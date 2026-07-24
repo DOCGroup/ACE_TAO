@@ -1,0 +1,5 @@
+// -*- MPC -*-
+feature(uring) {
+  macros += ACE_HAS_IO_URING
+  lit_libs += uring
+}

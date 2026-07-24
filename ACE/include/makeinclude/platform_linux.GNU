@@ -69,6 +69,11 @@ ifeq ($(threads),1)
   LIBS += -lrt
 endif
 
+ifeq ($(uring),1)
+  CPPFLAGS += -DACE_HAS_IO_URING
+  LIBS += -luring
+endif
+
 ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
 endif

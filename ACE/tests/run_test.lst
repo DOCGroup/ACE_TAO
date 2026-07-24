@@ -30,15 +30,15 @@ Buffer_Stream_Test
 Bug_1576_Regression_Test
 Bug_1890_Regression_Test
 Bug_2368_Regression_Test:
-Bug_2434_Regression_Test
+Bug_2434_Regression_Test: !GHA
 Bug_2497_Regression_Test
 Bug_2540_Regression_Test
 Bug_2609_Regression_Test: !ST !ACE_FOR_TAO
-Bug_2610_Regression_Test: !ST !ACE_FOR_TAO !FIXED_BUGS_ONLY
+Bug_2610_Regression_Test: !ST !ACE_FOR_TAO !FIXED_BUGS_ONLY !GHA
 Bug_2659_Regression_Test: !ST !VxWorks
 Bug_2653_Regression_Test: !ST
-Bug_2740_Regression_Test: !ST
-Bug_2772_Regression_Test: !ST !FIXED_BUGS_ONLY
+Bug_2740_Regression_Test: !ST !GHA
+Bug_2772_Regression_Test: !ST !FIXED_BUGS_ONLY !GHA
 Bug_2815_Regression_Test
 Bug_2820_Regression_Test
 Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR !FACE_SAFETY
@@ -133,7 +133,7 @@ Hash_Map_Manager_Test
 Hash_Multi_Map_Manager_Test
 High_Res_Timer_Test: !ACE_FOR_TAO
 NDDS_Timer_Test: NDDS
-INET_Addr_Test: !NO_NETWORK
+INET_Addr_Test: !NO_NETWORK !GHA
 IOStream_Test
 Integer_Truncate_Test
 Intrusive_Auto_Ptr_Test
@@ -156,7 +156,7 @@ MT_SOCK_Test: !LynxOS
 Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Map_Manager_Test: !ACE_FOR_TAO
 Map_Test: !ACE_FOR_TAO
-Max_Default_Port_Test: !ST
+Max_Default_Port_Test: !ST !GHA
 Mem_Map_Test: !VxWorks !nsk !ACE_FOR_TAO !LynxOS
 Memcpy_Test: !ACE_FOR_TAO
 Message_Block_Large_Copy_Test
@@ -168,12 +168,12 @@ Monotonic_Manual_Event_Test
 Monotonic_Message_Queue_Test: !ACE_FOR_TAO
 Monotonic_Task_Test: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
-Multicast_Interfaces_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT !FACE_SAFETY
-Multihomed_INET_Addr_Test: !ACE_FOR_TAO
+Multicast_Interfaces_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT !FACE_SAFETY !GHA
+Multihomed_INET_Addr_Test: !ACE_FOR_TAO !GHA
 Naming_Test: !NO_OTHER !LynxOS !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
 Network_Adapters_Test: !ACE_FOR_TAO
 New_Fail_Test: ALL !DISABLED
-NonBlocking_Conn_Test
+NonBlocking_Conn_Test: !GHA
 Notification_Queue_Unit_Test
 Notify_Performance_Test: !nsk !ACE_FOR_TAO
 OS_Test
@@ -185,11 +185,32 @@ Pipe_Test: !PHARLAP !VxWorks
 Priority_Buffer_Test
 Priority_Reactor_Test: !ACE_FOR_TAO
 Priority_Task_Test
-Proactor_File_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
-Proactor_Scatter_Gather_Test: !VxWorks !nsk !ACE_FOR_TAO
-Proactor_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
-Proactor_Timer_Test: !VxWorks !nsk !ACE_FOR_TAO
-Proactor_UDP_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Contract_Test -t d:       !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Contract_Test -t w:       !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_Contract_Test -t a:       !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Contract_Test -t i:       !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Contract_Test -t c:       !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Contract_Test -t u:       !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_File_Test -t d:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_File_Test -t w:           !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_File_Test -t u:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_Scatter_Gather_Test -t w: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_Scatter_Gather_Test -t u: !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_Stress_Test -t d:         !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Stress_Test -t w:         !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_Stress_Test -t u:         !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_Test -t d:                !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Test -t w:                !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_Test -t u:                !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_Test_IPV6 -t d:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Test_IPV6 -t w:           !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_Test_IPV6 -t u:           !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_Timer_Test -t d:          !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_Timer_Test -t w:          !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_Timer_Test -t u:          !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
+Proactor_UDP_Test -t d:            !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
+Proactor_UDP_Test -t w:            !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO Win32
+Proactor_UDP_Test -t u:            !Win32 !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO uring
 Process_Env_Test: !VxWorks !PHARLAP
 Process_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Win32
 Process_Manager_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
@@ -221,7 +242,7 @@ RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Cygwin
 Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
 Signal_Test: !VxWorks !Cygwin
 SOCK_Acceptor_Test: !NO_NETWORK
-SOCK_Connector_Test: !NO_NETWORK
+SOCK_Connector_Test: !NO_NETWORK !GHA
 SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test: !NO_NETWORK
 SOCK_Test: !NO_NETWORK
@@ -232,7 +253,7 @@ SV_Shared_Memory_Test: !MSVC !VxWorks !nsk !ACE_FOR_TAO
 Semaphore_Test: !ACE_FOR_TAO
 Service_Config_Test: !STATIC
 Missing_Svc_Conf_Test: !STATIC
-Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY
+Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY !GHA
 Sigset_Ops_Test
 Simple_Message_Block_Test
 Singleton_Test
@@ -241,7 +262,7 @@ Svc_Handler_Test: !ACE_FOR_TAO
 Task_Wait_Test
 TP_Reactor_Test: !ACE_FOR_TAO
 TSS_Test
-TSS_Leak_Test: !ST !FIXED_BUGS_ONLY
+TSS_Leak_Test: !ST !FIXED_BUGS_ONLY !GHA
 TSS_Static_Test
 Task_Test
 Task_Group_Test
@@ -267,12 +288,11 @@ Upgradable_RW_Test: !ACE_FOR_TAO
 Vector_Test
 WFMO_Reactor_Test: !nsk
 INET_Addr_Test_IPV6: !nsk
-Max_Default_Port_Test_IPV6: !nsk
-Multicast_Test_IPV6: !NO_MCAST !nsk
+Max_Default_Port_Test_IPV6: !nsk !GHA
+Multicast_Test_IPV6: !NO_MCAST !nsk !GHA
 Multihomed_INET_Addr_Test_IPV6: !nsk !ACE_FOR_TAO
-Proactor_Test_IPV6: !nsk !ACE_FOR_TAO !BAD_AIO
-SOCK_Send_Recv_Test_IPV6
-SOCK_Dgram_Test: !NO_NETWORK
+SOCK_Send_Recv_Test_IPV6:
+SOCK_Dgram_Test: !NO_NETWORK !GHA
 SOCK_Dgram_Bcast_Test: !ACE_FOR_TAO
 SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk

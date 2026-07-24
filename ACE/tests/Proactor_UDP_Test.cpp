@@ -51,8 +51,16 @@
 
 #endif /* ACE_WIN32 */
 
+#include "Proactor_Test_Backend.h"
+
 // Proactor Type (UNIX only, Win32 ignored)
-typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CB } ProactorType;
+typedef Proactor_Test_Backend::Type ProactorType;
+static const ProactorType DEFAULT = Proactor_Test_Backend::BACKEND_DEFAULT;
+static const ProactorType AIOCB = Proactor_Test_Backend::BACKEND_AIOCB;
+static const ProactorType SIG = Proactor_Test_Backend::BACKEND_SIG;
+static const ProactorType SUN = Proactor_Test_Backend::BACKEND_SUN;
+static const ProactorType CB = Proactor_Test_Backend::BACKEND_CB;
+static const ProactorType URING = Proactor_Test_Backend::BACKEND_URING;
 static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,
@@ -84,6 +92,8 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 static int loglevel;       // 0 full , 1 only errors
 
 static size_t xfer_limit;  // Number of bytes for Client to send.
+
+static unsigned long session_drain_timeout = 120; // Seconds.
 
 static char complete_message[] =
   "GET / HTTP/1.1\r\n"
@@ -196,80 +206,10 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                     -1);
 
   ACE_TEST_ASSERT (this->proactor_ == 0);
-
-#if defined (ACE_WIN32)
-
-  ACE_UNUSED_ARG (type_proactor);
-  ACE_UNUSED_ARG (max_op);
-
-  ACE_WIN32_Proactor *proactor_impl = 0;
-
-  ACE_NEW_RETURN (proactor_impl,
-                  ACE_WIN32_Proactor,
-                  -1);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Create Proactor Type = WIN32\n")));
-
-#elif defined (ACE_HAS_AIO_CALLS)
-
-  ACE_POSIX_Proactor * proactor_impl = 0;
-
-  switch (type_proactor)
-    {
-    case AIOCB:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_POSIX_AIOCB_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = AIOCB\n")));
-      break;
-
-#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
-    case SIG:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_POSIX_SIG_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = SIG\n")));
-      break;
-#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#  if defined (sun)
-    case SUN:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_SUN_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%t) Create Proactor Type = SUN\n")));
-      break;
-#  endif /* sun */
-
-#  if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
-    case CB:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_POSIX_CB_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
-      break;
-#  endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
-
-    default:
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = DEFAULT\n")));
-      break;
-  }
-
-#endif /* ACE_WIN32 */
-
-  // always delete implementation  1 , not  !(proactor_impl == 0)
-  ACE_NEW_RETURN (this->proactor_,
-                  ACE_Proactor (proactor_impl, 1 ),
-                  -1);
-  // Set new singleton and delete it in close_singleton()
-  ACE_Proactor::instance (this->proactor_, 1);
-  return 0;
+  return Proactor_Test_Backend::create_proactor (type_proactor,
+                                                 max_op,
+                                                 this->proactor_,
+                                                 true);
 }
 
 int
@@ -283,7 +223,12 @@ MyTask::delete_proactor (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Delete Proactor\n")));
 
+#if defined (ACE_WIN32)
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Skipping ACE_Proactor::close_singleton() on Windows test shutdown\n")));
+#else
   ACE_Proactor::close_singleton ();
+#endif
   this->proactor_ = 0;
 
   return 0;
@@ -483,6 +428,7 @@ class TestData
 public:
   TestData ();
   bool testing_done (void);
+  void log_session_counts (void);
   Server *server_up (void);
   Client *client_up (void);
   void server_done (Server *s);
@@ -532,6 +478,18 @@ TestData::testing_done (void)
     return false;
 
   return (svr_dn >= svr_up && clt_dn >= clt_up);
+}
+
+void
+TestData::log_session_counts (void)
+{
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("Session progress: ")
+              ACE_TEXT ("servers up=%d down=%d, clients up=%d down=%d\n"),
+              this->servers_.sessions_up_.value (),
+              this->servers_.sessions_down_.value (),
+              this->clients_.sessions_up_.value (),
+              this->clients_.sessions_down_.value ()));
 }
 
 Server *
@@ -754,178 +712,188 @@ struct Session_Data
 // clear it!). So, this bit of messiness is necessary for portability.
 // When the Master is destroyed, it will try to stop establishing sessions
 // but this will only work on Windows.
-class Master : public ACE_Handler
+class Master : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
   ~Master (void);
 
-  // Called when dgram receive operation completes.
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  bool started (void) const;
+  void shutdown (void);
+  virtual int svc (void);
 
 private:
-  void start_recv (void);
+  void handle_session (const Session_Data &session);
 
   TestData *tester_;
   ACE_INET_Addr recv_addr_;
   ACE_SOCK_Dgram sock_;
-  ACE_Asynch_Read_Dgram rd_;
-  ACE_Message_Block *mb_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> sessions_expected_;
-  volatile bool recv_in_progress_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, bool> shutting_down_;
+  bool thread_started_;
 };
 
 // *************************************************************
 Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
   : tester_ (tester),
     recv_addr_ (recv_addr),
-    mb_ (0),
     sessions_expected_ (expected),
-    recv_in_progress_ (false)
+    shutting_down_ (false),
+    thread_started_ (false)
 {
   if (this->sock_.open (recv_addr) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Master socket %p\n"), ACE_TEXT ("open")));
-  else
+  else if (this->activate (THR_NEW_LWP, 1) == -1)
     {
-      if (this->rd_.open (*this, this->sock_.get_handle ()) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Master reader %p\n"),
-                    ACE_TEXT ("open")));
-      this->mb_ = new ACE_Message_Block (sizeof (Session_Data));
-      start_recv ();
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Master activate %p\n"),
+                  ACE_TEXT ("activate")));
+      this->sock_.close ();
     }
+  else
+    this->thread_started_ = true;
 }
 
 Master::~Master (void)
 {
-  if (this->recv_in_progress_)
-    this->rd_.cancel ();
-  this->sock_.close ();
+  this->shutdown ();
 
-  if (this->mb_ != 0)
-    {
-      this->mb_->release ();
-      this->mb_ = 0;
-    }
+  if (this->thread_started_ && this->wait () == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Master wait %p\n"),
+                ACE_TEXT ("wait")));
+
+  this->sock_.close ();
+}
+
+bool
+Master::started (void) const
+{
+  return this->thread_started_;
 }
 
 void
-Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
+Master::shutdown (void)
 {
-  // We should only receive Start datagrams with valid addresses to reply to.
-  if (result.success ())
+  this->shutting_down_ = true;
+}
+
+int
+Master::svc (void)
+{
+  ACE_Time_Value timeout (1);
+
+  while (!this->shutting_down_.value ()
+         && this->sessions_expected_.value () > 0)
     {
-      if (result.bytes_transferred () != sizeof (Session_Data))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) Master session data expected %B bytes; ")
-                    ACE_TEXT ("received %B\n"),
-                    sizeof (Session_Data),
-                    result.bytes_transferred ()));
+      Session_Data session;
+      ACE_INET_Addr remote_addr;
+      ssize_t received = this->sock_.recv (&session,
+                                           sizeof (session),
+                                           remote_addr,
+                                           0,
+                                           &timeout);
+
+      if (received == -1)
+        {
+          if (ACE_OS::last_error () == ETIME)
+            continue;
+
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Master %p\n"), ACE_TEXT ("recv")));
+          continue;
+        }
+
+      if (static_cast<size_t> (received) != sizeof (Session_Data))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) Master session data expected %B bytes; ")
+                      ACE_TEXT ("received %b\n"),
+                      sizeof (Session_Data),
+                      received));
+          continue;
+        }
+
+      this->handle_session (session);
+    }
+
+  return 0;
+}
+
+void
+Master::handle_session (const Session_Data &session)
+{
+  if (session.direction_ == 0)
+    {
+      ACE_INET_Addr client_addr, me_addr;
+      ACE_TCHAR client_str[80], me_str[80];
+      client_addr.set ((u_short)session.port_, session.addr_, 0);
+      client_addr.addr_to_string (client_str, 80);
+
+      // Set up the local and remote addresses. This is the socket that
+      // the session will run over. The addressing info to be sent back to
+      // the Client goes over the well-known receive socket to ensure the
+      // reply is sent to the client that initiated the session.
+      ACE_SOCK_CODgram sock;
+      if (sock.open (client_addr) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) Master new socket for ")
+                      ACE_TEXT ("client %s: %p\n"),
+                      client_str,
+                      ACE_TEXT ("open")));
+        }
       else
         {
-          ACE_Message_Block *mb = result.message_block ();
-          Session_Data *session =
-            reinterpret_cast<Session_Data*>(mb->rd_ptr ());
-          if (session->direction_ == 0)
+          sock.get_local_addr (me_addr);
+          me_addr.addr_to_string (me_str, 80);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) Master setting up server for ")
+                      ACE_TEXT ("local %s, peer %s\n"),
+                      me_str,
+                      client_str));
+
+          Session_Data ack;
+          ack.direction_ = 1;   // Ack
+          ack.addr_ = ACE_HTONL (me_addr.get_ip_address ());
+          ack.port_ = ACE_HTONS (me_addr.get_port_number ());
+          if (this->sock_.send (&ack,
+                                sizeof (ack),
+                                client_addr) == -1)
             {
-              ACE_INET_Addr client_addr, me_addr;
-              ACE_TCHAR client_str[80], me_str[80];
-              client_addr.set ((u_short)session->port_, session->addr_, 0);
-              client_addr.addr_to_string (client_str, 80);
-
-              // Set up the local and remote addresses - need fully-specified
-              // addresses to use UDP aio on Linux. This is the socket that
-              // the session will run over. The addressing info to be sent
-              // back to the Client will be sent over the receive socket
-              // to ensure it goes back to the client initiating the session.
-              ACE_SOCK_CODgram sock;
-              if (sock.open (client_addr) == -1)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("(%t) Master new socket for ")
-                              ACE_TEXT ("client %s: %p\n"),
-                              client_str,
-                              ACE_TEXT ("open")));
-                }
-              else
-                {
-                  sock.get_local_addr (me_addr);
-                  me_addr.addr_to_string (me_str, 80);
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%t) Master setting up server for ")
-                              ACE_TEXT ("local %s, peer %s\n"),
-                              me_str,
-                              client_str));
-
-                  Session_Data session;
-                  session.direction_ = 1;   // Ack
-                  session.addr_ = ACE_HTONL (me_addr.get_ip_address ());
-                  session.port_ = ACE_HTONS (me_addr.get_port_number ());
-                  if (this->sock_.send (&session,
-                                        sizeof (session),
-                                        client_addr) == -1)
-                    {
-                      ACE_ERROR ((LM_ERROR,
-                                  ACE_TEXT ("(%t) Master reply %p\n"),
-                                  ACE_TEXT ("send")));
-                      sock.close ();
-                    }
-                  else
-                    {
-                      Server *server = this->tester_->server_up ();
-                      server->go (sock.get_handle (), client_addr);
-                    }
-                }
-              if (--this->sessions_expected_ == 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("All expected sessions are up\n")));
-                }
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) Master reply %p\n"),
+                          ACE_TEXT ("send")));
+              sock.close ();
             }
           else
             {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%t) Badly formed Session request\n")));
+              Server *server = this->tester_->server_up ();
+              if (server == 0)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%t) Master failed to allocate server handler.\n")));
+                  sock.close ();
+                }
+              else
+                {
+                  ACE_HANDLE const server_handle = sock.get_handle ();
+                  sock.set_handle (ACE_INVALID_HANDLE);
+                  server->go (server_handle, client_addr);
+                }
             }
+        }
+
+      if (--this->sessions_expected_ == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("All expected sessions are up\n")));
         }
     }
   else
     {
-      ACE_Log_Priority prio = LM_ERROR;
-#if defined (ACE_WIN32)
-      if (result.error () == ERROR_OPERATION_ABORTED)
-        prio = LM_DEBUG;
-#else
-      if (result.error () == ECANCELED)
-        prio = LM_DEBUG;
-#endif /* ACE_WIN32 */
-      // Multiple steps to log the error without squashing errno.
-      ACE_LOG_MSG->conditional_set (__FILE__,
-                                    __LINE__,
-                                    -1,
-                                    (int)(result.error ()));
-      ACE_LOG_MSG->log (prio,
-                        ACE_TEXT ("(%t) Master %p\n"),
-                        ACE_TEXT ("recv"));
-      // If canceled, don't try to restart.
-      if (prio == LM_DEBUG)
-        return;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) Badly formed Session request\n")));
     }
-  this->start_recv ();
-}
-
-void
-Master::start_recv (void)
-{
-  if (this->mb_ == 0)
-    return;
-
-  size_t unused = 0;
-  this->mb_->reset ();
-  if (this->rd_.recv (this->mb_, unused, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Master %p\n"), ACE_TEXT ("recv")));
-  else
-    this->recv_in_progress_ = true;
 }
 
 // ***************************************************
@@ -1013,6 +981,8 @@ Server::go (ACE_HANDLE handle, const ACE_INET_Addr &client)
 
   // Lock this before initiating I/O, else it may complete while we're
   // still setting up.
+  bool has_io = false;
+
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
 
@@ -1026,9 +996,11 @@ Server::go (ACE_HANDLE handle, const ACE_INET_Addr &client)
                   ACE_TEXT ("Server::ACE_Asynch_Read_Dgram::open")));
     else
       this->initiate_read ();
+
+    has_io = this->io_count_ > 0;
   }
 
-  if (this->io_count_ > 0)
+  if (has_io)
     return;
 
   delete this;     // Error setting up I/O factories
@@ -1331,6 +1303,8 @@ int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
   ACE_OS::sleep(3);  // Let Master get going
+  const ACE_Time_Value session_reply_timeout (5);
+
   if (num > MAX_CLIENTS)
     num = MAX_CLIENTS;
 
@@ -1360,7 +1334,9 @@ Connector::start (const ACE_INET_Addr& addr, int num)
                           ACE_TEXT ("(%t) Starting client %d: %p\n"),
                           rc,
                           ACE_TEXT ("send")));
-      if (sock.recv (&session, sizeof (session)) == -1)
+      if (sock.recv (&session,
+                     sizeof (session),
+                     &session_reply_timeout) == -1)
         ACE_ERROR_BREAK ((LM_ERROR,
                           ACE_TEXT ("(%t) Starting client %d: %p\n"),
                           rc,
@@ -1992,6 +1968,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    i SIG")
       ACE_TEXT ("\n    c CB")
       ACE_TEXT ("\n    s SUN")
+      ACE_TEXT ("\n    u URING")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
       ACE_TEXT ("\n-h <host> for Client mode")
@@ -2016,34 +1993,8 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
 static int
 set_proactor_type (const ACE_TCHAR *ptype)
 {
-  if (!ptype)
-    return 0;
-
-  switch (ACE_OS::ace_toupper (*ptype))
-    {
-    case 'D':
-      proactor_type = DEFAULT;
-      return 1;
-    case 'A':
-      proactor_type = AIOCB;
-      return 1;
-    case 'I':
-      proactor_type = SIG;
-      return 1;
-#if defined (sun)
-    case 'S':
-      proactor_type = SUN;
-      return 1;
-#endif /* sun */
-#if !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
-     case 'C':
-       proactor_type = CB;
-       return 1;
-#endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
-    default:
-      break;
-    }
-  return 0;
+  return Proactor_Test_Backend::parse_type (ptype, proactor_type) == 0
+    && Proactor_Test_Backend::is_available (proactor_type) != 0;
 }
 
 static int
@@ -2141,54 +2092,114 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   MyTask    task1;
   TestData  test;
+  int started = 0;
+  int result = 0;
+  Master *master = 0;
+  Connector *connector = 0;
 
   if (task1.start (threads, proactor_type, max_aio_operations) == 0)
     {
+      started = 1;
       // NOTE - there's no real reason this test is limited to IPv4 other
       // than the way Session_Data is set up - to expand this test to work
       // on IPv6 as well as IPv4, you need to do some work on passing the
       // Session_Data address differently.
       ACE_INET_Addr addr (port, ACE_LOCALHOST, AF_INET);
-      Master master (&test, addr, clients);
-      Connector connector (&test);
-      int rc = 0;
-
-      if (both != 0 || host == 0) // Acceptor
+      master = new Master (&test, addr, clients);
+      connector = new Connector (&test);
+      if (master == 0 || connector == 0)
         {
-          // Already running; if not needed will be deleted soon.
-          rc = 1;
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) Failed to allocate Proactor_UDP_Test peers.\n")));
+          result = -1;
         }
-
-      if (both != 0 || host != 0)
+      else
         {
-          if (host == 0)
-            host = ACE_LOCALHOST;
+          int rc = 0;
 
-          if (addr.set (port, host, 1, addr.get_type ()) == -1)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+          if (!master->started ())
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) Failed to start Proactor_UDP_Test master listener.\n")));
+              rc = -1;
+            }
+
+          if (rc >= 0 && (both != 0 || host == 0)) // Acceptor
+            {
+              // Already running; if not needed will be deleted soon.
+              rc = 1;
+            }
+
+          if (rc >= 0 && (both != 0 || host != 0))
+            {
+              if (host == 0)
+                host = ACE_LOCALHOST;
+
+              if (addr.set (port, host, 1, addr.get_type ()) == -1)
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+              else
+                rc += connector->start (addr, clients);
+            }
+
+          if (rc <= 0)
+            {
+              result = -1;
+            }
           else
-            rc += connector.start (addr, clients);
+            {
+              // Let the sessions get going, then wait for them to drain while
+              // the master and connector are still alive. Destroying them
+              // earlier leaves callbacks racing with stack lifetime.
+              ACE_OS::sleep (3);
+
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
+              ACE_Time_Value const drain_deadline =
+                ACE_OS::gettimeofday () + ACE_Time_Value (session_drain_timeout);
+              while (!test.testing_done ())
+                {
+                  if (ACE_OS::gettimeofday () >= drain_deadline)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("(%t) Timed out waiting %u seconds ")
+                                  ACE_TEXT ("for UDP sessions to drain.\n"),
+                                  session_drain_timeout));
+                      test.log_session_counts ();
+                      result = -1;
+                      break;
+                    }
+
+                  ACE_OS::sleep (1);
+                }
+            }
+
+          test.stop_all ();
+
+          if (master != 0)
+            {
+              master->shutdown ();
+              ACE_OS::sleep (1);
+            }
         }
-
-      // Wait a few seconds to let things get going, then poll til
-      // all sessions are done. Note that when we exit this scope, the
-      // Acceptor and Connector will be destroyed, which should prevent
-      // further connections and also test how well destroyed handlers
-      // are handled.
-      ACE_OS::sleep (3);
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
-  while (!test.testing_done ())
-    ACE_OS::sleep (1);
+  else
+    result = -1;
 
-  test.stop_all ();
+  if (started)
+    {
+      // Let canceled connect completions drain before stopping
+      // the proactor thread.
+      ACE_OS::sleep (1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Stop Thread Pool Task\n")));
   task1.stop ();
 
+  delete connector;
+  delete master;
+
   ACE_END_TEST;
 
-  return 0;
+  return result;
 }
 
 #else

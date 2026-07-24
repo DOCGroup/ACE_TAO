@@ -179,8 +179,11 @@
 /Priority_Buffer_Test
 /Priority_Reactor_Test
 /Priority_Task_Test
+/Proactor_Contract_Test
 /Proactor_File_Test
+/Proactor_Network_Performance_Test
 /Proactor_Scatter_Gather_Test
+/Proactor_Stress_Test
 /Proactor_Test
 /Proactor_Test_IPV6
 /Proactor_Timer_Test

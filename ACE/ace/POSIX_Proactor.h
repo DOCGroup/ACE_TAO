@@ -26,6 +26,7 @@
 // system calls.
 
 #include "ace/Proactor_Impl.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Free_List.h"
 #include "ace/Pipe.h"
 #include "ace/POSIX_Asynch_IO.h"
@@ -301,14 +302,11 @@ protected:
   virtual int post_wakeup_completions (int how_many);
 
 protected:
-  /// Handler to handle the wakeups. This works in conjunction with the
-  /// <ACE_Proactor::run_event_loop>.
-  ACE_Handler wakeup_handler_;
   int os_id_;
 
 private:
   /// Task to process pseudo-asynchronous accept/connect
-  ACE_Asynch_Pseudo_Task  pseudo_task_;
+  ACE_Asynch_Pseudo_Task *pseudo_task_;
 
 };
 
@@ -409,6 +407,9 @@ protected:
   void create_notify_manager (void);
   void delete_notify_manager (void);
 
+  /// Lazily create the notify manager and report whether it is ready.
+  int ensure_notify_manager (void);
+
   /// Define the maximum number of asynchronous I/O requests
   /// for the current OS
   void check_max_aio_num (void) ;
@@ -445,6 +446,10 @@ protected:
   /// called from post_completion method
   virtual int notify_completion (int sig_num);
 
+  /// Called when an AIO request that was expected to signal completion
+  /// will never invoke its normal completion callback.
+  virtual void abandon_pending_aio (void);
+
   /// Put "post_completed" result into the internal queue
   int  putq_result (ACE_POSIX_Asynch_Result *result);
 
@@ -476,10 +481,16 @@ protected:
   /// Mutex to protect work with lists.
   ACE_SYNCH_MUTEX mutex_;
 
+  /// Serialize lazy creation/destruction of the notify pipe manager.
+  ACE_SYNCH_MUTEX notify_manager_mutex_;
+
+  /// Serialize aio_suspend wait/dequeue handling for the AIOCB backend.
+  ACE_SYNCH_MUTEX dispatch_mutex_;
+
   /// The purpose of this member is only to identify asynchronous request
   /// from NotifyManager. We will reserve for it always slot 0
   /// in the list of aiocb's to be sure that don't lose notifications.
-  ACE_HANDLE notify_pipe_read_handle_ ;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, ACE_HANDLE> notify_pipe_read_handle_;
 
   /// Number of ACE_POSIX_Asynch_Result's waiting for start
   /// i.e. deferred AIOs

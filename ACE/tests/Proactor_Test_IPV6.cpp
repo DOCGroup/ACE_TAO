@@ -56,10 +56,17 @@
 #endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
 
 #include "Proactor_Test.h"
+#include "Proactor_Test_Backend.h"
 
 
 // Proactor Type (UNIX only, Win32 ignored)
-typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CB } ProactorType;
+typedef Proactor_Test_Backend::Type ProactorType;
+static const ProactorType DEFAULT = Proactor_Test_Backend::BACKEND_DEFAULT;
+static const ProactorType AIOCB = Proactor_Test_Backend::BACKEND_AIOCB;
+static const ProactorType SIG = Proactor_Test_Backend::BACKEND_SIG;
+static const ProactorType SUN = Proactor_Test_Backend::BACKEND_SUN;
+static const ProactorType CB = Proactor_Test_Backend::BACKEND_CB;
+static const ProactorType URING = Proactor_Test_Backend::BACKEND_URING;
 static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,
@@ -203,80 +210,10 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                     -1);
 
   ACE_TEST_ASSERT (this->proactor_ == 0);
-
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
-  ACE_UNUSED_ARG (type_proactor);
-  ACE_UNUSED_ARG (max_op);
-
-  ACE_WIN32_Proactor *proactor_impl = 0;
-
-  ACE_NEW_RETURN (proactor_impl,
-                  ACE_WIN32_Proactor,
-                  -1);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Create Proactor Type = WIN32\n")));
-
-#elif defined (ACE_HAS_AIO_CALLS)
-
-  ACE_POSIX_Proactor * proactor_impl = 0;
-
-  switch (type_proactor)
-    {
-    case AIOCB:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_POSIX_AIOCB_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = AIOCB\n")));
-      break;
-
-#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
-    case SIG:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_POSIX_SIG_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = SIG\n")));
-      break;
-#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#  if defined (sun)
-    case SUN:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_SUN_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%t) Create Proactor Type = SUN\n")));
-      break;
-#  endif /* sun */
-
-#  if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
-    case CB:
-      ACE_NEW_RETURN (proactor_impl,
-                      ACE_POSIX_CB_Proactor (max_op),
-                      -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
-      break;
-#  endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
-
-    default:
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = DEFAULT\n")));
-      break;
-  }
-
-#endif // (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
-  // always delete implementation  1 , not  !(proactor_impl == 0)
-  ACE_NEW_RETURN (this->proactor_,
-                  ACE_Proactor (proactor_impl, 1 ),
-                  -1);
-  // Set new singleton and delete it in close_singleton()
-  ACE_Proactor::instance (this->proactor_, 1);
-  return 0;
+  return Proactor_Test_Backend::create_proactor (type_proactor,
+                                                 max_op,
+                                                 this->proactor_,
+                                                 true);
 }
 
 int
@@ -708,7 +645,10 @@ Server::~Server (void)
     this->tester_->server_done (this);
 
   if (this->handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::closesocket (this->handle_);
+    {
+      ACE_OS::shutdown (this->handle_, ACE_SHUTDOWN_WRITE);
+      ACE_OS::closesocket (this->handle_);
+    }
 
   this->id_ = -1;
   this->handle_= ACE_INVALID_HANDLE;
@@ -1587,7 +1527,8 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         if (result.error () == ERROR_OPERATION_ABORTED)
           prio = LM_DEBUG;
 #else
-        if (result.error () == ECANCELED)
+        if (result.error () == ECANCELED ||
+            result.error () == EPIPE)
           prio = LM_DEBUG;
 #endif /* ACE_WIN32 */
         else
@@ -1713,7 +1654,8 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         if (result.error () == ERROR_OPERATION_ABORTED)
           prio = LM_DEBUG;
 #else
-        if (result.error () == ECANCELED)
+        if (result.error () == ECANCELED ||
+            result.error () == ECONNRESET)
           prio = LM_DEBUG;
 #endif /* ACE_WIN32 */
         else
@@ -1766,6 +1708,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    i SIG")
       ACE_TEXT ("\n    c CB")
       ACE_TEXT ("\n    s SUN")
+      ACE_TEXT ("\n    u URING")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
       ACE_TEXT ("\n-h <host> for Client mode")
@@ -1790,34 +1733,8 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
 static int
 set_proactor_type (const ACE_TCHAR *ptype)
 {
-  if (!ptype)
-    return 0;
-
-  switch (ACE_OS::ace_toupper (*ptype))
-    {
-    case 'D':
-      proactor_type = DEFAULT;
-      return 1;
-    case 'A':
-      proactor_type = AIOCB;
-      return 1;
-    case 'I':
-      proactor_type = SIG;
-      return 1;
-#if defined (sun)
-    case 'S':
-      proactor_type = SUN;
-      return 1;
-#endif /* sun */
-#if !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
-     case 'C':
-       proactor_type = CB;
-       return 1;
-#endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
-    default:
-      break;
-    }
-  return 0;
+  return Proactor_Test_Backend::parse_type (ptype, proactor_type) == 0
+    && Proactor_Test_Backend::is_available (proactor_type) != 0;
 }
 
 static int
@@ -1914,60 +1831,131 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (::parse_args (argc, argv) == -1)
     return -1;
 
-#if defined (ACE_HAS_IPV6)
+  int run_status = 0;
+
+#if !defined (ACE_HAS_IPV6)
+  ACE_DEBUG ((LM_WARNING,
+              ACE_TEXT ("IPv6 is not supported by ACE on this platform.\n")
+              ACE_TEXT ("Proactor_Test_IPV6 will not be run.\n")));
+
+  ACE_END_TEST;
+
+  return 0;
+#else
+  if (!ACE::ipv6_enabled ())
+    {
+      ACE_DEBUG ((LM_WARNING,
+                  ACE_TEXT ("IPv6 is not supported by ACE on this platform.\n")
+                  ACE_TEXT ("Proactor_Test_IPV6 will not be run.\n")));
+
+      ACE_END_TEST;
+
+      return 0;
+    }
+
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
   disable_signal (SIGPIPE, SIGPIPE);
 
   MyTask    task1;
   TestData  test;
+  Acceptor *acceptor = 0;
+  Connector *connector = 0;
+  int started = 0;
 
   if (task1.start (threads, proactor_type, max_aio_operations) == 0)
     {
-      Acceptor  acceptor (&test);
-      Connector connector (&test);
-      ACE_INET_Addr addr (port, "::");
-
-      int rc = 0;
-
-      if (both != 0 || host == 0) // Acceptor
+      started = 1;
+      acceptor = new Acceptor (&test);
+      connector = new Connector (&test);
+      if (acceptor == 0 || connector == 0)
         {
-          // Simplify, initial read with zero size
-          if (acceptor.open (addr, 0, 1) == 0)
-            rc = 1;
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) Failed to allocate Proactor_Test_IPV6 peers.\n")));
+          run_status = -1;
         }
-
-      if (both != 0 || host != 0)
+      else
         {
-          if (host == 0)
-            host = ACE_IPV6_LOCALHOST;
+          ACE_INET_Addr addr (port, "::");
 
-          if (addr.set (port, host, 1, addr.get_type ()) == -1)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+          int rc = 0;
+
+          if (both != 0 || host == 0) // Acceptor
+            {
+              // Simplify, initial read with zero size
+              if (acceptor->open (addr, 0, 1) == 0)
+                rc = 1;
+            }
+
+          if (both != 0 || host != 0)
+            {
+              if (host == 0)
+                host = ACE_IPV6_LOCALHOST;
+
+              if (addr.set (port, host, 1, addr.get_type ()) == -1)
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+              else
+                rc += connector->start (addr, clients);
+            }
+
+          if (rc <= 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) No Proactor_Test_IPV6 sessions were started.\n")));
+              run_status = -1;
+            }
           else
-            rc += connector.start (addr, clients);
+            {
+              // Let the sessions get going, then wait for them to drain while
+              // the acceptor and connector are still alive. Destroying them
+              // earlier leaves callbacks racing with stack lifetime.
+              ACE_OS::sleep (3);
+
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
+              ACE_Time_Value limit = ACE_OS::gettimeofday () + ACE_Time_Value (30);
+              while (!test.testing_done () && ACE_OS::gettimeofday () < limit)
+                ACE_OS::sleep (1);
+
+              if (!test.testing_done ())
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Timed out waiting for sessions to run down.\n")));
+                  run_status = -1;
+                }
+            }
+
+          test.stop_all ();
+
+          if (acceptor != 0)
+            acceptor->cancel ();
+          if (connector != 0)
+            connector->cancel ();
+          ACE_OS::sleep (1);
         }
-
-      // Wait a few seconds to let things get going, then poll til
-      // all sessions are done. Note that when we exit this scope, the
-      // Acceptor and Connector will be destroyed, which should prevent
-      // further connections and also test how well destroyed handlers
-      // are handled.
-      ACE_OS::sleep (3);
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
-  while (!test.testing_done ())
-    ACE_OS::sleep (1);
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) Failed to start Proactor_Test_IPV6 task.\n")));
+      run_status = -1;
+    }
 
-  test.stop_all ();
+  if (started)
+    {
+      // Let canceled accept/connect completions drain before stopping
+      // the proactor thread.
+      ACE_OS::sleep (1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Stop Thread Pool Task\n")));
   task1.stop ();
 
-#endif /* ACE_HAS_IPV6 */
+  delete connector;
+  delete acceptor;
+
+#endif /* !ACE_HAS_IPV6 */
 
   ACE_END_TEST;
 
-  return 0;
+  return run_status;
 }
 
 #else

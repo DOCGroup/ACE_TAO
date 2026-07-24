@@ -9,11 +9,115 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_POSIX_CB_Proactor::Notification_State::Notification_State (ACE_SYNCH_SEMAPHORE &sema)
+  : zero_pending_ (this->mutex_),
+    sema_ (&sema),
+    pending_callbacks_ (0),
+    ref_count_ (0)
+{
+}
+
+void
+ACE_POSIX_CB_Proactor::Notification_State::add_pending (void)
+{
+  ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_);
+  ++this->ref_count_;
+  ++this->pending_callbacks_;
+}
+
+void
+ACE_POSIX_CB_Proactor::Notification_State::complete_one (void)
+{
+  this->finish_pending_i (true);
+}
+
+void
+ACE_POSIX_CB_Proactor::Notification_State::abandon_pending (void)
+{
+  this->finish_pending_i (false);
+}
+
+size_t
+ACE_POSIX_CB_Proactor::Notification_State::pending (void)
+{
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, 0);
+  return this->pending_callbacks_;
+}
+
+int
+ACE_POSIX_CB_Proactor::Notification_State::wait_for_pending_zero (const ACE_Time_Value *abstime)
+{
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1);
+
+  while (this->pending_callbacks_ != 0)
+    if (this->zero_pending_.wait (abstime) == -1)
+      return -1;
+
+  return 0;
+}
+
+void
+ACE_POSIX_CB_Proactor::Notification_State::add_ref (void)
+{
+  ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_);
+  ++this->ref_count_;
+}
+
+void
+ACE_POSIX_CB_Proactor::Notification_State::remove_ref (void)
+{
+  bool destroy = false;
+  {
+    ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_);
+    if (this->ref_count_ != 0 && --this->ref_count_ == 0)
+      destroy = true;
+  }
+
+  if (destroy)
+    delete this;
+}
+
+void
+ACE_POSIX_CB_Proactor::Notification_State::detach (void)
+{
+  ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_);
+  this->sema_ = 0;
+}
+
+void
+ACE_POSIX_CB_Proactor::Notification_State::finish_pending_i (bool signal_waiter)
+{
+  bool destroy = false;
+  {
+    ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->mutex_);
+
+    if (signal_waiter && this->sema_ != 0)
+      this->sema_->release ();
+
+    if (this->pending_callbacks_ != 0)
+      {
+        --this->pending_callbacks_;
+        if (this->pending_callbacks_ == 0)
+          this->zero_pending_.broadcast ();
+      }
+
+    if (this->ref_count_ != 0 && --this->ref_count_ == 0)
+      destroy = true;
+  }
+
+  if (destroy)
+    delete this;
+}
+
 ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
   : ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                               ACE_POSIX_Proactor::PROACTOR_CB),
-    sema_ ((unsigned int) 0)
+    sema_ ((unsigned int) 0),
+    notification_state_ (0)
 {
+  ACE_NEW (this->notification_state_, Notification_State (this->sema_));
+  this->notification_state_->add_ref ();
+
   // we should start pseudo-asynchronous accept task
   // one per all future acceptors
 
@@ -34,9 +138,10 @@ ACE_POSIX_CB_Proactor::get_impl_type (void)
 
 void ACE_POSIX_CB_Proactor::aio_completion_func (sigval cb_data)
 {
-  ACE_POSIX_CB_Proactor * impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);
-  if ( impl != 0 )
-    impl->notify_completion (0);
+  Notification_State *state =
+    static_cast<Notification_State *> (cb_data.sival_ptr);
+  if (state != 0)
+    state->complete_one ();
 }
 
 #if defined (ACE_HAS_SIG_C_FUNC)
@@ -46,6 +151,27 @@ ACE_POSIX_CB_Proactor_aio_completion (sigval cb_data)
   ACE_POSIX_CB_Proactor::aio_completion_func (cb_data);
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
+
+int
+ACE_POSIX_CB_Proactor::close (void)
+{
+  int const result = ACE_POSIX_AIOCB_Proactor::close ();
+
+  Notification_State *state = this->notification_state_;
+  if (state != 0)
+    {
+      this->notification_state_ = 0;
+
+      ACE_Time_Value const settle_timeout (0, 500000);
+      ACE_Time_Value const deadline =
+        ACE_OS::gettimeofday () + settle_timeout;
+      (void) state->wait_for_pending_zero (&deadline);
+      state->detach ();
+      state->remove_ref ();
+    }
+
+  return result;
+}
 
 int
 ACE_POSIX_CB_Proactor::handle_events (ACE_Time_Value &wait_time)
@@ -62,11 +188,27 @@ ACE_POSIX_CB_Proactor::handle_events (void)
 }
 
 int
-ACE_POSIX_CB_Proactor::notify_completion (int sig_num)
+ACE_POSIX_CB_Proactor::notify_completion (int /* sig_num */)
 {
-  ACE_UNUSED_ARG (sig_num);
-
   return this->sema_.release();
+}
+
+int
+ACE_POSIX_CB_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
+
+  int const rc = this->putq_result (result);
+  if (rc == 0)
+    this->sema_.release ();
+  return rc;
+}
+
+void
+ACE_POSIX_CB_Proactor::abandon_pending_aio (void)
+{
+  if (this->notification_state_ != 0)
+    this->notification_state_->abandon_pending ();
 }
 
 
@@ -90,7 +232,7 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 #  endif /* ACE_HAS_SIG_C_FUNC */
   result->aio_sigevent.sigev_notify_attributes = 0;
 
-  result->aio_sigevent.sigev_value.sival_ptr = this ;
+  result->aio_sigevent.sigev_value.sival_ptr = this->notification_state_;
 
   return slot;
 }
@@ -160,13 +302,75 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
   // process post_completed results
   ret_que = this->process_result_queue ();
 
-  // Uncomment this  if you want to test
-  // and research the behavior of you system
-  // ACELIB_DEBUG ((LM_DEBUG,
-  //            "(%t) NumAIO=%d NumQueue=%d\n",
-  //             ret_aio, ret_que));
 
   return ret_aio + ret_que > 0 ? 1 : 0;
+}
+
+int
+ACE_POSIX_CB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
+                                  ACE_POSIX_Proactor::Opcode op)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
+
+  int ret_val = (aiocb_list_cur_size_ >= aiocb_list_max_size_) ? -1 : 0;
+
+  if (result == 0)
+    return -1;
+
+  switch (op)
+    {
+    case ACE_POSIX_Proactor::ACE_OPCODE_READ:
+      result->aio_lio_opcode = LIO_READ;
+      break;
+
+    case ACE_POSIX_Proactor::ACE_OPCODE_WRITE:
+      result->aio_lio_opcode = LIO_WRITE;
+      break;
+
+    default:
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%N:%l:(%P|%t)::")
+                         ACE_TEXT ("start_aio: Invalid op code %d\n"),
+                         op),
+                        -1);
+    }
+
+  if (ret_val != 0)
+    {
+      errno = EAGAIN;
+      return -1;
+    }
+
+  ssize_t const slot = this->allocate_aio_slot (result);
+  if (slot < 0)
+    return -1;
+
+  size_t const index = static_cast<size_t> (slot);
+  this->result_list_[index] = result;
+  ++this->aiocb_list_cur_size_;
+
+  if (this->notification_state_ != 0)
+    this->notification_state_->add_pending ();
+
+  ret_val = this->start_aio_i (result);
+  switch (ret_val)
+    {
+    case 0:
+      this->aiocb_list_[index] = result;
+      return 0;
+
+    case 1:
+      ++this->num_deferred_aiocb_;
+      return 0;
+
+    default:
+      this->abandon_pending_aio ();
+      break;
+    }
+
+  this->result_list_[index] = 0;
+  --this->aiocb_list_cur_size_;
+  return -1;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

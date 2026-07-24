@@ -97,7 +97,7 @@ jobs:
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
         echo "ipv6=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
-        echo "xerces3=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "xerces3=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "ssl=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
@@ -126,3 +126,72 @@ jobs:
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
     - name: Build solution TAO/tests/IDL_Test/IDL_Test.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/tests/IDL_Test/IDL_Test.sln
+    - name: Run ACE full test suite
+      if: matrix.name == 'VS2022Debug64Cxx20'
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      shell: pwsh
+      run: |
+        $env:PATH = "${env:ACE_ROOT}\lib;${env:ACE_ROOT}\tests;${env:ACE_ROOT}\lib\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }};${env:ACE_ROOT}\tests\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }};${{ github.workspace }}\vcpkg_installed\${{ matrix.vcpkgarch }}\debug\bin;${{ github.workspace }}\vcpkg_installed\${{ matrix.vcpkgarch }}\bin;$env:PATH"
+        & perl .\run_test.pl -Config Win32 -Config MSVC -Config FIXED_BUGS_ONLY -Config GHA 2>&1 |
+          Tee-Object -FilePath run_test_full_suite.log
+        $runExit = $LASTEXITCODE
+        $failures = Select-String -Path run_test_full_suite.log -Pattern '^(Error|ERROR):', 'auto_run_tests_finished:.*Result:(?!0\b)-?\d+'
+        if ($runExit -ne 0) {
+          Write-Error "run_test.pl failed with exit status $runExit"
+          exit $runExit
+        }
+        if ($failures) {
+          $failures | ForEach-Object { Write-Output $_.Line }
+          Write-Error "ACE full test suite reported errors or failing test results."
+          exit 1
+        }
+    - name: Upload ACE full test suite logs
+      if: always() && matrix.name == 'VS2022Debug64Cxx20'
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-ace-full-test-suite
+        path: |
+          ${{ env.ACE_ROOT }}/tests/run_test_full_suite.log
+          ${{ env.ACE_ROOT }}/tests/log
+        if-no-files-found: ignore
+    - name: Run Proactor Win32 correctness smoke tests
+      if: matrix.name == 'VS2022Debug64Cxx17'
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      shell: pwsh
+      run: |
+        $env:PATH = "${env:ACE_ROOT}\lib;${env:ACE_ROOT}\lib\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }};${env:ACE_ROOT}\tests\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }};$env:PATH"
+        $env:RUN_ID = "gha-win32-correctness"
+        $env:BASE_PORT = "23000"
+        perl .\run_proactor_correctness_matrix.pl --backend win32 `
+          --test Proactor_Contract_Test `
+          --test Proactor_File_Test `
+          --test Proactor_Network_Performance_Test:tcp `
+          --test Proactor_Network_Performance_Test:udp `
+          --test Proactor_Scatter_Gather_Test `
+          --test Proactor_Stress_Test `
+          --test Proactor_Test `
+          --test Proactor_Test_IPV6 `
+          --test Proactor_Timer_Test `
+          --test Proactor_UDP_Test
+    - name: Run Proactor Win32 performance smoke tests
+      if: matrix.name == 'VS2022Debug64Cxx17'
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      shell: pwsh
+      run: |
+        $env:PATH = "${env:ACE_ROOT}\lib;${env:ACE_ROOT}\lib\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }};${env:ACE_ROOT}\tests\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }};$env:PATH"
+        $env:RUN_ID = "gha-win32-performance"
+        $env:BASE_PORT = "24000"
+        perl .\run_proactor_performance_matrix.pl --backend win32 `
+          --scenario stress_recursive `
+          --scenario tcp_1x1_light_v4 `
+          --scenario tcp_1x16_moderate_mt_v4 `
+          --scenario udp_1x16_moderate_mt_buf4m_v4
+    - name: Upload Proactor Win32 smoke logs
+      if: always() && matrix.name == 'VS2022Debug64Cxx17'
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-proactor-win32-smoke
+        path: |
+          ${{ env.ACE_ROOT }}/tests/log/proactor_matrix/gha-win32-correctness
+          ${{ env.ACE_ROOT }}/tests/log/proactor_performance/gha-win32-performance
+        if-no-files-found: ignore

@@ -6,6 +6,7 @@
 // calls.
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
 #include "ace/Task_T.h"
@@ -86,13 +87,13 @@ protected:
   ACE_Proactor &proactor_;
 
   /// Flag used to indicate when we are shutting down.
-  int shutting_down_;
+  ACE_Atomic_Op<ACE_Thread_Mutex, bool> shutting_down_;
 };
 
 ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
   : ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_),
     proactor_ (proactor),
-    shutting_down_ (0)
+    shutting_down_ (false)
 {
 }
 
@@ -104,8 +105,7 @@ ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
 int
 ACE_Proactor_Timer_Handler::destroy (void)
 {
-  // Mark for closing down.
-  this->shutting_down_ = 1;
+  this->shutting_down_ = true;
 
   // Signal timer event.
   this->timer_event_.signal ();
@@ -124,32 +124,22 @@ ACE_Proactor_Timer_Handler::signal (void)
 int
 ACE_Proactor_Timer_Handler::svc (void)
 {
-  ACE_Time_Value absolute_time;
   ACE_Time_Value relative_time;
   int result = 0;
 
-  while (this->shutting_down_ == 0)
+  for (;;)
     {
-      // Check whether the timer queue has any items in it.
-      if (this->proactor_.timer_queue ()->is_empty () == 0)
+      if (this->shutting_down_.value () != 0)
+        break;
+
+      ACE_Time_Value *wait_time =
+        this->proactor_.timer_queue ()->calculate_timeout (0,
+                                                           &relative_time);
+
+      // Block using the timer queue's lock-safe timeout calculation.
+      if (wait_time != 0)
         {
-          // Get the earliest absolute time.
-          absolute_time = this->proactor_.timer_queue ()->earliest_time ();
-
-          // Get current time from timer queue since we don't know
-          // which <gettimeofday> was used.
-          ACE_Time_Value cur_time =
-            this->proactor_.timer_queue ()->gettimeofday ();
-
-          // Compare absolute time with curent time received from the
-          // timer queue.
-          if (absolute_time > cur_time)
-            relative_time = absolute_time - cur_time;
-          else
-            relative_time = ACE_Time_Value::zero;
-
-          // Block for relative time.
-          result = this->timer_event_.wait (&relative_time, 0);
+          result = this->timer_event_.wait (wait_time, 0);
         }
       else
         // The timer queue has no entries, so wait indefinitely.
@@ -425,6 +415,11 @@ ACE_Proactor::close_singleton (void)
       delete ACE_Proactor::proactor_;
       ACE_Proactor::proactor_ = 0;
       ACE_Proactor::delete_proactor_ = false;
+
+      ACE_Framework_Repository *repository =
+        ACE_Framework_Repository::instance ();
+      if (repository != 0)
+        repository->remove_component (ACE_Proactor::name ());
     }
 }
 
@@ -458,12 +453,11 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
 {
   ACE_TRACE ("ACE_Proactor::proactor_run_event_loop");
   int result = 0;
+  int end_event_loop = 0;
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
-    // Early check. It is ok to do this without lock, since we care just
-    // whether it is zero or non-zero.
     if (this->end_event_loop_ != 0)
       return 0;
 
@@ -474,9 +468,12 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
   // Run the event loop.
   for (;;)
     {
-      // Check the end loop flag. It is ok to do this without lock,
-      // since we care just whether it is zero or non-zero.
-      if (this->end_event_loop_ != 0)
+      {
+        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
+        end_event_loop = this->end_event_loop_;
+      }
+
+      if (end_event_loop != 0)
         break;
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
@@ -514,12 +511,11 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
 {
   ACE_TRACE ("ACE_Proactor::proactor_run_event_loop");
   int result = 0;
+  int end_event_loop = 0;
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
-    // Early check. It is ok to do this without lock, since we care just
-    // whether it is zero or non-zero.
     if (this->end_event_loop_ != 0
        || tv == ACE_Time_Value::zero)
       return 0;
@@ -531,9 +527,12 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
   // Run the event loop.
   for (;;)
     {
-      // Check the end loop flag. It is ok to do this without lock,
-      // since we care just whether it is zero or non-zero.
-      if (this->end_event_loop_ != 0)
+      {
+        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
+        end_event_loop = this->end_event_loop_;
+      }
+
+      if (end_event_loop != 0)
         break;
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
@@ -613,6 +612,11 @@ ACE_Proactor::proactor_event_loop_done (void)
 int
 ACE_Proactor::close (void)
 {
+  // Stop the timer thread before tearing down the implementation it
+  // posts completions into.
+  delete this->timer_handler_;
+  this->timer_handler_ = 0;
+
   // Close the implementation.
   if (this->implementation ()->close () == -1)
     ACELIB_ERROR ((LM_ERROR,
@@ -624,13 +628,6 @@ ACE_Proactor::close (void)
     {
       delete this->implementation ();
       this->implementation_ = 0;
-    }
-
-  // Delete the timer handler.
-  if (this->timer_handler_)
-    {
-      delete this->timer_handler_;
-      this->timer_handler_ = 0;
     }
 
   // Delete the timer queue.

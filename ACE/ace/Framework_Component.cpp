@@ -142,7 +142,7 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
         fc->this_ == this->component_vector_[i]->this_)
       {
         ACELIB_ERROR_RETURN ((LM_ERROR,
-          "AFR::register_component: error, compenent already registered\n"),
+          "AFR::register_component: error, component already registered\n"),
                           -1);
       }
 

@@ -14,7 +14,7 @@
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
-  // supporting POSIX aio calls.
+  // supporting POSIX aio calls or io_uring.
 
 //////////////////////////////////////////////////////////////////
 
@@ -36,7 +36,10 @@
 
 #include "ace/Proactor.h"
 #include "ace/Asynch_Connector.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Time_Value.h"
+#include "ace/Get_Opt.h"
+#include "Proactor_Test_Backend.h"
 
 
 // How long are our fake serial I/O frames?
@@ -50,6 +53,12 @@ public:
 
   int
   Connect();
+
+  int
+  start_timer (const ACE_Time_Value &interval);
+
+  void
+  shutdown (void);
 
   // This method will be called when an asynchronous read
   // completes on a file.
@@ -69,7 +78,12 @@ public:
   ACE_Asynch_Read_File reader_;
   ACE_Asynch_Write_File writer_;
 private:
+  void
+  cancel_timer (void);
+
   int   block_count_;
+  long  timer_id_;
+  ACE_Atomic_Op<ACE_Thread_Mutex, bool> shutting_down_;
 #if defined (ACE_WIN32)
   bool  read_pending_;
 #endif
@@ -80,6 +94,8 @@ private:
 FileIOHandler::FileIOHandler ()
   : ACE_Handler ()
   , block_count_ (0)
+  , timer_id_ (-1)
+  , shutting_down_ (false)
 #if defined (ACE_WIN32)
   , read_pending_ (false)
 #endif
@@ -198,6 +214,31 @@ int FileIOHandler::Connect()
   return result;
 }
 
+int
+FileIOHandler::start_timer (const ACE_Time_Value &interval)
+{
+  this->timer_id_ =
+    ACE_Proactor::instance ()->schedule_repeating_timer (*this, 0, interval);
+  return this->timer_id_ == -1 ? -1 : 0;
+}
+
+void
+FileIOHandler::cancel_timer (void)
+{
+  if (this->timer_id_ != -1)
+    {
+      ACE_Proactor::instance ()->cancel_timer (this->timer_id_);
+      this->timer_id_ = -1;
+    }
+}
+
+void
+FileIOHandler::shutdown (void)
+{
+  this->shutting_down_ = true;
+  this->cancel_timer ();
+}
+
 //***************************************************************************
 //
 //    Method:          handle_read_file
@@ -213,13 +254,25 @@ void
 FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
 {
   ACE_Message_Block &mb = result.message_block();
+  if (this->shutting_down_.value ())
+  {
+    mb.release();
+#if defined (ACE_WIN32)
+    this->read_pending_ = false;
+#endif
+    return;
+  }
+
+  unsigned long const next_offset =
+    result.offset () + static_cast<unsigned long> (result.bytes_transferred ());
+
   // If the read failed, queue up another one using the same message block
   if (!result.success() || result.bytes_transferred() == 0)
   {
     //ACE_DEBUG((LM_INFO, ACE_TEXT("FileIOHandler receive timeout.\n")));
     reader_.read(mb,
                  mb.space(),
-                 result.offset () + result.bytes_transferred ());
+                 next_offset);
   }
   else
   {
@@ -237,13 +290,13 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
     // Release the message block when we're done with it
     mb.release();
 
-    if ((result.offset () + result.bytes_transferred ()) < 256)
+    if (next_offset < 256)
     {
       // Our processing is done; prime the read process again
       ACE_Message_Block *new_mb;
       ACE_NEW_NORETURN(new_mb, ACE_Message_Block(FILE_FRAME_SIZE));
       if (reader_.read(*new_mb, new_mb->space(),
-                       result.offset () + result.bytes_transferred ()) != 0)
+                       next_offset) != 0)
       {
         int errnr = ACE_OS::last_error ();
         ACE_DEBUG(
@@ -261,6 +314,7 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
     else
     {
       // we have it all; stop the proactor
+      this->shutdown ();
       ACE_Proactor::instance ()->proactor_end_event_loop ();
     }
   }
@@ -284,6 +338,10 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
   // When the write completes, we get the message block. It's been sent,
   // so we just deallocate it.
   result.message_block().release();
+  if (this->shutting_down_.value ())
+  {
+    return;
+  }
 #if defined (ACE_WIN32)
   // to circumvent problems on older Win32 (see above) we schedule a read here if none
   // is pending yet.
@@ -322,6 +380,11 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 void
 FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act*/)
 {
+  if (this->shutting_down_.value () || this->block_count_ >= 16)
+  {
+    return;
+  }
+
   // do not schedule more than 16 writes
   if (this->block_count_ < 16)
   {
@@ -343,6 +406,10 @@ FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT("Successfully queued write of %d bytes\n"), new_mb->length ())); // success
       this->block_count_ ++; // next block
+      if (this->block_count_ >= 16)
+      {
+        this->cancel_timer ();
+      }
     }
     else
     {
@@ -353,33 +420,71 @@ FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act
 
 
 int
-run_main(int /*argc*/, ACE_TCHAR * /*argv*/[])
+run_main(int argc, ACE_TCHAR *argv[])
 {
+  ACE_Proactor *proactor = 0;
+  Proactor_Test_Backend::Type backend = Proactor_Test_Backend::BACKEND_DEFAULT;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("t:"));
+  int c = 0;
+  while ((c = get_opt ()) != EOF)
+    {
+      switch (c)
+        {
+        case 't':
+          if (Proactor_Test_Backend::parse_type (get_opt.opt_arg (), backend) == 0)
+            break;
+          Proactor_Test_Backend::print_type_usage (argv[0]);
+          return -1;
+        default:
+          Proactor_Test_Backend::print_type_usage (argv[0]);
+          return -1;
+        }
+    }
+
   ACE_START_TEST (ACE_TEXT ("Proactor_File_Test"));
 
+  if (Proactor_Test_Backend::create_proactor (backend, 128, proactor, true) != 0)
+    {
+      ACE_END_TEST;
+      return -1;
+    }
+
   int rc = 0;
-  FileIOHandler fileIOHandler;
-
-  // Initialize the serial port handler
-  if (0 != fileIOHandler.Connect())
   {
-    rc = 1;
+    FileIOHandler fileIOHandler;
+
+    // Initialize the serial port handler
+    if (0 != fileIOHandler.Connect())
+      {
+        rc = 1;
+      }
+    else
+      {
+        ACE_DEBUG((LM_INFO, ACE_TEXT(" File I/O Handler connected.\n")));
+
+        // start the repeating timer for data transmission
+
+        ACE_Time_Value repeatTime(0, 50000); // 0.05 second time interval
+        if (fileIOHandler.start_timer (repeatTime) != 0)
+          rc = 1;
+
+        if (rc == 0)
+          // Run the Proactor
+          ACE_Proactor::instance()->proactor_run_event_loop();
+      }
+
+    fileIOHandler.shutdown ();
   }
-  else
-  {
-    ACE_DEBUG((LM_INFO, ACE_TEXT(" File I/O Handler connected.\n")));
 
-    // start the repeating timer for data transmission
-
-    ACE_Time_Value repeatTime(0, 50000); // 0.05 second time interval
-    ACE_Proactor::instance()->schedule_repeating_timer(fileIOHandler,
-                                                       (void *) (100),
-                                                       repeatTime);
-
-    // Run the Proactor
-    ACE_Proactor::instance()->proactor_run_event_loop();
-  }
-
+#if defined (ACE_WIN32)
+  // Windows test shutdown currently relies on process-exit cleanup for the
+  // singleton proactor. Explicit close_singleton() here regressed Win32 CI
+  // during this PR and should not be re-enabled without revalidation.
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Skipping ACE_Proactor::close_singleton() on Windows test shutdown\n")));
+#else
+  ACE_Proactor::close_singleton ();
+#endif
   ACE_END_TEST;
 
   return rc;

@@ -279,6 +279,8 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     UPIPE_Acceptor.cpp
     UPIPE_Connector.cpp
     UPIPE_Stream.cpp
+    Uring_Asynch_IO.cpp
+    Uring_Proactor.cpp
     WFMO_Reactor.cpp
     WIN32_Asynch_IO.cpp
     WIN32_Proactor.cpp
@@ -465,6 +467,11 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Timer_Wheel.h
     Truncate.h
     UPIPE_Addr.h
+    Uring_Asynch_IO.h
+    Uring_Proactor.h
+    WFMO_Reactor.h
+    WIN32_Asynch_IO.h
+    WIN32_Proactor.h
     Value_Ptr.h
     Version.h
     Versioned_Namespace.h

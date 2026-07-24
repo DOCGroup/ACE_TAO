@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.24 and ACE-6.5.25
 ======================================================
 
+. Added an optional Linux io_uring based ACE Proactor backend and expanded
+  Proactor test coverage across the available backend implementations.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.23 and ACE-6.5.24
 ======================================================
 

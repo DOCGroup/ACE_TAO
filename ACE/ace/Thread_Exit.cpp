@@ -12,6 +12,11 @@ ACE_Thread_Exit::cleanup (void *instance)
 {
   ACE_OS_TRACE ("ACE_Thread_Exit::cleanup");
 
+  ACE_MT (ACE_Thread_Mutex *lock =
+          ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+            (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
+          ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock));
+
   delete (ACE_TSS_TYPE (ACE_Thread_Exit) *) instance;
 
   // Set the thr_exit_ static to null to keep things from crashing if
@@ -35,29 +40,27 @@ ACE_Thread_Exit::instance (void)
 
   // Determines if we were dynamically allocated.
   static ACE_TSS_TYPE (ACE_Thread_Exit) * volatile instance_;
+  ACE_TSS_TYPE (ACE_Thread_Exit) *instance = 0;
 
-  // Implement the Double Check pattern.
+  ACE_MT (ACE_Thread_Mutex *lock =
+          ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+            (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
+          ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
   if (!ACE_Thread_Exit::is_constructed_)
     {
-      ACE_MT (ACE_Thread_Mutex *lock =
-              ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-                (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
-              ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
+      ACE_NEW_RETURN (instance_,
+                      ACE_TSS_TYPE (ACE_Thread_Exit),
+                      0);
 
-      if (!ACE_Thread_Exit::is_constructed_)
-        {
-          ACE_NEW_RETURN (instance_,
-                          ACE_TSS_TYPE (ACE_Thread_Exit),
-                          0);
+      ACE_Thread_Exit::is_constructed_ = true;
 
-          ACE_Thread_Exit::is_constructed_ = true;
-
-          ACE_Thread_Manager::set_thr_exit (instance_);
-        }
+      ACE_Thread_Manager::set_thr_exit (instance_);
     }
 
-  return ACE_TSS_GET (instance_, ACE_Thread_Exit);
+  instance = instance_;
+
+  return ACE_TSS_GET (instance, ACE_Thread_Exit);
 #else
   return 0;
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */

@@ -94,6 +94,17 @@ ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
   // Get to the platform specific implementation.
   ACE_POSIX_Proactor *posix_proactor = dynamic_cast<ACE_POSIX_Proactor *> (proactor_impl);
 
+  // Some runtimes have trouble with the direct cast from the abstract
+  // proactor interface to the POSIX base for callback-based proactors,
+  // even though the narrower AIOCB path is still valid.
+  if (posix_proactor == 0)
+    {
+      ACE_POSIX_AIOCB_Proactor *aiocb_proactor =
+        dynamic_cast<ACE_POSIX_AIOCB_Proactor *> (proactor_impl);
+      if (aiocb_proactor != 0)
+        posix_proactor = aiocb_proactor;
+    }
+
   if (posix_proactor == 0)
     ACELIB_ERROR_RETURN ((LM_ERROR, "Dynamic cast to POSIX Proactor failed\n"), -1);
 
@@ -516,10 +527,10 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   int signal_number)
 {
   size_t space = message_block.space ();
-  if ( bytes_to_read > space )
+  if (bytes_to_read > space)
      bytes_to_read=space;
 
-  if ( bytes_to_read == 0 )
+  if (bytes_to_read == 0)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("ACE_POSIX_Asynch_Read_File::read:")
@@ -996,7 +1007,7 @@ ACE_POSIX_Asynch_Accept::close ()
   ACE_TRACE ("ACE_POSIX_Asynch_Accept::close");
 
   // 1. It performs cancellation of all pending requests
-  // 2. Removes itself from Reactor ( ACE_Asynch_Pseudo_Task)
+  // 2. Removes itself from Reactor (ACE_Asynch_Pseudo_Task)
   // 3. close the socket
   //
   //  Parameter flg_notify can be
@@ -1078,7 +1089,7 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT("%N:%l:(%P | %t):%p\n"),
                   ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input:")
-                  ACE_TEXT( " dequeueing failed")));
+                  ACE_TEXT(" dequeueing failed")));
 
     // Disable the handle in the reactor if no more accepts are pending.
     if (this->result_queue_.size () == 0)
@@ -1345,7 +1356,7 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
 //  return code :
 //   -1   errors  before  attempt to connect
 //    0   connect started
-//    1   connect finished ( may be unsuccessfully)
+//    1   connect finished (may be unsuccessfully)
 
 int
 ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
@@ -1356,6 +1367,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
   result->set_bytes_transferred (0);
 
   ACE_HANDLE handle = result->connect_handle ();
+  bool created_handle = false;
 
   if (handle == ACE_INVALID_HANDLE)
     {
@@ -1366,6 +1378,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
                                0);
       // save it
       result->connect_handle (handle);
+      created_handle = (handle != ACE_INVALID_HANDLE);
       if (handle == ACE_INVALID_HANDLE)
         {
           result->set_error (errno);
@@ -1384,8 +1397,13 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
                               SOL_SOCKET,
                               SO_REUSEADDR,
                               (const char*) &one,
-                              sizeof one) == -1 )
+                              sizeof one) == -1)
         {
+          if (created_handle)
+            {
+              ACE_OS::closesocket (handle);
+              result->connect_handle (ACE_INVALID_HANDLE);
+            }
           result->set_error (errno);
           ACELIB_ERROR_RETURN
             ((LM_ERROR,
@@ -1402,6 +1420,11 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 
       if (ACE_OS::bind (handle, laddr, size) == -1)
         {
+           if (created_handle)
+             {
+               ACE_OS::closesocket (handle);
+               result->connect_handle (ACE_INVALID_HANDLE);
+             }
            result->set_error (errno);
            ACELIB_ERROR_RETURN
              ((LM_ERROR,
@@ -1414,6 +1437,11 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
   // set non blocking mode
   if (ACE::set_flags (handle, ACE_NONBLOCK) != 0)
     {
+      if (created_handle)
+        {
+          ACE_OS::closesocket (handle);
+          result->connect_handle (ACE_INVALID_HANDLE);
+        }
       result->set_error (errno);
       ACELIB_ERROR_RETURN
         ((LM_ERROR,
@@ -1436,6 +1464,11 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
           if (errno == EINTR)
              continue;
 
+          if (created_handle)
+            {
+              ACE_OS::closesocket (handle);
+              result->connect_handle (ACE_INVALID_HANDLE);
+            }
           result->set_error (errno);
         }
 
@@ -1829,6 +1862,9 @@ ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler (void)
 int
 ACE_POSIX_Asynch_Transmit_Handler::transmit (void)
 {
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer =
+    this->result_->header_and_trailer ();
+
   // No proactor is given for the <open>'s. Because we are using the
   // concrete implementations of the  Asynch_Operations, and we have
   // already given them the specific proactor, so they wont need the
@@ -1852,9 +1888,15 @@ ACE_POSIX_Asynch_Transmit_Handler::transmit (void)
                        "ACE_Asynch_Transmit_Handler:write_stream open failed\n"),
                       -1);
 
+  // A plain file transmit may omit header/trailer altogether.
+  if (header_and_trailer == 0
+      || header_and_trailer->header () == 0
+      || header_and_trailer->header_bytes () == 0)
+    return this->initiate_read_file ();
+
   // Transmit the header.
-  if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
-                       this->result_->header_and_trailer ()->header_bytes (),
+  if (this->ws_.write (*header_and_trailer->header (),
+                       header_and_trailer->header_bytes (),
                        reinterpret_cast<void *> (&this->header_act_),
                        0) == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -2007,12 +2049,24 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
 int
 ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file (void)
 {
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer =
+    this->result_->header_and_trailer ();
+
   // Is there something to read.
   if (this->file_offset_ >= this->file_size_)
     {
+      if (header_and_trailer == 0
+          || header_and_trailer->trailer () == 0
+          || header_and_trailer->trailer_bytes () == 0)
+        {
+          this->result_->complete (this->bytes_transferred_, 1, 0, 0);
+          delete this;
+          return 0;
+        }
+
       // File is sent. Send the trailer.
-      if (this->ws_.write (*this->result_->header_and_trailer ()->trailer (),
-                           this->result_->header_and_trailer ()->trailer_bytes (),
+      if (this->ws_.write (*header_and_trailer->trailer (),
+                           header_and_trailer->trailer_bytes (),
                            (void *)&this->trailer_act_,
                            this->result_->priority (),
                            this->result_->signal_number ()) == -1)

@@ -33,12 +33,14 @@ jobs:
             optional_macros: CCFLAGS+=-std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-24.04
-          - CC: gcc-14
+          - feature: ACE full tests
+            CC: gcc-14
             CXX: g++-14
-            PackageDeps: g++-14
-            optional_macros: CCFLAGS+=-std=c++20
+            PackageDeps: g++-14 liburing-dev
+            optional_macros: c++20=1
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-24.04
+            full_test_suite: true
           - CC: clang-12
             CXX: clang++-12
             PackageDeps: clang-12
@@ -136,6 +138,11 @@ jobs:
         '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
       if: matrix.optional_macros != ''
+    - name: enable io_uring for ACE full test suite
+      run: |
+        'uring=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+      if: matrix.full_test_suite == true
     - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
         '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
@@ -152,6 +159,11 @@ jobs:
         '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       if: matrix.optional_feature != ''
       shell: pwsh
+    - name: enable io_uring MPC feature for ACE full test suite
+      run: |
+        'uring=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+      if: matrix.full_test_suite == true
     - name: initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
@@ -182,6 +194,278 @@ jobs:
         make -j 6 -C ${env:TAO_ROOT}/tests/IDL_Test
       shell: pwsh
       if: matrix.feature != 'CORBA/e micro'
+    - name: Probe io_uring availability for ACE full test suite
+      id: full_suite_uring_probe
+      shell: bash
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      if: matrix.full_test_suite == true
+      run: |
+        set -euo pipefail
+        export LD_LIBRARY_PATH="${ACE_ROOT}/lib:${ACE_ROOT}/tests:${LD_LIBRARY_PATH:-}"
+        set +e
+        BASE_PORT=27000 RUN_ID=gha-full-suite-uring-probe TIMEOUT_SECS=90 perl ./run_proactor_correctness_matrix.pl \
+          --test Proactor_Contract_Test \
+          --backend uring
+        rc=$?
+        set -e
+        if [ "$rc" -eq 0 ]; then
+          echo "available=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        probe_unavailable=0
+        for log in log/proactor_matrix/gha-full-suite-uring-probe/Proactor_Contract_Test.uring*.log; do
+          [ -e "$log" ] || continue
+          if grep -Eiq 'Failed to initialize uring proactor|io_uring_queue_init|Operation not permitted|EPERM' "$log"; then
+            probe_unavailable=1
+            break
+          fi
+        done
+        if [ "$probe_unavailable" -eq 1 ]; then
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          echo "io_uring is unavailable on this runner; running the full suite without -Config uring."
+          exit 0
+        fi
+        exit "$rc"
+    - name: Run ACE full test suite
+      shell: bash
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      if: matrix.full_test_suite == true
+      run: |
+        set -euo pipefail
+        export LD_LIBRARY_PATH="${ACE_ROOT}/lib:${ACE_ROOT}/tests:${LD_LIBRARY_PATH:-}"
+        test_configs=(-Config Linux -Config FIXED_BUGS_ONLY -Config GHA)
+        if [ "${{ steps.full_suite_uring_probe.outputs.available }}" = "true" ]; then
+          test_configs+=(-Config uring)
+        fi
+        set +e
+        perl ./run_test.pl "${test_configs[@]}" 2>&1 | tee run_test_full_suite.log
+        run_status=${PIPESTATUS[0]}
+        set -e
+        parse_status=0
+        perl -ne 'if (/^(Error|ERROR):/ || /auto_run_tests_finished:.*Result:(?!0\b)-?\d+/) { print; $failed = 1 } END { exit($failed ? 1 : 0) }' \
+          run_test_full_suite.log || parse_status=$?
+        if [ "$run_status" -ne 0 ]; then
+          echo "run_test.pl failed with exit status $run_status"
+          exit "$run_status"
+        fi
+        if [ "$parse_status" -ne 0 ]; then
+          echo "ACE full test suite reported errors or failing test results."
+          exit "$parse_status"
+        fi
+    - name: Upload ACE full test suite logs
+      if: always() && matrix.full_test_suite == true
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-ace-full-test-suite
+        path: |
+          ${{ env.ACE_ROOT }}/tests/run_test_full_suite.log
+          ${{ env.ACE_ROOT }}/tests/log
+        if-no-files-found: ignore
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       if: matrix.feature == 'CodeQL'
+
+  proactor-posix-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    name: ubuntu-24.04 gcc-13 Proactor POSIX smoke
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/MPC
+      CC: gcc-13
+      CXX: g++-13
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v6
+    - name: checkout MPC
+      uses: actions/checkout@v6
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - name: Install apt packages
+      shell: bash
+      run: |
+        set -euxo pipefail
+        sudo apt-get update
+        sudo apt-get install -y "$CXX"
+    - name: Configure ACE
+      shell: bash
+      run: |
+        set -euxo pipefail
+        cat > "$ACE_ROOT/ace/config.h" <<'EOF'
+        #include "ace/config-linux.h"
+        EOF
+        cat > "$ACE_ROOT/include/makeinclude/platform_macros.GNU" <<'EOF'
+        ipv6=1
+        include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+        EOF
+        cat > "$ACE_ROOT/bin/MakeProjectCreator/config/default.features" <<'EOF'
+        ipv6=1
+        versioned_namespace=1
+        EOF
+    - name: Generate ACE makefiles
+      shell: bash
+      run: |
+        set -euxo pipefail
+        perl "$ACE_ROOT/bin/mwc.pl" -type gnuace "$ACE_ROOT/ace/ace.mwc" -workers 4
+        perl "$ACE_ROOT/bin/mwc.pl" -type gnuace "$ACE_ROOT/tests/tests.mwc" -workers 4
+    - name: Build Proactor smoke targets
+      shell: bash
+      run: |
+        set -euxo pipefail
+        proactor_targets=(
+          Proactor_Contract_Test
+          Proactor_File_Test
+          Proactor_Stress_Test
+          Proactor_Test
+          Proactor_Test_IPV6
+          Proactor_Timer_Test
+          Proactor_UDP_Test
+        )
+        make -j4 -C "$ACE_ROOT/ace" depend
+        make -j4 -C "$ACE_ROOT/ace" ACE
+        make -j4 -C "$ACE_ROOT/tests" depend
+        make -j4 -C "$ACE_ROOT/tests" "${proactor_targets[@]}"
+    - name: Run Proactor POSIX smoke tests
+      shell: bash
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      run: |
+        set -euxo pipefail
+        BASE_PORT=23000 RUN_ID=gha-posix-contract INCLUDE_DEFAULT=1 perl ./run_proactor_correctness_matrix.pl \
+          --test Proactor_Contract_Test \
+          --backend default \
+          --backend aiocb \
+          --backend sig \
+          --backend cb
+        BASE_PORT=24000 RUN_ID=gha-posix-default INCLUDE_DEFAULT=1 perl ./run_proactor_correctness_matrix.pl \
+          --backend default \
+          --test Proactor_File_Test \
+          --test Proactor_Stress_Test \
+          --test Proactor_Test \
+          --test Proactor_Test_IPV6 \
+          --test Proactor_Timer_Test \
+          --test Proactor_UDP_Test
+    - name: Upload Proactor POSIX smoke logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-proactor-posix-smoke
+        path: ${{ env.ACE_ROOT }}/tests/log/proactor_matrix/gha-posix*
+        if-no-files-found: ignore
+
+  proactor-uring-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    name: ubuntu-24.04 gcc-13 Proactor io_uring smoke
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/MPC
+      CC: gcc-13
+      CXX: g++-13
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v6
+    - name: checkout MPC
+      uses: actions/checkout@v6
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - name: Install apt packages
+      shell: bash
+      run: |
+        set -euxo pipefail
+        sudo apt-get update
+        sudo apt-get install -y "$CXX" liburing-dev
+    - name: Configure ACE for io_uring
+      shell: bash
+      run: |
+        set -euxo pipefail
+        cat > "$ACE_ROOT/ace/config.h" <<'EOF'
+        #include "ace/config-linux.h"
+        EOF
+        cat > "$ACE_ROOT/include/makeinclude/platform_macros.GNU" <<'EOF'
+        ipv6=1
+        uring=1
+        include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+        EOF
+        cat > "$ACE_ROOT/bin/MakeProjectCreator/config/default.features" <<'EOF'
+        ipv6=1
+        versioned_namespace=1
+        EOF
+    - name: Generate ACE makefiles
+      shell: bash
+      run: |
+        set -euxo pipefail
+        perl "$ACE_ROOT/bin/mwc.pl" -type gnuace "$ACE_ROOT/ace/ace.mwc" -workers 4
+        perl "$ACE_ROOT/bin/mwc.pl" -type gnuace "$ACE_ROOT/tests/tests.mwc" -workers 4
+    - name: Build Proactor io_uring smoke targets
+      shell: bash
+      run: |
+        set -euxo pipefail
+        proactor_targets=(
+          Proactor_Contract_Test
+          Proactor_File_Test
+          Proactor_Scatter_Gather_Test
+          Proactor_Stress_Test
+          Proactor_Test
+          Proactor_Test_IPV6
+          Proactor_Timer_Test
+          Proactor_UDP_Test
+        )
+        make -j4 -C "$ACE_ROOT/ace" depend
+        make -j4 -C "$ACE_ROOT/ace" ACE
+        make -j4 -C "$ACE_ROOT/tests" depend
+        make -j4 -C "$ACE_ROOT/tests" "${proactor_targets[@]}"
+    - name: Probe io_uring availability
+      id: uring_probe
+      shell: bash
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      run: |
+        set -euo pipefail
+        set +e
+        BASE_PORT=25000 RUN_ID=gha-uring-probe perl ./run_proactor_correctness_matrix.pl \
+          --test Proactor_Contract_Test \
+          --backend uring
+        rc=$?
+        set -e
+        if [ "$rc" -eq 0 ]; then
+          echo "available=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        probe_unavailable=0
+        for log in log/proactor_matrix/gha-uring-probe/Proactor_Contract_Test.uring*.log; do
+          [ -e "$log" ] || continue
+          if grep -Eiq 'Failed to initialize uring proactor|io_uring_queue_init|Operation not permitted|EPERM' "$log"; then
+            probe_unavailable=1
+            break
+          fi
+        done
+        if [ "$probe_unavailable" -eq 1 ]; then
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          echo "io_uring is unavailable on this runner; skipping io_uring smoke."
+          exit 0
+        fi
+        exit "$rc"
+    - name: Run Proactor io_uring smoke tests
+      if: steps.uring_probe.outputs.available == 'true'
+      shell: bash
+      working-directory: ${{ env.ACE_ROOT }}/tests
+      run: |
+        set -euxo pipefail
+        BASE_PORT=26000 RUN_ID=gha-uring-smoke perl ./run_proactor_correctness_matrix.pl \
+          --backend uring \
+          --test Proactor_Contract_Test \
+          --test Proactor_File_Test \
+          --test Proactor_Scatter_Gather_Test \
+          --test Proactor_Stress_Test \
+          --test Proactor_Test \
+          --test Proactor_Test_IPV6 \
+          --test Proactor_Timer_Test \
+          --test Proactor_UDP_Test
+    - name: Upload Proactor io_uring smoke logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-proactor-uring-smoke
+        path: ${{ env.ACE_ROOT }}/tests/log/proactor_matrix/gha-uring*
+        if-no-files-found: ignore

@@ -37,6 +37,7 @@ bzip2         = 0
 lzo1          = 0
 lzo2          = 0
 ipv6          = 0
+uring         = 0
 mfc           = 0
 rpc           = 0
 sctp          = 0
