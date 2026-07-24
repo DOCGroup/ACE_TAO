@@ -328,11 +328,11 @@ run_event_loop (u_short port)
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
       ACE_Handle_Set temp = handle_set;
 
-      int result = ACE_OS::select (int (oneway_acceptor.get_handle ()) + 1,
-                                   (fd_set *) temp,
-                                   0,
-                                   0,
-                                   timeout);
+      int select_width = 0;
+#if !defined (ACE_WIN32)
+      select_width = oneway_acceptor.get_handle () + 1;
+#endif /* ACE_WIN32 */
+      int const result = ACE_OS::select (select_width, (fd_set *) temp, 0, 0, timeout);
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",
