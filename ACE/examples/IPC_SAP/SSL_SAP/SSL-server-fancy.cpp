@@ -554,7 +554,7 @@ Handler_Factory::handle_events ()
 
       int select_width = 0;
 #if !defined (ACE_WIN32)
-      select_width = this->oneway_acceptor_.get_handle ()) + 1;
+      select_width = this->oneway_acceptor_.get_handle () + 1;
 #endif /* ACE_WIN32 */
       int result =
         ACE_OS::select (select_width,
