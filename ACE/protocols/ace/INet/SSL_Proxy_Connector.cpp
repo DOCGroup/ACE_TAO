@@ -150,7 +150,7 @@ namespace ACE
                 // Block indefinitely if timeout pointer is zero.
                 int select_width = 0;
 #if !defined (ACE_WIN32)
-                select_width = int (handle) + 1;
+                select_width = handle + 1;
 #endif /* ACE_WIN32 */
                 status = ACE::select (select_width,
                                       &rd_handle,

@@ -132,7 +132,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           ACE_ASSERT (rd_handle.num_set() == 1 || wr_handle.num_set () == 1);
           int select_width = 0;
 #if !defined (ACE_WIN32)
-          select_width = int (handle) + 1;
+          select_width = handle + 1;
 #endif /* ACE_WIN32 */
           status = ACE::select (select_width,
                                 &rd_handle,

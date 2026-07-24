@@ -295,10 +295,10 @@ run_event_loop (u_short port)
 
       int maxfd = 0;
 #if !defined (ACE_WIN32)
-      maxfd = (int)oneway_acceptor.get_handle ();
-      if (maxfd < (int)twoway_acceptor.get_handle ())
+      maxfd = oneway_acceptor.get_handle ();
+      if (maxfd < twoway_acceptor.get_handle ())
         {
-          maxfd = (int)twoway_acceptor.get_handle ();
+          maxfd = twoway_acceptor.get_handle ();
         }
 #  endif /* ACE_WIN32 */
       int result = ACE_OS::select (maxfd + 1,
