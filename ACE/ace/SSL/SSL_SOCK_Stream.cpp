@@ -127,9 +127,14 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
 
   io_vec->iov_base = nullptr;
 
+  int select_width = 0;
+#if !defined (ACE_WIN32)
+  select_width = this->get_handle () + 1;
+#endif /* ACE_WIN32 */
+
   // Check the status of the current socket.
   switch (
-    ACE_OS::select (int (this->get_handle ()) + 1,
+    ACE_OS::select (select_width,
                     handle_set,
                     nullptr,
                     nullptr,

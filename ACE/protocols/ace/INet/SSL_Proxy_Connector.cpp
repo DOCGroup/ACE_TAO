@@ -148,7 +148,11 @@ namespace ACE
                 ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
                 // Block indefinitely if timeout pointer is zero.
-                status = ACE::select (int (handle) + 1,
+                int select_width = 0;
+#if !defined (ACE_WIN32)
+                select_width = handle + 1;
+#endif /* ACE_WIN32 */
+                status = ACE::select (select_width,
                                       &rd_handle,
                                       &wr_handle,
                                       0,

@@ -2205,8 +2205,8 @@ ACE::handle_ready (ACE_HANDLE handle,
   // Wait for data or for the timeout to elapse.
   int select_width = 0;
 #if !defined (ACE_WIN32)
-  select_width = int (handle) + 1;
-#  endif /* ACE_WIN32 */
+  select_width = handle + 1;
+#endif /* ACE_WIN32 */
   int result = ACE_OS::select (select_width,
                                read_ready ? handle_set.fdset () : 0, // read_fds.
                                write_ready ? handle_set.fdset () : 0, // write_fds.
