@@ -92,7 +92,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
       stack_syms = ::backtrace_symbols (stack, stack_size);
 
       for (size_t i = starting_frame;
-           i < stack_size && num_frames > 0;
+           i < stack_size && num_frames > 0 && this->buflen_ < SYMBUFSIZ - 1;
            i++, num_frames--)
         {
           // this could be more efficient by remembering where we left off in buf_
