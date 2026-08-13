@@ -67,3 +67,9 @@ feature(ace_languagestandard2017) {
     languagestandard = 17
   }
 }
+
+feature(ace_languagestandard2020) {
+  specific(vs2026) {
+    LanguageStandard = stdcpp20
+  }
+}
