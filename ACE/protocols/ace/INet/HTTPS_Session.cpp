@@ -29,7 +29,7 @@ namespace ACE
                                          , Context* ctx
 #endif
                                          )
-      : SessionBase (URL::HTTPS_PORT, keep_alive),
+      : ACE::HTTP::SessionBase (URL::HTTPS_PORT, keep_alive),
         connection_ (0),
         sock_stream_ (0)
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
@@ -47,7 +47,7 @@ namespace ACE
                                          , Context* ctx
 #endif
                                          )
-      : SessionBase (URL::HTTPS_PORT, timeout, keep_alive, alive_timeout),
+      : ACE::HTTP::SessionBase (URL::HTTPS_PORT, timeout, keep_alive, alive_timeout),
         connection_ (0),
         sock_stream_ (0)
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
