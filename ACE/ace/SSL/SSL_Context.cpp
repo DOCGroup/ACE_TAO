@@ -568,6 +568,9 @@ ACE_SSL_Context::private_key (const char *file_name,
                                      this->private_key_.file_name (),
                                      this->private_key_.type ()) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       this->private_key_ = ACE_SSL_Data_File ();
       return -1;
     }
@@ -582,7 +585,14 @@ ACE_SSL_Context::verify_private_key ()
 
   this->check_context ();
 
-  return (::SSL_CTX_check_private_key (this->context_) <= 0 ? -1 : 0);
+  if (::SSL_CTX_check_private_key (this->context_) <= 0)
+    {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
+      return -1;
+    }
+  return 0;
 }
 
 int
@@ -602,6 +612,9 @@ ACE_SSL_Context::certificate (const char *file_name,
                                       this->certificate_.file_name (),
                                       this->certificate_.type ()) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       this->certificate_ = ACE_SSL_Data_File ();
       return -1;
     }
@@ -623,6 +636,9 @@ ACE_SSL_Context::certificate (X509* cert)
 
   if (::SSL_CTX_use_certificate (this->context_, cert) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       return -1;
     }
   else
@@ -647,6 +663,9 @@ ACE_SSL_Context::certificate_chain (const char *file_name, int type)
   if (::SSL_CTX_use_certificate_chain_file (this->context_,
                                             this->certificate_.file_name ()) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       return -1;
     }
   else
