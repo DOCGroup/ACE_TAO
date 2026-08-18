@@ -53,6 +53,3 @@ openssl ca -config openssl.cnf -batch \
   -md sha256 \
   -in client.csr \
   -out client_cert.pem
-
-# Clean up temporary CSRs
-rm -f *.csr
