@@ -9,3 +9,50 @@ openssl x509 -in san.csr -req -extfile x509v3conf.txt -days 9999 -extensions alt
 The CA can be checked using the following commands
 
 openssl x509 -noout -text -in cacert.pem
+
+****
+
+# 1. Clean and initialize directory structure
+rm -rf DOCCA *.pem *.csr
+mkdir -p DOCCA/newcerts DOCCA/private
+touch DOCCA/index.txt
+echo "1000" > DOCCA/serial
+
+# 2. Generate Unencrypted CA Key & Self-Signed Root Certificate
+openssl req -config openssl.cnf -new -x509 -nodes \
+  -newkey rsa:2048 \
+  -keyout DOCCA/private/cakey.pem \
+  -out DOCCA/cacert.pem \
+  -days 3650 \
+  -subj "/C=US/ST=Tennessee/O=DOC Group/CN=DOC Group Root CA"
+
+cp DOCCA/cacert.pem cacert.pem
+
+# 3. Generate Server Key & CSR (2048-bit RSA, unencrypted)
+openssl req -config openssl.cnf -new -nodes \
+  -newkey rsa:2048 \
+  -keyout server_key.pem \
+  -out server.csr \
+  -subj "/C=US/ST=Tennessee/O=DOC Group/CN=Build Czar Server"
+
+# 4. Sign Server Certificate (No password prompt will appear)
+openssl ca -config openssl.cnf -batch \
+  -md sha256 \
+  -in server.csr \
+  -out server_cert.pem
+
+# 5. Generate Client Key & CSR (2048-bit RSA, unencrypted)
+openssl req -config openssl.cnf -new -nodes \
+  -newkey rsa:2048 \
+  -keyout client_key.pem \
+  -out client.csr \
+  -subj "/C=US/ST=Tennessee/O=DOC Group/CN=Build Czar Client"
+
+# 6. Sign Client Certificate (No password prompt will appear)
+openssl ca -config openssl.cnf -batch \
+  -md sha256 \
+  -in client.csr \
+  -out client_cert.pem
+
+# Clean up temporary CSRs
+rm -f *.csr
