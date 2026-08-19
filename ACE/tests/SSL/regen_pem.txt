@@ -6,4 +6,4 @@ openssl req -new -x509 \
     -out dummy.pem \
     -days 3650 \
     -sha256 \
-    -subj "/C=US/ST=CA/L=Irvine/O=Object Computing Inc/OU=OCI+TAO/CN=priyanka/emailAddress=pgontla"
+    -subj "/C=US/ST=CA/L=Irvine/O=Object Computing Inc/OU=OCI\+TAO/CN=priyanka/emailAddress=pgontla"
