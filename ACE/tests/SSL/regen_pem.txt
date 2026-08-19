@@ -1,0 +1,9 @@
+openssl genrsa -out key.pem 2048
+
+# Generate a self-signed certificate
+openssl req -new -x509 \
+    -key key.pem \
+    -out dummy.pem \
+    -days 3650 \
+    -sha256 \
+    -subj "/C=US/ST=CA/L=Irvine/O=Object Computing Inc/OU=OCI+TAO/CN=priyanka/emailAddress=pgontla"
