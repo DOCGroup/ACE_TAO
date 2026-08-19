@@ -290,8 +290,18 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
   // Note - the next two strings are naked on purpose... the arguments to
   // the ACE_SSL_Context methods are const char *, not ACE_TCHAR *.
-  context->certificate ("dummy.pem", SSL_FILETYPE_PEM);
-  context->private_key ("key.pem", SSL_FILETYPE_PEM);
+  if (context->certificate ("dummy.pem", SSL_FILETYPE_PEM) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Setting certificate failed\n"));
+      return 1;
+    }
+  if (context->private_key ("key.pem", SSL_FILETYPE_PEM) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: Setting key failed\n"));
+      return 1;
+    }
 
   parse_arg (argc, argv);
 
