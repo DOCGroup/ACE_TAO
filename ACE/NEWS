@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.24 and ACE-6.5.25
 ======================================================
 
+. Fixed compile error in ACE INet SSL support when using Embarcadero C++ Builder bcc32
+  compiler
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.23 and ACE-6.5.24
 ======================================================
 
