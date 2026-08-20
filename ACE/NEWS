@@ -1,6 +1,12 @@
 USER VISIBLE CHANGES BETWEEN ACE-8.0.6 and ACE-8.0.7
 ====================================================
 
+. Fixed compile errors in ACE SSL with the Embarcadero C++ Builder bcc64x compiler
+
+. Minor ACE SSL fixes
+
+. Dropped support for OpenSSL 1.0.x
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.5 and ACE-8.0.6
 ====================================================
 
