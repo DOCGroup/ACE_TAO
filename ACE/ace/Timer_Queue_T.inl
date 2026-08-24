@@ -1,4 +1,7 @@
 // -*- C++ -*-
+
+#include "ace/Guard_T.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE, class FUNCTOR> ACE_INLINE FUNCTOR &

@@ -13,6 +13,8 @@
 #include "ace/Intrusive_List.h"
 #include "ace/Intrusive_List_Node.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
