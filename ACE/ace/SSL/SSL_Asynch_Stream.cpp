@@ -510,6 +510,8 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake ()
     {
     case ST_CLIENT:
       retval = ::SSL_connect (this->ssl_);
+      if (retval == 1) // handshake was successfully completed - ensure that we call post_handshake_check
+        return do_SSL_handshake();
       break;
 
     case ST_SERVER:
