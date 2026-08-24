@@ -406,8 +406,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
-  context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);
-  context->private_key ("./key.pem", SSL_FILETYPE_PEM);
+  if (context->certificate ("./dummy.pem", SSL_FILETYPE_PEM) != 0)
+    return -1;
+
+  if (context->private_key ("./key.pem", SSL_FILETYPE_PEM) != 0)
+    return -1;
 
   // Initialize the logger.
   ACE_LOG_MSG->open (argv[0]);
