@@ -852,7 +852,7 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
   // Initiate the write; Winsock 2 is required for the higher-performing
   // WSASend() function. For Winsock 1, fall back to the slower WriteFile().
   int initiate_result = 0;
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && !(defined(ACE_USE_WIN32_WRITE_FILE))
   WSABUF iov;
   iov.buf = result->message_block ().rd_ptr ();
   iov.len = static_cast<DWORD> (bytes_to_write);
