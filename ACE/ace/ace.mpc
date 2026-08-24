@@ -193,6 +193,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Process_Mutex.cpp
     Process_Semaphore.cpp
     Profile_Timer.cpp
+    RAW_Socket.cpp
     Reactor.cpp
     Reactor_Impl.cpp
     Reactor_Notification_Strategy.cpp
