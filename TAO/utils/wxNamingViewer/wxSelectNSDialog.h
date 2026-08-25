@@ -19,7 +19,7 @@ private:
   void onInitDialog( wxInitDialogEvent& event);
   void onOK( wxCommandEvent& event);
   void onRemove( wxCommandEvent& event);
-  void onLeftDClick( wxMouseEvent& event);
+  void onLeftDClick( wxCommandEvent& event);
 
   class ACE_Configuration* config;
 
