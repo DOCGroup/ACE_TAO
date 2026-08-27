@@ -542,7 +542,7 @@ public:
    *  - 'S': print out the appropriate signal message corresponding
    *         to var-argument, e.g., as done by strsignal()
    *  - 's': prints a ACE_TCHAR* character string (also see C and W)
-   *  - 'T': print timestamp in hour:minute:sec:usec format (plain option,
+   *  - 'T': print timestamp in hour:minute:sec.usec format (plain option,
    *         i.e. without any flags, prints system supplied timestamp;
    *         with '#' flag added expects ACE_Time_Value* in argument list)
    *  - 'D': print timestamp as Weekday Month day year hour:minute:sec.usec
@@ -555,6 +555,10 @@ public:
    *  - 'W': prints a wchar_t* character string (also see C and s)
    *  - 'x': print as a hex number
    *  - 'X': print as a hex number
+   *  - 'Y': print duration in hour:minute:sec.usec format (plain option,
+   *         i.e. without any flags, is currently unspecified;
+   *         with '#' flag added expects ACE_Time_Value* in argument list)
+   *         Note that durations >= 24 hours will currently overflow
    *  - 'z': print an ACE_OS::WChar character
    *  - 'Z': print an ACE_OS::WChar character string
    *  - ':': print a time_t value as an integral number
