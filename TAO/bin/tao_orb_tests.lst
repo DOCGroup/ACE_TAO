@@ -432,6 +432,8 @@ TAO/tests/TransportCurrent/IIOP/run_test.pl -dynamic: !DISABLE_TRANSPORT_CURRENT
 TAO/tests/TransportCurrent/IIOP/run_test.pl -static: !DISABLE_TRANSPORT_CURRENT STATIC !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !MINIMUM
 TAO/tests/Transport_Cache_Manager/run_test.pl
 TAO/tests/Transport_Idle_Timeout/run_test.pl
+TAO/tests/Transport_Idle_Timeout_Long_Request/run_test.pl
+TAO/tests/Transport_Idle_Timeout_server/run_test.pl
 TAO/tests/UNKNOWN_Exception/run_test.pl:
 TAO/tests/Native_Exceptions/run_test.pl:
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST

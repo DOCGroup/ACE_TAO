@@ -1,0 +1,33 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    Transport_Idle_Timeout.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  after += *idl
+  Source_Files {
+    server.cpp
+  }
+  Source_Files {
+    Transport_Idle_TimeoutC.cpp
+    Transport_Idle_TimeoutS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    Transport_Idle_TimeoutC.cpp
+  }
+  IDL_Files {
+  }
+}

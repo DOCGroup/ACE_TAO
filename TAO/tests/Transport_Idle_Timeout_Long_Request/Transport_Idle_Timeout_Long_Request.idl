@@ -1,0 +1,9 @@
+module Transport_Idle_Timeout_Long_Request_Test
+{
+  interface Test
+  {
+    void long_request ();
+    void ping ();
+    void shutdown ();
+  };
+};
