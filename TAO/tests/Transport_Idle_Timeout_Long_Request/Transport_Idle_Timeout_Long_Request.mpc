@@ -1,0 +1,28 @@
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  IDL_Files {
+    Transport_Idle_Timeout_Long_Request.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver {
+  after += *idl
+  Source_Files {
+    server.cpp
+    Transport_Idle_Timeout_Long_RequestC.cpp
+    Transport_Idle_Timeout_Long_RequestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient {
+  after += *idl
+  Source_Files {
+    client.cpp
+    Transport_Idle_Timeout_Long_RequestC.cpp
+  }
+  IDL_Files {
+  }
+}
