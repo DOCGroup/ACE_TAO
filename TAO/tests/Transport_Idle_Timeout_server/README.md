@@ -21,16 +21,11 @@ opening, causing the second `ping()` to fail.
 The fix restarts the idle timer when parsed incoming traffic is received,
 so the second `ping()` succeeds.
 
-The client disables invocation retries for communication failures, closed
-replies, and transient exceptions so that a closed server transport cannot
-be transparently replaced by a new connection and make the test pass
-accidentally.
-
 ## Build
 
 Generate the projects with MPC in this directory, for example:
 
-    $ACE_ROOT/bin/mwc.pl -type <your-type> Transport_Idle_Timeout.mpc
+    $ACE_ROOT/bin/mwc.pl -type <your-type> Transport_Idle_Timeout_server.mpc
 
 Then build the generated workspace/project.
 
