@@ -1,0 +1,8 @@
+module Transport_Idle_Timeout_Test
+{
+  interface Test
+  {
+    void ping ();
+    void shutdown ();
+  };
+};

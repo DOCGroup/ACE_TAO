@@ -2974,8 +2974,8 @@ TAO_Transport::schedule_idle_timer ()
               TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport[%d]::schedule_idle_timer, ")
                       ACE_TEXT ("schedule idle timer with id [%d] ")
-                      ACE_TEXT ("in the reactor.\n"),
-                      this->id (), this->idle_timer_id_));
+                      ACE_TEXT ("for %d seconds in the reactor.\n"),
+                      this->id (), this->idle_timer_id_, timeout_sec));
             }
         }
     }
