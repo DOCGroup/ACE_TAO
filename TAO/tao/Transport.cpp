@@ -1460,6 +1460,10 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
     this->stats_->messages_sent (message_length);
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
+  // We have send a reply back on a call, the request has finished, so
+  // let us schedule our idle timer again
+  this->schedule_idle_timer ();
+
   return ret;
 }
 
@@ -1749,6 +1753,12 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input\n"),
          this->id ()));
+    }
+
+  if (this->idle_timer_id_ != -1)
+    {
+      // We have an idle running so cancel it, we received a call
+      this->cancel_idle_timer ();
     }
 
   // First try to process messages of the head of the incoming queue.
