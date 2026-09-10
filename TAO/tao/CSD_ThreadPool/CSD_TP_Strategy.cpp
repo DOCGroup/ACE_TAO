@@ -7,6 +7,7 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h"
 #include "ace/Trace.h"
 #include "tao/ORB_Core.h"
+#include "tao/Resource_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Strategy.inl"
@@ -56,6 +57,14 @@ TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op)
 bool
 TAO::CSD::TP_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
+  if (orb_core.resource_factory ()->transport_idle_timeout () > 0)
+    {
+      TAOLIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - CSD cannot be used when ")
+                    ACE_TEXT ("-ORBTransportIdleTimeout is enabled\n")));
+      throw CORBA::NO_IMPLEMENT ();
+    }
+
   this->task_.thr_mgr(orb_core.thr_mgr());
   // Activates the worker threads, and waits until all have been started.
   return (this->task_.open(&(this->num_threads_)) == 0);
