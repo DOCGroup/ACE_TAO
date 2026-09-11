@@ -8,13 +8,13 @@ class OnewayIdle_i : public virtual POA_Test::OnewayIdle
 public:
   explicit OnewayIdle_i (CORBA::ORB_ptr orb);
 
-  void ping (CORBA::Long wait_seconds) override;
-  CORBA::Long observed_cache_size () override;
-  void shutdown () override;
+  void ping () override;
+
+  bool test_failed () const;
 
 private:
   CORBA::ORB_var orb_;
-  CORBA::Long observed_cache_size_ { -1 };
+  bool test_failed_ { false };
 };
 
 #endif /* TRANSPORT_IDLE_TIMEOUT_ONEWAY_I_H */
