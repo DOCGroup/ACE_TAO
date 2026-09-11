@@ -1393,9 +1393,11 @@ example</a> of how this is used in TAO.</p>
         <td>Number of seconds after which idle connections are closed and purged from
         the transport cache. By default idle connections are kept until they are
         explicitly closed or purged because the transport cache is almost full.
-        Synchronous incoming requests are not considered idle while they are being
-        processed. AMH and CSD deferred server request processing are not supported
-        when this option is enabled.</td>
+        Any successfully received data, including partial GIOP messages, cancels the
+        idle timer. The idle timer is started again when data is successfully sent
+        on the transport. AMH and CSD deferred server request processing are not
+        supported when this option is enabled and result in
+        <code>CORBA::NO_IMPLEMENT</code>.</td>
       </tr>
     </tbody>
   </table>

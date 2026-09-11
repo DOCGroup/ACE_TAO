@@ -566,7 +566,7 @@ TAO_Transport::make_idle ()
   int const result = this->transport_cache_manager ().make_idle (this->cache_map_entry_);
   if (result == 0)
     {
-      this->schedule_idle_timer ();
+      this->reschedule_idle_timer ();
     }
   return result;
 }
@@ -1007,7 +1007,7 @@ TAO_Transport::handle_idle_timeout (const ACE_Time_Value & /* current_time */, c
             ACE_TEXT ("idle_timeout, transport is not purgable, don't close it, reschedule it\n"),
             this->id ()));
 
-      this->schedule_idle_timer ();
+      this->reschedule_idle_timer ();
     }
   else
     {
@@ -1106,6 +1106,9 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 
       return DR_ERROR;
     }
+
+  // Any successfully sent data means this transport is active.
+  this->reschedule_idle_timer ();
 
   // ... now we need to update the queue, removing elements
   // that have been sent, and updating the last element if it
@@ -1460,10 +1463,6 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
     this->stats_->messages_sent (message_length);
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
-  // We have send a reply back on a call, the request has finished, so
-  // let us schedule our idle timer again
-  this->schedule_idle_timer ();
-
   return ret;
 }
 
@@ -1755,12 +1754,6 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
          this->id ()));
     }
 
-  if (this->idle_timer_id_ != -1)
-    {
-      // We have an idle running so cancel it, we received a call
-      this->cancel_idle_timer ();
-    }
-
   // First try to process messages of the head of the incoming queue.
   int const retval = this->process_queue_head (rh);
 
@@ -2015,6 +2008,10 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
       return ACE_Utils::truncate_cast<int> (n);
     }
 
+  // Any successfully received data means the transport is active.
+  // Disable the idle timer until data is sent again.
+  this->cancel_idle_timer ();
+
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -2243,6 +2240,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
       return ACE_Utils::truncate_cast<int> (n);
     }
+
+  // Any successfully received data means the transport is active.
+  // Disable the idle timer until data is sent again.
+  this->cancel_idle_timer ();
 
   if (this->partial_message_ != nullptr && this->partial_message_->length () > 0)
     {
@@ -2887,7 +2888,7 @@ TAO_Transport::post_open (size_t id)
   this->transport_cache_manager ().set_entry_state (this->cache_map_entry_, TAO::ENTRY_IDLE_AND_PURGABLE);
 
   // this transport is just opened, so schedule it for the idle timer
-  this->schedule_idle_timer ();
+  this->reschedule_idle_timer ();
 
   return true;
 }
@@ -2952,7 +2953,7 @@ TAO_Transport::connection_closed_on_read () const
 }
 
 void
-TAO_Transport::schedule_idle_timer ()
+TAO_Transport::reschedule_idle_timer ()
 {
   int const timeout_sec = this->orb_core_->resource_factory ()->transport_idle_timeout ();
   if (timeout_sec > 0)
@@ -2972,9 +2973,9 @@ TAO_Transport::schedule_idle_timer ()
           if (TAO_debug_level > 6)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::schedule_idle_timer, ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::reschedule_idle_timer, ")
                       ACE_TEXT ("schedule idle timer with id [%d] ")
-                      ACE_TEXT ("for %d seconds in the reactor.\n"),
+                      ACE_TEXT ("for [%d] seconds in the reactor.\n"),
                       this->id (), this->idle_timer_id_, timeout_sec));
             }
         }

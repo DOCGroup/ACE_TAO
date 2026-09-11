@@ -30,7 +30,7 @@ namespace TAO
   *
   * @brief One-shot reactor timer that closes an idle transport.
   *
-  * Created by TAO_Transport::schedule_idle_timer() when a transport
+  * Created by TAO_Transport::reschedule_idle_timer() when a transport
   * enters the ENTRY_IDLE_AND_PURGABLE state.  Cancelled if the
   * transport is reacquired for a new request before the timer fires.
   */
