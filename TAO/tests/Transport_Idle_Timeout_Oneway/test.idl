@@ -1,0 +1,13 @@
+module Test
+{
+  interface OnewayIdle
+  {
+    /// Wait long enough for the configured idle timeout to expire.
+    oneway void ping (in long wait_seconds);
+
+    /// Server-side transport cache size recorded at the end of ping().
+    long observed_cache_size ();
+
+    oneway void shutdown ();
+  };
+};
