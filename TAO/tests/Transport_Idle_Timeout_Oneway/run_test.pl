@@ -32,7 +32,7 @@ my $SV = $server->CreateProcess (
 
 my $CL = $client->CreateProcess (
     "client",
-    "-ORBSvcConf svc.conf -k file://$client_ior -ORBDebugLevel $cdebug_level -ORBVerboseLogging 1"
+    "-k file://$client_ior -ORBDebugLevel $cdebug_level -ORBVerboseLogging 1"
 );
 
 my $server_status = $SV->Spawn ();
