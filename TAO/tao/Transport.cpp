@@ -1107,9 +1107,6 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
       return DR_ERROR;
     }
 
-  // Any successfully sent data means this transport is active.
-  this->reschedule_idle_timer ();
-
   // ... now we need to update the queue, removing elements
   // that have been sent, and updating the last element if it
   // was only partially sent ...
@@ -2568,6 +2565,10 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           // closing connection and the necessary memory management.
           return -1;
         }
+
+      // Restart the idle timer after synchronous request processing,
+      // including oneway requests for which no reply is sent.
+      this->reschedule_idle_timer ();
       break;
     case GIOP::Reply:
     case GIOP::LocateReply:
