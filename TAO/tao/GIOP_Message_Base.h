@@ -244,6 +244,13 @@ private:
    */
   void set_giop_flags (TAO_OutputCDR & msg) const;
 
+  /// Whether incoming GIOP fragments are awaiting reassembly.
+  bool has_pending_fragments () const
+  {
+    TAO_Queued_Data *qd = nullptr;
+    return this->fragment_stack_.top (qd) == 0;
+  }
+
 private:
   /// Cached ORB_Core pointer...
   TAO_ORB_Core *orb_core_;
