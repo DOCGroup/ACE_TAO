@@ -1,6 +1,5 @@
 #!/usr/bin/perl
 
-use strict;
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
@@ -10,6 +9,16 @@ my $status = 0;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Cannot create server target";
 my $client = PerlACE::TestTarget::create_target (2) || die "Cannot create client target";
+my $debug_level = '0';
+my $cdebug_level = '0';
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+    if ($i eq '-cdebug') {
+      $cdebug_level = '10';
+    }
+}
 
 my $server_ior = $server->LocalFile ($ior_file);
 my $client_ior = $client->LocalFile ($ior_file);
@@ -19,12 +28,12 @@ $client->DeleteFile ($ior_file);
 
 my $SV = $server->CreateProcess (
     "server",
-    "-ORBSvcConf svc.conf -o $server_ior"
+    "-ORBSvcConf svc.conf -o $server_ior -ORBDebugLevel $debug_level -ORBVerboseLogging 1"
 );
 
 my $CL = $client->CreateProcess (
     "client",
-    "-ORBSvcConf svc.conf -k file://$client_ior -t $timeout_sec"
+    "-ORBSvcConf svc.conf -k file://$client_ior -t $timeout_sec -ORBDebugLevel $cdebug_level -ORBVerboseLogging 1"
 );
 
 my $server_status = $SV->Spawn ();
