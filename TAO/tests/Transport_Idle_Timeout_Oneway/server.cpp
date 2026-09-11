@@ -80,11 +80,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P|%t) server transport cache size after ORB run = %B\n"),
                   size));
 
-      if (impl->test_failed () || size != 1)
+      if (impl->test_failed () || size != 0)
         {
-          if (size != 1)
+          if (size != 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ERROR: expected server transport cache size 1, got %B\n"),
+                        ACE_TEXT ("(%P|%t) ERROR: expected server transport cache size 0, got %B\n"),
                         size));
           return 1;
         }
