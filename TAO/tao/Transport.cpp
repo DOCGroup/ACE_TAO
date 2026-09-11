@@ -992,12 +992,32 @@ TAO_Transport::handle_idle_timeout (const ACE_Time_Value & /* current_time */, c
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
-         ACE_TEXT ("idle timer expired, closing transport\n"),
+         ACE_TEXT ("idle timer expired, checking transport\n"),
          this->id ()));
     }
 
   // Timer has expired, so setting the idle timer id back to -1
   this->idle_timer_id_ = -1;
+
+  // Pending data, including incomplete messages and GIOP fragments,
+  // prevents closure by the transport idle timer.
+  TAO_Queued_Data *qd = nullptr;
+  if (!this->queue_is_empty ()
+      || this->incoming_message_queue_.queue_length () != 0
+      || this->incoming_message_stack_.top (qd) == 0
+      || (this->partial_message_ != nullptr
+          && this->partial_message_->length () != 0)
+      || this->messaging_object ()->has_pending_fragments ())
+    {
+      if (TAO_debug_level > 6)
+        TAOLIB_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
+            ACE_TEXT ("pending input or output, rescheduling idle timer\n"),
+            this->id ()));
+
+      this->reschedule_idle_timer ();
+      return 0;
+    }
 
   if (this->transport_cache_manager ().purge_entry_when_purgable (this->cache_map_entry_) == -1)
     {
