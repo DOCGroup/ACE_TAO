@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Usage: server [-o <ior_file>]\n")),
+                             ACE_TEXT ("(%P|%t) Usage: server [-o <ior_file>]\n")),
                             -1);
         }
     }
@@ -64,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       FILE *file = ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
       if (file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file '%s'\n"),
+                           ACE_TEXT ("(%P|%t) Cannot open output file '%s'\n"),
                            ior_output_file),
                           1);
       ACE_OS::fprintf (file, "%s", ior.in ());
@@ -94,7 +94,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception &ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("server exception"));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) server caught CORBA exception %C\n"),
+                  ex._name ())));
       return 1;
     }
 

@@ -21,14 +21,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Usage: client -k <ior>\n")),
+                             ACE_TEXT ("(%P|%t) Usage: client -k <ior>\n")),
                             -1);
         }
     }
 
   if (ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("client: -k <IOR> is required\n")),
+                       ACE_TEXT ("(%P|%t) client: -k <IOR> is required\n")),
                       -1);
   return 0;
 }
@@ -54,10 +54,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test::OnewayIdle_var test = Test::OnewayIdle::_narrow (object.in ());
       if (CORBA::is_nil (test.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Narrow to Test::OnewayIdle failed\n")),
+                           ACE_TEXT ("(%P|%t) Narrow to Test::OnewayIdle failed\n")),
                           1);
 
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Sending oneway ping\n")));
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("(%P|%t) Sending oneway ping\n")));
       test->ping ();
 
       ACE_Time_Value run_time (3);
@@ -78,7 +79,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception &ex)
     {
-      ex._tao_print_exception (ACE_TEXT ("client exception"));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) client caught CORBA exception %C\n"),
+                  ex._name ())));
       return 1;
     }
 
