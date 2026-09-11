@@ -1,0 +1,7 @@
+module Test
+{
+  interface OnewayIdle
+  {
+    oneway void ping ();
+  };
+};
