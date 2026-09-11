@@ -72,19 +72,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       manager->activate ();
 
-      ACE_Time_Value run_time (2);
+      ACE_Time_Value run_time (3);
       orb->run (run_time);
 
       size_t const size = cache_size (orb.in ());
       ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("(%P|%t) transport cache size after ORB run = %B\n"),
+                  ACE_TEXT ("(%P|%t) server transport cache size after ORB run = %B\n"),
                   size));
 
       if (impl->test_failed () || size != 1)
         {
           if (size != 1)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ERROR: expected transport cache size 1, got %B\n"),
+                        ACE_TEXT ("(%P|%t) ERROR: expected server transport cache size 1, got %B\n"),
                         size));
           return 1;
         }
