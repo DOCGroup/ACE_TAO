@@ -32,7 +32,7 @@ my $SV = $server->CreateProcess (
 
 my $CL = $client->CreateProcess (
     "client",
-    "-k file://$client_ior -ORBDebugLevel $cdebug_level -ORBVerboseLogging 1"
+    "-ORBSvcConf svc.conf -k file://$client_ior -ORBDebugLevel $cdebug_level -ORBVerboseLogging 1"
 );
 
 my $server_status = $SV->Spawn ();
@@ -60,7 +60,7 @@ if ($client->PutFile ($ior_file) == -1) {
     exit 1;
 }
 
-my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval () + 5);
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
