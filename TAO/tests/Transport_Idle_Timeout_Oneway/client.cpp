@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Sending oneway ping\n")));
       test->ping ();
 
-      ACE_Time_Value run_time (2);
+      ACE_Time_Value run_time (3);
       orb->run (run_time);
 
       size_t const size = cache_size (orb.in ());
