@@ -96,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server caught CORBA exception %C\n"),
-                  ex._name ())));
+                  ex._name ()));
       return 1;
     }
 
