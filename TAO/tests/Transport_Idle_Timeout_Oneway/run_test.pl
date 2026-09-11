@@ -27,7 +27,7 @@ $client->DeleteFile ($ior_file);
 
 my $SV = $server->CreateProcess (
     "server",
-    "-ORBSvcConf svc.conf -o $server_ior -ORBDebugLevel $debug_level -ORBVerboseLogging 1"
+    "-ORBSvcConf server.conf -o $server_ior -ORBDebugLevel $debug_level -ORBVerboseLogging 1"
 );
 
 my $CL = $client->CreateProcess (
