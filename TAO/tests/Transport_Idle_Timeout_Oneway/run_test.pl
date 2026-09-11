@@ -1,0 +1,71 @@
+#!/usr/bin/perl
+
+use strict;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
+
+my $ior_file = "test.ior";
+my $timeout_sec = 3;
+my $status = 0;
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Cannot create server target";
+my $client = PerlACE::TestTarget::create_target (2) || die "Cannot create client target";
+
+my $server_ior = $server->LocalFile ($ior_file);
+my $client_ior = $client->LocalFile ($ior_file);
+
+$server->DeleteFile ($ior_file);
+$client->DeleteFile ($ior_file);
+
+my $SV = $server->CreateProcess (
+    "server",
+    "-ORBSvcConf svc.conf -o $server_ior"
+);
+
+my $CL = $client->CreateProcess (
+    "client",
+    "-ORBSvcConf svc.conf -k file://$client_ior -t $timeout_sec"
+);
+
+my $server_status = $SV->Spawn ();
+if ($server_status != 0) {
+    print STDERR "ERROR: server Spawn returned $server_status\n";
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($ior_file,
+                               $server->ProcessStartWaitInterval ()) == -1) {
+    print STDERR "ERROR: IOR file '$server_ior' not created\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+if ($server->GetFile ($ior_file) == -1) {
+    print STDERR "ERROR: server GetFile '$ior_file' failed\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+if ($client->PutFile ($ior_file) == -1) {
+    print STDERR "ERROR: client PutFile '$ior_file' failed\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+my $client_status = $CL->SpawnWaitKill (
+    $client->ProcessStartWaitInterval () + 30);
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $status = 1;
+}
+
+my $server_exit = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+if ($server_exit != 0) {
+    print STDERR "ERROR: server returned $server_exit\n";
+    $status = 1;
+}
+
+$server->DeleteFile ($ior_file);
+$client->DeleteFile ($ior_file);
+
+exit $status;
