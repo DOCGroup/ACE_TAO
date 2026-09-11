@@ -2,6 +2,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "tao/ORB_Core.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Transport_Cache_Manager_T.h"
 
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 
@@ -24,6 +27,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
   return 0;
+}
+
+static size_t
+cache_size (CORBA::ORB_ptr orb)
+{
+  TAO_ORB_Core *core = orb->orb_core ();
+  return core->lane_resources ().transport_cache ().current_size ();
 }
 
 int
@@ -61,7 +71,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fclose (file);
 
       manager->activate ();
-      orb->run ();
+
+      ACE_Time_Value run_time (2);
+      orb->run (run_time);
+
+      size_t const size = cache_size (orb.in ());
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("(%P|%t) transport cache size after ORB run = %B\n"),
+                  size));
+
+      if (impl->test_failed () || size != 1)
+        {
+          if (size != 1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) ERROR: expected transport cache size 1, got %B\n"),
+                        size));
+          return 1;
+        }
 
       root_poa->destroy (true, true);
       orb->destroy ();
