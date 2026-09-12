@@ -566,7 +566,7 @@ TAO_Transport::make_idle ()
   int const result = this->transport_cache_manager ().make_idle (this->cache_map_entry_);
   if (result == 0)
     {
-      this->schedule_idle_timer ();
+      this->reschedule_idle_timer ();
     }
   return result;
 }
@@ -992,12 +992,32 @@ TAO_Transport::handle_idle_timeout (const ACE_Time_Value & /* current_time */, c
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
-         ACE_TEXT ("idle timer expired, closing transport\n"),
+         ACE_TEXT ("idle timer expired, checking transport\n"),
          this->id ()));
     }
 
   // Timer has expired, so setting the idle timer id back to -1
   this->idle_timer_id_ = -1;
+
+  // Pending data, including incomplete messages and GIOP fragments,
+  // prevents closure by the transport idle timer.
+  TAO_Queued_Data *qd = nullptr;
+  if (!this->queue_is_empty ()
+      || this->incoming_message_queue_.queue_length () != 0
+      || this->incoming_message_stack_.top (qd) == 0
+      || (this->partial_message_ != nullptr
+          && this->partial_message_->length () != 0)
+      || this->messaging_object ()->has_pending_fragments ())
+    {
+      if (TAO_debug_level > 6)
+        TAOLIB_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
+            ACE_TEXT ("pending input or output, rescheduling idle timer\n"),
+            this->id ()));
+
+      this->reschedule_idle_timer ();
+      return 0;
+    }
 
   if (this->transport_cache_manager ().purge_entry_when_purgable (this->cache_map_entry_) == -1)
     {
@@ -1007,7 +1027,7 @@ TAO_Transport::handle_idle_timeout (const ACE_Time_Value & /* current_time */, c
             ACE_TEXT ("idle_timeout, transport is not purgable, don't close it, reschedule it\n"),
             this->id ()));
 
-      this->schedule_idle_timer ();
+      this->reschedule_idle_timer ();
     }
   else
     {
@@ -2005,6 +2025,10 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
       return ACE_Utils::truncate_cast<int> (n);
     }
 
+  // Any successfully received data means the transport is active.
+  // Disable the idle timer until data is sent again.
+  this->cancel_idle_timer ();
+
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -2233,6 +2257,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
       return ACE_Utils::truncate_cast<int> (n);
     }
+
+  // Any successfully received data means the transport is active.
+  // Disable the idle timer until data is sent again.
+  this->cancel_idle_timer ();
 
   if (this->partial_message_ != nullptr && this->partial_message_->length () > 0)
     {
@@ -2557,6 +2585,10 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           // closing connection and the necessary memory management.
           return -1;
         }
+
+      // Restart the idle timer after synchronous request processing,
+      // including oneway requests for which no reply is sent.
+      this->reschedule_idle_timer ();
       break;
     case GIOP::Reply:
     case GIOP::LocateReply:
@@ -2877,7 +2909,7 @@ TAO_Transport::post_open (size_t id)
   this->transport_cache_manager ().set_entry_state (this->cache_map_entry_, TAO::ENTRY_IDLE_AND_PURGABLE);
 
   // this transport is just opened, so schedule it for the idle timer
-  this->schedule_idle_timer ();
+  this->reschedule_idle_timer ();
 
   return true;
 }
@@ -2942,7 +2974,7 @@ TAO_Transport::connection_closed_on_read () const
 }
 
 void
-TAO_Transport::schedule_idle_timer ()
+TAO_Transport::reschedule_idle_timer ()
 {
   int const timeout_sec = this->orb_core_->resource_factory ()->transport_idle_timeout ();
   if (timeout_sec > 0)
@@ -2962,9 +2994,9 @@ TAO_Transport::schedule_idle_timer ()
           if (TAO_debug_level > 6)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::schedule_idle_timer, ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::reschedule_idle_timer, ")
                       ACE_TEXT ("schedule idle timer with id [%d] ")
-                      ACE_TEXT ("for %d seconds in the reactor.\n"),
+                      ACE_TEXT ("for [%d] seconds in the reactor.\n"),
                       this->id (), this->idle_timer_id_, timeout_sec));
             }
         }

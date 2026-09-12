@@ -1061,8 +1061,10 @@ private:
    */
   bool using_blocking_io_for_asynch_messages() const;
 
-  /// Helper method to schedule a timer when the transport is made idle
-  void schedule_idle_timer ();
+  /// Helper method to (re)schedule a timer when the transport is made idle
+  /// or has been used for data, cancels an existing idle timer when one is
+  /// active
+  void reschedule_idle_timer ();
 
 protected:
   /// IOP protocol tag.
