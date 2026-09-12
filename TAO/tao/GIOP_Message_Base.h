@@ -155,6 +155,13 @@ public:
   /// request/response?
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
+  /// Whether incoming GIOP fragments are awaiting reassembly.
+  bool has_pending_fragments () const
+  {
+    TAO_Queued_Data *qd = nullptr;
+    return this->fragment_stack_.top (qd) == 0;
+  }
+
 private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
@@ -243,13 +250,6 @@ private:
    *       thing marshaled into the output CDR stream @a msg.
    */
   void set_giop_flags (TAO_OutputCDR & msg) const;
-
-  /// Whether incoming GIOP fragments are awaiting reassembly.
-  bool has_pending_fragments () const
-  {
-    TAO_Queued_Data *qd = nullptr;
-    return this->fragment_stack_.top (qd) == 0;
-  }
 
 private:
   /// Cached ORB_Core pointer...
