@@ -23,6 +23,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::transport_snapshot (
+    std::vector<transport_type *> &transports)
+  {
+    ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
+    transports.reserve (transports.size () + this->cache_map_.current_size ());
+    for (HASH_MAP_ITER iter = this->cache_map_.begin ();
+         iter != this->cache_map_.end (); ++iter)
+      {
+        transport_type *transport = iter->int_id_.transport ();
+        transport->add_reference ();
+        transports.push_back (transport);
+      }
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::Transport_Cache_Manager_T (
     int percent,
     purging_strategy *purging,
@@ -299,9 +315,6 @@ namespace TAO
                 found = CACHE_FOUND_AVAILABLE;
                 found_entry = entry;
                 entry->item ().recycle_state (ENTRY_BUSY);
-                // We found a transport we can use, so cancel its idle timer
-                // with the lock held
-                entry->item().transport ()->cancel_idle_timer ();
 
                 if (TAO_debug_level > 6)
                   {

@@ -21,6 +21,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     acceptor_registry_ (nullptr),
     connector_registry_ (nullptr),
     transport_cache_ (nullptr),
+    idle_scanner_ (this),
     leader_follower_ (nullptr),
     new_leader_generator_ (new_leader_generator),
     input_cdr_dblock_allocator_ (nullptr),
@@ -45,6 +46,43 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources ()
 {
+}
+
+bool
+TAO_Thread_Lane_Resources::start_idle_scanner (ACE_Reactor *reactor)
+{
+  if (this->resource_factory ()->transport_idle_timeout () <= 0)
+    return true;
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->idle_scan_lock_, false);
+  if (this->idle_scan_stopped_)
+    return false;
+  if (this->idle_scan_timer_id_ != -1)
+    return true;
+  const ACE_Time_Value interval (this->resource_factory ()->transport_idle_scan_interval ());
+  this->idle_scan_reactor_ = reactor;
+  this->idle_scan_timer_id_ = reactor->schedule_timer (
+    &this->idle_scanner_, nullptr, interval, interval);
+  return this->idle_scan_timer_id_ != -1;
+}
+
+void
+TAO_Thread_Lane_Resources::scan_idle_transports ()
+{
+  ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
+  if (this->idle_scan_stopped_)
+    return;
+  struct Snapshot
+  {
+    std::vector<TAO_Transport *> transports;
+    ~Snapshot ()
+    {
+      for (TAO_Transport *transport : this->transports)
+        transport->remove_reference ();
+    }
+  } snapshot;
+  this->transport_cache_->transport_snapshot (snapshot.transports);
+  for (TAO_Transport *transport : snapshot.transports)
+    transport->purge_if_idle (*this->transport_cache_);
 }
 
 TAO::Transport_Cache_Manager &
@@ -360,6 +398,15 @@ TAO_Thread_Lane_Resources::resource_factory ()
 void
 TAO_Thread_Lane_Resources::finalize ()
 {
+  {
+    ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
+    this->idle_scan_stopped_ = true;
+    if (this->idle_scan_timer_id_ != -1)
+      {
+        this->idle_scan_reactor_->cancel_timer (this->idle_scan_timer_id_);
+        this->idle_scan_timer_id_ = -1;
+      }
+  }
   // Close connectors before acceptors!
   // Ask the registry to close all registered connectors.
   if (this->connector_registry_ != nullptr)

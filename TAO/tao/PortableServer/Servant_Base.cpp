@@ -20,6 +20,7 @@
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
+#include "tao/Resource_Factory.h"
 #include "tao/TSS_Resources.h"
 #include "tao/Stub.h"
 #include "tao/TAO_Server_Request.h"
@@ -541,6 +542,10 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
   TAO::Portable_Server::Servant_Upcall *servant_upcall,
   TAO_ServantBase *derived_this)
 {
+  // Reject before acknowledging SYNC_WITH_SERVER or entering AMH code.
+  if (req.orb_core ()->resource_factory ()->transport_idle_timeout () > 0)
+    throw CORBA::NO_IMPLEMENT ();
+
   TAO_Skeleton skel;
   const char *opname = req.operation ();
 

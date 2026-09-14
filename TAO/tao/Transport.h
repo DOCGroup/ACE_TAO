@@ -19,12 +19,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Transport_Timer.h"
-#include "tao/Transport_Idle_Timer.h"
 #include "tao/Incoming_Message_Queue.h"
 #include "tao/Incoming_Message_Stack.h"
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
+#include <chrono>
 
 struct iovec;
 
@@ -850,8 +850,11 @@ public:
    */
   int handle_timeout (const ACE_Time_Value &current_time, const void* act);
 
-  /// Timeout called when the idle timer expired for this transport
-  int handle_idle_timeout (const ACE_Time_Value &current_time, const void* act);
+  /// Recheck idle age and pending work before removing from the supplied cache.
+  void purge_if_idle (TAO::Transport_Cache_Manager &cache);
+
+  /// Record real I/O or synchronous dispatch activity using a steady clock.
+  void touch_activity ();
 
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size () const;
@@ -895,9 +898,6 @@ public:
 
   /// Transport statistics
   TAO::Transport::Stats* stats () const;
-
-  /// Helper method to cancel the timer when the transport is not idle anymore
-  void cancel_idle_timer ();
 
 private:
   /// Helper method that returns the Transport Cache Manager.
@@ -1061,8 +1061,8 @@ private:
    */
   bool using_blocking_io_for_asynch_messages() const;
 
-  /// Helper method to schedule a timer when the transport is made idle
-  void schedule_idle_timer ();
+  /// Excludes idle purging while incoming state is being processed.
+  class Input_Activity_Guard;
 
 protected:
   /// IOP protocol tag.
@@ -1123,14 +1123,14 @@ protected:
   /// The timer ID
   long flush_timer_id_ { -1 };
 
-  /// The idle timer ID
-  long idle_timer_id_ { -1 };
+  /// Serializes input admission, activity timestamps and idle-close decisions.
+  ACE_Thread_Mutex idle_state_lock_;
+  std::chrono::steady_clock::time_point last_activity_ { std::chrono::steady_clock::now () };
+  unsigned int input_callbacks_ { 0 };
+  bool idle_closing_ { false };
 
   /// The adapter used to receive timeout callbacks from the Reactor
   TAO::Transport_Timer transport_timer_;
-
-  /// The adapter used to receive idle timeout callbacks from the Reactor
-  TAO::Transport_Idle_Timer transport_idle_timer_;
 
   /// Lock that insures that activities that *might* use handler-related
   /// resources (such as a connection handler) get serialized.

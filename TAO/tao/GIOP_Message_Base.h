@@ -155,6 +155,13 @@ public:
   /// request/response?
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
+  /// Called only while incoming processing is excluded by the transport.
+  bool has_pending_fragments () const
+  {
+    TAO_Queued_Data *qd = nullptr;
+    return this->fragment_stack_.top (qd) == 0;
+  }
+
 private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message

@@ -23,6 +23,7 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/params.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Transport_Idle_Timer.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
@@ -86,6 +87,10 @@ public:
 
   /// Get the transport cache
   TAO::Transport_Cache_Manager &transport_cache ();
+
+  /// Lazily start one repeating idle scanner for this lane/cache.
+  bool start_idle_scanner (ACE_Reactor *reactor);
+  void scan_idle_transports ();
 
   TAO_Leader_Follower &leader_follower ();
 
@@ -166,6 +171,12 @@ private:
 
   /// Transport cache.
   TAO::Transport_Cache_Manager *transport_cache_;
+
+  TAO::Transport_Idle_Timer idle_scanner_;
+  ACE_Thread_Mutex idle_scan_lock_;
+  ACE_Reactor *idle_scan_reactor_ { nullptr };
+  long idle_scan_timer_id_ { -1 };
+  bool idle_scan_stopped_ { false };
 
   /// The leader/followers management class for this lane.
   TAO_Leader_Follower *leader_follower_;

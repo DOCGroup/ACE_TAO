@@ -128,7 +128,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , incoming_message_queue_ (orb_core)
   , current_deadline_ (ACE_Time_Value::zero)
   , transport_timer_ (this)
-  , transport_idle_timer_ (this)
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((size_t) this)
   , purging_order_ (0)
@@ -186,8 +185,6 @@ TAO_Transport::~TAO_Transport ()
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport, start\n"),
                   this->id_));
     }
-
-  this->cancel_idle_timer ();
 
   delete this->messaging_object_;
 
@@ -337,9 +334,6 @@ TAO_Transport::close_connection ()
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::close_connection\n"),
                   this->id ()));
     }
-
-  // Cancel any pending timer
-  this->cancel_idle_timer ();
 
   this->connection_handler_i ()->close_connection ();
 }
@@ -563,12 +557,8 @@ TAO_Transport::make_idle ()
                   this->id ()));
     }
 
-  int const result = this->transport_cache_manager ().make_idle (this->cache_map_entry_);
-  if (result == 0)
-    {
-      this->schedule_idle_timer ();
-    }
-  return result;
+  this->touch_activity ();
+  return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
 }
 
 int
@@ -985,44 +975,53 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
   return 0;
 }
 
-int
-TAO_Transport::handle_idle_timeout (const ACE_Time_Value & /* current_time */, const void */*act*/)
+void
+TAO_Transport::touch_activity ()
 {
+  if (this->orb_core_->resource_factory ()->transport_idle_timeout () > 0)
+    {
+      ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_state_lock_);
+      this->last_activity_ = std::chrono::steady_clock::now ();
+    }
+}
+
+void
+TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
+{
+  {
+    // Never wait for a sender: a slow write must not stall the entire scan.
+    ACE_Guard<ACE_Lock> output_guard (*this->handler_lock_, false);
+    if (!output_guard.locked ())
+      return;
+    ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_state_lock_);
+    const int timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
+    if (timeout <= 0 || this->idle_closing_ || this->input_callbacks_ != 0
+        || std::chrono::steady_clock::now () - this->last_activity_
+             < std::chrono::seconds (timeout))
+      return;
+
+    // Input admission is excluded. No incoming queue can change until
+    // this decision is committed or the idle-state lock is released.
+    TAO_Queued_Data *qd = nullptr;
+    if (!this->queue_is_empty_i ()
+        || this->incoming_message_queue_.queue_length () != 0
+        || this->incoming_message_stack_.top (qd) == 0
+        || (this->partial_message_ && this->partial_message_->length () != 0)
+        || this->messaging_object ()->has_pending_fragments ())
+      return;
+
+    // The cache lock inside this operation serializes against acquisition.
+    // Its existing purgability check includes the outgoing mux dispatchers.
+    if (cache.purge_entry_when_purgable (this->cache_map_entry_) == -1)
+      return;
+    this->idle_closing_ = true;
+  }
+
   if (TAO_debug_level > 6)
-    {
-      TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
-         ACE_TEXT ("idle timer expired, closing transport\n"),
-         this->id ()));
-    }
-
-  // Timer has expired, so setting the idle timer id back to -1
-  this->idle_timer_id_ = -1;
-
-  if (this->transport_cache_manager ().purge_entry_when_purgable (this->cache_map_entry_) == -1)
-    {
-      if (TAO_debug_level > 6)
-        TAOLIB_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
-            ACE_TEXT ("idle_timeout, transport is not purgable, don't close it, reschedule it\n"),
-            this->id ()));
-
-      this->schedule_idle_timer ();
-    }
-  else
-    {
-      if (TAO_debug_level > 6)
-        TAOLIB_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
-            ACE_TEXT ("idle_timeout, transport purged due to idle timeout\n"),
-            this->id ()));
-
-      // Close the underlying socket.
-      // close_connection() is safe to call from the reactor thread.
-      (void) this->close_connection ();
-    }
-
-  return 0;
+    TAOLIB_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_if_idle, closing idle transport\n"),
+      this->id ()));
+  this->close_connection ();
 }
 
 TAO_Transport::Drain_Result
@@ -1071,6 +1070,9 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 #endif  /* TAO_HAS_SENDFILE==1 */
     retval = this->send (iov, iovcnt, byte_count,
                          this->io_timeout (dc));
+
+  if (byte_count != 0)
+    this->touch_activity ();
 
   if (TAO_debug_level > 9)
     {
@@ -1134,6 +1136,8 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 TAO_Transport::Drain_Result
 TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
 {
+  if (this->idle_closing_)
+    return DR_ERROR;
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
   // sent
@@ -1431,6 +1435,8 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
+  if (this->idle_closing_)
+    return -1;
   int ret = 0;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
@@ -1740,10 +1746,47 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
  * All the methods relevant to the incoming data path of the ORB are
  * defined below
  */
+class TAO_Transport::Input_Activity_Guard
+{
+public:
+  explicit Input_Activity_Guard (TAO_Transport &transport)
+    : transport_ (transport)
+  {
+    if (transport.orb_core_->resource_factory ()->transport_idle_timeout () <= 0)
+      {
+        this->admitted_ = true;
+        return;
+      }
+    ACE_GUARD (ACE_Thread_Mutex, guard, this->transport_.idle_state_lock_);
+    if (!this->transport_.idle_closing_)
+      {
+        ++this->transport_.input_callbacks_;
+        this->admitted_ = true;
+        this->tracked_ = true;
+      }
+  }
+  ~Input_Activity_Guard ()
+  {
+    if (this->tracked_)
+      {
+        ACE_GUARD (ACE_Thread_Mutex, guard, this->transport_.idle_state_lock_);
+        --this->transport_.input_callbacks_;
+      }
+  }
+  bool admitted () const { return this->admitted_; }
+private:
+  TAO_Transport &transport_;
+  bool admitted_ { false };
+  bool tracked_ { false };
+};
+
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                              ACE_Time_Value * max_wait_time)
 {
+  Input_Activity_Guard activity (*this);
+  if (!activity.admitted ())
+    return -1;
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -2000,6 +2043,9 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
+  if (n > 0)
+    this->touch_activity ();
+
   if (n <= 0)
     {
       return ACE_Utils::truncate_cast<int> (n);
@@ -2219,6 +2265,9 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   ssize_t const n = this->recv (message_block.wr_ptr (),
                                 recv_size,
                                 max_wait_time);
+
+  if (n > 0)
+    this->touch_activity ();
 
   // If there is an error return to the reactor..
   // do not reset partial message in case of n == 0 (EWOULDBLOCK || EAGAIN),
@@ -2547,6 +2596,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       return -1;
     case GIOP::Request:
     case GIOP::LocateRequest:
+      this->touch_activity ();
       // Let us resume the handle before we go ahead to process the
       // request. This will open up the handle for other threads.
       rh.resume_handle ();
@@ -2557,6 +2607,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           // closing connection and the necessary memory management.
           return -1;
         }
+      this->touch_activity ();
       break;
     case GIOP::Reply:
     case GIOP::LocateReply:
@@ -2876,8 +2927,10 @@ TAO_Transport::post_open (size_t id)
   // update transport cache to make this entry available
   this->transport_cache_manager ().set_entry_state (this->cache_map_entry_, TAO::ENTRY_IDLE_AND_PURGABLE);
 
-  // this transport is just opened, so schedule it for the idle timer
-  this->schedule_idle_timer ();
+  this->touch_activity ();
+  if (!this->orb_core_->lane_resources ().start_idle_scanner (
+        this->orb_core_->reactor ()))
+    return false;
 
   return true;
 }
@@ -2939,58 +2992,6 @@ bool
 TAO_Transport::connection_closed_on_read () const
 {
   return connection_closed_on_read_;
-}
-
-void
-TAO_Transport::schedule_idle_timer ()
-{
-  int const timeout_sec = this->orb_core_->resource_factory ()->transport_idle_timeout ();
-  if (timeout_sec > 0)
-    {
-      if (this->idle_timer_id_ != -1)
-        {
-          // The transport was marked as idle, but we have a timer running, cancel that old timer
-          // first
-          this->cancel_idle_timer ();
-        }
-      ACE_Reactor *reactor = this->orb_core_->reactor ();
-      if (reactor)
-        {
-          ACE_Time_Value const tv (static_cast<time_t> (timeout_sec));
-          this->idle_timer_id_= reactor->schedule_timer (std::addressof(this->transport_idle_timer_), nullptr, tv);
-
-          if (TAO_debug_level > 6)
-            {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::schedule_idle_timer, ")
-                      ACE_TEXT ("schedule idle timer with id [%d] ")
-                      ACE_TEXT ("for %d seconds in the reactor.\n"),
-                      this->id (), this->idle_timer_id_, timeout_sec));
-            }
-        }
-    }
-}
-
-void
-TAO_Transport::cancel_idle_timer ()
-{
-  if (this->idle_timer_id_ != -1)
-    {
-      ACE_Reactor *reactor = this->orb_core ()->reactor ();
-      if (reactor)
-        {
-          if (TAO_debug_level > 6)
-            {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cancel_idle_timer, ")
-                      ACE_TEXT ("cancel idle timer with id [%d] ")
-                      ACE_TEXT ("from the reactor.\n"),
-                      this->id (), this->idle_timer_id_));
-            }
-          reactor->cancel_timer (this->idle_timer_id_);
-          this->idle_timer_id_ = -1;
-        }
-    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

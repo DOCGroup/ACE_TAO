@@ -1,8 +1,7 @@
 /**
  *  @file    Transport_Idle_Timer.h
  *
- * Reactor timer that fires when a transport has been idle for the
- * configured transport idle timeout period and triggers auto-close.
+ * Periodic reactor timer scanning a thread lane's transport cache.
  *
  *  @author  Johnny Willemsen
  */
@@ -21,26 +20,24 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Transport;
+class TAO_Thread_Lane_Resources;
 
 namespace TAO
 {
   /**
   * @class Transport_Idle_Timer
   *
-  * @brief One-shot reactor timer that closes an idle transport.
+  * @brief Periodic reactor timer scanning one thread lane's transport cache.
   *
-  * Created by TAO_Transport::schedule_idle_timer() when a transport
-  * enters the ENTRY_IDLE_AND_PURGABLE state.  Cancelled if the
-  * transport is reacquired for a new request before the timer fires.
+  * Owned and cancelled by TAO_Thread_Lane_Resources.
   */
   class Transport_Idle_Timer : public ACE_Event_Handler
   {
   public:
-    explicit Transport_Idle_Timer (TAO_Transport *transport);
+    explicit Transport_Idle_Timer (TAO_Thread_Lane_Resources *resources);
     ~Transport_Idle_Timer () override = default;
 
-    /// Reactor callback — close the transport if still idle.
+    /// Reactor callback: scan the cache for eligible idle transports.
     int handle_timeout (const ACE_Time_Value &current_time,
                         const void *act = nullptr) override;
 
@@ -51,8 +48,8 @@ namespace TAO
     Transport_Idle_Timer &operator= (Transport_Idle_Timer &&) = delete;
 
   private:
-    /// Transport this idle timer works on
-    TAO_Transport *transport_;
+    /// Thread lane owning this scanner
+    TAO_Thread_Lane_Resources *resources_;
   };
 }
 

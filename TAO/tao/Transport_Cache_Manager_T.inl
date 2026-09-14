@@ -64,7 +64,7 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_when_purgable (HASH_MAP_ENTRY *&entry)
   {
-    int retval = 0;
+    int retval = -1;
 
     if (entry)
     {

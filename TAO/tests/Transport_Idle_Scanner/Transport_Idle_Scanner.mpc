@@ -1,0 +1,11 @@
+project(server) : taoserver {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(client) : aceexe {
+  Source_Files {
+    client.cpp
+  }
+}
