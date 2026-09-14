@@ -257,7 +257,7 @@ public:
   virtual int transport_idle_timeout () const = 0;
 
   /// Interval in seconds between transport idle scans.
-  virtual int transport_idle_scan_interval () const { return 1; }
+  virtual int transport_idle_scan_interval () const = 0;
 
 protected:
   /**
