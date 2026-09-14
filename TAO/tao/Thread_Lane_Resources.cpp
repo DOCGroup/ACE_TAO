@@ -70,18 +70,7 @@ TAO_Thread_Lane_Resources::scan_idle_transports ()
   ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
   if (this->idle_scan_stopped_)
     return;
-  struct Snapshot
-  {
-    std::vector<TAO_Transport *> transports;
-    ~Snapshot ()
-    {
-      for (TAO_Transport *transport : this->transports)
-        transport->remove_reference ();
-    }
-  } snapshot;
-  this->transport_cache_->transport_snapshot (snapshot.transports);
-  for (TAO_Transport *transport : snapshot.transports)
-    transport->purge_if_idle (*this->transport_cache_);
+  this->transport_cache_->purge_idle_transports ();
 }
 
 TAO::Transport_Cache_Manager &

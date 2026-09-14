@@ -7,6 +7,7 @@
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
+#include <vector>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager_T.inl"
@@ -24,18 +25,34 @@ namespace TAO
 {
   template <typename TT, typename TRDT, typename PSTRAT>
   void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::transport_snapshot (
-    std::vector<transport_type *> &transports)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_idle_transports ()
   {
-    ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
-    transports.reserve (transports.size () + this->cache_map_.current_size ());
-    for (HASH_MAP_ITER iter = this->cache_map_.begin ();
-         iter != this->cache_map_.end (); ++iter)
+    struct Snapshot
+    {
+      std::vector<transport_type *> transports;
+      ~Snapshot ()
       {
-        transport_type *transport = iter->int_id_.transport ();
-        transport->add_reference ();
-        transports.push_back (transport);
+        for (transport_type *transport : this->transports)
+          transport->remove_reference ();
       }
+    } snapshot;
+
+    {
+      ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
+      snapshot.transports.reserve (this->cache_map_.current_size ());
+      for (HASH_MAP_ITER iter = this->cache_map_.begin ();
+           iter != this->cache_map_.end (); ++iter)
+        {
+          transport_type *transport = iter->int_id_.transport ();
+          transport->add_reference ();
+          snapshot.transports.push_back (transport);
+        }
+    }
+
+    // Purging modifies the cache and closes transports, so release the
+    // cache lock before checking the retained transports.
+    for (transport_type *transport : snapshot.transports)
+      transport->purge_if_idle (*this);
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>

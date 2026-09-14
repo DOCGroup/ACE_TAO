@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager_T.h"
-#include <vector>
 
 #include "tao/Cache_Entries_T.h"
 #include "tao/orbconf.h"
@@ -170,8 +169,9 @@ namespace TAO
     /// Return the underlying cache map
     HASH_MAP &map ();
 
-    /// Snapshot with one reference per transport; caller must release them.
-    void transport_snapshot (std::vector<transport_type *> &transports);
+    /// Purge idle transports, retaining references while checking them
+    /// outside the cache lock.
+    void purge_idle_transports ();
 
   private:
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
