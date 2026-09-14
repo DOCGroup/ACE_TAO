@@ -1061,9 +1061,6 @@ private:
    */
   bool using_blocking_io_for_asynch_messages() const;
 
-  /// Excludes idle purging while incoming state is being processed.
-  class Input_Activity_Guard;
-
 protected:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
@@ -1123,10 +1120,9 @@ protected:
   /// The timer ID
   long flush_timer_id_ { -1 };
 
-  /// Serializes input admission, activity timestamps and idle-close decisions.
+  /// Serializes activity timestamps and idle-close decisions.
   ACE_Thread_Mutex idle_state_lock_;
   std::chrono::steady_clock::time_point last_activity_ { std::chrono::steady_clock::now () };
-  unsigned int input_callbacks_ { 0 };
   bool idle_closing_ { false };
 
   /// The adapter used to receive timeout callbacks from the Reactor

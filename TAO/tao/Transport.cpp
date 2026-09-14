@@ -995,13 +995,12 @@ TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
       return;
     ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_state_lock_);
     const int timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
-    if (timeout <= 0 || this->idle_closing_ || this->input_callbacks_ != 0
+    if (timeout <= 0 || this->idle_closing_
         || std::chrono::steady_clock::now () - this->last_activity_
              < std::chrono::seconds (timeout))
       return;
 
-    // Input admission is excluded. No incoming queue can change until
-    // this decision is committed or the idle-state lock is released.
+    // Incoming state is not synchronized with receive processing here.
     TAO_Queued_Data *qd = nullptr;
     if (!this->queue_is_empty_i ()
         || this->incoming_message_queue_.queue_length () != 0
@@ -1746,47 +1745,10 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
  * All the methods relevant to the incoming data path of the ORB are
  * defined below
  */
-class TAO_Transport::Input_Activity_Guard
-{
-public:
-  explicit Input_Activity_Guard (TAO_Transport &transport)
-    : transport_ (transport)
-  {
-    if (transport.orb_core_->resource_factory ()->transport_idle_timeout () <= 0)
-      {
-        this->admitted_ = true;
-        return;
-      }
-    ACE_GUARD (ACE_Thread_Mutex, guard, this->transport_.idle_state_lock_);
-    if (!this->transport_.idle_closing_)
-      {
-        ++this->transport_.input_callbacks_;
-        this->admitted_ = true;
-        this->tracked_ = true;
-      }
-  }
-  ~Input_Activity_Guard ()
-  {
-    if (this->tracked_)
-      {
-        ACE_GUARD (ACE_Thread_Mutex, guard, this->transport_.idle_state_lock_);
-        --this->transport_.input_callbacks_;
-      }
-  }
-  bool admitted () const { return this->admitted_; }
-private:
-  TAO_Transport &transport_;
-  bool admitted_ { false };
-  bool tracked_ { false };
-};
-
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                              ACE_Time_Value * max_wait_time)
 {
-  Input_Activity_Guard activity (*this);
-  if (!activity.admitted ())
-    return -1;
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
