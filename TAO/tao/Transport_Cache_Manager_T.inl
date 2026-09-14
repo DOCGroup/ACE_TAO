@@ -64,36 +64,16 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_when_purgable (HASH_MAP_ENTRY *&entry)
   {
-    int retval = -1;
+    // Even the first read must be locked: a referenced scan candidate may
+    // have been removed from the cache since the snapshot was taken.
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
+    if (entry == nullptr || !this->is_entry_purgable_i (*entry))
+      return -1;
 
-    if (entry)
-    {
-      HASH_MAP_ENTRY* cached_entry = nullptr;
-      ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-      if (entry) // in case someone beat us to it (entry is reference to transport member)
-      {
-        // Only purge the entry when it is purgable
-        if (this->is_entry_purgable_i (*entry))
-          {
-            // Store the entry in a temporary and zero out the reference.
-            // If there is only one reference count for the transport, we will end up causing
-            // it's destruction.  And the transport can not be holding a cache map entry if
-            // that happens.
-            cached_entry = entry;
-            entry = nullptr;
-
-            // now it's save to really purge the entry
-            retval = this->purge_entry_i (cached_entry);
-          }
-        else
-          {
-            // Entry is not purgable at this moment
-            retval = -1;
-          }
-      }
-    }
-
-    return retval;
+    // Clear the transport's back pointer before releasing the cache reference.
+    HASH_MAP_ENTRY *cached_entry = entry;
+    entry = nullptr;
+    return this->purge_entry_i (cached_entry);
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
