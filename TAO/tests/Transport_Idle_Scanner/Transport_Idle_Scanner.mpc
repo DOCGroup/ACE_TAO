@@ -1,10 +1,12 @@
-project(server) : taoserver {
+project(Transport_Idle_Scanner_Server) : taoserver {
+  exename = server
   Source_Files {
     server.cpp
   }
 }
 
-project(client) : aceexe {
+project(Transport_Idle_Scanner_Client) : aceexe {
+  exename = client
   Source_Files {
     client.cpp
   }
