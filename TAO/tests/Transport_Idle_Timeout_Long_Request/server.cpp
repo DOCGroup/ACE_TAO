@@ -3,16 +3,16 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_time.h"
+#include <chrono>
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 void
 sleep_with_reactor (CORBA::ORB_ptr orb, int seconds)
 {
-  ACE_Time_Value const deadline = ACE_OS::gettimeofday () + ACE_Time_Value (seconds);
+  const auto deadline = std::chrono::steady_clock::now () + std::chrono::seconds (seconds);
 
-  while (ACE_OS::gettimeofday () < deadline)
+  while (std::chrono::steady_clock::now () < deadline)
     {
       ACE_Time_Value tv (0, 50000); // 50 ms slices
       orb->perform_work (tv);

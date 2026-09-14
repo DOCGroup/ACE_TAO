@@ -35,6 +35,7 @@ OnewayIdle_i::ping ()
                   size));
       this->test_failed_ = true;
     }
+  this->request_received_ = true;
 }
 
 bool

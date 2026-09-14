@@ -30,17 +30,13 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile ($iorbase);
 $client->DeleteFile ($iorbase);
 
-# The timeout is intentionally short. The first ping opens the transport
-# and is followed 1.5 seconds later by the second ping. Without the fix,
-# the server-side timer started when the transport was opened expires after
-# 2 seconds and the second request fails. With the fix, receiving the first
-# request restarts the server-side timer and the second request succeeds.
+# Server-only expiry: Y=2, X=2. Reuse across scans, then observe idle closure.
 my $server_args =
-    "-ORBSvcConf svc.conf -ORBdebuglevel $debug_level -ORBVerboseLogging 1 " .
+    "-ORBSvcConf server.conf -ORBdebuglevel $debug_level -ORBVerboseLogging 1 " .
     "-o $server_iorfile";
 
 my $client_args =
-    "-ORBdebuglevel $cdebug_level -ORBVerboseLogging 1 " .
+    "-ORBSvcConf client.conf -ORBdebuglevel $cdebug_level -ORBVerboseLogging 1 " .
     "-k file://$client_iorfile";
 
 $SV = $server->CreateProcess ("server", $server_args);
@@ -72,7 +68,7 @@ if ($client->PutFile ($iorbase) == -1) {
 }
 
 $client_status = $CL->SpawnWaitKill (
-    $client->ProcessStartWaitInterval () + 10);
+    $client->ProcessStartWaitInterval () + 20);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
