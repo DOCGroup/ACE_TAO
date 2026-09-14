@@ -853,8 +853,11 @@ public:
   /// Recheck idle age and pending work before removing from the supplied cache.
   void purge_if_idle (TAO::Transport_Cache_Manager &cache);
 
-  /// Record real I/O or synchronous dispatch activity using a steady clock.
+  /// Record cache acquisition, I/O or synchronous dispatch activity.
   void touch_activity ();
+
+  /// Check the configured idle timeout under the activity timestamp lock.
+  bool idle_timeout_expired ();
 
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size () const;

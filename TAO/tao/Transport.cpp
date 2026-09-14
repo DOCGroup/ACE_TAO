@@ -985,6 +985,16 @@ TAO_Transport::touch_activity ()
     }
 }
 
+bool
+TAO_Transport::idle_timeout_expired ()
+{
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->idle_state_lock_, false);
+  const int timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
+  return timeout > 0
+    && std::chrono::steady_clock::now () - this->last_activity_
+         >= std::chrono::seconds (timeout);
+}
+
 void
 TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
 {
@@ -993,11 +1003,7 @@ TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
     ACE_Guard<ACE_Lock> output_guard (*this->handler_lock_, false);
     if (!output_guard.locked ())
       return;
-    ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_state_lock_);
-    const int timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
-    if (timeout <= 0
-        || std::chrono::steady_clock::now () - this->last_activity_
-             < std::chrono::seconds (timeout))
+    if (!this->idle_timeout_expired ())
       return;
 
     // Incoming state is not synchronized with receive processing here.
@@ -1010,8 +1016,8 @@ TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
       return;
 
     // The cache lock inside this operation serializes against acquisition.
-    // Its existing purgability check includes the outgoing mux dispatchers.
-    if (cache.purge_entry_when_purgable (this->cache_map_entry_) == -1)
+    // Recheck idle age there so a completed cache acquisition cannot be missed.
+    if (cache.purge_entry_if_idle (this->cache_map_entry_) == -1)
       return;
   }
 

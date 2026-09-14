@@ -77,6 +77,21 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
+  ACE_INLINE int
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_if_idle (HASH_MAP_ENTRY *&entry)
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
+    // Match acquisition's lock order: cache lock, then activity lock.
+    if (entry == nullptr || !this->is_entry_purgable_i (*entry)
+        || !entry->int_id_.transport ()->idle_timeout_expired ())
+      return -1;
+
+    HASH_MAP_ENTRY *cached_entry = entry;
+    entry = nullptr;
+    return this->purge_entry_i (cached_entry);
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_connected (HASH_MAP_ENTRY *&entry, bool state)
   {
