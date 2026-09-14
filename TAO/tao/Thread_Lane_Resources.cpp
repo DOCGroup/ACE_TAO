@@ -49,7 +49,7 @@ TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources ()
 }
 
 bool
-TAO_Thread_Lane_Resources::start_idle_scanner (ACE_Reactor *reactor)
+TAO_Thread_Lane_Resources::start_idle_scanner ()
 {
   if (this->resource_factory ()->transport_idle_timeout () <= 0)
     return true;
@@ -59,8 +59,7 @@ TAO_Thread_Lane_Resources::start_idle_scanner (ACE_Reactor *reactor)
   if (this->idle_scan_timer_id_ != -1)
     return true;
   const ACE_Time_Value interval (this->resource_factory ()->transport_idle_scan_interval ());
-  this->idle_scan_reactor_ = reactor;
-  this->idle_scan_timer_id_ = reactor->schedule_timer (
+  this->idle_scan_timer_id_ = this->leader_follower ().reactor ()->schedule_timer (
     &this->idle_scanner_, nullptr, interval, interval);
   return this->idle_scan_timer_id_ != -1;
 }
@@ -403,7 +402,7 @@ TAO_Thread_Lane_Resources::finalize ()
     this->idle_scan_stopped_ = true;
     if (this->idle_scan_timer_id_ != -1)
       {
-        this->idle_scan_reactor_->cancel_timer (this->idle_scan_timer_id_);
+        this->leader_follower ().reactor ()->cancel_timer (this->idle_scan_timer_id_);
         this->idle_scan_timer_id_ = -1;
       }
   }

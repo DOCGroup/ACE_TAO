@@ -89,7 +89,7 @@ public:
   TAO::Transport_Cache_Manager &transport_cache ();
 
   /// Lazily start one repeating idle scanner for this lane/cache.
-  bool start_idle_scanner (ACE_Reactor *reactor);
+  bool start_idle_scanner ();
   void scan_idle_transports ();
 
   TAO_Leader_Follower &leader_follower ();
@@ -174,7 +174,6 @@ private:
 
   TAO::Transport_Idle_Timer idle_scanner_;
   ACE_Thread_Mutex idle_scan_lock_;
-  ACE_Reactor *idle_scan_reactor_ { nullptr };
   long idle_scan_timer_id_ { -1 };
   bool idle_scan_stopped_ { false };
 
