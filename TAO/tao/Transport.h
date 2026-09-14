@@ -1123,7 +1123,6 @@ protected:
   /// Serializes activity timestamps and idle-close decisions.
   ACE_Thread_Mutex idle_state_lock_;
   std::chrono::steady_clock::time_point last_activity_ { std::chrono::steady_clock::now () };
-  bool idle_closing_ { false };
 
   /// The adapter used to receive timeout callbacks from the Reactor
   TAO::Transport_Timer transport_timer_;

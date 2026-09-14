@@ -995,7 +995,7 @@ TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
       return;
     ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_state_lock_);
     const int timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
-    if (timeout <= 0 || this->idle_closing_
+    if (timeout <= 0
         || std::chrono::steady_clock::now () - this->last_activity_
              < std::chrono::seconds (timeout))
       return;
@@ -1013,7 +1013,6 @@ TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
     // Its existing purgability check includes the outgoing mux dispatchers.
     if (cache.purge_entry_when_purgable (this->cache_map_entry_) == -1)
       return;
-    this->idle_closing_ = true;
   }
 
   if (TAO_debug_level > 6)
@@ -1135,8 +1134,6 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 TAO_Transport::Drain_Result
 TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
 {
-  if (this->idle_closing_)
-    return DR_ERROR;
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
   // sent
@@ -1434,8 +1431,6 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
-  if (this->idle_closing_)
-    return -1;
   int ret = 0;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
