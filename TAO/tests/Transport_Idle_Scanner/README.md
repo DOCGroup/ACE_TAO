@@ -12,7 +12,7 @@ provide complementary request/reply and oneway coverage. Expiry assertions
 must allow the scan interval and reactor scheduling margin.
 
 Each thread-lane cache owns one scanner timer, starts it when the first
-transport opens, and cancels it when the cache closes. A scan takes a referenced
+transport is cached, and cancels it when the cache closes. A scan takes a referenced
 transport snapshot and makes a nonblocking attempt to acquire each transport's
 output lock.
 It releases the cache lock before closing a socket. Cache acquisition, activity timestamp updates and the
