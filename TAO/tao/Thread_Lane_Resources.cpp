@@ -43,7 +43,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
             orb_core.resource_factory ()->locked_transport_cache (),
             orb_core.orbid (),
             orb_core.resource_factory ()->transport_idle_timeout (),
-            orb_core.resource_factory ()->transport_idle_scan_interval ())));
+            orb_core.resource_factory ()->transport_idle_scan_interval ()));
 }
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources ()
