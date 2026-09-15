@@ -37,7 +37,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       mock_transport mytransport[transport_max];
       mock_tdi mytdi[transport_max];
       mock_ps* myps = new mock_ps(10);
-      TCM my_cache (purging_percentage, myps, cache_maximum, false, 0);
+      TCM my_cache (*orb->orb_core (), purging_percentage, myps,
+                    cache_maximum, false, 0, 0, 30);
 
       // Cache all transports in the cache
       for (i = 0; i < transport_max; i++)

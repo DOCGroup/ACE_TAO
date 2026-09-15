@@ -26,14 +26,14 @@ namespace TAO
 {
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::Transport_Cache_Manager_T (
+    TAO_ORB_Core &orb_core,
     int percent,
     purging_strategy *purging,
     size_t cache_maximum,
     bool locked,
     char const *orbid,
-    TAO_ORB_Core * const orb_core,
-    int const idle_timeout,
-    int const idle_scan_interval)
+    int idle_timeout,
+    int idle_scan_interval)
     : percent_ (percent)
     , purging_strategy_ (purging)
     , cache_map_ (cache_maximum)
@@ -171,18 +171,13 @@ namespace TAO
         return true;
       }
 
-    if (this->orb_core_ == nullptr)
-      {
-        return false;
-      }
-
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false));
     if (this->idle_scan_timer_id_ != -1)
       {
         return true;
       }
 
-    ACE_Reactor * const reactor = this->orb_core_->reactor ();
+    ACE_Reactor * const reactor = this->orb_core_.reactor ();
     if (reactor == nullptr)
       {
         return false;
@@ -201,7 +196,7 @@ namespace TAO
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (this->idle_scan_timer_id_ != -1)
       {
-        this->orb_core_->reactor ()->cancel_timer (this->idle_scan_timer_id_);
+        this->orb_core_.reactor ()->cancel_timer (this->idle_scan_timer_id_);
         this->idle_scan_timer_id_ = -1;
       }
   }

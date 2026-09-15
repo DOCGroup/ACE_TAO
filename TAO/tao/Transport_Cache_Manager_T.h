@@ -96,14 +96,14 @@ namespace TAO
     // == Public methods
     /// Constructor
     Transport_Cache_Manager_T (
+      TAO_ORB_Core &orb_core,
       int percent,
       purging_strategy* purging_strategy,
       size_t cache_maximum,
       bool locked,
       char const *orbid,
-      TAO_ORB_Core *orb_core = nullptr,
-      int const idle_timeout = 0,
-      int const idle_scan_interval = 30);
+      int idle_timeout,
+      int idle_scan_interval);
 
     /// Destructor
     ~Transport_Cache_Manager_T ();
@@ -293,7 +293,7 @@ namespace TAO
     size_t cache_maximum_;
 
     /// ORB core used to obtain the reactor when the scanner is first needed.
-    TAO_ORB_Core * const orb_core_;
+    TAO_ORB_Core &orb_core_;
 
     /// Idle timeout and periodic scan interval configured for this cache.
     int const idle_timeout_;
