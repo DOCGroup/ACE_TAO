@@ -60,7 +60,6 @@ namespace TAO
    */
   template <typename TT, typename TRDT, typename PSTRAT>
   class Transport_Cache_Manager_T
-    : private Transport_Idle_Timer_Handler
   {
   public:
     typedef TT transport_type;
@@ -183,14 +182,32 @@ namespace TAO
     void touch_activity (transport_type *transport);
 
   private:
+    /// Timer callback. Serialized with scanner shutdown.
+    void scan_idle_transports ();
+
+    /// Delegate reactor timer callbacks to the owning cache manager.
+    class Idle_Scanner_Handler final : public Transport_Idle_Timer_Handler
+    {
+    public:
+      explicit Idle_Scanner_Handler (Transport_Cache_Manager_T *manager)
+        : manager_ (manager)
+      {
+      }
+
+      void scan_idle_transports () override
+      {
+        this->manager_->scan_idle_transports ();
+      }
+
+    private:
+      Transport_Cache_Manager_T * const manager_;
+    };
+
     /// Purge a purgable entry only if its transport's idle timeout has expired.
     int purge_entry_if_idle (HASH_MAP_ENTRY *&entry);
 
     /// Lazily start this cache's repeating idle scanner.
     bool start_idle_scanner ();
-
-    /// Timer callback. Serialized with scanner shutdown.
-    void scan_idle_transports () override;
 
     /// Stop and cancel the scanner. May be called repeatedly.
     void stop_idle_scanner ();
@@ -289,6 +306,7 @@ namespace TAO
     int const idle_scan_interval_;
 
     /// Idle scanner lifecycle; independent of the cache-map lock.
+    Idle_Scanner_Handler idle_scanner_handler_;
     Transport_Idle_Timer idle_scanner_;
     ACE_Thread_Mutex idle_scan_lock_;
     ACE_Reactor *idle_scan_reactor_ { nullptr };
