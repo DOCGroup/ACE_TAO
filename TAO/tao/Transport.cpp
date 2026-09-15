@@ -32,6 +32,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Truncate.h"
+#include <chrono>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport.inl"
@@ -105,6 +106,13 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               id, location));
 }
 
+static std::int64_t
+monotonic_milliseconds ()
+{
+  return std::chrono::duration_cast<std::chrono::milliseconds> (
+    std::chrono::steady_clock::now ().time_since_epoch ()).count ();
+}
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
@@ -127,6 +135,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , tail_ (nullptr)
   , incoming_message_queue_ (orb_core)
   , current_deadline_ (ACE_Time_Value::zero)
+  , last_activity_ (monotonic_milliseconds ())
   , transport_timer_ (this)
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((size_t) this)
@@ -977,13 +986,8 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
 void
 TAO_Transport::touch_activity ()
 {
-  this->transport_cache_manager ().touch_activity (this);
-}
-
-void
-TAO_Transport::touch_activity_i ()
-{
-  this->last_activity_ = std::chrono::steady_clock::now ();
+  this->last_activity_.store (
+    monotonic_milliseconds (), std::memory_order_relaxed);
 }
 
 bool
@@ -991,8 +995,9 @@ TAO_Transport::idle_timeout_expired_i ()
 {
   int const timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
   return timeout > 0
-    && std::chrono::steady_clock::now () - this->last_activity_
-         >= std::chrono::seconds (timeout);
+    && monotonic_milliseconds ()
+         - this->last_activity_.load (std::memory_order_relaxed)
+         >= static_cast<std::int64_t> (timeout) * 1000;
 }
 
 bool

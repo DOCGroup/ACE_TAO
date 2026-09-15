@@ -172,9 +172,6 @@ namespace TAO
     /// Return the underlying cache map
     HASH_MAP &map ();
 
-    /// Record activity under the cache lock; caller must not already hold it.
-    void touch_activity (transport_type *transport);
-
   private:
     /// Delegate reactor timer callbacks directly to the owning cache manager.
     class TCM_Idle_Timer_Handler final : public ACE_Event_Handler
@@ -199,8 +196,9 @@ namespace TAO
     /// Purge an idle entry. Caller must hold the cache lock.
     int purge_entry_if_idle_i (HASH_MAP_ENTRY *entry);
 
-    /// Stop and cancel the scanner. Caller must hold the cache lock.
-    void stop_idle_scanner_i ();
+    /// Mark the scanner stopped and return its timer id.
+    /// Caller must hold the cache lock.
+    long stop_idle_scanner_i ();
 
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.

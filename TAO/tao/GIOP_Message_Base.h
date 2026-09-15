@@ -158,7 +158,7 @@ public:
 private:
   friend class TAO_Transport;
 
-  /// Called only while incoming processing is excluded by the transport.
+  /// Report whether fragmented input is pending for the idle scanner.
   bool has_pending_fragments () const
   {
     TAO_Queued_Data *qd = nullptr;

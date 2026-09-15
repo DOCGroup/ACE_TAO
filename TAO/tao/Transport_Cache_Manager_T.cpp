@@ -180,20 +180,12 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
-  void
+  long
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner_i ()
   {
-    if (this->idle_scan_timer_id_ != -1)
-      {
-        if (TAO_debug_level > 6)
-          {
-            TAOLIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-              ACE_TEXT ("stop_idle_scanner_i, canceling idle scanner\n")));
-          }
-        this->reactor_.cancel_timer (this->idle_scan_timer_id_);
-        this->idle_scan_timer_id_ = -1;
-      }
+    long const timer_id = this->idle_scan_timer_id_;
+    this->idle_scan_timer_id_ = -1;
+    return timer_id;
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
@@ -208,7 +200,7 @@ namespace TAO
         entry->item ().recycle_state (state);
         if (transport != nullptr)
           {
-            transport->touch_activity_i ();
+            transport->touch_activity ();
             if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING)
               {
                 entry->item ().is_connected (transport->is_connected ());
@@ -472,7 +464,7 @@ namespace TAO
       if (found == CACHE_FOUND_AVAILABLE)
         {
           // Acquiring an available transport is activity, even before I/O.
-          transport->touch_activity_i ();
+          transport->touch_activity ();
           // Update the purging strategy information while we
           // are holding our lock
           this->purging_strategy_->update_item (*transport);
@@ -486,7 +478,7 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle_i (HASH_MAP_ENTRY *entry)
   {
     // The caller holds the cache lock; do not acquire it again.
-    entry->item ().transport ()->touch_activity_i ();
+    entry->item ().transport ()->touch_activity ();
     entry->item ().recycle_state (ENTRY_IDLE_AND_PURGABLE);
 
     return 0;
@@ -505,7 +497,7 @@ namespace TAO
         return -1;
       }
 
-    entry->item ().transport ()->touch_activity_i ();
+    entry->item ().transport ()->touch_activity ();
     purging_strategy *st = this->purging_strategy_;
     (void) st->update_item (*(entry->item ().transport ()));
 
@@ -516,8 +508,6 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::close_i (Connection_Handler_Set &handlers)
   {
-    this->stop_idle_scanner_i ();
-
     HASH_MAP_ITER end_iter = this->cache_map_.end ();
 
     for (HASH_MAP_ITER iter = this->cache_map_.begin ();

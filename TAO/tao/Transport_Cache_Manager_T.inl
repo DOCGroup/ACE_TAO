@@ -30,7 +30,7 @@ namespace TAO
       retval = this->bind_i (ext_id, int_id);
       if (retval == 0)
         {
-          transport->touch_activity_i ();
+          transport->touch_activity ();
         }
     }
 
@@ -83,14 +83,6 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
-  ACE_INLINE void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::touch_activity (transport_type *transport)
-  {
-    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-    transport->touch_activity_i ();
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_if_idle_i (HASH_MAP_ENTRY *entry)
   {
@@ -115,7 +107,7 @@ namespace TAO
         transport_type * const transport = entry->item ().transport ();
         if (transport != nullptr)
           {
-            transport->touch_activity_i ();
+            transport->touch_activity ();
             if (TAO_debug_level > 9 && state != entry->item ().is_connected ())
               {
                 TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
@@ -165,12 +157,30 @@ namespace TAO
     if (this->cache_lock_ == 0)
       return -1;
 
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                              guard,
-                              *this->cache_lock_,
-                              -1));
+    long timer_id = -1;
+    int result = -1;
+    {
+      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                                guard,
+                                *this->cache_lock_,
+                                -1));
 
-    return this->close_i (handlers);
+      timer_id = this->stop_idle_scanner_i ();
+      result = this->close_i (handlers);
+    }
+
+    if (timer_id != -1)
+      {
+        if (TAO_debug_level > 6)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+              ACE_TEXT ("close, canceling idle scanner\n")));
+          }
+        this->reactor_.cancel_timer (timer_id);
+      }
+
+    return result;
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>

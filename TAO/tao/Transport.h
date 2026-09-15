@@ -24,7 +24,8 @@
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
-#include <chrono>
+#include <atomic>
+#include <cstdint>
 
 struct iovec;
 
@@ -1114,9 +1115,8 @@ protected:
   /// The timer ID
   long flush_timer_id_ { -1 };
 
-  /// Protected by the transport cache manager's lock after construction.
-  /// Activity updates must use the same lane cache as the transport.
-  std::chrono::steady_clock::time_point last_activity_ { std::chrono::steady_clock::now () };
+  /// Monotonic activity timestamp in milliseconds.
+  std::atomic<std::int64_t> last_activity_;
 
   /// The adapter used to receive timeout callbacks from the Reactor
   TAO::Transport_Timer transport_timer_;
@@ -1169,8 +1169,7 @@ private:
   /// Record cache acquisition, I/O or synchronous dispatch activity.
   void touch_activity ();
 
-  /// Caller must hold the owning cache lock; these helpers do not lock.
-  void touch_activity_i ();
+  /// Check the monotonic activity timestamp.
   bool idle_timeout_expired_i ();
 
   /// Caller must hold the owning transport cache manager's lock.
