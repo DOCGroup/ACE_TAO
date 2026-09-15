@@ -977,8 +977,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
 void
 TAO_Transport::touch_activity ()
 {
-  if (this->orb_core_->resource_factory ()->transport_idle_timeout () > 0)
-    this->transport_cache_manager ().touch_activity (this);
+  this->transport_cache_manager ().touch_activity (this);
 }
 
 void

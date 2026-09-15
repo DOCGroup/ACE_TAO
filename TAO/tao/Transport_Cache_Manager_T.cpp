@@ -29,8 +29,12 @@ namespace TAO
   bool
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner (
     ACE_Reactor *reactor,
+    int idle_timeout,
     int scan_interval)
   {
+    if (idle_timeout <= 0)
+      return true;
+
     ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->idle_scan_lock_, false);
     if (this->idle_scan_stopped_)
       return false;

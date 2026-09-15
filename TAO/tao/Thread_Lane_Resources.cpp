@@ -50,10 +50,9 @@ TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources ()
 bool
 TAO_Thread_Lane_Resources::start_idle_scanner ()
 {
-  if (this->resource_factory ()->transport_idle_timeout () <= 0)
-    return true;
   return this->transport_cache_->start_idle_scanner (
     this->leader_follower ().reactor (),
+    this->resource_factory ()->transport_idle_timeout (),
     this->resource_factory ()->transport_idle_scan_interval ());
 }
 

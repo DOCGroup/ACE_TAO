@@ -176,7 +176,9 @@ namespace TAO
     HASH_MAP &map ();
 
     /// Lazily start and stop this cache's repeating idle scanner.
-    bool start_idle_scanner (ACE_Reactor *reactor, int scan_interval);
+    bool start_idle_scanner (ACE_Reactor *reactor,
+                             int idle_timeout,
+                             int scan_interval);
     void stop_idle_scanner (ACE_Reactor *reactor);
 
     /// Purge idle transports, retaining references while checking them
