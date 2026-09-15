@@ -175,11 +175,10 @@ namespace TAO
     /// Return the underlying cache map
     HASH_MAP &map ();
 
-    /// Lazily start and stop this cache's repeating idle scanner.
-    bool start_idle_scanner (ACE_Reactor *reactor,
-                             int idle_timeout,
-                             int scan_interval);
-    void stop_idle_scanner (ACE_Reactor *reactor);
+    /// Lazily start this cache's repeating idle scanner.
+    bool start_idle_scanner (ACE_Reactor * const reactor,
+                             int const idle_timeout,
+                             int const scan_interval);
 
     /// Purge idle transports, retaining references while checking them
     /// outside the cache lock.
@@ -191,6 +190,9 @@ namespace TAO
   private:
     /// Timer callback. Serialized with scanner shutdown.
     void scan_idle_transports () override;
+
+    /// Stop and cancel the scanner. May be called repeatedly.
+    void stop_idle_scanner ();
 
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.
@@ -281,6 +283,7 @@ namespace TAO
     /// Idle scanner lifecycle; independent of the cache-map lock.
     Transport_Idle_Timer idle_scanner_;
     ACE_Thread_Mutex idle_scan_lock_;
+    ACE_Reactor *idle_scan_reactor_ { nullptr };
     long idle_scan_timer_id_ { -1 };
     bool idle_scan_stopped_ { false };
 

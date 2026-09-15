@@ -47,15 +47,6 @@ TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources ()
 {
 }
 
-bool
-TAO_Thread_Lane_Resources::start_idle_scanner ()
-{
-  return this->transport_cache_->start_idle_scanner (
-    this->leader_follower ().reactor (),
-    this->resource_factory ()->transport_idle_timeout (),
-    this->resource_factory ()->transport_idle_scan_interval ());
-}
-
 TAO::Transport_Cache_Manager &
 TAO_Thread_Lane_Resources::transport_cache ()
 {
@@ -369,11 +360,6 @@ TAO_Thread_Lane_Resources::resource_factory ()
 void
 TAO_Thread_Lane_Resources::finalize ()
 {
-  ACE_Reactor *reactor =
-    this->leader_follower_ == nullptr
-      ? nullptr
-      : this->leader_follower_->reactor ();
-  this->transport_cache_->stop_idle_scanner (reactor);
   // Close connectors before acceptors!
   // Ask the registry to close all registered connectors.
   if (this->connector_registry_ != nullptr)

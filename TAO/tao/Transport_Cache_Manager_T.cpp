@@ -28,9 +28,9 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   bool
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner (
-    ACE_Reactor *reactor,
-    int idle_timeout,
-    int scan_interval)
+    ACE_Reactor * const reactor,
+    int const idle_timeout,
+    int const scan_interval)
   {
     if (idle_timeout <= 0)
       return true;
@@ -41,25 +41,27 @@ namespace TAO
     if (this->idle_scan_timer_id_ != -1)
       return true;
 
-    const ACE_Time_Value interval (scan_interval);
+    ACE_Time_Value const interval (scan_interval);
     this->idle_scan_timer_id_ = reactor->schedule_timer (
       &this->idle_scanner_, nullptr, interval, interval);
+    if (this->idle_scan_timer_id_ != -1)
+      this->idle_scan_reactor_ = reactor;
     return this->idle_scan_timer_id_ != -1;
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
   void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner (
-    ACE_Reactor *reactor)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner ()
   {
     ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
     this->idle_scan_stopped_ = true;
     if (this->idle_scan_timer_id_ != -1)
       {
-        ACE_ASSERT (reactor != nullptr);
-        if (reactor != nullptr)
-          reactor->cancel_timer (this->idle_scan_timer_id_);
+        ACE_ASSERT (this->idle_scan_reactor_ != nullptr);
+        if (this->idle_scan_reactor_ != nullptr)
+          this->idle_scan_reactor_->cancel_timer (this->idle_scan_timer_id_);
         this->idle_scan_timer_id_ = -1;
+        this->idle_scan_reactor_ = nullptr;
       }
   }
 
@@ -158,6 +160,8 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T ()
   {
+    this->stop_idle_scanner ();
+
     delete this->cache_lock_;
     this->cache_lock_ = nullptr;
 

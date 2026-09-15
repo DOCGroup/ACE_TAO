@@ -86,9 +86,6 @@ public:
   /// Get the transport cache
   TAO::Transport_Cache_Manager &transport_cache ();
 
-  /// Lazily start the repeating scanner owned by this lane's cache.
-  bool start_idle_scanner ();
-
   TAO_Leader_Follower &leader_follower ();
 
   /**

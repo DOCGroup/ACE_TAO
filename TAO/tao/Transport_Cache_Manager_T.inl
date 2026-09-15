@@ -145,6 +145,8 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     close (Connection_Handler_Set &handlers)
   {
+    this->stop_idle_scanner ();
+
     // The cache lock pointer should only be zero if
     // Transport_Cache_Manager_T::open() was never called.  Note that
     // only one thread opens the Transport_Cache_Manager_T at any given

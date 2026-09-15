@@ -43,8 +43,8 @@ namespace TAO
     ~Transport_Idle_Timer () override = default;
 
     /// Reactor callback: scan the cache for eligible idle transports.
-    int handle_timeout (const ACE_Time_Value &current_time,
-                        const void *act = nullptr) override;
+    int handle_timeout (ACE_Time_Value const &current_time,
+                        void const *act = nullptr) override;
 
     Transport_Idle_Timer () = delete;
     Transport_Idle_Timer (const Transport_Idle_Timer &) = delete;

@@ -12,7 +12,7 @@ namespace TAO
   }
 
   int
-  Transport_Idle_Timer::handle_timeout (const ACE_Time_Value &, const void*)
+  Transport_Idle_Timer::handle_timeout (ACE_Time_Value const &, void const *)
   {
     try
       {

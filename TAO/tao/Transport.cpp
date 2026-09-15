@@ -989,7 +989,7 @@ TAO_Transport::touch_activity_i ()
 bool
 TAO_Transport::idle_timeout_expired_i ()
 {
-  const int timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
+  int const timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
   return timeout > 0
     && std::chrono::steady_clock::now () - this->last_activity_
          >= std::chrono::seconds (timeout);
@@ -2889,7 +2889,12 @@ TAO_Transport::post_open (size_t id)
   this->transport_cache_manager ().set_entry_state (this->cache_map_entry_, TAO::ENTRY_IDLE_AND_PURGABLE);
 
   this->touch_activity ();
-  if (!this->orb_core_->lane_resources ().start_idle_scanner ())
+  TAO_Resource_Factory * const resource_factory =
+    this->orb_core_->resource_factory ();
+  if (!this->transport_cache_manager ().start_idle_scanner (
+        this->orb_core_->reactor (),
+        resource_factory->transport_idle_timeout (),
+        resource_factory->transport_idle_scan_interval ()))
     return false;
 
   return true;
