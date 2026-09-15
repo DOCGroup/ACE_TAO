@@ -13,8 +13,8 @@ must allow the scan interval and reactor scheduling margin.
 
 The scanner uses one timer per thread-lane cache, a referenced transport
 snapshot, and a nonblocking attempt to acquire each transport's output lock.
-It releases the cache lock before closing a socket. Cache acquisition and the
-final idle-age check take the cache lock before the activity timestamp lock.
+It releases the cache lock before closing a socket. Cache acquisition, activity timestamp updates and the
+final idle-age check use the owning transport cache manager's lock.
 Incoming-state checks are not synchronized with receive processing, and active
 input callbacks do not receive additional protection. Configure Y above the
 maximum request duration, including blocking, queuing and scheduling delays.

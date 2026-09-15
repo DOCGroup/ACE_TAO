@@ -176,6 +176,9 @@ namespace TAO
     /// outside the cache lock.
     void purge_idle_transports ();
 
+    /// Record activity under the cache lock; caller must not already hold it.
+    void touch_activity (transport_type *transport);
+
   private:
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.

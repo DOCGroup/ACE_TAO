@@ -856,9 +856,6 @@ public:
   /// Record cache acquisition, I/O or synchronous dispatch activity.
   void touch_activity ();
 
-  /// Check the configured idle timeout under the activity timestamp lock.
-  bool idle_timeout_expired ();
-
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size () const;
 
@@ -1071,6 +1068,9 @@ protected:
   /// Global orbcore resource.
   TAO_ORB_Core * const orb_core_;
 
+  /// Owning lane cache, retained so other threads use the same cache lock.
+  TAO::Transport_Cache_Manager &transport_cache_manager_;
+
   /// Our entry in the cache. We don't own this. It is here for our
   /// convenience. We cannot just change things around.
   TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
@@ -1123,8 +1123,7 @@ protected:
   /// The timer ID
   long flush_timer_id_ { -1 };
 
-  /// Serializes activity timestamps and idle-close decisions.
-  ACE_Thread_Mutex idle_state_lock_;
+  /// Protected by transport_cache_manager_'s lock after construction.
   std::chrono::steady_clock::time_point last_activity_ { std::chrono::steady_clock::now () };
 
   /// The adapter used to receive timeout callbacks from the Reactor
@@ -1170,6 +1169,15 @@ protected:
   /// Note that this could result in violate the "at most once" CORBA
   /// semantics.
   bool connection_closed_on_read_;
+
+private:
+  template <typename TT, typename TRDT, typename PSTRAT>
+  friend class TAO::Transport_Cache_Manager_T;
+
+  /// Caller must hold the owning cache lock; these helpers do not lock.
+  void touch_activity_i ();
+  bool idle_timeout_expired_i ();
+
 
 private:
   /// Our messaging object.

@@ -393,7 +393,7 @@ namespace TAO
       if (found == CACHE_FOUND_AVAILABLE)
         {
           // Acquiring an available transport is activity, even before I/O.
-          transport->touch_activity ();
+          transport->touch_activity_i ();
           // Update the purging strategy information while we
           // are holding our lock
           this->purging_strategy_->update_item (*transport);

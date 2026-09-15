@@ -118,6 +118,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               size_t input_cdr_size)
   : tag_ (tag)
   , orb_core_ (orb_core)
+  , transport_cache_manager_ (orb_core->lane_resources ().transport_cache ())
   , cache_map_entry_ (nullptr)
   , tms_ (nullptr)
   , ws_ (nullptr)
@@ -979,16 +980,18 @@ void
 TAO_Transport::touch_activity ()
 {
   if (this->orb_core_->resource_factory ()->transport_idle_timeout () > 0)
-    {
-      ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_state_lock_);
-      this->last_activity_ = std::chrono::steady_clock::now ();
-    }
+    this->transport_cache_manager_.touch_activity (this);
+}
+
+void
+TAO_Transport::touch_activity_i ()
+{
+  this->last_activity_ = std::chrono::steady_clock::now ();
 }
 
 bool
-TAO_Transport::idle_timeout_expired ()
+TAO_Transport::idle_timeout_expired_i ()
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->idle_state_lock_, false);
   const int timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
   return timeout > 0
     && std::chrono::steady_clock::now () - this->last_activity_
@@ -1002,8 +1005,6 @@ TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
     // Never wait for a sender: a slow write must not stall the entire scan.
     ACE_Guard<ACE_Lock> output_guard (*this->handler_lock_, false);
     if (!output_guard.locked ())
-      return;
-    if (!this->idle_timeout_expired ())
       return;
 
     // Incoming state is not synchronized with receive processing here.
@@ -2734,7 +2735,7 @@ TAO_Transport::notify_reactor_now ()
 TAO::Transport_Cache_Manager &
 TAO_Transport::transport_cache_manager ()
 {
-  return this->orb_core_->lane_resources ().transport_cache ();
+  return this->transport_cache_manager_;
 }
 
 void
