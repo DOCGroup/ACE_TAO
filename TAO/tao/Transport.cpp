@@ -983,8 +983,7 @@ TAO_Transport::touch_activity ()
 void
 TAO_Transport::touch_activity_i ()
 {
-  if (this->orb_core_->resource_factory ()->transport_idle_timeout () > 0)
-    this->last_activity_ = std::chrono::steady_clock::now ();
+  this->last_activity_ = std::chrono::steady_clock::now ();
 }
 
 bool
