@@ -2508,6 +2508,8 @@ int
 TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
                                         TAO_Resume_Handle &rh)
 {
+  this->touch_activity ();
+
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -2538,7 +2540,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       return -1;
     case GIOP::Request:
     case GIOP::LocateRequest:
-      this->touch_activity ();
       // Let us resume the handle before we go ahead to process the
       // request. This will open up the handle for other threads.
       rh.resume_handle ();
@@ -2549,7 +2550,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           // closing connection and the necessary memory management.
           return -1;
         }
-      this->touch_activity ();
       break;
     case GIOP::Reply:
     case GIOP::LocateReply:
@@ -2606,6 +2606,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     case GIOP::Fragment:
       break;
     }
+
+  this->touch_activity ();
 
   // If not, just return back..
   return 0;
