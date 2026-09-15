@@ -84,8 +84,6 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T ()
   {
-    this->stop_idle_scanner ();
-
     delete this->cache_lock_;
     this->cache_lock_ = nullptr;
 
@@ -191,9 +189,8 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner ()
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner_i ()
   {
-    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (this->idle_scan_timer_id_ != -1)
       {
         this->orb_core_.reactor ()->cancel_timer (this->idle_scan_timer_id_);
@@ -521,6 +518,8 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::close_i (Connection_Handler_Set &handlers)
   {
+    this->stop_idle_scanner_i ();
+
     HASH_MAP_ITER end_iter = this->cache_map_.end ();
 
     for (HASH_MAP_ITER iter = this->cache_map_.begin ();

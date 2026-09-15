@@ -203,8 +203,8 @@ namespace TAO
     /// Lazily start this cache's repeating idle scanner.
     bool start_idle_scanner ();
 
-    /// Stop and cancel the scanner. May be called repeatedly.
-    void stop_idle_scanner ();
+    /// Stop and cancel the scanner. Caller must hold the cache lock.
+    void stop_idle_scanner_i ();
 
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.
