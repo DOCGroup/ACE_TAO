@@ -3,6 +3,7 @@
 #include "tao/Connection_Purging_Strategy.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Condition.h"
+#include "tao/ORB_Core.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -27,13 +28,13 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   bool
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner (
-    ACE_Reactor * const reactor,
-    int const idle_timeout,
-    int const scan_interval)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner ()
   {
-    if (idle_timeout <= 0)
+    if (this->idle_timeout_ <= 0)
       return true;
+
+    if (this->orb_core_ == nullptr)
+      return false;
 
     ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->idle_scan_lock_, false);
     if (this->idle_scan_stopped_)
@@ -41,7 +42,11 @@ namespace TAO
     if (this->idle_scan_timer_id_ != -1)
       return true;
 
-    ACE_Time_Value const interval (scan_interval);
+    ACE_Reactor * const reactor = this->orb_core_->reactor ();
+    if (reactor == nullptr)
+      return false;
+
+    ACE_Time_Value const interval (this->idle_scan_interval_);
     this->idle_scan_timer_id_ = reactor->schedule_timer (
       &this->idle_scanner_, nullptr, interval, interval);
     if (this->idle_scan_timer_id_ != -1)
@@ -112,12 +117,18 @@ namespace TAO
     purging_strategy *purging,
     size_t cache_maximum,
     bool locked,
-    const char *orbid)
+    char const *orbid,
+    TAO_ORB_Core * const orb_core,
+    int const idle_timeout,
+    int const idle_scan_interval)
     : percent_ (percent)
     , purging_strategy_ (purging)
     , cache_map_ (cache_maximum)
     , cache_lock_ (nullptr)
     , cache_maximum_ (cache_maximum)
+    , orb_core_ (orb_core)
+    , idle_timeout_ (idle_timeout)
+    , idle_scan_interval_ (idle_scan_interval)
     , idle_scanner_ (this)
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     , purge_monitor_ (0)

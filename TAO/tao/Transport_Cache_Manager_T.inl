@@ -30,6 +30,9 @@ namespace TAO
       retval = this->bind_i (ext_id, int_id);
     }
 
+    if (retval == 0 && !this->start_idle_scanner ())
+      return -1;
+
     return retval;
   }
 

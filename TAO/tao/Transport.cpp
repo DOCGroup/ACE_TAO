@@ -2889,14 +2889,6 @@ TAO_Transport::post_open (size_t id)
   this->transport_cache_manager ().set_entry_state (this->cache_map_entry_, TAO::ENTRY_IDLE_AND_PURGABLE);
 
   this->touch_activity ();
-  TAO_Resource_Factory * const resource_factory =
-    this->orb_core_->resource_factory ();
-  if (!this->transport_cache_manager ().start_idle_scanner (
-        this->orb_core_->reactor (),
-        resource_factory->transport_idle_timeout (),
-        resource_factory->transport_idle_scan_interval ()))
-    return false;
-
   return true;
 }
 

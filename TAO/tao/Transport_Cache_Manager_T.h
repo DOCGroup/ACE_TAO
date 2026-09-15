@@ -39,6 +39,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Connection_Handler;
+class TAO_ORB_Core;
 class TAO_Resource_Factory;
 
 template <class ACE_COND_MUTEX> class TAO_Condition;
@@ -101,7 +102,10 @@ namespace TAO
       purging_strategy* purging_strategy,
       size_t cache_maximum,
       bool locked,
-      const char *orbid);
+      char const *orbid,
+      TAO_ORB_Core *orb_core = nullptr,
+      int const idle_timeout = 0,
+      int const idle_scan_interval = 0);
 
     /// Destructor
     ~Transport_Cache_Manager_T ();
@@ -175,11 +179,6 @@ namespace TAO
     /// Return the underlying cache map
     HASH_MAP &map ();
 
-    /// Lazily start this cache's repeating idle scanner.
-    bool start_idle_scanner (ACE_Reactor * const reactor,
-                             int const idle_timeout,
-                             int const scan_interval);
-
     /// Purge idle transports, retaining references while checking them
     /// outside the cache lock.
     void purge_idle_transports ();
@@ -188,6 +187,9 @@ namespace TAO
     void touch_activity (transport_type *transport);
 
   private:
+    /// Lazily start this cache's repeating idle scanner.
+    bool start_idle_scanner ();
+
     /// Timer callback. Serialized with scanner shutdown.
     void scan_idle_transports () override;
 
@@ -279,6 +281,13 @@ namespace TAO
 
     /// Maximum size of the cache
     size_t cache_maximum_;
+
+    /// ORB core used to obtain the reactor when the scanner is first needed.
+    TAO_ORB_Core * const orb_core_;
+
+    /// Idle timeout and periodic scan interval configured for this cache.
+    int const idle_timeout_;
+    int const idle_scan_interval_;
 
     /// Idle scanner lifecycle; independent of the cache-map lock.
     Transport_Idle_Timer idle_scanner_;
