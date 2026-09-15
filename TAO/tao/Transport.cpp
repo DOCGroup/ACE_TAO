@@ -557,7 +557,6 @@ TAO_Transport::make_idle ()
                   this->id ()));
     }
 
-  this->touch_activity ();
   return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
 }
 

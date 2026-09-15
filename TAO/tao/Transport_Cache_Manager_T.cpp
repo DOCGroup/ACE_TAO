@@ -406,6 +406,8 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle_i (HASH_MAP_ENTRY *entry)
   {
+    // The caller holds the cache lock; do not acquire it again.
+    entry->item ().transport ()->touch_activity_i ();
     entry->item ().recycle_state (ENTRY_IDLE_AND_PURGABLE);
 
     return 0;
