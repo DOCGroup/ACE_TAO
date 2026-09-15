@@ -24,7 +24,9 @@ bool expect_open (ACE_SOCK_Stream &stream, bool open)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 2)
-    return 1;
+    {
+      return 1;
+    }
   ACE_INET_Addr address (argv[1]);
   ACE_SOCK_Connector connector;
   ACE_SOCK_Stream idle, partial, fragmented;
@@ -32,7 +34,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (connector.connect (idle, address, &connect_timeout) == -1
       || connector.connect (partial, address, &connect_timeout) == -1
       || connector.connect (fragmented, address, &connect_timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) connect failed: %m\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) connect failed: %m\n")), 1);
+    }
 
   // Big-endian GIOP 1.2 CancelRequest, request id 1.
   const unsigned char cancel[] = {
@@ -44,7 +48,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   };
   if (partial.send_n (cancel, 6) != 6
       || fragmented.send_n (fragment, sizeof fragment) != sizeof fragment)
-    return 1;
+    {
+      return 1;
+    }
 
   // Y=2, X=2: eligible idle sockets should close within ~4 seconds.
   ACE_OS::sleep (1);
@@ -59,7 +65,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Both transports must then become eligible for eventual idle closure.
   if (partial.send_n (cancel + 6, sizeof cancel - 6) != sizeof cancel - 6
       || fragmented.send_n (cancel, sizeof cancel) != sizeof cancel)
-    return 1;
+    {
+      return 1;
+    }
   ACE_OS::sleep (1);
   ok = expect_open (partial, true) && expect_open (fragmented, true) && ok;
   ACE_OS::sleep (4);

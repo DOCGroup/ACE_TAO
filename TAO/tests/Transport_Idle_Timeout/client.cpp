@@ -82,8 +82,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
             -1);
       }
   if (timeout_sec < 2 || scan_interval_sec < 1 || loop_count < 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) require -t >= 2, -x >= 1 and -n >= 1\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_TEXT ("(%P|%t) require -t >= 2, -x >= 1 and -n >= 1\n")), -1);
+    }
   if (ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT ("(%P|%t) client: -k <IOR> is required\n")), -1);

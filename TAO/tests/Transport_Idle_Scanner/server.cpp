@@ -11,14 +11,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       const ACE_TCHAR *ready = ACE_TEXT ("ready");
       ACE_Get_Opt options (argc, argv, ACE_TEXT ("o:"));
       if (options () == 'o')
-        ready = options.opt_arg ();
+        {
+          ready = options.opt_arg ();
+        }
       CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa = PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var manager = poa->the_POAManager ();
       manager->activate ();
       FILE *file = ACE_OS::fopen (ready, ACE_TEXT ("w"));
       if (!file)
-        return 1;
+        {
+          return 1;
+        }
       ACE_OS::fputs ("ready\n", file);
       ACE_OS::fclose (file);
       ACE_Time_Value runtime (40);

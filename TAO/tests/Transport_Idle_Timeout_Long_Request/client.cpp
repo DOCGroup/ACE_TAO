@@ -93,7 +93,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test->ping ();
       run_for (orb.in (), 3);
       if (!expect_cache (orb.in (), 1))
-        return 1;
+        {
+          return 1;
+        }
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: long_request\n")));
       test->long_request ();
 
@@ -102,11 +104,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       run_for (orb.in (), 3);
       if (!expect_cache (orb.in (), 1)
           || !wait_for_idle_close (orb.in (), 4 + 1 + 1))
-        return 1;
+        {
+          return 1;
+        }
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: reconnect after idle scan\n")));
       test->ping ();
       if (!expect_cache (orb.in (), 1))
-        return 1;
+        {
+          return 1;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: shutdown\n"));
       test->shutdown ();

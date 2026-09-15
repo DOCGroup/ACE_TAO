@@ -83,8 +83,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           orb->perform_work (slice);
         }
       if (!impl->request_received ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-          ACE_TEXT ("(%P|%t) ERROR: oneway request was not received\n")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT ("(%P|%t) ERROR: oneway request was not received\n")), 1);
+        }
 
       TAO_Resource_Factory *factory = orb->orb_core ()->resource_factory ();
       ACE_Time_Value run_time (factory->transport_idle_timeout ()

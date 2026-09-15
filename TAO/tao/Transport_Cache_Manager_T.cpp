@@ -46,18 +46,26 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner ()
   {
     if (this->idle_timeout_ <= 0)
-      return true;
+      {
+        return true;
+      }
 
     if (this->orb_core_ == nullptr)
-      return false;
+      {
+        return false;
+      }
 
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false));
     if (this->idle_scan_timer_id_ != -1)
-      return true;
+      {
+        return true;
+      }
 
     ACE_Reactor * const reactor = this->orb_core_->reactor ();
     if (reactor == nullptr)
-      return false;
+      {
+        return false;
+      }
 
     ACE_Time_Value const interval (this->idle_scan_interval_);
     this->idle_scan_timer_id_ = reactor->schedule_timer (
@@ -112,7 +120,9 @@ namespace TAO
           // Never wait for a sender: a slow write must not stall the scan.
           ACE_Guard<ACE_Lock> output_guard (*transport->handler_lock_, false);
           if (!output_guard.locked () || !transport->is_idle ())
-            continue;
+            {
+              continue;
+            }
 
           // Recheck the idle age under the cache lock so a completed cache
           // acquisition cannot be missed.
@@ -123,10 +133,12 @@ namespace TAO
         if (purged)
           {
             if (TAO_debug_level > 6)
-              TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
-                transport->id ()));
+              {
+                TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+                  ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
+                  transport->id ()));
+              }
             transport->close_connection ();
           }
       }
@@ -222,7 +234,9 @@ namespace TAO
           {
             transport->touch_activity_i ();
             if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING)
-              entry->item ().is_connected (transport->is_connected ());
+              {
+                entry->item ().is_connected (transport->is_connected ());
+              }
           }
       }
   }
@@ -511,7 +525,9 @@ namespace TAO
                               *this->cache_lock_, -1));
 
     if (!entry)
-      return -1;
+      {
+        return -1;
+      }
 
     entry->item ().transport ()->touch_activity_i ();
     purging_strategy *st = this->purging_strategy_;

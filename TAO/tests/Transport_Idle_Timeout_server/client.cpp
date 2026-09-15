@@ -106,17 +106,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               run_for (orb.in (), 1);
               if (!expect_cache (orb.in (), 1))
-                return 1;
+                {
+                  return 1;
+                }
             }
           test->ping ();
         }
 
       // Then stop all requests and let the server scanner close the connection.
       if (!wait_for_idle_close (orb.in (), 2 + 2 + 1))
-        return 1;
+        {
+          return 1;
+        }
       test->ping ();
       if (!expect_cache (orb.in (), 1))
-        return 1;
+        {
+          return 1;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: shutdown\n"));
       test->shutdown ();

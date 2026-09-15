@@ -486,7 +486,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (0 == ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("-ORBTransportIdleScanInterval")))
       {
         if (++curarg == argc)
-          return -1;
+          {
+            return -1;
+          }
         this->transport_idle_scan_interval_ = ACE_OS::atoi (argv[curarg]);
         if (this->transport_idle_scan_interval_ <= 0)
           {

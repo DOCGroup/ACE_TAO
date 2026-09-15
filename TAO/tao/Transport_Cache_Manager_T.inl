@@ -31,7 +31,9 @@ namespace TAO
     }
 
     if (retval == 0 && !this->start_idle_scanner ())
-      return -1;
+      {
+        return -1;
+      }
 
     return retval;
   }
@@ -71,7 +73,9 @@ namespace TAO
     // have been removed from the cache since the snapshot was taken.
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
     if (entry == nullptr || !this->is_entry_purgable_i (*entry))
-      return -1;
+      {
+        return -1;
+      }
 
     // Clear the transport's back pointer before releasing the cache reference.
     HASH_MAP_ENTRY *cached_entry = entry;
@@ -95,7 +99,9 @@ namespace TAO
     // Read the timestamp under the same lock used for activity updates.
     if (entry == nullptr || !this->is_entry_purgable_i (*entry)
         || !entry->int_id_.transport ()->idle_timeout_expired_i ())
-      return -1;
+      {
+        return -1;
+      }
 
     HASH_MAP_ENTRY *cached_entry = entry;
     entry = nullptr;
@@ -111,13 +117,17 @@ namespace TAO
       {
         transport_type * const transport = entry->item ().transport ();
         if (transport != nullptr)
-          transport->touch_activity_i ();
+          {
+            transport->touch_activity_i ();
+          }
         if (TAO_debug_level > 9 && transport != nullptr
             && state != entry->item ().is_connected ())
-          TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
-                      ACE_TEXT ("::mark_connected, %s Transport[%d]\n"),
-                      (state ? ACE_TEXT("true") : ACE_TEXT("false")),
-                      transport->id ()));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
+                        ACE_TEXT ("::mark_connected, %s Transport[%d]\n"),
+                        (state ? ACE_TEXT("true") : ACE_TEXT("false")),
+                        transport->id ()));
+          }
         entry->item().is_connected (state);
       }
   }
