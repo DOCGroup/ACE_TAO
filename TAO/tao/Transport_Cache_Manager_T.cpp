@@ -108,7 +108,30 @@ namespace TAO
     // Purging modifies the cache and closes transports, so release the
     // cache lock before checking the retained transports.
     for (transport_type *transport : snapshot.transports)
-      transport->purge_if_idle (*this);
+      {
+        bool purged = false;
+        {
+          // Never wait for a sender: a slow write must not stall the scan.
+          ACE_Guard<ACE_Lock> output_guard (*transport->handler_lock_, false);
+          if (!output_guard.locked () || !transport->is_idle ())
+            continue;
+
+          // Recheck the idle age under the cache lock so a completed cache
+          // acquisition cannot be missed.
+          purged = this->purge_entry_if_idle (
+            transport->cache_map_entry_) != -1;
+        }
+
+        if (purged)
+          {
+            if (TAO_debug_level > 6)
+              TAOLIB_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+                ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
+                transport->id ()));
+            transport->close_connection ();
+          }
+      }
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>

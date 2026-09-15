@@ -137,9 +137,6 @@ namespace TAO
     /// Purge the entry from the Cache Map only when the entry is purgable
     int purge_entry_when_purgable (HASH_MAP_ENTRY *& entry);
 
-    /// Purge a purgable entry only if its transport's idle timeout has expired.
-    int purge_entry_if_idle (HASH_MAP_ENTRY *& entry);
-
     /// Mark the entry as connected.
     void mark_connected (HASH_MAP_ENTRY *& entry, bool state);
 
@@ -187,6 +184,9 @@ namespace TAO
     void touch_activity (transport_type *transport);
 
   private:
+    /// Purge a purgable entry only if its transport's idle timeout has expired.
+    int purge_entry_if_idle (HASH_MAP_ENTRY *&entry);
+
     /// Lazily start this cache's repeating idle scanner.
     bool start_idle_scanner ();
 

@@ -850,9 +850,6 @@ public:
    */
   int handle_timeout (const ACE_Time_Value &current_time, const void* act);
 
-  /// Recheck idle age and pending work before removing from the supplied cache.
-  void purge_if_idle (TAO::Transport_Cache_Manager &cache);
-
   /// Record cache acquisition, I/O or synchronous dispatch activity.
   void touch_activity ();
 
@@ -1175,6 +1172,9 @@ private:
   /// Caller must hold the owning cache lock; these helpers do not lock.
   void touch_activity_i ();
   bool idle_timeout_expired_i ();
+
+  /// Caller must hold the handler lock.
+  bool is_idle ();
 
 
 private:

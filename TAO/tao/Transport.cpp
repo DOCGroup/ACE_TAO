@@ -995,35 +995,16 @@ TAO_Transport::idle_timeout_expired_i ()
          >= std::chrono::seconds (timeout);
 }
 
-void
-TAO_Transport::purge_if_idle (TAO::Transport_Cache_Manager &cache)
+bool
+TAO_Transport::is_idle ()
 {
-  {
-    // Never wait for a sender: a slow write must not stall the entire scan.
-    ACE_Guard<ACE_Lock> output_guard (*this->handler_lock_, false);
-    if (!output_guard.locked ())
-      return;
-
-    // Incoming state is not synchronized with receive processing here.
-    TAO_Queued_Data *qd = nullptr;
-    if (!this->queue_is_empty_i ()
-        || this->incoming_message_queue_.queue_length () != 0
-        || this->incoming_message_stack_.top (qd) == 0
-        || (this->partial_message_ && this->partial_message_->length () != 0)
-        || this->messaging_object ()->has_pending_fragments ())
-      return;
-
-    // The cache lock inside this operation serializes against acquisition.
-    // Recheck idle age there so a completed cache acquisition cannot be missed.
-    if (cache.purge_entry_if_idle (this->cache_map_entry_) == -1)
-      return;
-  }
-
-  if (TAO_debug_level > 6)
-    TAOLIB_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_if_idle, closing idle transport\n"),
-      this->id ()));
-  this->close_connection ();
+  // Incoming state is not synchronized with receive processing here.
+  TAO_Queued_Data *qd = nullptr;
+  return this->queue_is_empty_i ()
+    && this->incoming_message_queue_.queue_length () == 0
+    && this->incoming_message_stack_.top (qd) != 0
+    && (!this->partial_message_ || this->partial_message_->length () == 0)
+    && !this->messaging_object ()->has_pending_fragments ();
 }
 
 TAO_Transport::Drain_Result
