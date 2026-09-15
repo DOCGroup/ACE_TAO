@@ -38,7 +38,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Connection_Handler;
-class TAO_ORB_Core;
 class TAO_Resource_Factory;
 
 template <class ACE_COND_MUTEX> class TAO_Condition;
@@ -96,7 +95,7 @@ namespace TAO
     // == Public methods
     /// Constructor
     Transport_Cache_Manager_T (
-      TAO_ORB_Core &orb_core,
+      ACE_Reactor &reactor,
       int percent,
       purging_strategy* purging_strategy,
       size_t cache_maximum,
@@ -200,9 +199,6 @@ namespace TAO
     /// Purge an idle entry. Caller must hold the cache lock.
     int purge_entry_if_idle_i (HASH_MAP_ENTRY *entry);
 
-    /// Lazily start this cache's repeating idle scanner.
-    bool start_idle_scanner ();
-
     /// Stop and cancel the scanner. Caller must hold the cache lock.
     void stop_idle_scanner_i ();
 
@@ -292,8 +288,8 @@ namespace TAO
     /// Maximum size of the cache
     size_t cache_maximum_;
 
-    /// ORB core used to obtain the reactor when the scanner is first needed.
-    TAO_ORB_Core &orb_core_;
+    /// Reactor used for the idle scanner; it outlives this cache manager.
+    ACE_Reactor &reactor_;
 
     /// Idle timeout and periodic scan interval configured for this cache.
     int const idle_timeout_;

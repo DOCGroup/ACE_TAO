@@ -36,7 +36,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
   // Create the transport cache.
   ACE_NEW (this->transport_cache_,
            TAO::Transport_Cache_Manager (
-            orb_core,
+            *this->leader_follower ().reactor (),
             orb_core.resource_factory ()->purge_percentage (),
             orb_core.resource_factory ()->create_purging_strategy (),
             orb_core.resource_factory ()->cache_maximum (),

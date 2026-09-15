@@ -34,11 +34,6 @@ namespace TAO
         }
     }
 
-    if (retval == 0 && !this->start_idle_scanner ())
-      {
-        return -1;
-      }
-
     return retval;
   }
 

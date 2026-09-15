@@ -3,7 +3,6 @@
 #include "tao/Connection_Purging_Strategy.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Condition.h"
-#include "tao/ORB_Core.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -26,7 +25,7 @@ namespace TAO
 {
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::Transport_Cache_Manager_T (
-    TAO_ORB_Core &orb_core,
+    ACE_Reactor &reactor,
     int percent,
     purging_strategy *purging,
     size_t cache_maximum,
@@ -39,7 +38,7 @@ namespace TAO
     , cache_map_ (cache_maximum)
     , cache_lock_ (nullptr)
     , cache_maximum_ (cache_maximum)
-    , orb_core_ (orb_core)
+    , reactor_ (reactor)
     , idle_timeout_ (idle_timeout)
     , idle_scan_interval_ (idle_scan_interval)
     , idle_scanner_ (this)
@@ -79,6 +78,13 @@ namespace TAO
 #else
   ACE_UNUSED_ARG (orbid);
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
+
+    if (this->idle_timeout_ > 0)
+      {
+        ACE_Time_Value const interval (this->idle_scan_interval_);
+        this->idle_scan_timer_id_ = this->reactor_.schedule_timer (
+          &this->idle_scanner_, nullptr, interval, interval);
+      }
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
@@ -161,39 +167,12 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
-  bool
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner ()
-  {
-    if (this->idle_timeout_ <= 0)
-      {
-        return true;
-      }
-
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false));
-    if (this->idle_scan_timer_id_ != -1)
-      {
-        return true;
-      }
-
-    ACE_Reactor * const reactor = this->orb_core_.reactor ();
-    if (reactor == nullptr)
-      {
-        return false;
-      }
-
-    ACE_Time_Value const interval (this->idle_scan_interval_);
-    this->idle_scan_timer_id_ = reactor->schedule_timer (
-      &this->idle_scanner_, nullptr, interval, interval);
-    return this->idle_scan_timer_id_ != -1;
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner_i ()
   {
     if (this->idle_scan_timer_id_ != -1)
       {
-        this->orb_core_.reactor ()->cancel_timer (this->idle_scan_timer_id_);
+        this->reactor_.cancel_timer (this->idle_scan_timer_id_);
         this->idle_scan_timer_id_ = -1;
       }
   }
