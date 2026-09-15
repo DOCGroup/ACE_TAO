@@ -10,6 +10,7 @@ public:
   void is_connected (bool is_connected) { this->is_connected_ = is_connected;}
   ACE_Event_Handler::Reference_Count add_reference () {return 0;}
   ACE_Event_Handler::Reference_Count remove_reference () {return 0;}
+  void touch_activity_i () {}
   void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {this->entry_ = entry;}
   TCM::HASH_MAP_ENTRY *cache_map_entry () {return this->entry_;}
   void close_connection () { purged_count_ = ++global_purged_count;};
@@ -23,5 +24,4 @@ private:
   /// When did we got purged
   int purged_count_;
 };
-
 

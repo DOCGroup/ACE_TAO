@@ -108,7 +108,7 @@ namespace TAO
     /// Destructor
     ~Transport_Cache_Manager_T ();
 
-    /// Add the transport to the cache.
+    /// Add the transport to the cache and record transport activity.
     /**
      * The transport has the property definition based on which caching
      * can be done. This method sets the cache entry status.  By

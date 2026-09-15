@@ -28,6 +28,10 @@ namespace TAO
         int_id.recycle_state (state);
 
       retval = this->bind_i (ext_id, int_id);
+      if (retval == 0)
+        {
+          transport->touch_activity_i ();
+        }
     }
 
     if (retval == 0 && !this->start_idle_scanner ())
