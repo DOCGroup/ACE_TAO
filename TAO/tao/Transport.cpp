@@ -118,7 +118,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               size_t input_cdr_size)
   : tag_ (tag)
   , orb_core_ (orb_core)
-  , transport_cache_manager_ (orb_core->lane_resources ().transport_cache ())
   , cache_map_entry_ (nullptr)
   , tms_ (nullptr)
   , ws_ (nullptr)
@@ -980,7 +979,7 @@ void
 TAO_Transport::touch_activity ()
 {
   if (this->orb_core_->resource_factory ()->transport_idle_timeout () > 0)
-    this->transport_cache_manager_.touch_activity (this);
+    this->transport_cache_manager ().touch_activity (this);
 }
 
 void
@@ -2735,7 +2734,7 @@ TAO_Transport::notify_reactor_now ()
 TAO::Transport_Cache_Manager &
 TAO_Transport::transport_cache_manager ()
 {
-  return this->transport_cache_manager_;
+  return this->orb_core_->lane_resources ().transport_cache ();
 }
 
 void

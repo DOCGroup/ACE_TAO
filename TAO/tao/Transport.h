@@ -1068,9 +1068,6 @@ protected:
   /// Global orbcore resource.
   TAO_ORB_Core * const orb_core_;
 
-  /// Owning lane cache, retained so other threads use the same cache lock.
-  TAO::Transport_Cache_Manager &transport_cache_manager_;
-
   /// Our entry in the cache. We don't own this. It is here for our
   /// convenience. We cannot just change things around.
   TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
@@ -1123,7 +1120,8 @@ protected:
   /// The timer ID
   long flush_timer_id_ { -1 };
 
-  /// Protected by transport_cache_manager_'s lock after construction.
+  /// Protected by the transport cache manager's lock after construction.
+  /// Activity updates must use the same lane cache as the transport.
   std::chrono::steady_clock::time_point last_activity_ { std::chrono::steady_clock::now () };
 
   /// The adapter used to receive timeout callbacks from the Reactor
