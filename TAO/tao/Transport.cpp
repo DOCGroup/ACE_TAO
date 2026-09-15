@@ -1054,10 +1054,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
     retval = this->send (iov, iovcnt, byte_count,
                          this->io_timeout (dc));
 
-  if (byte_count != 0)
-    {
-      this->touch_activity ();
-    }
+  this->touch_activity ();
 
   if (TAO_debug_level > 9)
     {
@@ -1987,10 +1984,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
-  if (n > 0)
-    {
-      this->touch_activity ();
-    }
+  this->touch_activity ();
 
   if (n <= 0)
     {
@@ -2212,10 +2206,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
-  if (n > 0)
-    {
-      this->touch_activity ();
-    }
+  this->touch_activity ();
 
   // If there is an error return to the reactor..
   // do not reset partial message in case of n == 0 (EWOULDBLOCK || EAGAIN),
