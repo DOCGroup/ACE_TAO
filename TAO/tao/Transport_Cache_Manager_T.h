@@ -12,6 +12,7 @@
 #define TAO_CONNECTION_CACHE_MANAGER_T_H
 
 #include /**/ "ace/pre.h"
+#include "ace/Event_Handler.h"
 #include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -21,7 +22,6 @@
 #include "ace/Hash_Map_Manager_T.h"
 
 #include "tao/Cache_Entries_T.h"
-#include "tao/Transport_Idle_Timer.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
@@ -181,22 +181,17 @@ namespace TAO
     void touch_activity (transport_type *transport);
 
   private:
-    /// Timer callback.
-    void scan_idle_transports ();
-
-    /// Delegate reactor timer callbacks to the owning cache manager.
-    class Idle_Scanner_Handler final : public Transport_Idle_Timer_Handler
+    /// Delegate reactor timer callbacks directly to the owning cache manager.
+    class TCM_Idle_Timer_Handler final : public ACE_Event_Handler
     {
     public:
-      explicit Idle_Scanner_Handler (Transport_Cache_Manager_T *manager)
+      explicit TCM_Idle_Timer_Handler (Transport_Cache_Manager_T *manager)
         : manager_ (manager)
       {
       }
 
-      void scan_idle_transports () override
-      {
-        this->manager_->scan_idle_transports ();
-      }
+      int handle_timeout (ACE_Time_Value const &current_time,
+                          void const *act = nullptr) override;
 
     private:
       Transport_Cache_Manager_T * const manager_;
@@ -305,8 +300,7 @@ namespace TAO
     int const idle_scan_interval_;
 
     /// Idle scanner lifecycle, protected by the cache lock.
-    Idle_Scanner_Handler idle_scanner_handler_;
-    Transport_Idle_Timer idle_scanner_;
+    TCM_Idle_Timer_Handler idle_scanner_;
     long idle_scan_timer_id_ { -1 };
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)

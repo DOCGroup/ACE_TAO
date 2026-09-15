@@ -24,6 +24,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  template <typename TT, typename TRDT, typename PSTRAT>
+  int
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
+    handle_timeout (ACE_Time_Value const &, void const *)
+  {
+    try
+      {
+        this->manager_->purge_idle_transports ();
+      }
+    catch (...)
+      {
+        TAOLIB_ERROR ((LM_ERROR,
+          ACE_TEXT ("TAO (%P|%t) - Transport idle scan failed; retrying next interval\n")));
+      }
+    return 0;
+  }
 
   template <typename TT, typename TRDT, typename PSTRAT>
   bool
@@ -59,13 +75,6 @@ namespace TAO
         this->orb_core_->reactor ()->cancel_timer (this->idle_scan_timer_id_);
         this->idle_scan_timer_id_ = -1;
       }
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::scan_idle_transports ()
-  {
-    this->purge_idle_transports ();
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
@@ -141,8 +150,7 @@ namespace TAO
     , orb_core_ (orb_core)
     , idle_timeout_ (idle_timeout)
     , idle_scan_interval_ (idle_scan_interval)
-    , idle_scanner_handler_ (this)
-    , idle_scanner_ (&this->idle_scanner_handler_)
+    , idle_scanner_ (this)
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     , purge_monitor_ (0)
     , size_monitor_ (0)
