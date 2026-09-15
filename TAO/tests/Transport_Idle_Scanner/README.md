@@ -4,8 +4,8 @@ This raw-GIOP regression uses a server-only idle timeout Y=2 seconds and
 explicitly overrides the 30-second default with scan interval X=2 seconds. It
 checks idle closure, retention of a partial header and an incomplete fragmented
 request beyond Y+X, and eventual closure after completing/cancelling that
-input. The server destroys its ORB
-normally to exercise scanner teardown. Run `perl run_test.pl` after building.
+input. The server destroys its ORB normally to exercise scanner teardown. Run
+`perl run_test.pl` after building.
 
 The existing Transport_Idle_Timeout, Transport_Idle_Timeout_server,
 Transport_Idle_Timeout_Oneway and Transport_Idle_Timeout_Long_Request tests
@@ -16,7 +16,10 @@ Each thread-lane cache owns one scanner timer, starts it when the cache is
 constructed with idle expiry enabled, and cancels it when the cache closes. A
 scan checks entries under the cache lock and retains transports selected for
 purging. It releases the cache lock before closing a socket. Activity timestamp
-updates use a relaxed atomic monotonic-millisecond value.
+updates use a relaxed atomic monotonic-millisecond value. During shutdown, the
+timer id is cleared under the cache lock and the reactor timer is cancelled
+after releasing that lock.
+
 Incoming-state checks are not synchronized with receive processing, and active
 input callbacks do not receive additional protection. Configure Y above the
 maximum request duration, including blocking, queuing and scheduling delays.

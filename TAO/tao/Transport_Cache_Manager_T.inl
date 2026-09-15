@@ -171,13 +171,24 @@ namespace TAO
 
     if (timer_id != -1)
       {
-        if (TAO_debug_level > 6)
+        int const cancel_result = this->reactor_.cancel_timer (timer_id);
+        if (cancel_result <= 0)
+          {
+            if (TAO_debug_level > 0)
+              {
+                TAOLIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+                  ACE_TEXT ("close, failed to cancel idle scanner timer %ld, ")
+                  ACE_TEXT ("result %d\n"), timer_id, cancel_result));
+              }
+          }
+        else if (TAO_debug_level > 6)
           {
             TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-              ACE_TEXT ("close, canceling idle scanner\n")));
+              ACE_TEXT ("close, canceled idle scanner timer %ld, result %d\n"),
+              timer_id, cancel_result));
           }
-        this->reactor_.cancel_timer (timer_id);
       }
 
     return result;

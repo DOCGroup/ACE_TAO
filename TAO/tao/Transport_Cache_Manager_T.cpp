@@ -82,15 +82,27 @@ namespace TAO
     if (this->idle_timeout_ > 0)
       {
         ACE_Time_Value const interval (this->idle_scan_interval_);
-        if (TAO_debug_level > 6)
+        this->idle_scan_timer_id_ = this->reactor_.schedule_timer (
+          &this->idle_scanner_, nullptr, interval, interval);
+        if (this->idle_scan_timer_id_ == -1)
+          {
+            if (TAO_debug_level > 0)
+              {
+                TAOLIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+                  ACE_TEXT ("Transport_Cache_Manager_T, failed to schedule ")
+                  ACE_TEXT ("idle scanner every %d seconds, result %ld\n"),
+                  this->idle_scan_interval_, this->idle_scan_timer_id_));
+              }
+          }
+        else if (TAO_debug_level > 6)
           {
             TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-              ACE_TEXT ("Transport_Cache_Manager_T, scheduling idle scanner every %d seconds\n"),
-              this->idle_scan_interval_));
+              ACE_TEXT ("Transport_Cache_Manager_T, scheduled idle scanner ")
+              ACE_TEXT ("every %d seconds, timer id %ld\n"),
+              this->idle_scan_interval_, this->idle_scan_timer_id_));
           }
-        this->idle_scan_timer_id_ = this->reactor_.schedule_timer (
-          &this->idle_scanner_, nullptr, interval, interval);
       }
   }
 
