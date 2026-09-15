@@ -29,15 +29,7 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
     handle_timeout (ACE_Time_Value const &, void const *)
   {
-    try
-      {
-        this->manager_->purge_idle_transports ();
-      }
-    catch (...)
-      {
-        TAOLIB_ERROR ((LM_ERROR,
-          ACE_TEXT ("TAO (%P|%t) - Transport idle scan failed; retrying next interval\n")));
-      }
+    this->manager_->purge_idle_transports ();
     return 0;
   }
 
