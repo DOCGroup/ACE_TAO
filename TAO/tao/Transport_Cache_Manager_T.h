@@ -173,10 +173,6 @@ namespace TAO
     /// Return the underlying cache map
     HASH_MAP &map ();
 
-    /// Purge idle transports, retaining references while checking them
-    /// outside the cache lock.
-    void purge_idle_transports ();
-
     /// Record activity under the cache lock; caller must not already hold it.
     void touch_activity (transport_type *transport);
 
@@ -196,6 +192,10 @@ namespace TAO
     private:
       Transport_Cache_Manager_T * const manager_;
     };
+
+    /// Purge idle transports, retaining references while checking them
+    /// outside the cache lock.
+    void purge_idle_transports ();
 
     /// Purge a purgable entry only if its transport's idle timeout has expired.
     int purge_entry_if_idle (HASH_MAP_ENTRY *&entry);

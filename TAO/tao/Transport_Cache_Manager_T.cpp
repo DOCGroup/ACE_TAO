@@ -109,9 +109,9 @@ namespace TAO
       {
         bool purged = false;
         {
-          // Never wait for a sender: a slow write must not stall the scan.
-          ACE_Guard<ACE_Lock> output_guard (*transport->handler_lock_, false);
-          if (!output_guard.locked () || !transport->is_idle ())
+          // Serialize the idle check with transport output processing.
+          ACE_GUARD (ACE_Lock, output_guard, *transport->handler_lock_);
+          if (!transport->is_idle ())
             {
               continue;
             }

@@ -850,9 +850,6 @@ public:
    */
   int handle_timeout (const ACE_Time_Value &current_time, const void* act);
 
-  /// Record cache acquisition, I/O or synchronous dispatch activity.
-  void touch_activity ();
-
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size () const;
 
@@ -1168,6 +1165,9 @@ protected:
 private:
   template <typename TT, typename TRDT, typename PSTRAT>
   friend class TAO::Transport_Cache_Manager_T;
+
+  /// Record cache acquisition, I/O or synchronous dispatch activity.
+  void touch_activity ();
 
   /// Caller must hold the owning cache lock; these helpers do not lock.
   void touch_activity_i ();
