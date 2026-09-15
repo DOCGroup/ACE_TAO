@@ -20,21 +20,26 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Thread_Lane_Resources;
-
 namespace TAO
 {
+  class Transport_Idle_Timer_Handler
+  {
+  public:
+    virtual ~Transport_Idle_Timer_Handler () = default;
+    virtual void scan_idle_transports () = 0;
+  };
+
   /**
   * @class Transport_Idle_Timer
   *
   * @brief Periodic reactor timer scanning one thread lane's transport cache.
   *
-  * Owned and cancelled by TAO_Thread_Lane_Resources.
+  * Owned and cancelled by the transport cache manager.
   */
   class Transport_Idle_Timer : public ACE_Event_Handler
   {
   public:
-    explicit Transport_Idle_Timer (TAO_Thread_Lane_Resources *resources);
+    explicit Transport_Idle_Timer (Transport_Idle_Timer_Handler *handler);
     ~Transport_Idle_Timer () override = default;
 
     /// Reactor callback: scan the cache for eligible idle transports.
@@ -48,8 +53,7 @@ namespace TAO
     Transport_Idle_Timer &operator= (Transport_Idle_Timer &&) = delete;
 
   private:
-    /// Thread lane owning this scanner
-    TAO_Thread_Lane_Resources *resources_;
+    Transport_Idle_Timer_Handler *handler_;
   };
 }
 

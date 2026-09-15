@@ -1,6 +1,4 @@
 #include "tao/Transport_Idle_Timer.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "ace/Reactor.h"
 
@@ -8,8 +6,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  Transport_Idle_Timer::Transport_Idle_Timer (TAO_Thread_Lane_Resources *resources)
-    : resources_ (resources)
+  Transport_Idle_Timer::Transport_Idle_Timer (Transport_Idle_Timer_Handler *handler)
+    : handler_ (handler)
   {
   }
 
@@ -18,7 +16,7 @@ namespace TAO
   {
     try
       {
-        this->resources_->scan_idle_transports ();
+        this->handler_->scan_idle_transports ();
       }
     catch (...)
       {

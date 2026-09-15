@@ -22,6 +22,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 
 #include "tao/Cache_Entries_T.h"
+#include "tao/Transport_Idle_Timer.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
@@ -30,6 +31,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
+class ACE_Reactor;
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -57,6 +59,7 @@ namespace TAO
    */
   template <typename TT, typename TRDT, typename PSTRAT>
   class Transport_Cache_Manager_T
+    : private Transport_Idle_Timer_Handler
   {
   public:
     typedef TT transport_type;
@@ -172,6 +175,10 @@ namespace TAO
     /// Return the underlying cache map
     HASH_MAP &map ();
 
+    /// Lazily start and stop this cache's repeating idle scanner.
+    bool start_idle_scanner (ACE_Reactor *reactor, int scan_interval);
+    void stop_idle_scanner (ACE_Reactor *reactor);
+
     /// Purge idle transports, retaining references while checking them
     /// outside the cache lock.
     void purge_idle_transports ();
@@ -180,6 +187,9 @@ namespace TAO
     void touch_activity (transport_type *transport);
 
   private:
+    /// Timer callback. Serialized with scanner shutdown.
+    void scan_idle_transports () override;
+
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.
     Find_Result find (
@@ -265,6 +275,12 @@ namespace TAO
 
     /// Maximum size of the cache
     size_t cache_maximum_;
+
+    /// Idle scanner lifecycle; independent of the cache-map lock.
+    Transport_Idle_Timer idle_scanner_;
+    ACE_Thread_Mutex idle_scan_lock_;
+    long idle_scan_timer_id_ { -1 };
+    bool idle_scan_stopped_ { false };
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     /// Connection cache purge monitor.

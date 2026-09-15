@@ -6,6 +6,7 @@
 #include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
+#include "ace/Assert.h"
 #include "ace/Lock_Adapter_T.h"
 #include <vector>
 
@@ -23,6 +24,50 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  bool
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner (
+    ACE_Reactor *reactor,
+    int scan_interval)
+  {
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->idle_scan_lock_, false);
+    if (this->idle_scan_stopped_)
+      return false;
+    if (this->idle_scan_timer_id_ != -1)
+      return true;
+
+    const ACE_Time_Value interval (scan_interval);
+    this->idle_scan_timer_id_ = reactor->schedule_timer (
+      &this->idle_scanner_, nullptr, interval, interval);
+    return this->idle_scan_timer_id_ != -1;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner (
+    ACE_Reactor *reactor)
+  {
+    ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
+    this->idle_scan_stopped_ = true;
+    if (this->idle_scan_timer_id_ != -1)
+      {
+        ACE_ASSERT (reactor != nullptr);
+        if (reactor != nullptr)
+          reactor->cancel_timer (this->idle_scan_timer_id_);
+        this->idle_scan_timer_id_ = -1;
+      }
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::scan_idle_transports ()
+  {
+    ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
+    if (!this->idle_scan_stopped_)
+      this->purge_idle_transports ();
+  }
+
   template <typename TT, typename TRDT, typename PSTRAT>
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_idle_transports ()
@@ -67,6 +112,7 @@ namespace TAO
     , cache_map_ (cache_maximum)
     , cache_lock_ (nullptr)
     , cache_maximum_ (cache_maximum)
+    , idle_scanner_ (this)
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     , purge_monitor_ (0)
     , size_monitor_ (0)

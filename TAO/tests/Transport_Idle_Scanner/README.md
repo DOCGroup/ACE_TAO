@@ -11,8 +11,8 @@ Transport_Idle_Timeout_Oneway and Transport_Idle_Timeout_Long_Request tests
 provide complementary request/reply and oneway coverage. Expiry assertions
 must allow the scan interval and reactor scheduling margin.
 
-The scanner uses one timer per thread-lane cache, a referenced transport
-snapshot, and a nonblocking attempt to acquire each transport's output lock.
+Each thread-lane cache owns one scanner timer, takes a referenced transport
+snapshot, and makes a nonblocking attempt to acquire each transport's output lock.
 It releases the cache lock before closing a socket. Cache acquisition, activity timestamp updates and the
 final idle-age check use the owning transport cache manager's lock.
 Incoming-state checks are not synchronized with receive processing, and active
