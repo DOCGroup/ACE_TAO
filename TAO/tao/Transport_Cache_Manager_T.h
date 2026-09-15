@@ -13,7 +13,6 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Null_Mutex.h"
-#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -182,7 +181,7 @@ namespace TAO
     void touch_activity (transport_type *transport);
 
   private:
-    /// Timer callback. Serialized with scanner shutdown.
+    /// Timer callback.
     void scan_idle_transports ();
 
     /// Delegate reactor timer callbacks to the owning cache manager.
@@ -305,13 +304,10 @@ namespace TAO
     int const idle_timeout_;
     int const idle_scan_interval_;
 
-    /// Idle scanner lifecycle; independent of the cache-map lock.
+    /// Idle scanner lifecycle, protected by the cache lock.
     Idle_Scanner_Handler idle_scanner_handler_;
     Transport_Idle_Timer idle_scanner_;
-    ACE_Thread_Mutex idle_scan_lock_;
-    ACE_Reactor *idle_scan_reactor_ { nullptr };
     long idle_scan_timer_id_ { -1 };
-    bool idle_scan_stopped_ { false };
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     /// Connection cache purge monitor.

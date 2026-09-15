@@ -7,7 +7,6 @@
 #include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
-#include "ace/Assert.h"
 #include "ace/Lock_Adapter_T.h"
 #include <vector>
 
@@ -36,9 +35,7 @@ namespace TAO
     if (this->orb_core_ == nullptr)
       return false;
 
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->idle_scan_lock_, false);
-    if (this->idle_scan_stopped_)
-      return false;
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false));
     if (this->idle_scan_timer_id_ != -1)
       return true;
 
@@ -49,8 +46,6 @@ namespace TAO
     ACE_Time_Value const interval (this->idle_scan_interval_);
     this->idle_scan_timer_id_ = reactor->schedule_timer (
       &this->idle_scanner_, nullptr, interval, interval);
-    if (this->idle_scan_timer_id_ != -1)
-      this->idle_scan_reactor_ = reactor;
     return this->idle_scan_timer_id_ != -1;
   }
 
@@ -58,15 +53,11 @@ namespace TAO
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner ()
   {
-    ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
-    this->idle_scan_stopped_ = true;
+    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (this->idle_scan_timer_id_ != -1)
       {
-        ACE_ASSERT (this->idle_scan_reactor_ != nullptr);
-        if (this->idle_scan_reactor_ != nullptr)
-          this->idle_scan_reactor_->cancel_timer (this->idle_scan_timer_id_);
+        this->orb_core_->reactor ()->cancel_timer (this->idle_scan_timer_id_);
         this->idle_scan_timer_id_ = -1;
-        this->idle_scan_reactor_ = nullptr;
       }
   }
 
@@ -74,9 +65,7 @@ namespace TAO
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::scan_idle_transports ()
   {
-    ACE_GUARD (ACE_Thread_Mutex, guard, this->idle_scan_lock_);
-    if (!this->idle_scan_stopped_)
-      this->purge_idle_transports ();
+    this->purge_idle_transports ();
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
