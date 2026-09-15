@@ -1,7 +1,7 @@
 class mock_transport
 {
 public:
-  mock_transport () : id_(0), is_connected_(false), entry_(0), purging_order_ (0), purged_count_ (0) {}
+  mock_transport () : id_(0), is_connected_(false), cache_map_entry_(0), purging_order_ (0), purged_count_ (0) {}
   size_t id () const {return id_;}
   void id (size_t id) { this->id_ = id;}
   unsigned long purging_order () const {return purging_order_;}
@@ -10,18 +10,20 @@ public:
   void is_connected (bool is_connected) { this->is_connected_ = is_connected;}
   ACE_Event_Handler::Reference_Count add_reference () {return 0;}
   ACE_Event_Handler::Reference_Count remove_reference () {return 0;}
-  void touch_activity_i () {}
-  void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {this->entry_ = entry;}
-  TCM::HASH_MAP_ENTRY *cache_map_entry () {return this->entry_;}
+  void touch_activity () {}
+  bool idle_timeout_expired_i () {return false;}
+  bool is_idle () {return true;}
+  void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {this->cache_map_entry_ = entry;}
+  TCM::HASH_MAP_ENTRY *cache_map_entry () {return this->cache_map_entry_;}
   void close_connection () { purged_count_ = ++global_purged_count;};
   int purged_count () { return this->purged_count_;}
   bool can_be_purged () { return true;}
 private:
+  friend TCM;
   size_t id_;
   bool is_connected_;
-  TCM::HASH_MAP_ENTRY *entry_;
+  TCM::HASH_MAP_ENTRY *cache_map_entry_;
   unsigned long purging_order_;
   /// When did we got purged
   int purged_count_;
 };
-
