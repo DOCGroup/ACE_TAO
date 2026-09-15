@@ -13,8 +13,14 @@ must allow the scan interval and reactor scheduling margin.
 
 The scanner uses one timer per thread-lane cache, a referenced transport
 snapshot, and a nonblocking attempt to acquire each transport's output lock.
-It never holds the cache lock while acquiring a transport lock or closing a
-socket. Input callback admission and the final idle decision share a separate
-mutex; active callbacks are conservatively skipped. CSD/AMH deferred completion
-is not tracked and is unsupported. Configure Y above maximum synchronous call
-duration even though active input callbacks receive additional protection.
+It releases the cache lock before closing a socket. Cache acquisition and the
+final idle-age check take the cache lock before the activity timestamp lock.
+Incoming-state checks are not synchronized with receive processing, and active
+input callbacks do not receive additional protection. Configure Y above the
+maximum request duration, including blocking, queuing and scheduling delays.
+
+CSD (including Dynamic TP), AMH and other deferred dispatch configurations are
+allowed, but their deferred completion is not tracked. A transport can therefore
+be closed while work is queued or executing or an asynchronous reply is pending.
+Short operations with bounded delays may work when Y exceeds the full delay
+through completion; the scanner does not guarantee this.

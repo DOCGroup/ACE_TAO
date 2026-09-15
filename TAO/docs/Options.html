@@ -1398,13 +1398,16 @@ example</a> of how this is used in TAO.</p>
         and writes (even partial transfers), synchronous request dispatch and
         completion (including oneways), and release of a transport for reuse.
         Pending input, output, incomplete messages, fragments, and outstanding
-        outgoing requests prevent idle purging. An active input callback also
-        prevents purging so the scanner never races with incoming queue mutation.
-        Set this timeout above the maximum synchronous request duration, including
-        blocking and scheduling delays. CSD strategies (including Dynamic TP) are
-        rejected with <code>CORBA::NO_IMPLEMENT</code> during CSD POA construction;
-        AMH requests are rejected before asynchronous dispatch. Other deferred
-        dispatch mechanisms are unsupported.</td>
+        outgoing requests prevent idle purging. Incoming-state checks are not
+        synchronized with receive processing.
+        Set this timeout above the maximum request duration, including blocking,
+        queuing and scheduling delays. Completion of CSD strategies (including
+        Dynamic TP), AMH requests and other deferred dispatch mechanisms is not
+        tracked. These configurations are allowed, but the transport may be closed
+        while work is queued or executing or an asynchronous reply is pending.
+        Short operations with bounded delays may work when the timeout exceeds
+        the full delay through completion; this is not guaranteed by the idle
+        scanner.</td>
       </tr>
       <tr>
         <td><code>-ORBTransportIdleScanInterval</code> <em>number</em></td>

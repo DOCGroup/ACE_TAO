@@ -2,8 +2,6 @@
 #include "tao/CSD_Framework/CSD_POA.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
-#include "tao/ORB_Core.h"
-#include "tao/Resource_Factory.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -31,11 +29,6 @@ TAO_CSD_POA::TAO_CSD_POA (const String &name,
                    orb_core,
                    object_adapter)
 {
-  // Reject before installing a strategy or changing POAManager state.
-  // This also covers repository-installed CSD and Dynamic TP strategies.
-  if (orb_core.resource_factory ()->transport_idle_timeout () > 0)
-    throw CORBA::NO_IMPLEMENT ();
-
   ACE_NEW_THROW_EX (this->sds_proxy_,
                     TAO::CSD::Strategy_Proxy (),
                     CORBA::NO_MEMORY ());
