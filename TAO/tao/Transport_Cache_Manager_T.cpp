@@ -82,6 +82,13 @@ namespace TAO
     if (this->idle_timeout_ > 0)
       {
         ACE_Time_Value const interval (this->idle_scan_interval_);
+        if (TAO_debug_level > 6)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+              ACE_TEXT ("Transport_Cache_Manager_T, scheduling idle scanner every %d seconds\n"),
+              this->idle_scan_interval_));
+          }
         this->idle_scan_timer_id_ = this->reactor_.schedule_timer (
           &this->idle_scanner_, nullptr, interval, interval);
       }
@@ -109,6 +116,12 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
     handle_timeout (ACE_Time_Value const &, void const *)
   {
+    if (TAO_debug_level > 6)
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+          ACE_TEXT ("TCM_Idle_Timer_Handler::handle_timeout, idle scanner fired\n")));
+      }
     this->manager_->purge_idle_transports ();
     return 0;
   }
@@ -172,6 +185,12 @@ namespace TAO
   {
     if (this->idle_scan_timer_id_ != -1)
       {
+        if (TAO_debug_level > 6)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+              ACE_TEXT ("stop_idle_scanner_i, canceling idle scanner\n")));
+          }
         this->reactor_.cancel_timer (this->idle_scan_timer_id_);
         this->idle_scan_timer_id_ = -1;
       }
