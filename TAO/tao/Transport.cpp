@@ -2869,7 +2869,6 @@ TAO_Transport::post_open (size_t id)
   // update transport cache to make this entry available
   this->transport_cache_manager ().set_entry_state (this->cache_map_entry_, TAO::ENTRY_IDLE_AND_PURGABLE);
 
-  this->touch_activity ();
   return true;
 }
 

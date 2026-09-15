@@ -137,18 +137,17 @@ namespace TAO
     /// Purge the entry from the Cache Map only when the entry is purgable
     int purge_entry_when_purgable (HASH_MAP_ENTRY *& entry);
 
-    /// Mark the entry as connected.
+    /// Mark the entry as connected and record transport activity.
     void mark_connected (HASH_MAP_ENTRY *& entry, bool state);
 
-    /// Make the entry idle and ready for use.
+    /// Make the entry idle and record transport activity.
     int make_idle (HASH_MAP_ENTRY *&entry);
 
-    /// Modify the state setting on the provided entry.
+    /// Modify the state setting and record transport activity.
     void set_entry_state (HASH_MAP_ENTRY *&entry,
                           TAO::Cache_Entries_State state);
 
-    /// Mark the entry as touched. This call updates the purging
-    /// strategy policy information.
+    /// Record transport activity and update purging strategy information.
     int update_entry (HASH_MAP_ENTRY *&entry);
 
     /// Close the underlying hash map manager and return any handlers

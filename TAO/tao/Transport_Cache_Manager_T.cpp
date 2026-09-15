@@ -218,10 +218,14 @@ namespace TAO
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (entry != nullptr)
       {
+        transport_type * const transport = entry->item ().transport ();
+        if (transport != nullptr)
+          transport->touch_activity_i ();
         entry->item ().recycle_state (state);
-        if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING && entry->item ().transport ())
+        if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING
+            && transport != nullptr)
           {
-            entry->item ().is_connected (entry->item ().transport ()->is_connected ());
+            entry->item ().is_connected (transport->is_connected ());
           }
       }
   }
@@ -512,6 +516,7 @@ namespace TAO
     if (!entry)
       return -1;
 
+    entry->item ().transport ()->touch_activity_i ();
     purging_strategy *st = this->purging_strategy_;
     (void) st->update_item (*(entry->item ().transport ()));
 
