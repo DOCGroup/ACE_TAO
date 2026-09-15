@@ -217,13 +217,12 @@ namespace TAO
     if (entry != nullptr)
       {
         transport_type * const transport = entry->item ().transport ();
-        if (transport != nullptr)
-          transport->touch_activity_i ();
         entry->item ().recycle_state (state);
-        if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING
-            && transport != nullptr)
+        if (transport != nullptr)
           {
-            entry->item ().is_connected (transport->is_connected ());
+            transport->touch_activity_i ();
+            if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING)
+              entry->item ().is_connected (transport->is_connected ());
           }
       }
   }
