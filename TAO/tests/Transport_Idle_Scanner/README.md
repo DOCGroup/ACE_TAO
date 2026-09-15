@@ -1,9 +1,10 @@
 # Periodic transport idle scanner
 
-This raw-GIOP regression uses a server-only idle timeout Y=2 seconds and a
-non-default scan interval X=2 seconds. It checks idle closure, retention of a
-partial header and an incomplete fragmented request beyond Y+X, and eventual
-closure after completing/cancelling that input. The server destroys its ORB
+This raw-GIOP regression uses a server-only idle timeout Y=2 seconds and
+explicitly overrides the 30-second default with scan interval X=2 seconds. It
+checks idle closure, retention of a partial header and an incomplete fragmented
+request beyond Y+X, and eventual closure after completing/cancelling that
+input. The server destroys its ORB
 normally to exercise scanner teardown. Run `perl run_test.pl` after building.
 
 The existing Transport_Idle_Timeout, Transport_Idle_Timeout_server,

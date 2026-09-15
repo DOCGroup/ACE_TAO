@@ -103,7 +103,7 @@ namespace TAO
       char const *orbid,
       TAO_ORB_Core *orb_core = nullptr,
       int const idle_timeout = 0,
-      int const idle_scan_interval = 0);
+      int const idle_scan_interval = 30);
 
     /// Destructor
     ~Transport_Cache_Manager_T ();
