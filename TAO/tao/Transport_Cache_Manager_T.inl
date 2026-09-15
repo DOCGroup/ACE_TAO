@@ -93,19 +93,17 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_if_idle (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_if_idle_i (HASH_MAP_ENTRY *entry)
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-    // Read the timestamp under the same lock used for activity updates.
     if (entry == nullptr || !this->is_entry_purgable_i (*entry)
+        || !entry->int_id_.transport ()->is_idle ()
         || !entry->int_id_.transport ()->idle_timeout_expired_i ())
       {
         return -1;
       }
 
-    HASH_MAP_ENTRY *cached_entry = entry;
-    entry = nullptr;
-    return this->purge_entry_i (cached_entry);
+    entry->int_id_.transport ()->cache_map_entry_ = nullptr;
+    return this->purge_entry_i (entry);
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>

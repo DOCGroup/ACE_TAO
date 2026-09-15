@@ -193,12 +193,12 @@ namespace TAO
       Transport_Cache_Manager_T * const manager_;
     };
 
-    /// Purge idle transports, retaining references while checking them
-    /// outside the cache lock.
+    /// Purge idle entries under the cache lock and close their retained
+    /// transports after releasing the lock.
     void purge_idle_transports ();
 
-    /// Purge a purgable entry only if its transport's idle timeout has expired.
-    int purge_entry_if_idle (HASH_MAP_ENTRY *&entry);
+    /// Purge an idle entry. Caller must hold the cache lock.
+    int purge_entry_if_idle_i (HASH_MAP_ENTRY *entry);
 
     /// Lazily start this cache's repeating idle scanner.
     bool start_idle_scanner ();

@@ -25,118 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename TT, typename TRDT, typename PSTRAT>
-  int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
-    handle_timeout (ACE_Time_Value const &, void const *)
-  {
-    this->manager_->purge_idle_transports ();
-    return 0;
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  bool
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner ()
-  {
-    if (this->idle_timeout_ <= 0)
-      {
-        return true;
-      }
-
-    if (this->orb_core_ == nullptr)
-      {
-        return false;
-      }
-
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false));
-    if (this->idle_scan_timer_id_ != -1)
-      {
-        return true;
-      }
-
-    ACE_Reactor * const reactor = this->orb_core_->reactor ();
-    if (reactor == nullptr)
-      {
-        return false;
-      }
-
-    ACE_Time_Value const interval (this->idle_scan_interval_);
-    this->idle_scan_timer_id_ = reactor->schedule_timer (
-      &this->idle_scanner_, nullptr, interval, interval);
-    return this->idle_scan_timer_id_ != -1;
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner ()
-  {
-    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-    if (this->idle_scan_timer_id_ != -1)
-      {
-        this->orb_core_->reactor ()->cancel_timer (this->idle_scan_timer_id_);
-        this->idle_scan_timer_id_ = -1;
-      }
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_idle_transports ()
-  {
-    struct Snapshot
-    {
-      std::vector<transport_type *> transports;
-      ~Snapshot ()
-      {
-        for (transport_type *transport : this->transports)
-          transport->remove_reference ();
-      }
-    } snapshot;
-
-    {
-      ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
-      snapshot.transports.reserve (this->cache_map_.current_size ());
-      for (HASH_MAP_ITER iter = this->cache_map_.begin ();
-           iter != this->cache_map_.end (); ++iter)
-        {
-          transport_type *transport = iter->int_id_.transport ();
-          transport->add_reference ();
-          snapshot.transports.push_back (transport);
-        }
-    }
-
-    // Purging modifies the cache and closes transports, so release the
-    // cache lock before checking the retained transports.
-    for (transport_type *transport : snapshot.transports)
-      {
-        bool purged = false;
-        {
-          // Serialize the idle check with transport output processing.
-          ACE_GUARD (ACE_Lock, output_guard, *transport->handler_lock_);
-          if (!transport->is_idle ())
-            {
-              continue;
-            }
-
-          // Recheck the idle age under the cache lock so a completed cache
-          // acquisition cannot be missed.
-          purged = this->purge_entry_if_idle (
-            transport->cache_map_entry_) != -1;
-        }
-
-        if (purged)
-          {
-            if (TAO_debug_level > 6)
-              {
-                TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                  ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
-                  transport->id ()));
-              }
-            transport->close_connection ();
-          }
-      }
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::Transport_Cache_Manager_T (
     int percent,
     purging_strategy *purging,
@@ -210,6 +98,112 @@ namespace TAO
     this->purge_monitor_->remove_ref ();
     this->size_monitor_->remove_ref ();
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  int
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
+    handle_timeout (ACE_Time_Value const &, void const *)
+  {
+    this->manager_->purge_idle_transports ();
+    return 0;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_idle_transports ()
+  {
+    struct Purged_Transports
+    {
+      std::vector<transport_type *> transports;
+      ~Purged_Transports ()
+      {
+        for (transport_type *transport : this->transports)
+          {
+            transport->remove_reference ();
+          }
+      }
+    } purged;
+
+    {
+      ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
+      purged.transports.reserve (this->cache_map_.current_size ());
+      for (HASH_MAP_ITER iter = this->cache_map_.begin ();
+           iter != this->cache_map_.end ();)
+        {
+          HASH_MAP_ENTRY * const entry = &(*iter);
+          transport_type * const transport = entry->int_id_.transport ();
+          ++iter;
+
+          // Retain the transport while unbinding its cache entry.
+          transport->add_reference ();
+          if (this->purge_entry_if_idle_i (entry) != -1)
+            {
+              purged.transports.push_back (transport);
+            }
+          else
+            {
+              transport->remove_reference ();
+            }
+        }
+    }
+
+    // Closing can invoke transport code, so do it without the cache lock.
+    for (transport_type *transport : purged.transports)
+      {
+        if (TAO_debug_level > 6)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+              ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
+              transport->id ()));
+          }
+        transport->close_connection ();
+      }
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  bool
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::start_idle_scanner ()
+  {
+    if (this->idle_timeout_ <= 0)
+      {
+        return true;
+      }
+
+    if (this->orb_core_ == nullptr)
+      {
+        return false;
+      }
+
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false));
+    if (this->idle_scan_timer_id_ != -1)
+      {
+        return true;
+      }
+
+    ACE_Reactor * const reactor = this->orb_core_->reactor ();
+    if (reactor == nullptr)
+      {
+        return false;
+      }
+
+    ACE_Time_Value const interval (this->idle_scan_interval_);
+    this->idle_scan_timer_id_ = reactor->schedule_timer (
+      &this->idle_scanner_, nullptr, interval, interval);
+    return this->idle_scan_timer_id_ != -1;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner ()
+  {
+    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
+    if (this->idle_scan_timer_id_ != -1)
+      {
+        this->orb_core_->reactor ()->cancel_timer (this->idle_scan_timer_id_);
+        this->idle_scan_timer_id_ = -1;
+      }
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>

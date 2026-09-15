@@ -1173,7 +1173,7 @@ private:
   void touch_activity_i ();
   bool idle_timeout_expired_i ();
 
-  /// Caller must hold the handler lock.
+  /// Caller must hold the owning transport cache manager's lock.
   bool is_idle ();
 
 
