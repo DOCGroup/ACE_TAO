@@ -87,8 +87,8 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_if_idle_i (HASH_MAP_ENTRY *entry)
   {
     if (entry == nullptr || !this->is_entry_purgable_i (*entry)
-        || !entry->int_id_.transport ()->is_idle ()
-        || !entry->int_id_.transport ()->idle_timeout_expired_i ())
+        || !entry->int_id_.transport ()->idle_timeout_expired_i ()
+        || !entry->int_id_.transport ()->is_idle ())
       {
         return -1;
       }
