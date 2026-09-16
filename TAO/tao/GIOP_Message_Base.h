@@ -155,9 +155,6 @@ public:
   /// request/response?
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
-private:
-  friend class TAO_Transport;
-
   /// Report whether fragmented input is pending for the idle scanner.
   bool has_pending_fragments () const
   {
@@ -165,6 +162,7 @@ private:
     return this->fragment_stack_.top (qd) == 0;
   }
 
+private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
   /// When decompressed, db contains a complete new ACE_Data_Block and
