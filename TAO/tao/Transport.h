@@ -23,7 +23,6 @@
 #include "tao/Incoming_Message_Stack.h"
 #include "tao/Message_Semantics.h"
 #include "ace/Atomic_Op.h"
-#include "ace/Thread_Mutex.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
 
@@ -1131,7 +1130,7 @@ protected:
   long flush_timer_id_;
 
   /// Monotonic activity timestamp in milliseconds.
-  ACE_Atomic_Op<ACE_Thread_Mutex, ACE_INT64> last_activity_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_INT64> last_activity_;
 
   /// The adapter used to receive timeout callbacks from the Reactor
   TAO::Transport_Timer transport_timer_;
