@@ -187,6 +187,7 @@ public:
   virtual void disable_factory (void);
   virtual bool drop_replies_during_shutdown (void) const;
   virtual int transport_idle_timeout (void) const;
+  virtual int transport_idle_scan_interval (void) const;
  //@}
 
 protected:
@@ -323,6 +324,7 @@ private:
   /// Amount of seconds after which an idle transport will be closed
   /// 0 means no closing of idle connections (default)
   int transport_idle_timeout_;
+  int transport_idle_scan_interval_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)

@@ -155,6 +155,9 @@ public:
   /// request/response?
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
+  /// Report whether fragmented input is pending for the idle scanner.
+  bool has_pending_fragments (void) const;
+
 private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message

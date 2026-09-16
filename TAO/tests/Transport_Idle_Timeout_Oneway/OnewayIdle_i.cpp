@@ -16,11 +16,13 @@ namespace
 
 OnewayIdle_i::OnewayIdle_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
+  , test_failed_ (false)
+  , request_received_ (false)
 {
 }
 
 void
-OnewayIdle_i::ping ()
+OnewayIdle_i::ping (void)
 {
   size_t const size = cache_size (this->orb_.in ());
 
@@ -35,10 +37,17 @@ OnewayIdle_i::ping ()
                   size));
       this->test_failed_ = true;
     }
+  this->request_received_ = true;
 }
 
 bool
-OnewayIdle_i::test_failed () const
+OnewayIdle_i::test_failed (void) const
 {
   return this->test_failed_;
+}
+
+bool
+OnewayIdle_i::request_received (void) const
+{
+  return this->request_received_;
 }

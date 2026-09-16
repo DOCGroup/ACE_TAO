@@ -259,6 +259,9 @@ public:
   /// 0 means no closing of idle connections (default)
   virtual int transport_idle_timeout () const = 0;
 
+  /// Interval in seconds between transport idle scans.
+  virtual int transport_idle_scan_interval (void) const = 0;
+
 protected:
   /**
    * Loads the default protocols. This method is used so that the

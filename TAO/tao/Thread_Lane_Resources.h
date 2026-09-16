@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
 #include /**/ "tao/TAO_Export.h"
 #include "tao/params.h"
 #include "tao/Transport_Cache_Manager.h"

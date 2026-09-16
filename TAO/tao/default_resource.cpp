@@ -135,6 +135,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
   , drop_replies_ (true)
   , transport_idle_timeout_ (0)
+  , transport_idle_scan_interval_ (30)
 {
 #if TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY == 1
   this->resource_usage_strategy_ =
@@ -486,6 +487,19 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         TAOLIB_DEBUG ((LM_WARNING,
                     ACE_TEXT ("Zero copy writes unsupported on this platform\n")));
 #endif  /* TAO_HAS_SENDFILE==1 */
+      }
+    else if (0 == ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("-ORBTransportIdleScanInterval")))
+      {
+        if (++curarg == argc)
+          {
+            return -1;
+          }
+        this->transport_idle_scan_interval_ = ACE_OS::atoi (argv[curarg]);
+        if (this->transport_idle_scan_interval_ <= 0)
+          {
+            this->report_option_value_error (ACE_TEXT("-ORBTransportIdleScanInterval"), argv[curarg]);
+            return -1;
+          }
       }
     else if (0 == ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("-ORBTransportIdleTimeout")))
       {
@@ -1241,6 +1255,11 @@ int TAO_Default_Resource_Factory::transport_idle_timeout () const
   return this->transport_idle_timeout_;
 }
 
+int TAO_Default_Resource_Factory::transport_idle_scan_interval (void) const
+{
+  return this->transport_idle_scan_interval_;
+}
+
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
@@ -1253,4 +1272,3 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-

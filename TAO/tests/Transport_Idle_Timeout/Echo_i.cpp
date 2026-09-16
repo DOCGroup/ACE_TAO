@@ -2,22 +2,19 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_time.h"
+#include "ace/High_Res_Timer.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Cache_Manager_T.h"
 #include "tao/Thread_Lane_Resources.h"
 
-/// Sleep for @a seconds, spinning on reactor events so that the server's
-/// reactor thread (which fires the idle timer) is not blocked.
-/// We cannot use ACE_OS::sleep() alone because in a single-process test
-/// harness the reactor runs in the same thread.  For a two-process test
-/// the sleep is fine; for safety we drain reactor events anyway.
+/// Run the servant ORB reactor while delaying synchronous completion.
 void
 sleep_with_reactor (CORBA::ORB_ptr orb, int seconds)
 {
-  ACE_Time_Value const deadline = ACE_OS::gettimeofday () + ACE_Time_Value (seconds);
+  ACE_Time_Value const deadline = ACE_High_Res_Timer::gettimeofday_hr ()
+    + ACE_Time_Value (seconds);
 
-  while (ACE_OS::gettimeofday () < deadline)
+  while (ACE_High_Res_Timer::gettimeofday_hr () < deadline)
     {
       ACE_Time_Value tv (0, 50000); // 50 ms slices
       orb->perform_work (tv);

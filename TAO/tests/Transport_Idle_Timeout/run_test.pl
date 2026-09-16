@@ -18,7 +18,8 @@ use PerlACE::TestTarget;
 
 my $ior_file1 = "test1.ior";
 my $ior_file2 = "test2.ior";
-my $timeout_sec = 3;   # must match svc.conf value
+my $timeout_sec = 3;   # Y, must match svc.conf
+my $scan_interval_sec = 2; # X, must match svc.conf
 my $status = 0;
 my $debug_level = '0';
 my $cdebug_level = '0';
@@ -52,7 +53,7 @@ sub run_scenario {
 
     my $CL = $client->CreateProcess (
         "client",
-        "-ORBdebuglevel $cdebug_level -ORBVerboseLogging 1 -ORBSvcConf $svc_conf -k file://$client_ior -t $timeout_sec $extra_client_args"
+        "-ORBdebuglevel $cdebug_level -ORBVerboseLogging 1 -ORBSvcConf $svc_conf -k file://$client_ior -t $timeout_sec -x $scan_interval_sec $extra_client_args"
     );
 
     # Start server
@@ -82,9 +83,7 @@ sub run_scenario {
         return 1;
     }
 
-    # Run client — allow generous wall-clock budget:
-    #   TC-1+TC-2+TC-3: ~3*(timeout+2) + 3 slack = ~20 s for timeout=3
-    #   TC-4:           timeout+2 + 3 slack       = ~8 s
+    # Allow spaced reuse pings and Y + X + margin expiry waits.
     my $client_budget = ($extra_client_args =~ /-d/) ? 15 : 60;
     my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ()
                                             + $client_budget);
@@ -136,7 +135,7 @@ sub run_multiple_scenario {
 
     my $CL = $client->CreateProcess (
         "client_multiple",
-        "-ORBdebuglevel $cdebug_level -ORBVerboseLogging 1 -ORBSvcConf $svc_conf -k file://$client1_ior -l file://$client2_ior -t $timeout_sec $extra_client_args"
+        "-ORBdebuglevel $cdebug_level -ORBVerboseLogging 1 -ORBSvcConf $svc_conf -k file://$client1_ior -l file://$client2_ior -t $timeout_sec -x $scan_interval_sec $extra_client_args"
     );
 
     # Start server 1
@@ -191,9 +190,7 @@ sub run_multiple_scenario {
         return 1;
     }
 
-    # Run client — allow generous wall-clock budget:
-    #   TC-1+TC-2+TC-3: ~3*(timeout+2) + 3 slack = ~20 s for timeout=3
-    #   TC-4:           timeout+2 + 3 slack       = ~8 s
+    # Allow spaced reuse pings and Y + X + margin expiry waits.
     my $client_budget = ($extra_client_args =~ /-d/) ? 15 : 60;
     my $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ()
                                             + $client_budget);

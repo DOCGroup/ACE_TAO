@@ -1393,7 +1393,30 @@ example</a> of how this is used in TAO.</p>
         <td><code>-ORBTransportIdleTimeout</code> <em>number</em></td>
         <td>Number of seconds after which idle connections are closed and purged from
         the transport cache. By default idle connections are kept until they are
-        explicitly closed or purged because the transport cache is almost full.</td>
+        explicitly closed or purged because the transport cache is almost full.
+        When enabled, each thread-lane transport cache is scanned periodically.
+        Activity is measured with a monotonic clock and includes successful reads
+        and writes (even partial transfers), synchronous request dispatch and
+        completion (including oneways), and release of a transport for reuse.
+        Pending input, output, incomplete messages, fragments, and outstanding
+        outgoing requests prevent idle purging. Incoming-state checks are not
+        synchronized with receive processing.
+        Set this timeout above the maximum request duration, including blocking,
+        queuing and scheduling delays. Completion of CSD strategies (including
+        Dynamic TP), AMH requests and other deferred dispatch mechanisms is not
+        tracked. These configurations are allowed, but the transport may be closed
+        while work is queued or executing or an asynchronous reply is pending.
+        Short operations with bounded delays may work when the timeout exceeds
+        the full delay through completion; this is not guaranteed by the idle
+        scanner.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBTransportIdleScanInterval</code> <em>number</em></td>
+        <td>Positive scan interval in seconds; defaults to 30. Only effective when
+        <code>-ORBTransportIdleTimeout</code> is enabled. With timeout Y and interval
+        X, an eligible transport normally closes between Y and Y+X seconds after
+        its last activity. Reactor delays or pending work may postpone closure.
+        Each scan is linear in the number of cached transports.</td>
       </tr>
     </tbody>
   </table>

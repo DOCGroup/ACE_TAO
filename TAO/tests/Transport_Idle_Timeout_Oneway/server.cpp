@@ -1,8 +1,10 @@
 #include "OnewayIdle_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
+#include "tao/Resource_Factory.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager_T.h"
 
@@ -52,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
       PortableServer::POAManager_var manager = root_poa->the_POAManager ();
 
-      OnewayIdle_i *impl = nullptr;
+      OnewayIdle_i *impl = 0;
       ACE_NEW_RETURN (impl, OnewayIdle_i (orb.in ()), 1);
       PortableServer::ServantBase_var owner (impl);
 
@@ -62,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior = orb->object_to_string (test.in ());
       FILE *file = ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
-      if (file == nullptr)
+      if (file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) Cannot open output file '%s'\n"),
                            ior_output_file),
@@ -72,7 +74,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       manager->activate ();
 
-      ACE_Time_Value run_time (2);
+      // Do not start the idle observation window until the oneway has run.
+      // Also fail if no request arrives; an initially empty cache is not a pass.
+      ACE_Time_Value const deadline = ACE_High_Res_Timer::gettimeofday_hr ()
+        + ACE_Time_Value (30);
+      while (!impl->request_received ()
+             && ACE_High_Res_Timer::gettimeofday_hr () < deadline)
+        {
+          ACE_Time_Value slice (0, 50000);
+          orb->perform_work (slice);
+        }
+      if (!impl->request_received ())
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT ("(%P|%t) ERROR: oneway request was not received\n")), 1);
+        }
+
+      TAO_Resource_Factory *factory = orb->orb_core ()->resource_factory ();
+      ACE_Time_Value run_time (factory->transport_idle_timeout ()
+                               + factory->transport_idle_scan_interval () + 1);
       orb->run (run_time);
 
       size_t const size = cache_size (orb.in ());

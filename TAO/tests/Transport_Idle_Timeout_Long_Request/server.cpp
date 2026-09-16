@@ -1,18 +1,19 @@
 #include "Transport_Idle_Timeout_Long_RequestS.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_time.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 void
 sleep_with_reactor (CORBA::ORB_ptr orb, int seconds)
 {
-  ACE_Time_Value const deadline = ACE_OS::gettimeofday () + ACE_Time_Value (seconds);
+  ACE_Time_Value const deadline = ACE_High_Res_Timer::gettimeofday_hr ()
+    + ACE_Time_Value (seconds);
 
-  while (ACE_OS::gettimeofday () < deadline)
+  while (ACE_High_Res_Timer::gettimeofday_hr () < deadline)
     {
       ACE_Time_Value tv (0, 50000); // 50 ms slices
       orb->perform_work (tv);
@@ -28,7 +29,7 @@ public:
   {
   }
 
-  void long_request () override
+  void long_request ()
   {
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) server: long_request, sleeping 2 seconds\n"));
@@ -37,12 +38,12 @@ public:
                 "(%P|%t) server: long_request finished\n"));
   }
 
-  void ping () override
+  void ping ()
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) server: ping received\n"));
   }
 
-  void shutdown () override
+  void shutdown ()
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) server: shutdown received\n"));
     this->orb_->shutdown (false);
