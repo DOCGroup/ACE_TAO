@@ -124,6 +124,13 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
+    TCM_Idle_Timer_Handler (Transport_Cache_Manager_T *manager)
+    : manager_ (manager)
+  {
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
     handle_timeout (ACE_Time_Value const &, void const *)

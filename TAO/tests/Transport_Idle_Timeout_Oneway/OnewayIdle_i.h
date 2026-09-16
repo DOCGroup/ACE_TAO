@@ -11,7 +11,7 @@ public:
   void ping () override;
 
   bool test_failed () const;
-  bool request_received () const { return this->request_received_; }
+  bool request_received () const;
 
 private:
   CORBA::ORB_var orb_;

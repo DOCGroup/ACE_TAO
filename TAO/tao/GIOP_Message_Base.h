@@ -156,11 +156,7 @@ public:
   bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
   /// Report whether fragmented input is pending for the idle scanner.
-  bool has_pending_fragments () const
-  {
-    TAO_Queued_Data *qd = nullptr;
-    return this->fragment_stack_.top (qd) == 0;
-  }
+  bool has_pending_fragments () const;
 
 private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1

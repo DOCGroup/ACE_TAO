@@ -1616,6 +1616,13 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
   return generator_parser->is_ready_for_bidirectional ();
 }
 
+bool
+TAO_GIOP_Message_Base::has_pending_fragments () const
+{
+  TAO_Queued_Data *qd = nullptr;
+  return this->fragment_stack_.top (qd) == 0;
+}
+
 TAO_Queued_Data *
 TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 {

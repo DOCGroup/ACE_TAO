@@ -177,10 +177,7 @@ namespace TAO
     class TCM_Idle_Timer_Handler final : public ACE_Event_Handler
     {
     public:
-      explicit TCM_Idle_Timer_Handler (Transport_Cache_Manager_T *manager)
-        : manager_ (manager)
-      {
-      }
+      explicit TCM_Idle_Timer_Handler (Transport_Cache_Manager_T *manager);
 
       int handle_timeout (ACE_Time_Value const &current_time,
                           void const *act = nullptr) override;
