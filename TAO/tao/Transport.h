@@ -1132,6 +1132,9 @@ protected:
   /// Monotonic activity timestamp in milliseconds.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_INT64> last_activity_;
 
+  /// Synchronous inbound requests currently being dispatched.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> active_requests_;
+
   /// The adapter used to receive timeout callbacks from the Reactor
   TAO::Transport_Timer transport_timer_;
 
@@ -1180,8 +1183,40 @@ private:
   template <typename TT, typename TRDT, typename PSTRAT>
   friend class TAO::Transport_Cache_Manager_T;
 
+  /// Keep synchronous request dispatch active until its upcall completes.
+  class Active_Request_Guard
+  {
+  public:
+    /// Start tracking a synchronous request when idle expiry is enabled.
+    explicit Active_Request_Guard (TAO_Transport &transport);
+
+    /// Finish tracking and record request completion activity.
+    ~Active_Request_Guard (void);
+
+    /// Whether dispatch may proceed on this transport.
+    bool acquired (void) const;
+
+  private:
+    /// A guard represents one dispatch and cannot be copied.
+    Active_Request_Guard (Active_Request_Guard const &);
+    Active_Request_Guard &operator= (Active_Request_Guard const &);
+
+    /// Transport whose synchronous request is being tracked.
+    TAO_Transport &transport_;
+
+    /// True when idle expiry is enabled and the counter was incremented.
+    bool tracked_;
+
+    /// False when the transport was already selected for closing.
+    bool acquired_;
+  };
+
   /// Record cache acquisition, I/O or synchronous dispatch activity.
   void touch_activity (void);
+
+  /// Begin/end synchronous request tracking through the cache manager.
+  bool begin_active_request (bool &tracked);
+  void end_active_request (void);
 
   /// Check the monotonic activity timestamp.
   bool idle_timeout_expired_i (void);

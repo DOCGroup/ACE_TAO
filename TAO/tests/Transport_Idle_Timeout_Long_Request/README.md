@@ -1,21 +1,21 @@
 # Long request with periodic idle scanning
 
-The server uses Y=4 seconds and X=1 second. The client explicitly disables idle
+The server uses Y=1 second and X=1 second. The client explicitly disables idle
 expiry. The old svc.conf is replaced by server.conf to avoid automatic loading
 of server settings by the client.
 
-After a ping, the client processes reactor events for three seconds and verifies
-the connection is still cached. It then calls long_request(), which processes
-server reactor events for two seconds. The call spans the old idle deadline
-while remaining shorter than Y, as required by the supported configuration.
+The client invokes a synchronous request that runs for three seconds while the
+servant processes reactor events. Multiple idle scans therefore fire while the
+request is being dispatched. The request must complete successfully because an
+active synchronous dispatch is not eligible for idle purging.
 
-After the reply the client waits three seconds without making another call.
-The cache must still contain the connection: synchronous completion must refresh
-activity. It then waits up to Y+X+1 seconds for peer closure, checks the empty
-cache, reconnects with ping(), and shuts down.
+Completion refreshes transport activity before the active-request count returns
+to zero. The client verifies that the connection is still cached immediately
+after the reply, then waits up to Y+X+1 seconds for peer closure, reconnects with
+ping(), and shuts down.
 
-This replaces the old Y=1/two-second-servant scenario, which was outside the
-documented maximum-request-duration contract. The scanner can conservatively
-retain active input callbacks, but this test does not require overlong calls.
+Active-request tracking takes the transport cache lock only when transport idle
+expiry is enabled. With the default Y=0 configuration, request dispatch performs
+no active-request bookkeeping and acquires no additional cache lock.
 
 Run `perl run_test.pl`; use `-debug` or `-cdebug` for ORB logging.

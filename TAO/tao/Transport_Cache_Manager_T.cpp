@@ -125,6 +125,41 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
+  bool
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::begin_active_request (
+    transport_type &transport,
+    bool &tracked)
+  {
+    tracked = false;
+    if (this->idle_timeout_ <= 0)
+      {
+        return true;
+      }
+
+    ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false);
+    if (transport.cache_map_entry_ == 0)
+      {
+        return false;
+      }
+
+    ++transport.active_requests_;
+    transport.touch_activity ();
+    tracked = true;
+    return true;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::end_active_request (
+    transport_type &transport)
+  {
+    ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
+    transport.touch_activity ();
+    ACE_ASSERT (transport.active_requests_.value () > 0);
+    --transport.active_requests_;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
     TCM_Idle_Timer_Handler (Transport_Cache_Manager_T *manager)
     : manager_ (manager)

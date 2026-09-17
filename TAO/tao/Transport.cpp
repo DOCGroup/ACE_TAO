@@ -143,6 +143,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , current_deadline_ (ACE_Time_Value::zero)
   , flush_timer_id_ (-1)
   , last_activity_ (monotonic_milliseconds ())
+  , active_requests_ (0)
   , transport_timer_ (this)
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((size_t) this)
@@ -584,7 +585,8 @@ TAO_Transport::purge_entry (void)
 bool
 TAO_Transport::can_be_purged (void)
 {
-  return !this->tms_->has_request ();
+  return this->active_requests_.value () == 0
+    && !this->tms_->has_request ();
 }
 
 int
@@ -1013,6 +1015,40 @@ TAO_Transport::touch_activity (void)
   this->last_activity_ = monotonic_milliseconds ();
 }
 
+TAO_Transport::Active_Request_Guard::Active_Request_Guard (
+  TAO_Transport &transport)
+  : transport_ (transport)
+  , tracked_ (false)
+  , acquired_ (this->transport_.begin_active_request (this->tracked_))
+{
+}
+
+TAO_Transport::Active_Request_Guard::~Active_Request_Guard (void)
+{
+  if (this->tracked_)
+    {
+      this->transport_.end_active_request ();
+    }
+}
+
+bool
+TAO_Transport::Active_Request_Guard::acquired (void) const
+{
+  return this->acquired_;
+}
+
+bool
+TAO_Transport::begin_active_request (bool &tracked)
+{
+  return this->transport_cache_manager ().begin_active_request (*this, tracked);
+}
+
+void
+TAO_Transport::end_active_request (void)
+{
+  this->transport_cache_manager ().end_active_request (*this);
+}
+
 bool
 TAO_Transport::idle_timeout_expired_i (void)
 {
@@ -1028,7 +1064,8 @@ TAO_Transport::is_idle (void)
 {
   // Incoming state is not synchronized with receive processing here.
   TAO_Queued_Data *qd = 0;
-  return this->queue_is_empty_i ()
+  return this->active_requests_.value () == 0
+    && this->queue_is_empty_i ()
     && this->incoming_message_queue_.queue_length () == 0
     && this->incoming_message_stack_.top (qd) != 0
     && (!this->partial_message_ || this->partial_message_->length () == 0)
@@ -2568,16 +2605,24 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       return -1;
     case GIOP::Request:
     case GIOP::LocateRequest:
-      // Let us resume the handle before we go ahead to process the
-      // request. This will open up the handle for other threads.
-      rh.resume_handle ();
+      {
+        Active_Request_Guard const active_request (*this);
+        if (!active_request.acquired ())
+          {
+            return -1;
+          }
 
-      if (this->messaging_object ()->process_request_message (this, qd) == -1)
-        {
-          // Return a "-1" so that the next stage can take care of
-          // closing connection and the necessary memory management.
-          return -1;
-        }
+        // Let us resume the handle before we go ahead to process the
+        // request. This will open up the handle for other threads.
+        rh.resume_handle ();
+
+        if (this->messaging_object ()->process_request_message (this, qd) == -1)
+          {
+            // Return a "-1" so that the next stage can take care of
+            // closing connection and the necessary memory management.
+            return -1;
+          }
+      }
       break;
     case GIOP::Reply:
     case GIOP::LocateReply:
