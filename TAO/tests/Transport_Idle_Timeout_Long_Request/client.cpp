@@ -12,17 +12,6 @@ cache_size (CORBA::ORB_ptr orb)
   return orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
 }
 
-static void
-run_for (CORBA::ORB_ptr orb, int seconds)
-{
-  const auto deadline = std::chrono::steady_clock::now () + std::chrono::seconds (seconds);
-  while (std::chrono::steady_clock::now () < deadline)
-    {
-      ACE_Time_Value slice (0, 50000);
-      orb->perform_work (slice);
-    }
-}
-
 static bool
 expect_cache (CORBA::ORB_ptr orb, size_t expected)
 {
@@ -89,21 +78,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (test.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "nil Test reference\n"), 1);
 
-      // Y=4, X=1. Start a two-second call near the old idle deadline.
-      test->ping ();
-      run_for (orb.in (), 3);
-      if (!expect_cache (orb.in (), 1))
-        {
-          return 1;
-        }
+      // Y=1, X=1. The three-second request must remain protected even
+      // though multiple idle scans fire while it is being dispatched.
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: long_request\n")));
       test->long_request ();
 
-      // Completion must refresh activity: three seconds is less than Y,
-      // but more than the idle time remaining from receipt of the request.
-      run_for (orb.in (), 3);
+      // Completion refreshes activity, after which the normal Y-to-Y+X
+      // idle closing window starts.
       if (!expect_cache (orb.in (), 1)
-          || !wait_for_idle_close (orb.in (), 4 + 1 + 1))
+          || !wait_for_idle_close (orb.in (), 1 + 1 + 1))
         {
           return 1;
         }

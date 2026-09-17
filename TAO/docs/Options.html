@@ -1397,17 +1397,18 @@ example</a> of how this is used in TAO.</p>
         Activity is measured with a monotonic clock and includes successful reads
         and writes (even partial transfers), synchronous request dispatch and
         completion (including oneways), and release of a transport for reuse.
-        Pending input, output, incomplete messages, fragments, and outstanding
-        outgoing requests prevent idle purging. Incoming-state checks are not
-        synchronized with receive processing.
-        Set this timeout above the maximum request duration, including blocking,
-        queuing and scheduling delays. Completion of CSD strategies (including
-        Dynamic TP), AMH requests and other deferred dispatch mechanisms is not
-        tracked. These configurations are allowed, but the transport may be closed
-        while work is queued or executing or an asynchronous reply is pending.
-        Short operations with bounded delays may work when the timeout exceeds
-        the full delay through completion; this is not guaranteed by the idle
-        scanner.</td>
+        Pending input, output, incomplete messages, fragments, synchronous inbound
+        requests, and outstanding outgoing requests prevent idle purging. The idle
+        period for a synchronous inbound request starts when dispatch completes,
+        so such a request may take longer than this timeout. Request tracking is
+        enabled only when this option is enabled; the default configuration adds
+        no cache locking to request dispatch. Incoming-state checks are not
+        synchronized with receive processing. Completion of CSD strategies
+        (including Dynamic TP), AMH requests and other deferred dispatch mechanisms
+        is not tracked. These configurations are allowed, but the transport may be
+        closed while work is queued or executing or an asynchronous reply is
+        pending. Set the timeout above the full delay through completion when using
+        such a mechanism; this is not guaranteed by the idle scanner.</td>
       </tr>
       <tr>
         <td><code>-ORBTransportIdleScanInterval</code> <em>number</em></td>

@@ -31,8 +31,8 @@ public:
   void long_request () override
   {
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) server: long_request, sleeping 2 seconds\n"));
-    sleep_with_reactor (orb_.in(), 2);
+                "(%P|%t) server: long_request, sleeping 3 seconds\n"));
+    sleep_with_reactor (orb_.in(), 3);
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) server: long_request finished\n"));
   }

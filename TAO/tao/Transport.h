@@ -1118,6 +1118,9 @@ protected:
   /// Monotonic activity timestamp in milliseconds.
   std::atomic<std::int64_t> last_activity_;
 
+  /// Synchronous inbound requests currently being dispatched.
+  std::atomic<unsigned long> active_requests_ { 0 };
+
   /// The adapter used to receive timeout callbacks from the Reactor
   TAO::Transport_Timer transport_timer_;
 
@@ -1166,8 +1169,30 @@ private:
   template <typename TT, typename TRDT, typename PSTRAT>
   friend class TAO::Transport_Cache_Manager_T;
 
+  /// Keep synchronous request dispatch active until its upcall completes.
+  class Active_Request_Guard
+  {
+  public:
+    explicit Active_Request_Guard (TAO_Transport &transport);
+    ~Active_Request_Guard ();
+
+    bool acquired () const;
+
+  private:
+    Active_Request_Guard (Active_Request_Guard const &) = delete;
+    Active_Request_Guard &operator= (Active_Request_Guard const &) = delete;
+
+    TAO_Transport &transport_;
+    bool tracked_;
+    bool acquired_;
+  };
+
   /// Record cache acquisition, I/O or synchronous dispatch activity.
   void touch_activity ();
+
+  /// Begin/end synchronous request tracking through the cache manager.
+  bool begin_active_request (bool &tracked);
+  void end_active_request ();
 
   /// Check the monotonic activity timestamp.
   bool idle_timeout_expired_i ();

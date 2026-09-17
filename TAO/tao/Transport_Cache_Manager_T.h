@@ -39,6 +39,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Connection_Handler;
 class TAO_Resource_Factory;
+class TAO_Transport;
 
 template <class ACE_COND_MUTEX> class TAO_Condition;
 
@@ -173,6 +174,12 @@ namespace TAO
     HASH_MAP &map ();
 
   private:
+    friend class TAO_Transport;
+
+    /// Track synchronous dispatch when idle expiry is enabled.
+    bool begin_active_request (transport_type &transport, bool &tracked);
+    void end_active_request (transport_type &transport);
+
     /// Delegate reactor timer callbacks directly to the owning cache manager.
     class TCM_Idle_Timer_Handler final : public ACE_Event_Handler
     {

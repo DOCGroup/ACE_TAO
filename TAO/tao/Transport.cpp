@@ -553,7 +553,8 @@ TAO_Transport::purge_entry ()
 bool
 TAO_Transport::can_be_purged ()
 {
-  return !this->tms_->has_request ();
+  return this->active_requests_.load (std::memory_order_relaxed) == 0
+    && !this->tms_->has_request ();
 }
 
 int
@@ -990,6 +991,40 @@ TAO_Transport::touch_activity ()
     monotonic_milliseconds (), std::memory_order_relaxed);
 }
 
+TAO_Transport::Active_Request_Guard::Active_Request_Guard (
+  TAO_Transport &transport)
+  : transport_ (transport)
+  , tracked_ (false)
+  , acquired_ (this->transport_.begin_active_request (this->tracked_))
+{
+}
+
+TAO_Transport::Active_Request_Guard::~Active_Request_Guard ()
+{
+  if (this->tracked_)
+    {
+      this->transport_.end_active_request ();
+    }
+}
+
+bool
+TAO_Transport::Active_Request_Guard::acquired () const
+{
+  return this->acquired_;
+}
+
+bool
+TAO_Transport::begin_active_request (bool &tracked)
+{
+  return this->transport_cache_manager ().begin_active_request (*this, tracked);
+}
+
+void
+TAO_Transport::end_active_request ()
+{
+  this->transport_cache_manager ().end_active_request (*this);
+}
+
 bool
 TAO_Transport::idle_timeout_expired_i ()
 {
@@ -1005,7 +1040,8 @@ TAO_Transport::is_idle ()
 {
   // Incoming state is not synchronized with receive processing here.
   TAO_Queued_Data *qd = nullptr;
-  return this->queue_is_empty_i ()
+  return this->active_requests_.load (std::memory_order_relaxed) == 0
+    && this->queue_is_empty_i ()
     && this->incoming_message_queue_.queue_length () == 0
     && this->incoming_message_stack_.top (qd) != 0
     && (!this->partial_message_ || this->partial_message_->length () == 0)
@@ -2542,16 +2578,24 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       return -1;
     case GIOP::Request:
     case GIOP::LocateRequest:
-      // Let us resume the handle before we go ahead to process the
-      // request. This will open up the handle for other threads.
-      rh.resume_handle ();
+      {
+        Active_Request_Guard const active_request (*this);
+        if (!active_request.acquired ())
+          {
+            return -1;
+          }
 
-      if (this->messaging_object ()->process_request_message (this, qd) == -1)
-        {
-          // Return a "-1" so that the next stage can take care of
-          // closing connection and the necessary memory management.
-          return -1;
-        }
+        // Let us resume the handle before we go ahead to process the
+        // request. This will open up the handle for other threads.
+        rh.resume_handle ();
+
+        if (this->messaging_object ()->process_request_message (this, qd) == -1)
+          {
+            // Return a "-1" so that the next stage can take care of
+            // closing connection and the necessary memory management.
+            return -1;
+          }
+      }
       break;
     case GIOP::Reply:
     case GIOP::LocateReply:
