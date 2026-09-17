@@ -20,9 +20,10 @@ updates use a relaxed atomic monotonic-millisecond value. During shutdown, the
 timer id is cleared under the cache lock and the reactor timer is cancelled
 after releasing that lock.
 
-Incoming-state checks are not synchronized with receive processing, and active
-input callbacks do not receive additional protection. Configure Y above the
-maximum request duration, including blocking, queuing and scheduling delays.
+Incoming-state checks are not synchronized with receive processing. Synchronous
+GIOP Request and LocateRequest dispatch is tracked while idle expiry is enabled,
+so these requests can take longer than Y without being purged. Completion
+refreshes transport activity before the active-request count returns to zero.
 
 CSD (including Dynamic TP), AMH and other deferred dispatch configurations are
 allowed, but their deferred completion is not tracked. A transport can therefore
