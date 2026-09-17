@@ -1173,17 +1173,29 @@ private:
   class Active_Request_Guard
   {
   public:
+    /// Start tracking a synchronous request when idle expiry is enabled.
     explicit Active_Request_Guard (TAO_Transport &transport);
+
+    /// Finish tracking and record request completion activity.
     ~Active_Request_Guard ();
 
+    /// Whether dispatch may proceed on this transport.
     bool acquired () const;
 
   private:
+    /// A guard represents one dispatch and cannot transfer ownership.
     Active_Request_Guard (Active_Request_Guard const &) = delete;
     Active_Request_Guard &operator= (Active_Request_Guard const &) = delete;
+    Active_Request_Guard (Active_Request_Guard &&) = delete;
+    Active_Request_Guard &operator= (Active_Request_Guard &&) = delete;
 
+    /// Transport whose synchronous request is being tracked.
     TAO_Transport &transport_;
+
+    /// True when idle expiry is enabled and the counter was incremented.
     bool tracked_;
+
+    /// False when the transport was already selected for closing.
     bool acquired_;
   };
 
