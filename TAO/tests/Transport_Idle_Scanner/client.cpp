@@ -47,7 +47,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     'G','I','O','P', 1,2,2,0, 0,0,0,4, 0,0,0,1
   };
   if (partial.send_n (cancel, 6) != 6
-      || fragmented.send_n (fragment, sizeof fragment) != sizeof fragment)
+      || fragmented.send_n (fragment, sizeof fragment)
+           != static_cast<ssize_t> (sizeof fragment))
     {
       return 1;
     }
@@ -63,8 +64,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Finish the partial message and cancel the outstanding fragmented request.
   // Both transports must then become eligible for eventual idle closure.
-  if (partial.send_n (cancel + 6, sizeof cancel - 6) != sizeof cancel - 6
-      || fragmented.send_n (cancel, sizeof cancel) != sizeof cancel)
+  if (partial.send_n (cancel + 6, sizeof cancel - 6)
+        != static_cast<ssize_t> (sizeof cancel - 6)
+      || fragmented.send_n (cancel, sizeof cancel)
+           != static_cast<ssize_t> (sizeof cancel))
     {
       return 1;
     }
