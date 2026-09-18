@@ -483,6 +483,19 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("Zero copy writes unsupported on this platform\n")));
 #endif  /* TAO_HAS_SENDFILE==1 */
       }
+    else if (0 == ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("-ORBTransportIdleScanInterval")))
+      {
+        if (++curarg == argc)
+          {
+            return -1;
+          }
+        this->transport_idle_scan_interval_ = ACE_OS::atoi (argv[curarg]);
+        if (this->transport_idle_scan_interval_ <= 0)
+          {
+            this->report_option_value_error (ACE_TEXT("-ORBTransportIdleScanInterval"), argv[curarg]);
+            return -1;
+          }
+      }
     else if (0 == ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("-ORBTransportIdleTimeout")))
       {
         ++curarg;
@@ -1229,6 +1242,11 @@ int TAO_Default_Resource_Factory::transport_idle_timeout () const
   return this->transport_idle_timeout_;
 }
 
+int TAO_Default_Resource_Factory::transport_idle_scan_interval () const
+{
+  return this->transport_idle_scan_interval_;
+}
+
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
@@ -1241,4 +1259,3 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-

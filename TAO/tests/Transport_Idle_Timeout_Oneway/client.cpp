@@ -61,7 +61,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P|%t) Sending oneway ping\n")));
       test->ping ();
 
-      ACE_Time_Value run_time (3);
+      // Y=1, X=2, server margin=1; allow two more seconds for peer closure.
+      ACE_Time_Value run_time (1 + 2 + 1 + 2);
       orb->run (run_time);
 
       size_t const size = cache_size (orb.in ());

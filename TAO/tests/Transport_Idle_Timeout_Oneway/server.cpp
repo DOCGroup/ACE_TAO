@@ -3,6 +3,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
+#include "tao/Resource_Factory.h"
+#include <chrono>
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager_T.h"
 
@@ -72,7 +74,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       manager->activate ();
 
-      ACE_Time_Value run_time (2);
+      // Do not start the idle observation window until the oneway has run.
+      // Also fail if no request arrives; an initially empty cache is not a pass.
+      const auto deadline = std::chrono::steady_clock::now () + std::chrono::seconds (30);
+      while (!impl->request_received () && std::chrono::steady_clock::now () < deadline)
+        {
+          ACE_Time_Value slice (0, 50000);
+          orb->perform_work (slice);
+        }
+      if (!impl->request_received ())
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            ACE_TEXT ("(%P|%t) ERROR: oneway request was not received\n")), 1);
+        }
+
+      TAO_Resource_Factory *factory = orb->orb_core ()->resource_factory ();
+      ACE_Time_Value run_time (factory->transport_idle_timeout ()
+                               + factory->transport_idle_scan_interval () + 1);
       orb->run (run_time);
 
       size_t const size = cache_size (orb.in ());

@@ -35,10 +35,17 @@ OnewayIdle_i::ping ()
                   size));
       this->test_failed_ = true;
     }
+  this->request_received_ = true;
 }
 
 bool
 OnewayIdle_i::test_failed () const
 {
   return this->test_failed_;
+}
+
+bool
+OnewayIdle_i::request_received () const
+{
+  return this->request_received_;
 }

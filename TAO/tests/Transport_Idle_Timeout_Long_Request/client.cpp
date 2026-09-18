@@ -1,6 +1,43 @@
 #include "Transport_Idle_Timeout_Long_RequestC.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
+#include "tao/ORB_Core.h"
+#include "tao/Thread_Lane_Resources.h"
+#include <chrono>
+
+static size_t
+cache_size (CORBA::ORB_ptr orb)
+{
+  return orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
+}
+
+static bool
+expect_cache (CORBA::ORB_ptr orb, size_t expected)
+{
+  const size_t actual = cache_size (orb);
+  if (actual != expected)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) cache size %B, expected %B\n"),
+                  actual, expected));
+      return false;
+    }
+  return true;
+}
+
+// Observe closure without making a CORBA call that could reconnect.
+static bool
+wait_for_idle_close (CORBA::ORB_ptr orb, int seconds)
+{
+  const auto deadline = std::chrono::steady_clock::now () + std::chrono::seconds (seconds);
+  while (cache_size (orb) != 0 && std::chrono::steady_clock::now () < deadline)
+    {
+      ACE_Time_Value slice (0, 50000);
+      orb->perform_work (slice);
+    }
+  return expect_cache (orb, 0);
+}
+
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
@@ -41,13 +78,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (test.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "nil Test reference\n"), 1);
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: long_request\n"));
+      // Y=1, X=1. The three-second request must remain protected even
+      // though multiple idle scans fire while it is being dispatched.
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: long_request\n")));
       test->long_request ();
 
-      // long_request() only returns if the server could send its reply after
-      // two seconds, despite a one second transport idle timeout.
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: ping\n"));
+      // Completion refreshes activity, after which the normal Y-to-Y+X
+      // idle closing window starts.
+      if (!expect_cache (orb.in (), 1)
+          || !wait_for_idle_close (orb.in (), 1 + 1 + 1))
+        {
+          return 1;
+        }
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: reconnect after idle scan\n")));
       test->ping ();
+      if (!expect_cache (orb.in (), 1))
+        {
+          return 1;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: shutdown\n"));
       test->shutdown ();

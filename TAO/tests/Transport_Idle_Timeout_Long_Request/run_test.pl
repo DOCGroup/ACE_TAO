@@ -31,11 +31,11 @@ $client->DeleteFile ($iorbase);
 
 my $SV = $server->CreateProcess (
     "server",
-    "-ORBSvcConf svc.conf -o $server_iorfile -ORBdebuglevel $debug_level -ORBVerboseLogging 1");
+    "-ORBSvcConf server.conf -o $server_iorfile -ORBdebuglevel $debug_level -ORBVerboseLogging 1");
 
 my $CL = $client->CreateProcess (
     "client",
-    "-ORBSvcConf svc.conf -k file://$client_iorfile -ORBdebuglevel $cdebug_level -ORBVerboseLogging 1");
+    "-ORBSvcConf client.conf -k file://$client_iorfile -ORBdebuglevel $cdebug_level -ORBVerboseLogging 1");
 
 if ($SV->Spawn () != 0) {
     print STDERR "ERROR: server failed to start\n";

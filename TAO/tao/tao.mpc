@@ -307,7 +307,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Transport_Acceptor.cpp
     Transport_Connector.cpp
     Transport_Descriptor_Interface.cpp
-    Transport_Idle_Timer.cpp
     Transport_Mux_Strategy.cpp
     Transport_Queueing_Strategies.cpp
     Transport_Selection_Guard.cpp
@@ -634,7 +633,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Transport_Cache_Manager_T.h
     Transport_Connector.h
     Transport_Descriptor_Interface.h
-    Transport_Idle_Timer.h
     Transport.h
     Transport_Mux_Strategy.h
     Transport_Queueing_Strategies.h

@@ -11,10 +11,12 @@ public:
   void ping () override;
 
   bool test_failed () const;
+  bool request_received () const;
 
 private:
   CORBA::ORB_var orb_;
   bool test_failed_ { false };
+  bool request_received_ { false };
 };
 
 #endif /* TRANSPORT_IDLE_TIMEOUT_ONEWAY_I_H */
