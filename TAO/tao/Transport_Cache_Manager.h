@@ -31,6 +31,8 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#include "tao/Transport.h"
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_TRANSPORT_CACHE_MANAGER_H */
