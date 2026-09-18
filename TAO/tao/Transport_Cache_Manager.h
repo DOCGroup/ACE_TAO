@@ -14,6 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Transport_Cache_Manager_T.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -22,7 +23,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
-class TAO_Transport_Descriptor_Interface;
 
 namespace TAO
 {
