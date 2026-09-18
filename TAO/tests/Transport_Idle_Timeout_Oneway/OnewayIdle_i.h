@@ -8,13 +8,15 @@ class OnewayIdle_i : public virtual POA_Test::OnewayIdle
 public:
   explicit OnewayIdle_i (CORBA::ORB_ptr orb);
 
-  void ping () override;
+  void ping (void);
 
-  bool test_failed () const;
+  bool test_failed (void) const;
+  bool request_received (void) const;
 
 private:
   CORBA::ORB_var orb_;
-  bool test_failed_ { false };
+  bool test_failed_;
+  bool request_received_;
 };
 
 #endif /* TRANSPORT_IDLE_TIMEOUT_ONEWAY_I_H */

@@ -1,18 +1,21 @@
-# Long server request and transport idle timeout regression
+# Long request with periodic idle scanning
 
-The server uses:
+The server uses Y=1 second and X=1 second. The client explicitly disables idle
+expiry. The old svc.conf is replaced by server.conf to avoid automatic loading
+of server settings by the client.
 
-    -ORBTransportIdleTimeout 1
+The client invokes a synchronous request that runs for three seconds while the
+servant processes reactor events. Multiple idle scans therefore fire while the
+request is being dispatched. The request must complete successfully because an
+active synchronous dispatch is not eligible for idle purging.
 
-`long_request()` sleeps for two seconds before returning.
+Completion refreshes transport activity before the active-request count returns
+to zero. The client verifies that the connection is still cached immediately
+after the reply, then waits up to Y+X+1 seconds for peer closure, reconnects with
+ping(), and shuts down.
 
-The test succeeds only when the server can keep the transport alive while the
-request is actively being processed and send the reply afterwards.
+Active-request tracking takes the transport cache lock only when transport idle
+expiry is enabled. With the default Y=0 configuration, request dispatch performs
+no active-request bookkeeping and acquires no additional cache lock.
 
-This exposes a weakness in a patch that merely calls `schedule_idle_timer()`
-when a request is received: that schedules a new one-second timer, but does
-not protect a request whose processing takes longer than one second.
-
-A robust implementation should cancel the server-side idle timer before
-processing a request and schedule a new timer after request processing has
-completed.
+Run `perl run_test.pl`; use `-debug` or `-cdebug` for ORB logging.

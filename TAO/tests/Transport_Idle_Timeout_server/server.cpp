@@ -15,12 +15,12 @@ public:
   {
   }
 
-  void ping () override
+  void ping ()
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) server: ping received\n"));
   }
 
-  void shutdown () override
+  void shutdown ()
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) server: shutdown received\n"));
     this->orb_->shutdown (false);

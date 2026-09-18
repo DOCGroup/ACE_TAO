@@ -1,27 +1,20 @@
-# Transport Idle Timeout Oneway Test
+# Oneway completion and periodic idle scanning
 
-This test exercises `-ORBTransportIdleTimeout` with a oneway request.
+Only the server enables expiry: Y=1 second, X=2 seconds. The client explicitly
+disables expiry in client.conf.
 
-The timeout is configured to 1 second on the server only. The client does not configure an idle timeout.
+The client sends one oneway ping. The servant checks that one transport is
+cached and records receipt. The server waits up to 30 seconds for that receipt,
+then runs its reactor for Y+X+1 seconds after dispatch has returned and checks
+that the cache is empty. No received request is a failure, not an empty-cache pass.
 
-Test sequence:
+The client keeps its reactor running for six seconds after sending, longer than
+the server's four-second observation window, and expects to observe peer closure.
+Both cache assertions must pass: client closure alone could otherwise be caused
+by server teardown. The observation window assumes timely delivery of the small
+local test request; heavily delayed delivery can fail the timing budget.
 
-1. The client sends a single `oneway ping()` request.
-2. The servant verifies that the server transport cache contains one transport while handling the request.
-3. The server keeps processing for 2 seconds. At that point the 1-second idle timeout has expired, while the client is still running. Receiving the oneway request cancels the server-side idle timer; completion of the synchronous servant dispatch is expected to schedule it again, even though no reply is sent. The server transport cache must therefore be empty at the check.
-4. The client continues running its ORB for 3 seconds in total. This keeps the client connection alive while the server performs its 2-second cache check. Afterwards the client expects its transport cache to be empty after observing the server-side connection closure.
+Completion refreshes the monotonic activity timestamp despite there being no
+reply. No per-transport timer is cancelled or restarted.
 
-Keeping the client alive longer than the server-side cache check ensures that the server cannot report an empty cache simply because the client exited and closed the connection.
-
-Expected final cache sizes:
-
-- server after 2 seconds: 0
-- client after 3 seconds: 0
-
-This test requires idle-timer rescheduling after oneway dispatch completion. With receive-cancels-only behavior, the server cache remains at 1 and the test must fail. The servant's in-request cache expectation remains 1.
-
-Run the test with:
-
-    perl run_test.pl
-
-Use `-debug` or `-cdebug` to enable server or client ORB debug logging respectively.
+Run `perl run_test.pl`; use `-debug` or `-cdebug` for ORB logging.

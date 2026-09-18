@@ -19,10 +19,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Transport_Timer.h"
-#include "tao/Transport_Idle_Timer.h"
 #include "tao/Incoming_Message_Queue.h"
 #include "tao/Incoming_Message_Stack.h"
 #include "tao/Message_Semantics.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
 
@@ -864,9 +864,6 @@ public:
    */
   int handle_timeout (const ACE_Time_Value &current_time, const void* act);
 
-  /// Timeout called when the idle timer expired for this transport
-  int handle_idle_timeout (const ACE_Time_Value &current_time, const void* act);
-
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size (void) const;
 
@@ -909,9 +906,6 @@ public:
 
   /// Transport statistics
   TAO::Transport::Stats* stats (void) const;
-
-  /// Helper method to cancel the timer when the transport is not idle anymore
-  void cancel_idle_timer ();
 
 private:
   /// Helper method that returns the Transport Cache Manager.
@@ -1075,11 +1069,7 @@ private:
    */
   bool using_blocking_io_for_asynch_messages() const;
 
-  /// Helper method to schedule a timer when the transport is made idle
-  void schedule_idle_timer ();
-
   //@@ TAO_TRANSPORT_SPL_PRIVATE_METHODS_ADD_HOOK
-
 protected:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
@@ -1139,14 +1129,14 @@ protected:
   /// The timer ID
   long flush_timer_id_;
 
-  /// The idle timer ID
-  long idle_timer_id_;
+  /// Monotonic activity timestamp in milliseconds.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_INT64> last_activity_;
+
+  /// Synchronous inbound requests currently being dispatched.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> active_requests_;
 
   /// The adapter used to receive timeout callbacks from the Reactor
   TAO::Transport_Timer transport_timer_;
-
-  /// The adapter used to receive idle timeout callbacks from the Reactor
-  TAO::Transport_Idle_Timer transport_idle_timer_;
 
   /// Lock that insures that activities that *might* use handler-related
   /// resources (such as a connection handler) get serialized.
@@ -1188,6 +1178,52 @@ protected:
   /// Note that this could result in violate the "at most once" CORBA
   /// semantics.
   bool connection_closed_on_read_;
+
+private:
+  template <typename TT, typename TRDT, typename PSTRAT>
+  friend class TAO::Transport_Cache_Manager_T;
+
+  /// Keep synchronous request dispatch active until its upcall completes.
+  class Active_Request_Guard
+  {
+  public:
+    /// Start tracking a synchronous request when idle expiry is enabled.
+    explicit Active_Request_Guard (TAO_Transport &transport);
+
+    /// Finish tracking and record request completion activity.
+    ~Active_Request_Guard (void);
+
+    /// Whether dispatch may proceed on this transport.
+    bool acquired (void) const;
+
+  private:
+    /// A guard represents one dispatch and cannot be copied.
+    Active_Request_Guard (Active_Request_Guard const &);
+    Active_Request_Guard &operator= (Active_Request_Guard const &);
+
+    /// Transport whose synchronous request is being tracked.
+    TAO_Transport &transport_;
+
+    /// True when idle expiry is enabled and the counter was incremented.
+    bool tracked_;
+
+    /// False when the transport was already selected for closing.
+    bool acquired_;
+  };
+
+  /// Record cache acquisition, I/O or synchronous dispatch activity.
+  void touch_activity (void);
+
+  /// Begin/end synchronous request tracking through the cache manager.
+  bool begin_active_request (bool &tracked);
+  void end_active_request (void);
+
+  /// Check the monotonic activity timestamp.
+  bool idle_timeout_expired_i (void);
+
+  /// Caller must hold the owning transport cache manager's lock.
+  bool is_idle (void);
+
 
 private:
   /// Our messaging object.
