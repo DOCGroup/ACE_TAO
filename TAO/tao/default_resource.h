@@ -185,7 +185,7 @@ public:
   virtual void disable_factory ();
   virtual bool drop_replies_during_shutdown () const;
   virtual int transport_idle_timeout () const;
-  int transport_idle_scan_interval () const override;
+  virtual int transport_idle_scan_interval () const;
  //@}
 
 protected:
