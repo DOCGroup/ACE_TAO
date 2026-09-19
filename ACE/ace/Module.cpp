@@ -161,7 +161,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::sibling (ACE_Task<ACE_SYNCH_USE, TIME_PO
 template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module ()
   : next_ (0)
-  , arg_ (0)
+  , arg_ (nullptr)
   , flags_ (M_FLAGS_NOT_SET)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module");

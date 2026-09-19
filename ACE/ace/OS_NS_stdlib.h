@@ -41,7 +41,7 @@ extern "C" {
 }
 #else
 extern "C" {
-  typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
+  using ACE_COMPARE_FUNC = int (*)(const void *, const void *);
 }
 #endif /* ACE_WIN32 && _MSC_VER */
 

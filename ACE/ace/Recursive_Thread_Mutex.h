@@ -38,8 +38,8 @@ class ACE_Export ACE_Recursive_Thread_Mutex
 {
 public:
   /// Initialize a recursive mutex.
-  ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name = 0,
-                              ACE_mutexattr_t *arg = 0);
+  ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name = nullptr,
+                              ACE_mutexattr_t *arg = nullptr);
 
   /// Implicitly release a recursive mutex.
   ~ACE_Recursive_Thread_Mutex ();

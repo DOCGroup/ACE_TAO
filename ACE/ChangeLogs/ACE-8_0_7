@@ -1,0 +1,321 @@
+commit 140bbbebfa1b5571fc6f2b5726db853772090e42
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 15:48:53 2026 +0200
+
+    Fixed typo
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 2649f68c84d977ae871fd3d631aa17b95b052c44
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 15:39:58 2026 +0200
+
+    Document changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit bda33b654b060902ff1113f890a8d1c40e0deedd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 16:30:37 2026 +0200
+
+    Check return calls of the SSL context calls
+    
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+
+commit 8702865d36823b339e0796a9025335b7d233b389
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 14:36:18 2026 +0200
+
+    Check return value of ssl context calls
+    
+        * ACE/tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+
+commit 039037e385996812c9aa65a6ebf14b253462aaf9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 13:09:26 2026 +0200
+
+    Updated
+    
+        * ACE/tests/SSL/dummy.pem:
+        * ACE/tests/SSL/key.pem:
+
+commit 06ebe692d1a3cfc3de9a0e07a71f36116d376ea3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 13:08:43 2026 +0200
+
+    Update ACE/tests/SSL/regen_pem.txt
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+commit 2d7c6be8c914ae5ee8d0347ea8478aeeb5c7d65b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 13:02:24 2026 +0200
+
+    Updated certificates for ACE SSL tests
+    
+        * ACE/tests/SSL/regen_pem.txt:
+          Added.
+    
+        * ACE/tests/SSL/dummy.pem:
+        * ACE/tests/SSL/key.pem:
+
+commit 3e1bfbce75b4d772c3872ee84f8a3be07b647e9b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 14 16:53:36 2026 +0200
+
+    In debug mode log in some more places the OpenSSL underlying error
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit dfd0e83f1938e4598a0d9a7caa7875a07894262e
+Merge: 354177e0c1b 0a3b491467a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 14:57:25 2026 +0200
+
+    Merge pull request #2557 from jwillemsen/jwi-httpssessionscope
+    
+    Add namespace to base class to resolve compile errors with certain co…
+
+commit 0a3b491467a76594b8cb813680fc77f44fa8ecee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 13:34:09 2026 +0200
+
+    Add namespace to base class to resolve compile errors with certain compilers
+    
+        * ACE/protocols/ace/INet/HTTPS_Session.cpp:
+
+commit 354177e0c1b633059a146c343c9d32f34f730e21
+Merge: b7e618f8c4c 9c53c46bdeb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jul 25 14:01:07 2026 +0200
+
+    Merge pull request #2555 from jwillemsen/jwi-sslerrors
+    
+    Compile fixes for SSL on Windows 64bit
+
+commit 9c53c46bdeb5a1e27c5075cee62274a2e2e5d0f8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 24 16:49:52 2026 +0200
+
+    Another windows cast fix
+    
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+
+commit ecb1ed394bb6b1000561e8136745c47e09146676
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 24 15:09:12 2026 +0200
+
+    Reduce scope variable
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit 5f76a1f78b3bb46ebae83eefe25e835cd18c0184
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 24 14:58:18 2026 +0200
+
+    Reduce casts
+    
+        * ACE/ace/SSL/SSL_SOCK_Stream.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+
+commit 17e61ea0a0ca183da766868d04f76520237210f8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 24 14:53:29 2026 +0200
+
+    Removed uncessary casts
+    
+        * ACE/ace/ACE.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Connector.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * ACE/protocols/ace/INet/SSL_Proxy_Connector.cpp:
+
+commit 7c2735e8e5c4fb892786b83187048114a0481535
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 24 14:50:18 2026 +0200
+
+    Updated casts for windows
+    
+        * ACE/ace/SSL/SSL_SOCK_Connector.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.inl:
+        * ACE/examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * ACE/examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * ACE/examples/C++NPv2/TPC_Logging_Server.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * ACE/protocols/ace/INet/SSL_Proxy_Connector.cpp:
+
+commit 27df1e9d6c4beecdc070cec041dfd1b237a2ce54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 23 15:29:13 2026 +0200
+
+    More windows fixes
+    
+        * ACE/ace/ACE.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.cpp:
+
+commit 2aee08caf6d578d29112f08e3f385c4c1291a4eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 23 15:00:09 2026 +0200
+
+    Alternative approach to fix compile errors on Windows 64bit
+    
+        * ACE/ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Connector.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * ACE/protocols/ace/INet/SSL_Proxy_Connector.cpp:
+
+commit 525a02ca2e14ce7163564c03738a407f67014ce6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 23 09:19:38 2026 +0200
+
+    Use reinterpret_cast
+    
+        * ACE/ace/SSL/SSL_SOCK_Connector.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.inl:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * ACE/protocols/ace/INet/SSL_Proxy_Connector.cpp:
+
+commit 398719d1a12dda6708b7c0e9fe71b38732d726d8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 23 09:16:54 2026 +0200
+
+    Fix type casting in select call for handle
+
+commit 033cc6e6ba9484dea3ae8c7ea2d29488f04f5e3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 16:40:03 2026 +0200
+
+    Use static_cast
+    
+        * ACE/ace/SSL/SSL_SOCK_Connector.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * ACE/protocols/ace/INet/SSL_Proxy_Connector.cpp:
+
+commit 3c975e2266538ade661ab80b569c9e372e258e5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 16:37:26 2026 +0200
+
+    Use static_cast
+    
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+
+commit e65da064d9b37b831dcd729045c88fa0792d00a7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 16:31:45 2026 +0200
+
+    Use static_cast instead of plain c casts
+    
+        * ACE/ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.inl:
+
+commit 20d9f1fe74a5ae2a6258c10ca66175a07fd31a52
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 16:29:58 2026 +0200
+
+    Use nullptr
+    
+        * ACE/ace/OS_NS_stdio.inl:
+
+commit a3eb9b95afbb3de59fab1f54c840bf0712d1d1f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 20 12:56:13 2026 +0200
+
+    Remove openssl11 feature, openssl 1.0 itself was supported until 2015
+    
+        * .github/workflows/windows.yml:
+        * ACE/ACE-INSTALL.html:
+        * ACE/bin/MakeProjectCreator/config/global.features:
+
+commit 4fccb0ab9120cf6ff85f8d7eb278567f30d45a49
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 10 16:05:25 2026 +0200
+
+    Updated to a working server
+    
+        * ACE/tests/NonBlocking_Conn_Test.cpp:
+
+commit 07c010db1d05149a0135bf219f37e16c3c3a56a4
+Merge: a11cc7c142e 6b394acbc6f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 9 17:42:34 2026 +0200
+
+    Merge pull request #2549 from jwillemsen/jwi-nodownloaddredownload
+    
+    Updated all download links to just github, can't access download.dre …
+
+commit 6b394acbc6f7d317249875eae8c1fb6ff0acbafa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 9 15:22:09 2026 +0200
+
+    Only http
+    
+        * ACE/README:
+
+commit 1be5b48136b8306d925c9344335f1f7bc10dbb75
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 9 12:46:16 2026 +0200
+
+    Updated all download links to just github, can't access download.dre anymore for new uploads
+    
+        * ACE/Kokyu/docs/Kokyu.html:
+        * ACE/README:
+        * ACE/docs/Download.html:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/Security/Download.html:
+        * TAO/docs/tutorials/Quoter/index.html:
+
+commit 35d84b4f6c535a93f83cbd8e80494e34783889d5
+Merge: cc8db73e732 4be510c76ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 19 20:25:34 2026 +0200
+
+    Merge pull request #2543 from jwillemsen/jwi-oldstdstrem
+    
+    Remove obsolete old_stdstream feature
+
+commit 4be510c76cab960457602e08f804896950e3a48d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 19 15:13:43 2026 +0200
+
+    Remove obsolete old_stdstream feature
+    
+        * ACE/bin/MakeProjectCreator/config/global.features:
+        * ACE/bin/MakeProjectCreator/config/inet.mpb:
+        * ACE/protocols/ace/INet/inet.mpc:
+
+commit 87d80b37da4a5921436d406a00e038119f6d95dc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 19 15:12:55 2026 +0200
+
+    Cleanup old ccm features
+    
+        * ACE/bin/MakeProjectCreator/config/global.features:
+
+commit 88a73328a3b6c49ac843ece607f6d8f6e1e92368
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 11 18:53:30 2026 +0200
+
+    Upgrade to vcpkg 2026.04.27
+    
+        * .github/workflows/windows.yml:
+        * ACE/docs/bczar/bczar.html:
+
+commit 47982ae8cb7265287bf332c5d6eba1e176b901b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 11 09:31:16 2026 +0200
+
+    Make ACE 8.0.6 and TAO 4.0.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * TAO/NEWS:

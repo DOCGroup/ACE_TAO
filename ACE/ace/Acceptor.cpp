@@ -73,7 +73,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
   // Must supply a valid Reactor to Acceptor::open()...
 
-  if (reactor == 0)
+  if (reactor == nullptr)
     {
       errno = EINVAL;
       return -1;
@@ -187,7 +187,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                     addr_str,
                     ACE_TEXT ("# acceptor factory\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
@@ -563,18 +563,18 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open");
 
-  if (this->service_name_ == 0 && service_name != 0)
+  if (this->service_name_ == 0 && service_name != nullptr)
     ACE_ALLOCATOR_RETURN (this->service_name_,
                           ACE_OS::strdup (service_name),
                           -1);
-  if (this->service_description_ == 0 && service_description != 0)
+  if (this->service_description_ == 0 && service_description != nullptr)
     ACE_ALLOCATOR_RETURN (this->service_description_,
                           ACE_OS::strdup (service_description),
                           -1);
   this->reactor (reactor);
 
   // Must supply a valid Reactor to Acceptor::open()...
-  if (reactor == 0)
+  if (reactor == nullptr)
     {
       errno = EINVAL;
       return -1;
@@ -659,15 +659,15 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor
       delete_concurrency_strategy_ (false),
       scheduling_strategy_ (0),
       delete_scheduling_strategy_ (false),
-      service_name_ (0),
-      service_description_ (0)
+      service_name_ (nullptr),
+      service_description_ (nullptr)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor");
 
-  if (service_name != 0)
+  if (service_name != nullptr)
     ACE_ALLOCATOR (this->service_name_,
                    ACE_OS::strdup (service_name));
-  if (service_description != 0)
+  if (service_description != nullptr)
     ACE_ALLOCATOR (this->service_description_,
                    ACE_OS::strdup (service_description));
   this->use_select_ = use_select;
@@ -694,8 +694,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor
       delete_concurrency_strategy_ (false),
       scheduling_strategy_ (0),
       delete_scheduling_strategy_ (false),
-      service_name_ (0),
-      service_description_ (0)
+      service_name_ (nullptr),
+      service_description_ (nullptr)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor");
 
@@ -859,7 +859,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                     ? ACE_TEXT ("<unknown>")
                     : this->service_description_);
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
@@ -1031,7 +1031,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::register_handler
       this->restart_ = restart;
       ACE_Time_Value *tv = (ACE_Time_Value *) synch_options.time_value ();
 
-      if (tv != 0
+      if (tv != nullptr
           && this->reactor ()->schedule_timer (this,
                                                synch_options.arg (),
                                                *tv) == -1)
@@ -1222,7 +1222,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                     addr_str,
                     ACE_TEXT ("#oneshot acceptor factory\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);

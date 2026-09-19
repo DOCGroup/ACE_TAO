@@ -32,7 +32,7 @@ Deadlock::svc ()
               ACE_TEXT ("Deadlock starts accessing Reactor and Timer Queue....\n")));
 
   this->reactor ()->schedule_timer (this,
-                                    0,
+                                    nullptr,
                                     ACE_Time_Value (1));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -119,7 +119,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Scheduler a timer to kick things off.
   reactor.schedule_timer (&handler,
-                          0,
+                          nullptr,
                           ACE_Time_Value (1));
 
   // Run the event loop for a while.

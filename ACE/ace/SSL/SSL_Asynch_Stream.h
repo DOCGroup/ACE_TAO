@@ -173,7 +173,7 @@ public:
    *               be called to get access to a singleton.
    */
   ACE_SSL_Asynch_Stream (Stream_Type s_type = ST_SERVER,
-                         ACE_SSL_Context * context = 0);
+                         ACE_SSL_Context * context = nullptr);
 
   /// Destructor
   virtual ~ACE_SSL_Asynch_Stream ();
@@ -198,8 +198,8 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = 0,
-            ACE_Proactor *proactor = 0);
+            const void *completion_key = nullptr,
+            ACE_Proactor *proactor = nullptr);
 
   /**
    * Initiates an asynchronous read. If the operation is successfully
@@ -233,7 +233,7 @@ public:
    */
   int read (ACE_Message_Block &message_block,
             size_t num_bytes_to_read,
-            const void *act = 0,
+            const void *act = nullptr,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
@@ -269,14 +269,14 @@ public:
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act = 0,
+             const void *act = nullptr,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 
 protected:
   /// Virtual from ACE_Asynch_Operation. Since this class is essentially an
   /// implementation class, simply return 0.
-  virtual ACE_Asynch_Operation_Impl *implementation () const { return 0; }
+  virtual ACE_Asynch_Operation_Impl *implementation () const { return nullptr; }
 
   /// virtual from ACE_Handler
 

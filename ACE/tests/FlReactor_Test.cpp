@@ -42,7 +42,7 @@ class Test_Window : public Fl_Gl_Window
 public:
   /// Constructor
   Test_Window (int x, int y, int w, int h,
-               const char * l = 0);
+               const char * l = nullptr);
 
   int sides () const;
   void sides (int s);
@@ -126,8 +126,8 @@ void sides_cb (Fl_Widget *o, void *p)
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Connection_Handler (Test_Window *w = 0,
-                      Fl_Box* box = 0);
+  Connection_Handler (Test_Window *w = nullptr,
+                      Fl_Box* box = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *);
@@ -143,8 +143,8 @@ private:
 class Acceptor : public ACE_Acceptor<Connection_Handler,ACE_SOCK_ACCEPTOR>
 {
 public:
-  Acceptor (Test_Window *w = 0,
-            Fl_Box *box = 0);
+  Acceptor (Test_Window *w = nullptr,
+            Fl_Box *box = nullptr);
 
   virtual int make_svc_handler (Connection_Handler *&sh);
 
@@ -181,7 +181,7 @@ Connection_Handler::open (void*)
       this->box_->redraw ();
     }
 
-  if (this->w_ != 0)
+  if (this->w_ != nullptr)
     {
       this->w_->incr_sides ();
     }
@@ -207,7 +207,7 @@ Acceptor::Acceptor (Test_Window *w, Fl_Box *box)
 int
 Acceptor::make_svc_handler (Connection_Handler *&sh)
 {
-  if (sh == 0)
+  if (sh == nullptr)
     {
       ACE_NEW_RETURN (sh, Connection_Handler (this->w_, this->box_), -1);
       sh->reactor (this->reactor());

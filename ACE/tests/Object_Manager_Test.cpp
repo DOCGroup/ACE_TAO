@@ -23,7 +23,7 @@ void
 hook1 ()
 {
   delete ip;
-  ip = 0;
+  ip = nullptr;
 }
 
 extern "C"

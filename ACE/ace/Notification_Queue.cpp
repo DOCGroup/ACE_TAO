@@ -42,10 +42,10 @@ ACE_Notification_Queue::reset()
 
   // Release all the event handlers still in the queue ...
   for (ACE_Notification_Queue_Node * node = notify_queue_.head();
-       node != 0;
+       node != nullptr;
        node = node->next())
     {
-      if (node->get().eh_ == 0)
+      if (node->get().eh_ == nullptr)
         {
           continue;
         }
@@ -53,13 +53,13 @@ ACE_Notification_Queue::reset()
     }
 
   // ... free up the dynamically allocated resources ...
-  ACE_Notification_Queue_Node **b = 0;
+  ACE_Notification_Queue_Node **b = nullptr;
   for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Queue_Node *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
        alloc_iter.advance ())
     {
       delete [] *b;
-      *b = 0;
+      *b = nullptr;
     }
 
   // ... cleanup the list of allocated blocks ...
@@ -75,7 +75,7 @@ ACE_Notification_Queue::allocate_more_buffers()
 {
   ACE_TRACE ("ACE_Notification_Queue::allocate_more_buffers");
 
-  ACE_Notification_Queue_Node *temp = 0;
+  ACE_Notification_Queue_Node *temp = nullptr;
 
   ACE_NEW_RETURN (temp,
                   ACE_Notification_Queue_Node[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
@@ -109,7 +109,7 @@ ACE_Notification_Queue::purge_pending_notifications(
 
   int number_purged = 0;
   ACE_Notification_Queue_Node * node = notify_queue_.head();
-  while(node != 0)
+  while(node != nullptr)
     {
       if (!node->matches_for_purging(eh))
         {
@@ -175,7 +175,7 @@ ACE_Notification_Queue::push_new_notification(
   ACE_Notification_Queue_Node * node =
     free_queue_.pop_front();
 
-  ACE_ASSERT (node != 0);
+  ACE_ASSERT (node != nullptr);
   node->set(buffer);
 
   notify_queue_.push_back(node);

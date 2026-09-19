@@ -32,6 +32,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Truncate.h"
+#include <chrono>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport.inl"
@@ -105,6 +106,13 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               id, location));
 }
 
+static std::int64_t
+monotonic_milliseconds ()
+{
+  return std::chrono::duration_cast<std::chrono::milliseconds> (
+    std::chrono::steady_clock::now ().time_since_epoch ()).count ();
+}
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
@@ -127,7 +135,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , tail_ (nullptr)
   , incoming_message_queue_ (orb_core)
   , current_deadline_ (ACE_Time_Value::zero)
-  , flush_timer_id_ (-1)
+  , last_activity_ (monotonic_milliseconds ())
   , transport_timer_ (this)
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((size_t) this)
@@ -183,7 +191,7 @@ TAO_Transport::~TAO_Transport ()
 {
   if (TAO_debug_level > 9)
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport\n"),
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport, start\n"),
                   this->id_));
     }
 
@@ -217,6 +225,11 @@ TAO_Transport::~TAO_Transport ()
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   delete this->stats_;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+  if (TAO_debug_level > 9)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport, end\n"),
+                  this->id_));
+    }
 }
 
 void
@@ -324,6 +337,13 @@ TAO_Transport::register_if_necessary ()
 void
 TAO_Transport::close_connection ()
 {
+  if (TAO_debug_level > 4)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::close_connection\n"),
+                  this->id ()));
+    }
+
   this->connection_handler_i ()->close_connection ();
 }
 
@@ -375,8 +395,7 @@ TAO_Transport::register_handler ()
   this->ws_->is_registered (true);
 
   // Register the handler with the reactor
-  return r->register_handler (this->event_handler_i (),
-                              ACE_Event_Handler::READ_MASK);
+  return r->register_handler (this->event_handler_i (), ACE_Event_Handler::READ_MASK);
 }
 
 int
@@ -534,7 +553,8 @@ TAO_Transport::purge_entry ()
 bool
 TAO_Transport::can_be_purged ()
 {
-  return !this->tms_->has_request ();
+  return this->active_requests_.load (std::memory_order_relaxed) == 0
+    && !this->tms_->has_request ();
 }
 
 int
@@ -553,6 +573,13 @@ TAO_Transport::make_idle ()
 int
 TAO_Transport::update_transport ()
 {
+  if (TAO_debug_level > 3)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::update_transport\n"),
+                  this->id ()));
+    }
+
   return this->transport_cache_manager ().update_entry (this->cache_map_entry_);
 }
 
@@ -852,7 +879,7 @@ TAO_Transport::schedule_output_i ()
   ACE_Event_Handler * const eh = this->event_handler_i ();
   ACE_Reactor * const reactor = eh->reactor ();
 
-  if (reactor == nullptr)
+  if (!reactor)
     {
       if (TAO_debug_level > 1)
         {
@@ -940,21 +967,85 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
       // pending.
       this->reset_flush_timer ();
 
-      TAO_Flushing_Strategy *flushing_strategy =
-        this->orb_core ()->flushing_strategy ();
+      TAO_Flushing_Strategy *flushing_strategy = this->orb_core ()->flushing_strategy ();
       int const result = flushing_strategy->schedule_output (this);
       if (result == TAO_Flushing_Strategy::MUST_FLUSH)
         {
           typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
           TAO_REVERSE_LOCK reverse (*this->handler_lock_);
           ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
-          if (flushing_strategy->flush_transport (this, nullptr) == -1) {
-            return -1;
-          }
+          if (flushing_strategy->flush_transport (this, nullptr) == -1)
+            {
+              return -1;
+            }
         }
     }
 
   return 0;
+}
+
+void
+TAO_Transport::touch_activity ()
+{
+  this->last_activity_.store (
+    monotonic_milliseconds (), std::memory_order_relaxed);
+}
+
+TAO_Transport::Active_Request_Guard::Active_Request_Guard (
+  TAO_Transport &transport)
+  : transport_ (transport)
+  , tracked_ (false)
+  , acquired_ (this->transport_.begin_active_request (this->tracked_))
+{
+}
+
+TAO_Transport::Active_Request_Guard::~Active_Request_Guard ()
+{
+  if (this->tracked_)
+    {
+      this->transport_.end_active_request ();
+    }
+}
+
+bool
+TAO_Transport::Active_Request_Guard::acquired () const
+{
+  return this->acquired_;
+}
+
+bool
+TAO_Transport::begin_active_request (bool &tracked)
+{
+  return this->transport_cache_manager ().begin_active_request (*this, tracked);
+}
+
+void
+TAO_Transport::end_active_request ()
+{
+  this->transport_cache_manager ().end_active_request (*this);
+}
+
+bool
+TAO_Transport::idle_timeout_expired_i ()
+{
+  int const timeout = this->orb_core_->resource_factory ()->transport_idle_timeout ();
+  return timeout > 0
+    && monotonic_milliseconds ()
+         - this->last_activity_.load (std::memory_order_relaxed)
+         >= static_cast<std::int64_t> (timeout) * 1000;
+}
+
+bool
+TAO_Transport::is_idle ()
+{
+  // Incoming state is not synchronized with receive processing here.
+  TAO_Queued_Data *qd = nullptr;
+  return this->active_requests_.load (std::memory_order_relaxed) == 0
+    && this->queue_is_empty_i ()
+    && this->incoming_message_queue_.queue_length () == 0
+    && this->incoming_message_stack_.top (qd) != 0
+    && (!this->partial_message_ || this->partial_message_->length () == 0)
+    && !this->messaging_object ()->has_pending_fragments ();
 }
 
 TAO_Transport::Drain_Result
@@ -1003,6 +1094,8 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
 #endif  /* TAO_HAS_SENDFILE==1 */
     retval = this->send (iov, iovcnt, byte_count,
                          this->io_timeout (dc));
+
+  this->touch_activity ();
 
   if (TAO_debug_level > 9)
     {
@@ -1932,6 +2025,8 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
+  this->touch_activity ();
+
   if (n <= 0)
     {
       return ACE_Utils::truncate_cast<int> (n);
@@ -2151,6 +2246,8 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   ssize_t const n = this->recv (message_block.wr_ptr (),
                                 recv_size,
                                 max_wait_time);
+
+  this->touch_activity ();
 
   // If there is an error return to the reactor..
   // do not reset partial message in case of n == 0 (EWOULDBLOCK || EAGAIN),
@@ -2449,6 +2546,8 @@ int
 TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
                                         TAO_Resume_Handle &rh)
 {
+  this->touch_activity ();
+
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -2479,16 +2578,24 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       return -1;
     case GIOP::Request:
     case GIOP::LocateRequest:
-      // Let us resume the handle before we go ahead to process the
-      // request. This will open up the handle for other threads.
-      rh.resume_handle ();
+      {
+        Active_Request_Guard const active_request (*this);
+        if (!active_request.acquired ())
+          {
+            return -1;
+          }
 
-      if (this->messaging_object ()->process_request_message (this, qd) == -1)
-        {
-          // Return a "-1" so that the next stage can take care of
-          // closing connection and the necessary memory management.
-          return -1;
-        }
+        // Let us resume the handle before we go ahead to process the
+        // request. This will open up the handle for other threads.
+        rh.resume_handle ();
+
+        if (this->messaging_object ()->process_request_message (this, qd) == -1)
+          {
+            // Return a "-1" so that the next stage can take care of
+            // closing connection and the necessary memory management.
+            return -1;
+          }
+      }
       break;
     case GIOP::Reply:
     case GIOP::LocateReply:
@@ -2545,6 +2652,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     case GIOP::Fragment:
       break;
     }
+
+  this->touch_activity ();
 
   // If not, just return back..
   return 0;
@@ -2729,8 +2838,7 @@ TAO_Transport::pre_close ()
   // of the is_connected_ flag, so that during cache lookups the cache
   // manager doesn't need to be burdened by the lock in is_connected().
   this->is_connected_ = false;
-  this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
-                                                   false);
+  this->transport_cache_manager ().mark_connected (this->cache_map_entry_, false);
   this->purge_entry ();
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
@@ -2804,13 +2912,10 @@ TAO_Transport::post_open (size_t id)
                             ACE_TEXT (", cache_map_entry_ is [%@]\n"), this->id_, this->cache_map_entry_));
     }
 
-  this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
-                                                   true);
+  this->transport_cache_manager ().mark_connected (this->cache_map_entry_, true);
 
   // update transport cache to make this entry available
-  this->transport_cache_manager ().set_entry_state (
-    this->cache_map_entry_,
-    TAO::ENTRY_IDLE_AND_PURGABLE);
+  this->transport_cache_manager ().set_entry_state (this->cache_map_entry_, TAO::ENTRY_IDLE_AND_PURGABLE);
 
   return true;
 }

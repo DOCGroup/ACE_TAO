@@ -41,8 +41,8 @@ public:
   friend class ACE_Double_Linked_List_Reverse_Iterator<ACE_DLList_Node>;
 
   ACE_DLList_Node (void *i,
-                   ACE_DLList_Node *n = 0,
-                   ACE_DLList_Node *p = 0);
+                   ACE_DLList_Node *n = nullptr,
+                   ACE_DLList_Node *p = nullptr);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -67,7 +67,7 @@ ACE_SSL_Asynch_Read_Stream_Result::ACE_SSL_Asynch_Read_Stream_Result
 
 ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result (ACE_Handler & handler)
   : A_RESULT (handler.proxy (),
-              0,          // act,
+              nullptr,          // act,
               ACE_INVALID_HANDLE,
               0,           // Offset
               0,           // OffsetHigh
@@ -93,14 +93,14 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Asynch_Stream::Stream_Type s_type,
   ACE_SSL_Context * context)
   : type_         (s_type),
-    proactor_     (0),
-    ext_handler_  (0),
-    ext_read_result_ (0),
-    ext_write_result_(0),
+    proactor_     (nullptr),
+    ext_handler_  (nullptr),
+    ext_read_result_ (nullptr),
+    ext_write_result_(nullptr),
     flags_        (0),
-    ssl_          (0),
+    ssl_          (nullptr),
     handshake_complete_(false),
-    bio_          (0),
+    bio_          (nullptr),
     bio_istream_  (),
     bio_inp_msg_  (),
     bio_inp_errno_(0),
@@ -115,11 +115,11 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   // was honestly copied from ACE_SSL_SOCK_Stream :)
 
   ACE_SSL_Context * ctx =
-    (context == 0 ? ACE_SSL_Context::instance () : context);
+    (context == nullptr ? ACE_SSL_Context::instance () : context);
 
   this->ssl_ = ::SSL_new (ctx->context ());
 
-  if (this->ssl_ == 0)
+  if (this->ssl_ == nullptr)
     ACELIB_ERROR
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream %p\n"),
@@ -241,7 +241,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
         ACE_TEXT ("- already opened")),
        -1);
 
-  if (this->ssl_ == 0)
+  if (this->ssl_ == nullptr)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
@@ -276,7 +276,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
 
   this->bio_ = ACE_SSL_make_BIO (this);
 
-  if (this->bio_ == 0)
+  if (this->bio_ == nullptr)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
@@ -333,7 +333,7 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
   // only one read operation is allowed now
   // later it will be possible to make a queue
 
-  if (this->ext_read_result_ != 0)
+  if (this->ext_read_result_ != nullptr)
     return -1;
 
   // create result for future notification
@@ -376,7 +376,7 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
   // only one read operation is allowed now
   // later it will be possible to make a queue
 
-  if (this->ext_write_result_ != 0)
+  if (this->ext_write_result_ != nullptr)
     return -1;
 
   // create result for future notification
@@ -561,7 +561,7 @@ ACE_SSL_Asynch_Stream::post_handshake_check ()
 int
 ACE_SSL_Asynch_Stream::do_SSL_read ()
 {
-  if (this->ext_read_result_ == 0)  // nothing to do
+  if (this->ext_read_result_ == nullptr)  // nothing to do
     {
       return 0;
     }
@@ -623,7 +623,7 @@ ACE_SSL_Asynch_Stream::do_SSL_read ()
 int
 ACE_SSL_Asynch_Stream::do_SSL_write ()
 {
-  if (this->ext_write_result_ == 0)  // nothing to do
+  if (this->ext_write_result_ == nullptr)  // nothing to do
     {
       return 0;
     }
@@ -693,7 +693,7 @@ ACE_SSL_Asynch_Stream::notify_close ()
     return 2;   // too early , we will do later
 
   // create result for future notification
-  ACE_SSL_Asynch_Result * close_result = 0;
+  ACE_SSL_Asynch_Result * close_result = nullptr;
 
   ACE_NEW_RETURN (close_result,
                   ACE_SSL_Asynch_Result (*this),
@@ -725,7 +725,7 @@ int
 ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
                                     int error)
 {
-  if (ext_read_result_ == 0) //nothing to notify
+  if (ext_read_result_ == nullptr) //nothing to notify
     return 1;
 
   this->ext_read_result_->set_bytes_transferred (bytes_transferred);
@@ -736,7 +736,7 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
 
   if (retval == 0)
     {
-      this->ext_read_result_ = 0;
+      this->ext_read_result_ = nullptr;
       return 0;  // success
     }
 
@@ -755,7 +755,7 @@ int
 ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
                                      int error)
 {
-  if (this->ext_write_result_ == 0) //nothing to notify
+  if (this->ext_write_result_ == nullptr) //nothing to notify
     return 1;
 
   this->ext_write_result_->set_bytes_transferred (bytes_transferred);
@@ -767,7 +767,7 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
 
   if (retval == 0)
     {
-      this->ext_write_result_ = 0;
+      this->ext_write_result_ = nullptr;
       return 0;  // success
     }
 
@@ -872,7 +872,7 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
   if (this->bio_istream_.read (
         bio_inp_msg_,  // message block
         len,           // priority
-        0,             // act
+        nullptr,             // act
         0,             // priority
         ACE_SIGRTMIN   // default signal
         ) == -1)
@@ -949,7 +949,7 @@ ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
   if (this->bio_ostream_.write (
         this->bio_out_msg_, // message block
         len,          // priority
-        0,            // act
+        nullptr,            // act
         0,            // priority
         ACE_SIGRTMIN  // default signal
         ) == -1)
@@ -996,7 +996,7 @@ ACE_SSL_Asynch_Stream::handle_write_stream (
       if (this->bio_ostream_.write (
             mb,          // message block
             len,         // priority
-            0,           // act
+            nullptr,           // act
             0,           // priority
             ACE_SIGRTMIN // default signal
             ) == 0)
@@ -1043,7 +1043,7 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
 void
 ACE_SSL_Asynch_Stream::handle_wakeup ()
 {
-  ACE_Handler * user_handler = 0;
+  ACE_Handler * user_handler = nullptr;
 
   {
     ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
@@ -1053,7 +1053,7 @@ ACE_SSL_Asynch_Stream::handle_wakeup ()
     user_handler = this->ext_handler_;
   }
 
-  if (user_handler != 0)
+  if (user_handler != nullptr)
     user_handler->handle_wakeup();
 }
 

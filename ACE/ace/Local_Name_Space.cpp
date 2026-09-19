@@ -49,7 +49,7 @@ ACE_NS_String::char_rep () const
 
 ACE_NS_String::ACE_NS_String ()
   : len_ (0),
-    rep_ (0),
+    rep_ (nullptr),
     delete_rep_ (false)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");

@@ -92,7 +92,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name");
   if (this->mod_ == 0)
-    return 0;
+    return nullptr;
   else
     return this->mod_->name ();
 }

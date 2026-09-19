@@ -34,10 +34,10 @@
 ACE_Timer_Queue *
 create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = 0;
+  ACE_Timer_Queue * tmq = nullptr;
 
   using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_HR_Time_Policy>;
-  ACE_NEW_RETURN (tmq, timer_queue_type (), 0);
+  ACE_NEW_RETURN (tmq, timer_queue_type (), nullptr);
 
   return tmq;
 }
@@ -45,7 +45,7 @@ create_timer_queue ()
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask () : my_reactor_ (0), my_tq_ (0) {}
+  MyTask () : my_reactor_ (nullptr), my_tq_ (nullptr) {}
 
   ~MyTask () override { stop (); }
 
@@ -78,12 +78,12 @@ MyTask::create_reactor ()
                     this->lock_,
                     -1);
 
-  ACE_TEST_ASSERT (this->my_reactor_ == 0);
+  ACE_TEST_ASSERT (this->my_reactor_ == nullptr);
 
   this->my_tq_ = create_timer_queue ();
 
-  ACE_TP_Reactor * pImpl = 0;
-  ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (0, this->my_tq_), -1);
+  ACE_TP_Reactor * pImpl = nullptr;
+  ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (nullptr, this->my_tq_), -1);
 
   ACE_NEW_RETURN (my_reactor_,
                    ACE_Reactor (pImpl ,1),
@@ -108,11 +108,11 @@ MyTask::delete_reactor ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) Delete TP_Reactor\n")));
 
-  this->reactor (0);
+  this->reactor (nullptr);
   delete this->my_reactor_;
-  this->my_reactor_ = 0;
+  this->my_reactor_ = nullptr;
   delete this->my_tq_;
-  this->my_tq_ = 0;
+  this->my_tq_ = nullptr;
   return 0;
 }
 
@@ -132,7 +132,7 @@ MyTask::start (int num_threads)
 int
 MyTask::stop ()
 {
-  if (this->my_reactor_ != 0)
+  if (this->my_reactor_ != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("End TP_Reactor event loop\n")));
@@ -197,7 +197,7 @@ int TestHandler::handle_timeout (const ACE_Time_Value &,
 bool TestHandler::trigger_in(const ACE_Time_Value &delay)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) TestHandler::trigger_in - scheduling timer\n"));
-  return -1 != reactor_->schedule_timer (this, 0, delay, ACE_Time_Value (0));
+  return -1 != reactor_->schedule_timer (this, nullptr, delay, ACE_Time_Value (0));
 }
 
 bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittime, bool monotonic = false)
@@ -252,7 +252,7 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
       if (condition_.wait (&waittime) != -1 || errno != ETIME)
         {
           ACE_ERROR ((LM_ERROR, "ERROR: No errno or return -1\n"));
-          status = 1;
+          status = true;
         }
       ACE_DEBUG((LM_INFO,
                   "(%P|%t) Condition wait returned at %#T.\n", &waittime));

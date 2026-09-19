@@ -331,8 +331,8 @@ sizeof_from_gt_sizeof_to ()
 template <typename T>
 struct Caller
 {
-  typedef T argument_type;
-  typedef void result_type;
+  using argument_type = T;
+  using result_type = void;
 
   /// Constructor
   Caller () : success (true) {}

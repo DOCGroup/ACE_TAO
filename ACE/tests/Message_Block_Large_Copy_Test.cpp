@@ -33,7 +33,7 @@ run_duplicate_test (const size_t msg_block_count,
     }
 
     ACE_Message_Block* mb_test = mb_top->duplicate ();
-    if (mb_test != 0)
+    if (mb_test != nullptr)
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,
@@ -74,7 +74,7 @@ run_clone_test (const size_t msg_block_count,
     }
 
     ACE_Message_Block* mb_test = mb_top->clone ();
-    if (mb_test != 0)
+    if (mb_test != nullptr)
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,

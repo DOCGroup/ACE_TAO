@@ -94,7 +94,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_type size)
   // Initialize the ACE_Event_Handler pointers to 0.
   std::fill (this->event_handlers_.begin (),
              this->event_handlers_.end (),
-             static_cast<ACE_Event_Handler *> (0));
+             static_cast<ACE_Event_Handler *> (nullptr));
 
   this->max_handlep1_ = 0;
 #endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
@@ -177,7 +177,7 @@ ACE_Select_Reactor_Handler_Repository::find_eh (ACE_HANDLE handle)
 #else
   map_type::iterator const tmp = &this->event_handlers_[handle];
 
-  if (*tmp != 0)
+  if (*tmp != nullptr)
     pos = tmp;
 #endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
@@ -192,7 +192,7 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::bind");
 
-  if (event_handler == 0)
+  if (event_handler == nullptr)
     return -1;
 
   if (handle == ACE_INVALID_HANDLE)
@@ -296,7 +296,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   // is unbound.
   ACE_Event_Handler * const event_handler =
     (pos == this->event_handlers_.end ()
-     ? 0
+     ? nullptr
      : ACE_SELECT_REACTOR_EVENT_HANDLER (pos));
 
   // Clear out the <mask> bits in the Select_Reactor's wait_set.
@@ -380,7 +380,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (
       complete_removal = true;
     }
 
-  if (event_handler == 0)
+  if (event_handler == nullptr)
     return -1;
 
   bool const requires_reference_counting =
@@ -416,7 +416,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::ACE_Select_Reactor_Handler_Repos
   // Advance to the next element containing a non-zero event handler.
   // There's no need to do this for the Windows case since the hash
   // map will only contain non-zero event handlers.
-  while (this->current_ != end && (*(this->current_) == 0))
+  while (this->current_ != end && (*(this->current_) == nullptr))
     ++this->current_;
 #endif
 }
@@ -461,7 +461,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::advance ()
   // Advance to the next element containing a non-zero event handler.
   // There's no need to do this for the Windows case since the hash
   // map will only contain non-zero event handlers.
-  while (this->current_ != end && (*(this->current_) == 0))
+  while (this->current_ != end && (*(this->current_) == nullptr))
     ++this->current_;
 #endif  /* !ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
@@ -529,7 +529,7 @@ ACE_Select_Reactor_Handler_Repository::dump () const
 }
 
 ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify ()
-  : select_reactor_ (0)
+  : select_reactor_ (nullptr)
   , max_notify_iterations_ (-1)
 {
 }
@@ -601,7 +601,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
     {
       this->select_reactor_ = dynamic_cast<ACE_Select_Reactor_Impl *> (r);
 
-      if (select_reactor_ == 0)
+      if (select_reactor_ == nullptr)
         {
           errno = EINVAL;
           return -1;
@@ -648,7 +648,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
     }
   else
     {
-      this->select_reactor_ = 0;
+      this->select_reactor_ = nullptr;
       return 0;
     }
 }
@@ -693,7 +693,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
 
   // Just consider this method a "no-op" if there's no
   // <ACE_Select_Reactor> configured.
-  if (this->select_reactor_ == 0)
+  if (this->select_reactor_ == nullptr)
     return 0;
 
   ACE_Event_Handler_var safe_handler (event_handler);
@@ -829,7 +829,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   // internal structures.  Otherwise, we need to dispatch the
   // appropriate handle_* method on the <ACE_Event_Handler> pointer
   // we've been passed.
-  if (buffer.eh_ != 0)
+  if (buffer.eh_ != nullptr)
     {
       ACE_Event_Handler *event_handler = buffer.eh_;
 
@@ -977,7 +977,7 @@ int
 ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,
                                                       ACE_Reactor_Mask mask)
 {
-  if (this->notify_handler_ == 0)
+  if (this->notify_handler_ == nullptr)
     return 0;
   else
     return this->notify_handler_->purge_pending_notifications (eh, mask);
@@ -1005,7 +1005,7 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
     return -1;
 
 #if !defined (ACE_WIN32)
-  ACE_Sig_Guard sb (0,
+  ACE_Sig_Guard sb (nullptr,
                     this->mask_signals_); // Block out all signals until method returns.
 #endif /* ACE_WIN32 */
 

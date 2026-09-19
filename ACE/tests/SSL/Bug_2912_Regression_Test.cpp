@@ -2,7 +2,7 @@
  * @file Bug_2912_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2912:
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2912
+ *   https://github.com/DOCGroup/bugzilla/issues/2912
  *
  * This test reproduces the following interactions:
  *

@@ -31,7 +31,7 @@ ACE_Addr::ACE_Addr (int type, int size) :
 void *
 ACE_Addr::get_addr () const
 {
-  return 0;
+  return nullptr;
 }
 
 void

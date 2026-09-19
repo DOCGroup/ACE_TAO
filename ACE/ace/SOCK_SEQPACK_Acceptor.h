@@ -133,8 +133,8 @@ public:
               bool reset_new_handle = false) const;
 
   // = Meta-type info
-  typedef ACE_Multihomed_INET_Addr PEER_ADDR;
-  typedef ACE_SOCK_SEQPACK_Association PEER_STREAM;
+  using PEER_ADDR = ACE_Multihomed_INET_Addr;
+  using PEER_STREAM = ACE_SOCK_SEQPACK_Association;
 
   /// Dump the state of an object.
   void dump () const;

@@ -42,7 +42,7 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Pair_Caching_Utility
 {
 public:
-  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
+  using CLEANUP_STRATEGY = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
   ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
@@ -94,8 +94,8 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Recyclable_Handler_Caching_Utility
 {
 public:
-  typedef ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
-  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+  using CLEANUP_STRATEGY = ARHCLE<KEY, VALUE, CONTAINER>;
+  using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
   ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
@@ -149,8 +149,8 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Refcounted_Recyclable_Handler_Caching_Utility
 {
 public:
-  typedef ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
-  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+  using CLEANUP_STRATEGY = ARRHCLE<KEY, VALUE, CONTAINER>;
+  using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
   ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
@@ -210,8 +210,8 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Handler_Caching_Utility
 {
 public:
-  typedef ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
-  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+  using CLEANUP_STRATEGY = ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>;
+  using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
   ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
@@ -268,8 +268,8 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Null_Caching_Utility
 {
 public:
-  typedef ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
-  typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
+  using CLEANUP_STRATEGY = ANCLE<KEY, VALUE, CONTAINER>;
+  using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
   ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,

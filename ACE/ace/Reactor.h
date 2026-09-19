@@ -75,7 +75,7 @@ public:
    * handling error status and the end-of-loop indication will be checked
    * as normal, just as if there is no hook function specified.
    */
-  typedef int (*REACTOR_EVENT_HOOK)(ACE_Reactor *);
+  using REACTOR_EVENT_HOOK = int (*)(ACE_Reactor *);
 
   /// Get pointer to a process-wide ACE_Reactor.
   static ACE_Reactor *instance ();
@@ -174,8 +174,8 @@ public:
    * ACE_Reactor::alertable_handle_events() method returns -1 or
    * the end_reactor_event_loop() method is invoked.
    */
-  int run_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
-  int run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
+  int run_reactor_event_loop (REACTOR_EVENT_HOOK = nullptr);
+  int run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK = nullptr);
 
   /**
    * Run the event loop until the ACE_Reactor::handle_events() or
@@ -189,9 +189,9 @@ public:
    * the underlying event demultiplexer waits for events.
    */
   int run_reactor_event_loop (ACE_Time_Value &tv,
-                              REACTOR_EVENT_HOOK = 0);
+                              REACTOR_EVENT_HOOK = nullptr);
   int run_alertable_reactor_event_loop (ACE_Time_Value &tv,
-                                        REACTOR_EVENT_HOOK = 0);
+                                        REACTOR_EVENT_HOOK = nullptr);
 
   /**
    * Instruct the Reactor to terminate its event loop and notifies the
@@ -218,7 +218,7 @@ public:
    * @a delete_implementation tells the Reactor whether or not to
    * delete the @a implementation on destruction.
    */
-  ACE_Reactor (ACE_Reactor_Impl *implementation = 0,
+  ACE_Reactor (ACE_Reactor_Impl *implementation = nullptr,
                bool delete_implementation = false);
 
   /// Close down and release all resources.
@@ -226,7 +226,7 @@ public:
    * Any notifications that remain queued on this reactor instance are
    * lost.
    */
-  virtual ~ACE_Reactor ();
+  ~ACE_Reactor () override;
 
   /**
    * Initialize the ACE_Reactor to manage @a max_number_of_handles.
@@ -237,8 +237,8 @@ public:
    */
   int open (size_t max_number_of_handles,
             bool restart = false,
-            ACE_Sig_Handler *signal_handler = 0,
-            ACE_Timer_Queue *timer_queue = 0);
+            ACE_Sig_Handler *signal_handler = nullptr,
+            ACE_Timer_Queue *timer_queue = nullptr);
 
   /// Use a user specified signal handler instead.
   int set_sig_handler (ACE_Sig_Handler *signal_handler);
@@ -283,8 +283,8 @@ public:
    * return when the system queues an I/O completion routine or an
    * Asynchronous Procedure Call.
    */
-  int handle_events (ACE_Time_Value *max_wait_time = 0);
-  int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
+  int handle_events (ACE_Time_Value *max_wait_time = nullptr);
+  int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr);
 
   /**
    * This method is just like the one above, except the
@@ -393,9 +393,9 @@ public:
    */
   int register_handler (int signum,
                         ACE_Event_Handler *new_sh,
-                        ACE_Sig_Action *new_disp = 0,
-                        ACE_Event_Handler **old_sh = 0,
-                        ACE_Sig_Action *old_disp = 0);
+                        ACE_Sig_Action *new_disp = nullptr,
+                        ACE_Event_Handler **old_sh = nullptr,
+                        ACE_Sig_Action *old_disp = nullptr);
 
   /**
    * Register handler for multiple signals.
@@ -407,7 +407,7 @@ public:
    */
   int register_handler (const ACE_Sig_Set &sigset,
                         ACE_Event_Handler *event_handler,
-                        ACE_Sig_Action *sig_action = 0);
+                        ACE_Sig_Action *sig_action = nullptr);
 
   /**
    * Remove @a masks from @a handle registration.
@@ -461,7 +461,7 @@ public:
    */
   int remove_handler (int signum,
                       ACE_Sig_Action *new_disp,
-                      ACE_Sig_Action *old_disp = 0,
+                      ACE_Sig_Action *old_disp = nullptr,
                       int sigkey = -1);
 
   /**
@@ -565,11 +565,11 @@ public:
    *                      cancel or reschedule this timer.
    * @retval              -1 on failure, with errno set.
    */
-  virtual long schedule_timer (ACE_Event_Handler *event_handler,
+  long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,
                                const ACE_Time_Value &interval =
-                                ACE_Time_Value::zero);
+                                ACE_Time_Value::zero) override;
 
   using ACE_Reactor_Timer_Interface::schedule_timer;
 
@@ -584,8 +584,8 @@ public:
    *
    * This change will not take effect until the next timeout.
    */
-  virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval);
+  int reset_timer_interval (long timer_id,
+                                    const ACE_Time_Value &interval) override;
 
   using ACE_Reactor_Timer_Interface::reset_timer_interval;
 
@@ -603,9 +603,9 @@ public:
    * will be called with ACE_Event_Handler::TIMER_MASK.
    * ACE_Event_Handler::remove_reference() will also be called.
    */
-  virtual int cancel_timer (long timer_id,
-                            const void **arg = 0,
-                            int dont_call_handle_close = 1);
+  int cancel_timer (long timer_id,
+                            const void **arg = nullptr,
+                            int dont_call_handle_close = 1) override;
 
   /**
    * Cancel all timers associated with event handler.
@@ -624,8 +624,8 @@ public:
    *
    * Returns number of handlers cancelled.
    */
-  virtual int cancel_timer (ACE_Event_Handler *event_handler,
-                            int dont_call_handle_close = 1);
+  int cancel_timer (ACE_Event_Handler *event_handler,
+                            int dont_call_handle_close = 1) override;
 
   // = High-level Event_Handler scheduling operations
 
@@ -700,9 +700,9 @@ public:
    * indefinitely.  When the call returns, tv has the time remaining
    * after the call completes.
    */
-  int notify (ACE_Event_Handler *event_handler = 0,
+  int notify (ACE_Event_Handler *event_handler = nullptr,
               ACE_Reactor_Mask masks = ACE_Event_Handler::EXCEPT_MASK,
-              ACE_Time_Value *timeout = 0);
+              ACE_Time_Value *timeout = nullptr);
 
   /**
    * Set the maximum number of times that ACE_Reactor will
@@ -760,7 +760,7 @@ public:
    */
   int handler (ACE_HANDLE handle,
                ACE_Reactor_Mask mask,
-               ACE_Event_Handler **event_handler = 0);
+               ACE_Event_Handler **event_handler = nullptr);
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
@@ -768,7 +768,7 @@ public:
    * this @c handler if @a event_handler != 0.
    */
   int handler (int signum,
-               ACE_Event_Handler **event_handler = 0);
+               ACE_Event_Handler **event_handler = nullptr);
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
@@ -786,7 +786,7 @@ public:
 
   /// Transfers ownership of Reactor to the @a new_owner.
   int owner (ACE_thread_t new_owner,
-             ACE_thread_t *old_owner = 0);
+             ACE_thread_t *old_owner = nullptr);
 
   /// Return the ID of the "owner" thread.
   int owner (ACE_thread_t *owner);

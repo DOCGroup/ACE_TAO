@@ -40,10 +40,10 @@ namespace
 char *
 dup_string (const char *const str)
 {
-  char *buf = 0;
+  char *buf = nullptr;
   ACE_NEW_RETURN (buf,
                   char [ACE_OS::strlen (str) + 1],
-                  0);
+                  nullptr);
   ACE_OS::strcpy (buf, str);
 
   return buf;
@@ -63,13 +63,13 @@ Key_List::~Key_List ()
     this->dump ();
 
   // Free up all the nodes in the list.
-  while (this->head != 0)
+  while (this->head != nullptr)
     {
-      List_Node *temp = 0;
+      List_Node *temp = nullptr;
 
       // Make sure to delete the linked nodes, as well.
       for (List_Node *ptr = this->head->link;
-           ptr != 0;
+           ptr != nullptr;
            ptr = temp)
         {
           temp = ptr->link;
@@ -104,10 +104,10 @@ char *
 Key_List::special_input (char delimiter)
 {
   int size = 80;
-  char *buf = 0;
+  char *buf = nullptr;
   ACE_NEW_RETURN (buf,
                   char[size],
-                  0);
+                  nullptr);
   int c;
 
   for (int i = 0; (c = getchar ()) != EOF; i++)
@@ -141,10 +141,10 @@ Key_List::special_input (char delimiter)
         {
           // Yikes, time to grow the buffer!
 
-          char *temp = 0;
+          char *temp = nullptr;
           ACE_NEW_RETURN (temp,
                           char[size *= 2],
-                          0);
+                          nullptr);
           for (int j = 0; j < i; j++)
             temp[j] = buf[j];
 
@@ -155,7 +155,7 @@ Key_List::special_input (char delimiter)
     }
 
   delete [] buf;
-  return 0;
+  return nullptr;
 }
 
 /// Stores any C/C++ source code that must be included verbatim into
@@ -195,7 +195,7 @@ Key_List::output_types ()
     {
       delete [] array_type_;
       array_type_ = array_type ();
-      if (array_type_ == 0)
+      if (array_type_ == nullptr)
         // Something's wrong, but we'll catch it later on....
         return -1;
       else
@@ -247,7 +247,7 @@ int
 Key_List::read_keys ()
 {
   this->include_src = this->save_include_src ();
-  if (this->include_src == 0)
+  if (this->include_src == nullptr)
     return -1;
   else if (this->output_types () == -1)
     return -1;
@@ -257,7 +257,7 @@ Key_List::read_keys ()
 
       char *buffer = input.read ('\n');
 
-      if (buffer == 0)
+      if (buffer == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "No words in input file, did you forget to prepend %%%%"
                            " or use -t accidentally?\n"),
@@ -265,7 +265,7 @@ Key_List::read_keys ()
       // Read in all the keywords from the input file.
       else
         {
-          List_Node *temp = 0;
+          List_Node *temp = nullptr;
           const char *delimiter = option.delimiter ();
           ACE_NEW_RETURN (this->head,
                           List_Node (buffer,
@@ -273,7 +273,7 @@ Key_List::read_keys ()
                                                         delimiter))),
                           -1);
           for (temp = this->head;
-               (0 != (buffer = input.read ('\n')))
+               (nullptr != (buffer = input.read ('\n')))
                  && ACE_OS::strcmp (buffer, "%%");
                temp = temp->next)
             {
@@ -294,13 +294,13 @@ Key_List::read_keys ()
 
           // Make large hash table for efficiency.
           Hash_Table table (this->list_len * Key_List::TABLE_MULTIPLE);
-          List_Node *trail = 0;
+          List_Node *trail = nullptr;
 
           // Test whether there are any links and also set the maximum
           // length an identifier in the keyword list.
 
           for (temp = head;
-               temp != 0;
+               temp != nullptr;
                temp = temp->next)
             {
               List_Node *ptr = table.find (temp, option[NOLENGTH]);
@@ -312,7 +312,7 @@ Key_List::read_keys ()
               // *greatly* simplifies processing during later stages
               // of the program.
 
-              if (ptr == 0)
+              if (ptr == nullptr)
                 trail = temp;
               else
                 {
@@ -373,11 +373,11 @@ Key_List::read_keys ()
 List_Node *
 Key_List::merge (List_Node *list1, List_Node *list2)
 {
-  if (list1 == 0)
+  if (list1 == nullptr)
     {
       return list2;
     }
-  else if (list2 == 0)
+  else if (list2 == nullptr)
     {
       return list1;
     }
@@ -416,7 +416,7 @@ Key_List::merge_sort (List_Node *a_head)
         }
 
       temp = middle->next;
-      middle->next = 0;
+      middle->next = nullptr;
       return merge (merge_sort (a_head), merge_sort (temp));
     }
 }
@@ -463,7 +463,7 @@ Key_List::already_determined (List_Node *ptr)
 void
 Key_List::reorder ()
 {
-  List_Node *ptr = 0;
+  List_Node *ptr = nullptr;
 
   for (ptr = head; ptr; ptr = ptr->next)
     ptr->occurrence = occurrence (ptr);
@@ -504,7 +504,7 @@ Key_List::reorder ()
 void
 Key_List::output_min_max ()
 {
-  List_Node *temp = 0;
+  List_Node *temp = nullptr;
   for (temp = head; temp->next; temp = temp->next)
     continue;
 
@@ -652,7 +652,7 @@ Key_List::output_switch (int use_keyword_table)
               // Handle `static links,' i.e., those that occur during
               // the initial preprocessing.
 
-              if (temp->link == 0)
+              if (temp->link == nullptr)
                 {
                   if (option[DEBUGGING])
                     ACE_OS::printf ("                  /* hash value = %4d, keyword = \"%s\" */\n",
@@ -661,7 +661,7 @@ Key_List::output_switch (int use_keyword_table)
                 }
               else
                 {
-                  List_Node *links = 0;
+                  List_Node *links = nullptr;
 
                   for (links = temp; links; links = links->link)
                     {
@@ -1269,7 +1269,7 @@ Key_List::count_duplicates (List_Node *link,
 
   // Count the number of "static" duplicates for this hash value.
   for (List_Node *ptr = link;
-       ptr != 0;
+       ptr != nullptr;
        ptr = ptr->link)
     {
       count++;
@@ -1308,12 +1308,12 @@ Key_List::output_lookup_array ()
     {
       const int DEFAULT_VALUE = -1;
 
-      Duplicate_Entry *duplicates = 0;
+      Duplicate_Entry *duplicates = nullptr;
       ACE_NEW_RETURN (duplicates,
                       Duplicate_Entry[total_duplicates],
                       -1);
 
-      int *lookup_array = 0;
+      int *lookup_array = nullptr;
       ACE_NEW_RETURN (lookup_array,
                       int[max_hash_value + 1],
                       -1);
@@ -1344,8 +1344,8 @@ Key_List::output_lookup_array ()
                         temp->hash_value,
                         lookup_array[temp->hash_value]));
 
-          if (temp->link == 0 &&
-              (temp->next == 0 || hash_value != temp->next->hash_value))
+          if (temp->link == nullptr &&
+              (temp->next == nullptr || hash_value != temp->next->hash_value))
             // This isn't a duplicate.  Note that we know this because
             // we sorted the keys by their hash value.
             continue;
@@ -1814,7 +1814,7 @@ Key_List::string_sort ()
       List_Node *curr;
       if(ptr->link)
         {
-          List_Node *last_node = 0;
+          List_Node *last_node = nullptr;
 
           for(curr = ptr->link; curr; curr = curr->link)
             {
@@ -1822,7 +1822,7 @@ Key_List::string_sort ()
               curr->next = curr->link;
 
               // Save the pointer for the last node.
-              if (curr->link == 0)
+              if (curr->link == nullptr)
                 last_node = curr;
             }
 
@@ -1837,7 +1837,7 @@ Key_List::string_sort ()
 
   for(ptr=head;ptr;ptr=ptr->next)
     {
-      ptr->link = 0;
+      ptr->link = nullptr;
     }
 
   // Set the sorting options.
@@ -1898,7 +1898,7 @@ Key_List::dump ()
       if (dup)
         {
           for (;
-               dup != 0;
+               dup != nullptr;
                dup = dup->link)
             ACE_DEBUG ((LM_DEBUG,
                         " %s",
@@ -1914,7 +1914,7 @@ Key_List::dump ()
 // Simple-minded constructor action here...
 
 Key_List::Key_List ()
-  : head (0),
+  : head (nullptr),
     total_duplicates (0),
     array_type_ (dup_string (Key_List::default_array_type)),
     return_type (dup_string (Key_List::default_return_type)),

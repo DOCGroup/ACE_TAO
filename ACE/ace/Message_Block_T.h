@@ -48,15 +48,15 @@ public:
                          ACE_Allocator *data_block_allocator);
 
   /// Delete all the resources held in the message.
-  virtual ~ACE_Locked_Data_Block ();
+  ~ACE_Locked_Data_Block () override;
 
   /**
    * Return an exact "deep copy" of the message, the dynamic type is
    * ACE_Locked_Data_Block<>
    * See the documentation in Message_Block.h for details.
    */
-  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0,
-                                        size_t max_size = 0) const;
+  ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0,
+                                        size_t max_size = 0) const override;
 
 private:
   /// The lock

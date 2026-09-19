@@ -213,13 +213,13 @@ run_main (int, ACE_TCHAR *[])
   // Test iterating through a set and deleting elements.
   {
     ACE_Unbounded_Set<MyNode*> ubs3;
-    MyNode *n = 0;
+    MyNode *n = nullptr;
     for (int i = 0; i < 10; ++i)
       {
         n = new MyNode (i);
         ubs3.insert (n);
       }
-    MyNode **i_n = 0;
+    MyNode **i_n = nullptr;
     ACE_Unbounded_Set_Iterator<MyNode*> ubs3_iter (ubs3.begin ());
     for (; ubs3_iter.next (i_n); ++ubs3_iter)
       delete *i_n;

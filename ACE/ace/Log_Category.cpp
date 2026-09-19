@@ -48,14 +48,14 @@ ACE_Log_Category::~ACE_Log_Category()
 
   if (this->id_ > 0)
     {
-      void *temp = 0;
+      void *temp = nullptr;
       if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
         {
           return; // This should not happen!
         }
-      if (temp != 0) {
+      if (temp != nullptr) {
         delete static_cast <ACE_Log_Category_TSS *> (temp);
-        ACE_OS::thr_setspecific (this->key_, 0);
+        ACE_OS::thr_setspecific (this->key_, nullptr);
       }
       ACE_OS::thr_keyfree (this->key_);
     }
@@ -77,7 +77,7 @@ ACE_Log_Category::per_thr_obj()
 #if defined (ACE_HAS_THREADS)
   {
     // Ensure that we are serialized!
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, nullptr);
 
     // make sure we only create the key once!
     if (this->id_ == 0)
@@ -87,28 +87,28 @@ ACE_Log_Category::per_thr_obj()
 
         if (ACE_OS::thr_keycreate (&this->key_,
                                    &ACE_Log_Category_tss_destroy) != 0)
-          return 0; // Major problems, this should *never* happen!
+          return nullptr; // Major problems, this should *never* happen!
       }
   }
 
-  void *temp = 0;
+  void *temp = nullptr;
   if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
     {
-      return 0; // This should not happen!
+      return nullptr; // This should not happen!
     }
-  if (temp != 0)
+  if (temp != nullptr)
     return static_cast <ACE_Log_Category_TSS *> (temp);
 
   ACE_Log_Category_TSS * result;
 
   ACE_NEW_RETURN(result,
                  ACE_Log_Category_TSS(this, ACE_Log_Msg::instance()),
-                 0);
+                 nullptr);
 
  if (ACE_OS::thr_setspecific (this->key_,
                               result) != 0)
    {
-     return 0;
+     return nullptr;
    }
 
   return result;

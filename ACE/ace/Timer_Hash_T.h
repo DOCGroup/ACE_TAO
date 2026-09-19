@@ -41,10 +41,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Hash_Upcall
 {
 public:
-  typedef ACE_Timer_Queue_T<ACE_Event_Handler *,
-                            ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
-                            ACE_Null_Mutex>
-          TIMER_QUEUE;
+  using TIMER_QUEUE = ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, ACE_Null_Mutex>;
 
   /// Default constructor (creates an invalid object, but needs to be here
   /// so timer queues using this functor can be constructed)
@@ -123,7 +120,7 @@ class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE>
 {
 public:
   /// Constructor.
-  typedef ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY> Hash;
+  using Hash = ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
   ACE_Timer_Hash_Iterator_T (Hash &);
 
   virtual ~ACE_Timer_Hash_Iterator_T ();
@@ -168,14 +165,13 @@ class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_
 {
 public:
   /// Type of iterator
-  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>
-          HASH_ITERATOR;
+  using HASH_ITERATOR = ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
 
   /// Iterator is a friend
   friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
 
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Timer_Queue;
+  using Base_Timer_Queue = ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
   /**
    * Default constructor. @a table_size determines the size of the
@@ -185,7 +181,7 @@ public:
    */
   ACE_Timer_Hash_T (size_t table_size,
                     FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /**
@@ -196,7 +192,7 @@ public:
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
   ACE_Timer_Hash_T (FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
@@ -241,7 +237,7 @@ public:
    * this instance of ACE_Timer_Hash_T then user will get a memory leak.
    */
   virtual int cancel (long timer_id,
-                      const void **act = 0,
+                      const void **act = nullptr,
                       int dont_call_handle_close = 1);
 
   /**

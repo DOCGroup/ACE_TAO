@@ -27,47 +27,20 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The following typedef are here for ease of use
 
-typedef ACE_Timer_Hash_Upcall <ACE_Event_Handler *,
-                               ACE_Event_Handler_Handle_Timeout_Upcall,
-                               ACE_SYNCH_RECURSIVE_MUTEX>
-        ACE_Hash_Upcall;
+using ACE_Hash_Upcall = ACE_Timer_Hash_Upcall<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
-typedef ACE_Timer_List_T <ACE_Event_Handler *,
-                          ACE_Hash_Upcall,
-                          ACE_Null_Mutex>
-        ACE_Hash_Timer_List;
+using ACE_Hash_Timer_List = ACE_Timer_List_T<ACE_Event_Handler *, ACE_Hash_Upcall, ACE_Null_Mutex>;
 
-typedef ACE_Timer_Heap_T <ACE_Event_Handler *,
-                          ACE_Hash_Upcall,
-                          ACE_Null_Mutex>
-        ACE_Hash_Timer_Heap;
+using ACE_Hash_Timer_Heap = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Hash_Upcall, ACE_Null_Mutex>;
 
 
-typedef ACE_Timer_Hash_T<ACE_Event_Handler *,
-                        ACE_Event_Handler_Handle_Timeout_Upcall,
-                        ACE_SYNCH_RECURSIVE_MUTEX,
-                        ACE_Hash_Timer_List>
+using ACE_Timer_Hash = ACE_Timer_Hash_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_Hash_Timer_List>;
 
-        ACE_Timer_Hash;
+using ACE_Timer_Hash_Iterator = ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_Hash_Timer_List, ACE_Default_Time_Policy>;
 
-typedef ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *,
-                                  ACE_Event_Handler_Handle_Timeout_Upcall,
-                                  ACE_SYNCH_RECURSIVE_MUTEX,
-                                  ACE_Hash_Timer_List,
-                                  ACE_Default_Time_Policy>
-        ACE_Timer_Hash_Iterator;
+using ACE_Timer_Hash_Heap = ACE_Timer_Hash_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_Hash_Timer_Heap>;
 
-typedef ACE_Timer_Hash_T<ACE_Event_Handler *,
-                        ACE_Event_Handler_Handle_Timeout_Upcall,
-                        ACE_SYNCH_RECURSIVE_MUTEX,
-                        ACE_Hash_Timer_Heap>
-        ACE_Timer_Hash_Heap;
-
-typedef ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *,
-                                  ACE_Event_Handler_Handle_Timeout_Upcall,
-                                  ACE_SYNCH_RECURSIVE_MUTEX,
-                                  ACE_Hash_Timer_Heap>
-        ACE_Timer_Hash_Heap_Iterator;
+using ACE_Timer_Hash_Heap_Iterator = ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_Hash_Timer_Heap>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

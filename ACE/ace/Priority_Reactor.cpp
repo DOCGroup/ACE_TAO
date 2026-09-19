@@ -45,8 +45,8 @@ ACE_Priority_Reactor::init_bucket ()
 ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
   : ACE_Select_Reactor(sh, tq),
-    bucket_ (0),
-    tuple_allocator_ (0)
+    bucket_ (nullptr),
+    tuple_allocator_ (nullptr)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
   this->init_bucket ();
@@ -57,8 +57,8 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
                                             ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
   : ACE_Select_Reactor (size, restart, sh, tq),
-    bucket_ (0),
-    tuple_allocator_ (0)
+    bucket_ (nullptr),
+    tuple_allocator_ (nullptr)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
   this->init_bucket ();
@@ -92,7 +92,7 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
     {
       ACE_Event_Handler *event_handler =
         this->handler_rep_.find (handle);
-      if (event_handler == 0)
+      if (event_handler == nullptr)
         return -1;
 
       ACE_Event_Tuple et (event_handler,

@@ -41,7 +41,7 @@ int handle_test (ACE_DLL &dll)
   // Test the get/set_handle methods.
   ACE_DLL local_dll;
 
-  ACE_SHLIB_HANDLE handle = dll.get_handle (1);
+  ACE_SHLIB_HANDLE handle = dll.get_handle (true);
   if (handle != ACE_SHLIB_INVALID_HANDLE)
     {
       if (local_dll.set_handle (handle) != 0)
@@ -87,7 +87,7 @@ int basic_test (ACE_DLL &dll)
   // Cast the void* to long first.
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   Hello_Factory factory = reinterpret_cast<Hello_Factory> (tmp);
-  if (factory == 0)
+  if (factory == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        dll.error ()),
@@ -124,7 +124,7 @@ int dynamic_cast_test (ACE_DLL &dll)
   // Cast the void* to long first.
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   PFN pfnAcquire = reinterpret_cast<PFN> (tmp);
-  if (pfnAcquire == 0)
+  if (pfnAcquire == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        dll.error ()),

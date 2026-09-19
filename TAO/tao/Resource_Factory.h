@@ -245,14 +245,19 @@ public:
   virtual void disable_factory () = 0;
 
   /// Return the resource usage strategy.
-  virtual
-  TAO_Resource_Factory::Resource_Usage
-  resource_usage_strategy () const = 0;
+  virtual TAO_Resource_Factory::Resource_Usage resource_usage_strategy () const = 0;
 
   /// Return the value of the strategy that indicates whether
   /// the ORB should wait for the replies during shutdown or drop
   /// replies during shutdown.
   virtual bool drop_replies_during_shutdown () const = 0;
+
+  /// Amount of seconds after which an idle transport will be closed
+  /// 0 means no closing of idle connections (default)
+  virtual int transport_idle_timeout () const = 0;
+
+  /// Interval in seconds between transport idle scans.
+  virtual int transport_idle_scan_interval () const = 0;
 
 protected:
   /**

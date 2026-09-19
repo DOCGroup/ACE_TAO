@@ -59,7 +59,7 @@ class ACE_Service_Type_Factory;
 // The following definition for the ACE_YYSTYPE must occur before
 // YY_DECL is declared since YY_DECL expands to function
 // prototypes that use ACE_YYSTYPE.
-typedef union
+using ACE_YYSTYPE = union
 {
   int type_;
   ACE_Location_Node *location_node_;
@@ -67,7 +67,7 @@ typedef union
   ACE_Static_Node *static_node_;
   ACE_Service_Type_Factory *svc_record_;
   ACE_TCHAR *ident_;
-} ACE_YYSTYPE;
+};
 
 #define ACE_YYSTYPE_IS_DECLARED
 

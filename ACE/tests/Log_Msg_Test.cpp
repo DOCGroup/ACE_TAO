@@ -158,7 +158,7 @@ test_callbacks ()
 
   // Create a callback object and make it "verbose".
   Logger logger;
-  logger.verbose (1);
+  logger.verbose (true);
 
   // Set the callback object.
   ACE_LOG_MSG->msg_callback (&logger);
@@ -181,7 +181,7 @@ test_callbacks ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) sixth message\n")));
 
-  logger.verbose (0);
+  logger.verbose (false);
 
   // This message should show up via the Logger callback (not
   // verbosely).
@@ -195,7 +195,7 @@ test_callbacks ()
   // from stderr should be verbose.
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) eighth message\n")));
-  ACE_LOG_MSG->msg_callback (0);
+  ACE_LOG_MSG->msg_callback (nullptr);
 }
 
 static void
@@ -453,7 +453,7 @@ test_acelib_category()
   else {
     ACE_ERROR((LM_ERROR, "Some ace lib category log failed\n"));
   }
-  ACE_LOG_MSG->msg_callback (0);
+  ACE_LOG_MSG->msg_callback (nullptr);
   return failed;
 }
 
@@ -527,7 +527,7 @@ test_ostream ()
     }
 
   // Allocate the input buffer
-  char *buffer = 0;
+  char *buffer = nullptr;
   ACE_NEW_RETURN (buffer,
                   char[info.size_ + 1],
                   -1);
@@ -621,7 +621,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
   else
     {
       const ACE_TCHAR *b = log_record.msg_data ();
-      const ACE_TCHAR *expect = 0;
+      const ACE_TCHAR *expect = nullptr;
 
       ++this->tests_;
 
@@ -734,8 +734,8 @@ test_format_specs ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IONE\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
-  ACE_WCHAR_T *nill_string = 0;
-  char* char_nill_string = 0;
+  ACE_WCHAR_T *nill_string = nullptr;
+  char* char_nill_string = nullptr;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), nill_string));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), char_nill_string));
@@ -798,7 +798,7 @@ test_format_specs ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), &tv));
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
-  ACE_LOG_MSG->msg_callback (0);
+  ACE_LOG_MSG->msg_callback (nullptr);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
 

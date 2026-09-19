@@ -79,7 +79,7 @@ public:
    *
    * Short-hand for the right type of pointer to function.
    */
-  typedef ACE_Time_Value (*FPtr)();
+  using FPtr = ACE_Time_Value (*)();
 
   /**
    * @brief Constructor from a pointer to function.
@@ -151,7 +151,7 @@ protected:
 /// Temporarily, for backwards compatibility reasons, this will
 /// be the default time policy. In time to be replaced by
 /// ACE_System_Time_Policy.
-typedef ACE_FPointer_Time_Policy ACE_Default_Time_Policy;
+using ACE_Default_Time_Policy = ACE_FPointer_Time_Policy;
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Export ACE_Time_Value_T<ACE_System_Time_Policy>;

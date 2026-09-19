@@ -38,19 +38,19 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 // Process-wide Thread Manager.
-ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
+ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = nullptr;
 
 // Controls whether the Thread_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
 bool ACE_Thread_Manager::delete_thr_mgr_ = false;
 #endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
-ACE_TSS_TYPE (ACE_Thread_Exit) *ACE_Thread_Manager::thr_exit_ = 0;
+ACE_TSS_TYPE (ACE_Thread_Exit) *ACE_Thread_Manager::thr_exit_ = nullptr;
 
 int
 ACE_Thread_Manager::set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr)
 {
-  if (ACE_Thread_Manager::thr_exit_ == 0)
+  if (ACE_Thread_Manager::thr_exit_ == nullptr)
     ACE_Thread_Manager::thr_exit_ = ptr;
   else
     return -1;
@@ -131,7 +131,7 @@ int
 ACE_Thread_Descriptor::at_exit (ACE_At_Thread_Exit* cleanup)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
-  if (cleanup==0)
+  if (cleanup==nullptr)
    return -1;
   else
    {
@@ -144,7 +144,7 @@ void
 ACE_Thread_Descriptor::do_at_exit ()
 {
   ACE_TRACE ("ACE_Thread_Descriptor::do_at_exit");
-  while (at_exit_list_!=0)
+  while (at_exit_list_!=nullptr)
     this->at_pop ();
 }
 
@@ -160,7 +160,7 @@ ACE_Thread_Descriptor::terminate ()
      // Run at_exit hooks
      this->do_at_exit ();
      // We must remove Thread_Descriptor from Thread_Manager list
-     if (this->tm_ != 0)
+     if (this->tm_ != nullptr)
       {
          int close_handle = 0;
 
@@ -190,23 +190,23 @@ ACE_Thread_Descriptor::terminate ()
 
          // Remove thread descriptor from the table. 'this' is invalid
          // upon return.
-         if (this->tm_ != 0)
+         if (this->tm_ != nullptr)
            {
              // remove_thr makes use of 'this' invalid on return.
              // Code below will free log_msg, so clear our pointer
              // now - it's already been saved in log_msg.
-             this->log_msg_ = 0;
+             this->log_msg_ = nullptr;
              tm_->remove_thr (this, close_handle);
            }
       }
 
      // Check if we need delete ACE_Log_Msg instance
      // If ACE_TSS_cleanup was not executed first log_msg == 0
-     if (log_msg == 0)
+     if (log_msg == nullptr)
       {
         // Only inform to ACE_TSS_cleanup that it must delete the log instance
         // setting ACE_LOG_MSG thr_desc to 0.
-        ACE_LOG_MSG->thr_desc (0);
+        ACE_LOG_MSG->thr_desc (nullptr);
       }
      else
       {
@@ -223,14 +223,14 @@ ACE_Thread_Descriptor::at_exit (void *object,
   ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
   // To keep compatibility, when cleanup_hook is null really is a at_pop
   // without apply.
-  if (cleanup_hook == 0)
+  if (cleanup_hook == nullptr)
    {
-     if (this->at_exit_list_!= 0)
+     if (this->at_exit_list_!= nullptr)
       this->at_pop(0);
    }
   else
    {
-     ACE_At_Thread_Exit* cleanup = 0;
+     ACE_At_Thread_Exit* cleanup = nullptr;
      ACE_NEW_RETURN (cleanup,
                      ACE_At_Thread_Exit_Func (object,
                                               cleanup_hook,
@@ -259,9 +259,9 @@ ACE_Thread_Descriptor::dump () const
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor ()
-  : log_msg_ (0),
-    at_exit_list_ (0),
-    tm_ (0),
+  : log_msg_ (nullptr),
+    at_exit_list_ (nullptr),
+    tm_ (nullptr),
     terminated_ (false)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
@@ -323,7 +323,7 @@ ACE_Thread_Descriptor *
 ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::thread_descriptor");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
 
   ACE_FIND (this->find_thread (thr_id), ptr);
   return ptr;
@@ -333,7 +333,7 @@ ACE_Thread_Descriptor *
 ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle)
 {
   ACE_TRACE ("ACE_Thread_Manager::hthread_descriptor");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
 
   ACE_FIND (this->find_hthread (thr_handle), ptr);
   return ptr;
@@ -349,7 +349,7 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
   ACE_Thread_Descriptor *desc =
     this->thread_desc_self ();
 
-  if (desc == 0)
+  if (desc == nullptr)
     return -1;
   else
     desc->self (self);
@@ -405,17 +405,17 @@ ACE_Thread_Manager::instance ()
 {
   ACE_TRACE ("ACE_Thread_Manager::instance");
 
-  if (ACE_Thread_Manager::thr_mgr_ == 0)
+  if (ACE_Thread_Manager::thr_mgr_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
+                                *ACE_Static_Object_Lock::instance (), nullptr));
 
-      if (ACE_Thread_Manager::thr_mgr_ == 0)
+      if (ACE_Thread_Manager::thr_mgr_ == nullptr)
         {
           ACE_NEW_RETURN (ACE_Thread_Manager::thr_mgr_,
                           ACE_Thread_Manager,
-                          0);
+                          nullptr);
           ACE_Thread_Manager::delete_thr_mgr_ = true;
         }
     }
@@ -428,7 +428,7 @@ ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Thread_Manager::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), nullptr));
 
   ACE_Thread_Manager *t = ACE_Thread_Manager::thr_mgr_;
   // We can't safely delete it since we don't know who created it!
@@ -451,7 +451,7 @@ ACE_Thread_Manager::close_singleton ()
       // First, we clean up the thread descriptor list.
       ACE_Thread_Manager::thr_mgr_->close ();
       delete ACE_Thread_Manager::thr_mgr_;
-      ACE_Thread_Manager::thr_mgr_ = 0;
+      ACE_Thread_Manager::thr_mgr_ = nullptr;
       ACE_Thread_Manager::delete_thr_mgr_ = false;
     }
 
@@ -468,7 +468,7 @@ ACE_Thread_Manager::close ()
 
   // Clean up the thread descriptor list.
   if (this->automatic_wait_)
-    this->wait (0, 1);
+    this->wait (nullptr, 1);
   else
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -593,7 +593,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // Reset thread descriptor status
   new_thr_desc->reset (this);
 
-  ACE_Thread_Adapter *thread_args = 0;
+  ACE_Thread_Adapter *thread_args = nullptr;
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
@@ -621,7 +621,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_hthread_t thr_handle;
 
   ACE_thread_t thr_id;
-  if (t_id == 0)
+  if (t_id == nullptr)
     t_id = &thr_id;
 
   // Acquire the <sync_> lock to block the spawned thread from
@@ -666,7 +666,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                             DUPLICATE_SAME_ACCESS);
 # endif /* ! ACE_LACKS_DUP */
 #else  /* ! ACE_HAS_WTHREADS */
-  if (t_handle != 0)
+  if (t_handle != nullptr)
     *t_handle = thr_handle;
 #endif /* ! ACE_HAS_WTHREADS */
 
@@ -713,7 +713,7 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
                      grp_id,
                      stack,
                      stack_size,
-                     0,
+                     nullptr,
                      thr_name) == -1)
     return -1;
 
@@ -748,14 +748,14 @@ ACE_Thread_Manager::spawn_n (size_t n,
       if (this->spawn_i (func,
                          args,
                          flags,
-                         0,
-                         thread_handles == 0 ? 0 : &thread_handles[i],
+                         nullptr,
+                         thread_handles == nullptr ? nullptr : &thread_handles[i],
                          priority,
                          grp_id,
-                         stack == 0 ? 0 : stack[i],
-                         stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
+                         stack == nullptr ? nullptr : stack[i],
+                         stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                          task,
-                         thr_name == 0 ? 0 : &thr_name [i]) == -1)
+                         thr_name == nullptr ? nullptr : &thr_name [i]) == -1)
         return -1;
     }
 
@@ -791,14 +791,14 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
       if (this->spawn_i (func,
                          args,
                          flags,
-                         thread_ids == 0 ? 0 : &thread_ids[i],
-                         thread_handles == 0 ? 0 : &thread_handles[i],
+                         thread_ids == nullptr ? nullptr : &thread_ids[i],
+                         thread_handles == nullptr ? nullptr : &thread_handles[i],
                          priority,
                          grp_id,
-                         stack == 0 ? 0 : stack[i],
-                         stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
+                         stack == nullptr ? nullptr : stack[i],
+                         stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                          task,
-                         thr_name == 0 ? 0 : &thr_name [i]) == -1)
+                         thr_name == nullptr ? nullptr : &thr_name [i]) == -1)
         return -1;
     }
 
@@ -818,9 +818,9 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
                                 ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
-  ACE_Thread_Descriptor *thr_desc = 0;
+  ACE_Thread_Descriptor *thr_desc = nullptr;
 
-  if (td == 0)
+  if (td == nullptr)
     {
       ACE_NEW_RETURN (thr_desc,
                       ACE_Thread_Descriptor,
@@ -859,7 +859,7 @@ ACE_Thread_Manager::find_hthread (ACE_hthread_t h_id)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Locate the index in the table associated with <t_id>.  Must be
@@ -879,7 +879,7 @@ ACE_Thread_Manager::find_thread (ACE_thread_t t_id)
           return iter.next ();
         }
     }
-  return 0;
+  return nullptr;
 }
 
 // Insert a thread into the pool (checks for duplicates and doesn't
@@ -895,7 +895,7 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if we're already registered...
-  if (this->find_thread (t_id) != 0 )
+  if (this->find_thread (t_id) != nullptr )
     return -1;
 
   if (grp_id == -1)
@@ -905,7 +905,7 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
                         t_handle,
                         ACE_THR_SPAWNED,
                         grp_id,
-                        0,
+                        nullptr,
                         flags) == -1)
     return -1;
 
@@ -949,7 +949,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
-  td->tm_ = 0;
+  td->tm_ = nullptr;
   this->thr_list_.remove (td);
 
 #if defined (ACE_WIN32)
@@ -973,9 +973,9 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 void
 ACE_Thread_Manager::remove_thr_all ()
 {
-  ACE_Thread_Descriptor *td = 0;
+  ACE_Thread_Descriptor *td = nullptr;
 
-  while ((td = this->thr_list_.delete_head ()) != 0)
+  while ((td = this->thr_list_.delete_head ()) != nullptr)
     {
       this->remove_thr (td, 1);
     }
@@ -1192,7 +1192,7 @@ ACE_Thread_Manager::check_state (ACE_UINT32 state,
   if (self_check)
     {
       ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
-      if (desc == 0)
+      if (desc == nullptr)
         return 0;               // Always return false.
       thr_state = desc->thr_state_;
     }
@@ -1200,7 +1200,7 @@ ACE_Thread_Manager::check_state (ACE_UINT32 state,
     {
       // Not calling from self, have to look it up from the list.
       ACE_FIND (this->find_thread (id), ptr);
-      if (ptr == 0)
+      if (ptr == nullptr)
         return 0;
       thr_state = ptr->thr_state_;
     }
@@ -1557,7 +1557,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   ACE_TRACE ("ACE_Thread_Manager::wait_grp");
 
   int copy_count = 0;
-  ACE_Thread_Descriptor_Base *copy_table = 0;
+  ACE_Thread_Descriptor_Base *copy_table = nullptr;
 
   // We have to make sure that while we wait for these threads to
   // exit, we do not have the lock.  Therefore we make a copy of all
@@ -1681,7 +1681,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
     // deleted already.
     ACE_thread_t const id = ACE_OS::thr_self ();
     ACE_Thread_Descriptor* td = this->find_thread (id);
-    if (td != 0)
+    if (td != nullptr)
      {
        // @@ We call Thread_Descriptor terminate this realize the cleanup
        // process itself.
@@ -1714,7 +1714,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
   std::unique_ptr<ACE_Time_Value> local_timeout;
   // Check to see if we're using absolute time or not.
-  if (!use_absolute_time && timeout != 0)
+  if (!use_absolute_time && timeout != nullptr)
     {
       // create time value duplicate (preserves time policy)
       local_timeout.reset (timeout->duplicate ());
@@ -1733,7 +1733,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    if (ACE_Object_Manager::shutting_down () != 1)
+    if (ACE_Object_Manager::shutting_down () == false)
       {
         // Program is not shutting down.  Perform a normal wait on threads.
         if (abandon_detached_threads != 0)
@@ -1755,7 +1755,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
             if (! this->thr_to_be_removed_.is_empty ())
               {
-                ACE_Thread_Descriptor *td = 0;
+                ACE_Thread_Descriptor *td {};
                 while (this->thr_to_be_removed_.dequeue_head (td) != -1)
                   this->remove_thr (td, 1);
               }
@@ -1771,8 +1771,8 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         this->remove_thr_all ();
 
 #if !defined (ACE_HAS_VXTHREADS)
-  ACE_Thread_Descriptor_Base* item = 0;
-  while ((item = this->terminated_thr_list_.delete_head ()) != 0)
+  ACE_Thread_Descriptor_Base* item = nullptr;
+  while ((item = this->terminated_thr_list_.delete_head ()) != nullptr)
     {
       term_thr_list_copy.insert_tail (item);
     }
@@ -1783,9 +1783,9 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #if !defined (ACE_HAS_VXTHREADS)
     // @@ VxWorks doesn't support thr_join (yet.)  We are working
     // on our implementation.
-    ACE_Thread_Descriptor_Base *item = 0;
+    ACE_Thread_Descriptor_Base *item {};
 
-    while ((item = term_thr_list_copy.delete_head ()) != 0)
+    while ((item = term_thr_list_copy.delete_head ()) != nullptr)
       {
 #ifndef ACE_LACKS_PTHREAD_JOIN
         if (ACE_BIT_DISABLED (item->flags_, THR_DETACHED | THR_DAEMON)
@@ -1831,7 +1831,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
 
-      for (ACE_Thread_Descriptor *td = 0;
+      for (ACE_Thread_Descriptor *td = nullptr;
            this->thr_to_be_removed_.dequeue_head (td) != -1;
            )
         this->remove_thr (td, 1);
@@ -1846,7 +1846,7 @@ int
 ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 {
   int copy_count = 0;
-  ACE_Thread_Descriptor_Base *copy_table = 0;
+  ACE_Thread_Descriptor_Base *copy_table = nullptr;
 
   // We have to make sure that while we wait for these threads to
   // exit, we do not have the lock.  Therefore we make a copy of all
@@ -2010,7 +2010,7 @@ ACE_Thread_Manager::find_task (ACE_Task_Base *task, size_t slot)
       ++i;
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Returns the number of ACE_Task in a group.
@@ -2029,8 +2029,8 @@ ACE_Thread_Manager::num_tasks_in_group (int grp_id)
        iter.advance ())
     {
       if (iter.next ()->grp_id_ == grp_id
-          && this->find_task (iter.next ()->task_, i) == 0
-          && iter.next ()->task_ != 0)
+          && this->find_task (iter.next ()->task_, i) == nullptr
+          && iter.next ()->task_ != nullptr)
         {
           ++tasks_count;
         }
@@ -2085,7 +2085,7 @@ ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
 
       ACE_Task_Base *task_p = iter.next ()->task_;
 
-      if (0 != task_p)
+      if (nullptr != task_p)
         {
           // This thread has a task pointer; see if it's already in the
           // list. Don't add duplicates.
@@ -2152,7 +2152,7 @@ ACE_Thread_Manager::thr_state (ACE_thread_t id,
     {
       ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
 
-      if (desc == 0)
+      if (desc == nullptr)
         {
           return 0;               // Always return false.
         }
@@ -2164,7 +2164,7 @@ ACE_Thread_Manager::thr_state (ACE_thread_t id,
       // Not calling from self, have to look it up from the list.
       ACE_FIND (this->find_thread (id), ptr);
 
-      if (ptr == 0)
+      if (ptr == nullptr)
         {
           return 0;
         }
@@ -2199,7 +2199,7 @@ ACE_Thread_Manager::task_list (int grp_id,
         }
 
       if (iter.next ()->grp_id_ == grp_id
-          && this->find_task (iter.next ()->task_, i) == 0)
+          && this->find_task (iter.next ()->task_, i) == nullptr)
         {
           task_list_iterator[task_list_count] = iter.next ()->task_;
           ++task_list_count;

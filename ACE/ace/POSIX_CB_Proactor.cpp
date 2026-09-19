@@ -35,7 +35,7 @@ ACE_POSIX_CB_Proactor::get_impl_type ()
 void ACE_POSIX_CB_Proactor::aio_completion_func (sigval cb_data)
 {
   ACE_POSIX_CB_Proactor * impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);
-  if ( impl != 0 )
+  if ( impl != nullptr )
     impl->notify_completion (0);
 }
 
@@ -87,7 +87,7 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 #  else
   result->aio_sigevent.sigev_notify_function = aio_completion_func;
 #  endif /* ACE_HAS_SIG_C_FUNC */
-  result->aio_sigevent.sigev_notify_attributes = 0;
+  result->aio_sigevent.sigev_notify_attributes = nullptr;
 
   result->aio_sigevent.sigev_value.sival_ptr = this ;
 
@@ -145,13 +145,13 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
                                     index,
                                     count);
 
-      if (asynch_result == 0)
+      if (asynch_result == nullptr)
           break;
 
       // Call the application code.
       this->application_specific_code (asynch_result,
                                        return_status, // Bytes transferred.
-                                       0,             // No completion key.
+                                       nullptr,             // No completion key.
                                        error_status); // Error
      }
 

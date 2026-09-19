@@ -2277,7 +2277,7 @@ Fri Dec 19 22:34:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for [BUGID 1688]. Please see
 
-          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1688
+          https://github.com/DOCGroup/bugzilla/issues/1688
 
           for more details. Thanks to Gary Maxey <gary.maxey@hp.com> for
           the patch.
@@ -8467,7 +8467,7 @@ Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
           bugzilla database at
 
-          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1268
+          https://github.com/DOCGroup/bugzilla/issues/1268
 
           for more details on the source of the problem and the solution
           for the same. Thanks to Carlos O'Ryan for providing patches.
@@ -8542,7 +8542,7 @@ Sat Oct 11 17:39:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
           <sbetterm@erggroup.com> for reporting the problem and suggesting
           a solution.  Please see
 
-          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1605
+          https://github.com/DOCGroup/bugzilla/issues/1605
 
           for a description of the problem.
 

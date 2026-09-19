@@ -38,7 +38,7 @@ ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
 {
   ACE_OS_TRACE ("ACE_Thread_Control::ACE_Thread_Control");
 
-  if (this->tm_ != 0 && insert)
+  if (this->tm_ != nullptr && insert)
     {
       ACE_hthread_t t_id;
       ACE_OS::thr_self (t_id);
@@ -64,7 +64,7 @@ ACE_Thread_Control::exit (ACE_THR_FUNC_RETURN exit_status, int do_thr_exit)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::exit");
 
-  if (this->tm_ != 0)
+  if (this->tm_ != nullptr)
     return this->tm_->exit (exit_status, do_thr_exit);
   else
     {

@@ -42,12 +42,12 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
 ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
                           bool delete_implementation)
-  : implementation_ (0),
+  : implementation_ (nullptr),
     delete_implementation_ (delete_implementation)
 {
   this->implementation (impl);
 
-  if (this->implementation () == 0)
+  if (this->implementation () == nullptr)
     {
 #if !defined (ACE_WIN32) \
       || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) \
@@ -88,7 +88,7 @@ ACE_Reactor::~ACE_Reactor ()
 }
 
 // Process-wide ACE_Reactor.
-ACE_Reactor *ACE_Reactor::reactor_ = 0;
+ACE_Reactor *ACE_Reactor::reactor_ = nullptr;
 
 // Controls whether the Reactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
@@ -99,17 +99,17 @@ ACE_Reactor::instance ()
 {
   ACE_TRACE ("ACE_Reactor::instance");
 
-  if (ACE_Reactor::reactor_ == 0)
+  if (ACE_Reactor::reactor_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
+                                *ACE_Static_Object_Lock::instance (), nullptr));
 
-      if (ACE_Reactor::reactor_ == 0)
+      if (ACE_Reactor::reactor_ == nullptr)
         {
           ACE_NEW_RETURN (ACE_Reactor::reactor_,
                           ACE_Reactor,
-                          0);
+                          nullptr);
           ACE_Reactor::delete_reactor_ = true;
           ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_)
         }
@@ -123,7 +123,7 @@ ACE_Reactor::instance (ACE_Reactor *r, bool delete_reactor)
   ACE_TRACE ("ACE_Reactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), nullptr));
   ACE_Reactor *t = ACE_Reactor::reactor_;
   ACE_Reactor::delete_reactor_ = delete_reactor;
 
@@ -132,7 +132,7 @@ ACE_Reactor::instance (ACE_Reactor *r, bool delete_reactor)
   // We can't register the Reactor singleton as a framework component twice.
   // Therefore we test to see if we had an existing reactor instance, which
   // if so means it must have already been registered.
-  if (t == 0)
+  if (t == nullptr)
     ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_);
 
   return t;
@@ -149,7 +149,7 @@ ACE_Reactor::close_singleton ()
   if (ACE_Reactor::delete_reactor_)
     {
       delete ACE_Reactor::reactor_;
-      ACE_Reactor::reactor_ = 0;
+      ACE_Reactor::reactor_ = nullptr;
       ACE_Reactor::delete_reactor_ = false;
     }
 }
@@ -191,7 +191,7 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
     {
       int const result = this->implementation_->handle_events ();
 
-      if (eh != 0 && (*eh)(this))
+      if (eh != nullptr && (*eh)(this))
         continue;
       else if (result == -1 && this->implementation_->deactivated ())
         return 0;
@@ -214,7 +214,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
     {
       int const result = this->implementation_->alertable_handle_events ();
 
-      if (eh != 0 && (*eh)(this))
+      if (eh != nullptr && (*eh)(this))
         continue;
       else if (result == -1 && this->implementation_->deactivated ())
         return 0;
@@ -238,7 +238,7 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
     {
       int result = this->implementation_->handle_events (tv);
 
-      if (eh != 0 && (*eh) (this))
+      if (eh != nullptr && (*eh) (this))
         continue;
       else if (result == -1)
         {
@@ -280,7 +280,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
     {
       int result = this->implementation_->alertable_handle_events (tv);
 
-      if (eh != 0 && (*eh)(this))
+      if (eh != nullptr && (*eh)(this))
         continue;
       else if (result == -1 && this->implementation_->deactivated ())
         return 0;
@@ -444,7 +444,7 @@ ACE_Reactor::notify (ACE_Event_Handler *event_handler,
 {
   // First, try to remember this reactor in the event handler, in case
   // the event handler goes away before the notification is delivered.
-  if (event_handler != 0 && event_handler->reactor () == 0)
+  if (event_handler != nullptr && event_handler->reactor () == nullptr)
     {
       event_handler->reactor (this);
     }

@@ -31,7 +31,7 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
       tv += *max_wait_time;
 
       ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
-                                                  0,
+                                                  nullptr,
                                                   &tv));
     }
   else
@@ -68,8 +68,8 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
       tv += *max_wait_time;
 
-      ACE_MT (result = this->token_.acquire (0,
-                                             0,
+      ACE_MT (result = this->token_.acquire (nullptr,
+                                             nullptr,
                                              &tv));
     }
   else
@@ -97,7 +97,7 @@ ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
                                 bool mask_signals,
                                 int s_queue)
-  : ACE_Select_Reactor (sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
+  : ACE_Select_Reactor (sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, nullptr, mask_signals, s_queue)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (true);
@@ -109,7 +109,7 @@ ACE_TP_Reactor::ACE_TP_Reactor (size_t max_number_of_handles,
                                 ACE_Timer_Queue *tq,
                                 bool mask_signals,
                                 int s_queue)
-  : ACE_Select_Reactor (max_number_of_handles, restart, sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, 0, mask_signals, s_queue)
+  : ACE_Select_Reactor (max_number_of_handles, restart, sh, tq, ACE_DISABLE_NOTIFY_PIPE_DEFAULT, nullptr, mask_signals, s_queue)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (true);
@@ -376,7 +376,7 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   if (!dispatch_info.dispatch ())
     {
       // Check for removed handlers.
-      if (dispatch_info.event_handler_ == 0)
+      if (dispatch_info.event_handler_ == nullptr)
         {
           this->handler_rep_.unbind(dispatch_info.handle_,
                                     dispatch_info.mask_);
@@ -529,7 +529,7 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
   ACE_EH_PTMF const callback = dispatch_info.callback_;
 
   // Check for removed handlers.
-  if (event_handler == 0)
+  if (event_handler == nullptr)
     return -1;
 
   // Upcall. If the handler returns positive value (requesting a
@@ -626,7 +626,7 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
               ACE_TEXT ("ACE_TP_Reactor::notify_handle: ")
               ACE_TEXT ("Wrong version of notify_handle() got called\n")));
 
-  ACE_ASSERT (eh == 0);
+  ACE_ASSERT (eh == nullptr);
   ACE_UNUSED_ARG (eh);
 }
 

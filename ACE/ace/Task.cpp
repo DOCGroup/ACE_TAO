@@ -75,7 +75,7 @@ ACE_Task_Base::wait ()
 
   // If we don't have a thread manager, we probably were never
   // activated.
-  if (this->thr_mgr () != 0)
+  if (this->thr_mgr () != nullptr)
     return this->thr_mgr ()->wait_task (this);
   else
     return 0;
@@ -124,7 +124,7 @@ ACE_Task_Base::activate (long flags,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   // If the task passed in is zero, we will use <this>
-  if (task == 0)
+  if (task == nullptr)
     task = this;
 
   if (this->thr_count_ > 0 && force_active == 0)
@@ -145,7 +145,7 @@ ACE_Task_Base::activate (long flags,
   // Use the ACE_Thread_Manager singleton if we're running as an
   // active object and the caller didn't supply us with a
   // Thread_Manager.
-  if (this->thr_mgr_ == 0)
+  if (this->thr_mgr_ == nullptr)
 # if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
     this->thr_mgr_ = ACE_THREAD_MANAGER_SINGLETON::instance ();
 # else /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
@@ -153,7 +153,7 @@ ACE_Task_Base::activate (long flags,
 # endif /* ACE_THREAD_MANAGER_LACKS_STATICS */
 
   int grp_spawned = -1;
-  if (thread_ids == 0)
+  if (thread_ids == nullptr)
     // Thread Ids were not specified
     grp_spawned =
       this->thr_mgr_->spawn_n (n_threads,
@@ -261,7 +261,7 @@ ACE_Task_Base::svc_run (void *args)
 #if defined ACE_HAS_SIG_C_FUNC
   t->thr_mgr ()->at_exit (t, ACE_Task_Base_cleanup, 0);
 #else
-  t->thr_mgr ()->at_exit (t, ACE_Task_Base::cleanup, 0);
+  t->thr_mgr ()->at_exit (t, ACE_Task_Base::cleanup, nullptr);
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   ACE_THR_FUNC_RETURN status;
@@ -281,11 +281,11 @@ ACE_Task_Base::svc_run (void *args)
   ACE_Thread_Manager *thr_mgr_ptr = t->thr_mgr ();
 
   // This calls the Task->close () hook.
-  t->cleanup (t, 0);
+  t->cleanup (t, nullptr);
 
   // This prevents a second invocation of the cleanup code
   // (called later by <ACE_Thread_Manager::exit>.
-  thr_mgr_ptr->at_exit (t, 0, 0);
+  thr_mgr_ptr->at_exit (t, nullptr, nullptr);
 #endif
   return status;
 }

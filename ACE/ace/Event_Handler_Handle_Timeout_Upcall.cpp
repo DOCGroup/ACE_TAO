@@ -18,7 +18,7 @@ timeout (ACE_Timer_Queue &timer_queue,
         int recurring_timer,
         const ACE_Time_Value &cur_time)
 {
-  int requires_reference_counting = 0;
+  bool requires_reference_counting = false;
 
   if (!recurring_timer)
     {
@@ -36,8 +36,7 @@ timeout (ACE_Timer_Queue &timer_queue,
         timer_queue.cancel (event_handler, 0); // 0 means "call handle_close()".
     }
 
-  if (!recurring_timer &&
-      requires_reference_counting)
+  if (!recurring_timer && requires_reference_counting)
     {
       event_handler->remove_reference ();
     }

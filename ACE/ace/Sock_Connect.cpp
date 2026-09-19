@@ -177,7 +177,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
     {
       hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
 
-      if (hp == 0)
+      if (hp == nullptr)
         return -1;
       else
         ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
@@ -319,7 +319,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
   if (ACE_OS::getnameinfo ((const sockaddr *) addr.get_addr (),
                            addr_size, hostname,
                            static_cast<ACE_SOCKET_LEN> (len),
-                           0, 0, NI_NAMEREQD) != 0)
+                           nullptr, 0, NI_NAMEREQD) != 0)
     return -1;
 
   if (ACE::debug ())
@@ -562,15 +562,15 @@ get_ip_interfaces_getifaddrs (size_t &count,
 {
   // Take advantage of the BSD getifaddrs function that simplifies
   // access to connected interfaces.
-  struct ifaddrs *ifap = 0;
-  struct ifaddrs *p_if = 0;
+  struct ifaddrs *ifap = nullptr;
+  struct ifaddrs *p_if = nullptr;
 
   if (::getifaddrs (&ifap) != 0)
     return -1;
 
   // Count number of interfaces.
   size_t num_ifs = 0;
-  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+  for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     ++num_ifs;
 
   // Now create and initialize output array.
@@ -585,10 +585,10 @@ get_ip_interfaces_getifaddrs (size_t &count,
   count = 0;
 
   for (p_if = ifap;
-       p_if != 0;
+       p_if != nullptr;
        p_if = p_if->ifa_next)
     {
-      if (p_if->ifa_addr == 0)
+      if (p_if->ifa_addr == nullptr)
         continue;
 
       // Check to see if it's up.
@@ -644,7 +644,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   ACE_TRACE ("ACE::get_ip_interfaces");
 
   count = 0;
-  addrs = 0;
+  addrs = nullptr;
 
 #if defined (ACE_WIN32)
   return get_ip_interfaces_win32 (count, addrs);

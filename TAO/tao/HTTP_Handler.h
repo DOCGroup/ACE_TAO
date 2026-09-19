@@ -50,7 +50,7 @@ public:
   size_t byte_count () const;
 
   /// Activate this instance of the <HTTP_Handler>
-  virtual int open (void * = 0);
+  virtual int open (void * = nullptr);
 
   /// Close down the Blob
   virtual int close (u_long flags = 0);

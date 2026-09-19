@@ -103,12 +103,12 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
   : name_ (name_ptr),
     pointer_ (pointer),
     next_ (next),
-    prev_ (0)
+    prev_ (nullptr)
 {
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
   ACE_OS::strcpy (n, name);
-  if (next != 0)
+  if (next != nullptr)
     next->prev_ = this;
 }
 
@@ -131,7 +131,7 @@ ACE_PI_Control_Block::ACE_Name_Node::name (const char *)
 }
 
 ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header ()
-  : next_block_ (0),
+  : next_block_ (nullptr),
     size_ (0)
 {
 }

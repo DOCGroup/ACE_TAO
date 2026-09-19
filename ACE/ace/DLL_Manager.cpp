@@ -19,7 +19,7 @@ sig_atomic_t ACE_DLL_Handle::open_called_ = 0;
 
 ACE_DLL_Handle::ACE_DLL_Handle ()
   : refcount_ (0),
-    dll_name_ (0),
+    dll_name_ (nullptr),
     handle_ (ACE_SHLIB_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_DLL_Handle::ACE_DLL_Handle");
@@ -117,7 +117,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           this->get_dll_names (dll_name, dll_names);
 #endif
 
-          ACE_TString *name = 0;
+          ACE_TString *name = nullptr;
           for (ACE_Array_Iterator<ACE_TString> name_iter (dll_names);
                name_iter.next (name); name_iter.advance ())
             {
@@ -241,7 +241,7 @@ void *
 ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors, ACE_TString &error)
 {
   ACE_TRACE ("ACE_DLL_Handle::symbol");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
 
   std::unique_ptr <ACE_TCHAR[]> auto_name (ACE::ldname (sym_name));
   // handle_ can be invalid especially when ACE_DLL_Handle resigned ownership
@@ -276,7 +276,7 @@ ACE_SHLIB_HANDLE
 ACE_DLL_Handle::get_handle (bool become_owner)
 {
   ACE_TRACE ("ACE_DLL_Handle::get_handle");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
 
   if (this->refcount_ == 0 && become_owner)
     {
@@ -451,7 +451,7 @@ ACE_DLL_Handle::open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* e
 /******************************************************************/
 
 // Pointer to the Singleton instance.
-ACE_DLL_Manager *ACE_DLL_Manager::instance_ = 0;
+ACE_DLL_Manager *ACE_DLL_Manager::instance_ = nullptr;
 
 
 ACE_DLL_Manager *
@@ -459,16 +459,16 @@ ACE_DLL_Manager::instance (int size)
 {
   ACE_TRACE ("ACE_DLL_Manager::instance");
 
-  if (ACE_DLL_Manager::instance_ == 0)
+  if (ACE_DLL_Manager::instance_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-      if (ACE_DLL_Manager::instance_ == 0)
+                                *ACE_Static_Object_Lock::instance (), nullptr));
+      if (ACE_DLL_Manager::instance_ == nullptr)
         {
           ACE_NEW_RETURN (ACE_DLL_Manager::instance_,
                           ACE_DLL_Manager (size),
-                          0);
+                          nullptr);
         }
     }
 
@@ -484,11 +484,11 @@ ACE_DLL_Manager::close_singleton ()
                      *ACE_Static_Object_Lock::instance ()));
 
   delete ACE_DLL_Manager::instance_;
-  ACE_DLL_Manager::instance_ = 0;
+  ACE_DLL_Manager::instance_ = nullptr;
 }
 
 ACE_DLL_Manager::ACE_DLL_Manager (int size)
-  : handle_vector_ (0),
+  : handle_vector_ (nullptr),
     current_size_ (0),
     total_size_ (0),
     unload_policy_ (ACE_DLL_UNLOAD_POLICY_PER_DLL)
@@ -521,10 +521,10 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
 {
   ACE_TRACE ("ACE_DLL_Manager::open_dll");
 
-  ACE_DLL_Handle *temp_handle = 0;
-  ACE_DLL_Handle *dll_handle = 0;
+  ACE_DLL_Handle *temp_handle = nullptr;
+  ACE_DLL_Handle *dll_handle = nullptr;
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
     dll_handle = this->find_dll (dll_name);
     if (!dll_handle)
       {
@@ -532,7 +532,7 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
           {
             ACE_NEW_RETURN (temp_handle,
                             ACE_DLL_Handle,
-                            0);
+                            nullptr);
 
             dll_handle = temp_handle;
           }
@@ -551,14 +551,14 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
                         dll_name));
 
           delete temp_handle;
-          return 0;
+          return nullptr;
         }
 
       // Add the handle to the vector only if the dll is successfully
       // opened.
-      if (temp_handle != 0)
+      if (temp_handle != nullptr)
         {
-          ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+          ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
           this->handle_vector_[this->current_size_] = dll_handle;
           ++this->current_size_;
         }
@@ -571,7 +571,7 @@ int
 ACE_DLL_Manager::close_dll (const ACE_TCHAR *dll_name)
 {
   ACE_TRACE ("ACE_DLL_Manager::close_dll");
-  ACE_DLL_Handle *handle = 0;
+  ACE_DLL_Handle *handle = nullptr;
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
@@ -626,7 +626,7 @@ ACE_DLL_Manager::open (int size)
 {
   ACE_TRACE ("ACE_DLL_Manager::open");
 
-  ACE_DLL_Handle **temp = 0;
+  ACE_DLL_Handle **temp = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,
@@ -650,7 +650,7 @@ ACE_DLL_Manager::close ()
 
   int force_close = 1;
 
-  if (this->handle_vector_ != 0)
+  if (this->handle_vector_ != nullptr)
     {
       // Delete components in reverse order.
       for (int i = this->current_size_ - 1; i >= 0; i--)
@@ -659,7 +659,7 @@ ACE_DLL_Manager::close ()
             {
               ACE_DLL_Handle *s =
                 const_cast<ACE_DLL_Handle *> (this->handle_vector_[i]);
-              this->handle_vector_[i] = 0;
+              this->handle_vector_[i] = nullptr;
               this->unload_dll (s, force_close);
               delete s;
             }
@@ -671,7 +671,7 @@ ACE_DLL_Manager::close ()
       delete [] this->handle_vector_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      this->handle_vector_ = 0;
+      this->handle_vector_ = nullptr;
       this->current_size_ = 0;
     }
   return 0;
@@ -689,7 +689,7 @@ ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
         return this->handle_vector_[i];
       }
 
-  return 0;
+  return nullptr;
 }
 
 int
@@ -721,7 +721,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
               dll_unload_policy const the_policy =
                 reinterpret_cast<dll_unload_policy> (temp_p);
 
-              if (the_policy != 0)
+              if (the_policy != nullptr)
                 unload = ACE_BIT_DISABLED (the_policy (),
                                            ACE_DLL_UNLOAD_POLICY_LAZY);
               else

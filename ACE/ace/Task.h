@@ -68,7 +68,7 @@ public:
   ACE_Task_Base (ACE_Thread_Manager * = 0);
 
   /// Destructor.
-  virtual ~ACE_Task_Base ();
+  ~ACE_Task_Base () override;
 
   // These methods should be overridden by subclasses if you'd like to
   // provide <Task>-specific initialization and termination behavior.
@@ -201,9 +201,9 @@ public:
   // since they are inherently error-prone to use.  They are only here
   // for (the rare) applications that know how to use them correctly.
   /// Suspend a task.
-  virtual int suspend ();
+  int suspend () override;
   /// Resume a suspended task.
-  virtual int resume ();
+  int resume () override;
 
   /// Get the current group id.
   int grp_id () const;

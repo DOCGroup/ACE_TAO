@@ -78,7 +78,7 @@ private:
 ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX)
 
 /// Provide a Singleton access point to the based pointer repository.
-typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX> ACE_BASED_POINTER_REPOSITORY;
+using ACE_BASED_POINTER_REPOSITORY = ACE_Singleton<ACE_Based_Pointer_Repository, ACE_MT_SYNCH::RW_MUTEX>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

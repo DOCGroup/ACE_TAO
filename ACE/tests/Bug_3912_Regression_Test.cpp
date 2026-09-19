@@ -55,7 +55,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   bool close_called = false;
-  Close_Handler* close_handler = 0;
+  Close_Handler* close_handler = nullptr;
   ACE_NEW_RETURN(close_handler, Close_Handler (&close_called), -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening service config\n")));
@@ -77,14 +77,14 @@ run_test (int argc, ACE_TCHAR *argv[])
 
 
   ACE_Service_Repository *asr = ACE_Service_Repository::instance ();
-  if (asr == 0)
+  if (asr == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("run_test, no service repository\n")),
                        -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test module\n")));
 
-  const ACE_Service_Type* st = 0;
+  const ACE_Service_Type* st = nullptr;
   status = asr->find (ACE_TEXT ("Close_Test_Module"), &st);
   if (status != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -98,7 +98,7 @@ run_test (int argc, ACE_TCHAR *argv[])
   MT_Module* close_test_module =
     static_cast <MT_Module *> (st->type()->object ());
 
-  if (close_test_module == 0)
+  if (close_test_module == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("run_test, no close test module\n")),
                        -1);

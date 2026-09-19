@@ -37,16 +37,16 @@ class ACE_Active_Map_Manager : public ACE_Map_Manager<ACE_Active_Map_Manager_Key
 {
 public:
   // = Traits.
-  typedef ACE_Active_Map_Manager_Key key_type;
-  typedef T mapped_type;
+  using key_type = ACE_Active_Map_Manager_Key;
+  using mapped_type = T;
 
-  typedef ACE_Map_Entry<ACE_Active_Map_Manager_Key, T> ENTRY;
-  typedef ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> ITERATOR;
-  typedef ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> REVERSE_ITERATOR;
+  using ENTRY = ACE_Map_Entry<ACE_Active_Map_Manager_Key, T>;
+  using ITERATOR = ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>;
+  using REVERSE_ITERATOR = ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>;
 
-  typedef ENTRY entry;
-  typedef ITERATOR iterator;
-  typedef REVERSE_ITERATOR reverse_iterator;
+  using entry = ENTRY;
+  using iterator = ITERATOR;
+  using reverse_iterator = REVERSE_ITERATOR;
 
   /// Initialize a Active_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Active_Map_Manager (ACE_Allocator *alloc = nullptr);
@@ -178,7 +178,7 @@ public:
 
 protected:
   /// Private base class
-  typedef ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> ACE_AMM_BASE;
+  using ACE_AMM_BASE = ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>;
 
 private:
   // = Disallow these operations.

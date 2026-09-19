@@ -55,11 +55,11 @@ TAO_Thread_Per_Connection_Handler::activate_ch (long flags,
                          0,
                          ACE_DEFAULT_THREAD_PRIORITY,
                          -1,
-                         0,
-                         0,
-                         0,
-                         0,
-                         0,
+                         nullptr,
+                         nullptr,
+                         nullptr,
+                         nullptr,
+                         nullptr,
                          &thread_names[0]);
 }
 

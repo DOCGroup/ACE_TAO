@@ -395,21 +395,17 @@ protected:
 protected:
   /// Maintain a queue of services to be configured from the
   /// command-line.
-  typedef ACE_Unbounded_Queue<ACE_TString> ACE_SVC_QUEUE;
-  typedef ACE_Unbounded_Queue_Iterator<ACE_TString> ACE_SVC_QUEUE_ITERATOR;
+  using ACE_SVC_QUEUE = ACE_Unbounded_Queue<ACE_TString>;
+  using ACE_SVC_QUEUE_ITERATOR = ACE_Unbounded_Queue_Iterator<ACE_TString>;
 
   /// Maintain a set of the statically linked service descriptors.
-  typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
-    ACE_STATIC_SVCS;
+  using ACE_STATIC_SVCS = ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 
-  typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
-    ACE_STATIC_SVCS_ITERATOR;
+  using ACE_STATIC_SVCS_ITERATOR = ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
 
-  typedef ACE_Unbounded_Set<Processed_Static_Svc *>
-    ACE_PROCESSED_STATIC_SVCS;
+  using ACE_PROCESSED_STATIC_SVCS = ACE_Unbounded_Set<Processed_Static_Svc *>;
 
-  typedef ACE_Unbounded_Set_Iterator<Processed_Static_Svc *>
-    ACE_PROCESSED_STATIC_SVCS_ITERATOR;
+  using ACE_PROCESSED_STATIC_SVCS_ITERATOR = ACE_Unbounded_Set_Iterator<Processed_Static_Svc *>;
 
   friend class ACE_Dynamic_Service_Base;
   friend class ACE_Service_Object;

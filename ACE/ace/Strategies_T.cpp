@@ -129,13 +129,13 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       // Create an ACE_Service_Type containing the SVC_Handler and
       // insert into this->svc_rep_;
 
-      ACE_Service_Type_Impl *stp = 0;
+      ACE_Service_Type_Impl *stp = nullptr;
       ACE_NEW_RETURN (stp,
                       ACE_Service_Object_Type (svc_handler,
                                                this->svc_name_),
                       -1);
 
-      ACE_Service_Type *srp = 0;
+      ACE_Service_Type *srp = nullptr;
 
       ACE_NEW_RETURN (srp,
                       ACE_Service_Type (this->svc_name_,
@@ -143,7 +143,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
                                         handle,
                                         1),
                       -1);
-      if (srp == 0)
+      if (srp == nullptr)
         {
           delete stp;
           errno = ENOMEM;
@@ -1146,7 +1146,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
   // Reset the <*act_holder> in the confines and protection of the
   // lock.
   if (act_holder)
-    *act_holder = 0;
+    *act_holder = nullptr;
 
   // The wonders and perils of ACT
   CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;

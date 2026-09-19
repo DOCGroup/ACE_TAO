@@ -105,7 +105,7 @@ ACE_Sbrk_Memory_Pool::~ACE_Sbrk_Memory_Pool ()
 void *
 ACE_Sbrk_Memory_Pool::base_addr () const
 {
-  return 0;
+  return nullptr;
 }
 
 // Round up the request to a multiple of the page size.

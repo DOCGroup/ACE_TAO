@@ -39,7 +39,7 @@ public:
   friend class ACE_UPIPE_Acceptor;
   friend class ACE_UPIPE_Connector;
 
-  typedef ACE_Stream<ACE_SYNCH> MT_Stream;
+  using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
 
   ACE_UPIPE_Stream ();
 
@@ -55,37 +55,37 @@ public:
   /// Send a message through the message queue.  Returns -1 on error,
   /// else 0.
   int send (ACE_Message_Block *mb_p,
-            ACE_Time_Value *timeout  = 0);
+            ACE_Time_Value *timeout  = nullptr);
 
   /// Recv a message from the message queue.  Returns -1 on error, else
   /// 0.
   int recv (ACE_Message_Block *&mb_p,
-            ACE_Time_Value *timeout  = 0);
+            ACE_Time_Value *timeout  = nullptr);
 
   // = Send/recv char buffers.
   /// Send a buffer of @a n bytes through the message queue.  Returns -1
   /// on error, else number of bytes sent.
   ssize_t send (const char *buffer,
                 size_t n,
-                ACE_Time_Value *timeout = 0);
+                ACE_Time_Value *timeout = nullptr);
 
   /// Recv a buffer of upto @a n bytes from the message queue.  Returns
   /// -1 on error, else number of bytes read.
   ssize_t recv (char *buffer,
                 size_t n,
-                ACE_Time_Value *timeout = 0);
+                ACE_Time_Value *timeout = nullptr);
 
   /// Send a buffer of exactly @a n bytes to the message queue.  Returns
   /// -1 on error, else number of bytes written (which should == n).
   ssize_t send_n (const char *buffer,
                   size_t n,
-                  ACE_Time_Value *timeout = 0);
+                  ACE_Time_Value *timeout = nullptr);
 
   /// Recv a buffer of exactly @a n bytes from the message queue.
   /// Returns -1 on error, else the number of bytes read.
   ssize_t recv_n (char *buffer,
                   size_t n,
-                  ACE_Time_Value *timeout = 0);
+                  ACE_Time_Value *timeout = nullptr);
 
   /// Perform control operations on the UPIPE_Stream.
   int control (int cmd, void *val) const;
@@ -100,7 +100,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Meta-type info
-  typedef ACE_UPIPE_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_UPIPE_Addr;
 
 private:
   /// To hold the last ACE_Message_Block read out of the stream. Thus

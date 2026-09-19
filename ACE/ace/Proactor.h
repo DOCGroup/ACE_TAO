@@ -42,7 +42,7 @@ class ACE_Proactor_Impl;
 class ACE_Proactor_Timer_Handler;
 
 /// Type def for the timer queue.
-typedef ACE_Abstract_Timer_Queue<ACE_Handler *> ACE_Proactor_Timer_Queue;
+using ACE_Proactor_Timer_Queue = ACE_Abstract_Timer_Queue<ACE_Handler *>;
 
 /**
  * @class ACE_Proactor_Handle_Timeout_Upcall
@@ -129,32 +129,13 @@ class ACE_Export ACE_Proactor
 {
   // = Here are the private typedefs that the ACE_Proactor uses.
 
-  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *>
-    TIMER_QUEUE_ITERATOR;
-  typedef ACE_Timer_List_T<ACE_Handler *,
-    ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
-  TIMER_LIST;
-  typedef ACE_Timer_List_Iterator_T<ACE_Handler *,
-    ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
-  TIMER_LIST_ITERATOR;
-  typedef ACE_Timer_Heap_T<ACE_Handler *,
-    ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
-  TIMER_HEAP;
-  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *,
-    ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
-  TIMER_HEAP_ITERATOR;
-  typedef ACE_Timer_Wheel_T<ACE_Handler *,
-    ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
-  TIMER_WHEEL;
-  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
-    ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
-  TIMER_WHEEL_ITERATOR;
+  using TIMER_QUEUE_ITERATOR = ACE_Timer_Queue_Iterator_T<ACE_Handler *>;
+  using TIMER_LIST = ACE_Timer_List_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
+  using TIMER_LIST_ITERATOR = ACE_Timer_List_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
+  using TIMER_HEAP = ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
+  using TIMER_HEAP_ITERATOR = ACE_Timer_Heap_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
+  using TIMER_WHEEL = ACE_Timer_Wheel_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
+  using TIMER_WHEEL_ITERATOR = ACE_Timer_Wheel_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
   // = Friendship.
 
@@ -249,7 +230,7 @@ public:
    * handle_events.  If it is -1, the the proactor_run_event_loop will return
    * (pre-maturely.)
    */
-  typedef int (*PROACTOR_EVENT_HOOK)(ACE_Proactor *);
+  using PROACTOR_EVENT_HOOK = int (*)(ACE_Proactor *);
 
   // These methods work with an instance of a proactor.
   /**

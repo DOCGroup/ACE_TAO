@@ -96,8 +96,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Meta-type "trait" information.
-  typedef ACE_FILE_Addr PEER_ADDR;
-  typedef ACE_FILE_IO PEER_STREAM;
+  using PEER_ADDR = ACE_FILE_Addr;
+  using PEER_STREAM = ACE_FILE_IO;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

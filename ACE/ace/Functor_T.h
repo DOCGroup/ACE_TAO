@@ -64,10 +64,10 @@ public:
   ACE_Command_Callback (RECEIVER &recvr, ACTION action);
 
   /// Virtual destructor.
-  virtual ~ACE_Command_Callback () = default;
+  ~ACE_Command_Callback () override = default;
 
   /// Invokes the method @c action_ from the object @c receiver_.
-  virtual int execute (void *arg = 0);
+  int execute (void *arg = 0) override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -89,18 +89,18 @@ template <class RECEIVER>
 class ACE_Member_Function_Command : public ACE_Command_Base
 {
 public:
-  typedef void (RECEIVER::*PTMF)();
+  using PTMF = void (RECEIVER::*)();
 
   /// Con Constructor: sets the <receiver_> of the Command to @a recvr, and the
   /// <action_> of the Command to <action>.
   ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf);
 
   /// Virtual destructor.
-  virtual ~ACE_Member_Function_Command () = default;
+  ~ACE_Member_Function_Command () override = default;
 
   /// Invokes the method <action_> from the object <receiver_>.  The
   /// parameter is ignored
-  virtual int execute (void *);
+  int execute (void *) override;
 
 private:
   /// Object where the method resides.

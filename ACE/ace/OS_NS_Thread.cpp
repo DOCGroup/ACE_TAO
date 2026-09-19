@@ -1825,7 +1825,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   pthread_mutexattr_t l_attributes;
 # endif
 
-  if (attributes == 0)
+  if (attributes == nullptr)
     attributes = &l_attributes;
   int result = 0;
   int attr_init = 0;  // have we initialized the local attributes.
@@ -2588,8 +2588,8 @@ ACE_OS::event_init (ACE_event_t *event,
     }
 #elif defined (ACE_HAS_THREADS)
   ACE_UNUSED_ARG (sa);
-  event->name_ = 0;
-  event->eventdata_ = 0;
+  event->name_ = nullptr;
+  event->eventdata_ = nullptr;
 
   if (type == USYNC_PROCESS)
     {
@@ -2619,7 +2619,7 @@ ACE_OS::event_init (ACE_event_t *event,
           owner = true;
         }
 
-      void *const mapped = ACE_OS::mmap (0, sizeof (ACE_eventdata_t),
+      void *const mapped = ACE_OS::mmap (nullptr, sizeof (ACE_eventdata_t),
                                          PROT_RDWR, MAP_SHARED, fd);
       ACE_eventdata_t *evtdata = reinterpret_cast<ACE_eventdata_t *> (mapped);
       ACE_OS::close (fd);
@@ -2635,7 +2635,7 @@ ACE_OS::event_init (ACE_event_t *event,
       if (owner)
         {
           event->name_ = ACE_OS::strdup (name_p);
-          if (event->name_ == 0 ||
+          if (event->name_ == nullptr ||
               eventdata_init (event->eventdata_, USYNC_PROCESS, manual_reset,
                               initial_state, attributes, name, arg,
                               ACE_EVENT_USE_COND_PSHARED,
@@ -3471,8 +3471,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # define  ACE_THREAD_ARGUMENT  thread_args
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
-  ACE_Base_Thread_Adapter *thread_args = 0;
-  if (thread_adapter == 0)
+  ACE_Base_Thread_Adapter *thread_args = nullptr;
+  if (thread_adapter == nullptr)
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
@@ -3494,7 +3494,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
 
-  if (thread_adapter == 0)
+  if (thread_adapter == nullptr)
     auto_thread_args.reset (thread_args);
 
 #if defined (ACE_HAS_THREADS)
@@ -3506,11 +3506,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
   ACE_thread_t tmp_thr;
-  if (thr_id == 0)
+  if (thr_id == nullptr)
     thr_id = &tmp_thr;
 
   ACE_hthread_t tmp_handle;
-  if (thr_handle == 0)
+  if (thr_handle == nullptr)
     thr_handle = &tmp_handle;
 
 # if defined (ACE_HAS_PTHREADS)
@@ -3539,7 +3539,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   if !defined (ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE)
 #     if !defined (ACE_LACKS_PTHREAD_ATTR_SETSTACK)
       int result;
-      if (stack != 0)
+      if (stack != nullptr)
         result = ACE_ADAPT_RETVAL (pthread_attr_setstack (&attr, stack, size), result);
       else
         result = ACE_ADAPT_RETVAL (pthread_attr_setstacksize (&attr, size), result);

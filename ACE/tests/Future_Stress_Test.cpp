@@ -40,7 +40,7 @@ void* worker (void* args)
   int r = config->a + config->b * config->c;
   config->result.set(r);
 
-  return 0;
+  return nullptr;
 }
 
 void* runner (void* args)
@@ -70,7 +70,7 @@ void* runner (void* args)
     int expected_res = config.a+config.b*config.c;
     int actual_res = -1;
     if (ACE_Thread::spawn((ACE_THR_FUNC)worker,
-                        static_cast<void*>(&config), THR_NEW_LWP | THR_JOINABLE, 0,
+                        static_cast<void*>(&config), THR_NEW_LWP | THR_JOINABLE, nullptr,
                         &thread_id) == -1)
     {
         ACE_ERROR ((LM_INFO,
@@ -90,7 +90,7 @@ void* runner (void* args)
   } while( *duration != ACE_Time_Value::zero );
    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner done\n"), runNum));
 
-   return 0;
+   return nullptr;
 }
 
 int

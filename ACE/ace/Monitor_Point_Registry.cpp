@@ -21,7 +21,7 @@ namespace ACE
     bool
     Monitor_Point_Registry::add (Monitor_Base* type)
     {
-      if (type == 0)
+      if (type == nullptr)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
                              "registry add: null type\n"),
@@ -51,7 +51,7 @@ namespace ACE
     bool
     Monitor_Point_Registry::remove (const char* name)
     {
-      if (name == 0)
+      if (name == nullptr)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
                              "registry remove: null name\n"),
@@ -59,12 +59,12 @@ namespace ACE
         }
 
       int status = 0;
-      Map::data_type mp = 0;
+      Map::data_type mp = nullptr;
 
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-        ACE_CString name_str (name, 0, false);
+        ACE_CString name_str (name, nullptr, false);
         status = this->map_.unbind (name_str, mp);
       }
 
@@ -109,15 +109,15 @@ namespace ACE
     Monitor_Base*
     Monitor_Point_Registry::get (const ACE_CString& name) const
     {
-      Map::data_type mp = 0;
+      Map::data_type mp = nullptr;
 
       {
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, nullptr);
 
         this->map_.find (name, mp);
       }
 
-      if (mp != 0)
+      if (mp != nullptr)
         {
           mp->add_ref ();
         }
@@ -146,7 +146,7 @@ namespace ACE
            i != this->map_.end ();
            i.advance ())
         {
-          Map::ENTRY* entry = 0;
+          Map::ENTRY* entry = nullptr;
           i.next (entry);
           entry->int_id_->remove_ref ();
         }

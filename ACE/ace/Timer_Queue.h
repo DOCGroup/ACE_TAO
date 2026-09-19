@@ -32,14 +32,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The following typedef are here for ease of use and backward
 // compatibility.
-typedef ACE_Timer_Node_Dispatch_Info_T<ACE_Event_Handler *>
-        ACE_Timer_Node_Dispatch_Info;
+using ACE_Timer_Node_Dispatch_Info = ACE_Timer_Node_Dispatch_Info_T<ACE_Event_Handler *>;
 
-typedef ACE_Timer_Node_T<ACE_Event_Handler *>
-        ACE_Timer_Node;
+using ACE_Timer_Node = ACE_Timer_Node_T<ACE_Event_Handler *>;
 
-typedef ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *>
-        ACE_Timer_Queue_Iterator;
+using ACE_Timer_Queue_Iterator = ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -107,7 +107,7 @@ client (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) Client: Message has been sent, about to exit...\n"));
-  return 0;
+  return nullptr;
 }
 
 // Callback for "Press Me" button.
@@ -128,7 +128,7 @@ inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   // eval (command);
   const char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
-  if (varValue == 0)
+  if (varValue == nullptr)
     return TCL_ERROR;
   return TCL_OK;
 }
@@ -148,7 +148,7 @@ inc_tmo (ClientData client_data)
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   //  eval (command);
   const char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
-  if (varValue == 0)
+  if (varValue == nullptr)
     ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
 
   (void) Tk_CreateTimerHandler (1000,
@@ -159,8 +159,8 @@ inc_tmo (ClientData client_data)
 class EV_handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     char new_string[80];
     ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
@@ -169,7 +169,7 @@ public:
     //    sprintf (command,"set %s %s",(char *)arg,new_string);
     //    eval (command);
     const char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
-    if (varValue == 0)
+    if (varValue == nullptr)
       ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
 
     return 0;
@@ -180,7 +180,7 @@ class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNC
 {
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *)
+  int open (void *) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
@@ -229,9 +229,9 @@ run_main (int, ACE_TCHAR *[])
     ACE_OS::exit (1);
   }
 
-  Tk_Window tk = 0;
+  Tk_Window tk = nullptr;
   tk = Tk_MainWindow(tcl_interp);
-  if (tk == 0)
+  if (tk == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Tk_Reactor_Test: Tk_MainWindow() failed\n"),1);
     }
@@ -247,7 +247,7 @@ run_main (int, ACE_TCHAR *[])
                      pressme,
                      inc_count,
                      label_var_name,
-                     0);
+                     nullptr);
 
   // Register callback for X Timer
   (void) Tk_CreateTimerHandler (1000,
@@ -279,7 +279,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
-                                          0,
+                                          nullptr,
                                           THR_NEW_LWP | THR_DETACHED);
 
   while (!quit)

@@ -165,7 +165,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
   // it does not define SEGV_MAPERR.
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR) && \
         (defined (SEGV_MAPERR) || defined (SEGV_MEMERR))
-  if (siginfo == 0)
+  if (siginfo == nullptr)
     return -1;
 
   // Make sure that the pointer causing the problem is within the
@@ -428,7 +428,7 @@ ACE_Shared_Memory_Pool::release (int destroy)
           // OS to release it
           if (destroy == 1 && used == 1)
             {
-              if (ACE_OS::shmctl (shmid, IPC_RMID, 0) == -1)
+              if (ACE_OS::shmctl (shmid, IPC_RMID, nullptr) == -1)
                 {
                   result = -1;
                 }

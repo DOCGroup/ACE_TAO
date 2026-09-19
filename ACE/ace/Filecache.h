@@ -145,10 +145,9 @@ private:
   ACE_HANDLE handle_;
 };
 
-typedef ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
-        ACE_Filecache_Hash;
+using ACE_Filecache_Hash = ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *> ACE_Filecache_Hash_Entry;
+using ACE_Filecache_Hash_Entry = ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>;
 
 /**
  * @class ACE_Filecache

@@ -34,7 +34,7 @@ class ACE_Time_Policy_T : public ACE_Dynamic_Time_Policy_Base
 {
 public:
   ACE_Time_Policy_T (TIME_POLICY const & time_policy = TIME_POLICY());
-  virtual ~ACE_Time_Policy_T ();
+  ~ACE_Time_Policy_T () override;
 
   /// Return the current time according to this policy
   ACE_Time_Value_T<ACE_Delegating_Time_Policy> operator()() const;
@@ -47,7 +47,7 @@ public:
   void set_gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 protected:
   /// Return the current time according to policy implementation.
-  virtual ACE_Time_Value_T<ACE_Delegating_Time_Policy> gettimeofday () const;
+  ACE_Time_Value_T<ACE_Delegating_Time_Policy> gettimeofday () const override;
 
 private:
   /// The policy to return the current time of day

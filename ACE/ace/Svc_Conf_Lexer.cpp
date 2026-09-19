@@ -135,7 +135,7 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
   ACE_Encoding_Converter_Factory::Encoding_Hint hint =
                 ACE_Encoding_Converter_Factory::ACE_NONE;
 #endif /* ACE_USES_WCHAR */
-  if (param->buffer == 0)
+  if (param->buffer == nullptr)
     {
 #if defined (ACE_USES_WCHAR)
       look_for_bom = true;
@@ -371,7 +371,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
               {
                 buffer->state_ = ACE_COMMENT;
               }
-            else if (ACE_OS::strchr (separators, c) != 0)
+            else if (ACE_OS::strchr (separators, c) != nullptr)
               {
                 if (c == '\n')
                   {
@@ -518,7 +518,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                                                 ACE_TEXT ("/\\:%.~-");
                         for (const ACE_TCHAR* p = path_parts; *p != '\0'; p++)
                           {
-                            if (ACE_OS::strchr (ace_yylval->ident_, *p) != 0)
+                            if (ACE_OS::strchr (ace_yylval->ident_, *p) != nullptr)
                               {
                                 token = ACE_PATHNAME;
                                 break;

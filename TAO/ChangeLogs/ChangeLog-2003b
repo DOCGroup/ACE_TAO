@@ -66,7 +66,7 @@ Wed Jun 11 15:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Transport_Cache_Manager.cpp (make_idle_i): Fixes for BUG
           1528. Please see
 
-          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1528
+          https://github.com/DOCGroup/bugzilla/issues/1528
 
           for the motivation. This checkin just removes the call to find
           () on the map. It just changes the state of the map entry to
@@ -7585,7 +7585,7 @@ Thu Apr  3 13:13:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Muxed_TMS.cpp (connection_closed): Fix for bug 1482. Please
           refer to
 
-          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1482
+          https://github.com/DOCGroup/bugzilla/issues/1482
 
           for details. The patch does the following
 
@@ -7620,7 +7620,7 @@ Thu Apr  3 10:57:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tests/Bug_1482_Regression: A regression test for bug
 
-          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1482
+          https://github.com/DOCGroup/bugzilla/issues/1482
 
           Please see the bugzilla entry for details.
 

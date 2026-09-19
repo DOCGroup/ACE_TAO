@@ -263,7 +263,7 @@ test_cancel_repeat_timer ()
   Repeat_Timer_Handler *handler = new Repeat_Timer_Handler;
   ACE_Time_Value timeout (Repeat_Timer_Handler::REPEAT_INTERVAL);
   long t_id = ACE_Proactor::instance ()->schedule_repeating_timer
-    (*handler, 0, timeout);
+    (*handler, nullptr, timeout);
   if (t_id == -1)
     {
       ACE_ERROR ((LM_ERROR,

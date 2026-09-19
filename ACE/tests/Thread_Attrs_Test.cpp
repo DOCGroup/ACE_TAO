@@ -23,7 +23,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Spawn the thread
-  int open (void * = 0) override;
+  int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Check the cancel settings against what is expected then exit.
@@ -131,7 +131,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the thread
-  int open (void * = 0) override;
+  int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Check the stack size against what is expected then exit.
@@ -200,11 +200,11 @@ Stack_Size_Check::open (void *)
                       0,
                       ACE_DEFAULT_THREAD_PRIORITY,
                       -1,
-                      0,
-                      0,
-                      0,
+                      nullptr,
+                      nullptr,
+                      nullptr,
                       &stack_size_,
-                      0,
+                      nullptr,
                       names) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
@@ -225,7 +225,7 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 #if defined (ACE_HAS_THREADS)
   Stack_Size_Check size_checker (40*1024);
-  status = size_checker.open(0);
+  status = size_checker.open(nullptr);
   if (status == 0)
     {
       if (size_checker.wait () == -1)
@@ -251,23 +251,23 @@ run_main (int, ACE_TCHAR *[])
   Cancel_Check check2 (true, false);
   Cancel_Check check3 (false, true);
   Cancel_Check check4 (false, false);
-  if (check1.open(0) == 0)
+  if (check1.open(nullptr) == 0)
     {
       check1.wait ();
       if (!check1)
         status = 1;
 
-      check2.open (0);
+      check2.open (nullptr);
       check2.wait ();
       if (!check2)
         status = 1;
 
-      check3.open (0);
+      check3.open (nullptr);
       check3.wait ();
       if (!check3)
         status = 1;
 
-      check4.open (0);
+      check4.open (nullptr);
       check4.wait ();
       if (!check4)
         status = 1;

@@ -179,7 +179,7 @@ public:
   int abort ();
 
   // = Meta-type info
-  typedef ACE_Multihomed_INET_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_Multihomed_INET_Addr;
 
   /// Dump the state of an object.
   void dump () const;

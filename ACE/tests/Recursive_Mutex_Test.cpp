@@ -128,7 +128,7 @@ test_timed_wait (int nesting_level,
                      rm);
   else
     {
-      u_int seed = (u_int) ACE_OS::time (0);
+      u_int seed = (u_int) ACE_OS::time (nullptr);
 
       for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
         {
@@ -274,7 +274,7 @@ test_timed_wait (int nesting_level,
             // acquiring the mutex or taking ownership of an existing
             // lock. The third parameter tells the guard that the mutex
             // has not been locked.
-            ACE_Guard<ACE_TEST_MUTEX> guard (*rm, 0, 0);
+            ACE_Guard<ACE_TEST_MUTEX> guard (*rm, false, 0);
             ACE_TEST_ASSERT (guard.locked () == 0);
 
             // Conditionally acquire the mutex.
@@ -302,7 +302,7 @@ test_timed_wait (int nesting_level,
               // acquiring the mutex, but instead take ownership of the
               // existing lock.  The third parameter tells the guard that
               // the mutex has already been locked.
-              ACE_Guard<ACE_TEST_MUTEX> guard (*rm, 0, 1);
+              ACE_Guard<ACE_TEST_MUTEX> guard (*rm, false, 1);
               ACE_TEST_ASSERT (guard.locked () != 0);
 
               // Perform some operation which might exit the current scope
@@ -328,7 +328,7 @@ recursion_worker (void *arg)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t) Starting test of recursion depth\n")));
   test_recursion_depth (0, rm);
 
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -340,7 +340,7 @@ timed_worker (void *arg)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t) Starting test of timed wait\n")));
   test_timed_wait (0, rm);
 
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */

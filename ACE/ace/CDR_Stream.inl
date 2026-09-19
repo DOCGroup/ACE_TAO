@@ -2,8 +2,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-// ****************************************************************
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // implementing the special types
@@ -750,16 +748,23 @@ ACE_InputCDR::read_octet (ACE_CDR::Octet& x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_boolean (ACE_CDR::Boolean& x)
 {
-  ACE_CDR::Octet tmp = 0;
-  (void) this->read_octet (tmp);
-  x = tmp ? true : false;
-  return this->good_bit_;
+  ACE_CDR::Octet tmp {};
+  if (this->read_octet (tmp))
+    {
+      x = tmp ? true : false;
+      // At the moment we have received something else than 0 or 1 we see this
+      // as failure as the CORBA spec requires this to be 0 or 1, another value
+      // is very likely incorrect or corrupt data
+      this->good_bit_ = !(tmp & static_cast<ACE_CDR::Octet> (~1));
+      return this->good_bit_;
+    }
+  return false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_char (ACE_CDR::Char &x)
 {
-  if (this->char_translator_ == 0)
+  if (this->char_translator_ == nullptr)
     {
       void *temp = &x;
       return this->read_1 (reinterpret_cast<ACE_CDR::Octet*> (temp));

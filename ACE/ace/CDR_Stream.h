@@ -114,9 +114,9 @@ public:
    */
   ACE_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
-                 ACE_Allocator* buffer_allocator = 0,
-                 ACE_Allocator* data_block_allocator = 0,
-                 ACE_Allocator* message_block_allocator = 0,
+                 ACE_Allocator* buffer_allocator = nullptr,
+                 ACE_Allocator* data_block_allocator = nullptr,
+                 ACE_Allocator* message_block_allocator = nullptr,
                  size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
@@ -135,9 +135,9 @@ public:
   ACE_OutputCDR (char *data,
                  size_t size,
                  int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
-                 ACE_Allocator* buffer_allocator = 0,
-                 ACE_Allocator* data_block_allocator = 0,
-                 ACE_Allocator* message_block_allocator = 0,
+                 ACE_Allocator* buffer_allocator = nullptr,
+                 ACE_Allocator* data_block_allocator = nullptr,
+                 ACE_Allocator* message_block_allocator = nullptr,
                  size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
@@ -155,7 +155,7 @@ public:
    */
   ACE_OutputCDR (ACE_Data_Block *data_block,
                  int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
-                 ACE_Allocator* message_block_allocator = 0,
+                 ACE_Allocator* message_block_allocator = nullptr,
                  size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
@@ -722,7 +722,7 @@ public:
                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION,
-                ACE_Lock* lock = 0);
+                ACE_Lock* lock = nullptr);
 
   /// Create an input stream from an ACE_Data_Block. The @a flag
   /// indicates whether the @a data can be deleted by the CDR stream
@@ -767,9 +767,9 @@ public:
 
   /// Create an input CDR from an output CDR.
   ACE_InputCDR (const ACE_OutputCDR& rhs,
-                ACE_Allocator* buffer_allocator = 0,
-                ACE_Allocator* data_block_allocator = 0,
-                ACE_Allocator* message_block_allocator = 0);
+                ACE_Allocator* buffer_allocator = nullptr,
+                ACE_Allocator* data_block_allocator = nullptr,
+                ACE_Allocator* message_block_allocator = nullptr);
 
   /// Helper class to transfer the contents from one input CDR to
   /// another without requiring any extra memory allocations, data

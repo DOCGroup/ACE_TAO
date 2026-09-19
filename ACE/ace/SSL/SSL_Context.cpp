@@ -106,10 +106,10 @@ ACE_SSL_Context::lock_type * ACE_SSL_Context::locks_ = 0;
 #endif  /* ACE_HAS_THREADS  && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
 ACE_SSL_Context::ACE_SSL_Context ()
-  : context_ (0),
+  : context_ (nullptr),
     mode_ (-1),
     default_verify_mode_ (SSL_VERIFY_NONE),
-    default_verify_callback_ (0),
+    default_verify_callback_ (nullptr),
     have_ca_ (0)
 {
   ACE_TRACE ("ACE_SSL_Context::ACE_SSL_Context");
@@ -124,7 +124,7 @@ ACE_SSL_Context::~ACE_SSL_Context ()
   if (this->context_)
     {
       ::SSL_CTX_free (this->context_);
-      this->context_ = 0;
+      this->context_ = nullptr;
     }
 
   ACE_SSL_Context::ssl_library_fini ();
@@ -195,13 +195,13 @@ ACE_SSL_Context::ssl_library_init ()
       const char *egd_socket_file =
         ACE_OS::getenv (ACE_SSL_EGD_FILE_ENV);
 
-      if (egd_socket_file != 0)
+      if (egd_socket_file != nullptr)
         (void) this->egd_file (egd_socket_file);
 #endif  /* OPENSSL_VERSION_NUMBER */
 
       const char *rand_file = ACE_OS::getenv (ACE_SSL_RAND_FILE_ENV);
 
-      if (rand_file != 0)
+      if (rand_file != nullptr)
         {
           (void) this->seed_file (rand_file);
         }
@@ -252,11 +252,11 @@ ACE_SSL_Context::set_mode (int mode)
                             *ACE_Static_Object_Lock::instance (),
                             -1));
 
-  if (this->context_ != 0)
+  if (this->context_ != nullptr)
     return -1;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000002
-  const SSL_METHOD *method = 0;
+  const SSL_METHOD *method = nullptr;
 #else
   SSL_METHOD *method = 0;
 #endif
@@ -279,7 +279,7 @@ ACE_SSL_Context::set_mode (int mode)
     }
 
   this->context_ = ::SSL_CTX_new (method);
-  if (this->context_ == 0)
+  if (this->context_ == nullptr)
     return -1;
 
   this->mode_ = mode;
@@ -391,7 +391,7 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
 
   char name[MAXHOSTNAMELEN+1];
 
-  if (peerssl == 0 || host.get_host_name (name, MAXHOSTNAMELEN) == -1)
+  if (peerssl == nullptr || host.get_host_name (name, MAXHOSTNAMELEN) == -1)
     {
       return false;
     }
@@ -402,13 +402,13 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
   X509* cert = ::SSL_get_peer_certificate(peerssl);
 #endif
 
-  if (cert == 0)
+  if (cert == nullptr)
     {
       return false;
     }
 
-  char *peer = 0;
-  char **peerarg = ACE::debug () ? &peer : 0;
+  char *peer = nullptr;
+  char **peerarg = ACE::debug () ? &peer : nullptr;
   int const flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
   size_t const len = ACE_OS::strlen (name);
 
@@ -421,7 +421,7 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
                   ACE_TEXT ("name <%C> returns %d, peer <%C>\n"),
                   name, result, peer));
     }
-  if (peer != 0)
+  if (peer != nullptr)
     {
       ::OPENSSL_free (peer);
     }
@@ -446,7 +446,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 
   this->check_context ();
 
-  if (ca_file == 0 && use_env_defaults)
+  if (ca_file == nullptr && use_env_defaults)
     {
       // Use the default environment settings.
       ca_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
@@ -456,7 +456,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 #endif
     }
 
-  if (ca_dir == 0 && use_env_defaults)
+  if (ca_dir == nullptr && use_env_defaults)
     {
       // Use the default environment settings.
       ca_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
@@ -485,7 +485,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
       // the CTX; any changes to it by way of these function calls will
       // change the CTX directly.
-      STACK_OF (X509_NAME) * cert_names = 0;
+      STACK_OF (X509_NAME) * cert_names = nullptr;
       cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
 
       // Add CAs from both the file and dir, if specified. There should
@@ -494,9 +494,9 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       if (ca_file)
         {
           bool error = false;
-          if (cert_names == 0)
+          if (cert_names == nullptr)
             {
-              if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != 0)
+              if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != nullptr)
                 ::SSL_CTX_set_client_CA_list (this->context_, cert_names);
               else
                 error = true;
@@ -523,11 +523,11 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 #  if !defined (OPENSSL_SYS_MACINTOSH_CLASSIC)
 #    if !defined (OPENSSL_SYS_WIN32)
 
-      if (ca_dir != 0)
+      if (ca_dir != nullptr)
         {
-          if (cert_names == 0)
+          if (cert_names == nullptr)
             {
-              if ((cert_names = sk_X509_NAME_new_null ()) == 0)
+              if ((cert_names = sk_X509_NAME_new_null ()) == nullptr)
                 {
                   if (ACE::debug ())
                     ACE_SSL_Context::report_error ();
@@ -568,6 +568,9 @@ ACE_SSL_Context::private_key (const char *file_name,
                                      this->private_key_.file_name (),
                                      this->private_key_.type ()) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       this->private_key_ = ACE_SSL_Data_File ();
       return -1;
     }
@@ -582,7 +585,14 @@ ACE_SSL_Context::verify_private_key ()
 
   this->check_context ();
 
-  return (::SSL_CTX_check_private_key (this->context_) <= 0 ? -1 : 0);
+  if (::SSL_CTX_check_private_key (this->context_) <= 0)
+    {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
+      return -1;
+    }
+  return 0;
 }
 
 int
@@ -602,6 +612,9 @@ ACE_SSL_Context::certificate (const char *file_name,
                                       this->certificate_.file_name (),
                                       this->certificate_.type ()) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       this->certificate_ = ACE_SSL_Data_File ();
       return -1;
     }
@@ -623,6 +636,9 @@ ACE_SSL_Context::certificate (X509* cert)
 
   if (::SSL_CTX_use_certificate (this->context_, cert) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       return -1;
     }
   else
@@ -647,6 +663,9 @@ ACE_SSL_Context::certificate_chain (const char *file_name, int type)
   if (::SSL_CTX_use_certificate_chain_file (this->context_,
                                             this->certificate_.file_name ()) <= 0)
     {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+
       return -1;
     }
   else
@@ -784,19 +803,18 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
   {
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
-    DH * ret = nullptr;
     BIO * bio = nullptr;
 
-    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == 0)
+    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == nullptr)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;
       }
 
-    ret = PEM_read_bio_DHparams (bio, 0, 0, 0);
+    DH * ret = PEM_read_bio_DHparams (bio, nullptr, nullptr, nullptr);
     BIO_free (bio);
 
-    if (ret == 0)
+    if (ret == nullptr)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;

@@ -59,7 +59,7 @@ public:
    * != 0 and the call times out before the condition is signaled
    * <wait> returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime = 0);
+  int wait (const ACE_Time_Value *abstime = nullptr);
 
   /**
    * Block on condition or until absolute time-of-day has passed.  If
@@ -70,7 +70,7 @@ public:
    * and sets errno to ETIME.
    */
   int wait (ACE_Recursive_Thread_Mutex &mutex,
-            const ACE_Time_Value *abstime = 0);
+            const ACE_Time_Value *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
@@ -96,7 +96,7 @@ private:
   ACE_Recursive_Thread_Mutex &mutex_;
 };
 
-typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;
+using ACE_Condition_Recursive_Thread_Mutex = ACE_Condition<ACE_Recursive_Thread_Mutex>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

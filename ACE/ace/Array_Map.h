@@ -91,21 +91,21 @@ class ACE_Array_Map
 {
 public:
   // STL-style typedefs/traits.
-  typedef Key                                    key_type;
-  typedef Value                                  mapped_type;
-  typedef Value                                  data_type;
-  typedef std::pair<key_type, mapped_type>       value_type;
-  typedef Alloc                                  allocator_type;
-  typedef value_type &                           reference;
-  typedef value_type const &                     const_reference;
-  typedef value_type *                           pointer;
-  typedef value_type const *                     const_pointer;
-  typedef value_type *                           iterator;
-  typedef value_type const *                     const_iterator;
-  typedef ptrdiff_t                              difference_type;
-  typedef size_t                                 size_type;
-  typedef std::reverse_iterator<iterator>        reverse_iterator;
-  typedef std::reverse_iterator<const_iterator>  const_reverse_iterator;
+  using key_type = Key;
+  using mapped_type = Value;
+  using data_type = Value;
+  using value_type = std::pair<key_type, mapped_type>;
+  using allocator_type = Alloc;
+  using reference = value_type &;
+  using const_reference = const value_type &;
+  using pointer = value_type *;
+  using const_pointer = const value_type *;
+  using iterator = value_type *;
+  using const_iterator = const value_type *;
+  using difference_type = ptrdiff_t;
+  using size_type = size_t;
+  using reverse_iterator = std::reverse_iterator<iterator>;
+  using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
   /// Default Constructor.
   /**

@@ -38,9 +38,9 @@ namespace ACE_Utils
       {
         // Reset the string version of the UUID a string version
         // exist, and the UUID is not equal to the old UUID.
-        if (0 != this->as_string_.get ())
+        if (nullptr != this->as_string_.get ())
           {
-            if (0 == rhs.as_string_.get () || *this != rhs)
+            if (nullptr == rhs.as_string_.get () || *this != rhs)
               this->as_string_.reset ();
           }
 
@@ -59,14 +59,14 @@ namespace ACE_Utils
   const ACE_CString * UUID::to_string () const
   {
     // Compute the string representation only once.
-    if (0 != this->as_string_.get ())
+    if (nullptr != this->as_string_.get ())
       return this->as_string_.get ();
 
     // Get a buffer exactly the correct size. Use the nil UUID as a
     // gauge.  Don't forget the trailing nul.
     std::unique_ptr <char[]> auto_clean;
     size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
-    char *buf = 0;
+    char *buf = nullptr;
 
     if (36 == UUID_STRING_LENGTH)
       {
@@ -77,7 +77,7 @@ namespace ACE_Utils
 #else
         ACE_NEW_RETURN (buf,
                         char[UUID_STRING_LENGTH + 1],
-                        0);
+                        nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
         // Let the auto array pointer manage the buffer.
@@ -108,7 +108,7 @@ namespace ACE_Utils
 #else
         ACE_NEW_RETURN (buf,
                         char[UUID_STRING_LENGTH + 1],
-                        0);
+                        nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
         // Let the auto array pointer manage the buffer.
@@ -132,11 +132,11 @@ namespace ACE_Utils
       }
 
     // Save the string.
-    ACE_CString * as_string = 0;
+    ACE_CString * as_string = nullptr;
 
     ACE_NEW_RETURN (as_string,
                     ACE_CString (buf, UUID_STRING_LENGTH),
-                    0);
+                    nullptr);
 
     this->as_string_.reset (as_string);
     return this->as_string_.get ();
@@ -419,10 +419,10 @@ namespace ACE_Utils
   UUID*
   UUID_Generator::generate_UUID (ACE_UINT16 version, u_char variant)
   {
-    UUID* uuid = 0;
+    UUID* uuid = nullptr;
     ACE_NEW_RETURN (uuid,
                     UUID,
-                    0);
+                    nullptr);
 
     this->generate_UUID (*uuid, version, variant);
     return uuid;

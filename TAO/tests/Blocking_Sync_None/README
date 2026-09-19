@@ -8,7 +8,7 @@
 that the ORB never blocks a request made with the SYNC_NONE scope
 policy.  This is a regression test for:
 
-http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=858
+https://github.com/DOCGroup/bugzilla/issues/858
 
 	To run the test use the run_test.pl script:
 

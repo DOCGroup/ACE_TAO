@@ -42,7 +42,6 @@ ACE_SOCK_Dgram::dump () const
 // buffer to read.  This method determines how much data is in the
 // socket, allocates a buffer of this size, reads in the data, and
 // returns the number of bytes read.
-
 ssize_t
 ACE_SOCK_Dgram::recv (iovec *io_vec,
                       ACE_Addr &addr,
@@ -89,7 +88,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 #else
           delete [] (char *)io_vec->iov_base;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-          io_vec->iov_base = 0;
+          io_vec->iov_base = nullptr;
         }
       else
         {
@@ -113,7 +112,6 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 // PF_INET protocol family and the address of LOCAL == the address of
 // the special variable SAP_ANY then we are going to arbitrarily bind
 // to a portnumber.
-
 int
 ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
                              int protocol_family,
@@ -185,7 +183,6 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 }
 
 // Here's the general-purpose open routine.
-
 int
 ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       int protocol_family,
@@ -214,7 +211,6 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 
 // Here's the general-purpose constructor used by a connectionless
 // datagram ``server''...
-
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                                 int protocol_family,
                                 int protocol,
@@ -279,7 +275,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_namelen = addr.get_size ();
 
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-  send_msg.msg_control = 0;
+  send_msg.msg_control = nullptr;
   send_msg.msg_controllen = 0;
   send_msg.msg_flags = 0;
 #elif !defined ACE_LACKS_SENDMSG
@@ -647,7 +643,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
 {
   ACE_TRACE ("ACE_SOCK_Dgram::make_multicast_ifaddr");
   ip_mreq  lmreq;       // Scratch copy.
-  if (net_if != 0)
+  if (net_if != nullptr)
     {
 #if defined (ACE_WIN32)
       // This port number is not necessary, just convenient

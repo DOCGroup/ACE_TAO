@@ -57,13 +57,13 @@ class ACE_Export ACE_POSIX_Asynch_Result : public virtual ACE_Asynch_Result_Impl
 {
 public:
   /// Number of bytes transferred by the operation.
-  size_t bytes_transferred () const;
+  size_t bytes_transferred () const override;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  const void *act () const override;
 
   /// Did the operation succeed?
-  int success () const;
+  int success () const override;
 
   /**
    * This is the ACT associated with the handle on which the
@@ -71,13 +71,13 @@ public:
    *
    * @note This is not implemented for POSIX4 platforms.
    */
-  const void *completion_key () const;
+  const void *completion_key () const override;
 
   /// Error value if the operation fails.
-  u_long error () const;
+  u_long error () const override;
 
   /// This returns ACE_INVALID_HANDLE on POSIX4 platforms.
-  ACE_HANDLE event () const;
+  ACE_HANDLE event () const override;
 
   /**
    * This really make sense only when doing file I/O.
@@ -86,24 +86,24 @@ public:
    *     aiocb64.
    *
    */
-  u_long offset () const;
-  u_long offset_high () const;
+  u_long offset () const override;
+  u_long offset_high () const override;
 
   /// Priority of the operation.
-  int priority () const;
+  int priority () const override;
 
   /**
    * POSIX4 realtime signal number to be used for the
    * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
    * default, SIGRTMIN is used to issue <aio_> calls.
    */
-  int signal_number () const;
+  int signal_number () const override;
 
   /// Post @c this to the Proactor.
-  int post_completion (ACE_Proactor_Impl *proactor);
+  int post_completion (ACE_Proactor_Impl *proactor) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Result ();
+  ~ACE_POSIX_Asynch_Result () override;
 
   /// Simulate error value to use in the post_completion ()
   void set_error (u_long errcode);
@@ -167,15 +167,15 @@ public:
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor = 0);
+            ACE_Proactor *proactor = 0) override;
 
   /// Check the documentation for ACE_Asynch_Operation::cancel.
-  int cancel ();
+  int cancel () override;
 
   // = Access methods.
 
   /// Return the underlying proactor.
-  ACE_Proactor* proactor () const;
+  ACE_Proactor* proactor () const override;
 
   /// Return the underlying Proactor implementation.
   ACE_POSIX_Proactor * posix_proactor () const;
@@ -185,7 +185,7 @@ protected:
   ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Operation ();
+  ~ACE_POSIX_Asynch_Operation () override;
 
   // This call is for the POSIX implementation. This method is used by
   // ACE_Asynch_Operation to store some information with the
@@ -231,13 +231,13 @@ class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  size_t bytes_to_read () const;
+  size_t bytes_to_read () const override;
 
   /// Message block which contains the read data.
-  ACE_Message_Block &message_block () const;
+  ACE_Message_Block &message_block () const override;
 
   /// I/O handle used for reading.
-  ACE_HANDLE handle () const;
+  ACE_HANDLE handle () const override;
 
 protected:
   ACE_POSIX_Asynch_Read_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -253,13 +253,13 @@ protected:
 
   /// Get the data copied to this class, before calling application
   /// handler.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_Stream_Result ();
+  ~ACE_POSIX_Asynch_Read_Stream_Result () override;
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
@@ -290,10 +290,10 @@ public:
             size_t bytes_to_read,
             const void *act,
             int priority,
-            int signal_number = 0);
+            int signal_number = 0) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_Stream ();
+  ~ACE_POSIX_Asynch_Read_Stream () override;
 };
 
 
@@ -319,13 +319,13 @@ class ACE_Export ACE_POSIX_Asynch_Write_Stream_Result : public virtual ACE_Async
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  size_t bytes_to_write () const;
+  size_t bytes_to_write () const override;
 
   /// Message block that contains the data to be written.
-  ACE_Message_Block &message_block () const;
+  ACE_Message_Block &message_block () const override;
 
   /// I/O handle used for writing.
-  ACE_HANDLE handle () const;
+  ACE_HANDLE handle () const override;
 
 protected:
   /// Constructor is protected since creation is limited to
@@ -340,13 +340,13 @@ protected:
                                         int signal_number);
 
   /// ACE_Proactor will call this method when the write completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_Stream_Result ();
+  ~ACE_POSIX_Asynch_Write_Stream_Result () override;
 
 protected:
   // aiocb::aio_nbytes
@@ -379,10 +379,10 @@ public:
              size_t bytes_to_write,
              const void *act,
              int priority,
-             int signal_number = 0);
+             int signal_number = 0) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_Stream ();
+  ~ACE_POSIX_Asynch_Write_Stream () override;
 };
 
 /**
@@ -415,13 +415,13 @@ protected:
                                      int signal_number);
 
   /// ACE_Proactor will call this method when the read completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_File_Result ();
+  ~ACE_POSIX_Asynch_Read_File_Result () override;
 };
 
 /**
@@ -458,10 +458,10 @@ public:
             u_long offset_high,
             const void *act,
             int priority,
-            int signal_number = 0);
+            int signal_number = 0) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_File ();
+  ~ACE_POSIX_Asynch_Read_File () override;
 
 private:
   /**
@@ -473,7 +473,7 @@ private:
             size_t bytes_to_read,
             const void *act,
             int priority,
-            int signal_number = 0);
+            int signal_number = 0) override;
 };
 
 
@@ -518,13 +518,13 @@ protected:
                                       int signal_number);
 
   /// ACE_Proactor will call this method when the write completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_File_Result ();
+  ~ACE_POSIX_Asynch_Write_File_Result () override;
 };
 
 /**
@@ -553,10 +553,10 @@ public:
              u_long offset_high,
              const void *act,
              int priority,
-             int signal_number = 0);
+             int signal_number = 0) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_File ();
+  ~ACE_POSIX_Asynch_Write_File () override;
 
 private:
   /**
@@ -569,7 +569,7 @@ private:
              size_t bytes_to_write,
              const void *act,
              int priority,
-             int signal_number = 0);
+             int signal_number = 0) override;
 };
 
 /**
@@ -594,16 +594,16 @@ class ACE_Export ACE_POSIX_Asynch_Accept_Result : public virtual ACE_Asynch_Acce
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous accept.
-  size_t bytes_to_read () const;
+  size_t bytes_to_read () const override;
 
   /// Message block which contains the read data.
-  ACE_Message_Block &message_block () const;
+  ACE_Message_Block &message_block () const override;
 
   /// I/O handle used for accepting new connections.
-  ACE_HANDLE listen_handle () const;
+  ACE_HANDLE listen_handle () const override;
 
   /// I/O handle for the new connection.
-  ACE_HANDLE accept_handle () const;
+  ACE_HANDLE accept_handle () const override;
 
 protected:
   /// Constructor is protected since creation is limited to
@@ -619,13 +619,13 @@ protected:
                                   int signal_number);
 
   /// ACE_Proactor will call this method when the accept completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Accept_Result ();
+  ~ACE_POSIX_Asynch_Accept_Result () override;
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
@@ -658,7 +658,7 @@ public:
   ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Accept ();
+  ~ACE_POSIX_Asynch_Accept () override;
 
  /**
    * This <open> belongs to ACE_POSIX_Asynch_Operation. We forward
@@ -668,7 +668,7 @@ public:
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor = 0);
+            ACE_Proactor *proactor = 0) override;
 
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
@@ -687,13 +687,13 @@ public:
               const void *act,
               int priority,
               int signal_number = 0,
-              int addr_family = AF_INET);
+              int addr_family = AF_INET) override;
 
   /**
    *  Cancel all pending pseudo-asynchronus requests
    *  Behavior as usual AIO request
    */
-  int cancel ();
+  int cancel () override;
 
   /**
    *  Close performs cancellation of all pending requests
@@ -702,17 +702,17 @@ public:
   int close ();
 
   /// virtual from ACE_Event_Handler
-  ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// virtual from ACE_Event_Handler
-  void set_handle (ACE_HANDLE handle);
+  void set_handle (ACE_HANDLE handle) override;
 
   /// virtual from ACE_Event_Handler
   /// Called when accept event comes up on <listen_handle>
-  int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   /// virtual from ACE_Event_Handler
-  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) override;
 
 private:
   /// flg_notify points whether or not we should send notification about
@@ -760,7 +760,7 @@ class ACE_Export ACE_POSIX_Asynch_Connect_Result : public virtual ACE_Asynch_Con
 
 public:
   /// I/O handle for the  connection.
-  ACE_HANDLE connect_handle () const;
+  ACE_HANDLE connect_handle () const override;
 
 protected:
   /// Constructor is protected since creation is limited to
@@ -773,13 +773,13 @@ protected:
                                    int signal_number);
 
   /// ACE_Proactor will call this method when the accept completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Connect_Result ();
+  ~ACE_POSIX_Asynch_Connect_Result () override;
 
   // aiocb::aio_filedes
   // I/O handle for the new connection.
@@ -800,7 +800,7 @@ public:
   ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Connect ();
+  ~ACE_POSIX_Asynch_Connect () override;
 
  /**
    * This belongs to ACE_POSIX_Asynch_Operation. We forward
@@ -810,7 +810,7 @@ public:
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor = 0);
+            ACE_Proactor *proactor = 0) override;
 
   /**
    * This starts off an asynchronous connect.
@@ -825,13 +825,13 @@ public:
                int reuse_addr,
                const void *act,
                int priority,
-               int signal_number = 0);
+               int signal_number = 0) override;
 
   /**
    *  Cancel all pending pseudo-asynchronus requests
    *  Behavior as usual AIO request
    */
-  int cancel ();
+  int cancel () override;
 
   /**
    *  Close performs cancellation of all pending requests.
@@ -839,19 +839,19 @@ public:
   int close ();
 
   /// virtual from ACE_Event_Handler
-  ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// virtual from ACE_Event_Handler
-  void set_handle (ACE_HANDLE handle);
+  void set_handle (ACE_HANDLE handle) override;
 
   /// virtual from ACE_Event_Handler
   /// The default action on handle_input() and handle_exception is to
   /// return -1. Since that's what we want to do, just reuse them.
   /// handle_output(), however, is where successful connects are reported.
-  int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
   /// virtual from ACE_Event_Handler
-  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
+  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) override ;
 
 private:
   int connect_i (ACE_POSIX_Asynch_Connect_Result *result,
@@ -876,8 +876,7 @@ private:
   /// true  - Connect is registered in ACE_Asynch_Pseudo_Task
   /// false - Aceept is deregisted in ACE_Asynch_Pseudo_Task
 
-  typedef ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-          MAP_MANAGER;
+  using MAP_MANAGER = ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_MT_SYNCH::NULL_MUTEX>;
 
   /// Map of Result pointers that correspond to all the pending connects.
   MAP_MANAGER result_map_;
@@ -913,24 +912,24 @@ class ACE_Export ACE_POSIX_Asynch_Transmit_File_Result : public virtual ACE_Asyn
 
 public:
   /// Socket used for transmitting the file.
-  ACE_HANDLE socket () const;
+  ACE_HANDLE socket () const override;
 
   /// File from which the data is read.
-  ACE_HANDLE file () const;
+  ACE_HANDLE file () const override;
 
   /// Header and trailer data associated with this transmit file.
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer () const;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer () const override;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous transmit file.
-  size_t bytes_to_write () const;
+  size_t bytes_to_write () const override;
 
   /// Number of bytes per send requested at the start of the transmit
   /// file.
-  size_t bytes_per_send () const;
+  size_t bytes_per_send () const override;
 
   /// Flags which were passed into transmit file.
-  u_long flags () const;
+  u_long flags () const override;
 
 protected:
   ACE_POSIX_Asynch_Transmit_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -950,13 +949,13 @@ protected:
   // ACE_Asynch_Transmit_File factory.
 
   /// ACE_Proactor will call this method when the write completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Transmit_File_Result ();
+  ~ACE_POSIX_Asynch_Transmit_File_Result () override;
 
   /// Network I/O handle.
   ACE_HANDLE socket_;
@@ -1012,10 +1011,10 @@ public:
                      u_long flags,
                      const void *act,
                      int priority,
-                     int signal_number = 0);
+                     int signal_number = 0) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Transmit_File ();
+  ~ACE_POSIX_Asynch_Transmit_File () override;
 };
 
 
@@ -1037,7 +1036,7 @@ class ACE_Export ACE_POSIX_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dg
 public:
   /// Constructor.
   ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor);
-  virtual ~ACE_POSIX_Asynch_Read_Dgram ();
+  ~ACE_POSIX_Asynch_Read_Dgram () override;
 
   /** This method queues an asynchronous read.  Up to
    * @a message_block->total_size() bytes will be read and stored in the
@@ -1060,13 +1059,13 @@ public:
    * @retval -1 There was an error; see @c errno to get the error code.
    *
    */
-  virtual ssize_t recv (ACE_Message_Block *message_block,
+  ssize_t recv (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
                         const void *act,
                         int priority,
-                        int signal_number);
+                        int signal_number) override;
 
 protected:
   /// Do-nothing constructor.
@@ -1091,16 +1090,16 @@ class ACE_Export ACE_POSIX_Asynch_Write_Dgram_Result : public virtual ACE_Asynch
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  size_t bytes_to_write () const;
+  size_t bytes_to_write () const override;
 
   /// Message block which contains the sent data
-  ACE_Message_Block *message_block () const;
+  ACE_Message_Block *message_block () const override;
 
   /// The flags using in the write
-  int flags () const;
+  int flags () const override;
 
   /// I/O handle used for writing.
-  ACE_HANDLE handle () const;
+  ACE_HANDLE handle () const override;
 
 protected:
   /// Constructor is protected since creation is limited to
@@ -1116,13 +1115,13 @@ protected:
                                        int signal_number);
 
   /// ACE_Proactor will call this method when the write completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_Dgram_Result ();
+  ~ACE_POSIX_Asynch_Write_Dgram_Result () override;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -1160,7 +1159,7 @@ public:
   ACE_POSIX_Asynch_Write_Dgram (ACE_POSIX_Proactor *posix_proactor);
 
   /// Destructor
-  virtual ~ACE_POSIX_Asynch_Write_Dgram ();
+  ~ACE_POSIX_Asynch_Write_Dgram () override;
 
   /** This method queues an asynchronous send.  Up to
    * @a message_block->total_length bytes will be sent, beginning at the
@@ -1183,13 +1182,13 @@ public:
    * @retval 0  The IO will complete asynchronously.
    * @retval -1 There was an error; see @c errno to get the error code.
    */
-  virtual ssize_t send (ACE_Message_Block *message_block,
+  ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,
                         const ACE_Addr &addr,
                         const void *act,
                         int priority,
-                        int signal_number);
+                        int signal_number) override;
 
 protected:
   /// Do-nothing constructor.
@@ -1217,21 +1216,21 @@ class ACE_Export ACE_POSIX_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  size_t bytes_to_read () const;
+  size_t bytes_to_read () const override;
 
   /// Message block which contains the read data
-  ACE_Message_Block *message_block () const;
+  ACE_Message_Block *message_block () const override;
 
   /// The address of where the packet came from
-  int remote_address (ACE_Addr& addr) const;
+  int remote_address (ACE_Addr& addr) const override;
 
   sockaddr *saddr () const;
 
   /// The flags used in the read
-  int flags () const;
+  int flags () const override;
 
   /// I/O handle used for reading.
-  ACE_HANDLE handle () const;
+  ACE_HANDLE handle () const override;
 
 protected:
   /// Constructor is protected since creation is limited to
@@ -1248,13 +1247,13 @@ protected:
                                       int signal_number = 0);
 
   /// Proactor will call this method when the read completes.
-  virtual void complete (size_t bytes_transferred,
+  void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
-                         u_long error);
+                         u_long error) override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_Dgram_Result ();
+  ~ACE_POSIX_Asynch_Read_Dgram_Result () override;
 
   /// Bytes requested when the asynchronous read was initiated.
   size_t bytes_to_read_;

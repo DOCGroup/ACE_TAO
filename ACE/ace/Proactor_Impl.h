@@ -40,7 +40,7 @@ class ACE_Export ACE_Proactor_Impl : public ACE_Event_Handler
 {
 public:
   /// Virtual destruction.
-  virtual ~ACE_Proactor_Impl ();
+  ~ACE_Proactor_Impl () override;
 
   /// Close the IO completion port.
   virtual int close () = 0;
@@ -80,7 +80,7 @@ public:
   virtual void number_of_threads (size_t threads) = 0;
 
   /// Get the event handle.
-  virtual ACE_HANDLE get_handle () const = 0;
+  ACE_HANDLE get_handle () const override = 0;
 
   //
   // = Factory methods for the operations

@@ -125,7 +125,7 @@ int run_receiver ()
 static ACE_THR_FUNC_RETURN run_thread_receiver (void *)
 {
   receiver_exit_code = run_receiver ();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS) */
 
@@ -170,7 +170,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   if (socket.open (ACE_Addr::sap_any) != -1)
     {
       // send datagrams until child finishes
-      while (1)
+      while (true)
         {
           send_datagram (socket, dgrams_no--);
           ACE_Time_Value child_timeout (1);

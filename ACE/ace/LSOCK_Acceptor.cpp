@@ -94,10 +94,10 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
     return -1;
   else
     {
-      sockaddr *addr = 0;
+      sockaddr *addr = nullptr;
       int len = 0;
 
-      if (remote_addr != 0)
+      if (remote_addr != nullptr)
         {
           len = remote_addr->get_size ();
           addr = (sockaddr *) remote_addr->get_addr ();
@@ -110,12 +110,12 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
-             && timeout == 0);
+             && timeout == nullptr);
 
       // Reset the size of the addr, which is only necessary for UNIX
       // domain sockets.
       if (new_stream.get_handle () != ACE_INVALID_HANDLE
-          && remote_addr != 0)
+          && remote_addr != nullptr)
         remote_addr->set_size (len);
     }
 

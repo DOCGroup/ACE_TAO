@@ -69,7 +69,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
       Test_Result = 1;
-      return 0;
+      return nullptr;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -175,7 +175,7 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -196,7 +196,7 @@ server (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("accept")));
       Test_Result = 1;
-      return 0;
+      return nullptr;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -303,7 +303,7 @@ server (void *arg)
 
   sock_str.close();
 
-  return 0;
+  return nullptr;
 }
 
 #endif /*ACE_HAS_IPV6*/

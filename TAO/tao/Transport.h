@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Transport.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TRANSPORT_H
 #define TAO_TRANSPORT_H
@@ -28,6 +24,8 @@
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
+#include <atomic>
+#include <cstdint>
 
 struct iovec;
 
@@ -105,7 +103,7 @@ namespace TAO
   public:
     /// Default constructor
     Drain_Constraints()
-      : timeout_(0)
+      : timeout_(nullptr)
       , block_on_io_(false)
     {
     }
@@ -541,7 +539,7 @@ public:
    */
   virtual ssize_t recv (char *buffer,
                         size_t len,
-                        const ACE_Time_Value *timeout = 0) = 0;
+                        const ACE_Time_Value *timeout = nullptr) = 0;
 
   /**
    * @name Control connection lifecycle
@@ -695,7 +693,7 @@ public:
    * those cases a maximum read time can be specified.
    */
   virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0);
+                            ACE_Time_Value *max_wait_time = nullptr);
 
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
@@ -739,10 +737,10 @@ public:
    *
    */
   virtual int send_message (TAO_OutputCDR &stream,
-                            TAO_Stub *stub = 0,
-                            TAO_ServerRequest *request = 0,
+                            TAO_Stub *stub = nullptr,
+                            TAO_ServerRequest *request = nullptr,
                             TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
-                            ACE_Time_Value *max_time_wait = 0) = 0;
+                            ACE_Time_Value *max_time_wait = nullptr) = 0;
 
   /// Sent the contents of @a message_block
   /**
@@ -818,7 +816,7 @@ public:
    */
   int send_message_block_chain (const ACE_Message_Block *message_block,
                                 size_t &bytes_transferred,
-                                ACE_Time_Value *max_wait_time = 0);
+                                ACE_Time_Value *max_wait_time = nullptr);
 
   /// Send a message block chain, assuming the lock is held
   int send_message_block_chain_i (const ACE_Message_Block *message_block,
@@ -1058,11 +1056,6 @@ private:
    */
   bool using_blocking_io_for_asynch_messages() const;
 
-  /*
-   * Specialization hook to add concrete private methods from
-   * TAO's protocol implementation onto the base Transport class
-   */
-
 protected:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
@@ -1120,10 +1113,16 @@ protected:
   ACE_Time_Value current_deadline_;
 
   /// The timer ID
-  long flush_timer_id_;
+  long flush_timer_id_ { -1 };
+
+  /// Monotonic activity timestamp in milliseconds.
+  std::atomic<std::int64_t> last_activity_;
+
+  /// Synchronous inbound requests currently being dispatched.
+  std::atomic<unsigned long> active_requests_ { 0 };
 
   /// The adapter used to receive timeout callbacks from the Reactor
-  TAO_Transport_Timer transport_timer_;
+  TAO::Transport_Timer transport_timer_;
 
   /// Lock that insures that activities that *might* use handler-related
   /// resources (such as a connection handler) get serialized.
@@ -1167,13 +1166,61 @@ protected:
   bool connection_closed_on_read_;
 
 private:
+  template <typename TT, typename TRDT, typename PSTRAT>
+  friend class TAO::Transport_Cache_Manager_T;
+
+  /// Keep synchronous request dispatch active until its upcall completes.
+  class Active_Request_Guard
+  {
+  public:
+    /// Start tracking a synchronous request when idle expiry is enabled.
+    explicit Active_Request_Guard (TAO_Transport &transport);
+
+    /// Finish tracking and record request completion activity.
+    ~Active_Request_Guard ();
+
+    /// Whether dispatch may proceed on this transport.
+    bool acquired () const;
+
+  private:
+    /// A guard represents one dispatch and cannot transfer ownership.
+    Active_Request_Guard (Active_Request_Guard const &) = delete;
+    Active_Request_Guard &operator= (Active_Request_Guard const &) = delete;
+    Active_Request_Guard (Active_Request_Guard &&) = delete;
+    Active_Request_Guard &operator= (Active_Request_Guard &&) = delete;
+
+    /// Transport whose synchronous request is being tracked.
+    TAO_Transport &transport_;
+
+    /// True when idle expiry is enabled and the counter was incremented.
+    bool tracked_;
+
+    /// False when the transport was already selected for closing.
+    bool acquired_;
+  };
+
+  /// Record cache acquisition, I/O or synchronous dispatch activity.
+  void touch_activity ();
+
+  /// Begin/end synchronous request tracking through the cache manager.
+  bool begin_active_request (bool &tracked);
+  void end_active_request ();
+
+  /// Check the monotonic activity timestamp.
+  bool idle_timeout_expired_i ();
+
+  /// Caller must hold the owning transport cache manager's lock.
+  bool is_idle ();
+
+
+private:
   /// Our messaging object.
   TAO_GIOP_Message_Base *messaging_object_;
 
   /// @@Phil, I think it would be nice if we could think of a way to
   /// do the following.
   /// We have been trying to use the transport for marking about
-  /// translator factories and such! IMHO this is a wrong encapulation
+  /// translator factories and such! IMHO this is a wrong encapsulation
   /// ie. trying to populate the transport object with these
   /// details. We should probably have a class something like
   /// TAO_Message_Property or TAO_Message_Translator or whatever (I am

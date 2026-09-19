@@ -76,7 +76,7 @@ run_main (int, ACE_TCHAR *[])
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
           try_ace_new (&blocks[i]);
-          if (blocks[i] == 0)
+          if (blocks[i] == nullptr)
             break;
         }
       if (i == MAX_ALLOCS_IN_TEST)
@@ -88,7 +88,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_TEST_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == nullptr);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
@@ -110,7 +110,7 @@ run_main (int, ACE_TCHAR *[])
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
           blocks[i] = try_ace_new_return ();
-          if (blocks[i] == 0)
+          if (blocks[i] == nullptr)
             break;
         }
 
@@ -123,7 +123,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_TEST_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == nullptr);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
@@ -143,7 +143,7 @@ run_main (int, ACE_TCHAR *[])
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
           blocks[i] = try_ace_new_noreturn ();
-          if (blocks[i] == 0)
+          if (blocks[i] == nullptr)
             break;
         }
 
@@ -156,7 +156,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_TEST_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == nullptr);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),

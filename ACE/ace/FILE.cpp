@@ -108,7 +108,7 @@ ACE_FILE::get_local_addr (ACE_Addr &addr) const
   ACE_FILE_Addr *file_addr =
     dynamic_cast<ACE_FILE_Addr *> (&addr);
 
-  if (file_addr == 0)
+  if (file_addr == nullptr)
     return -1;
   else
     {

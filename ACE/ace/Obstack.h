@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SINGLETON_DECLARATION (ACE_Obstack_T <char>;)
 
-typedef ACE_Obstack_T<char> ACE_Obstack;
+using ACE_Obstack = ACE_Obstack_T<char>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -155,7 +155,7 @@ Options::~Options ()
 {
   if (ACE_BIT_ENABLED (option_word_, DEBUGGING))
     {
-      char *ptr = 0;
+      char *ptr = nullptr;
 
       ACE_OS::fprintf (stderr,
                        "\ndumping Options:"
@@ -690,7 +690,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   if (argv[get_opt.opt_ind ()] &&
     ACE_OS::freopen (argv[get_opt.opt_ind ()],
                      ACE_TEXT("r"),
-                     stdin) == 0)
+                     stdin) == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open keyword file %p\n%r",
                        argv[get_opt.opt_ind ()],

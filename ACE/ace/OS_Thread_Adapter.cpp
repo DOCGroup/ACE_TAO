@@ -22,7 +22,7 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
      , long cancel_flags
      )
   : ACE_Base_Thread_Adapter (user_func, arg, entry_point
-                             , 0
+                             , nullptr
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                              , selector
                              , handler

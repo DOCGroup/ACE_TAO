@@ -149,8 +149,8 @@ public:
   friend class ACE_Unbounded_Queue_Const_Iterator<T>;
 
   // Trait definition.
-  typedef ACE_Unbounded_Queue_Iterator<T> ITERATOR;
-  typedef ACE_Unbounded_Queue_Const_Iterator<T> CONST_ITERATOR;
+  using ITERATOR = ACE_Unbounded_Queue_Iterator<T>;
+  using CONST_ITERATOR = ACE_Unbounded_Queue_Const_Iterator<T>;
 
   /// Construction.  Use user specified allocation strategy
   /// if specified.

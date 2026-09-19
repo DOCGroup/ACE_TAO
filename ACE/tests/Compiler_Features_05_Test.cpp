@@ -6,7 +6,7 @@
  * on the development mailing queue, and the documentation was captured
  * in:
  *
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3715
+ *   https://github.com/DOCGroup/bugzilla/issues/3715
  */
 
 #include "test_config.h"

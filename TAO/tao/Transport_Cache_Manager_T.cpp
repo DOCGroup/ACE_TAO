@@ -7,6 +7,7 @@
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
+#include <vector>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager_T.inl"
@@ -24,16 +25,23 @@ namespace TAO
 {
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::Transport_Cache_Manager_T (
+    ACE_Reactor &reactor,
     int percent,
     purging_strategy *purging,
     size_t cache_maximum,
     bool locked,
-    const char *orbid)
+    char const *orbid,
+    int idle_timeout,
+    int idle_scan_interval)
     : percent_ (percent)
     , purging_strategy_ (purging)
     , cache_map_ (cache_maximum)
-    , cache_lock_ (0)
+    , cache_lock_ (nullptr)
     , cache_maximum_ (cache_maximum)
+    , reactor_ (reactor)
+    , idle_timeout_ (idle_timeout)
+    , idle_scan_interval_ (idle_scan_interval)
+    , idle_scanner_ (this)
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     , purge_monitor_ (0)
     , size_monitor_ (0)
@@ -70,6 +78,32 @@ namespace TAO
 #else
   ACE_UNUSED_ARG (orbid);
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
+
+    if (this->idle_timeout_ > 0)
+      {
+        ACE_Time_Value const interval (this->idle_scan_interval_);
+        this->idle_scan_timer_id_ = this->reactor_.schedule_timer (
+          &this->idle_scanner_, nullptr, interval, interval);
+        if (this->idle_scan_timer_id_ == -1)
+          {
+            if (TAO_debug_level > 0)
+              {
+                TAOLIB_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+                  ACE_TEXT ("Transport_Cache_Manager_T, failed to schedule ")
+                  ACE_TEXT ("idle scanner every %d seconds, result %ld\n"),
+                  this->idle_scan_interval_, this->idle_scan_timer_id_));
+              }
+          }
+        else if (TAO_debug_level > 6)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+              ACE_TEXT ("Transport_Cache_Manager_T, scheduled idle scanner ")
+              ACE_TEXT ("every %d seconds, timer id %ld\n"),
+              this->idle_scan_interval_, this->idle_scan_timer_id_));
+          }
+      }
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
@@ -90,6 +124,125 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
+  bool
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::begin_active_request (
+    transport_type &transport,
+    bool &tracked)
+  {
+    tracked = false;
+    if (this->idle_timeout_ <= 0)
+      {
+        return true;
+      }
+
+    ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, false);
+    if (transport.cache_map_entry_ == nullptr)
+      {
+        return false;
+      }
+
+    ++transport.active_requests_;
+    transport.touch_activity ();
+    tracked = true;
+    return true;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::end_active_request (
+    transport_type &transport)
+  {
+    ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
+    transport.touch_activity ();
+    ACE_ASSERT (transport.active_requests_ > 0);
+    --transport.active_requests_;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
+    TCM_Idle_Timer_Handler (Transport_Cache_Manager_T *manager)
+    : manager_ (manager)
+  {
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  int
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::TCM_Idle_Timer_Handler::
+    handle_timeout (ACE_Time_Value const &, void const *)
+  {
+    if (TAO_debug_level > 6)
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+          ACE_TEXT ("TCM_Idle_Timer_Handler::handle_timeout, idle scanner fired\n")));
+      }
+    this->manager_->purge_idle_transports ();
+    return 0;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  void
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_idle_transports ()
+  {
+    struct Purged_Transports
+    {
+      std::vector<transport_type *> transports;
+      ~Purged_Transports ()
+      {
+        for (transport_type *transport : this->transports)
+          {
+            transport->remove_reference ();
+          }
+      }
+    } purged;
+
+    {
+      ACE_GUARD (ACE_Lock, guard, *this->cache_lock_);
+      purged.transports.reserve (this->cache_map_.current_size ());
+      for (HASH_MAP_ITER iter = this->cache_map_.begin ();
+           iter != this->cache_map_.end ();)
+        {
+          HASH_MAP_ENTRY * const entry = &(*iter);
+          transport_type * const transport = entry->int_id_.transport ();
+          ++iter;
+
+          // Retain the transport while unbinding its cache entry.
+          transport->add_reference ();
+          if (this->purge_entry_if_idle_i (entry) != -1)
+            {
+              purged.transports.push_back (transport);
+            }
+          else
+            {
+              transport->remove_reference ();
+            }
+        }
+    }
+
+    // Closing can invoke transport code, so do it without the cache lock.
+    for (transport_type *transport : purged.transports)
+      {
+        if (TAO_debug_level > 6)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
+              ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
+              transport->id ()));
+          }
+        transport->close_connection ();
+      }
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
+  long
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::stop_idle_scanner_i ()
+  {
+    long const timer_id = this->idle_scan_timer_id_;
+    this->idle_scan_timer_id_ = -1;
+    return timer_id;
+  }
+
+  template <typename TT, typename TRDT, typename PSTRAT>
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::set_entry_state (HASH_MAP_ENTRY *&entry,
                                             TAO::Cache_Entries_State state)
@@ -97,11 +250,16 @@ namespace TAO
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
     if (entry != nullptr)
       {
+        transport_type * const transport = entry->item ().transport ();
         entry->item ().recycle_state (state);
-        if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING
-            && entry->item ().transport ())
-          entry->item ().is_connected (
-            entry->item ().transport ()->is_connected ());
+        if (transport != nullptr)
+          {
+            transport->touch_activity ();
+            if (state != ENTRY_UNKNOWN && state != ENTRY_CONNECTING)
+              {
+                entry->item ().is_connected (transport->is_connected ());
+              }
+          }
       }
   }
 
@@ -122,7 +280,7 @@ namespace TAO
        }
 
     // Get the entry too
-    HASH_MAP_ENTRY *entry = 0;
+    HASH_MAP_ENTRY *entry = nullptr;
 
     // Update the purging strategy information while we
     // are holding our lock
@@ -227,9 +385,9 @@ namespace TAO
     transport_type *&transport,
     size_t &busy_count)
   {
-    if (prop == 0)
+    if (prop == nullptr)
       {
-        transport = 0;
+        transport = nullptr;
         return CACHE_FOUND_NONE;
       }
 
@@ -280,16 +438,16 @@ namespace TAO
 
     // Make a temporary object. It does not do a copy.
     Cache_ExtId key (prop);
-    HASH_MAP_ENTRY *entry = 0;
+    HASH_MAP_ENTRY *entry = nullptr;
     busy_count = 0;
     int cache_status = 0;
-    HASH_MAP_ENTRY *found_entry = 0;
+    HASH_MAP_ENTRY *found_entry = nullptr;
 
     // loop until we find a usable transport, or until we've checked
     // all cached entries for this endpoint
     while (found != CACHE_FOUND_AVAILABLE && cache_status == 0)
       {
-        entry = 0;
+        entry = nullptr;
         cache_status = this->cache_map_.find (key, entry);
         if (cache_status == 0 && entry)
           {
@@ -353,12 +511,14 @@ namespace TAO
         // Bump the index up
         key.incr_index ();
       }
-    if (found_entry != 0)
+    if (found_entry)
     {
       transport = found_entry->item ().transport ();
       transport->add_reference ();
       if (found == CACHE_FOUND_AVAILABLE)
         {
+          // Acquiring an available transport is activity, even before I/O.
+          transport->touch_activity ();
           // Update the purging strategy information while we
           // are holding our lock
           this->purging_strategy_->update_item (*transport);
@@ -371,6 +531,8 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle_i (HASH_MAP_ENTRY *entry)
   {
+    // The caller holds the cache lock; do not acquire it again.
+    entry->item ().transport ()->touch_activity ();
     entry->item ().recycle_state (ENTRY_IDLE_AND_PURGABLE);
 
     return 0;
@@ -384,9 +546,12 @@ namespace TAO
                               guard,
                               *this->cache_lock_, -1));
 
-    if (entry == nullptr)
-      return -1;
+    if (!entry)
+      {
+        return -1;
+      }
 
+    entry->item ().transport ()->touch_activity ();
     purging_strategy *st = this->purging_strategy_;
     (void) st->update_item (*(entry->item ().transport ()));
 
@@ -437,7 +602,9 @@ namespace TAO
         // Do not mark the entry as closed if we don't have a
         // blockable handler added
         if (retval)
-          (*iter).int_id_.recycle_state (ENTRY_CLOSED);
+          {
+            (*iter).int_id_.recycle_state (ENTRY_CLOSED);
+          }
       }
 
     return true;
@@ -508,8 +675,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   bool
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    is_entry_connecting_i (const HASH_MAP_ENTRY &entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_connecting_i (const HASH_MAP_ENTRY &entry)
   {
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);
@@ -537,8 +703,7 @@ namespace TAO
 #if !defined (ACE_LACKS_QSORT)
   template <typename TT, typename TRDT, typename PSTRAT>
   int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    cpscmp(const void* a, const void* b)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::cpscmp(const void* a, const void* b)
   {
     const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**) const_cast<void *> (a);
     const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**) const_cast<void *> (b);
@@ -565,7 +730,7 @@ namespace TAO
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
 
-      DESCRIPTOR_SET sorted_set = 0;
+      DESCRIPTOR_SET sorted_set = nullptr;
       int const sorted_size = this->fill_set_i (sorted_set);
 
       // Only call close_entries () if sorted_set != 0.  It takes
@@ -594,8 +759,7 @@ namespace TAO
             {
               if (this->is_entry_purgable_i (*sorted_set[i]))
                 {
-                  transport_type* transport =
-                    sorted_set[i]->int_id_.transport ();
+                  transport_type* transport = sorted_set[i]->int_id_.transport ();
                   sorted_set[i]->int_id_.recycle_state (ENTRY_BUSY);
                   transport->add_reference ();
 
@@ -628,13 +792,13 @@ namespace TAO
             }
 
           delete [] sorted_set;
-          sorted_set = 0;
+          sorted_set = nullptr;
           // END FORMER close_entries
         }
     }
 
     // Now, without the lock held, lets go through and close all the transports.
-    if (! transports_to_be_closed.is_empty ())
+    if (!transports_to_be_closed.is_empty ())
       {
         typename transport_set_type::iterator it (transports_to_be_closed);
         while (! it.done ())

@@ -90,12 +90,12 @@ namespace ACE
        * @brief Used by the admin class as a container for the data from
        *        a group of monitor points.
        */
-      typedef ACE_Vector<Data> DataList;
+      using DataList = ACE_Vector<Data>;
 
       /**
        * @brief Used in various places to pass around a set of string names.
        */
-      typedef ACE_Vector<ACE_CString> NameList;
+      using NameList = ACE_Vector<ACE_CString>;
 
       /**
        * @brief Holder for a monitor point's constraints.
@@ -103,7 +103,7 @@ namespace ACE
 #if defined (ACE_HAS_ALLOC_HOOKS)
       typedef ACE_Array_Map<long, Constraint, std::equal_to<long>, ACE_Allocator_Std_Adapter<std::pair<long, Constraint> > > ConstraintList;
 #else
-      typedef ACE_Array_Map<long, Constraint> ConstraintList;
+      using ConstraintList = ACE_Array_Map<long, Constraint>;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
     };

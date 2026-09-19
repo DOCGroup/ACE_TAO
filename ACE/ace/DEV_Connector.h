@@ -93,8 +93,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Meta-type info
-  typedef ACE_DEV_Addr PEER_ADDR;
-  typedef ACE_DEV_IO   PEER_STREAM;
+  using PEER_ADDR = ACE_DEV_Addr;
+  using PEER_STREAM = ACE_DEV_IO;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

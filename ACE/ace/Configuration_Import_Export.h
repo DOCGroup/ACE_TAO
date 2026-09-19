@@ -94,20 +94,20 @@ public:
   ACE_Registry_ImpExp (ACE_Configuration&);
 
   /// Destruction.
-  virtual ~ACE_Registry_ImpExp () = default;
+  ~ACE_Registry_ImpExp () override = default;
 
   /**
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  virtual int import_config (const ACE_TCHAR* filename);
+  int import_config (const ACE_TCHAR* filename) override;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls export_section() passing
    * the root section.
    */
-  virtual int export_config (const ACE_TCHAR* filename);
+  int export_config (const ACE_TCHAR* filename) override;
 
 private:
   int export_section (const ACE_Configuration_Section_Key& section,
@@ -166,20 +166,20 @@ public:
   /**
    * Destructor
    */
-  virtual ~ACE_Ini_ImpExp () = default;
+  ~ACE_Ini_ImpExp () override = default;
 
   /**
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  virtual int import_config (const ACE_TCHAR* filename);
+  int import_config (const ACE_TCHAR* filename) override;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls export_section() passing
    * the root section.
    */
-  virtual int export_config (const ACE_TCHAR* filename);
+  int export_config (const ACE_TCHAR* filename) override;
 
 private:
   /**

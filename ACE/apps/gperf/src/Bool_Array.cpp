@@ -41,7 +41,7 @@ Bool_Array::~Bool_Array ()
 }
 
 Bool_Array::Bool_Array ()
-  : storage_array_ (0),
+  : storage_array_ (nullptr),
     generation_number_ (0),
     size_ (0)
 {

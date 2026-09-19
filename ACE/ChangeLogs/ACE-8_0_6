@@ -1,0 +1,815 @@
+commit b7cdd60af259c0db5831cac9c9ff16b9b6e97c0c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 08:30:55 2026 +0200
+
+    Add missing override
+    
+        * ACE/ace/Strategies_T.h:
+
+commit 7055722a48a7fb6f840cbf639f7a570384732b6f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 6 15:35:57 2026 +0200
+
+    Fix missing override warnings
+    
+        * ACE/ace/Asynch_IO_Impl.h:
+        * ACE/ace/Connector.h:
+        * ACE/ace/Select_Reactor_T.h:
+
+commit 598a2f7e7c23ffc100ea188d8e575a89e4ae8df5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 6 11:49:04 2026 +0200
+
+    Fix error
+    
+        * ACE/ace/Event_Handler_T.h:
+
+commit 768c56d1fdf1a4136c6c11ab8c8aaba07a389dee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 6 09:28:39 2026 +0200
+
+    Fixed compile error, use true/false
+    
+        * ACE/tests/Based_Pointer_Test.cpp:
+        * ACE/tests/Bug_2659_Regression_Test.cpp:
+        * ACE/tests/Bug_2740_Regression_Test.cpp:
+        * ACE/tests/Bug_2815_Regression_Test.cpp:
+        * ACE/tests/Bug_2820_Regression_Test.cpp:
+        * ACE/tests/Bug_2975_Regression_Test.cpp:
+        * ACE/tests/Bug_3319_Regression_Test.cpp:
+        * ACE/tests/Bug_3878_Regression_Test.cpp:
+        * ACE/tests/Bug_4055_Regression_Test.cpp:
+        * ACE/tests/Config_Test.cpp:
+        * ACE/tests/DLL_Test.cpp:
+        * ACE/tests/Dev_Poll_Reactor_Echo_Test.cpp:
+        * ACE/tests/Dev_Poll_Reactor_Test.cpp:
+        * ACE/tests/Framework_Component_Test.cpp:
+        * ACE/tests/Log_Msg_Test.cpp:
+        * ACE/tests/Log_Thread_Inheritance_Test.cpp:
+        * ACE/tests/MT_Reactor_Timer_Test.cpp:
+        * ACE/tests/MT_Reference_Counted_Notify_Test.cpp:
+        * ACE/tests/Malloc_Test.cpp:
+        * ACE/tests/Map_Manager_Test.cpp:
+        * ACE/tests/NonBlocking_Conn_Test.cpp:
+        * ACE/tests/Proactor_Test.cpp:
+        * ACE/tests/Proactor_Test_IPV6.cpp:
+        * ACE/tests/Proactor_UDP_Test.cpp:
+        * ACE/tests/Process_Manager_Test.cpp:
+        * ACE/tests/Reactor_Fairness_Test.cpp:
+        * ACE/tests/Reactor_Notification_Queue_Test.cpp:
+        * ACE/tests/Reactor_Performance_Test.cpp:
+        * ACE/tests/Reactor_Registration_Test.cpp:
+        * ACE/tests/Recursive_Mutex_Test.cpp:
+        * ACE/tests/Reference_Counted_Event_Handler_Test.cpp:
+        * ACE/tests/SOCK_Dgram_Bcast_Test.cpp:
+        * ACE/tests/SString_Test.cpp:
+        * ACE/tests/Service_Config_Test.cpp:
+        * ACE/tests/Test_Output.cpp:
+        * ACE/tests/Thread_Mutex_Test.cpp:
+        * ACE/tests/Token_Strategy_Test.cpp:
+
+commit 9e3c5542f0c15ee52321c87ec4a130d5c1c74892
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 6 08:51:24 2026 +0200
+
+    Introduce ACE_THR_FUNC_RETURN_NULL as return value for a thread function, is nullptr on linux, windows on other platforms
+    
+        * ACE/ace/config-macros.h:
+        * ACE/tests/Bug_2740_Regression_Test.cpp:
+        * ACE/tests/Bug_3539_Regression_Test.cpp:
+        * ACE/tests/Bug_4189_Regression_Test.cpp:
+        * ACE/tests/Dev_Poll_Reactor_Test.cpp:
+        * ACE/tests/MEM_Stream_Test.cpp:
+        * ACE/tests/Message_Queue_Test_Ex.cpp:
+        * ACE/tests/Reactor_Fairness_Test.cpp:
+        * ACE/tests/Recursive_Condition_Test.cpp:
+        * ACE/tests/SOCK_Dgram_Bcast_Test.cpp:
+        * ACE/tests/SOCK_SEQPACK_SCTP_Test.cpp:
+        * ACE/tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * ACE/tests/Service_Config_DLL.cpp:
+        * ACE/tests/Service_Config_Test.cpp:
+        * ACE/tests/Signal_Test.cpp:
+        * ACE/tests/Task_Ex_Test.cpp:
+        * ACE/tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * ACE/tests/Thread_Pool_Reactor_Test.cpp:
+
+commit 83e7a2024bc4babf360563d5c191aef2d37ccb60
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 18:14:18 2026 +0200
+
+    Revert change
+    
+        * ACE/ace/OS_NS_signal.h:
+
+commit 88800e0ed4ac4723a1dc70517cda3c7c5b19530b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 17:44:47 2026 +0200
+
+    Incorrct changes
+    
+        * ACE/ace/Cache_Map_Manager_T.h:
+
+commit 8b74d04ead23787c8ead38a394a896735288de24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 17:37:40 2026 +0200
+
+    Incorrect clang-tidy changes
+    
+        * ACE/ace/CDR_Base.h:
+        * ACE/ace/OS_NS_wchar.h:
+        * ACE/ace/SStringfwd.h:
+
+commit 4f5723825e110692d18df157d113573876d1b821
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 17:29:22 2026 +0200
+
+    Use using instead of typedef (clang-tidy changes)
+
+commit efdfbbd1fb4295bea3af40544e6240fc12d04762
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 17:14:59 2026 +0200
+
+    Use override instead of virtual (clang-tidy changes)
+
+commit e2fcc6cb293576f555927e2d5d01b4073767a177
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 17:05:31 2026 +0200
+
+    Use override instead of virtual (clang-tidy changes)
+
+commit 700e5587045689a877995e930447a1ac6b633f88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 16:24:04 2026 +0200
+
+    Use nullptr instead of 0 (clang-tidy changes)
+
+commit c83f3a46decdb4f41da71668f8c890fb3296e26e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 16:10:21 2026 +0200
+
+    Use nullptr instead of 0 (clang-tidy changes)
+
+commit 97a38d39612aacac99ff1e214a45e97c6672333e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 10:09:49 2026 +0200
+
+    Incorrect changes
+    
+        * ACE/ace/Event_Handler.cpp:
+        * ACE/ace/OS_Thread_Adapter.cpp:
+
+commit 47aa400dfa2c6a347368e59bd29c9bd95a1c4289
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 10:08:44 2026 +0200
+
+    Incorrect changes
+    
+        * ACE/ace/Thread_Adapter.cpp:
+        * ACE/ace/Thread_Control.cpp:
+        * ACE/ace/Thread_Manager.cpp:
+
+commit 1eaed17d0598cf9efa7b96f69bc8666c20c66448
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 09:57:24 2026 +0200
+
+    use nullptr, changes by clang-tidy
+
+commit 7e10ce461def205e3cb7031e9b01f83b8372c17f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 09:29:30 2026 +0200
+
+    Use clang-tidy to use nullptr in headers
+    
+        * ACE/ace/ACE.cpp:
+        * ACE/ace/Abstract_Timer_Queue.h:
+        * ACE/ace/Acceptor.h:
+        * ACE/ace/Array_Base.h:
+        * ACE/ace/Cached_Connect_Strategy_T.h:
+        * ACE/ace/Connector.h:
+        * ACE/ace/Containers_T.h:
+        * ACE/ace/Hash_Map_Manager_T.h:
+        * ACE/ace/Hash_Multi_Map_Manager_T.h:
+        * ACE/ace/INET_Addr.cpp:
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/ace/Malloc_T.h:
+        * ACE/ace/Message_Queue_T.h:
+        * ACE/ace/Module.h:
+        * ACE/ace/Null_Barrier.h:
+        * ACE/ace/Null_Semaphore.h:
+        * ACE/ace/OS_NS_Thread.h:
+        * ACE/ace/OS_NS_stropts.h:
+        * ACE/ace/Obstack_T.h:
+        * ACE/ace/Select_Reactor_T.h:
+        * ACE/ace/Sig_Handler.cpp:
+        * ACE/ace/Strategies_T.h:
+        * ACE/ace/Stream.h:
+        * ACE/ace/Stream_Modules.h:
+        * ACE/ace/String_Base.h:
+        * ACE/ace/Svc_Conf_Param.h:
+        * ACE/ace/Svc_Handler.h:
+        * ACE/ace/TP_Reactor.h:
+        * ACE/ace/Task_Ex_T.h:
+        * ACE/ace/Task_T.h:
+        * ACE/ace/Timer_Hash_T.h:
+        * ACE/ace/Timer_Heap_T.h:
+        * ACE/ace/Timer_List_T.h:
+        * ACE/ace/Timer_Queue_Adapters.h:
+        * ACE/ace/Timer_Queue_T.h:
+        * ACE/ace/Timer_Wheel_T.h:
+        * ACE/ace/Vector_T.h:
+
+commit d1f9db7a5c96c8548c3a34f4b5b8480313895927
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 15 10:20:06 2026 +0200
+
+    Fix python3 warning
+    
+        * ACE/bin/make_release.py:
+
+commit 0649a9d114c35ee0e9868b31c1709d53e414b200
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 10 13:46:29 2026 +0200
+
+    Remove NSK from list test lst files
+    
+        * ACE/bin/ace_tests.lst:
+        * ACE/tests/run_test.lst:
+
+commit 4b5eba11d5feb899e33c307c1198aa86e6d12f61
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 16:29:10 2026 +0200
+
+    const/bool changes
+    
+        * ACE/ace/WFMO_Reactor.cpp:
+
+commit 52835b6c2874011020205027c86a8e8c2f0b56be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 14:14:12 2026 +0200
+
+    TEst extensions
+    
+        * ACE/ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/client_multiple.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit f719d1a90dbc85826f6f91f015e40e58ac46d044
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 08:30:56 2026 +0100
+
+    List bugzilla migration
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 6aeca465a2dc2c96688e4d19a4c8032986edf3be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 08:28:08 2026 +0100
+
+    NOt using bugzilla anymore
+    
+        * ACE/docs/usage-bugzilla.html:
+          Deleted.
+    
+        * ACE/docs/index.html:
+
+commit ea6cff17f6f33235687feb8a60d92fcbe149468c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 08:26:38 2026 +0100
+
+    Migrate all bugzilla links to bugzilla github repo
+    
+        * ACE/ChangeLogs/ChangeLog-2002a:
+        * ACE/ChangeLogs/ChangeLog-2002b:
+        * ACE/ChangeLogs/ChangeLog-2003c:
+        * ACE/ChangeLogs/ChangeLog-2004a:
+        * ACE/ChangeLogs/ChangeLog-2004b:
+        * ACE/ChangeLogs/ChangeLog-2007b:
+        * ACE/ace/Abstract_Timer_Queue.h:
+        * ACE/docs/ACE-guidelines.html:
+        * ACE/tests/Based_Pointer_Test.cpp:
+        * ACE/tests/Bug_1576_Regression_Test.cpp:
+        * ACE/tests/Bug_1890_Regression_Test.cpp:
+        * ACE/tests/Bug_2368_Regression_Test.cpp:
+        * ACE/tests/Bug_2497_Regression_Test.cpp:
+        * ACE/tests/Bug_2540_Regression_Test.cpp:
+        * ACE/tests/Bug_2609_Regression_Test.cpp:
+        * ACE/tests/Bug_2610_Regression_Test.cpp:
+        * ACE/tests/Bug_2659_Regression_Test.cpp:
+        * ACE/tests/Bug_2740_Regression_Test.cpp:
+        * ACE/tests/Bug_2975_Regression_Test.cpp:
+        * ACE/tests/Bug_3102_Regression_Test.cpp:
+        * ACE/tests/Bug_3319_Regression_Test.cpp:
+        * ACE/tests/Bug_3500_Regression_Test.cpp:
+        * ACE/tests/Bug_3532_Regression_Test.cpp:
+        * ACE/tests/Bug_3541_Regression_Test.cpp:
+        * ACE/tests/Bug_3673_Regression_Test.cpp:
+        * ACE/tests/Bug_3709_Regression_Test.cpp:
+        * ACE/tests/Bug_3710_Regression_Test.cpp:
+        * ACE/tests/Bug_3911_Regression_Test.cpp:
+        * ACE/tests/Bug_3974_Regression_Test.cpp:
+        * ACE/tests/Compiler_Features_01_Test.cpp:
+        * ACE/tests/Compiler_Features_02_Test.cpp:
+        * ACE/tests/Compiler_Features_03_Test.cpp:
+        * ACE/tests/Compiler_Features_04_Test.cpp:
+        * ACE/tests/Compiler_Features_05_Test.cpp:
+        * ACE/tests/Compiler_Features_06_Test.cpp:
+        * ACE/tests/Compiler_Features_07_Test.cpp:
+        * ACE/tests/Compiler_Features_09_Test.cpp:
+        * ACE/tests/Compiler_Features_10_Test.cpp:
+        * ACE/tests/Compiler_Features_11_Test.cpp:
+        * ACE/tests/Compiler_Features_12_Test.cpp:
+        * ACE/tests/Compiler_Features_13_Test.cpp:
+        * ACE/tests/Compiler_Features_14_Test.cpp:
+        * ACE/tests/SSL/Bug_2912_Regression_Test.cpp:
+        * TAO/ChangeLogs/ChangeLog-2000b:
+        * TAO/ChangeLogs/ChangeLog-2001b:
+        * TAO/ChangeLogs/ChangeLog-2001c:
+        * TAO/ChangeLogs/ChangeLog-2002a:
+        * TAO/ChangeLogs/ChangeLog-2002b:
+        * TAO/ChangeLogs/ChangeLog-2002c:
+        * TAO/ChangeLogs/ChangeLog-2003b:
+        * TAO/ChangeLogs/ChangeLog-2003c:
+        * TAO/ChangeLogs/ChangeLog-2003e:
+        * TAO/ChangeLogs/ChangeLog-2004a:
+        * TAO/ChangeLogs/ChangeLog-2004b:
+        * TAO/ChangeLogs/ChangeLog-2005a:
+        * TAO/ChangeLogs/ChangeLog-2005b:
+        * TAO/ChangeLogs/ChangeLog-2009a:
+        * TAO/docs/Options.html:
+        * TAO/docs/Security/SSLIOP-USAGE.html:
+        * TAO/docs/releasenotes/TODO.html:
+        * TAO/docs/releasenotes/ec.html:
+        * TAO/docs/releasenotes/index.html:
+        * TAO/docs/releasenotes/orbcore.html:
+        * TAO/docs/rtcorba/issues.html:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.inl:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * TAO/orbsvcs/tests/Bug_2248_Regression/README:
+        * TAO/orbsvcs/tests/Bug_2285_Regression/README:
+        * TAO/orbsvcs/tests/Bug_2287_Regression/README:
+        * TAO/orbsvcs/tests/Bug_2925_Regression/README:
+        * TAO/orbsvcs/tests/Bug_3215_Regression/README:
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/README:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/Leader_Follower.h:
+        * TAO/tao/Strategies/DIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+        * TAO/tests/Big_Oneways/README:
+        * TAO/tests/Big_Request_Muxing/README:
+        * TAO/tests/Big_Twoways/README:
+        * TAO/tests/Blocking_Sync_None/README:
+        * TAO/tests/Bug_3384_Regression/README.txt:
+        * TAO/tests/Crash_On_Write/README:
+        * TAO/tests/DynAny_Test/test_dynsequence.cpp:
+        * TAO/tests/LongUpcalls/README:
+        * TAO/tests/ORB_shutdown/README:
+        * TAO/tests/Stack_Recursion/README:
+
+commit 74ea4af173224f0e394086ead4f860db81912144
+Merge: 7dd378037d1 df24cb5654d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 19:44:23 2026 +0100
+
+    Merge pull request #2514 from jwillemsen/jwi-objectman
+    
+    Use bool as return value for starting_up/shutting_down
+
+commit 19faa832f6501ebb2ca4623bcd8c41c0bc93a230
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 15:13:41 2026 +0100
+
+    Add include
+    
+        * ACE/ace/Singleton.cpp:
+
+commit 115bdf33e9c9ed093416ffe6da6a44ebb53a0c6d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 15:02:33 2026 +0100
+
+    More nullptr/bool changes
+    
+        * ACE/ace/Framework_Component.cpp:
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/ace/Object_Manager.cpp:
+        * ACE/ace/Service_Repository.cpp:
+        * ACE/ace/Singleton.cpp:
+        * ACE/ace/Thread_Manager.cpp:
+
+commit 15e17eb01885345477dc53b72468bf9c0a6c830a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 14:45:50 2026 +0100
+
+    Update Config_Test.cpp
+
+commit 318d214702bfa2bf6d89415e8709e8704c24b140
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 14:41:39 2026 +0100
+
+    Use bool as return value for starting_up/shutting_down
+    
+        * ACE/ace/Object_Manager.cpp:
+        * ACE/ace/Object_Manager.h:
+        * ACE/ace/Object_Manager_Base.cpp:
+        * ACE/ace/Object_Manager_Base.h:
+
+commit 5f51784b337ac57f273f091a3207ce683e685340
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 14:35:06 2026 +0100
+
+    Use HKEY_CURRENT_USER for testing
+    
+    Use HKEY_CURRENT_USER for testing as HKEY_LOCAL_MACHINE can't be changed when this test runs under a normal user. Also use const/addressof in various places
+
+commit 3ea48644c41b13b2a38c8886f08b32b715eb98c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 10 14:32:46 2026 +0100
+
+    Update Compiler_Features_41_Test.cpp
+
+commit d795777ce47faffdbbd7a03d44c05b88939dc3e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 10 14:16:53 2026 +0100
+
+    Updated compiler 41 test, handle the exception thrown correctly
+
+commit 462ea847d883aeab305e98d4667d96abc303d070
+Author: Bjørn Damstedt Rasmussen <contact@bearware.dk>
+Date:   Sat Feb 28 21:13:28 2026 +0100
+
+    Fix memory leak in ACE::HTTPS::Session_T
+    
+    Seems close_streams() and close_connection() were incorrectly put in
+    constructor instead of destructor.
+
+commit 88610d16be02dd23f2774a627105d2de7d34ca69
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 23 09:26:16 2026 +0100
+
+    Revert "Use ACE_ERROR"
+    
+    This reverts commit f28c00bfd9691900cba0faee11348bfcd3c8b765.
+
+commit f28c00bfd9691900cba0faee11348bfcd3c8b765
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 20 16:19:17 2026 +0100
+
+    Use ACE_ERROR
+    
+        * ACE/tests/Compiler_Features_43_Test.cpp:
+
+commit 6dfc999bc7f51952f62930f6c796525cd53528c2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 20 15:58:17 2026 +0100
+
+    Add new unit test for runtime exceptions
+    
+        * ACE/tests/Compiler_Features_43_Test.cpp:
+          Added.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit e9dc7d4640c8c2f2a79444c69d4d3b9d75fabe3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 22 09:44:39 2026 +0100
+
+    Update ACE/NEWS with new features and fixes
+
+commit 36c40acb7cb0a8413e9b24ab48bf572f4aade102
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 13:39:54 2026 +0100
+
+    Use inlining also in a debug build with C++Builder
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+
+commit 4d74f4c9253d845ae96e1ab2f1bf4b371ecada4c
+Merge: 3b55e85be90 eaf89a82260
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 30 16:50:41 2025 +0100
+
+    Merge pull request #2497 from jwillemsen/jwi-modernexam
+    
+    Use nullptr/default/override
+
+commit eaf89a82260c01fcd3dc0ac6787f0d3370b95706
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 30 16:21:10 2025 +0100
+
+    Use nullptr/default/override
+    
+        * ACE/examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * ACE/tests/Bug_2820_Regression_Test.cpp:
+
+commit 0d601ed236179dcb24c19308665221d074ced410
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 17 14:16:00 2025 +0100
+
+    Add back debug message
+    
+        * ACE/tests/Reactor_Disp_Order_Test_Dev_Poll.cpp:
+
+commit d828d2571978d5b67e3594bf16a364c1e1d3e417
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 17 14:13:29 2025 +0100
+
+    Updated exe names
+    
+        * ACE/tests/.gitignore:
+
+commit ede6ba654287e9ffa572fa71306bccc34ef53f35
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 17 14:09:42 2025 +0100
+
+    only use one main
+    
+        * ACE/tests/Reactor_Disp_Order_Test_Dev_Poll.cpp:
+
+commit 7f80b0b2a1ea02af877fe4889a51eb31840bc608
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 17 14:04:59 2025 +0100
+
+    Shorten Dispatch to Disp, Dispatch triggers for a Win32 application the UAC installer protection, see https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-vista/cc709628(v=ws.10)?redirectedfrom=MSDN
+    
+        * ACE/tests/Reactor_Dispatch_Order_Test.cpp -> ACE/tests/Reactor_Disp_Order_Test.cpp:
+        * ACE/tests/Reactor_Dispatch_Order_Test_Dev_Poll.cpp -> ACE/tests/Reactor_Disp_Order_Test_Dev_Poll.cpp:
+          Moved.
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit 002e3c262c21a31546464f9cc3d3543983b5bef5
+Merge: 97d0c617ae8 71af1ebc6e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 9 08:21:33 2025 +0100
+
+    Merge pull request #2489 from jwillemsen/jwi-booleancdr
+    
+    Check that a CDR boolean is received as 0 or 1, if another value it i…
+
+commit 97d0c617ae8bed05d1216ceb70e7345ce3e6bf36
+Merge: 3abc747cc02 1965a425404
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 22:20:05 2025 +0100
+
+    Merge pull request #2490 from jwillemsen/jwi-stl
+    
+    Removed stl feature flag, we require STL support, add missing break
+
+commit 1965a425404980d6a9026a9ca0c5670217c6d5fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 18:51:28 2025 +0100
+
+    Removed stl feature flag, we require STL support, add missing break
+    
+        * ACE/bin/MakeProjectCreator/config/stl.mpb:
+          Deleted.
+    
+        * ACE/bin/MakeProjectCreator/config/global.features:
+        * TAO/docs/tutorials/Quoter/RTCORBA/Distributor.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/StockQuoter.mpc:
+
+commit 71af1ebc6e2e70190532670d3dd14008523319f8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 13:20:54 2025 +0100
+
+    Logging fix
+    
+        * ACE/tests/CDR_Test.cpp:
+
+commit ac3a7d366efa46b1411c5273b622821768855476
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 13:04:49 2025 +0100
+
+    Docu fix
+    
+        * ACE/tests/CDR_Test.cpp:
+
+commit 7214dbe1e411239346f63933a9b7eb24b2283713
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 13:00:32 2025 +0100
+
+    Check that a CDR boolean is received as 0 or 1, if another value it is an error
+    
+        * ACE/ace/CDR_Stream.cpp:
+        * ACE/ace/CDR_Stream.inl:
+        * ACE/tests/CDR_Test.cpp:
+        * TAO/tao/AnyTypeCode/append.cpp:
+
+commit 3abc747cc02e763f39b0c75b533c9aac97f99611
+Merge: 7b61afa2af6 f02274950cc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 25 12:46:28 2025 +0100
+
+    Merge pull request #2487 from jwillemsen/jwi-NULL
+    
+    Use nullptr instead of NULL
+
+commit f02274950cc2fed89b06e14e89da46f1d994e524
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 25 09:12:10 2025 +0100
+
+    Use nullptr instead of NULL
+    
+        * ACE/ace/Activation_Queue.cpp:
+        * ACE/ace/Future.cpp:
+        * ACE/apps/JAWS/clients/WebSTONE/src/nsapi-includes/frame/http.h:
+        * ACE/apps/JAWS/clients/WebSTONE/src/sysdep.h:
+        * ACE/tests/Network_Adapters_Test.cpp:
+        * TAO/tests/Bug_2234_Regression/server.cpp:
+        * TAO/tests/MProfile_Forwarding/client.cpp:
+
+commit 6dcd48f9cb00329fd6341e4c496c8c7374b5d1c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 25 09:07:44 2025 +0100
+
+    Doxygen changes
+    
+        * ACE/ace/SOCK_Dgram.cpp:
+        * ACE/ace/SOCK_Dgram.h:
+        * ACE/examples/Reactor/Dgram/Dgram.cpp:
+
+commit 6b972df5ca73dfadb85a885df4678d31e06ff5ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 21 15:51:49 2025 +0100
+
+    Doxygen and layout changes
+    
+        * ACE/ace/SOCK_Dgram.h:
+        * ACE/examples/Reactor/Dgram/CODgram.cpp:
+
+commit d8e96ff45b276f00bb9347e64a7f32719607364d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 19 09:02:41 2025 +0100
+
+    Layout and typo changes
+    
+        * ACE/examples/QOS/Diffserv/server.cpp:
+        * ACE/examples/Reactor/Dgram/CODgram.cpp:
+        * ACE/examples/Reactor/Dgram/Dgram.cpp:
+
+commit 930a971cec8ad2812e045b1b378f15d8ea910cdf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 18 17:06:14 2025 +0100
+
+    Layout changes and correct casing executable names
+    
+        * ACE/examples/Reactor/Dgram/CODgram.cpp:
+        * ACE/examples/Reactor/Dgram/Dgram.cpp:
+
+commit 838b2e5d45469698654cc3f17081484231aaebc4
+Merge: 1a9f9ff0efa d1b9482e424
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 18 16:40:00 2025 +0100
+
+    Merge pull request #2480 from jwillemsen/jwi-reactoroverride
+    
+    Use override
+
+commit d1b9482e4240967083ee344a8ab2e8caabd15be3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 18 15:57:37 2025 +0100
+
+    Zap empty lines
+    
+        * ACE/examples/Reactor/README:
+
+commit 6878c6a3a89d8d519188c9a904a8f4bb5048176d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 18 15:55:04 2025 +0100
+
+    Const/nullptr
+    
+        * ACE/examples/Reactor/Dgram/CODgram.cpp:
+        * ACE/examples/Reactor/Dgram/Dgram.cpp:
+
+commit 03d46b732d8a02e042795fb2ef68a72c8a99bf21
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 18 15:44:41 2025 +0100
+
+    Use override
+    
+        * ACE/examples/Reactor/Dgram/CODgram.cpp:
+        * ACE/examples/Reactor/Dgram/Dgram.cpp:
+
+commit 6715e94b6c040e4a0dc4a140b1ffa5cda896677c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 13 12:11:40 2025 +0100
+
+    Fixed typo and fuzz
+
+commit 6d408db8cdb1b200ebba59b2262dede66f50f925
+Author: Okan <61149510+okan-nako@users.noreply.github.com>
+Date:   Thu Nov 13 10:52:02 2025 +0100
+
+    Update iosfwd.h
+    
+    The location of "#include /**/ "ace/post.h"" seems wrong and should be after "#endif ACE_LACKS_IOSTREAM_TOTALLY", which can potentially cause issues if there are any pragma checks in pre.h and post.h files together with e.g. ACE_LACKS_IOSTREAM_TOTALLY macros.
+
+commit 275074766408205fe155d46824ed82381ef068be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 7 09:17:47 2025 +0100
+
+    Update wget URL in cleanbuilds.sh script
+
+commit ea0884dcd953c705ad493604238c1d2601f2fb36
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 7 09:16:35 2025 +0100
+
+    Update URLs for test statistics and builds
+
+commit 7418f1f1e528c116bd8eff9fa4a4958325647f23
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 19 18:15:03 2025 +0200
+
+    Use nullptr, fixed comments
+    
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/POSIX_Asynch_IO.cpp:
+        * ACE/examples/Reactor/Proactor/simple_test_proactor.cpp:
+        * ACE/examples/Reactor/Proactor/test_proactor.cpp:
+        * ACE/examples/Reactor/Proactor/test_proactor2.cpp:
+        * ACE/examples/Reactor/Proactor/test_proactor3.cpp:
+        * ACE/examples/Reactor/Proactor/test_udp_proactor.cpp:
+        * ACE/tests/Proactor_Timer_Test.cpp:
+
+commit addc542381926016504cb3cd23464941848357ff
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 3 10:49:00 2025 -0500
+
+    Fix Issues with Chrono Test
+
+commit c9d1cbe79b740aae729273d0111d7deb3a8a8d99
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 3 01:26:37 2025 -0500
+
+    More Tweaks to Chrono_Test
+
+commit b226740d6536cc53173c4c426649c2b839f8603c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Aug 29 20:45:05 2025 -0500
+
+    Time_Value & Floating-point std::chrono::duration
+    
+    `ACE_Time_Value` currently doesn't accept a `std::chrono::duration` with
+    `Rep` that's a floating point type because it's using the modulus
+    operator to separate the microseconds (`duration % seconds(1)`) and
+    trying to use modulus with floating points causes a compile error.
+    
+    This changes it to use subtraction from the whole number of seconds
+    (`duration - sec`) and adds a test for it.
+    
+    Also:
+    - Simplify the `-=` and `+=` ops of `ACE_Time_Value`
+    - Rewrite some of the testing in `Chrono_Test.cpp`.
+
+commit 7a37b53f716269c84c0735eed99a0ce0bbac12a6
+Merge: c322914029f 6bc2d418278
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 25 09:10:17 2025 +0200
+
+    Merge pull request #2459 from jwillemsen/jwi-defineendif
+    
+    Updated comment
+
+commit 6bc2d418278dc35e09db7c3e54ffe3ebdb99955d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 25 09:03:12 2025 +0200
+
+    Updated comment
+    
+        * ACE/ace/ACE.cpp:
+
+commit 8628cdc515245cf145110089cfc2b6b7ae2db2bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 22 16:16:34 2025 +0200
+
+    Removed ancient workaround for mingw32
+    
+        * ACE/ace/OS_NS_stdio.inl:
+
+commit a4c2e2696361aa92e31217b55d8dfdf0ef57b4d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 22 08:28:04 2025 +0200
+
+    Update
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit 6e4f718f72f5733e9dadb5bf54223554f736cef7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 22 08:20:57 2025 +0200
+
+    Prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

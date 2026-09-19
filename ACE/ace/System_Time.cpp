@@ -12,14 +12,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
-  : shmem_ (0)
-  , delta_time_ (0)
+  : shmem_ (nullptr)
+  , delta_time_ (nullptr)
 {
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");
 
   // Only create a new unique filename for the memory pool file
   // if the user didn't supply one...
-  if (poolname == 0)
+  if (poolname == nullptr)
     {
 #if defined (ACE_DEFAULT_BACKING_STORE)
       // Create a temporary file.
@@ -62,7 +62,7 @@ int
 ACE_System_Time::get_local_system_time (time_t & time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
-  time_out = ACE_OS::time (0);
+  time_out = ACE_OS::time (nullptr);
   return 0;
 }
 
@@ -70,7 +70,7 @@ int
 ACE_System_Time::get_local_system_time (ACE_Time_Value &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
-  time_out.set (ACE_OS::time (0), 0);
+  time_out.set (ACE_OS::time (nullptr), 0);
   return 0;
 }
 
@@ -81,10 +81,10 @@ ACE_System_Time::get_master_system_time (time_t &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_master_system_time");
 
-  if (this->delta_time_ == 0)
+  if (this->delta_time_ == nullptr)
     {
       // Try to find it
-      void * temp = 0;
+      void * temp = nullptr;
       if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) == -1)
         {
           // No time entry in shared memory (meaning no Clerk exists)

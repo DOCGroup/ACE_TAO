@@ -118,8 +118,8 @@ const int TCPTotalBytesToSend = TCPClientPings * TCPBytesToSend;
 class DgramHandler: public ACE_Event_Handler
 {
 public:
-  DgramHandler (ACE_Reactor *p_reactor = 0);
-  virtual ~DgramHandler ();
+  DgramHandler (ACE_Reactor *p_reactor = nullptr);
+  ~DgramHandler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int  open (const ACE_INET_Addr &local,
@@ -128,10 +128,10 @@ public:
              int reuse_addr=0);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask);
-  virtual int handle_timeout (const ACE_Time_Value &current_time, const void *act=0);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask) override;
+  int handle_timeout (const ACE_Time_Value &current_time, const void *act=nullptr) override;
   int         dgramsSent () const;
   int         dgramsReceived () const;
   int         timeoutsTriggered () const;
@@ -152,7 +152,7 @@ private:
 class TCPConnectionHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> inherited;
+  using inherited = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 public:
   TCPConnectionHandler (bool p_serverSide = false);
   virtual ~TCPConnectionHandler ();
@@ -163,7 +163,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
+  virtual int open (void * = nullptr);
 
   int scheduleSend (ACE_Message_Block *);
   int sendBuffers ();
@@ -177,7 +177,7 @@ private:
   int pingsNo_; //!< number of pings client should make
 };
 
-typedef ACE_Connector< TCPConnectionHandler, ACE_SOCK_CONNECTOR > TCPConnectorHandler;
+using TCPConnectorHandler = ACE_Connector<TCPConnectionHandler, ACE_SOCK_Connector>;
 class TCPAcceptorHandler; // forward declaration
 
 /* \class HandlersRegister
@@ -211,7 +211,7 @@ private:
 class TCPAcceptorHandler : public ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_ACCEPTOR >
 {
 public:
-  typedef ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_ACCEPTOR > inherited;
+  using inherited = ACE_Acceptor<TCPConnectionHandler, ACE_SOCK_Acceptor>;
 public:
   TCPAcceptorHandler (HandlersRegister *p_handlersRegister);
   virtual ~TCPAcceptorHandler ();
@@ -358,7 +358,7 @@ int DgramHandler::expectedTriggers () const
 */
 
 TCPConnectionHandler::TCPConnectionHandler (bool p_serverSide):
-  buffers_ (0),
+  buffers_ (nullptr),
   totalReceived_ (0),
   totalSent_ (0),
   serverSide_ (p_serverSide),
@@ -487,7 +487,7 @@ int TCPConnectionHandler::sendBuffers ()
             ACE_Message_Block *buffer = buffers_;
             result -= buffers_->length ();
             buffers_= buffers_->cont ();
-            buffer->cont (0);
+            buffer->cont (nullptr);
             buffer->release ();
           }
 
@@ -539,7 +539,7 @@ HandlersRegister::HandlersRegister (ACE_Reactor *p_reactor):
       // create dgram input handler
       DgramHandlers_[ i ] = new DgramHandler (p_reactor);
 
-      TCPServers_[ i ] = 0;
+      TCPServers_[ i ] = nullptr;
 
       TCPClients_[ i ] = new TCPConnectionHandler (false);
 
@@ -602,7 +602,7 @@ int HandlersRegister::scheduleTimers (const ACE_Time_Value &p_TestTime)
   for (i = 0; i < HandlersNo; ++i)
     {
       if (-1 == reactor_->schedule_timer (DgramHandlers_[ i ],
-                                          (const void *) 0,
+                                          (const void *) nullptr,
                                           ACE_Time_Value::zero,
                                           p_TestTime * (0.5 / DgramsToSend)))
         ACE_ERROR_RETURN ((LM_ERROR,

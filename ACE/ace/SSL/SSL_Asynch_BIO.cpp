@@ -141,7 +141,7 @@ ACE_ASYNCH_BIO_NEW_NAME (BIO * pBIO)
 {
   BIO_set_init(pBIO, 0); // not initialized
   BIO_set_num(pBIO, 0); // still zero ( we can use it )
-  BIO_set_data(pBIO, 0); // will be pointer to ACE_SSL_Asynch_Stream
+  BIO_set_data(pBIO, nullptr); // will be pointer to ACE_SSL_Asynch_Stream
   BIO_set_flags(pBIO, 0);
 
   return 1;
@@ -152,7 +152,7 @@ ACE_ASYNCH_BIO_FREE_NAME (BIO * pBIO)
 {
   if (pBIO && BIO_get_shutdown(pBIO))
     {
-      BIO_set_data(pBIO, 0);
+      BIO_set_data(pBIO, nullptr);
       BIO_set_init(pBIO, 0);
       BIO_set_num(pBIO, 0);
       BIO_set_flags(pBIO, 0);
@@ -171,7 +171,7 @@ ACE_ASYNCH_BIO_READ_NAME (BIO * pBIO, char * buf, int len)
   ACE_SSL_Asynch_Stream * const p_stream =
     static_cast<ACE_SSL_Asynch_Stream *> (BIO_get_data(pBIO));
 
-  if (BIO_get_init(pBIO) == 0 || p_stream == 0 || buf == 0 || len <= 0)
+  if (BIO_get_init(pBIO) == 0 || p_stream == nullptr || buf == nullptr || len <= 0)
     return -1;
 
   BIO_clear_retry_flags (pBIO);
@@ -201,7 +201,7 @@ ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
   ACE_SSL_Asynch_Stream * p_stream =
     static_cast<ACE_SSL_Asynch_Stream *> (BIO_get_data(pBIO));
 
-  if (BIO_get_init(pBIO) == 0 || p_stream == 0 || buf == 0 || len <= 0)
+  if (BIO_get_init(pBIO) == 0 || p_stream == nullptr || buf == nullptr || len <= 0)
     return -1;
 
   BIO_clear_retry_flags (pBIO);

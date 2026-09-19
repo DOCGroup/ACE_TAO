@@ -277,7 +277,7 @@ protected:
 
 private:
   // FUZZ: disable check_for_ACE_Guard
-  typedef ACE_Guard<ACE_LOCK> Guard_Type;
+  using Guard_Type = ACE_Guard<ACE_LOCK>;
   // FUZZ: enable check_for_ACE_Guard
 
   void operator= (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
@@ -322,8 +322,8 @@ public:
   // Declare the dynamic allocation hooks.
 private:
   // FUZZ: disable check_for_ACE_Guard
-  typedef ACE_Guard<ACE_LOCK> Guard_Type;
-  typedef ACE_Write_Guard<ACE_LOCK> Write_Guard_Type;
+  using Guard_Type = ACE_Guard<ACE_LOCK>;
+  using Write_Guard_Type = ACE_Write_Guard<ACE_LOCK>;
   // FUZZ: enable check_for_ACE_Guard
 };
 
@@ -365,8 +365,8 @@ public:
   // Declare the dynamic allocation hooks.
 private:
   // FUZZ: disable check_for_ACE_Guard
-  typedef ACE_Guard<ACE_LOCK> Guard_Type;
-  typedef ACE_Read_Guard<ACE_LOCK> Read_Guard_Type;
+  using Guard_Type = ACE_Guard<ACE_LOCK>;
+  using Read_Guard_Type = ACE_Read_Guard<ACE_LOCK>;
   // FUZZ: enable check_for_ACE_Guard
 };
 

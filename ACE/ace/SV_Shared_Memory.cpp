@@ -61,7 +61,7 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
 ACE_SV_Shared_Memory::ACE_SV_Shared_Memory ()
   : internal_id_ (0),
     size_ (0),
-    segment_ptr_ (0)
+    segment_ptr_ (nullptr)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
 }
@@ -79,7 +79,7 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (ACE_HANDLE int_id,
     size_ (0)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
-  if (this->attach (0, flags) == -1)
+  if (this->attach (nullptr, flags) == -1)
     ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
 }

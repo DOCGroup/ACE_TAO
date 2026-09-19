@@ -2,7 +2,7 @@
  * @file Bug_2609_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2609:
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2609
+ *   https://github.com/DOCGroup/bugzilla/issues/2609
  *
  * @author Milan Cvetkovic <milan.cvetkovic@mpathix.com>
  */
@@ -131,7 +131,7 @@ run_main (int, ACE_TCHAR *[])
 
   Timer_Handler timer_handler;
   ACE_Reactor::instance()->schedule_timer (&timer_handler,
-                                           0,
+                                           nullptr,
                                            ACE_Time_Value(0));
 
   My_Task task;

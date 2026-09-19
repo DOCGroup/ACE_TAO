@@ -30,7 +30,7 @@ namespace ACE
       : expr (rhs.expr),
         control_action (rhs.control_action)
     {
-      if (control_action != 0)
+      if (control_action != nullptr)
         {
           control_action->add_ref ();
         }
@@ -38,7 +38,7 @@ namespace ACE
 
     Monitor_Control_Types::Constraint::~Constraint ()
     {
-      if (this->control_action != 0)
+      if (this->control_action != nullptr)
         {
           this->control_action->remove_ref ();
         }
@@ -49,7 +49,7 @@ namespace ACE
     {
       if (this != &rhs)
         {
-          if (this->control_action != 0)
+          if (this->control_action != nullptr)
             {
               this->control_action->remove_ref ();
             }
@@ -57,7 +57,7 @@ namespace ACE
           this->expr = rhs.expr;
           this->control_action = rhs.control_action;
 
-          if (this->control_action != 0)
+          if (this->control_action != nullptr)
             {
               this->control_action->add_ref ();
             }

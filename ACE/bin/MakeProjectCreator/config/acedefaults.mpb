@@ -16,7 +16,6 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
   // Support the alternative Borland Make project type
   specific(bmake) {
     unicode_flags += -DACE_USES_WCHAR
-    debug_macros += ACE_NO_INLINE=1
     platform_libs += iphlpapi
     lit_libs -= iphlpapi
   }

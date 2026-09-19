@@ -102,7 +102,7 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
 
-  if (old_b != 0)
+  if (old_b != nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Old backend (%@) not 0 at start\n"),

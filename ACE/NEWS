@@ -1,7 +1,25 @@
+USER VISIBLE CHANGES BETWEEN ACE-8.0.7 and ACE-8.0.8
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-8.0.6 and ACE-8.0.7
+====================================================
+
+. Fixed compile errors in ACE SSL with the Embarcadero C++ Builder bcc64x compiler
+
+. Minor ACE SSL fixes
+
+. Dropped support for OpenSSL 1.0.x
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.5 and ACE-8.0.6
 ====================================================
 
 . Support floating-point-based `std::chrono::duration` in `ACE_Time_Value`
+
+. Don't disable inlining in a debug build with Embarcadero C++ Builder compilers
+
+. Added checks to CDR boolean and boolean array demarshaling
+
+. All issues from bugzilla.dre.vanderbilt.edu migrated to https://github.com/DOCGroup/bugzilla
 
 USER VISIBLE CHANGES BETWEEN ACE-8.0.4 and ACE-8.0.5
 ====================================================

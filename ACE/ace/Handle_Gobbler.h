@@ -51,7 +51,7 @@ public:
   inline void close_remaining_handles ();
 
 private:
-  typedef ACE_Handle_Set HANDLE_SET;
+  using HANDLE_SET = ACE_Handle_Set;
 
   /// The container which holds the open descriptors.
   HANDLE_SET handle_set_;

@@ -110,7 +110,7 @@ ACE_Barrier::wait ()
       // We're awake and the count has completed. See if it completed
       // because all threads hit the barrier, or because the barrier
       // was shut down.
-      if (this->sub_barrier_[this->current_generation_] == 0)
+      if (this->sub_barrier_[this->current_generation_] == nullptr)
         {
           errno = ESHUTDOWN;
           retval = -1;

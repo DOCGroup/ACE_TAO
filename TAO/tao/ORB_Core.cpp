@@ -878,7 +878,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           (ACE_LOG_MSG->*flagop)(value);
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBHandleLoggingStrategyEvents"))))
         {
           ACE_Logging_Strategy *logging_strategy =

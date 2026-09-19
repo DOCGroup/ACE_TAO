@@ -70,7 +70,7 @@ ACE_SOCK_Netlink::send (const iovec iov[],
   send_msg.msg_iovlen = n;
   send_msg.msg_name = (char *) addr.get_addr ();
   send_msg.msg_namelen = addr.get_size ();
-  send_msg.msg_control = 0;
+  send_msg.msg_control = nullptr;
   send_msg.msg_controllen = 0;
   send_msg.msg_flags = 0;
 
@@ -92,7 +92,7 @@ ACE_SOCK_Netlink::recv (iovec iov[],
   recv_msg.msg_iovlen = n;
   recv_msg.msg_name = (char *) addr.get_addr ();
   recv_msg.msg_namelen = addr.get_size ();
-  recv_msg.msg_control = 0;
+  recv_msg.msg_control = nullptr;
   recv_msg.msg_controllen = 0;
   recv_msg.msg_flags = 0;
 

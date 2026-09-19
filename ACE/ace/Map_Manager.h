@@ -132,17 +132,17 @@ public:
   friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 
   // = Traits.
-  typedef EXT_ID KEY;
-  typedef INT_ID VALUE;
-  typedef ACE_LOCK lock_type;
-  typedef ACE_Map_Entry<EXT_ID, INT_ID> ENTRY;
-  typedef ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> ITERATOR;
-  typedef ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> CONST_ITERATOR;
-  typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> REVERSE_ITERATOR;
+  using KEY = EXT_ID;
+  using VALUE = INT_ID;
+  using lock_type = ACE_LOCK;
+  using ENTRY = ACE_Map_Entry<EXT_ID, INT_ID>;
+  using ITERATOR = ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+  using CONST_ITERATOR = ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+  using REVERSE_ITERATOR = ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 
-  typedef ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> iterator;
-  typedef ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> const_iterator;
-  typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
+  using iterator = ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+  using const_iterator = ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+  using reverse_iterator = ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 
   /// Initialize a ACE_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Map_Manager (ACE_Allocator *alloc = nullptr);

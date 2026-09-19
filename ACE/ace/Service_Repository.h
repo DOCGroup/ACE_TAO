@@ -191,7 +191,7 @@ protected:
 #if defined (ACE_HAS_ALLOC_HOOKS)
   typedef ACE_Array_Map<size_t, const ACE_Service_Type*, std::equal_to<size_t>, ACE_Allocator_Std_Adapter<std::pair<size_t, const ACE_Service_Type*> > > array_type;
 #else
-  typedef ACE_Array_Map<size_t, const ACE_Service_Type*> array_type;
+  using array_type = ACE_Array_Map<size_t, const ACE_Service_Type *>;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   /// Contains all the configured services.

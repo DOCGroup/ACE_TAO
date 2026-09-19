@@ -150,7 +150,7 @@ test (ACE_Reactor_Impl &reactor_impl,
               reactor_type));
 
   ACE_Reactor reactor (&reactor_impl,
-                       0);
+                       false);
 
   Event_Handler *e = new Event_Handler (reactor,
                                         ACE_INVALID_HANDLE,

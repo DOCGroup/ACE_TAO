@@ -39,8 +39,8 @@ class ACE_Export ACE_RW_Mutex
 public:
   /// Initialize a readers/writer lock.
   ACE_RW_Mutex (int type = USYNC_THREAD,
-                const ACE_TCHAR *name = 0,
-                void *arg = 0);
+                const ACE_TCHAR *name = nullptr,
+                void *arg = nullptr);
 
   /// Implicitly destroy a readers/writer lock
   ~ACE_RW_Mutex ();

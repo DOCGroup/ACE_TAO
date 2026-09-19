@@ -16,6 +16,7 @@
 #include "ace/Framework_Component.h"
 #include "ace/Guard_T.h"
 #include "ace/os_include/os_typeinfo.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,10 +54,9 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance ()
     ACE_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (singleton == nullptr)
     {
-      if (ACE_Object_Manager::starting_up () ||
-          ACE_Object_Manager::shutting_down ())
+      if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
@@ -65,7 +65,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance ()
           // don't register for destruction with the
           // ACE_Object_Manager:  we'll have to leak this instance.
 
-          ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+          ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), nullptr);
         }
       else
         {
@@ -75,7 +75,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance ()
           // instantiation.
 #if defined(ACE_FACE_SAFETY_BASE)
           static ACE_LOCK the_lock;
-          static ACE_LOCK *lock = &the_lock;
+          static ACE_LOCK *lock = std::addressof(the_lock);
 #else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock = 0;
 #endif /* ACE_FACE_SAFETY_BASE */
@@ -170,10 +170,9 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance ()
     ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (singleton == nullptr)
     {
-      if (ACE_Object_Manager::starting_up () ||
-          ACE_Object_Manager::shutting_down ())
+      if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
@@ -183,7 +182,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance ()
           // ACE_Object_Manager:  we'll have to leak this instance.
 
           ACE_NEW_RETURN (singleton, (ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>),
-                          0);
+                          nullptr);
         }
       else
         {
@@ -254,10 +253,9 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
     ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (singleton == nullptr)
     {
-      if (ACE_Object_Manager::starting_up () ||
-          ACE_Object_Manager::shutting_down ())
+      if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
@@ -266,7 +264,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           // don't register for destruction with the
           // ACE_Object_Manager:  we'll have to leak this instance.
 
-          ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
+          ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), nullptr);
         }
       else
         {
@@ -338,10 +336,9 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
     ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (singleton == nullptr)
     {
-      if (ACE_Object_Manager::starting_up () ||
-          ACE_Object_Manager::shutting_down ())
+      if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
@@ -352,7 +349,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
 
           ACE_NEW_RETURN (singleton,
                           (ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>),
-                          0);
+                          nullptr);
         }
       else
         {
@@ -437,10 +434,9 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance ()
     ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (singleton == nullptr)
     {
-      if (ACE_Object_Manager::starting_up () ||
-          ACE_Object_Manager::shutting_down ())
+      if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
         {
           // The program is still starting up, and therefore assumed
           // to be single threaded.  There's no need to double-check.
@@ -450,7 +446,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance ()
           // ACE_Object_Manager:  we'll have to leak this instance.
 
           ACE_NEW_RETURN (singleton, (ACE_DLL_Singleton_T<TYPE, ACE_LOCK>),
-                          0);
+                          nullptr);
         }
       else
         {

@@ -63,13 +63,13 @@ protected:
   /// Testing the number of properties, currently in the Property Set.
   int test_get_number_of_properties ();
 
-  ///Testing get_all_property_names.
+  /// Testing get_all_property_names.
   int test_get_all_property_names ();
 
   /// Testing get_property_value.
   int test_get_property_value ();
 
-  ///Testing get_properties.  Give the names and get their properties.
+  /// Testing get_properties.  Give the names and get their properties.
   int test_get_properties ();
 
   /// Testing get_all_properties.

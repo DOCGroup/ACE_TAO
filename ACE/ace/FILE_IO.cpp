@@ -50,7 +50,7 @@ ACE_FILE_IO::send (size_t n, ...) const
 #else
   va_list argp;
   int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = 0;
+  iovec *iovp = nullptr;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -105,7 +105,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 #else
   va_list argp;
   int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = 0;
+  iovec *iovp = nullptr;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -154,7 +154,7 @@ ACE_FILE_IO::recvv (iovec *io_vec)
 {
   ACE_TRACE ("ACE_FILE_IO::recvv");
 
-  io_vec->iov_base = 0;
+  io_vec->iov_base = nullptr;
   ACE_OFF_T const length = ACE_OS::filesize (this->get_handle ());
 
   if (length > 0)

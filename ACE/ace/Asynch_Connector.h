@@ -48,7 +48,7 @@ public:
   ACE_Asynch_Connector ();
 
   /// Virtual destruction
-  virtual ~ACE_Asynch_Connector () = default;
+  ~ACE_Asynch_Connector () override = default;
 
   /**
    * This opens asynch connector
@@ -123,7 +123,7 @@ public:
 
 protected:
   /// This is called when an outstanding accept completes.
-  virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
+  void handle_connect (const ACE_Asynch_Connect::Result &result) override;
 
 
   /// This parses the address from read buffer.

@@ -71,7 +71,7 @@ public:
   /**
    * A short name for iterator for ACE_Vector.
    */
-  typedef ACE_Vector_Iterator<T, DEFAULT_SIZE> Iterator;
+  using Iterator = ACE_Vector_Iterator<T, DEFAULT_SIZE>;
 
 
   /**
@@ -83,7 +83,7 @@ public:
    *              default ACE allocator is used
    */
   ACE_Vector (const size_t init_size = DEFAULT_SIZE,
-              ACE_Allocator* alloc = 0);
+              ACE_Allocator* alloc = nullptr);
 
   /**
    * Destructor.

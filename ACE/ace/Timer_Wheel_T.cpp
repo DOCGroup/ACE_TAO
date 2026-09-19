@@ -600,7 +600,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (long timer_id,
                                             n->get_type (),
                                             skip_close,
                                             cookie);
-      if (act != 0)
+      if (act != nullptr)
         *act = n->get_act ();
 
       this->cancel_i (n);
@@ -822,7 +822,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_
           this->free_node (n);
         }
 
-      const void *upcall_act = 0;
+      const void *upcall_act = nullptr;
 
       this->preinvoke (info, cur_time, upcall_act);
 

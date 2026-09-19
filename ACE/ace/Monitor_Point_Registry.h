@@ -75,9 +75,7 @@ namespace ACE
       Monitor_Point_Registry () = default;
 
       /// Underlying container for the registry.
-      typedef ACE_Hash_Map_Manager<ACE_CString,
-                                   Monitor_Base*,
-                                   ACE_SYNCH_NULL_MUTEX> Map;
+      using Map = ACE_Hash_Map_Manager<ACE_CString, Monitor_Base *, ACE_MT_SYNCH::NULL_MUTEX>;
 
       mutable ACE_SYNCH_MUTEX mutex_;
       Map map_;

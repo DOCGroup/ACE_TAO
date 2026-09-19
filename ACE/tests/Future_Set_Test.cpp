@@ -52,11 +52,11 @@ class Prime_Scheduler : public ACE_Task_Base
 public:
   /// Constructor.
   Prime_Scheduler (const ACE_TCHAR *,
-                   Prime_Scheduler * = 0);
+                   Prime_Scheduler * = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  int open (void *args = 0) override;
+  int open (void *args = nullptr) override;
 
   /// Terminator.
   //FUZZ: enable check_for_lack_ACE_OS
@@ -516,7 +516,7 @@ run_main (int, ACE_TCHAR *[])
                   (u_int) resultd));
     }
 
-  const ACE_TCHAR *name = 0;
+  const ACE_TCHAR *name = nullptr;
   count = 0;
   while (fsetname.next_readable (fname))
     {

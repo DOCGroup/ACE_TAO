@@ -63,19 +63,18 @@ public:
   // = Typedefs to simplify pointer-to-member-function registration.
 
   // Get/set the underlying handle.
-  typedef ACE_HANDLE (T::*GET_HANDLE) () const;
-  typedef void (T::*SET_HANDLE) (ACE_HANDLE);
+  using GET_HANDLE = ACE_HANDLE (T::*)() const;
+  using SET_HANDLE = void (T::*)(ACE_HANDLE);
 
   /// Handle I/O events.
-  typedef int (T::*IO_HANDLER) (ACE_HANDLE);
+  using IO_HANDLER = int (T::*)(ACE_HANDLE);
 
   /// Handle timeout events.
-  typedef int (T::*TO_HANDLER) (const ACE_Time_Value &, const void *);
+  using TO_HANDLER = int (T::*)(const ACE_Time_Value &, const void *);
 
   /// Handle close events.
-  typedef int (T::*CL_HANDLER) (ACE_HANDLE, ACE_Reactor_Mask);
-
-  typedef int (T::*SIG_HANDLER) (int, siginfo_t*, ucontext_t*);
+  using CL_HANDLER = int (T::*)(ACE_HANDLE, ACE_Reactor_Mask);
+  using SIG_HANDLER = int (T::*)(int, siginfo_t *, ucontext_t *);
 
   /// Initialize the op_handler.
   ACE_Event_Handler_T (T *op_handler,
@@ -90,19 +89,19 @@ public:
                        IO_HANDLER except = 0);
 
   /// Close down and delete the <op_handler>
-  ~ACE_Event_Handler_T ();
+  ~ACE_Event_Handler_T () override;
 
   // = Override all the ACE_Event_Handler methods.
 
   // These methods all delegate down to the <T> operations handler.
-  virtual ACE_HANDLE get_handle () const;
-  virtual void set_handle (ACE_HANDLE);
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  ACE_HANDLE get_handle () const override;
+  void set_handle (ACE_HANDLE) override;
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
+  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
 
   // = Get/set the operations handler.
   T *op_handler ();

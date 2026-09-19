@@ -54,7 +54,7 @@ public:
   ACE_Service_Manager ();
 
   /// Destructor.
-  virtual ~ACE_Service_Manager ();
+  ~ACE_Service_Manager () override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -71,13 +71,13 @@ protected:
   virtual int list_services ();
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  int fini () override;
 
   // = Scheduling hooks.
-  virtual int suspend ();
-  virtual int resume ();
+  int suspend () override;
+  int resume () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -86,10 +86,10 @@ protected:
   int open (const ACE_INET_Addr &sia);
 
   // = Demultiplexing hooks.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
   /// Handle one request.
   virtual void process_request (ACE_TCHAR *request);

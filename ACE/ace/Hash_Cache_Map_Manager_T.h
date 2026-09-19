@@ -65,11 +65,11 @@ public:
    * are used by the strategy and is transparent to the user of this
    * class.
    */
-  typedef std::pair<VALUE, ATTRIBUTES> CACHE_VALUE;
-  typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> HASH_MAP;
-  typedef ACE_Hash_Map_Entry<KEY, CACHE_VALUE> CACHE_ENTRY;
-  typedef KEY key_type;
-  typedef VALUE mapped_type;
+  using CACHE_VALUE = std::pair<VALUE, ATTRIBUTES>;
+  using HASH_MAP = ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>;
+  using CACHE_ENTRY = ACE_Hash_Map_Entry<KEY, CACHE_VALUE>;
+  using key_type = KEY;
+  using mapped_type = VALUE;
 
   /// Initialize a <Hash_Cache_Map_Manager> with @a size entries.
   ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
@@ -186,7 +186,7 @@ public:
 
 protected:
   /// Base class.
-  typedef ACE_CACHE_MAP_MANAGER ACE_HCMM_BASE;
+  using ACE_HCMM_BASE = ACMM<KEY, VALUE, ACE_Hash_Map_Manager_Ex<KEY, std::pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, ACE_Hash_Map_Iterator_Ex<KEY, std::pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, ACE_Hash_Map_Reverse_Iterator_Ex<KEY, std::pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, CACHING_STRATEGY, ATTRIBUTES>;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

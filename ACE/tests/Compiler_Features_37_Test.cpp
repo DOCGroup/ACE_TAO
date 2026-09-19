@@ -10,7 +10,7 @@ template <typename key, typename value>
 class my_map
 {
 public:
-  my_map () : capacity_ (0), nodes_(0) {}
+  my_map () : capacity_ (0), nodes_(nullptr) {}
   ~my_map ();
   using key_type = key;
   using data_type = value;

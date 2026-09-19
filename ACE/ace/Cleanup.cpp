@@ -31,10 +31,10 @@ ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
 /*****************************************************************************/
 
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node ()
-  : object_ (0),
-    cleanup_hook_ (0),
-    param_ (0),
-    name_ (0)
+  : object_ (nullptr),
+    cleanup_hook_ (nullptr),
+    param_ (nullptr),
+    name_ (nullptr)
 {
 }
 
@@ -45,7 +45,7 @@ ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
   : object_ (object),
     cleanup_hook_ (cleanup_hook),
     param_ (param),
-    name_ (name ? ACE_OS::strdup (name) : 0)
+    name_ (name ? ACE_OS::strdup (name) : nullptr)
 {
 }
 
@@ -86,7 +86,7 @@ ACE_OS_Exit_Info::at_exit_i (void *object,
 {
   // Return -1 and sets errno if unable to allocate storage.  Enqueue
   // at the head and dequeue from the head to get LIFO ordering.
-  ACE_Cleanup_Info_Node *new_node = 0;
+  ACE_Cleanup_Info_Node *new_node = nullptr;
 
   ACE_NEW_RETURN (new_node,
                   ACE_Cleanup_Info_Node (object, cleanup_hook, param, name),
@@ -101,7 +101,7 @@ bool
 ACE_OS_Exit_Info::find (void *object)
 {
   for (ACE_Cleanup_Info_Node *iter = registered_objects_.head ();
-       iter != 0;
+       iter != nullptr;
        iter = iter->next ())
     {
       if (iter->object () == object)
@@ -117,9 +117,9 @@ ACE_OS_Exit_Info::find (void *object)
 bool
 ACE_OS_Exit_Info::remove (void *object)
 {
-  ACE_Cleanup_Info_Node *node = 0;
+  ACE_Cleanup_Info_Node *node = nullptr;
   for (ACE_Cleanup_Info_Node *iter = registered_objects_.head ();
-       iter != 0;
+       iter != nullptr;
        iter = iter->next ())
     {
       if (iter->object () == object)
@@ -146,7 +146,7 @@ ACE_OS_Exit_Info::call_hooks ()
   // Call all registered cleanup hooks, in reverse order of
   // registration.
   for (ACE_Cleanup_Info_Node *iter = registered_objects_.pop_front ();
-       iter != 0;
+       iter != nullptr;
        iter = registered_objects_.pop_front ())
     {
       if (iter->cleanup_hook () == reinterpret_cast<ACE_CLEANUP_FUNC> (

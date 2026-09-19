@@ -182,18 +182,18 @@ public:
   friend class ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
 
-  typedef EXT_ID KEY;
-  typedef INT_ID VALUE;
-  typedef ACE_LOCK lock_type;
-  typedef ACE_RB_Tree_Node<EXT_ID, INT_ID> ENTRY;
+  using KEY = EXT_ID;
+  using VALUE = INT_ID;
+  using lock_type = ACE_LOCK;
+  using ENTRY = ACE_RB_Tree_Node<EXT_ID, INT_ID>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> ITERATOR;
-  typedef ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> REVERSE_ITERATOR;
+  using ITERATOR = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  using REVERSE_ITERATOR = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
 
   // = STL-style iterator typedefs.
-  typedef ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iterator;
-  typedef ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> reverse_iterator;
+  using iterator = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  using reverse_iterator = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
 
   /// Constructor.
   ACE_RB_Tree (ACE_Allocator *alloc = nullptr);

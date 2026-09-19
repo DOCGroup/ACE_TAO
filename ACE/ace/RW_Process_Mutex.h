@@ -43,7 +43,7 @@ public:
   /// @a name, @a flags and @a mode \sa ACE_File_Lock.
   /// If not specified, a name is generated and flags and mode are set
   /// to default platform values.
-  ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
+  ACE_RW_Process_Mutex (const ACE_TCHAR *name = nullptr,
                         int flags = O_CREAT|O_RDWR,
                         mode_t mode =  ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS);
 

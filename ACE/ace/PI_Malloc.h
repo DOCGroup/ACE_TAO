@@ -45,9 +45,9 @@ public:
   class ACE_Malloc_Header;
   class ACE_Name_Node;
 
-  typedef ACE_Based_Pointer<ACE_Malloc_Header> MALLOC_HEADER_PTR;
-  typedef ACE_Based_Pointer<ACE_Name_Node> NAME_NODE_PTR;
-  typedef ACE_Based_Pointer_Basic<char> CHAR_PTR;
+  using MALLOC_HEADER_PTR = ACE_Based_Pointer<ACE_Malloc_Header>;
+  using NAME_NODE_PTR = ACE_Based_Pointer<ACE_Name_Node>;
+  using CHAR_PTR = ACE_Based_Pointer_Basic<char>;
 
   /**
    * @class ACE_Malloc_Header

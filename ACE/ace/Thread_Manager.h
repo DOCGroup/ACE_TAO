@@ -135,7 +135,7 @@ public:
                             ACE_CLEANUP_FUNC func,
                             void *param = nullptr);
 
-  virtual ~ACE_At_Thread_Exit_Func ();
+  ~ACE_At_Thread_Exit_Func () override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -150,7 +150,7 @@ protected:
    void *param_;
 
    /// The apply method
-   void apply ();
+   void apply () override;
 };
 
 /**
@@ -173,7 +173,7 @@ class ACE_Export ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
   friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 public:
   ACE_Thread_Descriptor_Base ();
-  virtual ~ACE_Thread_Descriptor_Base ();
+  ~ACE_Thread_Descriptor_Base () override;
 
   // = We need the following operators to make Borland happy.
 
@@ -280,7 +280,7 @@ public:
                void *param);
 
   /// Do nothing destructor to keep some compilers happy
-  ~ACE_Thread_Descriptor ();
+  ~ACE_Thread_Descriptor () override;
 
   /**
    * Do nothing but to acquire the thread descriptor's lock and
@@ -360,7 +360,7 @@ class ACE_Thread_Control;
 // ACE_Thread_Manager, so it's not useful for anyone else.
 // It also caused problems on IRIX5 with g++.
 #if defined (__GNUG__)
-typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
+using ACE_THR_MEMBER_FUNC = int (ACE_Thread_Manager::*)(ACE_Thread_Descriptor *, int);
 #endif /* __GNUG__ */
 
 /**

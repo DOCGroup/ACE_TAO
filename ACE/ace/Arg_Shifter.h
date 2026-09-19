@@ -222,7 +222,7 @@ private:
   int front_;
 };
 
-typedef ACE_Arg_Shifter_T<ACE_TCHAR> ACE_Arg_Shifter;
+using ACE_Arg_Shifter = ACE_Arg_Shifter_T<ACE_TCHAR>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

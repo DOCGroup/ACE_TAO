@@ -30,7 +30,7 @@ ACE_Log_Msg_UNIX_Syslog::~ACE_Log_Msg_UNIX_Syslog ()
 int
 ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * logger_key)
 {
-  if (logger_key == 0)
+  if (logger_key == nullptr)
     logger_key = ACE_Log_Msg::program_name ();
 
   // Initialize the UNIX syslog facility.  Default the syslog log
@@ -90,13 +90,13 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 
   ACE_TCHAR message[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
   ACE_OS::strcpy (message, log_record.msg_data ());
-  ACE_TCHAR *strtokp = 0;
+  ACE_TCHAR *strtokp = nullptr;
 
   for (ACE_TCHAR *line = ACE_OS::strtok_r (message,
                                            ACE_TEXT ("\n"),
                                            &strtokp);
-       line != 0;
-       line = ACE_OS::strtok_r (0,
+       line != nullptr;
+       line = ACE_OS::strtok_r (nullptr,
                                 ACE_TEXT ("\n"),
                                 &strtokp))
     {
@@ -110,7 +110,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
           || ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE_LITE))
         {
           ACE_TCHAR date_and_time[27];
-          if (0 == ACE::timestamp (date_and_time, sizeof (date_and_time), 1))
+          if (nullptr == ACE::timestamp (date_and_time, sizeof (date_and_time), 1))
             ACE_OS::strcpy (date_and_time, ACE_TEXT ("<time error>"));
           const ACE_TCHAR *prio_name =
             ACE_Log_Record::priority_name(ACE_Log_Priority(log_record.type()));

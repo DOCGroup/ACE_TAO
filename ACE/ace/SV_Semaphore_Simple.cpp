@@ -132,7 +132,7 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::name_2_key");
 
-  if (name == 0)
+  if (name == nullptr)
     {
       errno = EINVAL;
 #ifdef ACE_HAS_SYSV_IPC
@@ -179,7 +179,7 @@ ACE_SV_Semaphore_Simple::open (const char *name,
   key_t key = ACE_DEFAULT_SEM_KEY;
 
 #ifdef ACE_HAS_SYSV_IPC
-  if (name != 0)
+  if (name != nullptr)
     key = this->name_2_key (name);
 #else
   ACE_UNUSED_ARG (name);

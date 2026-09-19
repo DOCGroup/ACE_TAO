@@ -50,11 +50,11 @@ public:
    * then we'll allocate one dynamically.  Otherwise, we'll use the
    * one passed as a parameter.
    */
-  ACE_Task (ACE_Thread_Manager *thr_mgr = 0,
-            ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq = 0);
+  ACE_Task (ACE_Thread_Manager *thr_mgr = nullptr,
+            ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq = nullptr);
 
   /// Destructor.
-  virtual ~ACE_Task ();
+  ~ACE_Task () override;
 
   /// Gets the message queue associated with this task.
   ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *msg_queue ();
@@ -84,18 +84,18 @@ public: // Should be protected:
 
   /// Insert message into the message queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
-  int putq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
+  int putq (ACE_Message_Block *, ACE_Time_Value *timeout = nullptr);
 
   /**
    * Extract the first message from the queue (blocking).  Note that
    * @a timeout uses <{absolute}> time rather than <{relative}> time.
    * Returns number of items in queue if the call succeeds or -1 otherwise.
    */
-  int getq (ACE_Message_Block *&mb, ACE_Time_Value *timeout = 0);
+  int getq (ACE_Message_Block *&mb, ACE_Time_Value *timeout = nullptr);
 
   /// Return a message to the queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
-  int ungetq (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
+  int ungetq (ACE_Message_Block *, ACE_Time_Value *timeout = nullptr);
 
   /**
    * Turn the message around, sending it in the opposite direction in
@@ -108,14 +108,14 @@ public: // Should be protected:
    *           will time out. If 0, this call blocks until it can be
    *           completed.
    */
-  int reply (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int reply (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr);
 
   /**
    * Transfer message to the adjacent ACE_Task in a ACE_Stream.  Note
    * that @a timeout uses <{absolute}> time rather than <{relative}>
    * time.
    */
-  int put_next (ACE_Message_Block *msg, ACE_Time_Value *timeout = 0);
+  int put_next (ACE_Message_Block *msg, ACE_Time_Value *timeout = nullptr);
 
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated

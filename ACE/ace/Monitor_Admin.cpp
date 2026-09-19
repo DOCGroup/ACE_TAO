@@ -75,7 +75,7 @@ namespace ACE
     Monitor_Base*
     Monitor_Admin::monitor_point (const char* name)
     {
-      ACE_CString name_str (name, 0, false);
+      ACE_CString name_str (name, nullptr, false);
       return Monitor_Point_Registry::instance ()->get (name_str);
     }
 

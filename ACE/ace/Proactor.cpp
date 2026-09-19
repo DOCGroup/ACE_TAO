@@ -32,7 +32,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Process-wide ACE_Proactor.
-ACE_Proactor *ACE_Proactor::proactor_ = 0;
+ACE_Proactor *ACE_Proactor::proactor_ = nullptr;
 
 /// Controls whether the Proactor is deleted when we shut down (we can
 /// only delete it safely if we created it!)
@@ -176,7 +176,7 @@ ACE_Proactor_Timer_Handler::svc ()
 // *********************************************************************
 
 ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall ()
-  : proactor_ (0)
+  : proactor_ (nullptr)
 {
 }
 
@@ -218,7 +218,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                                              int,
                                              const ACE_Time_Value &time)
 {
-  if (this->proactor_ == 0)
+  if (this->proactor_ == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
                        ACE_TEXT (" no completion port to post timeout to?!@\n")),
@@ -233,7 +233,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                                           0,
                                           -1);
 
-  if (asynch_timer == 0)
+  if (asynch_timer == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
                        ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
@@ -289,7 +289,7 @@ ACE_Proactor_Handle_Timeout_Upcall::deletion (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 {
-  if (this->proactor_ == 0)
+  if (this->proactor_ == nullptr)
     {
       this->proactor_ = &proactor;
       return 0;
@@ -306,17 +306,17 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
                             bool delete_implementation,
                             ACE_Proactor_Timer_Queue *tq)
-  : implementation_ (0),
+  : implementation_ (nullptr),
     delete_implementation_ (delete_implementation),
-    timer_handler_ (0),
-    timer_queue_ (0),
+    timer_handler_ (nullptr),
+    timer_queue_ (nullptr),
     delete_timer_queue_ (0),
     end_event_loop_ (0),
     event_loop_thread_count_ (0)
 {
   this->implementation (implementation);
 
-  if (this->implementation () == 0)
+  if (this->implementation () == nullptr)
     {
 #if defined (ACE_HAS_AIO_CALLS)
       // POSIX Proactor.
@@ -368,18 +368,18 @@ ACE_Proactor::instance (size_t /* threads */)
 {
   ACE_TRACE ("ACE_Proactor::instance");
 
-  if (ACE_Proactor::proactor_ == 0)
+  if (ACE_Proactor::proactor_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Static_Object_Lock::instance (),
-                                0));
+                                nullptr));
 
-      if (ACE_Proactor::proactor_ == 0)
+      if (ACE_Proactor::proactor_ == nullptr)
         {
           ACE_NEW_RETURN (ACE_Proactor::proactor_,
                           ACE_Proactor,
-                          0);
+                          nullptr);
 
           ACE_Proactor::delete_proactor_ = true;
           ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Proactor, ACE_Proactor::proactor_);
@@ -394,7 +394,7 @@ ACE_Proactor::instance (ACE_Proactor * r, bool delete_proactor)
   ACE_TRACE ("ACE_Proactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), nullptr));
 
   ACE_Proactor *t = ACE_Proactor::proactor_;
 
@@ -416,7 +416,7 @@ ACE_Proactor::close_singleton ()
   if (ACE_Proactor::delete_proactor_)
     {
       delete ACE_Proactor::proactor_;
-      ACE_Proactor::proactor_ = 0;
+      ACE_Proactor::proactor_ = nullptr;
       ACE_Proactor::delete_proactor_ = false;
     }
 }
@@ -475,7 +475,7 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events ();
 
-      if (eh != 0 && (*eh) (this))
+      if (eh != nullptr && (*eh) (this))
         continue;
 
       if (result == -1)
@@ -532,7 +532,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events (tv);
 
-      if (eh != 0 && (*eh) (this))
+      if (eh != nullptr && (*eh) (this))
         continue;
 
       if (result == -1 || result == 0)
@@ -616,27 +616,27 @@ ACE_Proactor::close ()
   if (this->delete_implementation_)
     {
       delete this->implementation ();
-      this->implementation_ = 0;
+      this->implementation_ = nullptr;
     }
 
   // Delete the timer handler.
   if (this->timer_handler_)
     {
       delete this->timer_handler_;
-      this->timer_handler_ = 0;
+      this->timer_handler_ = nullptr;
     }
 
   // Delete the timer queue.
   if (this->delete_timer_queue_)
     {
       delete this->timer_queue_;
-      this->timer_queue_ = 0;
+      this->timer_queue_ = nullptr;
       this->delete_timer_queue_ = 0;
     }
   else if (this->timer_queue_)
     {
       this->timer_queue_->close ();
-      this->timer_queue_ = 0;
+      this->timer_queue_ = nullptr;
     }
 
   return 0;
@@ -774,7 +774,7 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
     }
 
   // New timer queue.
-  if (tq == 0)
+  if (tq == nullptr)
     {
       ACE_NEW (this->timer_queue_,
                TIMER_HEAP);
@@ -791,7 +791,7 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
 
   TQ_Base * tqb = dynamic_cast<TQ_Base*> (this->timer_queue_);
 
-  if (tqb != 0)
+  if (tqb != nullptr)
     {
       tqb->upcall_functor ().proactor (*this);
     }

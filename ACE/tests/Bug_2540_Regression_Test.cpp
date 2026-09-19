@@ -2,7 +2,7 @@
  * @file Bug_2540_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2540
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2540
+ *   https://github.com/DOCGroup/bugzilla/issues/2540
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  * Based on Bug_1890_Regression_Test
@@ -103,7 +103,7 @@ run_main (int, ACE_TCHAR *[])
   // regardless of platform. In particular, this test relies on a handler
   // that doesn't consume ready-to-read data being called back - this won't
   // happen with ACE_WFMO_Reactor.
-  ACE_Select_Reactor *impl_ptr = 0;
+  ACE_Select_Reactor *impl_ptr = nullptr;
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
   std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
@@ -217,7 +217,7 @@ int Timer::open(ACE_Reactor * r)
   ACE_Time_Value const interval(0, ACE_ONE_SECOND_IN_USECS / 10);
   ACE_Time_Value const startup (0, ACE_ONE_SECOND_IN_USECS / 20);
 
-  if ( -1 == r->schedule_timer(this, 0, startup, interval))
+  if ( -1 == r->schedule_timer(this, nullptr, startup, interval))
   {
       ACE_ERROR_RETURN((LM_ERROR, "Could not schedule timer\n"), -1);
   }

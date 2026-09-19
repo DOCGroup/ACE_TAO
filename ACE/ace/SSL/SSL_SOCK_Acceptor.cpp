@@ -46,7 +46,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // status; we'll block in SSL_accept if the socket is blocking, and
   // block in ACE::select if not.
   int reset_blocking_mode = 0;
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
                                               ACE_NONBLOCK);
@@ -130,10 +130,14 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
         {
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set() == 1 || wr_handle.num_set () == 1);
-          status = ACE::select (int (handle) + 1,
+          int select_width = 0;
+#if !defined (ACE_WIN32)
+          select_width = handle + 1;
+#endif /* ACE_WIN32 */
+          status = ACE::select (select_width,
                                 &rd_handle,
                                 &wr_handle,
-                                0,
+                                nullptr,
                                 timeout);
 
           (void) countdown.update ();

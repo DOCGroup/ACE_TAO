@@ -92,8 +92,8 @@ typedef char ACE_ANTI_TCHAR;
 #   define ACE_TEXT_PRIs ACE_TEXT("s")
 # endif
 #else /* ACE_USES_WCHAR */
-typedef char ACE_TCHAR;
-typedef wchar_t ACE_ANTI_TCHAR;
+using ACE_TCHAR = char;
+using ACE_ANTI_TCHAR = wchar_t;
 # define ACE_TEXT(STRING) STRING
 # define ACE_TEXT_ALWAYS_CHAR(STRING) STRING
 # define ACE_TEXT_ALWAYS_WCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()

@@ -31,7 +31,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 extern "C" ACE_Export void
 ACE_TSS_C_cleanup (void *object)
 {
-  if (object != 0)
+  if (object != nullptr)
     {
       ACE_TSS_Adapter * const tss_adapter = (ACE_TSS_Adapter *) object;
       // Perform cleanup on the real TS object.

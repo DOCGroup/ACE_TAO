@@ -54,7 +54,7 @@ namespace ACE
 }
 
 /// For the ACE_FACTORY_DEFINE macro in the .cpp file.
-typedef ACE::Monitor_Control::Monitor_Admin_Manager MC_ADMINMANAGER;
+using MC_ADMINMANAGER = ACE::Monitor_Control::Monitor_Admin_Manager;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

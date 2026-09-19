@@ -25,7 +25,7 @@ ACE_LSOCK_Stream::get_local_addr (ACE_Addr &addr) const
   ACE_UNIX_Addr *rhs_unix_addr = dynamic_cast<ACE_UNIX_Addr *> (&addr);
   ACE_UNIX_Addr lhs_unix_addr;
 
-  if (rhs_unix_addr == 0)
+  if (rhs_unix_addr == nullptr)
     return -1;
   else if (ACE_SOCK::get_local_addr (lhs_unix_addr) == -1)
     return -1;
@@ -74,7 +74,7 @@ ACE_LSOCK_Stream::send_msg (const iovec iov[],
 
   send_msg.msg_iov = const_cast <iovec *> (iov);
   send_msg.msg_iovlen = n;
-  send_msg.msg_name = 0;
+  send_msg.msg_name = nullptr;
   send_msg.msg_namelen = 0;
 
 #if defined (ACE_LACKS_SENDMSG)
@@ -115,7 +115,7 @@ ACE_LSOCK_Stream::recv_msg (iovec iov[],
 
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
-  recv_msg.msg_name = 0;
+  recv_msg.msg_name = nullptr;
   recv_msg.msg_namelen = 0;
 
 #if defined (ACE_LACKS_SENDMSG)

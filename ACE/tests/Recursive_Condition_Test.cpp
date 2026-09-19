@@ -83,7 +83,7 @@ waiter (void *)
   if (mutex_.release () != 0)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("release")));
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int

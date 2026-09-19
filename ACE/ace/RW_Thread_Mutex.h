@@ -35,8 +35,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_RW_Thread_Mutex : public ACE_RW_Mutex
 {
 public:
-  ACE_RW_Thread_Mutex (const ACE_TCHAR *name = 0,
-                       void *arg = 0);
+  ACE_RW_Thread_Mutex (const ACE_TCHAR *name = nullptr,
+                       void *arg = nullptr);
 
   /// Default dtor.
   ~ACE_RW_Thread_Mutex ();

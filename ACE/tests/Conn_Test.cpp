@@ -308,7 +308,7 @@ void
 cached_connect (STRAT_CONNECTOR &con,
                 const ACE_INET_Addr &server_addr)
 {
-  Svc_Handler *svc_handler = 0;
+  Svc_Handler *svc_handler = nullptr;
 
   for (int i = 0; i < n_client_iterations; i++)
     {
@@ -371,7 +371,7 @@ client_connections (void *arg)
               ACE_TEXT ("(%P|%t) **** starting cached blocking connect\n")));
   cached_connect (*info->strat_connector_,
                   *info->server_addr_);
-  return 0;
+  return nullptr;
 }
 
 // Execute the client tests.
@@ -390,7 +390,7 @@ client (void *arg)
   // connection.
   CACHED_CONNECT_STRATEGY caching_connect_strategy;
 
-  STRAT_CONNECTOR strat_connector (0,
+  STRAT_CONNECTOR strat_connector (nullptr,
                                    &creation_strategy,
                                    &caching_connect_strategy,
                                    &activation_strategy);
@@ -422,7 +422,7 @@ client (void *arg)
 #else  /* ACE_HAS_THREADS */
   client_connections (&info);
 #endif /* ACE_HAS_THREADS */
-  return 0;
+  return nullptr;
 }
 
 // Performs the iterative server activities.
@@ -445,7 +445,7 @@ server (void *arg)
   Svc_Handler *svc_handler;
   ACE_NEW_RETURN (svc_handler,
                   Svc_Handler,
-                  0);
+                  nullptr);
 
   // Keep looping until we timeout on <accept> or fail.
 
@@ -474,7 +474,7 @@ server (void *arg)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("accept timed out\n")));
-              return 0;
+              return nullptr;
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -493,7 +493,7 @@ server (void *arg)
       svc_handler->recv_data ();
     }
 
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return nullptr);
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -513,7 +513,7 @@ int
 spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
-  pid_t *children_ptr = 0;
+  pid_t *children_ptr = nullptr;
   ACE_NEW_RETURN (children_ptr,
                   pid_t[n_servers],
                   -1);
@@ -563,7 +563,7 @@ spawn_processes (ACCEPTOR *acceptor,
 
   do
     {
-      child = ACE_OS::waitpid (0, 0, 0);
+      child = ACE_OS::waitpid (0, nullptr, 0);
       if (child != -1)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reaping %d\n"),

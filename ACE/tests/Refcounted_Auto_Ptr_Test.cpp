@@ -75,7 +75,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  int open (void *args = 0) override;
+  int open (void *args = nullptr) override;
 
   /// Terminator.
   int close (u_long flags = 0) override;
@@ -232,7 +232,7 @@ Scheduler::svc ()
       // Dequeue the next method request (we use an unique pointer in
       // case an exception is thrown in the <call>).
       ACE_Method_Request *mo_p = this->activation_queue_.dequeue ();
-      if (0 == mo_p)
+      if (nullptr == mo_p)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) activation queue shut down\n")));
@@ -479,7 +479,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr = 0;
+  Scheduler *scheduler_ptr = nullptr;
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,

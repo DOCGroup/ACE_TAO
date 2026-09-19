@@ -111,7 +111,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::create_buckets (size_t size)
 {
   size_t bytes = size * sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>);
-  void *ptr = 0;
+  void *ptr = nullptr;
 
   ACE_ALLOCATOR_RETURN (ptr,
                         this->table_allocator_->malloc (bytes),
@@ -141,12 +141,12 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   // memory before allocating new one.
   this->close_i ();
 
-  if (table_alloc == 0)
+  if (table_alloc == nullptr)
     table_alloc = ACE_Allocator::instance ();
 
   this->table_allocator_ = table_alloc;
 
-  if (entry_alloc == 0)
+  if (entry_alloc == nullptr)
     entry_alloc = table_alloc;
 
   this->entry_allocator_ = entry_alloc;
@@ -233,7 +233,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
   size_t loc = 0;
   if (this->shared_find (ext_id, entry, loc) == -1)
     {
-      void *ptr = 0;
+      void *ptr = nullptr;
       // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
@@ -261,7 +261,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
   if (this->shared_find (ext_id, entry, loc) == -1)
     {
       // Not found.
-      void *ptr = 0;
+      void *ptr = nullptr;
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
                             -1);

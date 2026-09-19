@@ -89,7 +89,7 @@ client (void *arg)
   if (cli_stream.close () == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
 
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -124,7 +124,7 @@ server (void *arg)
 #  endif /* ACE_WIN64 */
   int result = ACE_OS::select (select_width,
                                handle_set,
-                               0, 0, &tv);
+                               nullptr, nullptr, &tv);
   ACE_TEST_ASSERT (tv == def_timeout);
 
   if (result == -1)
@@ -132,7 +132,7 @@ server (void *arg)
   else if (result == 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) select timed out, shutting down\n")));
-      return 0;
+      return nullptr;
     }
 
   // Create a new ACE_SOCK_Stream endpoint (note automatic restart
@@ -163,7 +163,7 @@ server (void *arg)
 #  endif /* ACE_WIN64 */
           if (ACE_OS::select (select_width,
                               handle_set,
-                              0, 0, 0) == -1)
+                              nullptr, nullptr, nullptr) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
@@ -184,7 +184,7 @@ server (void *arg)
               // Close endpoint.
               if (new_stream.close () == -1)
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
-              return 0;
+              return nullptr;
             }
           else if (r_bytes == -1)
             {
@@ -204,7 +204,7 @@ server (void *arg)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("accept")));
     }
 
-  return 0;
+  return nullptr;
 }
 
 static void

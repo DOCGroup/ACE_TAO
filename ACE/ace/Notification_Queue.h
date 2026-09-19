@@ -138,7 +138,7 @@ private:
   /// a time.
   ACE_Unbounded_Queue <ACE_Notification_Queue_Node*> alloc_queue_;
 
-  typedef ACE_Intrusive_List<ACE_Notification_Queue_Node> Buffer_List;
+  using Buffer_List = ACE_Intrusive_List<ACE_Notification_Queue_Node>;
 
   /// Keeps track of all pending notifications.
   Buffer_List notify_queue_;

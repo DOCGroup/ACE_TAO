@@ -27,7 +27,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Framework_Repository)
 sig_atomic_t ACE_Framework_Repository::shutting_down_ = 0;
 
 // Pointer to the Singleton instance.
-ACE_Framework_Repository *ACE_Framework_Repository::repository_ = 0;
+ACE_Framework_Repository *ACE_Framework_Repository::repository_ = nullptr;
 
 ACE_Framework_Repository::~ACE_Framework_Repository ()
 {
@@ -40,7 +40,7 @@ ACE_Framework_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Framework_Repository::open");
 
-  ACE_Framework_Component **temp = 0;
+  ACE_Framework_Component **temp = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,
@@ -65,7 +65,7 @@ ACE_Framework_Repository::close ()
 
   this->shutting_down_ = 1;
 
-  if (this->component_vector_ != 0)
+  if (this->component_vector_ != nullptr)
     {
       // Delete components in reverse order.
       for (int i = this->current_size_ - 1; i >= 0; i--)
@@ -75,7 +75,7 @@ ACE_Framework_Repository::close ()
               const_cast<ACE_Framework_Component *> (
                 this->component_vector_[i]);
 
-            this->component_vector_[i] = 0;
+            this->component_vector_[i] = nullptr;
             delete s;
           }
 
@@ -84,7 +84,7 @@ ACE_Framework_Repository::close ()
 #else
       delete [] this->component_vector_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      this->component_vector_ = 0;
+      this->component_vector_ = nullptr;
       this->current_size_ = 0;
     }
 
@@ -97,19 +97,19 @@ ACE_Framework_Repository::instance (int size)
 {
   ACE_TRACE ("ACE_Framework_Repository::instance");
 
-  if (ACE_Framework_Repository::repository_ == 0)
+  if (ACE_Framework_Repository::repository_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-      if (ACE_Framework_Repository::repository_ == 0)
+                                *ACE_Static_Object_Lock::instance (), nullptr));
+      if (ACE_Framework_Repository::repository_ == nullptr)
         {
           if (ACE_Object_Manager::starting_up () ||
               !ACE_Object_Manager::shutting_down ())
             {
               ACE_NEW_RETURN (ACE_Framework_Repository::repository_,
                               ACE_Framework_Repository (size),
-                              0);
+                              nullptr);
             }
         }
     }
@@ -126,7 +126,7 @@ ACE_Framework_Repository::close_singleton ()
                      *ACE_Static_Object_Lock::instance ()));
 
   delete ACE_Framework_Repository::repository_;
-  ACE_Framework_Repository::repository_ = 0;
+  ACE_Framework_Repository::repository_ = nullptr;
 }
 
 int
@@ -168,7 +168,7 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
         ACE_OS::strcmp (this->component_vector_[i]->name_, name) == 0)
       {
         delete this->component_vector_[i];
-        this->component_vector_[i] = 0;
+        this->component_vector_[i] = nullptr;
         this->compact ();
         return 0;
       }
@@ -206,7 +206,7 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
                         ACE_TEXT ("component \"%s\"\n"),
                         dll_name, this->component_vector_[i]->name_));
         delete this->component_vector_[i];
-        this->component_vector_[i] = 0;
+        this->component_vector_[i] = nullptr;
         ++retval;
       }
 
@@ -232,7 +232,7 @@ ACE_Framework_Repository::compact ()
       // Find hole
       for (i = 0; i < this->current_size_; ++i)
         {
-          if (this->component_vector_[i] == 0)
+          if (this->component_vector_[i] == nullptr)
             {
               if (start_hole == this->current_size_)
                 {

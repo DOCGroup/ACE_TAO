@@ -435,7 +435,7 @@ test_hash_map_manager (size_t table_size,
 
       {
         i = 0;
-        HASH_ENTRY *entry = 0;
+        HASH_ENTRY *entry = nullptr;
 
         for (HASH_ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -478,7 +478,7 @@ test_hash_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        HASH_ENTRY *entry = 0;
+        HASH_ENTRY *entry = nullptr;
 
         for (HASH_REVERSE_ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -521,7 +521,7 @@ test_hash_map_manager (size_t table_size,
 
       {
         i = 0;
-        HASH_MAP_MANAGER::ENTRY *entry = 0;
+        HASH_MAP_MANAGER::ENTRY *entry = nullptr;
 
         for (HASH_MAP_MANAGER::ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -564,7 +564,7 @@ test_hash_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        HASH_MAP_MANAGER::ENTRY *entry = 0;
+        HASH_MAP_MANAGER::ENTRY *entry = nullptr;
 
         for (HASH_MAP_MANAGER::REVERSE_ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -640,7 +640,7 @@ test_map_manager (size_t table_size,
 
       {
         i = 0;
-        MAP_ENTRY *entry = 0;
+        MAP_ENTRY *entry = nullptr;
 
         for (ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -683,7 +683,7 @@ test_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        MAP_ENTRY *entry = 0;
+        MAP_ENTRY *entry = nullptr;
 
         for (REVERSE_ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -726,7 +726,7 @@ test_map_manager (size_t table_size,
 
       {
         i = 0;
-        MAP_MANAGER::ENTRY *entry = 0;
+        MAP_MANAGER::ENTRY *entry = nullptr;
 
         for (MAP_MANAGER::ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -769,7 +769,7 @@ test_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        MAP_MANAGER::ENTRY *entry = 0;
+        MAP_MANAGER::ENTRY *entry = nullptr;
 
         for (MAP_MANAGER::REVERSE_ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -818,7 +818,7 @@ test_map_manager (size_t table_size,
 
   // Unbind one at a time.
   MAP_MANAGER::iterator end = map.end ();
-  while (1)
+  while (true)
     {
       MAP_MANAGER::iterator iter = map.begin ();
       if (iter == end)
@@ -849,7 +849,7 @@ run_test (int (*ptf) (size_t, size_t, int),
 
   timer.elapsed_time (et);
 
-  ACE_TCHAR *test_iterators_string = 0;
+  ACE_TCHAR *test_iterators_string = nullptr;
 
   if (test_iterators)
     test_iterators_string =

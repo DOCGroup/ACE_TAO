@@ -32,9 +32,9 @@ class ACE_RW_Thread_Mutex;
 class ACE_Thread_Semaphore;
 
 template <class MUTEX> class ACE_Condition;
-typedef ACE_Condition<ACE_Null_Mutex> ACE_Null_Condition;
-typedef ACE_Condition<ACE_Thread_Mutex> ACE_Condition_Thread_Mutex;
-typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;
+using ACE_Null_Condition = ACE_Condition<ACE_Null_Mutex>;
+using ACE_Condition_Thread_Mutex = ACE_Condition<ACE_Thread_Mutex>;
+using ACE_Condition_Recursive_Thread_Mutex = ACE_Condition<ACE_Recursive_Thread_Mutex>;
 
 /**
  * @class ACE_NULL_SYNCH
@@ -46,15 +46,15 @@ typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread
 class ACE_Export ACE_NULL_SYNCH
 {
 public:
-  typedef ACE_Null_Mutex MUTEX;
-  typedef ACE_Null_Mutex NULL_MUTEX;
-  typedef ACE_Null_Mutex PROCESS_MUTEX;
-  typedef ACE_Null_Mutex RECURSIVE_MUTEX;
-  typedef ACE_Null_Mutex RW_MUTEX;
-  typedef ACE_Null_Condition CONDITION;
-  typedef ACE_Null_Condition RECURSIVE_CONDITION;
-  typedef ACE_Null_Semaphore SEMAPHORE;
-  typedef ACE_Null_Mutex NULL_SEMAPHORE;
+  using MUTEX = ACE_Null_Mutex;
+  using NULL_MUTEX = ACE_Null_Mutex;
+  using PROCESS_MUTEX = ACE_Null_Mutex;
+  using RECURSIVE_MUTEX = ACE_Null_Mutex;
+  using RW_MUTEX = ACE_Null_Mutex;
+  using CONDITION = ACE_Null_Condition;
+  using RECURSIVE_CONDITION = ACE_Null_Condition;
+  using SEMAPHORE = ACE_Null_Semaphore;
+  using NULL_SEMAPHORE = ACE_Null_Mutex;
 };
 
 #if defined (ACE_HAS_THREADS)
@@ -74,15 +74,15 @@ class ACE_Process_Mutex;
 class ACE_Export ACE_MT_SYNCH
 {
 public:
-  typedef ACE_Thread_Mutex MUTEX;
-  typedef ACE_Null_Mutex NULL_MUTEX;
-  typedef ACE_Process_Mutex PROCESS_MUTEX;
-  typedef ACE_Recursive_Thread_Mutex RECURSIVE_MUTEX;
-  typedef ACE_RW_Thread_Mutex RW_MUTEX;
-  typedef ACE_Condition_Thread_Mutex CONDITION;
-  typedef ACE_Condition_Recursive_Thread_Mutex RECURSIVE_CONDITION;
-  typedef ACE_Thread_Semaphore SEMAPHORE;
-  typedef ACE_Null_Semaphore NULL_SEMAPHORE;
+  using MUTEX = ACE_Thread_Mutex;
+  using NULL_MUTEX = ACE_Null_Mutex;
+  using PROCESS_MUTEX = ACE_Process_Mutex;
+  using RECURSIVE_MUTEX = ACE_Recursive_Thread_Mutex;
+  using RW_MUTEX = ACE_RW_Thread_Mutex;
+  using CONDITION = ACE_Condition_Thread_Mutex;
+  using RECURSIVE_CONDITION = ACE_Condition_Recursive_Thread_Mutex;
+  using SEMAPHORE = ACE_Thread_Semaphore;
+  using NULL_SEMAPHORE = ACE_Null_Semaphore;
 };
 
 #endif /* ACE_HAS_THREADS */

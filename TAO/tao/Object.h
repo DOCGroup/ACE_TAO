@@ -267,8 +267,8 @@ namespace CORBA
     /// Constructor
     Object (TAO_Stub *p,
             CORBA::Boolean collocated = false,
-            TAO_Abstract_ServantBase *servant = 0,
-            TAO_ORB_Core *orb_core = 0);
+            TAO_Abstract_ServantBase *servant = nullptr,
+            TAO_ORB_Core *orb_core = nullptr);
 
     Object (IOP::IOR *ior, TAO_ORB_Core *orb_core);
 

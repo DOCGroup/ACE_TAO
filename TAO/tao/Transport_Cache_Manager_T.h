@@ -12,8 +12,9 @@
 #define TAO_CONNECTION_CACHE_MANAGER_T_H
 
 #include /**/ "ace/pre.h"
+#include "ace/Event_Handler.h"
 #include "ace/Null_Mutex.h"
-#include "ace/Thread_Mutex.h"
+#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -94,16 +95,19 @@ namespace TAO
     // == Public methods
     /// Constructor
     Transport_Cache_Manager_T (
+      ACE_Reactor &reactor,
       int percent,
       purging_strategy* purging_strategy,
       size_t cache_maximum,
       bool locked,
-      const char *orbid);
+      char const *orbid,
+      int idle_timeout,
+      int idle_scan_interval);
 
     /// Destructor
     ~Transport_Cache_Manager_T ();
 
-    /// Add the transport to the cache.
+    /// Add the transport to the cache and record transport activity.
     /**
      * The transport has the property definition based on which caching
      * can be done. This method sets the cache entry status.  By
@@ -127,18 +131,20 @@ namespace TAO
     /// Purge the entry from the Cache Map
     int purge_entry (HASH_MAP_ENTRY *& entry);
 
-    /// Mark the entry as connected.
+    /// Purge the entry from the Cache Map only when the entry is purgable
+    int purge_entry_when_purgable (HASH_MAP_ENTRY *& entry);
+
+    /// Mark the entry as connected and record transport activity.
     void mark_connected (HASH_MAP_ENTRY *& entry, bool state);
 
-    /// Make the entry idle and ready for use.
+    /// Make the entry idle and record transport activity.
     int make_idle (HASH_MAP_ENTRY *&entry);
 
-    /// Modify the state setting on the provided entry.
+    /// Modify the state setting and record transport activity.
     void set_entry_state (HASH_MAP_ENTRY *&entry,
                           TAO::Cache_Entries_State state);
 
-    /// Mark the entry as touched. This call updates the purging
-    /// strategy policy information.
+    /// Record transport activity and update purging strategy information.
     int update_entry (HASH_MAP_ENTRY *&entry);
 
     /// Close the underlying hash map manager and return any handlers
@@ -167,6 +173,36 @@ namespace TAO
     HASH_MAP &map ();
 
   private:
+    friend transport_type;
+
+    /// Track synchronous dispatch when idle expiry is enabled.
+    bool begin_active_request (transport_type &transport, bool &tracked);
+    void end_active_request (transport_type &transport);
+
+    /// Delegate reactor timer callbacks directly to the owning cache manager.
+    class TCM_Idle_Timer_Handler final : public ACE_Event_Handler
+    {
+    public:
+      explicit TCM_Idle_Timer_Handler (Transport_Cache_Manager_T *manager);
+
+      int handle_timeout (ACE_Time_Value const &current_time,
+                          void const *act = nullptr) override;
+
+    private:
+      Transport_Cache_Manager_T * const manager_;
+    };
+
+    /// Purge idle entries under the cache lock and close their retained
+    /// transports after releasing the lock.
+    void purge_idle_transports ();
+
+    /// Purge an idle entry. Caller must hold the cache lock.
+    int purge_entry_if_idle_i (HASH_MAP_ENTRY *entry);
+
+    /// Mark the scanner stopped and return its timer id.
+    /// Caller must hold the cache lock.
+    long stop_idle_scanner_i ();
+
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.
     Find_Result find (
@@ -252,6 +288,17 @@ namespace TAO
 
     /// Maximum size of the cache
     size_t cache_maximum_;
+
+    /// Reactor used for the idle scanner; it outlives this cache manager.
+    ACE_Reactor &reactor_;
+
+    /// Idle timeout and periodic scan interval configured for this cache.
+    int const idle_timeout_;
+    int const idle_scan_interval_;
+
+    /// Idle scanner lifecycle, protected by the cache lock.
+    TCM_Idle_Timer_Handler idle_scanner_;
+    long idle_scan_timer_id_ { -1 };
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     /// Connection cache purge monitor.

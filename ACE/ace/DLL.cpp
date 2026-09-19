@@ -16,9 +16,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
   : open_mode_ (0),
-    dll_name_ (0),
+    dll_name_ (nullptr),
     close_handle_on_destruction_ (close_handle_on_destruction),
-    dll_handle_ (0),
+    dll_handle_ (nullptr),
     error_ (0)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (int)");
@@ -26,9 +26,9 @@ ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
 
 ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
   : open_mode_ (0),
-    dll_name_ (0),
+    dll_name_ (nullptr),
     close_handle_on_destruction_ (false),
-    dll_handle_ (0),
+    dll_handle_ (nullptr),
     error_ (0)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
@@ -71,9 +71,9 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
                   bool close_handle_on_destruction)
   : open_mode_ (open_mode),
-    dll_name_ (0),
+    dll_name_ (nullptr),
     close_handle_on_destruction_ (close_handle_on_destruction),
-    dll_handle_ (0),
+    dll_handle_ (nullptr),
     error_ (0)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL");
@@ -143,7 +143,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
       if (ACE::debug ())
         ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
-                    this->dll_name_ == 0 ? ACE_TEXT ("(null)")
+                    this->dll_name_ == nullptr ? ACE_TEXT ("(null)")
         : this->dll_name_));
       return -1;
     }
@@ -195,7 +195,7 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   this->error_ = 0;
   this->errmsg_.clear (true);
 
-  void *sym = 0;
+  void *sym = nullptr;
   if (this->dll_handle_)
     sym = this->dll_handle_->symbol (sym_name, ignore_errors, this->errmsg_);
 
@@ -222,13 +222,13 @@ ACE_DLL::close ()
     this->error_ = 1;
 
   // Even if close_dll() failed, go ahead and cleanup.
-  this->dll_handle_ = 0;
+  this->dll_handle_ = nullptr;
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free (this->dll_name_);
 #else
   delete [] this->dll_name_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  this->dll_name_ = 0;
+  this->dll_name_ = nullptr;
   this->close_handle_on_destruction_ = false;
 
   return retval;
@@ -245,7 +245,7 @@ ACE_DLL::error () const
       return const_cast<ACE_TCHAR*> (this->errmsg_.c_str ());
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Return the handle to the user either temporarily or forever, thus

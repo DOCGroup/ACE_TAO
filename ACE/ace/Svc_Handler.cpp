@@ -40,7 +40,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
       // If this ACE_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_ASSERT (dynamic_instance != 0);
+      ACE_ASSERT (dynamic_instance != nullptr);
 
       throw std::bad_alloc ();
     }
@@ -62,14 +62,14 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
 
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
-  if (dynamic_instance == 0)
+  if (dynamic_instance == nullptr)
     {
       // If this ACE_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_ASSERT (dynamic_instance != 0);
+      ACE_ASSERT (dynamic_instance != nullptr);
 
-      return 0;
+      return nullptr;
     }
   else
     {
@@ -122,8 +122,8 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Svc_Handler (ACE_Thread_Manager 
                                                           ACE_Reactor *reactor)
   : ACE_Task<SYNCH_TRAITS> (tm, mq),
     closing_ (false),
-    recycler_ (0),
-    recycling_act_ (0)
+    recycler_ (nullptr),
+    recycling_act_ (nullptr)
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Svc_Handler");
 
@@ -458,7 +458,7 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS> int
 ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i ()
 {
   ACE_Message_Queue_Iterator<SYNCH_TRAITS> iterator (*this->msg_queue ());
-  ACE_Message_Block *mblk = 0;
+  ACE_Message_Block *mblk = nullptr;
   ssize_t result = 0;
 
   // Get the first <ACE_Message_Block> so that we can write everything

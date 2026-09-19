@@ -44,11 +44,11 @@ ACE_SOCK_Dgram_Bcast::close ()
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::close");
 
   ACE_Bcast_Node *temp = this->if_list_;
-  this->if_list_ = 0;
+  this->if_list_ = nullptr;
 
   // Release the dynamically allocated memory.
 
-  while (temp != 0)
+  while (temp != nullptr)
     {
       ACE_Bcast_Node *hold = temp->next_;
       delete temp;
@@ -62,7 +62,7 @@ ACE_SOCK_Dgram_Bcast::close ()
 // Here's the simple-minded constructor.
 
 ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast ()
-  : if_list_ (0)
+  : if_list_ (nullptr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
 }
@@ -76,7 +76,7 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
                                             int reuse_addr,
                                             const ACE_TCHAR *host_name)
   : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr),
-    if_list_ (0)
+    if_list_ (nullptr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
 
@@ -149,7 +149,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
     {
       hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
 
-      if (hp == 0)
+      if (hp == nullptr)
         return -1;
       else
         ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr,
@@ -263,7 +263,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         }
       else
         {
-          if (host_name != 0)
+          if (host_name != nullptr)
             ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                         ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enabled for this interface."),
                         flags.ifr_name));
@@ -279,7 +279,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                                   this->if_list_),
                   -1);
 #endif /* !ACE_WIN32 */
-  if (this->if_list_ == 0)
+  if (this->if_list_ == nullptr)
     {
       errno = ENXIO;
       return -1;
@@ -301,11 +301,11 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
   ssize_t iterations = 0;
   ssize_t total_bytes = 0;
 
-  if (this->if_list_ == 0)
+  if (this->if_list_ == nullptr)
     return -1;
 
   for (ACE_Bcast_Node *temp = this->if_list_;
-       temp != 0;
+       temp != nullptr;
        temp = temp->next_)
     {
       temp->bcast_addr_.set_port_number (port_number);
@@ -337,13 +337,13 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");
 
-  if (this->if_list_ == 0)
+  if (this->if_list_ == nullptr)
     return -1;
 
   // Send the message to every interface.
 
   for (ACE_Bcast_Node *temp = this->if_list_;
-       temp != 0;
+       temp != nullptr;
        temp = temp->next_)
     {
       temp->bcast_addr_.set_port_number (port_number);

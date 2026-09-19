@@ -99,7 +99,7 @@ public:
    */
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
                           const ACE_Addr &remote_sap,
-                          const ACE_Time_Value *timeout = 0,
+                          const ACE_Time_Value *timeout = nullptr,
                           const ACE_Addr &local_sap = ACE_Addr::sap_any,
                           int reuse_addr = 0,
                           int flags = 0,
@@ -151,9 +151,9 @@ public:
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
                           const ACE_Addr &remote_sap,
                           ACE_QoS_Params qos_params,
-                          const ACE_Time_Value *timeout = 0,
+                          const ACE_Time_Value *timeout = nullptr,
                           const ACE_Addr &local_sap = ACE_Addr::sap_any,
-                          ACE_Protocol_Info *protocolinfo = 0,
+                          ACE_Protocol_Info *protocolinfo = nullptr,
                           ACE_SOCK_GROUP g = 0,
                           u_long flags = 0,
                           int reuse_addr = 0,
@@ -204,7 +204,7 @@ public:
    */
   int connect (ACE_SSL_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = 0,
+               const ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
@@ -256,9 +256,9 @@ public:
   int connect (ACE_SSL_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,
                ACE_QoS_Params qos_params,
-               const ACE_Time_Value *timeout = 0,
+               const ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
-               ACE_Protocol_Info *protocolinfo = 0,
+               ACE_Protocol_Info *protocolinfo = nullptr,
                ACE_SOCK_GROUP g = 0,
                u_long flags = 0,
                int reuse_addr = 0,
@@ -271,8 +271,8 @@ public:
    * then it will contain the address of the connected peer.
    */
   int complete (ACE_SSL_SOCK_Stream &new_stream,
-                ACE_Addr *remote_sap = 0,
-                const ACE_Time_Value *timeout = 0);
+                ACE_Addr *remote_sap = nullptr,
+                const ACE_Time_Value *timeout = nullptr);
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);

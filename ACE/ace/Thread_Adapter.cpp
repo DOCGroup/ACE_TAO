@@ -66,13 +66,13 @@ ACE_Thread_Adapter::invoke ()
   // -jxh
 
   ACE_Thread_Exit *exit_hook_instance = ACE_Thread_Exit::instance ();
-  ACE_Thread_Exit_Maybe exit_hook_maybe (exit_hook_instance == 0);
+  ACE_Thread_Exit_Maybe exit_hook_maybe (exit_hook_instance == nullptr);
   ACE_Thread_Exit *exit_hook_ptr = exit_hook_instance
                                    ? exit_hook_instance
                                    : exit_hook_maybe.instance ();
   ACE_Thread_Exit &exit_hook = *exit_hook_ptr;
 
-  if (this->thr_mgr () != 0)
+  if (this->thr_mgr () != nullptr)
     {
       // Keep track of the <Thread_Manager> that's associated with this
       // <exit_hook>.

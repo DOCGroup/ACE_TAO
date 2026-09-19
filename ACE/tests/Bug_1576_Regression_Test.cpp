@@ -2,7 +2,7 @@
  * @file Bug_1576_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 1576:
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1576
+ *   https://github.com/DOCGroup/bugzilla/issues/1576
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
@@ -41,7 +41,7 @@ run_main (int, ACE_TCHAR *[])
   // just getting an error ...
   void * symbol = dll.symbol (ACE_TEXT ("SHOULD_CRASH"));
 
-  if(symbol == 0)
+  if(symbol == nullptr)
   {
     // Use dll.error() is you want to get the error text, but we don't this in
     // this test because else the error is shown on the scoreboard

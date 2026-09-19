@@ -177,27 +177,27 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-  typedef bool Boolean;
-  typedef ACE_Byte Octet;
-  typedef char Char;
-  typedef ACE_WCHAR_T WChar;
-  typedef ACE_INT16 Short;
-  typedef ACE_UINT16 UShort;
-  typedef ACE_INT32 Long;
-  typedef ACE_UINT32 ULong;
-  typedef ACE_INT64 LongLong;
-  typedef ACE_UINT64 ULongLong;
-  typedef ACE_INT8 Int8;
-  typedef ACE_UINT8 UInt8;
-  typedef Short Int16;
-  typedef UShort UInt16;
-  typedef Long Int32;
-  typedef ULong UInt32;
-  typedef LongLong Int64;
-  typedef ULongLong UInt64;
+  using Boolean = bool;
+  using Octet = ACE_Byte;
+  using Char = char;
+  using WChar = ACE_WCHAR_T;
+  using Short = ACE_INT16;
+  using UShort = ACE_UINT16;
+  using Long = ACE_INT32;
+  using ULong = ACE_UINT32;
+  using LongLong = ACE_INT64;
+  using ULongLong = ACE_UINT64;
+  using Int8 = ACE_INT8;
+  using UInt8 = ACE_UINT8;
+  using Int16 = Short;
+  using UInt16 = UShort;
+  using Int32 = Long;
+  using UInt32 = ULong;
+  using Int64 = LongLong;
+  using UInt64 = ULongLong;
 
 #   if ACE_SIZEOF_FLOAT == 4
-      typedef float Float;
+      using Float = float;
 #   else  /* ACE_SIZEOF_FLOAT != 4 */
       struct Float
       {
@@ -212,7 +212,7 @@ public:
 #   endif /* ACE_SIZEOF_FLOAT != 4 */
 
 #   if ACE_SIZEOF_DOUBLE == 8
-      typedef double Double;
+      using Double = double;
 #   else  /* ACE_SIZEOF_DOUBLE != 8 */
       struct Double
       {
@@ -232,7 +232,7 @@ public:
     // extension, not yet standard.
 
 #    if   ACE_SIZEOF_LONG_DOUBLE == 16
-       typedef long double      LongDouble;
+       using LongDouble = long double;
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER 0
 #      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS = RHS
 #    else
@@ -389,11 +389,11 @@ public:
            : private IteratorBase
          {
          public:
-           typedef std::bidirectional_iterator_tag iterator_category;
-           typedef Proxy value_type;
-           typedef std::ptrdiff_t difference_type;
-           typedef Proxy* pointer;
-           typedef Proxy& reference;
+           using iterator_category = std::bidirectional_iterator_tag;
+           using value_type = Proxy;
+           using difference_type = std::ptrdiff_t;
+           using pointer = Proxy *;
+           using reference = Proxy &;
 
            explicit Iterator (Fixed *outer, int digit = 0);
            Proxy operator* ();
@@ -412,11 +412,11 @@ public:
            : public IteratorBase
          {
          public:
-           typedef std::bidirectional_iterator_tag iterator_category;
-           typedef Octet value_type;
-           typedef std::ptrdiff_t difference_type;
-           typedef Octet* pointer;
-           typedef Octet& reference;
+           using iterator_category = std::bidirectional_iterator_tag;
+           using value_type = Octet;
+           using difference_type = std::ptrdiff_t;
+           using pointer = Octet *;
+           using reference = Octet &;
 
            explicit ConstIterator (const Fixed *outer, int digit = 0);
            Octet operator* ();

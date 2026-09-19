@@ -29,7 +29,7 @@ template<typename TYPE> class ACE_Timer_Node_T;
  * This is a base class for all the timer queues, regardless of
  * locking strategy, upcall mechanism, internal implementation, etc.
  * The class was motivated by bug 3706:
- *    http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3706
+ *    https://github.com/DOCGroup/bugzilla/issues/3706
  * In short, the Reactor (and potentially other classes) want to refer
  * to timer queues regardless of the implementation internals.
  */
@@ -154,7 +154,7 @@ public:
    * cancellation succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
-                      const void **act = 0,
+                      const void **act = nullptr,
                       int dont_call_handle_close = 1) = 0;
 
   /**
@@ -201,7 +201,7 @@ public:
   virtual ACE_Time_Value current_time() = 0;
 
   /// Type of Iterator.
-  typedef ACE_Timer_Queue_Iterator_T<TYPE> ITERATOR;
+  using ITERATOR = ACE_Timer_Queue_Iterator_T<TYPE>;
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
   virtual ITERATOR & iter () = 0;

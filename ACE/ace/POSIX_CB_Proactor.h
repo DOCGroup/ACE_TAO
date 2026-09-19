@@ -34,10 +34,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_POSIX_CB_Proactor : public ACE_POSIX_AIOCB_Proactor
 {
 public:
-  virtual Proactor_Type get_impl_type ();
+  Proactor_Type get_impl_type () override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_CB_Proactor ();
+  ~ACE_POSIX_CB_Proactor () override;
 
   /// Constructor defines max number asynchronous operations that can
   /// be started at the same time.
@@ -54,7 +54,7 @@ protected:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (ACE_Time_Value &wait_time);
+  int handle_events (ACE_Time_Value &wait_time) override;
 
   /**
    * Block indefinitely until at least one event is dispatched.
@@ -63,14 +63,14 @@ protected:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events ();
+  int handle_events () override;
 
   /// Find free slot to store result and aiocb pointer
-  virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
+  ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result) override;
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
   /// called from post_completion method
-  virtual int notify_completion (int sig_num);
+  int notify_completion (int sig_num) override;
 
   /**
    * Dispatch a single set of events.  If @a milli_seconds elapses

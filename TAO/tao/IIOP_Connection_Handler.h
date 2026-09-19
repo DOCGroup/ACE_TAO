@@ -62,7 +62,7 @@ public:
   Reference_Count remove_reference ();
 #endif
 
-  TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
+  TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Constructor.
   TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
@@ -87,7 +87,7 @@ public:
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+                              const void *act = nullptr);
   //@}
 
   /// Add ourselves to Cache.

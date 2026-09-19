@@ -113,7 +113,7 @@ worker (void*)
         break;
       }
 
-  return 0;
+  return nullptr;
 }
 #endif /* ACE_HAS_THREADS */
 

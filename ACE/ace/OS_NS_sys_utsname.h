@@ -48,7 +48,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # else
 #   include "ace/os_include/sys/os_utsname.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef struct utsname ACE_utsname;
+using ACE_utsname = struct utsname;
 ACE_END_VERSIONED_NAMESPACE_DECL
 # endif /* ACE_LACKS_UTSNAME_T */
 

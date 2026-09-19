@@ -54,7 +54,7 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.
-ACE_Process_Manager *ACE_Process_Manager::instance_ = 0;
+ACE_Process_Manager *ACE_Process_Manager::instance_ = nullptr;
 
 // Controls whether the Process_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
@@ -100,8 +100,8 @@ ACE_Process_Manager::dump () const
 }
 
 ACE_Process_Manager::Process_Descriptor::Process_Descriptor ()
-  : process_ (0),
-    exit_notify_ (0)
+  : process_ (nullptr),
+    exit_notify_ (nullptr)
 {
   ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::Process_Descriptor");
 }
@@ -111,17 +111,17 @@ ACE_Process_Manager::instance ()
 {
   ACE_TRACE ("ACE_Process_Manager::instance");
 
-  if (ACE_Process_Manager::instance_ == 0)
+  if (ACE_Process_Manager::instance_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
+                                *ACE_Static_Object_Lock::instance (), nullptr));
 
-      if (ACE_Process_Manager::instance_ == 0)
+      if (ACE_Process_Manager::instance_ == nullptr)
         {
           ACE_NEW_RETURN (ACE_Process_Manager::instance_,
                           ACE_Process_Manager,
-                          0);
+                          nullptr);
           ACE_Process_Manager::delete_instance_ = true;
 
           // Register with the Object_Manager so that the wrapper to
@@ -129,7 +129,7 @@ ACE_Process_Manager::instance ()
           // being terminated.
           ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
                                        ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
-                                       0,
+                                       nullptr,
                                        typeid (ACE_Process_Manager).name ());
         }
     }
@@ -142,7 +142,7 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
 {
   ACE_TRACE ("ACE_Process_Manager::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), nullptr));
 
   ACE_Process_Manager *t = ACE_Process_Manager::instance_;
   // We can't safely delete it since we don't know who created it!
@@ -153,7 +153,7 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
   // being terminated.
   ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
                                ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
-                               0,
+                               nullptr,
                                typeid (*t).name ());
 
   ACE_Process_Manager::instance_ = tm;
@@ -171,7 +171,7 @@ ACE_Process_Manager::close_singleton( )
   if (ACE_Process_Manager::delete_instance_)
     {
       delete ACE_Process_Manager::instance_;
-      ACE_Process_Manager::instance_ = 0;
+      ACE_Process_Manager::instance_ = nullptr;
       ACE_Process_Manager::delete_instance_ = false;
     }
 }
@@ -184,7 +184,7 @@ ACE_Process_Manager::resize (size_t size)
   if (size <= this->max_process_table_size_)
     return 0;
 
-  Process_Descriptor *temp = 0;
+  Process_Descriptor *temp = nullptr;
 
   ACE_NEW_RETURN (temp,
                   Process_Descriptor[size],
@@ -231,10 +231,10 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 ACE_Process_Manager::ACE_Process_Manager (size_t size,
                                           ACE_Reactor *r)
   : ACE_Event_Handler (),
-    process_table_ (0),
+    process_table_ (nullptr),
     max_process_table_size_ (0),
     current_count_ (0),
-    default_exit_handler_ (0)
+    default_exit_handler_ (nullptr)
 #if defined (ACE_HAS_THREADS)
   , lock_ ()
 #endif /* ACE_HAS_THREADS */
@@ -255,30 +255,30 @@ ACE_Process_Manager::close ()
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
-  if (this->reactor () != 0)
+  if (this->reactor () != nullptr)
     {
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
-      this->reactor ()->remove_handler (SIGCHLD, (ACE_Sig_Action *) 0);
+      this->reactor ()->remove_handler (SIGCHLD, (ACE_Sig_Action *) nullptr);
 #endif /*  !ACE_WIN32  */
-      this->reactor (0);
+      this->reactor (nullptr);
     }
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (this->process_table_ != 0)
+  if (this->process_table_ != nullptr)
     {
       while (this->current_count_ > 0)
         this->remove_proc (0);
 
       delete [] this->process_table_;
-      this->process_table_ = 0;
+      this->process_table_ = nullptr;
       this->max_process_table_size_ = 0;
       this->current_count_ = 0;
     }
 
-  if (this->default_exit_handler_ != 0)
+  if (this->default_exit_handler_ != nullptr)
       this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,0);
-  this->default_exit_handler_ = 0;
+  this->default_exit_handler_ = nullptr;
 
   return 0;
 }
@@ -318,7 +318,7 @@ ACE_Process_Manager::handle_close (ACE_HANDLE /* handle */,
   if (close_mask == ACE_Event_Handler::SIGNAL_MASK)
     {
       // Reactor is telling us we're gone; don't unregister again later.
-      this->reactor (0);
+      this->reactor (nullptr);
     }
   return 0;
 }
@@ -386,7 +386,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 
   if (pid == ACE_INVALID_PID)
     {
-      if (this->default_exit_handler_ != 0)
+      if (this->default_exit_handler_ != nullptr)
         this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE, 0);
       this->default_exit_handler_ = eh;
       return 0;
@@ -402,7 +402,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 
   Process_Descriptor &proc_desc = this->process_table_[i];
 
-  if (proc_desc.exit_notify_ != 0)
+  if (proc_desc.exit_notify_ != nullptr)
     proc_desc.exit_notify_->handle_close (ACE_INVALID_HANDLE, 0);
   proc_desc.exit_notify_ = eh;
   return 0;
@@ -413,7 +413,7 @@ pid_t
 ACE_Process_Manager::spawn (ACE_Process_Options &options,
                             ACE_Event_Handler *event_handler)
 {
-  ACE_Process *process = 0;
+  ACE_Process *process = nullptr;
   ACE_NEW_RETURN (process,
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
@@ -458,7 +458,7 @@ ACE_Process_Manager::spawn_n (size_t n,
 {
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
 
-  if (child_pids != 0)
+  if (child_pids != nullptr)
     for (size_t i = 0;
          i < n;
          ++i)
@@ -472,7 +472,7 @@ ACE_Process_Manager::spawn_n (size_t n,
       if (pid == ACE_INVALID_PID || pid == 0)
         // We're in the child or something's gone wrong.
         return pid;
-      else if (child_pids != 0)
+      else if (child_pids != nullptr)
         child_pids[i] = pid;
     }
 
@@ -559,12 +559,12 @@ ACE_Process_Manager::remove_proc (size_t i)
   // If there's an exit_notify_ <Event_Handler> for this pid, call its
   // <handle_close> method.
 
-  if (this->process_table_[i].exit_notify_ != 0)
+  if (this->process_table_[i].exit_notify_ != nullptr)
     {
       this->process_table_[i].exit_notify_->handle_close
         (this->process_table_[i].process_->gethandle(),
          0);
-      this->process_table_[i].exit_notify_ = 0;
+      this->process_table_[i].exit_notify_ = nullptr;
     }
 
 #if defined (ACE_WIN32)
@@ -576,7 +576,7 @@ ACE_Process_Manager::remove_proc (size_t i)
 
   this->process_table_[i].process_->unmanage ();
 
-  this->process_table_[i].process_ = 0;
+  this->process_table_[i].process_ = nullptr;
 
   this->current_count_--;
 
@@ -762,13 +762,13 @@ ACE_Process_Manager::wait (pid_t pid,
   ACE_TRACE ("ACE_Process_Manager::wait");
 
   ACE_exitcode local_stat = 0;
-  if (status == 0)
+  if (status == nullptr)
     status = &local_stat;
 
   *status = 0;
 
   ssize_t idx = -1;
-  ACE_Process *proc = 0;
+  ACE_Process *proc = nullptr;
 
   {
     // fake context after which the lock is released
@@ -784,7 +784,7 @@ ACE_Process_Manager::wait (pid_t pid,
       }
     // release the lock.
   }
-  if (proc != 0)
+  if (proc != nullptr)
     pid = proc->wait (timeout, status);
   else
     {
@@ -884,7 +884,7 @@ ACE_Process_Manager::wait (pid_t pid,
           // open(), and there's already a SIGCHLD action set, so no
           // action is needed here.
           ACE_Sig_Action old_action;
-          if (this->reactor () == 0)
+          if (this->reactor () == nullptr)
             {
               ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
               ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
@@ -915,7 +915,7 @@ ACE_Process_Manager::wait (pid_t pid,
             }
 
           // Restore the previous SIGCHLD action if it was changed.
-          if (this->reactor () == 0)
+          if (this->reactor () == nullptr)
             old_action.register_action (SIGCHLD);
 # endif /* !ACE_LACKS_UNIX_SIGNALS */
         }
@@ -937,7 +937,7 @@ ACE_Process_Manager::wait (pid_t pid,
         }
       else
         proc = process_table_[idx].process_;
-      if (proc != 0)
+      if (proc != nullptr)
         ACE_ASSERT (pid == proc->getpid ());
 
       this->notify_proc_handler (idx,
@@ -962,13 +962,13 @@ ACE_Process_Manager::notify_proc_handler (size_t i,
 
       proc_desc.process_->exit_code (exit_code);
 
-      if (proc_desc.exit_notify_ != 0)
+      if (proc_desc.exit_notify_ != nullptr)
         proc_desc.exit_notify_->handle_exit (proc_desc.process_);
-      else if (this->default_exit_handler_ != 0
+      else if (this->default_exit_handler_ != nullptr
                && this->default_exit_handler_->handle_exit (proc_desc.process_) < 0)
         {
           this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE, 0);
-          this->default_exit_handler_ = 0;
+          this->default_exit_handler_ = nullptr;
         }
       return 1;
     }

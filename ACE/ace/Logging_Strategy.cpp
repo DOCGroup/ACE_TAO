@@ -37,8 +37,8 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string, ACE_Log_Msg::MASK_
   for (ACE_TCHAR *priority = ACE_OS::strtok_r (priority_string,
                                                ACE_TEXT ("|"),
                                                &strtokp);
-       priority != 0;
-       priority = ACE_OS::strtok_r (0,
+       priority != nullptr;
+       priority = ACE_OS::strtok_r (nullptr,
                                     ACE_TEXT ("|"),
                                     &strtokp))
     {
@@ -106,8 +106,8 @@ ACE_Logging_Strategy::tokenize (ACE_TCHAR *flag_string)
   for (ACE_TCHAR *flag = ACE_OS::strtok_r (flag_string,
                                            ACE_TEXT ("|"),
                                            &strtokp);
-       flag != 0;
-       flag = ACE_OS::strtok_r (0, ACE_TEXT ("|"), &strtokp))
+       flag != nullptr;
+       flag = ACE_OS::strtok_r (nullptr, ACE_TEXT ("|"), &strtokp))
     {
       if (ACE_OS::strcmp (flag, ACE_TEXT ("STDERR")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);
@@ -160,12 +160,12 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           // The key can be changed by the -k option also, so if it's
           // been set already, don't set it.
           if (ACE_BIT_ENABLED (this->flags_, ACE_Log_Msg::LOGGER) &&
-              this->logger_key_ == 0)
+              this->logger_key_ == nullptr)
             this->logger_key_ = ACE::strnew (ACE_DEFAULT_LOGGER_KEY);
           break;
         case 'i':
           // Interval (in secs) at which logfile size is sampled.
-          this->interval_ = ACE_OS::strtoul (get_opt.opt_arg (), 0, 10);
+          this->interval_ = ACE_OS::strtoul (get_opt.opt_arg (), nullptr, 10);
           break;
         case 'k':
           // Ensure that the LOGGER flag is set
@@ -179,7 +179,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'm':
           // Maximum logfile size (in KB).  Must be a non-zero value.
-          this->max_size_ = ACE_OS::strtoul (get_opt.opt_arg (), 0, 10);
+          this->max_size_ = ACE_OS::strtoul (get_opt.opt_arg (), nullptr, 10);
           this->max_size_ <<= 10;       // convert from KB to bytes.
           break;
         case 'n':
@@ -277,7 +277,7 @@ ACE_Logging_Strategy::fini ()
 #else
   delete [] this->filename_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  this->filename_ = 0; // Avoid double deletions.
+  this->filename_ = nullptr; // Avoid double deletions.
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->logger_key_);
@@ -355,7 +355,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                  -1);
               delete_ostream = 1;
             }
-          else if (output_file == 0)
+          else if (output_file == nullptr)
             {
               ACE_NEW_RETURN
                 (output_file,
@@ -557,7 +557,7 @@ ACE_Logging_Strategy::reactor (ACE_Reactor *r)
       if (this->reactor ())
         {
           this->reactor ()->schedule_timer
-            (this, 0,
+            (this, nullptr,
              ACE_Time_Value (this->interval_),
              ACE_Time_Value (this->interval_));
         }

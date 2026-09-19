@@ -51,7 +51,7 @@ namespace TAO
           {
             TAO_Stub* stub = obj->_stubobj ();
 
-            if (stub != 0)
+            if (stub != nullptr)
               {
                 stub->_incr_refcnt ();
 

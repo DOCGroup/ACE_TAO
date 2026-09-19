@@ -60,35 +60,31 @@ class ACE_Cache_Map_Manager
 {
 public:
   // = Traits.
-  typedef KEY key_type;
-  typedef VALUE mapped_type;
-  typedef CMAP_TYPE map_type;
-  typedef CACHING_STRATEGY caching_strategy_type;
+  using key_type = KEY;
+  using mapped_type = VALUE;
+  using map_type = CMAP_TYPE;
+  using caching_strategy_type = CACHING_STRATEGY;
 
-  typedef ITERATOR_IMPL ITERATOR_IMPLEMENTATION;
-  typedef REVERSE_ITERATOR_IMPL REVERSE_ITERATOR_IMPLEMENTATION;
+  using ITERATOR_IMPLEMENTATION = ITERATOR_IMPL;
+  using REVERSE_ITERATOR_IMPLEMENTATION = REVERSE_ITERATOR_IMPL;
 
   friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
   friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
-          ITERATOR;
-  typedef ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
-          REVERSE_ITERATOR;
+  using ITERATOR = ACMI<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
+  using REVERSE_ITERATOR = ACMRI<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
 
    // = STL-style iterator typedefs.
-  typedef ITERATOR
-          iterator;
-  typedef REVERSE_ITERATOR
-          reverse_iterator;
+  using iterator = ITERATOR;
+  using reverse_iterator = REVERSE_ITERATOR;
 
   /**
    * The actual value mapped to the key in the map. The <attributes>
    * are used by the strategy and is transparent to the user of this
    * class.
    */
-  typedef std::pair<VALUE, ATTRIBUTES> CACHE_VALUE;
+  using CACHE_VALUE = std::pair<VALUE, ATTRIBUTES>;
 
   /// Initialize a <Cache_Map_Manager> with <caching_strategy> and
   /// @a size entries.
@@ -245,10 +241,8 @@ public:
   // = Traits.
   /// The actual value mapped to the key in the cache. The <attributes>
   /// are used by the strategy and is transparent to the cache user.
-  typedef ACE_Reference_Pair<KEY, VALUE>
-          value_type;
-  typedef std::pair <VALUE, ATTRIBUTES>
-          CACHE_VALUE;
+  using value_type = ACE_Reference_Pair<KEY, VALUE>;
+  using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
 
   // = Initialisation and termination methods.
 
@@ -320,8 +314,8 @@ public:
   // = Traits.
   /// The actual value mapped to the key in the cache. The <attributes>
   /// are used by the strategy and is transparent to the cache user.
-  typedef ACE_Reference_Pair<KEY, VALUE> value_type;
-  typedef std::pair <VALUE, ATTRIBUTES> CACHE_VALUE;
+  using value_type = ACE_Reference_Pair<KEY, VALUE>;
+  using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
 
   // = Initialisation and termination methods.
 

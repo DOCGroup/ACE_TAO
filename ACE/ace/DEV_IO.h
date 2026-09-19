@@ -166,7 +166,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Meta-type info
-  typedef ACE_DEV_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_DEV_Addr;
 
 private:
   /// Address of device we are connected to.

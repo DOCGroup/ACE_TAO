@@ -295,7 +295,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (long timer_id,
   ACE_Timer_Node_T<TYPE>* n = this->find_node(timer_id);
   if (n != 0)
     {
-      if (act != 0)
+      if (act != nullptr)
         *act = n->get_act ();
 
       // Call the close hooks.

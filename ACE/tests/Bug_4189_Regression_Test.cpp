@@ -52,7 +52,7 @@ int reuseAddr_test ()
 static ACE_THR_FUNC_RETURN run_thread_receiver (void *)
 {
   reuseAddr_test ();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* defined (ACE_HAS_THREADS) */
 

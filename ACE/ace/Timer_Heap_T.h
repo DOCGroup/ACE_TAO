@@ -40,7 +40,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_
 class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE>
 {
 public:
-  typedef ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Heap;
+  using Heap = ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   /// Constructor.
   ACE_Timer_Heap_Iterator_T (Heap &);
 
@@ -88,10 +88,10 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_
 class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>
 {
 public:
-  typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> HEAP_ITERATOR;
+  using HEAP_ITERATOR = ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Time_Policy;
+  using Base_Time_Policy = ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
   /**
    * The Constructor creates a heap with specified number of elements.
@@ -110,7 +110,7 @@ public:
   ACE_Timer_Heap_T (size_t size,
                     bool preallocated = false,
                     FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /**
@@ -121,7 +121,7 @@ public:
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
   ACE_Timer_Heap_T (FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor.
@@ -162,7 +162,7 @@ public:
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
-                      const void **act = 0,
+                      const void **act = nullptr,
                       int dont_call_handle_close = 1);
 
   /**

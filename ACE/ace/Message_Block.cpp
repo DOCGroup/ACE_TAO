@@ -59,7 +59,7 @@ ACE_Message_Block::data_block (ACE_Data_Block *db)
   ACE_TRACE ("ACE_Message_Block::data_block");
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE)
-      && this->data_block_ != 0)
+      && this->data_block_ != nullptr)
     this->data_block_->release ();
 
   this->data_block_ = db;
@@ -216,7 +216,7 @@ ACE_Data_Block::size (size_t length)
   else
     {
       // We need to resize!
-      char *buf = 0;
+      char *buf = nullptr;
       ACE_ALLOCATOR_RETURN (buf,
                             (char *) this->allocator_strategy_->malloc (length),
                             -1);
@@ -257,7 +257,7 @@ ACE_Message_Block::total_size_and_length (size_t &mb_size,
   ACE_TRACE ("ACE_Message_Block::total_size_and_length");
 
   for (const ACE_Message_Block *i = this;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       mb_size += i->size ();
@@ -272,7 +272,7 @@ ACE_Message_Block::total_size () const
 
   size_t size = 0;
   for (const ACE_Message_Block *i = this;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     size += i->size ();
 
@@ -286,7 +286,7 @@ ACE_Message_Block::total_length () const
 
   size_t length = 0;
   for (const ACE_Message_Block *i = this;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     length += i->length ();
 
@@ -301,7 +301,7 @@ ACE_Message_Block::total_capacity () const
   size_t size = 0;
 
   for (const ACE_Message_Block *i = this;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     size += i->capacity ();
 
@@ -313,11 +313,11 @@ ACE_Data_Block::ACE_Data_Block ()
     cur_size_ (0),
     max_size_ (0),
     flags_ (ACE_Message_Block::DONT_DELETE),
-    base_ (0),
-    allocator_strategy_ (0),
-    locking_strategy_ (0),
+    base_ (nullptr),
+    allocator_strategy_ (nullptr),
+    locking_strategy_ (nullptr),
     reference_count_ (1),
-    data_block_allocator_ (0)
+    data_block_allocator_ (nullptr)
 {
   ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");
   ACE_FUNCTION_TIMEPROBE (ACE_DATA_BLOCK_CTOR1_ENTER);
@@ -351,15 +351,15 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
 
   // If the user didn't pass one in, let's use the
   // <ACE_Allocator::instance>.
-  if (this->allocator_strategy_ == 0)
+  if (this->allocator_strategy_ == nullptr)
     ACE_ALLOCATOR (this->allocator_strategy_,
                    ACE_Allocator::instance ());
 
-  if (this->data_block_allocator_ == 0)
+  if (this->data_block_allocator_ == nullptr)
     ACE_ALLOCATOR (this->data_block_allocator_,
                    ACE_Allocator::instance ());
 
-  if (msg_data == 0)
+  if (msg_data == nullptr)
     {
       ACE_ALLOCATOR (this->base_,
                      (char *) this->allocator_strategy_->malloc (size));
@@ -372,7 +372,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
 
   // ACE_ALLOCATOR returns on alloc failure but we cant throw, so setting
   // the size to 0 (i.e. "bad bit") ...
-  if (this->base_ == 0)
+  if (this->base_ == nullptr)
     {
       size = 0;
     }
@@ -386,7 +386,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                                       size_t size,
                                       unsigned long priority)
   : flags_ (0),
-    data_block_ (0)
+    data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -395,21 +395,21 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                     nullptr, // cont
                     data,    // data
                     nullptr, // allocator
-                    0,       // locking strategy
+                    nullptr,       // locking strategy
                     ACE_Message_Block::DONT_DELETE, // flags
                     priority, // priority
                     ACE_Time_Value::zero,     // execution time
                     ACE_Time_Value::max_time, // absolute time of deadline
                     nullptr,  // data block
                     nullptr,  // data_block allocator
-                    0) == -1) // message_block allocator
+                    nullptr) == -1) // message_block allocator
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
   : flags_ (0),
-    data_block_ (0)
+    data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -418,7 +418,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
                     nullptr, // cont
                     nullptr, // data
                     nullptr, // allocator
-                    0,       // locking strategy
+                    nullptr,       // locking strategy
                     ACE_Message_Block::DONT_DELETE, // flags
                     0, // priority
                     ACE_Time_Value::zero,     // execution time
@@ -442,7 +442,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
   :flags_ (0),
-   data_block_ (0)
+   data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -456,7 +456,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     priority,
                     execution_time,
                     deadline_time,
-                    0, // data block
+                    nullptr, // data block
                     data_block_allocator,
                     message_block_allocator) == -1)
     ACELIB_ERROR ((LM_ERROR,
@@ -488,7 +488,7 @@ ACE_Message_Block::init (size_t size,
                        priority,
                        execution_time,
                        deadline_time,
-                       0,  // data block
+                       nullptr,  // data block
                        data_block_allocator,
                        message_block_allocator);
 }
@@ -504,7 +504,7 @@ ACE_Message_Block::init (const char *data, size_t size)
                        nullptr, // cont
                        data,    // data
                        nullptr, // allocator
-                       0,       // locking strategy
+                       nullptr,       // locking strategy
                        ACE_Message_Block::DONT_DELETE,  // flags
                        0,  // priority
                        ACE_Time_Value::zero,     // execution time
@@ -559,10 +559,10 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
 
   if (this->init_i (0,         // size
                     MB_NORMAL, // type
-                    0,         // cont
-                    0,         // data
-                    0,         // allocator
-                    0,         // locking strategy
+                    nullptr,         // cont
+                    nullptr,         // data
+                    nullptr,         // allocator
+                    nullptr,         // locking strategy
                     0,         // flags
                     0,         // priority
                     ACE_Time_Value::zero,     // execution time
@@ -699,15 +699,15 @@ ACE_Message_Block::init_i (size_t size,
 
   this->message_block_allocator_ = message_block_allocator;
 
-  if (this->data_block_ != 0)
+  if (this->data_block_ != nullptr)
     {
       this->data_block_->release ();
-      this->data_block_ = 0;
+      this->data_block_ = nullptr;
     }
 
-  if (db == 0)
+  if (db == nullptr)
     {
-      if (data_block_allocator == 0)
+      if (data_block_allocator == nullptr)
         ACE_ALLOCATOR_RETURN (data_block_allocator,
                               ACE_Allocator::instance (),
                               -1);
@@ -732,7 +732,7 @@ ACE_Message_Block::init_i (size_t size,
       // Message block initialization may fail, while the construction
       // succeeds.  Since ACE may throw no exceptions, we have to do a
       // separate check and clean up, like this:
-      if (db != 0 && db->size () < size)
+      if (db != nullptr && db->size () < size)
         {
           db->ACE_Data_Block::~ACE_Data_Block();  // placement destructor ...
           data_block_allocator->free (db); // free ...
@@ -793,12 +793,12 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
   ACE_Lock *lock_to_be_used = nullptr;
 
   // Check if we were passed in a lock
-  if (lock != 0)
+  if (lock != nullptr)
     {
       // Make sure that the lock passed in and our lock are the same
       if (lock == this->locking_strategy_)
         // In this case no locking is required.
-        lock_to_be_used = 0;
+        lock_to_be_used = nullptr;
 
       // The lock passed in does not match our lock
       else
@@ -814,9 +814,9 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
 
   // If there's a locking strategy then we need to acquire the lock
   // before decrementing the count.
-  if (lock_to_be_used != 0)
+  if (lock_to_be_used != nullptr)
     {
-      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock_to_be_used, 0);
+      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock_to_be_used, nullptr);
 
       result = this->release_i ();
     }
@@ -859,7 +859,7 @@ ACE_Message_Block::release ()
   // This flag is set to 1 when we have to destroy the data_block
   int destroy_dblock = 0;
 
-  ACE_Lock *lock = 0;
+  ACE_Lock *lock = nullptr;
 
   // Do we have a valid data block
   if (this->data_block ())
@@ -868,10 +868,10 @@ ACE_Message_Block::release ()
       lock = this->data_block ()->locking_strategy ();
 
       // if we have a lock
-      if (lock != 0)
+      if (lock != nullptr)
         {
           // One guard for all
-          ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, nullptr);
 
           // Call non-guarded release with @a lock
           destroy_dblock = this->release_i (lock);
@@ -879,11 +879,11 @@ ACE_Message_Block::release ()
       // This is the case when we have a valid data block but no lock
       else
         // Call non-guarded release with no lock
-        destroy_dblock = this->release_i (0);
+        destroy_dblock = this->release_i (nullptr);
     }
   else
     // This is the case when we don't even have a valid data block
-    destroy_dblock = this->release_i (0);
+    destroy_dblock = this->release_i (nullptr);
 
   if (destroy_dblock != 0)
     {
@@ -893,7 +893,7 @@ ACE_Message_Block::release ()
                     ACE_Data_Block);
     }
 
-  return 0;
+  return nullptr;
 }
 
 int
@@ -911,7 +911,7 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
         {
           tmp = mb;
           mb = mb->cont_;
-          tmp->cont_ = 0;
+          tmp->cont_ = nullptr;
 
           ACE_Data_Block *db = tmp->data_block ();
           if (tmp->release_i (lock) != 0)
@@ -924,7 +924,7 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
         }
       while (mb);
 
-      this->cont_ = 0;
+      this->cont_ = nullptr;
     }
 
   int result = 0;
@@ -933,7 +933,7 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
                         ACE_Message_Block::DONT_DELETE) &&
       this->data_block ())
     {
-      if (this->data_block ()->release_no_delete (lock) == 0)
+      if (this->data_block ()->release_no_delete (lock) == nullptr)
         result = 1;
       this->data_block_ = nullptr;
     }
@@ -988,7 +988,7 @@ ACE_Data_Block::duplicate ()
   if (this->locking_strategy_)
     {
       // We need to acquire the lock before incrementing the count.
-      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
+      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, nullptr);
       ++this->reference_count_;
     }
   else
@@ -1017,14 +1017,14 @@ ACE_Message_Block::duplicate () const
   // Increment the reference counts of all the continuation messages.
   while (current)
     {
-      ACE_Message_Block* cur_dup = 0;
+      ACE_Message_Block* cur_dup = nullptr;
 
       // Create a new <ACE_Message_Block> that contains unique copies of
       // the message block fields, but a reference counted duplicate of
       // the <ACE_Data_Block>.
 
       // If there is no allocator, use the standard new and delete calls.
-      if (current->message_block_allocator_ == 0)
+      if (current->message_block_allocator_ == nullptr)
         ACE_NEW_NORETURN (cur_dup,
                           ACE_Message_Block (0, // size
                                              ACE_Message_Type (0), // type
@@ -1067,13 +1067,13 @@ ACE_Message_Block::duplicate () const
 
 
       // If allocation failed above, release everything done so far and return NULL
-      if (cur_dup == 0)
+      if (cur_dup == nullptr)
         {
-          if (nb_top != 0)
+          if (nb_top != nullptr)
             {
               nb_top->release ();
             }
-          return 0;
+          return nullptr;
         }
 
       // Set the read and write pointers in the new <Message_Block> to the
@@ -1151,22 +1151,22 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
                            this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
                          ACE_Data_Block (newsize, // size
                                          this->type_,     // type
-                                         0,               // data
+                                         nullptr,               // data
                                          this->allocator_strategy_, // allocator
                                          this->locking_strategy_, // locking strategy
                                          this->flags_,  // flags
                                          this->data_block_allocator_),
-                         0);
+                         nullptr);
 
   // Message block initialization may fail while the construction
   // succeeds.  Since as a matter of policy, ACE may throw no
   // exceptions, we have to do a separate check like this.
-  if (nb != 0 && nb->size () < newsize)
+  if (nb != nullptr && nb->size () < newsize)
     {
       nb->ACE_Data_Block::~ACE_Data_Block();  // placement destructor ...
       this->data_block_allocator_->free (nb); // free ...
       errno = ENOMEM;
-      return 0;
+      return nullptr;
     }
 
   // Set new flags minus the mask...

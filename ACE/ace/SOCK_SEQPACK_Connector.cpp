@@ -105,7 +105,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
     }
 
   // Enable non-blocking, if required.
-  if (timeout != 0
+  if (timeout != nullptr
       && new_association.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
@@ -129,7 +129,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       // Create an array of sockaddr_in to hold the underlying
       // representations of the primary and secondary
       // addresses.
-      sockaddr_in*  local_inet_addrs = 0;
+      sockaddr_in*  local_inet_addrs = nullptr;
 #if defined(ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_NORETURN (local_inet_addrs, static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * (num_addresses))));
 #else
@@ -224,7 +224,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
     }
 
   // Enable non-blocking, if required.
-  if (timeout != 0
+  if (timeout != nullptr
       && new_association.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
@@ -240,7 +240,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
   // Save/restore errno.
   ACE_Errno_Guard error (errno);
 
-  if (result == -1 && timeout != 0)
+  if (result == -1 && timeout != nullptr)
     {
       // Check whether the connection is in progress.
       if (error == EINPROGRESS || error == EWOULDBLOCK)
@@ -250,7 +250,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
             error = EWOULDBLOCK;
           // Wait synchronously using timeout.
           else if (this->complete (new_association,
-                                   0,
+                                   nullptr,
                                    timeout) == -1)
             error = errno;
           else
@@ -369,7 +369,7 @@ ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_associat
 #endif /* ACE_WIN32 */
     }
 
-  if (remote_sap != 0)
+  if (remote_sap != nullptr)
     {
       int len = remote_sap->get_size ();
       sockaddr *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
@@ -408,7 +408,7 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                      flags,
                      perms,
                      protocol) == -1
-      && timeout != 0
+      && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
@@ -435,7 +435,7 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                      flags,
                      perms,
                      protocol) == -1
-      && timeout != 0
+      && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),

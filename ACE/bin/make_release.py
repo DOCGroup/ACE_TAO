@@ -47,7 +47,7 @@ cpu_count = multiprocessing.cpu_count()
 
 """ This is a regex that detects files that SHOULD NOT have line endings
 converted to CRLF when being put into a ZIP file """
-bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt|sh)$")
+bin_regex = re.compile (r"\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt|sh)$")
 version_restr = r'(\d+)(?:\.(\d+)(?:\.(\d+))?)?'
 version_re = re.compile(version_restr)
 
@@ -312,7 +312,7 @@ def update_debianbuild ():
 
     path = get_path('ACE', 'debian', 'control')
 
-    mask = re.compile ("(libace|libACE|libkokyu|libKokyu|libnetsvcs)([^\s,:]*-)(\d+\.\d+\.\d+)([^\s,:]*)")
+    mask = re.compile (r"(libace|libACE|libkokyu|libKokyu|libnetsvcs)([^\s,:]*-)(\d+\.\d+\.\d+)([^\s,:]*)")
 
     def update_ver (match):
         return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)

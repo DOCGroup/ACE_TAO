@@ -328,7 +328,6 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   // connection establishment. Maybe a custom wait strategy is needed
   // at this point to register several potential transports so that
   // when one succeeds the rest are cancelled or closed.
-
   unsigned int endpoint_count = 0;
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),nullptr);
        ep != nullptr;
@@ -705,8 +704,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
             }
           else // not making new connection
             {
-              (void) this->wait_for_transport (r, base_transport,
-                                               timeout, true);
+              (void) this->wait_for_transport (r, base_transport, timeout, true);
               base_transport->remove_reference ();
             }
         }

@@ -71,8 +71,8 @@ public:
   int get_local_addr (ACE_Addr &) const;
 
   // = Meta-type info
-  typedef ACE_UNIX_Addr PEER_ADDR;
-  typedef ACE_LSOCK_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_UNIX_Addr;
+  using PEER_STREAM = ACE_LSOCK_Stream;
 
   /// Dump the state of an object.
   void dump () const;

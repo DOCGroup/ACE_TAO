@@ -42,30 +42,30 @@ class ACE_Array_Base
 {
 public:
   // Old/ACE-style traits.
-  typedef T TYPE;
-  typedef ACE_Array_Iterator<T> ITERATOR;
+  using TYPE = T;
+  using ITERATOR = ACE_Array_Iterator<T>;
 
   // STL-style typedefs/traits.
-  typedef T                              value_type;
-  typedef value_type *                   iterator;
-  typedef value_type const *             const_iterator;
-  typedef value_type &                   reference;
-  typedef value_type const &             const_reference;
-  typedef value_type *                   pointer;
-  typedef value_type const *             const_pointer;
-  typedef ptrdiff_t                      difference_type;
-  typedef ACE_Allocator::size_type       size_type;
-  typedef std::reverse_iterator<iterator>       reverse_iterator;
-  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+  using value_type = T;
+  using iterator = value_type *;
+  using const_iterator = const value_type *;
+  using reference = value_type &;
+  using const_reference = const value_type &;
+  using pointer = value_type *;
+  using const_pointer = const value_type *;
+  using difference_type = ptrdiff_t;
+  using size_type = ACE_Allocator::size_type;
+  using reverse_iterator = std::reverse_iterator<iterator>;
+  using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
   /// Dynamically create an uninitialized array.
   ACE_Array_Base (size_type size = 0,
-                  ACE_Allocator * the_allocator = 0);
+                  ACE_Allocator * the_allocator = nullptr);
 
   /// Dynamically initialize the entire array to the @a default_value.
   ACE_Array_Base (size_type size,
                   T const & default_value,
-                  ACE_Allocator * the_allocator = 0);
+                  ACE_Allocator * the_allocator = nullptr);
 
   /**
    * The copy constructor performs initialization by making an exact

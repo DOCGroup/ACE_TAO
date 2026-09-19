@@ -46,12 +46,12 @@ namespace ACE
       : private ACE_Refcountable_T<ACE_SYNCH_MUTEX>
     {
     public:
-      typedef Monitor_Control_Types::ConstraintList CONSTRAINTS;
-      typedef CONSTRAINTS::const_iterator CONSTRAINT_ITERATOR;
+      using CONSTRAINTS = Monitor_Control_Types::ConstraintList;
+      using CONSTRAINT_ITERATOR = CONSTRAINTS::const_iterator;
 
       Monitor_Base (const char* name,
                     Monitor_Control_Types::Information_Type type);
-      virtual ~Monitor_Base ();
+      ~Monitor_Base () override;
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.

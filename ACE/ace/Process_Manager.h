@@ -134,7 +134,7 @@ public:
 
   /// Destructor releases all resources and does not wait for processes
   /// to exit.
-  virtual ~ACE_Process_Manager ();
+  ~ACE_Process_Manager () override;
 
   //@}
 
@@ -371,12 +371,12 @@ protected:
 
 #if !defined(ACE_WIN32)
   /// Collect one (or more, on unix) process exit status.
-  virtual int handle_input (ACE_HANDLE proc);
+  int handle_input (ACE_HANDLE proc) override;
 
   /// If registered with a reactor for SIGCHLD and the reactor closes, this
   /// will get called to notify.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
 #endif // !defined(ACE_WIN32)
 
@@ -389,7 +389,7 @@ protected:
    * On Win32, this routine is called synchronously, and is passed the
    * HANDLE of the Process that exited, so we can do all our work here
    */
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
 
 private:
   /**

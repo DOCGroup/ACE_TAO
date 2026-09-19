@@ -41,7 +41,7 @@ Gen_Perf::Gen_Perf ()
   : max_hash_value (0),
     fewest_collisions (0),
     num_done (1),
-    union_set (0)
+    union_set (nullptr)
 {
 }
 
@@ -254,7 +254,7 @@ Gen_Perf::open ()
 
   if (option[RANDOM])
     {
-      ACE_OS::srand ((u_int) ACE_OS::time (0));
+      ACE_OS::srand ((u_int) ACE_OS::time (nullptr));
 
       for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
         {
@@ -320,10 +320,10 @@ Gen_Perf::compute_binary_search ()
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr = 0;
+  List_Node *curr = nullptr;
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
-       curr != 0;
+       curr != nullptr;
        curr = curr->next, hash_value++)
     {
       curr->hash_value = hash_value;
@@ -340,10 +340,10 @@ Gen_Perf::compute_linear_search ()
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr = 0;
+  List_Node *curr = nullptr;
   int hash_value = 0;
   for (hash_value = 0, curr = this->key_list.head;
-       curr != 0;
+       curr != nullptr;
        curr = curr->next, hash_value++)
     {
       curr->hash_value = hash_value;
@@ -354,10 +354,10 @@ Gen_Perf::compute_linear_search ()
 int
 Gen_Perf::compute_perfect_hash ()
 {
-  List_Node *curr = 0;
+  List_Node *curr = nullptr;
 
   for (curr = this->key_list.head;
-       curr != 0;
+       curr != nullptr;
        curr = curr->next)
     {
       this->hash (curr);

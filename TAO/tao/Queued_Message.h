@@ -74,7 +74,7 @@ class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 public:
   /// Constructor
   TAO_Queued_Message (TAO_ORB_Core *oc,
-                      ACE_Allocator *alloc = 0,
+                      ACE_Allocator *alloc = nullptr,
                       bool is_heap_allocated = false);
 
   /// Destructor

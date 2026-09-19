@@ -1822,31 +1822,31 @@ ACE_Ordered_MultiSet_Iterator<T>::operator* ()
 template <class T> T *
 ACE_DLList<T>::insert_tail (T *new_item)
 {
-  ACE_DLList_Node *temp1 = 0;
+  ACE_DLList_Node *temp1 = nullptr;
   ACE_NEW_MALLOC_RETURN (temp1,
                          static_cast<ACE_DLList_Node *> (this->allocator_->malloc (sizeof (ACE_DLList_Node))),
                          ACE_DLList_Node (new_item),
                          0);
   ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_tail (temp1);
-  return (T *) (temp2 ? temp2->item_ : 0);
+  return (T *) (temp2 ? temp2->item_ : nullptr);
 }
 
 template <class T> T *
 ACE_DLList<T>::insert_head (T *new_item)
 {
-  ACE_DLList_Node *temp1 = 0;
+  ACE_DLList_Node *temp1 = nullptr;
   ACE_NEW_MALLOC_RETURN (temp1,
                          (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
                          ACE_DLList_Node (new_item), 0);
   ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_head (temp1);
-  return (T *) (temp2 ? temp2->item_ : 0);
+  return (T *) (temp2 ? temp2->item_ : nullptr);
 }
 
 template <class T> T *
 ACE_DLList<T>::delete_head ()
 {
   ACE_DLList_Node *temp1 = ACE_DLList_Base::delete_head ();
-  T *temp2 = (T *) (temp1 ? temp1->item_ : 0);
+  T *temp2 = (T *) (temp1 ? temp1->item_ : nullptr);
   ACE_DES_FREE (temp1,
                 this->allocator_->free,
                 ACE_DLList_Node);
@@ -1858,7 +1858,7 @@ template <class T> T *
 ACE_DLList<T>::delete_tail ()
 {
   ACE_DLList_Node *temp1 = ACE_DLList_Base::delete_tail ();
-  T *temp2 = (T *) (temp1 ? temp1->item_ : 0);
+  T *temp2 = (T *) (temp1 ? temp1->item_ : nullptr);
   ACE_DES_FREE (temp1,
                 this->allocator_->free,
                 ACE_DLList_Node);

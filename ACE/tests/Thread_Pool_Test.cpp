@@ -68,12 +68,12 @@ public:
 
   /// Allows the producer to pass messages to the <Thread_Pool>.
   int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0) override;
+                   ACE_Time_Value *tv = nullptr) override;
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the threads in the pool.
-  int open (void * = 0) override;
+  int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Close hook.
@@ -124,7 +124,7 @@ Thread_Pool::svc ()
 
   for (int count = 1; ; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       int result = this->getq (mb);
 
@@ -200,7 +200,7 @@ Thread_Pool::test_queue_deactivation_shutdown ()
   if (this->open () == -1)
     return -1;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
@@ -213,9 +213,9 @@ Thread_Pool::test_queue_deactivation_shutdown ()
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ,
                                          ACE_Message_Block::MB_DATA,
-                                         0,
-                                         0,
-                                         0,
+                                         nullptr,
+                                         nullptr,
+                                         nullptr,
                                          &this->lock_adapter_),
                       -1);
 
@@ -288,7 +288,7 @@ Thread_Pool::test_empty_message_shutdown ()
   if (this->open () == -1)
     return -1;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
@@ -300,9 +300,9 @@ Thread_Pool::test_empty_message_shutdown ()
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ,
                                          ACE_Message_Block::MB_DATA,
-                                         0,
-                                         0,
-                                         0,
+                                         nullptr,
+                                         nullptr,
+                                         nullptr,
                                          &this->lock_adapter_),
                       -1);
 

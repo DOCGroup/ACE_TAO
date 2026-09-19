@@ -2,8 +2,7 @@ This document is also available at the following URL:
 
 https://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
-All software and documentation is available via both anonymous ftp and
-http.
+All software and documentation is available via http.
 
 THE ADAPTIVE COMMUNICATION ENVIRONMENT (ACE)
 
@@ -147,7 +146,7 @@ applications provided with the ACE release include:
 OBTAINING ACE
 
 ACE may be obtained electronically from
-https://download.dre.vanderbilt.edu.  This release contains the source
+https://github.com/DOCGroup/ACE_TAO.  This release contains the source
 code, test drivers, and example applications (including JAWS) for C++
 wrapper libraries and the higher-level ACE network programming
 framework developed as part of the ADAPTIVE project at the University

@@ -13,7 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Stream)
 
 ACE_UPIPE_Stream::ACE_UPIPE_Stream ()
-  : mb_last_ (0),
+  : mb_last_ (nullptr),
     reference_count_ (0)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::ACE_UPIPE_STREAM");
@@ -21,10 +21,10 @@ ACE_UPIPE_Stream::ACE_UPIPE_Stream ()
 
 ACE_UPIPE_Stream::~ACE_UPIPE_Stream ()
 {
-  if (this->mb_last_ != 0)
+  if (this->mb_last_ != nullptr)
     {
       this->mb_last_->release ();
-      this->mb_last_ = 0;
+      this->mb_last_ = nullptr;
     }
 }
 
@@ -122,7 +122,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
   size_t bytes_read = 0;
 
   while (bytes_read < n)
-    if (this->mb_last_ != 0)
+    if (this->mb_last_ != nullptr)
       {
         // We have remaining data in our last read Message_Buffer.
         size_t this_len = this->mb_last_->length ();

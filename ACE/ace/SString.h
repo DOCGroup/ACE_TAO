@@ -131,7 +131,7 @@ ACE_NS_WString operator + (const ACE_NS_WString &,
 class ACE_Export ACE_SString
 {
 public:
-  typedef ACE_Allocator::size_type size_type;
+  using size_type = ACE_Allocator::size_type;
 
   /// No position constant
   static const size_type npos;
@@ -256,7 +256,7 @@ ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_SString 
 #if defined (ACE_USES_WCHAR)
 typedef ACE_WString ACE_TString;
 #else /* ACE_USES_WCHAR */
-typedef ACE_CString ACE_TString;
+using ACE_TString = ACE_CString;
 #endif /* ACE_USES_WCHAR */
 
 // ****************************************************************

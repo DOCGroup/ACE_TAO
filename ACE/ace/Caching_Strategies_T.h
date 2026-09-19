@@ -198,7 +198,7 @@ class ACE_LRU_Caching_Strategy
 {
 public:
   // Traits.
-  typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  using CACHING_ATTRIBUTES = ATTRIBUTES;
 
   // = Initialisation and termination.
 
@@ -299,7 +299,7 @@ class ACE_LFU_Caching_Strategy
 {
 public:
   // Traits.
-  typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  using CACHING_ATTRIBUTES = ATTRIBUTES;
 
   // = Initialisation and termination methods.
 
@@ -391,7 +391,7 @@ template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_FIFO_Caching_Strategy
 {
 public:
-  typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  using CACHING_ATTRIBUTES = ATTRIBUTES;
 
   // = Initialisation and termination.
 
@@ -479,7 +479,7 @@ class ACE_Null_Caching_Strategy
 {
 public:
   // = Traits.
-  typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  using CACHING_ATTRIBUTES = ATTRIBUTES;
 
   // = Strategy methods. All are NO_OP methods!!!
 

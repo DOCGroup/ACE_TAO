@@ -24,16 +24,16 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry const *element = 0;
-  for (size_t i = 0; element == 0 && i < num_registry_entries_; i++)
+  registry_entry const *element = nullptr;
+  for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
     if (ACE_OS::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
       element = &registry_db_[i];
-  if (element == 0)
+  if (element == nullptr)
     return 0;
   codeset_id = element->codeset_id_;
-  if (num_sets != 0)
+  if (num_sets != nullptr)
     *num_sets = element->num_sets_;
-  if (char_sets != 0)
+  if (char_sets != nullptr)
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (*char_sets,static_cast<ACE_CDR::UShort*> (ACE_Allocator::instance()->malloc(sizeof (ACE_CDR::UShort) * (element->num_sets_))),0);
@@ -52,16 +52,16 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry const *element = 0;
-  for (size_t i = 0; element == 0 && i < num_registry_entries_; i++)
+  registry_entry const *element = nullptr;
+  for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
     if (codeset_id == registry_db_[i].codeset_id_)
       element = &registry_db_[i];
-  if (element == 0)
+  if (element == nullptr)
     return 0;
   locale.set (element->loc_name_);
-  if (num_sets != 0)
+  if (num_sets != nullptr)
     *num_sets = element->num_sets_;
-  if (char_sets != 0)
+  if (char_sets != nullptr)
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (*char_sets,static_cast<ACE_CDR::UShort*> (ACE_Allocator::instance()->malloc(sizeof (ACE_CDR::UShort) * (element->num_sets_))),0);
@@ -78,9 +78,9 @@ int
 ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
                                        ACE_CDR::ULong other)
 {
-  registry_entry const *lhs = 0;
-  registry_entry const *rhs = 0;
-  for (size_t i = 0; (lhs == 0 || rhs == 0) && i < num_registry_entries_; i++)
+  registry_entry const *lhs = nullptr;
+  registry_entry const *rhs = nullptr;
+  for (size_t i = 0; (lhs == nullptr || rhs == nullptr) && i < num_registry_entries_; i++)
     {
       if (codeset_id == registry_db_[i].codeset_id_)
         lhs = &registry_db_[i];
@@ -88,7 +88,7 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
         rhs = &registry_db_[i];
     }
 
-  if (lhs == 0 || rhs == 0)
+  if (lhs == nullptr || rhs == nullptr)
     return 0;
 
   for (ACE_CDR::UShort l = 0; l < lhs->num_sets_; l++)

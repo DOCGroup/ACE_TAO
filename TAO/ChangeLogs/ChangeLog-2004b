@@ -3705,7 +3705,7 @@ Sun Nov 14 05:01:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for Bug 1535. Please see
 
-          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1535
+          https://github.com/DOCGroup/bugzilla/issues/1535
 
           for details.
 

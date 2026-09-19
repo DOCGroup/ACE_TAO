@@ -102,7 +102,7 @@ private:
   const char *name_;
 };
 
-typedef ACE_Intrusive_List<ACE_Cleanup_Info_Node> ACE_Cleanup_Info_Node_List;
+using ACE_Cleanup_Info_Node_List = ACE_Intrusive_List<ACE_Cleanup_Info_Node>;
 
 /**
  * @class ACE_OS_Exit_Info
@@ -123,7 +123,7 @@ public:
   ~ACE_OS_Exit_Info () = default;
 
   /// Use to register a cleanup hook.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name = 0);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name = nullptr);
 
   /// Look for a registered cleanup hook object.  Returns true if already
   /// registered, false if not.

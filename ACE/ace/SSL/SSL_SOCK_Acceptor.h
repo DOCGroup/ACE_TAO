@@ -136,8 +136,8 @@ public:
    * @return 0 if success; -1 for failure (errno contains error code).
    */
   int accept (ACE_SSL_SOCK_Stream &new_stream,
-              ACE_Addr *remote_addr = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_Addr *remote_addr = nullptr,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
 
@@ -158,8 +158,8 @@ public:
    */
   int accept (ACE_SSL_SOCK_Stream &new_stream,
               ACE_Accept_QoS_Params qos_params,
-              ACE_Addr *remote_addr = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_Addr *remote_addr = nullptr,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
   //@}

@@ -1,0 +1,814 @@
+commit 9481e1c16a8bc702b7976126faf5d7c95d28be1a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 16:18:49 2026 +0200
+
+    Use nullptr instead of 0 (clang-tidy changes)
+
+commit 8cd85d8eba04ccc6a1245283827bb7d573d1d667
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 10:02:43 2026 +0200
+
+    Use nullptr, changed by clang-tidy
+    
+        * TAO/tao/Acceptor_Impl.cpp:
+        * TAO/tao/Fixed_Array_Argument_T.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Object_T.cpp:
+        * TAO/tao/Thread_Per_Connection_Handler.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Var_Array_Argument_T.cpp:
+
+commit 1eaed17d0598cf9efa7b96f69bc8666c20c66448
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 09:57:24 2026 +0200
+
+    use nullptr, changes by clang-tidy
+
+commit c34395f5316459d42d8bd20fbc6649a4e4a8db43
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 15 10:14:52 2026 +0200
+
+    Add space
+    
+        * TAO/orbsvcs/tests/Property/client.h:
+
+commit 11b0ecb1ee52f0ae9f30f0436fde3c47d32bf950
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 9 08:22:48 2026 +0200
+
+    Removed not used arg
+    
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+
+commit a2497c3ba70a15c68d1af7409ae90506adba12a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 9 08:22:14 2026 +0200
+
+    Removed double semicolon
+    
+        * TAO/tests/Transport_Idle_Timeout/client_multiple.cpp:
+
+commit bbad0ceaa9d323b372607dd0ea906dd1eac5e6a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 8 13:54:53 2026 +0200
+
+    Tets change, check size of cache before calling the second server
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/client_multiple.cpp:
+
+commit 87a0d08f15f38af2eaacc161b535f9354d5e515c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 8 12:03:13 2026 +0200
+
+    List new feature in news
+    
+        * TAO/NEWS:
+
+commit d8bafaeb3548602f5d7bade797d5f5e0caead71d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 16:46:27 2026 +0200
+
+    nullptr
+    
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+
+commit cdd29ec32e5d2899a5d147deca4036279812423c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 16:35:48 2026 +0200
+
+    nullptr changes
+    
+        * TAO/tao/Transport_Cache_Manager_T.inl:
+
+commit bb10f1f9b113e5cd01d215798b7f14bd440857e6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 16:30:59 2026 +0200
+
+    Doxygen docu
+    
+        * TAO/tao/Resource_Factory.h:
+
+commit 6fde616e25240ec9fa8dfd816be0bdf0acf7f190
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 15:05:50 2026 +0200
+
+    When we are asked to schedule a timer cancel any running ounes
+    
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+
+commit 1f9bf7a5b45cd4d3557c4b9c25c635bbb7cf8f89
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 14:43:53 2026 +0200
+
+    Fixed typo
+    
+        * TAO/tao/Transport_Idle_Timer.h:
+
+commit bc3f2e74702024b4d82954468ddabfe54996f0be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 14:37:04 2026 +0200
+
+    Only schedule an idle timer when we have no timer id yet
+    
+        * TAO/tao/Transport.cpp:
+
+commit 52835b6c2874011020205027c86a8e8c2f0b56be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 14:14:12 2026 +0200
+
+    TEst extensions
+    
+        * ACE/ace/Event_Handler_Handle_Timeout_Upcall.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/client_multiple.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit 6c7ef471b23e7c8c260afca1cd64d38f864923e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 12:54:30 2026 +0200
+
+    Check for valid reactor pointer
+    
+        * TAO/tao/Transport.cpp:
+
+commit 9c287a6b68e2d2b79c9ec605d8976a17d7da55ec
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 12:48:57 2026 +0200
+
+    Layout changes, schedule idle timer also in postopen
+    
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.inl:
+
+commit 1f9f833efbace8e60a80315ae10254c4ef7d4c35
+Merge: d6d34dc8eb2 2e72456bd57
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 7 10:15:12 2026 +0200
+
+    Merge branch 'master' into jwi-idletransport
+
+commit d6d34dc8eb28e8adef669d158b5be45216a6bd72
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 12:01:04 2026 +0200
+
+    Fixed typo
+    
+        * TAO/tao/Transport.cpp:
+
+commit 812c76ec7875a0f64aa3999e8d2df41ab89a09e5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 11:50:25 2026 +0200
+
+    Removed not used is_idle
+    
+        * TAO/tao/Transport_Cache_Manager_T.h:
+        * TAO/tao/Transport_Cache_Manager_T.inl:
+
+commit 9ca5ffb1d05b9768dd4b581de42a07d4d54e079b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 11:48:28 2026 +0200
+
+    Removed todo
+    
+        * TAO/tao/Transport.cpp:
+
+commit 7c944d4cb6ff3b132c971337826e35c5f9b8dda4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 10:14:43 2026 +0200
+
+    Revert change
+    
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+
+commit cc41da5719029238313554a650815af77e19e9d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 09:55:04 2026 +0200
+
+    Return value changes
+    
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+
+commit 94df85a50de3de5ed4fa7e36fb7769412c4d0ba5
+Merge: b94d846f918 def90e136e8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 09:45:10 2026 +0200
+
+    Merge branch 'jwi-idletransport' of https://github.com/jwillemsen/ATCD into jwi-idletransport
+
+commit b94d846f918dde5cd0e9939c0b9471e74c2179bd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 09:45:01 2026 +0200
+
+    fixe
+    
+        * TAO/tao/tao.mpc:
+
+commit def90e136e82f37a73ec2f0ac0e5792dd0e7f345
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 09:43:02 2026 +0200
+
+    Update TAO/tests/Transport_Idle_Timeout/svc.conf
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+commit b9fbb69fd9fceb78ce042d2b955e59a4ff644ab5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 09:42:42 2026 +0200
+
+    Update TAO/tests/Transport_Idle_Timeout/run_test.pl
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+commit 630ec1e4b761af6527d6a25e0d7dd0bfec0477d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 3 09:22:26 2026 +0200
+
+    Removed empty line
+    
+        * TAO/tao/Cache_Entries_T.inl:
+
+commit db2dd465cdb91bbdae683b482eddbdca260a598f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 1 15:53:04 2026 +0200
+
+    Rework for thread safety
+    
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.h:
+        * TAO/tao/Transport_Cache_Manager_T.inl:
+        * TAO/tao/Transport_Connector.cpp:
+
+commit 71166a816c7b12ca92df60b9d94248b7b0d7f4fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 1 13:21:04 2026 +0200
+
+    Test fixes
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/client_multiple.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+
+commit 101a7ef97c418c3cde0224cc1794a97544123d02
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 1 13:12:39 2026 +0200
+
+    Always schedule the timer
+    
+        * TAO/tao/Transport.cpp:
+
+commit ef7fd5156c649f8de87ba70a8418ef9d2c547319
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 1 13:09:44 2026 +0200
+
+    Work in progress
+    
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.h:
+
+commit e0c745a3335baa0e8800987d9eff92c07f73175a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 16:53:25 2026 +0200
+
+    Layout/nullptr changes
+    
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+
+commit 1dfa8fe00d12982da14f3701696dd1593c93f547
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 15:52:03 2026 +0200
+
+    Test extensions
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/client_multiple.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit c7c77cbf623996def48d1da91df57eaaac0f06be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 14:01:14 2026 +0200
+
+    Add special client for testing with multiple servers, mixing basic and multiple gets too complicated for a unit test
+    
+        * TAO/tests/Transport_Idle_Timeout/client_multiple.cpp:
+          Added.
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Idle_Transport_Timeout.mpc:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout/svc.conf:
+        * TAO/tests/Transport_Idle_Timeout/svc_disabled.conf:
+
+commit 31046bdf8070bf7a510a4c26d7129724b005e2fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 13:14:33 2026 +0200
+
+    Test infrastructure
+    
+        * TAO/tests/Transport_Idle_Timeout/svc_disabled.conf:
+          Added.
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout/svc.conf:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit 0e7d800fa0bb989e294d2293063e5a8928031562
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 12:44:58 2026 +0200
+
+    Removed disabled test, default
+    
+        * TAO/tests/Transport_Idle_Timeout/svc_disabled.conf:
+          Deleted.
+    
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+
+commit 2b8198cf3d2689fe8943d533c94243186736bf0a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 10:39:27 2026 +0200
+
+    Test infrastructure extensions
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit b93d27461fc210fe33fbd8cc270723f8b652cc75
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 10:15:38 2026 +0200
+
+    Rework test for more features
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit 00ff5077f3835d4cec2c0c096aa38021b15828a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 30 17:10:01 2026 +0200
+
+    fixed fguzz
+    
+        * TAO/tao/Transport_Idle_Timer.h:
+
+commit 5fafd7776f7d78f1d52d34b418eb57f86a154fd2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 30 17:09:11 2026 +0200
+
+    Cleanup
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/svc.conf:
+        * TAO/tests/Transport_Idle_Timeout/svc_disabled.conf:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit 5e8ce3d6d9eb2eb027ae68ae83a162191cfe3cc4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 30 16:19:58 2026 +0200
+
+    Docu changes
+    
+        * TAO/tao/Transport_Idle_Timer.h:
+
+commit 7f66766479bf95295fdfc75634cffdfd1744e1ff
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 30 15:49:02 2026 +0200
+
+    Document new flag
+    
+        * TAO/docs/Options.html:
+
+commit d57b5ece5ff2d9ced3116b625015e0e69aa5048f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 30 15:44:37 2026 +0200
+
+    Move add/remove ref to idle timer
+    
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport_Idle_Timer.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+
+commit 30d5cb476e11d89da45b1ee6ac569ed313a15cc4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 30 14:46:46 2026 +0200
+
+    Test improvements and cleanup
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.h:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/test.idl:
+
+commit 266e5b0121d9053e6385978cb317bc45419af03e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Mar 28 10:46:52 2026 +0100
+
+    Add new test
+    
+        * TAO/bin/tao_orb_tests.lst:
+
+commit adbd880d3b3872f03d309710e182a09ba5421619
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 15:52:49 2026 +0100
+
+    Storing work in progress
+    
+        * TAO/tao/Transport.cpp:
+
+commit fbc35c85da402f5bff6ef4557ba4ac38ed4b64a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 15:06:04 2026 +0100
+
+    Test extension
+    
+        * TAO/tests/Transport_Idle_Timeout/Echo_i.cpp:
+        * TAO/tests/Transport_Idle_Timeout/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout/server.cpp:
+        * TAO/tests/Transport_Idle_Timeout/svc.conf:
+        * TAO/tests/Transport_Idle_Timeout/svc_disabled.conf:
+
+commit c718855e6b5992f7b2ab5db17db41edc64bdae43
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 14:53:51 2026 +0100
+
+    Starter unit test
+
+commit 8798127d5570d03a122dfb6ec722035125ce5f24
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 14:50:23 2026 +0100
+
+    Add missing post include
+    
+        * TAO/tao/Transport_Idle_Timer.h:
+
+commit 2e72456bd57c04f722cb108ee7ace94670bfc598
+Merge: 389bef75e6d f719d1a90db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 09:25:30 2026 +0100
+
+    Merge pull request #2522 from jwillemsen/jwi-bugzilla2
+    
+    Updated all links to bugzilla
+
+commit f719d1a90dbc85826f6f91f015e40e58ac46d044
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 08:30:56 2026 +0100
+
+    List bugzilla migration
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit ea6cff17f6f33235687feb8a60d92fcbe149468c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 27 08:26:38 2026 +0100
+
+    Migrate all bugzilla links to bugzilla github repo
+    
+        * ACE/ChangeLogs/ChangeLog-2002a:
+        * ACE/ChangeLogs/ChangeLog-2002b:
+        * ACE/ChangeLogs/ChangeLog-2003c:
+        * ACE/ChangeLogs/ChangeLog-2004a:
+        * ACE/ChangeLogs/ChangeLog-2004b:
+        * ACE/ChangeLogs/ChangeLog-2007b:
+        * ACE/ace/Abstract_Timer_Queue.h:
+        * ACE/docs/ACE-guidelines.html:
+        * ACE/tests/Based_Pointer_Test.cpp:
+        * ACE/tests/Bug_1576_Regression_Test.cpp:
+        * ACE/tests/Bug_1890_Regression_Test.cpp:
+        * ACE/tests/Bug_2368_Regression_Test.cpp:
+        * ACE/tests/Bug_2497_Regression_Test.cpp:
+        * ACE/tests/Bug_2540_Regression_Test.cpp:
+        * ACE/tests/Bug_2609_Regression_Test.cpp:
+        * ACE/tests/Bug_2610_Regression_Test.cpp:
+        * ACE/tests/Bug_2659_Regression_Test.cpp:
+        * ACE/tests/Bug_2740_Regression_Test.cpp:
+        * ACE/tests/Bug_2975_Regression_Test.cpp:
+        * ACE/tests/Bug_3102_Regression_Test.cpp:
+        * ACE/tests/Bug_3319_Regression_Test.cpp:
+        * ACE/tests/Bug_3500_Regression_Test.cpp:
+        * ACE/tests/Bug_3532_Regression_Test.cpp:
+        * ACE/tests/Bug_3541_Regression_Test.cpp:
+        * ACE/tests/Bug_3673_Regression_Test.cpp:
+        * ACE/tests/Bug_3709_Regression_Test.cpp:
+        * ACE/tests/Bug_3710_Regression_Test.cpp:
+        * ACE/tests/Bug_3911_Regression_Test.cpp:
+        * ACE/tests/Bug_3974_Regression_Test.cpp:
+        * ACE/tests/Compiler_Features_01_Test.cpp:
+        * ACE/tests/Compiler_Features_02_Test.cpp:
+        * ACE/tests/Compiler_Features_03_Test.cpp:
+        * ACE/tests/Compiler_Features_04_Test.cpp:
+        * ACE/tests/Compiler_Features_05_Test.cpp:
+        * ACE/tests/Compiler_Features_06_Test.cpp:
+        * ACE/tests/Compiler_Features_07_Test.cpp:
+        * ACE/tests/Compiler_Features_09_Test.cpp:
+        * ACE/tests/Compiler_Features_10_Test.cpp:
+        * ACE/tests/Compiler_Features_11_Test.cpp:
+        * ACE/tests/Compiler_Features_12_Test.cpp:
+        * ACE/tests/Compiler_Features_13_Test.cpp:
+        * ACE/tests/Compiler_Features_14_Test.cpp:
+        * ACE/tests/SSL/Bug_2912_Regression_Test.cpp:
+        * TAO/ChangeLogs/ChangeLog-2000b:
+        * TAO/ChangeLogs/ChangeLog-2001b:
+        * TAO/ChangeLogs/ChangeLog-2001c:
+        * TAO/ChangeLogs/ChangeLog-2002a:
+        * TAO/ChangeLogs/ChangeLog-2002b:
+        * TAO/ChangeLogs/ChangeLog-2002c:
+        * TAO/ChangeLogs/ChangeLog-2003b:
+        * TAO/ChangeLogs/ChangeLog-2003c:
+        * TAO/ChangeLogs/ChangeLog-2003e:
+        * TAO/ChangeLogs/ChangeLog-2004a:
+        * TAO/ChangeLogs/ChangeLog-2004b:
+        * TAO/ChangeLogs/ChangeLog-2005a:
+        * TAO/ChangeLogs/ChangeLog-2005b:
+        * TAO/ChangeLogs/ChangeLog-2009a:
+        * TAO/docs/Options.html:
+        * TAO/docs/Security/SSLIOP-USAGE.html:
+        * TAO/docs/releasenotes/TODO.html:
+        * TAO/docs/releasenotes/ec.html:
+        * TAO/docs/releasenotes/index.html:
+        * TAO/docs/releasenotes/orbcore.html:
+        * TAO/docs/rtcorba/issues.html:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.inl:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * TAO/orbsvcs/tests/Bug_2248_Regression/README:
+        * TAO/orbsvcs/tests/Bug_2285_Regression/README:
+        * TAO/orbsvcs/tests/Bug_2287_Regression/README:
+        * TAO/orbsvcs/tests/Bug_2925_Regression/README:
+        * TAO/orbsvcs/tests/Bug_3215_Regression/README:
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/README:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/Leader_Follower.h:
+        * TAO/tao/Strategies/DIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+        * TAO/tests/Big_Oneways/README:
+        * TAO/tests/Big_Request_Muxing/README:
+        * TAO/tests/Big_Twoways/README:
+        * TAO/tests/Blocking_Sync_None/README:
+        * TAO/tests/Bug_3384_Regression/README.txt:
+        * TAO/tests/Crash_On_Write/README:
+        * TAO/tests/DynAny_Test/test_dynsequence.cpp:
+        * TAO/tests/LongUpcalls/README:
+        * TAO/tests/ORB_shutdown/README:
+        * TAO/tests/Stack_Recursion/README:
+
+commit cacbcdb44d518f4dd473812be34a9251431265ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 13:20:37 2026 +0100
+
+    Added cancel of idle timer on transport usage
+    
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Connector.cpp:
+
+commit 9c8c4b3324c435bc3646e156f94056ae21c56613
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 13:09:20 2026 +0100
+
+    Add cancel timer
+    
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Idle_Timer.cpp:
+        * TAO/tao/Transport_Idle_Timer.h:
+
+commit 4313626e44d42665e710d79eb9e276ee769f3d32
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 13:04:41 2026 +0100
+
+    Schedule timer on making idle
+    
+        * TAO/tao/Resource_Factory.h:
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport.h:
+
+commit e61960a6dd8246736e51ccda6b27a7b339896658
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 12:54:05 2026 +0100
+
+    Commandline flag
+    
+        * TAO/tao/Transport_Cache_Manager_T.inl:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/default_resource.h:
+
+commit c7bab8262dd27a138d6a12a2dc7aabd62284a91b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 12:31:39 2026 +0100
+
+    Use TAO namespace
+    
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Idle_Timer.h:
+        * TAO/tao/Transport_Timer.cpp:
+        * TAO/tao/Transport_Timer.h:
+
+commit 6b7bc8fef47c8f2503b9f1084ae57fe5703e4eeb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 12:28:23 2026 +0100
+
+    Added new timer class for idle transport purging
+    
+        * TAO/tao/Transport_Idle_Timer.cpp:
+        * TAO/tao/Transport_Idle_Timer.h:
+          Added.
+    
+        * TAO/tao/Cache_Entries_T.inl:
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Cache_Manager_T.h:
+        * TAO/tao/Transport_Cache_Manager_T.inl:
+        * TAO/tao/tao.mpc:
+
+commit 1c852e6e40d8f886f9ecaf77c6643bbee0904f8a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 10:38:41 2026 +0100
+
+    Fixed typo in comment
+    
+        * TAO/tao/Transport.h:
+
+commit df24cb5654d0e52e3aa3a7009d22458b4da0b639
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 17:26:48 2026 +0100
+
+    Update return type description for shutting_down method
+
+commit 5f3e8f4c6fb77ff6eb349406fb1221d21c708bc7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 11 16:47:37 2026 +0100
+
+    Use bool return values
+    
+        * TAO/tao/TAO_Singleton.cpp:
+        * TAO/tao/TAO_Singleton_Manager.cpp:
+        * TAO/tao/TAO_Singleton_Manager.h:
+
+commit f653259a9554f3d4e6e19727c1cbeba6a8579dd1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 22 09:45:10 2026 +0100
+
+    Document changes for TAO-4.0.6
+    
+    Added a section for changes in TAO-4.0.6 with no updates.
+
+commit 292ef3041ea78853451cb24db19c4b237345fd44
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 17 14:52:29 2025 +0100
+
+    Rename Updates to Upd to not let windows UAC block this test from starting
+    
+        * TAO/orbsvcs/tests/Notify/Basic/.gitignore:
+        * TAO/orbsvcs/tests/Notify/Basic/Basic.mpc:
+        * TAO/orbsvcs/tests/Notify/Basic/README:
+        * TAO/orbsvcs/tests/Notify/Basic/run_test.pl:
+        * TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl:
+
+commit a0f570a2464800e96bda52c1d898ad0b677905b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 12 10:53:38 2025 +0100
+
+    CALLBACK is a macro with C++Builder
+    
+        * TAO/docs/tutorials/Quoter/RTCORBA/Stock_Database.h:
+        * TAO/docs/tutorials/Quoter/RTCORBA/Stock_Database.tpp:
+
+commit 002e3c262c21a31546464f9cc3d3543983b5bef5
+Merge: 97d0c617ae8 71af1ebc6e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 9 08:21:33 2025 +0100
+
+    Merge pull request #2489 from jwillemsen/jwi-booleancdr
+    
+    Check that a CDR boolean is received as 0 or 1, if another value it i…
+
+commit 97d0c617ae8bed05d1216ceb70e7345ce3e6bf36
+Merge: 3abc747cc02 1965a425404
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 22:20:05 2025 +0100
+
+    Merge pull request #2490 from jwillemsen/jwi-stl
+    
+    Removed stl feature flag, we require STL support, add missing break
+
+commit 1965a425404980d6a9026a9ca0c5670217c6d5fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 18:51:28 2025 +0100
+
+    Removed stl feature flag, we require STL support, add missing break
+    
+        * ACE/bin/MakeProjectCreator/config/stl.mpb:
+          Deleted.
+    
+        * ACE/bin/MakeProjectCreator/config/global.features:
+        * TAO/docs/tutorials/Quoter/RTCORBA/Distributor.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/StockQuoter.mpc:
+
+commit 68d64fb77e28bbff9af71f3e0796e3dc435b91eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 13:15:58 2025 +0100
+
+    Check as boolean the return value of some calls
+    
+        * TAO/tao/AnyTypeCode/append.cpp:
+
+commit 7214dbe1e411239346f63933a9b7eb24b2283713
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 13:00:32 2025 +0100
+
+    Check that a CDR boolean is received as 0 or 1, if another value it is an error
+    
+        * ACE/ace/CDR_Stream.cpp:
+        * ACE/ace/CDR_Stream.inl:
+        * ACE/tests/CDR_Test.cpp:
+        * TAO/tao/AnyTypeCode/append.cpp:
+
+commit f02274950cc2fed89b06e14e89da46f1d994e524
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 25 09:12:10 2025 +0100
+
+    Use nullptr instead of NULL
+    
+        * ACE/ace/Activation_Queue.cpp:
+        * ACE/ace/Future.cpp:
+        * ACE/apps/JAWS/clients/WebSTONE/src/nsapi-includes/frame/http.h:
+        * ACE/apps/JAWS/clients/WebSTONE/src/sysdep.h:
+        * ACE/tests/Network_Adapters_Test.cpp:
+        * TAO/tests/Bug_2234_Regression/server.cpp:
+        * TAO/tests/MProfile_Forwarding/client.cpp:
+
+commit 3abe7ad6640d69100108d8174826d0661f79eb64
+Merge: cd8e75b6098 4aeab859617
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 22 19:58:05 2025 +0200
+
+    Merge branch 'master' into jwi-warning
+
+commit cd8e75b6098d4dbd789f33fb6f6209baaa83b073
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 22 19:06:56 2025 +0200
+
+    Removed redundant empty line
+    
+        * TAO/tao/PortableServer/Root_POA.cpp:
+
+commit 2b638ef4a5a25828b9fd9b6bd2703596e3e37254
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 22 17:39:46 2025 +0200
+
+    Fixed compiler warnings
+    
+        * TAO/tao/Monitor/Monitor_Impl.cpp:
+        * TAO/tao/PortableServer/Root_POA.cpp:
+
+commit 2bc86f2abdd9c79d4eb7b3c0ec861e866afbb369
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 21 12:33:04 2025 +0200
+
+    Use null, override, default
+    
+        * TAO/docs/releasenotes/orbcore.html:
+        * TAO/tao/Acceptor_Impl.cpp:
+        * TAO/tao/Connection_Purging_Strategy.cpp:
+        * TAO/tao/Connection_Purging_Strategy.h:
+        * TAO/tao/LRU_Connection_Purging_Strategy.cpp:
+        * TAO/tao/LRU_Connection_Purging_Strategy.h:
+        * TAO/tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * TAO/tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * TAO/tao/Strategies/NULL_Connection_Purging_Strategy.h:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.h:
+        * TAO/tao/Transport_Timer.h:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/orbconf.h:
+
+commit 6e4f718f72f5733e9dadb5bf54223554f736cef7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 22 08:20:57 2025 +0200
+
+    Prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

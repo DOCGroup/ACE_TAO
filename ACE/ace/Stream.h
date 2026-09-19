@@ -66,9 +66,9 @@ public:
    * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
    * @a arg is the value past in to the <open> methods of the tasks.
    */
-  ACE_Stream (void *arg = 0,
-              ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head = 0,
-              ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail = 0);
+  ACE_Stream (void *arg = nullptr,
+              ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head = nullptr,
+              ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail = nullptr);
 
   /**
    * Create a Stream consisting of @a head and @a tail as the Stream
@@ -77,8 +77,8 @@ public:
    * @a arg is the value past in to the @c open() methods of the tasks.
    */
   virtual int open (void *arg,
-                    ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head = 0,
-                    ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail = 0);
+                    ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head = nullptr,
+                    ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail = nullptr);
 
   /// Close down the stream and release all the resources.
   virtual int close (int flags = M_DELETE);
@@ -139,7 +139,7 @@ public:
    * @a timeout == 0).
    */
   virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *timeout = 0);
+                   ACE_Time_Value *timeout = nullptr);
 
   /**
    * Read the message @a mb that is stored in the stream head.
@@ -147,7 +147,7 @@ public:
    * to complete (or block forever if @a timeout == 0).
    */
   virtual int get (ACE_Message_Block *&mb,
-                   ACE_Time_Value *timeout = 0);
+                   ACE_Time_Value *timeout = nullptr);
 
   /// Send control message down the stream.
   virtual int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
@@ -198,8 +198,8 @@ private:
 
   /// Must a new module onto the Stream.
   int push_module (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *,
-                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0,
-                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0);
+                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = nullptr,
+                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = nullptr);
 };
 
 /**

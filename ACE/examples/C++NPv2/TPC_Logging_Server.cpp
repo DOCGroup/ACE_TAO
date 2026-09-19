@@ -82,7 +82,7 @@ int TPC_Logging_Acceptor::accept_svc_handler
 #if defined (ACE_WIN32)
   // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
   // See ace/config-lite.h for the typedefs.
-  SSL_set_fd (ssl_, reinterpret_cast<int> (sh->get_handle ()));
+  SSL_set_fd (ssl_, static_cast<int> ((intptr_t)sh->get_handle ()));
 #else
   SSL_set_fd (ssl_, sh->get_handle ());
 #endif /* ACE_WIN32 */

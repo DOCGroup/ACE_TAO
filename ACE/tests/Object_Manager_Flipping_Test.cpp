@@ -29,7 +29,7 @@ void
 hook1 ()
 {
   delete ip;
-  ip = 0;
+  ip = nullptr;
 }
 
 int run_main (int, ACE_TCHAR *[])

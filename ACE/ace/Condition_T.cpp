@@ -114,7 +114,7 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
                             const ACE_Time_Value *abstime)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
-  if (abstime == 0)
+  if (abstime == nullptr)
     {
       return ACE_OS::cond_wait (&this->cond_,
                                 &mutex.lock ());

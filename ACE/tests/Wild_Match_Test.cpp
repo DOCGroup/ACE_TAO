@@ -35,7 +35,7 @@ int run_main (int, ACE_TCHAR *[])
 
   ok &= !match ("C2",               "?[!2]",              true,   true);
   ok &=  match ("C1",               "?[!2]",              true,   true);
-  ok &= !match (0,                  "[!C]?",              true,   true);
+  ok &= !match (nullptr,                  "[!C]?",              true,   true);
 
   // invalid classes: results are undefined but we shouldn't crash
   match ("foo", "f[o-a]o", true, true);

@@ -30,7 +30,7 @@ ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
                                               u_int f,
                                               ACE_Service_Object_Exterminator gobbler,
                                               int stype)
-  : name_ (0),
+  : name_ (nullptr),
     obj_ (so),
     gobbler_ (gobbler),
     flags_ (f),
@@ -63,12 +63,12 @@ ACE_Service_Type_Impl::fini () const
 #else
   delete [] const_cast <ACE_TCHAR *> (this->name_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  (const_cast <ACE_Service_Type_Impl *> (this))->name_ = 0;
+  (const_cast <ACE_Service_Type_Impl *> (this))->name_ = nullptr;
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_OBJ))
     {
-      if (gobbler_ != 0)
+      if (gobbler_ != nullptr)
         gobbler_ (this->object ());
       else
         // Cast to remove const-ness.
@@ -103,7 +103,7 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
   ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
-  if (so == 0)
+  if (so == nullptr)
     return -1;
 
   this->initialized_ = so->init (argc, argv);
@@ -124,7 +124,7 @@ ACE_Service_Object_Type::fini () const
   // Call fini() if an only if, the object was successfully
   // initialized, i.e. init() returned 0. This is necessary to
   // maintain the ctor/dtor-like semantics for init/fini.
-  if (so != 0 && this->initialized_ == 0)
+  if (so != nullptr && this->initialized_ == 0)
       so->fini ();
 
   return ACE_Service_Type_Impl::fini ();
@@ -170,8 +170,8 @@ ACE_Module_Type::ACE_Module_Type (void *m,
                                   const ACE_TCHAR *m_name,
                                   u_int f,
                                   int stype)
-  : ACE_Service_Type_Impl (m, m_name, f, 0, stype)
-  , link_ (0)
+  : ACE_Service_Type_Impl (m, m_name, f, nullptr, stype)
+  , link_ (nullptr)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
@@ -250,10 +250,10 @@ ACE_Module_Type::fini () const
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
 
-  if (reader != 0)
+  if (reader != nullptr)
     reader->fini ();
 
-  if (writer != 0)
+  if (writer != nullptr)
     writer->fini ();
 
   // Close the module and delete the memory.
@@ -272,7 +272,7 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
                     this->name (),
                     ACE_TEXT ("# ACE_Module\n"));
 
-  if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
+  if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*str, buf, len);
@@ -316,7 +316,7 @@ ACE_Stream_Type::suspend () const
   ACE_TRACE ("ACE_Stream_Type::suspend");
 
   for (ACE_Module_Type *m = this->head_;
-       m != 0;
+       m != nullptr;
        m = m->link ())
     m->suspend ();
 
@@ -329,7 +329,7 @@ ACE_Stream_Type::resume () const
   ACE_TRACE ("ACE_Stream_Type::resume");
 
   for (ACE_Module_Type *m = this->head_;
-       m != 0;
+       m != nullptr;
        m = m->link ())
     m->resume ();
 
@@ -340,8 +340,8 @@ ACE_Stream_Type::ACE_Stream_Type (void *s,
                                   const ACE_TCHAR *s_name,
                                   u_int f,
                                   int stype)
-  : ACE_Service_Type_Impl (s, s_name, f, 0, stype),
-    head_ (0)
+  : ACE_Service_Type_Impl (s, s_name, f, nullptr, stype),
+    head_ (nullptr)
 {
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");
 }
@@ -362,7 +362,7 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
                     this->name (),
                     ACE_TEXT ("# STREAM\n"));
 
-  if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
+  if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*str, buf, len);
@@ -376,7 +376,7 @@ ACE_Stream_Type::fini () const
   void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
 
-  for (ACE_Module_Type *m = this->head_; m != 0;)
+  for (ACE_Module_Type *m = this->head_; m != nullptr;)
   {
     ACE_Module_Type *t = m->link ();
 
@@ -397,19 +397,19 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 {
   ACE_TRACE ("ACE_Stream_Type::remove");
 
-  ACE_Module_Type *prev = 0;
+  ACE_Module_Type *prev = nullptr;
   void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
   int result = 0;
 
-  for (ACE_Module_Type *m = this->head_; m != 0; )
+  for (ACE_Module_Type *m = this->head_; m != nullptr; )
     {
       // We need to do this first so we don't bomb out if we delete m!
       ACE_Module_Type *link = m->link ();
 
       if (m == mod)
         {
-          if (prev == 0)
+          if (prev == nullptr)
             this->head_ = link;
           else
             prev->link (link);
@@ -450,12 +450,12 @@ ACE_Stream_Type::find (const ACE_TCHAR *module_name) const
   ACE_TRACE ("ACE_Stream_Type::find");
 
   for (ACE_Module_Type *m = this->head_;
-       m != 0;
+       m != nullptr;
        m = m->link ())
     if (ACE_OS::strcmp (m->name (), module_name) == 0)
       return m;
 
-  return 0;
+  return nullptr;
 }
 
 // @@@ Eliminated ommented out explicit template instantiation code

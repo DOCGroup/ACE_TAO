@@ -497,7 +497,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef pthread_rwlock_t ACE_rwlock_t;
+using ACE_rwlock_t = pthread_rwlock_t;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #   endif /* ACE_LACKS_RWLOCK_T */
 
@@ -551,7 +551,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
+using ACE_recursive_thread_mutex_t = ACE_thread_mutex_t;
 #     if defined (ACE_WIN32)
 // Windows has recursive mutexes, but doesn't have condition variables,
 // so there's no built-in support for this. Thus, the condition-related
@@ -564,7 +564,7 @@ struct ACE_recursive_mutex_state
 };
 #     else
 // No need for special handling; just need a type for method signatures.
-typedef int ACE_recursive_mutex_state;
+using ACE_recursive_mutex_state = int;
 #     endif /* ACE_WIN32 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -790,7 +790,7 @@ private:
 // = The ACE_Sched_Priority type should be used for platform-
 //   independent thread and process priorities, by convention.
 //   int should be used for OS-specific priorities.
-typedef int ACE_Sched_Priority;
+using ACE_Sched_Priority = int;
 
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)
 #   if defined (ACE_VXWORKS)
@@ -813,10 +813,10 @@ typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 #   define ACE_SELF (0)
 #else /* !defined (ACE_WIN32) */
-  typedef int ACE_idtype_t;
-  typedef long ACE_id_t;
+  using ACE_idtype_t = int;
+  using ACE_id_t = long;
 #     define ACE_SELF (-1)
-  typedef short ACE_pri_t;
+  using ACE_pri_t = short;
 #endif /* !defined (ACE_WIN32) */
 
 # if defined (ACE_HAS_TSS_EMULATION)
@@ -1161,8 +1161,8 @@ namespace ACE_OS {
   extern ACE_Export
   int cond_init (ACE_cond_t *cv,
                  short type = ACE_DEFAULT_SYNCH_TYPE,
-                 const char *name = 0,
-                 void *arg = 0);
+                 const char *name = nullptr,
+                 void *arg = nullptr);
 
 #if defined (ACE_LACKS_COND_T)
   extern ACE_Export
@@ -1251,8 +1251,8 @@ namespace ACE_OS {
                   ACE_condattr_t *attributes,
                   int manual_reset = 0,
                   int initial_state = 0,
-                  const char *name = 0,
-                  void *arg = 0,
+                  const char *name = nullptr,
+                  void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 
 # if defined (ACE_HAS_WCHAR)
@@ -1310,8 +1310,8 @@ namespace ACE_OS {
   extern ACE_Export
   int mutex_init (ACE_mutex_t *m,
                   int lock_scope = ACE_DEFAULT_SYNCH_TYPE,
-                  const char *name = 0,
-                  ACE_mutexattr_t *arg = 0,
+                  const char *name = nullptr,
+                  ACE_mutexattr_t *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0,
                   int lock_type = 0);
 
@@ -1459,8 +1459,8 @@ namespace ACE_OS {
   extern ACE_Export
   int rwlock_init (ACE_rwlock_t *rw,
                    int type = ACE_DEFAULT_SYNCH_TYPE,
-                   const ACE_TCHAR *name = 0,
-                   void *arg = 0);
+                   const ACE_TCHAR *name = nullptr,
+                   void *arg = nullptr);
 
   //@}
 
@@ -1635,12 +1635,12 @@ namespace ACE_OS {
                   void *args,
                   long flags,
                   ACE_thread_t *thr_id,
-                  ACE_hthread_t *t_handle = 0,
+                  ACE_hthread_t *t_handle = nullptr,
                   long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                  void *stack = 0,
+                  void *stack = nullptr,
                   size_t stacksize = ACE_DEFAULT_THREAD_STACKSIZE,
-                  ACE_Base_Thread_Adapter *thread_adapter = 0,
-                  const char **thr_name = 0);
+                  ACE_Base_Thread_Adapter *thread_adapter = nullptr,
+                  const char **thr_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_equal (ACE_thread_t t1, ACE_thread_t t2);

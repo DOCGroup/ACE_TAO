@@ -310,8 +310,8 @@ private:
   ACE_Unbounded_Queue<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > queue_;
 };
 
-typedef ACE_ARGV_Queue_Entry_T<ACE_TCHAR> ACE_ARGV_Queue_Entry;
-typedef ACE_ARGV_T<ACE_TCHAR> ACE_ARGV;
+using ACE_ARGV_Queue_Entry = ACE_ARGV_Queue_Entry_T<ACE_TCHAR>;
+using ACE_ARGV = ACE_ARGV_T<ACE_TCHAR>;
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -33,10 +33,10 @@
 # include "ace/OS_NS_fcntl.h"
 #endif /* VXWORKS */
 
-ACE_Test_Output *ACE_Test_Output::instance_ = 0;
+ACE_Test_Output *ACE_Test_Output::instance_ = nullptr;
 
 ACE_Test_Output::ACE_Test_Output ()
-  : output_file_ (0)
+  : output_file_ (nullptr)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_ = new OFSTREAM;
@@ -46,7 +46,7 @@ ACE_Test_Output::ACE_Test_Output ()
 ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr, 0);
+  ACE_LOG_MSG->msg_ostream (&cerr, false);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -75,7 +75,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN + 1] = { 0 };
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir = 0;
+  const ACE_TCHAR *test_dir = nullptr;
 
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
@@ -95,7 +95,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
     }
 
 #endif /* ACE_WIN32 */
-  if (test_dir == 0)
+  if (test_dir == nullptr)
     test_dir = ACE_DEFAULT_TEST_DIR;
 
   // This could be done with ACE_OS::sprintf() but it requires different
@@ -142,7 +142,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
-  ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
+  ACE_LOG_MSG->msg_ostream (this->output_file_, false);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
@@ -162,7 +162,7 @@ ACE_Test_Output::close ()
     ACE_OS::fflush (this->output_file_);
     ACE_OS::fclose (this->output_file_);
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
-    ACE_LOG_MSG->msg_ostream (0, 0);
+    ACE_LOG_MSG->msg_ostream (nullptr, false);
   }
   // else something else changed the stream and hence should
   // have closed the output_file_
@@ -171,17 +171,17 @@ ACE_Test_Output::close ()
 ACE_Test_Output *
 ACE_Test_Output::instance ()
 {
-  if (ACE_Test_Output::instance_ == 0)
+  if (ACE_Test_Output::instance_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
+                                *ACE_Static_Object_Lock::instance (), nullptr));
 
-      if (ACE_Test_Output::instance_ == 0)
+      if (ACE_Test_Output::instance_ == nullptr)
         {
           ACE_NEW_RETURN (ACE_Test_Output::instance_,
                           ACE_Test_Output,
-                          0);
+                          nullptr);
           ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Test_Output, ACE_Test_Output::instance_)
         }
     }
@@ -204,5 +204,5 @@ void
 ACE_Test_Output::close_singleton ()
 {
   delete ACE_Test_Output::instance_;
-  ACE_Test_Output::instance_ = 0;
+  ACE_Test_Output::instance_ = nullptr;
 }

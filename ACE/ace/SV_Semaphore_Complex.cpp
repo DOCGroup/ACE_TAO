@@ -247,7 +247,7 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
   key_t key = ACE_DEFAULT_SEM_KEY;
 
 #ifdef ACE_HAS_SYSV_IPC
-  if (name != 0)
+  if (name != nullptr)
     key = this->name_2_key (name);
 #else
   ACE_UNUSED_ARG (name);

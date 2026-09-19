@@ -5,7 +5,7 @@
 This is a stress test for the IIOP_SSL features.  This test should
 serve as a stress test for
 
-http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1421
+https://github.com/DOCGroup/bugzilla/issues/1421
 
 If SSL cannot be used (for whatever reason) we expect the
 communication to take place  over an insecure TCP/IP port. This test

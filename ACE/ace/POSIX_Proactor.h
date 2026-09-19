@@ -89,10 +89,10 @@ public:
   virtual Proactor_Type  get_impl_type ();
 
   /// Virtual destructor.
-  virtual ~ACE_POSIX_Proactor ();
+  ~ACE_POSIX_Proactor () override;
 
   /// Close down the Proactor.
-  virtual int close ();
+  int close () override;
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -100,7 +100,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (ACE_Time_Value &wait_time) = 0;
+  int handle_events (ACE_Time_Value &wait_time) override = 0;
 
   /**
    * Block indefinitely until at least one event is dispatched.
@@ -108,7 +108,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events () = 0;
+  int handle_events () override = 0;
 
   /**
    * Post a result to the completion port of the Proactor.  If errors
@@ -128,27 +128,27 @@ public:
   ACE_Asynch_Pseudo_Task &get_asynch_pseudo_task ();
 
   /// This function is a no-op function for Unix systems. Returns 0.
-  virtual int register_handle (ACE_HANDLE handle,
-                               const void *completion_key);
+  int register_handle (ACE_HANDLE handle,
+                               const void *completion_key) override;
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
-  int wake_up_dispatch_threads ();
+  int wake_up_dispatch_threads () override;
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
-  int close_dispatch_threads (int wait);
+  int close_dispatch_threads (int wait) override;
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
-  size_t number_of_threads () const;
-  void number_of_threads (size_t threads);
+  size_t number_of_threads () const override;
+  void number_of_threads (size_t threads) override;
 
   /// This is a no-op in POSIX. Returns ACE_INVALID_HANDLE.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   // Methods used to create Asynch IO factory and result objects. We
   // create the right objects here in these methods.
 
-  virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream ();
-  virtual ACE_Asynch_Read_Stream_Result_Impl *
+  ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream () override;
+  ACE_Asynch_Read_Stream_Result_Impl *
     create_asynch_read_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
@@ -156,10 +156,10 @@ public:
                                       const void *act,
                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                       int priority = 0,
-                                      int signal_number = ACE_SIGRTMIN);
+                                      int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream ();
-  virtual ACE_Asynch_Write_Stream_Result_Impl *
+  ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream () override;
+  ACE_Asynch_Write_Stream_Result_Impl *
     create_asynch_write_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
@@ -167,10 +167,10 @@ public:
                                        const void *act,
                                        ACE_HANDLE event = ACE_INVALID_HANDLE,
                                        int priority = 0,
-                                       int signal_number = ACE_SIGRTMIN);
+                                       int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file ();
-  virtual ACE_Asynch_Read_File_Result_Impl *
+  ACE_Asynch_Read_File_Impl *create_asynch_read_file () override;
+  ACE_Asynch_Read_File_Result_Impl *
     create_asynch_read_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
                                     ACE_Message_Block &message_block,
@@ -180,10 +180,10 @@ public:
                                     u_long offset_high,
                                     ACE_HANDLE event = ACE_INVALID_HANDLE,
                                     int priority = 0,
-                                    int signal_number = ACE_SIGRTMIN);
+                                    int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file ();
-  virtual ACE_Asynch_Write_File_Result_Impl *
+  ACE_Asynch_Write_File_Impl *create_asynch_write_file () override;
+  ACE_Asynch_Write_File_Result_Impl *
     create_asynch_write_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
@@ -193,10 +193,10 @@ public:
                                      u_long offset_high,
                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
                                      int priority = 0,
-                                     int signal_number = ACE_SIGRTMIN);
+                                     int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram ();
-  virtual ACE_Asynch_Read_Dgram_Result_Impl *
+  ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram () override;
+  ACE_Asynch_Read_Dgram_Result_Impl *
     create_asynch_read_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block *message_block,
@@ -206,10 +206,10 @@ public:
                                      const void* act,
                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
                                      int priority = 0,
-                                     int signal_number = ACE_SIGRTMIN);
+                                     int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram ();
-  virtual ACE_Asynch_Write_Dgram_Result_Impl *
+  ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram () override;
+  ACE_Asynch_Write_Dgram_Result_Impl *
     create_asynch_write_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
@@ -218,10 +218,10 @@ public:
                                       const void* act,
                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                       int priority = 0,
-                                      int signal_number = ACE_SIGRTMIN);
+                                      int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Accept_Impl *create_asynch_accept ();
-  virtual ACE_Asynch_Accept_Result_Impl *
+  ACE_Asynch_Accept_Impl *create_asynch_accept () override;
+  ACE_Asynch_Accept_Result_Impl *
     create_asynch_accept_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                  ACE_HANDLE listen_handle,
                                  ACE_HANDLE accept_handle,
@@ -230,19 +230,19 @@ public:
                                  const void *act,
                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
                                  int priority = 0,
-                                 int signal_number = ACE_SIGRTMIN);
+                                 int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Connect_Impl *create_asynch_connect ();
-  virtual ACE_Asynch_Connect_Result_Impl *
+  ACE_Asynch_Connect_Impl *create_asynch_connect () override;
+  ACE_Asynch_Connect_Result_Impl *
     create_asynch_connect_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE connect_handle,
                                   const void *act,
                                   ACE_HANDLE event = ACE_INVALID_HANDLE,
                                   int priority = 0,
-                                  int signal_number = ACE_SIGRTMIN);
+                                  int signal_number = ACE_SIGRTMIN) override;
 
-  virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file ();
-  virtual ACE_Asynch_Transmit_File_Result_Impl *
+  ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file () override;
+  ACE_Asynch_Transmit_File_Result_Impl *
     create_asynch_transmit_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE socket,
                                         ACE_HANDLE file,
@@ -255,17 +255,17 @@ public:
                                         const void *act,
                                         ACE_HANDLE event = ACE_INVALID_HANDLE,
                                         int priority = 0,
-                                        int signal_number = ACE_SIGRTMIN);
+                                        int signal_number = ACE_SIGRTMIN) override;
 
   /// Create a timer result object which can be used with the Timer
   /// mechanism of the Proactor.
-  virtual ACE_Asynch_Result_Impl *
+  ACE_Asynch_Result_Impl *
     create_asynch_timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
                          const void *act,
                          const ACE_Time_Value &tv,
                          ACE_HANDLE event = ACE_INVALID_HANDLE,
                          int priority = 0,
-                         int signal_number = ACE_SIGRTMIN);
+                         int signal_number = ACE_SIGRTMIN) override;
 
 protected:
   /// Constructor.
@@ -288,7 +288,7 @@ protected:
    * threads can wake up. This is used in conjunction with the
    * <run_event_loop>.
    */
-  virtual int post_wakeup_completions (int how_many);
+  int post_wakeup_completions (int how_many) override;
 
 protected:
   /// Handler to handle the wakeups. This works in conjunction with the
@@ -328,13 +328,13 @@ public:
   /// which can be started at the same time
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  virtual Proactor_Type  get_impl_type ();
+  Proactor_Type  get_impl_type () override;
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Proactor ();
+  ~ACE_POSIX_AIOCB_Proactor () override;
 
   /// Close down the Proactor.
-  virtual int close ();
+  int close () override;
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -342,7 +342,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (ACE_Time_Value &wait_time);
+  int handle_events (ACE_Time_Value &wait_time) override;
 
   /**
    * Block indefinitely until at least one event is dispatched.
@@ -351,13 +351,13 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events ();
+  int handle_events () override;
 
   /// Post a result to the completion port of the Proactor.
-  virtual int post_completion (ACE_POSIX_Asynch_Result *result);
+  int post_completion (ACE_POSIX_Asynch_Result *result) override;
 
-  virtual int start_aio (ACE_POSIX_Asynch_Result *result,
-                         ACE_POSIX_Proactor::Opcode op);
+  int start_aio (ACE_POSIX_Asynch_Result *result,
+                         ACE_POSIX_Proactor::Opcode op) override;
 
   /**
    * This method should be called from
@@ -370,7 +370,7 @@ public:
    * we will receive ECANCELED  for all ::aio_canceled AIO requests
    * later on return from ::aio_suspend
    */
-  virtual int cancel_aio (ACE_HANDLE h);
+  int cancel_aio (ACE_HANDLE h) override;
 
 protected:
   /// Special constructor for ACE_SUN_Proactor
@@ -507,7 +507,7 @@ public:
    */
   ACE_POSIX_SIG_Proactor (size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  virtual Proactor_Type get_impl_type ();
+  Proactor_Type get_impl_type () override;
 
   /**
    * This constructor should be used to tell the Proactor to mask and
@@ -519,7 +519,7 @@ public:
                           size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
   /// Destructor.
-  virtual ~ACE_POSIX_SIG_Proactor ();
+  ~ACE_POSIX_SIG_Proactor () override;
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -527,7 +527,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events (ACE_Time_Value &wait_time);
+  int handle_events (ACE_Time_Value &wait_time) override;
 
   /**
    * Block indefinitely until at least one event is dispatched.
@@ -536,7 +536,7 @@ public:
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
    */
-  virtual int handle_events ();
+  int handle_events () override;
 
   /// Post a result to the completion port of the Proactor.
   /// now it is implemented in base ACE_POSIX_AIOCB_Proactor class
@@ -548,13 +548,13 @@ public:
    * which the Proactor will be waiting) of the Proactor. If there are
    * more than one signal, the higher numbered signal will be chosen.
    */
-  virtual ACE_Asynch_Result_Impl *create_asynch_timer
+  ACE_Asynch_Result_Impl *create_asynch_timer
     (const ACE_Handler::Proxy_Ptr &handler_proxy,
      const void *act,
      const ACE_Time_Value &tv,
      ACE_HANDLE event = ACE_INVALID_HANDLE,
      int priority = 0,
-     int signal_number = ACE_SIGRTMIN);
+     int signal_number = ACE_SIGRTMIN) override;
 
 protected:
   /// To setup the handler for a real-time signbal.
@@ -575,11 +575,11 @@ protected:
   virtual int handle_events_i (const ACE_Time_Value *timeout);
 
   /// Find free slot to store result and aiocb pointer
-  virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
+  ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result) override;
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
   /// called from post_completion method
-  virtual int notify_completion (int sig_num);
+  int notify_completion (int sig_num) override;
 
   /**
    * These signals are used for completion notification by the

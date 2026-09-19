@@ -66,7 +66,7 @@ public:
     : type (SVC_CONF_FILE),
       yyerrno (0),
       yylineno (1),
-      buffer (0),
+      buffer (nullptr),
       obstack (),
       config (gestalt)
   {
@@ -78,7 +78,7 @@ public:
     : type (SVC_CONF_DIRECTIVE),
       yyerrno (0),
       yylineno (1),
-      buffer (0),
+      buffer (nullptr),
       obstack (),
       config (gestalt)
   {

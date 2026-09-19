@@ -34,7 +34,7 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
 {
   ACE_TRACE ("ACE_Reactive_MEM_IO::recv_buf");
 
-  if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
+  if (this->shm_malloc_ == nullptr || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
   ACE_OFF_T new_offset = 0;
@@ -47,13 +47,13 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   if (retv == 0)
     {
       //      ACELIB_DEBUG ((LM_INFO, "MEM_Stream closed\n"));
-      buf = 0;
+      buf = nullptr;
       return 0;
     }
   else if (retv != static_cast <ssize_t> (sizeof (ACE_OFF_T)))
     {
       //  Nothing available or we are really screwed.
-      buf = 0;
+      buf = nullptr;
       return -1;
     }
 
@@ -67,7 +67,7 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 {
   ACE_TRACE ("ACE_Reactive_MEM_IO::send_buf");
 
-  if (this->shm_malloc_ == 0 || this->handle_ == ACE_INVALID_HANDLE)
+  if (this->shm_malloc_ == nullptr || this->handle_ == ACE_INVALID_HANDLE)
     {
       return -1;
     }
@@ -347,7 +347,7 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
   ACE_UNUSED_ARG (type);
 
   delete this->deliver_strategy_;
-  this->deliver_strategy_ = 0;
+  this->deliver_strategy_ = nullptr;
   switch (type)
     {
     case ACE_MEM_IO::Reactive:
@@ -374,7 +374,7 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
 int
 ACE_MEM_IO::fini ()
 {
-  if (this->deliver_strategy_ != 0)
+  if (this->deliver_strategy_ != nullptr)
     {
       return this->deliver_strategy_->fini ();
     }
@@ -395,7 +395,7 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
 {
   ACE_TRACE ("ACE_MEM_IO::send");
 
-  if (this->deliver_strategy_ == 0)
+  if (this->deliver_strategy_ == nullptr)
     {
       return -1;                  // Something went seriously wrong.
     }
@@ -411,7 +411,7 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
 
       size_t n = 0;
 
-      while (message_block != 0)
+      while (message_block != nullptr)
         {
           ACE_OS::memcpy (static_cast<char *> (buf->data ()) + n,
                           message_block->rd_ptr (),

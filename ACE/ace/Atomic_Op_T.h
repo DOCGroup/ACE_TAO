@@ -23,103 +23,103 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename TYPE>
 struct ACE_Type_Traits
 {
-  typedef TYPE const & parameter_type;
+  using parameter_type = const TYPE &;
 };
 
 template<>
 struct ACE_Type_Traits<bool>
 {
-  typedef bool parameter_type;
+  using parameter_type = bool;
 };
 
 template<>
 struct ACE_Type_Traits<char>
 {
-  typedef char parameter_type;
+  using parameter_type = char;
 };
 
 template<>
 struct ACE_Type_Traits<signed char>
 {
-  typedef signed char parameter_type;
+  using parameter_type = signed char;
 };
 
 template<>
 struct ACE_Type_Traits<unsigned char>
 {
-  typedef unsigned char parameter_type;
+  using parameter_type = unsigned char;
 };
 
 template<>
 struct ACE_Type_Traits<short>
 {
-  typedef short parameter_type;
+  using parameter_type = short;
 };
 
 template<>
 struct ACE_Type_Traits<unsigned short>
 {
-  typedef unsigned short parameter_type;
+  using parameter_type = unsigned short;
 };
 
 template<>
 struct ACE_Type_Traits<int>
 {
-  typedef int parameter_type;
+  using parameter_type = int;
 };
 
 template<>
 struct ACE_Type_Traits<unsigned int>
 {
-  typedef unsigned int parameter_type;
+  using parameter_type = unsigned int;
 };
 
 template<>
 struct ACE_Type_Traits<long>
 {
-  typedef long parameter_type;
+  using parameter_type = long;
 };
 
 template<>
 struct ACE_Type_Traits<unsigned long>
 {
-  typedef unsigned long parameter_type;
+  using parameter_type = unsigned long;
 };
 
 template<>
 struct ACE_Type_Traits<long long>
 {
-  typedef long long parameter_type;
+  using parameter_type = long long;
 };
 
 template<>
 struct ACE_Type_Traits<unsigned long long>
 {
-  typedef unsigned long long parameter_type;
+  using parameter_type = unsigned long long;
 };
 
 template<>
 struct ACE_Type_Traits<float>
 {
-  typedef float parameter_type;
+  using parameter_type = float;
 };
 
 template<>
 struct ACE_Type_Traits<double>
 {
-  typedef double parameter_type;
+  using parameter_type = double;
 };
 
 template<>
 struct ACE_Type_Traits<long double>
 {
-  typedef long double parameter_type;
+  using parameter_type = long double;
 };
 
 template<typename TYPE>
 struct ACE_Type_Traits<TYPE*>
 {
-  typedef TYPE* parameter_type;
+  using parameter_type = TYPE *;
 };
 
 /**
@@ -144,7 +144,7 @@ template <class ACE_LOCK, typename TYPE>
 class ACE_Atomic_Op_Ex
 {
 public:
-  typedef typename ACE_Type_Traits<TYPE>::parameter_type arg_type;
+  using arg_type = typename ACE_Type_Traits<TYPE>::parameter_type;
 
   /// Initialize @c value_ to 0.
   ACE_Atomic_Op_Ex (ACE_LOCK & mtx);
@@ -256,7 +256,7 @@ template <class ACE_LOCK, typename TYPE>
 class ACE_Atomic_Op
 {
 public:
-  typedef typename ACE_Type_Traits<TYPE>::parameter_type arg_type;
+  using arg_type = typename ACE_Type_Traits<TYPE>::parameter_type;
 
   /// Initialize @c value_ to 0.
   ACE_Atomic_Op ();

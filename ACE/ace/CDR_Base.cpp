@@ -498,7 +498,7 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
   ACE_Data_Block *db =
     mb->data_block ()->clone_nocopy (0, newsize);
 
-  if (db == 0)
+  if (db == nullptr)
     return -1;
 
   // Do the equivalent of ACE_CDR::mb_align() here to avoid having
@@ -540,11 +540,11 @@ int
 ACE_CDR::consolidate (ACE_Message_Block *dst,
                       const ACE_Message_Block *src)
 {
-  if (src == 0)
+  if (src == nullptr)
     return 0;
 
   size_t const newsize =
-    ACE_CDR::first_size (ACE_CDR::total_length (src, 0)
+    ACE_CDR::first_size (ACE_CDR::total_length (src, nullptr)
                          + ACE_CDR::MAX_ALIGNMENT);
 
   if (dst->size (newsize) == -1)
@@ -565,7 +565,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
 #endif /* ACE_CDR_IGNORE_ALIGNMENT */
 
   for (const ACE_Message_Block* i = src;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       // If the destination and source are the same, do not
@@ -929,7 +929,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
       ++f.digits_;
     }
 
-  if (!f.scale_ && span > f.digits_ && str[span - f.digits_ - 1] == '.')
+  if (!f.scale_ && span > static_cast<size_t> (f.digits_) && str[span - f.digits_ - 1] == '.')
     f.scale_ = f.digits_;
 
   if (idx >= 0)

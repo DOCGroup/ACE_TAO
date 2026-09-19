@@ -38,7 +38,7 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (void *args = 0) override;
+  int open (void *args = nullptr) override;
   int close (u_long flags = 0) override;
   int svc () override;
 
@@ -184,10 +184,10 @@ worker (void *args)
         /* NOTREACHED */
       case 0:
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor shutdown\n")));
-        return 0;
+        return nullptr;
       }
 
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return nullptr);
 }
 
 #endif /* ACE_HAS_THREADS */

@@ -71,12 +71,12 @@ public:
   friend class ACE_String_Base_Const_Iterator <ACE_CHAR_T>;
 
   // ACE-style iterators
-  typedef ACE_String_Base_Iterator <ACE_CHAR_T> ITERATOR;
-  typedef ACE_String_Base_Const_Iterator <ACE_CHAR_T> CONST_ITERATOR;
+  using ITERATOR = ACE_String_Base_Iterator<ACE_CHAR_T>;
+  using CONST_ITERATOR = ACE_String_Base_Const_Iterator<ACE_CHAR_T>;
 
   // STL-style iterators
-  typedef ACE_String_Base_Iterator <ACE_CHAR_T> iterator;
-  typedef ACE_String_Base_Const_Iterator <ACE_CHAR_T> const_iterator;
+  using iterator = ACE_String_Base_Iterator<ACE_CHAR_T>;
+  using const_iterator = ACE_String_Base_Const_Iterator<ACE_CHAR_T>;
 
    /**
     *  Default constructor.
@@ -84,7 +84,7 @@ public:
     *  @param the_allocator ACE_Allocator associated with string
     *  @return Default ACE_String_Base string.
     */
-  ACE_String_Base (ACE_Allocator *the_allocator = 0);
+  ACE_String_Base (ACE_Allocator *the_allocator = nullptr);
 
   /**
    * Constructor that copies @a s into dynamically allocated memory.
@@ -142,7 +142,7 @@ public:
    *  @param the_allocator ACE_Allocator associated with string
    *  @return ACE_String_Base containing ACE_CHAR_T 'c'
    */
-  ACE_String_Base (ACE_CHAR_T c, ACE_Allocator *the_allocator = 0);
+  ACE_String_Base (ACE_CHAR_T c, ACE_Allocator *the_allocator = nullptr);
 
   /**
    *  Constructor that allocates a len long string.
@@ -606,11 +606,11 @@ class ACE_String_Base_Iterator
 {
 public:
   // = std::iterator_traits typedefs/traits.
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef ACE_CHAR_T                            value_type;
-  typedef ACE_CHAR_T &                          reference;
-  typedef ACE_CHAR_T *                          pointer;
-  typedef ptrdiff_t                       difference_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using value_type = ACE_CHAR_T;
+  using reference = ACE_CHAR_T &;
+  using pointer = ACE_CHAR_T *;
+  using difference_type = ptrdiff_t;
 
   /**
    * Initializing constructor
@@ -733,11 +733,11 @@ class ACE_String_Base_Const_Iterator
 {
 public:
   // = std::iterator_traits typedefs/traits.
-  typedef std::bidirectional_iterator_tag iterator_category;
-  typedef const ACE_CHAR_T                      value_type;
-  typedef const ACE_CHAR_T &                    reference;
-  typedef const ACE_CHAR_T *                    pointer;
-  typedef ptrdiff_t                       difference_type;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using value_type = const ACE_CHAR_T;
+  using reference = const ACE_CHAR_T &;
+  using pointer = const ACE_CHAR_T *;
+  using difference_type = ptrdiff_t;
 
   /**
    * Initializing constructor

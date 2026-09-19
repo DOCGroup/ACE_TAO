@@ -1,11 +1,11 @@
-// Exercise the <ACE_SOCK_CODgram> wrapper along with the
-// <ACE_Reactor>.  This test simply ping-pongs datagrams back and
+// Exercise the ACE_SOCK_CODgram wrapper along with the
+// ACE_Reactor.  This test simply ping-pongs datagrams back and
 // forth between the peer1 and peer2 processes.  This test can
 // be run in two ways:
 //
 // 1. Stand-alone -- e.g.,
 //
-//    % ./CODgram
+//    % ./codgram
 //
 //    which will spawn a child process and run peer1 and peer2
 //    in different processes on the same machine.
@@ -13,10 +13,10 @@
 // 2. Distributed -- e.g.,
 //
 //    # Peer1
-//    % ./CODgram 10002 tango.cs.wustl.edu 10003 peer1
+//    % ./codgram 10002 tango.cs.wustl.edu 10003 peer1
 //
 //    # Peer1
-//    % ./CODgram 10003 tango.cs.wustl.edu 10002 peer2
+//    % ./codgram 10003 tango.cs.wustl.edu 10002 peer2
 //
 //    which will run peer1 and peer2 in different processes
 //    on the same or different machines.  Note that you MUST
@@ -43,13 +43,13 @@ public:
                   const ACE_INET_Addr &local_addr);
 
   // = Hook methods inherited from the <ACE_Event_Handler>.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_timeout (const ACE_Time_Value & tv,
-                              const void *arg = 0);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_timeout (const ACE_Time_Value & tv,
+                      const void *arg = nullptr) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len);
@@ -98,7 +98,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
               "(%P|%t) activity occurred on handle %d!\n",
               this->endpoint_.get_handle ()));
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf);
+  ssize_t const n = this->endpoint_.recv (buf, sizeof buf);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -126,8 +126,7 @@ run_test (u_short localport,
           u_short remoteport,
           const ACE_TCHAR *peer)
 {
-  ACE_INET_Addr remote_addr (remoteport,
-                             remotehost);
+  ACE_INET_Addr remote_addr (remoteport, remotehost);
   ACE_INET_Addr local_addr (localport);
 
   Dgram_Endpoint endpoint (remote_addr, local_addr);
@@ -142,7 +141,7 @@ run_test (u_short localport,
   char buf[BUFSIZ];
   ACE_OS::strcpy (buf,
                   "Data to transmit");
-  size_t len = ACE_OS::strlen (buf);
+  size_t const len = ACE_OS::strlen (buf);
 
   // "peer1" is the "initiator."
   if (ACE_OS::strncmp (peer, ACE_TEXT("peer1"), 5) == 0)
@@ -191,7 +190,7 @@ run_test (u_short localport,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // Estabish call backs and socket names.
+  // Establish call backs and socket names.
 
   port1 = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   const ACE_TCHAR *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;

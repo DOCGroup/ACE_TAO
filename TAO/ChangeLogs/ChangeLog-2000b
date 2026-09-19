@@ -4512,7 +4512,7 @@ Wed Sep  6 20:15:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
           If the -d (AST dump) option was used with the IDl compiler,
           a null ostream was being passed to the dump function. Thanks
-          to Roland Rüdenauer <roland.ruedenauer@freenet.de> for reporting
+          to Roland Rï¿½denauer <roland.ruedenauer@freenet.de> for reporting
           this bug.
 
         * TAO_IDL/ast/ast_field.cpp:
@@ -5757,7 +5757,7 @@ Tue Aug 29 20:28:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * orbsvcs/examples/Notify/Filter/Filter.cpp:
         * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
-          Fix for http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=626
+          Fix for https://github.com/DOCGroup/bugzilla/issues/626
 
 Tue Aug 29 20:09:44 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
@@ -17184,7 +17184,7 @@ Wed Apr 26 11:50:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
           Added Managed_Types.h and Sequence_T.h to included
           files. This fixes a compile error with SunCC 4.2
           when using exceptions=1 and interface_repo=1.
-          Thanks to Ramiro Peñataro <penataro@ll.iac.es>
+          Thanks to Ramiro Peï¿½ataro <penataro@ll.iac.es>
           for sending in the bug and the fix.
 
 Wed Apr 26 08:35:25 2000  Darrell Brunsch <brunsch@uci.edu>

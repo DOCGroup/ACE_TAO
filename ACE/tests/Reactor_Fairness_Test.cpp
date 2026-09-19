@@ -178,10 +178,10 @@ sender (void *arg)
   int i;
 
   // Automagic memory cleanup.
-  ACE_SOCK_Stream *temp_socks = 0;
+  ACE_SOCK_Stream *temp_socks = nullptr;
   ACE_NEW_RETURN (temp_socks,
                   ACE_SOCK_Stream [opt_nconnections],
-                  0);
+                  ACE_THR_FUNC_RETURN_NULL);
   std::unique_ptr <ACE_SOCK_Stream[]> socks (temp_socks);
 
   // Connection all <opt_nconnections> connections before sending data.
@@ -203,7 +203,7 @@ sender (void *arg)
       socks[i].enable (ACE_NONBLOCK);
     }
   if (i < opt_nconnections)
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
 
   // Keep blasting data on all possible connections until this thread
   // is canceled. If we manage to overrun the receiver on all sockets,
@@ -248,7 +248,7 @@ sender (void *arg)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Done sending.\n")));
   for (i = 0; i < opt_nconnections; i++)
     socks[i].close ();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 ACE_THR_FUNC_RETURN
@@ -263,7 +263,7 @@ reactor_loop (void *p)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("reactor")));
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) reactor thread %d ending\n"), me));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 void

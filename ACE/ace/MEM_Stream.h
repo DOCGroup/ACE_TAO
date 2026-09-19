@@ -95,7 +95,7 @@ public:
   int close ();
 
   // = Meta-type info
-  typedef ACE_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_Addr;
 
   /// Dump the state of an object.
   void dump () const;

@@ -43,14 +43,14 @@ class ACE_Unbounded_Set_Ex_Iterator
 {
 public:
   /// Type definition of the container type.
-  typedef ACE_Unbounded_Set_Ex<T, C> container_type;
+  using container_type = ACE_Unbounded_Set_Ex<T, C>;
 
   // = std::iterator_traits typedefs/traits.
-  typedef std::forward_iterator_tag                iterator_category;
-  typedef typename container_type::value_type      value_type;
-  typedef typename container_type::reference       reference;
-  typedef typename container_type::pointer         pointer;
-  typedef typename container_type::difference_type difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = typename container_type::value_type;
+  using reference = typename container_type::reference;
+  using pointer = typename container_type::pointer;
+  using difference_type = typename container_type::difference_type;
 
   ACE_Unbounded_Set_Ex_Iterator (ACE_Unbounded_Set_Ex<T, C> &s, bool end = false);
 
@@ -109,14 +109,14 @@ template <class T, class C>
 class ACE_Unbounded_Set_Ex_Const_Iterator
 {
 public:
-  typedef ACE_Unbounded_Set_Ex<T, C> container_type;
+  using container_type = ACE_Unbounded_Set_Ex<T, C>;
 
   // = std::iterator_traits typedefs/traits.
-  typedef std::forward_iterator_tag                 iterator_category;
-  typedef typename container_type::const_value_type value_type;
-  typedef typename container_type::const_reference  reference;
-  typedef typename container_type::const_pointer    pointer;
-  typedef typename container_type::difference_type  difference_type;
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = typename container_type::const_value_type;
+  using reference = typename container_type::const_reference;
+  using pointer = typename container_type::const_pointer;
+  using difference_type = typename container_type::difference_type;
 
   ACE_Unbounded_Set_Ex_Const_Iterator (const ACE_Unbounded_Set_Ex<T, C> &s,
                                        bool end = false);
@@ -212,21 +212,21 @@ public:
   friend class ACE_Unbounded_Set_Ex_Const_Iterator<T, C>;
 
   // Trait definition.
-  typedef ACE_Unbounded_Set_Ex_Iterator<T, C> ITERATOR;
-  typedef ACE_Unbounded_Set_Ex_Iterator<T, C> iterator;
-  typedef ACE_Unbounded_Set_Ex_Const_Iterator<T, C> CONST_ITERATOR;
-  typedef ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const_iterator;
-  typedef C COMP;
-  typedef ACE_Node<T, C> NODE;
+  using ITERATOR = ACE_Unbounded_Set_Ex_Iterator<T, C>;
+  using iterator = ACE_Unbounded_Set_Ex_Iterator<T, C>;
+  using CONST_ITERATOR = ACE_Unbounded_Set_Ex_Const_Iterator<T, C>;
+  using const_iterator = ACE_Unbounded_Set_Ex_Const_Iterator<T, C>;
+  using COMP = C;
+  using NODE = ACE_Node<T, C>;
 
   // = STL typedefs/traits.
-  typedef T                   value_type;
-  typedef T const             const_value_type;
-  typedef value_type &        reference;
-  typedef const_value_type &  const_reference;
-  typedef value_type *        pointer;
-  typedef const_value_type *  const_pointer;
-  typedef ptrdiff_t           difference_type;
+  using value_type = T;
+  using const_value_type = const T;
+  using reference = value_type &;
+  using const_reference = const_value_type &;
+  using pointer = value_type *;
+  using const_pointer = const_value_type *;
+  using difference_type = ptrdiff_t;
 
   /// Constructor.  Use user specified allocation strategy
   /// if specified.

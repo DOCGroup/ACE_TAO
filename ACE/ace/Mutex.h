@@ -164,7 +164,7 @@ public:
 #elif defined ACE_HAS_PTHREADS
 # define ACE_MUTEX_USE_PROCESS_LOCK
 # define ACE_MUTEX_PROCESS_LOCK_IS_MUTEX
-  typedef ACE_mutex_t Process_Lock;
+  using Process_Lock = ACE_mutex_t;
 #endif
 
 #ifdef ACE_MUTEX_USE_PROCESS_LOCK

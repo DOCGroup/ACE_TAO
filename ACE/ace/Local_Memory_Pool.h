@@ -46,7 +46,7 @@ class ACE_Export ACE_Local_Memory_Pool_Options
 class ACE_Export ACE_Local_Memory_Pool
 {
 public:
-  typedef ACE_Local_Memory_Pool_Options OPTIONS;
+  using OPTIONS = ACE_Local_Memory_Pool_Options;
 
   /// Initialize the pool.
   ACE_Local_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,

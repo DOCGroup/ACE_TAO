@@ -78,8 +78,8 @@ public:
   int sync_local_system_time (ACE_System_Time::Sync_Mode mode);
 
 private:
-  typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
-  typedef ACE_Allocator_Adapter<MALLOC> ALLOCATOR;
+  using MALLOC = ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Null_Mutex>;
+  using ALLOCATOR = ACE_Allocator_Adapter<MALLOC>;
 
   /// Our allocator (used for obtaining system time from shared memory).
   ALLOCATOR * shmem_;

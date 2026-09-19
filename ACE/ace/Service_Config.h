@@ -147,7 +147,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 extern "C"
 {
-  typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR) (ACE_Service_Object_Exterminator *);
+  using ACE_SERVICE_ALLOCATOR = ACE_Service_Object *(*)(ACE_Service_Object_Exterminator *);
 }
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

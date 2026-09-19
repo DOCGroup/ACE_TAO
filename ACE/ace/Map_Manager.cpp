@@ -33,7 +33,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
   this->close_i ();
 
   // Use the user specified allocator or the default singleton one.
-  if (alloc == 0)
+  if (alloc == nullptr)
     alloc = ACE_Allocator::instance ();
 
   this->allocator_ = alloc;

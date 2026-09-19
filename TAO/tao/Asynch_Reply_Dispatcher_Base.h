@@ -46,7 +46,7 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher_Base
 public:
   /// Default constructor.
   TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core,
-                                    ACE_Allocator *allocator = 0);
+                                    ACE_Allocator *allocator = nullptr);
 
   /// Sets the transport for this invocation.
   void transport (TAO_Transport *t);

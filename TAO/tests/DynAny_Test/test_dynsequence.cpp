@@ -203,7 +203,7 @@ Test_DynSequence::run_test ()
 
       // Now verify that we can replace an element using the in/out return
       // type.  This illustrates the problems described in bug # 2877:
-      //   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2877
+      //   https://github.com/DOCGroup/bugzilla/issues/2877
       // notice that this code has side-effects on the out_elems sequence, so
       // do not move this code up or you will make the comparisons above fail.
       {

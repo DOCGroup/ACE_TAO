@@ -8457,7 +8457,7 @@ Fri Jul 25 11:51:26 UTC 2008  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/DynAny_Test/test_dynsequence.cpp:
           This fixes the following bug.
-            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3341
+            https://github.com/DOCGroup/bugzilla/issues/3341
           Short recap, the test was failing silently.  The failure was a
           false positive because the test had been changed to reproduce
           one bug (2877), but in the process broke the original test.

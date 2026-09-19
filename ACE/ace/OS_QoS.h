@@ -28,7 +28,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined (ACE_HAS_WINSOCK2_GQOS)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
 #else
-typedef unsigned long ACE_SERVICE_TYPE;
+using ACE_SERVICE_TYPE = unsigned long;
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 
 #if defined (WSA_FLAG_OVERLAPPED)
@@ -377,14 +377,7 @@ private:
 
 // Callback function that's used by the QoS-enabled <ACE_OS::accept>
 // method.
-typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
-                                       iovec *caller_data,
-                                       ACE_QoS *socket_qos,
-                                       ACE_QoS *group_socket_qos,
-                                       iovec *callee_id,
-                                       iovec *callee_data,
-                                       ACE_SOCK_GROUP *g,
-                                       unsigned long callbackdata);
+using ACE_QOS_CONDITION_FUNC = int (*)(iovec *, iovec *, ACE_QoS *, ACE_QoS *, iovec *, iovec *, ACE_SOCK_GROUP *, unsigned long);
 
 
 /**

@@ -70,7 +70,7 @@ My_Accept_Handler::get_handle () const
 int
 My_Accept_Handler::handle_input (ACE_HANDLE)
 {
-  if (this->peer_acceptor_.accept(this->stream_, 0) == -1) {
+  if (this->peer_acceptor_.accept(this->stream_, nullptr) == -1) {
     ACE_ERROR((LM_ERROR, ACE_TEXT ("%p\n"),
                ACE_TEXT ("peer_acceptor.accept")));
     ACE_OS::exit(1);
@@ -139,7 +139,7 @@ client (void *arg)
 #if defined (ACE_VXWORKS)
         }
 #endif
-      return 0;
+      return nullptr;
     }
 
 #if defined (ACE_VXWORKS)
@@ -155,7 +155,7 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return 0;
+  return nullptr;
 }
 
 int

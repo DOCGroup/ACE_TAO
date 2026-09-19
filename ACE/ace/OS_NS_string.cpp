@@ -41,8 +41,8 @@ ACE_OS::strdup_emulation (const wchar_t *s)
   wchar_t *buffer =
     (wchar_t *) ACE_OS::malloc ((ACE_OS::strlen (s) + 1)
                                 * sizeof (wchar_t));
-  if (buffer == 0)
-    return 0;
+  if (buffer == nullptr)
+    return nullptr;
 
   return ACE_OS::strcpy (buffer, s);
 }
@@ -99,7 +99,7 @@ ACE_OS::strerror (int errnum)
   // and set errno to EINVAL.
   ACE_Errno_Guard g (errno);
   errno = 0;
-  char *errmsg = 0;
+  char *errmsg = nullptr;
 
 # if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
@@ -116,7 +116,7 @@ ACE_OS::strerror (int errnum)
 #  endif /* ACE_WIN32 */
   errmsg = ::strerror (errnum);
 
-  if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
+  if (errno == EINVAL || errmsg == nullptr || errmsg[0] == 0)
     {
       ACE_OS::snprintf (ret_errortext, 128, "Unknown error %d", errnum);
       errmsg = ret_errortext;
@@ -143,7 +143,7 @@ ACE_OS::strsignal (int signum)
 {
   static char signal_text[128];
 #if defined (ACE_HAS_STRSIGNAL)
-  char *ret_val = 0;
+  char *ret_val = nullptr;
 
 # if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
   if (signum < 0 || signum >= ACE_NSIG)
@@ -196,7 +196,7 @@ ACE_OS::strnchr (const char *s, int c, size_t len)
     if (s[i] == c)
       return s + i;
 
-  return 0;
+  return nullptr;
 }
 
 const ACE_WCHAR_T *
@@ -210,7 +210,7 @@ ACE_OS::strnchr (const ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 const char *
@@ -221,7 +221,7 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
-    return 0;
+    return nullptr;
 
   // Go upto <len>
   size_t const len = len1 - len2;
@@ -235,7 +235,7 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 const ACE_WCHAR_T *
@@ -246,7 +246,7 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
-    return 0;
+    return nullptr;
 
   // Go upto <len>
   size_t const len = len1 - len2;
@@ -260,7 +260,7 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 char *
@@ -275,7 +275,7 @@ ACE_OS::strsncpy (char *dst, const char *src, size_t maxlen)
       if (rdst!=rsrc)
         {
           *rdst = '\0';
-          if (rsrc != 0)
+          if (rsrc != nullptr)
             {
               ACE_OS::strncat (rdst, rsrc, --rmaxlen);
             }
@@ -301,7 +301,7 @@ ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
       if (rdst!= rsrc)
         {
           *rdst = ACE_TEXT_WIDE ('\0');
-          if (rsrc != 0)
+          if (rsrc != nullptr)
             {
               ACE_OS::strncat (rdst, rsrc, --rmaxlen);
             }

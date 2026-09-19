@@ -106,8 +106,8 @@ extern "C"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef struct t_optmgmt ACE_TOPTMGMT;
-typedef struct t_bind  ACE_TBIND;
+using ACE_TOPTMGMT = struct t_optmgmt;
+using ACE_TBIND = struct t_bind;
 
 /**
  * @namespace ACE_OS

@@ -443,19 +443,19 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control");
   ACE_IO_Cntl_Msg ioc (cmd);
 
-  ACE_Message_Block *db = 0;
+  ACE_Message_Block *db = nullptr;
 
   // Try to create a data block that contains the user-supplied data.
   ACE_NEW_RETURN (db,
                   ACE_Message_Block (sizeof (int),
                                      ACE_Message_Block::MB_IOCTL,
-                                     0,
+                                     nullptr,
                                      (char *) a),
                   -1);
   // Try to create a control block <cb> that contains the control
   // field and a pointer to the data block <db> in <cb>'s continuation
   // field.
-  ACE_Message_Block *cb = 0;
+  ACE_Message_Block *cb = nullptr;
 
   ACE_NEW_NORETURN (cb,
                     ACE_Message_Block (sizeof ioc,
@@ -468,7 +468,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
 
   // If we can't allocate <cb> then we need to delete db and return
   // -1.
-  if (cb == 0)
+  if (cb == nullptr)
     {
       db->release ();
       errno = ENOMEM;

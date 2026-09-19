@@ -178,7 +178,7 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state = 0);
+        Invocation_Retry_State *retry_state = nullptr);
 
     /// Make a collocated call.
     /**
@@ -209,7 +209,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state = 0);
+        Invocation_Retry_State *retry_state = nullptr);
 
     /// Helper method to make a one way invocation.
     /**

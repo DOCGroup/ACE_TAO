@@ -2,7 +2,7 @@
  * @file Bug_2740_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2740
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2740
+ *   https://github.com/DOCGroup/bugzilla/issues/2740
  *
  * @author paolo.volpi@tvblob.com
  */
@@ -45,7 +45,7 @@ public:
 
   int open (void* factory) override;
   int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE) override;
-  int handle_timeout (const ACE_Time_Value &now, const void *act = 0) override;
+  int handle_timeout (const ACE_Time_Value &now, const void *act = nullptr) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask mask = 0) override;
 
@@ -103,7 +103,7 @@ ClientSvcHandler::open (void* factory)
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory) == 0)
     {
       this->timer_ = this->reactor ()->schedule_timer (this,
-                                                       0,
+                                                       nullptr,
                                                        MAX_CLIENT_TIMEOUT);
 
       size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
@@ -157,7 +157,7 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %d: %p\n"),
                              ACE_TEXT ("resending")),
                             -1);
-        this->timer_ = reactor ()->schedule_timer (this, 0, MAX_CLIENT_TIMEOUT);
+        this->timer_ = reactor ()->schedule_timer (this, nullptr, MAX_CLIENT_TIMEOUT);
       }
     else if (bc == 0) // Socket was closed by server
       {
@@ -295,7 +295,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -320,7 +320,7 @@ event_loop(void *arg)
   int s = reactor->run_reactor_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: reactor loop done; status %d\n"), s));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 
@@ -332,7 +332,7 @@ int run_main(int, ACE_TCHAR *[])
   disable_signal (SIGPIPE, SIGPIPE);
 
   ACE_Dev_Poll_Reactor dp_reactor;
-  dp_reactor.restart (1);          // Restart on EINTR
+  dp_reactor.restart (true);          // Restart on EINTR
   ACE_Reactor reactor (&dp_reactor);
 
   // Bind acceptor to any port and then find out what the port was.

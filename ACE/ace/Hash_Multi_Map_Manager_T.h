@@ -49,8 +49,8 @@ class ACE_Hash_Multi_Map_Entry
 public:
   friend class ACE_Unbounded_Set<INT_ID>;
 
-  typedef ACE_Unbounded_Set<INT_ID> VALUE_SET;
-  typedef ACE_Unbounded_Set_Iterator<INT_ID> VALUE_SET_ITERATOR;
+  using VALUE_SET = ACE_Unbounded_Set<INT_ID>;
+  using VALUE_SET_ITERATOR = ACE_Unbounded_Set_Iterator<INT_ID>;
 
   /// Constructor.
   ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
@@ -142,29 +142,20 @@ public:
   friend class ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  typedef EXT_ID
-          KEY;
-  typedef INT_ID
-          VALUE;
-  typedef ACE_LOCK lock_type;
-  typedef ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>
-          ENTRY;
+  using KEY = EXT_ID;
+  using VALUE = INT_ID;
+  using lock_type = ACE_LOCK;
+  using ENTRY = ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
-          ITERATOR;
-  typedef ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
-          CONST_ITERATOR;
-  typedef ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
-          REVERSE_ITERATOR;
+  using ITERATOR = ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  using CONST_ITERATOR = ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  using REVERSE_ITERATOR = ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
   // = STL-style iterator typedefs.
-  typedef ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
-          iterator;
-  typedef ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
-          const_iterator;
-  typedef ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
-          reverse_iterator;
+  using iterator = ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  using const_iterator = ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  using reverse_iterator = ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
   /**
    * Initialize a @c Hash_Multi_Map_Manager with default size elements.
@@ -179,8 +170,8 @@ public:
    * If @a entry_alloc is 0 then it defaults to the same allocator as
    * @a table_alloc.
    */
-  ACE_Hash_Multi_Map_Manager (ACE_Allocator *table_alloc = 0,
-                              ACE_Allocator *entry_alloc = 0);
+  ACE_Hash_Multi_Map_Manager (ACE_Allocator *table_alloc = nullptr,
+                              ACE_Allocator *entry_alloc = nullptr);
 
   /**
    * Initialize a @c Hash_Multi_Map_Manager with @a size elements.
@@ -197,8 +188,8 @@ public:
    * @a table_alloc.
    */
   ACE_Hash_Multi_Map_Manager (size_t size,
-                              ACE_Allocator *table_alloc = 0,
-                              ACE_Allocator *entry_alloc = 0);
+                              ACE_Allocator *table_alloc = nullptr,
+                              ACE_Allocator *entry_alloc = nullptr);
 
   /**
    * Initialize a @c Hash_Multi_Map_Manager with @a size elements.
@@ -217,8 +208,8 @@ public:
    */
 
   int open (size_t size = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *table_alloc = 0,
-            ACE_Allocator *entry_alloc = 0);
+            ACE_Allocator *table_alloc = nullptr,
+            ACE_Allocator *entry_alloc = nullptr);
 
   /// Close down a Hash_Multi_Map_Manager and release dynamically allocated
   /// resources.

@@ -64,7 +64,7 @@ project(*Notify Extended Filter): notifytest {
 }
 
 project(*Notify Updates): notifytest {
-  exename = Updates
+  exename = Upd
   Source_Files {
     Updates.cpp
   }

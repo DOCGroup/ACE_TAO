@@ -476,7 +476,7 @@ namespace CORBA
      */
     CORBA::Object_ptr resolve_initial_references (
       const char *name,
-      ACE_Time_Value *timeout = 0);
+      ACE_Time_Value *timeout = nullptr);
 
 #if !defined(CORBA_E_MICRO)
     /// Register an object reference with the ORB.

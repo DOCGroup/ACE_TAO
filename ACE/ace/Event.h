@@ -69,7 +69,7 @@ private:
   const ACE_Event_T &operator= (const ACE_Event_T<TIME_POLICY> &rhs) = delete;
 };
 
-typedef ACE_Event_T<ACE_System_Time_Policy> ACE_Event;
+using ACE_Event = ACE_Event_T<ACE_System_Time_Policy>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

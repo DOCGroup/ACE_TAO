@@ -54,10 +54,10 @@ public:
   int set (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
 
   /// Return a pointer to the address.
-  virtual void *get_addr () const;
+  void *get_addr () const override;
 
   /// Set a pointer to the underlying network address.
-  virtual void set_addr (const void *addr, int len);
+  void set_addr (const void *addr, int len) override;
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;

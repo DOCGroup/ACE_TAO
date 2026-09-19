@@ -54,11 +54,9 @@ struct ACE_Protocol_Info
 
 // Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
 // method.
-typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (unsigned long error,
-                                                unsigned long bytes_transferred,
-                                                ACE_OVERLAPPED *overlapped,
-                                                unsigned long flags);
-typedef unsigned long ACE_SOCK_GROUP;
+using ACE_OVERLAPPED_COMPLETION_FUNC = void (*)(unsigned long, unsigned long, ACE_OVERLAPPED *, unsigned long);
+typedef unsigned long ACE_S;
+using ACE_SOCK_GROUP = unsigned long;
 
 #endif /* (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 
@@ -127,10 +125,10 @@ namespace ACE_OS {
              unsigned long io_control_code,
              ACE_QoS &ace_qos,
              unsigned long *bytes_returned,
-             void *buffer_p = 0,
+             void *buffer_p = nullptr,
              unsigned long buffer = 0,
-             ACE_OVERLAPPED *overlapped = 0,
-             ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
+             ACE_OVERLAPPED *overlapped = nullptr,
+             ACE_OVERLAPPED_COMPLETION_FUNC func = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int isastream (ACE_HANDLE handle);

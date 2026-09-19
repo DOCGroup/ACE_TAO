@@ -137,8 +137,8 @@ public:
               bool reset_new_handle = false) const;
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
-  typedef ACE_SOCK_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_INET_Addr;
+  using PEER_STREAM = ACE_SOCK_Stream;
 
   /// Dump the state of an object.
   void dump () const;

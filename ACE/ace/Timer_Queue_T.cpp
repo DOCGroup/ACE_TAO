@@ -87,7 +87,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
           // time on the Timer_Queue.
 
           this->timeout_ = this->earliest_time () - cur_time;
-          if (max_wait_time == 0 || *max_wait_time > timeout_)
+          if (max_wait_time == nullptr || *max_wait_time > timeout_)
             return &this->timeout_;
           else
             return max_wait_time;
@@ -109,8 +109,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
 {
   ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
 
-  if (the_timeout == 0)
-    return 0;
+  if (the_timeout == nullptr)
+    return nullptr;
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, max_wait_time));
 
@@ -120,7 +120,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
       if (max_wait_time)
         *the_timeout = *max_wait_time;
       else
-        return 0;
+        return nullptr;
     }
   else
     {
@@ -134,7 +134,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
           // time on the Timer_Queue.
 
           *the_timeout = this->earliest_time () - cur_time;
-          if (!(max_wait_time == 0 || *max_wait_time > *the_timeout))
+          if (!(max_wait_time == nullptr || *max_wait_time > *the_timeout))
             *the_timeout = *max_wait_time;
         }
       else
@@ -276,7 +276,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_
       ACE_MT (ACE_Reverse_Lock<ACE_LOCK> rev_lk(this->mutex_));
       ACE_MT (ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_LOCK>, rmon, rev_lk, -1));
 
-      const void *upcall_act = 0;
+      const void *upcall_act = nullptr;
 
       this->preinvoke (info, cur_time, upcall_act);
 
@@ -377,7 +377,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire_single (
   }
   // We do not need the lock anymore, all these operations take place
   // with local variables.
-  const void *upcall_act = 0;
+  const void *upcall_act = nullptr;
 
   // Preinvoke (handles refcount if needed, etc.)
   this->preinvoke (info, cur_time, upcall_act);

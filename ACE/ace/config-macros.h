@@ -520,16 +520,15 @@ typedef ACE_HANDLE ACE_SOCKET;
 // Define the type that's returned from the platform's native thread
 // functions. ACE_THR_FUNC_RETURN is the type defined as the thread
 // function's return type, except when the thread function doesn't return
-// anything (INTEGRITY). The ACE_THR_FUNC_NO_RETURN_VAL macro is used to
-// indicate that the actual thread function doesn't return anything. The
-// rest of ACE uses a real type so there's no a ton of conditional code
-// everywhere to deal with the possibility of no return type.
+// anything (INTEGRITY).
 #if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
+#define ACE_THR_FUNC_RETURN_NULL 0
 # define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
 #elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
+#define ACE_THR_FUNC_RETURN_NULL 0
 # define ACE_HAS_INTEGRAL_TYPE_THR_FUNC_RETURN
 #elif defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 // INTEGRITY-178 Task's entry point function doesn't return anything.
@@ -537,8 +536,10 @@ typedef DWORD ACE_THR_FUNC_RETURN;
 // This is used by ACE's internal thread adapter function but will be ignored by
 // the actual entry point passed to INTEGRITY's and INTEGRITY-178 Task calls.
 typedef int ACE_THR_FUNC_RETURN;
+#define ACE_THR_FUNC_RETURN_NULL 0
 #else
 typedef void* ACE_THR_FUNC_RETURN;
+#define ACE_THR_FUNC_RETURN_NULL nullptr
 #endif /* ACE_VXWORKS */
 typedef ACE_THR_FUNC_RETURN (*ACE_THR_FUNC)(void *);
 

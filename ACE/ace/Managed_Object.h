@@ -45,7 +45,7 @@ public:
   ACE_Cleanup_Adapter ();
 
   /// Virtual destructor, needed by some compilers for vtable placement.
-  virtual ~ACE_Cleanup_Adapter ();
+  ~ACE_Cleanup_Adapter () override;
 
   /// Accessor for contained object.
   TYPE &object ();

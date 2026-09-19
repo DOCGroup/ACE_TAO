@@ -177,7 +177,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -199,7 +199,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -226,7 +226,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -255,7 +255,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,

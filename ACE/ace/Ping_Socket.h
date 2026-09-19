@@ -37,7 +37,7 @@ class ACE_INET_Addr;
  */
 class ACE_Export ACE_Ping_Socket : public ACE_ICMP_Socket
 {
-  typedef ACE_ICMP_Socket inherited;
+  using inherited = ACE_ICMP_Socket;
 public:
   /// Default constructor.
   ACE_Ping_Socket ();

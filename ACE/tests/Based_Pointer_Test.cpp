@@ -64,7 +64,7 @@ using MMAP_Allocator = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Null_Mutex, ACE_PI
 
 // Check that the ACE_Based_Pointer_Repository can be accessed
 // from a Windows DLL
-// (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1991)
+// (see https://github.com/DOCGroup/bugzilla/issues/1991)
 int singleton_test ()
 {
     void* baddr1 = ACE_BASED_POINTER_REPOSITORY::instance();
@@ -97,7 +97,7 @@ int singleton_test ()
     ACE_DLL dll;
     int retval = dll.open (dll_file.c_str (),
                            ACE_DEFAULT_SHLIB_MODE,
-                           0);
+                           false);
 
     if (retval != 0)
        {
@@ -114,7 +114,7 @@ int singleton_test ()
     ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
     Get_Bp_Repository_Inst get_bp_repository_inst =
        reinterpret_cast<Get_Bp_Repository_Inst> (tmp);
-    if (get_bp_repository_inst == 0)
+    if (get_bp_repository_inst == nullptr)
        ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           dll.error ()),
@@ -143,20 +143,20 @@ int singleton_test ()
 int
 mmap_map_test()
 {
-    MMAP_Allocator* alloc = 0;
+    MMAP_Allocator* alloc = nullptr;
 
     ACE_OS::unlink("foo");
       {
         // The 'options' are only here to quiet MSVC 6. It can be removed
         // when MSVC 6 support is removed.
-        MMAP_Allocator::MEMORY_POOL_OPTIONS *options = 0;
+        MMAP_Allocator::MEMORY_POOL_OPTIONS *options = nullptr;
         ACE_NEW_RETURN
           (alloc,
            MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT ("foo"), options),
            -1);
 
         void* addr = alloc->base_addr();
-        if(addr == 0)
+        if(addr == nullptr)
          {
            ACE_ERROR((LM_ERROR,
                ACE_TEXT ("Unable to get base to MMAP Memory Pool\n")));
@@ -167,7 +167,7 @@ mmap_map_test()
 
        // Check a base address mapping was added to the Repository
        // when the pool was created
-       void* ba = 0;
+       void* ba = nullptr;
        if(ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
         {
            ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to access repository\n")));
@@ -193,7 +193,7 @@ mmap_map_test()
                               ACE_TEXT ("Unable to access repository\n")),
                              -1);
          }
-       if(ba != 0)
+       if(ba != nullptr)
          {
            ACE_ERROR_RETURN ((LM_ERROR,
                               ACE_TEXT ("MMAP pool mapping not removed\n")),
@@ -207,15 +207,15 @@ mmap_map_test()
 // into the Based_Pointer_Repository
 // (i.e. maps based on backing stores that are already
 //  present in the filesystem)
-// (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2216)
+// (see https://github.com/DOCGroup/bugzilla/issues/2216)
 int
 mmap_persistent_map_test()
 {
-    MMAP_Allocator* alloc = 0;
+    MMAP_Allocator* alloc = nullptr;
 
     // The 'options' are only here to quiet MSVC 6. It can be removed
     // when MSVC 6 support is removed.
-    MMAP_Allocator::MEMORY_POOL_OPTIONS *options = 0;
+    MMAP_Allocator::MEMORY_POOL_OPTIONS *options = nullptr;
     ACE_OS::unlink("foo");
       {
         ACE_NEW_RETURN
@@ -238,7 +238,7 @@ mmap_persistent_map_test()
        -1);
 
     void* addr = alloc->base_addr();
-    if(addr == 0)
+    if(addr == nullptr)
       {
         ACE_ERROR ((LM_ERROR,
            ACE_TEXT ("Unable to get base to persistent MMAP Memory Pool\n")));
@@ -246,7 +246,7 @@ mmap_persistent_map_test()
         delete alloc;
         return -1;
       }
-    void* ba = 0;
+    void* ba = nullptr;
     if(ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
       {
         ACE_ERROR ((LM_ERROR,
@@ -255,7 +255,7 @@ mmap_persistent_map_test()
         delete alloc;
         return -1;
       }
-    if(ba == 0)
+    if(ba == nullptr)
       {
         ACE_ERROR ((LM_ERROR,
            ACE_TEXT ("Persistent MMAP Memory Pool not mapped\n")));
@@ -274,20 +274,20 @@ mmap_persistent_map_test()
 // (i.e. when a segment is resized it may move its base address
 // because the OS cannot fit the new segment size at the same
 // base address, in this case the Repository must be updated)
-// (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2218)
+// (see https://github.com/DOCGroup/bugzilla/issues/2218)
 int
 mmap_remap_test()
 {
     // Use a Position Independent memory segment
     // because this one is going to move
 
-    MMAP_Allocator *alloc[ 3 ]= {0, 0, 0};
-    void *pool_base[ 3 ]= {0, 0, 0};
+    MMAP_Allocator *alloc[ 3 ]= {nullptr, nullptr, nullptr};
+    void *pool_base[ 3 ]= {nullptr, nullptr, nullptr};
 
     // Make sure the Pool options are set to allow
     // the segment to move
     ACE_MMAP_Memory_Pool_Options data_opts(
-               0,
+               nullptr,
                ACE_MMAP_Memory_Pool_Options::NEVER_FIXED );
     int i;
 
@@ -346,7 +346,7 @@ mmap_remap_test()
         return -1;
       }
 
-    void *ba= 0;
+    void *ba= nullptr;
     if (ACE_BASED_POINTER_REPOSITORY::instance()->find(nba, ba) == -1)
       {
         ACE_ERROR ((LM_ERROR,

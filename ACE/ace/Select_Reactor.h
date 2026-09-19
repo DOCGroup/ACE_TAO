@@ -21,12 +21,12 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
+using ACE_Select_Reactor_Token = ACE_Reactor_Token_T<ACE_SELECT_TOKEN>;
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Export ACE_Select_Reactor_T<ACE_Select_Reactor_Token>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
-typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
+using ACE_Select_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Token>;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE == 0)
 // FUZZ: disable check_for_ACE_Guard

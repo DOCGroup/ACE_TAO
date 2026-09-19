@@ -53,7 +53,7 @@ public:
    */
   TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
                             TAO_ORB_Core *oc,
-                            ACE_Allocator *alloc = 0,
+                            ACE_Allocator *alloc = nullptr,
                             bool is_heap_allocated = false);
 
   /// Destructor

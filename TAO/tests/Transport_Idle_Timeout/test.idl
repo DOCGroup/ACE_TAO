@@ -1,0 +1,19 @@
+// Simple interface used by the transport idle timeout regression test.
+// The server exposes a single 'ping' operation so the client can
+// establish a real IIOP connection, then go silent and let the idle
+// timer fire.
+
+module Test
+{
+  interface Echo
+  {
+    /// Ping the server, sleeps the number of seconds as passed with the call.
+    /// Sleeping means running the reactor to make sure idle connections are purged
+    /// Pass in the cache size we expect just before returning the call on the server
+    /// side
+    boolean ping (in long sleep_time, in long cache_size_expected, in Echo server, in long sleep_time_server, in long cache_size_expected_in_server1, in long cache_size_expected_in_server2);
+
+    /// Orderly shutdown.
+    oneway void shutdown ();
+  };
+};

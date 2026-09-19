@@ -100,7 +100,7 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::name");
   if (this->mod_ == 0)
-    return 0;
+    return nullptr;
   else
     return this->mod_->name ();
 }

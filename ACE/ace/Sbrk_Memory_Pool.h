@@ -48,7 +48,7 @@ class ACE_Export ACE_Sbrk_Memory_Pool_Options
 class ACE_Export ACE_Sbrk_Memory_Pool
 {
 public:
-  typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
+  using OPTIONS = ACE_Sbrk_Memory_Pool_Options;
 
   /// Initialize the pool.
   ACE_Sbrk_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,

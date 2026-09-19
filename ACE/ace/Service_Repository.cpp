@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
 /// Process-wide Service Repository.
-ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
+ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = nullptr;
 
 /// Controls whether the Service_Repository is deleted when we shut
 /// down (we can only delete it safely if we created it)!
@@ -36,19 +36,18 @@ ACE_Service_Repository::instance (size_t size)
 {
   ACE_TRACE ("ACE_Service_Repository::instance");
 
-  if (ACE_Service_Repository::svc_rep_ == 0)
+  if (ACE_Service_Repository::svc_rep_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-      if (ACE_Service_Repository::svc_rep_ == 0)
+                                *ACE_Static_Object_Lock::instance (), nullptr));
+      if (ACE_Service_Repository::svc_rep_ == nullptr)
         {
-          if (ACE_Object_Manager::starting_up () ||
-              !ACE_Object_Manager::shutting_down ())
+          if (ACE_Object_Manager::starting_up () || !ACE_Object_Manager::shutting_down ())
             {
               ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_,
                               ACE_Service_Repository (size),
-                              0);
+                              nullptr);
               ACE_Service_Repository::delete_svc_rep_ = true;
             }
         }
@@ -62,7 +61,7 @@ ACE_Service_Repository::instance (ACE_Service_Repository *s)
 {
   ACE_TRACE ("ACE_Service_Repository::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), nullptr));
 
   ACE_Service_Repository *t = ACE_Service_Repository::svc_rep_;
   // We can't safely delete it since we don't know who created it!
@@ -83,7 +82,7 @@ ACE_Service_Repository::close_singleton ()
   if (ACE_Service_Repository::delete_svc_rep_)
     {
       delete ACE_Service_Repository::svc_rep_;
-      ACE_Service_Repository::svc_rep_ = 0;
+      ACE_Service_Repository::svc_rep_ = nullptr;
       ACE_Service_Repository::delete_svc_rep_ = false;
     }
 }
@@ -129,7 +128,7 @@ ACE_Service_Repository::fini ()
     {
       ACE_Service_Type *s =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
-      if (s == 0)
+      if (s == nullptr)
         ACELIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
                     this,
@@ -146,8 +145,8 @@ ACE_Service_Repository::fini ()
     ACE_Service_Type *s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
-    if (s != 0 &&
-        s->type () != 0 &&
+    if (s != nullptr &&
+        s->type () != nullptr &&
         (s->type ()->service_type () != ACE_Service_Type::MODULE))
     {
 #ifndef ACE_NLOGGING
@@ -160,7 +159,7 @@ ACE_Service_Repository::fini ()
                     i,
                     s->name (),
                     s->type (),
-                    (s->type () != 0) ? s->type ()->object () : 0,
+                    (s->type () != nullptr) ? s->type ()->object () : nullptr,
                     s->active ()));
       }
 #endif
@@ -178,8 +177,8 @@ ACE_Service_Repository::fini ()
     ACE_Service_Type *s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
-    if (s != 0 &&
-        s->type () != 0 &&
+    if (s != nullptr &&
+        s->type () != nullptr &&
         (s->type ()->service_type () == ACE_Service_Type::MODULE))
     {
 #ifndef ACE_NLOGGING
@@ -192,7 +191,7 @@ ACE_Service_Repository::fini ()
                     i,
                     s->name (),
                     s->type (),
-                    (s->type () != 0) ? s->type ()->object () : 0,
+                    (s->type () != nullptr) ? s->type ()->object () : nullptr,
                     s->active ()));
       }
 #endif
@@ -230,7 +229,7 @@ ACE_Service_Repository::close ()
 #ifndef ACE_NLOGGING
       if(ACE::debug ())
         {
-          if (s == 0)
+          if (s == nullptr)
             ACELIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@ [%d] -> 0\n"),
                         this,
@@ -291,12 +290,12 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
       slot = (*iter).first;
       if ((*iter).second->fini_called ())
         {
-          if (srp != 0)
-            *srp = 0;
+          if (srp != nullptr)
+            *srp = nullptr;
           return -1;
         }
 
-      if (srp != 0)
+      if (srp != nullptr)
         *srp = (*iter).second;
 
       if (ignore_suspended
@@ -328,13 +327,13 @@ ACE_Service_Repository::relocate_i (size_t begin,
       ACE_Service_Type *type =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
-      ACE_SHLIB_HANDLE old_handle = (type == 0) ? ACE_SHLIB_INVALID_HANDLE
+      ACE_SHLIB_HANDLE old_handle = (type == nullptr) ? ACE_SHLIB_INVALID_HANDLE
                                                 : type->dll ().get_handle (0);
 
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         {
-          if (type == 0)
+          if (type == nullptr)
             ACELIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE (%P|%t) SR::relocate_i - repo=%@ [%d]")
                         ACE_TEXT (": skipping empty slot\n"),
@@ -352,7 +351,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
         }
 #endif
 
-      if (type != 0  // skip any gaps
+      if (type != nullptr  // skip any gaps
           && old_handle == ACE_SHLIB_INVALID_HANDLE
           && new_handle != old_handle)
         {
@@ -396,7 +395,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
   size_t i = 0;
   int return_value = -1;
-  ACE_Service_Type const *s = 0;
+  ACE_Service_Type const *s = nullptr;
 
   // Establish scope for locking while manipulating the service
   // storage
@@ -408,7 +407,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
     return_value = find_i (sr->name (), i, &s, false);
 
     // Adding an entry.
-    if (s != 0)
+    if (s != nullptr)
       {
         this->service_array_[i] = sr;
       }
@@ -435,9 +434,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
                 this,
                 i,
                 sr->name(),
-                (return_value == 0 ? ((s==0) ? "new" : "replacing") : "failed"),
+                (return_value == 0 ? ((s==nullptr) ? "new" : "replacing") : "failed"),
                 sr->type (),
-                (sr->type () != 0) ? sr->type ()->object () : 0,
+                (sr->type () != nullptr) ? sr->type ()->object () : nullptr,
                 sr->active ()));
 #endif
 
@@ -489,7 +488,7 @@ int
 ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
-  ACE_Service_Type *s = 0;
+  ACE_Service_Type *s = nullptr;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
@@ -498,7 +497,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
       return -1;
   }
 
-  if (ps != 0)
+  if (ps != nullptr)
     *ps = s;
   else
     delete s;
@@ -529,7 +528,7 @@ int
 ACE_Service_Repository::remove_i (const ACE_TCHAR name[], ACE_Service_Type **ps)
 {
   size_t i = 0;
-  if (-1 == this->find_i (name, i, 0, false))
+  if (-1 == this->find_i (name, i, nullptr, false))
     return -1;    // Not found
 
   // We may need the old ptr - to be delete outside the lock!
@@ -547,7 +546,7 @@ ACE_Service_Repository::remove_i (const ACE_TCHAR name[], ACE_Service_Type **ps)
                 (*ps)->active ()));
 #endif
 
-  this->service_array_[i] = 0; // simply leave a gap
+  this->service_array_[i] = nullptr; // simply leave a gap
   return 0;
 }
 
@@ -609,9 +608,9 @@ ACE_Service_Repository_Iterator::valid () const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::valid");
   if (!this->ignore_suspended_)
-    return (this->svc_rep_.service_array_[this->next_] != 0); // skip over gaps
+    return (this->svc_rep_.service_array_[this->next_] != nullptr); // skip over gaps
 
-  return (this->svc_rep_.service_array_[this->next_] != 0
+  return (this->svc_rep_.service_array_[this->next_] != nullptr
           && this->svc_rep_.service_array_[this->next_]->active ());
 }
 

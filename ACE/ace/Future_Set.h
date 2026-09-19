@@ -100,21 +100,17 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  typedef ACE_Future<T> FUTURE;
+  using FUTURE = ACE_Future<T>;
 
-  typedef ACE_Future_Rep<T> FUTURE_REP;
+  using FUTURE_REP = ACE_Future_Rep<T>;
 
-  typedef ACE_Future_Holder<T> FUTURE_HOLDER;
+  using FUTURE_HOLDER = ACE_Future_Holder<T>;
 
-  typedef ACE_Pointer_Hash<FUTURE_REP *> FUTURE_REP_HASH;
+  using FUTURE_REP_HASH = ACE_Pointer_Hash<FUTURE_REP *>;
 
-  typedef ACE_Equal_To<FUTURE_REP *> FUTURE_REP_COMPARE;
+  using FUTURE_REP_COMPARE = ACE_Equal_To<FUTURE_REP *>;
 
-  typedef ACE_Hash_Map_Manager_Ex<FUTURE_REP *,
-                                  FUTURE_HOLDER *,
-                                  FUTURE_REP_HASH,
-                                  FUTURE_REP_COMPARE,
-                                  ACE_Null_Mutex> FUTURE_HASH_MAP;
+  using FUTURE_HASH_MAP = ACE_Hash_Map_Manager_Ex<FUTURE_REP *, FUTURE_HOLDER *, FUTURE_REP_HASH, FUTURE_REP_COMPARE, ACE_Null_Mutex>;
 
   /// Map of <ACE_Futures>, subjects, which have not been written to by
   /// client's writer thread.

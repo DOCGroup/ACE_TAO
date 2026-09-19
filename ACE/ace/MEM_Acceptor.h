@@ -115,8 +115,8 @@ public:
   int get_local_addr (ACE_MEM_Addr &) const;
 
   // = Meta-type info
-  typedef ACE_MEM_Addr PEER_ADDR;
-  typedef ACE_MEM_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_MEM_Addr;
+  using PEER_STREAM = ACE_MEM_Stream;
 
   /// Dump the state of an object.
   void dump () const;

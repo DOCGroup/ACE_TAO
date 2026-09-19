@@ -21,7 +21,7 @@ ACE_MEM_Stream::dump () const
 int
 ACE_MEM_Stream::close ()
 {
-  this->send ((char *)0, 0);
+  this->send ((char *)nullptr, 0);
 
   this->fini ();
 

@@ -18,17 +18,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
-  : ssl_ (0),
+  : ssl_ (nullptr),
     stream_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 
   ACE_SSL_Context * ctx =
-    (context == 0 ? ACE_SSL_Context::instance () : context);
+    (context == nullptr ? ACE_SSL_Context::instance () : context);
 
   this->ssl_ = ::SSL_new (ctx->context ());
 
-  if (this->ssl_ == 0)
+  if (this->ssl_ == nullptr)
     {
       ACELIB_ERROR ((LM_ERROR,
                   "(%P|%t) ACE_SSL_SOCK_Stream "
@@ -66,7 +66,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   ACE_Time_Value t;
   ACE_Time_Value *timeout = const_cast<ACE_Time_Value *> (max_wait_time);
 
-  if (max_wait_time != 0)
+  if (max_wait_time != nullptr)
     {
       // Make a copy since ACE_Countdown_Time modifies the
       // ACE_Time_Value.
@@ -125,14 +125,19 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
   handle_set.reset ();
   handle_set.set_bit (this->get_handle ());
 
-  io_vec->iov_base = 0;
+  io_vec->iov_base = nullptr;
+
+  int select_width = 0;
+#if !defined (ACE_WIN32)
+  select_width = this->get_handle () + 1;
+#endif /* ACE_WIN32 */
 
   // Check the status of the current socket.
   switch (
-    ACE_OS::select (int (this->get_handle ()) + 1,
+    ACE_OS::select (select_width,
                     handle_set,
-                    0,
-                    0,
+                    nullptr,
+                    nullptr,
                     timeout))
     {
     case -1:
@@ -180,7 +185,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 
   // If SSL has data in the buffer, i.e. SSL_pending() returns a
   // non-zero value, then don't block on select().
-  if (timeout == 0 || ::SSL_pending (this->ssl_))
+  if (timeout == nullptr || ::SSL_pending (this->ssl_))
     return this->send (buf, len, flags);
 
   int val = 0;
@@ -337,7 +342,7 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
   /* This code mimics ACE::send_n */
   // Total number of bytes written.
   size_t temp = 0;
-  size_t &bytes_transferred = ((bt == 0) ? temp : *bt);
+  size_t &bytes_transferred = ((bt == nullptr) ? temp : *bt);
 
   // Actual number of bytes written in each <send> attempt
   ssize_t n = 0;
@@ -391,7 +396,7 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
     }
 
   size_t temp = 0;
-  size_t &bytes_transferred = ((bt == 0) ? temp : *bt);
+  size_t &bytes_transferred = ((bt == nullptr) ? temp : *bt);
 
   ssize_t n = 0;
 

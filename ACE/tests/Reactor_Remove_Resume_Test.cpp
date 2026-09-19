@@ -373,8 +373,8 @@ tp_reactor_factory ()
  */
 struct Run_Test
 {
-  typedef reactor_factory_type argument_type;
-  typedef void result_type;
+  using argument_type = reactor_factory_type;
+  using result_type = void;
 
   /// Function call operator overload.
   void operator() (reactor_factory_type factory)

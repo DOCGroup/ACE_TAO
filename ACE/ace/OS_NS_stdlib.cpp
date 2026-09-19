@@ -32,7 +32,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
+ACE_EXIT_HOOK ACE_OS::exit_hook_ = nullptr;
 
 void *
 ACE_OS::calloc (size_t elements, size_t sizeof_elements)
@@ -91,7 +91,7 @@ ACE_OS::getenvstrings ()
   return ::GetEnvironmentStrings ();
 # endif /* ACE_USES_WCHAR */
 #else /* ACE_WIN32 */
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 #endif /* ACE_WIN32 */
 }
 
@@ -102,8 +102,8 @@ ACE_OS::getenvstrings ()
 ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-  const ACE_TCHAR * start = 0;
-  if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != 0)
+  const ACE_TCHAR * start = nullptr;
+  if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != nullptr)
     {
       ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
       size_t var_len = ACE_OS::strcspn (&start[1],
@@ -118,7 +118,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
       char *temp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (buf));
 #  endif /* ACE_WIN32 */
       size_t buf_len = ACE_OS::strlen (str) + 1;
-      if (temp != 0)
+      if (temp != nullptr)
         buf_len += ACE_OS::strlen (temp) - var_len;
       ACE_TCHAR * buf_p =
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -127,16 +127,16 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
         (ACE_TCHAR *) ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      if (buf_p == 0)
+      if (buf_p == nullptr)
         {
           errno = ENOMEM;
-          return 0;
+          return nullptr;
         }
       ACE_TCHAR * p = buf_p;
       size_t const len = static_cast<size_t> (start - str);
       ACE_OS::strncpy (p, str, len);
       p += len;
-      if (temp != 0)
+      if (temp != nullptr)
         {
 #  if defined (ACE_WIN32)
           p = ACE_OS::strecpy (p, temp) - 1;
@@ -1218,7 +1218,7 @@ void
 ACE_OS::setprogname_emulation (const char* progname)
 {
   const char *p = ACE_OS::strrchr (progname, '/');
-  if (p != 0)
+  if (p != nullptr)
 #  if defined (ACE_INTEGRITY)
     __progname = const_cast<char*> (p + 1);
 #  else

@@ -70,16 +70,16 @@ class ACE_Svc_Handler : public ACE_Task<SYNCH_TRAITS>
 {
 public:
   // Useful STL-style traits.
-  typedef typename PEER_STREAM::PEER_ADDR addr_type;
-  typedef PEER_STREAM stream_type;
+  using addr_type = typename PEER_STREAM::PEER_ADDR;
+  using stream_type = PEER_STREAM;
 
   /**
    * Constructor initializes the @a thr_mgr and @a mq by passing them
    * down to the ACE_Task base class.  The @a reactor is passed to
    * the ACE_Event_Handler.
    */
-  ACE_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
-                   ACE_Message_Queue<SYNCH_TRAITS> *mq = 0,
+  ACE_Svc_Handler (ACE_Thread_Manager *thr_mgr = nullptr,
+                   ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Destructor.
@@ -89,7 +89,7 @@ public:
   /// ACE_Acceptor or ACE_Connector, which passes "this" in as the
   /// parameter to open.  If this method returns -1 the Svc_Handler's
   /// close() method is automatically called.
-  virtual int open (void *acceptor_or_connector = 0);
+  virtual int open (void *acceptor_or_connector = nullptr);
 
   /**
    * Object termination hook -- application-specific cleanup code goes
@@ -123,7 +123,7 @@ public:
    * this method. In addition, reset @c *act_holder to zero if
    * @a act_holder != 0.
    */
-  virtual void cleanup_hint (void **act_holder = 0);
+  virtual void cleanup_hint (void **act_holder = nullptr);
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
@@ -236,7 +236,7 @@ public:
    * recycling.  Return 0 if the object is ready for recycling, -1 on
    * failures.
    */
-  virtual int recycle (void * = 0);
+  virtual int recycle (void * = nullptr);
 
 protected:
   /// Maintain connection with client.
@@ -281,11 +281,11 @@ public:
    * @a relative_timeout value is interpreted to be in a unit that's
    * relative to the current time returned by <ACE_OS::gettimeofday>.
    */
-  ACE_Buffered_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,
-                            ACE_Message_Queue<SYNCH_TRAITS> *mq = 0,
+  ACE_Buffered_Svc_Handler (ACE_Thread_Manager *thr_mgr = nullptr,
+                            ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,
                             ACE_Reactor *reactor = ACE_Reactor::instance (),
                             size_t max_buffer_size = 0,
-                            ACE_Time_Value *relative_timeout = 0);
+                            ACE_Time_Value *relative_timeout = nullptr);
 
   /// Destructor, which calls <flush>.
   virtual ~ACE_Buffered_Svc_Handler ();
@@ -298,7 +298,7 @@ public:
    * has elapsed.
    */
   virtual int put (ACE_Message_Block *message_block,
-                   ACE_Time_Value *timeout = 0);
+                   ACE_Time_Value *timeout = nullptr);
 
   /// Flush the ACE_Message_Queue, which writes all the queued
   /// ACE_Message_Blocks to the <PEER_STREAM>.

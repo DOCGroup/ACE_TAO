@@ -95,12 +95,12 @@ protected:
   virtual TAO_Transport *make_connection (
       TAO::Profile_Transport_Resolver *r,
       TAO_Transport_Descriptor_Interface &desc,
-      ACE_Time_Value *timeout = 0);
+      ACE_Time_Value *timeout = nullptr);
 
   virtual TAO_Transport *make_parallel_connection (
       TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
+                                  ACE_Time_Value *timeout = nullptr);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
@@ -115,7 +115,7 @@ private:
   int begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
                         TAO::Profile_Transport_Resolver *r,
                         TAO_IIOP_Endpoint *endpoint,
-                        ACE_Time_Value *timeout = 0);
+                        ACE_Time_Value *timeout = nullptr);
 
   /// This is the second half of making a connection when several endpoints
   /// are involved. This works with modified wait strategies to wait for one
@@ -128,7 +128,7 @@ private:
                                       unsigned count,
                                       TAO::Profile_Transport_Resolver *r,
                                       TAO_LF_Multi_Event *mev,
-                                      ACE_Time_Value *timeout = 0);
+                                      ACE_Time_Value *timeout = nullptr);
 
 
   /// Return the remote endpoint, a helper function

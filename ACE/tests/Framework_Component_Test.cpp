@@ -62,7 +62,7 @@ run_test (u_long unload_mask = 0)
   // dll, which contains a singleton.
   ACE_Service_Config::open (ACE_TEXT ("Framework_Component_Test"),
                             ACE_DEFAULT_LOGGER_KEY,
-                            1, 1, 1);
+                            true, true, true);
 
   // Now add server 1.
   ACE_Service_Config::process_directive (ADD_SERVICE(1));

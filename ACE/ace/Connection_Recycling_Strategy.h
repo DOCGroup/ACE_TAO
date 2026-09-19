@@ -52,7 +52,7 @@ public:
 
   /// Cleanup hint and reset @a act_holder to zero if @a act_holder != 0.
   virtual int cleanup_hint (const void *recycling_act,
-                            void **act_holder = 0) = 0;
+                            void **act_holder = nullptr) = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -267,7 +267,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe_ifs");
 
   if (ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL)
-      && net_if == 0)
+      && net_if == nullptr)
     {
       int family = mcast_addr.get_type ();
       size_t nr_subscribed = 0;
@@ -276,21 +276,21 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
       // Take advantage of the BSD getifaddrs function that simplifies
       // access to connected interfaces.
-      struct ifaddrs *ifap = 0;
-      struct ifaddrs *p_if = 0;
+      struct ifaddrs *ifap = nullptr;
+      struct ifaddrs *p_if = nullptr;
 
       if (::getifaddrs (&ifap) != 0)
         return -1;
 
       // Not every interface is for IP, and not all are up and multicast.
       for (p_if = ifap;
-           p_if != 0;
+           p_if != nullptr;
            p_if = p_if->ifa_next)
         {
           // Some OSes can return interfaces with no ifa_addr if the
           // interface has no assigned address.
           // If there is an address but it's not the family we want, ignore it.
-          if (p_if->ifa_addr == 0 || p_if->ifa_addr->sa_family != family)
+          if (p_if->ifa_addr == nullptr || p_if->ifa_addr->sa_family != family)
             continue;
 
           // Check to see if it's up and supports multicast.
@@ -459,7 +459,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 #endif /* ACE_HAS_IPV6 - Fall into IPv4-only case */
     {
       // Validate passed multicast addr and iface specifications.
-      if (this->make_multicast_ifaddr (0,
+      if (this->make_multicast_ifaddr (nullptr,
                                        mcast_addr,
                                        net_if) == -1)
         return -1;
@@ -568,7 +568,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
     return -1;
 
   // Only do this if net_if == 0, i.e., INADDR_ANY
-  if (net_if == 0)
+  if (net_if == nullptr)
     {
       int const result = this->subscribe_ifs (mcast_addr, net_if, reuse_addr);
       // Check for error or "short-circuit" return.
@@ -614,7 +614,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
 
   if (ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL)
-      && net_if == 0)
+      && net_if == nullptr)
     {
 #if defined (ACE_HAS_IPV6)
       if (mcast_addr.get_type () == AF_INET6)
@@ -741,7 +741,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // Unsubscribe on all local multicast-capable network interfaces, by
       // doing recursive calls with specific interfaces.
 
-      ACE_INET_Addr *if_addrs = 0;
+      ACE_INET_Addr *if_addrs = nullptr;
       size_t if_cnt;
 
       // NOTE - <get_ip_interfaces> doesn't always get all of the

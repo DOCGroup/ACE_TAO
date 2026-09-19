@@ -203,17 +203,17 @@ typedef ACE::If_Then_Else<
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The sizes of the commonly implemented types are known.
-typedef int8_t   ACE_INT8;
-typedef uint8_t  ACE_UINT8;
-typedef int16_t  ACE_INT16;
-typedef uint16_t ACE_UINT16;
-typedef int32_t  ACE_INT32;
-typedef uint32_t ACE_UINT32;
-typedef int64_t  ACE_INT64;
-typedef uint64_t ACE_UINT64;
+using ACE_INT8 = int8_t;
+using ACE_UINT8 = uint8_t;
+using ACE_INT16 = int16_t;
+using ACE_UINT16 = uint16_t;
+using ACE_INT32 = int32_t;
+using ACE_UINT32 = uint32_t;
+using ACE_INT64 = int64_t;
+using ACE_UINT64 = uint64_t;
 
 /// Define a generic byte for use in codecs
-typedef unsigned char ACE_Byte;
+using ACE_Byte = unsigned char;
 
 // Define a pseudo wide character type when wchar is not supported so we
 // can support basic wide character string operations.

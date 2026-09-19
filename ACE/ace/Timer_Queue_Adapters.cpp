@@ -105,7 +105,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_
   // signals when SIGALRM is running.  Also, we always restart system
   // calls that are interrupted by the signals.
 
-  ACE_Sig_Action sa ((ACE_SignalHandler) 0,
+  ACE_Sig_Action sa ((ACE_SignalHandler) nullptr,
                      this->mask_,
                      SA_RESTART);
 

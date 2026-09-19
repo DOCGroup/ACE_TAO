@@ -40,7 +40,7 @@ public:
   Client ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void * = 0) override;
+  int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   int handle_output (ACE_HANDLE handle) override;
@@ -95,7 +95,7 @@ Client::open (void *)
   ACE_Time_Value delay (1, 0);
   ACE_Time_Value restart (1, 0);
   if (this->reactor ()->schedule_timer (this,
-                                        0,
+                                        nullptr,
                                         delay,
                                         restart) == -1)
     {
@@ -470,7 +470,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -495,7 +495,7 @@ run_main (int, ACE_TCHAR *[])
   disable_signal (SIGPIPE, SIGPIPE);
 
   ACE_Dev_Poll_Reactor dp_reactor;
-  dp_reactor.restart (1);          // Restart on EINTR
+  dp_reactor.restart (true);          // Restart on EINTR
   ACE_Reactor reactor (&dp_reactor);
 
   TestConnector client;
@@ -528,7 +528,7 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("Unable to open server service handler")),
                       -1);
 
-  Client *client_handler = 0;
+  Client *client_handler = nullptr;
 
   if (client.connect (client_handler, addr) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

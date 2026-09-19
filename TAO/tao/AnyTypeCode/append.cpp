@@ -658,143 +658,143 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
         {
         case CORBA::tk_octet:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
-                if (src->read_octet_array ((ACE_CDR::Octet*)buf, bounds) == 0)
+                if (!src->read_octet_array ((ACE_CDR::Octet*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_boolean:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
-                if (src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds) == 0)
+                if (!src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_char:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
-                if (src->read_char_array ((ACE_CDR::Char*)buf, bounds) == 0)
+                if (!src->read_char_array ((ACE_CDR::Char*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_short:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
-                if (src->read_short_array ((ACE_CDR::Short*)buf, bounds) == 0)
+                if (!src->read_short_array ((ACE_CDR::Short*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_ushort:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
-                if (src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds) == 0)
+                if (!src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_wchar:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
-                if (src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds) == 0)
+                if (!src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_long:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
-                if (src->read_long_array ((ACE_CDR::Long*)buf, bounds) == 0)
+                if (!src->read_long_array ((ACE_CDR::Long*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_ulong:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
-                if (src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds) == 0)
+                if (!src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_float:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
-                if (src->read_float_array ((ACE_CDR::Float*)buf, bounds) == 0)
+                if (!src->read_float_array ((ACE_CDR::Float*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_double:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
-                if (src->read_double_array ((ACE_CDR::Double*)buf, bounds) == 0)
+                if (!src->read_double_array ((ACE_CDR::Double*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_longlong:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
-                if (src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds) == 0)
+                if (!src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_ulonglong:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
-                if (src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds) == 0)
+                if (!src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
         case CORBA::tk_longdouble:
           {
-            char* buf;
+            char* buf {};
             if (dest->adjust (ACE_CDR::LONGDOUBLE_SIZE * bounds,
                               ACE_CDR::LONGDOUBLE_ALIGN, buf) == 0)
               {
-                if (src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds) == 0)
+                if (!src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -803,9 +803,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
         default:
           while (bounds-- && retval == TAO::TRAVERSE_CONTINUE)
             {
-              retval = TAO_Marshal_Object::perform_append (tc2.in (),
-                                                           src,
-                                                           dest);
+              retval = TAO_Marshal_Object::perform_append (tc2.in (), src, dest);
             }
           break;
         }// end of switch
@@ -844,143 +842,143 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
     {
     case CORBA::tk_octet:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
-            if (src->read_octet_array ((ACE_CDR::Octet*)buf, bounds) == 0)
+            if (!src->read_octet_array ((ACE_CDR::Octet*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_boolean:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
-            if (src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds) == 0)
+            if (!src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_char:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
-            if (src->read_char_array ((ACE_CDR::Char*)buf, bounds) == 0)
+            if (!src->read_char_array ((ACE_CDR::Char*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_short:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
-            if (src->read_short_array ((ACE_CDR::Short*)buf, bounds) == 0)
+            if (!src->read_short_array ((ACE_CDR::Short*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_ushort:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
-            if (src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds) == 0)
+            if (!src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_wchar:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
-            if (src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds) == 0)
+            if (!src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_long:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
-            if (src->read_long_array ((ACE_CDR::Long*)buf, bounds) == 0)
+            if (!src->read_long_array ((ACE_CDR::Long*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_ulong:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
-            if (src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds) == 0)
+            if (!src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_float:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
-            if (src->read_float_array ((ACE_CDR::Float*)buf, bounds) == 0)
+            if (!src->read_float_array ((ACE_CDR::Float*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_double:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
-            if (src->read_double_array ((ACE_CDR::Double*)buf, bounds) == 0)
+            if (!src->read_double_array ((ACE_CDR::Double*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_longlong:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
-            if (src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds) == 0)
+            if (!src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_ulonglong:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
-            if (src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds) == 0)
+            if (!src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     case CORBA::tk_longdouble:
       {
-        char* buf;
+        char* buf {};
         if (dest->adjust (ACE_CDR::LONGDOUBLE_SIZE * bounds,
                           ACE_CDR::LONGDOUBLE_ALIGN, buf) == 0)
           {
-            if (src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds) == 0)
+            if (!src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -988,9 +986,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
     default:
       while (bounds-- && retval == TAO::TRAVERSE_CONTINUE)
         {
-          retval = TAO_Marshal_Object::perform_append (tc2.in (),
-                                                       src,
-                                                       dest);
+          retval = TAO_Marshal_Object::perform_append (tc2.in (), src, dest);
         }
       break;
     }// end of switch

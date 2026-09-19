@@ -355,7 +355,7 @@ int
 Counting_Service::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-  ACE_Time_Value* timeout = 0;
+  ACE_Time_Value* timeout = nullptr;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) reading from peer on %d\n"),
@@ -457,7 +457,7 @@ Counting_Service::open (void *)
   else if (OPTIONS::instance ()->concurrency_type () == Options::THREAD)
     // We need to set this to 0 so that our <shutdown> method doesn't
     // try to deregister <this> from the Reactor.
-    this->reactor (0);
+    this->reactor (nullptr);
   return 0;
 }
 
@@ -476,7 +476,7 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   char buf[BUFSIZ];
-  const char *command = 0;
+  const char *command = nullptr;
   size_t command_len;
   size_t i;
 
@@ -585,7 +585,7 @@ client (void *arg)
   // Remove the filename.
   ACE_OS::unlink (OPTIONS::instance ()->filename ());
 
-  return 0;
+  return nullptr;
 }
 
 // Performs the server activities.
@@ -608,7 +608,7 @@ server (void *)
     // Run the main event loop.
     result = ACE_Reactor::instance ()->handle_events ();
 
-  return 0;
+  return nullptr;
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -634,8 +634,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Note that this implicitly creates the Reactor singleton.
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
                      ACE_Reactor::instance(),
-                     0,
-                     0,
+                     nullptr,
+                     nullptr,
                      OPTIONS::instance ()->concurrency_strategy ()) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -666,7 +666,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           break;
           /* NOTREACHED */
         default:
-          server (0);
+          server (nullptr);
           break;
           /* NOTREACHED */
         }

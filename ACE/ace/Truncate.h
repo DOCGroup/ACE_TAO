@@ -69,7 +69,7 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<unsigned char>
   {
-    typedef unsigned char unsigned_type;
+    using unsigned_type = unsigned char;
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
@@ -77,7 +77,7 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<unsigned short>
   {
-    typedef unsigned short unsigned_type;
+    using unsigned_type = unsigned short;
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
@@ -85,7 +85,7 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<unsigned int>
   {
-    typedef unsigned int unsigned_type;
+    using unsigned_type = unsigned int;
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
@@ -93,7 +93,7 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<unsigned long>
   {
-    typedef unsigned long unsigned_type;
+    using unsigned_type = unsigned long;
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
@@ -106,7 +106,7 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<unsigned long long>
   {
-    typedef unsigned long long unsigned_type;
+    using unsigned_type = unsigned long long;
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
@@ -116,8 +116,8 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<signed char>
   {
-    typedef signed char   signed_type;
-    typedef unsigned char unsigned_type;
+    using signed_type = signed char;
+    using unsigned_type = unsigned char;
 
     unsigned_type operator() (signed_type x)
     {
@@ -128,8 +128,8 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<signed short>
   {
-    typedef signed short   signed_type;
-    typedef unsigned short unsigned_type;
+    using signed_type = short;
+    using unsigned_type = unsigned short;
 
     unsigned_type operator() (signed_type x)
     {
@@ -140,8 +140,8 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<signed int>
   {
-    typedef signed int   signed_type;
-    typedef unsigned int unsigned_type;
+    using signed_type = int;
+    using unsigned_type = unsigned int;
 
     unsigned_type operator() (signed_type x)
     {
@@ -152,8 +152,8 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<signed long>
   {
-    typedef signed long   signed_type;
-    typedef unsigned long unsigned_type;
+    using signed_type = long;
+    using unsigned_type = unsigned long;
 
     unsigned_type operator() (signed_type x)
     {
@@ -169,8 +169,8 @@ namespace ACE_Utils
   template<>
   struct To_Unsigned<signed long long>
   {
-    typedef signed long long   signed_type;
-    typedef unsigned long long unsigned_type;
+    using signed_type = long long;
+    using unsigned_type = unsigned long long;
 
     unsigned_type operator() (signed_type x)
     {
@@ -297,13 +297,7 @@ namespace ACE_Utils
 
     static bool const USABLE = (USE_LEFT || USE_RIGHT);
 
-    typedef typename ACE::If_Then_Else<
-      USE_LEFT,
-      LEFT,
-      typename ACE::If_Then_Else<
-        USE_RIGHT,
-        RIGHT,
-        void>::result_type>::result_type promote_type;
+    using promote_type = typename ACE::If_Then_Else<USE_LEFT, LEFT, typename ACE::If_Then_Else<USE_RIGHT, RIGHT, void>::result_type>::result_type;
 
     static bool greater_than (LEFT lhs, RIGHT rhs)
     {
@@ -346,13 +340,7 @@ namespace ACE_Utils
   template<typename LEFT, typename RIGHT>
   struct Comparator
   {
-    typedef typename ACE::If_Then_Else<
-      Fast_Comparator<LEFT, RIGHT>::USABLE,
-      Fast_Comparator<LEFT, RIGHT>,
-      Safe_Comparator<LEFT,
-                      RIGHT,
-                      Sign_Check<LEFT>::is_signed,
-                      Sign_Check<RIGHT>::is_signed> >::result_type comp_type;
+    using comp_type = typename ACE::If_Then_Else<Fast_Comparator<LEFT, RIGHT>::USABLE, Fast_Comparator<LEFT, RIGHT>, Safe_Comparator<LEFT, RIGHT, Sign_Check<LEFT>::is_signed, Sign_Check<RIGHT>::is_signed>>::result_type;
   };
 
   // -----------------------------------------------------
@@ -374,19 +362,13 @@ namespace ACE_Utils
                             || (sizeof(FROM) == sizeof (TO)
                                 && Sign_Check<FROM>::is_signed == 0));
 
-    typedef typename ACE::If_Then_Else<
-      MAX_FROM_GT_MAX_TO,
-      FROM,
-      TO>::result_type comp_to_type;
+    using comp_to_type = typename ACE::If_Then_Else<MAX_FROM_GT_MAX_TO, FROM, TO>::result_type;
 
     // Take advantage of knowledge that we're casting a positive value
     // to a type large enough to hold it so that we can bypass
     // negative value checks at compile-time.  Otherwise fallback on
     // the safer comparison.
-    typedef typename ACE::If_Then_Else<
-      MAX_FROM_GT_MAX_TO,
-      Fast_Comparator<FROM, comp_to_type>,
-      typename Comparator<FROM, comp_to_type>::comp_type>::result_type comparator;
+    using comparator = typename ACE::If_Then_Else<MAX_FROM_GT_MAX_TO, Fast_Comparator<FROM, comp_to_type>, typename Comparator<FROM, comp_to_type>::comp_type>::result_type;
 
     /// Truncate a value of type @c FROM to value of type @c TO, if
     /// the value is larger than the maximum of value of type @c TO.

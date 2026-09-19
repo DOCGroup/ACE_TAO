@@ -64,8 +64,8 @@ public:
    * means "restart if interrupted."
    */
   int accept (ACE_UPIPE_Stream &server_stream,
-              ACE_UPIPE_Addr *remote_addr = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_UPIPE_Addr *remote_addr = nullptr,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false);
 

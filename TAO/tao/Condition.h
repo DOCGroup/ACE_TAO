@@ -75,7 +75,7 @@ public:
    * call times out before the condition is signaled <wait> returns -1
    * and sets errno to ETIME.
    */
-  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = 0);
+  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();

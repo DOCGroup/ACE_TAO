@@ -92,7 +92,7 @@ run_main (int, ACE_TCHAR *[])
   {
     ACE_Reactor select_reactor (
         new ACE_Select_Reactor,
-        1);
+        true);
 
     Event_Handler handler(&select_reactor,
                           max_notifications,
@@ -103,7 +103,7 @@ run_main (int, ACE_TCHAR *[])
 
   {
     ACE_Reactor tp_reactor (new ACE_TP_Reactor,
-                            1);
+                            true);
     Event_Handler handler(&tp_reactor,
                           max_notifications,
                           "TP_Reactor");

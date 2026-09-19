@@ -61,7 +61,7 @@ class ACE_Task_Ex : public ACE_Task_Base
 public:
   friend class ACE_Module<ACE_SYNCH_USE, TIME_POLICY>;
   friend class ACE_Module_Type;
-  typedef ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> MESSAGE_QUEUE_EX;
+  using MESSAGE_QUEUE_EX = ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, _ACE_SYNCH, TIME_POLICY>;
 
   // = Initialization/termination methods.
   /**
@@ -78,7 +78,7 @@ public:
   ACE_Task_Ex &operator= (ACE_Task_Ex &&) = delete;
 
   /// Destructor.
-  virtual ~ACE_Task_Ex ();
+  ~ACE_Task_Ex () override;
 
   /// Gets the message queue associated with this task.
   MESSAGE_QUEUE_EX *msg_queue ();
@@ -100,32 +100,32 @@ public: // Should be protected:
 
   /// Insert message into the message queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
-  int putq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = 0);
+  int putq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
    * Extract the first message from the queue (blocking).  Note that
    * @a timeout uses <{absolute}> time rather than <{relative}> time.
    * Returns number of items in queue if the call succeeds or -1 otherwise.
    */
-  int getq (ACE_MESSAGE_TYPE *&mb, ACE_Time_Value *timeout = 0);
+  int getq (ACE_MESSAGE_TYPE *&mb, ACE_Time_Value *timeout = nullptr);
 
   /// Return a message to the queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
-  int ungetq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = 0);
+  int ungetq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
    * Turn the message around and send it back down the Stream.  Note
    * that @a timeout uses <{absolute}> time rather than <{relative}>
    * time.
    */
-  int reply (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = 0);
+  int reply (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
    * Transfer message to the adjacent ACE_Task_Ex in a ACE_Stream.  Note
    * that @a timeout uses <{absolute}> time rather than <{relative}>
    * time.
    */
-  int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = 0);
+  int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = nullptr);
 
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated

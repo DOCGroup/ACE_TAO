@@ -110,7 +110,7 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
 ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
   const ACE_TCHAR *backing_store_name,
   const OPTIONS *options)
-  : base_addr_ (0),
+  : base_addr_ (nullptr),
     use_fixed_addr_(0),
     flags_ (MAP_SHARED),
     write_each_page_ (false),
@@ -154,7 +154,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
       this->install_signal_handler_ = options->install_signal_handler_;
     }
 
-  if (backing_store_name == 0)
+  if (backing_store_name == nullptr)
     {
       // Only create a new unique filename for the backing store file
       // if the user didn't supply one...
@@ -276,7 +276,7 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::NEVER_FIXED)
-    this->base_addr_ = 0;
+    this->base_addr_ = nullptr;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   // Remap the file; try to stay at the same location as a previous mapping
@@ -289,7 +289,7 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
                        this->base_addr_,
                        0,
                        this->sa_) == -1
-      || (this->base_addr_ != 0
+      || (this->base_addr_ != nullptr
       && this->mmap_.addr () != this->base_addr_))
     {
 #if 0
@@ -336,9 +336,9 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
 
   if (this->commit_backing_store_name (rounded_bytes,
                                        map_size) == -1)
-    return 0;
+    return nullptr;
   else if (this->map_file (map_size) == -1)
-    return 0;
+    return nullptr;
 
   // ACELIB_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %B,
   // rounded_bytes = %B, map_size = %B\n", nbytes, rounded_bytes,
@@ -475,7 +475,7 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
   // for backwards compatibility
-  if (base_addr_ == 0 && use_fixed_addr_ == ALWAYS_FIXED)
+  if (base_addr_ == nullptr && use_fixed_addr_ == ALWAYS_FIXED)
     use_fixed_addr_ = FIRSTCALL_FIXED;
 }
 
@@ -495,7 +495,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   // Make sure that the pointer causing the problem is within the
   // range of the backing store.
 
-  if (siginfo != 0)
+  if (siginfo != nullptr)
     {
       // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %@\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)

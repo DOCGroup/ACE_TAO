@@ -30,12 +30,12 @@ ACE_Thread::spawn_n (size_t n,
                               arg,
                               flags,
                               &t_id,
-                              0,
+                              nullptr,
                               priority,
-                              stack == 0 ? 0 : stack[i],
-                              stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
+                              stack == nullptr ? nullptr : stack[i],
+                              stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                               thread_adapter,
-                              thr_name == 0 ? 0 : &thr_name[i]) != 0)
+                              thr_name == nullptr ? nullptr : &thr_name[i]) != 0)
         break;
    }
 
@@ -70,16 +70,16 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                             &t_id,
                             &t_handle,
                             priority,
-                            stack == 0 ? 0 : stack[i],
-                            stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
+                            stack == nullptr ? nullptr : stack[i],
+                            stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                             thread_adapter,
-                            thr_name == 0 ? 0 : &thr_name[i]);
+                            thr_name == nullptr ? nullptr : &thr_name[i]);
 
       if (result == 0)
         {
-          if (thread_ids != 0)
+          if (thread_ids != nullptr)
             thread_ids[i] = t_id;
-          if (thread_handles != 0)
+          if (thread_handles != nullptr)
             thread_handles[i] = t_handle;
         }
       else

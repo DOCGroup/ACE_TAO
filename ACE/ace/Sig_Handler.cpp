@@ -91,12 +91,12 @@ ACE_Sig_Handler::handler (int signum)
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
-    ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, m, *lock, 0));
+    ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, m, *lock, nullptr));
 
   if (ACE_Sig_Handler::in_range (signum))
     return ACE_Sig_Handler::signal_handlers_[signum];
   else
-    return 0;
+    return nullptr;
 }
 
 ACE_Event_Handler *
@@ -113,7 +113,7 @@ ACE_Sig_Handler::handler_i (int signum,
       return sh;
     }
   else
-    return 0;
+    return nullptr;
 }
 
 ACE_Event_Handler *
@@ -124,7 +124,7 @@ ACE_Sig_Handler::handler (int signum,
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
-    ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, m, *lock, 0));
+    ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, m, *lock, nullptr));
 
   return ACE_Sig_Handler::handler_i (signum, new_sh);
 }
@@ -148,12 +148,12 @@ ACE_Sig_Handler::register_handler_i (int signum,
 
       // Return a pointer to the old ACE_Event_Handler if the user
       // asks for this.
-      if (old_sh != 0)
+      if (old_sh != nullptr)
         *old_sh = sh;
 
       // Make sure that @a new_disp points to a valid location if the
       // user doesn't care...
-      if (new_disp == 0)
+      if (new_disp == nullptr)
         new_disp = &sa;
 
       new_disp->handler (ace_signal_handler_dispatcher);
@@ -195,13 +195,13 @@ ACE_Sig_Handler::remove_handler_i (int signum,
 {
   ACE_TRACE ("ACE_Sig_Handler::remove_handler_i");
 
-  ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0); // Reset to default disposition.
+  ACE_Sig_Action sa (SIG_DFL, (sigset_t *) nullptr); // Reset to default disposition.
 
-  if (new_disp == 0)
+  if (new_disp == nullptr)
     new_disp = &sa;
 
   ACE_Event_Handler *eh = ACE_Sig_Handler::signal_handlers_[signum];
-  ACE_Sig_Handler::signal_handlers_[signum] = 0;
+  ACE_Sig_Handler::signal_handlers_[signum] = nullptr;
 
   // Allow the event handler to close down if necessary.
   if (eh)
@@ -252,7 +252,7 @@ ACE_Sig_Handler::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
 
   ACE_Event_Handler *eh = ACE_Sig_Handler::signal_handlers_[signum];
 
-  if (eh != 0)
+  if (eh != nullptr)
     {
       if (eh->handle_signal (signum, siginfo, ucontext) == -1)
         ACE_Sig_Handler::remove_handler_i (signum);
@@ -305,11 +305,11 @@ ACE_SIG_HANDLERS_SET *
 ACE_Sig_Handlers_Set::instance (int signum)
 {
   if (signum <= 0 || signum >= ACE_NSIG)
-    return 0; // This will cause problems...
-  else if (ACE_Sig_Handlers_Set::sig_handlers_[signum] == 0)
+    return nullptr; // This will cause problems...
+  else if (ACE_Sig_Handlers_Set::sig_handlers_[signum] == nullptr)
     ACE_NEW_RETURN (ACE_Sig_Handlers_Set::sig_handlers_[signum],
                     ACE_SIG_HANDLERS_SET,
-                    0);
+                    nullptr);
   return ACE_Sig_Handlers_Set::sig_handlers_[signum];
 }
 
@@ -417,7 +417,7 @@ ACE_Sig_Handlers::register_handler (int signum,
         {
           // Make sure that new_disp points to a valid location if the
           // user doesn't care...
-          if (new_disp == 0)
+          if (new_disp == nullptr)
             new_disp = &sa;
 
           new_disp->handler (ace_signal_handlers_dispatcher);
@@ -496,9 +496,9 @@ ACE_Sig_Handlers::remove_handler (int signum,
           // If there are no more handlers left for a signal then
           // register the new disposition or restore the default
           // disposition.
-          ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
+          ACE_Sig_Action sa (SIG_DFL, (sigset_t *) nullptr);
 
-          if (new_disp == 0)
+          if (new_disp == nullptr)
             new_disp = &sa;
 
           return new_disp->register_action (signum, old_disp);
@@ -537,7 +537,7 @@ ACE_Sig_Handlers::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext
 
   ACE_SIG_HANDLERS_ITERATOR handler_iterator (*handler_set);
 
-  for (ACE_Event_Handler **eh = 0;
+  for (ACE_Event_Handler **eh = nullptr;
        handler_iterator.next (eh) != 0;
        )
     if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
@@ -557,7 +557,7 @@ ACE_Sig_Handlers::handler (int signum)
   ACE_SIG_HANDLERS_SET *handler_set =
     ACE_Sig_Handlers_Set::instance (signum);
   ACE_SIG_HANDLERS_ITERATOR handler_iterator (*handler_set);
-  ACE_Event_Handler **eh = 0;
+  ACE_Event_Handler **eh = nullptr;
   handler_iterator.next (eh);
   return *eh;
 }

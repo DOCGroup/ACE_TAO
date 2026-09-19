@@ -64,7 +64,7 @@ public:
                                    long timer_id);
 
   /// Destructor.
-  ~ACE_NonBlocking_Connect_Handler ();
+  ~ACE_NonBlocking_Connect_Handler () override;
 
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
@@ -96,24 +96,24 @@ public:
   void timer_id (long timer_id);
 
   /// Called by ACE_Reactor when asynchronous connections fail.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Called by ACE_Dev_Poll_Reactor when asynchronous connections fail.
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
   /// Called by ACE_Reactor when asynchronous connections succeed.
-  virtual int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   /// Called by ACE_Reactor when asynchronous connections suceeds (on
   /// some platforms only).
-  virtual int handle_exception (ACE_HANDLE fd);
+  int handle_exception (ACE_HANDLE fd) override;
 
   /// This method is called if a connection times out before
   /// completing.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
 
   /// Should Reactor resume us if we have been suspended before the upcall?
-  virtual int resume_handler ();
+  int resume_handler () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -165,12 +165,12 @@ class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service
 {
 public:
   // Useful STL-style traits.
-  typedef typename SVC_HANDLER::addr_type addr_type;
-  typedef PEER_CONNECTOR connector_type;
-  typedef SVC_HANDLER handler_type;
-  typedef typename SVC_HANDLER::stream_type stream_type;
-  typedef typename PEER_CONNECTOR::PEER_ADDR peer_addr_type;
-  typedef typename PEER_CONNECTOR::PEER_ADDR PEER_ADDR_TYPEDEF;
+  using addr_type = typename SVC_HANDLER::addr_type;
+  using connector_type = PEER_CONNECTOR;
+  using handler_type = SVC_HANDLER;
+  using stream_type = typename SVC_HANDLER::stream_type;
+  using peer_addr_type = typename PEER_CONNECTOR::PEER_ADDR;
+  using PEER_ADDR_TYPEDEF = typename PEER_CONNECTOR::PEER_ADDR;
 
   /**
    * Initialize a connector.  @a flags indicates how SVC_HANDLER's
@@ -191,7 +191,7 @@ public:
                     int flags = 0);
 
   /// Shutdown a connector and release resources.
-  virtual ~ACE_Connector ();
+  ~ACE_Connector () override;
 
   // = Connection establishment methods.
 
@@ -246,7 +246,7 @@ public:
   virtual int connect_n (size_t n,
                          SVC_HANDLER *svc_handlers[],
                          typename PEER_CONNECTOR::PEER_ADDR remote_addrs[],
-                         ACE_TCHAR *failed_svc_handlers = 0,
+                         ACE_TCHAR *failed_svc_handlers = nullptr,
                          const ACE_Synch_Options &synch_options =
                          ACE_Synch_Options::defaults);
 
@@ -266,14 +266,14 @@ public:
   virtual PEER_CONNECTOR &connector () const;
 
   /// Initialize Svc_Handler.
-  virtual void initialize_svc_handler (ACE_HANDLE handle,
-                                       SVC_HANDLER *svc_handler);
+  void initialize_svc_handler (ACE_HANDLE handle,
+                               SVC_HANDLER *svc_handler) override;
 
   /// Set Reactor.
-  virtual void reactor (ACE_Reactor *reactor);
+  void reactor (ACE_Reactor *reactor) override;
 
   /// Get Reactor.
-  virtual ACE_Reactor *reactor () const;
+  ACE_Reactor *reactor () const override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -291,7 +291,7 @@ protected:
   int flags_;
 
   // = Helpful typedefs.
-  typedef ACE_NonBlocking_Connect_Handler<SVC_HANDLER> NBCH;
+  using NBCH = ACE_NonBlocking_Connect_Handler<SVC_HANDLER>;
 
   // = The following two methods define the Connector's strategies for
   // creating, connecting, and activating SVC_HANDLER's, respectively.
@@ -356,27 +356,27 @@ protected:
 
   /// Return the handle set representing the non-blocking connects in
   /// progress.
-  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles ();
+  ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles () override;
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Calls handle_close() to shutdown the Connector gracefully.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version returns address info in @a buf.
-  virtual int info (ACE_TCHAR **strp, size_t length) const;
+  int info (ACE_TCHAR **strp, size_t length) const override;
 
   // = Service management hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int suspend ();
+  int suspend () override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int resume ();
+  int resume () override;
 
 private:
   /// This is the peer connector factory.
@@ -409,24 +409,16 @@ class ACE_Strategy_Connector
 {
 public:
   // Useful STL-style traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER>
-  creation_strategy_type;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>
-  connect_strategy_type;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-  concurrency_strategy_type;
-  typedef ACE_Connector <SVC_HANDLER, PEER_CONNECTOR>
-  base_type;
+  using creation_strategy_type = ACE_Creation_Strategy<SVC_HANDLER>;
+  using connect_strategy_type = ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>;
+  using concurrency_strategy_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
+  using base_type = ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>;
 
   // = Define some useful (old style) traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER>
-  CREATION_STRATEGY;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>
-  CONNECT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-  CONCURRENCY_STRATEGY;
-  typedef ACE_Connector <SVC_HANDLER, PEER_CONNECTOR>
-  SUPER;
+  using CREATION_STRATEGY = ACE_Creation_Strategy<SVC_HANDLER>;
+  using CONNECT_STRATEGY = ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>;
+  using CONCURRENCY_STRATEGY = ACE_Concurrency_Strategy<SVC_HANDLER>;
+  using SUPER = ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>;
 
   /**
    * Initialize a connector.  @a flags indicates how SVC_HANDLER's
@@ -435,9 +427,9 @@ public:
    * non-blocking I/O on the SVC_HANDLER when it is opened.
    */
   ACE_Strategy_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
-                          ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-                          ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> * = 0,
-                          ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+                          ACE_Creation_Strategy<SVC_HANDLER> * = nullptr,
+                          ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> * = nullptr,
+                          ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr,
                           int flags = 0);
 
   /**
@@ -457,9 +449,9 @@ public:
    * non-blocking I/O on the SVC_HANDLER when it is opened.
    */
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
-                    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-                    ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> * = 0,
-                    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+                    ACE_Creation_Strategy<SVC_HANDLER> * = nullptr,
+                    ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> * = nullptr,
+                    ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr,
                     int flags = 0);
 
   /// Shutdown a connector and release resources.

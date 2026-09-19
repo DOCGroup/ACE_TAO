@@ -2,7 +2,7 @@
  * @file Bug_2610_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2610:
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2610
+ *   https://github.com/DOCGroup/bugzilla/issues/2610
  *
  * @author Milan Cvetkovic <milan.cvetkovic@mpathix.com>
  */
@@ -133,7 +133,7 @@ run_main (int, ACE_TCHAR *[])
   My_Acceptor acceptor;
   Timer_Handler timer_handler;
   ACE_Reactor::instance()->schedule_timer(
-    &timer_handler, 0, ACE_Time_Value(0));
+    &timer_handler, nullptr, ACE_Time_Value(0));
 
   My_Task task;
   int activated = task.activate();
@@ -186,7 +186,7 @@ run_main (int, ACE_TCHAR *[])
   }
 
   {
-    My_Svc_Handler* handler=0;
+    My_Svc_Handler* handler=nullptr;
     My_Connector connector;
     connector.connect (handler, a1);
     ACE_Event_Handler_var safe_handler (handler);

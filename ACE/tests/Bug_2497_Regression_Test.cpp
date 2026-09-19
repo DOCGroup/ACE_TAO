@@ -2,7 +2,7 @@
  * @file Bug_2497_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2497
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2497
+ *   https://github.com/DOCGroup/bugzilla/issues/2497
  *
  * @author sergant128@mail.ru
  */
@@ -41,7 +41,7 @@ public:
       this->open( ACE_TEXT("Test module"),
                   &_writerTask,
                   &_readerTask,
-                  0,
+                  nullptr,
                   M_DELETE_NONE );
     }
 

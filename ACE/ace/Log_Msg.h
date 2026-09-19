@@ -445,11 +445,11 @@ public:
   /// Query tracing status on a per-thread basis...
   bool tracing_enabled () const;
 
-  typedef enum
+  using MASK_TYPE = enum
   {
     PROCESS = 0,
     THREAD = 1
-  } MASK_TYPE;
+  };
 
   // = Get/set the priority mask.
   /// Get the current ACE_Log_Priority mask.
@@ -663,7 +663,7 @@ private:
   /// be deleted when it reaches zero.  Since we want optional but shared
   /// ownership neither std::unique_ptr nor ACE_Strong_Bound_Ptr have the right
   /// semantics.  *Bound_Ptr also doesn't take advantage of Atomic_Op.
-  typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned long> Atomic_ULong;
+  using Atomic_ULong = ACE_Atomic_Op<ACE_MT_SYNCH::MUTEX, unsigned long>;
   Atomic_ULong *ostream_refcount_;
 
   /// The callback object.

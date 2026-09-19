@@ -10,7 +10,7 @@ deadlocks.
 
 This is part of the regression testsuite for:
 
-http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=132
+https://github.com/DOCGroup/bugzilla/issues/132
 
 To run the test use the run_test.pl script:
 

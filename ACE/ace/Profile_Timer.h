@@ -51,7 +51,7 @@ public:
     ACE_timer_t system_time;
   };
 
-  typedef ACE_Rusage Rusage;
+  using Rusage = ACE_Rusage;
 
   /// Default constructor. Clears all time values to 0.
   ACE_Profile_Timer ();

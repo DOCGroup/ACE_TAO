@@ -40,7 +40,7 @@ class ACE_MEM_IO;
 class ACE_MEM_SAP_Node
 {
 public:
-  typedef ACE_Based_Pointer<ACE_MEM_SAP_Node> ACE_MEM_SAP_NODE_PTR;
+  using ACE_MEM_SAP_NODE_PTR = ACE_Based_Pointer<ACE_MEM_SAP_Node>;
 
   /// Initialize the node with its capacity.
   ACE_MEM_SAP_Node (size_t cap);
@@ -72,8 +72,8 @@ public:
 class ACE_Export ACE_MEM_SAP
 {
 public:
-  typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> MALLOC_TYPE;
-  typedef ACE_MMAP_Memory_Pool_Options MALLOC_OPTIONS;
+  using MALLOC_TYPE = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Process_Mutex, ACE_PI_Control_Block>;
+  using MALLOC_OPTIONS = ACE_MMAP_Memory_Pool_Options;
 
   /// Destructor.
   virtual ~ACE_MEM_SAP ();

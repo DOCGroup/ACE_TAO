@@ -109,7 +109,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  ~ACE_INET_Addr ();
+  ~ACE_INET_Addr () override;
 
   // = Direct initialization methods.
 
@@ -210,11 +210,11 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
-  virtual void *get_addr () const;
+  void *get_addr () const override;
   int get_addr_size() const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (const void *, int len);
+  void set_addr (const void *, int len) override;
 
   /// Set a pointer to the address.
   virtual void set_addr (const void *, int len, int map);
@@ -375,7 +375,7 @@ public:
   bool is_ip_equal (const ACE_INET_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash () const;
+  u_long hash () const override;
 
   /// If there is another address to examine, move to it and return true;
   /// else return false.

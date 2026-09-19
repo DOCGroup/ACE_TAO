@@ -30,11 +30,11 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
                         bool substitute_env_args,
                         bool quote_args)
 {
-  if (argv == 0 || argv[0] == 0)
+  if (argv == nullptr || argv[0] == nullptr)
     return 0;
 
   int argc;
-  for (argc = 0; argv[argc] != 0; ++argc)
+  for (argc = 0; argv[argc] != nullptr; ++argc)
     continue;
 
   return argv_to_string (argc,
@@ -51,7 +51,7 @@ ACE_OS::argv_to_string (int argc,
                         bool substitute_env_args,
                         bool quote_args)
 {
-  if (argc <= 0 || argv == 0 || argv[0] == 0)
+  if (argc <= 0 || argv == nullptr || argv[0] == nullptr)
     return 0;
 
   size_t buf_len = 0;
@@ -64,7 +64,7 @@ ACE_OS::argv_to_string (int argc,
     {
       // Account for environment variables.
       if (substitute_env_args
-          && ACE_OS::strchr (argv[i], ACE_TEXT ('$')) != 0)
+          && ACE_OS::strchr (argv[i], ACE_TEXT ('$')) != nullptr)
         {
           if (argv_p == argv)
             {
@@ -73,7 +73,7 @@ ACE_OS::argv_to_string (int argc,
 #else
               argv_p = (ACE_TCHAR **) ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
 #endif /* ACE_HAS_ALLOC_HOOKS */
-              if (argv_p == 0)
+              if (argv_p == nullptr)
                 {
                   errno = ENOMEM;
                   return 0;
@@ -81,7 +81,7 @@ ACE_OS::argv_to_string (int argc,
               ACE_OS::memcpy (argv_p, argv, argc * sizeof (ACE_TCHAR *));
             }
           argv_p[i] = ACE_OS::strenvdup (argv[i]);
-          if (argv_p[i] == 0)
+          if (argv_p[i] == nullptr)
             {
 #if defined (ACE_HAS_ALLOC_HOOKS)
               ACE_Allocator::instance()->free (argv_p);
@@ -96,9 +96,9 @@ ACE_OS::argv_to_string (int argc,
       // is empty. Perhaps a check for other c | ord(c) <= 32 is in
       // order?
       if (quote_args
-          && (ACE_OS::strchr (argv_p[i], ACE_TEXT (' ')) != 0
-              || ACE_OS::strchr (argv_p[i], ACE_TEXT ('\t')) != 0
-              || ACE_OS::strchr (argv_p[i], ACE_TEXT ('\n')) != 0
+          && (ACE_OS::strchr (argv_p[i], ACE_TEXT (' ')) != nullptr
+              || ACE_OS::strchr (argv_p[i], ACE_TEXT ('\t')) != nullptr
+              || ACE_OS::strchr (argv_p[i], ACE_TEXT ('\n')) != nullptr
               || *argv_p[i] == 0))
         {
           if (argv_p == argv)
@@ -108,7 +108,7 @@ ACE_OS::argv_to_string (int argc,
 #else
               argv_p = (ACE_TCHAR **) ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
 #endif /* ACE_HAS_ALLOC_HOOKS */
-              if (argv_p == 0)
+              if (argv_p == nullptr)
                 {
                   errno = ENOMEM;
                   return 0;
@@ -117,7 +117,7 @@ ACE_OS::argv_to_string (int argc,
             }
           int quotes = 0;
           ACE_TCHAR *temp = argv_p[i];
-          if (ACE_OS::strchr (temp, ACE_TEXT ('"')) != 0)
+          if (ACE_OS::strchr (temp, ACE_TEXT ('"')) != nullptr)
             {
               for (int j = 0; temp[j] != 0; ++j)
                 if (temp[j] == ACE_TEXT ('"'))
@@ -131,7 +131,7 @@ ACE_OS::argv_to_string (int argc,
             (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (temp) + quotes + 3)
                                           * sizeof (ACE_TCHAR));
 #endif /* ACE_HAS_ALLOC_HOOKS */
-          if (argv_p[i] == 0)
+          if (argv_p[i] == nullptr)
             {
 #if defined (ACE_HAS_ALLOC_HOOKS)
               ACE_Allocator::instance()->free (argv_p);
@@ -453,7 +453,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
                 size_t *bt)
 {
   size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n = 0;
 
   for (bytes_transferred = 0;
@@ -754,7 +754,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
   // Reset the number of arguments
   argc = 0;
 
-  if (buf == 0)
+  if (buf == nullptr)
     return -1;
 
   ACE_TCHAR *cp = buf;
@@ -860,7 +860,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
       if (substitute_env_args) {
           argv[i] = ACE_OS::strenvdup (argp);
 
-          if (argv[i] == 0)
+          if (argv[i] == nullptr)
             {
               if (argp != arg)
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -876,7 +876,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
         {
           argv[i] = ACE_OS::strdup (argp);
 
-          if (argv[i] == 0)
+          if (argv[i] == nullptr)
             {
               if (argp != arg)
                 {
@@ -902,7 +902,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 #endif /* ACE_HAS_ALLOC_HOOKS */
     }
 
-  argv[argc] = 0;
+  argv[argc] = nullptr;
   return 0;
 }
 
@@ -916,7 +916,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
                  size_t *bt)
 {
   size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;

@@ -61,7 +61,7 @@ public:
    * @c this, thereby rendering the object useless after the call
    * returns.
    */
-  virtual ACE_THR_FUNC_RETURN invoke ();
+  ACE_THR_FUNC_RETURN invoke () override;
 
   /// Accessor for the optional ACE_Thread_Manager.
   ACE_Thread_Manager *thr_mgr ();
@@ -70,7 +70,7 @@ public:
 
 protected:
   /// Ensure that this object must be allocated on the heap.
-  ~ACE_Thread_Adapter ();
+  ~ACE_Thread_Adapter () override;
 
 private:
   /// Called by invoke, mainly here to separate the SEH stuff because

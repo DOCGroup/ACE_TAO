@@ -47,7 +47,7 @@ class ACE_Export ACE_Reactor_Notify : public ACE_Event_Handler
 {
 public:
   virtual int open (ACE_Reactor_Impl *,
-                    ACE_Timer_Queue *timer_queue = 0,
+                    ACE_Timer_Queue *timer_queue = nullptr,
                     int disable_notify = 0) = 0;
   virtual int close () = 0;
 
@@ -61,9 +61,9 @@ public:
    * caller will block until action is possible, else will wait until
    * the relative time specified in *@a timeout elapses).
    */
-  virtual int notify (ACE_Event_Handler *eh = 0,
+  virtual int notify (ACE_Event_Handler *eh = nullptr,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value *timeout = 0) = 0;
+                      ACE_Time_Value *timeout = nullptr) = 0;
 
   /// Handles pending threads (if any) that are waiting to unblock the
   /// Reactor_Impl.
@@ -111,7 +111,7 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
+  virtual int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
   /// Dump the state of an object.
@@ -132,10 +132,10 @@ public:
   /// Initialization.
   virtual int open (size_t size,
                     bool restart = false,
-                    ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0,
+                    ACE_Sig_Handler * = nullptr,
+                    ACE_Timer_Queue * = nullptr,
                     int disable_notify_pipe = 0,
-                    ACE_Reactor_Notify * = 0) = 0;
+                    ACE_Reactor_Notify * = nullptr) = 0;
 
   /**
    * Returns 0, if the size of the current message has been put in
@@ -186,8 +186,8 @@ public:
    * return when the system queues an I/O completion routine or an
    * Asynchronous Procedure Call.
    */
-  virtual int handle_events (ACE_Time_Value *max_wait_time = 0) = 0;
-  virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0) = 0;
+  virtual int handle_events (ACE_Time_Value *max_wait_time = nullptr) = 0;
+  virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr) = 0;
 
   /**
    * This method is just like the one above, except the
@@ -273,15 +273,15 @@ public:
    */
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
-                                ACE_Sig_Action *new_disp = 0,
-                                ACE_Event_Handler **old_sh = 0,
-                                ACE_Sig_Action *old_disp = 0) = 0;
+                                ACE_Sig_Action *new_disp = nullptr,
+                                ACE_Event_Handler **old_sh = nullptr,
+                                ACE_Sig_Action *old_disp = nullptr) = 0;
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
   virtual int register_handler (const ACE_Sig_Set &sigset,
                                 ACE_Event_Handler *new_sh,
-                                ACE_Sig_Action *new_disp = 0) = 0;
+                                ACE_Sig_Action *new_disp = nullptr) = 0;
 
   /**
    * Removes @a event_handler.  Note that the I/O handle will be
@@ -316,7 +316,7 @@ public:
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
-                              ACE_Sig_Action *old_disp = 0,
+                              ACE_Sig_Action *old_disp = nullptr,
                               int sigkey = -1) = 0;
 
   /// Calls remove_handler() for every signal in @a sigset.
@@ -410,7 +410,7 @@ public:
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,
-                            const void **arg = 0,
+                            const void **arg = nullptr,
                             int dont_call_handle_close = 1) = 0;
 
   // = High-level Event_Handler scheduling operations
@@ -441,9 +441,9 @@ public:
    * 0, the caller will block until action is possible, else will wait
    * until the relative time specified in @a timeout elapses).
    */
-  virtual int notify (ACE_Event_Handler *event_handler = 0,
+  virtual int notify (ACE_Event_Handler *event_handler = nullptr,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value * = 0) = 0;
+                      ACE_Time_Value * = nullptr) = 0;
 
   /**
    * Set the maximum number of times that ACE_Reactor_Impl will
@@ -470,7 +470,7 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
+  virtual int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
   /**
@@ -486,7 +486,7 @@ public:
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
-                       ACE_Event_Handler **event_handler = 0) = 0;
+                       ACE_Event_Handler **event_handler = nullptr) = 0;
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
@@ -494,7 +494,7 @@ public:
    * this handler if @a event_handler != 0.
    */
   virtual int handler (int signum,
-                       ACE_Event_Handler ** = 0) = 0;
+                       ACE_Event_Handler ** = nullptr) = 0;
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
@@ -511,7 +511,7 @@ public:
   virtual void wakeup_all_threads () = 0;
 
   /// Transfers ownership of Reactor_Impl to the @a new_owner.
-  virtual int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = 0) = 0;
+  virtual int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = nullptr) = 0;
 
   /// Return the ID of the "owner" thread.
   virtual int owner (ACE_thread_t *owner) = 0;

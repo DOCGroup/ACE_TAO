@@ -303,8 +303,8 @@ ACE_Flow_Spec::priority (int p)
 ACE_QoS::ACE_QoS ()
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #else
-  : sending_flowspec_ (0),
-    receiving_flowspec_ (0)
+  : sending_flowspec_ (nullptr),
+    receiving_flowspec_ (nullptr)
 #endif /* ACE_HAS_WINSOCK2 */
 {
 }

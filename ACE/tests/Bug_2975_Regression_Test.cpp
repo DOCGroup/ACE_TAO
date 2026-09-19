@@ -2,7 +2,7 @@
  * @file Bug_2975_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2975:
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2975
+ *   https://github.com/DOCGroup/bugzilla/issues/2975
  *
  * @author Pavel Zaichenko <zaichep@mail.ru>
  */
@@ -42,7 +42,7 @@ run_main (int, ACE_TCHAR *argv[])
 
   ret = ACE_Service_Config::open(args.argc(), args.argv(),
                                  ACE_DEFAULT_LOGGER_KEY,
-                                 1, 1);
+                                 true, true);
 
   if (0 != ret)
   {

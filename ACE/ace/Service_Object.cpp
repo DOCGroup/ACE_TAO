@@ -37,7 +37,7 @@ ACE_Service_Type::dump () const
                   static_cast<void const *> (this),
                   ACE_TEXT_ALWAYS_CHAR (this->name_),
                   static_cast<void const *> (this->type_),
-                  (this->type_ != 0) ? this->type_->object () : 0,
+                  (this->type_ != nullptr) ? this->type_->object () : nullptr,
                   this->active_);
 #endif
 }
@@ -46,7 +46,7 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     const ACE_DLL &dll,
                                     bool active)
-  : name_ (0),
+  : name_ (nullptr),
     type_ (t),
     dll_ (dll),
     active_ (active),
@@ -60,7 +60,7 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     ACE_SHLIB_HANDLE handle,
                                     bool active)
-  : name_ (0),
+  : name_ (nullptr),
     type_ (t),
     active_ (active),
     fini_already_called_ (false)
@@ -96,7 +96,7 @@ ACE_Service_Type::fini ()
 
   this->fini_already_called_ = true;
 
-  if (this->type_ == 0)
+  if (this->type_ == nullptr)
     {
       // Returning 1 currently only makes sense for dummy instances, used
       // to "reserve" a spot (kind of like forward-declarations) for a
@@ -110,7 +110,7 @@ ACE_Service_Type::fini ()
   int const ret = this->type_->fini ();
 
   // Ensure type is 0 to prevent invalid access after call to fini.
-  this->type_ = 0;
+  this->type_ = nullptr;
 
   // Ensure that closing the DLL is done after type_->fini() as it may
   // require access to the code for the service object destructor,

@@ -16,7 +16,7 @@ ACE_Thread_Exit::cleanup (void *instance)
 
   // Set the thr_exit_ static to null to keep things from crashing if
   // ACE::fini() is enabled here.
-  ACE_Thread_Manager::thr_exit_ = 0;
+  ACE_Thread_Manager::thr_exit_ = nullptr;
 
   ACE_Thread_Exit::is_constructed_ = false;
   // All TSS objects have been destroyed.  Reset this flag so
@@ -43,13 +43,13 @@ ACE_Thread_Exit::instance ()
       ACE_MT (ACE_Thread_Mutex *lock =
               ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
                 (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
-              ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
+              ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, nullptr));
 
       if (!ACE_Thread_Exit::is_constructed_)
         {
           ACE_NEW_RETURN (instance_,
                           ACE_TSS_TYPE (ACE_Thread_Exit),
-                          0);
+                          nullptr);
 
           ACE_Thread_Exit::is_constructed_ = true;
 
@@ -78,7 +78,7 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
 {
   ACE_OS_TRACE ("ACE_Thread_Exit::thr_mgr");
 
-  if (tm != 0)
+  if (tm != nullptr)
     this->thread_control_.insert (tm, 0);
 }
 
@@ -93,7 +93,7 @@ ACE_Thread_Exit::~ACE_Thread_Exit ()
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Exit)
 
 ACE_Thread_Exit_Maybe::ACE_Thread_Exit_Maybe (int flag)
-  : instance_ (0)
+  : instance_ (nullptr)
 {
   if (flag)
     {

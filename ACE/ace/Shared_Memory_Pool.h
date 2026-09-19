@@ -81,13 +81,13 @@ public:
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 {
 public:
-  typedef ACE_Shared_Memory_Pool_Options OPTIONS;
+  using OPTIONS = ACE_Shared_Memory_Pool_Options;
 
   /// Initialize the pool.
   ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
                           const OPTIONS *options = nullptr);
 
-  virtual ~ACE_Shared_Memory_Pool () = default;
+  ~ACE_Shared_Memory_Pool () override = default;
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
@@ -193,7 +193,7 @@ protected:
 
   /// Handle SIGSEGV and SIGBUS signals to remap shared memory
   /// properly.
-  virtual int handle_signal (int, siginfo_t *siginfo, ucontext_t *);
+  int handle_signal (int, siginfo_t *siginfo, ucontext_t *) override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

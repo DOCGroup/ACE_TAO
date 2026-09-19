@@ -35,7 +35,7 @@ class ACE_Timer_List_Iterator_T
 : public ACE_Timer_Queue_Iterator_T <TYPE>
 {
 public:
-  typedef ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> List;
+  using List = ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   /// Constructor.
   ACE_Timer_List_Iterator_T (List& lst);
 
@@ -84,15 +84,15 @@ class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_
 {
 public:
   /// Type of iterator
-  typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Iterator;
+  using Iterator = ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
   /// Iterator is a friend
   friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
-  typedef ACE_Timer_Node_T<TYPE> Node;
+  using Node = ACE_Timer_Node_T<TYPE>;
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Timer_Queue;
-  typedef ACE_Free_List<Node> FreeList;
+  using Base_Timer_Queue = ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
+  using FreeList = ACE_Free_List<Node>;
 
   /**
    * Default constructor. @a upcall_functor is the instance of the
@@ -100,7 +100,7 @@ public:
    * default FUNCTOR will be created.  @a freelist is the freelist of
    * timer nodes.  If 0, then a default freelist will be created.
    */
-  ACE_Timer_List_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = 0,
+  ACE_Timer_List_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = nullptr,
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
@@ -141,7 +141,7 @@ public:
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
-                      const void** act = 0,
+                      const void** act = nullptr,
                       int dont_call_handle_close = 1);
 
   /**

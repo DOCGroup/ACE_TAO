@@ -46,8 +46,8 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
                       ACE_mutexattr_t *arg, mode_t mode)
   :
 #ifdef ACE_MUTEX_USE_PROCESS_LOCK
-    process_lock_ (0),
-    lockname_ (0),
+    process_lock_ (nullptr),
+    lockname_ (nullptr),
 #endif /* ACE_MUTEX_USE_PROCESS_LOCK */
     removed_ (false)
 {
@@ -76,7 +76,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
               return;
             }
           this->lockname_ = ACE_OS::strdup (name);
-          if (this->lockname_ == 0)
+          if (this->lockname_ == nullptr)
             {
               ACE_OS::close (fd);
               return;
@@ -84,7 +84,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
         }
 
       this->process_lock_ =
-        (ACE_mutex_t *) ACE_OS::mmap (0,
+        (ACE_mutex_t *) ACE_OS::mmap (nullptr,
                                       sizeof (ACE_mutex_t),
                                       PROT_RDWR,
                                       MAP_SHARED,

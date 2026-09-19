@@ -84,7 +84,7 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
                     ACE_TEXT ("tcp"),
                     ACE_TEXT ("# lists all services in the daemon\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     {
       return -1;
     }
@@ -313,8 +313,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     ACE_Reactor::instance ()->uses_event_associations ();
 
   if (this->acceptor_.accept (this->client_stream_, // stream
-                              0, // remote address
-                              0, // timeout
+                              nullptr, // remote address
+                              nullptr, // timeout
                               1, // restart
                               reset_new_handle  // reset new handler
                               ) == -1)
@@ -379,8 +379,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
           offset += result;
           *offset = 0;
 
-          if (ACE_OS::strchr (request, '\r') != 0
-              || ACE_OS::strchr (request, '\n') != 0)
+          if (ACE_OS::strchr (request, '\r') != nullptr
+              || ACE_OS::strchr (request, '\n') != nullptr)
             {
               remaining = 0;
             }
@@ -404,10 +404,10 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     default:
       {
-        ACE_Event_Handler *old_signal_handler = 0;
+        ACE_Event_Handler *old_signal_handler = nullptr;
         ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                     this,
-                                                    0,
+                                                    nullptr,
                                                     &old_signal_handler);
 
         this->process_request (request);

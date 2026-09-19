@@ -133,14 +133,14 @@ private:
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
 {
 public:
-  typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
+  using OPTIONS = ACE_MMAP_Memory_Pool_Options;
 
   /// Initialize the pool.
   ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
 
   /// Destructor.
-  virtual ~ACE_MMAP_Memory_Pool ();
+  ~ACE_MMAP_Memory_Pool () override;
 
   /// Ask system for initial chunk of shared memory.
   virtual void *init_acquire (size_t nbytes,
@@ -249,7 +249,7 @@ protected:
    * update the mapping accordingly. When the signal handler returns,
    * the instruction should be restarted and the operation should work.
    */
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 #endif
 
 #if !defined (ACE_WIN32)
@@ -320,16 +320,16 @@ public:
                              const OPTIONS *options = 0);
 
   /// Destructor.
-  virtual ~ACE_Lite_MMAP_Memory_Pool ();
+  ~ACE_Lite_MMAP_Memory_Pool () override;
 
   /// Overwrite the default sync behavior with no-op
-  virtual int sync (size_t len, int flags = MS_SYNC);
+  int sync (size_t len, int flags = MS_SYNC) override;
 
   /// Overwrite the default sync behavior with no-op
-  virtual int sync (int flags = MS_SYNC);
+  int sync (int flags = MS_SYNC) override;
 
   /// Overwrite the default sync behavior with no-op
-  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
+  int sync (void *addr, size_t len, int flags = MS_SYNC) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

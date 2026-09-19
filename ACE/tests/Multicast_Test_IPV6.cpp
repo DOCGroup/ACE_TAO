@@ -461,9 +461,9 @@ public:
 
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
-            const ACE_TCHAR *net_if = 0);
+            const ACE_TCHAR *net_if = nullptr);
   int leave (const ACE_INET_Addr &mcast_addr,
-             const ACE_TCHAR *net_if = 0);
+             const ACE_TCHAR *net_if = nullptr);
 
   // = Event Handler hooks.
   int handle_input (ACE_HANDLE handle) override;
@@ -558,7 +558,7 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                       -1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
 
-  ACE_CString *str = 0;
+  ACE_CString *str = nullptr;
   ACE_NEW_RETURN (str, ACE_CString (buf), -1);
   this->address_vec_.push_back (str);
   return 0;
@@ -632,7 +632,7 @@ MCT_Event_Handler::handle_close (ACE_HANDLE /*fd*/,
   this->reactor ()->remove_handler (this,
                                     ACE_Event_Handler::ALL_EVENTS_MASK |
                                     ACE_Event_Handler::DONT_CALL);
-  this->reactor (0);
+  this->reactor (nullptr);
   delete this;
   return 0;
 }
@@ -659,7 +659,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
-  int open (void *args = 0) override;
+  int open (void *args = nullptr) override;
   int svc () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -997,7 +997,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Time_Value max_wait ( config.wait ()/* seconds */);
       ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
       ACE_Time_Value *ptime = ACE_BIT_ENABLED (role, MCT_Config::PRODUCER)
-                                ? &wait_time : 0;
+                                ? &wait_time : nullptr;
       if (ACE_Thread_Manager::instance ()->wait (ptime) == -1)
         {
           if (errno == ETIME)

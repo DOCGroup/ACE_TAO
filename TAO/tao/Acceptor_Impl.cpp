@@ -118,7 +118,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   if (f->activate_server_connections ())
     {
       // Thread-per-connection concurrency model
-      TAO_Thread_Per_Connection_Handler *tpch = 0;
+      TAO_Thread_Per_Connection_Handler *tpch = nullptr;
 
       ACE_NEW_RETURN (tpch,
                       TAO_Thread_Per_Connection_Handler (sh,
@@ -167,7 +167,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
       if (TAO_debug_level > 0)
          {
-           const ACE_TCHAR *error_message = 0;
+           const ACE_TCHAR *error_message = nullptr;
            if (f->activate_server_connections ())
              error_message = ACE_TEXT("could not activate new connection");
            else

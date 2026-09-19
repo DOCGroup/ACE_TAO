@@ -82,9 +82,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i (int signum,
   ACE_TRACE ("ACE_Select_Reactor_T::handler_i");
   ACE_Event_Handler *handler = this->signal_handler_->handler (signum);
 
-  if (handler == 0)
+  if (handler == nullptr)
     return -1;
-  else if (eh != 0)
+  else if (eh != nullptr)
     *eh = handler;
   return 0;
 }
@@ -230,7 +230,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers ()
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  ACE_Event_Handler *eh = 0;
+  ACE_Event_Handler *eh = nullptr;
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
        iter.next (eh) != 0;
@@ -248,7 +248,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers ()
   ACE_TRACE ("ACE_Select_Reactor_T::resume_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  ACE_Event_Handler *eh = 0;
+  ACE_Event_Handler *eh = nullptr;
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
        iter.next (eh) != 0;
@@ -297,7 +297,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler
   (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::find_handler");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, nullptr));
   return this->find_handler_i (handle);
 }
 
@@ -697,7 +697,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if ((this->timer_queue_ != 0) && (handler != 0))
+  if ((this->timer_queue_ != 0) && (handler != nullptr))
     return this->timer_queue_->cancel (handler, dont_call_handle_close);
   else
     return 0;
@@ -806,7 +806,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
 {
   ACE_TRACE ("ACE_Select_Reactor_T::notify_handle");
   // Check for removed handlers.
-  if (event_handler == 0)
+  if (event_handler == nullptr)
     return;
 
   bool const reference_counting_required =
@@ -888,7 +888,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
   ACE_TRACE ("ACE_Select_Reactor_T::handler_i");
   ACE_Event_Handler *event_handler = this->handler_rep_.find (handle);
 
-  if (event_handler == 0)
+  if (event_handler == nullptr)
     return -1;
   else
     {
@@ -904,7 +904,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
         return -1;
     }
 
-  if (eh != 0)
+  if (eh != nullptr)
     {
       *eh = event_handler;
       event_handler->add_reference ();
@@ -1038,7 +1038,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
 
   // Check if we have timers to fire.
   bool const timers_pending =
-    (this_timeout != 0 && *this_timeout != mwt ? true : false);
+    (this_timeout != nullptr && *this_timeout != mwt ? true : false);
 
 #ifdef ACE_WIN32
   // This arg is ignored on Windows and causes pointer truncation
@@ -1073,7 +1073,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::wait_for_multiple_events");
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout = 0;
+  ACE_Time_Value *this_timeout = nullptr;
 
   int number_of_active_handles = this->any_ready (dispatch_set);
 

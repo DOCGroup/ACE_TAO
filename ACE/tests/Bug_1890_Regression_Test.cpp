@@ -2,7 +2,7 @@
  * @file Bug_1890_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 1890
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1890
+ *   https://github.com/DOCGroup/bugzilla/issues/1890
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  * Based on a test provided by "Vadim" (no further details available)
@@ -99,7 +99,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Bug 1890 is all about ACE_Select_Reactor, so run it on that reactor
   // regardless of platform.
-  ACE_Select_Reactor *impl_ptr = 0;
+  ACE_Select_Reactor *impl_ptr = nullptr;
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
   std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
@@ -211,7 +211,7 @@ Timer::open (ACE_Reactor * r)
   ACE_Time_Value const interval(0, ACE_ONE_SECOND_IN_USECS / 10);
   ACE_Time_Value const startup (0, ACE_ONE_SECOND_IN_USECS / 20);
 
-  if (-1 == r->schedule_timer (this, 0, startup, interval))
+  if (-1 == r->schedule_timer (this, nullptr, startup, interval))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

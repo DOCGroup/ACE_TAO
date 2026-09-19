@@ -43,7 +43,7 @@ run_main (int, ACE_TCHAR *[])
 
   int result = 0;
 
-  std::unique_ptr<ACE_Reactor> reactor(new ACE_Reactor(new ACE_Select_Reactor, 1));
+  std::unique_ptr<ACE_Reactor> reactor(new ACE_Reactor(new ACE_Select_Reactor, true));
   ACE_Event_Handler_var v =
     ACE::make_event_handler<Simple_Handler> (reactor.get());
 
@@ -71,13 +71,13 @@ run_main (int, ACE_TCHAR *[])
   reactor.reset ();
 
   // Reset the reactor in the event handler, since it is gone.p
-  v->reactor(0);
+  v->reactor(nullptr);
 
   ACE_Event_Handler::Reference_Count pos_release_count =
     v->add_reference();
 
   // Only our explicit calls to add_reference() should be reflected in
-  // the refence_count...
+  // the reference_count...
   if (pos_release_count != pre_notify_count + 2)
     {
       result = -1;

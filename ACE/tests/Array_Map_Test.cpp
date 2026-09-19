@@ -337,7 +337,7 @@ class RefCounted
 {
 public:
   RefCounted ()
-    : refcount_ (0)
+    : refcount_ (nullptr)
   {
   }
 

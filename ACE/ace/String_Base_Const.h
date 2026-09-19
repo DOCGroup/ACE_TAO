@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_String_Base_Const
 {
 public:
-  typedef ACE_Allocator::size_type size_type;
+  using size_type = ACE_Allocator::size_type;
 
   /// Constant that denotes case where no such character position
   /// exists.

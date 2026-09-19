@@ -37,7 +37,7 @@ class ACE_Obstack_T
 {
 public:
   ACE_Obstack_T (size_t size = (4096 * sizeof (ACE_CHAR_T)) - sizeof (ACE_Obchunk),
-                 ACE_Allocator *allocator_strategy = 0);
+                 ACE_Allocator *allocator_strategy = nullptr);
   ~ACE_Obstack_T ();
 
   /// Request Obstack to prepare a block at least @a len long for building

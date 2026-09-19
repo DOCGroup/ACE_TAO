@@ -49,7 +49,7 @@ int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
 
-ACE_Thread_Mutex *Errno::lock_ = 0;
+ACE_Thread_Mutex *Errno::lock_ = nullptr;
 
 // This is our thread-specific error handler . . .
 // See comment below about why it's dynamically allocated.
@@ -85,7 +85,7 @@ worker (void *c)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
-  int *ip = 0;
+  int *ip = nullptr;
 
   // Make one key that will be available when the thread exits so that
   // we'll have something to cleanup!
@@ -97,7 +97,7 @@ worker (void *c)
       return (void *) -1;
     }
 
-  ACE_NEW_RETURN (ip, int, 0);
+  ACE_NEW_RETURN (ip, int, nullptr);
 
   if (ACE_Thread::setspecific (key, (void *) ip) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
@@ -112,7 +112,7 @@ worker (void *c)
           break;
         }
 
-      ACE_NEW_RETURN (ip, int, 0);
+      ACE_NEW_RETURN (ip, int, nullptr);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
                             ACE_TEXT ("key = %d, ip = %x\n"),
@@ -129,7 +129,7 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::getspecific")));
 
-      if (ACE_Thread::setspecific (key, (void *) 0) == -1)
+      if (ACE_Thread::setspecific (key, (void *) nullptr) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::setspecific")));
 
@@ -143,7 +143,7 @@ worker (void *c)
 #endif /* ACE_HAS_TSS_EMULATION */
 
       // Cause an error.
-      ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
+      ACE_OS::read (ACE_INVALID_HANDLE, nullptr, 0);
 
       // The following two lines set the thread-specific state.
       (*tss_error)->error (errno);
@@ -155,7 +155,7 @@ worker (void *c)
 
       {
         // Use the guard to serialize access
-        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, 0));
+        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, nullptr));
         ACE_TEST_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
@@ -171,7 +171,7 @@ worker (void *c)
         {
           // Use the guard to serialize access to errors.
           ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
-                                    0));
+                                    nullptr));
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
                       ACE_TEXT ("is %u, it should be 37!\n"),
@@ -222,7 +222,7 @@ worker (void *c)
 #  endif /* defined (ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_TSS_EMULATION */
     }
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */

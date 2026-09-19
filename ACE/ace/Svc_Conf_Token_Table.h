@@ -69,7 +69,7 @@ extern int ace_yydebug;
     ACE_IDENT = 270,               /* ACE_IDENT  */
     ACE_STRING = 271               /* ACE_STRING  */
   };
-  typedef enum ace_yytokentype ace_yytoken_kind_t;
+  using ace_yytoken_kind_t = enum ace_yytokentype;
 #endif
 
 /* Value type.  */

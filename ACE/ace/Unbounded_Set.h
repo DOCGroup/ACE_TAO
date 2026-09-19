@@ -44,7 +44,7 @@ class ACE_Unbounded_Set_Iterator : public
   ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
 {
 public:
-  typedef ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> > base_type;
+  using base_type = ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
 
   ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, bool end = false);
 
@@ -60,7 +60,7 @@ class ACE_Unbounded_Set_Const_Iterator : public
   ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
 {
 public:
-  typedef ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> > base_type;
+  using base_type = ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
 
   ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
                                     bool end = false);

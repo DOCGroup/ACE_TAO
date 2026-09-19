@@ -55,7 +55,7 @@ TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone ()
   typename ARRAY_TRAITS::slice_type * tmp_ptr = 0;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
-                        0);
+                        nullptr);
   ARRAY_TRAITS::copy(tmp_ptr, this->x_.in ());
 
   In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>* clone_arg

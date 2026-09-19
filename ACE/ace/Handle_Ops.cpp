@@ -16,7 +16,7 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
 {
   ACE_TRACE ("ACE::handle_timed_open");
 
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
 #if !defined (ACE_WIN32)
       // On Win32, ACE_NONBLOCK gets recognized as O_WRONLY so we

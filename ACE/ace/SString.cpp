@@ -275,7 +275,7 @@ ACE_SString::ACE_SString (const char *s,
   if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (s == 0)
+  if (s == nullptr)
     {
       this->len_ = 0;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);

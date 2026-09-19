@@ -40,10 +40,10 @@ public:
   ACE_Framework_Component_T (Concrete *concrete);
 
   /// Destructor.
-  ~ACE_Framework_Component_T ();
+  ~ACE_Framework_Component_T () override;
 
   /// Close the contained singleton.
-  void close_singleton ();
+  void close_singleton () override;
 
   ACE_ALLOC_HOOK_DECLARE;
 };

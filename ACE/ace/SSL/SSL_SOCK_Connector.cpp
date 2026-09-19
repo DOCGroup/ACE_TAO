@@ -28,7 +28,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                                      const ACE_Time_Value *timeout)
 {
   SSL *ssl = new_stream.ssl ();
-  if (ssl == 0)
+  if (ssl == nullptr)
     return -1;
 
   if (SSL_is_init_finished (ssl))
@@ -50,7 +50,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   // status; we'll block in SSL_connect if the socket is blocking, and
   // block in ACE::select if not.
   int reset_blocking_mode = 0;
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
                                               ACE_NONBLOCK);
@@ -63,11 +63,11 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
     }
 
   ACE_Time_Value t;
-  if (timeout != 0)
+  if (timeout != nullptr)
     t = *timeout;   // Need a non-const copy.
 
   // Take into account the time between each select() call below.
-  ACE_Countdown_Time countdown ((timeout == 0 ? 0 : &t));
+  ACE_Countdown_Time countdown ((timeout == nullptr ? nullptr : &t));
 
   int status;
 
@@ -152,11 +152,15 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
           // Block indefinitely if timeout pointer is zero.
-          status = ACE::select (int (handle) + 1,
+          int select_width = 0;
+#if !defined (ACE_WIN32)
+          select_width = handle + 1;
+#endif /* ACE_WIN32 */
+          status = ACE::select (select_width,
                                 &rd_handle,
                                 &wr_handle,
-                                0,
-                                (timeout == 0 ? 0 : &t));
+                                nullptr,
+                                (timeout == nullptr ? nullptr : &t));
 
           (void) countdown.update ();
 
@@ -199,7 +203,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // and the SSL handshake.
   ACE_Time_Value time_copy;
   ACE_Countdown_Time countdown (&time_copy);
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       time_copy += *timeout;
       countdown.start ();
@@ -235,7 +239,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
   // ssl_connect to bound the time on the handshake.
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       countdown.update ();
       timeout = &time_copy;
@@ -267,7 +271,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // and the SSL handshake.
   ACE_Time_Value time_copy;
   ACE_Countdown_Time countdown (&time_copy);
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       time_copy += *timeout;
       countdown.start ();
@@ -305,7 +309,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
   // ssl_connect to bound the time on the handshake.
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       countdown.update ();
       timeout = &time_copy;
@@ -332,7 +336,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   // and the SSL handshake.
   ACE_Time_Value time_copy;
   ACE_Countdown_Time countdown (&time_copy);
-  if (tv != 0)
+  if (tv != nullptr)
     {
       time_copy += *tv;
       countdown.start ();
@@ -353,7 +357,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
   // ssl_connect to bound the time on the handshake.
-  if (tv != 0)
+  if (tv != nullptr)
     {
       countdown.update ();
       tv = &time_copy;

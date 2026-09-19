@@ -50,7 +50,7 @@ public:
   explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
 
   /// Default dtor.
-  ~ACE_MEM_Addr () = default;
+  ~ACE_MEM_Addr () override = default;
 
   // = Direct initialization methods.
 
@@ -75,10 +75,10 @@ public:
   int set (const ACE_TCHAR port_name[]);
 
   /// Return a pointer to the underlying network address.
-  virtual void *get_addr () const;
+  void *get_addr () const override;
 
   /// Set a pointer to the address.
-  virtual void set_addr (const void *, int len);
+  void set_addr (const void *, int len) override;
 
   /// Transform the external ACE_MEM_Addr address into string
   /// format.
@@ -141,7 +141,7 @@ public:
   bool operator != (const ACE_INET_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash () const;
+  u_long hash () const override;
 
   /// Dump the state of an object.
   void dump () const;

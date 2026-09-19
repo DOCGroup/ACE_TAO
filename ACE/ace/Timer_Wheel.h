@@ -25,16 +25,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // The following typedefs are here for ease of use and backward
 // compatibility.
 
-typedef ACE_Timer_Wheel_T<ACE_Event_Handler *,
-                         ACE_Event_Handler_Handle_Timeout_Upcall,
-                         ACE_SYNCH_RECURSIVE_MUTEX>
-        ACE_Timer_Wheel;
+using ACE_Timer_Wheel = ACE_Timer_Wheel_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
-typedef ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *,
-                                   ACE_Event_Handler_Handle_Timeout_Upcall,
-                                   ACE_SYNCH_RECURSIVE_MUTEX,
-                                   ACE_Default_Time_Policy>
-        ACE_Timer_Wheel_Iterator;
+using ACE_Timer_Wheel_Iterator = ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_Default_Time_Policy>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

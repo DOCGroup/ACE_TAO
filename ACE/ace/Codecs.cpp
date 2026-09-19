@@ -44,9 +44,9 @@ ACE_Base64::encode (const ACE_Byte* input,
     ACE_Base64::init();
 
   if (!input)
-    return 0;
+    return nullptr;
 
-  ACE_Byte* result = 0;
+  ACE_Byte* result = nullptr;
 
   size_t length = ((input_len + 2) / 3) * 4;
   size_t num_lines = length / max_columns + 1;
@@ -54,7 +54,7 @@ ACE_Base64::encode (const ACE_Byte* input,
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (result, static_cast<ACE_Byte*> (ACE_Allocator::instance()->malloc(sizeof (ACE_Byte) * length)), 0);
 #else
-  ACE_NEW_RETURN (result, ACE_Byte[length], 0);
+  ACE_NEW_RETURN (result, ACE_Byte[length], nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   int char_count = 0;
@@ -139,15 +139,15 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
     ACE_Base64::init();
 
   if (!input)
-    return 0;
+    return nullptr;
 
   size_t result_len = ACE_Base64::length (input);
-  ACE_Byte* result = 0;
+  ACE_Byte* result = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (result, static_cast<ACE_Byte*> (ACE_Allocator::instance()->malloc(sizeof (ACE_Byte) * result_len)), 0);
 #else
-  ACE_NEW_RETURN (result, ACE_Byte[result_len], 0);
+  ACE_NEW_RETURN (result, ACE_Byte[result_len], nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   ACE_Byte* ptr = const_cast<ACE_Byte*> (input);
@@ -222,7 +222,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
 #else
       delete[] result;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      return 0;
+      return nullptr;
     }
   result[pos] = 0;
   *output_len = pos;

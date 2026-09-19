@@ -62,13 +62,13 @@ LPTOP_LEVEL_EXCEPTION_FILTER WINAPI ACEdisableSetUnhandledExceptionFilter (
 #endif // ACE_DISABLE_WIN32_ERROR_WINDOWS
 
 // Singleton pointer.
-ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
+ACE_Object_Manager *ACE_Object_Manager::instance_ = nullptr;
 
 void *ACE_Object_Manager::preallocated_object[
-  ACE_Object_Manager::ACE_PREALLOCATED_OBJECTS] = { 0 };
+  ACE_Object_Manager::ACE_PREALLOCATED_OBJECTS] = { nullptr };
 
 void *ACE_Object_Manager::preallocated_array[
-  ACE_Object_Manager::ACE_PREALLOCATED_ARRAYS] = { 0 };
+  ACE_Object_Manager::ACE_PREALLOCATED_ARRAYS] = { nullptr };
 
 // Handy macros for use by ACE_Object_Manager constructor to
 // preallocate or delete an object or array, either statically (in
@@ -150,16 +150,16 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Object_Manager_Preallocations)
 
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
-int
+bool
 ACE_Object_Manager::starting_up ()
 {
-  return ACE_Object_Manager::instance_  ?  instance_->starting_up_i ()  :  1;
+  return ACE_Object_Manager::instance_ ? instance_->starting_up_i () : true;
 }
 
-int
+bool
 ACE_Object_Manager::shutting_down ()
 {
-  return ACE_Object_Manager::instance_  ?  instance_->shutting_down_i ()  :  1;
+  return ACE_Object_Manager::instance_ ? instance_->shutting_down_i () : true;
 }
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
@@ -324,7 +324,7 @@ ACE_Object_Manager::init ()
 #     endif /* ! ACE_LACKS_ACE_SVCCONF */
 
           // Open the main thread's ACE_Log_Msg.
-          if (0 == ACE_LOG_MSG)
+          if (nullptr == ACE_LOG_MSG)
             return -1;
         }
 
@@ -373,12 +373,12 @@ ACE_Object_Manager::ACE_Object_Manager ()
   // ACE_OS::tss_open () in the function body.
   : exit_info_ ()
 #if !defined (ACE_LACKS_ACE_SVCCONF)
-  , preallocations_ (0)
-  , ace_service_config_sig_handler_ (0)
+  , preallocations_ (nullptr)
+  , ace_service_config_sig_handler_ (nullptr)
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  , singleton_null_lock_ (0)
-  , singleton_recursive_lock_ (0)
+  , singleton_null_lock_ (nullptr)
+  , singleton_recursive_lock_ (nullptr)
 #endif /* ACE_MT_SAFE */
 #if defined (ACE_HAS_TSS_EMULATION)
   , ts_storage_initialized_ (false)
@@ -398,7 +398,7 @@ ACE_Object_Manager::ACE_Object_Manager ()
   // from calls to ACE_Object_Manager::instance().
 
   // Be sure that no further instances are created via instance ().
-  if (instance_ == 0)
+  if (instance_ == nullptr)
     instance_ = this;
 
   init ();
@@ -419,13 +419,13 @@ ACE_Object_Manager::instance ()
   // instances, or before any other threads have been created in
   // the process.  So, it's not thread safe.
 
-  if (instance_ == 0)
+  if (instance_ == nullptr)
     {
-      ACE_Object_Manager *instance_pointer = 0;
+      ACE_Object_Manager *instance_pointer = nullptr;
 
       ACE_NEW_RETURN (instance_pointer,
                       ACE_Object_Manager,
-                      0);
+                      nullptr);
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = true;
@@ -489,7 +489,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Null_Mutex *&lock)
       // preallocated lock is not available.  Allocate a lock to use,
       // for interface compatibility, though there should be no
       // contention on it.
-      if (ACE_Object_Manager::instance ()->singleton_null_lock_ == 0)
+      if (ACE_Object_Manager::instance ()->singleton_null_lock_ == nullptr)
         {
           ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
                             singleton_null_lock_,
@@ -501,7 +501,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Null_Mutex *&lock)
           // destructor, so it will clean it up as a special case.
         }
 
-      if (ACE_Object_Manager::instance ()->singleton_null_lock_ != 0)
+      if (ACE_Object_Manager::instance ()->singleton_null_lock_ != nullptr)
         lock = &ACE_Object_Manager::instance ()->singleton_null_lock_->
           object ();
     }
@@ -516,7 +516,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Null_Mutex *&lock)
 int
 ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 {
-  if (lock == 0)
+  if (lock == nullptr)
     {
       if (starting_up () || shutting_down ())
         {
@@ -540,9 +540,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
                                     internal_lock_,
                                     -1));
 
-          if (lock == 0)
+          if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = 0;
+              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = nullptr;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
                               -1);
@@ -553,7 +553,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
               // ACE_Object_Manager::instance ()->internal_lock_
               // again; that's why it is a recursive lock.
               ACE_Object_Manager::at_exit (lock_adapter,
-                                           0,
+                                           nullptr,
                                            typeid (*lock_adapter).name ());
             }
         }
@@ -565,7 +565,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 int
 ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
 {
-  if (lock == 0)
+  if (lock == nullptr)
     {
       if (starting_up ()  ||  shutting_down ())
         {
@@ -590,9 +590,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
                                       internal_lock_,
                                     -1));
 
-          if (lock == 0)
+          if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter = 0;
+              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter = nullptr;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Mutex>,
                               -1);
@@ -621,7 +621,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex *&lock)
       // preallocated lock is not available.  Allocate a lock to use,
       // for interface compatibility, though there should be no
       // contention on it.
-      if (ACE_Object_Manager::instance ()->singleton_recursive_lock_ == 0)
+      if (ACE_Object_Manager::instance ()->singleton_recursive_lock_ == nullptr)
         ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
                           singleton_recursive_lock_,
                         ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
@@ -631,7 +631,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex *&lock)
       // declaration is visible to the ACE_Object_Manager destructor,
       // so it will clean it up as a special case.
 
-      if (ACE_Object_Manager::instance ()->singleton_recursive_lock_ != 0)
+      if (ACE_Object_Manager::instance ()->singleton_recursive_lock_ != nullptr)
         lock = &ACE_Object_Manager::instance ()->singleton_recursive_lock_->
           object ();
     }
@@ -649,7 +649,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex *&lock)
 int
 ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 {
-  if (lock == 0)
+  if (lock == nullptr)
     {
       if (starting_up () || shutting_down ())
         {
@@ -674,9 +674,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
                                     internal_lock_,
                                     -1));
 
-          if (lock == 0)
+          if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter = 0;
+              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter = nullptr;
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex>,
                               -1);
@@ -724,7 +724,7 @@ ACE_Object_Manager::fini ()
     {
 #if !defined (ACE_LACKS_ACE_SVCCONF)
       delete preallocations_;
-      preallocations_ = 0;
+      preallocations_ = nullptr;
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 #if defined (ACE_HAS_TRACE)
@@ -804,18 +804,18 @@ ACE_Object_Manager::fini ()
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
   delete ace_service_config_sig_handler_;
-  ace_service_config_sig_handler_ = 0;
+  ace_service_config_sig_handler_ = nullptr;
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   delete internal_lock_;
-  internal_lock_ = 0;
+  internal_lock_ = nullptr;
 
   delete singleton_null_lock_;
-  singleton_null_lock_ = 0;
+  singleton_null_lock_ = nullptr;
 
   delete singleton_recursive_lock_;
-  singleton_recursive_lock_ = 0;
+  singleton_recursive_lock_ = nullptr;
 #endif /* ACE_MT_SAFE */
 
   // Indicate that this ACE_Object_Manager instance has been shut down.
@@ -831,7 +831,7 @@ ACE_Object_Manager::fini ()
     }
 
   if (this == instance_)
-    instance_ = 0;
+    instance_ = nullptr;
 
   return 0;
 }
@@ -875,7 +875,7 @@ ACE_Object_Manager_Manager::~ACE_Object_Manager_Manager ()
                          saved_main_thread_id_))
     {
       delete ACE_Object_Manager::instance_;
-      ACE_Object_Manager::instance_ = 0;
+      ACE_Object_Manager::instance_ = nullptr;
     }
   // else if this destructor is not called by the main thread, then do
   // not delete the ACE_Object_Manager.  That causes problems, on
@@ -890,7 +890,7 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 // This is global so that it doesn't have to be declared in the header
 // file.  That would cause nasty circular include problems.
 using ACE_Static_Object_Lock_Type = ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
-static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
+static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = nullptr;
 
 // ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
 // But, applications may find it useful for avoiding recursive calls
@@ -909,16 +909,16 @@ ACE_Static_Object_Lock::instance ()
       // destroyed, so the preallocated lock is not available.
       // Allocate a lock to use, for interface compatibility, though
       // there should be no contention on it.
-      if (ACE_Static_Object_Lock_lock == 0)
+      if (ACE_Static_Object_Lock_lock == nullptr)
         {
 #     if defined (ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
         // Allocate a buffer with malloc, and then use placement
         // new for the object, on the malloc'd buffer.
         void *buffer =
           ACE_OS::malloc (sizeof (*ACE_Static_Object_Lock_lock));
-        if (buffer == 0)
+        if (buffer == nullptr)
           {
-            return 0;
+            return nullptr;
           }
         // do not use ACE_NEW macros for placement new
         ACE_Static_Object_Lock_lock = new (buffer)
@@ -927,7 +927,7 @@ ACE_Static_Object_Lock::instance ()
 #       else   /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
         ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
                         ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
-                        0);
+                        nullptr);
 #       endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
         }
 
@@ -956,7 +956,7 @@ ACE_Static_Object_Lock::cleanup_lock ()
 # else  /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
     delete ACE_Static_Object_Lock_lock;
 # endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
-    ACE_Static_Object_Lock_lock = 0;
+    ACE_Static_Object_Lock_lock = nullptr;
 }
 #endif /* ACE_HAS_THREADS */
 

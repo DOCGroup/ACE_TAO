@@ -48,7 +48,7 @@ public:
   ACE_Asynch_Acceptor ();
 
   /// Virtual destruction
-  virtual ~ACE_Asynch_Acceptor ();
+  ~ACE_Asynch_Acceptor () override;
 
   /**
    * @c open starts one or more asynchronous accept requests on a
@@ -211,12 +211,12 @@ public:
 
 protected:
   /// This is called when an outstanding accept completes.
-  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
+  void handle_accept (const ACE_Asynch_Accept::Result &result) override;
 
   /// Return the listen handle.
-  ACE_HANDLE handle () const;
+  ACE_HANDLE handle () const override;
   /// Set the listen handle.
-  void handle (ACE_HANDLE h);
+  void handle (ACE_HANDLE h) override;
 
   /// This parses the address from read buffer.
   void parse_address (const ACE_Asynch_Accept::Result &result,

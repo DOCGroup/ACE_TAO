@@ -108,13 +108,13 @@ ACE_Obstack_T<ACE_CHAR_T>::new_chunk ()
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::new_chunk");
 
-  ACE_Obchunk *temp = 0;
+  ACE_Obchunk *temp = nullptr;
 
   ACE_NEW_MALLOC_RETURN (temp,
                          static_cast<ACE_Obchunk *> (this->allocator_strategy_->malloc
                              (sizeof (class ACE_Obchunk) + this->size_)),
                          ACE_Obchunk (this->size_),
-                         0);
+                         nullptr);
   return temp;
 }
 
@@ -123,8 +123,8 @@ ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack_T (size_t size,
                                           ACE_Allocator *allocator_strategy)
   : allocator_strategy_ (allocator_strategy),
     size_ (size),
-    head_ (0),
-    curr_ (0)
+    head_ (nullptr),
+    curr_ (nullptr)
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack");
 
@@ -143,10 +143,10 @@ ACE_Obstack_T<ACE_CHAR_T>::~ACE_Obstack_T ()
 
   ACE_Obchunk *temp = this->head_;
 
-  while (temp != 0)
+  while (temp != nullptr)
     {
       ACE_Obchunk *next = temp->next_;
-      temp->next_  = 0;
+      temp->next_  = nullptr;
       this->allocator_strategy_->free (temp);
       temp = next;
     }
@@ -180,14 +180,14 @@ template <class ACE_CHAR_T> void
 ACE_Obstack_T<ACE_CHAR_T>::unwind_i (void* obj)
 {
   ACE_Obchunk* curr = this->head_;
-  while (curr != 0 && (curr->contents_ > obj || curr->end_ < obj))
+  while (curr != nullptr && (curr->contents_ > obj || curr->end_ < obj))
       curr = curr->next_;
   if (curr)
     {
       this->curr_ = curr;
       this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
     }
-  else if (obj != 0)
+  else if (obj != nullptr)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("Deletion of non-existent object.\n%a")));
 }

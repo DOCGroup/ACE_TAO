@@ -39,7 +39,7 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
                                   bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::find_i");
-  const ACE_Service_Type *svc_rec = 0;
+  const ACE_Service_Type *svc_rec = nullptr;
 
   ACE_Service_Gestalt* global = ACE_Service_Config::global ();
 
@@ -62,21 +62,21 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
 
-  void *obj = 0;
-  const ACE_Service_Type_Impl *type = 0;
+  void *obj = nullptr;
+  const ACE_Service_Type_Impl *type = nullptr;
 
   const ACE_Service_Gestalt* repo_found = repo;
   const ACE_Service_Type *svc_rec = find_i (repo_found, name, no_global);
-  if (svc_rec != 0)
+  if (svc_rec != nullptr)
     {
       type = svc_rec->type ();
-      if (type != 0)
+      if (type != nullptr)
         obj = type->object ();
     }
 
   if (ACE::debug ())
     {
-      ACE_GUARD_RETURN (ACE_Log_Msg, log_guard, *ACE_Log_Msg::instance (), 0);
+      ACE_GUARD_RETURN (ACE_Log_Msg, log_guard, *ACE_Log_Msg::instance (), nullptr);
 
       if (repo->repo_ != repo_found->repo_)
         {

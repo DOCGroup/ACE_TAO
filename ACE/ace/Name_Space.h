@@ -24,7 +24,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
+using ACE_WSTRING_SET = ACE_Unbounded_Set<ACE_NS_WString>;
 
 /**
  * @class ACE_Name_Binding
@@ -64,11 +64,11 @@ public:
   char *type_;
 };
 
-typedef ACE_Unbounded_Set<ACE_Name_Binding> ACE_BINDING_SET;
-typedef ACE_Unbounded_Set_Iterator<ACE_Name_Binding> ACE_BINDING_ITERATOR;
+using ACE_BINDING_SET = ACE_Unbounded_Set<ACE_Name_Binding>;
+using ACE_BINDING_ITERATOR = ACE_Unbounded_Set_Iterator<ACE_Name_Binding>;
 
-typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_PWSTRING_SET;
-typedef ACE_Unbounded_Set_Iterator<ACE_NS_WString> ACE_PWSTRING_ITERATOR;
+using ACE_PWSTRING_SET = ACE_Unbounded_Set<ACE_NS_WString>;
+using ACE_PWSTRING_ITERATOR = ACE_Unbounded_Set_Iterator<ACE_NS_WString>;
 
 /**
  * @class ACE_Name_Space

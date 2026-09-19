@@ -250,7 +250,7 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        if ((result = reactor->cancel_timer (timer_id, 0, 0)) != 1)
+        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
                       result));
@@ -311,7 +311,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("register pipe handler read")));
       else
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler->pipe_.read_handle (),
@@ -331,7 +331,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       }
 
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler->pipe_.read_handle (),
@@ -398,7 +398,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        if ((result = reactor->cancel_timer (timer_id, 0, 0)) != 1)
+        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
                       result));
@@ -446,7 +446,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
 void
 reference_count_1 (ACE_Reactor_Impl *impl)
 {
-  ACE_Reactor reactor (impl, 1);
+  ACE_Reactor reactor (impl, true);
 
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting Reference Counted Event Handler Test 1....\n\n"));
@@ -457,7 +457,7 @@ reference_count_1 (ACE_Reactor_Impl *impl)
 void
 reference_count_2 (ACE_Reactor_Impl *impl)
 {
-  ACE_Reactor reactor (impl, 1);
+  ACE_Reactor reactor (impl, true);
 
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting Reference Counted Event Handler Test 2....\n\n"));
@@ -616,7 +616,7 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("register pipe handler read")));
       else
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler.pipe_.read_handle (),
@@ -635,7 +635,7 @@ simple_event_handler (ACE_Reactor *reactor)
       }
 
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler.pipe_.read_handle (),
@@ -707,7 +707,7 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        if ((result = reactor->cancel_timer (timer_id, 0, 0)) != 1)
+        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
                       result));
@@ -754,7 +754,7 @@ simple_event_handler (ACE_Reactor *reactor)
 void
 simple (ACE_Reactor_Impl *impl)
 {
-  ACE_Reactor reactor (impl, 1);
+  ACE_Reactor reactor (impl, true);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nTesting Simple Event Handler....\n\n")));
 
@@ -885,7 +885,7 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
 
   if (test_io)
     {
-      Closed_In_Upcall_Event_Handler *handler = 0;
+      Closed_In_Upcall_Event_Handler *handler = nullptr;
       ACE_NEW (handler, Closed_In_Upcall_Event_Handler (events));
 
       ACE_Event_Handler_var safe_handler (handler);
@@ -921,7 +921,7 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
 void
 closed_in_upcall (ACE_Reactor_Impl *impl)
 {
-  ACE_Reactor reactor (impl, 1);
+  ACE_Reactor reactor (impl, true);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nTesting Closed in Upcall Event Handler....\n\n")));

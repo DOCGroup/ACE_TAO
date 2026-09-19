@@ -222,7 +222,7 @@ namespace ACE_Utils
 
     /// Type to represent UTC as a count of 100 nanosecond intervals
     /// since 00:00:00.00, 15 October 1582.
-    typedef ACE_UINT64 UUID_Time;
+    using UUID_Time = ACE_UINT64;
 
     /// The locking strategy prevents multiple generators from accessing
     /// the UUID_state at the same time. Get the locking strategy.
@@ -275,7 +275,7 @@ ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX
 
 namespace ACE_Utils
 {
-  typedef ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
+  using UUID_GENERATOR = ACE_Singleton<ACE_Utils::UUID_Generator, ACE_MT_SYNCH::MUTEX>;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

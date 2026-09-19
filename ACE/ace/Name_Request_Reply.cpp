@@ -33,7 +33,7 @@ ACE_Name_Request::ACE_Name_Request (
   this->type_len (type_length);
 
   // If timeout is a NULL pointer, then block forever...
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       this->transfer_.block_forever_ = 1;
       this->transfer_.sec_timeout_   = 0;

@@ -148,7 +148,7 @@ protected:
 class ACE_Asynch_Read_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Stream_Impl () = default;
+  ~ACE_Asynch_Read_Stream_Impl () override = default;
 
   /// This starts off an asynchronous read. Upto @a bytes_to_read will
   /// be read and stored in the @a message_block.
@@ -184,7 +184,7 @@ protected:
 class ACE_Asynch_Read_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Stream_Result_Impl () = default;
+  ~ACE_Asynch_Read_Stream_Result_Impl () override = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
@@ -210,7 +210,7 @@ protected:
 class ACE_Asynch_Write_Stream_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Stream_Impl () = default;
+  ~ACE_Asynch_Write_Stream_Impl () override = default;
 
   /// This starts off an asynchronous write.  Upto @a bytes_to_write
   /// will be written from the @a message_block.
@@ -246,7 +246,7 @@ protected:
 class ACE_Asynch_Write_Stream_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Stream_Result_Impl () = default;
+  ~ACE_Asynch_Write_Stream_Result_Impl () override = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -272,7 +272,7 @@ protected:
 class ACE_Asynch_Read_File_Impl : public virtual ACE_Asynch_Read_Stream_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_File_Impl () = default;
+  ~ACE_Asynch_Read_File_Impl () override = default;
 
   /**
    * This starts off an asynchronous read.  Upto @a bytes_to_read will
@@ -305,22 +305,22 @@ public:
 
   /// This starts off an asynchronous read. Upto @a bytes_to_read will
   /// be read and stored in the @a message_block.
-  virtual int read (ACE_Message_Block &message_block,
-                    size_t bytes_to_read,
-                    const void *act,
-                    int priority,
-                    int signal_number) = 0;
+  int read (ACE_Message_Block &message_block,
+            size_t bytes_to_read,
+            const void *act,
+            int priority,
+            int signal_number) override = 0;
 
 #if defined (ACE_WIN32)
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
   */
-  virtual int readv (ACE_Message_Block &message_block,
-                     size_t bytes_to_read,
-                     const void *act,
-                     int priority,
-                     int signal_number) = 0;
+  int readv (ACE_Message_Block &message_block,
+             size_t bytes_to_read,
+             const void *act,
+             int priority,
+             int signal_number) override = 0;
 #endif /* defined (ACE_WIN32) */
 
 protected:
@@ -337,7 +337,7 @@ class ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Read_Stream_R
 {
 public:
   /// Destructor.
-  virtual ~ACE_Asynch_Read_File_Result_Impl () = default;
+  ~ACE_Asynch_Read_File_Result_Impl () override = default;
 
 protected:
   ACE_Asynch_Read_File_Result_Impl () = default;
@@ -353,7 +353,7 @@ protected:
 class ACE_Asynch_Write_File_Impl : public virtual ACE_Asynch_Write_Stream_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_File_Impl () = default;
+  ~ACE_Asynch_Write_File_Impl () override = default;
 
   /**
    * This starts off an asynchronous write.  Upto @a bytes_to_write
@@ -386,22 +386,22 @@ public:
 
   /// This starts off an asynchronous write.  Upto @a bytes_to_write
   /// will be written from the @a message_block.
-  virtual int write (ACE_Message_Block &message_block,
-                     size_t bytes_to_write,
-                     const void *act,
-                     int priority,
-                     int signal_number) = 0;
+  int write (ACE_Message_Block &message_block,
+             size_t bytes_to_write,
+             const void *act,
+             int priority,
+             int signal_number) override = 0;
 
 #if defined (ACE_WIN32)
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
   */
-  virtual int writev (ACE_Message_Block &message_block,
-                      size_t bytes_to_write,
-                      const void *act,
-                      int priority,
-                      int signal_number) = 0;
+  int writev (ACE_Message_Block &message_block,
+              size_t bytes_to_write,
+              const void *act,
+              int priority,
+              int signal_number) override = 0;
 #endif /* defined (ACE_WIN32) */
 
 protected:
@@ -418,7 +418,7 @@ protected:
 class ACE_Asynch_Write_File_Result_Impl : public virtual ACE_Asynch_Write_Stream_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_File_Result_Impl () = default;
+  ~ACE_Asynch_Write_File_Result_Impl () override = default;
 
 protected:
   ACE_Asynch_Write_File_Result_Impl () = default;
@@ -434,7 +434,7 @@ protected:
 class ACE_Asynch_Accept_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Accept_Impl () = default;
+  ~ACE_Asynch_Accept_Impl () override = default;
 
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
@@ -469,7 +469,7 @@ protected:
 class ACE_Asynch_Accept_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Accept_Result_Impl () = default;
+  ~ACE_Asynch_Accept_Result_Impl () override = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous accept.
@@ -499,7 +499,7 @@ protected:
 class ACE_Asynch_Connect_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Connect_Impl () = default;
+  ~ACE_Asynch_Connect_Impl () override = default;
 
   /**
    * This starts off an asynchronous connect
@@ -526,7 +526,7 @@ protected:
 class ACE_Asynch_Connect_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Connect_Result_Impl () = default;
+  ~ACE_Asynch_Connect_Result_Impl () override = default;
 
   /// I/O handle for the connection.
   virtual ACE_HANDLE connect_handle () const = 0;
@@ -546,7 +546,7 @@ protected:
 class ACE_Asynch_Transmit_File_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Transmit_File_Impl () = default;
+  ~ACE_Asynch_Transmit_File_Impl () override = default;
 
   /// This starts off an asynchronous transmit file.
   virtual int transmit_file (ACE_HANDLE file,
@@ -574,7 +574,7 @@ protected:
 class ACE_Asynch_Transmit_File_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Transmit_File_Result_Impl () = default;
+  ~ACE_Asynch_Transmit_File_Result_Impl () override = default;
 
   /// Socket used for transmitting the file.
   virtual ACE_HANDLE socket () const = 0;
@@ -611,7 +611,7 @@ protected:
 class ACE_Asynch_Read_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Dgram_Impl () = default;
+  ~ACE_Asynch_Read_Dgram_Impl () override = default;
 
   /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
@@ -661,7 +661,7 @@ protected:
 class ACE_Asynch_Read_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Read_Dgram_Result_Impl () = default;
+  ~ACE_Asynch_Read_Dgram_Result_Impl () override = default;
 
   /// Message block which contains the read data
   virtual ACE_Message_Block *message_block () const = 0;
@@ -693,7 +693,7 @@ protected:
 class ACE_Asynch_Write_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Dgram_Impl () = default;
+  ~ACE_Asynch_Write_Dgram_Impl () override = default;
 
   /** This starts off an asynchronous send.  Upto
    * <message_block->total_length()> will be sent.  @a message_block's
@@ -743,7 +743,7 @@ protected:
 class ACE_Asynch_Write_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
 {
 public:
-  virtual ~ACE_Asynch_Write_Dgram_Result_Impl () = default;
+  ~ACE_Asynch_Write_Dgram_Result_Impl () override = default;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.

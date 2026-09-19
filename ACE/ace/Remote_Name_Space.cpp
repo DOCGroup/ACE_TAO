@@ -89,7 +89,7 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
   ACE_Name_Request request (ACE_Name_Request::RESOLVE,
                             name_urep.get (),
                             name_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
@@ -123,7 +123,7 @@ ACE_Remote_Name_Space::unbind (const ACE_NS_WString &name)
   ACE_Name_Request request (ACE_Name_Request::UNBIND,
                             name_urep.get (),
                             name_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
   return this->ns_proxy_.request_reply (request);
 }
 
@@ -137,11 +137,11 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
   ACE_Name_Request request (ACE_Name_Request::LIST_NAMES,
                             pattern_urep.get (),
                             pattern_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
 
-  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -170,11 +170,11 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUES,
                             pattern_urep.get (),
                             pattern_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
 
-  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -204,12 +204,12 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPES,
                             pattern_urep.get (),
                             pattern_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
 
-  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -238,12 +238,12 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
   ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES,
                             pattern_urep.get (),
                             pattern_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
 
-  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -278,12 +278,12 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES,
                             pattern_urep.get (),
                             pattern_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
 
-  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -318,12 +318,12 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES,
                             pattern_urep.get (),
                             pattern_len,
-                            0, 0, 0, 0);
+                            nullptr, 0, nullptr, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
 
-  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_Name_Request reply (0, nullptr, 0, nullptr, 0, nullptr, 0, nullptr);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {

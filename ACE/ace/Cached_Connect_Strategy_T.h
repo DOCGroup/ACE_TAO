@@ -74,30 +74,15 @@ public:
   void cleanup ();
 
   // = Typedefs for managing the map
-  typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
-          REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
- typedef ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
-                                    SVC_HANDLER *,
-                                    ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                    ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                    CACHING_STRATEGY,
-                                    ATTRIBUTES>
-          CONNECTION_CACHE;
-  typedef typename CONNECTION_CACHE::CACHE_ENTRY CONNECTION_CACHE_ENTRY;
-  typedef typename CONNECTION_CACHE::key_type KEY;
-  typedef typename CONNECTION_CACHE::mapped_type VALUE;
+  using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
+ using CONNECTION_CACHE = ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, CACHING_STRATEGY, ATTRIBUTES>;
+  using CONNECTION_CACHE_ENTRY = typename CONNECTION_CACHE::CACHE_ENTRY;
+  using KEY = typename CONNECTION_CACHE::key_type;
+  using VALUE = typename CONNECTION_CACHE::mapped_type;
 
-  typedef ACE_Recyclable_Handler_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
-                                                  std::pair<SVC_HANDLER *, ATTRIBUTES>,
-                                                  ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
-                                                                          std::pair<SVC_HANDLER *, ATTRIBUTES>,
-                                                                          ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                                                          ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                                                          MUTEX> >
-          CLEANUP_STRATEGY;
+  using CLEANUP_STRATEGY = ARHCLE<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, std::pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, std::pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, MUTEX>>;
 
-  typedef ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
-          CCSBASE;
+  using CCSBASE = ACE_Cached_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR, MUTEX>;
 
   // = Accessor.
   CACHING_STRATEGY &caching_strategy ();
@@ -205,20 +190,18 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1,
 class ACE_Bounded_Cached_Connect_Strategy
   : public ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
 {
-   typedef ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
-   CCSEBASE;
+   using CCSEBASE = ACCSE<SVC_HANDLER, _ACE_PEER_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, MUTEX>;
 
   // = Typedefs for managing the map
-  typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
-          REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
+  using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
 
 public:
   /// Constructor
   ACE_Bounded_Cached_Connect_Strategy (size_t  max_size,
                                        CACHING_STRATEGY &caching_s,
-                                       ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
-                                       ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
-                                       ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
+                                       ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
+                                       ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = nullptr,
+                                       ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = nullptr,
                                        MUTEX *lock = 0,
                                        int delete_lock = 0);
 

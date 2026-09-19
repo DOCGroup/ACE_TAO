@@ -79,7 +79,7 @@ ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
     return -1;
   else
     {
-      ACE_UPIPE_Stream *remote_stream = 0;
+      ACE_UPIPE_Stream *remote_stream = nullptr;
 
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
 
@@ -105,7 +105,7 @@ ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
                     ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
                     ACE_TEXT ("link streams failed")));
       // Send a message over the new streampipe to confirm acceptance.
-      else if (new_stream.send (&mb_, 0) == -1)
+      else if (new_stream.send (&mb_, nullptr) == -1)
         ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
                     ACE_TEXT ("linked stream.put failed")));

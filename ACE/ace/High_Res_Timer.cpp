@@ -87,7 +87,7 @@ ACE_High_Res_Timer::get_cpuinfo ()
   FILE *cpuinfo = ACE_OS::fopen (ACE_TEXT ("/proc/cpuinfo"),
                                  ACE_TEXT ("r"));
 
-  if (cpuinfo != 0)
+  if (cpuinfo != nullptr)
     {
       char buf[128];
 
@@ -486,10 +486,10 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
 int
 ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
 {
-  if (env != 0)
+  if (env != nullptr)
     {
       const char *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
-      if (env_value != 0)
+      if (env_value != nullptr)
         {
           int const value = ACE_OS::atoi (env_value);
           if (value > 0)

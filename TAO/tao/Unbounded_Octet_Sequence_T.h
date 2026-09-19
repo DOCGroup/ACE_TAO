@@ -47,15 +47,15 @@ public:
     : maximum_ (allocation_traits::default_maximum())
     , length_ (0)
     , buffer_ (allocation_traits::default_buffer_allocation())
-    , release_ (buffer_ != 0)
-    , mb_ (0)
+    , release_ (buffer_ != nullptr)
+    , mb_ (nullptr)
   {}
   inline explicit unbounded_value_sequence(CORBA::ULong maximum)
     : maximum_(maximum)
     , length_(0)
     , buffer_(allocbuf(maximum_))
     , release_(true)
-    , mb_ (0)
+    , mb_ (nullptr)
   {}
   inline unbounded_value_sequence(
       CORBA::ULong maximum,
@@ -66,7 +66,7 @@ public:
       length_ (length),
       buffer_ (data),
       release_ (release),
-      mb_ (0)
+      mb_ (nullptr)
   {}
   inline ~unbounded_value_sequence() {
     if (mb_)
@@ -82,7 +82,7 @@ public:
     , length_ (length)
     , buffer_ (reinterpret_cast <CORBA::Octet *>(mb->rd_ptr ()))
     , release_ (false)
-    , mb_(0) {
+    , mb_(nullptr) {
     // Get the message block flags.
     ACE_Message_Block::Message_Flags const flg = mb->self_flags ();
 
@@ -128,7 +128,7 @@ public:
   inline void length(CORBA::ULong length) {
     if (length <= maximum_)
       {
-        if (this->mb_ == 0)
+        if (this->mb_ == nullptr)
           {
             length_ = length;
           }
@@ -170,7 +170,7 @@ public:
     swap(tmp);
   }
   inline value_type const * get_buffer() const {
-    if (buffer_ == 0)
+    if (buffer_ == nullptr)
       {
         buffer_ = allocbuf(maximum_);
         release_ = true;
@@ -180,9 +180,9 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     if (orphan && !release_)
     {
-      return 0;
+      return nullptr;
     }
-    if (buffer_ == 0)
+    if (buffer_ == nullptr)
     {
       buffer_ = allocbuf(maximum_);
       if (!orphan)
@@ -253,11 +253,11 @@ public:
     const unbounded_value_sequence &rhs)
     : maximum_ (0)
     , length_ (0)
-    , buffer_(0)
+    , buffer_(nullptr)
     , release_(false)
-    , mb_ (0)
+    , mb_ (nullptr)
   {
-    if (rhs.maximum_ == 0 || rhs.buffer_ == 0)
+    if (rhs.maximum_ == 0 || rhs.buffer_ == nullptr)
     {
       maximum_ = rhs.maximum_;
       length_ = rhs.length_;
@@ -265,7 +265,7 @@ public:
     }
     unbounded_value_sequence tmp(rhs.maximum_);
     tmp.length_ = rhs.length_;
-    if (rhs.mb_ == 0)
+    if (rhs.mb_ == nullptr)
       {
         ACE_OS::memcpy (tmp.buffer_,
                         rhs.buffer_,
@@ -274,7 +274,7 @@ public:
     else
       {
         size_t offset = 0;
-        for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
+        for (const ACE_Message_Block *i = rhs.mb_; i != nullptr; i = i->cont ())
           {
             ACE_OS::memcpy (tmp.buffer_ + offset,
                             i->rd_ptr (),

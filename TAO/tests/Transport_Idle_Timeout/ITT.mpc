@@ -1,0 +1,44 @@
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*server): taoserver {
+  after += *idl
+  Source_Files {
+    server.cpp
+    Echo_i.cpp
+    testS.cpp
+    testC.cpp
+  }
+  Header_Files {
+    Echo_i.h
+    testS.h
+    testC.h
+  }
+}
+
+project(*client): taoclient {
+  after += *idl
+  Source_Files {
+    client.cpp
+    testC.cpp
+  }
+  Header_Files {
+    testC.h
+  }
+}
+
+project(*client_multiple): taoclient {
+  exename = client_multiple
+  after += *idl
+  Source_Files {
+    client_multiple.cpp
+    testC.cpp
+  }
+  Header_Files {
+    testC.h
+  }
+}

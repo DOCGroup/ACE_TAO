@@ -24,21 +24,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // The following typedefs are here for ease of use and backward
 // compatibility.
 
-typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                         ACE_Event_Handler_Handle_Timeout_Upcall,
-                         ACE_SYNCH_RECURSIVE_MUTEX>
-        ACE_Timer_Heap;
+using ACE_Timer_Heap = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
-typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-                                  ACE_Event_Handler_Handle_Timeout_Upcall,
-                                  ACE_SYNCH_RECURSIVE_MUTEX>
-        ACE_Timer_Heap_Iterator;
+using ACE_Timer_Heap_Iterator = ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
-typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                         ACE_Event_Handler_Handle_Timeout_Upcall,
-                         ACE_SYNCH_RECURSIVE_MUTEX,
-                         ACE_FPointer_Time_Policy>
-        ACE_Timer_Heap_Variable_Time_Source;
+using ACE_Timer_Heap_Variable_Time_Source = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_FPointer_Time_Policy>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

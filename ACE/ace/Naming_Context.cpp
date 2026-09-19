@@ -40,7 +40,7 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
                     ACE_TEXT ("ACE_Naming_Context"),
                     ACE_TEXT ("Proxy for making calls to a Name Server"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
@@ -106,7 +106,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
         }
     }
 
-  if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
+  if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("NAME_SPACE::NAME_SPACE\n")),
                       -1);
@@ -119,7 +119,7 @@ ACE_Naming_Context::close_down ()
   ACE_TRACE ("ACE_Naming_Context::close_down");
 
   delete this->name_options_;
-  this->name_options_ = 0;
+  this->name_options_ = nullptr;
 
   return this->close ();
 }
@@ -130,15 +130,15 @@ ACE_Naming_Context::close ()
   ACE_TRACE ("ACE_Naming_Context::close");
 
   delete this->name_space_;
-  this->name_space_ = 0;
+  this->name_space_ = nullptr;
 
   return 0;
 }
 
 ACE_Naming_Context::ACE_Naming_Context ()
-  : name_options_ (0),
-    name_space_ (0),
-    netnameserver_host_ (0),
+  : name_options_ (nullptr),
+    name_space_ (nullptr),
+    netnameserver_host_ (nullptr),
     netnameserver_port_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
@@ -149,9 +149,9 @@ ACE_Naming_Context::ACE_Naming_Context ()
 
 ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
                                         int lite)
-  : name_options_ (0),
-    name_space_ (0),
-    netnameserver_host_ (0)
+  : name_options_ (nullptr),
+    name_space_ (nullptr),
+    netnameserver_host_ (nullptr)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
@@ -252,7 +252,7 @@ ACE_Naming_Context::resolve (const char *name_in,
   // responsible for deleting it!
   value_out = val_str.char_rep ();
 
-  return value_out == 0 ? -1 : 0;
+  return value_out == nullptr ? -1 : 0;
 }
 
 int
@@ -419,7 +419,7 @@ ACE_Name_Options::ACE_Name_Options ()
     use_registry_ (false),
     nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
-    process_name_ (0),
+    process_name_ (nullptr),
     database_ (ACE_OS::strdup (ACE_DEFAULT_LOCALNAME)),
     base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
@@ -575,7 +575,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Name_Options::parse_args");
 
-  const ACE_TCHAR* program_name = 0;
+  const ACE_TCHAR* program_name = nullptr;
 
   // Argc can be 0 on some platforms like VxWorks.
   if (argc > 0)

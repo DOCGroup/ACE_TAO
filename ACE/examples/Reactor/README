@@ -1,5 +1,3 @@
-
-
 This directory contains subdirectories that test the ACE Reactor and Proactor
 
   . Dgram
@@ -15,7 +13,6 @@ This directory contains subdirectories that test the ACE Reactor and Proactor
 
   . Ntalker
     A program that implements a multicast "chat" program.
-
 
   . Proactor
     A program that illustrates the "Proactive" version of

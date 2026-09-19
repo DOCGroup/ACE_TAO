@@ -7,8 +7,8 @@
 	Test the behavior of the ORB when the server crashes in the
 middle of a write() operation.  This is a regression test for:
 
-http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=678
-http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=856
+https://github.com/DOCGroup/bugzilla/issues/678
+https://github.com/DOCGroup/bugzilla/issues/856
 
 	To run the test use the run_test.pl script:
 

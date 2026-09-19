@@ -148,9 +148,9 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     secs_ (ts_sec),
     usecs_ (0),
     pid_ (ACE_UINT32 (p)),
-    msg_data_ (0),
+    msg_data_ (nullptr),
     msg_data_size_ (0),
-    category_(0)
+    category_(nullptr)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -158,7 +158,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
 #else
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  if (0 != this->msg_data_)
+  if (nullptr != this->msg_data_)
     {
       this->msg_data_size_ = MAXLOGMSGLEN;
       this->msg_data_[0] = '\0';
@@ -173,9 +173,9 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     secs_ (ts.sec ()),
     usecs_ ((ACE_UINT32) ts.usec ()),
     pid_ (ACE_UINT32 (p)),
-    msg_data_ (0),
+    msg_data_ (nullptr),
     msg_data_size_ (0),
-    category_(0)
+    category_(nullptr)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -183,7 +183,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
 #else
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  if (0 != this->msg_data_)
+  if (nullptr != this->msg_data_)
     {
       this->msg_data_size_ = MAXLOGMSGLEN;
       this->msg_data_[0] = '\0';
@@ -209,9 +209,9 @@ ACE_Log_Record::ACE_Log_Record ()
     secs_ (0),
     usecs_ (0),
     pid_ (0),
-    msg_data_ (0),
+    msg_data_ (nullptr),
     msg_data_size_ (0),
-    category_(0)
+    category_(nullptr)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -219,7 +219,7 @@ ACE_Log_Record::ACE_Log_Record ()
 #else
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  if (0 != this->msg_data_)
+  if (nullptr != this->msg_data_)
     {
       this->msg_data_size_ = MAXLOGMSGLEN;
       this->msg_data_[0] = '\0';
@@ -241,7 +241,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                           ACE_Log_Msg::VERBOSE_LITE))
     {
       ACE_Time_Value reftime (this->secs_, this->usecs_);
-      if (0 == ACE::timestamp (reftime,
+      if (nullptr == ACE::timestamp (reftime,
                                timestamp,
                                sizeof (timestamp) / sizeof (ACE_TCHAR)))
         return -1;
@@ -255,7 +255,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   if (ACE_BIT_ENABLED (verbose_flag,
                        ACE_Log_Msg::VERBOSE))
     {
-      const ACE_TCHAR *lhost_name = ((host_name == 0)
+      const ACE_TCHAR *lhost_name = ((host_name == nullptr)
                                       ? ACE_TEXT ("<local_host>")
                                       : host_name);
       ACE_OS::snprintf (verbose_msg, verbose_msg_size,
@@ -297,7 +297,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR *verbose_msg = 0;
+      ACE_TCHAR *verbose_msg = nullptr;
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (verbose_msg, static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * MAXVERBOSELOGMSGLEN)), -1);
 #else
@@ -309,7 +309,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 
       if (result == 0)
         {
-          if (fp != 0)
+          if (fp != nullptr)
             {
               int const verbose_msg_len =
                 static_cast<int> (ACE_OS::strlen (verbose_msg));
@@ -404,7 +404,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR* verbose_msg = 0;
+      ACE_TCHAR* verbose_msg = nullptr;
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
       int const result = this->format_msg (host_name, verbose_flag, verbose_msg,

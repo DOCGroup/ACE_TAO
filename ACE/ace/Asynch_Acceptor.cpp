@@ -202,7 +202,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::accept");
 
-  ACE_Message_Block *message_block = 0;
+  ACE_Message_Block *message_block = nullptr;
   // The space_needed calculation is drive by needs of Windows. POSIX doesn't
   // need to extra 16 bytes, but it doesn't hurt.
   size_t space_needed = sizeof (sockaddr_in) + 16;
@@ -307,7 +307,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
                                 local_address);
 
       // Pass the ACT
-      if (result.act () != 0)
+      if (result.act () != nullptr)
         new_handler->act (result.act ());
 
       // Set up the handler's new handle value

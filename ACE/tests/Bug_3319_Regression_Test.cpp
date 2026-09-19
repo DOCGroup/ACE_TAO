@@ -2,7 +2,7 @@
  * @file Bug_3319_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2975:
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3319
+ *   https://github.com/DOCGroup/bugzilla/issues/3319
  */
 
 #include "ace/ACE.h"
@@ -21,7 +21,7 @@ run_main (int, ACE_TCHAR *[])
   args.add (ACE_TEXT("MyProgram"), true);
   int ret = ACE_Service_Config::open(args.argc(), args.argv(),
                                      ACE_DEFAULT_LOGGER_KEY,
-                                     1, 1, 1);
+                                     true, true, true);
 
   if (ACE_OS::strcmp (log_msg->program_name (), ACE_TEXT("MyProgram")) != 0)
   {

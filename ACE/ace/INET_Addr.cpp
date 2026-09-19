@@ -39,7 +39,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   if (ipaddr_format == 0)
     result = (this->get_host_name (hoststr, MAXHOSTNAMELEN+1) == 0);
   else
-    result = (this->get_host_addr (hoststr, MAXHOSTNAMELEN+1) != 0);
+    result = (this->get_host_addr (hoststr, MAXHOSTNAMELEN+1) != nullptr);
 
   if (!result)
     return -1;
@@ -210,8 +210,8 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
   int result;
-  char *ip_buf = 0;
-  char *ip_addr = 0;
+  char *ip_buf = nullptr;
+  char *ip_addr = nullptr;
 
   // Need to make a duplicate since we'll be overwriting the string.
   ACE_ALLOCATOR_RETURN (ip_buf,
@@ -240,9 +240,9 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
     }
 #endif /* ACE_HAS_IPV6 */
 
-  if (port_p == 0) // Assume it's a port number.
+  if (port_p == nullptr) // Assume it's a port number.
     {
-      char *endp = 0;
+      char *endp = nullptr;
       long const port = ACE_OS::strtol (ip_addr, &endp, 10);
 
       if (*endp == '\0')    // strtol scanned the entire string - all digits
@@ -259,7 +259,7 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
     {
       *port_p = '\0'; ++port_p; // skip over ':'
 
-      char *endp = 0;
+      char *endp = nullptr;
       long port = ACE_OS::strtol (port_p, &endp, 10);
 
       if (*endp == '\0')    // strtol scanned the entire string - all digits
@@ -344,7 +344,7 @@ ACE_INET_Addr::set (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::set");
 
   // Yow, someone gave us a NULL host_name!
-  if (host_name == 0)
+  if (host_name == nullptr)
     {
       errno = EINVAL;
       return -1;
@@ -415,8 +415,8 @@ ACE_INET_Addr::set (u_short port_number,
   // searching this->inet_addrs_ which would slow things down.
   hints.ai_socktype = SOCK_STREAM;
 
-  addrinfo *res = 0;
-  const int error = ACE_OS::getaddrinfo (host_name, 0, &hints, &res);
+  addrinfo *res = nullptr;
+  const int error = ACE_OS::getaddrinfo (host_name, nullptr, &hints, &res);
 
   if (error)
     {
@@ -449,7 +449,7 @@ static int get_port_number_from_name (const char port_name[],
                                       const char protocol[])
 {
   // Maybe port_name is directly a port number?
-  char *endp = 0;
+  char *endp = nullptr;
   long port_number = ACE_OS::strtol (port_name, &endp, 10);
 
   if (*endp == '\0')
@@ -479,7 +479,7 @@ static int get_port_number_from_name (const char port_name[],
                                          protocol,
                                          &sentry,
                                          buf);
-  if (sp != 0)
+  if (sp != nullptr)
     port_number = sp->s_port;
 #endif /* ACE_LACKS_GETSERVBYNAME */
 
@@ -550,7 +550,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                  address_family) == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
-                ACE_TEXT_CHAR_TO_TCHAR ((host_name == 0) ?
+                ACE_TEXT_CHAR_TO_TCHAR ((host_name == nullptr) ?
                                         "<unknown>" : host_name)));
 }
 
@@ -568,7 +568,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                  address_family) == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
-                ACE_TEXT_WCHAR_TO_TCHAR ((host_name == 0) ?
+                ACE_TEXT_WCHAR_TO_TCHAR ((host_name == nullptr) ?
                                          ACE_TEXT_WIDE ("<unknown>") :
                                          host_name)));
 }
@@ -868,7 +868,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
   const int res = ACE_OS::getnameinfo ((const sockaddr *) this->get_addr (),
                                        addr_size, hostname,
                                        static_cast<ACE_SOCKET_LEN> (len),
-                                       0, 0, 0);
+                                       nullptr, 0, 0);
   return (res == 0) ? 0 : -1;
 }
 

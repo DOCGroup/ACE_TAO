@@ -30,7 +30,7 @@ class ACE_Export ACE_Basic_Stats
 {
 public:
 #if !defined (ACE_WIN32)
-   typedef ACE_UINT32 scale_factor_type;
+   using scale_factor_type = ACE_UINT32;
 #else
    typedef ACE_UINT64 scale_factor_type;
 #endif

@@ -82,14 +82,14 @@ public:
   ACE_Module ();
 
   /// Shutdown the Module.
-  virtual ~ACE_Module ();
+  ~ACE_Module () override;
 
   /// Create an initialized module with @a module_name as its identity
   /// and @a reader and @a writer as its tasks.
   ACE_Module (const ACE_TCHAR *module_name,
-              ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer = 0,
-              ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader = 0,
-              void *args = 0,
+              ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer = nullptr,
+              ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader = nullptr,
+              void *args = nullptr,
               int flags = M_DELETE);
 
   /**
@@ -100,9 +100,9 @@ public:
    * <ACE_Task::module_closed>.
    */
   int open (const ACE_TCHAR *module_name,
-            ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer = 0,
-            ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader = 0,
-            void *a = 0,
+            ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer = nullptr,
+            ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader = nullptr,
+            void *a = nullptr,
             int flags = M_DELETE);
 
   /**

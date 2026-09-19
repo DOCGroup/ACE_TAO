@@ -220,7 +220,7 @@ private:
   friend class ACE_Strong_Bound_Ptr;
 
   /// The ACE_Bound_Ptr_Counter type.
-  typedef ACE_Bound_Ptr_Counter<ACE_LOCK> COUNTER;
+  using COUNTER = ACE_Bound_Ptr_Counter<ACE_LOCK>;
 
   /// The reference counter.
   COUNTER *counter_;
@@ -351,7 +351,7 @@ private:
   friend class ACE_Strong_Bound_Ptr<X, ACE_LOCK>;
 
   /// The ACE_Bound_Ptr_Counter type.
-  typedef ACE_Bound_Ptr_Counter<ACE_LOCK> COUNTER;
+  using COUNTER = ACE_Bound_Ptr_Counter<ACE_LOCK>;
 
   /// The reference counter.
   COUNTER *counter_;

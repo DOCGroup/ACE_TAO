@@ -85,11 +85,11 @@ static const void *CHILD_BASE_ADDR =
 // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
 
 static MALLOC *
-myallocator (const void *base_addr = 0)
+myallocator (const void *base_addr = nullptr)
 {
   static std::unique_ptr<MALLOC> static_allocator;
 
-  if (static_allocator.get () == 0)
+  if (static_allocator.get () == nullptr)
     {
       ACE_MMAP_Memory_Pool_Options options (base_addr);
 
@@ -106,7 +106,7 @@ myallocator (const void *base_addr = 0)
 }
 
 static void
-init_test (const void *base_addr = 0)
+init_test (const void *base_addr = nullptr)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
@@ -124,18 +124,18 @@ init_test (const void *base_addr = 0)
 static Test_Data *
 initialize (MALLOC *allocator)
 {
-  double *temp = 0;
+  double *temp = nullptr;
   ACE_ALLOCATOR_RETURN (temp,
                         (double *) allocator->malloc (sizeof (double)),
-                        0);
+                        nullptr);
   // Make sure that doubles work!
   *temp = 5.0;
   allocator->free (temp);
 
-  void *ptr = 0;
+  void *ptr = nullptr;
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
-                        0);
+                        nullptr);
   Test_Data *data1 = new (ptr) Test_Data;
 
   data1->i1_ = 111;
@@ -143,19 +143,19 @@ initialize (MALLOC *allocator)
   data1->i3_ = 333;
   data1->d1_ = 87.5;
 
-  void *gap = 0;
+  void *gap = nullptr;
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
-                        0);
+                        nullptr);
   allocator->free (gap);
 
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
-                        0);
+                        nullptr);
   Test_Data *data2 = new (ptr) Test_Data;
 
-  data1->next_ = 0;
+  data1->next_ = nullptr;
   data2->next_ = data1;
   data2->i1_ = -111;
   data2->i2_ = -222;
@@ -165,7 +165,7 @@ initialize (MALLOC *allocator)
   // Test in shared memory using long (array/pointer)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
-                        0);
+                        nullptr);
   Long_Test *lt = new (ptr) Long_Test;
 
   lt->array_[0] = 1000;
@@ -185,7 +185,7 @@ initialize (MALLOC *allocator)
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
-                        0);
+                        nullptr);
   lt = new (ptr) Long_Test;
 
   lt->array_[0] = 2000;
@@ -210,7 +210,7 @@ static void
 print (const char *process_name,
        Test_Data *data)
 {
-  for (Test_Data *t = data; t != 0; t = t->next_)
+  for (Test_Data *t = data; t != nullptr; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("<<<< (%P) %C\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
@@ -264,7 +264,7 @@ parent (Test_Data *data)
 static int
 child ()
 {
-  void *bar = 0;
+  void *bar = nullptr;
   // Perform "busy waiting" here until the parent stores data under a
   // new name called "bar" in <ACE_Malloc>.  This isn't a good design
   // -- it's just to test that synchronization is working across
@@ -339,7 +339,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 # endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
       // No arguments means we're the parent process.
-      ACE_Process_Options options (1);
+      ACE_Process_Options options (true);
 
       options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
                             ACE_TEXT ("%") ACE_TEXT_PRIs
@@ -351,7 +351,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
 
       Test_Data *data = initialize (myalloc);
-      ACE_TEST_ASSERT (data != 0);
+      ACE_TEST_ASSERT (data != nullptr);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) PARENT allocator at = %@, ")
@@ -388,7 +388,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // In this case we're the child process.
       ACE_APPEND_LOG (ACE_TEXT ("Malloc_Test-child"));
 
-      void *data = 0;
+      void *data = nullptr;
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
       int result = myalloc->find ("foo", data);
       ACE_TEST_ASSERT (result != -1);

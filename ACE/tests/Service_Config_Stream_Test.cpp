@@ -72,7 +72,7 @@ public:
     : ACE_Module<ACE_SYNCH, ACE_System_Time_Policy> (
         ACE_TEXT ("Decrypter"),
         &writer_, &reader_,
-        0,
+        nullptr,
         M_DELETE_NONE) // Tasks are members; don't delete
   {}
 

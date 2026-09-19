@@ -2,7 +2,7 @@
  * @file Bug_2368_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2368:
- *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2368
+ *   https://github.com/DOCGroup/bugzilla/issues/2368
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
@@ -81,7 +81,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("register_handlerB")));
 
-  ACE_Sig_Action *new_disp = 0;
+  ACE_Sig_Action *new_disp = nullptr;
   if (ACE_Reactor::instance ()->remove_handler
       (SIGINT,
        new_disp) == -1)

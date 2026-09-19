@@ -15,7 +15,7 @@ ACE_SSL_Initializer::init (int, ACE_TCHAR *[])
 {
   // Initialize ACE_SSL_Context singleton.
   ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
-  ACE_ASSERT (ssl_ctx != 0);
+  ACE_ASSERT (ssl_ctx != nullptr);
   ACE_UNUSED_ARG (ssl_ctx);
 
   return 0;

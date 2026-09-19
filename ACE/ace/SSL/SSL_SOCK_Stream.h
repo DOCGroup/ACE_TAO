@@ -110,7 +110,7 @@ public:
    */
   ssize_t sendv (const iovec iov[],
                  size_t n,
-                 const ACE_Time_Value *timeout = 0) const;
+                 const ACE_Time_Value *timeout = nullptr) const;
 
   /**
    * Allows a client to read from a socket without having to provide a
@@ -121,7 +121,7 @@ public:
    * delete [] io_vec->iov_base.
    */
   ssize_t recvv (iovec *io_vec,
-                 const ACE_Time_Value *timeout = 0) const;
+                 const ACE_Time_Value *timeout = nullptr) const;
 
   /**
    * Wait to timeout amount of time to send up to n bytes into buf
@@ -201,7 +201,7 @@ public:
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout,
-                  size_t *bytes_transferred = 0) const;
+                  size_t *bytes_transferred = nullptr) const;
 
   /**
    * Try to send exactly @a len bytes into @a buf (uses the send() call).
@@ -213,7 +213,7 @@ public:
   ssize_t send_n (const void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout,
-                  size_t *bytes_transferred = 0) const;
+                  size_t *bytes_transferred = nullptr) const;
 
   /**
    * Try to receive exactly @a len bytes into @a buf (uses the recv() call).
@@ -229,7 +229,7 @@ public:
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout,
-                  size_t *bytes_transferred = 0) const;
+                  size_t *bytes_transferred = nullptr) const;
 
   /**
    * Try to receive exactly len bytes into buf (uses the recv() call).
@@ -244,7 +244,7 @@ public:
   ssize_t recv_n (void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout,
-                  size_t *bytes_transferred = 0) const;
+                  size_t *bytes_transferred = nullptr) const;
   //@}
 
   /**

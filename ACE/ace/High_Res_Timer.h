@@ -95,7 +95,7 @@ class ACE_Export ACE_High_Res_Timer
 {
 public:
 #if !defined (ACE_WIN32)
-   typedef ACE_UINT32 global_scale_factor_type;
+   using global_scale_factor_type = ACE_UINT32;
 #else
    typedef ACE_UINT64 global_scale_factor_type;
 #endif

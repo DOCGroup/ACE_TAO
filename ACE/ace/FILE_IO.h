@@ -154,7 +154,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Meta-type info
-  typedef ACE_FILE_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_FILE_Addr;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

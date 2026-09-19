@@ -122,12 +122,12 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::op
   // memory before allocating new one.
   this->close_i ();
 
-  if (table_alloc == 0)
+  if (table_alloc == nullptr)
     table_alloc = ACE_Allocator::instance ();
 
   this->table_allocator_ = table_alloc;
 
-  if (entry_alloc == 0)
+  if (entry_alloc == nullptr)
     entry_alloc = table_alloc;
 
   this->entry_allocator_ = entry_alloc;

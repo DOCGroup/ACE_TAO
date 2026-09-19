@@ -61,17 +61,17 @@ ACE_ODB::instance ()
 {
   ACE_TRACE ("ACE_ODB::instance");
 
-  if (ACE_ODB::instance_ == 0)
+  if (ACE_ODB::instance_ == nullptr)
     {
       ACE_MT (ACE_Thread_Mutex *lock =
         ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_DUMP_LOCK);
-        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, nullptr));
 
-      if (ACE_ODB::instance_ == 0)
+      if (ACE_ODB::instance_ == nullptr)
         ACE_NEW_RETURN (ACE_ODB::instance_,
                         ACE_ODB,
-                        0);
+                        nullptr);
     }
 
   return ACE_ODB::instance_;
@@ -83,7 +83,7 @@ ACE_ODB::dump_objects ()
   ACE_TRACE ("ACE_ODB::dump_objects");
   for (int i = 0; i < this->current_size_; i++)
     {
-      if (this->object_table_[i].this_ != 0)
+      if (this->object_table_[i].this_ != nullptr)
         // Dump the state of the object.
         this->object_table_[i].dumper_->dump ();
     }
@@ -101,7 +101,7 @@ ACE_ODB::register_object (const ACE_Dumpable *dumper)
 
   for (i = 0; i < this->current_size_; i++)
     {
-      if (this->object_table_[i].this_ == 0)
+      if (this->object_table_[i].this_ == nullptr)
         slot = i;
       else if (this->object_table_[i].this_ == dumper->this_)
         {
@@ -133,11 +133,11 @@ ACE_ODB::remove_object (const void *this_ptr)
 
   if (i < this->current_size_)
     {
-      this->object_table_[i].this_ = 0;
-      this->object_table_[i].dumper_ = 0;
+      this->object_table_[i].this_ = nullptr;
+      this->object_table_[i].dumper_ = nullptr;
     }
 }
 
-ACE_ODB *ACE_ODB::instance_ = 0;
+ACE_ODB *ACE_ODB::instance_ = nullptr;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

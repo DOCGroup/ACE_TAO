@@ -54,7 +54,7 @@ ACE_Dirent_Selector::close ()
 #else
   ACE_OS::free (this->namelist_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  this->namelist_ = 0;
+  this->namelist_ = nullptr;
   return 0;
 }
 

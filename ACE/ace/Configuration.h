@@ -538,12 +538,8 @@ protected:
 
 // ACE_Allocator version
 
-typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL,
-                                           ACE_SYNCH_MUTEX> >
-        PERSISTENT_ALLOCATOR;
-typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
-                                           ACE_SYNCH_MUTEX> >
-        HEAP_ALLOCATOR;
+using PERSISTENT_ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_MT_SYNCH::MUTEX>>;
+using HEAP_ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<ACE_Local_Memory_Pool, ACE_MT_SYNCH::MUTEX>>;
 
 /**
  * @class ACE_Configuration_ExtId
@@ -591,14 +587,8 @@ public:
   const ACE_TCHAR *name ();
 };
 
-typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>
-        SUBSECTION_MAP;
-typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
-                                int,
-                                ACE_Hash<ACE_Configuration_ExtId>,
-                                ACE_Equal_To<ACE_Configuration_ExtId>,
-                                ACE_Null_Mutex>
-        SUBSECTION_HASH;
+using SUBSECTION_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
+using SUBSECTION_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 
 /**
  * @class ACE_Configuration_Value_IntId
@@ -649,18 +639,11 @@ public:
   size_t                        length_;
 };
 
-typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId,
-                                    ACE_Configuration_Value_IntId>
-        VALUE_MAP;
-typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
-                                ACE_Configuration_Value_IntId,
-                                ACE_Hash<ACE_Configuration_ExtId>,
-                                ACE_Equal_To<ACE_Configuration_ExtId>,
-                                ACE_Null_Mutex>
-        VALUE_HASH;
+using VALUE_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
+using VALUE_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 
 // Deprecated typedef.  Use the VALUE_HASH::ENTRY trait instead.
-typedef VALUE_HASH::ENTRY VALUE_ENTRY;
+using VALUE_ENTRY = VALUE_HASH::ENTRY;
 
 /**
  * @class ACE_Configuration_Section_IntId
@@ -698,18 +681,11 @@ public:
   SUBSECTION_MAP* section_hash_map_;
 };
 
-typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId,
-                                    ACE_Configuration_Section_IntId>
-        SECTION_MAP;
-typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
-                                ACE_Configuration_Section_IntId,
-                                ACE_Hash<ACE_Configuration_ExtId>,
-                                ACE_Equal_To<ACE_Configuration_ExtId>,
-                                ACE_Null_Mutex>
-        SECTION_HASH;
+using SECTION_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
+using SECTION_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 
 // Deprecated typedef.  Use the SECTION_HASH::ENTRY trait instead.
-typedef SECTION_HASH::ENTRY SECTION_ENTRY;
+using SECTION_ENTRY = SECTION_HASH::ENTRY;
 
 /**
  * @class ACE_Configuration_Section_Key_Heap
@@ -739,7 +715,7 @@ public:
 
 protected:
   /// Destructor - will delete the iterators
-  virtual ~ACE_Configuration_Section_Key_Heap ();
+  ~ACE_Configuration_Section_Key_Heap () override;
 
   // Not used
   ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);
@@ -769,7 +745,7 @@ public:
   ACE_Configuration_Heap ();
 
   /// Destructor
-  virtual ~ACE_Configuration_Heap ();
+  ~ACE_Configuration_Heap () override;
 
   /**
    * Opens a configuration that allocates its memory from a memory-mapped file.
@@ -804,56 +780,56 @@ public:
    */
   int open (size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
-  virtual int open_section (const ACE_Configuration_Section_Key& base,
+  int open_section (const ACE_Configuration_Section_Key& base,
                             const ACE_TCHAR* sub_section,
-                            bool create, ACE_Configuration_Section_Key& result);
+                            bool create, ACE_Configuration_Section_Key& result) override;
 
-  virtual int remove_section (const ACE_Configuration_Section_Key& key,
+  int remove_section (const ACE_Configuration_Section_Key& key,
                               const ACE_TCHAR* sub_section,
-                              bool recursive);
+                              bool recursive) override;
 
-  virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
+  int enumerate_values (const ACE_Configuration_Section_Key& key,
                                 int index,
                                 ACE_TString& name,
-                                VALUETYPE& type);
+                                VALUETYPE& type) override;
 
-  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
+  int enumerate_sections (const ACE_Configuration_Section_Key& key,
                                   int index,
-                                  ACE_TString& name);
+                                  ACE_TString& name) override;
 
-  virtual int set_string_value (const ACE_Configuration_Section_Key& key,
+  int set_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
-                                const ACE_TString& value);
+                                const ACE_TString& value) override;
 
-  virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
+  int set_integer_value (const ACE_Configuration_Section_Key& key,
                                  const ACE_TCHAR* name,
-                                 u_int value);
+                                 u_int value) override;
 
-  virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
+  int set_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 const void* data,
-                                size_t length);
+                                size_t length) override;
 
-  virtual int get_string_value (const ACE_Configuration_Section_Key& key,
+  int get_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
-                                ACE_TString& value);
+                                ACE_TString& value) override;
 
-  virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
+  int get_integer_value (const ACE_Configuration_Section_Key& key,
                                  const ACE_TCHAR* name,
-                                 u_int& value);
+                                 u_int& value) override;
 
-  virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
+  int get_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 void* &data,
-                                size_t &length);
+                                size_t &length) override;
 
-  virtual int find_value(const ACE_Configuration_Section_Key& key,
+  int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
-                         VALUETYPE& type);
+                         VALUETYPE& type) override;
 
   /// Removes the the value @a name from @a key.  returns non zero on error
-  virtual int remove_value (const ACE_Configuration_Section_Key& key,
-                            const ACE_TCHAR* name);
+  int remove_value (const ACE_Configuration_Section_Key& key,
+                            const ACE_TCHAR* name) override;
 
 private:
   /// @a sub_section may not contain path separators

@@ -40,15 +40,15 @@ public:
   /// collection. This wraps the dce_cs_loc_to_rgy function, or emulates it.
   static int locale_to_registry (const ACE_CString &locale,
                                  ACE_CDR::ULong &codeset_id,
-                                 ACE_CDR::UShort * = 0,
-                                 ACE_CDR::UShort ** = 0);
+                                 ACE_CDR::UShort * = nullptr,
+                                 ACE_CDR::UShort ** = nullptr);
 
   /// Based on a registry value, find the locale string and optional codeset
   /// collection.  This wraps the dce_cs_rgy_to_loc function, or emulates it.
   static int registry_to_locale (ACE_CDR::ULong codeset_id,
                                  ACE_CString &locale,
-                                 ACE_CDR::UShort * = 0,
-                                 ACE_CDR::UShort ** = 0);
+                                 ACE_CDR::UShort * = nullptr,
+                                 ACE_CDR::UShort ** = nullptr);
 
   /// Tell if two codesets are compatible. This wraps the
   /// rpc_cs_char_set_compat_check function.
@@ -61,14 +61,14 @@ public:
 
   enum {max_charsets_ = 5};
 protected:
-  typedef struct {
+  using registry_entry = struct {
     const char *     desc_;
     const char *     loc_name_;
     ACE_CDR::ULong   codeset_id_;
     ACE_CDR::UShort  num_sets_;
     ACE_CDR::UShort  char_sets_[max_charsets_];
     ACE_CDR::UShort  max_bytes_;
-  } registry_entry;
+  };
 
 private:
   static size_t const num_registry_entries_;
@@ -76,12 +76,12 @@ private:
 
   static int locale_to_registry_i (const ACE_CString &locale,
                                    ACE_CDR::ULong &codeset_id,
-                                   ACE_CDR::UShort * = 0,
-                                   ACE_CDR::UShort ** = 0);
+                                   ACE_CDR::UShort * = nullptr,
+                                   ACE_CDR::UShort ** = nullptr);
   static int registry_to_locale_i (ACE_CDR::ULong codeset_id,
                                    ACE_CString &locale,
-                                   ACE_CDR::UShort * = 0,
-                                   ACE_CDR::UShort ** = 0);
+                                   ACE_CDR::UShort * = nullptr,
+                                   ACE_CDR::UShort ** = nullptr);
   static int is_compatible_i (ACE_CDR::ULong codeset_id,
                               ACE_CDR::ULong other);
   static ACE_CDR::Short get_max_bytes_i (ACE_CDR::ULong codeset_id);

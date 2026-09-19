@@ -33,7 +33,7 @@ run_main (int, ACE_TCHAR *[])
 
   {
     // Checks normal heap deletes.
-    ACE_Message_Block *mb = 0;
+    ACE_Message_Block *mb = nullptr;
 
     ACE_NEW_RETURN (mb, ACE_Message_Block, -1);
     mb->release ();
@@ -72,7 +72,7 @@ run_main (int, ACE_TCHAR *[])
 
     {
       // Checks normal heap deletes.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_NEW_RETURN (mb, ACE_Message_Block, -1);
       mb->locking_strategy (lock);
       mb->release ();

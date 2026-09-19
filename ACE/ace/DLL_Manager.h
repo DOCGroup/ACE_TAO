@@ -53,7 +53,7 @@ class ACE_Export ACE_DLL_Handle
 {
 public:
   /// Error stack. Fixed size should suffice. Ignores any errors exceeding the size.
-  typedef ACE_Fixed_Stack <ACE_TString, 10> ERROR_STACK;
+  using ERROR_STACK = ACE_Fixed_Stack<ACE_TString, 10>;
 
   /// Default constructor.
   ACE_DLL_Handle ();

@@ -70,7 +70,7 @@ static int disable_signal (int sigmin, int sigmax);
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host = 0;
+static const ACE_TCHAR *host = nullptr;
 
 // number of Senders instances
 static int senders = 1;
@@ -124,7 +124,7 @@ class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   MyTask (): sem_ ((unsigned int) 0),
-                 my_reactor_ (0) {}
+                 my_reactor_ (nullptr) {}
 
   ~MyTask () override { stop (); }
 
@@ -150,9 +150,9 @@ MyTask::create_reactor ()
                     this->lock_,
                     -1);
 
-  ACE_TEST_ASSERT (this->my_reactor_ == 0);
+  ACE_TEST_ASSERT (this->my_reactor_ == nullptr);
 
-  ACE_TP_Reactor * pImpl = 0;
+  ACE_TP_Reactor * pImpl = nullptr;
 
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor, -1);
 
@@ -182,9 +182,9 @@ MyTask::delete_reactor ()
               ACE_TEXT (" (%t) Delete TP_Reactor\n")));
 
   delete this->my_reactor_;
-  ACE_Reactor::instance ((ACE_Reactor *) 0);
-  this->my_reactor_ = 0;
-  this->reactor (0);
+  ACE_Reactor::instance ((ACE_Reactor *) nullptr);
+  this->my_reactor_ = nullptr;
+  this->reactor (nullptr);
 
   return 0;
 }
@@ -214,7 +214,7 @@ MyTask::start (int num_threads)
 int
 MyTask::stop ()
 {
-  if (this->my_reactor_ != 0)
+  if (this->my_reactor_ != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("End TP_Reactor event loop\n")));
@@ -255,7 +255,7 @@ MyTask::svc ()
 // *************************************************************
 
 Acceptor::Acceptor ()
-  : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> ((ACE_Reactor *) 0),
+  : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> ((ACE_Reactor *) nullptr),
     sessions_ (0),
     total_snd_(0),
     total_rcv_(0),
@@ -265,12 +265,12 @@ Acceptor::Acceptor ()
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
-     this->list_receivers_[i] =0;
+     this->list_receivers_[i] =nullptr;
 }
 
 Acceptor::~Acceptor ()
 {
-  this->reactor (0);
+  this->reactor (nullptr);
   stop ();
 }
 
@@ -285,7 +285,7 @@ Acceptor::stop ()
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
     {
       delete this->list_receivers_[i];
-      this->list_receivers_[i] =0;
+      this->list_receivers_[i] =nullptr;
     }
 }
 
@@ -314,7 +314,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 
   if (rcvr.index_ < MAX_RECEIVERS
       && this->list_receivers_[rcvr.index_] == &rcvr)
-    this->list_receivers_[rcvr.index_] = 0;
+    this->list_receivers_[rcvr.index_] = nullptr;
 
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
@@ -357,7 +357,7 @@ Acceptor::make_svc_handler (Receiver *&sh)
     return -1;
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
-    if (this->list_receivers_ [i] == 0)
+    if (this->list_receivers_ [i] == nullptr)
       {
         ACE_NEW_RETURN (sh,
                         Receiver (this , i),
@@ -378,15 +378,15 @@ Receiver::Receiver (Acceptor * acceptor, size_t index)
     total_w_  (0),
     total_r_  (0)
 {
-  if (acceptor_ != 0)
+  if (acceptor_ != nullptr)
     acceptor_->on_new_receiver (*this);
 }
 
 
 Receiver::~Receiver ()
 {
-  this->reactor (0);
-  if (acceptor_ != 0)
+  this->reactor (nullptr);
+  if (acceptor_ != nullptr)
     acceptor_->on_delete_receiver (*this);
 
   this->index_ = 0;
@@ -394,7 +394,7 @@ Receiver::~Receiver ()
   for (; ;)
     {
       ACE_Time_Value tv = ACE_Time_Value::zero;
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       if (this->getq (mb, &tv) < 0)
         break;
@@ -465,7 +465,7 @@ Receiver::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   TPReactor->remove_handler (this,
                              ACE_Event_Handler::ALL_EVENTS_MASK |
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
-  this->reactor (0);
+  this->reactor (nullptr);
   this->destroy ();
   return 0;
 }
@@ -475,7 +475,7 @@ Receiver::handle_input (ACE_HANDLE h)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ),
                   -1);
@@ -559,7 +559,7 @@ Receiver::handle_output (ACE_HANDLE h)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   int     err = 0;
   ssize_t res = 0;
@@ -567,7 +567,7 @@ Receiver::handle_output (ACE_HANDLE h)
 
   int     qcount = this->getq (mb, &tv);
 
-  if (mb != 0)  // qcount >= 0)
+  if (mb != nullptr)  // qcount >= 0)
     {
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
@@ -614,7 +614,7 @@ Receiver::handle_output (ACE_HANDLE h)
 // *************************************************************
 
 Connector::Connector ()
-  : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> ((ACE_Reactor *) 0),
+  : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> ((ACE_Reactor *) nullptr),
     sessions_ (0),
     total_snd_(0),
     total_rcv_(0),
@@ -624,12 +624,12 @@ Connector::Connector ()
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
-     this->list_senders_[i] = 0;
+     this->list_senders_[i] = nullptr;
 }
 
 Connector::~Connector ()
 {
-  this->reactor (0);
+  this->reactor (nullptr);
   stop ();
 }
 
@@ -645,7 +645,7 @@ Connector::stop ()
   for (size_t i = 0; i < MAX_SENDERS; ++i)
     {
       delete this->list_senders_[i];
-      this->list_senders_[i] =0;
+      this->list_senders_[i] =nullptr;
     }
 }
 
@@ -673,7 +673,7 @@ Connector::on_delete_sender (Sender & sndr)
 
   if (sndr.index_ < MAX_SENDERS
       && this->list_senders_[sndr.index_] == &sndr)
-    this->list_senders_[sndr.index_] = 0;
+    this->list_senders_[sndr.index_] = nullptr;
 
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
@@ -709,7 +709,7 @@ Connector::start (const ACE_INET_Addr & addr, int num)
 
   for (int i = 0 ; i < num ; i++)
     {
-      Sender * sender = 0;
+      Sender * sender = nullptr;
 
       if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::connect (sender, addr) < 0)
         ACE_ERROR_RETURN
@@ -731,7 +731,7 @@ Connector::make_svc_handler (Sender * & sh)
     return -1;
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
-    if (this->list_senders_ [i] == 0)
+    if (this->list_senders_ [i] == nullptr)
       {
         ACE_NEW_RETURN (sh,
                         Sender (this , i),
@@ -753,7 +753,7 @@ Sender::Sender (Connector* connector, size_t index)
     total_w_  (0),
     total_r_  (0)
 {
-  if (connector_ != 0)
+  if (connector_ != nullptr)
     connector_->on_new_sender (*this);
 
   ACE_OS::snprintf (send_buf_, 1024, "%s", data);
@@ -762,8 +762,8 @@ Sender::Sender (Connector* connector, size_t index)
 
 Sender::~Sender ()
 {
-  this->reactor (0);
-  if (connector_ != 0)
+  this->reactor (nullptr);
+  if (connector_ != nullptr)
     connector_->on_delete_sender (*this);
 
   this->index_ = 0;
@@ -771,7 +771,7 @@ Sender::~Sender ()
   for (; ;)
     {
       ACE_Time_Value tv = ACE_Time_Value::zero;
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       if (this->getq (mb, &tv) < 0)
         break;
@@ -818,7 +818,7 @@ Sender::initiate_write ()
     {
       size_t nbytes = ACE_OS::strlen (send_buf_);
 
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (nbytes+8),
                       -1);
@@ -876,7 +876,7 @@ Sender::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   TPReactor->remove_handler (this,
                              ACE_Event_Handler::ALL_EVENTS_MASK |
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
-  this->reactor (0);
+  this->reactor (nullptr);
   this->destroy ();
   return 0;
 }
@@ -886,7 +886,7 @@ Sender::handle_input (ACE_HANDLE h)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ),
                   -1);
@@ -954,7 +954,7 @@ Sender::handle_output (ACE_HANDLE h)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   int     err=0;
   ssize_t res=0;
@@ -962,7 +962,7 @@ Sender::handle_output (ACE_HANDLE h)
 
   int     qcount = this->getq (mb , & tv);
 
-  if (mb != 0)  // qcount >= 0
+  if (mb != nullptr)  // qcount >= 0
     {
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
@@ -1126,7 +1126,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -1162,12 +1162,12 @@ run_main (int argc, ACE_TCHAR *argv[])
       int rc = 0;
 
       ACE_INET_Addr addr (port);
-      if (both != 0 || host == 0) // Acceptor
+      if (both != 0 || host == nullptr) // Acceptor
         rc += acceptor.start (addr);
 
-      if (both != 0 || host != 0)
+      if (both != 0 || host != nullptr)
         {
-          if (host == 0)
+          if (host == nullptr)
             host = ACE_LOCALHOST;
 
           if (addr.set (port, host, 1, addr.get_type ()) == -1)

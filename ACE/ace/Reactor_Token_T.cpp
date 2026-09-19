@@ -30,7 +30,7 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::ACE_Reactor_Token_T
 
 template <class ACE_TOKEN_TYPE>
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::ACE_Reactor_Token_T (int s_queue)
-  : reactor_ (0)
+  : reactor_ (nullptr)
 {
   ACE_TRACE ("ACE_Reactor_Token_T::ACE_Reactor_Token");
 

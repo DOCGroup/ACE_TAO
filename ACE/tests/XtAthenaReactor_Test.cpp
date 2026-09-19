@@ -117,7 +117,7 @@ client (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) Client: Message has been sent, about to exit...\n"));
-  return 0;
+  return nullptr;
 }
 
 // Callback for "Press Me" button.
@@ -156,8 +156,8 @@ inc_tmo (void *w,XtIntervalId *)
 class EV_handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     char new_string[80];
     ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
@@ -222,7 +222,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                                 &argc,
                                 argv,
                                 0,
-                                static_cast<void *>(0));
+                                static_cast<void *>(nullptr));
 
   digits_rc = create_box(topLevel, "digits_rc");
 
@@ -298,7 +298,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
-                                          0,
+                                          nullptr,
                                           THR_NEW_LWP | THR_DETACHED);
 
   XtAppMainLoop (XtWidgetToApplicationContext (topLevel));

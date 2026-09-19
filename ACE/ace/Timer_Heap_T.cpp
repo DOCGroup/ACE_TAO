@@ -583,7 +583,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
 
   // Grow the array of timer ids.
 
-  ssize_t *new_timer_ids = 0;
+  ssize_t *new_timer_ids = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   new_timer_ids = reinterpret_cast<ssize_t *>
@@ -806,7 +806,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (long timer_id,
                                             dont_call,
                                             cookie);
 
-      if (act != 0)
+      if (act != nullptr)
         *act = temp->get_act ();
 
       this->free_node (temp);

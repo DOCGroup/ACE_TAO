@@ -125,7 +125,7 @@ ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
   if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)
     {
-      if (x != 0)
+      if (x != nullptr)
         {
           //In GIOP 1.2 the length field contains the number of bytes
           //the wstring occupies rather than number of wchars
@@ -148,7 +148,7 @@ ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
     }
 
   else
-    if (x != 0)
+    if (x != nullptr)
       {
         if (this->write_ulong (len + 1))
           return this->write_wchar_array (x, len + 1);

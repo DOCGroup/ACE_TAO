@@ -30,7 +30,7 @@ ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
                                     const char *type)
   : name_ (name),
     value_ (value),
-    type_ (type == 0 ? ACE_OS::strdup ("") : ACE_OS::strdup (type))
+    type_ (type == nullptr ? ACE_OS::strdup ("") : ACE_OS::strdup (type))
 {
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }

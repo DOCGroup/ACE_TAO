@@ -80,9 +80,9 @@ void *
 ACE_Shared_Memory_MM::malloc (size_t)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::malloc");
-  void *addr = 0;
+  void *addr = nullptr;
 
-  return this->shared_memory_ (addr) == -1 ? 0 : addr;
+  return this->shared_memory_ (addr) == -1 ? nullptr : addr;
 }
 
 ACE_HANDLE
@@ -96,7 +96,7 @@ int
 ACE_Shared_Memory_MM::free (void *p)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::free");
-  return p != 0;
+  return p != nullptr;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

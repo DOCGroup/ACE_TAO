@@ -17,13 +17,13 @@ ACE_Allocator::instance ()
 {
   //  ACE_TRACE ("ACE_Allocator::instance");
 
-  if (ACE_Allocator::allocator_ == 0)
+  if (ACE_Allocator::allocator_ == nullptr)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
+                                *ACE_Static_Object_Lock::instance (), nullptr));
 
-      if (ACE_Allocator::allocator_ == 0)
+      if (ACE_Allocator::allocator_ == nullptr)
         {
           // Have a seat.  We want to avoid ever having to delete the
           // ACE_Allocator instance, to avoid shutdown order
@@ -39,7 +39,7 @@ ACE_Allocator::instance ()
           // that of a pointer, we allocate it as a pointer so that it
           // doesn't get constructed statically.  We never bother to
           // destroy it.
-          static void *allocator_instance = 0;
+          static void *allocator_instance = nullptr;
 
           // Check this critical assumption.  We put it in a variable
           // first to avoid stupid compiler warnings that the
@@ -65,7 +65,7 @@ ACE_Allocator::instance (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Allocator::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), nullptr));
   ACE_Allocator *t = ACE_Allocator::allocator_;
 
   ACE_Allocator::allocator_ = r;
@@ -94,9 +94,9 @@ ACE_Allocator::ACE_Allocator ()
 void *
 ACE_New_Allocator::malloc (size_t nbytes)
 {
-  char *ptr = 0;
+  char *ptr = nullptr;
   if (nbytes > 0)
-    ACE_NEW_RETURN (ptr, char[nbytes], 0);
+    ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
   return (void *) ptr;
 }
 
@@ -104,9 +104,9 @@ void *
 ACE_New_Allocator::calloc (size_t nbytes,
                            char initial_value)
 {
-  char *ptr = 0;
+  char *ptr = nullptr;
 
-  ACE_NEW_RETURN (ptr, char[nbytes], 0);
+  ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
 
   ACE_OS::memset (ptr, initial_value, nbytes);
   return (void *) ptr;
@@ -216,7 +216,7 @@ ACE_Static_Allocator_Base::malloc (size_t nbytes)
   if (this->offset_ + nbytes > this->size_)
     {
       errno = ENOMEM;
-      return 0;
+      return nullptr;
     }
   else
     {

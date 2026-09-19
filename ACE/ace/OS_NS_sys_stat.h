@@ -57,7 +57,7 @@ typedef struct _stat ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::_stat
 #     define ACE_WSTAT_FUNC_NAME ::_wstat
 #   else
-typedef struct stat ACE_stat;
+using ACE_stat = struct stat;
 #     define ACE_STAT_FUNC_NAME ::stat
 #     define ACE_WSTAT_FUNC_NAME ACE_STAT_FUNC_NAME
 #   endif /* ACE_WIN32 */

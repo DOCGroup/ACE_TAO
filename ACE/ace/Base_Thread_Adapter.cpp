@@ -12,11 +12,11 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INIT_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::init_log_msg_hook_ = 0;
-ACE_INHERIT_LOG_MSG_HOOK  ACE_Base_Thread_Adapter::inherit_log_msg_hook_ = 0;
-ACE_CLOSE_LOG_MSG_HOOK    ACE_Base_Thread_Adapter::close_log_msg_hook_ = 0;
-ACE_SYNC_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::sync_log_msg_hook_ = 0;
-ACE_THR_DESC_LOG_MSG_HOOK ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_ = 0;
+ACE_INIT_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::init_log_msg_hook_ = nullptr;
+ACE_INHERIT_LOG_MSG_HOOK  ACE_Base_Thread_Adapter::inherit_log_msg_hook_ = nullptr;
+ACE_CLOSE_LOG_MSG_HOOK    ACE_Base_Thread_Adapter::close_log_msg_hook_ = nullptr;
+ACE_SYNC_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::sync_log_msg_hook_ = nullptr;
+ACE_THR_DESC_LOG_MSG_HOOK ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_ = nullptr;
 
 ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
      ACE_THR_FUNC user_func,
@@ -38,7 +38,7 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
 {
   ACE_OS_TRACE ("ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter");
 
-  if (ACE_Base_Thread_Adapter::init_log_msg_hook_ != 0)
+  if (ACE_Base_Thread_Adapter::init_log_msg_hook_ != nullptr)
     (*ACE_Base_Thread_Adapter::init_log_msg_hook_) (
           this->log_msg_attributes_
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
@@ -54,7 +54,7 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
 void
 ACE_Base_Thread_Adapter::inherit_log_msg ()
 {
-  if (ACE_Base_Thread_Adapter::inherit_log_msg_hook_ != 0)
+  if (ACE_Base_Thread_Adapter::inherit_log_msg_hook_ != nullptr)
     (*ACE_Base_Thread_Adapter::inherit_log_msg_hook_)(
            this->thr_desc_,
            this->log_msg_attributes_);
@@ -68,23 +68,23 @@ ACE_Base_Thread_Adapter::inherit_log_msg ()
 void
 ACE_Base_Thread_Adapter::close_log_msg ()
 {
-  if (ACE_Base_Thread_Adapter::close_log_msg_hook_ != 0)
+  if (ACE_Base_Thread_Adapter::close_log_msg_hook_ != nullptr)
     (*ACE_Base_Thread_Adapter::close_log_msg_hook_) ();
 }
 
 void
 ACE_Base_Thread_Adapter::sync_log_msg (const ACE_TCHAR *prg)
 {
-  if (ACE_Base_Thread_Adapter::sync_log_msg_hook_ != 0)
+  if (ACE_Base_Thread_Adapter::sync_log_msg_hook_ != nullptr)
     (*ACE_Base_Thread_Adapter::sync_log_msg_hook_) (prg);
 }
 
 ACE_OS_Thread_Descriptor *
 ACE_Base_Thread_Adapter::thr_desc_log_msg ()
 {
-  if (ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_ != 0)
+  if (ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_ != nullptr)
     return (*ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_) ();
-  return 0;
+  return nullptr;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

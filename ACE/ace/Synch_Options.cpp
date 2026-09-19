@@ -91,7 +91,7 @@ const ACE_Time_Value *
 ACE_Synch_Options::time_value () const
 {
   ACE_TRACE ("ACE_Synch_Options::time_value");
-  return (*this)[USE_TIMEOUT] ? &this->timeout_ : 0;
+  return (*this)[USE_TIMEOUT] ? &this->timeout_ : nullptr;
 }
 
 const void *

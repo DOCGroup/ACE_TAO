@@ -98,7 +98,7 @@ ACE_Capabilities::resetcaps ()
        !iter.done ();
        iter.advance ())
     {
-      CAPABILITIES_MAP::ENTRY *entry = 0;
+      CAPABILITIES_MAP::ENTRY *entry = nullptr;
       iter.next (entry);
       delete entry->int_id_;
     }
@@ -227,7 +227,7 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 {
   int ch;
 
-  line.set (0, 0);
+  line.set (nullptr, 0);
 
   while ((ch = ACE_OS::fgetc (fp)) != EOF && ch != ACE_TEXT ('\n'))
     line += (ACE_TCHAR) ch;
@@ -241,13 +241,13 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 int
 ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 {
-  ACE_CapEntry* cap = 0;
+  ACE_CapEntry* cap = nullptr;
   if (this->caps_.find (keyname, cap) == -1)
     return -1;
 
   ACE_StringCapEntry *scap =
     dynamic_cast<ACE_StringCapEntry *> (cap);
-  if (scap == 0)
+  if (scap == nullptr)
     return -1;
 
   val = scap->getval ();
@@ -257,13 +257,13 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 int
 ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
 {
-  ACE_CapEntry *cap = 0;
+  ACE_CapEntry *cap = nullptr;
   if (this->caps_.find (keyname, cap) == -1)
     return -1;
 
   ACE_IntCapEntry *icap =
     dynamic_cast<ACE_IntCapEntry *> (cap);
-  if (icap != 0)
+  if (icap != nullptr)
     {
       val = icap->getval ();
       return 0;
@@ -272,7 +272,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
   ACE_BoolCapEntry *bcap =
     dynamic_cast<ACE_BoolCapEntry *> (cap);
 
-  if (bcap == 0)
+  if (bcap == nullptr)
     return -1;
 
   val = bcap->getval ();
@@ -302,7 +302,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 {
   FILE *fp = ACE_OS::fopen (fname, ACE_TEXT ("r"));
 
-  if (fp == 0)
+  if (fp == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Can't open %s file\n"),
                        fname),

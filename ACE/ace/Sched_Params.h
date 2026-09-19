@@ -63,7 +63,7 @@ class ACE_Export ACE_Sched_Params
   //    implementation, especially for PTHREADS platforms.  Please
   //    send any comments or corrections to the ACE developers.
 public:
-  typedef int Policy;
+  using Policy = int;
 
   /// Constructor.
   ACE_Sched_Params (const Policy policy,

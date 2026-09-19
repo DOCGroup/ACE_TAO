@@ -31,7 +31,7 @@ class ACE_Reactor_Timer_Interface;
 class ACE_Thread_Manager;
 class ACE_Process;
 
-typedef unsigned long ACE_Reactor_Mask;
+using ACE_Reactor_Mask = unsigned long;
 
 /**
  * @class ACE_Event_Handler
@@ -198,7 +198,7 @@ public:
                                    ACE_Thread_Manager *thr_mgr);
 
   /// Reference count type.
-  typedef long Reference_Count;
+  using Reference_Count = long;
 
   /// Increment reference count on the handler.
   /**
@@ -283,7 +283,7 @@ protected:
                      int priority = ACE_Event_Handler::LO_PRIORITY);
 
   /// Typedef for implementation of reference counting.
-  typedef std::atomic<Reference_Count> Atomic_Reference_Count;
+  using Atomic_Reference_Count = std::atomic<Reference_Count>;
 
   /// Reference count.
   Atomic_Reference_Count reference_count_;

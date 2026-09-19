@@ -62,8 +62,8 @@ List_Node::sort (char *base, int len)
 /// seen so far.  This is used to initialize the INDEX field to some
 /// useful value.
 List_Node::List_Node (char *k, int len)
-  : link (0),
-    next (0),
+  : link (nullptr),
+    next (nullptr),
     key (k),
     rest (option[TYPE] ? k + len + 1 : const_cast<char*> ("")),
     length (len),

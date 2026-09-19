@@ -53,14 +53,14 @@ class ACE_Export ACE_Condition<ACE_Thread_Mutex>
 public:
   /// Initialize the condition variable.
   ACE_Condition (ACE_Thread_Mutex &m,
-                 const ACE_TCHAR *name = 0,
-                 void *arg = 0);
+                 const ACE_TCHAR *name = nullptr,
+                 void *arg = nullptr);
 
   /// Initialize the condition variable.
   ACE_Condition (ACE_Thread_Mutex &m,
                  const ACE_Condition_Attributes &attributes,
-                 const ACE_TCHAR *name = 0,
-                 void *arg = 0);
+                 const ACE_TCHAR *name = nullptr,
+                 void *arg = nullptr);
 
   /// Implicitly destroy the condition variable.
   ~ACE_Condition ();
@@ -91,7 +91,7 @@ public:
    * call times out before the condition is signaled <wait> returns -1
    * and sets errno to ETIME.
    */
-  int wait (ACE_Thread_Mutex &mutex, const ACE_Time_Value *abstime = 0);
+  int wait (ACE_Thread_Mutex &mutex, const ACE_Time_Value *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
@@ -127,7 +127,7 @@ private:
   ACE_Condition (const ACE_Condition<ACE_Thread_Mutex> &) = delete;
 };
 
-typedef ACE_Condition<ACE_Thread_Mutex> ACE_Condition_Thread_Mutex;
+using ACE_Condition_Thread_Mutex = ACE_Condition<ACE_Thread_Mutex>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

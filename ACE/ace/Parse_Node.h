@@ -86,9 +86,9 @@ class ACE_Suspend_Node : public ACE_Parse_Node
 {
 public:
   ACE_Suspend_Node (const ACE_TCHAR *name);
-  ~ACE_Suspend_Node ();
+  ~ACE_Suspend_Node () override;
 
-  virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
+  void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -114,9 +114,9 @@ class ACE_Resume_Node : public ACE_Parse_Node
 {
 public:
   ACE_Resume_Node (const ACE_TCHAR *name);
-  ~ACE_Resume_Node ();
+  ~ACE_Resume_Node () override;
 
-  virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
+  void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -142,9 +142,9 @@ class ACE_Remove_Node : public ACE_Parse_Node
 {
 public:
   ACE_Remove_Node (const ACE_TCHAR *name);
-  ~ACE_Remove_Node ();
+  ~ACE_Remove_Node () override;
 
-  virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
+  void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -170,9 +170,9 @@ class ACE_Static_Node : public ACE_Parse_Node
 {
 public:
   ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = 0);
-  virtual ~ACE_Static_Node ();
+  ~ACE_Static_Node () override;
 
-  virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
+  void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
   virtual const ACE_Service_Type *record (const ACE_Service_Gestalt *g) const;
 
   ACE_TCHAR *parameters () const;
@@ -209,10 +209,10 @@ class ACE_Dynamic_Node : public ACE_Static_Node
 public:
   ACE_Dynamic_Node (ACE_Service_Type_Factory const *, ACE_TCHAR *params);
 
-  virtual ~ACE_Dynamic_Node ();
+  ~ACE_Dynamic_Node () override;
 
   //  virtual const ACE_Service_Type *record () const;
-  virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
+  void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -242,9 +242,9 @@ class ACE_Stream_Node : public ACE_Parse_Node
 {
 public:
   ACE_Stream_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
-  virtual ~ACE_Stream_Node ();
+  ~ACE_Stream_Node () override;
 
-  virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
+  void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -274,9 +274,9 @@ class ACE_Dummy_Node : public ACE_Parse_Node
 {
 public:
   ACE_Dummy_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
-  ~ACE_Dummy_Node ();
+  ~ACE_Dummy_Node () override;
 
-  virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
+  void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -364,10 +364,10 @@ class ACE_Object_Node : public ACE_Location_Node
 {
 public:
   ACE_Object_Node (const ACE_TCHAR *pathname, const ACE_TCHAR *obj_name);
-  virtual void *symbol (ACE_Service_Gestalt *config,
+  void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0);
-  virtual ~ACE_Object_Node ();
+                        ACE_Service_Object_Exterminator * = 0) override;
+  ~ACE_Object_Node () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -397,10 +397,10 @@ class ACE_Function_Node : public ACE_Location_Node
 {
 public:
   ACE_Function_Node (const ACE_TCHAR *pathname, const ACE_TCHAR *func_name);
-  virtual void *symbol (ACE_Service_Gestalt *config,
+  void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator *gobbler = 0);
-  virtual ~ACE_Function_Node ();
+                        ACE_Service_Object_Exterminator *gobbler = 0) override;
+  ~ACE_Function_Node () override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -452,10 +452,10 @@ class ACE_Static_Function_Node : public ACE_Location_Node
 {
 public:
   explicit ACE_Static_Function_Node (const ACE_TCHAR *func_name);
-  virtual void *symbol (ACE_Service_Gestalt *config,
+  void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0);
-  virtual ~ACE_Static_Function_Node ();
+                        ACE_Service_Object_Exterminator * = 0) override;
+  ~ACE_Static_Function_Node () override;
 
   /// Dump the state of an object.
   void dump () const;

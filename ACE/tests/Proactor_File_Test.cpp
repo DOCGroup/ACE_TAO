@@ -137,7 +137,7 @@ int FileIOHandler::Connect()
   // reopen new file for asynch IO
   if(connector_.connect(peer_,
                         tmp_addr,
-                        0, //timeout
+                        nullptr, //timeout
                         ACE_Addr::sap_any,
                         0, //reuse
                         O_RDWR |FILE_FLAG_OVERLAPPED) != 0)

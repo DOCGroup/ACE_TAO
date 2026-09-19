@@ -32,19 +32,19 @@ namespace
     char key;
     int  value;
     ACE_RB_Tree_Node<char, int> *node;
-  } nodes[] = {{'a',  1, 0},
-               {'f',  6, 0},
-               {'c',  3, 0},
-               {'e',  5, 0},
-               {'g',  7, 0},
-               {'b',  2, 0},
-               {'h',  8, 0},
-               {'d',  4, 0},
-               {'i',  9, 0},
-               {'l', 12, 0},
-               {'j', 10, 0},
-               {'k', 11, 0},
-               {'m', 13, 0}};
+  } nodes[] = {{'a',  1, nullptr},
+               {'f',  6, nullptr},
+               {'c',  3, nullptr},
+               {'e',  5, nullptr},
+               {'g',  7, nullptr},
+               {'b',  2, nullptr},
+               {'h',  8, nullptr},
+               {'d',  4, nullptr},
+               {'i',  9, nullptr},
+               {'l', 12, nullptr},
+               {'j', 10, nullptr},
+               {'k', 11, nullptr},
+               {'m', 13, nullptr}};
 }
 
 int
@@ -70,7 +70,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_DEBUG, "Validating Tree\n"));
     {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
     {
-      ACE_RB_Tree_Node<char, int> *node = 0;
+      ACE_RB_Tree_Node<char, int> *node = nullptr;
 
       if (tree.find (nodes[i].key, node))
       {
@@ -104,7 +104,7 @@ run_main (int, ACE_TCHAR *[])
         }
         else
         {
-          ACE_RB_Tree_Node<char, int> *node = 0;
+          ACE_RB_Tree_Node<char, int> *node = nullptr;
 
           if (0 == tree.find (nodes[i].key, node))
           {

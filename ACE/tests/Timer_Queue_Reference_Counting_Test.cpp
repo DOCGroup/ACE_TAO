@@ -185,7 +185,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
     {
       result =
         timer_queue.cancel (first_timer_id,
-                            0,
+                            nullptr,
                             dont_call_handle_close);
       ACE_TEST_ASSERT (result == 1);
 
@@ -193,7 +193,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
         {
           result =
             timer_queue.cancel (second_timer_id,
-                                0,
+                                nullptr,
                                 dont_call_handle_close);
           ACE_TEST_ASSERT (result == 1);
         }
@@ -301,7 +301,7 @@ expire (ACE_Timer_Queue &timer_queue,
       i += result;
     }
 
-  timer_queue.cancel (timer_id, 0, 0);
+  timer_queue.cancel (timer_id, nullptr, 0);
 }
 
 template<class TIMER_QUEUE>
@@ -418,7 +418,7 @@ simple (ACE_Timer_Queue &timer_queue)
 
     result =
       timer_queue.cancel (timer_id,
-                          0,
+                          nullptr,
                           0);
     ACE_TEST_ASSERT (result == 1);
   }
@@ -449,7 +449,7 @@ simple (ACE_Timer_Queue &timer_queue)
       i += result;
     }
 
-  timer_queue.cancel (timer_id, 0, 0);
+  timer_queue.cancel (timer_id, nullptr, 0);
 }
 
 template <class TIMER_QUEUE>

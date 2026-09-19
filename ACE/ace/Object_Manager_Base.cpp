@@ -62,13 +62,13 @@ ACE_Object_Manager_Base::~ACE_Object_Manager_Base ()
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 }
 
-int
+bool
 ACE_Object_Manager_Base::starting_up_i ()
 {
   return object_manager_state_ < OBJ_MAN_INITIALIZED;
 }
 
-int
+bool
 ACE_Object_Manager_Base::shutting_down_i ()
 {
   return object_manager_state_ > OBJ_MAN_INITIALIZED;
@@ -87,11 +87,11 @@ ACE_OS_Object_Manager_Internal_Exit_Hook ()
 ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ {};
 
 void *ACE_OS_Object_Manager::preallocated_object[
-  ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
+  ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { nullptr };
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
-  : default_mask_ (0)
-  , thread_hook_ (0)
+  : default_mask_ (nullptr)
+  , thread_hook_ (nullptr)
   , exit_info_ ()
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   , seh_except_selector_ (ACE_SEH_Default_Exception_Selector)
@@ -391,7 +391,7 @@ ACE_OS_Object_Manager::fini ()
 #else
   delete default_mask_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  default_mask_ = 0;
+  default_mask_ = nullptr;
 
   // Indicate that this ACE_OS_Object_Manager instance has been shut down.
   object_manager_state_ = OBJ_MAN_SHUT_DOWN;
@@ -414,7 +414,7 @@ ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func, const char* name)
 {
   return exit_info_.at_exit_i (&ace_exit_hook_marker,
                                reinterpret_cast <ACE_CLEANUP_FUNC> (func),
-                               0,
+                               nullptr,
                                name);
 }
 
@@ -436,20 +436,20 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
 #endif /* ACE_LACKS_PERROR */
 }
 
-int
+bool
 ACE_OS_Object_Manager::starting_up ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->starting_up_i ()
-    : 1;
+    : true;
 }
 
-int
+bool
 ACE_OS_Object_Manager::shutting_down ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->shutting_down_i ()
-    : 1;
+    : true;
 }
 
 /*****************************************************************************/

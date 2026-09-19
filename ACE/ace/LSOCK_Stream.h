@@ -53,7 +53,7 @@ public:
   void set_handle (ACE_HANDLE fd);
 
   // = Meta-type info
-  typedef ACE_UNIX_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_UNIX_Addr;
 
   /// Dump the state of an object.
   void dump () const;

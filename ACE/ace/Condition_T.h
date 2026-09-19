@@ -52,13 +52,13 @@ class ACE_Condition
 public:
   /// Initialize the condition variable.
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
-                 const ACE_TCHAR *name = 0, void *arg = 0);
+                 const ACE_TCHAR *name = nullptr, void *arg = nullptr);
 
   /// Initialize the condition variable.
   ACE_Condition (MUTEX &m,
                  const ACE_Condition_Attributes &attributes,
-                 const ACE_TCHAR *name = 0,
-                 void *arg = 0);
+                 const ACE_TCHAR *name = nullptr,
+                 void *arg = nullptr);
 
   /// Implicitly destroy the condition variable.
   ~ACE_Condition ();
@@ -83,7 +83,7 @@ public:
    * call times out before the condition is signaled wait() returns -1
    * and sets errno to ETIME.
    */
-  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = 0);
+  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
@@ -137,7 +137,7 @@ template <class MUTEX>
 class ACE_Thread_Condition : public ACE_Condition<MUTEX>
 {
 public:
-  ACE_Thread_Condition (MUTEX &m, const ACE_TCHAR *name = 0, void *arg = 0);
+  ACE_Thread_Condition (MUTEX &m, const ACE_TCHAR *name = nullptr, void *arg = nullptr);
 
   /// Dump the state of an object.
   void dump () const;

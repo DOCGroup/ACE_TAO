@@ -62,7 +62,7 @@ namespace ACE
   template <typename Ta, typename Tb>
   struct If_Then_Else<true, Ta, Tb>
   {
-    typedef Ta result_type;
+    using result_type = Ta;
   };
 
   /**
@@ -76,7 +76,7 @@ namespace ACE
   template <typename Ta, typename Tb>
   struct If_Then_Else<false, Ta, Tb>
   {
-    typedef Tb result_type;
+    using result_type = Tb;
   };
 }
 

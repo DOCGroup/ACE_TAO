@@ -80,7 +80,7 @@ private:
   ACE_Condition (const ACE_Condition<ACE_Null_Mutex> &) = delete;
 };
 
-typedef ACE_Condition<ACE_Null_Mutex> ACE_Null_Condition;
+using ACE_Null_Condition = ACE_Condition<ACE_Null_Mutex>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -81,7 +81,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // Stash the passed/duped handle sets away in this object for later
   // closing if needed or requested. At the same time, figure out which
   // ones to include in command line options if that's needed below.
-  ACE_Handle_Set *set_p = 0;
+  ACE_Handle_Set *set_p = nullptr;
   if (options.dup_handles (this->dup_handles_))
     set_p = &this->dup_handles_;
   else if (options.passed_handles (this->handles_passed_))
@@ -403,7 +403,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
         // If we must, set the working directory for the child
         // process.
-        if (options.working_directory () != 0)
+        if (options.working_directory () != nullptr)
           ACE_OS::chdir (options.working_directory ());
         // Should check for error here!
 
@@ -444,7 +444,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           {
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
-            for (size_t i = 0; procenv[i] != 0; i++)
+            for (size_t i = 0; procenv[i] != nullptr; i++)
               if (ACE_OS::putenv (procenv[i]) != 0)
                 return ACE_INVALID_PID;
 
@@ -593,7 +593,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
         ACE_OS::waitpid (this->child_id_,
                          &this->exit_code_,
                          WNOHANG);
-      if (status != 0)
+      if (status != nullptr)
         *status = this->exit_code_;
 
       return retv;
@@ -620,7 +620,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
       pid = ACE_OS::waitpid (this->getpid (),
                              &this->exit_code_,
                              WNOHANG);
-      if (status != 0)
+      if (status != nullptr)
         *status = this->exit_code_;
 
       if (pid > 0 || pid == ACE_INVALID_PID)
@@ -754,16 +754,16 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
     set_handles_called_ (0),
     environment_buf_index_ (0),
     environment_argv_index_ (0),
-    environment_buf_ (0),
+    environment_buf_ (nullptr),
     environment_buf_len_ (env_buf_len),
     max_environment_args_ (max_env_args),
     max_environ_argv_index_ (max_env_args - 1),
     command_line_argv_calculated_ (false),
-    command_line_buf_ (0),
-    command_line_copy_ (0),
+    command_line_buf_ (nullptr),
+    command_line_copy_ (nullptr),
     command_line_buf_len_ (command_line_buf_len),
     max_command_line_args_ (max_cmdline_args),
-    command_line_argv_ (0),
+    command_line_argv_ (nullptr),
     process_group_ (ACE_INVALID_PID),
     use_unicode_environment_ (false)
 {
@@ -793,7 +793,7 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
            ACE_TCHAR *[max_env_args]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
   environment_buf_[0] = '\0';
-  environment_argv_[0] = 0;
+  environment_argv_[0] = nullptr;
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->startup_info_,
                   0,
@@ -934,7 +934,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   // To address the potential buffer overflow,
   // we now allocate the buffer on heap with a variable size.
   size_t const buflen = ACE_OS::strlen (variable_name) + ACE_OS::strlen (format) + 2;
-  ACE_TCHAR *newformat = 0;
+  ACE_TCHAR *newformat = nullptr;
   ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
   std::unique_ptr<ACE_TCHAR[]> safe_newformat (newformat);
 
@@ -951,7 +951,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
     }
   int retval = 0;
 
-  ACE_TCHAR *stack_buf = 0;
+  ACE_TCHAR *stack_buf = nullptr;
   ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);
   std::unique_ptr<ACE_TCHAR[]> safe_stack_buf (stack_buf);
 
@@ -1034,7 +1034,7 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] = environment_buf_ + environment_buf_index_;
-  environment_argv_[environment_argv_index_] = 0;
+  environment_argv_[environment_argv_index_] = nullptr;
 
   // Update our index.
   environment_buf_index_ += len;
@@ -1234,7 +1234,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
 int
 ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 {
-  ACE_ANTI_TCHAR *anti_clb = 0;
+  ACE_ANTI_TCHAR *anti_clb = nullptr;
   ACE_NEW_RETURN (anti_clb,
                   ACE_ANTI_TCHAR[this->command_line_buf_len_],
                   -1);
@@ -1264,7 +1264,7 @@ ACE_TCHAR *
 ACE_Process_Options::env_buf ()
 {
   if (environment_buf_[0] == '\0')
-    return 0;
+    return nullptr;
   else
     return environment_buf_;
 }
@@ -1292,11 +1292,11 @@ ACE_Process_Options::command_line_argv ()
       unsigned int x = 0;
       do
         command_line_argv_[x] = parser.next ();
-      while (command_line_argv_[x] != 0
+      while (command_line_argv_[x] != nullptr
              // subtract one for the ending zero.
              && ++x < max_command_line_args_ - 1);
 
-      command_line_argv_[x] = 0;
+      command_line_argv_[x] = nullptr;
     }
 
   return command_line_argv_;

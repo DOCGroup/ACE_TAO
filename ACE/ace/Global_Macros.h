@@ -370,7 +370,7 @@
 /// Service Objects, i.e., objects dynamically loaded via the service
 /// configurator, must provide a destructor function with the
 /// following prototype to perform object cleanup.
-typedef void (*ACE_Service_Object_Exterminator)(void *);
+using ACE_Service_Object_Exterminator = void (*)(void *);
 
 /** @name Service Configurator macros
  *

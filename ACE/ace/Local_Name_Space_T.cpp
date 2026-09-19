@@ -146,7 +146,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   const size_t total_len = name_len + value_len + type_len;
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
-  if (ptr == 0)
+  if (ptr == nullptr)
     return -1;
   else
     {
@@ -331,7 +331,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   size_t len = ACE_OS::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
   // memory.
-  char *new_type = 0;
+  char *new_type = nullptr;
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (new_type,
                         static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * (len + 1))),
@@ -361,7 +361,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space ()
   : allocator_ (0),
     name_space_map_ (0),
-    name_options_ (0)
+    name_options_ (nullptr)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
 }
@@ -491,7 +491,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
-  void *ns_map = 0;
+  void *ns_map = nullptr;
 
   // This is the easy case since if we find the Name Server Map
   // Manager we know it's already initialized.
@@ -556,7 +556,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (
 
   int result = 1;
 
-  for (map_entry = 0;
+  for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance())
     {
@@ -590,7 +590,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (
 
   int result = 1;
 
-  for (map_entry = 0;
+  for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
     {
@@ -622,7 +622,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  char *compiled_regexp = 0;
+  char *compiled_regexp = nullptr;
 
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
@@ -645,7 +645,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
 
   int result = 1;
 
-  for (map_entry = 0;
+  for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
     {
@@ -659,7 +659,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
 #else
         // If we don't have regular expressions just use strstr() for
         // substring matching.
-        || ACE_OS::strstr (type, compiled_regexp) != 0)
+        || ACE_OS::strstr (type, compiled_regexp) != nullptr)
 #endif /* ACE_HAS_REGEX */
 
         {
@@ -697,7 +697,7 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  for (map_entry = 0;
+  for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance())
     {
@@ -726,7 +726,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  for (map_entry = 0;
+  for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
     {
@@ -754,7 +754,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  char *compiled_regexp = 0;
+  char *compiled_regexp = nullptr;
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
 
@@ -771,7 +771,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
 
-  for (map_entry = 0;
+  for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
     {
@@ -784,7 +784,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else /* If we don't have regular expressions just use strstr() for
          substring matching. */
-        || ACE_OS::strstr (type, compiled_regexp) != 0)
+        || ACE_OS::strstr (type, compiled_regexp) != nullptr)
 #endif /* ACE_HAS_REGEX */
         {
           ACE_Name_Binding entry (map_entry->ext_id_,
@@ -817,7 +817,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i () const
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  for (map_entry = 0;
+  for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance())
     {

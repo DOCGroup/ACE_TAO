@@ -72,7 +72,7 @@ protected:
 
   virtual ssize_t send (iovec *iov, int iovcnt,
                         size_t &bytes_transferred,
-                        const ACE_Time_Value *timeout = 0);
+                        const ACE_Time_Value *timeout = nullptr);
 
 #if TAO_HAS_SENDFILE == 1
   virtual ssize_t sendfile (TAO_MMAP_Allocator * allocator,
@@ -82,7 +82,7 @@ protected:
                             TAO::Transport::Drain_Constraints const & dc);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
-  virtual ssize_t recv (char *buf, size_t len, const ACE_Time_Value *s = 0);
+  virtual ssize_t recv (char *buf, size_t len, const ACE_Time_Value *s = nullptr);
 
 public:
   /// Bridge method to call a similar method on the connection handler
@@ -100,10 +100,10 @@ public:
                             ACE_Time_Value *max_wait_time);
 
   virtual int send_message (TAO_OutputCDR &stream,
-                            TAO_Stub *stub = 0,
-                            TAO_ServerRequest *request = 0,
+                            TAO_Stub *stub = nullptr,
+                            TAO_ServerRequest *request = nullptr,
                             TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
-                            ACE_Time_Value *max_time_wait = 0);
+                            ACE_Time_Value *max_time_wait = nullptr);
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 

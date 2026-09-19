@@ -24,8 +24,8 @@ class ACE_Null_Barrier
 public:
   /// Initialize the barrier to synchronize <count> threads.
   ACE_Null_Barrier (unsigned int,
-                    const char * = 0,
-                    void * = 0) {}
+                    const char * = nullptr,
+                    void * = nullptr) {}
 
   /// Default dtor.
   ~ACE_Null_Barrier () = default;

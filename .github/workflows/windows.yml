@@ -101,9 +101,9 @@ jobs:
       VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
     - name: checkout MPC
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
@@ -114,7 +114,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: c82f74667287d3dc386bce81e44964370c91a289
+        vcpkgGitCommitId: cd61e1e26a038e82d6550a3ebbe0fbbfe7da78e3
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
       run: |
@@ -123,9 +123,8 @@ jobs:
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
         echo "ipv6=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
-        echo "xerces3=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "xerces3=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "ssl=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
-        echo "openssl11=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "zlib=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
@@ -147,7 +146,7 @@ jobs:
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
@@ -170,9 +169,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
     - name: checkout MPC
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}

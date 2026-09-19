@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13, macos-14]
+        os: [macos-14]
         include:
           - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
     runs-on: ${{ matrix.os }}
@@ -30,9 +30,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
     - name: checkout MPC
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}

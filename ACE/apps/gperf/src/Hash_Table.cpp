@@ -108,7 +108,7 @@ Hash_Table::find (List_Node *item,
   else
     {
       this->table_[probe] = item;
-      return 0;
+      return nullptr;
     }
 }
 

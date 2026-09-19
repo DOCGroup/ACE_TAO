@@ -40,7 +40,7 @@ class ACE_Export ACE_Allocator
 {
 public:
   /// Unsigned integer type used for specifying memory block lengths.
-  typedef size_t size_type;
+  using size_type = size_t;
 
   // = Memory Management
 
@@ -169,14 +169,14 @@ template <typename T>
 class ACE_Export ACE_Allocator_Std_Adapter
 {
 public:
-  typedef T value_type;
-  typedef T* pointer;
-  typedef const T* const_pointer;
-  typedef T& reference;
-  typedef const T& const_reference;
-  typedef std::size_t size_type;
-  typedef std::ptrdiff_t difference_type;
-  template <typename U> struct rebind { typedef ACE_Allocator_Std_Adapter<U> other; };
+  using value_type = T;
+  using pointer = T *;
+  using const_pointer = const T *;
+  using reference = T &;
+  using const_reference = const T &;
+  using size_type = std::size_t;
+  using difference_type = std::ptrdiff_t;
+  template <typename U> struct rebind { using other = ACE_Allocator_Std_Adapter<U>; };
 
   ACE_Allocator_Std_Adapter() = default;
 

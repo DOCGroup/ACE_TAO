@@ -60,10 +60,10 @@ class ACE_Acceptor : public ACE_Service_Object
 {
 public:
   // Useful STL-style traits.
-  typedef typename PEER_ACCEPTOR::PEER_ADDR addr_type;
-  typedef PEER_ACCEPTOR acceptor_type;
-  typedef SVC_HANDLER handler_type;
-  typedef typename SVC_HANDLER::stream_type stream_type;
+  using addr_type = typename PEER_ACCEPTOR::PEER_ADDR;
+  using acceptor_type = PEER_ACCEPTOR;
+  using handler_type = SVC_HANDLER;
+  using stream_type = typename SVC_HANDLER::stream_type;
 
   /// "Do-nothing" constructor.
   ACE_Acceptor (ACE_Reactor * = 0,
@@ -151,7 +151,7 @@ public:
                     int reuse_addr = 1);
 
   /// Close down the Acceptor's resources.
-  virtual ~ACE_Acceptor ();
+  ~ACE_Acceptor () override;
 
   /// Return the underlying PEER_ACCEPTOR object.
   virtual operator PEER_ACCEPTOR &() const;
@@ -160,7 +160,7 @@ public:
   virtual PEER_ACCEPTOR &acceptor () const;
 
   /// Returns the listening acceptor's {ACE_HANDLE}.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Close down the Acceptor
   virtual int close ();
@@ -212,31 +212,31 @@ protected:
   // = Demultiplexing hooks.
   /// Perform termination activities when {this} is removed from the
   /// {reactor}.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Accepts all pending connections from clients, and creates and
   /// activates SVC_HANDLERs.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Calls {handle_close}.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version returns address info in {buf}.
-  virtual int info (ACE_TCHAR **buf, size_t) const;
+  int info (ACE_TCHAR **buf, size_t) const override;
 
 public:
   // = Service management hooks.
   /// This method calls {Reactor::suspend}.
-  virtual int suspend ();
+  int suspend () override;
 
   /// This method calls {Reactor::resume}.
-  virtual int resume ();
+  int resume () override;
 
 protected:
   /// Concrete factory for accepting connections from clients...
@@ -281,25 +281,21 @@ class ACE_Strategy_Acceptor
 {
 public:
   // Useful STL-style traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER>
-          creation_strategy_type;
-  typedef ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR>
-          accept_strategy_type;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-          concurrency_strategy_type;
-  typedef ACE_Scheduling_Strategy<SVC_HANDLER> scheduling_strategy_type;
-  typedef ACE_Acceptor <SVC_HANDLER, PEER_ACCEPTOR>
-          base_type;
+  using creation_strategy_type = ACE_Creation_Strategy<SVC_HANDLER>;
+  using accept_strategy_type = ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR>;
+  using concurrency_strategy_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
+  using scheduling_strategy_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
+  using base_type = ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>;
 
   // = Define some useful (old style) traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> ACCEPT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
-  typedef ACE_Scheduling_Strategy<SVC_HANDLER> SCHEDULING_STRATEGY;
+  using CREATION_STRATEGY = ACE_Creation_Strategy<SVC_HANDLER>;
+  using ACCEPT_STRATEGY = ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR>;
+  using CONCURRENCY_STRATEGY = ACE_Concurrency_Strategy<SVC_HANDLER>;
+  using SCHEDULING_STRATEGY = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
   /// Default constructor.
-  ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
-                         const ACE_TCHAR service_description[] = 0,
+  ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = nullptr,
+                         const ACE_TCHAR service_description[] = nullptr,
                          int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                          int reuse_addr = 1);
 
@@ -311,12 +307,12 @@ public:
    */
   ACE_Strategy_Acceptor (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
                          ACE_Reactor * = ACE_Reactor::instance (),
-                         ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-                         ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> * = 0,
-                         ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
-                         ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
-                         const ACE_TCHAR service_name[] = 0,
-                         const ACE_TCHAR service_description[] = 0,
+                         ACE_Creation_Strategy<SVC_HANDLER> * = nullptr,
+                         ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> * = nullptr,
+                         ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr,
+                         ACE_Scheduling_Strategy<SVC_HANDLER> * = nullptr,
+                         const ACE_TCHAR service_name[] = nullptr,
+                         const ACE_TCHAR service_description[] = nullptr,
                          int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                          int reuse_addr = 1);
 
@@ -368,12 +364,12 @@ public:
    */
   virtual int open (const typename PEER_ACCEPTOR::PEER_ADDR &,
                     ACE_Reactor * = ACE_Reactor::instance (),
-                    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-                    ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> * =0,
-                    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
-                    ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
-                    const ACE_TCHAR *service_name = 0,
-                    const ACE_TCHAR *service_description = 0,
+                    ACE_Creation_Strategy<SVC_HANDLER> * = nullptr,
+                    ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> * =nullptr,
+                    ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr,
+                    ACE_Scheduling_Strategy<SVC_HANDLER> * = nullptr,
+                    const ACE_TCHAR *service_name = nullptr,
+                    const ACE_TCHAR *service_description = nullptr,
                     int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                     int reuse_addr = 1);
 
@@ -536,10 +532,10 @@ class ACE_Oneshot_Acceptor : public ACE_Service_Object
 {
 public:
   // Useful STL-style traits.
-  typedef typename PEER_ACCEPTOR::PEER_ADDR addr_type;
-  typedef PEER_ACCEPTOR acceptor_type;
-  typedef SVC_HANDLER handler_type;
-  typedef typename SVC_HANDLER::stream_type stream_type;
+  using addr_type = typename PEER_ACCEPTOR::PEER_ADDR;
+  using acceptor_type = PEER_ACCEPTOR;
+  using handler_type = SVC_HANDLER;
+  using stream_type = typename SVC_HANDLER::stream_type;
 
   /// Constructor.
   ACE_Oneshot_Acceptor ();
@@ -554,7 +550,7 @@ public:
    */
   ACE_Oneshot_Acceptor (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
                         ACE_Reactor *reactor = ACE_Reactor::instance (),
-                        ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
+                        ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr);
 
   /**
    * Initialize the appropriate strategies for concurrency and then
@@ -566,10 +562,10 @@ public:
    */
   int open (const typename PEER_ACCEPTOR::PEER_ADDR &,
             ACE_Reactor *reactor = ACE_Reactor::instance (),
-            ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
+            ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr);
 
   /// Close down the {Oneshot_Acceptor}.
-  virtual ~ACE_Oneshot_Acceptor ();
+  ~ACE_Oneshot_Acceptor () override;
 
   // = Explicit factory operation.
   /// Create a {SVC_HANDLER}, accept the connection into the
@@ -619,41 +615,41 @@ protected:
 
   // = Demultiplexing hooks.
   /// Returns the listening acceptor's {ACE_HANDLE}.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Perform termination activities when {this} is removed from the
   /// {reactor}.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Accept one connection from a client and activates the
   /// SVC_HANDLER.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Called when an acceptor times out...
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg) override;
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version returns address info in {buf}.
-  virtual int info (ACE_TCHAR **, size_t) const;
+  int info (ACE_TCHAR **, size_t) const override;
 
   // = Service management hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int suspend ();
+  int suspend () override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int resume ();
+  int resume () override;
 
 private:
   /**

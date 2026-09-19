@@ -95,7 +95,7 @@ Time_Handler::svc ()
   // This one may get the callback before we return, so serialize.
   this->lock_.acquire ();
   this->timer_id_[0] = r->schedule_timer(this,
-                                         (const void *) 0,
+                                         (const void *) nullptr,
                                          ACE_Time_Value (0, -5));
   this->lock_.release ();
   ACE_OS::sleep(3);
@@ -300,7 +300,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value no_waiting (0);
   size_t events = 0;
 
-  while (1)
+  while (true)
     {
       int result = r->handle_events (no_waiting);
 

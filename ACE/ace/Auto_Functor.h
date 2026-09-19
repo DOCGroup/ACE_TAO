@@ -55,8 +55,8 @@ template<typename X, typename Functor>
 class Auto_Functor
 {
 public:
-  typedef X element_type;
-  typedef Functor functor_type;
+  using element_type = X;
+  using functor_type = Functor;
 
   /// Constructor
   explicit Auto_Functor (X * p = nullptr,

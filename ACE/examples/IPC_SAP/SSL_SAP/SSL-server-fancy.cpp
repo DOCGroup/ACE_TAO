@@ -552,8 +552,12 @@ Handler_Factory::handle_events ()
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
       fd_set temp = handles;
 
+      int select_width = 0;
+#if !defined (ACE_WIN32)
+      select_width = this->oneway_acceptor_.get_handle () + 1;
+#endif /* ACE_WIN32 */
       int result =
-        ACE_OS::select (int (this->oneway_acceptor_.get_handle ()) + 1,
+        ACE_OS::select (select_width,
                         (fd_set *) &temp,
                         0,
                         0,
@@ -588,8 +592,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
-  context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);
-  context->private_key ("./key.pem", SSL_FILETYPE_PEM);
+  if (context->certificate ("./dummy.pem", SSL_FILETYPE_PEM) != 0)
+    return -1;
+
+  if (context->private_key ("./key.pem", SSL_FILETYPE_PEM) != 0)
+    return -1;
 
   OPTIONS::instance ()->parse_args (argc, argv);
 

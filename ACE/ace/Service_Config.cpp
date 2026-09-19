@@ -41,7 +41,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper ()
   ACE_Object_Manager::init_tss ();
 # endif
 
-  if (ACE_Thread::keycreate (&key_, 0) == -1)
+  if (ACE_Thread::keycreate (&key_, nullptr) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) Failed to create thread key: %p\n"),
@@ -61,7 +61,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 void*
 ACE_Threading_Helper<ACE_Thread_Mutex>::get ()
 {
-  void* temp = 0;
+  void* temp = nullptr;
   if (ACE_Thread::getspecific (key_, &temp) == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
@@ -121,7 +121,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
 {
   ACE_Service_Gestalt* s = this->saved_.get ();
-  ACE_ASSERT (s != 0);
+  ACE_ASSERT (s != nullptr);
 
   ACE_Service_Config::current (s);
 
@@ -137,7 +137,7 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 // Set the signal handler to point to the handle_signal() function.
-ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = 0;
+ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = nullptr;
 
 // Trigger a reconfiguration.
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
@@ -145,7 +145,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 // = Set by command-line options.
 
 /// Pathname of file to write process id.
-ACE_TCHAR *ACE_Service_Config::pid_file_name_ = 0;
+ACE_TCHAR *ACE_Service_Config::pid_file_name_ = nullptr;
 
 /// Shall we become a daemon process?
 bool ACE_Service_Config::be_a_daemon_ = false;
@@ -252,12 +252,12 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     }
 
   // Write process id to file.
-  if (this->pid_file_name_ != 0)
+  if (this->pid_file_name_ != nullptr)
     {
       FILE* pidf = ACE_OS::fopen (this->pid_file_name_,
                                   ACE_TEXT("w"));
 
-      if (pidf != 0)
+      if (pidf != nullptr)
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",
@@ -274,7 +274,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   const ACE_TCHAR *key = logger_key;
 
-  if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
+  if (key == nullptr || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
     {
       // Only use the static <logger_key_> if the caller doesn't
       // override it in the parameter list or if the key supplied is
@@ -312,7 +312,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     {
       ACE_Sig_Set ss;
       ss.sig_add (ACE_Service_Config::signum_);
-      if ((ACE_Reactor::instance () != 0) &&
+      if ((ACE_Reactor::instance () != nullptr) &&
           (ACE_Reactor::instance ()->register_handler
            (ss, ACE_Service_Config::signal_handler_) == -1))
         ACELIB_ERROR ((LM_ERROR,
@@ -380,7 +380,7 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = 0;
+  ACE_Service_Gestalt* tmp = nullptr;
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
@@ -399,7 +399,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = 0;
+  ACE_Service_Gestalt* tmp = nullptr;
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
@@ -427,7 +427,7 @@ ACE_Service_Gestalt*
 ACE_Service_Config::current ()
 {
   void* temp = ACE_Service_Config::singleton()->threadkey_.get ();
-  if (temp == 0) {
+  if (temp == nullptr) {
     // The most likely reason is that the current thread was spawned
     // by some native primitive, like pthreads or Windows API - not
     // from ACE. This is perfectly legal for callers who are not, or
@@ -474,7 +474,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
                                               u_int flags,
                                               ACE_Service_Object_Exterminator gobbler)
 {
-  ACE_Service_Type_Impl *stp = 0;
+  ACE_Service_Type_Impl *stp = nullptr;
 
   // Note, the only place we need to put a case statement.  This is
   // also the place where we'd put the RTTI tests, if the compiler
@@ -487,17 +487,17 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
                       ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
                                                name, flags,
                                                gobbler),
-                      0);
+                      nullptr);
       break;
     case ACE_Service_Type::MODULE:
       ACE_NEW_RETURN (stp,
                       ACE_Module_Type (symbol, name, flags),
-                      0);
+                      nullptr);
       break;
     case ACE_Service_Type::STREAM:
       ACE_NEW_RETURN (stp,
                       ACE_Stream_Type (symbol, name, flags),
-                      0);
+                      nullptr);
       break;
     default:
       ACELIB_ERROR ((LM_ERROR,
@@ -532,7 +532,7 @@ ACE_Service_Config::reconfigure ()
   if (ACE::debug ())
     {
 #if !defined (ACE_NLOGGING)
-      time_t t = ACE_OS::time (0);
+      time_t t = ACE_OS::time (nullptr);
 
       if (ACE::debug ())
         ACELIB_DEBUG ((LM_DEBUG,
@@ -573,7 +573,7 @@ ACE_Service_Config::fini_svcs ()
     ACE_Log_Msg::disable_debug_messages ();
 
   int result = 0;
-  if (ACE_Service_Repository::instance () != 0)
+  if (ACE_Service_Repository::instance () != nullptr)
     result = ACE_Service_Repository::instance ()->fini ();
 
   if (ACE::debug ())

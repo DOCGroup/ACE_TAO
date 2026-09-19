@@ -206,34 +206,34 @@ public:
    * ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
    * if it had already been called.
    */
-  virtual int init ();
+  int init () override;
 
   /**
    * Explicitly destroy the singleton instance of the
    * ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
    * if it had already been called.
    */
-  virtual int fini ();
+  int fini () override;
 
   /**
-   * Returns 1 before the ACE_Object_Manager has been constructed.
+   * Returns true before the ACE_Object_Manager has been constructed.
    * This flag can be used to determine if the program is constructing
    * static objects.  If no static object spawns any threads, the
-   * program will be single-threaded when this flag returns 1.  (Note
+   * program will be single-threaded when this flag returns true.  (Note
    * that the program still might construct some static objects when
-   * this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
+   * this flag returns false, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
    * defined.)
    */
-  static int starting_up ();
+  static bool starting_up ();
 
   /**
-   * Returns 1 after the ACE_Object_Manager has been destroyed.  This
+   * Returns true after the ACE_Object_Manager has been destroyed.  This
    * flag can be used to determine if the program is in the midst of
    * destroying static objects.  (Note that the program might destroy
-   * some static objects before this flag can return 1, if
+   * some static objects before this flag can return true, if
    * ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
    */
-  static int shutting_down ();
+  static bool shutting_down ();
 
   /**
    * Register an ACE_Cleanup object for cleanup at process
@@ -422,7 +422,7 @@ public:
   /// be constructed/destructed in <main> with
   /// ACE_HAS_NONSTATIC_OBJECT_MANAGER.
   ACE_Object_Manager ();
-  ~ACE_Object_Manager ();
+  ~ACE_Object_Manager () override;
 
 private:
   /// Singleton pointer.

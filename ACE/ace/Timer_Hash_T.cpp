@@ -19,7 +19,7 @@ class Hash_Token
 public:
   // This constructor is required by ACE_Locked_Free_List::alloc.
   Hash_Token () :
-    act_ (0),
+    act_ (nullptr),
     pos_ (0),
     orig_id_ (0),
     next_ (0)
@@ -610,7 +610,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (long tim
       if (h->pos_ == this->earliest_position_)
         this->find_new_earliest ();
 
-      if (act != 0)
+      if (act != nullptr)
         *act = h->act_;
 
       // We could destruct Hash_Token explicitly but we better
@@ -841,7 +841,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::expire (const AC
 
           info.act_ = h->act_;
 
-          const void *upcall_act = 0;
+          const void *upcall_act = nullptr;
 
           this->preinvoke (info, cur_time, upcall_act);
 

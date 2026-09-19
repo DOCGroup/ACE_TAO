@@ -31,7 +31,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
   ACE_HANDLE handle = this->get_handle ();
 
   // Handle the case where we're doing a timed <accept>.
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       if (ACE::handle_timed_accept (handle,
                                     timeout,
@@ -108,11 +108,11 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
     {
       // On Win32 the third parameter to <accept> must be a NULL
       // pointer if we want to ignore the client's address.
-      int *len_ptr = 0;
-      sockaddr *addr = 0;
+      int *len_ptr = nullptr;
+      sockaddr *addr = nullptr;
       int len = 0;
 
-      if (remote_addr != 0)
+      if (remote_addr != nullptr)
         {
           len = remote_addr->get_size ();
           len_ptr = &len;
@@ -126,12 +126,12 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
       while (new_association.get_handle () == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
-             && timeout == 0);
+             && timeout == nullptr);
 
       // Reset the size of the addr, so the proper UNIX/IPv4/IPv6 family
       // is known.
       if (new_association.get_handle () != ACE_INVALID_HANDLE
-          && remote_addr != 0)
+          && remote_addr != nullptr)
         {
           remote_addr->set_size (len);
           remote_addr->set_type (addr->sa_family);
@@ -328,7 +328,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           // Create an array of sockaddr_in to hold the underlying
           // representations of the primary and secondary
           // addresses.
-          sockaddr_in*  local_inet_addrs = 0;
+          sockaddr_in*  local_inet_addrs = nullptr;
 #if defined(ACE_HAS_ALLOC_HOOKS)
           ACE_ALLOCATOR_NORETURN (local_inet_addrs,
                                   static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * num_addresses)));

@@ -92,7 +92,7 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
     }
 
   // Enable non-blocking, if required.
-  if (timeout != 0 && new_stream.enable (ACE_NONBLOCK) == -1)
+  if (timeout != nullptr && new_stream.enable (ACE_NONBLOCK) == -1)
     return -1;
   else
     return 0;
@@ -107,7 +107,7 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
   // Save/restore errno.
   ACE_Errno_Guard error (errno);
 
-  if (result == -1 && timeout != 0)
+  if (result == -1 && timeout != nullptr)
     {
       // Check whether the connection is in progress.
       if (error == EINPROGRESS || error == EWOULDBLOCK)
@@ -145,7 +145,7 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
 #endif /* ACE_WIN32 */
             }
           // Wait synchronously using timeout.
-          else if (this->complete (new_stream, 0, timeout) == -1)
+          else if (this->complete (new_stream, nullptr, timeout) == -1)
             error = errno;
           else
             return 0;
@@ -293,7 +293,7 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
 #endif /* ACE_NON_BLOCKING_BUG_DELAY */
     }
 
-  if (remote_sap != 0)
+  if (remote_sap != nullptr)
     {
       int len = remote_sap->get_size ();
       sockaddr *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
@@ -332,7 +332,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      flags,
                      perms,
                      protocol) == -1
-      && timeout != 0
+      && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
@@ -362,7 +362,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      flags,
                      reuse_addr,
                      perms) == -1
-      && timeout != 0
+      && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),

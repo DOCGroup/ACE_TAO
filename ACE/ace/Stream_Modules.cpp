@@ -137,7 +137,7 @@ ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t leng
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info");
   const ACE_TCHAR *name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, name, length);
@@ -281,7 +281,7 @@ ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t leng
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info");
   const ACE_TCHAR *name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, name, length);
@@ -360,7 +360,7 @@ ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp,
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info");
   const ACE_TCHAR *name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, name, length);

@@ -1201,7 +1201,7 @@ ace_yyreduce:
     {
   case 2: /* svc_config_entries: svc_config_entries svc_config_entry  */
     {
-      if ((ace_yyvsp[0].parse_node_) != 0)
+      if ((ace_yyvsp[0].parse_node_) != nullptr)
       {
         (ace_yyvsp[0].parse_node_)->apply (ACE_SVC_CONF_PARAM->config, ACE_SVC_CONF_PARAM->yyerrno);
         delete (ace_yyvsp[0].parse_node_);
@@ -1218,10 +1218,10 @@ ace_yyreduce:
 
   case 11: /* dynamic: ACE_DYNAMIC svc_location parameters_opt  */
     {
-      if ((ace_yyvsp[-1].svc_record_) != 0)
+      if ((ace_yyvsp[-1].svc_record_) != nullptr)
         (ace_yyval.parse_node_) = new ACE_Dynamic_Node ((ace_yyvsp[-1].svc_record_), (ace_yyvsp[0].ident_));
       else
-        (ace_yyval.parse_node_) = 0;
+        (ace_yyval.parse_node_) = nullptr;
     }
     break;
 
@@ -1289,12 +1289,12 @@ ace_yyreduce:
     break;
 
   case 23: /* stream_modules: %empty  */
-                { (ace_yyval.parse_node_) = 0; }
+                { (ace_yyval.parse_node_) = nullptr; }
     break;
 
   case 24: /* module_list: module_list module  */
     {
-      if ((ace_yyvsp[0].parse_node_) != 0)
+      if ((ace_yyvsp[0].parse_node_) != nullptr)
         {
           (ace_yyvsp[0].parse_node_)->link ((ace_yyvsp[-1].parse_node_));
           (ace_yyval.parse_node_) = (ace_yyvsp[0].parse_node_);
@@ -1303,7 +1303,7 @@ ace_yyreduce:
     break;
 
   case 25: /* module_list: %empty  */
-                { (ace_yyval.parse_node_) = 0; }
+                { (ace_yyval.parse_node_) = nullptr; }
     break;
 
   case 26: /* module: dynamic  */
@@ -1332,7 +1332,7 @@ ace_yyreduce:
       ACE_Module_Type *mt = ace_get_module (sn->record (ACE_SVC_CONF_PARAM->config),
                                             sn->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
-      if (mt != 0)
+      if (mt != nullptr)
         mt->suspend ();
     }
     break;
@@ -1343,7 +1343,7 @@ ace_yyreduce:
       ACE_Module_Type *mt = ace_get_module (sn->record (ACE_SVC_CONF_PARAM->config),
                                             (ace_yyvsp[0].static_node_)->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
-      if (mt != 0)
+      if (mt != nullptr)
         mt->resume ();
     }
     break;
@@ -1358,7 +1358,7 @@ ace_yyreduce:
 
       ACE_Stream_Type *st =
         dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (stream->record (ACE_SVC_CONF_PARAM->config)->type ()));
-      if (!st || (mt != 0 && st->remove (mt) == -1))
+      if (!st || (mt != nullptr && st->remove (mt) == -1))
         {
           ACELIB_ERROR ((LM_ERROR,
                          ACE_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
@@ -1430,7 +1430,7 @@ ace_yyreduce:
     break;
 
   case 42: /* parameters_opt: %empty  */
-                { (ace_yyval.ident_) = 0; }
+                { (ace_yyval.ident_) = nullptr; }
     break;
 
 
@@ -1664,12 +1664,12 @@ ace_get_module (ACE_Service_Type const * sr,
                 int & ace_yyerrno)
 {
   ACE_Stream_Type const * const st =
-    (sr == 0
-     ? 0
+    (sr == nullptr
+     ? nullptr
      : dynamic_cast<ACE_Stream_Type const *> (sr->type ()));
-  ACE_Module_Type const * const mt = (st == 0 ? 0 : st->find (svc_name));
+  ACE_Module_Type const * const mt = (st == nullptr ? nullptr : st->find (svc_name));
 
-  if (sr == 0 || st == 0 || mt == 0)
+  if (sr == nullptr || st == nullptr || mt == nullptr)
     {
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("cannot locate Module_Type %s ")

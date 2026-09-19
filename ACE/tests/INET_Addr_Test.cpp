@@ -249,10 +249,10 @@ int run_main (int, ACE_TCHAR *[])
   // the ACE_INET_Addr to ensure resetting an address works.
   const char *addr_ports[] =
     {
-      "127.0.0.1:80", "www.dre.vanderbilt.edu:80", 0
+      "127.0.0.1:80", "www.dre.vanderbilt.edu:80", nullptr
     };
   ACE_INET_Addr addr_port;
-  for (int i = 0; addr_ports[i] != 0; ++i)
+  for (int i = 0; addr_ports[i] != nullptr; ++i)
     {
       if (addr_port.set (addr_ports[i]) == 0)
         {
@@ -332,14 +332,14 @@ int run_main (int, ACE_TCHAR *[])
 
   const char *ipv4_addresses[] =
     {
-      "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
+      "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", nullptr
     };
 
   ACE_INET_Addr addr;
   status |= check_type_consistency (addr);
   char hostaddr[1024];
 
-  for (int i=0; ipv4_addresses[i] != 0; i++)
+  for (int i=0; ipv4_addresses[i] != nullptr; i++)
     {
       struct in_addr addrv4;
       ACE_OS::memset ((void *) &addrv4, 0, sizeof addrv4);
@@ -367,7 +367,7 @@ int run_main (int, ACE_TCHAR *[])
           status = 1;
         }
 
-      if (addr.get_host_addr () != 0 &&
+      if (addr.get_host_addr () != nullptr &&
           ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -381,7 +381,7 @@ int run_main (int, ACE_TCHAR *[])
 
       // Now we check the operation of get_host_addr(char*,int)
       const char* haddr = addr.get_host_addr (&hostaddr[0], sizeof(hostaddr));
-      if (haddr != 0 &&
+      if (haddr != nullptr &&
           ACE_OS::strcmp (&hostaddr[0], haddr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -417,7 +417,7 @@ int run_main (int, ACE_TCHAR *[])
       addr.set (80, addr32, 0); // addr32 is already in network byte order
       status |= check_type_consistency(addr);
 
-      if (addr.get_host_addr () != 0 &&
+      if (addr.get_host_addr () != nullptr &&
           ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -488,10 +488,10 @@ int run_main (int, ACE_TCHAR *[])
         "ff01::101",             // multicast address
         "::1",                   // loopback address
         "::",                    // unspecified addresses
-        0
+        nullptr
       };
 
-      for (int i=0; ipv6_addresses[i] != 0; i++)
+      for (int i=0; ipv6_addresses[i] != nullptr; i++)
         {
           ACE_INET_Addr addr (80, ipv6_addresses[i]);
           status |= check_type_consistency (addr);
@@ -509,9 +509,9 @@ int run_main (int, ACE_TCHAR *[])
       const char *ipv6_names[] = {
         "naboo.dre.vanderbilt.edu",
         "v6.ipv6-test.com",
-        0
+        nullptr
       };
-      for (int i=0; ipv6_names[i] != 0; i++)
+      for (int i=0; ipv6_names[i] != nullptr; i++)
         {
           ACE_INET_Addr addr (80, ipv6_names[i]);
           status |= check_type_consistency (addr);
@@ -548,10 +548,10 @@ int run_main (int, ACE_TCHAR *[])
   struct Address loopback_addresses[] =
     { {"127.0.0.1", true}, {"127.1.2.3", true}
       , {"127.0.0.0", true}, {"127.255.255.255", true}
-      , {"126.255.255.255", false}, {"128.0.0.0", false}, {0, true}
+      , {"126.255.255.255", false}, {"128.0.0.0", false}, {nullptr, true}
     };
 
-  for (int i=0; loopback_addresses[i].name != 0; i++)
+  for (int i=0; loopback_addresses[i].name != nullptr; i++)
     {
       struct in_addr addrv4;
       ACE_UINT32 addr32 = 0;

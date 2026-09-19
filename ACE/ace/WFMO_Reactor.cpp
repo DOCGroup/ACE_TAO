@@ -868,7 +868,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos ()
           // the upcall.
           if (event_handler != nullptr)
             {
-              int requires_reference_counting =
+              bool const requires_reference_counting =
                 event_handler->reference_counting_policy ().value () ==
                 ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -1962,7 +1962,7 @@ ACE_WFMO_Reactor::simple_dispatch_handler (DWORD slot,
   ACE_Event_Handler *event_handler =
     this->handler_rep_.current_info ()[slot].event_handler_;
 
-  int requires_reference_counting =
+  bool const requires_reference_counting =
     event_handler->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 

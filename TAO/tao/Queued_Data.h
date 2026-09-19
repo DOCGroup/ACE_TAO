@@ -46,19 +46,19 @@ class TAO_Export TAO_Queued_Data
 {
 public:
   /// Default Constructor
-  TAO_Queued_Data (ACE_Allocator *alloc = 0);
+  TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
 
   /// Constructor.
-  TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = 0);
+  TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   TAO_Queued_Data (const TAO_Queued_Data &qd);
 
   /// Creation of a node in the queue.
   static TAO_Queued_Data* make_queued_data (
-                                    ACE_Allocator *message_buffer_alloc = 0,
-                                    ACE_Allocator *input_cdr_alloc = 0,
-                                    ACE_Data_Block *db = 0);
+                                    ACE_Allocator *message_buffer_alloc = nullptr,
+                                    ACE_Allocator *input_cdr_alloc = nullptr,
+                                    ACE_Data_Block *db = nullptr);
 
   /// Deletion of a node from the queue.
   static void release (TAO_Queued_Data *qd);

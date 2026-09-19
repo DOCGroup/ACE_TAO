@@ -144,7 +144,7 @@ typedef long long ACE_hrtime_t;
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
   typedef hrtime_t ACE_hrtime_t;
 #  else  /* ! ACE_HAS_HI_RES_TIMER */
-  typedef ACE_UINT64 ACE_hrtime_t;
+  using ACE_hrtime_t = ACE_UINT64;
 #  endif /* ! ACE_HAS_HI_RES_TIMER */
 #endif /* ACE_WIN32 */
 

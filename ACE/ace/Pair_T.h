@@ -34,8 +34,8 @@ class ACE_Reference_Pair
 {
 public:
   // = Traits.
-  typedef T1 first_type;
-  typedef T2 second_type;
+  using first_type = T1;
+  using second_type = T2;
 
   /// Constructor.
   ACE_Reference_Pair (T1 &t1, T2 &t2);

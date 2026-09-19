@@ -49,7 +49,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
   iov.iov_len = sizeof a;
   send_msg.msg_iov = &iov;
   send_msg.msg_iovlen = 1;
-  send_msg.msg_name = 0;
+  send_msg.msg_name = nullptr;
   send_msg.msg_namelen = 0;
 
 #if defined (ACE_LACKS_SENDMSG)
@@ -89,7 +89,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
   char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-  if (pbuf != 0 && len != 0)
+  if (pbuf != nullptr && len != nullptr)
     {
       iov.iov_base = pbuf;
       iov.iov_len  = *len;
@@ -102,7 +102,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
 
   recv_msg.msg_iov = &iov;
   recv_msg.msg_iovlen = 1;
-  recv_msg.msg_name = 0;
+  recv_msg.msg_name = nullptr;
   recv_msg.msg_namelen = 0;
 
 #ifndef ACE_LACKS_SENDMSG
@@ -176,7 +176,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
         }
       else
         {
-          if (len != 0)
+          if (len != nullptr)
             *len = nbytes;
           return 0;
         }

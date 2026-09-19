@@ -1,0 +1,199 @@
+commit 140bbbebfa1b5571fc6f2b5726db853772090e42
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 15:48:53 2026 +0200
+
+    Fixed typo
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 2649f68c84d977ae871fd3d631aa17b95b052c44
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 15:39:58 2026 +0200
+
+    Document changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 519cc4fc556f1e4ed405b5bfc98a4b467d309e67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 08:42:17 2026 +0200
+
+    Move this test to Security and updated the certificates
+    
+        * TAO/orbsvcs/tests/Bug_3418_Regression/client_cert.pem:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/client_key.pem:
+          Deleted.
+    
+        * TAO/orbsvcs/tests/Bug_3418_Regression/.gitignore -> TAO/orbsvcs/tests/Security/Bug_3418_Regression/.gitignore:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/Bug_3418_Regression.mpc -> TAO/orbsvcs/tests/Security/Bug_3418_Regression/Bug_3418_Regression.mpc:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/Test.cpp -> TAO/orbsvcs/tests/Security/Bug_3418_Regression/Test.cpp:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/b.conf -> TAO/orbsvcs/tests/Security/Bug_3418_Regression/b.conf:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/m.conf -> TAO/orbsvcs/tests/Security/Bug_3418_Regression/m.conf:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/run_test.pl -> TAO/orbsvcs/tests/Security/Bug_3418_Regression/run_test.pl:
+          Moved.
+    
+        * TAO/orbsvcs/tests/Security/Bug_3418_Regression/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_3418_Regression/client_key.pem:
+          Added.
+    
+        * TAO/bin/tao_other_tests.lst:
+
+commit e82cdc1ab2082d5546afed04695c5f30a82c0b0f
+Merge: d4545321e8e f44b97b7877
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 18 20:40:28 2026 +0200
+
+    Merge branch 'jwi-sslcertificates' of https://github.com/jwillemsen/ATCD into jwi-sslcertificates
+
+commit d4545321e8ea21d103a3e0c58c7b75d956d0f125
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 18 20:40:18 2026 +0200
+
+    Updated keys for this regression
+    
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/ca.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/client-cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/client-key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/make-client-keys:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/server-cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/server-key.pem:
+          Deleted.
+    
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/server_key.pem:
+          Added.
+    
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/client.conf:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/server.conf:
+
+commit f44b97b787775592a035e3c90e6d5edcb9fc1f3f
+Merge: 813af8a6935 f1a89ab2b76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 18 17:51:15 2026 +0200
+
+    Merge branch 'master' into jwi-sslcertificates
+
+commit 813af8a6935e70ff6231999df5e59940d9e67afb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 18 11:29:45 2026 +0200
+
+    Removed rm step
+    
+        * TAO/orbsvcs/tests/Security/cert/README:
+
+commit 84ff8fd836b24861029efc2838bb8bf19dd7746f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 18 11:19:15 2026 +0200
+
+    Updated all certificates as OpenSSL v3 didn't accept our certificates anymore
+    
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/cacert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/client_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/client_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/server_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/server_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/cacert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/cacert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/server_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Callback/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Callback/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Callback/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Callback/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Callback/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/server_key.pem:
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/server_key.pem:
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+        * TAO/orbsvcs/tests/Security/cert/DOCCA/cacert.pem:
+        * TAO/orbsvcs/tests/Security/cert/DOCCA/index.txt.attr:
+        * TAO/orbsvcs/tests/Security/cert/DOCCA/index.txt:
+        * TAO/orbsvcs/tests/Security/cert/DOCCA/newcerts/1000.pem:
+        * TAO/orbsvcs/tests/Security/cert/DOCCA/newcerts/1001.pem:
+        * TAO/orbsvcs/tests/Security/cert/DOCCA/private/cakey.pem:
+        * TAO/orbsvcs/tests/Security/cert/README:
+        * TAO/orbsvcs/tests/Security/cert/cacert.pem:
+        * TAO/orbsvcs/tests/Security/cert/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/cert/client_key.pem:
+        * TAO/orbsvcs/tests/Security/cert/openssl.cnf:
+        * TAO/orbsvcs/tests/Security/cert/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/cert/server_key.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/cacert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client_key.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server_key.pem:
+
+commit c20114eac7971d1a45a191c2b244b423866e059f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 16:09:40 2026 +0200
+
+    Always use params_dup.cpp
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+        * TAO/orbsvcs/orbsvcs/ssliop_params_dup.mpb:
+          Deleted.
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP.mpc:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.cpp:
+
+commit 1be5b48136b8306d925c9344335f1f7bc10dbb75
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 9 12:46:16 2026 +0200
+
+    Updated all download links to just github, can't access download.dre anymore for new uploads
+    
+        * ACE/Kokyu/docs/Kokyu.html:
+        * ACE/README:
+        * ACE/docs/Download.html:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/Security/Download.html:
+        * TAO/docs/tutorials/Quoter/index.html:
+
+commit 47982ae8cb7265287bf332c5d6eba1e176b901b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 11 09:31:16 2026 +0200
+
+    Make ACE 8.0.6 and TAO 4.0.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * TAO/NEWS:

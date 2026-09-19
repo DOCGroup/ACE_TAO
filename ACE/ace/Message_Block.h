@@ -114,8 +114,8 @@ public:
     MB_USER     = 0x200
   };
 
-  typedef int ACE_Message_Type;
-  typedef unsigned long Message_Flags;
+  using ACE_Message_Type = int;
+  using Message_Flags = unsigned long;
 
   enum
   {

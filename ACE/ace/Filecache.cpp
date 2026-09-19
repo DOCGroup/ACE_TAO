@@ -40,24 +40,24 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // static data members
-ACE_Filecache *ACE_Filecache::cvf_ = 0;
+ACE_Filecache *ACE_Filecache::cvf_ = nullptr;
 
 void
 ACE_Filecache_Handle::init ()
 {
-  this->file_ = 0;
+  this->file_ = nullptr;
   this->handle_ = ACE_INVALID_HANDLE;
 }
 
 ACE_Filecache_Handle::ACE_Filecache_Handle ()
-  : file_ (0), handle_ (0)
+  : file_ (nullptr), handle_ (0)
 {
   this->init ();
 }
 
 ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
                                             ACE_Filecache_Flag mapit)
-  : file_ (0), handle_ (0)
+  : file_ (nullptr), handle_ (0)
 {
   this->init ();
   // Fetch the file from the Virtual_Filesystem let the
@@ -71,7 +71,7 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
 ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
                                             int size,
                                             ACE_Filecache_Flag )
-  : file_ (0), handle_ (0)
+  : file_ (nullptr), handle_ (0)
 {
   this->init ();
 
@@ -101,13 +101,13 @@ ACE_Filecache_Handle::~ACE_Filecache_Handle ()
 void *
 ACE_Filecache_Handle::address () const
 {
-  return this->file_ == 0 ? 0 : this->file_->address ();
+  return this->file_ == nullptr ? nullptr : this->file_->address ();
 }
 
 ACE_HANDLE
 ACE_Filecache_Handle::handle () const
 {
-  if (this->handle_ == ACE_INVALID_HANDLE && this->file_ != 0)
+  if (this->handle_ == ACE_INVALID_HANDLE && this->file_ != nullptr)
     {
       ACE_Filecache_Handle *mutable_this =
         const_cast<ACE_Filecache_Handle *> (this);
@@ -119,7 +119,7 @@ ACE_Filecache_Handle::handle () const
 int
 ACE_Filecache_Handle::error () const
 {
-  if (this->file_ == 0)
+  if (this->file_ == nullptr)
     return -1;
   else
     return this->file_->error ();
@@ -128,7 +128,7 @@ ACE_Filecache_Handle::error () const
 ACE_OFF_T
 ACE_Filecache_Handle::size () const
 {
-  if (this->file_ == 0)
+  if (this->file_ == nullptr)
     return -1;
   else
     return this->file_->size ();
@@ -208,19 +208,19 @@ ACE_Filecache *
 ACE_Filecache::instance ()
 {
   // Double check locking pattern.
-  if (ACE_Filecache::cvf_ == 0)
+  if (ACE_Filecache::cvf_ == nullptr)
     {
       ACE_SYNCH_RW_MUTEX &lock =
         *ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>::get_preallocated_object
           (ACE_Object_Manager::ACE_FILECACHE_LOCK);
-      ACE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, ace_mon, lock, 0);
+      ACE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, ace_mon, lock, nullptr);
 
       // @@ James, please check each of the ACE_NEW_RETURN calls to
       // make sure that it is safe to return if allocation fails.
-      if (ACE_Filecache::cvf_ == 0)
+      if (ACE_Filecache::cvf_ == nullptr)
         ACE_NEW_RETURN (ACE_Filecache::cvf_,
                         ACE_Filecache,
-                        0);
+                        nullptr);
     }
 
   return ACE_Filecache::cvf_;
@@ -243,24 +243,24 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
                          ACE_SYNCH_RW_MUTEX &filelock,
                          int mapit)
 {
-  ACE_Filecache_Object *handle = 0;
+  ACE_Filecache_Object *handle = nullptr;
 
   if (this->hash_.find (filename, handle) == -1)
     {
       ACE_NEW_RETURN (handle,
                       ACE_Filecache_Object (filename, filelock, 0, mapit),
-                      0);
+                      nullptr);
 
       //      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: creating %s\n"), filename));
 
       if (this->hash_.bind (filename, handle) == -1)
         {
           delete handle;
-          handle = 0;
+          handle = nullptr;
         }
     }
   else
-    handle = 0;
+    handle = nullptr;
 
   return handle;
 }
@@ -268,7 +268,7 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
 ACE_Filecache_Object *
 ACE_Filecache::remove_i (const ACE_TCHAR *filename)
 {
-  ACE_Filecache_Object *handle = 0;
+  ACE_Filecache_Object *handle = nullptr;
 
   // Disassociate file from the cache.
   if (this->hash_.unbind (filename, handle) == 0)
@@ -280,11 +280,11 @@ ACE_Filecache::remove_i (const ACE_TCHAR *filename)
       if (handle->lock_.tryacquire_write () == 0)
         {
           delete handle;
-          handle = 0;
+          handle = nullptr;
         }
     }
   else
-    handle = 0;
+    handle = nullptr;
 
   return handle;
 }
@@ -294,7 +294,7 @@ ACE_Filecache::update_i (const ACE_TCHAR *filename,
                          ACE_SYNCH_RW_MUTEX &filelock,
                          int mapit)
 {
-  ACE_Filecache_Object *handle = 0;
+  ACE_Filecache_Object *handle = nullptr;
 
   handle = this->remove_i (filename);
   handle = this->insert_i (filename, filelock, mapit);
@@ -312,7 +312,7 @@ ACE_Filecache::find (const ACE_TCHAR *filename)
 ACE_Filecache_Object *
 ACE_Filecache::remove (const ACE_TCHAR *filename)
 {
-  ACE_Filecache_Object *handle = 0;
+  ACE_Filecache_Object *handle = nullptr;
 
   ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
@@ -323,19 +323,19 @@ ACE_Filecache::remove (const ACE_TCHAR *filename)
       ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
                               ace_mon,
                               hashlock,
-                              0);
+                              nullptr);
 
       return this->remove_i (filename);
     }
 
-  return 0;
+  return nullptr;
 }
 
 
 ACE_Filecache_Object *
 ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 {
-  ACE_Filecache_Object *handle = 0;
+  ACE_Filecache_Object *handle = nullptr;
 
   ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
@@ -348,12 +348,12 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
       ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
                               ace_mon,
                               hashlock,
-                              0);
+                              nullptr);
 
       // Second check in the method call
       handle = this->insert_i (filename, filelock, mapit);
 
-      if (handle == 0)
+      if (handle == nullptr)
         filelock.release ();
     }
   else
@@ -365,12 +365,12 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
             ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
                                     ace_mon,
                                     hashlock,
-                                    0);
+                                    nullptr);
 
             // Second check in the method call
             handle = this->update_i (filename, filelock, mapit);
 
-            if (handle == 0)
+            if (handle == nullptr)
               filelock.release ();
           }
         }
@@ -383,14 +383,14 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 ACE_Filecache_Object *
 ACE_Filecache::create (const ACE_TCHAR *filename, int size)
 {
-  ACE_Filecache_Object *handle = 0;
+  ACE_Filecache_Object *handle = nullptr;
 
   ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
 
   ACE_NEW_RETURN (handle,
                   ACE_Filecache_Object (filename, size, filelock),
-                  0);
+                  nullptr);
   handle->acquire ();
 
   return handle;
@@ -399,13 +399,13 @@ ACE_Filecache::create (const ACE_TCHAR *filename, int size)
 ACE_Filecache_Object *
 ACE_Filecache::finish (ACE_Filecache_Object *&file)
 {
-  if (file == 0)
+  if (file == nullptr)
     return file;
 
   ACE_OFF_T loc = ACE::hash_pjw (file->filename_) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
 
-  if (file != 0)
+  if (file != nullptr)
     switch (file->action_)
       {
       case ACE_Filecache_Object::ACE_WRITING:
@@ -413,7 +413,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
           ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
                                   ace_mon,
                                   hashlock,
-                                  0);
+                                  nullptr);
 
           file->release ();
 
@@ -432,7 +432,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
             if (file->lock_.tryacquire_write () == 0)
               {
                 delete file;
-                file = 0;
+                file = nullptr;
               }
           }
 #endif
@@ -450,7 +450,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
             if (file->lock_.tryacquire_write () == 0)
               {
                 delete file;
-                file = 0;
+                file = nullptr;
               }
           }
 
@@ -466,14 +466,14 @@ ACE_Filecache_Object::init ()
   this->filename_[0] = '\0';
   this->handle_ = ACE_INVALID_HANDLE;
   this->error_ = ACE_SUCCESS;
-  this->tempname_ = 0;
+  this->tempname_ = nullptr;
   this->size_ = 0;
 
   ACE_OS::memset (&(this->stat_), 0, sizeof (this->stat_));
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object ()
-  : tempname_ (0),
+  : tempname_ (nullptr),
     mmap_ (),
     handle_ (0),
     // stat_ (),
@@ -492,7 +492,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa,
                                             int mapit)
-  : tempname_ (0),
+  : tempname_ (nullptr),
     mmap_ (),
     handle_ (0),
     // stat_ (),
@@ -542,7 +542,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
     {
       // Can we map the file?
       if (this->mmap_.map (this->handle_, static_cast<size_t> (-1),
-                           PROT_READ, ACE_MAP_PRIVATE, 0, 0, this->sa_) != 0)
+                           PROT_READ, ACE_MAP_PRIVATE, nullptr, 0, this->sa_) != 0)
         {
           this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
                          ACE_TEXT ("ACE_Filecache_Object::ctor: map"));
@@ -602,7 +602,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
 
   // Can we map?
   if (this->mmap_.map (this->handle_, this->size_, PROT_RDWR, MAP_SHARED,
-                       0, 0, this->sa_) != 0)
+                       nullptr, 0, this->sa_) != 0)
     {
       this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
                      ACE_TEXT ("ACE_Filecache_Object::acquire: map"));

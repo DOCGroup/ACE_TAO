@@ -71,10 +71,10 @@ public:
   /// Constructor
   TAO_Operation_Details (const char *name,
                          const CORBA::ULong len,
-                         TAO::Argument **args = 0,
+                         TAO::Argument **args = nullptr,
                          const CORBA::ULong num_args = 0,
                          const CORBA::Boolean has_in_args = true,
-                         const TAO::Exception_Data *ex_data = 0,
+                         const TAO::Exception_Data *ex_data = nullptr,
                          const CORBA::ULong ex_count = 0);
 
   /// Operation name

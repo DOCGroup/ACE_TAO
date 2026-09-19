@@ -62,7 +62,7 @@ My_Accept_Handler::get_handle () const
 int
 My_Accept_Handler::handle_input (ACE_HANDLE)
 {
-  if (this->peer_acceptor_.accept(this->stream_, 0) == -1) {
+  if (this->peer_acceptor_.accept(this->stream_, nullptr) == -1) {
     ACE_ERROR((LM_ERROR, ACE_TEXT ("%p\n"),
                ACE_TEXT ("peer_acceptor.accept")));
     ACE_OS::exit(1);
@@ -115,7 +115,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
 
-      return 0;
+      return nullptr;
     }
 
   // if connect succesful, what is the max port number we connected
@@ -127,7 +127,7 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return 0;
+  return nullptr;
 }
 #endif /*ACE_HAS_IPV6*/
 

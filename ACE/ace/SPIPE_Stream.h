@@ -148,7 +148,7 @@ public:
                    int len) const;
 
   // = Meta-type info
-  typedef ACE_SPIPE_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_SPIPE_Addr;
 
   /// Dump the state of an object.
   void dump () const;

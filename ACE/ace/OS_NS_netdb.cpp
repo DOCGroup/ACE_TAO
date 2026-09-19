@@ -95,15 +95,15 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   // It's easiest to know the first MAC-using interface. Use the BSD
   // getifaddrs function that simplifies access to connected interfaces.
-  struct ifaddrs *ifap = 0;
-  struct ifaddrs *p_if = 0;
+  struct ifaddrs *ifap = nullptr;
+  struct ifaddrs *p_if = nullptr;
 
   if (::getifaddrs (&ifap) != 0)
     return -1;
 
-  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+  for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {
-      if (p_if->ifa_addr == 0)
+      if (p_if->ifa_addr == nullptr)
         continue;
 
       // Check to see if it's up and is not either PPP or loopback
@@ -111,7 +111,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
           (p_if->ifa_flags & (IFF_LOOPBACK | IFF_POINTOPOINT)) == 0)
         break;
     }
-  if (p_if == 0)
+  if (p_if == nullptr)
     {
       errno = ENODEV;
       ::freeifaddrs (ifap);

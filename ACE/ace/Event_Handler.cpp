@@ -273,7 +273,7 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 // ---------------------------------------------------------------------
 
 ACE_Event_Handler_var::ACE_Event_Handler_var ()
-  : ptr_ (0)
+  : ptr_ (nullptr)
 {
 }
 
@@ -285,7 +285,7 @@ ACE_Event_Handler_var::ACE_Event_Handler_var (ACE_Event_Handler *p)
 ACE_Event_Handler_var::ACE_Event_Handler_var (const ACE_Event_Handler_var &b)
   : ptr_ (b.ptr_)
 {
-  if (this->ptr_ != 0)
+  if (this->ptr_ != nullptr)
     {
       this->ptr_->add_reference ();
     }
@@ -293,7 +293,7 @@ ACE_Event_Handler_var::ACE_Event_Handler_var (const ACE_Event_Handler_var &b)
 
 ACE_Event_Handler_var::~ACE_Event_Handler_var ()
 {
-  if (this->ptr_ != 0)
+  if (this->ptr_ != nullptr)
     {
       ACE_Errno_Guard eguard (errno);
       this->ptr_->remove_reference ();
@@ -337,7 +337,7 @@ ACE_Event_Handler *
 ACE_Event_Handler_var::release ()
 {
   ACE_Event_Handler * const old = this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return old;
 }
 
@@ -367,7 +367,7 @@ ACE_Event_Handler_var::operator !=(std::nullptr_t) const
 // ---------------------------------------------------------------------
 
 ACE_Notification_Buffer::ACE_Notification_Buffer ()
-  : eh_ (0),
+  : eh_ (nullptr),
     mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");

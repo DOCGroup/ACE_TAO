@@ -138,7 +138,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
                                 local_address);
 
       // Pass the ACT
-      if (result.act () != 0)
+      if (result.act () != nullptr)
         new_handler->act (result.act ());
 
       // Set up the handler's new handle value

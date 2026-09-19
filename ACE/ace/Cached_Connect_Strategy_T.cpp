@@ -435,7 +435,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   // Reset the <*act_holder> in the confines and protection of the
   // lock.
   if (act_holder)
-    *act_holder = 0;
+    *act_holder = nullptr;
 
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;

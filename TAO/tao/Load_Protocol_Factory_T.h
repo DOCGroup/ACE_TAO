@@ -32,10 +32,10 @@ namespace TAO
     load_protocol_factory (TAO_ProtocolFactorySet &protocol_set,
                            const char *name)
     {
-      TAO_Protocol_Factory *protocol_factory = 0;
+      TAO_Protocol_Factory *protocol_factory = nullptr;
       std::unique_ptr<TAO_Protocol_Factory> safe_protocol_factory;
 
-      TAO_Protocol_Item *item = 0;
+      TAO_Protocol_Item *item = nullptr;
 
       // If a protocol factory is obtained from the Service
       // Configurator then do not transfer ownership to the
@@ -46,7 +46,7 @@ namespace TAO
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (
           ACE_TEXT_CHAR_TO_TCHAR (name));
 
-      if (protocol_factory == 0)
+      if (protocol_factory == nullptr)
         {
           if (TAO_debug_level > 0)
             TAOLIB_ERROR ((LM_WARNING,

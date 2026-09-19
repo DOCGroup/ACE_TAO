@@ -233,7 +233,7 @@ command_line_test ()
   int result = 0;
   const ACE_TCHAR *command = ACE_TEXT ("test Hello");
   size_t command_len = ACE_OS::strlen (command);
-  ACE_Process_Options options (1, command_len + 1);
+  ACE_Process_Options options (true, command_len + 1);
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
   options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, command);
@@ -543,9 +543,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   Process_Task task1 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 3);
   Process_Task task2 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 2);
   Process_Task task3 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 1);
-  task1.open (0);
-  task2.open (0);
-  task3.open (0);
+  task1.open (nullptr);
+  task2.open (nullptr);
+  task3.open (nullptr);
 
   while (running_tasks!=0)
     {

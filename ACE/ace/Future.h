@@ -201,9 +201,9 @@ private:
   /// Reference count.
   int ref_count_ {};
 
-  typedef ACE_Future_Observer<T> OBSERVER;
+  using OBSERVER = ACE_Future_Observer<T>;
 
-  typedef ACE_Unbounded_Set<OBSERVER *> OBSERVER_COLLECTION;
+  using OBSERVER_COLLECTION = ACE_Unbounded_Set<OBSERVER *>;
 
   /// Keep a list of ACE_Future_Observers unread by client's reader thread.
   OBSERVER_COLLECTION observer_collection_;
@@ -355,7 +355,7 @@ public:
 private:
   /// The ACE_Future_Rep
   /// Protect operations on the <Future>.
-  typedef ACE_Future_Rep<T> FUTURE_REP;
+  using FUTURE_REP = ACE_Future_Rep<T>;
   FUTURE_REP *future_rep_;
 };
 

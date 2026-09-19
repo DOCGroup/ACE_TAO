@@ -37,7 +37,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
     allocator_ (alloc)
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 }
 
@@ -52,7 +52,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 }
 
@@ -136,9 +136,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
   // Don't bother going any farther if the total size is 0.
   if (this->size_ == 0)
-    return 0;
+    return nullptr;
 
-  char *result = 0;
+  char *result = nullptr;
 
   // Recurse, when the recursion bottoms out, allocate the result
   // buffer.
@@ -148,18 +148,18 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
       // space for the null terminator.
       result = (char *) this->allocator_->malloc (this->size_ + 1);
 
-      if (result == 0)
+      if (result == nullptr)
         {
           errno = ENOMEM;
-          return 0;
+          return nullptr;
         }
       result += this->size_;
 
       // Null terminate the buffer.
       *result = '\0';
     }
-  else if ((result = this->rec_read (term, search, replace)) == 0)
-    return 0;
+  else if ((result = this->rec_read (term, search, replace)) == nullptr)
+    return nullptr;
 
   // Copy buf into the appropriate location starting from end of
   // buffer.  Peter says this is confusing and that we should use

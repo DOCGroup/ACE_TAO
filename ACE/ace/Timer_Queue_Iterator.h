@@ -48,7 +48,7 @@ public:
   ~ACE_Timer_Node_T ();
 
   /// Useful typedef ..
-  typedef ACE_Timer_Node_Dispatch_Info_T <TYPE> DISPATCH_INFO;
+  using DISPATCH_INFO = ACE_Timer_Node_Dispatch_Info_T<TYPE>;
 
   /// Singly linked list
   void set (const TYPE &type,

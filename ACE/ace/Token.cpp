@@ -39,7 +39,7 @@ ACE_Token::dump () const
 
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id)
-  : next_ (0),
+  : next_ (nullptr),
     thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
     cv_ (0),
@@ -58,7 +58,7 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id,
                                                          ACE_Condition_Attributes &attributes)
-  : next_ (0),
+  : next_ (nullptr),
     thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
     cv_ (0),
@@ -76,8 +76,8 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
 }
 
 ACE_Token::ACE_Token_Queue::ACE_Token_Queue ()
-  : head_ (0),
-    tail_ (0)
+  : head_ (nullptr),
+    tail_ (nullptr)
 {
   ACE_TRACE ("ACE_Token::ACE_Token_Queue::ACE_Token_Queue");
 }
@@ -89,21 +89,21 @@ void
 ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entry)
 {
   ACE_TRACE ("ACE_Token::ACE_Token_Queue::remove_entry");
-  ACE_Token_Queue_Entry *curr = 0;
-  ACE_Token_Queue_Entry *prev = 0;
+  ACE_Token_Queue_Entry *curr = nullptr;
+  ACE_Token_Queue_Entry *prev = nullptr;
 
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     return;
 
   for (curr = this->head_;
-       curr != 0 && curr != entry;
+       curr != nullptr && curr != entry;
        curr = curr->next_)
     prev = curr;
 
-  if (curr == 0)
+  if (curr == nullptr)
     // Didn't find the entry...
     return;
-  else if (prev == 0)
+  else if (prev == nullptr)
     // Delete at the head.
     this->head_ = this->head_->next_;
   else
@@ -112,7 +112,7 @@ ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entr
 
   // We need to update the tail of the list if we've deleted the last
   // entry.
-  if (curr->next_ == 0)
+  if (curr->next_ == nullptr)
     this->tail_ = prev;
 }
 
@@ -123,7 +123,7 @@ void
 ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entry,
                                           int requeue_position)
 {
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     {
       // No other threads - just add me
       this->head_ = &entry;
@@ -147,12 +147,12 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
       // Determine where our thread should go in the queue of waiters.
 
       ACE_Token::ACE_Token_Queue_Entry *insert_after = this->head_;
-      while (requeue_position-- && insert_after->next_ != 0)
+      while (requeue_position-- && insert_after->next_ != nullptr)
         insert_after = insert_after->next_;
 
       entry.next_ = insert_after->next_;
 
-      if (entry.next_ == 0)
+      if (entry.next_ == nullptr)
         this->tail_ = &entry;
 
       insert_after->next_ = &entry;
@@ -210,7 +210,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
     }
 
   // Do a quick check for "polling" behavior.
-  if (timeout != 0 && *timeout == ACE_Time_Value::zero)
+  if (timeout != nullptr && *timeout == ACE_Time_Value::zero)
     {
       errno = ETIME;
       return -1;
@@ -330,7 +330,7 @@ int
 ACE_Token::acquire (ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Token::acquire");
-  return this->shared_acquire (0, 0, timeout, ACE_Token::WRITE_TOKEN);
+  return this->shared_acquire (nullptr, nullptr, timeout, ACE_Token::WRITE_TOKEN);
 }
 
 // Acquire the token, sleeping until it is obtained or until <timeout>
@@ -363,9 +363,9 @@ ACE_Token::renew (int requeue_position,
   // for.
 
   // If no writers and either we are a writer or there are no readers.
-  if (this->writers_.head_ == 0 &&
+  if (this->writers_.head_ == nullptr &&
       (this->in_use_ == ACE_Token::WRITE_TOKEN ||
-       this->readers_.head_ == 0))
+       this->readers_.head_ == nullptr))
     // Immediate return.
     return 0;
 
@@ -505,18 +505,18 @@ ACE_Token::wakeup_next_waiter ()
   this->in_use_ = 0;
 
   // Any waiters...
-  if (this->writers_.head_ == 0 &&
-      this->readers_.head_ == 0)
+  if (this->writers_.head_ == nullptr &&
+      this->readers_.head_ == nullptr)
     {
       // No more waiters...
       return;
     }
 
   // Wakeup next waiter.
-  ACE_Token_Queue *queue = 0;
+  ACE_Token_Queue *queue = nullptr;
 
   // Writer threads get priority to run first.
-  if (this->writers_.head_ != 0)
+  if (this->writers_.head_ != nullptr)
     {
       this->in_use_ = ACE_Token::WRITE_TOKEN;
       queue = &this->writers_;

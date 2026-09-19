@@ -251,8 +251,8 @@ public:
    *  detailed description of the CA file and directory requirements
    *  and processing.
    */
-  int load_trusted_ca (const char* ca_file = 0,
-                       const char* ca_dir = 0,
+  int load_trusted_ca (const char* ca_file = nullptr,
+                       const char* ca_dir = nullptr,
                        bool use_env_defaults = true);
 
   /**

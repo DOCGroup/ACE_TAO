@@ -63,8 +63,8 @@ struct ACE_TRANSMIT_FILE_BUFFERS
   void *Tail;
   size_t TailLength;
 };
-typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_PTRANSMIT_FILE_BUFFERS;
-typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
+using ACE_PTRANSMIT_FILE_BUFFERS = ACE_TRANSMIT_FILE_BUFFERS *;
+using ACE_LPTRANSMIT_FILE_BUFFERS = ACE_TRANSMIT_FILE_BUFFERS *;
 
 #   if !defined (ACE_INFINITE)
 #     define ACE_INFINITE LONG_MAX
@@ -290,7 +290,7 @@ public:
   ACE_Asynch_Read_Stream ();
 
   /// Destructor
-  virtual ~ACE_Asynch_Read_Stream ();
+  ~ACE_Asynch_Read_Stream () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -355,7 +355,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -399,7 +399,7 @@ public:
     Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_Stream_Result_Impl *implementation_;
@@ -432,7 +432,7 @@ public:
   ACE_Asynch_Write_Stream ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Write_Stream ();
+  ~ACE_Asynch_Write_Stream () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -509,7 +509,7 @@ public:
 
   /// Return the underlying implementation class.
   /// @todo (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -553,7 +553,7 @@ public:
     Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Write_Stream_Result_Impl *implementation_;
@@ -589,7 +589,7 @@ public:
   ACE_Asynch_Read_File ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Read_File ();
+  ~ACE_Asynch_Read_File () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -656,7 +656,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -697,7 +697,7 @@ public:
     Result (ACE_Asynch_Read_File_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_File_Result_Impl *implementation_;
@@ -738,7 +738,7 @@ public:
   ACE_Asynch_Write_File ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Write_File ();
+  ~ACE_Asynch_Write_File () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -791,7 +791,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation object.
@@ -831,7 +831,7 @@ public:
     Result (ACE_Asynch_Write_File_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Write_File_Result_Impl *implementation_;
@@ -870,7 +870,7 @@ public:
   ACE_Asynch_Accept ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Accept ();
+  ~ACE_Asynch_Accept () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -927,7 +927,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -974,7 +974,7 @@ public:
     Result (ACE_Asynch_Accept_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Accept_Result_Impl *implementation_;
@@ -1005,7 +1005,7 @@ public:
   ACE_Asynch_Connect ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Connect ();
+  ~ACE_Asynch_Connect () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1031,7 +1031,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -1068,7 +1068,7 @@ public:
     Result (ACE_Asynch_Connect_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Connect_Result_Impl *implementation_;
@@ -1110,7 +1110,7 @@ public:
   ACE_Asynch_Transmit_File ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Transmit_File ();
+  ~ACE_Asynch_Transmit_File () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1155,7 +1155,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// The implementation class.
@@ -1208,7 +1208,7 @@ public:
     Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Transmit_File_Result_Impl *implementation_;
@@ -1315,7 +1315,7 @@ public:
   ACE_Asynch_Read_Dgram ();
 
   /// Destructor
-  virtual ~ACE_Asynch_Read_Dgram ();
+  ~ACE_Asynch_Read_Dgram () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1364,7 +1364,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -1414,7 +1414,7 @@ public:
     Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_Dgram_Result_Impl *implementation_;
@@ -1448,7 +1448,7 @@ public:
   ACE_Asynch_Write_Dgram ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Write_Dgram ();
+  ~ACE_Asynch_Write_Dgram () override;
 
   /**
    * Initializes the factory with information which will be used with
@@ -1497,7 +1497,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -1544,7 +1544,7 @@ public:
     Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result ();
+    ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Write_Dgram_Result_Impl *implementation_;
@@ -1653,7 +1653,7 @@ public:
   private:
     ACE_Handler *handler_;
   };
-  typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> Proxy_Ptr;
+  using Proxy_Ptr = ACE_Refcounted_Auto_Ptr<Proxy, ACE_MT_SYNCH::MUTEX>;
 
   Proxy_Ptr &proxy ();
 
@@ -1700,7 +1700,7 @@ public:
   ACE_Service_Handler ();
 
   /// Virtual destruction.
-  virtual ~ACE_Service_Handler ();
+  ~ACE_Service_Handler () override;
 
   /**
    * {open} is called by ACE_Asynch_Acceptor to initialize a new

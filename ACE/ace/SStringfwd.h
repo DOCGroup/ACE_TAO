@@ -27,17 +27,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_CHAR_T> class ACE_String_Base;  // Forward declaration.
 
-typedef ACE_WCHAR_T ACE_WSTRING_TYPE;
+using ACE_WSTRING_TYPE = ACE_WCHAR_T;
 
-typedef ACE_String_Base<char> ACE_CString;
-typedef ACE_String_Base<ACE_WSTRING_TYPE> ACE_WString;
+using ACE_CString = ACE_String_Base<char>;
+using ACE_WString = ACE_String_Base<ACE_WSTRING_TYPE>;
 
 // This allows one to use W or C String based on the Unicode
 // setting
 #if defined (ACE_USES_WCHAR)
 typedef ACE_WString ACE_TString;
 #else /* ACE_USES_WCHAR */
-typedef ACE_CString ACE_TString;
+using ACE_TString = ACE_CString;
 #endif /* ACE_USES_WCHAR */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

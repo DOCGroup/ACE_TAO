@@ -40,7 +40,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Start the reactor event thread.
-  int open (void * = 0) override;
+  int open (void * = nullptr) override;
 
   // Run the reactor event loop.
   int svc () override;
@@ -117,7 +117,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Make this an Active Object.
-  int open (void * = 0) override;
+  int open (void * = nullptr) override;
 
   /// Close down the supplier.
   ///FUZZ: enable check_for_lack_ACE_OS
@@ -348,10 +348,10 @@ run_test (int disable_notify_pipe,
 {
   // Create special reactors with the appropriate flags enabled.
 
-  ACE_Select_Reactor *reactor_impl = 0;
+  ACE_Select_Reactor *reactor_impl = nullptr;
   if (disable_notify_pipe)
     ACE_NEW_RETURN (reactor_impl,
-                    ACE_Select_Reactor (0, 0, 1),
+                    ACE_Select_Reactor (nullptr, nullptr, 1),
                     -1);
   else
     ACE_NEW_RETURN (reactor_impl,
@@ -493,7 +493,7 @@ run_notify_purge_test ()
     r->notify (&n1, ACE_Event_Handler::READ_MASK);
     r->notify (n2, ACE_Event_Handler::READ_MASK);
     status = r->purge_pending_notifications
-      (0, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
+      (nullptr, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
     if (status != 2)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Purged %d notifies; expected 2\n"),

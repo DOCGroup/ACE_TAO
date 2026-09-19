@@ -1,5 +1,26 @@
+USER VISIBLE CHANGES BETWEEN TAO-4.0.7 and TAO-4.0.8
+====================================================
+
+. Reworked -ORBTransportIdleTimeout to use a periodic transport-cache scanner
+  with monotonic activity timestamps and the new -ORBTransportIdleScanInterval
+  option. Active synchronous requests are protected from idle purging.
+
+USER VISIBLE CHANGES BETWEEN TAO-4.0.6 and TAO-4.0.7
+====================================================
+
+. Fixed compile errors in SSLIOP with the Embarcadero C++ Builder bcc64x compiler
+
+. Updated the certificates for the SSLIOP tests because OpenSSL 3.x rejected
+  our old ones
+
 USER VISIBLE CHANGES BETWEEN TAO-4.0.5 and TAO-4.0.6
 ====================================================
+
+. All issues from bugzilla.dre.vanderbilt.edu migrated to
+  https://github.com/DOCGroup/bugzilla
+
+. Add -ORBTransportIdleTimeout to purge idle transports after
+  a configurable timeout, default is 0 (no purging of idle transports)
 
 USER VISIBLE CHANGES BETWEEN TAO-4.0.4 and TAO-4.0.5
 ====================================================

@@ -406,7 +406,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
   if (this->make_svc_handler (sh) == -1)
     return -1;
 
-  ACE_Time_Value *timeout = 0;
+  ACE_Time_Value *timeout = nullptr;
   int const use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
 
   if (use_reactor)
@@ -492,11 +492,11 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_n
                && errno == EWOULDBLOCK))
         {
           result = -1;
-          if (failed_svc_handlers != 0)
+          if (failed_svc_handlers != nullptr)
             // Mark this entry as having failed.
             failed_svc_handlers[i] = 1;
         }
-      else if (failed_svc_handlers != 0)
+      else if (failed_svc_handlers != nullptr)
         // Mark this entry as having succeeded.
         failed_svc_handlers[i] = 0;
     }
@@ -513,7 +513,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::cancel (SVC_HANDLER *sh)
   ACE_Event_Handler *handler =
     this->reactor ()->find_handler (sh->get_handle ());
 
-  if (handler == 0)
+  if (handler == nullptr)
     return -1;
 
   // find_handler() increments handler's refcount; ensure we decrement it.
@@ -549,7 +549,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
 
   ACE_HANDLE handle = sh->get_handle ();
   long timer_id = -1;
-  ACE_Time_Value *tv = 0;
+  ACE_Time_Value *tv = nullptr;
   NBCH *nbch = 0;
 
   ACE_NEW_RETURN (nbch,
@@ -576,7 +576,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
   // If we're starting connection under timer control then we need to
   // schedule a timeout with the ACE_Reactor.
   tv = const_cast<ACE_Time_Value *> (synch_options.time_value ());
-  if (tv != 0)
+  if (tv != nullptr)
     {
       timer_id =
         this->reactor ()->schedule_timer (nbch,
@@ -687,7 +687,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
   // Go through all the non-blocking handles.  It is necessary to
   // create a new iterator each time because we remove from the handle
   // set when we cancel the Svc_Handler.
-  ACE_HANDLE *handle = 0;
+  ACE_HANDLE *handle = nullptr;
   while (1)
     {
       ACE_Unbounded_Set_Iterator<ACE_HANDLE>
@@ -697,7 +697,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
 
       ACE_Event_Handler *handler =
         this->reactor ()->find_handler (*handle);
-      if (handler == 0)
+      if (handler == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("%t: Connector::close h %d, no handler\n"),
@@ -775,7 +775,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::info (ACE_TCHAR **strp, size_t lengt
                     ACE_TEXT ("ACE_Connector"),
                     ACE_TEXT ("# connector factory\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);

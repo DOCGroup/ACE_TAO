@@ -139,8 +139,8 @@ public:
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
-  typedef ACE_MEM_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_INET_Addr;
+  using PEER_STREAM = ACE_MEM_Stream;
 
   /// Dump the state of an object.
   void dump () const;
