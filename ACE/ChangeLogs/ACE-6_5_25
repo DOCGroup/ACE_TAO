@@ -1,0 +1,110 @@
+commit f2f1862f028851443998a4241279610fc8fb2aeb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 15:52:52 2026 +0200
+
+    Fix bcc32 comparison warning in CDR fixed parsing
+    
+    (cherry picked from commit 696c91a7d6500b09a19c7724eb9787455fd9a9e7)
+
+commit 085d4a421ec32aede042749a3e29a8ce2bcd4454
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 08:41:25 2026 +0200
+
+    Update ACE/NEWS with changes for version 6.5.24
+    
+    Dropped support for OpenSSL 1.0.x and updated Embarcadero C++ Builder support.
+
+commit dc274388efac6dbc3a236c6c09033e40f6969dec
+Merge: 9a5460d348e 54480bfa463
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 10:08:53 2026 +0200
+
+    Merge pull request #2562 from jwillemsen/jwi-sslcertace6tao2
+    
+    [ace6tao2] Updated certificates
+
+commit 54480bfa4631666400323dbc2b1d1fbb52aca2f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 17:12:35 2026 +0200
+
+    New certificates from master
+    
+        * ACE/tests/SSL/dummy.pem:
+        * ACE/tests/SSL/key.pem:
+
+commit 588f2bc17f88a0b4ae73fddfd807878793b6d441
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 15:42:22 2026 +0200
+
+    Document changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit c18aa19184290bcd27fc21e1ecabf7a668b29166
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 13:08:43 2026 +0200
+
+    Update ACE/tests/SSL/regen_pem.txt
+    
+    Co-authored-by: coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
+
+commit a74fe62fee54b576cbc740afba817bcb032b49e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 13:02:24 2026 +0200
+
+    Updated certificates for ACE SSL tests
+    
+        * ACE/tests/SSL/regen_pem.txt:
+          Added.
+    
+        * ACE/tests/SSL/dummy.pem:
+        * ACE/tests/SSL/key.pem:
+
+commit 290bc4f538fa4f859c219a400cd25e0a71d42784
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 16:30:37 2026 +0200
+
+    Check return calls of the SSL context calls
+    
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+
+commit 34dc5bcf127465a538aabe9024ba42cf675952ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 14:36:18 2026 +0200
+
+    Check return value of ssl context calls
+    
+        * ACE/tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+
+commit dbb1e2e4f69f8f25899d3d979276f572005e3f85
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 13:34:09 2026 +0200
+
+    Add namespace to base class to resolve compile errors with certain compilers
+    
+        * ACE/protocols/ace/INet/HTTPS_Session.cpp:
+    
+    (cherry picked from commit 0a3b491467a76594b8cb813680fc77f44fa8ecee)
+
+commit dc2798d47c12aa6f04f3d825c93c9df1156c2376
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 20 12:58:10 2026 +0200
+
+    Remove openssl11, OpenSSL 1.0 itself was supported until 2015
+    
+        * .github/workflows/windows.yml:
+        * ACE/ACE-INSTALL.html:
+        * ACE/bin/MakeProjectCreator/config/global.features:
+
+commit f721f248c53be96a138ee21636a6b3f609fad845
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 15 10:38:13 2026 +0200
+
+    Update for next release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:

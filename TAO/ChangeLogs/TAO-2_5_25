@@ -1,0 +1,472 @@
+commit ce82c6a1f5d08e1bdefc67475ca95d13ac4b0655
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 20:12:51 2026 +0200
+
+    Replaced forward declared type with include
+    
+        * TAO/tao/Transport_Cache_Manager.h:
+    
+    (cherry picked from commit f1759140de17c16a2b9f2544e29986567f66f5df)
+
+commit c5dfc5033e32b51f4846b3db5a69c333e44e716c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 15:34:08 2026 +0200
+
+    Fix signed size comparisons in idle scanner test
+
+commit 07e4022afddd8dfce9fec136bbe806b2d9b3fd13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 15:07:01 2026 +0200
+
+    Add include of Transport.h to resolve compile errors when using this file directly in test code
+    
+        * TAO/tao/Transport_Cache_Manager.h:
+    
+    (cherry picked from commit cdbf6ca13bbf90c48ab1c8435f697e049c931523)
+
+commit 70649ded88c29bee1885e34e04835f7fd5564269
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 21:40:54 2026 +0200
+
+    Document transport idle scanner in NEWS
+
+commit 6d21395000f69092d134ddb155b4d754eb0cd912
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 20:46:04 2026 +0200
+
+    Restore complete options documentation
+
+commit 5e9504db37a16a58ba41b11946018409ba9c555e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 20:44:37 2026 +0200
+
+    Correct transport idle scanner documentation
+
+commit 6f13910e75ee37ac149f7e35d55b5ad2bc00a55f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 20:23:42 2026 +0200
+
+    Protect active requests from idle scanning
+
+commit f2d188d844cb3caf6426f3a13814e9d361096182
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 16 20:43:52 2026 +0200
+
+    Use TAO mutex for transport activity timestamp
+
+commit 4cff59e0c28daa4de890b1f262ff6072d6831460
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 16 17:06:40 2026 +0200
+
+    Backport periodic transport idle scanner to ace6tao2
+
+commit 00c0c28e16d310904099edfc964a2c83e2d2489f
+Merge: 0e3fbd2bdc8 41d31fcf751
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 08:19:40 2026 +0200
+
+    Merge with ace6tao2
+
+commit 0e3fbd2bdc8a0c1b64267eb4bbeb0ce898cd7554
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:15:39 2026 +0200
+
+    Add new test
+    
+        * TAO/bin/tao_orb_tests.lst:
+    
+    (cherry picked from commit a44d804bae35ceed505eb4f039d0c6ac3e445a0f)
+    
+    # Conflicts:
+    #       TAO/bin/tao_orb_tests.lst
+
+commit 88727f51fbfe01bb285528b38fba4efbe5259055
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:13:54 2026 +0200
+
+    Document oneway completion idle-timeout expectation
+    
+    (cherry picked from commit fbb58ce002cd9ae3d70fe28238661b8ce0498fed)
+
+commit 7d85293b6b71fb5396ee78dbd7b08b0040816fa8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:13:53 2026 +0200
+
+    Expect server transport expiry after oneway completion
+    
+    (cherry picked from commit 843f668a6571a2bd46dbc6b5b95c599a8916da34)
+
+commit 882dca10f7a214b356ca812b9db850c5184cc13e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:09:45 2026 +0200
+
+    Remove auto-loaded idle timeout configuration
+    
+    (cherry picked from commit 6c0f580bce0221a5248b1f778a24efd0916a1eae)
+
+commit 5c708728afe92be5fb6269ca011c467fd54384ef
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:09:39 2026 +0200
+
+    Use server-specific idle timeout configuration
+    
+    (cherry picked from commit 1ebff6b53d1c021b892eebeba61d89d050766631)
+
+commit f23a4eee198fd86142b291aeb6a1a83d08fdef16
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:09:19 2026 +0200
+
+    Use server-specific idle timeout configuration
+    
+    (cherry picked from commit b70d40fcf76a1c58ddeacbcad9b6230fa749eeec)
+
+commit c2cefcb87ece6dd2dcee1dcbbf02de503c5ec7a0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:06:16 2026 +0200
+
+    Fix Transport_Idle_Timeout_Oneway server logging syntax
+    
+    (cherry picked from commit a45b5af584c4750a277f5aa17be397190a50529b)
+
+commit e1517e4c30630b74b10bd1736c55482c42805987
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:01:36 2026 +0200
+
+    Fix Transport_Idle_Timeout_Oneway client logging syntax
+    
+    (cherry picked from commit 817d3ba749c68cab114ebd7ba80964fb1299754b)
+
+commit 6015e2dae5e31d3209a3a4657863a587e39a4cee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:32:21 2026 +0200
+
+    Add process and thread ids to oneway test logging
+    
+    (cherry picked from commit 3be14e5ef54733fc4ac14056815e1f07fbd10427)
+
+commit 6861479f0608eb25dd01ba67397cd71840d727e8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:23:00 2026 +0200
+
+    Keep client alive during server idle timeout check
+    
+    (cherry picked from commit 61b3577e8bdd6ea85304f99bf83d23dd46e9d010)
+
+commit e80a9415787be1ddebdab8c2f6f3a4a8f116ec06
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:17:52 2026 +0200
+
+    Configure idle timeout only on oneway server
+    
+    (cherry picked from commit fd111dfb3489b43c12d03021951c42b276c71513)
+
+commit 2d9f45aefe24d5c8319b51accb509edc0d54fb17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:09:55 2026 +0200
+
+    Refine oneway idle timeout test behavior
+    
+    (cherry picked from commit ea5786675ebca0c00f97331873390464a1c643a3)
+
+commit 4c7a93a7db583777f631833cd23264488d238343
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:01:20 2026 +0200
+
+    Run simplified oneway idle timeout test
+    
+    (cherry picked from commit 3ada25d585ede7634f91424affdd34e8d17e1a96)
+
+commit 19884c50a728608cb7195a31f3ed482d38eb2f4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:01:11 2026 +0200
+
+    Use one second transport idle timeout
+    
+    (cherry picked from commit bf13c369d87fea4adc5c87272ef6cf8c61a2a992)
+
+commit 604d4fdbbb30294cca806b4351723b2607c3e09e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:01:05 2026 +0200
+
+    Check cache after timed server ORB run
+    
+    (cherry picked from commit ff9fc7e79283e84f8bc893e538c45aa7559c3175)
+
+commit a250b8f75252d1f2b06f126cc00ea5a1f3683dcf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:54 2026 +0200
+
+    Make oneway client exit after ping
+    
+    (cherry picked from commit ceefb87ed7d242253f1833c9a675d552aa3e2454)
+
+commit aaa0db37f893f11c071eff8f7be53d4156c5263f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:46 2026 +0200
+
+    Check transport cache in oneway servant
+    
+    (cherry picked from commit 44f0309065d57c5bfded35c97b37e83dd6f8582c)
+
+commit 75e8ea670c24bdfdf3b3c3f94a2f46c761ea3720
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:39 2026 +0200
+
+    Simplify oneway idle timeout servant
+    
+    (cherry picked from commit 3cdfab27a11c0ec114b79065756e6e9fe0faa3fa)
+
+commit df19d01e35a0261dbfeda4bb2945b74cc302f20b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:33 2026 +0200
+
+    Simplify oneway idle timeout test IDL
+    
+    (cherry picked from commit 790f0c1466e4e89b7dd274494700554a949aa2ef)
+
+commit 8b50b935b1afc4b5f38d3d88d02b7f9467de19f8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:53:03 2026 +0200
+
+    Add debug level
+    
+        * TAO/tests/Transport_Idle_Timeout_Oneway/run_test.pl:
+    
+    (cherry picked from commit 8d36241d72e2959f2aa17b6abaeae6c003f3655a)
+
+commit 7e2ea431d424751e8a1cbd8e7c423c1cc5299b5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:42:20 2026 +0200
+
+    Add oneway idle timeout test driver
+    
+    (cherry picked from commit bfb3af4d7e909fb3c51b765d5876b61292f77c29)
+
+commit 5634d78521d16e3316f7d667f60ae0ea3d8e616a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:42:03 2026 +0200
+
+    Configure oneway idle timeout test
+    
+    (cherry picked from commit c5821e8f1e88e6e9ffe1da47876f2ed13cfe4055)
+
+commit 46fa850f3b5f19899b027873c5b93ec5cb9c677f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:55 2026 +0200
+
+    Add oneway idle timeout MPC project
+    
+    (cherry picked from commit f763d7b33f7d8b40036a1b5d8055c15d4e541fce)
+
+commit c60b9a65515329a12e6aa4b484fc31e88fab1152
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:46 2026 +0200
+
+    Add oneway idle timeout test client
+    
+    (cherry picked from commit 2c992d57e8f4191b7bff651a956db8da6f0b38df)
+
+commit 5b8884a59c7b5bc9f2982d213cab085001c27130
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:29 2026 +0200
+
+    Add oneway idle timeout test server
+    
+    (cherry picked from commit e91dbdc36f6a72561f464b2aeaff787119be7861)
+
+commit 9726d594af24f3c47ab4b36a484da967be189275
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:18 2026 +0200
+
+    Add oneway idle timeout servant implementation
+    
+    (cherry picked from commit d2ef6c91d89f704e8f4bc77c3d50c50813f0d164)
+
+commit 94af8bf1c20694b7142c65d1e5af0e73b4d897da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:02 2026 +0200
+
+    Add oneway idle timeout servant header
+    
+    (cherry picked from commit 984008f1ff3a08c3fea3937fa5bc6a5b28cf31d5)
+
+commit 3a89c8bfb621fe4a3141596a4c41ae890e3d5c9f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:40:54 2026 +0200
+
+    Add oneway transport idle timeout test IDL
+    
+    (cherry picked from commit a8eb8874a9836406c49b54eb7030b457257f6125)
+
+commit 2e65fc6afb4b4bba7f858afb188995d9ae987269
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 08:21:59 2026 +0200
+
+    Comment update
+    
+        * TAO/tests/Transport_Idle_Timeout_server/README.md:
+    
+    (cherry picked from commit d69510230ab0e0aadeb27436a9df55c2e8f3aa62)
+
+commit e3505a92f87d07efb34ee06b41a0f47e94adbfb4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 8 16:29:26 2026 +0200
+
+    Test extensions
+    
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/README.md:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/Transport_Idle_Timeout_Long_Request.idl:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/Transport_Idle_Timeout_Long_Request.mpc:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/server.cpp:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/svc.conf:
+        * TAO/tests/Transport_Idle_Timeout_server/README.md:
+        * TAO/tests/Transport_Idle_Timeout_server/Transport_Idle_Timeout.idl:
+        * TAO/tests/Transport_Idle_Timeout_server/Transport_Idle_Timeout_server.mpc:
+        * TAO/tests/Transport_Idle_Timeout_server/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout_server/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout_server/server.cpp:
+        * TAO/tests/Transport_Idle_Timeout_server/svc.conf:
+          Added.
+    
+        * TAO/bin/tao_orb_tests.lst:
+        * TAO/tao/Transport.cpp:
+    
+    (cherry picked from commit 60b54759b88e115ba0ea33e4bf07f93ef2a828c6)
+
+commit e5e532ea8c8fc6887b4be8689d0d89f47cdb82aa
+Merge: dc274388efa a2704389f76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 31 10:21:59 2026 +0200
+
+    Merge pull request #2566 from jwillemsen/jwi-ace6tao2sslcerts
+    
+    [ace6tao2] Updated SSL certificates for these tests
+
+commit a2704389f76c67ce8acc1de9752a2820ab664d36
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 31 08:42:34 2026 +0200
+
+    Updated SSL certificates for these tests
+    
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/ca.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/client-cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/client-key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/make-client-keys:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/server-cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/ssl/server-key.pem:
+          Deleted.
+    
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/server_key.pem:
+          Added.
+    
+        * TAO/orbsvcs/tests/Security/Big_Request/README:
+        * TAO/orbsvcs/tests/Security/Big_Request/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Big_Request/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/README:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/client.conf:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/server.conf:
+
+commit dc274388efac6dbc3a236c6c09033e40f6969dec
+Merge: 9a5460d348e 54480bfa463
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 10:08:53 2026 +0200
+
+    Merge pull request #2562 from jwillemsen/jwi-sslcertace6tao2
+    
+    [ace6tao2] Updated certificates
+
+commit 588f2bc17f88a0b4ae73fddfd807878793b6d441
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 15:42:22 2026 +0200
+
+    Document changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit f19d6c2cd693c39c466e513715ad3baf27deaf66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 08:33:04 2026 +0200
+
+    Updated certificates
+    
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/cacert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/client_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/client_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/server_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/server_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/cacert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/cacert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client_key.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/server_cert.pem:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/server_key.pem:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/client_cert.pem:
+        * TAO/orbsvcs/tests/Bug_3418_Regression/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Callback/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Callback/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Callback/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Callback/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Callback/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Crash_Test/server_key.pem:
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/server_key.pem:
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Null_Cipher/server_key.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+        * TAO/orbsvcs/tests/Security/cert/cacert.pem:
+        * TAO/orbsvcs/tests/Security/cert/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/cert/client_key.pem:
+        * TAO/orbsvcs/tests/Security/cert/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/cert/server_key.pem:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/cacert.pem:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/client_key.pem:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/server_key.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_CSD/cacert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/cacert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client_key.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server_key.pem:
+
+commit f721f248c53be96a138ee21636a6b3f609fad845
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 15 10:38:13 2026 +0200
+
+    Update for next release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
