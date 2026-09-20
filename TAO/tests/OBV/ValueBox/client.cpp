@@ -131,7 +131,7 @@ template <class BoxT, class UT>
 int default_box_test (UT expected)
 {
     int fail {};
-    BoxT *valuebox {};
+    BoxT *valuebox {nullptr};
     ACE_NEW_RETURN (valuebox,
                     BoxT (),
                     1);
