@@ -182,7 +182,7 @@ test_default_initialized_exception (int &error_count)
 void
 test_default_initialized_valuetype (int &error_count)
 {
-  OBV_DefaultInitializedValue value {};
+  OBV_DefaultInitializedValue value;
 
   expect_equals<CORBA::Boolean> (
     error_count, "DefaultInitializedValue::boolean_value",
