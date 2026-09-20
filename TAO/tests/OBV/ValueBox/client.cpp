@@ -127,6 +127,22 @@ int simple_box_test ()
     return fail;
 }
 
+template <class BoxT, class UT>
+int default_box_test (UT expected)
+{
+    int fail = 0;
+    BoxT *valuebox = 0;
+    ACE_NEW_RETURN (valuebox,
+                    BoxT (),
+                    1);
+
+    OBV_VERITY (ACE::is_equal (valuebox->_value (), expected));
+
+    CORBA::remove_ref (valuebox);
+
+    return fail;
+}
+
 //
 // Test boxed values that use an underlying UT&
 //
@@ -156,6 +172,12 @@ int box_test_ref (BoxT *valuebox, UT &val1, UT &val2)
 int test_basic ()
 {
     int fail = 0;
+
+    // Default initialized valueboxes
+    fail += default_box_test<VBlong, CORBA::Long> (0);
+    fail += default_box_test<VBboolean, CORBA::Boolean> (false);
+    fail += default_box_test<VBenum, Color> (red);
+    fail += default_box_test<VBTDboolean, CORBA::Boolean> (false);
 
     // Basic types
     fail += simple_box_test<VBshort,  CORBA::Short> ();
