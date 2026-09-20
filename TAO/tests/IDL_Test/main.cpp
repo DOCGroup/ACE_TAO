@@ -19,6 +19,7 @@
 #include "typedefC.h"
 #include "expressionsC.h"
 #include "structC.h"
+#include "valuetypeC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -176,6 +177,19 @@ test_default_initialized_exception (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "DefaultInitializedException::long_value",
     exception.long_value, 0);
+}
+
+void
+test_default_initialized_valuetype (int &error_count)
+{
+  OBV_DefaultInitializedValue value {};
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitializedValue::boolean_value",
+    value.boolean_value (), false);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedValue::long_value",
+    value.long_value (), 0);
 }
 
 int
@@ -516,6 +530,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_expressions (error_count);
   test_default_initialized_struct (error_count);
   test_default_initialized_exception (error_count);
+  test_default_initialized_valuetype (error_count);
 
   return error_count ? 1 : 0;
 }
