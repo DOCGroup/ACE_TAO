@@ -56,4 +56,20 @@ module Test
     SString43 s10_3;
     S4 s10_4;
   };
+
+  struct DefaultInitialized
+  {
+    boolean boolean_value;
+    long long_value;
+    double double_value;
+    S90 enum_value;
+    S42 array_value;
+    S4 nested_value;
+  };
+
+  exception DefaultInitializedException
+  {
+    boolean boolean_value;
+    long long_value;
+  };
 };

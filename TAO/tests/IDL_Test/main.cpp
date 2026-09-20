@@ -18,6 +18,7 @@
 #include "nested_scopeS.h"
 #include "typedefC.h"
 #include "expressionsC.h"
+#include "structC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -136,6 +137,45 @@ test_expressions (int &error_count)
   expect_equals<CORBA::Double> (error_count, "MixedFloatValues::mul", MixedFloatValues::mul, 18.0);
   expect_equals<CORBA::Double> (error_count, "MixedFloatValues::add", MixedFloatValues::add, 9.0);
   expect_equals<CORBA::Double> (error_count, "MixedFloatValues::sub", MixedFloatValues::sub, 3.0);
+}
+
+void
+test_default_initialized_struct (int &error_count)
+{
+  Test::DefaultInitialized value;
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitialized::boolean_value",
+    value.boolean_value, false);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitialized::long_value", value.long_value, 0);
+  expect_equals<CORBA::Double> (
+    error_count, "DefaultInitialized::double_value", value.double_value, 0.0);
+  expect_equals<Test::S90> (
+    error_count, "DefaultInitialized::enum_value",
+    value.enum_value, Test::S90_1);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitialized::array_value[0]",
+    value.array_value[0], 0);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitialized::array_value[1]",
+    value.array_value[1], 0);
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitialized::nested_value.a",
+    value.nested_value.a, false);
+}
+
+void
+test_default_initialized_exception (int &error_count)
+{
+  Test::DefaultInitializedException exception;
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitializedException::boolean_value",
+    exception.boolean_value, false);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedException::long_value",
+    exception.long_value, 0);
 }
 
 int
@@ -474,6 +514,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   test_expressions (error_count);
+  test_default_initialized_struct (error_count);
+  test_default_initialized_exception (error_count);
 
   return error_count ? 1 : 0;
 }
