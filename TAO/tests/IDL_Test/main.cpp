@@ -200,12 +200,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const ACE_CDR::ULongLong test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
 
-  if (test_ull != AAA)
+  if (test_ull != AAAX)
     {
       ++error_count;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Generated value of unsigned")
-                  ACE_TEXT (" long long AAA in constants.idl")
+                  ACE_TEXT (" long long AAAX in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
     }
 

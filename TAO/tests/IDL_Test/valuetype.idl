@@ -65,7 +65,7 @@ valuetype GetsDeprecatedMember : IncludedBase
   public string StringMember;
 };
 
-module X
+module X_VALUETYPE
 {
   abstract valuetype AXXX
   {
