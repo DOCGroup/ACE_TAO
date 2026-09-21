@@ -2387,7 +2387,8 @@ TAO_CodeGen::gen_stub_hdr_includes ()
 
   if (idl_global->union_seen_)
     {
-      *this->client_header_ << "\n#include <memory>";
+      *this->client_header_ << "\n#include <memory>"
+                            << "\n#include <new>";
     }
 
   if (idl4)

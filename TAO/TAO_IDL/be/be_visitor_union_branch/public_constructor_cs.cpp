@@ -255,11 +255,8 @@ be_visitor_union_branch_public_constructor_cs::visit_structure (be_structure *no
     }
   else
     {
-      *os << bt->name () << " *_tao_union_member {};" << be_nl
-          << "ACE_NEW_MALLOC_NORETURN (" << be_idt_nl
-          << "_tao_union_member," << be_nl
-          << "std::addressof(this->u_." << ub->local_name () << "_)," << be_nl
-          << bt->name () << ");" << be_uidt << be_uidt;
+      *os << "::new (std::addressof(this->u_." << ub->local_name ()
+          << "_)) " << bt->name () << ";";
     }
 
   return 0;
