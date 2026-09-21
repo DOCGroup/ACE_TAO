@@ -259,7 +259,7 @@ be_visitor_union_branch_public_constructor_cs::visit_structure (be_structure *no
           << "ACE_NEW_MALLOC_NORETURN (" << be_idt_nl
           << "_tao_union_member," << be_nl
           << "std::addressof(this->u_." << ub->local_name () << "_)," << be_nl
-          << bt->name () << ");" << be_uidt;
+          << bt->name () << ");" << be_uidt << be_uidt;
     }
 
   return 0;
