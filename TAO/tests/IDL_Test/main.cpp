@@ -192,6 +192,29 @@ test_default_initialized_valuetype (int &error_count)
     value.long_value (), 0);
 }
 
+void
+test_default_initialized_struct_union (int &error_count)
+{
+  U87 value;
+
+  expect_equals<CORBA::Long> (
+    error_count, "U87::b_87_1::foo", value.b_87_1 ().foo, 0);
+
+  UBar member;
+  member.foo = 42;
+  value.b_87_1 (member);
+
+  U87 copy (value);
+  expect_equals<CORBA::Long> (
+    error_count, "U87 copy::b_87_1::foo", copy.b_87_1 ().foo, 42);
+
+  U87 assigned;
+  assigned = value;
+  expect_equals<CORBA::Long> (
+    error_count, "U87 assignment::b_87_1::foo",
+    assigned.b_87_1 ().foo, 42);
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -531,6 +554,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_struct (error_count);
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);
+  test_default_initialized_struct_union (error_count);
 
   return error_count ? 1 : 0;
 }

@@ -534,12 +534,6 @@ AST_Structure::redefine (AST_Structure *from)
 int
 AST_Structure::compute_size_type ()
 {
-  // Generated structure fields have default member initializers, so the
-  // resulting C++ structure has a non-trivial default constructor.  This is
-  // relevant when the structure is used as a union member: such structures
-  // must use the existing constructor-aware union storage path.
-  this->has_constructor (true);
-
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())

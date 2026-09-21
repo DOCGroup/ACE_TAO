@@ -78,7 +78,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << be_nl_2
       << node->name () << "::" << node->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
-      << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl;
+      << "ACE_OS::memset (std::addressof(this->u_), 0, sizeof (this->u_));" << be_nl;
 
   // The default constructor must initialize the discriminator
   // to the first case label value found in the union declaration

@@ -131,9 +131,12 @@ int be_visitor_union_ch::visit_union (be_union *node)
   *os << "private:" << be_idt_nl;
   *os << bt->nested_type_name (node) << " disc_;" << be_nl_2;
 
-  // The members are inside of a union.
-  *os << "union" << be_nl;
-  *os << "{" << be_idt;
+  // A user-provided constructor allows fixed structures with default member
+  // initializers to remain in the union.  The active member is constructed by
+  // the generated union implementation.
+  *os << "union _tao_union_storage" << be_nl;
+  *os << "{" << be_idt_nl
+      << "_tao_union_storage () {}" << be_nl;
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PRIVATE_CH);
 

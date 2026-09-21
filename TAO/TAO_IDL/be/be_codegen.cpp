@@ -2384,6 +2384,12 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   const bool idl4 = idl_global->idl_version_ >= IDL_VERSION_4;
   this->gen_standard_include (this->client_header_,
      idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
+
+  if (idl_global->union_seen_)
+    {
+      *this->client_header_ << "\n#include <memory>";
+    }
+
   if (idl4)
     {
       *client_header_ <<
