@@ -200,15 +200,20 @@ test_default_initialized_struct_union (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "U87::b_87_1::foo", value.b_87_1 ().foo, 0);
 
+  value.b_87_2 (7);
+
   UBar member;
   member.foo = 42;
   value.b_87_1 (member);
+  expect_equals<CORBA::Long> (
+    error_count, "U87 setter::b_87_1::foo", value.b_87_1 ().foo, 42);
 
   U87 copy (value);
   expect_equals<CORBA::Long> (
     error_count, "U87 copy::b_87_1::foo", copy.b_87_1 ().foo, 42);
 
   U87 assigned;
+  assigned.b_87_2 (8);
   assigned = value;
   expect_equals<CORBA::Long> (
     error_count, "U87 assignment::b_87_1::foo",
