@@ -402,6 +402,7 @@ private:
 
   /// Utility methods for generating file includes.
   void gen_stub_hdr_includes ();
+  void gen_stub_inline_includes ();
   void gen_stub_src_includes ();
   void gen_skel_hdr_includes ();
   void gen_skel_src_includes ();

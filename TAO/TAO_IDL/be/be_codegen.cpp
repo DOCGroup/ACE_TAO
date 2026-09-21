@@ -417,6 +417,8 @@ TAO_CodeGen::start_client_inline (const char *fname)
       return -1;
     }
 
+  this->gen_stub_inline_includes ();
+
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_inline_);
 
@@ -2385,14 +2387,6 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   this->gen_standard_include (this->client_header_,
      idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
 
-  if (idl_global->union_seen_)
-    {
-      this->gen_standard_include (this->client_header_,
-                                  "memory");
-      this->gen_standard_include (this->client_header_,
-                                  "new");
-    }
-
   if (idl4)
     {
       *client_header_ <<
@@ -2614,6 +2608,18 @@ TAO_CodeGen::gen_stub_hdr_includes ()
 }
 
 void
+TAO_CodeGen::gen_stub_inline_includes ()
+{
+  if (idl_global->union_seen_)
+    {
+      this->gen_standard_include (this->client_inline_,
+                                  "memory");
+      this->gen_standard_include (this->client_inline_,
+                                  "new");
+    }
+}
+
+void
 TAO_CodeGen::gen_stub_src_includes ()
 {
   // Generate the include statement for the precompiled header file.
@@ -2639,6 +2645,14 @@ TAO_CodeGen::gen_stub_src_includes ()
       *this->client_stubs_ << "\n#include \""
                            << be_global->be_get_client_hdr_fname (true)
                            << "\"";
+    }
+
+  if (idl_global->union_seen_)
+    {
+      this->gen_standard_include (this->client_stubs_,
+                                  "memory");
+      this->gen_standard_include (this->client_stubs_,
+                                  "new");
     }
 
   if (be_global->tc_support ()
