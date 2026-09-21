@@ -796,7 +796,7 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
           << "_tao_union_member," << be_nl
           << "std::addressof(this->u_." << ub->local_name () << "_)," << be_nl
           << bt->name () << " (u.u_." << ub->local_name () << "_));"
-          << be_uidt_nl;
+          << be_uidt << be_uidt_nl;
     }
 
   return 0;

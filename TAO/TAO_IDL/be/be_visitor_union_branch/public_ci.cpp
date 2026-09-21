@@ -1104,7 +1104,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
           << "ACE_NEW_MALLOC_NORETURN (" << be_idt_nl
           << "_tao_union_member," << be_nl
           << "std::addressof(this->u_." << ub->local_name () << "_)," << be_nl
-          << bt->name () << " (val));" << be_uidt_nl;
+          << bt->name () << " (val));" << be_uidt << be_uidt_nl;
     }
 
   *os << "}" << be_nl_2;
