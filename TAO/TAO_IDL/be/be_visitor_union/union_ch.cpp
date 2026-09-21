@@ -136,7 +136,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // the generated union implementation.
   *os << "union _tao_union_storage" << be_nl;
   *os << "{" << be_idt_nl
-      << "_tao_union_storage () {}\n";
+      << "_tao_union_storage () {}" << be_nl_2;
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PRIVATE_CH);
 
