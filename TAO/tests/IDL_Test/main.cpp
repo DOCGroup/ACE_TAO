@@ -197,8 +197,10 @@ test_default_initialized_union (int &error_count)
 {
   U87 value;
 
+  DefaultInitializedStructUnion struct_union;
   expect_equals<CORBA::Long> (
-    error_count, "U87::b_87_1::foo", value.b_87_1 ().foo, 0);
+    error_count, "DefaultInitializedStructUnion::value::foo",
+    struct_union.value ().foo, 0);
 
   value.b_87_2 (7);
 

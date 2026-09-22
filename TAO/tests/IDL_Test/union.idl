@@ -308,6 +308,12 @@ union U94 switch (long) {
 
 typedef long DefaultInitializedLongArray[2];
 
+union DefaultInitializedStructUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: UBar value;
+};
+
 union DefaultInitializedBooleanUnion switch (boolean)
 {
   case FALSE:
