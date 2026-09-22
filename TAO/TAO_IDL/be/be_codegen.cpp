@@ -948,6 +948,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                        << be_global->be_get_anyop_header_fname (true)
                        << "\"";
 
+  this->gen_system_include (this->anyop_source_, "memory");
   this->gen_typecode_includes (this->anyop_source_);
 
   this->gen_any_file_includes (this->anyop_source_);
@@ -2631,9 +2632,14 @@ TAO_CodeGen::gen_stub_src_includes ()
                            << "\"";
     }
 
-  if (idl_global->union_seen_)
+  if (idl_global->union_seen_
+      || (be_global->tc_support () && !be_global->gen_anyop_files ()))
     {
       this->gen_system_include (this->client_stubs_, "memory");
+    }
+
+  if (idl_global->union_seen_)
+    {
       this->gen_system_include (this->client_stubs_, "new");
     }
 
