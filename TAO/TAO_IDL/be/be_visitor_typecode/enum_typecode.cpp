@@ -80,9 +80,9 @@ TAO::be_visitor_enum_typecode::visit_members (be_enum * node)
       os << "\"" << item->original_local_name () << "\"";
 
       if (n < count - 1)
-        os << ",";
-
-      os << be_nl;
+        {
+          os << "," << be_nl;
+        }
 
       ++n;
     }
