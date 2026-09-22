@@ -40,6 +40,15 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
   const be_visitor_union::BoolUnionBranch bub =
     be_visitor_union::boolean_branch (node);
 
+  be_union *bu = dynamic_cast<be_union*> (node->defined_in ());
+  AST_Field **last_field = nullptr;
+  const bool last_branch =
+    bu != nullptr
+    && bu->nfields () != 0
+    && bu->field (last_field, bu->nfields () - 1) == 0
+    && last_field != nullptr
+    && *last_field == node;
+
   if (bub == be_visitor_union::BUB_NONE)
     {
       *os << be_nl;
@@ -116,7 +125,8 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
       *os << "}" << be_uidt;
-      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR
+          && last_branch)
         {
           *os << be_uidt_nl;
         }
