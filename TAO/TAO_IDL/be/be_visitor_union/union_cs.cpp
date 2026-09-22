@@ -220,11 +220,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &u)" << be_nl;
   *os << "{" << be_idt_nl;
-  // First check for self-assignment.
-  *os << "if (std::addressof(u) == this)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return *this;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+  // Check for self-assignment.
+  *os << "if (std::addressof(u) != this)" << be_idt_nl
+      << "{" << be_idt_nl;
   // Reset and set the discriminant.
   *os << "this->_reset ();" << be_nl;
   *os << "this->disc_ = u.disc_;" << be_nl;
@@ -259,11 +257,12 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   if (!boolDisc)
     {
-      *os << be_uidt_nl << "}" << be_nl;
+      *os << be_uidt_nl << "}" << be_uidt_nl;
     }
 
-  *os << "return *this;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_uidt_nl
+      << "return *this;" << be_uidt_nl
+      << "}" << be_nl_2;
 
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);

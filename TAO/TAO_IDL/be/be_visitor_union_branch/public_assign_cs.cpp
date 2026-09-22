@@ -87,10 +87,6 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
           << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
       break;
     case be_visitor_union::BUB_UNCONDITIONAL:
-      if (this->ctx_->sub_state () != TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
-        {
-          *os << be_idt;
-        }
       break;
     }
 
@@ -125,8 +121,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
       *os << "}" << be_uidt;
-      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR
-          && last_branch)
+      if (last_branch)
         {
           *os << be_uidt_nl;
         }
