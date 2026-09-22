@@ -11,11 +11,9 @@
 
 #include "union_branch.h"
 
-namespace
+bool
+be_visitor_union_branch_public_reset_cs::requires_reset (be_type *node)
 {
-  bool
-  requires_reset (be_type *node)
-  {
     while (node != nullptr && node->node_type () == AST_Decl::NT_typedef)
       {
         be_typedef *td = dynamic_cast<be_typedef*> (node);
@@ -57,7 +55,6 @@ namespace
       || dynamic_cast<be_string*> (node) != nullptr
       || dynamic_cast<be_union*> (node) != nullptr
       || dynamic_cast<be_union_fwd*> (node) != nullptr;
-  }
 }
 
 // *****************************************************
@@ -95,7 +92,7 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
 
   this->ctx_->node (node); // save the node
 
-  if (!requires_reset (bt))
+  if (!be_visitor_union_branch_public_reset_cs::requires_reset (bt))
     {
       return 0;
     }

@@ -268,44 +268,82 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
 
+  bool requires_reset = false;
+
+  for (unsigned long i = 0; i < node->nfields (); ++i)
+    {
+      AST_Field **field = nullptr;
+
+      if (node->field (field, i) != 0 || field == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit_union - "
+                             "failed to retrieve union branch\n"),
+                            -1);
+        }
+
+      be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+      be_type *branch_type =
+        branch != nullptr
+        ? dynamic_cast<be_type*> (branch->field_type ())
+        : nullptr;
+
+      if (branch_type != nullptr
+          && be_visitor_union_branch_public_reset_cs::requires_reset (
+            branch_type))
+        {
+          requires_reset = true;
+          break;
+        }
+    }
+
   *os << "/// Reset method to reset old values of a union." << be_nl;
   *os << "void " << node->name () << "::_reset ()" << be_nl;
-  *os << "{" << be_idt;
 
-  if (!boolDisc)
+  if (!requires_reset)
     {
-      *os << be_nl << "switch (this->disc_)" << be_nl;
-      *os << "{" << be_idt_nl;
+      *os << "{" << be_nl << "}";
     }
-
-  if (this->visit_scope (node) == -1)
+  else
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_cs"
-                         "visit_union - "
-                         "codegen for reset failed\n"),
-                        -1);
-    }
+      *os << "{" << be_idt;
 
-  // If there is no explicit default case, but there
-  // is an implicit one, and the discriminant is an enum,
-  // we need this to avert warnings in some compilers that
-  // not all case values are included. If there is no
-  // implicit default case, or the discriminator is not
-  // an enum, this does no harm.
-  if (!boolDisc && node->gen_empty_default_label ())
-    {
-      *os << be_nl
-          << "default:" << be_nl
-          << "break;";
-    }
+      if (!boolDisc)
+        {
+          *os << be_nl << "switch (this->disc_)" << be_nl;
+          *os << "{" << be_idt_nl;
+        }
 
-  if (!boolDisc)
-    {
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs"
+                             "visit_union - "
+                             "codegen for reset failed\n"),
+                            -1);
+        }
+
+      // If there is no explicit default case, but there
+      // is an implicit one, and the discriminant is an enum,
+      // we need this to avert warnings in some compilers that
+      // not all case values are included. If there is no
+      // implicit default case, or the discriminator is not
+      // an enum, this does no harm.
+      if (!boolDisc && node->gen_empty_default_label ())
+        {
+          *os << be_nl
+              << "default:" << be_nl
+              << "break;";
+        }
+
+      if (!boolDisc)
+        {
+          *os << be_uidt_nl << "}";
+        }
+
       *os << be_uidt_nl << "}";
     }
-
-  *os << be_uidt_nl << "}";
 
   if (be_global->tc_support ())
     {

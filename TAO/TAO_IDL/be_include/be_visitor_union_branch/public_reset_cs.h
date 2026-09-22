@@ -31,6 +31,8 @@ public:
 
   virtual int visit_union_branch (be_union_branch *node);
 
+  static bool requires_reset (be_type *node);
+
   virtual int visit_array (be_array *node);
   virtual int visit_enum (be_enum *node);
   virtual int visit_interface (be_interface *node);
