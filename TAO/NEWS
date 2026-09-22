@@ -2,8 +2,10 @@ USER VISIBLE CHANGES BETWEEN TAO-4.0.7 and TAO-4.0.8
 ====================================================
 
 . tao_idl now value-initializes generated IDL structure, exception, valuetype,
-  and valuebox members to prevent fundamental types from having indeterminate
-  values after default construction.
+  valuebox, and union members to prevent fundamental types from having
+  indeterminate values after default construction. Generated unions initialize
+  their active member and use placement construction where required for
+  non-trivial structure members.
 
 . Reworked -ORBTransportIdleTimeout to use a periodic transport-cache scanner
   with monotonic activity timestamps and the new -ORBTransportIdleScanInterval
