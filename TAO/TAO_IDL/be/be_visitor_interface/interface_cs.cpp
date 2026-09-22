@@ -185,7 +185,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << node->name () << "::" << node->local_name ()
           << " ()" << be_nl
-          << "{}";
+          << "{}" << be_nl_2;
     }
 
   if (! node->is_abstract () && ! node->is_local ())
