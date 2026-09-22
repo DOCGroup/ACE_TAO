@@ -92,16 +92,10 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
 
   this->ctx_->node (node); // save the node
 
-  if (!be_visitor_union_branch_public_reset_cs::requires_reset (bt))
-    {
-      return 0;
-    }
-
   const be_visitor_union::BoolUnionBranch bub =
     be_visitor_union::boolean_branch (node);
-
   be_union *bu = dynamic_cast<be_union*> (node->defined_in ());
-  bool first_reset_branch = true;
+  bool first_branch = true;
 
   for (unsigned long i = 0; bu != nullptr && i < bu->nfields (); ++i)
     {
@@ -112,22 +106,42 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
           break;
         }
 
-      be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
-      be_type *branch_type =
-        branch != nullptr
-        ? dynamic_cast<be_type*> (branch->field_type ())
-        : nullptr;
-
-      if (branch_type != nullptr
-          && be_visitor_union_branch_public_reset_cs::requires_reset (
-            branch_type))
+      if (dynamic_cast<be_union_branch*> (*field) != nullptr)
         {
-          first_reset_branch = false;
-          break;
+          first_branch = false;
         }
     }
 
-  if (bub != be_visitor_union::BUB_NONE || !first_reset_branch)
+  if (!be_visitor_union_branch_public_reset_cs::requires_reset (bt))
+    {
+      if (bub == be_visitor_union::BUB_NONE)
+        {
+          if (!first_branch)
+            {
+              *os << be_nl;
+            }
+
+          for (unsigned long i = 0; i < node->label_list_length (); ++i)
+            {
+              if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+                {
+                  *os << "default:" << be_nl;
+                }
+              else
+                {
+                  *os << "case ";
+                  node->gen_label_value (os, i);
+                  *os << ":" << be_nl;
+                }
+            }
+
+          *os << "break;";
+        }
+
+      return 0;
+    }
+
+  if (bub != be_visitor_union::BUB_NONE || !first_branch)
     {
       *os << be_nl;
     }
@@ -653,4 +667,3 @@ be_visitor_union_branch_public_reset_cs::visit_union_fwd (
 
   return this->visit_union (u);
 }
-

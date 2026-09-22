@@ -349,3 +349,17 @@ union DefaultInitializedStringUnion switch (boolean)
   case FALSE:
   case TRUE: string value;
 };
+
+enum ResetDiscriminator
+{
+  RESET_STRING,
+  RESET_LONG,
+  RESET_DEFAULT
+};
+
+union ResetWithNoopBranches switch (ResetDiscriminator)
+{
+  case RESET_STRING: string string_value;
+  case RESET_LONG: long long_value;
+  default: boolean boolean_value;
+};

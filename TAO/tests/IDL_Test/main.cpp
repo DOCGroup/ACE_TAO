@@ -253,6 +253,13 @@ test_default_initialized_union (int &error_count)
   expect_equals<const char *> (
     error_count, "DefaultInitializedStringUnion::value",
     string_union.value (), nullptr);
+
+  ResetWithNoopBranches reset_union;
+  reset_union.string_value ("value");
+  reset_union.long_value (42);
+  expect_equals<CORBA::Long> (
+    error_count, "ResetWithNoopBranches::long_value",
+    reset_union.long_value (), 42);
 }
 
 int
