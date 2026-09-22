@@ -88,8 +88,6 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl;
-
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
@@ -137,8 +135,6 @@ be_visitor_union_branch_private_ch::visit_enum (be_enum *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl;
-
   *os << bt->nested_type_name (bu) << " " << ub->local_name ()
       << "_;";
 
@@ -174,8 +170,6 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
-
-  *os << be_nl;
 
   *os << bt->nested_type_name (bu, "_var")
       << " *" << ub->local_name () << "_;";
@@ -213,8 +207,6 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl;
-
   *os << bt->nested_type_name (bu, "_var")
       << " *" << ub->local_name () << "_;";
 
@@ -250,8 +242,6 @@ be_visitor_union_branch_private_ch::visit_valuebox (be_valuebox *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
-
-  *os << be_nl;
 
   *os << bt->nested_type_name (bu, "_var")
       << " *" << ub->local_name () << "_;";
@@ -289,8 +279,6 @@ be_visitor_union_branch_private_ch::visit_valuetype (be_valuetype *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl;
-
   *os << bt->nested_type_name (bu, "_var")
       << " *" << ub->local_name () << "_;";
 
@@ -326,8 +314,6 @@ be_visitor_union_branch_private_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
-
-  *os << be_nl;
 
   *os << bt->nested_type_name (bu, "_var")
       << " *" << ub->local_name () << "_;";
@@ -367,8 +353,6 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
-
-  *os << be_nl;
 
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
@@ -446,8 +430,6 @@ be_visitor_union_branch_private_ch::visit_seq_map_common (be_type *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl;
-
   // C++ doesn't allow object instances inside unions, so we need a
   // pointer.
   *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
@@ -474,8 +456,6 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
-
-  *os << be_nl;
 
   if (node->width () == (long) sizeof (char))
     {
@@ -518,8 +498,6 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
-
-  *os << be_nl;
 
   // If we are variable sized, we need a pointer type.
   if (node->size_type () == AST_Type::VARIABLE
@@ -598,8 +576,6 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_nl;
-
   // C++ doesn't allow object instances inside unions, so we need a
   // pointer.
   *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
@@ -617,4 +593,3 @@ be_visitor_union_branch_private_ch::visit_union_fwd (
 
   return this->visit_union (u);
 }
-

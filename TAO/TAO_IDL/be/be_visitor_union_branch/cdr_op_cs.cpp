@@ -1014,7 +1014,7 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
           << "_tao_union." << f->local_name ()
           << " (_tao_union_tmp);" << be_nl
           << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
-          << "}" << be_uidt_nl;
+          << "}" << be_uidt;
 
       return 0;
 

@@ -148,8 +148,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
   // since a forward declaration may appear more than once.
   os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
-  *os << be_nl_2
-      << "template<>" << be_nl
+  *os << "template<>" << be_nl
       << "class "
       << " " << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl

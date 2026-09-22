@@ -94,11 +94,11 @@ int be_visitor_array_cs::visit_array (be_array *node)
       << "_slice *_tao_src_array)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << fname << "_slice *_tao_dup_array = "
-      << fname << "_alloc ();" << be_nl << be_nl;
+      << fname << "_alloc ();" << be_nl_2;
   *os << "if (_tao_dup_array)" << be_idt_nl
       << "{" << be_idt_nl;
   *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << "}" << be_uidt << be_nl_2;
   *os << "return _tao_dup_array;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
@@ -332,4 +332,3 @@ int be_visitor_array_cs::visit_array (be_array *node)
   node->cli_stub_gen (true);
   return 0;
 }
-

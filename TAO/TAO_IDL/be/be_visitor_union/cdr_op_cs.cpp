@@ -62,7 +62,7 @@ namespace {
       << "if (!(strm " << (out ? "<<" : ">>") << " " << val << "))" << be_idt_nl
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
+      << "}" << be_uidt << be_nl_2
       << "::CORBA::Boolean result = true;" << be_nl_2;
   }
 }

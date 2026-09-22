@@ -53,8 +53,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   if (node->is_defined ())
     {
-      *os << be_nl
-          << be_global->core_versioning_begin ();
+      *os << be_global->core_versioning_begin ();
 
       *os << be_nl_2
           << "void" << be_nl

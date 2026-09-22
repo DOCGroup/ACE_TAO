@@ -259,8 +259,7 @@ be_type::gen_common_varout (TAO_OutStream *os)
 
   AST_Type::SIZE_TYPE st = this->size_type ();
 
-  *os << be_nl_2
-      << (this->node_type () == AST_Decl::NT_struct ? "struct "
+  *os << (this->node_type () == AST_Decl::NT_struct ? "struct "
                                                     : "class ")
       << this->local_name () << ";";
 

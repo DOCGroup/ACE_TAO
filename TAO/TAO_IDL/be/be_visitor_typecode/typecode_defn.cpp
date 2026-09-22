@@ -369,8 +369,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
         }
 
       os << "," << be_nl
-         << node->dims ()[inner_ndims] << ");" << be_uidt_nl
-         << be_uidt_nl;
+         << node->dims ()[inner_ndims] << ");" << be_uidt << be_uidt << be_nl_2;
 
       os << "::CORBA::TypeCode_ptr const tc_"
          << node->flat_name ();

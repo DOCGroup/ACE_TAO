@@ -77,7 +77,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   *os << "void operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << "_forany &_tao_elem)" << be_uidt_nl
-      << be_uidt_nl
+      << be_uidt << be_nl
       << "{" << be_idt_nl
       << "TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
       << node->name () << "_slice," << be_nl
@@ -97,7 +97,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
       << "const ::CORBA::Any &_tao_any," << be_nl
       << node->name () << "_forany &_tao_elem)" << be_uidt_nl
-      << be_uidt_nl
+      << be_uidt << be_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl

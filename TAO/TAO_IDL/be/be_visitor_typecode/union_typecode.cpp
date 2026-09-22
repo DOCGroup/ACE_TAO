@@ -116,8 +116,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
      << "_tao_cases_" << node->flat_name () << "," << be_nl
      << "sizeof (_tao_cases_" << node->flat_name () << ")/"
         "sizeof (_tao_cases_" << node->flat_name () << "[0])," << be_nl
-     << node->default_index () << ");" << be_uidt_nl
-     << be_uidt_nl;
+     << node->default_index () << ");" << be_uidt << be_uidt << be_nl_2;
 
   if (this->gen_typecode_ptr (dynamic_cast<be_type*> (node)) != 0)
     {
