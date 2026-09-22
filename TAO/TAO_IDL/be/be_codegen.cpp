@@ -240,8 +240,11 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       if (be_global->alt_mapping ())
         {
-          *this->client_header_ << "\n#include <string>"
-                                << "\n#include <vector>\n";
+          this->gen_system_include (this->client_header_,
+                                    "string");
+          this->gen_system_include (this->client_header_,
+                                    "vector");
+          *this->client_header_ << "\n";
         }
 
       this->gen_stub_hdr_includes ();
@@ -2242,6 +2245,15 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 }
 
 void
+TAO_CodeGen::gen_system_include (TAO_OutStream *stream,
+                                 const char *included_file)
+{
+  *stream << "\n#include <"
+          << included_file
+          << ">";
+}
+
+void
 TAO_CodeGen::gen_ifndef_string (const char *fname,
                                 TAO_OutStream *stream,
                                 const char *prefix,
@@ -2612,10 +2624,10 @@ TAO_CodeGen::gen_stub_inline_includes ()
 {
   if (idl_global->union_seen_)
     {
-      this->gen_standard_include (this->client_inline_,
-                                  "memory");
-      this->gen_standard_include (this->client_inline_,
-                                  "new");
+      this->gen_system_include (this->client_inline_,
+                                "memory");
+      this->gen_system_include (this->client_inline_,
+                                "new");
     }
 }
 
@@ -2649,10 +2661,10 @@ TAO_CodeGen::gen_stub_src_includes ()
 
   if (idl_global->union_seen_)
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "memory");
-      this->gen_standard_include (this->client_stubs_,
-                                  "new");
+      this->gen_system_include (this->client_stubs_,
+                                "memory");
+      this->gen_system_include (this->client_stubs_,
+                                "new");
     }
 
   if (be_global->tc_support ()
@@ -2761,14 +2773,14 @@ TAO_CodeGen::gen_stub_src_includes ()
       || idl_global->union_seen_)
     {
       // Needed for _narrow(), which is now template-based.
-      this->gen_standard_include (this->client_stubs_,
-                                  "cstring");
+      this->gen_system_include (this->client_stubs_,
+                                "cstring");
     }
 
   if (be_global->gen_amh_classes ())
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "memory");
+      this->gen_system_include (this->client_stubs_,
+                                "memory");
     }
 }
 
@@ -2910,8 +2922,8 @@ TAO_CodeGen::gen_skel_src_includes ()
                               "ace/Malloc_Allocator.h");
 
   // For std::strcmp
-  this->gen_standard_include (this->server_skeletons_,
-                              "cstring");
+  this->gen_system_include (this->server_skeletons_,
+                            "cstring");
 }
 
 void

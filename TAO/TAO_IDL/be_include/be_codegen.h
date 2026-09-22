@@ -391,6 +391,10 @@ public:
                              const char *included_file,
                              bool add_comment = false);
 
+  /// Generate a system include using angle brackets.
+  void gen_system_include (TAO_OutStream *stream,
+                           const char *included_file);
+
   /// Cleanup.
   void destroy ();
 
