@@ -3513,10 +3513,10 @@ TAO_CodeGen::gen_conn_hdr_includes ()
       str.destroy ();
     }
 
-  const char * const ciao_exec_stub_header =
+  this->gen_standard_include (
+    this->ciao_conn_header_,
     BE_GlobalData::be_get_ciao_exec_stub_header (
-      idl_global->stripped_filename ());
-  this->gen_standard_include (this->ciao_conn_header_, ciao_exec_stub_header);
+      idl_global->stripped_filename ()));
 }
 
 void
