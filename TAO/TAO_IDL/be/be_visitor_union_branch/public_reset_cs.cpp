@@ -11,6 +11,55 @@
 
 #include "union_branch.h"
 
+namespace
+{
+  bool
+  requires_reset (be_type *node)
+  {
+    while (node != nullptr && node->node_type () == AST_Decl::NT_typedef)
+      {
+        be_typedef *td = dynamic_cast<be_typedef*> (node);
+        node = td != nullptr ? td->primitive_base_type () : nullptr;
+      }
+
+    be_predefined_type *predefined =
+      dynamic_cast<be_predefined_type*> (node);
+
+    if (predefined != nullptr)
+      {
+        switch (predefined->pt ())
+          {
+          case AST_PredefinedType::PT_object:
+          case AST_PredefinedType::PT_pseudo:
+          case AST_PredefinedType::PT_any:
+            return true;
+          default:
+            return false;
+          }
+      }
+
+    be_structure *structure = dynamic_cast<be_structure*> (node);
+
+    if (structure != nullptr)
+      {
+        return structure->size_type () == be_type::VARIABLE
+          || structure->has_constructor ();
+      }
+
+    return dynamic_cast<be_array*> (node) != nullptr
+      || dynamic_cast<be_interface*> (node) != nullptr
+      || dynamic_cast<be_interface_fwd*> (node) != nullptr
+      || dynamic_cast<be_valuebox*> (node) != nullptr
+      || dynamic_cast<be_valuetype*> (node) != nullptr
+      || dynamic_cast<be_valuetype_fwd*> (node) != nullptr
+      || dynamic_cast<be_sequence*> (node) != nullptr
+      || dynamic_cast<be_map*> (node) != nullptr
+      || dynamic_cast<be_string*> (node) != nullptr
+      || dynamic_cast<be_union*> (node) != nullptr
+      || dynamic_cast<be_union_fwd*> (node) != nullptr;
+  }
+}
+
 // *****************************************************
 //  visitor for union_branch in the client
 //  stubs file for the reset method
@@ -46,10 +95,18 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
 
   this->ctx_->node (node); // save the node
 
-  *os << be_nl;
+  if (!requires_reset (bt))
+    {
+      return 0;
+    }
 
   const be_visitor_union::BoolUnionBranch bub =
     be_visitor_union::boolean_branch (node);
+
+  if (bub != be_visitor_union::BUB_NONE)
+    {
+      *os << be_nl;
+    }
 
   switch (bub)
     {

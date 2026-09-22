@@ -271,11 +271,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   *os << "/// Reset method to reset old values of a union." << be_nl;
   *os << "void " << node->name () << "::_reset ()" << be_nl;
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
 
   if (!boolDisc)
     {
-      *os << "switch (this->disc_)" << be_nl;
+      *os << be_nl << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
     }
 
