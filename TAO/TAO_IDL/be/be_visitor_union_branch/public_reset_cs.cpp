@@ -148,11 +148,10 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
               node->gen_label_value (os, i);
               *os << ":";
             }
-          if (i == (node->label_list_length () - 1))
-            *os << be_idt_nl;
-          else
-            *os << be_nl;
+          *os << be_nl;
         }
+
+      *os << "{" << be_idt_nl;
       break;
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
@@ -174,7 +173,7 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
   switch (bub)
     {
     case be_visitor_union::BUB_NONE:
-      *os << be_uidt_nl << "break;";
+      *os << be_uidt_nl << "}" << be_nl << "break;";
       break;
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
