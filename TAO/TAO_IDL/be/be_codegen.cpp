@@ -2632,11 +2632,7 @@ TAO_CodeGen::gen_stub_src_includes ()
                            << "\"";
     }
 
-  if (idl_global->union_seen_
-      || (be_global->tc_support () && !be_global->gen_anyop_files ()))
-    {
-      this->gen_system_include (this->client_stubs_, "memory");
-    }
+  this->gen_system_include (this->client_stubs_, "memory");
 
   if (idl_global->union_seen_)
     {
@@ -2732,11 +2728,6 @@ TAO_CodeGen::gen_stub_src_includes ()
     {
       // Needed for _narrow(), which is now template-based.
       this->gen_system_include (this->client_stubs_, "cstring");
-    }
-
-  if (be_global->gen_amh_classes ())
-    {
-      this->gen_system_include (this->client_stubs_, "memory");
     }
 }
 
