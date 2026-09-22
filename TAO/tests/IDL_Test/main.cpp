@@ -193,7 +193,7 @@ test_default_initialized_valuetype (int &error_count)
 }
 
 void
-test_default_initialized_struct_union (int &error_count)
+test_default_initialized_union (int &error_count)
 {
   U87 value;
 
@@ -218,6 +218,39 @@ test_default_initialized_struct_union (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "U87 assignment::b_87_1::foo",
     assigned.b_87_1 ().foo, 42);
+
+  DefaultInitializedBooleanUnion boolean_union;
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitializedBooleanUnion::value",
+    boolean_union.value (), false);
+
+  DefaultInitializedLongUnion long_union;
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedLongUnion::value",
+    long_union.value (), 0);
+
+  DefaultInitializedDoubleUnion double_union;
+  expect_equals<CORBA::Double> (
+    error_count, "DefaultInitializedDoubleUnion::value",
+    double_union.value (), 0.0);
+
+  DefaultInitializedEnumUnion enum_union;
+  expect_equals<U90> (
+    error_count, "DefaultInitializedEnumUnion::value",
+    enum_union.value (), U90_1);
+
+  DefaultInitializedArrayUnion array_union;
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedArrayUnion::value[0]",
+    array_union.value ()[0], 0);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedArrayUnion::value[1]",
+    array_union.value ()[1], 0);
+
+  DefaultInitializedStringUnion string_union;
+  expect_equals<const char *> (
+    error_count, "DefaultInitializedStringUnion::value",
+    string_union.value (), nullptr);
 }
 
 int
@@ -559,7 +592,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_struct (error_count);
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);
-  test_default_initialized_struct_union (error_count);
+  test_default_initialized_union (error_count);
 
   return error_count ? 1 : 0;
 }

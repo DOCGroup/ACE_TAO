@@ -305,3 +305,35 @@ union U94 switch (long) {
   case 2: long b_94_2;
   default: U90Array b_94_3;
 };
+
+typedef long DefaultInitializedLongArray[2];
+
+union DefaultInitializedBooleanUnion switch (long)
+{
+  case 0: boolean value;
+};
+
+union DefaultInitializedLongUnion switch (long)
+{
+  case 0: long value;
+};
+
+union DefaultInitializedDoubleUnion switch (long)
+{
+  case 0: double value;
+};
+
+union DefaultInitializedEnumUnion switch (long)
+{
+  case 0: U90 value;
+};
+
+union DefaultInitializedArrayUnion switch (long)
+{
+  case 0: DefaultInitializedLongArray value;
+};
+
+union DefaultInitializedStringUnion switch (long)
+{
+  case 0: string value;
+};
