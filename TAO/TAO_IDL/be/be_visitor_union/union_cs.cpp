@@ -180,12 +180,16 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "break;";
     }
 
-  if (!boolDisc)
+  if (boolDisc)
     {
-      *os << be_uidt_nl << "}";
+      *os << "}";
+    }
+  else
+    {
+      *os << be_uidt_nl << "}" << be_uidt_nl << "}";
     }
 
-  *os << be_uidt_nl << "}" << be_nl_2;
+  *os << be_nl_2;
 
   *os << node->name () << "::~" << node->local_name ()
       << " ()" << be_nl
@@ -224,7 +228,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       << "}" << be_uidt_nl << be_nl;
   // Reset and set the discriminant.
   *os << "this->_reset ();" << be_nl;
-  *os << "this->disc_ = u.disc_;" << be_nl_2;
+  *os << "this->disc_ = u.disc_;" << be_nl;
   // now switch based on the disc value
   if (!boolDisc)
     {
@@ -259,7 +263,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << be_uidt_nl << "}" << be_nl;
     }
 
-  *os << be_nl << "return *this;" << be_uidt_nl;
+  *os << "return *this;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
   // The reset method.

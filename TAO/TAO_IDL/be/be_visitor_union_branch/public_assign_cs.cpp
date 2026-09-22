@@ -37,10 +37,13 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl;
-
   const be_visitor_union::BoolUnionBranch bub =
     be_visitor_union::boolean_branch (node);
+
+  if (bub == be_visitor_union::BUB_NONE)
+    {
+      *os << be_nl;
+    }
 
   switch (bub)
     {
@@ -73,7 +76,12 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     case be_visitor_union::BUB_FALSE:
       *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
           << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
-    default:
+      break;
+    case be_visitor_union::BUB_UNCONDITIONAL:
+      if (this->ctx_->sub_state () != TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+        {
+          *os << be_idt;
+        }
       break;
     }
 
@@ -107,10 +115,18 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
       break;
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
-      *os << "}" << be_uidt_nl;
+      *os << "}" << be_uidt;
+      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+        {
+          *os << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_nl;
+        }
       break;
     case be_visitor_union::BUB_UNCONDITIONAL:
-      *os << be_nl;
+      break;
     }
 
   return 0;
