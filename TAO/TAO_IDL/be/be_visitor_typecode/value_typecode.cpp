@@ -167,7 +167,8 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   // Fields
   os << "_tao_fields_" << node->flat_name () << "," << be_nl
-     << count << ");" << be_uidt << be_uidt << be_nl_2;
+     << count << ");" << be_uidt_nl
+     << be_uidt_nl;
 
   if (this->gen_typecode_ptr (dynamic_cast<be_type*> (node)) != 0)
     {

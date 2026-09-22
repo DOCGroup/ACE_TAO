@@ -98,7 +98,8 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
   TAO_INSERT_COMMENT (os);
 
   // The set method.
-  *os << "void _d ( " << bt->nested_type_name (bu) << ");" << be_nl;
+  *os << be_nl_2
+      << "void _d ( " << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
   *os << bt->nested_type_name (bu) << " _d () const;";
 

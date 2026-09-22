@@ -53,7 +53,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "if (!(cdr >> id.out ()))" << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
-          << "}" << be_uidt << be_nl_2
+          << "}" << be_uidt_nl << be_nl
           << "try"
           << be_idt_nl
           << "{" << be_idt_nl

@@ -121,7 +121,8 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
-      *os << "void _default ();";
+      *os << be_nl_2
+          << "void _default ();";
     }
 
   *os << be_uidt_nl;
