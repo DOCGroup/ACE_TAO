@@ -131,11 +131,9 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
-          << "static_cast<" << be_idt
-          << node->local_name () << " *> ("
-          << "_tao_void_pointer);" << be_uidt << be_uidt_nl
-          << "::CORBA::remove_ref (_tao_tmp_pointer);" << be_uidt_nl
+          << node->local_name () << " *tmp = static_cast<"
+          << node->local_name () << " *> (_tao_void_pointer);" << be_nl
+          << "::CORBA::remove_ref (tmp);" << be_uidt_nl
           << "}" << be_nl_2;
     }
 
