@@ -295,7 +295,16 @@ be_visitor_union_branch_public_constructor_cs::visit_map (be_map *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = this->ctx_->alias () ? this->ctx_->alias () : node;
+  be_type *bt = nullptr;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
 
   if (!ub || !bu)
     {
