@@ -308,32 +308,38 @@ union U94 switch (long) {
 
 typedef long DefaultInitializedLongArray[2];
 
-union DefaultInitializedBooleanUnion switch (long)
+union DefaultInitializedBooleanUnion switch (boolean)
 {
-  case 0: boolean value;
+  case FALSE:
+  case TRUE: boolean value;
 };
 
-union DefaultInitializedLongUnion switch (long)
+union DefaultInitializedLongUnion switch (boolean)
 {
-  case 0: long value;
+  case FALSE:
+  case TRUE: long value;
 };
 
-union DefaultInitializedDoubleUnion switch (long)
+union DefaultInitializedDoubleUnion switch (boolean)
 {
-  case 0: double value;
+  case FALSE:
+  case TRUE: double value;
 };
 
-union DefaultInitializedEnumUnion switch (long)
+union DefaultInitializedEnumUnion switch (boolean)
 {
-  case 0: U90 value;
+  case FALSE:
+  case TRUE: U90 value;
 };
 
-union DefaultInitializedArrayUnion switch (long)
+union DefaultInitializedArrayUnion switch (boolean)
 {
-  case 0: DefaultInitializedLongArray value;
+  case FALSE:
+  case TRUE: DefaultInitializedLongArray value;
 };
 
-union DefaultInitializedStringUnion switch (long)
+union DefaultInitializedStringUnion switch (boolean)
 {
-  case 0: string value;
+  case FALSE:
+  case TRUE: string value;
 };
