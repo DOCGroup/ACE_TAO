@@ -391,6 +391,10 @@ public:
                              const char *included_file,
                              bool add_comment = false);
 
+  /// Generate a system include using angle brackets.
+  void gen_system_include (TAO_OutStream *stream,
+                           const char *included_file);
+
   /// Cleanup.
   void destroy ();
 
@@ -402,6 +406,7 @@ private:
 
   /// Utility methods for generating file includes.
   void gen_stub_hdr_includes ();
+  void gen_stub_inline_includes ();
   void gen_stub_src_includes ();
   void gen_skel_hdr_includes ();
   void gen_skel_src_includes ();

@@ -199,9 +199,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
 
   // To get ACE_UNUSED_ARGS
-  this->gen_standard_include (this->client_header_,
-                              "ace/config-all.h",
-                              true);
+  this->gen_standard_include (this->client_header_, "ace/config-all.h", true);
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -240,8 +238,9 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       if (be_global->alt_mapping ())
         {
-          *this->client_header_ << "\n#include <string>"
-                                << "\n#include <vector>\n";
+          this->gen_system_include (this->client_header_, "string");
+          this->gen_system_include (this->client_header_, "vector");
+          *this->client_header_ << "\n";
         }
 
       this->gen_stub_hdr_includes ();
@@ -416,6 +415,8 @@ TAO_CodeGen::start_client_inline (const char *fname)
     {
       return -1;
     }
+
+  this->gen_stub_inline_includes ();
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_inline_);
@@ -947,6 +948,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                        << be_global->be_get_anyop_header_fname (true)
                        << "\"";
 
+  this->gen_system_include (this->anyop_source_, "memory");
   this->gen_typecode_includes (this->anyop_source_);
 
   this->gen_any_file_includes (this->anyop_source_);
@@ -1294,9 +1296,7 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
          << "\"\n";
     }
 
-  this->gen_standard_include (
-    this->ciao_exec_header_,
-    be_global->be_get_ciao_exec_stub_hdr_fname (true));
+  this->gen_standard_include (this->ciao_exec_header_, be_global->be_get_ciao_exec_stub_hdr_fname (true));
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -1439,10 +1439,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
   // This will almost certainly be true, but just in case...
   if (be_global->conn_export_include () != nullptr)
     {
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        be_global->conn_export_include (),
-        true);
+      this->gen_standard_include (this->ciao_conn_header_, be_global->conn_export_include (), true);
     }
 
   // Some compilers don't optimize the #ifndef header include
@@ -2240,6 +2237,15 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 }
 
 void
+TAO_CodeGen::gen_system_include (TAO_OutStream *stream,
+                                 const char *included_file)
+{
+  *stream << "\n#include <"
+          << included_file
+          << ">";
+}
+
+void
 TAO_CodeGen::gen_ifndef_string (const char *fname,
                                 TAO_OutStream *stream,
                                 const char *prefix,
@@ -2317,8 +2323,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   if (idl_global->abstract_iface_seen_ || idl_global->abstractbase_seen_)
     {
       // Include the AbstractBase file from the Valuetype library.
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Valuetype/AbstractBase.h");
+      this->gen_standard_include (this->client_header_, "tao/Valuetype/AbstractBase.h");
 
       if (idl_global->abstract_iface_seen_)
         {
@@ -2330,12 +2335,10 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   if (idl_global->valuebase_seen_)
     {
       // Include files from the Valuetype library.
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Valuetype/ValueBase.h");
+      this->gen_standard_include (this->client_header_, "tao/Valuetype/ValueBase.h");
 
       // Valuebox needs CDR for _tao_marshal_v code in .inl file
-      this->gen_standard_include (this->client_header_,
-                                  "tao/CDR.h");
+      this->gen_standard_include (this->client_header_, "tao/CDR.h");
     }
 
   if (idl_global->valuetype_seen_)
@@ -2343,12 +2346,10 @@ TAO_CodeGen::gen_stub_hdr_includes ()
       // Don't want to generate this twice.
       if (!idl_global->valuebase_seen_)
         {
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/ValueBase.h");
+          this->gen_standard_include (this->client_header_, "tao/Valuetype/ValueBase.h");
         }
 
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h");
+      this->gen_standard_include (this->client_header_, "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h");
 
       // Check for setting this bit performed in y.tab.cpp, actual checking
       // code is in be_valuetype.cpp.
@@ -2382,8 +2383,8 @@ TAO_CodeGen::gen_stub_hdr_includes ()
     );
 
   const bool idl4 = idl_global->idl_version_ >= IDL_VERSION_4;
-  this->gen_standard_include (this->client_header_,
-     idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
+  this->gen_standard_include (this->client_header_, idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
+
   if (idl4)
     {
       *client_header_ <<
@@ -2421,8 +2422,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
               i.advance ())
             {
               i.next (tmp);
-              this->gen_standard_include (this->client_header_,
-                                          *tmp);
+              this->gen_standard_include (this->client_header_, *tmp);
             }
         }
     }
@@ -2484,23 +2484,20 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   if (be_global->ami_call_back ())
     {
       // Include Messaging skeleton file.
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Messaging/Messaging.h");
+      this->gen_standard_include (this->client_header_, "tao/Messaging/Messaging.h");
     }
 
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (be_global->ami4ccm_call_back ())
     {
       // Include Messaging skeleton file.
-      this->gen_standard_include (this->client_header_,
-                                  "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+      this->gen_standard_include (this->client_header_, "connectors/ami4ccm/ami4ccm/ami4ccm.h");
     }
 
   // Include the smart proxy base class if smart proxies are enabled.
   if (be_global->gen_smart_proxies ())
     {
-      this->gen_standard_include (this->client_header_,
-                                  "tao/SmartProxies/Smart_Proxies.h");
+      this->gen_standard_include (this->client_header_, "tao/SmartProxies/Smart_Proxies.h");
     }
 
   // If we have not suppressed Any operator generation and also
@@ -2577,20 +2574,14 @@ TAO_CodeGen::gen_stub_hdr_includes ()
     }
 
   // Version file, for code that checks needs for regeneration.
-  this->gen_standard_include (this->client_header_,
-                              "tao/Version.h",
-                              true);
+  this->gen_standard_include (this->client_header_, "tao/Version.h", true);
 
   // Versioned namespace support.
-  this->gen_standard_include (this->client_header_,
-                              "tao/Versioned_Namespace.h",
-                              true);
+  this->gen_standard_include (this->client_header_, "tao/Versioned_Namespace.h", true);
 
   if ((be_global->versioning_include () != nullptr) && (ACE_OS::strlen (be_global->versioning_include ()) > 0))
     {
-      this->gen_standard_include (this->client_header_,
-                                  be_global->versioning_include (),
-                                  true);
+      this->gen_standard_include (this->client_header_, be_global->versioning_include (), true);
     }
 
   // On some platforms, this include isn't needed if certain command
@@ -2599,8 +2590,17 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   // include if gen_ostream_operators_ is true.
   if (be_global->gen_ostream_operators ())
     {
-      this->gen_standard_include (this->client_header_,
-                                  "ace/streams.h");
+      this->gen_standard_include (this->client_header_, "ace/streams.h");
+    }
+}
+
+void
+TAO_CodeGen::gen_stub_inline_includes ()
+{
+  if (idl_global->union_seen_)
+    {
+      this->gen_system_include (this->client_inline_, "memory");
+      this->gen_system_include (this->client_inline_, "new");
     }
 }
 
@@ -2632,6 +2632,13 @@ TAO_CodeGen::gen_stub_src_includes ()
                            << "\"";
     }
 
+  this->gen_system_include (this->client_stubs_, "memory");
+
+  if (idl_global->union_seen_)
+    {
+      this->gen_system_include (this->client_stubs_, "new");
+    }
+
   if (be_global->tc_support ()
       && !be_global->gen_anyop_files ())
     {
@@ -2639,45 +2646,34 @@ TAO_CodeGen::gen_stub_src_includes ()
     }
 
   // Always generated.
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/CDR.h");
+  this->gen_standard_include (this->client_stubs_, "tao/CDR.h");
 
   // Conditional includes.
 
    if (idl_global->non_local_op_seen_)
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Exception_Data.h");
+      this->gen_standard_include (this->client_stubs_, "tao/Exception_Data.h");
     }
 
   // Operations for local interfaces are pure virtual.
   if (idl_global->non_local_op_seen_)
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Invocation_Adapter.h");
+      this->gen_standard_include (this->client_stubs_, "tao/Invocation_Adapter.h");
     }
 
   // Any abstract interface present will probably have an operation.
   if (idl_global->abstract_iface_seen_)
     {
-      this->gen_standard_include (
-          this->client_stubs_,
-          "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
-        );
+      this->gen_standard_include (this->client_stubs_, "tao/Valuetype/AbstractBase_Invocation_Adapter.h");
 
-      this->gen_standard_include (
-          this->client_stubs_,
-          "tao/Valuetype/AbstractBase_T.h"
-        );
+      this->gen_standard_include (this->client_stubs_, "tao/Valuetype/AbstractBase_T.h");
     }
 
   if (be_global->ami_call_back () == true)
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Messaging/Asynch_Invocation_Adapter.h");
+      this->gen_standard_include (this->client_stubs_, "tao/Messaging/Asynch_Invocation_Adapter.h");
 
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Messaging/ExceptionHolder_i.h");
+      this->gen_standard_include (this->client_stubs_, "tao/Messaging/ExceptionHolder_i.h");
     }
 
   // If valuefactory_seen_ was set, this was generated in the stub header file,
@@ -2685,23 +2681,20 @@ TAO_CodeGen::gen_stub_src_includes ()
   if (idl_global->valuetype_seen_
       && !idl_global->valuefactory_seen_)
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Valuetype/ValueFactory.h");
+      this->gen_standard_include (this->client_stubs_, "tao/Valuetype/ValueFactory.h");
     }
 
   if (idl_global->non_local_iface_seen_)
     {
       // Needed for _narrow(), which is now template-based.
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Object_T.h");
+      this->gen_standard_include (this->client_stubs_, "tao/Object_T.h");
     }
 
   if (idl_global->octet_seq_seen_)
     {
       // Needed for the TAO_NO_COPY_OCTET_SEQUENCES optimization. Note that
       // it is preferable to just refer to CORBA::OctetSeq in the IDL file.
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/ORB_Core.h");
+      this->gen_standard_include (this->client_stubs_, "tao/ORB_Core.h");
     }
 
   // The UserException::_tao_{en,de}code() methods can throw a
@@ -2709,8 +2702,7 @@ TAO_CodeGen::gen_stub_src_includes ()
   // fully declared/defined by including "tao/SystemException.h".
   if (idl_global->exception_seen_)
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/SystemException.h");
+      this->gen_standard_include (this->client_stubs_, "tao/SystemException.h");
     }
 
   // Includes whatever Any template classes that may be needed.
@@ -2721,14 +2713,11 @@ TAO_CodeGen::gen_stub_src_includes ()
 
   if (be_global->alt_mapping () && idl_global->seq_seen_)
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Vector_CDR_T.h");
+      this->gen_standard_include (this->client_stubs_, "tao/Vector_CDR_T.h");
 
       if (be_global->any_support ())
         {
-          this->gen_standard_include (
-            this->client_stubs_,
-            "tao/AnyTypeCode/Vector_AnyOp_T.h");
+          this->gen_standard_include (this->client_stubs_, "tao/AnyTypeCode/Vector_AnyOp_T.h");
         }
     }
 
@@ -2738,14 +2727,7 @@ TAO_CodeGen::gen_stub_src_includes ()
       || idl_global->union_seen_)
     {
       // Needed for _narrow(), which is now template-based.
-      this->gen_standard_include (this->client_stubs_,
-                                  "cstring");
-    }
-
-  if (be_global->gen_amh_classes ())
-    {
-      this->gen_standard_include (this->client_stubs_,
-                                  "memory");
+      this->gen_system_include (this->client_stubs_, "cstring");
     }
 }
 
@@ -2763,19 +2745,15 @@ TAO_CodeGen::gen_skel_hdr_includes ()
       if (be_global->ami_call_back () == true)
         {
           // Include Messaging skeleton file.
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/MessagingS.h");
+          this->gen_standard_include (this->server_header_, "tao/Messaging/MessagingS.h");
         }
 
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/PortableServer.h");
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/Servant_Base.h");
+      this->gen_standard_include (this->server_header_, "tao/PortableServer/PortableServer.h");
+      this->gen_standard_include (this->server_header_, "tao/PortableServer/Servant_Base.h");
 
       if (be_global->gen_amh_classes ())
         {
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/AMH_Response_Handler.h");
+          this->gen_standard_include (this->server_header_, "tao/Messaging/AMH_Response_Handler.h");
         }
     }
 }
@@ -2794,101 +2772,68 @@ TAO_CodeGen::gen_skel_src_includes ()
     {
       case BE_GlobalData::TAO_DYNAMIC_HASH:
         {
-          this->gen_standard_include (
-            this->server_skeletons_,
-            "tao/PortableServer/Operation_Table_Dynamic_Hash.h");
+          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Dynamic_Hash.h");
         }
         break;
       case BE_GlobalData::TAO_LINEAR_SEARCH:
         {
-          this->gen_standard_include (
-            this->server_skeletons_,
-            "tao/PortableServer/Operation_Table_Linear_Search.h");
+          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Linear_Search.h");
         }
         break;
       case BE_GlobalData::TAO_BINARY_SEARCH:
         {
-          this->gen_standard_include (
-            this->server_skeletons_,
-            "tao/PortableServer/Operation_Table_Binary_Search.h");
+          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Binary_Search.h");
         }
         break;
       case BE_GlobalData::TAO_PERFECT_HASH:
         {
-          this->gen_standard_include (
-            this->server_skeletons_,
-            "tao/PortableServer/Operation_Table_Perfect_Hash.h");
+          this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Operation_Table_Perfect_Hash.h");
         }
         break;
     }
 
   if (be_global->gen_direct_collocation ())
     {
-      this->gen_standard_include (
-          this->server_skeletons_,
-          "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
-        );
+      this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h");
     }
 
   if (be_global->ami_call_back () == true)
     {
-      this->gen_standard_include (this->server_skeletons_,
-                                  "tao/Exception_Data.h");
-      this->gen_standard_include (this->server_skeletons_,
-                                  "tao/Messaging/ExceptionHolder_i.h");
+      this->gen_standard_include (this->server_skeletons_, "tao/Exception_Data.h");
+      this->gen_standard_include (this->server_skeletons_, "tao/Messaging/ExceptionHolder_i.h");
     }
 
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/Upcall_Command.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/Upcall_Wrapper.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Upcall_Command.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Upcall_Wrapper.h");
 
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/TAO_Server_Request.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/ORB_Core.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/Profile.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/Stub.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/IFR_Client_Adapter.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/Object_T.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/AnyTypeCode/TypeCode.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/AnyTypeCode/DynamicC.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/CDR.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/operation_details.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableInterceptor.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/TAO_Server_Request.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/ORB_Core.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/Profile.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/Stub.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/IFR_Client_Adapter.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/Object_T.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/AnyTypeCode/TypeCode.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/AnyTypeCode/DynamicC.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/CDR.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/operation_details.h");
+  this->gen_standard_include (this->server_skeletons_, "tao/PortableInterceptor.h");
 
   // The following header must always be included.
   if (be_global->gen_amh_classes ())
     {
-      this->gen_standard_include (this->server_skeletons_,
-                                  "tao/Thread_Lane_Resources.h");
-      this->gen_standard_include (this->server_skeletons_,
-                                  "tao/Buffer_Allocator_T.h");
-      this->gen_standard_include (this->server_skeletons_,
-                                  "tao/Messaging/AMH_Skeletons.h");
-      this->gen_standard_include (this->server_skeletons_,
-                                  "ace/Auto_Functor.h");
+      this->gen_standard_include (this->server_skeletons_, "tao/Thread_Lane_Resources.h");
+      this->gen_standard_include (this->server_skeletons_, "tao/Buffer_Allocator_T.h");
+      this->gen_standard_include (this->server_skeletons_, "tao/Messaging/AMH_Skeletons.h");
+      this->gen_standard_include (this->server_skeletons_, "ace/Auto_Functor.h");
     }
 
-  this->gen_standard_include (this->server_skeletons_,
-                              "ace/Dynamic_Service.h");
+  this->gen_standard_include (this->server_skeletons_, "ace/Dynamic_Service.h");
 
   // For Static_Allocator_Base
-  this->gen_standard_include (this->server_skeletons_,
-                              "ace/Malloc_Allocator.h");
+  this->gen_standard_include (this->server_skeletons_, "ace/Malloc_Allocator.h");
 
   // For std::strcmp
-  this->gen_standard_include (this->server_skeletons_,
-                              "cstring");
+  this->gen_system_include (this->server_skeletons_, "cstring");
 }
 
 void
@@ -2915,8 +2860,7 @@ TAO_CodeGen::gen_any_file_includes (TAO_OutStream * stream)
 {
   if (be_global->any_support ())
     {
-      this->gen_standard_include (stream,
-                                  "tao/CDR.h");
+      this->gen_standard_include (stream, "tao/CDR.h");
 
       // Any_Impl_T.cpp needs the full CORBA::Any type.
       this->gen_cond_file_include (
@@ -3000,21 +2944,13 @@ TAO_CodeGen::gen_var_file_includes ()
 void
 TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 {
-  this->gen_standard_include (
-    stream,
-    "tao/Arg_Traits_T.h");
+  this->gen_standard_include (stream, "tao/Arg_Traits_T.h");
 
-  this->gen_standard_include (
-    stream,
-    "tao/Basic_Arguments.h");
+  this->gen_standard_include (stream, "tao/Basic_Arguments.h");
 
-  this->gen_standard_include (
-    stream,
-    "tao/Special_Basic_Arguments.h");
+  this->gen_standard_include (stream, "tao/Special_Basic_Arguments.h");
 
-  this->gen_standard_include (
-    stream,
-    "tao/Any_Insert_Policy_T.h");
+  this->gen_standard_include (stream, "tao/Any_Insert_Policy_T.h");
 
   this->gen_cond_file_include (
       idl_global->enum_seen_,
@@ -3022,13 +2958,9 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
       stream
     );
 
-  this->gen_standard_include (
-      stream,
-      "tao/Fixed_Size_Argument_T.h");
+  this->gen_standard_include (stream, "tao/Fixed_Size_Argument_T.h");
 
-  this->gen_standard_include (
-      stream,
-      "tao/Var_Size_Argument_T.h");
+  this->gen_standard_include (stream, "tao/Var_Size_Argument_T.h");
 
   this->gen_cond_file_include (
       idl_global->bd_string_seen_,
@@ -3102,13 +3034,9 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 void
 TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 {
-  this->gen_standard_include (
-      stream,
-      "tao/PortableServer/Basic_SArguments.h");
+  this->gen_standard_include (stream, "tao/PortableServer/Basic_SArguments.h");
 
-  this->gen_standard_include (
-      stream,
-      "tao/PortableServer/Special_Basic_SArguments.h");
+  this->gen_standard_include (stream, "tao/PortableServer/Special_Basic_SArguments.h");
 
   this->gen_cond_file_include (
       idl_global->bd_string_seen_,
@@ -3116,13 +3044,9 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
       stream
     );
 
-  this->gen_standard_include (
-      stream,
-      "tao/PortableServer/Fixed_Size_SArgument_T.h");
+  this->gen_standard_include (stream, "tao/PortableServer/Fixed_Size_SArgument_T.h");
 
-  this->gen_standard_include (
-      stream,
-      "tao/PortableServer/Var_Size_SArgument_T.h");
+  this->gen_standard_include (stream, "tao/PortableServer/Var_Size_SArgument_T.h");
 
   // If we have a bound string and we have any generation enabled we must
   // include Any.h to get the <<= operator for BD_String
@@ -3232,27 +3156,20 @@ TAO_CodeGen::gen_cond_file_include (bool condition_green,
 {
   if (condition_green)
     {
-      this->gen_standard_include (stream,
-                                  filepath);
+      this->gen_standard_include (stream, filepath);
     }
 }
 
 void
 TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 {
-  this->gen_standard_include (
-    stream,
-    "tao/AnyTypeCode/Null_RefCount_Policy.h");
+  this->gen_standard_include (stream, "tao/AnyTypeCode/Null_RefCount_Policy.h");
 
-  this->gen_standard_include (
-    stream,
-    "tao/AnyTypeCode/TypeCode_Constants.h");
+  this->gen_standard_include (stream, "tao/AnyTypeCode/TypeCode_Constants.h");
 
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.
-  this->gen_standard_include (
-    stream,
-    "tao/AnyTypeCode/Alias_TypeCode_Static.h");
+  this->gen_standard_include (stream, "tao/AnyTypeCode/Alias_TypeCode_Static.h");
 
   this->gen_cond_file_include (
     idl_global->enum_seen_,
@@ -3319,9 +3236,7 @@ TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
   container_file += be_global->ciao_container_type ();
   container_file += "_ContainerC.h";
 
-  this->gen_standard_include (
-    stream,
-    container_file.c_str ());
+  this->gen_standard_include (stream, container_file.c_str ());
 
   ACE_CString context_file ("ciao/Contexts/");
   context_file += be_global->ciao_container_type ();
@@ -3329,31 +3244,21 @@ TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
   context_file += be_global->ciao_container_type ();
   context_file += "_Context_T.h";
 
-  this->gen_standard_include (
-    stream,
-    context_file.c_str ());
+  this->gen_standard_include (stream, context_file.c_str ());
 
   ACE_CString servant_file ("ciao/Servants/");
   servant_file += be_global->ciao_container_type ();
   servant_file += "/Servant_Impl_T.h";
 
-  this->gen_standard_include (
-    stream,
-    servant_file.c_str ());
+  this->gen_standard_include (stream, servant_file.c_str ());
 
-  this->gen_standard_include (
-    stream,
-    "ciao/Servants/Home_Servant_Impl_T.h");
+  this->gen_standard_include (stream, "ciao/Servants/Home_Servant_Impl_T.h");
 
-  this->gen_standard_include (
-    stream,
-    "ciao/Servants/Facet_Servant_Base_T.h");
+  this->gen_standard_include (stream, "ciao/Servants/Facet_Servant_Base_T.h");
 
   *stream << be_nl;
 
-  this->gen_standard_include (
-    stream,
-    be_global->be_get_server_hdr_fname (true));
+  this->gen_standard_include (stream, be_global->be_get_server_hdr_fname (true));
 }
 
 void
@@ -3363,56 +3268,36 @@ TAO_CodeGen::gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream)
   servant_file += be_global->ciao_container_type ();
   servant_file += "/Servant_Impl_T.h";
 
-  this->gen_standard_include (
-    stream,
-    servant_file.c_str ());
+  this->gen_standard_include (stream, servant_file.c_str ());
 
-  this->gen_standard_include (
-    stream,
-    "ciao/Servants/Home_Servant_Impl_T.h");
+  this->gen_standard_include (stream, "ciao/Servants/Home_Servant_Impl_T.h");
 
-  this->gen_standard_include (
-    stream,
-    "ciao/Servants/Facet_Servant_Base_T.h");
+  this->gen_standard_include (stream, "ciao/Servants/Facet_Servant_Base_T.h");
 
   *stream << be_nl;
 
   if (be_global->gen_ciao_exec_idl())
     {
-      this->gen_standard_include (
-        stream,
-        be_global->be_get_ciao_exec_stub_hdr_fname (true));
+      this->gen_standard_include (stream, be_global->be_get_ciao_exec_stub_hdr_fname (true));
 
       *stream << be_nl;
     }
 
-  this->gen_standard_include (
-    stream,
-    be_global->be_get_server_hdr_fname (true));
+  this->gen_standard_include (stream, be_global->be_get_server_hdr_fname (true));
 }
 
 void
 TAO_CodeGen::gen_svnt_src_includes (TAO_OutStream *stream)
 {
-  this->gen_standard_include (
-    stream,
-    "ciao/Valuetype_Factories/Cookies.h");
+  this->gen_standard_include (stream, "ciao/Valuetype_Factories/Cookies.h");
 
-  this->gen_standard_include (
-    stream,
-    "tao/SystemException.h");
+  this->gen_standard_include (stream, "tao/SystemException.h");
 
-  this->gen_standard_include (
-    stream,
-    "tao/Valuetype/ValueFactory.h");
+  this->gen_standard_include (stream, "tao/Valuetype/ValueFactory.h");
 
-  this->gen_standard_include (
-    stream,
-    "tao/ORB_Core.h");
+  this->gen_standard_include (stream, "tao/ORB_Core.h");
 
-  this->gen_standard_include (
-    stream,
-    "ace/SString.h");
+  this->gen_standard_include (stream, "ace/SString.h");
 }
 
 void
@@ -3424,30 +3309,21 @@ TAO_CodeGen::gen_exec_hdr_includes ()
   // Eventually, there should be a way to completely decouple them.
   if (be_global->exec_export_include () != nullptr)
     {
-      this->gen_standard_include (
-        this->ciao_exec_header_,
-        be_global->exec_export_include (),
-        true);
+      this->gen_standard_include (this->ciao_exec_header_, be_global->exec_export_include (), true);
     }
 
-  this->gen_standard_include (
-    this->ciao_exec_header_,
-    "tao/LocalObject.h");
+  this->gen_standard_include (this->ciao_exec_header_, "tao/LocalObject.h");
 }
 
 void
 TAO_CodeGen::gen_exec_src_includes ()
 {
   // Generate the include statement for the exec source.
-  this->gen_standard_include (
-    this->ciao_exec_source_,
-    be_global->be_get_ciao_exec_hdr_fname (true));
+  this->gen_standard_include (this->ciao_exec_source_, be_global->be_get_ciao_exec_hdr_fname (true));
   if (be_global->gen_ciao_exec_reactor_impl ())
     {
-      this->gen_standard_include (
-        this->ciao_exec_source_, "tao/ORB_Core.h");
-      this->gen_standard_include (
-        this->ciao_exec_source_, "ace/Reactor.h");
+      this->gen_standard_include (this->ciao_exec_source_, "tao/ORB_Core.h");
+      this->gen_standard_include (this->ciao_exec_source_, "ace/Reactor.h");
     }
 }
 
@@ -3456,33 +3332,21 @@ TAO_CodeGen::gen_exec_idl_includes ()
 {
   if (!be_global->gen_noeventccm ())
     {
-      this->gen_standard_include (
-      this->ciao_exec_idl_,
-      "ccm/CCM_Events.idl");
+      this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Events.idl");
      }
 
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    "ccm/CCM_Home.idl");
+  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Home.idl");
 
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    "ccm/CCM_Object.idl");
+  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Object.idl");
 
   if (!be_global->gen_lwccm ())
     {
-      this->gen_standard_include (
-        this->ciao_exec_idl_,
-        "ccm/CCM_Enumeration.idl");
+      this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_Enumeration.idl");
     }
 
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    "ccm/CCM_CCMException.idl");
+  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_CCMException.idl");
 
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    "ccm/CCM_HomeExecutorBase.idl");
+  this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_HomeExecutorBase.idl");
 
 
   ACE_CString component_file ("ccm/");
@@ -3491,28 +3355,20 @@ TAO_CodeGen::gen_exec_idl_includes ()
   component_file += be_global->ciao_container_type ();
   component_file += "Component.idl";
 
-  this->gen_standard_include (
-    this->ciao_exec_idl_,
-    component_file.c_str ());
+  this->gen_standard_include (this->ciao_exec_idl_, component_file.c_str ());
 
   if (be_global->ami4ccm_call_back ())
     {
-      this->gen_standard_include (
-        this->ciao_exec_idl_,
-        "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
+      this->gen_standard_include (this->ciao_exec_idl_, "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
   if (be_global->stripped_filename ())
     {
-      this->gen_standard_include (
-        this->ciao_exec_idl_,
-        be_global->stripped_filename ());
+      this->gen_standard_include (this->ciao_exec_idl_, be_global->stripped_filename ());
     }
   else
     {
-      this->gen_standard_include (
-        this->ciao_exec_idl_,
-        idl_global->stripped_filename ()->get_string ());
+      this->gen_standard_include (this->ciao_exec_idl_, idl_global->stripped_filename ()->get_string ());
     }
 
   char **path_tmp = nullptr;
@@ -3583,9 +3439,7 @@ TAO_CodeGen::gen_conn_hdr_includes ()
       lem_str = lem_str.substr (0, lem_str.find (".idl"));
       lem_str += be_global->client_hdr_ending ();
 
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        lem_str.c_str ());
+      this->gen_standard_include (this->ciao_conn_header_, lem_str.c_str ());
     }
 
   *this->ciao_conn_header_ << be_nl;
@@ -3625,16 +3479,12 @@ TAO_CodeGen::gen_conn_hdr_includes ()
     {
       iiter.next (path_tmp);
 
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        *path_tmp);
+      this->gen_standard_include (this->ciao_conn_header_, *path_tmp);
     }
 
   if (idl_global->ami_connector_seen_)
     {
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        "tao/LocalObject.h");
+      this->gen_standard_include (this->ciao_conn_header_, "tao/LocalObject.h");
     }
 
   for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
@@ -3655,9 +3505,7 @@ TAO_CodeGen::gen_conn_hdr_includes ()
 
       UTL_String str (idl_name);
 
-      this->gen_standard_include (
-        this->ciao_conn_header_,
-        BE_GlobalData::be_get_server_hdr (&str, true));
+      this->gen_standard_include (this->ciao_conn_header_, BE_GlobalData::be_get_server_hdr (&str, true));
 
       str.destroy ();
     }
@@ -3672,16 +3520,12 @@ void
 TAO_CodeGen::gen_conn_src_includes ()
 {
   // Generate the include statement for the connector exec source.
-  this->gen_standard_include (
-    this->ciao_conn_source_,
-    be_global->be_get_ciao_conn_hdr_fname (true));
+  this->gen_standard_include (this->ciao_conn_source_, be_global->be_get_ciao_conn_hdr_fname (true));
 
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (idl_global->ami_connector_seen_)
     {
-      this->gen_standard_include (
-        this->ciao_conn_source_,
-        "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+      this->gen_standard_include (this->ciao_conn_source_, "connectors/ami4ccm/ami4ccm/ami4ccm.h");
     }
 }
 
@@ -3691,14 +3535,10 @@ TAO_CodeGen::gen_ami_conn_idl_includes ()
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (be_global->ami4ccm_call_back ())
     {
-      this->gen_standard_include (
-        this->ciao_ami_conn_idl_,
-        "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
+      this->gen_standard_include (this->ciao_ami_conn_idl_, "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
-  this->gen_standard_include (
-    this->ciao_ami_conn_idl_,
-    idl_global->stripped_filename ()->get_string ());
+  this->gen_standard_include (this->ciao_ami_conn_idl_, idl_global->stripped_filename ()->get_string ());
 }
 
 void

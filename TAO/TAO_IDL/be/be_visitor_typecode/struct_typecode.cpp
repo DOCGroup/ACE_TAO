@@ -99,13 +99,13 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
   // Generate array containing struct field characteristics.
   os << "static TAO::TypeCode::Struct_Field<" << be_idt_nl
      << "char const *," << be_nl
-     << "::CORBA::TypeCode_ptr const *> const ";
+     << "::CORBA::TypeCode_ptr const *> const";
 
   if (node->nfields () == 0)
     {
       // Should only be possible for user exceptions with no fields.
-      os << "* const " << be_idt_nl
-         << fields_name.c_str () << " = nullptr;" << be_uidt_nl << be_uidt_nl;
+      os << " * const" << be_idt_nl
+         << fields_name.c_str () << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
     }
   else
     {
@@ -119,7 +119,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
         }
 
       os << be_uidt_nl
-         << "};" << be_uidt << be_uidt_nl << be_uidt_nl;
+         << "};" << be_uidt << be_uidt << be_uidt << be_nl_2;
     }
 
   static char const StringType[]      = "char const *";

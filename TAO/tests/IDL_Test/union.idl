@@ -305,3 +305,61 @@ union U94 switch (long) {
   case 2: long b_94_2;
   default: U90Array b_94_3;
 };
+
+typedef long DefaultInitializedLongArray[2];
+
+union DefaultInitializedStructUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: UBar value;
+};
+
+union DefaultInitializedBooleanUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: boolean value;
+};
+
+union DefaultInitializedLongUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: long value;
+};
+
+union DefaultInitializedDoubleUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: double value;
+};
+
+union DefaultInitializedEnumUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: U90 value;
+};
+
+union DefaultInitializedArrayUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: DefaultInitializedLongArray value;
+};
+
+union DefaultInitializedStringUnion switch (boolean)
+{
+  case FALSE:
+  case TRUE: string value;
+};
+
+enum ResetDiscriminator
+{
+  RESET_STRING,
+  RESET_LONG,
+  RESET_DEFAULT
+};
+
+union ResetWithNoopBranches switch (ResetDiscriminator)
+{
+  case RESET_STRING: string string_value;
+  case RESET_LONG: long long_value;
+  default: UBar struct_value;
+};

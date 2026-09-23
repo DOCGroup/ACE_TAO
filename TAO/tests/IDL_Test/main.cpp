@@ -18,6 +18,8 @@
 #include "nested_scopeS.h"
 #include "typedefC.h"
 #include "expressionsC.h"
+#include "structC.h"
+#include "valuetypeC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -138,6 +140,131 @@ test_expressions (int &error_count)
   expect_equals<CORBA::Double> (error_count, "MixedFloatValues::sub", MixedFloatValues::sub, 3.0);
 }
 
+void
+test_default_initialized_struct (int &error_count)
+{
+  Test::DefaultInitialized value;
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitialized::boolean_value",
+    value.boolean_value, false);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitialized::long_value", value.long_value, 0);
+  expect_equals<CORBA::Double> (
+    error_count, "DefaultInitialized::double_value", value.double_value, 0.0);
+  expect_equals<Test::S90> (
+    error_count, "DefaultInitialized::enum_value",
+    value.enum_value, Test::S90_1);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitialized::array_value[0]",
+    value.array_value[0], 0);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitialized::array_value[1]",
+    value.array_value[1], 0);
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitialized::nested_value.a",
+    value.nested_value.a, false);
+}
+
+void
+test_default_initialized_exception (int &error_count)
+{
+  Test::DefaultInitializedException exception;
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitializedException::boolean_value",
+    exception.boolean_value, false);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedException::long_value",
+    exception.long_value, 0);
+}
+
+void
+test_default_initialized_valuetype (int &error_count)
+{
+  OBV_DefaultInitializedValue value;
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitializedValue::boolean_value",
+    value.boolean_value (), false);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedValue::long_value",
+    value.long_value (), 0);
+}
+
+void
+test_default_initialized_union (int &error_count)
+{
+  U87 value;
+
+  DefaultInitializedStructUnion struct_union;
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedStructUnion::value::foo",
+    struct_union.value ().foo, 0);
+
+  value.b_87_2 (7);
+
+  UBar member;
+  member.foo = 42;
+  value.b_87_1 (member);
+  expect_equals<CORBA::Long> (
+    error_count, "U87 setter::b_87_1::foo", value.b_87_1 ().foo, 42);
+
+  U87 copy (value);
+  expect_equals<CORBA::Long> (
+    error_count, "U87 copy::b_87_1::foo", copy.b_87_1 ().foo, 42);
+
+  U87 assigned;
+  assigned.b_87_2 (8);
+  assigned = value;
+  expect_equals<CORBA::Long> (
+    error_count, "U87 assignment::b_87_1::foo",
+    assigned.b_87_1 ().foo, 42);
+
+  DefaultInitializedBooleanUnion boolean_union;
+  expect_equals<CORBA::Boolean> (
+    error_count, "DefaultInitializedBooleanUnion::value",
+    boolean_union.value (), false);
+
+  DefaultInitializedLongUnion long_union;
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedLongUnion::value",
+    long_union.value (), 0);
+
+  DefaultInitializedDoubleUnion double_union;
+  expect_equals<CORBA::Double> (
+    error_count, "DefaultInitializedDoubleUnion::value",
+    double_union.value (), 0.0);
+
+  DefaultInitializedEnumUnion enum_union;
+  expect_equals<U90> (
+    error_count, "DefaultInitializedEnumUnion::value",
+    enum_union.value (), U90_1);
+
+  DefaultInitializedArrayUnion array_union;
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedArrayUnion::value[0]",
+    array_union.value ()[0], 0);
+  expect_equals<CORBA::Long> (
+    error_count, "DefaultInitializedArrayUnion::value[1]",
+    array_union.value ()[1], 0);
+
+  DefaultInitializedStringUnion string_union;
+  expect_equals<const char *> (
+    error_count, "DefaultInitializedStringUnion::value",
+    string_union.value (), nullptr);
+
+  ResetWithNoopBranches reset_union;
+  expect_equals<CORBA::Long> (
+    error_count, "ResetWithNoopBranches::struct_value::foo",
+    reset_union.struct_value ().foo, 0);
+  reset_union.string_value ("value");
+  reset_union.long_value (42);
+  expect_equals<CORBA::Long> (
+    error_count, "ResetWithNoopBranches::long_value",
+    reset_union.long_value (), 42);
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -146,12 +273,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const ACE_CDR::ULongLong test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
 
-  if (test_ull != AAA)
+  if (test_ull != AAAX)
     {
       ++error_count;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Generated value of unsigned")
-                  ACE_TEXT (" long long AAA in constants.idl")
+                  ACE_TEXT (" long long AAAX in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
     }
 
@@ -474,6 +601,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   test_expressions (error_count);
+  test_default_initialized_struct (error_count);
+  test_default_initialized_exception (error_count);
+  test_default_initialized_valuetype (error_count);
+  test_default_initialized_union (error_count);
 
   return error_count ? 1 : 0;
 }

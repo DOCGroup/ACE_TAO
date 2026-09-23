@@ -1100,7 +1100,8 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
     }
   else
     {
-      *os << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
+      *os << "::new (std::addressof(this->u_." << ub->local_name ()
+          << "_)) " << bt->name () << " (val);" << be_uidt_nl;
     }
 
   *os << "}" << be_nl_2;
@@ -1290,4 +1291,3 @@ be_visitor_union_branch_public_ci::visit_union_fwd (be_union_fwd *node)
 
   return this->visit_union (u);
 }
-

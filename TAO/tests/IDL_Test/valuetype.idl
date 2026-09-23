@@ -29,6 +29,12 @@ valuetype MyValueType
   factory make_one ();
 };
 
+valuetype DefaultInitializedValue
+{
+  public boolean boolean_value;
+  public long long_value;
+};
+
 enum ValueSort2 {
   SYMBOL_TYPE2
 };
@@ -59,7 +65,7 @@ valuetype GetsDeprecatedMember : IncludedBase
   public string StringMember;
 };
 
-module X
+module X_VALUETYPE
 {
   abstract valuetype AXXX
   {
@@ -111,4 +117,3 @@ module ModSelection
 };
 
 #endif /* IDL_TEST_VALUETYPE_IDL */
-

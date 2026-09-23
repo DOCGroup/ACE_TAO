@@ -11,6 +11,52 @@
 
 #include "union_branch.h"
 
+bool
+be_visitor_union_branch_public_reset_cs::requires_reset (be_type *node)
+{
+    while (node != nullptr && node->node_type () == AST_Decl::NT_typedef)
+      {
+        be_typedef *td = dynamic_cast<be_typedef*> (node);
+        node = td != nullptr ? td->primitive_base_type () : nullptr;
+      }
+
+    be_predefined_type *predefined =
+      dynamic_cast<be_predefined_type*> (node);
+
+    if (predefined != nullptr)
+      {
+        switch (predefined->pt ())
+          {
+          case AST_PredefinedType::PT_object:
+          case AST_PredefinedType::PT_pseudo:
+          case AST_PredefinedType::PT_any:
+            return true;
+          default:
+            return false;
+          }
+      }
+
+    be_structure *structure = dynamic_cast<be_structure*> (node);
+
+    if (structure != nullptr)
+      {
+        return structure->size_type () == be_type::VARIABLE
+          || structure->has_constructor ();
+      }
+
+    return dynamic_cast<be_array*> (node) != nullptr
+      || dynamic_cast<be_interface*> (node) != nullptr
+      || dynamic_cast<be_interface_fwd*> (node) != nullptr
+      || dynamic_cast<be_valuebox*> (node) != nullptr
+      || dynamic_cast<be_valuetype*> (node) != nullptr
+      || dynamic_cast<be_valuetype_fwd*> (node) != nullptr
+      || dynamic_cast<be_sequence*> (node) != nullptr
+      || dynamic_cast<be_map*> (node) != nullptr
+      || dynamic_cast<be_string*> (node) != nullptr
+      || dynamic_cast<be_union*> (node) != nullptr
+      || dynamic_cast<be_union_fwd*> (node) != nullptr;
+}
+
 // *****************************************************
 //  visitor for union_branch in the client
 //  stubs file for the reset method
@@ -46,10 +92,59 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
 
   this->ctx_->node (node); // save the node
 
-  *os << be_nl;
-
   const be_visitor_union::BoolUnionBranch bub =
     be_visitor_union::boolean_branch (node);
+  be_union *bu = dynamic_cast<be_union*> (node->defined_in ());
+  bool first_branch = true;
+
+  for (unsigned long i = 0; bu != nullptr && i < bu->nfields (); ++i)
+    {
+      AST_Field **field = nullptr;
+
+      if (bu->field (field, i) != 0 || field == nullptr || *field == node)
+        {
+          break;
+        }
+
+      if (dynamic_cast<be_union_branch*> (*field) != nullptr)
+        {
+          first_branch = false;
+        }
+    }
+
+  if (!be_visitor_union_branch_public_reset_cs::requires_reset (bt))
+    {
+      if (bub == be_visitor_union::BUB_NONE)
+        {
+          if (!first_branch)
+            {
+              *os << be_nl;
+            }
+
+          for (unsigned long i = 0; i < node->label_list_length (); ++i)
+            {
+              if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+                {
+                  *os << "default:" << be_nl;
+                }
+              else
+                {
+                  *os << "case ";
+                  node->gen_label_value (os, i);
+                  *os << ":" << be_nl;
+                }
+            }
+
+          *os << "break;";
+        }
+
+      return 0;
+    }
+
+  if (bub != be_visitor_union::BUB_NONE || !first_branch)
+    {
+      *os << be_nl;
+    }
 
   switch (bub)
     {
@@ -67,11 +162,10 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
               node->gen_label_value (os, i);
               *os << ":";
             }
-          if (i == (node->label_list_length () - 1))
-            *os << be_idt_nl;
-          else
-            *os << be_nl;
+          *os << be_nl;
         }
+
+      *os << "{" << be_idt_nl;
       break;
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
@@ -93,7 +187,7 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
   switch (bub)
     {
     case be_visitor_union::BUB_NONE:
-      *os << be_uidt_nl << "break;" << be_nl;
+      *os << be_uidt_nl << "}" << be_nl << "break;";
       break;
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
@@ -169,7 +263,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 
   *os << fname << "_free (this->u_." << ub->local_name ()
       << "_);" << be_nl
-      << "this->u_." << ub->local_name () << "_ = nullptr;" << be_nl;
+      << "this->u_." << ub->local_name () << "_ = nullptr;";
 
   return 0;
 }
@@ -216,7 +310,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = nullptr;" << be_nl;
+      << "_ = nullptr;";
 
   return 0;
 }
@@ -243,7 +337,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = nullptr;" << be_nl;
+      << "_ = nullptr;";
 
   return 0;
 }
@@ -271,7 +365,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuebox (
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = nullptr;" << be_nl;
+      << "_ = nullptr;";
 
   return 0;
 }
@@ -299,7 +393,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype (
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = nullptr;" << be_nl;
+      << "_ = nullptr;";
 
   return 0;
 }
@@ -327,7 +421,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
-      << "_ = nullptr;" << be_nl;
+      << "_ = nullptr;";
 
   return 0;
 }
@@ -359,21 +453,21 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
       *os << "delete this->u_."
           << ub->local_name () << "_;" << be_nl;
       *os << "this->u_." << ub->local_name ()
-          << "_ = nullptr;" << be_nl;
+          << "_ = nullptr;";
 
       break;
     case AST_PredefinedType::PT_pseudo:
       *os << "::CORBA::release (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "this->u_." << ub->local_name ()
-          << "_ = nullptr;" << be_nl;
+          << "_ = nullptr;";
 
       break;
     case AST_PredefinedType::PT_any:
       *os << "delete this->u_."
           << ub->local_name () << "_;" << be_nl
           << "this->u_." << ub->local_name ()
-          << "_ = nullptr;" << be_nl;
+          << "_ = nullptr;";
 
       break;
     case AST_PredefinedType::PT_void:
@@ -420,7 +514,7 @@ be_visitor_union_branch_public_reset_cs::visit_seq_map_common ()
       << ub->local_name () << "_;" << be_nl
       << "this->u_."
       << ub->local_name ()
-      << "_ = nullptr;" << be_nl;
+      << "_ = nullptr;";
 
   return 0;
 }
@@ -457,7 +551,7 @@ be_visitor_union_branch_public_reset_cs::visit_string (
   *os << ub->local_name () << "_);" << be_nl
       << "this->u_."
       << ub->local_name ()
-      << "_ = nullptr;" << be_nl;
+      << "_ = nullptr;";
 
   return 0;
 }
@@ -499,7 +593,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (
           << "_;" << be_nl
           << "this->u_."
           << ub->local_name ()
-          << "_ = nullptr;" << be_nl;
+          << "_ = nullptr;";
    }
 
   return 0;
@@ -559,7 +653,7 @@ be_visitor_union_branch_public_reset_cs::visit_union (
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
       << "this->u_."
-      << ub->local_name () << "_ = nullptr;" << be_nl;
+      << ub->local_name () << "_ = nullptr;";
 
   return 0;
 }
@@ -573,4 +667,3 @@ be_visitor_union_branch_public_reset_cs::visit_union_fwd (
 
   return this->visit_union (u);
 }
-

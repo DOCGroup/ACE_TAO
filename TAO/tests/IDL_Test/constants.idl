@@ -46,7 +46,7 @@ const unsigned long max_ulong_hex = 0XFFFFFFFF;
 
 // Testing 64-bit integers. The executable will
 // verify that the generated values are correct.
-const unsigned long long AAA = 122192928000000000;
+const unsigned long long AAAX = 122192928000000000;
 const unsigned long AA = 3538947897;
 const long long NAAA = -122192928000000000;
 const long long PAAA = 122192928000000000;

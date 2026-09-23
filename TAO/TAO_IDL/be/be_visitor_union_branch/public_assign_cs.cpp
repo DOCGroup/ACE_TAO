@@ -37,10 +37,22 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl;
-
   const be_visitor_union::BoolUnionBranch bub =
     be_visitor_union::boolean_branch (node);
+
+  be_union *bu = dynamic_cast<be_union*> (node->defined_in ());
+  AST_Field **last_field = nullptr;
+  const bool last_branch =
+    bu != nullptr
+    && bu->nfields () != 0
+    && bu->field (last_field, bu->nfields () - 1) == 0
+    && last_field != nullptr
+    && *last_field == node;
+
+  if (bub == be_visitor_union::BUB_NONE)
+    {
+      *os << be_nl;
+    }
 
   switch (bub)
     {
@@ -73,7 +85,8 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     case be_visitor_union::BUB_FALSE:
       *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
           << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
-    default:
+      break;
+    case be_visitor_union::BUB_UNCONDITIONAL:
       break;
     }
 
@@ -107,10 +120,18 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
       break;
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
-      *os << "}" << be_uidt_nl;
+      *os << "}" << be_uidt;
+      if (last_branch)
+        {
+          *os << be_uidt_nl;
+        }
+      else
+        {
+          *os << be_nl;
+        }
       break;
     case be_visitor_union::BUB_UNCONDITIONAL:
-      *os << be_nl;
+      break;
     }
 
   return 0;
@@ -183,7 +204,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
   // set the discriminant to the appropriate label
   *os << "// Make a deep copy." << be_nl;
   *os << "this->u_." << ub->local_name ()
-      << "_ = " << be_idt_nl
+      << "_ =" << be_idt_nl
       << fname << "_dup (u.u_."
       << ub->local_name () << "_);" << be_uidt << be_uidt_nl;
 
@@ -211,7 +232,7 @@ be_visitor_union_branch_public_assign_cs::visit_enum (be_enum *)
 
   // set the discriminant to the appropriate label
   // valid label
-  *os << "this->u_." << ub->local_name () << "_ = " << be_idt_nl
+  *os << "this->u_." << ub->local_name () << "_ =" << be_idt_nl
       << "u.u_."
       << ub->local_name () << "_;" << be_uidt << be_uidt_nl;
 
@@ -791,8 +812,9 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     }
   else
     {
-      *os << "this->u_." << ub->local_name () << "_ = u.u_."
-          << ub->local_name () << "_;" << be_uidt_nl;
+      *os << "::new (std::addressof(this->u_." << ub->local_name ()
+          << "_)) " << bt->name () << " (u.u_." << ub->local_name ()
+          << "_);" << be_uidt_nl;
     }
 
   return 0;
@@ -904,4 +926,3 @@ be_visitor_union_branch_public_assign_cs::visit_union_fwd (
 
   return this->visit_union (u);
 }
-

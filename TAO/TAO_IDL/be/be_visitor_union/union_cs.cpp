@@ -78,7 +78,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << be_nl_2
       << node->name () << "::" << node->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
-      << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl;
+      << "ACE_OS::memset (std::addressof(this->u_), 0, sizeof (this->u_));" << be_nl;
 
   // The default constructor must initialize the discriminator
   // to the first case label value found in the union declaration
@@ -123,11 +123,36 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   *os << ";";
 
-  if (dv.computed_ == 0)
+  be_union_branch *active_branch = dv.computed_ == 0 ? ub : nullptr;
+
+  if (active_branch == nullptr && node->default_index () != -1)
+    {
+      for (UTL_ScopeActiveIterator default_si (node, UTL_Scope::IK_decls);
+           !default_si.is_done () && active_branch == nullptr;
+           default_si.next ())
+        {
+          be_union_branch *branch =
+            dynamic_cast<be_union_branch*> (default_si.item ());
+
+          for (unsigned long i = 0;
+               branch != nullptr && i < branch->label_list_length ();
+               ++i)
+            {
+              if (branch->label (i)->label_kind () ==
+                    AST_UnionLabel::UL_default)
+                {
+                  active_branch = branch;
+                  break;
+                }
+            }
+        }
+    }
+
+  if (active_branch != nullptr)
     {
       *os << be_nl;
       be_visitor_union_branch_public_constructor_cs const_visitor (this->ctx_);
-      if (ub->accept (&const_visitor) == -1)
+      if (active_branch->accept (&const_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs::"
@@ -180,12 +205,16 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "break;";
     }
 
-  if (!boolDisc)
+  if (boolDisc)
     {
-      *os << be_uidt_nl << "}";
+      *os << "}";
+    }
+  else
+    {
+      *os << be_uidt_nl << "}" << be_uidt_nl << "}";
     }
 
-  *os << be_uidt_nl << "}" << be_nl_2;
+  *os << be_nl_2;
 
   *os << node->name () << "::~" << node->local_name ()
       << " ()" << be_nl
@@ -200,9 +229,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *tmp =" << be_idt_nl
-          << "static_cast<"
-          << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
+          << node->local_name () << " *tmp = static_cast<"
+          << node->local_name () << " *> (_tao_void_pointer);" << be_nl
           << "delete tmp;" << be_uidt_nl
           << "}" << be_nl_2;
     }
@@ -217,14 +245,12 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &u)" << be_nl;
   *os << "{" << be_idt_nl;
-  // First check for self-assignment.
-  *os << "if (std::addressof(u) == this)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return *this;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+  // Check for self-assignment.
+  *os << "if (std::addressof(u) != this)" << be_idt_nl
+      << "{" << be_idt_nl;
   // Reset and set the discriminant.
   *os << "this->_reset ();" << be_nl;
-  *os << "this->disc_ = u.disc_;" << be_nl_2;
+  *os << "this->disc_ = u.disc_;" << be_nl;
   // now switch based on the disc value
   if (!boolDisc)
     {
@@ -256,53 +282,92 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   if (!boolDisc)
     {
-      *os << be_uidt_nl << "}" << be_nl;
+      *os << be_uidt_nl << "}" << be_uidt_nl;
     }
 
-  *os << be_nl << "return *this;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_uidt_nl
+      << "return *this;" << be_uidt_nl
+      << "}" << be_nl_2;
 
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
 
+  bool requires_reset = false;
+
+  for (unsigned long i = 0; i < node->nfields (); ++i)
+    {
+      AST_Field **field = nullptr;
+
+      if (node->field (field, i) != 0 || field == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit_union - "
+                             "failed to retrieve union branch\n"),
+                            -1);
+        }
+
+      be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+      be_type *branch_type =
+        branch != nullptr
+        ? dynamic_cast<be_type*> (branch->field_type ())
+        : nullptr;
+
+      if (branch_type != nullptr
+          && be_visitor_union_branch_public_reset_cs::requires_reset (
+            branch_type))
+        {
+          requires_reset = true;
+          break;
+        }
+    }
+
   *os << "/// Reset method to reset old values of a union." << be_nl;
   *os << "void " << node->name () << "::_reset ()" << be_nl;
-  *os << "{" << be_idt_nl;
 
-  if (!boolDisc)
+  if (!requires_reset)
     {
-      *os << "switch (this->disc_)" << be_nl;
-      *os << "{" << be_idt_nl;
+      *os << "{" << be_nl << "}";
     }
-
-  if (this->visit_scope (node) == -1)
+  else
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_cs"
-                         "visit_union - "
-                         "codegen for reset failed\n"),
-                        -1);
-    }
+      *os << "{" << be_idt;
 
-  // If there is no explicit default case, but there
-  // is an implicit one, and the discriminant is an enum,
-  // we need this to avert warnings in some compilers that
-  // not all case values are included. If there is no
-  // implicit default case, or the discriminator is not
-  // an enum, this does no harm.
-  if (!boolDisc && node->gen_empty_default_label ())
-    {
-      *os << be_nl
-          << "default:" << be_nl
-          << "break;";
-    }
+      if (!boolDisc)
+        {
+          *os << be_nl << "switch (this->disc_)" << be_nl;
+          *os << "{" << be_idt_nl;
+        }
 
-  if (!boolDisc)
-    {
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs"
+                             "visit_union - "
+                             "codegen for reset failed\n"),
+                            -1);
+        }
+
+      // If there is no explicit default case, but there
+      // is an implicit one, and the discriminant is an enum,
+      // we need this to avert warnings in some compilers that
+      // not all case values are included. If there is no
+      // implicit default case, or the discriminator is not
+      // an enum, this does no harm.
+      if (!boolDisc && node->gen_empty_default_label ())
+        {
+          *os << be_nl
+              << "default:" << be_nl
+              << "break;";
+        }
+
+      if (!boolDisc)
+        {
+          *os << be_uidt_nl << "}";
+        }
+
       *os << be_uidt_nl << "}";
     }
-
-  *os << be_uidt_nl << "}";
 
   if (be_global->tc_support ())
     {

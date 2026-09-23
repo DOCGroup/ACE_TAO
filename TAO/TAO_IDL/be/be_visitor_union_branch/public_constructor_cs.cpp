@@ -126,10 +126,80 @@ be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
 
   // set the discriminant to the appropriate label
   *os << "this->u_." << ub->local_name ()
-      << "_ = " << be_idt_nl
-      << fname << "_alloc ();" << be_uidt << be_uidt;
+      << "_ = " << fname << "_alloc ();" << be_nl
+      << "if (this->u_." << ub->local_name () << "_)" << be_nl
+      << "{" << be_idt_nl
+      << "TAO::Array_Traits<" << fname << "_forany>::zero ("
+      << "this->u_." << ub->local_name () << "_);" << be_uidt_nl
+      << "}" << be_uidt;
 
   return 0;
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::value_initialize ()
+{
+  be_union_branch *ub =
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
+  be_union *bu =
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_constructor_cs::"
+                         "value_initialize - "
+                         "bad context information\n"
+                         ), -1);
+    }
+
+  *this->ctx_->stream () << "this->u_." << ub->local_name () << "_ = {};";
+
+  return 0;
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_enum (be_enum *)
+{
+  return this->value_initialize ();
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_interface (be_interface *)
+{
+  return this->value_initialize ();
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_interface_fwd (
+  be_interface_fwd *)
+{
+  return this->value_initialize ();
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_string (be_string *)
+{
+  return this->value_initialize ();
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_valuebox (be_valuebox *)
+{
+  return this->value_initialize ();
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_valuetype (be_valuetype *)
+{
+  return this->value_initialize ();
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_valuetype_fwd (
+  be_valuetype_fwd *)
+{
+  return this->value_initialize ();
 }
 
 int
@@ -171,10 +241,9 @@ be_visitor_union_branch_public_constructor_cs::visit_predefined_type (
       *os << "ACE_NEW (" << be_idt << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
           << bt->name () << ");" << be_uidt;
-
       break;
     default:
-      break;
+      return this->value_initialize ();
     }
 
   return 0;
@@ -204,6 +273,42 @@ be_visitor_union_branch_public_constructor_cs::visit_sequence (be_sequence *node
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_constructor_cs::"
                          "visit_array - "
+                         "bad context information\n"
+                         ), -1);
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "ACE_NEW (" << be_idt_nl
+      << "this->u_." << ub->local_name () << "_," << be_nl
+      << bt->name () << ");" << be_uidt;
+
+  return 0;
+}
+
+int
+be_visitor_union_branch_public_constructor_cs::visit_map (be_map *node)
+{
+  be_union_branch *ub =
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
+  be_union *bu =
+    dynamic_cast<be_union*> (this->ctx_->scope ());
+  be_type *bt = nullptr;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_constructor_cs::"
+                         "visit_map - "
                          "bad context information\n"
                          ), -1);
     }
@@ -252,6 +357,11 @@ be_visitor_union_branch_public_constructor_cs::visit_structure (be_structure *no
       *os << "ACE_NEW (" << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
           << bt->name () << ");" << be_uidt;
+    }
+  else
+    {
+      *os << "::new (std::addressof(this->u_." << ub->local_name ()
+          << "_)) " << bt->name () << ";";
     }
 
   return 0;
@@ -335,4 +445,3 @@ be_visitor_union_branch_public_constructor_cs::visit_union_fwd (
 
   return this->visit_union (u);
 }
-

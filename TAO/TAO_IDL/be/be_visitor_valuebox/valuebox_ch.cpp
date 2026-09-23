@@ -836,5 +836,5 @@ be_visitor_valuebox_ch::emit_boxed_member_var (be_decl *node,
 
   // Member variable of underlying type;
   *os << be_uidt_nl << "private:" << be_idt_nl
-      << node->full_name () << type_suffix << " _pd_value;" << be_nl;
+      << node->full_name () << type_suffix << " _pd_value {};" << be_nl;
 }

@@ -56,8 +56,10 @@ be_visitor_field_ch::visit_field (be_field *node)
                         -1);
     }
 
-  // Now output the field name.
-  *os << " " << node->local_name () << ";";
+  // Now output the field name. Value-initialize structure and exception
+  // members so that default-constructed IDL types don't contain
+  // indeterminate values.
+  *os << " " << node->local_name () << " {};";
 
   return 0;
 }
@@ -632,5 +634,3 @@ be_visitor_field_ch::visit_eventtype_fwd (
 {
   return this->visit_valuetype_fwd (node);
 }
-
-

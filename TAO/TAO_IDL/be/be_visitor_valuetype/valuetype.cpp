@@ -750,7 +750,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   // Now output the field name.
   *os << " " << vt->field_pd_prefix ()
       << node->local_name ()
-      << vt->field_pd_postfix () << ";";
+      << vt->field_pd_postfix () << " {};";
 
   return 0;
 }
