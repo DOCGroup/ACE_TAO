@@ -2298,16 +2298,17 @@ ACE::format_hexdump (const char *buffer,
 
   const size_t bytes_per_line = 16;
   const size_t bytes_per_group = bytes_per_line / 2;
+  const size_t output_chars_per_line = 68;
 
   u_char c;
   ACE_TCHAR textver[bytes_per_line + 1];
 
   // Format up to bytes_per_line input bytes per output line.
-  size_t maxlen = (obuf_sz / 68) * bytes_per_line;
+  size_t max_input_bytes = (obuf_sz / output_chars_per_line) * bytes_per_line;
   const ACE_TCHAR *const obuf_start = obuf;
 
-  if (size > maxlen)
-    size = maxlen;
+  if (size > max_input_bytes)
+    size = max_input_bytes;
 
   size_t i;
 
