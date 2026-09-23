@@ -126,8 +126,7 @@ be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
 
   // set the discriminant to the appropriate label
   *os << "this->u_." << ub->local_name ()
-      << "_ =" << be_idt_nl
-      << fname << "_alloc ();" << be_uidt_nl
+      << "_ = " << fname << "_alloc ();" << be_nl
       << "if (this->u_." << ub->local_name () << "_)" << be_nl
       << "{" << be_idt_nl
       << "TAO::Array_Traits<" << fname << "_forany>::zero ("
