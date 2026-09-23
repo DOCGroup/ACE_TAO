@@ -2296,11 +2296,14 @@ ACE::format_hexdump (const char *buffer,
 {
   ACE_TRACE ("ACE::format_hexdump");
 
-  u_char c;
-  ACE_TCHAR textver[16 + 1];
+  const size_t bytes_per_line = 16;
+  const size_t bytes_per_group = bytes_per_line / 2;
 
-  // We can fit 16 bytes output in text mode per line, 4 chars per byte.
-  size_t maxlen = (obuf_sz / 68) * 16;
+  u_char c;
+  ACE_TCHAR textver[bytes_per_line + 1];
+
+  // Format up to bytes_per_line input bytes per output line.
+  size_t maxlen = (obuf_sz / 68) * bytes_per_line;
   const ACE_TCHAR *const obuf_start = obuf;
 
   if (size > maxlen)
@@ -2308,19 +2311,19 @@ ACE::format_hexdump (const char *buffer,
 
   size_t i;
 
-  size_t const lines = size / 16;
+  size_t const lines = size / bytes_per_line;
   for (i = 0; i < lines; i++)
     {
       size_t j;
 
-      for (j = 0 ; j < 16; j++)
+      for (j = 0 ; j < bytes_per_line; j++)
         {
-          c = (u_char) buffer[(i << 4) + j];    // or, buffer[i*16+j]
+          c = (u_char) buffer[(i * bytes_per_line) + j];
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
                            ACE_TEXT ("%02x "),
                            c);
           obuf += 3;
-          if (j == 7)
+          if (j == bytes_per_group - 1)
             {
               *obuf++ = ACE_TEXT (' ');
             }
@@ -2337,28 +2340,28 @@ ACE::format_hexdump (const char *buffer,
         ++obuf;
     }
 
-  if (size % 16)
+  if (size % bytes_per_line)
     {
-      for (i = 0 ; i < size % 16; i++)
+      for (i = 0 ; i < size % bytes_per_line; i++)
         {
-          c = (u_char) buffer[size - size % 16 + i];
+          c = (u_char) buffer[size - size % bytes_per_line + i];
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
                            ACE_TEXT ("%02x "),
                            c);
           obuf += 3;
-          if (i == 7)
+          if (i == bytes_per_group - 1)
             {
               *obuf++ = ACE_TEXT (' ');
             }
           textver[i] = ACE_OS::ace_isprint (c) ? c : u_char ('.');
         }
 
-      for (i = size % 16; i < 16; i++)
+      for (i = size % bytes_per_line; i < bytes_per_line; i++)
         {
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
                            ACE_TEXT ("   "));
           obuf += 3;
-          if (i == 7)
+          if (i == bytes_per_group - 1)
             {
               *obuf++ = ACE_TEXT (' ');
             }
