@@ -123,11 +123,36 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   *os << ";";
 
-  if (dv.computed_ == 0)
+  be_union_branch *active_branch = dv.computed_ == 0 ? ub : nullptr;
+
+  if (active_branch == nullptr && node->default_index () != -1)
+    {
+      for (UTL_ScopeActiveIterator default_si (node, UTL_Scope::IK_decls);
+           !default_si.is_done () && active_branch == nullptr;
+           default_si.next ())
+        {
+          be_union_branch *branch =
+            dynamic_cast<be_union_branch*> (default_si.item ());
+
+          for (unsigned long i = 0;
+               branch != nullptr && i < branch->label_list_length ();
+               ++i)
+            {
+              if (branch->label (i)->label_kind () ==
+                    AST_UnionLabel::UL_default)
+                {
+                  active_branch = branch;
+                  break;
+                }
+            }
+        }
+    }
+
+  if (active_branch != nullptr)
     {
       *os << be_nl;
       be_visitor_union_branch_public_constructor_cs const_visitor (this->ctx_);
-      if (ub->accept (&const_visitor) == -1)
+      if (active_branch->accept (&const_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs::"

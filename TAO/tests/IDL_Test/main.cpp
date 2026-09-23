@@ -255,6 +255,9 @@ test_default_initialized_union (int &error_count)
     string_union.value (), nullptr);
 
   ResetWithNoopBranches reset_union;
+  expect_equals<CORBA::Long> (
+    error_count, "ResetWithNoopBranches::struct_value::foo",
+    reset_union.struct_value ().foo, 0);
   reset_union.string_value ("value");
   reset_union.long_value (42);
   expect_equals<CORBA::Long> (

@@ -361,5 +361,5 @@ union ResetWithNoopBranches switch (ResetDiscriminator)
 {
   case RESET_STRING: string string_value;
   case RESET_LONG: long long_value;
-  default: boolean boolean_value;
+  default: UBar struct_value;
 };

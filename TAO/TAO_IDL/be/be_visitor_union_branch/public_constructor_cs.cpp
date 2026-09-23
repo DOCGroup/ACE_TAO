@@ -131,8 +131,7 @@ be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
       << "if (this->u_." << ub->local_name () << "_)" << be_nl
       << "{" << be_idt_nl
       << "TAO::Array_Traits<" << fname << "_forany>::zero ("
-      << be_idt << be_idt_nl
-      << "this->u_." << ub->local_name () << "_);" << be_uidt << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_);" << be_uidt_nl
       << "}" << be_uidt;
 
   return 0;
