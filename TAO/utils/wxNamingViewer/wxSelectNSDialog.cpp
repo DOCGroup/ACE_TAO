@@ -93,7 +93,13 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
       "Select Naming Service",
       wxDefaultPosition,
       wxSize(181,94),
-      wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU,
+      wxRAISED_BORDER | wxCAPTION |
+#if wxABI_VERSION < 20800
+      wxTHICK_FRAME |
+#else
+      wxRESIZE_BORDER |
+#endif
+      wxSYSTEM_MENU,
       "selectNS")
 #endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   , config( 0)
@@ -137,7 +143,11 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
 
 WxSelectNSDialog::~WxSelectNSDialog()
 {
+#if 0
   int count = servers->Number();
+#else
+  int count = servers->GetCount();
+#endif
   for (int i = 0; i < count; i++) {
     delete static_cast<wxString*>( servers->GetClientData( i));
   }
@@ -152,10 +162,10 @@ void WxSelectNSDialog::onAdd( wxCommandEvent& WXUNUSED(event))
         dialog->getServerName(),
         new wxString( dialog->getIor()));
     ACE_Configuration_Section_Key section = config->root_section();
-    ACE_TString value = dialog->getIor().c_str();
+    ACE_TString value = dialog->getIor().c_str().AsChar();
     config->set_string_value(
         section,
-        dialog->getServerName().c_str(),
+        dialog->getServerName().c_str().AsChar(),
         value);
   }
 }
@@ -180,7 +190,7 @@ void WxSelectNSDialog::onInitDialog( wxInitDialogEvent& event)
 }
 
 
-void WxSelectNSDialog::onLeftDClick( wxMouseEvent& event)
+void WxSelectNSDialog::onLeftDClick( wxCommandEvent& event)
 {
   ACE_UNUSED_ARG( event);
 

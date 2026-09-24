@@ -5,7 +5,6 @@
 // @author:  Charlie Frasch (cfrasch@atdesk.com)
 #include "ace/Init_ACE.h"
 #include "pch.h"
-#include "wx/resource.h"
 #include "wxNamingViewerFrame.h"
 #include "wxNamingViewer.wxr"
 
