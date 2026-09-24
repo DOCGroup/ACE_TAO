@@ -256,6 +256,19 @@ public:
                        bool use_env_defaults = true);
 
   /**
+   *  Load the location of the CRL.
+   *
+   *  @param[in] file_name          CRL file pathname. Passed to
+   *                                @c SSL_CTX_Load_verify_locations() if not
+   *                                0 and @a type is SSL_FILETYPE_PEM. Pass to
+   *                                @c X509_STORE_add_crl if not 0 @a type is SSL_FILETYPE_ASN1.
+   *  @param[in] type               CRL file type. Support SSL_FILETYPE_PEM and
+   *                                SSL_FILETYPE_ASN1.
+   *  @return 1 for success or others on error.
+   */
+  int load_crl_file(const char* file_name, int type);
+
+  /**
    *  Test whether any CA locations have been successfully loaded and
    *  return the number of successful attempts.
    *
