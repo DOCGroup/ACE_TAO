@@ -101,7 +101,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_INT16 server_strategy = ACE_MEM_IO::Reactive;
   // Receive the signaling strategy theserver support.
   if (ACE::recv (new_handle, &server_strategy,
-                 sizeof (ACE_INT16)) == -1)
+                 sizeof (ACE_INT16)) != sizeof (ACE_INT16))
     ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error receiving strategy\n")),
                       -1);
@@ -114,19 +114,19 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
     server_strategy = ACE_MEM_IO::Reactive;
 
   if (ACE::send (new_handle, &server_strategy,
-                 sizeof (ACE_INT16)) == -1)
+                 sizeof (ACE_INT16)) != sizeof (ACE_INT16))
     ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error sending strategy\n")),
                       -1);
 
-  ACE_INT16 buf_len;
+  ACE_INT16 buf_len = 0;
   // Byte-order is not a problem for this read.
-  if (ACE::recv (new_handle, &buf_len, sizeof (buf_len)) == -1)
+  if (ACE::recv (new_handle, &buf_len, sizeof (buf_len)) != sizeof (buf_len))
     ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename length\n")),
                       -1);
 
-  if (ACE::recv (new_handle, buf, buf_len) == -1)
+  if (ACE::recv (new_handle, buf, buf_len) != buf_len)
     ACELIB_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename.\n")),
                       -1);
