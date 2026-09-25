@@ -103,12 +103,15 @@ module ClassConstants
   interface Iface
   {
     const long iface_long = 55;
+    const float iface_float = 0.2;
+    const double iface_double = 66.66;
     const string iface_str = "iface_str";
     const wstring iface_wstr = L"iface_wstr";
   };
 
   valuetype Vt
   {
+    const float vt_float = 0.2;
     const double vt_long = 66.66;
     const string vt_str = "vt_str";
     const wstring vt_wstr = L"vt_wstr";
