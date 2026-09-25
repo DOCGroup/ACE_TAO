@@ -472,8 +472,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_string x)
 {
-  if (x.bound_ != 0 &&
-      static_cast<ACE_CDR::ULong> (x.val_.size ()) > x.bound_)
+  if (!tao_valid_std_string_length (x.val_.size (), x.bound_))
     {
       throw CORBA::BAD_PARAM ();
     }
@@ -495,8 +494,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_wstring x)
 {
-  if (x.bound_ != 0 &&
-      static_cast<ACE_CDR::ULong> (x.val_.size ()) > x.bound_)
+  if (!tao_valid_std_string_length (x.val_.size (), x.bound_))
     {
       throw CORBA::BAD_PARAM ();
     }

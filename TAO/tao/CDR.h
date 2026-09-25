@@ -60,6 +60,7 @@
 #include "ace/Null_Mutex.h"
 
 #include <string>
+#include <limits>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,6 +71,13 @@ class TAO_Stub;
 namespace CORBA
 {
   class ValueBase;
+}
+
+/// Check the representable CDR length before narrowing or applying an IDL bound.
+inline bool tao_valid_std_string_length (std::size_t length, ACE_CDR::ULong bound)
+{
+  return length < (std::numeric_limits<ACE_CDR::ULong>::max) () &&
+    (bound == 0 || length <= bound);
 }
 
 /**
