@@ -145,8 +145,10 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
-    - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v3
+    - name: Setup Visual Studio 2022
+      uses: step-security/msvc-dev-cmd@v1
+      with:
+        vsversion: '2022'
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
