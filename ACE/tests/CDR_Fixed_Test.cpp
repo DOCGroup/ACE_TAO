@@ -1,6 +1,7 @@
 #include "test_config.h"
 #include "ace/CDR_Base.h"
 #include "ace/OS_NS_string.h"
+#include <stdexcept>
 
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
 #include <fstream>
@@ -226,6 +227,35 @@ int run_main (int, ACE_TCHAR *[])
 
   Fixed f30 = Fixed::from_string("-9999752.0000") / Fixed::from_string("-4999876.00");
   EXPECT ("2", f30);
+
+  const Fixed max_integer = Fixed::from_string ("9999999999999999999999999999999");
+  bool overflow = false;
+  try
+    {
+      Fixed sum = max_integer + Fixed::from_integer (LongLong (1));
+      (void)sum;
+    }
+  catch (const std::overflow_error&)
+    {
+      overflow = true;
+    }
+  TEST_EQUAL (true, overflow);
+
+  overflow = false;
+  try
+    {
+      Fixed product = max_integer * Fixed::from_integer (LongLong (10));
+      (void)product;
+    }
+  catch (const std::overflow_error&)
+    {
+      overflow = true;
+    }
+  TEST_EQUAL (true, overflow);
+
+  EXPECT ("9999999999999999999999999999999", max_integer);
+  EXPECT ("9999999999999999999999999999998",
+          max_integer - Fixed::from_integer (LongLong (1)));
 
   ACE_END_TEST;
   return failed;

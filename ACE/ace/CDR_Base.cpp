@@ -18,6 +18,7 @@
 #include <cstring>
 #include <limits>
 #include <algorithm>
+#include <stdexcept>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1161,6 +1162,8 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
           this->normalize (this->scale_ - 1);
           this->digit (MAX_DIGITS - 1, 1);
         }
+      else
+        throw std::overflow_error ("ACE_CDR::Fixed addition exceeds 31 integer digits");
     }
 
   return *this;
@@ -1273,6 +1276,14 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
       temp[col] = carry % 10;
       carry /= 10;
     }
+
+  // The 62-digit temporary is exact.  Check its significant integer
+  // digits before reducing it to the 31-digit stored representation.
+  int significant = this->digits_ + right.digits_;
+  while (significant > 1 && temp[significant - 1] == 0)
+    --significant;
+  if (significant - this->scale_ - right.scale_ > MAX_DIGITS)
+    throw std::overflow_error ("ACE_CDR::Fixed multiplication exceeds 31 integer digits");
 
   this->digits_ += right.digits_;
   this->scale_ += right.scale_;
