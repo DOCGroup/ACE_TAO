@@ -233,6 +233,12 @@ int run_main (int, ACE_TCHAR *[])
           Fixed::from_string ("1234567890123456789012345678999")
           + Fixed::from_integer (LongLong (1)));
 
+  Fixed scaled_carry = Fixed::from_string ("999999999999999999999999999999.9");
+  scaled_carry += Fixed::from_string ("0.1");
+  EXPECT ("1000000000000000000000000000000", scaled_carry);
+  TEST_EQUAL (31, scaled_carry.fixed_digits ());
+  TEST_EQUAL (0, scaled_carry.fixed_scale ());
+
   const Fixed max_integer = Fixed::from_string ("9999999999999999999999999999999");
   Fixed sum = max_integer;
   bool overflow = false;

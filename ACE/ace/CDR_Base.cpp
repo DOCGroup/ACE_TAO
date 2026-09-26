@@ -1173,6 +1173,8 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
         {
           result.digit (0, 0);
           result.normalize (result.scale_ - 1);
+          // The carry occupies the digit freed by dropping one fractional digit.
+          ++result.digits_;
           result.digit (MAX_DIGITS - 1, 1);
         }
       else
