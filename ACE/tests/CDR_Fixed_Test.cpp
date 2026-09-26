@@ -227,6 +227,38 @@ int run_main (int, ACE_TCHAR *[])
             * Fixed::from_string ("0.1");
   EXPECT (                        "0.0000000000000000000000000000000", f26);
 
+  const Fixed tenth = Fixed::from_string ("0.1");
+  const Fixed division_boundary =
+    Fixed::from_string ("999999999999999999999999999999") / tenth;
+  EXPECT ("9999999999999999999999999999990", division_boundary);
+
+  Fixed division_overflow = Fixed::from_string ("1000000000000000000000000000000");
+  const Fixed division_before = division_overflow;
+  bool division_threw = false;
+  try
+    {
+      division_overflow /= tenth;
+    }
+  catch (const std::overflow_error&)
+    {
+      division_threw = true;
+    }
+  TEST_EQUAL (true, division_threw);
+  TEST_EQUAL (division_before, division_overflow);
+
+  division_threw = false;
+  try
+    {
+      const Fixed quotient =
+        Fixed::from_string ("9999999999999999999999999999999") / tenth;
+      (void)quotient;
+    }
+  catch (const std::overflow_error&)
+    {
+      division_threw = true;
+    }
+  TEST_EQUAL (true, division_threw);
+
   Fixed f27 = Fixed::from_string ("817459124");
   f27 /= Fixed::from_string ("0.001");
   EXPECT ("817459124000", f27);

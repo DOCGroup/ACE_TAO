@@ -1329,6 +1329,44 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   if (!rhs)
     return *this;
 
+  // A quotient with 32 integer digits cannot be stored.  Compare the
+  // unscaled digits at a common scale before changing either operand.
+  int lhs_high = this->digits_ - 1;
+  while (lhs_high >= 0 && this->digit (lhs_high) == 0)
+    --lhs_high;
+  int rhs_high = rhs.digits_ - 1;
+  while (rhs_high >= 0 && rhs.digit (rhs_high) == 0)
+    --rhs_high;
+
+  if (lhs_high >= 0 && rhs_high >= 0)
+    {
+      const int lhs_shift = rhs.scale_;
+      const int rhs_shift = this->scale_ + MAX_DIGITS;
+      const int lhs_top = lhs_high + lhs_shift;
+      const int rhs_top = rhs_high + rhs_shift;
+      bool overflow = lhs_top > rhs_top;
+      if (lhs_top == rhs_top)
+        {
+          overflow = true;
+          for (int pos = lhs_top; pos >= 0; --pos)
+            {
+              const int lhs_index = pos - lhs_shift;
+              const int rhs_index = pos - rhs_shift;
+              const Octet lhs_digit = lhs_index >= 0 && lhs_index <= lhs_high
+                ? this->digit (lhs_index) : 0;
+              const Octet rhs_digit = rhs_index >= 0 && rhs_index <= rhs_high
+                ? rhs.digit (rhs_index) : 0;
+              if (lhs_digit != rhs_digit)
+                {
+                  overflow = lhs_digit > rhs_digit;
+                  break;
+                }
+            }
+        }
+      if (overflow)
+        throw std::overflow_error ("ACE_CDR::Fixed division exceeds 31 integer digits");
+    }
+
   if (rhs.scale_ && rhs.scale_ <= this->scale_)
     this->scale_ -= rhs.scale_;
   else if (rhs.scale_)
