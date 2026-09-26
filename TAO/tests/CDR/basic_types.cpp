@@ -22,7 +22,7 @@
 static int
 test_std_string_bounds ()
 {
-  const std::string value (5, 'x');
+  std::string const value (5, 'x');
   TAO_OutputCDR output;
   if (!(output << ACE_OutputCDR::from_std_string (value, 5)))
     ACE_ERROR_RETURN ((LM_ERROR, "Bounded std::string insertion failed\n"), 1);
@@ -32,12 +32,12 @@ test_std_string_bounds ()
       output << ACE_OutputCDR::from_std_string (value, 4);
       ACE_ERROR_RETURN ((LM_ERROR, "Oversized std::string was accepted\n"), 1);
     }
-  catch (const CORBA::BAD_PARAM&)
+  catch (CORBA::BAD_PARAM const&)
     {
     }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
-  const std::wstring wide (5, L'x');
+  std::wstring const wide (5, L'x');
   if (!(output << ACE_OutputCDR::from_std_wstring (wide, 5)))
     ACE_ERROR_RETURN ((LM_ERROR, "Bounded std::wstring insertion failed\n"), 1);
   try
@@ -45,12 +45,12 @@ test_std_string_bounds ()
       output << ACE_OutputCDR::from_std_wstring (wide, 4);
       ACE_ERROR_RETURN ((LM_ERROR, "Oversized std::wstring was accepted\n"), 1);
     }
-  catch (const CORBA::BAD_PARAM&)
+  catch (CORBA::BAD_PARAM const&)
     {
     }
 #endif
 
-  const std::size_t max_length = (std::numeric_limits<ACE_CDR::ULong>::max) ();
+  std::size_t const max_length = (std::numeric_limits<ACE_CDR::ULong>::max) ();
   if (!TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length - 1, 0) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length, 0) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 4) ||
