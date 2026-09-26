@@ -36,7 +36,7 @@ namespace
 #define EXPECT(STR, OBJ)                                                \
 {                                                                       \
   char buffer[Fixed::MAX_STRING_SIZE];                                  \
-  (OBJ).to_string (buffer, sizeof buffer);                                \
+  OBJ.to_string (buffer, sizeof buffer);                                \
   if (ACE_OS::strcmp (STR, buffer)) {                                   \
     failed = true;                                                      \
     ACE_ERROR ((LM_ERROR, "FAILED conversion to string at line %l\n")); \
@@ -227,6 +227,11 @@ int run_main (int, ACE_TCHAR *[])
 
   Fixed f30 = Fixed::from_string("-9999752.0000") / Fixed::from_string("-4999876.00");
   EXPECT ("2", f30);
+
+  // A carry can resolve in a higher left-operand digit even at 31 digits.
+  EXPECT ("1234567890123456789012345679000",
+          Fixed::from_string ("1234567890123456789012345678999")
+          + Fixed::from_integer (LongLong (1)));
 
   const Fixed max_integer = Fixed::from_string ("9999999999999999999999999999999");
   bool overflow = false;
