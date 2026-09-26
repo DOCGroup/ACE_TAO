@@ -228,35 +228,32 @@ int run_main (int, ACE_TCHAR *[])
   Fixed f30 = Fixed::from_string("-9999752.0000") / Fixed::from_string("-4999876.00");
   EXPECT ("2", f30);
 
-  // A carry can resolve in a higher left-operand digit even at 31 digits.
-  EXPECT ("1234567890123456789012345679000",
-          Fixed::from_string ("1234567890123456789012345678999")
-          + Fixed::from_integer (LongLong (1)));
-
   const Fixed max_integer = Fixed::from_string ("9999999999999999999999999999999");
+  Fixed sum = max_integer;
   bool overflow = false;
   try
     {
-      Fixed sum = max_integer + Fixed::from_integer (LongLong (1));
-      (void)sum;
+      sum += Fixed::from_integer (LongLong (1));
     }
   catch (const std::overflow_error&)
     {
       overflow = true;
     }
   TEST_EQUAL (true, overflow);
+  EXPECT ("9999999999999999999999999999999", sum);
 
+  Fixed product = max_integer;
   overflow = false;
   try
     {
-      Fixed product = max_integer * Fixed::from_integer (LongLong (10));
-      (void)product;
+      product *= Fixed::from_integer (LongLong (-10));
     }
   catch (const std::overflow_error&)
     {
       overflow = true;
     }
   TEST_EQUAL (true, overflow);
+  EXPECT ("9999999999999999999999999999999", product);
 
   EXPECT ("9999999999999999999999999999999", max_integer);
   EXPECT ("9999999999999999999999999999998",

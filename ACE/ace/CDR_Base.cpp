@@ -1125,21 +1125,25 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
 {
-  if (!this->sign () && rhs.sign ())
-    return *this -= -rhs;
-
-  if (this->sign () && !rhs.sign ())
+  Fixed result = *this;
+  if (!result.sign () && rhs.sign ())
     {
-      Fixed negated = -*this;
+      result -= -rhs;
+      return *this = result;
+    }
+
+  if (result.sign () && !rhs.sign ())
+    {
+      Fixed negated = -result;
       negated -= rhs;
       return *this = -negated;
     }
 
-  ConstIterator rhs_iter = this->pre_add (rhs);
+  ConstIterator rhs_iter = result.pre_add (rhs);
 
-  Iterator lhs_iter = this->begin ();
-  if (this->scale_ > rhs.scale_)
-    lhs_iter += this->scale_ - rhs.scale_;
+  Iterator lhs_iter = result.begin ();
+  if (result.scale_ > rhs.scale_)
+    lhs_iter += result.scale_ - rhs.scale_;
 
   bool carry = false;
   for (; rhs_iter != rhs.end (); ++lhs_iter, ++rhs_iter)
@@ -1151,7 +1155,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
 
   // The right operand may end before the left; carry through its remaining
   // digits before deciding whether an additional digit is needed.
-  for (; carry && lhs_iter != this->end (); ++lhs_iter)
+  for (; carry && lhs_iter != result.end (); ++lhs_iter)
     {
       const Octet digit = *lhs_iter + 1;
       carry = digit > 9;
@@ -1160,22 +1164,22 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
 
   if (carry)
     {
-      if (this->digits_ < MAX_DIGITS)
+      if (result.digits_ < MAX_DIGITS)
         {
           *lhs_iter = 1;
-          ++this->digits_;
+          ++result.digits_;
         }
-      else if (this->scale_)
+      else if (result.scale_)
         {
-          this->digit (0, 0);
-          this->normalize (this->scale_ - 1);
-          this->digit (MAX_DIGITS - 1, 1);
+          result.digit (0, 0);
+          result.normalize (result.scale_ - 1);
+          result.digit (MAX_DIGITS - 1, 1);
         }
       else
         throw std::overflow_error ("ACE_CDR::Fixed addition exceeds 31 integer digits");
     }
 
-  return *this;
+  return *this = result;
 }
 
 int ACE_CDR::Fixed::lshift (int digits)
@@ -1265,52 +1269,53 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
 {
-  if (!this->sign () && rhs.sign ())
-    this->value_[15] = (this->value_[15] & 0xf0) | NEGATIVE;
-  else if (this->sign () && rhs.sign ())
-    this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
+  Fixed result = *this;
+  if (!result.sign () && rhs.sign ())
+    result.value_[15] = (result.value_[15] & 0xf0) | NEGATIVE;
+  else if (result.sign () && rhs.sign ())
+    result.value_[15] = (result.value_[15] & 0xf0) | POSITIVE;
 
-  this->ltrim ();
+  result.ltrim ();
   Fixed right = rhs;
   right.ltrim ();
 
   Octet temp[MAX_DIGITS * 2];
   int carry = 0;
 
-  for (int col = 0; col < this->digits_ + right.digits_; ++col)
+  for (int col = 0; col < result.digits_ + right.digits_; ++col)
     {
-      for (int row = (std::max) (0, col - this->digits_ + 1);
+      for (int row = (std::max) (0, col - result.digits_ + 1);
            row < (std::min) (col + 1, int (right.digits_)); ++row)
-        carry += this->digit (col - row) * right.digit (row);
+        carry += result.digit (col - row) * right.digit (row);
       temp[col] = carry % 10;
       carry /= 10;
     }
 
   // The 62-digit temporary is exact.  Check its significant integer
   // digits before reducing it to the 31-digit stored representation.
-  int significant = this->digits_ + right.digits_;
+  int significant = result.digits_ + right.digits_;
   while (significant > 1 && temp[significant - 1] == 0)
     --significant;
-  if (significant - this->scale_ - right.scale_ > MAX_DIGITS)
+  if (significant - result.scale_ - right.scale_ > MAX_DIGITS)
     throw std::overflow_error ("ACE_CDR::Fixed multiplication exceeds 31 integer digits");
 
-  this->digits_ += right.digits_;
-  this->scale_ += right.scale_;
+  result.digits_ += right.digits_;
+  result.scale_ += right.scale_;
   int digit_offset = 0;
 
-  if (this->digits_ > MAX_DIGITS)
+  if (result.digits_ > MAX_DIGITS)
     {
-      digit_offset = this->digits_ - MAX_DIGITS;
-      this->digits_ = MAX_DIGITS;
-      if (this->scale_ > digit_offset)
-        this->scale_ -= static_cast<Octet> (digit_offset);
+      digit_offset = result.digits_ - MAX_DIGITS;
+      result.digits_ = MAX_DIGITS;
+      if (result.scale_ > digit_offset)
+        result.scale_ -= static_cast<Octet> (digit_offset);
     }
 
-  for (int i = 0; i < this->digits_; ++i)
-    this->digit (i, temp[i + digit_offset]);
+  for (int i = 0; i < result.digits_; ++i)
+    result.digit (i, temp[i + digit_offset]);
 
-  this->ltrim ();
-  return *this;
+  result.ltrim ();
+  return *this = result;
 }
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
