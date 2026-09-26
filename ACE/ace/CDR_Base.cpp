@@ -1301,16 +1301,20 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
   if (significant - result.scale_ - right.scale_ > MAX_DIGITS)
     throw std::overflow_error ("ACE_CDR::Fixed multiplication exceeds 31 integer digits");
 
-  result.digits_ += right.digits_;
   result.scale_ += right.scale_;
+  // Leading zeroes in the temporary do not need storage, but fractional
+  // zeroes up to the scale do.
+  result.digits_ = static_cast<Octet> ((std::max) (significant, int (result.scale_)));
   int digit_offset = 0;
 
   if (result.digits_ > MAX_DIGITS)
     {
       digit_offset = result.digits_ - MAX_DIGITS;
       result.digits_ = MAX_DIGITS;
-      if (result.scale_ > digit_offset)
+      if (result.scale_ >= digit_offset)
         result.scale_ -= static_cast<Octet> (digit_offset);
+      else
+        result.scale_ = 0;
     }
 
   for (int i = 0; i < result.digits_; ++i)

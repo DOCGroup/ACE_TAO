@@ -204,6 +204,15 @@ int run_main (int, ACE_TCHAR *[])
     * Fixed::from_string ("876543219087654321.9876543210");// 18.10
         EXPECT ("8765432190108215212037174200.146", f25);  // 28.3
 
+  const Fixed wide_fraction = Fixed::from_string ("123456789012345678901234567890.1");
+  const Fixed fraction_kept = wide_fraction * Fixed::from_string ("1.1");
+  EXPECT ("135802467913580246791358024679.1", fraction_kept);
+  TEST_EQUAL (1, fraction_kept.fixed_scale ());
+
+  const Fixed fraction_dropped = wide_fraction * Fixed::from_string ("10.1");
+  EXPECT ("1246913569024691356902469135690", fraction_dropped);
+  TEST_EQUAL (0, fraction_dropped.fixed_scale ());
+
   //                                 1234567890123456789012345678901
   Fixed f26 = Fixed::from_string ("0.0000000000000000000000000000001")
             * Fixed::from_string ("0.1");
