@@ -19,6 +19,50 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
+static int
+test_std_string_bounds ()
+{
+  std::string const value (5, 'x');
+  TAO_OutputCDR output;
+  if (!(output << ACE_OutputCDR::from_std_string (value, 5)))
+    ACE_ERROR_RETURN ((LM_ERROR, "Bounded std::string insertion failed\n"), 1);
+
+  try
+    {
+      output << ACE_OutputCDR::from_std_string (value, 4);
+      ACE_ERROR_RETURN ((LM_ERROR, "Oversized std::string was accepted\n"), 1);
+    }
+  catch (CORBA::BAD_PARAM const&)
+    {
+    }
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+  std::wstring const wide (5, L'x');
+  if (!(output << ACE_OutputCDR::from_std_wstring (wide, 5)))
+    ACE_ERROR_RETURN ((LM_ERROR, "Bounded std::wstring insertion failed\n"), 1);
+  try
+    {
+      output << ACE_OutputCDR::from_std_wstring (wide, 4);
+      ACE_ERROR_RETURN ((LM_ERROR, "Oversized std::wstring was accepted\n"), 1);
+    }
+  catch (CORBA::BAD_PARAM const&)
+    {
+    }
+#endif
+
+  std::size_t const max_length = (std::numeric_limits<ACE_CDR::ULong>::max) ();
+  if (!TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length - 1, 0) ||
+      TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length, 0) ||
+      TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 4) ||
+      TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 3))
+    ACE_ERROR_RETURN ((LM_ERROR, "Incorrect std::string length validation\n"), 1);
+  if (sizeof (std::size_t) > sizeof (ACE_CDR::ULong) &&
+      TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length + 1, 0))
+    ACE_ERROR_RETURN ((LM_ERROR, "Unrepresentable CDR length accepted\n"), 1);
+
+  return 0;
+}
+
 static int n = 4096;
 static int nloops = 100;
 
@@ -207,6 +251,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      if (test_std_string_bounds () != 0)
+        return 1;
 
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:"));
       int opt;
