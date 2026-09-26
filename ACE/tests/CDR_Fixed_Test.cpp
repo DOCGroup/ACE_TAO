@@ -206,19 +206,19 @@ int run_main (int, ACE_TCHAR *[])
 
   // The product has 32 digits and scale 1: dropping one digit must
   // also reduce the scale to zero.
-  const Fixed scale_boundary =
+  Fixed const scale_boundary =
     Fixed::from_string ("999999999999999999999999999999.9")
     * Fixed::from_integer (LongLong (9));
   EXPECT ("8999999999999999999999999999999", scale_boundary);
   TEST_EQUAL (31, scale_boundary.fixed_digits ());
   TEST_EQUAL (0, scale_boundary.fixed_scale ());
 
-  const Fixed wide_fraction = Fixed::from_string ("123456789012345678901234567890.1");
-  const Fixed fraction_kept = wide_fraction * Fixed::from_string ("1.1");
+  Fixed const wide_fraction = Fixed::from_string ("123456789012345678901234567890.1");
+  Fixed const fraction_kept = wide_fraction * Fixed::from_string ("1.1");
   EXPECT ("135802467913580246791358024679.1", fraction_kept);
   TEST_EQUAL (1, fraction_kept.fixed_scale ());
 
-  const Fixed fraction_dropped = wide_fraction * Fixed::from_string ("10.1");
+  Fixed const fraction_dropped = wide_fraction * Fixed::from_string ("10.1");
   EXPECT ("1246913569024691356902469135690", fraction_dropped);
   TEST_EQUAL (0, fraction_dropped.fixed_scale ());
 
@@ -227,19 +227,19 @@ int run_main (int, ACE_TCHAR *[])
             * Fixed::from_string ("0.1");
   EXPECT (                        "0.0000000000000000000000000000000", f26);
 
-  const Fixed tenth = Fixed::from_string ("0.1");
-  const Fixed division_boundary =
+  Fixed const tenth = Fixed::from_string ("0.1");
+  Fixed const division_boundary =
     Fixed::from_string ("999999999999999999999999999999") / tenth;
   EXPECT ("9999999999999999999999999999990", division_boundary);
 
   Fixed division_overflow = Fixed::from_string ("1000000000000000000000000000000");
-  const Fixed division_before = division_overflow;
+  Fixed const division_before = division_overflow;
   bool division_threw = false;
   try
     {
       division_overflow /= tenth;
     }
-  catch (const std::overflow_error&)
+  catch (std::overflow_error const&)
     {
       division_threw = true;
     }
@@ -249,11 +249,11 @@ int run_main (int, ACE_TCHAR *[])
   division_threw = false;
   try
     {
-      const Fixed quotient =
+      Fixed const quotient =
         Fixed::from_string ("9999999999999999999999999999999") / tenth;
       (void)quotient;
     }
-  catch (const std::overflow_error&)
+  catch (std::overflow_error const&)
     {
       division_threw = true;
     }
@@ -289,14 +289,14 @@ int run_main (int, ACE_TCHAR *[])
   TEST_EQUAL (31, scaled_carry.fixed_digits ());
   TEST_EQUAL (0, scaled_carry.fixed_scale ());
 
-  const Fixed max_integer = Fixed::from_string ("9999999999999999999999999999999");
+  Fixed const max_integer = Fixed::from_string ("9999999999999999999999999999999");
   Fixed sum = max_integer;
   bool overflow = false;
   try
     {
       sum += Fixed::from_integer (LongLong (1));
     }
-  catch (const std::overflow_error&)
+  catch (std::overflow_error const&)
     {
       overflow = true;
     }
@@ -309,7 +309,7 @@ int run_main (int, ACE_TCHAR *[])
     {
       product *= Fixed::from_integer (LongLong (-10));
     }
-  catch (const std::overflow_error&)
+  catch (std::overflow_error const&)
     {
       overflow = true;
     }

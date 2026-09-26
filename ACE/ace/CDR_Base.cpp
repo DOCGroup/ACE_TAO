@@ -1157,7 +1157,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
   // digits before deciding whether an additional digit is needed.
   for (; carry && lhs_iter != result.end (); ++lhs_iter)
     {
-      const Octet digit = *lhs_iter + 1;
+      Octet const digit = *lhs_iter + 1;
       carry = digit > 9;
       *lhs_iter = digit - (carry ? 10 : 0);
     }
@@ -1340,21 +1340,21 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
 
   if (lhs_high >= 0 && rhs_high >= 0)
     {
-      const int lhs_shift = rhs.scale_;
-      const int rhs_shift = this->scale_ + MAX_DIGITS;
-      const int lhs_top = lhs_high + lhs_shift;
-      const int rhs_top = rhs_high + rhs_shift;
+      int const lhs_shift = rhs.scale_;
+      int const rhs_shift = this->scale_ + MAX_DIGITS;
+      int const lhs_top = lhs_high + lhs_shift;
+      int const rhs_top = rhs_high + rhs_shift;
       bool overflow = lhs_top > rhs_top;
       if (lhs_top == rhs_top)
         {
           overflow = true;
           for (int pos = lhs_top; pos >= 0; --pos)
             {
-              const int lhs_index = pos - lhs_shift;
-              const int rhs_index = pos - rhs_shift;
-              const Octet lhs_digit = lhs_index >= 0 && lhs_index <= lhs_high
+              int const lhs_index = pos - lhs_shift;
+              int const rhs_index = pos - rhs_shift;
+              Octet const lhs_digit = lhs_index >= 0 && lhs_index <= lhs_high
                 ? this->digit (lhs_index) : 0;
-              const Octet rhs_digit = rhs_index >= 0 && rhs_index <= rhs_high
+              Octet const rhs_digit = rhs_index >= 0 && rhs_index <= rhs_high
                 ? rhs.digit (rhs_index) : 0;
               if (lhs_digit != rhs_digit)
                 {
