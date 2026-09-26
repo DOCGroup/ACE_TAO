@@ -1149,6 +1149,15 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
       *lhs_iter = digit - (carry ? 10 : 0);
     }
 
+  // The right operand may end before the left; carry through its remaining
+  // digits before deciding whether an additional digit is needed.
+  for (; carry && lhs_iter != this->end (); ++lhs_iter)
+    {
+      const Octet digit = *lhs_iter + 1;
+      carry = digit > 9;
+      *lhs_iter = digit - (carry ? 10 : 0);
+    }
+
   if (carry)
     {
       if (this->digits_ < MAX_DIGITS)
