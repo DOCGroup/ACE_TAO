@@ -36,7 +36,7 @@ namespace
 #define EXPECT(STR, OBJ)                                                \
 {                                                                       \
   char buffer[Fixed::MAX_STRING_SIZE];                                  \
-  OBJ.to_string (buffer, sizeof buffer);                                \
+  (OBJ).to_string (buffer, sizeof buffer);                                \
   if (ACE_OS::strcmp (STR, buffer)) {                                   \
     failed = true;                                                      \
     ACE_ERROR ((LM_ERROR, "FAILED conversion to string at line %l\n")); \
