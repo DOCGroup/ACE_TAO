@@ -204,6 +204,15 @@ int run_main (int, ACE_TCHAR *[])
     * Fixed::from_string ("876543219087654321.9876543210");// 18.10
         EXPECT ("8765432190108215212037174200.146", f25);  // 28.3
 
+  // The product has 32 digits and scale 1: dropping one digit must
+  // also reduce the scale to zero.
+  const Fixed scale_boundary =
+    Fixed::from_string ("999999999999999999999999999999.9")
+    * Fixed::from_integer (LongLong (9));
+  EXPECT ("8999999999999999999999999999999", scale_boundary);
+  TEST_EQUAL (31, scale_boundary.fixed_digits ());
+  TEST_EQUAL (0, scale_boundary.fixed_scale ());
+
   const Fixed wide_fraction = Fixed::from_string ("123456789012345678901234567890.1");
   const Fixed fraction_kept = wide_fraction * Fixed::from_string ("1.1");
   EXPECT ("135802467913580246791358024679.1", fraction_kept);
