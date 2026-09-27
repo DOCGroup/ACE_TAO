@@ -73,11 +73,11 @@ namespace CORBA
   class ValueBase;
 }
 
-/// Check the representable CDR length before narrowing or applying an IDL bound.
+/// Check the IDL bound and representable CDR length before narrowing.
 inline bool tao_valid_std_string_length (std::size_t length, ACE_CDR::ULong bound)
 {
-  return length < (std::numeric_limits<ACE_CDR::ULong>::max) () &&
-    (bound == 0 || length <= bound);
+  return (bound == 0 || length <= bound) &&
+    length < (std::numeric_limits<ACE_CDR::ULong>::max) ();
 }
 
 /**
