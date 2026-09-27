@@ -80,6 +80,14 @@ inline bool tao_valid_std_string_length (std::size_t length, ACE_CDR::ULong boun
     length < (std::numeric_limits<ACE_CDR::ULong>::max) ();
 }
 
+/// Check the byte length used for a GIOP 1.2 wide string.
+inline bool tao_valid_giop12_wstring_length (std::size_t length,
+                                               std::size_t wchar_maxbytes)
+{
+  return wchar_maxbytes == 0 ||
+    length <= (std::numeric_limits<ACE_CDR::ULong>::max) () / wchar_maxbytes;
+}
+
 /**
  * @class TAO_OutputCDR
  *
