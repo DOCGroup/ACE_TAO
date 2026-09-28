@@ -66,15 +66,9 @@ class ACE_Svc_Conf_Param;
 class ACE_Export ACE_Service_Gestalt
 {
 public:
-  enum
-  {
-    MAX_SERVICES = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
-  };
+  static constexpr int MAX_SERVICES = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE;
 
-  enum
-  {
-    DEFAULT_SIZE = ACE_DEFAULT_SERVICE_GESTALT_SIZE
-  };
+  static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SERVICE_GESTALT_SIZE;
 
   /// Constructor either associates the instance with the process-wide
   /// singleton instance of ACE_Service_Repository, or creates and

@@ -646,16 +646,13 @@ public:
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
 
-  enum
-  {
-    /// Default size of the WFMO_Reactor's handle table.
-    /**
-     * Two slots will be added to the @a size parameter in the
-     * constructor and open methods which will store handles used for
-     * internal management purposes.
-     */
-    DEFAULT_SIZE = MAXIMUM_WAIT_OBJECTS - 2
-  };
+  /// Default size of the WFMO_Reactor's handle table.
+  /**
+   * Two slots will be added to the @a size parameter in the
+   * constructor and open methods which will store handles used for
+   * internal management purposes.
+   */
+  static constexpr int DEFAULT_SIZE = MAXIMUM_WAIT_OBJECTS - 2;
 
   /// Initialize ACE_WFMO_Reactor with the default size.
   ACE_WFMO_Reactor (ACE_Sig_Handler * = nullptr,

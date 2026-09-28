@@ -196,16 +196,13 @@ protected:
                                   int mapit);
 
 public:
-  enum
-  {
-    /// For this stupid implementation, use an array.  Someday, use a
-    /// balanced search tree, or real hash table.
-    ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE = 512,
+  /// For this stupid implementation, use an array.  Someday, use a
+  /// balanced search tree, or real hash table.
+  static constexpr int ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE = 512;
 
-    /// This determines the highwater mark in megabytes for the cache.
-    /// This will be ignored for now.
-    ACE_DEFAULT_VIRTUAL_FILESYSTEM_CACHE_SIZE = 20
-  };
+  /// This determines the highwater mark in megabytes for the cache.
+  /// This will be ignored for now.
+  static constexpr int ACE_DEFAULT_VIRTUAL_FILESYSTEM_CACHE_SIZE = 20;
 
 protected:
   /// Prevent it from being called.

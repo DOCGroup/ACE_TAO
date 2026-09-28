@@ -51,10 +51,7 @@ class ACE_Export ACE_Service_Repository
 public:
   friend class ACE_Service_Repository_Iterator;
 
-  enum
-  {
-    DEFAULT_SIZE = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
-  };
+  static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE;
 
   /// Initialize the repository.
   ACE_Service_Repository (size_t size = DEFAULT_SIZE);

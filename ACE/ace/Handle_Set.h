@@ -57,10 +57,7 @@ class ACE_Export ACE_Handle_Set
 public:
   friend class ACE_Handle_Set_Iterator;
 
-  enum
-  {
-    MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE
-  };
+  static constexpr int MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE;
 
   /// Constructor, initializes the bitmask to all 0s.
   ACE_Handle_Set ();
@@ -147,14 +144,11 @@ private:
   /// Bitmask.
   fd_set mask_;
 
-  enum
-  {
-    WORDSIZE = NFDBITS,
+  static constexpr int WORDSIZE = NFDBITS;
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
-    NUM_WORDS = howmany (MAXSIZE, NFDBITS),
+  static constexpr int NUM_WORDS = howmany (MAXSIZE, NFDBITS);
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
-    NBITS = 256
-  };
+  static constexpr int NBITS = 256;
 
   /// Counts the number of bits enabled in N.  Uses a table lookup to
   /// speed up the count.

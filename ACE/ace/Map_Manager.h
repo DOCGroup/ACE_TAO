@@ -421,14 +421,11 @@ protected:
   /// Occupied list.
   ACE_Map_Entry<EXT_ID, INT_ID> occupied_list_;
 
-  enum
-  {
-    /// Grow map exponentially up to 64K
-    MAX_EXPONENTIAL = 64 * 1024,
+  /// Grow map exponentially up to 64K
+  static constexpr int MAX_EXPONENTIAL = 64 * 1024;
 
-    /// Afterwards grow in chunks of 32K
-    LINEAR_INCREASE = 32 * 1024
-  };
+  /// Afterwards grow in chunks of 32K
+  static constexpr int LINEAR_INCREASE = 32 * 1024;
 
 private:
   // = Disallow these operations.

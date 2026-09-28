@@ -59,7 +59,7 @@ public:
   /// This wraps the rpc_rgy_get_max_bytes function.
   static ACE_CDR::Short get_max_bytes (ACE_CDR::ULong codeset_id);
 
-  enum {max_charsets_ = 5};
+  static constexpr int max_charsets_ = 5;
 protected:
   using registry_entry = struct {
     const char *     desc_;
