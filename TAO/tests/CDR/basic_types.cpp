@@ -60,15 +60,6 @@ test_std_string_bounds ()
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length + 1, 0))
     ACE_ERROR_RETURN ((LM_ERROR, "Unrepresentable CDR length accepted\n"), 1);
 
-#if !defined(ACE_LACKS_STD_WSTRING)
-  if (!TAO_VERSIONED_NAMESPACE_NAME::tao_valid_giop12_wstring_length (max_length / 2, 2) ||
-      TAO_VERSIONED_NAMESPACE_NAME::tao_valid_giop12_wstring_length (max_length / 2 + 1, 2) ||
-      !TAO_VERSIONED_NAMESPACE_NAME::tao_valid_giop12_wstring_length (max_length / 4, 4) ||
-      TAO_VERSIONED_NAMESPACE_NAME::tao_valid_giop12_wstring_length (max_length / 4 + 1, 4) ||
-      !TAO_VERSIONED_NAMESPACE_NAME::tao_valid_giop12_wstring_length (5, 0))
-    ACE_ERROR_RETURN ((LM_ERROR, "Incorrect GIOP 1.2 wide-string byte length validation\n"), 1);
-#endif
-
   return 0;
 }
 

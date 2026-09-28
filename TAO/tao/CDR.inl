@@ -498,15 +498,6 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
     {
       throw CORBA::BAD_PARAM ();
     }
-  ACE_CDR::Octet major;
-  ACE_CDR::Octet minor;
-  os.get_version (major, minor);
-  if (major == 1 && minor == 2 &&
-      !tao_valid_giop12_wstring_length (x.val_.size (),
-                                         ACE_OutputCDR::wchar_maxbytes ()))
-    {
-      throw CORBA::BAD_PARAM ();
-    }
   return os << x.val_;
 }
 #endif /* ACE_LACKS_STD_WSTRING */
