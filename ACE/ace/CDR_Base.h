@@ -311,11 +311,8 @@ public:
        class ACE_Export Fixed
        {
        public:
-         enum
-         {
-           MAX_DIGITS = 31,
-           MAX_STRING_SIZE = 4 + MAX_DIGITS, // includes -, 0, ., terminator
-         };
+         static constexpr int MAX_DIGITS = 31;
+         static constexpr int MAX_STRING_SIZE = 4 + MAX_DIGITS; // includes -, 0, ., terminator
 
          static const Octet POSITIVE = 0xc;
          static const Octet NEGATIVE = 0xd;

@@ -1,6 +1,7 @@
 #include "test_config.h"
 #include "ace/CDR_Base.h"
 #include "ace/OS_NS_string.h"
+#include <stdexcept>
 
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
 #include <fstream>
@@ -35,7 +36,7 @@ namespace
 #define EXPECT(STR, OBJ)                                                \
 {                                                                       \
   char buffer[Fixed::MAX_STRING_SIZE];                                  \
-  OBJ.to_string (buffer, sizeof buffer);                                \
+  (OBJ).to_string (buffer, sizeof buffer);                                \
   if (ACE_OS::strcmp (STR, buffer)) {                                   \
     failed = true;                                                      \
     ACE_ERROR ((LM_ERROR, "FAILED conversion to string at line %l\n")); \
@@ -203,10 +204,60 @@ int run_main (int, ACE_TCHAR *[])
     * Fixed::from_string ("876543219087654321.9876543210");// 18.10
         EXPECT ("8765432190108215212037174200.146", f25);  // 28.3
 
+  // The product has 32 digits and scale 1: dropping one digit must
+  // also reduce the scale to zero.
+  Fixed const scale_boundary =
+    Fixed::from_string ("999999999999999999999999999999.9")
+    * Fixed::from_integer (LongLong (9));
+  EXPECT ("8999999999999999999999999999999", scale_boundary);
+  TEST_EQUAL (31, scale_boundary.fixed_digits ());
+  TEST_EQUAL (0, scale_boundary.fixed_scale ());
+
+  Fixed const wide_fraction = Fixed::from_string ("123456789012345678901234567890.1");
+  Fixed const fraction_kept = wide_fraction * Fixed::from_string ("1.1");
+  EXPECT ("135802467913580246791358024679.1", fraction_kept);
+  TEST_EQUAL (1, fraction_kept.fixed_scale ());
+
+  Fixed const fraction_dropped = wide_fraction * Fixed::from_string ("10.1");
+  EXPECT ("1246913569024691356902469135690", fraction_dropped);
+  TEST_EQUAL (0, fraction_dropped.fixed_scale ());
+
   //                                 1234567890123456789012345678901
   Fixed f26 = Fixed::from_string ("0.0000000000000000000000000000001")
             * Fixed::from_string ("0.1");
   EXPECT (                        "0.0000000000000000000000000000000", f26);
+
+  Fixed const tenth = Fixed::from_string ("0.1");
+  Fixed const division_boundary =
+    Fixed::from_string ("999999999999999999999999999999") / tenth;
+  EXPECT ("9999999999999999999999999999990", division_boundary);
+
+  Fixed division_overflow = Fixed::from_string ("1000000000000000000000000000000");
+  Fixed const division_before = division_overflow;
+  bool division_threw = false;
+  try
+    {
+      division_overflow /= tenth;
+    }
+  catch (std::overflow_error const&)
+    {
+      division_threw = true;
+    }
+  TEST_EQUAL (true, division_threw);
+  TEST_EQUAL (division_before, division_overflow);
+
+  division_threw = false;
+  try
+    {
+      Fixed const quotient =
+        Fixed::from_string ("9999999999999999999999999999999") / tenth;
+      (void)quotient;
+    }
+  catch (std::overflow_error const&)
+    {
+      division_threw = true;
+    }
+  TEST_EQUAL (true, division_threw);
 
   Fixed f27 = Fixed::from_string ("817459124");
   f27 /= Fixed::from_string ("0.001");
@@ -226,6 +277,48 @@ int run_main (int, ACE_TCHAR *[])
 
   Fixed f30 = Fixed::from_string("-9999752.0000") / Fixed::from_string("-4999876.00");
   EXPECT ("2", f30);
+
+  // A carry can resolve in a higher left-operand digit even at 31 digits.
+  EXPECT ("1234567890123456789012345679000",
+          Fixed::from_string ("1234567890123456789012345678999")
+          + Fixed::from_integer (LongLong (1)));
+
+  Fixed scaled_carry = Fixed::from_string ("999999999999999999999999999999.9");
+  scaled_carry += Fixed::from_string ("0.1");
+  EXPECT ("1000000000000000000000000000000", scaled_carry);
+  TEST_EQUAL (31, scaled_carry.fixed_digits ());
+  TEST_EQUAL (0, scaled_carry.fixed_scale ());
+
+  Fixed const max_integer = Fixed::from_string ("9999999999999999999999999999999");
+  Fixed sum = max_integer;
+  bool overflow = false;
+  try
+    {
+      sum += Fixed::from_integer (LongLong (1));
+    }
+  catch (std::overflow_error const&)
+    {
+      overflow = true;
+    }
+  TEST_EQUAL (true, overflow);
+  EXPECT ("9999999999999999999999999999999", sum);
+
+  Fixed product = max_integer;
+  overflow = false;
+  try
+    {
+      product *= Fixed::from_integer (LongLong (-10));
+    }
+  catch (std::overflow_error const&)
+    {
+      overflow = true;
+    }
+  TEST_EQUAL (true, overflow);
+  EXPECT ("9999999999999999999999999999999", product);
+
+  EXPECT ("9999999999999999999999999999999", max_integer);
+  EXPECT ("9999999999999999999999999999998",
+          max_integer - Fixed::from_integer (LongLong (1)));
 
   ACE_END_TEST;
   return failed;
