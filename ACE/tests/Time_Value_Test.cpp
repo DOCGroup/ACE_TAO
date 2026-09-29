@@ -214,28 +214,28 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (ACE_Time_Value::max_time.usec () != -1);
 
   // Test performance of normalize()
-  ACE_Time_Value v1(std::numeric_limits<time_t>::max (),
-                    std::numeric_limits<suseconds_t>::max ());
-  ACE_Time_Value v2(std::numeric_limits<time_t>::min (),
-                   std::numeric_limits<suseconds_t>::min ());
-  ACE_Time_Value v3(std::numeric_limits<time_t>::max (),
-                    std::numeric_limits<suseconds_t>::min ());
-  ACE_Time_Value v4(std::numeric_limits<time_t>::min (),
-                    std::numeric_limits<suseconds_t>::max ());
+  ACE_Time_Value v1((std::numeric_limits<time_t>::max) (),
+                    (std::numeric_limits<suseconds_t>::max) ());
+  ACE_Time_Value v2((std::numeric_limits<time_t>::min) (),
+                   (std::numeric_limits<suseconds_t>::min) ());
+  ACE_Time_Value v3((std::numeric_limits<time_t>::max) (),
+                    (std::numeric_limits<suseconds_t>::min) ());
+  ACE_Time_Value v4((std::numeric_limits<time_t>::min) (),
+                    (std::numeric_limits<suseconds_t>::max) ());
 
-  v1.set(std::numeric_limits<time_t>::max (),
-         std::numeric_limits<suseconds_t>::max ());
-  v2.set(std::numeric_limits<time_t>::min (),
-         std::numeric_limits<suseconds_t>::min ());
-  v3.set(std::numeric_limits<time_t>::max (),
-         std::numeric_limits<suseconds_t>::min ());
-  v4.set(std::numeric_limits<time_t>::min (),
-         std::numeric_limits<suseconds_t>::max ());
+  v1.set((std::numeric_limits<time_t>::max) (),
+         (std::numeric_limits<suseconds_t>::max) ());
+  v2.set((std::numeric_limits<time_t>::min) (),
+         (std::numeric_limits<suseconds_t>::min) ());
+  v3.set((std::numeric_limits<time_t>::max) (),
+         (std::numeric_limits<suseconds_t>::min) ());
+  v4.set((std::numeric_limits<time_t>::min) (),
+         (std::numeric_limits<suseconds_t>::max) ());
 
   v1.set(DBL_MAX);
 
   // Arithmetic at the time_t limits must saturate without signed overflow.
-  time_t const max_sec = std::numeric_limits<time_t>::max ();
+  time_t const max_sec = (std::numeric_limits<time_t>::max) ();
   ACE_Time_Value const max_bound (max_sec, ACE_ONE_SECOND_IN_USECS - 1);
   ACE_Time_Value const max_whole_sec (max_sec, 0);
   ACE_Time_Value boundary_identity (max_whole_sec);
@@ -264,12 +264,12 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (half_max * 2.0 == ACE_Time_Value (max_sec - 1, 0));
 
 #if !defined (__QNX__)
-  ACE_Time_Value const min_bound (std::numeric_limits<time_t>::min (),
+  ACE_Time_Value const min_bound ((std::numeric_limits<time_t>::min) (),
                                   -ACE_ONE_SECOND_IN_USECS + 1);
-  ACE_Time_Value sub_from_min (std::numeric_limits<time_t>::min () + 1, 0);
+  ACE_Time_Value sub_from_min ((std::numeric_limits<time_t>::min) () + 1, 0);
   sub_from_min -= ACE_Time_Value (1);
   ACE_TEST_ASSERT (sub_from_min == ACE_Time_Value (
-    std::numeric_limits<time_t>::min (), 0));
+    (std::numeric_limits<time_t>::min) (), 0));
 
   ACE_Time_Value sub_past_min (min_bound);
   sub_past_min -= ACE_Time_Value (0, 1);
