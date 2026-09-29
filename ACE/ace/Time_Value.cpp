@@ -377,7 +377,9 @@ ACE_Time_Value::operator *= (double d)
             ? ACE_OS::floor (usec_total + 0.5)
             : ACE_OS::ceil (usec_total - 0.5));
 
-          this->set (time_sec, time_usec);
+          this->tv_.tv_sec = time_sec;
+          this->tv_.tv_usec = time_usec;
+          this->normalize (true);
         }
     }
   return *this;
