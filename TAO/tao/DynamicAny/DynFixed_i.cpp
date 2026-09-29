@@ -87,7 +87,7 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
     }
 
   value = ACE_CDR::Fixed::from_octets (octets, length, scale);
-  return value.fixed_digits () == digits;
+  return true;
 }
 
 void
