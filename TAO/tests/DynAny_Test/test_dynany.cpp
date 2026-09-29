@@ -83,7 +83,6 @@ Test_DynAny::run_test ()
             {
               ++this->error_count_;
             }
-
           if (fixed->set_value (" 123.450d \t") == 0)
             {
               ++this->error_count_;
@@ -94,7 +93,6 @@ Test_DynAny::run_test ()
               ++this->error_count_;
             }
         }
-
       if (!CORBA::is_nil (fixed.in ()))
         {
           if (fixed->set_value ("12.3456") != 0)
@@ -106,7 +104,6 @@ Test_DynAny::run_test ()
             {
               ++this->error_count_;
             }
-
           bool invalid_literal_rejected = false;
           try
             {
@@ -120,7 +117,6 @@ Test_DynAny::run_test ()
             {
               ++this->error_count_;
             }
-
           bool oversized_value_rejected = false;
           try
             {
@@ -146,7 +142,6 @@ Test_DynAny::run_test ()
             {
               ++this->error_count_;
             }
-
           DynamicAny::DynAny_var fixed_from_any =
             dynany_factory->create_dyn_any (fixed_value_any.in ());
           DynamicAny::DynFixed_var fixed_roundtrip =
@@ -200,7 +195,6 @@ Test_DynAny::run_test ()
                 }
             }
         }
-
       if (!CORBA::is_nil (max_fixed.in ()))
         {
           bool rejected = false;
@@ -322,7 +316,6 @@ Test_DynAny::run_test ()
                 }
             }
         }
-
       for (int malformed = 0; malformed != 2; ++malformed)
         {
           TAO_OutputCDR malformed_output;
@@ -337,7 +330,6 @@ Test_DynAny::run_test ()
               // A three-digit fixed value requires two octets.
               malformed_output.write_octet (0x12);
             }
-
           TAO_InputCDR malformed_input (malformed_output);
           TAO::Unknown_IDL_Type *malformed_impl = nullptr;
           ACE_NEW_THROW_EX (malformed_impl,
@@ -393,7 +385,6 @@ Test_DynAny::run_test ()
             }
           fixed_sequence->destroy ();
         }
-
       {
         ACE_DEBUG ((LM_DEBUG,
                     "\t*=*=*=*= %C =*=*=*=*\n",
