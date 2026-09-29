@@ -68,7 +68,7 @@ private:
   ACE_CDR::Fixed value_;
 
   TAO_DynFixed_i (TAO_DynFixed_i const&) = delete;
-  TAO_DynFixed_i& operator= (const TAO_DynFixed_i&) = delete;
+  TAO_DynFixed_i& operator= (TAO_DynFixed_i const&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
