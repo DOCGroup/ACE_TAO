@@ -9,12 +9,16 @@
 //=============================================================================
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/ShortSeqA.h"
 #include "tao/DynamicAny/DynamicAny.h"
+#include "tao/CDR.h"
 
 #include "test_dynany.h"
 #include "data.h"
 #include "analyzer.h"
+
+#include <cstring>
 
 Test_DynAny::Test_DynAny (CORBA::ORB_var orb, int debug)
   : orb_ (orb),
@@ -59,6 +63,271 @@ Test_DynAny::run_test ()
       DynAnyAnalyzer analyzer (this->orb_.in (),
                                dynany_factory.in (),
                                debug_);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "testing: fixed DynAny creation and value access\n"));
+
+      CORBA::TypeCode_var fixed_tc = this->orb_->create_fixed_tc (10, 3);
+      DynamicAny::DynAny_var fixed_any =
+        dynany_factory->create_dyn_any_from_type_code (fixed_tc.in ());
+      DynamicAny::DynFixed_var fixed =
+        DynamicAny::DynFixed::_narrow (fixed_any.in ());
+      if (CORBA::is_nil (fixed.in ()))
+        {
+          ++this->error_count_;
+        }
+      else
+        {
+          CORBA::String_var default_value = fixed->get_value ();
+          if (std::strcmp (default_value.in (), "0.000") != 0)
+            {
+              ++this->error_count_;
+            }
+
+          if (fixed->set_value (" 123.450d \t") == 0)
+            {
+              ++this->error_count_;
+            }
+          CORBA::String_var fixed_value = fixed->get_value ();
+          if (std::strcmp (fixed_value.in (), "123.450") != 0)
+            {
+              ++this->error_count_;
+            }
+        }
+
+      if (!CORBA::is_nil (fixed.in ()))
+        {
+          if (fixed->set_value ("12.3456") != 0)
+            {
+              ++this->error_count_;
+            }
+          CORBA::String_var truncated_value = fixed->get_value ();
+          if (std::strcmp (truncated_value.in (), "12.345") != 0)
+            {
+              ++this->error_count_;
+            }
+
+          bool invalid_literal_rejected = false;
+          try
+            {
+              fixed->set_value ("not-a-fixed-value");
+            }
+          catch (DynamicAny::DynAny::TypeMismatch const&)
+            {
+              invalid_literal_rejected = true;
+            }
+          if (!invalid_literal_rejected)
+            {
+              ++this->error_count_;
+            }
+
+          bool oversized_value_rejected = false;
+          try
+            {
+              fixed->set_value ("12345678.9999");
+            }
+          catch (DynamicAny::DynAny::InvalidValue const&)
+            {
+              oversized_value_rejected = true;
+            }
+          if (!oversized_value_rejected)
+            {
+              ++this->error_count_;
+            }
+
+          // Restore the value used by the CDR round trip.
+          fixed->set_value ("12.345");
+
+          CORBA::Any_var fixed_value_any = fixed->to_any ();
+          fixed->set_value ("1.000");
+          fixed->from_any (fixed_value_any.in ());
+          CORBA::String_var from_any_value = fixed->get_value ();
+          if (std::strcmp (from_any_value.in (), "12.345") != 0)
+            {
+              ++this->error_count_;
+            }
+
+          DynamicAny::DynAny_var fixed_from_any =
+            dynany_factory->create_dyn_any (fixed_value_any.in ());
+          DynamicAny::DynFixed_var fixed_roundtrip =
+            DynamicAny::DynFixed::_narrow (fixed_from_any.in ());
+          if (CORBA::is_nil (fixed_roundtrip.in ()))
+            {
+              ++this->error_count_;
+            }
+          else
+            {
+              CORBA::String_var roundtrip_value = fixed_roundtrip->get_value ();
+              if (std::strcmp (roundtrip_value.in (), "12.345") != 0 ||
+                  !fixed_from_any->equal (fixed_any.in ()))
+                {
+                  ++this->error_count_;
+                }
+            }
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "testing: fixed maximum precision round trip\n"));
+      CORBA::TypeCode_var max_fixed_tc = this->orb_->create_fixed_tc (31, 0);
+      DynamicAny::DynAny_var max_fixed_any =
+        dynany_factory->create_dyn_any_from_type_code (max_fixed_tc.in ());
+      DynamicAny::DynFixed_var max_fixed =
+        DynamicAny::DynFixed::_narrow (max_fixed_any.in ());
+      char const* max_fixed_text = "9999999999999999999999999999999";
+      if (CORBA::is_nil (max_fixed.in ()) ||
+          max_fixed->set_value (max_fixed_text) == 0)
+        {
+          ++this->error_count_;
+        }
+      else
+        {
+          CORBA::Any_var max_fixed_value = max_fixed->to_any ();
+          DynamicAny::DynAny_var max_fixed_copy =
+            dynany_factory->create_dyn_any (max_fixed_value.in ());
+          DynamicAny::DynFixed_var max_fixed_copy_as_fixed =
+            DynamicAny::DynFixed::_narrow (max_fixed_copy.in ());
+          if (CORBA::is_nil (max_fixed_copy_as_fixed.in ()))
+            {
+              ++this->error_count_;
+            }
+          else
+            {
+              CORBA::String_var max_roundtrip =
+                max_fixed_copy_as_fixed->get_value ();
+              if (std::strcmp (max_roundtrip.in (), max_fixed_text) != 0)
+                {
+                  ++this->error_count_;
+                }
+            }
+        }
+
+      if (!CORBA::is_nil (max_fixed.in ()))
+        {
+          bool rejected = false;
+          try
+            {
+              max_fixed->set_value ("99999999999999999999999999999999");
+            }
+          catch (DynamicAny::DynAny::InvalidValue const&)
+            {
+              rejected = true;
+            }
+          if (!rejected)
+            {
+              ++this->error_count_;
+            }
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "testing: fixed maximum scale round trip\n"));
+      CORBA::TypeCode_var max_scale_tc = this->orb_->create_fixed_tc (31, 31);
+      DynamicAny::DynAny_var max_scale_any =
+        dynany_factory->create_dyn_any_from_type_code (max_scale_tc.in ());
+      DynamicAny::DynFixed_var max_scale =
+        DynamicAny::DynFixed::_narrow (max_scale_any.in ());
+      char const* max_scale_text =
+        "0.1234567890123456789012345678901";
+      if (CORBA::is_nil (max_scale.in ()) ||
+          max_scale->set_value (max_scale_text) == 0)
+        {
+          ++this->error_count_;
+        }
+      else
+        {
+          CORBA::Any_var max_scale_value = max_scale->to_any ();
+          DynamicAny::DynAny_var max_scale_copy =
+            dynany_factory->create_dyn_any (max_scale_value.in ());
+          DynamicAny::DynFixed_var max_scale_copy_as_fixed =
+            DynamicAny::DynFixed::_narrow (max_scale_copy.in ());
+          if (CORBA::is_nil (max_scale_copy_as_fixed.in ()))
+            {
+              ++this->error_count_;
+            }
+          else
+            {
+              CORBA::String_var max_scale_roundtrip =
+                max_scale_copy_as_fixed->get_value ();
+              if (std::strcmp (max_scale_roundtrip.in (), max_scale_text) != 0)
+                {
+                  ++this->error_count_;
+                }
+            }
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "testing: malformed fixed CDR rejection\n"));
+      CORBA::TypeCode_var small_fixed_tc = this->orb_->create_fixed_tc (3, 0);
+      for (int malformed = 0; malformed != 2; ++malformed)
+        {
+          TAO_OutputCDR malformed_output;
+          if (malformed == 0)
+            {
+              // A sign nibble appears before the TypeCode-sized final nibble.
+              malformed_output.write_octet (0x1c);
+              malformed_output.write_octet (0x3c);
+            }
+          else
+            {
+              // A three-digit fixed value requires two octets.
+              malformed_output.write_octet (0x12);
+            }
+
+          TAO_InputCDR malformed_input (malformed_output);
+          TAO::Unknown_IDL_Type *malformed_impl = nullptr;
+          ACE_NEW_THROW_EX (malformed_impl,
+                            TAO::Unknown_IDL_Type (small_fixed_tc.in (),
+                                                   malformed_input),
+                            CORBA::NO_MEMORY ());
+          CORBA::Any malformed_any;
+          malformed_any.replace (malformed_impl);
+
+          bool rejected = false;
+          try
+            {
+              DynamicAny::DynAny_var invalid =
+                dynany_factory->create_dyn_any (malformed_any);
+            }
+          catch (CORBA::MARSHAL const&)
+            {
+              rejected = true;
+            }
+          if (!rejected)
+            {
+              ++this->error_count_;
+            }
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "testing: fixed DynAny as sequence component\n"));
+      CORBA::TypeCode_var fixed_sequence_tc =
+        this->orb_->create_sequence_tc (0, fixed_tc.in ());
+      DynamicAny::DynAny_var fixed_sequence_any =
+        dynany_factory->create_dyn_any_from_type_code (fixed_sequence_tc.in ());
+      DynamicAny::DynSequence_var fixed_sequence =
+        DynamicAny::DynSequence::_narrow (fixed_sequence_any.in ());
+      if (CORBA::is_nil (fixed_sequence.in ()))
+        {
+          ++this->error_count_;
+        }
+      else
+        {
+          fixed_sequence->length (1);
+          fixed_sequence->seek (0);
+          DynamicAny::DynAny_var component =
+            fixed_sequence->current_component ();
+          DynamicAny::DynFixed_var fixed_component =
+            DynamicAny::DynFixed::_narrow (component.in ());
+          if (CORBA::is_nil (fixed_component.in ()))
+            {
+              ++this->error_count_;
+            }
+          else if (fixed_component->set_value ("8.125") == 0)
+            {
+              ++this->error_count_;
+            }
+          fixed_sequence->destroy ();
+        }
+
       {
         ACE_DEBUG ((LM_DEBUG,
                     "\t*=*=*=*= %C =*=*=*=*\n",
