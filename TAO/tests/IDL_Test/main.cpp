@@ -95,6 +95,22 @@ expect_equals (int &error_count, const char *name, Type actual, Type expected)
     }
 }
 
+template <typename Callable>
+void
+expect_bad_param (int &error_count, const char *name, Callable callable)
+{
+  try
+    {
+      callable ();
+      *ACE_DEFAULT_LOG_STREAM
+        << "ERROR: " << name << " didn't throw CORBA::BAD_PARAM\n";
+      ++error_count;
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+}
+
 void
 test_expressions (int &error_count)
 {
@@ -280,6 +296,14 @@ test_union_discriminators (int &error_count)
       ++error_count;
     }
 
+  expect_bad_param (
+    error_count, "foo inactive getter",
+    [&shared_labels] () { shared_labels.foo_iface_member2 (); });
+  foo const &const_shared_labels = shared_labels;
+  expect_bad_param (
+    error_count, "foo inactive const getter",
+    [&const_shared_labels] () { const_shared_labels.foo_iface_member2 (); });
+
   try
     {
       shared_labels._d (0);
@@ -331,6 +355,9 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "foo explicit default member value",
     shared_labels.foo_iface_member (), 10);
+  expect_bad_param (
+    error_count, "foo inactive shared-label getter",
+    [&shared_labels] () { shared_labels.foo_str_member (); });
 
   try
     {
@@ -382,6 +409,13 @@ test_union_discriminators (int &error_count)
   expect_equals<DataType> (
     error_count, "Data implicit default unchanged after BAD_PARAM",
     implicit_default._d (), implicit_default_disc);
+  expect_bad_param (
+    error_count, "Data implicit default long getter",
+    [&implicit_default] () { implicit_default.longData (); });
+  Data const &const_implicit_default = implicit_default;
+  expect_bad_param (
+    error_count, "Data implicit default short getter",
+    [&const_implicit_default] () { const_implicit_default.shortData (); });
 
   Data implicit_default_copy (implicit_default);
   expect_equals<DataType> (
@@ -414,6 +448,9 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "Data active value unchanged after BAD_PARAM",
     implicit_default.longData (), 11);
+  expect_bad_param (
+    error_count, "Data inactive getter",
+    [&implicit_default] () { implicit_default.shortData (); });
 
   FieldValue enum_union;
   enum_union.strValue ("value");
@@ -501,6 +538,9 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Octet> (
     error_count, "TwoBranchesTF value unchanged after BAD_PARAM",
     boolean_union.val1 (), 1);
+  expect_bad_param (
+    error_count, "TwoBranchesTF inactive getter",
+    [&boolean_union] () { boolean_union.val2 (); });
 
   AllBoolUnions::TwoBranchesTD boolean_explicit_default;
   boolean_explicit_default.val2 ('v');
@@ -541,6 +581,22 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Char> (
     error_count, "TwoBranchesTD assignment value",
     boolean_explicit_default_assigned.val2 (), 'v');
+  U87 struct_union;
+  struct_union.b_87_2 (1);
+  expect_bad_param (
+    error_count, "U87 inactive mutable structure getter",
+    [&struct_union] () { struct_union.b_87_1 (); });
+  U87 const &const_struct_union = struct_union;
+  expect_bad_param (
+    error_count, "U87 inactive const structure getter",
+    [&const_struct_union] () { const_struct_union.b_87_1 (); });
+
+  U85 array_union;
+  U42 array_value {};
+  array_union.b_85_2 (array_value);
+  expect_bad_param (
+    error_count, "U85 inactive array getter",
+    [&array_union] () { array_union.b_85_1 (); });
 }
 
 void
