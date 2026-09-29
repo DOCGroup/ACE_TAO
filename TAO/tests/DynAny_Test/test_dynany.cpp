@@ -255,6 +255,41 @@ Test_DynAny::run_test ()
         }
 
       ACE_DEBUG ((LM_DEBUG,
+                  "testing: fixed leading zero fractional round trip\n"));
+      CORBA::TypeCode_var leading_fraction_tc =
+        this->orb_->create_fixed_tc (3, 3);
+      DynamicAny::DynAny_var leading_fraction_any =
+        dynany_factory->create_dyn_any_from_type_code (leading_fraction_tc.in ());
+      DynamicAny::DynFixed_var leading_fraction =
+        DynamicAny::DynFixed::_narrow (leading_fraction_any.in ());
+      if (CORBA::is_nil (leading_fraction.in ()) ||
+          leading_fraction->set_value ("0.012") == 0)
+        {
+          ++this->error_count_;
+        }
+      else
+        {
+          CORBA::Any_var leading_fraction_value = leading_fraction->to_any ();
+          DynamicAny::DynAny_var leading_fraction_copy =
+            dynany_factory->create_dyn_any (leading_fraction_value.in ());
+          DynamicAny::DynFixed_var leading_fraction_copy_as_fixed =
+            DynamicAny::DynFixed::_narrow (leading_fraction_copy.in ());
+          if (CORBA::is_nil (leading_fraction_copy_as_fixed.in ()))
+            {
+              ++this->error_count_;
+            }
+          else
+            {
+              CORBA::String_var leading_fraction_roundtrip =
+                leading_fraction_copy_as_fixed->get_value ();
+              if (std::strcmp (leading_fraction_roundtrip.in (), "0.012") != 0)
+                {
+                  ++this->error_count_;
+                }
+            }
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
                   "testing: malformed fixed CDR rejection\n"));
       CORBA::TypeCode_var small_fixed_tc = this->orb_->create_fixed_tc (3, 0);
       DynamicAny::DynAny_var leading_zero_any =
