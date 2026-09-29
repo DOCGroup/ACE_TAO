@@ -125,6 +125,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       marshal (cdr_out, uac_ed_out);
 
       test::UnionAllCovered_EnumerationDiscriminant uac_ed2_out;
+      uac_ed2_out._default ();
       uac_ed2_out._d (static_cast<test::Enumeration> (10));
       marshal (cdr_out, uac_ed2_out);
 
@@ -149,6 +150,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       marshal (cdr_out, uac_ted_out);
 
       test::UnionAllCovered_TypedefedEnumerationDiscriminant uac_ted2_out;
+      uac_ted2_out._default ();
       uac_ted2_out._d (static_cast<test::Enumeration> (40));
       marshal (cdr_out, uac_ted2_out);
 
