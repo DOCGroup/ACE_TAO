@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN TAO-4.0.8 and TAO-4.0.9
 ====================================================
 
+. Generated union discriminator setters now throw CORBA::BAD_PARAM when a new
+  discriminator would select a different union member. Discriminator values
+  selecting the currently active member remain accepted.
+
 USER VISIBLE CHANGES BETWEEN TAO-4.0.7 and TAO-4.0.8
 ====================================================
 

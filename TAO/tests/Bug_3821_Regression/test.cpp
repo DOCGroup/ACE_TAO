@@ -174,6 +174,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       marshal (cdr_out, uac_bd2_out);
 
       test::UnionWithDefault_BooleanDiscriminant uwd_bd_out;
+      uwd_bd_out.e_true (0);
       uwd_bd_out._d (static_cast<CORBA::Boolean> (7));
       marshal (cdr_out, uwd_bd_out);
 
@@ -182,6 +183,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       marshal (cdr_out, uwid_bd_out);
 
       test::UnionWithImplicitDefault_BooleanDiscriminant uwid_bd2_out;
+      uwid_bd2_out.e_true (0);
       uwid_bd2_out._d (static_cast<CORBA::Boolean> (9));
       marshal (cdr_out, uwid_bd2_out);
 
@@ -222,59 +224,59 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       TAO_InputCDR cdr_in (cdr_out);
 
       test::UnionAllCovered_EnumerationDiscriminant uac_ed_in;
-      uac_ed_in._d (test::Enum1);
+      uac_ed_in.e_enum1 (0);
       demarshal (cdr_in, uac_ed_in, test::Enum1, uac_ed_out._d ());
 
       test::UnionAllCovered_EnumerationDiscriminant uac_ed2_in;
-      uac_ed2_in._d (test::Enum1);
+      uac_ed2_in.e_enum1 (0);
       demarshal (cdr_in, uac_ed2_in, test::Enum1, uac_ed2_out._d ());
 
       test::UnionWithDefault_EnumerationDiscriminant uwd_ed_in;
-      uwd_ed_in._d (test::Enum1);
+      uwd_ed_in.e_enum1 (0);
       demarshal (cdr_in, uwd_ed_in, test::Enum1, uwd_ed_out._d ());
 
       test::UnionWithImplicitDefault_EnumerationDiscriminant uwid_ed_in;
-      uwid_ed_in._d (test::Enum1);
+      uwid_ed_in.e_enum1 (0);
       demarshal (cdr_in, uwid_ed_in, test::Enum1, uwid_ed_out._d ());
 
       test::UnionWithImplicitDefault_EnumerationDiscriminant uwid_ed2_in;
-      uwid_ed2_in._d (test::Enum1);
+      uwid_ed2_in.e_enum1 (0);
       demarshal (cdr_in, uwid_ed2_in, test::Enum1, uwid_ed2_out._d ());
 
       test::UnionAllCovered_TypedefedEnumerationDiscriminant uac_ted_in;
-      uac_ted_in._d (test::Enum1);
+      uac_ted_in.e_enum1 (0);
       demarshal (cdr_in, uac_ted_in, test::Enum1, uac_ted_out._d ());
 
       test::UnionAllCovered_TypedefedEnumerationDiscriminant uac_ted2_in;
-      uac_ted2_in._d (test::Enum1);
+      uac_ted2_in.e_enum1 (0);
       demarshal (cdr_in, uac_ted2_in, test::Enum1, uac_ted2_out._d ());
 
       test::UnionWithDefault_TypedefedEnumerationDiscriminant uwd_ted_in;
-      uwd_ted_in._d (test::Enum1);
+      uwd_ted_in.e_enum1 (0);
       demarshal (cdr_in, uwd_ted_in, test::Enum1, uwd_ted_out._d ());
 
       test::UnionWithImplicitDefault_TypedefedEnumerationDiscriminant uwid_ted_in;
-      uwid_ted_in._d (test::Enum1);
+      uwid_ted_in.e_enum1 (0);
       demarshal (cdr_in, uwid_ted_in, test::Enum1, uwid_ted_out._d ());
 
       test::UnionWithImplicitDefault_TypedefedEnumerationDiscriminant uwid_ted2_in;
-      uwid_ted2_in._d (test::Enum1);
+      uwid_ted2_in.e_enum1 (0);
       demarshal (cdr_in, uwid_ted2_in, test::Enum1, uwid_ted2_out._d ());
 
       test::UnionAllCovered_BooleanDiscriminant uac_bd_in;
-      uac_bd_in._d (false);
+      uac_bd_in.e_false (0);
       demarshal (cdr_in, uac_bd_in, false, uac_bd_out._d ());
 
       test::UnionAllCovered_BooleanDiscriminant uac_bd2_in;
-      uac_bd2_in._d (false);
+      uac_bd2_in.e_false (0);
       demarshal (cdr_in, uac_bd2_in, false, uac_bd2_out._d ());
 
       test::UnionWithDefault_BooleanDiscriminant uwd_bd_in;
-      uwd_bd_in._d (false);
+      uwd_bd_in.e_def (0);
       demarshal (cdr_in, uwd_bd_in, false, uwd_bd_out._d ());
 
       test::UnionWithImplicitDefault_BooleanDiscriminant uwid_bd_in;
-      uwid_bd_in._d (true);
+      uwid_bd_in.e_true (0);
       demarshal (cdr_in, uwid_bd_in, true, uwid_bd_out._d ());
 
       test::UnionWithImplicitDefault_BooleanDiscriminant uwid_bd2_in;
@@ -290,11 +292,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       demarshal (cdr_in, uac_cd2_in, 'a', uac_cd2_out._d ());
 
       test::UnionWithDefault_CharDiscriminant uwd_cd_in;
-      uwd_cd_in._d ('\1');
+      uwd_cd_in.e_chars (0);
       demarshal (cdr_in, uwd_cd_in, '\1', uwd_cd_out._d ());
 
       test::UnionWithImplicitDefault_CharDiscriminant uwid_cd_in;
-      uwid_cd_in._d ('\1');
+      uwid_cd_in.e_chars (0);
       demarshal (cdr_in, uwid_cd_in, '\1', uwid_cd_out._d ());
 
       test::UnionWithImplicitDefault_CharDiscriminant uwid_cd2_in;
@@ -302,11 +304,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       demarshal (cdr_in, uwid_cd2_in, '\1', uwid_cd2_out._d ());
 
       test::UnionWithDefault_LongDiscriminant uwd_ld_in;
-      uwd_ld_in._d (1);
+      uwd_ld_in.e_case1 (0);
       demarshal (cdr_in, uwd_ld_in, 1, uwd_ld_out._d ());
 
       test::UnionWithImplicitDefault_LongDiscriminant uwid_ld_in;
-      uwid_ld_in._d (1);
+      uwid_ld_in.e_case1 (0);
       demarshal (cdr_in, uwid_ld_in, 1, uwid_ld_out._d ());
 
       test::UnionWithImplicitDefault_LongDiscriminant uwid_ld2_in;
