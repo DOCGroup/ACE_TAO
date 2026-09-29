@@ -246,6 +246,14 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (ACE_Time_Value (0, 1) * 0.5 == ACE_Time_Value (0, 1));
   ACE_TEST_ASSERT (ACE_Time_Value (0, 1) * -0.5 == ACE_Time_Value (0, -1));
 
+  // On 32-bit time_t, rounding can carry into the maximum second.
+  if (sizeof (time_t) == 4 && (std::numeric_limits<time_t>::is_signed))
+    {
+      ACE_Time_Value round_past_max (max_sec - 10, ACE_ONE_SECOND_IN_USECS - 1);
+      round_past_max *= 1.0000000046566133;
+      ACE_TEST_ASSERT (round_past_max == max_bound);
+    }
+
   ACE_Time_Value add_to_max (max_sec - 1, 0);
   add_to_max += ACE_Time_Value (1);
   ACE_TEST_ASSERT (add_to_max == max_whole_sec);
