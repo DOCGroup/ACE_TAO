@@ -257,6 +257,37 @@ Test_DynAny::run_test ()
       ACE_DEBUG ((LM_DEBUG,
                   "testing: malformed fixed CDR rejection\n"));
       CORBA::TypeCode_var small_fixed_tc = this->orb_->create_fixed_tc (3, 0);
+      DynamicAny::DynAny_var leading_zero_any =
+        dynany_factory->create_dyn_any_from_type_code (small_fixed_tc.in ());
+      DynamicAny::DynFixed_var leading_zero_fixed =
+        DynamicAny::DynFixed::_narrow (leading_zero_any.in ());
+      if (CORBA::is_nil (leading_zero_fixed.in ()) ||
+          leading_zero_fixed->set_value ("12") == 0)
+        {
+          ++this->error_count_;
+        }
+      else
+        {
+          CORBA::Any_var leading_zero_value = leading_zero_fixed->to_any ();
+          DynamicAny::DynAny_var leading_zero_copy =
+            dynany_factory->create_dyn_any (leading_zero_value.in ());
+          DynamicAny::DynFixed_var leading_zero_copy_as_fixed =
+            DynamicAny::DynFixed::_narrow (leading_zero_copy.in ());
+          if (CORBA::is_nil (leading_zero_copy_as_fixed.in ()))
+            {
+              ++this->error_count_;
+            }
+          else
+            {
+              CORBA::String_var leading_zero_roundtrip =
+                leading_zero_copy_as_fixed->get_value ();
+              if (std::strcmp (leading_zero_roundtrip.in (), "12") != 0)
+                {
+                  ++this->error_count_;
+                }
+            }
+        }
+
       for (int malformed = 0; malformed != 2; ++malformed)
         {
           TAO_OutputCDR malformed_output;
