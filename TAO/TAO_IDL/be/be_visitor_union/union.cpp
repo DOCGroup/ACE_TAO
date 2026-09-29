@@ -144,6 +144,29 @@ be_visitor_union::boolean_branch (be_union_branch *b)
 }
 
 int
+be_visitor_union::branch_index (be_union_branch *b)
+{
+  be_union *u = dynamic_cast<be_union*> (b->defined_in ());
+
+  for (unsigned long i = 0; u != nullptr && i < u->nfields (); ++i)
+    {
+      AST_Field **field = nullptr;
+
+      if (u->field (field, i) != 0 || field == nullptr)
+        {
+          return -1;
+        }
+
+      if (*field == b)
+        {
+          return static_cast<int> (i);
+        }
+    }
+
+  return -1;
+}
+
+int
 be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)

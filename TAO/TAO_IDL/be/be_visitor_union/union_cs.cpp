@@ -168,19 +168,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // So we know we are generating the copy constructor.
   this->ctx_->sub_state (TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR);
 
-  const bool boolDisc = node->udisc_type() == AST_Expression::EV_bool;
-
   *os << node->name () << "::" << node->local_name ()
       << " (const ::" << node->name () << " &u)"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "this->disc_ = u.disc_;" << be_nl;
 
-  if (!boolDisc)
-    {
-      *os << "switch (this->disc_)" << be_nl;
-      *os << "{" << be_idt;
-    }
+  *os << "switch (_tao_member_index (this->disc_))" << be_nl
+      << "{" << be_idt;
 
   if (this->visit_scope (node) == -1)
     {
@@ -191,27 +186,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
                         -1);
     }
 
-  // If there is no explicit default case, but there
-  // is an implicit one, and the discriminant is an enum,
-  // we need this to avert warnings in some compilers that
-  // not all case values are included. If there is no
-  // implicit default case, or the discriminator is not
-  // an enum, this does no harm.
-  if (!boolDisc && node->gen_empty_default_label ())
-    {
-      *os << be_nl
-          << "default:" << be_nl
-          << "break;";
-    }
-
-  if (boolDisc)
-    {
-      *os << "}";
-    }
-  else
-    {
-      *os << be_uidt_nl << "}" << be_uidt_nl << "}";
-    }
+  *os << be_nl
+      << "default:" << be_nl
+      << "break;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}";
 
   *os << be_nl_2;
 
@@ -250,12 +229,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Reset and set the discriminant.
   *os << "this->_reset ();" << be_nl;
   *os << "this->disc_ = u.disc_;" << be_nl;
-  // now switch based on the disc value
-  if (!boolDisc)
-    {
-      *os << "switch (this->disc_)" << be_nl;
-      *os << "{" << be_idt;
-    }
+  // Now switch based on the selected member.
+  *os << "switch (_tao_member_index (this->disc_))" << be_nl
+      << "{" << be_idt;
 
   if (this->visit_scope (node) == -1)
     {
@@ -266,23 +242,10 @@ int be_visitor_union_cs::visit_union (be_union *node)
                         -1);
     }
 
-  // If there is no explicit default case, but there
-  // is an implicit one, and the discriminant is an enum,
-  // we need this to avert warnings in some compilers that
-  // not all case values are included. If there is no
-  // implicit default case, or the discriminator is not
-  // an enum, this does no harm.
-  if (!boolDisc && node->gen_empty_default_label ())
-    {
-      *os << be_nl
-          << "default:" << be_nl
-          << "break;";
-    }
-
-  if (!boolDisc)
-    {
-      *os << be_uidt_nl << "}" << be_uidt_nl;
-    }
+  *os << be_nl
+      << "default:" << be_nl
+      << "break;" << be_uidt_nl
+      << "}" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
       << "return *this;" << be_uidt_nl
@@ -332,11 +295,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
     {
       *os << "{" << be_idt;
 
-      if (!boolDisc)
-        {
-          *os << be_nl << "switch (this->disc_)" << be_nl;
-          *os << "{" << be_idt_nl;
-        }
+      *os << be_nl
+          << "switch (_tao_member_index (this->disc_))" << be_nl
+          << "{" << be_idt_nl;
 
       if (this->visit_scope (node) == -1)
         {
@@ -347,23 +308,10 @@ int be_visitor_union_cs::visit_union (be_union *node)
                             -1);
         }
 
-      // If there is no explicit default case, but there
-      // is an implicit one, and the discriminant is an enum,
-      // we need this to avert warnings in some compilers that
-      // not all case values are included. If there is no
-      // implicit default case, or the discriminator is not
-      // an enum, this does no harm.
-      if (!boolDisc && node->gen_empty_default_label ())
-        {
-          *os << be_nl
-              << "default:" << be_nl
-              << "break;";
-        }
-
-      if (!boolDisc)
-        {
-          *os << be_uidt_nl << "}";
-        }
+      *os << be_nl
+          << "default:" << be_nl
+          << "break;" << be_uidt_nl
+          << "}";
 
       *os << be_uidt_nl << "}";
     }

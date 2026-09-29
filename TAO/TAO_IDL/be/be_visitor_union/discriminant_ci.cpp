@@ -19,8 +19,7 @@ namespace
   {
     unsigned long default_member = node->nfields ();
 
-    *os << "auto const _tao_member = [] (decltype(discval) value) -> unsigned long" << be_idt_nl
-        << "{" << be_idt_nl;
+    *os << "{" << be_idt_nl;
 
     if (node->udisc_type () == AST_Expression::EV_bool)
       {
@@ -74,7 +73,7 @@ namespace
 
         *os << "return value ? " << true_member << "UL : "
             << false_member << "UL;" << be_uidt_nl
-            << "};" << be_uidt_nl;
+            << "}";
         return 0;
       }
 
@@ -122,7 +121,7 @@ namespace
     *os << "default:" << be_idt_nl
         << "return " << default_member << "UL;" << be_uidt_nl
         << be_uidt << "}" << be_uidt_nl
-        << be_uidt << "};" << be_uidt_nl;
+        << "}";
 
     return 0;
   }
@@ -139,12 +138,8 @@ namespace
     *os << "if (this->disc_ != discval)" << be_idt_nl
         << "{" << be_idt_nl;
 
-    if (generate_member_selection (os, node) == -1)
-      {
-        return -1;
-      }
-
-    *os << "if (_tao_member (this->disc_) != _tao_member (discval))" << be_idt_nl
+    *os << "if (_tao_member_index (this->disc_) != "
+        << "_tao_member_index (discval))" << be_idt_nl
         << "{" << be_idt_nl
         << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
         << "}" << be_uidt_nl
@@ -228,8 +223,20 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "}" << be_nl_2;
     }
 
+  *os << be_nl_2
+      << "ACE_INLINE" << be_nl
+      << "unsigned long" << be_nl
+      << bu->name () << "::_tao_member_index (" << bt->name ()
+      << " value)" << be_nl;
+
+  if (generate_member_selection (os, bu) == -1)
+    {
+      return -1;
+    }
+
   // the set method
-  *os << "// Accessor to set the discriminant." << be_nl
+  *os << be_nl_2
+      << "// Accessor to set the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::_d (" << bt->name ()
@@ -344,6 +351,17 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
         }
 
       *os << ";" << be_uidt_nl << "}";
+    }
+
+  *os << be_nl_2
+      << "ACE_INLINE" << be_nl
+      << "unsigned long" << be_nl
+      << bu->name () << "::_tao_member_index (::" << bt->name ()
+      << " value)" << be_nl;
+
+  if (generate_member_selection (os, bu) == -1)
+    {
+      return -1;
     }
 
   // The set method.

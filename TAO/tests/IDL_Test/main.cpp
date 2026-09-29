@@ -300,6 +300,30 @@ test_union_discriminators (int &error_count)
       ++error_count;
     }
 
+  foo shared_labels_copy (shared_labels);
+  expect_equals<CORBA::Short> (
+    error_count, "foo shared-label copy discriminator",
+    shared_labels_copy._d (), 4);
+  if (ACE_OS::strcmp (shared_labels_copy.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo shared-label copy has the wrong member value\n"));
+      ++error_count;
+    }
+
+  foo shared_labels_assigned;
+  shared_labels_assigned.foo_iface_member2 (1);
+  shared_labels_assigned = shared_labels;
+  expect_equals<CORBA::Short> (
+    error_count, "foo shared-label assignment discriminator",
+    shared_labels_assigned._d (), 4);
+  if (ACE_OS::strcmp (shared_labels_assigned.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo shared-label assignment has the wrong member value\n"));
+      ++error_count;
+    }
+
   shared_labels.foo_iface_member (10);
   shared_labels._d (10);
   expect_equals<CORBA::Short> (
@@ -325,6 +349,22 @@ test_union_discriminators (int &error_count)
     error_count, "foo explicit default value unchanged after BAD_PARAM",
     shared_labels.foo_iface_member (), 10);
 
+  foo explicit_default_copy (shared_labels);
+  expect_equals<CORBA::Short> (
+    error_count, "foo explicit-default copy discriminator",
+    explicit_default_copy._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit-default copy value",
+    explicit_default_copy.foo_iface_member (), 10);
+
+  shared_labels_assigned = shared_labels;
+  expect_equals<CORBA::Short> (
+    error_count, "foo explicit-default assignment discriminator",
+    shared_labels_assigned._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit-default assignment value",
+    shared_labels_assigned.foo_iface_member (), 10);
+
   Data implicit_default;
   implicit_default._d (static_cast<DataType> (42));
   DataType const implicit_default_disc = implicit_default._d ();
@@ -342,6 +382,18 @@ test_union_discriminators (int &error_count)
   expect_equals<DataType> (
     error_count, "Data implicit default unchanged after BAD_PARAM",
     implicit_default._d (), implicit_default_disc);
+
+  Data implicit_default_copy (implicit_default);
+  expect_equals<DataType> (
+    error_count, "Data implicit-default copy discriminator",
+    implicit_default_copy._d (), implicit_default_disc);
+
+  Data implicit_default_assigned;
+  implicit_default_assigned.longData (1);
+  implicit_default_assigned = implicit_default;
+  expect_equals<DataType> (
+    error_count, "Data implicit-default assignment discriminator",
+    implicit_default_assigned._d (), implicit_default_disc);
 
   implicit_default.longData (11);
   implicit_default._d (dtLong);
@@ -413,6 +465,23 @@ test_union_discriminators (int &error_count)
     error_count, "OneBranchTD value after valid discriminator",
     boolean_default_member.val (), 2);
 
+  AllBoolUnions::OneBranchTD boolean_default_copy (boolean_default_member);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD copy discriminator",
+    boolean_default_copy._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTD copy value",
+    boolean_default_copy.val (), 2);
+
+  AllBoolUnions::OneBranchTD boolean_default_assigned;
+  boolean_default_assigned = boolean_default_member;
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD assignment discriminator",
+    boolean_default_assigned._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTD assignment value",
+    boolean_default_assigned.val (), 2);
+
   AllBoolUnions::TwoBranchesTF boolean_union;
   boolean_union.val1 (1);
 
@@ -453,6 +522,25 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Char> (
     error_count, "TwoBranchesTD value unchanged after BAD_PARAM",
     boolean_explicit_default.val2 (), 'v');
+
+  AllBoolUnions::TwoBranchesTD boolean_explicit_default_copy (
+    boolean_explicit_default);
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTD copy discriminator",
+    boolean_explicit_default_copy._d (), false);
+  expect_equals<CORBA::Char> (
+    error_count, "TwoBranchesTD copy value",
+    boolean_explicit_default_copy.val2 (), 'v');
+
+  AllBoolUnions::TwoBranchesTD boolean_explicit_default_assigned;
+  boolean_explicit_default_assigned.val1 (1);
+  boolean_explicit_default_assigned = boolean_explicit_default;
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTD assignment discriminator",
+    boolean_explicit_default_assigned._d (), false);
+  expect_equals<CORBA::Char> (
+    error_count, "TwoBranchesTD assignment value",
+    boolean_explicit_default_assigned.val2 (), 'v');
 }
 
 void
