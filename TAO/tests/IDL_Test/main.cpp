@@ -273,6 +273,12 @@ test_union_discriminators (int &error_count)
   shared_labels._d (4);
   expect_equals<CORBA::Short> (
     error_count, "foo::_d valid shared label", shared_labels._d (), 4);
+  if (ACE_OS::strcmp (shared_labels.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d changed the shared-label member value\n"));
+      ++error_count;
+    }
 
   try
     {
@@ -287,11 +293,20 @@ test_union_discriminators (int &error_count)
 
   expect_equals<CORBA::Short> (
     error_count, "foo::_d unchanged after BAD_PARAM", shared_labels._d (), 4);
+  if (ACE_OS::strcmp (shared_labels.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d changed the member value after BAD_PARAM\n"));
+      ++error_count;
+    }
 
   shared_labels.foo_iface_member (10);
   shared_labels._d (10);
   expect_equals<CORBA::Short> (
     error_count, "foo::_d valid explicit default", shared_labels._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit default member value",
+    shared_labels.foo_iface_member (), 10);
 
   try
     {
@@ -303,9 +318,16 @@ test_union_discriminators (int &error_count)
   catch (CORBA::BAD_PARAM const &)
     {
     }
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d explicit default unchanged after BAD_PARAM",
+    shared_labels._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit default value unchanged after BAD_PARAM",
+    shared_labels.foo_iface_member (), 10);
 
   Data implicit_default;
   implicit_default._d (static_cast<DataType> (42));
+  DataType const implicit_default_disc = implicit_default._d ();
 
   try
     {
@@ -317,6 +339,9 @@ test_union_discriminators (int &error_count)
   catch (CORBA::BAD_PARAM const &)
     {
     }
+  expect_equals<DataType> (
+    error_count, "Data implicit default unchanged after BAD_PARAM",
+    implicit_default._d (), implicit_default_disc);
 
   implicit_default.longData (11);
   implicit_default._d (dtLong);
@@ -331,6 +356,12 @@ test_union_discriminators (int &error_count)
   catch (CORBA::BAD_PARAM const &)
     {
     }
+  expect_equals<DataType> (
+    error_count, "Data active discriminator unchanged after BAD_PARAM",
+    implicit_default._d (), dtLong);
+  expect_equals<CORBA::Long> (
+    error_count, "Data active value unchanged after BAD_PARAM",
+    implicit_default.longData (), 11);
 
   FieldValue enum_union;
   enum_union.strValue ("value");
@@ -349,6 +380,15 @@ test_union_discriminators (int &error_count)
   catch (CORBA::BAD_PARAM const &)
     {
     }
+  expect_equals<FieldType> (
+    error_count, "FieldValue::_d unchanged after BAD_PARAM",
+    enum_union._d (), FTYPE_VARCHAR);
+  if (ACE_OS::strcmp (enum_union.strValue (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "FieldValue::_d changed the member value after BAD_PARAM\n"));
+      ++error_count;
+    }
 
   AllBoolUnions::OneBranchTF single_boolean_member;
   single_boolean_member.val (1);
@@ -356,6 +396,22 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Boolean> (
     error_count, "OneBranchTF::_d valid shared label",
     single_boolean_member._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTF value after valid discriminator",
+    single_boolean_member.val (), 1);
+
+  AllBoolUnions::OneBranchTD boolean_default_member;
+  boolean_default_member.val (2);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD initial discriminator",
+    boolean_default_member._d (), true);
+  boolean_default_member._d (false);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD::_d valid explicit default",
+    boolean_default_member._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTD value after valid discriminator",
+    boolean_default_member.val (), 2);
 
   AllBoolUnions::TwoBranchesTF boolean_union;
   boolean_union.val1 (1);
@@ -370,6 +426,33 @@ test_union_discriminators (int &error_count)
   catch (CORBA::BAD_PARAM const &)
     {
     }
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTF::_d unchanged after BAD_PARAM",
+    boolean_union._d (), true);
+  expect_equals<CORBA::Octet> (
+    error_count, "TwoBranchesTF value unchanged after BAD_PARAM",
+    boolean_union.val1 (), 1);
+
+  AllBoolUnions::TwoBranchesTD boolean_explicit_default;
+  boolean_explicit_default.val2 ('v');
+
+  try
+    {
+      boolean_explicit_default._d (true);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "TwoBranchesTD::_d changed the active default member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTD::_d unchanged after BAD_PARAM",
+    boolean_explicit_default._d (), false);
+  expect_equals<CORBA::Char> (
+    error_count, "TwoBranchesTD value unchanged after BAD_PARAM",
+    boolean_explicit_default.val2 (), 'v');
 }
 
 void
