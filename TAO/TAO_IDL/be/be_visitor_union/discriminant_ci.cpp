@@ -15,11 +15,12 @@ namespace
 {
   int
   generate_member_selection (TAO_OutStream *os,
-                             be_union *node,
-                             char const *discriminator,
-                             char const *member)
+                             be_union *node)
   {
     unsigned long default_member = node->nfields ();
+
+    *os << "auto const _tao_member = [] (decltype(discval) value) -> unsigned long" << be_idt_nl
+        << "{" << be_idt_nl;
 
     if (node->udisc_type () == AST_Expression::EV_bool)
       {
@@ -71,12 +72,13 @@ namespace
             true_member = default_member;
           }
 
-        *os << member << " = " << discriminator << " ? "
-            << true_member << " : " << false_member << ";" << be_nl;
+        *os << "return value ? " << true_member << "UL : "
+            << false_member << "UL;" << be_uidt_nl
+            << "};" << be_uidt_nl;
         return 0;
       }
 
-    *os << "switch (" << discriminator << ")" << be_idt_nl
+    *os << "switch (value)" << be_idt_nl
         << "{" << be_idt_nl;
 
     for (unsigned long i = 0; i < node->nfields (); ++i)
@@ -113,15 +115,14 @@ namespace
 
         if (generated_label)
           {
-            *os << be_idt << member << " = " << i << ";" << be_nl
-                << "break;" << be_uidt_nl;
+            *os << be_idt << "return " << i << "UL;" << be_uidt_nl;
           }
       }
 
     *os << "default:" << be_idt_nl
-        << member << " = " << default_member << ";" << be_nl
-        << "break;" << be_uidt_nl
-        << be_uidt << "}" << be_uidt_nl;
+        << "return " << default_member << "UL;" << be_uidt_nl
+        << be_uidt << "}" << be_uidt_nl
+        << be_uidt << "};" << be_uidt_nl;
 
     return 0;
   }
@@ -136,19 +137,14 @@ namespace
       }
 
     *os << "if (this->disc_ != discval)" << be_idt_nl
-        << "{" << be_idt_nl
-        << "unsigned long _tao_current_member {};" << be_nl
-        << "unsigned long _tao_new_member {};" << be_nl;
+        << "{" << be_idt_nl;
 
-    if (generate_member_selection (
-          os, node, "this->disc_", "_tao_current_member") == -1
-        || generate_member_selection (
-          os, node, "discval", "_tao_new_member") == -1)
+    if (generate_member_selection (os, node) == -1)
       {
         return -1;
       }
 
-    *os << "if (_tao_current_member != _tao_new_member)" << be_idt_nl
+    *os << "if (_tao_member (this->disc_) != _tao_member (discval))" << be_idt_nl
         << "{" << be_idt_nl
         << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
         << "}" << be_uidt_nl
