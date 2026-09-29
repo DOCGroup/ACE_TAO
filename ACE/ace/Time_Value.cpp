@@ -49,9 +49,7 @@ ACE_Time_Value &
 ACE_Time_Value::operator ++ ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator ++ ()");
-  this->usec (this->usec () + 1);
-  this->normalize ();
-  return *this;
+  return *this += ACE_Time_Value (0, 1);
 }
 
 /// Decrement microseconds (the only reason this is here is / to allow
@@ -69,9 +67,7 @@ ACE_Time_Value &
 ACE_Time_Value::operator -- ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator -- ()");
-  this->usec (this->usec () - 1);
-  this->normalize ();
-  return *this;
+  return *this -= ACE_Time_Value (0, 1);
 }
 
 #if defined (ACE_WIN32)
@@ -169,7 +165,7 @@ ACE_Time_Value::normalize (bool saturate)
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS ||
       this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
-      time_t const sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
+      time_t const sec = this->tv_.tv_usec / ACE_ONE_SECOND_IN_USECS;
       suseconds_t const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
@@ -206,10 +202,96 @@ ACE_Time_Value::normalize (bool saturate)
 #endif /* __QNX__  */
 }
 
+ACE_Time_Value &
+ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
+{
+  // Normalize copies first so the seconds and microseconds can be checked
+  // independently without overflowing either field.
+  ACE_Time_Value lhs (*this);
+  ACE_Time_Value rhs (tv);
+  lhs.normalize (true);
+  rhs.normalize (true);
+
+  time_t const lhs_sec = lhs.sec ();
+  time_t const rhs_sec = rhs.sec ();
+  bool overflow =
+    rhs_sec > 0 && lhs_sec > ACE_Numeric_Limits<time_t>::max () - rhs_sec;
+#if !defined (__QNX__)
+  overflow = overflow ||
+    (rhs_sec < 0 && lhs_sec < ACE_Numeric_Limits<time_t>::min () - rhs_sec);
+#endif
+  if (overflow)
+    {
+      this->set (rhs_sec > 0 ? ACE_Numeric_Limits<time_t>::max ()
+                 : ACE_Numeric_Limits<time_t>::min (),
+                 rhs_sec > 0 ? ACE_ONE_SECOND_IN_USECS - 1
+                 : -ACE_ONE_SECOND_IN_USECS + 1);
+      return *this;
+    }
+
+  this->sec (lhs_sec + rhs_sec);
+  this->usec (lhs.usec () + rhs.usec ());
+  this->normalize (true);
+  return *this;
+}
+
+ACE_Time_Value &
+ACE_Time_Value::operator+= (time_t tv)
+{
+  return *this += ACE_Time_Value (tv);
+}
+
+ACE_Time_Value &
+ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
+{
+  ACE_Time_Value lhs (*this);
+  ACE_Time_Value rhs (tv);
+  lhs.normalize (true);
+  rhs.normalize (true);
+
+  time_t const lhs_sec = lhs.sec ();
+  time_t const rhs_sec = rhs.sec ();
+  bool overflow =
+    rhs_sec > 0 && lhs_sec < ACE_Numeric_Limits<time_t>::min () + rhs_sec;
+#if !defined (__QNX__)
+  overflow = overflow ||
+    (rhs_sec < 0 && lhs_sec > ACE_Numeric_Limits<time_t>::max () + rhs_sec);
+#endif
+  if (overflow)
+    {
+      this->set (rhs_sec > 0 ? ACE_Numeric_Limits<time_t>::min ()
+                 : ACE_Numeric_Limits<time_t>::max (),
+                 rhs_sec > 0 ? -ACE_ONE_SECOND_IN_USECS + 1
+                 : ACE_ONE_SECOND_IN_USECS - 1);
+      return *this;
+    }
+
+  this->sec (lhs_sec - rhs_sec);
+  this->usec (lhs.usec () - rhs.usec ());
+  this->normalize (true);
+  return *this;
+}
+
+ACE_Time_Value &
+ACE_Time_Value::operator-= (time_t tv)
+{
+  return *this -= ACE_Time_Value (tv);
+}
+
 
 ACE_Time_Value &
 ACE_Time_Value::operator *= (double d)
 {
+  if (d == 1.0)
+    return *this;
+
+  if (d == 0.0)
+    {
+      this->sec (0);
+      this->usec (0);
+      return *this;
+    }
+
   // To work around the lack of precision of a long double to contain
   // a 64-bits time_t + 6 digits after the decimal point for the usec part,
   // we perform the multiplication of the 2 timeval parts separately.
@@ -230,16 +312,19 @@ ACE_Time_Value::operator *= (double d)
   sec_total *= d;
 
   // shall we saturate the result?
-  static const float_type max_int =
-    ACE_Numeric_Limits<time_t>::max() + 0.999999;
-  static const float_type min_int =
-    ACE_Numeric_Limits<time_t>::min() - 0.999999;
+  // Use exclusive limits.  Adding 0.999999 to time_t::max() can round back
+  // to max() when float_type has only double precision, which allowed an
+  // out-of-range floating-to-integer conversion below.
+  static const float_type max_exclusive =
+    static_cast<float_type> (ACE_Numeric_Limits<time_t>::max ()) + 1;
+  static const float_type min_exclusive =
+    static_cast<float_type> (ACE_Numeric_Limits<time_t>::min ()) - 1;
 
-  if (sec_total > max_int)
+  if (sec_total >= max_exclusive)
     {
       this->set(ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS-1);
     }
-  else if (sec_total < min_int)
+  else if (sec_total <= min_exclusive)
     {
       this->set(ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS+1);
     }
@@ -272,28 +357,25 @@ ACE_Time_Value::operator *= (double d)
       sec_total += time_sec;
 
       // recheck for saturation
-      if (sec_total > max_int)
+      if (sec_total >= max_exclusive)
         {
           this->set (ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS - 1);
         }
-      else if (sec_total < min_int)
+      else if (sec_total <= min_exclusive)
         {
           this->set (ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS + 1);
         }
       else
         {
           time_sec = static_cast<time_t> (sec_total);
-          suseconds_t time_usec = static_cast<suseconds_t> (usec_total);
-
-          // round up the result to save the last usec
-          if (time_usec > 0 && (usec_total - time_usec) >= 0.5)
-            {
-              ++time_usec;
-            }
-          else if (time_usec < 0 && (usec_total - time_usec) <= -0.5)
-            {
-              --time_usec;
-            }
+          // Round to the nearest microsecond, with ties away from zero.
+          // Applying the rounding before conversion also handles values in
+          // (-1, 0), where conversion to suseconds_t would otherwise lose
+          // the sign before the tie check.
+          suseconds_t time_usec = static_cast<suseconds_t> (
+            usec_total >= 0
+            ? ACE_OS::floor (usec_total + 0.5)
+            : ACE_OS::ceil (usec_total - 0.5));
 
           this->set (time_sec, time_usec);
         }

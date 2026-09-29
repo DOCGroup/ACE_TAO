@@ -234,6 +234,63 @@ run_main (int, ACE_TCHAR *[])
 
   v1.set(DBL_MAX);
 
+  // Arithmetic at the time_t limits must saturate without signed overflow.
+  time_t const max_sec = ACE_Numeric_Limits<time_t>::max ();
+  ACE_Time_Value const max_bound (max_sec, ACE_ONE_SECOND_IN_USECS - 1);
+  ACE_Time_Value const max_whole_sec (max_sec, 0);
+  ACE_Time_Value boundary_identity (max_whole_sec);
+  boundary_identity *= 1.0;
+  ACE_TEST_ASSERT (boundary_identity == max_whole_sec);
+  ACE_TEST_ASSERT (max_bound * 2.0 == max_bound);
+  ACE_TEST_ASSERT (max_bound * 0.0 == ACE_Time_Value::zero);
+  ACE_TEST_ASSERT (ACE_Time_Value (0, 1) * 0.5 == ACE_Time_Value (0, 1));
+  ACE_TEST_ASSERT (ACE_Time_Value (0, 1) * -0.5 == ACE_Time_Value (0, -1));
+
+  ACE_Time_Value add_to_max (max_sec - 1, 0);
+  add_to_max += ACE_Time_Value (1);
+  ACE_TEST_ASSERT (add_to_max == max_whole_sec);
+
+  ACE_Time_Value add_past_max (max_bound);
+  add_past_max += ACE_Time_Value (0, 1);
+  ACE_TEST_ASSERT (add_past_max == max_bound);
+  ACE_Time_Value add_past_max_seconds (max_bound);
+  add_past_max_seconds += static_cast<time_t> (1);
+  ACE_TEST_ASSERT (add_past_max_seconds == max_bound);
+  ACE_Time_Value increment_past_max (max_bound);
+  ++increment_past_max;
+  ACE_TEST_ASSERT (increment_past_max == max_bound);
+
+  ACE_Time_Value const half_max (max_sec / 2, 0);
+  ACE_TEST_ASSERT (half_max * 2.0 == ACE_Time_Value (max_sec - 1, 0));
+
+#if !defined (__QNX__)
+  ACE_Time_Value const min_bound (ACE_Numeric_Limits<time_t>::min (),
+                                  -ACE_ONE_SECOND_IN_USECS + 1);
+  ACE_Time_Value sub_from_min (ACE_Numeric_Limits<time_t>::min () + 1, 0);
+  sub_from_min -= ACE_Time_Value (1);
+  ACE_TEST_ASSERT (sub_from_min == ACE_Time_Value (
+    ACE_Numeric_Limits<time_t>::min (), 0));
+
+  ACE_Time_Value sub_past_min (min_bound);
+  sub_past_min -= ACE_Time_Value (0, 1);
+  ACE_TEST_ASSERT (sub_past_min == min_bound);
+  ACE_Time_Value decrement_past_min (min_bound);
+  --decrement_past_min;
+  ACE_TEST_ASSERT (decrement_past_min == min_bound);
+
+  ACE_Time_Value subtract_past_min (min_bound);
+  subtract_past_min -= ACE_Time_Value (1);
+  ACE_TEST_ASSERT (subtract_past_min == min_bound);
+
+  ACE_Time_Value subtract_past_min_seconds (min_bound);
+  subtract_past_min_seconds -= static_cast<time_t> (1);
+  ACE_TEST_ASSERT (subtract_past_min_seconds == min_bound);
+
+  ACE_Time_Value multiply_past_min (min_bound);
+  multiply_past_min *= 2.0;
+  ACE_TEST_ASSERT (multiply_past_min == min_bound);
+#endif
+
   // Test setting from ACE_UINT64
   ms = 42555;
   ACE_Time_Value msec_test3;
