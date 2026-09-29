@@ -266,6 +266,113 @@ test_default_initialized_union (int &error_count)
 }
 
 void
+test_union_discriminators (int &error_count)
+{
+  foo shared_labels;
+  shared_labels.foo_str_member ("value");
+  shared_labels._d (4);
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d valid shared label", shared_labels._d (), 4);
+
+  try
+    {
+      shared_labels._d (0);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d accepted a discriminator for another member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d unchanged after BAD_PARAM", shared_labels._d (), 4);
+
+  shared_labels.foo_iface_member (10);
+  shared_labels._d (10);
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d valid explicit default", shared_labels._d (), 10);
+
+  try
+    {
+      shared_labels._d (-1);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d changed an explicit default member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  Data implicit_default;
+  implicit_default._d (static_cast<DataType> (42));
+
+  try
+    {
+      implicit_default._d (dtLong);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "Data::_d selected a member from the implicit default\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  implicit_default.longData (11);
+  implicit_default._d (dtLong);
+
+  try
+    {
+      implicit_default._d (dtShort);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "Data::_d changed the active member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  FieldValue enum_union;
+  enum_union.strValue ("value");
+  enum_union._d (FTYPE_VARCHAR);
+  expect_equals<FieldType> (
+    error_count, "FieldValue::_d valid shared label",
+    enum_union._d (), FTYPE_VARCHAR);
+
+  try
+    {
+      enum_union._d (FTYPE_DEFCHAR);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "FieldValue::_d changed the active member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  AllBoolUnions::OneBranchTF single_boolean_member;
+  single_boolean_member.val (1);
+  single_boolean_member._d (false);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTF::_d valid shared label",
+    single_boolean_member._d (), false);
+
+  AllBoolUnions::TwoBranchesTF boolean_union;
+  boolean_union.val1 (1);
+
+  try
+    {
+      boolean_union._d (false);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "TwoBranchesTF::_d changed the active member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+}
+
+void
 test_floating_constants (int &error_count)
 {
   expect_equals<CORBA::Float> (
@@ -627,6 +734,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);
   test_default_initialized_union (error_count);
+  test_union_discriminators (error_count);
 
   return error_count ? 1 : 0;
 }
