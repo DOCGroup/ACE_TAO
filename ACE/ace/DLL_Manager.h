@@ -238,10 +238,7 @@ public:
   friend class ACE_Framework_Repository;
   friend class ACE_Object_Manager;
 
-  enum
-  {
-    DEFAULT_SIZE = ACE_DEFAULT_DLL_MANAGER_SIZE
-  };
+  static constexpr int DEFAULT_SIZE = ACE_DEFAULT_DLL_MANAGER_SIZE;
 
   /// Return a unique instance
   static ACE_DLL_Manager *instance (int size = ACE_DLL_Manager::DEFAULT_SIZE);

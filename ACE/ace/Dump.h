@@ -111,7 +111,7 @@ class ACE_Export ACE_ODB
 {
 public:
   /// @todo This is clearly inadequate and should be dynamic...
-  enum {MAX_TABLE_SIZE = 100000};
+  static constexpr int MAX_TABLE_SIZE = 100000;
 
   /// Iterates through the entire set of registered objects and
   /// dumps their state.

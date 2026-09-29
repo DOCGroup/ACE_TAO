@@ -995,11 +995,8 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY = ACE_System
 class ACE_Message_Queue_Ex
 {
 public:
-  enum
-  {
-    /// Default priority value. This is the lowest priority.
-    DEFAULT_PRIORITY = 0
-  };
+  /// Default priority value. This is the lowest priority.
+  static constexpr int DEFAULT_PRIORITY = 0;
 
   friend class ACE_Message_Queue_Ex_Iterator <ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>;
   friend class ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>;

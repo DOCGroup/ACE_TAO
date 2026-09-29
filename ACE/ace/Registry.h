@@ -177,14 +177,12 @@ public:
     /// Friend factory
     friend class ACE_Predefined_Naming_Contexts;
 
-    enum {
-      /// Max sizes of names
-      /// (Not too sure about this value)
-      MAX_OBJECT_NAME_SIZE = BUFSIZ,
+    /// Max sizes of names
+    /// (Not too sure about this value)
+    static constexpr int MAX_OBJECT_NAME_SIZE = BUFSIZ;
 
-      /// Max size of context name
-      MAX_CONTEXT_NAME_SIZE = MAXPATHLEN + 1
-    };
+    /// Max size of context name
+    static constexpr int MAX_CONTEXT_NAME_SIZE = MAXPATHLEN + 1;
 
     /// Empty constructor: keys will be NULL
     Naming_Context ();

@@ -1,0 +1,34 @@
+commit 8dc06bedaf0158708205016bd8cca22fff1a63d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 29 10:03:47 2026 +0200
+
+    Update ACE/NEWS for version 8.0.8 changes
+    
+    Added a section for changes between ACE-8.0.7 and ACE-8.0.8.
+
+commit 696c91a7d6500b09a19c7724eb9787455fd9a9e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 15:52:52 2026 +0200
+
+    Fix bcc32 comparison warning in CDR fixed parsing
+
+commit ae519149341c05712111adc38dbc4756bbdefa5d
+Merge: 850150dd726 eb98a8f8850
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 09:50:02 2026 +0200
+
+    Merge pull request #2565 from jwillemsen/jwi-807release
+    
+    Make ACE/TAO 8.0.7 and 4.0.7 public
+
+commit eb98a8f88500acb9b2dd3007124e74a631c567c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 09:49:17 2026 +0200
+
+    Make ACE/TAO 8.0.7 and 4.0.7 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * TAO/NEWS:

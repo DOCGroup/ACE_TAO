@@ -81,11 +81,8 @@ private:
   static bool enable_tracing_;
 
   /// Default values.
-  enum
-  {
-    DEFAULT_INDENT  = 3,
-    DEFAULT_TRACING = 1
-  };
+  static constexpr int DEFAULT_INDENT = 3;
+  static constexpr int DEFAULT_TRACING = 1;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

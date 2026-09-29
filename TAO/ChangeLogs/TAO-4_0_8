@@ -1,0 +1,903 @@
+commit 61874305eaee34003d4792a7ff70b655f33a4bfa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 24 13:38:51 2026 +0200
+
+    Remove redundant generated union memset
+
+commit fc480e4e35cdc053a8e7e6411e8842c628166a5e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 23 11:36:06 2026 +0200
+
+    Compact generated union array allocation
+
+commit f40eb4b57bab772fc80204b0c4b094299f3f4087
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 23 11:31:35 2026 +0200
+
+    Initialize explicit default union members
+
+commit 643968eda38d4aa56fde68fcd371bab4d7331897
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 23:16:58 2026 +0200
+
+    Generate all labels in union reset switches
+
+commit 8f2330a843a4f949ab00f095518a73d2aca5c171
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 15:35:41 2026 +0200
+
+    Avoid inactive union member access in test
+
+commit 96cf265c73bac5a978376935d26e03609b140bae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 15:34:31 2026 +0200
+
+    Exercise active default union members
+
+commit 9ce0e339a3e18b5102a552cb736f47bff0fe89d6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 14:14:07 2026 +0200
+
+    Compact generated array declarations
+
+commit ea0c97a99b886bad8e7f14373f035bad1d12426d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 14:05:28 2026 +0200
+
+    Document initialized IDL union members
+
+commit a1408078b41e60694724379432954b1f8be0e47c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 13:55:49 2026 +0200
+
+    Revert "Avoid whitespace on generated blank lines"
+
+commit f6812827607e1c32fe521edafc4fb6870f42dcae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 13:51:00 2026 +0200
+
+    Avoid whitespace on generated blank lines
+
+commit dbe5f55715c40efb4cfb87c8ec4b0b3d326874b3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 13:28:09 2026 +0200
+
+    Clean up generated declaration spacing
+
+commit b9f9c1a5a50df126cd8a99ec455d6a9ec3314c59
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:52:43 2026 +0200
+
+    Generate memory include once in client stubs
+
+commit f054d27f3ed9b76de505096b9d55f00709972c7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:33:53 2026 +0200
+
+    Brace generated union reset cases
+
+commit dd6ef55515cffd4e18644b4c750cf6409f4b4fd0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:31:18 2026 +0200
+
+    Normalize generated Any destructors
+
+commit efdaeaba5cc294d6b72cfbb8597df2f59fa68b26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:25:53 2026 +0200
+
+    Use a single return in union assignment
+
+commit 87904bbb0027ecb6a44215dbd353f2e0c5a565d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:20:17 2026 +0200
+
+    Remove excess spacing from union reset cases
+
+commit d96a3233e458f0ddc38fc1f19d40588b05b10c7e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:15:06 2026 +0200
+
+    Avoid no-op switches in union reset methods
+
+commit aafd46be28fbb64e4ad87751bf40e7af2b36718d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:11:15 2026 +0200
+
+    Remove trailing line from enum TypeCode arrays
+
+commit b7ff9ed3a5becb77c2d367d3a15640aba009b362
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:09:24 2026 +0200
+
+    Use addressof for generated TypeCode pointers
+
+commit aec418439f89c119bbab658c97a8b0b9f6c61956
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 11:06:02 2026 +0200
+
+    Keep union Any destructor cast on one line
+
+commit be7c2d62bd465f95b138ce8c28c4eb98edf74371
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 10:57:46 2026 +0200
+
+    Preserve indentation between boolean union branches
+
+commit b4e9cf3dc01d0e216c3b47f7883f155ed4b2692d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 10:55:06 2026 +0200
+
+    Remove empty lines from generated union resets
+
+commit d36f8f69f12339fd3cadfa2f87c3a915506e8811
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 10:50:45 2026 +0200
+
+    Remove excess whitespace from generated unions
+
+commit 5a2b91f8c902dd6b2529311e8e8c824b700bc12b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 09:06:27 2026 +0200
+
+    Fix map union member type selection
+
+commit afd17838cefbeafae057637104b0100433f2ef5e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 09:00:27 2026 +0200
+
+    Value-initialize active union members
+
+commit dc48a343312cfc72097cc612f369fe6b44929d30
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 08:46:24 2026 +0200
+
+    Keep long generated include call multiline
+
+commit 8e6486e8c986500be8143f38d2e69ad5422c8c42
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 08:41:28 2026 +0200
+
+    Format generated include calls on one line
+
+commit 6db8c6a74d4f4b8f57b778b822b3fd076734983b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 08:36:55 2026 +0200
+
+    Generate system includes with angle brackets
+
+commit c787c51fcc402cc7c66fb94070838b0c5a9716b6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 22:51:41 2026 +0200
+
+    Add client inline include generation
+
+commit 73323c75fae6e04895f914b3526d38d9dbcb7691
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 22:42:08 2026 +0200
+
+    Use helper for standard union includes
+
+commit 17bee06e90ccbbdf0e3c3ea3e039ea8fc3b2412b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 22:32:09 2026 +0200
+
+    Use placement new for inline union structures
+
+commit ad4cec0c1d4d0a965ba57b3a4172ab0f66fd85e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 17:07:21 2026 +0200
+
+    Fixed indent
+    
+        * TAO/TAO_IDL/be/be_visitor_union_branch/public_constructor_cs.cpp:
+
+commit 21a8761d72027a4f2e3f58844cfd5e25f0559e47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:59:02 2026 +0200
+
+    remove new line
+    
+        * TAO/TAO_IDL/be/be_visitor_union/union_ch.cpp:
+
+commit d4642a3087e889dd4698e90ba5d456b3a1988ac6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:53:11 2026 +0200
+
+    Balance union placement construction indentation
+
+commit dcaa8b77e25f338cf6db504dc03e1706ce06c0e6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:50:21 2026 +0200
+
+    Use single newline after union storage constructor
+
+commit c054a34e9f50b119ee384bed5030493cd2ae50b7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:49:14 2026 +0200
+
+    Strengthen initialized union regression coverage
+
+commit 55353e885e70c5c92765f0818c28dbffc00f1345
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:40:01 2026 +0200
+
+    Restore union code generation indentation
+
+commit b9b35c8884fed2ae0dc5ce49dedb5e1aeecabb1d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:36:12 2026 +0200
+
+    Use output manipulator for union separator
+
+commit 4f04f3fc939b88b912326420eca9e456f368e03e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:33:41 2026 +0200
+
+    Avoid whitespace on generated blank line
+
+commit 9cee2690dddcfdb329a283429534a680582bf9e6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 16:14:24 2026 +0200
+
+    Keep initialized structures inline in unions
+
+commit da7ec6380bc6d28f4dfcca54c30148b4fd3ceb79
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 21 11:22:22 2026 +0200
+
+    Make IDL types unique, test was using same typename in multiple files
+    
+        * TAO/tests/IDL_Test/constants.idl:
+        * TAO/tests/IDL_Test/main.cpp:
+        * TAO/tests/IDL_Test/valuetype.idl:
+
+commit 18123fc3db1f3eb03db556d394b339e20147d073
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 22:59:27 2026 +0200
+
+    Default construct valuetype in regression test
+
+commit 4b30cf593bd0fbc9d6a3e632c60bbc6f9c7755b1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 22:44:15 2026 +0200
+
+    Test default initialized valuetype members
+
+commit d0dd5472707a008defec04c5301f9dd2ac67e7ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 21:47:55 2026 +0200
+
+    Handle initialized structures in generated unions
+
+commit ae13ddffabfd584c24853bb3bd2a96c11f85cef8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 21:08:30 2026 +0200
+
+    Use value initialization for valuebox pointer
+
+commit 5e7be8dd8fdaefde1019e15dec6043fd687b5e63
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 21:07:25 2026 +0200
+
+    Use nullptr in valuebox test
+
+commit 6d2f513df42589c90c9298ff3fd0200969e85285
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 21:06:21 2026 +0200
+
+    Use value initialization in valuebox test
+
+commit 7772f93e6f08e96b3533f701923173a6f19c41ab
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 21:04:12 2026 +0200
+
+    Initialize generated valueboxes
+
+commit cb2e08ab470fc1a2fd436ae80ec9c736b253bb64
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 20 20:59:51 2026 +0200
+
+    Initialize generated IDL members
+
+commit 0b202319dd679ef88e73d756f275b7f506e02395
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 19 18:44:57 2026 +0200
+
+    Avoid inconsistent override warnings in resource factory
+
+commit 77b174a7214cbf779d6bb0bed0dfc67d8793faae
+Merge: 1f73fe7bf1f f1759140de1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 20:13:37 2026 +0200
+
+    Merge pull request #2581 from jwillemsen/jwi-tdiforward
+    
+    Replaced forward declared type with include
+
+commit f1759140de17c16a2b9f2544e29986567f66f5df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 20:12:51 2026 +0200
+
+    Replaced forward declared type with include
+    
+        * TAO/tao/Transport_Cache_Manager.h:
+
+commit b9a59f53ff992af35799d633299b3d77715dfe01
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 15:34:07 2026 +0200
+
+    Fix signed size comparisons in idle scanner test
+
+commit cdbf6ca13bbf90c48ab1c8435f697e049c931523
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 15:07:01 2026 +0200
+
+    Add include of Transport.h to resolve compile errors when using this file directly in test code
+    
+        * TAO/tao/Transport_Cache_Manager.h:
+
+commit c159d471e85056b3644540b0d5522bb4ea57217d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 21:40:54 2026 +0200
+
+    Document transport idle scanner in NEWS
+
+commit b57e212a78bb15da3349d6370b0dea1d86f17b8f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 20:46:03 2026 +0200
+
+    Restore complete options documentation
+
+commit 5c9013b55ec930e0193bec434dfa88c99e625709
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 20:44:36 2026 +0200
+
+    Correct transport idle scanner documentation
+
+commit 9359eacd54ea0bb4e1d6441f718e7c4759540b68
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 20:18:21 2026 +0200
+
+    Document active request guard state
+
+commit 91d69e38e203c6793c3f8690fa2ffb419f55fe04
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 20:11:03 2026 +0200
+
+    Fix transport cache manager friendship
+
+commit 4ba4c29094e634c126b9d125d7bfba2b8a1c7925
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 17:30:40 2026 +0200
+
+    Protect active requests from idle scanning
+
+commit 053c9478b7751aca545cfc0ef53fac0d8abef925
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 16 15:38:06 2026 +0200
+
+    Move new method implementations to source files
+
+commit 359b8a1bac345b539904f95996e21aa264fc24c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 16 15:31:48 2026 +0200
+
+    Check idle timeout before transport state
+
+commit 997eb6b556f3ccb6bbc89138aa0f4f93632b4f25
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 16 15:27:28 2026 +0200
+
+    Expose pending GIOP fragments
+
+commit 53f2fb97da2cfc0cbeb48ec5bb122ec81ad9e382
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 19:34:45 2026 +0200
+
+    Update transport cache manager mock
+
+commit 29fe49e672031582e0f9d0b600afa82c8614e7c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 16:10:03 2026 +0200
+
+    Include reactor for inline timer cancellation
+
+commit 562f83be3f88a6614fccfdda09a3953c7b560a66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 14:56:14 2026 +0200
+
+    Report idle scanner timer results
+
+commit 97c6c916b13ee1a1e0f3a6d26536ce5936d59b5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 14:49:38 2026 +0200
+
+    Use atomic transport activity timestamp
+
+commit ac9b83c5461d54149386a0386ba89c2c67b7f283
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 14:20:25 2026 +0200
+
+    Log idle scanner timer lifecycle
+
+commit 128e842a0a6f0a9c0911fdaeff1e276a650a3f56
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 14:10:49 2026 +0200
+
+    Fix transport cache construction syntax
+
+commit cbece4a63756cd724c86e65fb10472f52788fb92
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 13:57:02 2026 +0200
+
+    Pass reactor to transport cache manager
+
+commit 34b7935bd4408b38deb9ed89866743b0b60ed003
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 13:52:38 2026 +0200
+
+    Record activity when caching transport
+
+commit e62ce38e794b705a0a97e8768fba44277c7a5622
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 13:44:44 2026 +0200
+
+    Record attempted transport I/O as activity
+
+commit d88ed2e9cd5909fd8d4039c256c4ea101761b39a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 13:39:54 2026 +0200
+
+    Stop idle scanner while closing cache
+
+commit 6aab51e7fd48e57d214c4f5b773f02102f5e13c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 13:34:45 2026 +0200
+
+    Require ORB core for transport cache manager
+
+commit 0e6f3409622c927d497ee4b710ee4d9de201c7f5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 13:19:36 2026 +0200
+
+    Simplify idle transport cache purge
+
+commit 60a2a8b2ed299596e15e47d3b5f74c6911406d29
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 13:07:12 2026 +0200
+
+    Restrict idle scanner helper visibility
+
+commit 73d03c4be50c51a52755da2b42ec121c2fe2558a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 12:58:39 2026 +0200
+
+    Let idle scan exceptions reach reactor
+
+commit 1fade8a0fadc567e151d1550c6960b2f2ebc1bc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 12:30:05 2026 +0200
+
+    Use braces for idle scanner conditions
+
+commit 1d41eef33a4e1d637d833564abc40d43d2f38df3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 12:29:32 2026 +0200
+
+    Shorten transport idle MPC filenames
+
+commit 0dc2b6b8491ac86118fde1fc64283c2b9882cb4a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 12:22:43 2026 +0200
+
+    Simplify transport cache state update
+
+commit 036d8ec5b875b0d73e7d3c20d769c4e283711e82
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 12:06:26 2026 +0200
+
+    Increase default transport idle scan interval
+
+commit 1aa20dae930ad810b0440e2eafa82149a1852367
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 11:44:46 2026 +0200
+
+    Let idle timer handler call cache manager directly
+
+commit 84c9fd2ee6c994ae623246cc9a13d2b44b071f47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 11:32:23 2026 +0200
+
+    Use cache lock for idle timer lifecycle
+
+commit c5443420b94e604f7f69faae702ee4952a0b372e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 11:19:57 2026 +0200
+
+    Record activity around parsed message processing
+
+commit dfb830721eac76076ae29368582257b06fb81fa6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 11:05:08 2026 +0200
+
+    Delegate idle timer callbacks to cache manager
+
+commit bc8f70cda546f9f588197401ec400813adf820e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 10:58:44 2026 +0200
+
+    Record transport activity during cache updates
+
+commit 8183d5dcea411c89a9160041cfb6061c720b577e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 10:47:16 2026 +0200
+
+    Move idle transport purging into cache manager
+
+commit 631336851fc9ec08acd35e8a8e2cacc68e4286f1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 10:40:12 2026 +0200
+
+    Document idle scanner cache lifecycle
+
+commit bebd2e302683626704318360bfad081c361293a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 10:38:50 2026 +0200
+
+    Let transport cache manage idle scanner startup
+
+commit 416b1a4e65e528067f421bb08523a59500bce5ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 09:49:51 2026 +0200
+
+    Manage the idle scanner through the transport cache lifecycle
+
+commit dbdb7c5a8ef28424952c15fc732a539043cb8782
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 09:39:15 2026 +0200
+
+    Always record transport activity timestamps
+
+commit ade0767103564e1d5b71fd6f026ecec6b04daa38
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 09:38:36 2026 +0200
+
+    Centralize idle timeout checks in scanner and timestamp internals
+
+commit 09e65fd1678c8ec57cd74c21696e5bc42599641b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 09:30:44 2026 +0200
+
+    Move idle scanner ownership to the transport cache manager
+
+commit e4665d96f417fd9c8184b7572c99143a35608551
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 08:58:54 2026 +0200
+
+    Skip activity timestamp updates when transport idle timeout is disabled
+
+commit b61093b79cd28be19278bfadcbe4b132e2d6cfb9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 08:40:01 2026 +0200
+
+    Update transport activity when the cache marks it idle
+
+commit 4f478c4f2d04c8fe531a555b8dd206d77d109070
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 08:33:07 2026 +0200
+
+    Remove cached transport cache manager reference
+
+commit 9abdfc1775f2c00e1d10f45b989206657c179583
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 08:30:50 2026 +0200
+
+    Protect transport activity timestamps with the owning cache lock
+
+commit 55ef4ee78ea627ff1539a741efcae94f65b70f70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 08:26:04 2026 +0200
+
+    Document deferred dispatch idle timeout limitations without rejecting AMH or CSD
+
+commit f4549696c2df2048b9d7a8f685961e8ec4a83905
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 19:40:58 2026 +0200
+
+    Record transport cache acquisition as idle timeout activity
+
+commit daed6053157020cbc4ecc4f4af1b9447b09cab7c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 19:37:48 2026 +0200
+
+    Remove idle closing flag from transport
+
+commit 89632430115db25094fbaf598f27b5bccbe16d51
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 19:35:53 2026 +0200
+
+    Remove input activity guard from transport idle scanning
+
+commit ee19df20da930701de60642be21b44969e3c17ce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 19:16:12 2026 +0200
+
+    Encapsulate idle transport scanning in the transport cache manager
+
+commit 6b96dfbab8c94fa2f50b90e8914d9aae71e245b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 19:05:55 2026 +0200
+
+    Give transport idle scanner MPC projects unique names
+
+commit db7960fb741dbc35536bd7f53bcf311d58e964a0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 19:04:57 2026 +0200
+
+    Use the lane reactor directly for transport idle scanning
+
+commit 1aee360cf656ef016d9528e394cb7af6f525eb4a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 18:58:44 2026 +0200
+
+    Make transport idle scan interval accessor pure virtual
+
+commit 4b2f596051e3b2c994aa5c8a03eda4075e48894f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 16:32:40 2026 +0200
+
+    Adapt all four transport idle timeout regressions to periodic scanning
+    
+    Include scan intervals in expiry budgets, exercise spaced reuse and check
+    cache state before reconnecting. Isolate server-only configuration, measure
+    oneway expiry after receipt, and keep long calls below the configured idle
+    age. Update test documentation for monotonic activity and scan semantics.
+    
+    Validation: source/configuration review and C++ delimiter checks only;
+    no build or runtime tests (execution environment unavailable).
+
+commit ca57bd30b67a5f2edc15337218d9c885f53583e1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 13:19:20 2026 +0200
+
+    Read idle scan cache-entry pointers only under the cache lock
+
+commit b0f3aa16ffd82199c3473e73a0ea852dc40ec7f8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 14 13:17:55 2026 +0200
+
+    Implement periodic transport idle scanning with monotonic activity tracking
+
+commit a44d804bae35ceed505eb4f039d0c6ac3e445a0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:15:39 2026 +0200
+
+    Add new test
+    
+        * TAO/bin/tao_orb_tests.lst:
+
+commit fbb58ce002cd9ae3d70fe28238661b8ce0498fed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:13:54 2026 +0200
+
+    Document oneway completion idle-timeout expectation
+
+commit 843f668a6571a2bd46dbc6b5b95c599a8916da34
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:13:53 2026 +0200
+
+    Expect server transport expiry after oneway completion
+
+commit 6c0f580bce0221a5248b1f778a24efd0916a1eae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:09:45 2026 +0200
+
+    Remove auto-loaded idle timeout configuration
+
+commit 1ebff6b53d1c021b892eebeba61d89d050766631
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:09:39 2026 +0200
+
+    Use server-specific idle timeout configuration
+
+commit b70d40fcf76a1c58ddeacbcad9b6230fa749eeec
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:09:19 2026 +0200
+
+    Use server-specific idle timeout configuration
+
+commit a45b5af584c4750a277f5aa17be397190a50529b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:06:16 2026 +0200
+
+    Fix Transport_Idle_Timeout_Oneway server logging syntax
+
+commit 817d3ba749c68cab114ebd7ba80964fb1299754b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 16:01:36 2026 +0200
+
+    Fix Transport_Idle_Timeout_Oneway client logging syntax
+
+commit 3be14e5ef54733fc4ac14056815e1f07fbd10427
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:32:21 2026 +0200
+
+    Add process and thread ids to oneway test logging
+
+commit 61b3577e8bdd6ea85304f99bf83d23dd46e9d010
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:23:00 2026 +0200
+
+    Keep client alive during server idle timeout check
+
+commit fd111dfb3489b43c12d03021951c42b276c71513
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:17:52 2026 +0200
+
+    Configure idle timeout only on oneway server
+
+commit ea5786675ebca0c00f97331873390464a1c643a3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:09:55 2026 +0200
+
+    Refine oneway idle timeout test behavior
+
+commit 3ada25d585ede7634f91424affdd34e8d17e1a96
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:01:20 2026 +0200
+
+    Run simplified oneway idle timeout test
+
+commit bf13c369d87fea4adc5c87272ef6cf8c61a2a992
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:01:11 2026 +0200
+
+    Use one second transport idle timeout
+
+commit ff9fc7e79283e84f8bc893e538c45aa7559c3175
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:01:05 2026 +0200
+
+    Check cache after timed server ORB run
+
+commit ceefb87ed7d242253f1833c9a675d552aa3e2454
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:54 2026 +0200
+
+    Make oneway client exit after ping
+
+commit 44f0309065d57c5bfded35c97b37e83dd6f8582c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:46 2026 +0200
+
+    Check transport cache in oneway servant
+
+commit 3cdfab27a11c0ec114b79065756e6e9fe0faa3fa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:39 2026 +0200
+
+    Simplify oneway idle timeout servant
+
+commit 790f0c1466e4e89b7dd274494700554a949aa2ef
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 15:00:33 2026 +0200
+
+    Simplify oneway idle timeout test IDL
+
+commit 8d36241d72e2959f2aa17b6abaeae6c003f3655a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:53:03 2026 +0200
+
+    Add debug level
+    
+        * TAO/tests/Transport_Idle_Timeout_Oneway/run_test.pl:
+
+commit 03758be0e3bed70324517aed8dd820ef9fb3a98e
+Merge: bfb3af4d7e9 67acca03c54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:48:13 2026 +0200
+
+    Merge branch 'master' into jwi-idletimeout-oneway-test
+
+commit bfb3af4d7e909fb3c51b765d5876b61292f77c29
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:42:20 2026 +0200
+
+    Add oneway idle timeout test driver
+
+commit c5821e8f1e88e6e9ffe1da47876f2ed13cfe4055
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:42:03 2026 +0200
+
+    Configure oneway idle timeout test
+
+commit f763d7b33f7d8b40036a1b5d8055c15d4e541fce
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:55 2026 +0200
+
+    Add oneway idle timeout MPC project
+
+commit 2c992d57e8f4191b7bff651a956db8da6f0b38df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:46 2026 +0200
+
+    Add oneway idle timeout test client
+
+commit e91dbdc36f6a72561f464b2aeaff787119be7861
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:29 2026 +0200
+
+    Add oneway idle timeout test server
+
+commit d2ef6c91d89f704e8f4bc77c3d50c50813f0d164
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:18 2026 +0200
+
+    Add oneway idle timeout servant implementation
+
+commit 984008f1ff3a08c3fea3937fa5bc6a5b28cf31d5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:41:02 2026 +0200
+
+    Add oneway idle timeout servant header
+
+commit a8eb8874a9836406c49b54eb7030b457257f6125
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 14:40:54 2026 +0200
+
+    Add oneway transport idle timeout test IDL
+
+commit d69510230ab0e0aadeb27436a9df55c2e8f3aa62
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 08:21:59 2026 +0200
+
+    Comment update
+    
+        * TAO/tests/Transport_Idle_Timeout_server/README.md:
+
+commit 60b54759b88e115ba0ea33e4bf07f93ef2a828c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 8 16:29:26 2026 +0200
+
+    Test extensions
+    
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/README.md:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/Transport_Idle_Timeout_Long_Request.idl:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/Transport_Idle_Timeout_Long_Request.mpc:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/server.cpp:
+        * TAO/tests/Transport_Idle_Timeout_Long_Request/svc.conf:
+        * TAO/tests/Transport_Idle_Timeout_server/README.md:
+        * TAO/tests/Transport_Idle_Timeout_server/Transport_Idle_Timeout.idl:
+        * TAO/tests/Transport_Idle_Timeout_server/Transport_Idle_Timeout_server.mpc:
+        * TAO/tests/Transport_Idle_Timeout_server/client.cpp:
+        * TAO/tests/Transport_Idle_Timeout_server/run_test.pl:
+        * TAO/tests/Transport_Idle_Timeout_server/server.cpp:
+        * TAO/tests/Transport_Idle_Timeout_server/svc.conf:
+          Added.
+    
+        * TAO/bin/tao_orb_tests.lst:
+        * TAO/tao/Transport.cpp:
+
+commit ae519149341c05712111adc38dbc4756bbdefa5d
+Merge: 850150dd726 eb98a8f8850
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 09:50:02 2026 +0200
+
+    Merge pull request #2565 from jwillemsen/jwi-807release
+    
+    Make ACE/TAO 8.0.7 and 4.0.7 public
+
+commit eb98a8f88500acb9b2dd3007124e74a631c567c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 09:49:17 2026 +0200
+
+    Make ACE/TAO 8.0.7 and 4.0.7 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * TAO/NEWS:

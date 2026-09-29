@@ -36,22 +36,19 @@ class ACE_Log_Category_TSS;
 class ACE_Export ACE_Log_Record
 {
 public:
-  enum
-  {
-    /// Maximum size of a logging message.
-    MAXLOGMSGLEN = ACE_MAXLOGMSGLEN+1,
+  /// Maximum size of a logging message.
+  static constexpr int MAXLOGMSGLEN = ACE_MAXLOGMSGLEN+1;
 
-    /// Most restrictive alignment.
-    ALIGN_WORDB  = 8,
+  /// Most restrictive alignment.
+  static constexpr int ALIGN_WORDB = 8;
 
-    /// Size used by verbose mode.
-    /// 20 (date) + 15 (host_name) + 10 (pid) + 10 (type)
-    ///           + 4 (@) ... + ? (progname)
-    VERBOSE_LEN = 128,
+  /// Size used by verbose mode.
+  /// 20 (date) + 15 (host_name) + 10 (pid) + 10 (type)
+  ///           + 4 (@) ... + ? (progname)
+  static constexpr int VERBOSE_LEN = 128;
 
-    /// Maximum size of a logging message with the verbose headers
-    MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN
-  };
+  /// Maximum size of a logging message with the verbose headers
+  static constexpr int MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN;
 
   // = Initialization
   /**

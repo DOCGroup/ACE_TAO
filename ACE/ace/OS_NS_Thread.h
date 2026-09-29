@@ -844,7 +844,7 @@ public:
   typedef void (*ACE_TSS_DESTRUCTOR)(void *value);
 
   /// Maximum number of TSS keys allowed over the life of the program.
-  enum { ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
+  static constexpr int ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS;
 
   /// Returns the total number of keys allocated so far.
   static u_int total_keys ();
@@ -1057,17 +1057,14 @@ private:
   /// For a given key, find the word and bit number that represent it.
   static void find (const u_int key, u_int &word, u_int &bit);
 
-  enum
-    {
 #   if ACE_SIZEOF_LONG == 8
-      ACE_BITS_PER_WORD = 64,
+  static constexpr int ACE_BITS_PER_WORD = 64;
 #   elif ACE_SIZEOF_LONG == 4
-      ACE_BITS_PER_WORD = 32,
+  static constexpr int ACE_BITS_PER_WORD = 32;
 #   else
 #     error ACE_TSS_Keys only supports 32 or 64 bit longs.
 #   endif /* ACE_SIZEOF_LONG == 8 */
-      ACE_WORDS = (ACE_DEFAULT_THREAD_KEYS - 1) / ACE_BITS_PER_WORD + 1
-    };
+  static constexpr int ACE_WORDS = (ACE_DEFAULT_THREAD_KEYS - 1) / ACE_BITS_PER_WORD + 1;
 
   /// Bit flag collection.  A bit value of 1 indicates that the key is in
   /// use by this thread.

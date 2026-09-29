@@ -45,10 +45,11 @@ class ACE_Time_Value;
 class ACE_Export ACE_Process_Options
 {
 public:
+  static constexpr int DEFAULT_COMMAND_LINE_BUF_LEN = 1024;
+
+  // UNIX process creation flags.
   enum
   {
-    DEFAULT_COMMAND_LINE_BUF_LEN = 1024,
-    // UNIX process creation flags.
 #if defined (ACE_WIN32)
     NO_EXEC = 0
 #else
@@ -61,12 +62,9 @@ protected:
   //
   /// @todo These sizes should be taken from the appropriate
   /// POSIX/system header files and/or defined dynamically.
-  enum
-  {
-    MAX_COMMAND_LINE_OPTIONS = 128,
-    ENVIRONMENT_BUFFER = 16 * 1024, // 16K
-    MAX_ENVIRONMENT_ARGS = 512 //
-  };
+  static constexpr int MAX_COMMAND_LINE_OPTIONS = 128;
+  static constexpr int ENVIRONMENT_BUFFER = 16 * 1024; // 16K
+  static constexpr int MAX_ENVIRONMENT_ARGS = 512;
 
 public:
   /**

@@ -1560,10 +1560,7 @@ public:
   // Trait definition.
   using ITERATOR = ACE_Bounded_Set_Iterator<T>;
 
-  enum
-  {
-    DEFAULT_SIZE = 10
-  };
+  static constexpr int DEFAULT_SIZE = 10;
 
   /// Construct a Bounded_Set using the default size.
   /**

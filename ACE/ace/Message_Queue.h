@@ -46,15 +46,14 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> class ACE_Message_Queue_Reverse_Ite
 class ACE_Export ACE_Message_Queue_Base
 {
 public:
+  // Default high and low watermarks.
+  /// Default high watermark (16 K).
+  static constexpr int DEFAULT_HWM = 16 * 1024;
+  /// Default low watermark (same as high water mark).
+  static constexpr int DEFAULT_LWM = 16 * 1024;
+
   enum
   {
-    // Default high and low watermarks.
-
-    /// Default high watermark (16 K).
-    DEFAULT_HWM = 16 * 1024,
-    /// Default low watermark (same as high water mark).
-    DEFAULT_LWM = 16 * 1024,
-
     // Queue states.  Before PULSED state was added, the activate()
     // and deactivate() methods returned WAS_INACTIVE or WAS_ACTIVE
     // to indicate the previous condition.  Now those methods

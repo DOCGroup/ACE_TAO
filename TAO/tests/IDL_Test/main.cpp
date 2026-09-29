@@ -265,6 +265,27 @@ test_default_initialized_union (int &error_count)
     reset_union.long_value (), 42);
 }
 
+void
+test_floating_constants (int &error_count)
+{
+  expect_equals<CORBA::Float> (
+    error_count, "root_beer", root_beer, 0.2F);
+  expect_equals<CORBA::Double> (
+    error_count, "bogey", bogey, 0.2);
+  expect_equals<CORBA::Float> (
+    error_count, "ClassConstants::Iface::iface_float",
+    ClassConstants::Iface::iface_float, 0.2F);
+  expect_equals<CORBA::Double> (
+    error_count, "ClassConstants::Iface::iface_double",
+    ClassConstants::Iface::iface_double, 66.66);
+  expect_equals<CORBA::Float> (
+    error_count, "ClassConstants::Vt::vt_float",
+    ClassConstants::Vt::vt_float, 0.2F);
+  expect_equals<CORBA::Double> (
+    error_count, "ClassConstants::Vt::vt_long",
+    ClassConstants::Vt::vt_long, 66.66);
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -601,6 +622,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   test_expressions (error_count);
+  test_floating_constants (error_count);
   test_default_initialized_struct (error_count);
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);

@@ -103,10 +103,7 @@ public:
   // This is just to silence a compiler warning about no public ctors
   friend class ACE_Framework_Component;
 
-  enum
-  {
-    DEFAULT_SIZE = ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE
-  };
+  static constexpr int DEFAULT_SIZE = ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE;
 
   ACE_Framework_Repository (const ACE_Framework_Repository &) = delete;
   ACE_Framework_Repository (ACE_Framework_Repository &&) = delete;

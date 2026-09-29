@@ -98,10 +98,7 @@ class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
 public:
   friend class ACE_Process_Control;
 
-  enum
-  {
-    DEFAULT_SIZE = 100
-  };
+  static constexpr int DEFAULT_SIZE = 100;
 
   /**
    * @name Initialization and termination methods
