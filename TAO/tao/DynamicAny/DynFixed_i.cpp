@@ -358,7 +358,7 @@ TAO_DynFixed_i::to_any ()
     }
 
   TAO_OutputCDR output;
-  if (!(output << this->value_))
+  if (!output.write_fixed (this->value_))
     {
       throw CORBA::MARSHAL ();
     }
