@@ -267,7 +267,8 @@ else
 ARCH_SOURCE_DIR := $(patsubst %/,%,$(call PWD)/$(ARCH))
 endif
 
-$(INSBIN)/%$(VAR)$(EXEEXT) \
+# Each recipe invocation creates only $@, so these patterns must be independent.
+ACE_INSTALL_LINK_TARGETS = $(INSBIN)/%$(VAR)$(EXEEXT) \
 $(INSINC)/ace% \
 $(INSLIB)/% \
 $(INSMAN)/man1/% \
@@ -279,59 +280,62 @@ $(INSMAN)/man6/% \
 $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
-$(INSMAN)/mann/% :
-	@$(MKDIR) $(@D)
-ifeq ($(vxworks_ntbuild),1)
-  ifeq ($(SOVERSION),)
-	@if not "$(ARCH_SOURCE_DIR)/$(@F)" == "$@" \
-		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
-		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
+$(INSMAN)/mann/%
+
+define ACE_INSTALL_LINK_RULE
+$(1):
+	@$$(MKDIR) $$(@D)
+ifeq ($$(vxworks_ntbuild),1)
+  ifeq ($$(SOVERSION),)
+	@if not "$$(ARCH_SOURCE_DIR)/$$(@F)" == "$$@" \
+		echo $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@ && \
+		$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@
   else
-	@if not exist $@ $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
-		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
-		$(RM) $@ && \
-		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
-		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
+	@if not exist $$@ $$(RM) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)) && \
+		$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)) && \
+		$$(RM) $$@ && \
+		echo $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@ && \
+		$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@
   endif #SOVERSION
 else #not vxworks_ntbuild
-    ifeq ($(firstword $(LN_S)),cp)
-      ifneq ($(SOVERSION),)
-	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+    ifeq ($$(firstword $$(LN_S)),cp)
+      ifneq ($$(SOVERSION),)
+	@if test $$(ARCH_SOURCE_DIR) != $$(@D) ; then \
+		$$(RM) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)); \
+		echo $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)); \
+		$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)); \
 	fi
       endif #SOVERSION
-	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		$(RM) $@; \
-		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
-		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
+	@if test $$(ARCH_SOURCE_DIR) != $$(@D) ; then \
+		$$(RM) $$@; \
+		echo $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@; \
+		$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@; \
 	fi
     else #firstword of LN_S is not cp, so we're using real symlinks
-      ifneq ($(SOVERSION),)
-       ifneq ($(versioned_so),2)
-	    @if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test ! -s $@ ; then \
-			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+      ifneq ($$(SOVERSION),)
+       ifneq ($$(versioned_so),2)
+	    @if test $$(ARCH_SOURCE_DIR) != $$(@D) ; then \
+		if test ! -s $$@ ; then \
+			$$(RM) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)); \
+			echo $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)); \
+			$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$(@:%.$$(SOEXT)$$(SOVERSION)=%.$$(SOEXT)); \
 		fi ; \
 	    fi
        else
-	    @if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test ! -s $@ ; then \
-			$(RM) $(@:%$(SOVERSION).$(SOEXT)=%.$(SOEXT)); \
-			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%$(SOVERSION).$(SOEXT)=%.$(SOEXT)); \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%$(SOVERSION).$(SOEXT)=%.$(SOEXT)); \
+	    @if test $$(ARCH_SOURCE_DIR) != $$(@D) ; then \
+		if test ! -s $$@ ; then \
+			$$(RM) $$(@:%$$(SOVERSION).$$(SOEXT)=%.$$(SOEXT)); \
+			echo $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$(@:%$$(SOVERSION).$$(SOEXT)=%.$$(SOEXT)); \
+			$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$(@:%$$(SOVERSION).$$(SOEXT)=%.$$(SOEXT)); \
 		fi ; \
 	    fi
         endif #versioned_so
       endif #SOVERSION
-	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test ! -s $@ ; then \
-			$(RM) $@; \
-			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
+	@if test $$(ARCH_SOURCE_DIR) != $$(@D) ; then \
+		if test ! -s $$@ ; then \
+			$$(RM) $$@; \
+			echo $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@; \
+			$$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F) $$@; \
 		fi ; \
 	fi
     endif #firstword
@@ -339,12 +343,15 @@ endif #vxworks_ntbuild
 
 ifdef MVSLIB
 #special for MVS in order to use the .x files
-	@if test -w $(@D) ; then \
-		if test ! -s $(@:.$(SOEXT)=.x) ; then \
-			$(RM) $(@); $(LN_S) $(ARCH_SOURCE_DIR)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+	@if test -w $$(@D) ; then \
+		if test ! -s $$(@:.$$(SOEXT)=.x) ; then \
+			$$(RM) $$(@); $$(LN_S) $$(ARCH_SOURCE_DIR)/$$(@F:.$$(SOEXT)=.x) $$(@:.$$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
+endef
+
+$(foreach target,$(ACE_INSTALL_LINK_TARGETS),$(eval $(call ACE_INSTALL_LINK_RULE,$(target))))
 
 #----------------------------------------------------------------------------
 #       Cleanup targets
