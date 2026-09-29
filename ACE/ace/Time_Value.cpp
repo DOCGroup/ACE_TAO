@@ -29,7 +29,7 @@ const ACE_Time_Value ACE_Time_Value::zero;
 /// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 /// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::max_time (
-  std::numeric_limits<time_t>::max (),
+  (std::numeric_limits<time_t>::max) (),
   ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
@@ -169,15 +169,15 @@ ACE_Time_Value::normalize (bool saturate)
       suseconds_t const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
-          std::numeric_limits<time_t>::max () - this->tv_.tv_sec < sec)
+          (std::numeric_limits<time_t>::max) () - this->tv_.tv_sec < sec)
         {
-          this->tv_.tv_sec = std::numeric_limits<time_t>::max ();
+          this->tv_.tv_sec = (std::numeric_limits<time_t>::max) ();
           this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
         }
       else if (saturate && this->tv_.tv_sec < 0 && sec < 0 &&
-               std::numeric_limits<time_t>::min () - this->tv_.tv_sec > sec)
+               (std::numeric_limits<time_t>::min) () - this->tv_.tv_sec > sec)
         {
-          this->tv_.tv_sec = std::numeric_limits<time_t>::min ();
+          this->tv_.tv_sec = (std::numeric_limits<time_t>::min) ();
           this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
         }
       else
@@ -215,15 +215,15 @@ ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
   time_t const lhs_sec = lhs.sec ();
   time_t const rhs_sec = rhs.sec ();
   bool overflow =
-    rhs_sec > 0 && lhs_sec > std::numeric_limits<time_t>::max () - rhs_sec;
+    rhs_sec > 0 && lhs_sec > (std::numeric_limits<time_t>::max) () - rhs_sec;
 #if !defined (__QNX__)
   overflow = overflow ||
-    (rhs_sec < 0 && lhs_sec < std::numeric_limits<time_t>::min () - rhs_sec);
+    (rhs_sec < 0 && lhs_sec < (std::numeric_limits<time_t>::min) () - rhs_sec);
 #endif
   if (overflow)
     {
-      this->set (rhs_sec > 0 ? std::numeric_limits<time_t>::max ()
-                 : std::numeric_limits<time_t>::min (),
+      this->set (rhs_sec > 0 ? (std::numeric_limits<time_t>::max) ()
+                 : (std::numeric_limits<time_t>::min) (),
                  rhs_sec > 0 ? ACE_ONE_SECOND_IN_USECS - 1
                  : -ACE_ONE_SECOND_IN_USECS + 1);
       return *this;
@@ -252,15 +252,15 @@ ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
   time_t const lhs_sec = lhs.sec ();
   time_t const rhs_sec = rhs.sec ();
   bool overflow =
-    rhs_sec > 0 && lhs_sec < std::numeric_limits<time_t>::min () + rhs_sec;
+    rhs_sec > 0 && lhs_sec < (std::numeric_limits<time_t>::min) () + rhs_sec;
 #if !defined (__QNX__)
   overflow = overflow ||
-    (rhs_sec < 0 && lhs_sec > std::numeric_limits<time_t>::max () + rhs_sec);
+    (rhs_sec < 0 && lhs_sec > (std::numeric_limits<time_t>::max) () + rhs_sec);
 #endif
   if (overflow)
     {
-      this->set (rhs_sec > 0 ? std::numeric_limits<time_t>::min ()
-                 : std::numeric_limits<time_t>::max (),
+      this->set (rhs_sec > 0 ? (std::numeric_limits<time_t>::min) ()
+                 : (std::numeric_limits<time_t>::max) (),
                  rhs_sec > 0 ? -ACE_ONE_SECOND_IN_USECS + 1
                  : ACE_ONE_SECOND_IN_USECS - 1);
       return *this;
@@ -316,17 +316,17 @@ ACE_Time_Value::operator *= (double d)
   // to max() when float_type has only double precision, which allowed an
   // out-of-range floating-to-integer conversion below.
   static const float_type max_exclusive =
-    static_cast<float_type> (std::numeric_limits<time_t>::max ()) + 1;
+    static_cast<float_type> ((std::numeric_limits<time_t>::max) ()) + 1;
   static const float_type min_exclusive =
-    static_cast<float_type> (std::numeric_limits<time_t>::min ()) - 1;
+    static_cast<float_type> ((std::numeric_limits<time_t>::min) ()) - 1;
 
   if (sec_total >= max_exclusive)
     {
-      this->set(std::numeric_limits<time_t>::max (), ACE_ONE_SECOND_IN_USECS-1);
+      this->set((std::numeric_limits<time_t>::max) (), ACE_ONE_SECOND_IN_USECS-1);
     }
   else if (sec_total <= min_exclusive)
     {
-      this->set(std::numeric_limits<time_t>::min (), -ACE_ONE_SECOND_IN_USECS+1);
+      this->set((std::numeric_limits<time_t>::min) (), -ACE_ONE_SECOND_IN_USECS+1);
     }
   else
     {
@@ -359,11 +359,11 @@ ACE_Time_Value::operator *= (double d)
       // recheck for saturation
       if (sec_total >= max_exclusive)
         {
-          this->set (std::numeric_limits<time_t>::max (), ACE_ONE_SECOND_IN_USECS - 1);
+          this->set ((std::numeric_limits<time_t>::max) (), ACE_ONE_SECOND_IN_USECS - 1);
         }
       else if (sec_total <= min_exclusive)
         {
-          this->set (std::numeric_limits<time_t>::min (), -ACE_ONE_SECOND_IN_USECS + 1);
+          this->set ((std::numeric_limits<time_t>::min) (), -ACE_ONE_SECOND_IN_USECS + 1);
         }
       else
         {
