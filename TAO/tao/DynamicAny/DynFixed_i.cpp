@@ -86,7 +86,27 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
       return false;
     }
 
-  value = ACE_CDR::Fixed::from_octets (octets, length, scale);
+  // from_octets infers the digit count and can drop a leading zero nibble.
+  // Rebuild from the TypeCode-sized digits to preserve the declared scale.
+  std::string decimal;
+  if (sign == ACE_CDR::Fixed::NEGATIVE)
+    {
+      decimal += '-';
+    }
+  for (int digit = 0; digit < digits; ++digit)
+    {
+      if (scale && digit == digits - scale)
+        {
+          decimal += '.';
+        }
+
+      int const octet = (first_digit + digit) / 2;
+      ACE_CDR::Octet const nibble = (first_digit + digit) % 2 == 0
+        ? static_cast<ACE_CDR::Octet> (octets[octet] >> 4)
+        : static_cast<ACE_CDR::Octet> (octets[octet] & 0x0f);
+      decimal += static_cast<char> ('0' + nibble);
+    }
+  value = ACE_CDR::Fixed::from_string (decimal.c_str ());
   return true;
 }
 
