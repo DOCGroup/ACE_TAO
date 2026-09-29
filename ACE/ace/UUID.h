@@ -37,7 +37,7 @@ namespace ACE_Utils
   {
   public:
     /// Size of the node in bytes.
-    enum {NODE_ID_SIZE = 6};
+    static constexpr int NODE_ID_SIZE = 6;
 
     /// Type definition of the node.
     typedef u_char Node_ID[NODE_ID_SIZE];
@@ -83,7 +83,7 @@ namespace ACE_Utils
   {
   public:
     /// The size of a binary UUID.
-    enum { BINARY_SIZE = 16 };
+    static constexpr int BINARY_SIZE = 16;
 
     /// Constructor
     UUID ();
@@ -199,7 +199,7 @@ namespace ACE_Utils
   class ACE_Export UUID_Generator
   {
   public:
-    enum {ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF};
+    static constexpr int ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF;
 
     /// Default constructor.
     UUID_Generator();

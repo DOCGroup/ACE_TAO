@@ -451,11 +451,8 @@ private:
 class ACE_Export ACE_Select_Reactor_Impl : public ACE_Reactor_Impl
 {
 public:
-  enum
-  {
-    /// Default size of the Select_Reactor's handle table.
-    DEFAULT_SIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE
-  };
+  /// Default size of the Select_Reactor's handle table.
+  static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE;
 
   /// Constructor.
   ACE_Select_Reactor_Impl (bool mask_signals = true);

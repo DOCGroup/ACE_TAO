@@ -88,11 +88,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  enum
-  {
-    /// Most restrictive alignment.
-    ALIGN_WORDB = 8
-  };
+  /// Most restrictive alignment.
+  static constexpr int ALIGN_WORDB = 8;
 
   /// Internal identifier.
   ACE_HANDLE internal_id_;

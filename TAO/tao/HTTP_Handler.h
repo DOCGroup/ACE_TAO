@@ -64,15 +64,12 @@ protected:
   ACE_Message_Block *mb_;
   ACE_TCHAR *filename_;
   size_t bytecount_;
-  enum
-  {
-    /// The handler assumes that the first 2048 bytes of a server response
-    /// contains the header
-    MAX_HEADER_SIZE = 2048,
+  /// The handler assumes that the first 2048 bytes of a server response
+  /// contains the header
+  static constexpr int MAX_HEADER_SIZE = 2048;
 
-    /// set the MAX_TRANSMISSION_UNIT (MTU) = BUFSIZ as defined by OS
-    MTU = BUFSIZ
-  };
+  /// set the MAX_TRANSMISSION_UNIT (MTU) = BUFSIZ as defined by OS
+  static constexpr int MTU = BUFSIZ;
 };
 
 class TAO_HTTP_Reader : public TAO_HTTP_Handler

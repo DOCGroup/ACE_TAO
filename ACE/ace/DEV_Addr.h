@@ -71,7 +71,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  enum { DEVNAME_LENGTH = MAXPATHLEN + 1 };
+  static constexpr int DEVNAME_LENGTH = MAXPATHLEN + 1;
   /// Name of the device.
   ACE_TCHAR devname_[DEVNAME_LENGTH];
 };

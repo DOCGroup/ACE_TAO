@@ -142,10 +142,8 @@ public:
   /// Returns the next token.
   ACE_CHAR_T *next ();
 
-  enum {
-    MAX_DELIMITERS=16,
-    MAX_PRESERVES=16
-  };
+  static constexpr int MAX_DELIMITERS = 16;
+  static constexpr int MAX_PRESERVES = 16;
 
 protected:
   /// Returns 1 if @a d is a delimiter, 0 otherwise.  If @a d should be
