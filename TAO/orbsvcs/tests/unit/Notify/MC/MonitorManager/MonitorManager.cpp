@@ -2,6 +2,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Thread_Manager.h"
+#include "tao/Exception.h"
 
 int
 ACE_TMAIN (int, ACE_TCHAR* argv[])
@@ -31,6 +32,11 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
       // Wait for an external entity to stop it.
       ACE_Thread_Manager::instance ()->wait ();
     }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("MonitorManager: ");
+      return 1;
+    }
   catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Caught an unexpected exception type\n"), 1);
@@ -41,4 +47,3 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
 
   return 0;
 }
-

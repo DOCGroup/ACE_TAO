@@ -113,6 +113,11 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
 
       mv_poaManager_->activate ();
     }
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("DllORB::init: ");
+    return -1;
+  }
   catch (...)
   {
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: exception\n")));
@@ -140,6 +145,11 @@ DllORB::fini ()
       ACE_OS::sleep (ACE_Time_Value (0, 500));
 
       mv_orb_->shutdown (true);
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("DllORB::fini: ");
+      return -1;
     }
   catch (...)
     {
@@ -213,6 +223,11 @@ int DllORB::svc ()
   try
     {
       mv_orb_->run ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("DllORB::svc: ");
+      result = 1;
     }
   catch (...)
     {
