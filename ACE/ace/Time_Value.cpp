@@ -16,6 +16,37 @@
 #include <cstdlib>
 #include <cmath>
 
+namespace
+{
+  template <typename T, bool IS_SIGNED>
+  struct ACE_Time_Value_Negative_Overflow
+  {
+    static bool addition (T, T)
+    {
+      return false;
+    }
+
+    static bool subtraction (T, T)
+    {
+      return false;
+    }
+  };
+
+  template <typename T>
+  struct ACE_Time_Value_Negative_Overflow<T, true>
+  {
+    static bool addition (T lhs, T rhs)
+    {
+      return rhs < 0 && lhs < (std::numeric_limits<T>::min) () - rhs;
+    }
+
+    static bool subtraction (T lhs, T rhs)
+    {
+      return rhs < 0 && lhs > (std::numeric_limits<T>::max) () + rhs;
+    }
+  };
+}
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Static constant representing `zero-time'.
@@ -216,10 +247,9 @@ ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
   time_t const rhs_sec = rhs.sec ();
   bool overflow =
     rhs_sec > 0 && lhs_sec > (std::numeric_limits<time_t>::max) () - rhs_sec;
-#if !defined (__QNX__)
   overflow = overflow ||
-    (rhs_sec < 0 && lhs_sec < (std::numeric_limits<time_t>::min) () - rhs_sec);
-#endif
+    ACE_Time_Value_Negative_Overflow<time_t,
+      std::numeric_limits<time_t>::is_signed>::addition (lhs_sec, rhs_sec);
   if (overflow)
     {
       this->set (rhs_sec > 0 ? (std::numeric_limits<time_t>::max) ()
@@ -253,10 +283,9 @@ ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
   time_t const rhs_sec = rhs.sec ();
   bool overflow =
     rhs_sec > 0 && lhs_sec < (std::numeric_limits<time_t>::min) () + rhs_sec;
-#if !defined (__QNX__)
   overflow = overflow ||
-    (rhs_sec < 0 && lhs_sec > (std::numeric_limits<time_t>::max) () + rhs_sec);
-#endif
+    ACE_Time_Value_Negative_Overflow<time_t,
+      std::numeric_limits<time_t>::is_signed>::subtraction (lhs_sec, rhs_sec);
   if (overflow)
     {
       this->set (rhs_sec > 0 ? (std::numeric_limits<time_t>::min) ()
