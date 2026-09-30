@@ -224,6 +224,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       start_test (current_test, "uac_cd2_out");
       test::UnionAllCovered_CharDiscriminant uac_cd2_out;
+      uac_cd2_out.e_chars (475520);
       uac_cd2_out._d (100);
       marshal (cdr_out, uac_cd2_out);
 
@@ -244,6 +245,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       start_test (current_test, "uwd_ld_out");
       test::UnionWithDefault_LongDiscriminant uwd_ld_out;
+      uwd_ld_out.e_def (475521);
       uwd_ld_out._d (1000);
       marshal (cdr_out, uwd_ld_out);
 
@@ -367,6 +369,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       test::UnionAllCovered_CharDiscriminant uac_cd2_in;
       uac_cd2_in._d ('a');
       demarshal (cdr_in, uac_cd2_in, 'a', uac_cd2_out._d ());
+      if (uac_cd2_in.e_chars () != 475520)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Demarshalled multi-label member has the wrong value\n"));
+          error = 1;
+        }
 
       start_test (current_test, "uwd_cd_in");
       test::UnionWithDefault_CharDiscriminant uwd_cd_in;
@@ -387,6 +395,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       test::UnionWithDefault_LongDiscriminant uwd_ld_in;
       uwd_ld_in.e_case1 (0);
       demarshal (cdr_in, uwd_ld_in, 1, uwd_ld_out._d ());
+      if (uwd_ld_in.e_def () != 475521)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Demarshalled explicit-default member has the wrong value\n"));
+          error = 1;
+        }
 
       start_test (current_test, "uwid_ld_in");
       test::UnionWithImplicitDefault_LongDiscriminant uwid_ld_in;
