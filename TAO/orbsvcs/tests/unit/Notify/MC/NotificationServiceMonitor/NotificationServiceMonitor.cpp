@@ -125,7 +125,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       // Skip the monitors not added by this test.
-      for (index = start_size; i < data.in ().length (); ++index)
+      for (index = start_size; index < data.in ().length (); ++index)
         {
           num = data[index].data_union.num ();
 
