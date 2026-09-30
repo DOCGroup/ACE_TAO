@@ -150,6 +150,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       TAO_Singleton_Manager::instance ()->fini ();
     }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("NotificationServiceMonitor: ");
+      return 1;
+    }
   catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Caught an unexpected exception type\n"), 1);
