@@ -78,7 +78,7 @@ namespace
         return 0;
       }
 
-    *os << "switch (value)" << be_idt_nl
+    *os << "switch (value)" << be_nl
         << "{" << be_idt_nl;
 
     for (unsigned long i = 0; i < node->nfields (); ++i)
