@@ -208,9 +208,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       start_test (current_test, "uwid_bd2_out");
       test::UnionWithImplicitDefault_BooleanDiscriminant uwid_bd2_out;
-      uwid_bd2_out.e_true (0);
+      uwid_bd2_out.e_true (16);
       uwid_bd2_out._d (static_cast<CORBA::Boolean> (9));
       marshal (cdr_out, uwid_bd2_out);
+
+      start_test (current_test, "uwid_bdf_out");
+      test::UnionWithImplicitDefaultFalse_BooleanDiscriminant uwid_bdf_out;
+      uwid_bdf_out.e_false (17);
+      marshal (cdr_out, uwid_bdf_out);
 
       start_test (current_test, "uac_cd_out");
       test::UnionAllCovered_CharDiscriminant uac_cd_out;
@@ -335,6 +340,23 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       test::UnionWithImplicitDefault_BooleanDiscriminant uwid_bd2_in;
       uwid_bd2_in._d (false);
       demarshal (cdr_in, uwid_bd2_in, false, uwid_bd2_out._d ());
+      if (uwid_bd2_in.e_true () != 16)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Demarshalled true boolean member has the wrong value\n"));
+          error = 1;
+        }
+
+      start_test (current_test, "uwid_bdf_in");
+      test::UnionWithImplicitDefaultFalse_BooleanDiscriminant uwid_bdf_in;
+      uwid_bdf_in._default ();
+      demarshal (cdr_in, uwid_bdf_in, true, false);
+      if (uwid_bdf_in.e_false () != 17)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Demarshalled false boolean member has the wrong value\n"));
+          error = 1;
+        }
 
       start_test (current_test, "uac_cd_in");
       test::UnionAllCovered_CharDiscriminant uac_cd_in;
