@@ -380,7 +380,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       start_test (current_test, "uwid_cd2_in");
       test::UnionWithImplicitDefault_CharDiscriminant uwid_cd2_in;
-      uwid_cd2_in._d ('\1');
+      uwid_cd2_in.e_chars (0);
       demarshal (cdr_in, uwid_cd2_in, '\1', uwid_cd2_out._d ());
 
       start_test (current_test, "uwd_ld_in");
@@ -395,7 +395,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       start_test (current_test, "uwid_ld2_in");
       test::UnionWithImplicitDefault_LongDiscriminant uwid_ld2_in;
-      uwid_ld2_in._d (1);
+      uwid_ld2_in.e_case1 (0);
       demarshal (cdr_in, uwid_ld2_in, 1, uwid_ld2_out._d ());
 
       // Verify that CDR input can replace an implicit-default state with a
