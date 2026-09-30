@@ -154,7 +154,7 @@ Notify_Push_Consumer::push_structured_event (
 
   if (supplierFilter_ == OrOp)
     validate(type != 0 || group != 0);
-  else if (supplierFilter_ == OrOp)
+  else if (supplierFilter_ == AndOp)
     validate(type != 0 && group != 0);
 
   if (received_ > expected_)
