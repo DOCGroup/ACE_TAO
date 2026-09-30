@@ -44,7 +44,8 @@ be_visitor_union_branch_public_ci::emit_getter_validation (
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "if (_tao_member_index (this->disc_) != " << index << "UL)"
+  *os << "if (_tao_member_index (this->disc_) != "
+      << static_cast<ACE_CDR::ULong> (index) << "UL)"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl

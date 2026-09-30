@@ -49,7 +49,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     }
 
   *os << be_nl
-      << "case " << index << "UL:" << be_nl
+      << "case " << static_cast<ACE_CDR::ULong> (index) << "UL:" << be_nl
       << "{" << be_idt_nl;
 
   // first generate the type information

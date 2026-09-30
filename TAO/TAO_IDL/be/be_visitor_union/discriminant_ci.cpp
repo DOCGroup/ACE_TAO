@@ -71,8 +71,9 @@ namespace
             true_member = default_member;
           }
 
-        *os << "return value ? " << true_member << "UL : "
-            << false_member << "UL;" << be_uidt_nl
+        *os << "return value ? " << static_cast<ACE_CDR::ULong> (true_member)
+            << "UL : " << static_cast<ACE_CDR::ULong> (false_member) << "UL;"
+            << be_uidt_nl
             << "}";
         return 0;
       }
@@ -114,12 +115,14 @@ namespace
 
         if (generated_label)
           {
-            *os << be_idt << "return " << i << "UL;" << be_uidt_nl;
+            *os << be_idt << "return " << static_cast<ACE_CDR::ULong> (i)
+                << "UL;" << be_uidt_nl;
           }
       }
 
     *os << "default:" << be_idt_nl
-        << "return " << default_member << "UL;" << be_uidt_nl
+        << "return " << static_cast<ACE_CDR::ULong> (default_member)
+        << "UL;" << be_uidt_nl
         << be_uidt << "}" << be_uidt_nl
         << "}";
 

@@ -106,14 +106,14 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
   if (!be_visitor_union_branch_public_reset_cs::requires_reset (bt))
     {
       *os << be_nl
-          << "case " << index << "UL:" << be_nl
+          << "case " << static_cast<ACE_CDR::ULong> (index) << "UL:" << be_nl
           << "break;";
 
       return 0;
     }
 
   *os << be_nl
-      << "case " << index << "UL:" << be_nl
+      << "case " << static_cast<ACE_CDR::ULong> (index) << "UL:" << be_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
