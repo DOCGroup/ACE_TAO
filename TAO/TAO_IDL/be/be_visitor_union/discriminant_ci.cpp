@@ -120,10 +120,10 @@ namespace
           }
       }
 
-    *os << "default:" << be_idt_nl
+    *os << "default:" << be_nl
         << "return " << static_cast<ACE_CDR::ULong> (default_member)
         << "UL;" << be_uidt_nl
-        << be_uidt << "}" << be_uidt_nl
+        << be_uidt << "}" << be_nl
         << "}";
 
     return 0;
