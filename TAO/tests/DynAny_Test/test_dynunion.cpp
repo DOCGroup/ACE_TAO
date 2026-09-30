@@ -86,7 +86,7 @@ Test_DynUnion::run_test ()
                   "testing: union discriminator validation\n"));
 
       DynAnyTests::test_multi_label_union multi_label;
-      multi_label.value (data.m_string1);
+      multi_label.value (CORBA::string_dup (data.m_string1));
       multi_label._d (2);
 
       if (multi_label._d () != 2
