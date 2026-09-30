@@ -206,6 +206,7 @@ Replicator::handle_exception (ACE_HANDLE )
     }
   catch (const CORBA::Exception &)
     {
+      this->prev_update_.unbind_all ();
       this->peer_ =
         ImplementationRepository::UpdatePushNotification::_nil ();
     }
