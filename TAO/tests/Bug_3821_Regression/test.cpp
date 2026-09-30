@@ -221,6 +221,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       uwid_ld2_out._d (2000);
       marshal (cdr_out, uwid_ld2_out);
 
+      test::UnionWithImplicitDefault_EnumerationDiscriminant labeled_from_default_out;
+      labeled_from_default_out.e_enum1 (42);
+      marshal (cdr_out, labeled_from_default_out);
+
       // Demarshal part.
 
       TAO_InputCDR cdr_in (cdr_out);
@@ -316,6 +320,18 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       test::UnionWithImplicitDefault_LongDiscriminant uwid_ld2_in;
       uwid_ld2_in._d (1);
       demarshal (cdr_in, uwid_ld2_in, 1, uwid_ld2_out._d ());
+
+      // Verify that CDR input can replace an implicit-default state with a
+      // labeled member without bypassing public discriminator validation.
+      test::UnionWithImplicitDefault_EnumerationDiscriminant labeled_from_default_in;
+      labeled_from_default_in._default ();
+      demarshal (cdr_in, labeled_from_default_in, test::Enum2, test::Enum1);
+      if (labeled_from_default_in.e_enum1 () != 42)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Demarshalled labeled union member has the wrong value\n"));
+          error = 1;
+        }
     }
   catch (const CORBA::Exception& ex)
     {
