@@ -15,6 +15,7 @@
 #include "tao/CDR.h"
 
 #include "test_dynany.h"
+#include "da_testsC.h"
 #include "data.h"
 #include "analyzer.h"
 
@@ -68,8 +69,9 @@ Test_DynAny::run_test ()
       ACE_DEBUG ((LM_DEBUG,
                   "testing: fixed DynAny creation and value access\n"));
 
-      fixed_test_stage = "create fixed TypeCode";
-      CORBA::TypeCode_var fixed_tc = this->orb_->create_fixed_tc (10, 3);
+      fixed_test_stage = "get fixed TypeCode";
+      CORBA::TypeCode_var fixed_tc =
+        CORBA::TypeCode::_duplicate (DynAnyTests::_tc_test_fixed);
       fixed_test_stage = "create DynFixed from TypeCode";
       DynamicAny::DynAny_var fixed_any =
         dynany_factory->create_dyn_any_from_type_code (fixed_tc.in ());
@@ -183,7 +185,8 @@ Test_DynAny::run_test ()
 
       ACE_DEBUG ((LM_DEBUG,
                   "testing: fixed maximum precision round trip\n"));
-      CORBA::TypeCode_var max_fixed_tc = this->orb_->create_fixed_tc (31, 0);
+      CORBA::TypeCode_var max_fixed_tc =
+        CORBA::TypeCode::_duplicate (DynAnyTests::_tc_test_max_fixed);
       DynamicAny::DynAny_var max_fixed_any =
         dynany_factory->create_dyn_any_from_type_code (max_fixed_tc.in ());
       DynamicAny::DynFixed_var max_fixed =
@@ -234,7 +237,8 @@ Test_DynAny::run_test ()
 
       ACE_DEBUG ((LM_DEBUG,
                   "testing: fixed maximum scale round trip\n"));
-      CORBA::TypeCode_var max_scale_tc = this->orb_->create_fixed_tc (31, 31);
+      CORBA::TypeCode_var max_scale_tc =
+        CORBA::TypeCode::_duplicate (DynAnyTests::_tc_test_max_scale_fixed);
       DynamicAny::DynAny_var max_scale_any =
         dynany_factory->create_dyn_any_from_type_code (max_scale_tc.in ());
       DynamicAny::DynFixed_var max_scale =
@@ -271,7 +275,7 @@ Test_DynAny::run_test ()
       ACE_DEBUG ((LM_DEBUG,
                   "testing: fixed leading zero fractional round trip\n"));
       CORBA::TypeCode_var leading_fraction_tc =
-        this->orb_->create_fixed_tc (3, 3);
+        CORBA::TypeCode::_duplicate (DynAnyTests::_tc_test_fraction_fixed);
       DynamicAny::DynAny_var leading_fraction_any =
         dynany_factory->create_dyn_any_from_type_code (leading_fraction_tc.in ());
       DynamicAny::DynFixed_var leading_fraction =
@@ -305,7 +309,8 @@ Test_DynAny::run_test ()
 
       ACE_DEBUG ((LM_DEBUG,
                   "testing: malformed fixed CDR rejection\n"));
-      CORBA::TypeCode_var small_fixed_tc = this->orb_->create_fixed_tc (3, 0);
+      CORBA::TypeCode_var small_fixed_tc =
+        CORBA::TypeCode::_duplicate (DynAnyTests::_tc_test_small_fixed);
       DynamicAny::DynAny_var leading_zero_any =
         dynany_factory->create_dyn_any_from_type_code (small_fixed_tc.in ());
       DynamicAny::DynFixed_var leading_zero_fixed =
@@ -378,7 +383,7 @@ Test_DynAny::run_test ()
       ACE_DEBUG ((LM_DEBUG,
                   "testing: fixed DynAny as sequence component\n"));
       CORBA::TypeCode_var fixed_sequence_tc =
-        this->orb_->create_sequence_tc (0, fixed_tc.in ());
+        CORBA::TypeCode::_duplicate (DynAnyTests::_tc_test_fixed_sequence);
       DynamicAny::DynAny_var fixed_sequence_any =
         dynany_factory->create_dyn_any_from_type_code (fixed_sequence_tc.in ());
       DynamicAny::DynSequence_var fixed_sequence =
