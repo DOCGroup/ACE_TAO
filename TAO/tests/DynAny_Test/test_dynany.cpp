@@ -44,6 +44,7 @@ int
 Test_DynAny::run_test ()
 {
   Data data (this->orb_);
+  char const* fixed_test_stage = "DynAny factory setup";
 
   try
     {
@@ -67,9 +68,12 @@ Test_DynAny::run_test ()
       ACE_DEBUG ((LM_DEBUG,
                   "testing: fixed DynAny creation and value access\n"));
 
+      fixed_test_stage = "create fixed TypeCode";
       CORBA::TypeCode_var fixed_tc = this->orb_->create_fixed_tc (10, 3);
+      fixed_test_stage = "create DynFixed from TypeCode";
       DynamicAny::DynAny_var fixed_any =
         dynany_factory->create_dyn_any_from_type_code (fixed_tc.in ());
+      fixed_test_stage = "narrow DynFixed";
       DynamicAny::DynFixed_var fixed =
         DynamicAny::DynFixed::_narrow (fixed_any.in ());
       if (CORBA::is_nil (fixed.in ()))
@@ -78,15 +82,18 @@ Test_DynAny::run_test ()
         }
       else
         {
+          fixed_test_stage = "get default fixed value";
           CORBA::String_var default_value = fixed->get_value ();
           if (std::strcmp (default_value.in (), "0.000") != 0)
             {
               ++this->error_count_;
             }
+          fixed_test_stage = "set fixed value 123.450";
           if (fixed->set_value (" 123.450d \t") == 0)
             {
               ++this->error_count_;
             }
+          fixed_test_stage = "get fixed value 123.450";
           CORBA::String_var fixed_value = fixed->get_value ();
           if (std::strcmp (fixed_value.in (), "123.450") != 0)
             {
@@ -95,10 +102,12 @@ Test_DynAny::run_test ()
         }
       if (!CORBA::is_nil (fixed.in ()))
         {
+          fixed_test_stage = "set and truncate fixed value 12.3456";
           if (fixed->set_value ("12.3456") != 0)
             {
               ++this->error_count_;
             }
+          fixed_test_stage = "get truncated fixed value";
           CORBA::String_var truncated_value = fixed->get_value ();
           if (std::strcmp (truncated_value.in (), "12.345") != 0)
             {
@@ -107,6 +116,7 @@ Test_DynAny::run_test ()
           bool invalid_literal_rejected = false;
           try
             {
+              fixed_test_stage = "reject invalid fixed literal";
               fixed->set_value ("not-a-fixed-value");
             }
           catch (DynamicAny::DynAny::TypeMismatch const&)
@@ -120,6 +130,7 @@ Test_DynAny::run_test ()
           bool oversized_value_rejected = false;
           try
             {
+              fixed_test_stage = "reject oversized fixed value";
               fixed->set_value ("12345678.9999");
             }
           catch (DynamicAny::DynAny::InvalidValue const&)
@@ -132,11 +143,16 @@ Test_DynAny::run_test ()
             }
 
           // Restore the value used by the CDR round trip.
+          fixed_test_stage = "restore fixed value";
           fixed->set_value ("12.345");
 
+          fixed_test_stage = "convert fixed to Any";
           CORBA::Any_var fixed_value_any = fixed->to_any ();
+          fixed_test_stage = "change fixed value before from_any";
           fixed->set_value ("1.000");
+          fixed_test_stage = "restore fixed value from Any";
           fixed->from_any (fixed_value_any.in ());
+          fixed_test_stage = "get fixed value after from_any";
           CORBA::String_var from_any_value = fixed->get_value ();
           if (std::strcmp (from_any_value.in (), "12.345") != 0)
             {
@@ -153,6 +169,7 @@ Test_DynAny::run_test ()
           else
             {
               CORBA::String_var roundtrip_value = fixed_roundtrip->get_value ();
+              fixed_test_stage = "compare fixed DynAnys";
               if (std::strcmp (roundtrip_value.in (), "12.345") != 0 ||
                   !fixed_from_any->equal (fixed_any.in ()))
                 {
@@ -721,6 +738,9 @@ Test_DynAny::run_test ()
     }
   catch (const CORBA::Exception& ex)
     {
+      ACE_ERROR ((LM_ERROR,
+                  "fixed DynAny test failed during %C\n",
+                  fixed_test_stage));
       ex._tao_print_exception ("test_dynany::run_test");
       ++this->error_count_;
     }
