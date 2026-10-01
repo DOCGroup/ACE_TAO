@@ -49,6 +49,7 @@ public:
   virtual int visit_union_fwd (be_union_fwd *node);
 
 private:
+  int emit_getter_validation (be_union_branch *node);
   int emit_valuetype_common  (be_type *node);
   int visit_seq_map_common (be_type *node);
 };

@@ -160,7 +160,6 @@ TAO_Monitor::get_monitor_data (
           list[i] = CORBA::string_dup (slist[i].c_str ());
         }
 
-      data.data_union._d (::Monitor::DATA_TEXT);
       data.data_union.list (list);
     }
   else
@@ -195,7 +194,6 @@ TAO_Monitor::get_monitor_data (
           num.sum_of_squares = monitor->sum_of_squares ();
         }
 
-      data.data_union._d (::Monitor::DATA_NUMERIC);
       data.data_union.num (num);
       data.data_union.num ().dlist[0].value = d.value_;
       data.data_union.num ().dlist[0].timestamp = usecs;

@@ -192,7 +192,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::cout << "Test passed - did not receive test events as expected." << std::endl;
     }
   }
-  catch(...)
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("Consumer: ");
+    return 1;
+  }
+  catch (...)
   {
     std::cerr << "Consumer: Some exceptions was caught!" << std::endl;
     return 1;
@@ -201,4 +206,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
