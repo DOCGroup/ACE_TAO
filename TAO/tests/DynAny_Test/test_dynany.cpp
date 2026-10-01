@@ -158,8 +158,10 @@ Test_DynAny::run_test ()
             {
               ++this->error_count_;
             }
+          fixed_test_stage = "create DynFixed from Any";
           DynamicAny::DynAny_var fixed_from_any =
             dynany_factory->create_dyn_any (fixed_value_any.in ());
+          fixed_test_stage = "narrow Any-created DynFixed";
           DynamicAny::DynFixed_var fixed_roundtrip =
             DynamicAny::DynFixed::_narrow (fixed_from_any.in ());
           if (CORBA::is_nil (fixed_roundtrip.in ()))
@@ -168,6 +170,7 @@ Test_DynAny::run_test ()
             }
           else
             {
+              fixed_test_stage = "get round-trip fixed value";
               CORBA::String_var roundtrip_value = fixed_roundtrip->get_value ();
               fixed_test_stage = "compare fixed DynAnys";
               if (std::strcmp (roundtrip_value.in (), "12.345") != 0 ||
