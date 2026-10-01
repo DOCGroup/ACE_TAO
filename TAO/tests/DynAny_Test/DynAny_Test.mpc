@@ -1,5 +1,5 @@
 // -*- MPC -*-
-project(*Basic): taoserver, dynamicany {
+project(*Basic): taoserver, dynamicany, typecodefactory {
   exename  = basic_test
 
   Source_Files {
