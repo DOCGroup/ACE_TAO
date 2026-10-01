@@ -95,6 +95,22 @@ expect_equals (int &error_count, const char *name, Type actual, Type expected)
     }
 }
 
+template <typename Callable>
+void
+expect_bad_param (int &error_count, const char *name, Callable callable)
+{
+  try
+    {
+      callable ();
+      *ACE_DEFAULT_LOG_STREAM
+        << "ERROR: " << name << " didn't throw CORBA::BAD_PARAM\n";
+      ++error_count;
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+}
+
 void
 test_expressions (int &error_count)
 {
@@ -263,6 +279,324 @@ test_default_initialized_union (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "ResetWithNoopBranches::long_value",
     reset_union.long_value (), 42);
+}
+
+void
+test_union_discriminators (int &error_count)
+{
+  foo shared_labels;
+  shared_labels.foo_str_member ("value");
+  shared_labels._d (4);
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d valid shared label", shared_labels._d (), 4);
+  if (ACE_OS::strcmp (shared_labels.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d changed the shared-label member value\n"));
+      ++error_count;
+    }
+
+  expect_bad_param (
+    error_count, "foo inactive getter",
+    [&shared_labels] () { shared_labels.foo_iface_member2 (); });
+  foo const &const_shared_labels = shared_labels;
+  expect_bad_param (
+    error_count, "foo inactive const getter",
+    [&const_shared_labels] () { const_shared_labels.foo_iface_member2 (); });
+
+  try
+    {
+      shared_labels._d (0);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d accepted a discriminator for another member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d unchanged after BAD_PARAM", shared_labels._d (), 4);
+  if (ACE_OS::strcmp (shared_labels.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d changed the member value after BAD_PARAM\n"));
+      ++error_count;
+    }
+
+  foo shared_labels_copy (shared_labels);
+  expect_equals<CORBA::Short> (
+    error_count, "foo shared-label copy discriminator",
+    shared_labels_copy._d (), 4);
+  if (ACE_OS::strcmp (shared_labels_copy.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo shared-label copy has the wrong member value\n"));
+      ++error_count;
+    }
+
+  foo shared_labels_assigned;
+  shared_labels_assigned.foo_iface_member2 (1);
+  shared_labels_assigned = shared_labels;
+  expect_equals<CORBA::Short> (
+    error_count, "foo shared-label assignment discriminator",
+    shared_labels_assigned._d (), 4);
+  if (ACE_OS::strcmp (shared_labels_assigned.foo_str_member (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "foo shared-label assignment has the wrong member value\n"));
+      ++error_count;
+    }
+
+  shared_labels.foo_iface_member (10);
+  shared_labels._d (10);
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d valid explicit default", shared_labels._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit default member value",
+    shared_labels.foo_iface_member (), 10);
+  expect_bad_param (
+    error_count, "foo inactive shared-label getter",
+    [&shared_labels] () { shared_labels.foo_str_member (); });
+
+  try
+    {
+      shared_labels._d (-1);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "foo::_d changed an explicit default member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+  expect_equals<CORBA::Short> (
+    error_count, "foo::_d explicit default unchanged after BAD_PARAM",
+    shared_labels._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit default value unchanged after BAD_PARAM",
+    shared_labels.foo_iface_member (), 10);
+
+  foo explicit_default_copy (shared_labels);
+  expect_equals<CORBA::Short> (
+    error_count, "foo explicit-default copy discriminator",
+    explicit_default_copy._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit-default copy value",
+    explicit_default_copy.foo_iface_member (), 10);
+
+  shared_labels_assigned = shared_labels;
+  expect_equals<CORBA::Short> (
+    error_count, "foo explicit-default assignment discriminator",
+    shared_labels_assigned._d (), 10);
+  expect_equals<CORBA::Long> (
+    error_count, "foo explicit-default assignment value",
+    shared_labels_assigned.foo_iface_member (), 10);
+
+  Data implicit_default;
+  implicit_default._d (static_cast<DataType> (42));
+  DataType const implicit_default_disc = implicit_default._d ();
+
+  try
+    {
+      implicit_default._d (dtLong);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "Data::_d selected a member from the implicit default\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+  expect_equals<DataType> (
+    error_count, "Data implicit default unchanged after BAD_PARAM",
+    implicit_default._d (), implicit_default_disc);
+  expect_bad_param (
+    error_count, "Data implicit default long getter",
+    [&implicit_default] () { implicit_default.longData (); });
+  Data const &const_implicit_default = implicit_default;
+  expect_bad_param (
+    error_count, "Data implicit default short getter",
+    [&const_implicit_default] () { const_implicit_default.shortData (); });
+
+  Data implicit_default_copy (implicit_default);
+  expect_equals<DataType> (
+    error_count, "Data implicit-default copy discriminator",
+    implicit_default_copy._d (), implicit_default_disc);
+
+  Data implicit_default_assigned;
+  implicit_default_assigned.longData (1);
+  implicit_default_assigned = implicit_default;
+  expect_equals<DataType> (
+    error_count, "Data implicit-default assignment discriminator",
+    implicit_default_assigned._d (), implicit_default_disc);
+
+  implicit_default.longData (11);
+  implicit_default._d (dtLong);
+
+  try
+    {
+      implicit_default._d (dtShort);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "Data::_d changed the active member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+  expect_equals<DataType> (
+    error_count, "Data active discriminator unchanged after BAD_PARAM",
+    implicit_default._d (), dtLong);
+  expect_equals<CORBA::Long> (
+    error_count, "Data active value unchanged after BAD_PARAM",
+    implicit_default.longData (), 11);
+  expect_bad_param (
+    error_count, "Data inactive getter",
+    [&implicit_default] () { implicit_default.shortData (); });
+
+  FieldValue enum_union;
+  enum_union.strValue ("value");
+  enum_union._d (FTYPE_VARCHAR);
+  expect_equals<FieldType> (
+    error_count, "FieldValue::_d valid shared label",
+    enum_union._d (), FTYPE_VARCHAR);
+
+  try
+    {
+      enum_union._d (FTYPE_DEFCHAR);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "FieldValue::_d changed the active member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+  expect_equals<FieldType> (
+    error_count, "FieldValue::_d unchanged after BAD_PARAM",
+    enum_union._d (), FTYPE_VARCHAR);
+  if (ACE_OS::strcmp (enum_union.strValue (), "value") != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "FieldValue::_d changed the member value after BAD_PARAM\n"));
+      ++error_count;
+    }
+
+  AllBoolUnions::OneBranchTF single_boolean_member;
+  single_boolean_member.val (1);
+  single_boolean_member._d (false);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTF::_d valid shared label",
+    single_boolean_member._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTF value after valid discriminator",
+    single_boolean_member.val (), 1);
+
+  AllBoolUnions::OneBranchTD boolean_default_member;
+  boolean_default_member.val (2);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD initial discriminator",
+    boolean_default_member._d (), true);
+  boolean_default_member._d (false);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD::_d valid explicit default",
+    boolean_default_member._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTD value after valid discriminator",
+    boolean_default_member.val (), 2);
+
+  AllBoolUnions::OneBranchTD boolean_default_copy (boolean_default_member);
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD copy discriminator",
+    boolean_default_copy._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTD copy value",
+    boolean_default_copy.val (), 2);
+
+  AllBoolUnions::OneBranchTD boolean_default_assigned;
+  boolean_default_assigned = boolean_default_member;
+  expect_equals<CORBA::Boolean> (
+    error_count, "OneBranchTD assignment discriminator",
+    boolean_default_assigned._d (), false);
+  expect_equals<CORBA::Octet> (
+    error_count, "OneBranchTD assignment value",
+    boolean_default_assigned.val (), 2);
+
+  AllBoolUnions::TwoBranchesTF boolean_union;
+  boolean_union.val1 (1);
+
+  try
+    {
+      boolean_union._d (false);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "TwoBranchesTF::_d changed the active member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTF::_d unchanged after BAD_PARAM",
+    boolean_union._d (), true);
+  expect_equals<CORBA::Octet> (
+    error_count, "TwoBranchesTF value unchanged after BAD_PARAM",
+    boolean_union.val1 (), 1);
+  expect_bad_param (
+    error_count, "TwoBranchesTF inactive getter",
+    [&boolean_union] () { boolean_union.val2 (); });
+
+  AllBoolUnions::TwoBranchesTD boolean_explicit_default;
+  boolean_explicit_default.val2 ('v');
+
+  try
+    {
+      boolean_explicit_default._d (true);
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "TwoBranchesTD::_d changed the active default member\n"));
+    }
+  catch (CORBA::BAD_PARAM const &)
+    {
+    }
+
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTD::_d unchanged after BAD_PARAM",
+    boolean_explicit_default._d (), false);
+  expect_equals<CORBA::Char> (
+    error_count, "TwoBranchesTD value unchanged after BAD_PARAM",
+    boolean_explicit_default.val2 (), 'v');
+
+  AllBoolUnions::TwoBranchesTD boolean_explicit_default_copy (
+    boolean_explicit_default);
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTD copy discriminator",
+    boolean_explicit_default_copy._d (), false);
+  expect_equals<CORBA::Char> (
+    error_count, "TwoBranchesTD copy value",
+    boolean_explicit_default_copy.val2 (), 'v');
+
+  AllBoolUnions::TwoBranchesTD boolean_explicit_default_assigned;
+  boolean_explicit_default_assigned.val1 (1);
+  boolean_explicit_default_assigned = boolean_explicit_default;
+  expect_equals<CORBA::Boolean> (
+    error_count, "TwoBranchesTD assignment discriminator",
+    boolean_explicit_default_assigned._d (), false);
+  expect_equals<CORBA::Char> (
+    error_count, "TwoBranchesTD assignment value",
+    boolean_explicit_default_assigned.val2 (), 'v');
+  U87 struct_union;
+  struct_union.b_87_2 (1);
+  expect_bad_param (
+    error_count, "U87 inactive mutable structure getter",
+    [&struct_union] () { struct_union.b_87_1 (); });
+  U87 const &const_struct_union = struct_union;
+  expect_bad_param (
+    error_count, "U87 inactive const structure getter",
+    [&const_struct_union] () { const_struct_union.b_87_1 (); });
+
+  U85 array_union;
+  U42 array_value {};
+  array_union.b_85_2 (array_value);
+  expect_bad_param (
+    error_count, "U85 inactive array getter",
+    [&array_union] () { array_union.b_85_1 (); });
 }
 
 void
@@ -627,6 +961,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);
   test_default_initialized_union (error_count);
+  test_union_discriminators (error_count);
 
   return error_count ? 1 : 0;
 }

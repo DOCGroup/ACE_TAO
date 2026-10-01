@@ -191,7 +191,7 @@ Replicator::handle_exception (ACE_HANDLE )
               this->to_send_[l].action.state () != ImplementationRepository::AAM_UPDATE_FAILED)
             {
               payload[p++] = this->to_send_[l];
-              if (this->to_send_[l].action._d () != ImplementationRepository::access)
+              if (this->to_send_[l].action._d () == ImplementationRepository::access)
                 {
                   ACE_CString sid = this->to_send_[l].name.in();
                   this->prev_update_.bind (sid, this->to_send_[l].action.state ());
@@ -206,6 +206,7 @@ Replicator::handle_exception (ACE_HANDLE )
     }
   catch (const CORBA::Exception &)
     {
+      this->prev_update_.unbind_all ();
       this->peer_ =
         ImplementationRepository::UpdatePushNotification::_nil ();
     }

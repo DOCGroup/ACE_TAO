@@ -28,6 +28,31 @@ be_visitor_union_branch_public_ci::~be_visitor_union_branch_public_ci ()
 {
 }
 
+int
+be_visitor_union_branch_public_ci::emit_getter_validation (
+    be_union_branch *node)
+{
+  int const index = be_visitor_union::branch_index (node);
+
+  if (index == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_ci::"
+                         "emit_getter_validation - "
+                         "failed to determine the union branch index\n"),
+                        -1);
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+  *os << "if (_tao_member_index (this->disc_) != "
+      << static_cast<ACE_CDR::ULong> (index) << "UL)"
+      << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+      << "}" << be_uidt_nl;
+  return 0;
+}
+
 // visit the union_branch node
 int
 be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
@@ -186,8 +211,10 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
-      << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
   return 0;
@@ -256,8 +283,10 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
       << "ACE_INLINE" << be_nl
       << bt->name () << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
-      << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
   return 0;
@@ -345,8 +374,10 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       << "ACE_INLINE" << be_nl
       << bt->name () << "_ptr" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
-      << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
       << "}";
 
   return 0;
@@ -434,8 +465,10 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       << "ACE_INLINE" << be_nl
       << bt->name () << "_ptr" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
-      << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
       << "}";
 
   return 0;
@@ -528,8 +561,10 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
       << "ACE_INLINE" << be_nl
       << bt->name () << "*" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
-      << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
       << "}";
 
   return 0;
@@ -677,6 +712,8 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << bu->name () << "::" << ub->local_name ()
             << " () const" << be_nl
             << "{" << be_idt_nl;
+        if (this->emit_getter_validation (ub) == -1)
+          return -1;
         *os << "return this->u_." << ub->local_name ()
             << "_->in ();" << be_uidt_nl;
         *os << "}";
@@ -690,6 +727,8 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << bu->name () << "::" << ub->local_name ()
             << " () const" << be_nl
             << "{" << be_idt_nl;
+        if (this->emit_getter_validation (ub) == -1)
+          return -1;
         *os << "return this->u_." << ub->local_name ()
             << "_;" << be_uidt_nl;
         *os << "}";
@@ -703,6 +742,8 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << bu->name () << "::" << ub->local_name ()
             << " () const" << be_nl
             << "{" << be_idt_nl;
+        if (this->emit_getter_validation (ub) == -1)
+          return -1;
         *os << "return this->u_." << ub->local_name ()
             << "_;" << be_uidt_nl;
         *os << "}";
@@ -715,8 +756,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << "const ::" << bt->name () << " &" << be_nl
             << bu->name () << "::" << ub->local_name ()
             << " () const" << be_nl
-            << "{" << be_idt_nl
-            << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+            << "{" << be_idt_nl;
+        if (this->emit_getter_validation (ub) == -1)
+          return -1;
+        *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
             << "}" << be_nl_2;
 
         // Get method with read/write access
@@ -725,8 +768,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << "::" << bt->name () << " &" << be_nl
             << bu->name () << "::" << ub->local_name ()
             << " ()" << be_nl
-            << "{" << be_idt_nl
-            << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+            << "{" << be_idt_nl;
+        if (this->emit_getter_validation (ub) == -1)
+          return -1;
+        *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
             << "}";
         break;
       case AST_PredefinedType::PT_void:
@@ -738,8 +783,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << "::" << bt->name () << be_nl
             << bu->name () << "::" << ub->local_name ()
             << " () const" << be_nl
-            << "{" << be_idt_nl
-            << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
+            << "{" << be_idt_nl;
+        if (this->emit_getter_validation (ub) == -1)
+          return -1;
+        *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
             << "}";
 
         break;
@@ -825,8 +872,10 @@ be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
       << "ACE_INLINE" << be_nl
       << "const " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
-      << "{" << be_idt_nl
-      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Read/write get method.
@@ -834,8 +883,10 @@ be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
       << "ACE_INLINE" << be_nl
       << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " ()" << be_nl
-      << "{" << be_idt_nl
-      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
   return 0;
@@ -1004,8 +1055,10 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   *os << bu->name () << "::" << ub->local_name ()
       << " () const // get method" << be_nl
-      << "{" << be_idt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
   return 0;
@@ -1113,6 +1166,9 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
 
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+
   if (bt->size_type () == be_type::VARIABLE
       || node->has_constructor ())
     {
@@ -1131,6 +1187,9 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl;
+
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
 
   if (bt->size_type () == be_type::VARIABLE
       || node->has_constructor ())
@@ -1267,8 +1326,10 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << "ACE_INLINE" << be_nl
       << "const " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
-      << "{" << be_idt_nl
-      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Read/write get method.
@@ -1276,8 +1337,10 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << "ACE_INLINE" << be_nl
       << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " ()" << be_nl
-      << "{" << be_idt_nl
-      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
+      << "{" << be_idt_nl;
+  if (this->emit_getter_validation (ub) == -1)
+    return -1;
+  *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}";
 
   return 0;

@@ -54,6 +54,46 @@ module DynAnyTests
   typedef test_struct test_struct_alias;
   typedef test_union test_union_alias;
 
+  union test_multi_label_union switch (long) {
+    case 1:
+    case 2: string value;
+    default: long other;
+  };
+
+  union test_default_label_union switch (long) {
+    case 1:
+    default: long value;
+    case 2: short other;
+  };
+
+  union test_boolean_union switch (boolean) {
+    case TRUE: long true_value;
+    case FALSE: short false_value;
+  };
+
+  union test_char_union switch (char) {
+    case 'a':
+    case 'b': long value;
+    case 'c': short other;
+  };
+
+  enum discriminator_enum {
+    DE_FIRST,
+    DE_SECOND,
+    DE_THIRD
+  };
+
+  union test_enum_union switch (discriminator_enum) {
+    case DE_FIRST:
+    case DE_SECOND: long value;
+    case DE_THIRD: short other;
+  };
+
+  union test_enum_default_union switch (discriminator_enum) {
+    case DE_FIRST: long value;
+    default: short other;
+  };
+
   union test_implicit_def switch (boolean) {
     case TRUE :
        test_enum tenum;

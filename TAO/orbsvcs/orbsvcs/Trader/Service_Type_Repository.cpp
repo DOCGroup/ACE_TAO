@@ -165,8 +165,9 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
   bool const all = which_types._d () == CosTradingRepos::ServiceTypeRepository::all;
   // FIXME: && (which_types.all_ () == true) ?
 
-  CosTradingRepos::ServiceTypeRepository::IncarnationNumber num =
-    which_types.incarnation ();
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber num {};
+  if (!all)
+    num = which_types.incarnation ();
 
   for (Service_Type_Map_Iterator itr (this->type_map_);
        itr.done () == 0;

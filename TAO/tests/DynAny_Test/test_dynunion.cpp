@@ -67,7 +67,6 @@ Test_DynUnion::run_test ()
                  "testing: constructor(Any)/from_any/to_any with string\n"));
 
       DynAnyTests::test_union tstring;
-      tstring._d (DynAnyTests::TE_THIRD);
       tstring.str (CORBA::string_dup (data.m_string1));
       CORBA::Any in_any4;
       in_any4 <<= tstring;
@@ -84,9 +83,197 @@ Test_DynUnion::run_test ()
         dynany_factory->create_dyn_any (out_any5.in());
 
       ACE_DEBUG ((LM_DEBUG,
+                  "testing: union discriminator validation\n"));
+
+      DynAnyTests::test_multi_label_union multi_label;
+      multi_label.value (CORBA::string_dup (data.m_string1));
+      multi_label._d (2);
+
+      if (multi_label._d () != 2
+          || ACE_OS::strcmp (multi_label.value (), data.m_string1) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: valid discriminator for the same union member was rejected\n"));
+          ++this->error_count_;
+        }
+
+      try
+        {
+          multi_label._d (3);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: changing the active union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: discriminator 3 selects a different member.
+        }
+
+      if (multi_label._d () != 2
+          || ACE_OS::strcmp (multi_label.value (), data.m_string1) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: invalid discriminator modified the union\n"));
+          ++this->error_count_;
+        }
+
+      DynAnyTests::test_default_label_union default_label;
+      default_label.value (10);
+      default_label._d (3);
+
+      if (default_label._d () != 3 || default_label.value () != 10)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: valid discriminator for the default union member was rejected\n"));
+          ++this->error_count_;
+        }
+
+      try
+        {
+          default_label._d (2);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: changing the default union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: discriminator 2 selects a different member.
+        }
+
+      DynAnyTests::test_union_no_active_member no_active_member;
+      no_active_member._d (3);
+
+      try
+        {
+          no_active_member._d (1);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: selecting a union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: discriminator 1 selects field_long.
+        }
+
+      no_active_member.field_long (11);
+      no_active_member._d (1);
+
+      try
+        {
+          no_active_member._d (2);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: changing an active union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: discriminator 2 selects field_string.
+        }
+
+      DynAnyTests::test_boolean_union boolean_union;
+      boolean_union.true_value (12);
+      boolean_union._d (true);
+
+      try
+        {
+          boolean_union._d (false);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: changing a boolean union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: false selects false_value.
+        }
+
+      DynAnyTests::test_char_union char_union;
+      char_union._d ('z');
+
+      try
+        {
+          char_union._d ('a');
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: selecting a char union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: 'a' selects value instead of the implicit default.
+        }
+
+      char_union.value (13);
+      char_union._d ('b');
+
+      if (char_union._d () != 'b' || char_union.value () != 13)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: valid char discriminator for the same union member was rejected\n"));
+          ++this->error_count_;
+        }
+
+      try
+        {
+          char_union._d ('c');
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: changing a char union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: 'c' selects other.
+        }
+
+      DynAnyTests::test_enum_union enum_union;
+      enum_union.value (14);
+      enum_union._d (DynAnyTests::DE_SECOND);
+
+      if (enum_union._d () != DynAnyTests::DE_SECOND
+          || enum_union.value () != 14)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: valid enum discriminator for the same union member was rejected\n"));
+          ++this->error_count_;
+        }
+
+      try
+        {
+          enum_union._d (DynAnyTests::DE_THIRD);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: changing an enum union member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: DE_THIRD selects other.
+        }
+
+      DynAnyTests::test_enum_default_union enum_default_union;
+      enum_default_union.other (15);
+      enum_default_union._d (DynAnyTests::DE_THIRD);
+
+      if (enum_default_union._d () != DynAnyTests::DE_THIRD
+          || enum_default_union.other () != 15)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: valid enum default discriminator was rejected\n"));
+          ++this->error_count_;
+        }
+
+      try
+        {
+          enum_default_union._d (DynAnyTests::DE_FIRST);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: changing an enum default member with _d() did not throw BAD_PARAM\n"));
+          ++this->error_count_;
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+          // Expected: DE_FIRST selects value.
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get\n"));
 
-      tu._d (DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
       CORBA::Any in_any1;
       in_any1 <<= tu;
