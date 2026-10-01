@@ -207,10 +207,13 @@ public:
     // destructed but *this will remain unchanged.
     element_traits::initialize_range(
         tmp.buffer_ + length_, tmp.buffer_ + length);
-    element_traits::copy_swap_range(
-      buffer_,
-      buffer_ + length_,
-      tmp.buffer_);
+    if (length_ != 0)
+      {
+        element_traits::copy_swap_range(
+          buffer_,
+          buffer_ + length_,
+          tmp.buffer_);
+      }
 
     swap(tmp);
   }

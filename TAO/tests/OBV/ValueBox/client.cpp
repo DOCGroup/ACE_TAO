@@ -1230,18 +1230,34 @@ int test_boxed_union()
   OBV_VERITY (valuebox1->m1 () == 37);
   OBV_VERITY (valuebox1->_d () == 1 || valuebox1->_d () == 2);
 
-  // Explicitly set discriminant, make sure thats the only thing
-  // that changes.
-  valuebox1->_d (2);
-  OBV_VERITY (valuebox1->_d () == 2);
+  // Changing the discriminator to select another member is invalid.
+  try
+    {
+      valuebox1->_d (2);
+      OBV_VERITY (false);
+    }
+  catch (const CORBA::BAD_PARAM&)
+    {
+    }
+  OBV_VERITY (valuebox1->_d () == 1);
   OBV_VERITY (valuebox1->m1 () == 37);
+
+  // Setting the discriminator for the active member is valid.
   valuebox1->_d (1);
   OBV_VERITY (valuebox1->_d () == 1);
   OBV_VERITY (valuebox1->m1 () == 37);
 
-  // Use _value() to access
-  valuebox1->_value ()._d (2);
-  OBV_VERITY (valuebox1->_d () == 2);
+  // The same discriminator validation applies through _value().
+  try
+    {
+      valuebox1->_value ()._d (2);
+      OBV_VERITY (false);
+    }
+  catch (const CORBA::BAD_PARAM&)
+    {
+    }
+  OBV_VERITY (valuebox1->_d () == 1);
+  OBV_VERITY (valuebox1->m1 () == 37);
 
   // Use _value as modifier.
   valuebox1->_value (fixed_union1.in());

@@ -1,6 +1,7 @@
 #include "ace/Log_Msg.h"
 
 #include "orbsvcs/Notify/MonitorControl/Control.h"
+#include "tao/Exception.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -60,7 +61,12 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("The TAO_NS_Control callback does not work");
         }
     }
-  catch(...)
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Control: ");
+      error ("Caught a CORBA exception");
+    }
+  catch (...)
     {
       error ("Caught an unexpected exception type");
     }
@@ -69,4 +75,3 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   return 0;
 }
-

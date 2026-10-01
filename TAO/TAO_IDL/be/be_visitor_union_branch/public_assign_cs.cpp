@@ -37,58 +37,20 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  const be_visitor_union::BoolUnionBranch bub =
-    be_visitor_union::boolean_branch (node);
+  const int index = be_visitor_union::branch_index (node);
 
-  be_union *bu = dynamic_cast<be_union*> (node->defined_in ());
-  AST_Field **last_field = nullptr;
-  const bool last_branch =
-    bu != nullptr
-    && bu->nfields () != 0
-    && bu->field (last_field, bu->nfields () - 1) == 0
-    && last_field != nullptr
-    && *last_field == node;
-
-  if (bub == be_visitor_union::BUB_NONE)
+  if (index == -1)
     {
-      *os << be_nl;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_assign_cs::"
+                         "visit_union_branch - "
+                         "failed to determine union branch index\n"),
+                        -1);
     }
 
-  switch (bub)
-    {
-    case be_visitor_union::BUB_NONE:
-      // This visitor is used when we are generating the copy ctor and
-      // assignment operator for the union.
-      // Individual assignment of the members takes place inside a case
-      // statement because the type of member assigned is based on the value
-      // of the discriminant
-      for (unsigned long i = 0;
-           i < node->label_list_length ();
-           ++i)
-        {
-          // check if we are printing the default case
-          if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
-            {
-              *os << "default:" << be_nl;
-            }
-          else
-            {
-              *os << "case ";
-              node->gen_label_value (os, i);
-              *os << ":" << be_nl;
-            }
-        }
-
-      *os << "{" << be_idt_nl;
-      break;
-    case be_visitor_union::BUB_TRUE:
-    case be_visitor_union::BUB_FALSE:
-      *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
-          << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
-      break;
-    case be_visitor_union::BUB_UNCONDITIONAL:
-      break;
-    }
+  *os << be_nl
+      << "case " << static_cast<ACE_CDR::ULong> (index) << "UL:" << be_nl
+      << "{" << be_idt_nl;
 
   // first generate the type information
   be_type *bt = dynamic_cast<be_type*> (node->field_type ());
@@ -113,26 +75,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
                          ), -1);
     }
 
-  switch (bub)
-    {
-    case be_visitor_union::BUB_NONE:
-      *os << "}" << be_nl << "break;";
-      break;
-    case be_visitor_union::BUB_TRUE:
-    case be_visitor_union::BUB_FALSE:
-      *os << "}" << be_uidt;
-      if (last_branch)
-        {
-          *os << be_uidt_nl;
-        }
-      else
-        {
-          *os << be_nl;
-        }
-      break;
-    case be_visitor_union::BUB_UNCONDITIONAL:
-      break;
-    }
+  *os << "}" << be_nl << "break;";
 
   return 0;
 }

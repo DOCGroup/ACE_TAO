@@ -42,6 +42,8 @@ public:
   enum BoolUnionBranch { BUB_NONE, BUB_UNCONDITIONAL, BUB_TRUE, BUB_FALSE };
 
   static BoolUnionBranch boolean_branch (be_union_branch *b);
+
+  static int branch_index (be_union_branch *b);
 };
 
 #endif /* _BE_VISITOR_UNION_UNION_H_ */

@@ -1,5 +1,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Monitor_Base.h"
+#include "tao/Exception.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -126,6 +127,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       list.clear ();
       list.receive (l);
     }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Statistic: ");
+      error ("Caught a CORBA exception");
+    }
   catch (...)
     {
       error ("Caught an unexpected exception type");
@@ -135,4 +141,3 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   return 0;
 }
-
