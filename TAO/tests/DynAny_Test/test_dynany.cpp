@@ -369,7 +369,7 @@ Test_DynAny::run_test ()
         }
       else
         {
-          fixed_sequence->length (1);
+          fixed_sequence->set_length (1);
           fixed_sequence->seek (0);
           DynamicAny::DynAny_var component =
             fixed_sequence->current_component ();
