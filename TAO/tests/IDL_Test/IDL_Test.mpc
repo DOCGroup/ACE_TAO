@@ -75,6 +75,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     idlflags += -GA
     array_only.idl
     constants.idl
+    fixed.idl
     generic_object.idl
 
     inherit.idl
@@ -143,6 +144,9 @@ project(*DLL): taoidldefaults, taolib, messaging {
     constantsA.cpp
     constantsC.cpp
     constantsS.cpp
+    fixedA.cpp
+    fixedC.cpp
+    fixedS.cpp
     dif2A.cpp
     dif2C.cpp
     dif2S.cpp

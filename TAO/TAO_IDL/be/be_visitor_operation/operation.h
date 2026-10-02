@@ -19,6 +19,7 @@
 #include "be_operation.h"
 #include "be_module.h"
 #include "be_predefined_type.h"
+#include "be_fixed.h"
 #include "be_sequence.h"
 #include "be_string.h"
 #include "be_structure.h"

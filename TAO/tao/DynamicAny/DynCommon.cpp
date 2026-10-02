@@ -8,6 +8,7 @@
 #include "tao/DynamicAny/DynAny_i.h"
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynEnum_i.h"
+#include "tao/DynamicAny/DynFixed_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
@@ -1151,6 +1152,10 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
       TAO::DynAnyFlagUtils<TAO_DynEnum_i>::set_flag_t (component,
                                                        destroying);
       break;
+    case CORBA::tk_fixed:
+      TAO::DynAnyFlagUtils<TAO_DynFixed_i>::set_flag_t (component,
+                                                        destroying);
+      break;
     case CORBA::tk_sequence:
       if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
         {
@@ -1179,8 +1184,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
       TAO::DynAnyFlagUtils<TAO_DynValueBox_i>::set_flag_t (component,
                                                            destroying);
       break;
-    case CORBA::tk_fixed:
-      throw ::CORBA::NO_IMPLEMENT ();
     default:
       TAO::DynAnyFlagUtils<TAO_DynAny_i>::set_flag_t (component,
                                                       destroying);

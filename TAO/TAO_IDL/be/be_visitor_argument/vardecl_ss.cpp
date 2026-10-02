@@ -255,6 +255,17 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
   return 0;
 }
 
+int be_visitor_args_vardecl_ss::visit_fixed (be_fixed *)
+{
+  be_argument * const arg = dynamic_cast<be_argument*> (this->ctx_->node ());
+
+  if (arg == nullptr)
+    return -1;
+
+  *this->ctx_->stream () << "::ACE_CDR::Fixed " << arg->local_name () << ";";
+  return 0;
+}
+
 int be_visitor_args_vardecl_ss::visit_sequence (
   be_sequence *node)
 {

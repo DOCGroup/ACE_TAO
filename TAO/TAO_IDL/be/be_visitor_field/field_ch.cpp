@@ -284,6 +284,24 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
 }
 
 int
+be_visitor_field_ch::visit_fixed (be_fixed *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = this->ctx_->alias ();
+
+  if (bt != nullptr)
+    {
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
+    }
+  else
+    {
+      *os << "::ACE_CDR::Fixed";
+    }
+
+  return 0;
+}
+
+int
 be_visitor_field_ch::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

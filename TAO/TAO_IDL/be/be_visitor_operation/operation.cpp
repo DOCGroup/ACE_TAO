@@ -436,6 +436,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   AST_Type *ut = bt->unaliased_type ();
   nt = ut->node_type ();
 
+  if (nt == AST_Decl::NT_fixed)
+    {
+      *os << "::ACE_CDR::Fixed";
+      return;
+    }
+
   // For the four predefined types below, we use the helper struct
   // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)

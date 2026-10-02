@@ -342,9 +342,7 @@ be_visitor::visit_native (be_native *)
 }
 
 int
-be_visitor::visit_fixed (be_fixed *node)
+be_visitor::visit_fixed (be_fixed *)
 {
-  if (!be_global->no_fixed_err ())
-    idl_global->err ()->fixed_unsupported (node);
   return 1;
 }
