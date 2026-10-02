@@ -65,6 +65,7 @@ public:
 
   /// visit predefined type
   virtual int visit_predefined_type (be_predefined_type *node);
+  virtual int visit_fixed (be_fixed *node);
 
   /// visit sequence type
   virtual int visit_sequence (be_sequence *node);

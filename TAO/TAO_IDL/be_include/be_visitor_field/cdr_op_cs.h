@@ -43,6 +43,7 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   virtual int visit_predefined_type (be_predefined_type *node);
+  virtual int visit_fixed (be_fixed *node);
   virtual int visit_sequence (be_sequence *node);
   virtual int visit_map (be_map *node);
   virtual int visit_string (be_string *node);

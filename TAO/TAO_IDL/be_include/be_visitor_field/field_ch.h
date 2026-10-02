@@ -35,6 +35,7 @@ public:
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_predefined_type (be_predefined_type *node);
+  virtual int visit_fixed (be_fixed *node);
   virtual int visit_sequence (be_sequence *node);
   virtual int visit_map (be_map *node);
   virtual int visit_string (be_string *node);

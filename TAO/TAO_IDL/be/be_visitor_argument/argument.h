@@ -21,6 +21,7 @@
 #include "be_component_fwd.h"
 #include "be_native.h"
 #include "be_predefined_type.h"
+#include "be_fixed.h"
 #include "be_string.h"
 #include "be_typedef.h"
 #include "be_structure.h"
