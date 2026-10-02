@@ -17,8 +17,8 @@
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
 #include "ace/Date_Time.h"
-#include "ace/Numeric_Limits.h"
 #include <sstream>
+#include <limits>
 #include <type_traits>
 
 int timeval_test_func (const ACE_Time_Value* timeout)
@@ -214,25 +214,95 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (ACE_Time_Value::max_time.usec () != -1);
 
   // Test performance of normalize()
-  ACE_Time_Value v1(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
-  ACE_Time_Value v2(ACE_Numeric_Limits<time_t>::min(),
-                   ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v3(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v4(ACE_Numeric_Limits<time_t>::min(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
+  ACE_Time_Value v1((std::numeric_limits<time_t>::max) (),
+                    (std::numeric_limits<suseconds_t>::max) ());
+  ACE_Time_Value v2((std::numeric_limits<time_t>::min) (),
+                   (std::numeric_limits<suseconds_t>::min) ());
+  ACE_Time_Value v3((std::numeric_limits<time_t>::max) (),
+                    (std::numeric_limits<suseconds_t>::min) ());
+  ACE_Time_Value v4((std::numeric_limits<time_t>::min) (),
+                    (std::numeric_limits<suseconds_t>::max) ());
 
-  v1.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::max());
-  v2.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v3.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v4.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::max());
+  v1.set((std::numeric_limits<time_t>::max) (),
+         (std::numeric_limits<suseconds_t>::max) ());
+  v2.set((std::numeric_limits<time_t>::min) (),
+         (std::numeric_limits<suseconds_t>::min) ());
+  v3.set((std::numeric_limits<time_t>::max) (),
+         (std::numeric_limits<suseconds_t>::min) ());
+  v4.set((std::numeric_limits<time_t>::min) (),
+         (std::numeric_limits<suseconds_t>::max) ());
 
   v1.set(DBL_MAX);
+
+  // Arithmetic at the time_t limits must saturate without signed overflow.
+  time_t const max_sec = (std::numeric_limits<time_t>::max) ();
+  ACE_Time_Value const max_bound (max_sec, ACE_ONE_SECOND_IN_USECS - 1);
+  ACE_Time_Value const max_whole_sec (max_sec, 0);
+  ACE_Time_Value boundary_identity (max_whole_sec);
+  boundary_identity *= 1.0;
+  ACE_TEST_ASSERT (boundary_identity == max_whole_sec);
+  ACE_TEST_ASSERT (max_bound * 2.0 == max_bound);
+  ACE_TEST_ASSERT (max_bound * 0.0 == ACE_Time_Value::zero);
+  ACE_TEST_ASSERT (ACE_Time_Value (0, 1) * 0.5 == ACE_Time_Value (0, 1));
+  ACE_TEST_ASSERT (ACE_Time_Value (0, 1) * -0.5 == ACE_Time_Value (0, -1));
+
+  // On 32-bit time_t, rounding can carry into the maximum second.
+  if (sizeof (time_t) == 4 && (std::numeric_limits<time_t>::is_signed))
+    {
+      ACE_Time_Value round_past_max (max_sec - 10, ACE_ONE_SECOND_IN_USECS - 1);
+      round_past_max *= 1.0000000046566133;
+      ACE_TEST_ASSERT (round_past_max == max_bound);
+    }
+
+  ACE_Time_Value add_to_max (max_sec - 1, 0);
+  add_to_max += ACE_Time_Value (1);
+  ACE_TEST_ASSERT (add_to_max == max_whole_sec);
+
+  ACE_Time_Value add_past_max (max_bound);
+  add_past_max += ACE_Time_Value (0, 1);
+  ACE_TEST_ASSERT (add_past_max == max_bound);
+  ACE_Time_Value add_past_max_seconds (max_bound);
+  add_past_max_seconds += static_cast<time_t> (1);
+  ACE_TEST_ASSERT (add_past_max_seconds == max_bound);
+  ACE_Time_Value increment_past_max (max_bound);
+  ++increment_past_max;
+  ACE_TEST_ASSERT (increment_past_max == max_bound);
+
+  ACE_Time_Value const half_max (max_sec / 2, 0);
+  ACE_TEST_ASSERT (half_max * 2.0 == ACE_Time_Value (max_sec - 1, 0));
+
+  if (std::numeric_limits<time_t>::is_signed)
+    {
+      ACE_Time_Value const min_bound ((std::numeric_limits<time_t>::min) (),
+                                      -ACE_ONE_SECOND_IN_USECS + 1);
+      ACE_Time_Value sub_from_min ((std::numeric_limits<time_t>::min) () + 1, 0);
+      sub_from_min -= ACE_Time_Value (1);
+      ACE_TEST_ASSERT (sub_from_min == ACE_Time_Value (
+        (std::numeric_limits<time_t>::min) (), 0));
+
+      ACE_Time_Value sub_past_min (min_bound);
+      sub_past_min -= ACE_Time_Value (0, 1);
+      ACE_TEST_ASSERT (sub_past_min == min_bound);
+      ACE_Time_Value decrement_past_min (min_bound);
+      --decrement_past_min;
+      ACE_TEST_ASSERT (decrement_past_min == min_bound);
+
+      ACE_Time_Value subtract_past_min (min_bound);
+      subtract_past_min -= ACE_Time_Value (1);
+      ACE_TEST_ASSERT (subtract_past_min == min_bound);
+
+      ACE_Time_Value subtract_past_min_seconds (min_bound);
+      subtract_past_min_seconds -= static_cast<time_t> (1);
+      ACE_TEST_ASSERT (subtract_past_min_seconds == min_bound);
+
+      ACE_Time_Value multiply_past_min (min_bound);
+      multiply_past_min *= 2.0;
+      ACE_TEST_ASSERT (multiply_past_min == min_bound);
+
+      ACE_Time_Value add_past_min_seconds (min_bound);
+      add_past_min_seconds += static_cast<time_t> (-1);
+      ACE_TEST_ASSERT (add_past_min_seconds == min_bound);
+    }
 
   // Test setting from ACE_UINT64
   ms = 42555;

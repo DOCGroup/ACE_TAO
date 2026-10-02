@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-8.0.8 and ACE-8.0.9
 ====================================================
 
+. Saturate ACE_Time_Value arithmetic at time_t limits and avoid out-of-range
+  floating-point conversions when multiplying near the limits
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.7 and ACE-8.0.8
 ====================================================
 

@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "ace/Truncate.h"
+#include <limits>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,14 +69,14 @@ ACE_INLINE void
 ACE_Time_Value::set (double d)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-  if (d < ACE_Numeric_Limits<time_t>::min())
+  if (d < (std::numeric_limits<time_t>::min) ())
     {
-      this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::min();
+      this->tv_.tv_sec = (std::numeric_limits<time_t>::min) ();
       this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
     }
-  else if (d > ACE_Numeric_Limits<time_t>::max())
+  else if (d > (std::numeric_limits<time_t>::max) ())
     {
-      this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::max();
+      this->tv_.tv_sec = (std::numeric_limits<time_t>::max) ();
       this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
     }
   else
@@ -322,50 +323,12 @@ operator != (const ACE_Time_Value &tv1,
   return !(tv1 == tv2);
 }
 
-/// Add TV to this.
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator+=");
-  this->sec (this->sec () + tv.sec ());
-  this->usec (this->usec () + tv.usec ());
-  this->normalize ();
-  return *this;
-}
-
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator+= (time_t tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator+=");
-  this->sec (this->sec () + tv);
-  return *this;
-}
-
 ACE_INLINE ACE_Time_Value &
 ACE_Time_Value::operator= (time_t tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator=");
   this->sec (tv);
   this->usec (0);
-  return *this;
-}
-
-/// Subtract TV to this.
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator-=");
-  this->sec (this->sec () - tv.sec ());
-  this->usec (this->usec () - tv.usec ());
-  this->normalize ();
-  return *this;
-}
-
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator-= (time_t tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator-=");
-  this->sec (this->sec () - tv);
   return *this;
 }
 
