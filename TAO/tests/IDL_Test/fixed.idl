@@ -1,0 +1,35 @@
+//=============================================================================
+/**
+ *  @file    fixed.idl
+ *
+ *  Coverage for IDL fixed-point types and their generated C++ mappings.
+ */
+//=============================================================================
+
+module FixedPoint
+{
+  // Exercise the smallest useful combinations as well as both legal limits.
+  typedef fixed<3, 0> WholeNumber;
+  typedef fixed<3, 3> Fraction;
+  typedef fixed<10, 3> Amount;
+  typedef fixed<31, 0> MaximumDigits;
+  typedef fixed<31, 31> MaximumScale;
+
+  struct FixedValues
+  {
+    WholeNumber whole_value;
+    Fraction fractional_value;
+    Amount monetary_value;
+    MaximumDigits maximum_digits_value;
+    MaximumScale maximum_scale_value;
+  };
+
+  interface FixedOperations
+  {
+    attribute Amount rate;
+  };
+
+  // Verify that aliases preserve the declared precision and scale.
+  typedef Amount AmountAlias;
+  typedef AmountAlias AmountAlias2;
+};
