@@ -44,6 +44,7 @@ public:
   virtual int visit_connector (be_connector *node);
   virtual int visit_sequence (be_sequence *node);
   virtual int visit_string (be_string *node);
+  virtual int visit_fixed (be_fixed *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_union (be_union *node);

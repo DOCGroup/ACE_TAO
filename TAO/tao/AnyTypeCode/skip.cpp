@@ -70,6 +70,12 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
     case CORBA::tk_wchar:
       continue_skipping = stream->skip_wchar ();
       break;
+    case CORBA::tk_fixed:
+      // Fixed-point values are BCD octets: one nibble per digit plus
+      // a leading pad nibble for even precisions and a sign nibble.
+      continue_skipping = stream->skip_bytes (
+        static_cast<ACE_CDR::ULong> ((tc->fixed_digits () + 2) / 2));
+      break;
     default:
       retval = TAO::TRAVERSE_STOP;
       // we are not a primitive type

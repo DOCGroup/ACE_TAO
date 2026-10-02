@@ -220,6 +220,14 @@ be_visitor_sequence_buffer_type::visit_string (be_string *node)
 }
 
 int
+be_visitor_sequence_buffer_type::visit_fixed (be_fixed *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  *os << "::ACE_CDR::Fixed";
+  return 0;
+}
+
+int
 be_visitor_sequence_buffer_type::visit_structure (be_structure *node)
 {
   return this->visit_node (node);

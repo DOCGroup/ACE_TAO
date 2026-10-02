@@ -77,6 +77,17 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
     case CORBA::tk_wchar:
       continue_append = dest->append_wchar (*src);
       break;
+    case CORBA::tk_fixed:
+      {
+        CORBA::UShort const length = (tc->fixed_digits () + 2) / 2;
+        for (CORBA::UShort i = 0; i < length && continue_append; ++i)
+          {
+            ACE_CDR::Octet octet;
+            continue_append = src->read_octet (octet)
+              && dest->write_octet (octet);
+          }
+      }
+      break;
     default:
       retval = TAO::TRAVERSE_STOP;
       // we are not a primitive type
