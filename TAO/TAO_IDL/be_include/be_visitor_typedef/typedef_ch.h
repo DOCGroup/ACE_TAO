@@ -56,6 +56,9 @@ public:
   /// visit a typedef
   virtual int visit_string (be_string *node);
 
+  /// visit a fixed-point type
+  virtual int visit_fixed (be_fixed *node);
+
   /// visit a sequence
   virtual int visit_sequence (be_sequence *node);
 

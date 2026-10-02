@@ -419,6 +419,20 @@ be_visitor_typedef_ch::visit_string (be_string *node)
 }
 
 int
+be_visitor_typedef_ch::visit_fixed (be_fixed *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ()->decl ();
+
+  TAO_INSERT_COMMENT (os);
+  *os << "typedef ::ACE_CDR::Fixed "
+      << tdef->nested_type_name (scope) << ";";
+
+  return 0;
+}
+
+int
 be_visitor_typedef_ch::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

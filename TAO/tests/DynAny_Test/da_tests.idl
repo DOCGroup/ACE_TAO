@@ -20,6 +20,13 @@ module DynAnyTests
   typedef sequence<short> SeqShort;
   typedef sequence<boolean> SeqBoolean;
 
+  typedef fixed<10, 3> test_fixed;
+  typedef fixed<31, 0> test_max_fixed;
+  typedef fixed<31, 31> test_max_scale_fixed;
+  typedef fixed<3, 3> test_fraction_fixed;
+  typedef fixed<3, 0> test_small_fixed;
+  typedef sequence<test_fixed> test_fixed_sequence;
+
   const unsigned long DIM = 2;
   typedef long test_array [DIM];
 

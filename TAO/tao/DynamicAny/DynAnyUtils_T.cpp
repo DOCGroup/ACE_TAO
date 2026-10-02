@@ -18,6 +18,7 @@
 #include "tao/DynamicAny/DynAny_i.h"
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynEnum_i.h"
+#include "tao/DynamicAny/DynFixed_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
@@ -254,6 +255,11 @@ namespace TAO
               ANY_TC>::create_dyn_any_t (any_tc, allow_truncation);
 
         case CORBA::tk_fixed:
+          return
+            CreateDynAnyUtils<
+              TAO_DynFixed_i,
+              ANY_TC>::create_dyn_any_t (any_tc, allow_truncation);
+
         case CORBA::tk_abstract_interface:
         case CORBA::tk_component:
         case CORBA::tk_home:
