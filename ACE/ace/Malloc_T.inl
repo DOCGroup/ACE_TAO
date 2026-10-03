@@ -38,6 +38,26 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
   return this->free_list_.size ();
 }
 
+template <class ACE_LOCK> ACE_INLINE size_t
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::pool_sum ()
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
+
+  return this->chunk_sum_;
+}
+
+template <class ACE_LOCK> ACE_INLINE ACE_LOCK &
+ACE_Cascaded_Dynamic_Cached_Allocator<ACE_LOCK>::mutex ()
+{
+  return this->mutex_;
+}
+
+template <class ACE_LOCK>
+ACE_INLINE ACE_LOCK& ACE_Cascaded_Multi_Size_Based_Allocator<ACE_LOCK>::mutex ()
+{
+  return this->mutex_;
+}
+
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter ()
 {
