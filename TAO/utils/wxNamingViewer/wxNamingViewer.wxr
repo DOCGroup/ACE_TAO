@@ -1,5 +1,5 @@
-static char *bindObject = "dialog(name = 'bindObject',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+static const char *bindObject = "dialog(name = 'bindObject',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Bind Object/Context',\
   id = 133,\
   x = -1, y = -1, width = 274, height = 66,\
@@ -26,8 +26,8 @@ static char *bindObject = "dialog(name = 'bindObject',\
   control = [1018, wxButton, 'View IOR', '0', 'viewIORButton', 222, 26, 50, 12, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *addNameServer = "dialog(name = 'addNameServer',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+static const char *addNameServer = "dialog(name = 'addNameServer',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Add Name Server',\
   id = 136,\
   x = -1, y = -1, width = 186, height = 69,\
@@ -48,8 +48,8 @@ static char *addNameServer = "dialog(name = 'addNameServer',\
   control = [5105, wxStaticText, 'IOR:', '0', 'statictext7', 7, 30, 24, 6, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *bindNewContext = "dialog(name = 'bindNewContext',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+static const char *bindNewContext = "dialog(name = 'bindNewContext',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Bind New Context',\
   id = 134,\
   x = -1, y = -1, width = 154, height = 76,\
@@ -70,8 +70,8 @@ static char *bindNewContext = "dialog(name = 'bindNewContext',\
   control = [5105, wxStaticText, 'Kind:', '0', 'statictext7', 7, 34, 15, 6, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *viewIOR = "dialog(name = 'viewIOR',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+static const char *viewIOR = "dialog(name = 'viewIOR',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'View IOR',\
   id = 102,\
   x = -1, y = -1, width = 394, height = 127,\
@@ -92,8 +92,8 @@ static char *viewIOR = "dialog(name = 'viewIOR',\
   control = [1007, wxTextCtrl, '', 'wxTE_READONLY', 'typeIDText', 57, 27, 274, 12, '',\
       [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
 
-static char *selectNS = "dialog(name = 'selectNS',\
-  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+static const char *selectNS = "dialog(name = 'selectNS',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU',\
   title = 'Select Naming Service',\
   id = 135,\
   x = -1, y = -1, width = 181, height = 94,\
