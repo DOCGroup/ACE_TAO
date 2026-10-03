@@ -478,7 +478,8 @@ namespace ACE
    * Translate the given timestamp to ISO-8601 format.
    *
    * @param time_value      ACE_Time_Value to format. This is assumed to be
-   *                        an absolute time value.
+   *                        an absolute time value. Passing ACE_Time_Value::zero
+                            uses gettimeofday().
    * @param date_and_time   Array to hold the timestamp.
    * @param time_len        Size of @a date_and_time in ACE_TCHARs.
    *                        Must be greater than or equal to 27.
@@ -497,6 +498,24 @@ namespace ACE
                                           ACE_TCHAR date_and_time[],
                                           size_t time_len,
                                           bool return_pointer_to_first_digit = false);
+
+  /**
+   * Translate the given duration to ISO-8601 format. Note that the current
+   * implementation cannot handle durations larger or equal to 24 hours.
+   *
+   * @param duration_value  ACE_Time_Value to format. This is assumed to be
+   *                        a time period.
+   * @param duration        Array to hold the duration.
+   * @param duration_len    Size of @a duration in ACE_TCHARs.
+   *                        Must be greater than or equal to 16.
+   *
+   * @retval 0 if unsuccessful, with errno set. If @a duration_len is less than
+   *           16 errno will be EINVAL.
+   * @retval If successful, pointer to beginning of @a duration.
+   */
+  extern ACE_Export ACE_TCHAR *duration (const ACE_Time_Value& duration_value,
+                                         ACE_TCHAR duration[],
+                                         size_t duration_len);
 
   /**
    * Translate the current time to ISO-8601 timestamp format.
