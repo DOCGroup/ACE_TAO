@@ -90,6 +90,8 @@ ACE_TLI_TCP_DEVICE                      Device the platform uses for TCP on
                                         TLI.  Only needed if not /dev/tcp.
 ACE_USE_POLL                            The OS platform supports the
                                         poll() event demultiplexor
+ACE_USE_WIN32_WRITE_FILE                Uses WriteFile instead of WSASend. This works for 
+                                        serial Ports (COM1...)                  
 ACE_USES_ASM_SYMBOL_IN_DLSYM            Platform uses assembly symbols
                                         instead of C symbols in
                                         dlsym()
