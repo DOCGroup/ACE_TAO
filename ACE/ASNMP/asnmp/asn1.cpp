@@ -175,10 +175,10 @@ u_char * asn1::build_int( u_char *data,
    * ASN.1 integer ::= 0x02 asnlength byte {byte}*
    */
 
-  long integer;
-  u_long mask;
+  int integer;
+  u_int mask;
 
-  if (intsize != (int) sizeof (long))
+  if (intsize < (int) sizeof (integer))
     return 0;
   integer = *intp;
   /*
@@ -187,7 +187,7 @@ u_char * asn1::build_int( u_char *data,
    * consecutive 1's or 0's at the most significant end of the
    * integer.
    */
-  mask = u_long (0x1FF) << ((8 * (sizeof(u_long) - 1)) - 1);
+  mask = u_int (0x1FF) << ((8 * (sizeof(mask) - 1)) - 1);
   /* mask is 0xFF800000 on a big-endian machine */
   while((((integer & mask) == 0) || ((integer & mask) == mask))
         && intsize > 1){
@@ -200,10 +200,10 @@ u_char * asn1::build_int( u_char *data,
   if (*datalength < intsize)
     return 0;
   *datalength -= intsize;
-  mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
+  mask = u_int (0xFF) << (8 * (sizeof(mask) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
   while(intsize--){
-    *data++ = (u_char)((integer & mask) >> (8 * (sizeof(long) - 1)));
+    *data++ = (u_char)((integer & mask) >> (8 * (sizeof(integer) - 1)));
     integer <<= 8;
   }
   return data;
