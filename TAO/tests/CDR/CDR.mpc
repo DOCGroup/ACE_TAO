@@ -7,6 +7,7 @@ project(*Alignment) : taoexe {
   }
 }
 
+
 project(*Allocator) : taoexe {
   exename  = allocator
 
@@ -15,7 +16,7 @@ project(*Allocator) : taoexe {
   }
 }
 
-project(*Basic Types) : taoexe, anytypecode {
+project(*Basic Types) : taoexe, anytypecode, portableserver {
   exename  = basic_types
 
   Source_Files {
@@ -46,4 +47,3 @@ project(*Tc) : taoexe, anytypecode {
     tc.cpp
   }
 }
-

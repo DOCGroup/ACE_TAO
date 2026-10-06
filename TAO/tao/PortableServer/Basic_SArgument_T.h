@@ -43,7 +43,7 @@ namespace TAO
     S arg () const;
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -66,7 +66,7 @@ namespace TAO
     S & arg ();
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -88,7 +88,7 @@ namespace TAO
     S & arg ();
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -110,7 +110,7 @@ namespace TAO
     S & arg ();
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**

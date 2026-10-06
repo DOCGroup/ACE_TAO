@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN TAO-4.0.8 and TAO-4.0.9
 ====================================================
 
+. TAO skeleton argument storage for basic and special-basic argument, return,
+  and out values is now value-initialized, preventing indeterminate scalar
+  values from reaching marshaling code.
+
 . Generated union discriminator setters now throw CORBA::BAD_PARAM when a new
   discriminator would select a different union member. Discriminator values
   selecting the currently active member remain accepted.
