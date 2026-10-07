@@ -54,6 +54,7 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     Dynamic_ParameterC.cpp
     Empty_Param_TypeCode.cpp
     Enum_TypeCode_Static.cpp
+    Fixed_TypeCode_Static.cpp
     ExceptionA.cpp
     FloatSeqA.cpp
     GIOPA.cpp
