@@ -3167,7 +3167,7 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 
   this->gen_standard_include (stream, "tao/AnyTypeCode/TypeCode_Constants.h");
 
-  this->gen_standard_include (stream, "tao/AnyTypeCode/Fixed_TypeCode.h");
+  this->gen_standard_include (stream, "tao/AnyTypeCode/Fixed_TypeCode_Static.h");
 
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.

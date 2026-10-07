@@ -20,6 +20,7 @@
 #include "expressionsC.h"
 #include "structC.h"
 #include "valuetypeC.h"
+#include "fixedA.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -279,6 +280,27 @@ test_default_initialized_union (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "ResetWithNoopBranches::long_value",
     reset_union.long_value (), 42);
+}
+
+void
+test_fixed_typecodes (int &error_count)
+{
+  CORBA::TypeCode_var whole_number_type =
+    FixedPoint::_tc_WholeNumber->content_type ();
+  expect_equals<CORBA::UShort> (
+    error_count, "FixedPoint::WholeNumber digits",
+    whole_number_type->fixed_digits (), 3);
+  expect_equals<CORBA::UShort> (
+    error_count, "FixedPoint::WholeNumber scale",
+    whole_number_type->fixed_scale (), 0);
+
+  CORBA::TypeCode_var amount_type = FixedPoint::_tc_Amount->content_type ();
+  expect_equals<CORBA::UShort> (
+    error_count, "FixedPoint::Amount digits",
+    amount_type->fixed_digits (), 10);
+  expect_equals<CORBA::UShort> (
+    error_count, "FixedPoint::Amount scale",
+    amount_type->fixed_scale (), 3);
 }
 
 void
@@ -961,6 +983,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);
   test_default_initialized_union (error_count);
+  test_fixed_typecodes (error_count);
   test_union_discriminators (error_count);
 
   return error_count ? 1 : 0;
