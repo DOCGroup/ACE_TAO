@@ -6,7 +6,7 @@
  *
  *  Header file for static @c CORBA::tk_fixed @c CORBA::TypeCodes.
  *
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
@@ -45,16 +45,16 @@ namespace TAO
     public:
       Fixed (::CORBA::UShort digits, ::CORBA::UShort scale);
 
-      virtual bool tao_marshal (TAO_OutputCDR & cdr, ::CORBA::ULong offset) const;
-      virtual void tao_duplicate ();
-      virtual void tao_release ();
+      bool tao_marshal (TAO_OutputCDR & cdr, ::CORBA::ULong offset) const override;
+      void tao_duplicate () override;
+      void tao_release () override;
 
     protected:
-      virtual ::CORBA::Boolean equal_i (::CORBA::TypeCode_ptr tc) const;
-      virtual ::CORBA::Boolean equivalent_i (::CORBA::TypeCode_ptr tc) const;
-      virtual ::CORBA::TypeCode_ptr get_compact_typecode_i () const;
-      virtual ::CORBA::UShort fixed_digits_i () const;
-      virtual ::CORBA::UShort fixed_scale_i () const;
+      ::CORBA::Boolean equal_i (::CORBA::TypeCode_ptr tc) const override;
+      ::CORBA::Boolean equivalent_i (::CORBA::TypeCode_ptr tc) const override;
+      ::CORBA::TypeCode_ptr get_compact_typecode_i () const override;
+      ::CORBA::UShort fixed_digits_i () const override;
+      ::CORBA::UShort fixed_scale_i () const override;
 
     private:
       ::CORBA::UShort const digits_;
