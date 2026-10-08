@@ -64,7 +64,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   }
 #endif
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 

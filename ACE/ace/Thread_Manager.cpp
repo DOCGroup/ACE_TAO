@@ -1701,7 +1701,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
       // storage this call can return (don't ask...).
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Wait for all the threads to exit.

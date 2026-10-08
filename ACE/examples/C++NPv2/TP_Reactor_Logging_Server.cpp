@@ -46,7 +46,7 @@ static ACE_THR_FUNC_RETURN event_loop (void *arg) {
 
   reactor->owner (ACE_OS::thr_self ());
   reactor->run_reactor_event_loop ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 
@@ -77,7 +77,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   }
 #endif
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 
@@ -102,4 +102,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     (controller, ACE_Reactor::instance ());
   return ACE_Thread_Manager::instance ()->wait ();
 }
-

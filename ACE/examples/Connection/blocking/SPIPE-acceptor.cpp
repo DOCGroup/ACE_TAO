@@ -151,7 +151,7 @@ run_reactor_event_loop (void *)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker thread starting\n")));
 
   ACE_Proactor::run_event_loop ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -212,4 +212,3 @@ IPC_Server::svc ()
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 #endif /* SPIPE_ACCEPTOR_C */
-

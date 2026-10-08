@@ -140,7 +140,7 @@ twoway_server (void *arg)
 
   delete [] request;
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Function entry point into the oneway server task.
@@ -277,7 +277,7 @@ oneway_server (void *arg)
 
   delete [] request;
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int

@@ -143,7 +143,7 @@ twoway_server (void *arg)
   new_stream.close ();
 
   delete [] request;
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Function entry point into the oneway server task.
@@ -274,7 +274,7 @@ oneway_server (void *arg)
   new_stream.close ();
 
   delete [] request;
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int

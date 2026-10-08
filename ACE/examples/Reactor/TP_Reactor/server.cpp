@@ -25,7 +25,7 @@ ACE_THR_FUNC_RETURN threadFunc(void *arg) {
     ACE_Reactor *reactor = (ACE_Reactor *) arg;
     reactor->run_reactor_event_loop();
 
-    return nullptr;
+    return ACE_THR_FUNC_RETURN_NULL;
 }
 
 /**
@@ -60,4 +60,3 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("Bye. Bye.\n")));
     return 0;
 }
-

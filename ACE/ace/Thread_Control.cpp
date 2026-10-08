@@ -73,7 +73,7 @@ ACE_Thread_Control::exit (ACE_THR_FUNC_RETURN exit_status, int do_thr_exit)
       // exit the thread after cleaning up TSS.
       ACE_OS::thr_exit (exit_status);
 #endif /* ! ACE_HAS_TSS_EMULATION */
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 }
 
