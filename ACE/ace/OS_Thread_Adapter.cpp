@@ -67,7 +67,7 @@ ACE_OS_Thread_Adapter::invoke ()
         ACE_OS::thr_setcanceltype (val, &old);
     }
 
-  ACE_THR_FUNC_RETURN status = nullptr;
+  ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL;
 
   ACE_SEH_TRY
     {
