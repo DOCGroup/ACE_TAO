@@ -1230,8 +1230,8 @@ DRV_pre_proc (const char *myfile)
   char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
   char tmp_cpp_ifile[MAXPATHLEN + 1] = { 0 };
 
-  // Append C++ source file extension.  Temporary files will be renamed
-  // to these filenames.
+  // Append C++ source file extension. Temporary files will be renamed to
+  // these filenames when the preprocessor requires an input extension.
   ACE_OS::strcpy (tmp_cpp_file,  tmp_file);
   if (copy_input_file)
     {
@@ -1243,7 +1243,7 @@ DRV_pre_proc (const char *myfile)
       ACE_OS::strcat (tmp_cpp_ifile, temp_file_extension);
     }
 
-  char * const t_file  = tmp_cpp_file;
+  char * const t_file  = copy_input_file ? tmp_cpp_file : tmp_file;
   char * const t_ifile = tmp_cpp_ifile;
   char const * const input_file = copy_input_file ? t_ifile : myfile;
 
@@ -1340,7 +1340,7 @@ DRV_pre_proc (const char *myfile)
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.  Renaming is (supposed to be) an atomic
   // operation so we shouldn't be susceptible to attack.
-  if (ACE_OS::rename (tmp_file, t_file) != 0)
+  if (copy_input_file && ACE_OS::rename (tmp_file, t_file) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Unable to rename temporary "
