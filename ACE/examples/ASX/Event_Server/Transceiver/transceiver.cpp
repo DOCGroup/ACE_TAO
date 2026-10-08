@@ -75,8 +75,7 @@ Event_Transceiver::handle_signal (int, siginfo_t *, ucontext_t *)
 }
 
 Event_Transceiver::Event_Transceiver ()
-{
-}
+= default;
 
 Event_Transceiver::Event_Transceiver (int argc, ACE_TCHAR *argv[])
 {

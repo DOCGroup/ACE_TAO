@@ -28,7 +28,7 @@ public:
       ACE_TRACE ("Server::Server");
     }
 
-  virtual int init (int argc, ACE_TCHAR *argv[])
+  int init (int argc, ACE_TCHAR *argv[]) override
     {
       ACE_TRACE ("Server::init");
       const ACE_TCHAR *l_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
@@ -38,7 +38,7 @@ public:
       if (this->thr_strategy_.open (this->thr_mgr_, THR_DETACHED | THR_NEW_LWP) == -1)
         return -1;
       else if (this->open (local_addr, this->reactor_,
-                           0, 0, &this->thr_strategy_) == -1)
+                           nullptr, nullptr, &this->thr_strategy_) == -1)
         return -1;
 
       // Give server a chance to register the STREAM pipe.
@@ -69,7 +69,7 @@ public:
       ACE_TRACE ("Client::Client");
     }
 
-  virtual int init (int argc, ACE_TCHAR *argv[])
+  int init (int argc, ACE_TCHAR *argv[]) override
   {
     ACE_TRACE ("Client::init");
 

@@ -64,7 +64,7 @@ const char *
 Mem_Map_Stream::recv (size_t &len)
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
-    return 0;
+    return nullptr;
 
 
   const char *s = this->recv_pos_;
@@ -87,7 +87,7 @@ Mem_Map_Stream::peek_str (size_t offset,
   // We will iterate if the size of <offset> is large.
   while (this->get_pos_ + (offset + size) > this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
-      return 0;
+      return nullptr;
 
   return &this->get_pos_[offset];
 }
@@ -136,7 +136,7 @@ int
 Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
                       const ACE_INET_Addr &addr)
 {
-  svc_handler_ = 0;
+  svc_handler_ = nullptr;
 
   // Connect to the server at <addr>. If the handler has to be
   // connected to the server again, the Caching strategy takes care

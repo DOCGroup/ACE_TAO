@@ -21,7 +21,7 @@ worker (intptr_t iterations)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;

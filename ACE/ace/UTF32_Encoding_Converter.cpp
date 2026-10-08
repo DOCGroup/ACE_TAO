@@ -27,7 +27,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-static const ACE_UINT32 UNI_MAX_LEGAL_UTF32 = 0x0010FFFF;
+static constexpr ACE_UINT32 UNI_MAX_LEGAL_UTF32 = 0x0010FFFF;
 
 ACE_UTF32_Encoding_Converter::ACE_UTF32_Encoding_Converter (bool swap)
  : ACE_UTF16_Encoding_Converter (swap)
@@ -45,8 +45,8 @@ ACE_UTF32_Encoding_Converter::to_utf8 (const void* source,
                                        size_t target_size,
                                        bool strict)
 {
-  static const ACE_UINT32 byteMask = 0xBF;
-  static const ACE_UINT32 byteMark = 0x80;
+  static constexpr ACE_UINT32 byteMask = 0xBF;
+  static constexpr ACE_UINT32 byteMark = 0x80;
   static const ACE_UINT32 UNI_SUR_HIGH_START = get_UNI_SUR_HIGH_START ();
   static const ACE_UINT32 UNI_SUR_LOW_END = get_UNI_SUR_LOW_END ();
   static const ACE_Byte* firstByteMark = get_first_byte_mark ();

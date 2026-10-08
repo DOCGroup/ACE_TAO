@@ -57,7 +57,7 @@ supplier (void *)
                        "(%t) %p\n", "error put"),
                       0);
   s_stream.close ();
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -74,7 +74,7 @@ consumer (void *)
 
   // Spawn the supplier thread.
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier),
-                                              (void *) 0,
+                                              (void *) nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -118,7 +118,7 @@ consumer (void *)
               size,
               secs));
   c_stream.close ();
-  return 0;
+  return nullptr;
 }
 
 int
@@ -129,7 +129,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Spawn the thread.
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer),
-                                              (void *) 0,
+                                              (void *) nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

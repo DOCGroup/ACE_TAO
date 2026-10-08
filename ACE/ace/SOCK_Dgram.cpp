@@ -749,7 +749,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
   ACE_OS::memset (&lmreq, 0, sizeof (lmreq));
 
 #if defined (ACE_WIN32) || !defined (ACE_LACKS_IF_NAMETOINDEX)
-  if (net_if != 0)
+  if (net_if != nullptr)
     {
 #if defined (ACE_WIN32)
       int if_ix = 0;

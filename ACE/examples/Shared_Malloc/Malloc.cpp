@@ -35,14 +35,14 @@ typedef ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX> SB_ALLOCATOR;
 #endif /* ACE_LACKS_SBRK */
 
 // Singleton
-ACE_Allocator *Malloc::instance_ = 0;
+ACE_Allocator *Malloc::instance_ = nullptr;
 
 // This is a factory that decides what type of allocator to create.
 
 ACE_Allocator *
 Malloc::instance ()
 {
-  if (Malloc::instance_ == 0)
+  if (Malloc::instance_ == nullptr)
     {
       if (Options::instance ()->child ())
         Malloc::instance_ = new ACE_Allocator_Adapter<M_ALLOCATOR>;

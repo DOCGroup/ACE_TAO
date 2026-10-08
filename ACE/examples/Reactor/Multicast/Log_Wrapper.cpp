@@ -18,8 +18,7 @@ Log_Wrapper::Log_Wrapper ()
 }
 
 Log_Wrapper::~Log_Wrapper ()
-{
-}
+= default;
 
 // Set the log_msg_ host address.
 

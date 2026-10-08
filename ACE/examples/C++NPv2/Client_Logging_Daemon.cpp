@@ -123,7 +123,7 @@ protected:
 
 int CLD_Handler::handle_input (ACE_HANDLE handle)
 {
-  ACE_Message_Block *mblk = 0;
+  ACE_Message_Block *mblk = nullptr;
   Logging_Handler logging_handler (handle);
 
   if (logging_handler.recv_log_record (mblk) != -1)
@@ -180,7 +180,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
       timeout = ACE_OS::gettimeofday ();
       timeout += FLUSH_TIMEOUT;
     }
-    ACE_Message_Block *mblk = 0;
+    ACE_Message_Block *mblk = nullptr;
     if (msg_queue_.dequeue_head (mblk, &timeout) == -1) {
       if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
@@ -233,7 +233,7 @@ int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
 
 
 int CLD_Handler::close () {
-  ACE_Message_Block *shutdown_message = 0;
+  ACE_Message_Block *shutdown_message = nullptr;
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
@@ -325,7 +325,7 @@ int CLD_Connector::reconnect () {
 
 class Client_Logging_Daemon : public ACE_Service_Object {
 public:
-  virtual ~Client_Logging_Daemon () {}    // Turn off g++ warnings.
+  virtual ~Client_Logging_Daemon () = default;    // Turn off g++ warnings.
 
   // Service Configurator hook methods.
   virtual int init (int argc, ACE_TCHAR *argv[]);

@@ -588,7 +588,7 @@ private:
   ACE_POSIX_Asynch_Read_Stream read_stream_;
 
   /// Default constructor. Shouldnt be called.
-  ACE_AIOCB_Notify_Pipe_Manager ();
+  ACE_AIOCB_Notify_Pipe_Manager () = delete;
 };
 
 ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
@@ -1933,8 +1933,7 @@ ACE_POSIX_Wakeup_Completion::ACE_POSIX_Wakeup_Completion
 }
 
 ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion ()
-{
-}
+= default;
 
 void
 ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,

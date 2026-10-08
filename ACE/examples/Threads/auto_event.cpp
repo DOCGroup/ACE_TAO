@@ -43,7 +43,7 @@ reader (void *arg)
   // Read shared data.
   ACE_DEBUG ((LM_DEBUG, "(%t) reader: value of data is: %d\n", data));
 
-  return 0;
+  return nullptr;
 }
 
 // Writer thread.
@@ -68,7 +68,7 @@ writer (void *arg)
       ACE_OS::exit (0);
     }
 
-  return 0;
+  return nullptr;
 }
 
 int

@@ -75,7 +75,7 @@ public:
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the threads in the pool.
-  int open (void * = 0) override;
+  int open (void * = nullptr) override;
 
   /// Close hook.
   ///FUZZ: enable check_for_lack_ACE_OS

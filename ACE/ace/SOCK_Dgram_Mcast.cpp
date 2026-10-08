@@ -452,7 +452,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 #if defined (ACE_HAS_IPV6)
   if (mcast_addr.get_type () == AF_INET6)
     {
-      if (this->make_multicast_ifaddr6 (0, mcast_addr, net_if) == -1)
+      if (this->make_multicast_ifaddr6 (nullptr, mcast_addr, net_if) == -1)
         return -1;
     }
   else
@@ -623,11 +623,11 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 # if defined(ACE_LINUX)
           struct if_nameindex *intf = ACE_OS::if_nameindex ();
 
-          if (intf == 0)
+          if (intf == nullptr)
             return -1;
 
           int index = 0;
-          while (intf[index].if_index != 0 || intf[index].if_name != 0)
+          while (intf[index].if_index != 0 || intf[index].if_name != nullptr)
             {
               if (this->leave (mcast_addr, ACE_TEXT_CHAR_TO_TCHAR(intf[index].if_name)) == 0)
                 ++nr_unsubscribed;
@@ -692,7 +692,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // Unsubscribe on all local multicast-capable network interfaces, by
           // doing recursive calls with specific interfaces.
 
-          ACE_INET_Addr *if_addrs = 0;
+          ACE_INET_Addr *if_addrs = nullptr;
           size_t if_cnt;
 
           // NOTE - <get_ip_interfaces> doesn't always get all of the

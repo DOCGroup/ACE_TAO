@@ -33,7 +33,7 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       if (msg_queue->dequeue_head (mb) == -1)
         break;
@@ -51,7 +51,7 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
         break;
     }
 
-  return 0;
+  return nullptr;
 }
 
 // The producer reads data from the stdin stream, creates a message,
@@ -72,14 +72,14 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       // Allocate a new buffer.
       char *buffer = rb.read ('\n');
 
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
-      if (buffer == 0)
+      if (buffer == nullptr)
         {
           // Send a 0-sized shutdown message to the other thread and
           // exit.
 
-          ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), 0);
+          ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), nullptr);
 
           if (msg_queue->enqueue_tail (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
@@ -94,9 +94,9 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
           ACE_NEW_RETURN (mb,
                           ACE_Message_Block (rb.size (),
                           ACE_Message_Block::MB_DATA,
-                          0,
+                          nullptr,
                           buffer),
-                          0);
+                          nullptr);
           mb->msg_priority (ACE_Utils::truncate_cast<unsigned long> (rb.size ()));
           mb->wr_ptr (rb.size ());
 
@@ -114,7 +114,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
   // the size of the lines!).
   consumer (msg_queue);
 
-  return 0;
+  return nullptr;
 }
 
 // Spawn off one thread that copies stdin to stdout in order of the

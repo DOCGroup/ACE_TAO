@@ -233,8 +233,7 @@ ACE_Filecache::ACE_Filecache ()
 }
 
 ACE_Filecache::~ACE_Filecache ()
-{
-}
+= default;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Filecache)
 

@@ -20,7 +20,7 @@ public:
   {
   }
 
-  int svc ()
+  int svc () override
   {
     /// Reconstruct the monitor's unique name using the queue's hex address.
     const int nibbles = 2 * sizeof (ptrdiff_t);
@@ -38,7 +38,7 @@ public:
     ACE::Monitor_Control::Monitor_Base *mq_monitor =
       mgr->admin ().monitor_point (name_str.c_str ());
 
-    if (mq_monitor != 0)
+    if (mq_monitor != nullptr)
       {
         ACE_OS::sleep (1);
 
@@ -75,7 +75,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// The message string is 11 bytes long so the message queue will
   /// grow and shrink in 11-byte increments.
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   const char *msg = "Hidely Ho!";
 
   /// Run the monitor checker in a separate thread.

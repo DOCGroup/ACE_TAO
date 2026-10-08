@@ -37,8 +37,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
 }
 
 ACE_Thread_Adapter::~ACE_Thread_Adapter ()
-{
-}
+= default;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Adapter);
 
@@ -124,7 +123,7 @@ ACE_Thread_Adapter::invoke_i ()
         ACE_OS::thr_setcanceltype (val, &old);
     }
 
-  ACE_THR_FUNC_RETURN status = 0;
+  ACE_THR_FUNC_RETURN status = nullptr;
 
   ACE_SEH_TRY
     {

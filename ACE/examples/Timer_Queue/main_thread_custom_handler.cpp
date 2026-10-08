@@ -27,7 +27,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
     // unique ptr ensures that the driver memory is released
     // automatically.
-    THREAD_TIMER_QUEUE_TEST_DRIVER *tqtd = 0;
+    THREAD_TIMER_QUEUE_TEST_DRIVER *tqtd = nullptr;
     ACE_NEW_RETURN (tqtd, Thread_Timer_Queue_Custom_Handler_Test, -1);
 
     std::unique_ptr <THREAD_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);

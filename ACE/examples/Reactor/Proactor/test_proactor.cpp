@@ -41,7 +41,7 @@
 
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = 0;
+static ACE_TCHAR *host = nullptr;
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -131,7 +131,7 @@ Receiver::open (ACE_HANDLE handle,
                                                                      this->handle_,
                                                                      duplicate,
                                                                      initial_read_size,
-                                                                     0,
+                                                                     nullptr,
                                                                      ACE_INVALID_HANDLE,
                                                                      0,
                                                                      0);
@@ -145,7 +145,7 @@ Receiver::open (ACE_HANDLE handle,
       // This will call the callback.
       fake_result->complete (message_block.length (),
                              1,
-                             0);
+                             nullptr);
 
       // Zap the fake result.
       delete fake_result;
@@ -163,7 +163,7 @@ Receiver::initiate_read_stream ()
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
   // <write> data asynchronously to the file.
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -276,15 +276,15 @@ class Sender : public ACE_Handler
 {
 public:
   Sender ();
-  ~Sender ();
+  ~Sender () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host,
             u_short port);
 
-  ACE_HANDLE handle () const;
-  void handle (ACE_HANDLE);
+  ACE_HANDLE handle () const override;
+  void handle (ACE_HANDLE) override;
 
 protected:
   // These methods are called by the framework
@@ -294,9 +294,9 @@ protected:
    * This is called when asynchronous writes from the socket complete
    * This is called when asynchronous reads from the socket complete
    */
-  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result) override;
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
 
 private:
   /// Transmit the entire file in one fell swoop.
@@ -491,7 +491,7 @@ Sender::initiate_read_file ()
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the file and to
   // <write> data asynchronously to the socket.
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -655,7 +655,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Asynch_Acceptor<Receiver> acceptor;
 
   // If passive side
-  if (host == 0)
+  if (host == nullptr)
    {
      if (acceptor.open (ACE_INET_Addr (port),
                         initial_read_size,

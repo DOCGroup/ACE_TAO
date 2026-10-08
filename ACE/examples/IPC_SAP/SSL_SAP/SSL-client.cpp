@@ -23,7 +23,7 @@ Options::Options ()
     sleep_time_ (0, 0), // By default, don't sleep between calls.
     threads_ (10),
     message_len_ (0),
-    message_buf_ (0),
+    message_buf_ (nullptr),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000),
     oneway_ (1) // Make oneway calls the default.
@@ -233,8 +233,8 @@ Options::oneway_client_test (void *)
   // Add 1 to the port to trigger the oneway test!
   char *request = options->shared_client_test (options->port () + 1,
                                                cli_stream);
-  if (request == 0)
-    return 0;
+  if (request == nullptr)
+    return nullptr;
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -286,8 +286,8 @@ Options::twoway_client_test (void *)
 
   char *request = options->shared_client_test (options->port (),
                                                cli_stream);
-  if (request == 0)
-    return 0;
+  if (request == nullptr)
+    return nullptr;
 
   // This variable is allocated off the stack to obviate the need for
   // locking.

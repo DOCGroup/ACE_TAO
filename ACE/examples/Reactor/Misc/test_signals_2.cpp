@@ -124,7 +124,7 @@ public:
 
   // @@ Note that this code is not portable to all OS platforms since
   // it does print statements within the signal handler.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *)
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override
   {
     this->count_++;
     ACE_DEBUG ((LM_DEBUG,
@@ -138,8 +138,8 @@ public:
     if (this->count_ != 1 && signum == SIGQUIT)
       {
         if (this->reactor_.remove_handler (SIGQUIT,
-                                           0,
-                                           0,
+                                           nullptr,
+                                           nullptr,
                                            this->quit_sigkey_) == -1)
           ACE_ERROR ((LM_ERROR,
                       "\n%p",
@@ -154,8 +154,8 @@ public:
     else if (this->count_ != 2 && signum == SIGINT)
       {
         if (this->reactor_.remove_handler (SIGINT,
-                                           0,
-                                           0,
+                                           nullptr,
+                                           nullptr,
                                            this->int_sigkey_) == -1)
           ACE_ERROR ((LM_ERROR,
                       "\n%p",
@@ -186,7 +186,7 @@ public:
   {
   }
 
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *)
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override
   {
     this->count_++;
     ACE_DEBUG ((LM_DEBUG,
@@ -198,7 +198,7 @@ public:
                 this->count_));
     if (this->count_ != 0 && signum == SIGQUIT)
       {
-        if (this->reactor_.remove_handler (SIGQUIT, 0, 0, this->quit_sigkey_) == -1)
+        if (this->reactor_.remove_handler (SIGQUIT, nullptr, nullptr, this->quit_sigkey_) == -1)
           ACE_ERROR ((LM_ERROR,
                       "\n%p",
                       "remove_handler"));
@@ -235,7 +235,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
 #else
   ACE_Select_Reactor reactor_impl (argc > 1
                                    ? &multi_handlers
-                                   : (ACE_Sig_Handler *) 0);
+                                   : (ACE_Sig_Handler *) nullptr);
 #endif /* ACE_WIN32 */
   ACE_Reactor reactor (&reactor_impl);
 

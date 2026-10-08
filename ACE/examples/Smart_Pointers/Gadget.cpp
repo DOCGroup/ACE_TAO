@@ -10,5 +10,4 @@
 #include "Gadget.h"
 
 Gadget::~Gadget ()
-{
-}
+= default;

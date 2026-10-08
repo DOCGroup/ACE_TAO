@@ -24,7 +24,7 @@
 
 #include "thread_specific.h"
 
-static const int iterations = 100;
+static constexpr int iterations = 100;
 
 // Static variables.
 ACE_MT (ACE_Thread_Mutex Errno::lock_);
@@ -41,17 +41,17 @@ template <ACE_SYNCH_DECL>
 class Tester: public ACE_Task<ACE_SYNCH_USE>
 {
 public:
-  Tester () {}
-  ~Tester () {}
+  Tester () = default;
+  ~Tester () override = default;
 
-  virtual int svc ();
+  int svc () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Activate the thread.
-  virtual int open (void *args = 0);
+  int open (void *args = nullptr) override;
 
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long args = 0);
+  int close (u_long args = 0) override;
 };
 
 template <ACE_SYNCH_DECL> int

@@ -14,14 +14,14 @@ class ACE_Svc_Export Test_Task : public MT_Task
 {
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
-  virtual int close (u_long);
+  int open (void *) override;
+  int close (u_long) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini ();
-  virtual int suspend ();
-  virtual int resume ();
+  int init (int, ACE_TCHAR *[]) override;
+  int fini () override;
+  int suspend () override;
+  int resume () override;
 };
 
 int

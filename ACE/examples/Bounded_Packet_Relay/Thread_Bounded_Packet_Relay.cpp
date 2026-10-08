@@ -41,8 +41,7 @@ Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_
 // Destructor.
 
 Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper ()
-{
-}
+= default;
 
 // Modifies device settings based on passed pointer to a u_long.
 
@@ -69,10 +68,10 @@ ACE_Message_Block *
 Text_Input_Device_Wrapper::create_input_message ()
 {
   // Construct a new message block to send.
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (read_length_),
-                  0);
+                  nullptr);
 
   // Zero out a "read" buffer to hold data.
   char read_buf [BUFSIZ];
@@ -305,7 +304,7 @@ User_Input_Task::run_transmission (void *)
                                             *queue_,
                                             driver_),
                               -1);
-              if (queue_->schedule (send_handler, 0, send_at) < 0)
+              if (queue_->schedule (send_handler, nullptr, send_at) < 0)
                 {
                   delete send_handler;
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -335,7 +334,7 @@ User_Input_Task::run_transmission (void *)
                                         -1);
                     }
                   if (queue_->schedule (termination_handler,
-                                        0, terminate_at) < 0)
+                                        nullptr, terminate_at) < 0)
                     {
                       delete termination_handler;
                       this->clear_all_timers ();
@@ -450,9 +449,9 @@ User_Input_Task::clear_all_timers ()
 {
   // loop through the timers in the queue, cancelling each one
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-       (node = queue_->timer_queue ()->get_first ()) != 0;
+       (node = queue_->timer_queue ()->get_first ()) != nullptr;
        )
-    queue_->timer_queue ()->cancel (node->get_timer_id (), 0, 0);
+    queue_->timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
 
   return 0;
 }
@@ -469,8 +468,7 @@ BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay &relay,
 // Destructor.
 
 BPR_Handler_Base::~BPR_Handler_Base ()
-{
-}
+= default;
 
 // Helper method: clears all timers.
 
@@ -480,9 +478,9 @@ BPR_Handler_Base::clear_all_timers (void *)
   // Loop through the timers in the queue, cancelling each one.
 
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-       (node = queue_.timer_queue ()->get_first ()) != 0;
+       (node = queue_.timer_queue ()->get_first ()) != nullptr;
        )
-    queue_.timer_queue ()->cancel (node->get_timer_id (), 0, 0);
+    queue_.timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
   //    queue_.cancel (node->get_timer_id (), 0);
 
   // Invoke the handler's (virtual) destructor
@@ -508,8 +506,7 @@ Send_Handler::Send_Handler (u_long send_count,
 // Destructor.
 
 Send_Handler::~Send_Handler ()
-{
-}
+= default;
 
 // Call back hook.
 
@@ -571,7 +568,7 @@ Send_Handler::reregister (void *)
 {
   // Re-register the handler for a new timeout.
   if (queue_.schedule (this,
-                       0,
+                       nullptr,
                        duration_ + ACE_OS::gettimeofday ()) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Send_Handler::reregister: "
@@ -595,8 +592,7 @@ Termination_Handler::Termination_Handler (Bounded_Packet_Relay &relay,
 // Destructor.
 
 Termination_Handler::~Termination_Handler ()
-{
-}
+= default;
 
 // Call back hook.
 
@@ -638,8 +634,7 @@ Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_
 // Destructor.
 
 Thread_Bounded_Packet_Relay_Driver::~Thread_Bounded_Packet_Relay_Driver ()
-{
-}
+= default;
 
 // Display the user menu.
 

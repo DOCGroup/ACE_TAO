@@ -160,7 +160,7 @@ ETCL_Literal_Constraint::operator const char* () const
     case ACE_ETCL_STRING:
       return this->op_.str_;
     default:
-      return 0;
+      return nullptr;
   }
 }
 

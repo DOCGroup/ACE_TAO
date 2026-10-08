@@ -52,7 +52,7 @@ malloc_recurse (int count)
       int alloc_size = gen_size ();
       void *ptr = Malloc::instance ()->malloc (alloc_size);
 
-      if (ptr == 0)
+      if (ptr == nullptr)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) *** malloc of size %d failed, %p\n%a",
                    "malloc",
@@ -127,7 +127,7 @@ spawn ()
           ACE_OS::sprintf (msg_size, "%lu",
                            (unsigned long)
                              Options::instance ()->max_msg_size ());
-          const char *cp = 0;
+          const char *cp = nullptr;
 
           if (Options::instance ()->debug ())
             cp = "-d";
@@ -143,7 +143,7 @@ spawn ()
             "-L",
             msg_size,
             cp,
-            0
+            nullptr
           };
 
           if (ACE_OS::execv (Options::instance ()->program_name (),

@@ -12,13 +12,13 @@
 ACE_THR_FUNC_RETURN worker (void *)
 {
   // do some work
-  return 0;
+  return nullptr;
 }
 
 ACE_THR_FUNC_RETURN service (void *)
 {
   // run the service
-  return 0;
+  return nullptr;
 }
 
 int ACE_TMAIN (int, ACE_TCHAR *[])

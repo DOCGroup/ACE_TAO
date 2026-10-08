@@ -71,12 +71,10 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::get ()
 }
 
 ACE_Threading_Helper<ACE_Null_Mutex>::~ACE_Threading_Helper ()
-{
-}
+= default;
 
 ACE_Threading_Helper<ACE_Null_Mutex>::ACE_Threading_Helper ()
-{
-}
+= default;
 
 void
 ACE_Threading_Helper<ACE_Null_Mutex>::set (void*)

@@ -31,8 +31,7 @@ Handler::Handler(const ACE_Time_Value &expiration_time)
 }
 
 Handler::~Handler ()
-{
-}
+= default;
 
 void
 Handler::set_id (int id)

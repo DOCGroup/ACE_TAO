@@ -39,13 +39,13 @@ Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 // Initialize the Singleton pointer.
-Async_Timer_Queue *Async_Timer_Queue::instance_ = 0;
+Async_Timer_Queue *Async_Timer_Queue::instance_ = nullptr;
 
 // Implement the Singleton logic.
 Async_Timer_Queue *
 Async_Timer_Queue::instance ()
 {
-  if (Async_Timer_Queue::instance_ == 0)
+  if (Async_Timer_Queue::instance_ == nullptr)
     {
       // Initialize with all signals enabled.
       ACE_Sig_Set ss (1);
@@ -112,7 +112,7 @@ Async_Timer_Queue::cancel (long timer_id)
 {
   ACE_DEBUG ((LM_DEBUG, "canceling %d\n", timer_id));
 
-  const void *act = 0;
+  const void *act = nullptr;
 
   if (this->tq_.cancel (timer_id, &act) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "cancel_timer"));

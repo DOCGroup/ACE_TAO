@@ -34,7 +34,7 @@ ACE_Thread_Control::insert (ACE_Thread_Manager *tm, bool insert)
 ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
                                         int insert)
   : tm_ (t),
-    status_ (0)
+    status_ (nullptr)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::ACE_Thread_Control");
 
@@ -73,7 +73,7 @@ ACE_Thread_Control::exit (ACE_THR_FUNC_RETURN exit_status, int do_thr_exit)
       // exit the thread after cleaning up TSS.
       ACE_OS::thr_exit (exit_status);
 #endif /* ! ACE_HAS_TSS_EMULATION */
-      return 0;
+      return nullptr;
     }
 }
 

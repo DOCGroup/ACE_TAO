@@ -31,26 +31,26 @@ public:
   Thread_Handler (size_t id,
                   size_t max_iterations);
 
-  ~Thread_Handler ();
+  ~Thread_Handler () override;
   // Destructor.
 
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
   // Handle signals.
 
-  virtual int handle_exception (ACE_HANDLE);
+  int handle_exception (ACE_HANDLE) override;
   // Print data from main thread.
 
-  virtual int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
   // Print data from main thread.
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *);
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *) override;
   // Handle timeout events in the main thread.
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
   // General notification messages to the Reactor.
 
-  virtual int notify (ACE_Time_Value *tv = 0);
+  virtual int notify (ACE_Time_Value *tv = nullptr);
   // Perform notifications.
 
   virtual int svc ();
@@ -129,7 +129,7 @@ Thread_Handler::Thread_Handler (
                 "register_handler"));
   else if (ACE_Reactor::instance ()->schedule_timer
            (this,
-            0,
+            nullptr,
             Thread_Handler::delay_,
             Thread_Handler::interval_) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -334,7 +334,7 @@ Thread_Handler::svc_run (void *eh)
     reinterpret_cast<Thread_Handler *> (eh);
 
   if (this_handler->svc () == 0)
-    return 0;
+    return nullptr;
   else
     return reinterpret_cast<void *> (-1);
 }

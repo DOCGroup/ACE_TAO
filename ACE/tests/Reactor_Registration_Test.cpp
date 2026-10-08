@@ -18,7 +18,7 @@
 #include "ace/ACE.h"
 
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
-static const size_t message_size = 26;
+static constexpr size_t message_size = 26;
 static int iteration = 1;
 
 class Event_Handler : public ACE_Event_Handler

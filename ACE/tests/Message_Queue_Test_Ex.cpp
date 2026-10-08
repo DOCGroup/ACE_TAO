@@ -36,7 +36,7 @@ const ACE_TCHAR usage[] =
 
 using QUEUE = ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>;
 
-static const int MAX_MESSAGES = 10000;
+static constexpr int MAX_MESSAGES = 10000;
 static const char test_message[] = "ACE_Message_Queue_Ex Test Message";
 
 static int max_messages = MAX_MESSAGES;

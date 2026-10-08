@@ -2,8 +2,7 @@
 #include "URL_Visitor_Factory.h"
 
 URL_Visitor_Factory::~URL_Visitor_Factory ()
-{
-}
+= default;
 
 URL_Visitor *
 URL_Validation_Visitor_Factory::make_visitor ()
@@ -12,7 +11,7 @@ URL_Validation_Visitor_Factory::make_visitor ()
 
   ACE_NEW_RETURN (v,
                   URL_Validation_Visitor,
-                  0);
+                  nullptr);
 
   return v;
 }
@@ -24,7 +23,7 @@ URL_Validation_Visitor_Factory::make_command_processor ()
 
   ACE_NEW_RETURN (cp,
                   Command_Processor,
-                  0);
+                  nullptr);
   return cp;
 }
 
@@ -35,12 +34,12 @@ URL_Download_Visitor_Factory::make_visitor ()
 
   ACE_NEW_RETURN (v,
                   URL_Download_Visitor,
-                  0);
+                  nullptr);
   return v;
 }
 
 Command_Processor *
 URL_Download_Visitor_Factory::make_command_processor ()
 {
-  return 0;
+  return nullptr;
 }

@@ -45,7 +45,7 @@ pid_t timerTask (int initialDelay,
 // Listing 2 code/ch07
 void foo ()
 {
-  time_t now = ACE_OS::time (0);
+  time_t now = ACE_OS::time (nullptr);
   cerr << "The time is " << ACE_OS::ctime (&now) << endl;
 }
 // Listing 2

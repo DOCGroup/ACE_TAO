@@ -1675,7 +1675,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
 
   // Just hold onto the guard while finding this thread's id and
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
@@ -1701,7 +1701,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
       // storage this call can return (don't ask...).
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Wait for all the threads to exit.

@@ -50,13 +50,13 @@ class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {
 public:
   Ping_Pong (char b[], ACE_HANDLE f);
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_output (ACE_HANDLE);
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE) override;
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *) override;
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 private:
   char buf_[BUFSIZ];
   // Buffer to send.
@@ -194,7 +194,7 @@ static const ACE_Time_Value SHUTDOWN_TIME (10);
 static void
 run_svc (ACE_HANDLE handle)
 {
-  Ping_Pong *callback = 0;
+  Ping_Pong *callback = nullptr;
   ACE_NEW (callback,
            Ping_Pong (ACE_TEXT_ALWAYS_CHAR (string_name),
                       handle));
@@ -210,7 +210,7 @@ run_svc (ACE_HANDLE handle)
       || reactor.register_handler (SIGINT,
                                    callback) == -1
       || reactor.schedule_timer (callback,
-                                 0,
+                                 nullptr,
                                  SHUTDOWN_TIME) == -1)
     {
       ACE_ERROR ((LM_ERROR,

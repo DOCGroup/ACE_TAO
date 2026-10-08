@@ -158,8 +158,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::fini ()
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::~IPC_Server ()
-{
-}
+= default;
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE handle,

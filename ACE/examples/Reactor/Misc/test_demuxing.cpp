@@ -27,14 +27,14 @@ class Sig_Handler : public ACE_Event_Handler
 {
 public:
   Sig_Handler ();
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
 private:
   ACE_HANDLE handle_;
@@ -164,10 +164,10 @@ class STDIN_Handler : public ACE_Event_Handler
   //   STDIO, and timeouts using the same mechanisms.
 public:
   STDIN_Handler ();
-  ~STDIN_Handler ();
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg);
+  ~STDIN_Handler () override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override;
 };
 
 STDIN_Handler::STDIN_Handler ()
@@ -185,7 +185,7 @@ STDIN_Handler::STDIN_Handler ()
   // queue.
   else if (ACE_Reactor::instance ()->schedule_timer
            (this,
-            0,
+            nullptr,
             ACE_Time_Value (timeout),
             ACE_Time_Value (timeout)) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -261,11 +261,11 @@ class Message_Handler : public ACE_Task <ACE_SYNCH>
 public:
   Message_Handler ();
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
   // Called back within the context of the <ACE_Reactor> Singleton to
   // dequeue and process the message on the <ACE_Message_Queue>.
 
-  virtual int svc ();
+  int svc () override;
   // Run the "event-loop" periodically putting messages to our
   // internal <Message_Queue> that we inherit from <ACE_Task>.
 
@@ -294,7 +294,7 @@ Message_Handler::svc ()
 {
   for (int i = 0;; i++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (1),
@@ -329,7 +329,7 @@ Message_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Message_Handler::handle_input\n"));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     ACE_ERROR ((LM_ERROR,

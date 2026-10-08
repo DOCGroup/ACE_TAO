@@ -67,7 +67,7 @@ static ACE_TCHAR *host = 0;
 
 // number of Senders instances
 static int senders = 1;
-static const int MaxSenders = 100;
+static constexpr int MaxSenders = 100;
 
 // duplex mode: ==0 half-duplex
 //              !=0 full duplex

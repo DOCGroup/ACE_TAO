@@ -24,7 +24,7 @@ static int n_threads = 0;
 static const int default_threads = ACE_DEFAULT_THREADS;
 
 // Default number of times to run the test.
-static const int default_iterations = 1000;
+static constexpr int default_iterations = 1000;
 
 class Task_Test : public ACE_Task<ACE_MT_SYNCH>
 {

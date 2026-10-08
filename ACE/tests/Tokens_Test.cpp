@@ -34,7 +34,7 @@
 typedef ACE_Token_Invariant_Manager TOKEN_INVARIANTS;
 
 static const ACE_TCHAR *server_host = ACE_DEFAULT_SERVER_HOST;
-static const int server_port = 23456;
+static constexpr int server_port = 23456;
 
 // Synchronize starts of threads, so that they all start before one
 // has a chance to finish and clean up the TSS objects.  To avoid

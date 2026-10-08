@@ -9,7 +9,7 @@ class HA_Device_Repository
 {
 public:
   HA_Device_Repository ()
-  { }
+  = default;
 
   void update_device (int device_id)
   {
@@ -33,7 +33,7 @@ public:
   HA_CommandHandler (HA_Device_Repository& rep) : rep_(rep)
   { }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_DEBUG
       ((LM_DEBUG, ACE_TEXT ("(%t) Handler Thread running\n")));

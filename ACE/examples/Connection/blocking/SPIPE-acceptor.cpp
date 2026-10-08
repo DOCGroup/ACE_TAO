@@ -20,8 +20,7 @@ Svc_Handler::Svc_Handler ()
 }
 
 Svc_Handler::~Svc_Handler ()
-{
-}
+= default;
 
 int
 Svc_Handler::open (void *)
@@ -68,8 +67,7 @@ IPC_Server::IPC_Server ()
 }
 
 IPC_Server::~IPC_Server ()
-{
-}
+= default;
 
 int
 IPC_Server::handle_signal (int, siginfo_t *, ucontext_t *)
@@ -155,7 +153,7 @@ run_reactor_event_loop (void *)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker thread starting\n")));
 
   ACE_Proactor::run_event_loop ();
-  return 0;
+  return nullptr;
 }
 
 int
@@ -169,7 +167,7 @@ IPC_Server::svc ()
       // Create a new SH endpoint, which performs all processing in
       // its open() method (note no automatic restart if errno ==
       // EINTR).
-      if (this->accept (&sh, 0) == -1)
+      if (this->accept (&sh, nullptr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("accept")),
@@ -181,13 +179,13 @@ IPC_Server::svc ()
         {
           // Run single-threaded.
           if (n_threads_ <= 1)
-            run_reactor_event_loop (0);
+            run_reactor_event_loop (nullptr);
           else
             {
               if (ACE_Thread_Manager::instance ()->spawn_n
                    (n_threads_,
                     run_reactor_event_loop,
-                    0,
+                    nullptr,
                     THR_NEW_LWP) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("%p\n"),

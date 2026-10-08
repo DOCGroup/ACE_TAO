@@ -77,8 +77,7 @@ Logging_Acceptor;
 // Default constructor.
 
 Logging_Handler::Logging_Handler ()
-{
-}
+= default;
 
 int
 Logging_Handler::handle_timeout (const ACE_Time_Value &,

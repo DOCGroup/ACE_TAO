@@ -8,8 +8,7 @@ URL::stream ()
 }
 
 URL::~URL ()
-{
-}
+= default;
 
 const URL_Status &
 URL::reply_status ()

@@ -10,5 +10,4 @@
 #include "Widget.h"
 
 Widget::~Widget ()
-{
-}
+= default;

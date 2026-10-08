@@ -207,8 +207,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
 }
 
 ACE_MMAP_Memory_Pool::~ACE_MMAP_Memory_Pool ()
-{
-}
+= default;
 
 // Compute the new map_size of the backing store and commit the
 // memory.
@@ -561,8 +560,7 @@ ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_s
 }
 
 ACE_Lite_MMAP_Memory_Pool::~ACE_Lite_MMAP_Memory_Pool ()
-{
-}
+= default;
 
 int
 ACE_Lite_MMAP_Memory_Pool::sync (size_t, int)

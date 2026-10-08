@@ -61,8 +61,7 @@ ACE_Process_Manager *ACE_Process_Manager::instance_ = nullptr;
 bool ACE_Process_Manager::delete_instance_ = false;
 
 ACE_Process_Manager::Process_Descriptor::~Process_Descriptor ()
-{
-}
+= default;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager::Process_Descriptor)
 

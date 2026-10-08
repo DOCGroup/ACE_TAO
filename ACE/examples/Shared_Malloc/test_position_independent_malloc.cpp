@@ -26,7 +26,7 @@ static void *base_addr = ACE_DEFAULT_BASE_ADDR;
 static void
 print (Test_Data *data)
 {
-  for (Test_Data *t = data; t != 0; t = t->next_)
+  for (Test_Data *t = data; t != nullptr; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "<<<<\ni1_ = %d, i2_ = %d, i3_ = %d\n",
@@ -46,26 +46,26 @@ initialize (TEST_MALLOC *allocator)
   void *ptr;
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
-                        0);
+                        nullptr);
   Test_Data *data1 = new (ptr) Test_Data;
 
   data1->i1_ = 111;
   data1->i2_ = 222;
   data1->i3_ = 333;
 
-  void *gap = 0;
+  void *gap = nullptr;
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
-                        0);
+                        nullptr);
 
   allocator->free (gap);
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
-                        0);
+                        nullptr);
   Test_Data *data2 = new (ptr) Test_Data;
 
-  data1->next_ = 0;
+  data1->next_ = nullptr;
   data1->i1_ = 111;
   data1->i2_ = 222;
   data1->i3_ = 333;
@@ -77,7 +77,7 @@ initialize (TEST_MALLOC *allocator)
   // Test in shared memory using long (array/pointer)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
-                        0);
+                        nullptr);
   Long_Test *lt = new (ptr) Long_Test;
 
   lt->array_[0] = 1000;
@@ -94,7 +94,7 @@ initialize (TEST_MALLOC *allocator)
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
-                        0);
+                        nullptr);
   lt = new (ptr) Long_Test;
 
   lt->array_[0] = 2000;
@@ -144,14 +144,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_MMAP_Memory_Pool_Options options (base_addr);
 
   // Create an allocator.
-  TEST_MALLOC *ptr = 0;
+  TEST_MALLOC *ptr = nullptr;
   ACE_NEW_RETURN (ptr,
                   TEST_MALLOC (ACE_TEXT("test_file"),
                                ACE_TEXT("test_lock"),
                                &options),
                   1);
   std::unique_ptr <TEST_MALLOC> allocator (ptr);
-  void *data = 0;
+  void *data = nullptr;
 
   // This is the first time in, so we allocate the memory and bind it
   // to the name "foo".

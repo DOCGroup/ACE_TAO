@@ -24,8 +24,7 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
 }
 
 ACE_Task_Base::~ACE_Task_Base ()
-{
-}
+= default;
 
 /// Default ACE_Task service routine
 int

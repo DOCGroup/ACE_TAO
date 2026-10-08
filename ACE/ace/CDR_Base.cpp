@@ -588,13 +588,13 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
   if (sizeof (rhs) == 8)
     {
 #if defined (ACE_LITTLE_ENDIAN)
-      static const size_t byte_zero = 1;
-      static const size_t byte_one = 0;
+      static constexpr size_t byte_zero = 1;
+      static constexpr size_t byte_one = 0;
       char rhs_ptr[16];
       ACE_CDR::swap_8 (reinterpret_cast<const char*> (&rhs), rhs_ptr);
 #else
-      static const size_t byte_zero = 0;
-      static const size_t byte_one = 1;
+      static constexpr size_t byte_zero = 0;
+      static constexpr size_t byte_one = 1;
       const char* rhs_ptr = reinterpret_cast<const char*> (&rhs);
 #endif
       ACE_INT16 sign  = static_cast<ACE_INT16> (
@@ -679,13 +679,13 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
   if (sizeof (ret) == 8)
     {
 #if defined (ACE_LITTLE_ENDIAN)
-      static const size_t byte_zero = 1;
-      static const size_t byte_one = 0;
+      static constexpr size_t byte_zero = 1;
+      static constexpr size_t byte_one = 0;
       char copy[16];
       ACE_CDR::swap_16 (this->ld, copy);
 #else
-      static const size_t byte_zero = 0;
-      static const size_t byte_one = 1;
+      static constexpr size_t byte_zero = 0;
+      static constexpr size_t byte_one = 1;
       const char* copy = this->ld;
 #endif
       ACE_INT16 exponent = 0;

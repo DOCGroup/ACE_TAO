@@ -4,12 +4,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Thread_Hook::ACE_Thread_Hook()
-{
-}
+= default;
 
 ACE_Thread_Hook::~ACE_Thread_Hook ()
-{
-}
+= default;
 
 ACE_THR_FUNC_RETURN
 ACE_Thread_Hook::start (ACE_THR_FUNC func, void *arg)

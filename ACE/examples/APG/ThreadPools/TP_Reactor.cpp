@@ -111,7 +111,7 @@ reactor_event_hook (ACE_Reactor *)
 class ServerTP : public ACE_Task_Base
 {
 public:
-  virtual int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Running the event loop\n")));
@@ -141,7 +141,7 @@ class Client: public ACE_Task_Base
         :addr_(rendezvous)
     {}
 
-    virtual int svc()
+    int svc() override
     {
       ACE_OS::sleep (3);
       const ACE_TCHAR *msg =

@@ -12,8 +12,8 @@ typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> TEST_MALLOC;
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 // The Address for the shared memory mapped files defaults to wherever
 // the OS wants to map it.
-const void *REQUEST_BASE_ADDR = 0;
-const void *RESPONSE_BASE_ADDR = 0;
+const void *REQUEST_BASE_ADDR = nullptr;
+const void *RESPONSE_BASE_ADDR = nullptr;
 #else
 // Default address for shared memory mapped files and SYSV shared
 // memory (defaults to 64 M).
@@ -33,7 +33,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_MMAP_Memory_Pool_Options request_options (REQUEST_BASE_ADDR);
 
   // Create an adapter version of an allocator.
-  ACE_Allocator_Adapter<TEST_MALLOC> *adapter_ptr = 0;
+  ACE_Allocator_Adapter<TEST_MALLOC> *adapter_ptr = nullptr;
   ACE_NEW_RETURN (adapter_ptr,
                   ACE_Allocator_Adapter<TEST_MALLOC> ("request_file",
                                                       "request_lock",
@@ -43,7 +43,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   std::unique_ptr <ACE_Allocator_Adapter<TEST_MALLOC> > shmem_request (adapter_ptr);
   ACE_MMAP_Memory_Pool_Options response_options (RESPONSE_BASE_ADDR);
 
-  TEST_MALLOC *ptr = 0;
+  TEST_MALLOC *ptr = nullptr;
   // Create a non-adapter version of an allocator.
   ACE_NEW_RETURN (ptr,
                   TEST_MALLOC (ACE_TEXT("response_file"),
@@ -51,7 +51,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                &response_options),
                   1);
   std::unique_ptr <TEST_MALLOC> shmem_response (ptr);
-  void *data = 0;
+  void *data = nullptr;
 
   // If we find "foo" then we're running the "second" time, so we must
   // release the resources.
@@ -81,7 +81,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                            "bind"),
                           1);
     }
-  data = 0;
+  data = nullptr;
 
   // If we find "foo" then we're running the "second" time, so we must
   // release the resources.

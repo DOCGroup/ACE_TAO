@@ -262,7 +262,6 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
 IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::~IPC_Client ()
-{
-}
+= default;
 
 #endif /* CPP_CONNECTOR_C */

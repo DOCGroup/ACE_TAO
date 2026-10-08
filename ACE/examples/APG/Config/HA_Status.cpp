@@ -14,7 +14,7 @@
 class HA_Status : public ACE_Service_Object
 {
 public:
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
 private:
   ACE_INET_Addr listen_addr_;

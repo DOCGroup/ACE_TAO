@@ -12,8 +12,7 @@ URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
 }
 
 URL_Processing_Strategy::~URL_Processing_Strategy ()
-{
-}
+= default;
 
 int
 URL_Processing_Strategy::destroy ()
@@ -74,7 +73,7 @@ HTTP_Header_Processing_Strategy::execute ()
           ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
                                                3);
 
-           URL_Status *url_status = 0;
+           URL_Status *url_status = nullptr;
           ACE_NEW_RETURN (url_status,
                           URL_Status,
                           0);
@@ -189,7 +188,7 @@ URL_Validation_Visitation_Strategy_Factory::make_header_iterator ()
   URL_Iterator *i;
   ACE_NEW_RETURN (i,
                   HTTP_Header_Iterator (*this->url_),
-                  0);
+                  nullptr);
   return i;
 }
 
@@ -199,7 +198,7 @@ URL_Validation_Visitation_Strategy_Factory::make_body_iterator ()
   URL_Iterator *i;
   ACE_NEW_RETURN (i,
                   HTML_Body_Iterator (*this->url_),
-                  0);
+                  nullptr);
   return i;
 }
 
@@ -210,7 +209,7 @@ URL_Validation_Visitation_Strategy_Factory::make_header_strategy (URL_Iterator &
   ACE_NEW_RETURN (ps,
                   HTTP_Header_Processing_Strategy (*this->url_,
                                                    iterator),
-                  0);
+                  nullptr);
   return ps;
 }
 
@@ -222,7 +221,7 @@ URL_Validation_Visitation_Strategy_Factory::make_body_strategy (URL_Iterator &it
                   HTML_Body_Validation_Strategy (*this->url_,
                                                  iterator,
                                                  this->visitor_context_),
-                  0);
+                  nullptr);
   return ps;
 }
 
@@ -235,19 +234,18 @@ URL_Validation_Visitation_Strategy_Factory::destroy ()
 }
 
 URL_Visitor::~URL_Visitor ()
-{
-}
+= default;
 
 URL_Validation_Visitor::URL_Validation_Visitor ()
 {
   ACE_NEW (this->caching_connect_strategy_,
            CACHED_CONNECT_STRATEGY (this->caching_strategy_));
   ACE_NEW (this->strat_connector_,
-           STRATEGY_CONNECTOR(0,
+           STRATEGY_CONNECTOR(nullptr,
                            &creation_strategy_,
                            caching_connect_strategy_,
                            &activation_strategy_));
-  if (strat_connector_ == 0)
+  if (strat_connector_ == nullptr)
     ACE_ERROR ((LM_ERROR,
                 "%p %s\n"
                 "strategy connector creation failed"));
@@ -256,8 +254,8 @@ URL_Validation_Visitor::URL_Validation_Visitor ()
 
 URL_Validation_Visitor::~URL_Validation_Visitor ()
 {
-  this->strat_connector_ = 0;
-  if (this->caching_connect_strategy_ != 0)
+  this->strat_connector_ = nullptr;
+  if (this->caching_connect_strategy_ != nullptr)
     delete this->caching_connect_strategy_;
 }
 
@@ -297,7 +295,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
 
   if (url.stream ().open (this->strat_connector_,
                           url.url_addr ()) == -1)
-    return 0;
+    return nullptr;
 
   // See if we can get connected and send the GET request via the
   // <HTTP_URL>.
@@ -312,7 +310,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "bind"));
-      return 0;
+      return nullptr;
     }
   // @@ Here's where we could check to see if the <url> was HTTP or
   // FTP, etc.  But for now we'll just assume that everything is an
@@ -323,7 +321,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
       ACE_NEW_RETURN (vs,
                       URL_Validation_Visitation_Strategy_Factory (&url,
                                                                   *this),
-                      0);
+                      nullptr);
       return vs;
     }
 }
@@ -345,20 +343,20 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
     {
       Auto_Destroyer <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
 
-      if (*vs == 0)
+      if (*vs == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_visitation_strategy_factory"),
                           -1);
 
       Auto_Destroyer <URL_Iterator> ihs (vs->make_header_iterator ());
-      if (*ihs == 0)
+      if (*ihs == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_header_iterator"),
                           -1);
       Auto_Destroyer <URL_Processing_Strategy> phs (vs->make_header_strategy (**ihs));
-      if (*phs == 0)
+      if (*phs == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_header_strategy"),
@@ -389,14 +387,14 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
         return 0;
 
       Auto_Destroyer <URL_Iterator> is (vs->make_body_iterator ());
-      if (*is == 0)
+      if (*is == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_body_iterator"),
                           -1);
 
       Auto_Destroyer <URL_Processing_Strategy> ps (vs->make_body_strategy (**is));
-      if (*ps == 0)
+      if (*ps == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_body_strategy"),
@@ -422,7 +420,7 @@ URL_Download_Visitation_Strategy_Factory::destroy ()
 URL_Iterator *
 URL_Download_Visitation_Strategy_Factory::make_header_iterator ()
 {
-  return 0;
+  return nullptr;
 }
 
 URL_Iterator *
@@ -431,7 +429,7 @@ URL_Download_Visitation_Strategy_Factory::make_body_iterator ()
   URL_Iterator *i;
   ACE_NEW_RETURN (i,
                   URL_Download_Iterator (*this->url_),
-                  0);
+                  nullptr);
   return i;
 }
 
@@ -441,7 +439,7 @@ URL_Download_Visitation_Strategy_Factory::make_header_strategy (URL_Iterator &it
   // You fill in here.
   ACE_UNUSED_ARG (iterator);
 
-  return 0;
+  return nullptr;
 }
 
 URL_Processing_Strategy *
@@ -451,7 +449,7 @@ URL_Download_Visitation_Strategy_Factory::make_body_strategy (URL_Iterator &iter
   ACE_NEW_RETURN (ps,
                   URL_Download_Strategy (*this->url_,
                                          iterator),
-                  0);
+                  nullptr);
   return ps;
 }
 
@@ -461,8 +459,7 @@ URL_Visitation_Strategy_Factory::URL_Visitation_Strategy_Factory (URL *url)
 }
 
 URL_Visitation_Strategy_Factory::~URL_Visitation_Strategy_Factory ()
-{
-}
+= default;
 
 URL_Download_Visitation_Strategy_Factory::URL_Download_Visitation_Strategy_Factory (URL *url)
   : URL_Visitation_Strategy_Factory (url)
@@ -493,7 +490,7 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
   URL_Visitation_Strategy_Factory *vs;
   ACE_NEW_RETURN (vs,
                   URL_Download_Visitation_Strategy_Factory (&url),
-                  0);
+                  nullptr);
   return vs;
 }
 
@@ -510,21 +507,21 @@ URL_Download_Visitor::visit (HTTP_URL &http_url)
 {
   Auto_Destroyer <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
 
-  if (*vs == 0)
+  if (*vs == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_visitation_strategy_factory"),
                       -1);
 
   Auto_Destroyer <URL_Iterator> is (vs->make_body_iterator ());
-  if (*is == 0)
+  if (*is == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_body_iterator"),
                       -1);
 
   Auto_Destroyer <URL_Processing_Strategy> ps (vs->make_body_strategy (**is));
-  if (*ps == 0)
+  if (*ps == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_body_strategy"),

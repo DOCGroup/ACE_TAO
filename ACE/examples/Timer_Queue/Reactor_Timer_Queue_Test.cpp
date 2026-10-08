@@ -63,7 +63,7 @@ Input_Handler::schedule_timer (void *argument)
   long tid;
 
   th = new Reactor_Timer_Handler;
-  if (th != 0)
+  if (th != nullptr)
     {
       tid = this->reactor ()->schedule_timer (th,
                                               0,

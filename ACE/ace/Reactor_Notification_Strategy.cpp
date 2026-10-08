@@ -17,8 +17,7 @@ ACE_Reactor_Notification_Strategy::ACE_Reactor_Notification_Strategy (
 }
 
 ACE_Reactor_Notification_Strategy::~ACE_Reactor_Notification_Strategy ()
-{
-}
+= default;
 
 int
 ACE_Reactor_Notification_Strategy::notify ()

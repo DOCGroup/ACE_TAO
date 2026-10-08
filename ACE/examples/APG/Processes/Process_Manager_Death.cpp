@@ -13,7 +13,7 @@ public:
     ACE_TRACE ("DeathHandler::DeathHandler");
   }
 
-  virtual int handle_exit (ACE_Process * process)
+  int handle_exit (ACE_Process * process) override
   {
     ACE_TRACE ("DeathHandler::handle_exit");
 

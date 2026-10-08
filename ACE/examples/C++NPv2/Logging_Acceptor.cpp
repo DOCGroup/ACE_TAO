@@ -13,7 +13,7 @@ int Logging_Acceptor::open (const ACE_INET_Addr &local_addr) {
 }
 
 int Logging_Acceptor::handle_input (ACE_HANDLE) {
-  Logging_Event_Handler *peer_handler = 0;
+  Logging_Event_Handler *peer_handler = nullptr;
   ACE_NEW_RETURN (peer_handler,
                   Logging_Event_Handler (reactor ()),
                   -1);

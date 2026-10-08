@@ -25,7 +25,7 @@ ACE_THR_FUNC_RETURN threadFunc(void *arg) {
     ACE_Reactor *reactor = (ACE_Reactor *) arg;
     reactor->run_reactor_event_loop();
 
-    return 0;
+    return nullptr;
 }
 
 /**
@@ -38,9 +38,9 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
     ACE_Reactor reactor(&tpReactor);
 
     // create a new accept handler using that reactor
-    AcceptHandler *acceptHandler = 0;
+    AcceptHandler *acceptHandler = nullptr;
     ACE_NEW_NORETURN (acceptHandler, AcceptHandler(&reactor));
-    if (acceptHandler == 0)
+    if (acceptHandler == nullptr)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
                         ACE_TEXT ("accept handler. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 

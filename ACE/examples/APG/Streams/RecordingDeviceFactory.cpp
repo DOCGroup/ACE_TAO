@@ -5,7 +5,7 @@
 RecordingDevice *RecordingDeviceFactory::instantiate (int argc,
                                                       ACE_TCHAR *argv[])
 {
-  RecordingDevice * device = 0;
+  RecordingDevice * device = nullptr;
 
   // Determine the implementation based on the values of argv
   // Exclude 2

@@ -29,8 +29,7 @@ Options::Options ()
 }
 
 Options::~Options ()
-{
-}
+= default;
 
 void Options::print_results ()
 {

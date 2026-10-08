@@ -19,7 +19,7 @@
 
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
   : ACE_Task_Base (input_task_mgr),
-    send_input_msg_cmd_ (0),
+    send_input_msg_cmd_ (nullptr),
     input_period_ (ACE_ONE_SECOND_IN_USECS),
     is_active_ (0),
     send_count_ (0)
@@ -29,8 +29,7 @@ Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_
 // Destructor.
 
 Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base ()
-{
-}
+= default;
 
 // Sets send input message command in the input device driver object.
 
@@ -96,7 +95,7 @@ Input_Device_Wrapper_Base::svc ()
     {
       // Create an input message to send.
       message = create_input_message ();
-      if (message == 0)
+      if (message == nullptr)
         {
           if (is_active_)
             {
@@ -110,7 +109,7 @@ Input_Device_Wrapper_Base::svc ()
         }
 
       // Make sure there is a send command object.
-      if (send_input_msg_cmd_ == 0)
+      if (send_input_msg_cmd_ == nullptr)
         {
           delete message;
           if (is_active_)
@@ -175,8 +174,7 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
 }
 
 Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base ()
-{
-}
+= default;
 
 // Constructor.
 
@@ -197,7 +195,7 @@ Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
     transmission_start_ (ACE_Time_Value::zero),
     transmission_end_ (ACE_Time_Value::zero)
 {
-  if (input_task_mgr_ == 0)
+  if (input_task_mgr_ == nullptr)
     input_task_mgr_ = ACE_Thread_Manager::instance ();
 }
 

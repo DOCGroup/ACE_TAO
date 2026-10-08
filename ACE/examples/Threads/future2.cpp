@@ -47,13 +47,13 @@ class Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-  Scheduler (const char *, Scheduler * = 0);
-  virtual ~Scheduler ();
+  Scheduler (const char *, Scheduler * = nullptr);
+  ~Scheduler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// The method that is used to start the active object.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (void *args = 0);
+  int open (void *args = nullptr) override;
 
   // = Here are the methods exported by the class. They return an
   // <ACE_Future>.
@@ -65,10 +65,10 @@ private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Should not be accessible from outside...  (use end () instead).
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
   /// Here the actual servicing of all requests is happening..
-  virtual int svc ();
+  int svc () override;
 
   // = Implementation methods.
   u_long work_i (u_long, int);
@@ -88,8 +88,8 @@ class Method_Request_work : public ACE_Method_Request
 {
 public:
   Method_Request_work (Scheduler *, u_long, int, ACE_Future<u_long> &);
-  virtual ~Method_Request_work ();
-  virtual int call ();
+  ~Method_Request_work () override;
+  int call () override;
 
 private:
   Scheduler *scheduler_;
@@ -110,8 +110,7 @@ Method_Request_work::Method_Request_work (Scheduler* new_Scheduler,
 }
 
 Method_Request_work::~Method_Request_work ()
-{
-}
+= default;
 
 int
 Method_Request_work::call ()
@@ -128,8 +127,8 @@ class Method_Request_name : public ACE_Method_Request
 {
 public:
   Method_Request_name (Scheduler *, ACE_Future<char*> &);
-  virtual ~Method_Request_name ();
-  virtual int call ();
+  ~Method_Request_name () override;
+  int call () override;
 
 private:
   Scheduler *scheduler_;
@@ -167,8 +166,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
-  virtual ~Method_Request_end () {}
-  virtual int call () { return -1; }
+  ~Method_Request_end () override = default;
+  int call () override { return -1; }
 
 private:
   /// Keep track of our scheduler.
@@ -248,7 +247,7 @@ Scheduler::name_i ()
 {
   char *the_name;
 
-  ACE_NEW_RETURN (the_name, char[ACE_OS::strlen (this->name_) + 1], 0);
+  ACE_NEW_RETURN (the_name, char[ACE_OS::strlen (this->name_) + 1], nullptr);
   ACE_OS::strcpy (the_name, this->name_);
 
   return the_name;

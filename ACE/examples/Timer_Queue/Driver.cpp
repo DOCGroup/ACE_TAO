@@ -32,8 +32,7 @@ Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
 // destructor
 template <class RECEIVER, class ACTION>
 Command<RECEIVER, ACTION>::~Command ()
-{
-}
+= default;
 
 // invokes an operation.
 
@@ -47,8 +46,7 @@ Command<RECEIVER, ACTION>::execute (void *arg)
 
 template <class TQ, class RECEIVER, class ACTION>
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::~Timer_Queue_Test_Driver ()
-{
-}
+= default;
 
 template <class TQ, class RECEIVER, class ACTION> int
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request ()

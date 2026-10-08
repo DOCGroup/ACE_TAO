@@ -55,9 +55,9 @@ supplier (void *)
       ACE_NEW_RETURN (mb_p,
                       ACE_Message_Block (size,
                                          ACE_Message_Block::MB_DATA,
-                                         (ACE_Message_Block *) 0,
+                                         (ACE_Message_Block *) nullptr,
                                          mybuf.get ()),
-                      0);
+                      nullptr);
       if (s_stream.send (mb_p) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
@@ -67,7 +67,7 @@ supplier (void *)
 
   ACE_NEW_RETURN (mb_p,
                   ACE_Message_Block ((size_t) 0),
-                  0);
+                  nullptr);
 
   // Insert a 0-sized message block to signal the other side to shut
   // down.
@@ -77,7 +77,7 @@ supplier (void *)
                        "send failed"),
                           0);
   s_stream.close ();
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -104,7 +104,7 @@ consumer (void *)
 
   // Spawn the supplier thread.
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier),
-                                              (void *) 0,
+                                              (void *) nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -126,7 +126,7 @@ consumer (void *)
 
   int received_messages = 0;
 
-  for (ACE_Message_Block *mb = 0;
+  for (ACE_Message_Block *mb = nullptr;
        c_stream.recv (mb) != -1 && mb->size () != 0;
        mb->release ())
     received_messages++;
@@ -139,7 +139,7 @@ consumer (void *)
               "The program ran %d seconds\n",
               received_messages, size, secs));
   c_stream.close ();
-  return 0;
+  return nullptr;
 }
 
 int
@@ -150,7 +150,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Spawn the two threads.
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer),
-                                              (void *) 0,
+                                              (void *) nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

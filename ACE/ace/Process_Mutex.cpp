@@ -91,7 +91,6 @@ ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
 }
 #endif /* ACE_HAS_WCHAR */
 ACE_Process_Mutex::~ACE_Process_Mutex ()
-{
-}
+= default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

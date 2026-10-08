@@ -24,25 +24,25 @@ class Quit_Handler : public ACE_Event_Handler {
 public:
   Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
 
-  virtual int handle_exception (ACE_HANDLE) {
+  int handle_exception (ACE_HANDLE) override {
     reactor ()->end_reactor_event_loop ();
     return -1; // Trigger call to handle_close() method.
   }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   { delete this; return 0; }
 
 protected:
   // Protected destructor ensures dynamic allocation.
-  virtual ~Quit_Handler () {}
+  ~Quit_Handler () override = default;
 };
 
 
 static ACE_THR_FUNC_RETURN controller (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
-  Quit_Handler *quit_handler = 0;
-  ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), 0);
+  Quit_Handler *quit_handler = nullptr;
+  ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), nullptr);
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
@@ -64,20 +64,20 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   }
 #endif
 
-  return 0;
+  return nullptr;
 }
 
 
 class Server_Shutdown : public ACE_Service_Object {
 public:
-  virtual int init (int, ACE_TCHAR *[]) {
+  int init (int, ACE_TCHAR *[]) override {
     reactor_ = ACE_Reactor::instance ();
     return ACE_Thread_Manager::instance ()->spawn
       (controller, reactor_, THR_DETACHED);
   }
 
-  virtual int fini () {
-    Quit_Handler *quit_handler = 0;
+  int fini () override {
+    Quit_Handler *quit_handler = nullptr;
     ACE_NEW_RETURN (quit_handler,
                     Quit_Handler (reactor_), -1);
     return reactor_->notify (quit_handler);

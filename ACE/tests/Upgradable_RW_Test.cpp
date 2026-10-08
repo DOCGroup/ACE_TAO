@@ -25,7 +25,7 @@
 static int n_iterations = 50;
 
 // Maximum string length used
-static const size_t MAX_STRING_SIZE = 200;
+static constexpr size_t MAX_STRING_SIZE = 200;
 
 // switch on RW mutexes, else use ordinary mutexes
 // #define RW_MUTEX 1
@@ -480,4 +480,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return status;
 }
-

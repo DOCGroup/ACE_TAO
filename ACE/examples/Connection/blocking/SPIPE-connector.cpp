@@ -17,8 +17,7 @@ Peer_Handler::Peer_Handler (int iterations)
 }
 
 Peer_Handler::~Peer_Handler ()
-{
-}
+= default;
 
 int
 Peer_Handler::open (void *)
@@ -135,8 +134,7 @@ IPC_Client::IPC_Client ()
 }
 
 IPC_Client::~IPC_Client ()
-{
-}
+= default;
 
 // Dynamic linking hooks.
 

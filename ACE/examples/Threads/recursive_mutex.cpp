@@ -81,7 +81,7 @@ worker (void *arg)
     = (ACE_Recursive_Thread_Mutex *) arg;
 
   recursive_worker (0, rm);
-  return 0;
+  return nullptr;
 }
 
 int

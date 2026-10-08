@@ -44,9 +44,9 @@ using QUEUE = ACE_Message_Queue<ACE_NULL_SYNCH>;
 using ITERATOR = ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
 using REVERSE_ITERATOR = ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 
-static const int MESSAGE_FACTOR = 100000;
-static const int MAX_MESSAGES = 10000;
-static const int MAX_MESSAGE_SIZE = 32;
+static constexpr int MESSAGE_FACTOR = 100000;
+static constexpr int MAX_MESSAGES = 10000;
+static constexpr int MAX_MESSAGE_SIZE = 32;
 static const char test_message[] = "ACE_Message_Queue Test Message";
 
 static int max_messages = MAX_MESSAGES;
@@ -956,4 +956,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return status;
 }
-

@@ -10,8 +10,7 @@ public:
   enum { CRITICAL, NORMAL};
 
   virtual ~LogMessage ()
-  {
-  }
+  = default;
 
   virtual int priority ()
   {
@@ -21,7 +20,7 @@ public:
 
 class CriticalLogMessage : public LogMessage
 {
-  virtual int priority ()
+  int priority () override
   {
     return LogMessage::CRITICAL;
   }

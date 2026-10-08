@@ -36,7 +36,7 @@ Supplier_Router::svc ()
 {
   ACE_ASSERT (this->is_writer ());
 
-  ACE_Message_Block *message_block = 0;
+  ACE_Message_Block *message_block = nullptr;
 
   if (options.debug ())
     ACE_DEBUG ((LM_DEBUG, "(%t) starting svc in %s\n", this->name ()));
@@ -60,7 +60,7 @@ Supplier_Router::open (void *)
 
   argv[0] = (ACE_TCHAR *)this->name ();
   argv[1] = (ACE_TCHAR *)options.supplier_file ();
-  argv[2] = 0;
+  argv[2] = nullptr;
 
   if (this->init (1, &argv[1]) == -1)
     return -1;
@@ -122,7 +122,7 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
                    module_name, ACE_TEXT ("upipe"),
                    ACE_TEXT ("# supplier router\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (module_name)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, module_name, length);

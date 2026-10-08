@@ -8,8 +8,7 @@ PCB::PCB() : count_(0)
 }
 
 PCB::~PCB()
-{
-}
+= default;
 
 int PCB::handleEvent (const void *arg)
 {

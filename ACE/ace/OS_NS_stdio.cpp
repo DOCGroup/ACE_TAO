@@ -737,7 +737,7 @@ namespace { // helpers for vsnprintf_emulation
         precision = 1;
 
 #ifdef ACE_LACKS_LOCALECONV
-      static const char thousands_sep = 0;
+      static constexpr char thousands_sep = 0;
       static const char grouping[] = "";
 #else
 # ifdef localeconv
@@ -1385,7 +1385,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
       Snprintf_Flags flags (fmt);
 
       // Parse field width (integer, *, or *n$)
-      static const int WIDTH_PREC_UNSPEC = -1;
+      static constexpr int WIDTH_PREC_UNSPEC = -1;
       int width = WIDTH_PREC_UNSPEC;
       if (*fmt == '*')
         {
