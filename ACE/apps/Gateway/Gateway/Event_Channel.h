@@ -18,7 +18,7 @@
 #include "Event_Forwarding_Discriminator.h"
 #include "ace/svc_export.h"
 
-typedef ACE_Null_Mutex MAP_MUTEX;
+using MAP_MUTEX = ACE_Null_Mutex;
 
 /**
  * @class Event_Channel

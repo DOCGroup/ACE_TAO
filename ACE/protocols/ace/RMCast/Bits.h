@@ -10,10 +10,10 @@
 
 namespace ACE_RMCast
 {
-  typedef ACE_SYNCH_MUTEX Mutex;
+  using Mutex = ACE_SYNCH_MUTEX;
 // FUZZ: disable check_for_ACE_Guard
-  typedef ACE_Guard<Mutex> Lock;
-  typedef ACE_Condition<Mutex> Condition;
+  using Lock = ACE_Guard<Mutex>;
+  using Condition = ACE_Condition<Mutex>;
 // FUZZ: enable check_for_ACE_Guard
 }
 

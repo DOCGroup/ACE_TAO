@@ -31,7 +31,7 @@
 // use ACE_Process_Mutex.
 #if defined (ACE_HAS_WTHREADS)
 # include "ace/Process_Mutex.h"
-  typedef ACE_Process_Mutex ACE_TEST_MUTEX;
+  using ACE_TEST_MUTEX = ACE_Process_Mutex;
 #else
 # include "ace/Thread_Mutex.h"
   using ACE_TEST_MUTEX = ACE_Recursive_Thread_Mutex;

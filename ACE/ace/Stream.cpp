@@ -341,12 +341,12 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
 
   if (head == 0)
     {
-      typedef ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY> STREAM_HEAD_TYPE;
+      using STREAM_HEAD_TYPE = ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (h1,
                         STREAM_HEAD_TYPE);
       ACE_NEW_NORETURN (h2,
                         STREAM_HEAD_TYPE);
-      typedef ACE_Module<ACE_SYNCH_USE, TIME_POLICY> MODULE_TYPE;
+      using MODULE_TYPE = ACE_Module<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (head,
                         MODULE_TYPE (ACE_TEXT ("ACE_Stream_Head"),
                                      h1, h2,
@@ -356,12 +356,12 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
 
   if (tail == 0)
     {
-      typedef ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY> STREAM_TAIL_TYPE;
+      using STREAM_TAIL_TYPE = ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (t1,
                         STREAM_TAIL_TYPE);
       ACE_NEW_NORETURN (t2,
                         STREAM_TAIL_TYPE);
-      typedef ACE_Module<ACE_SYNCH_USE, TIME_POLICY> MODULE_TYPE;
+      using MODULE_TYPE = ACE_Module<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (tail,
                         MODULE_TYPE (ACE_TEXT ("ACE_Stream_Tail"),
                                      t1, t2,

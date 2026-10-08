@@ -33,7 +33,7 @@
 class ACEXML_Export ACEXML_Attribute_Def_Builder
 {
 public:
-  typedef std::unique_ptr<ACEXML_Attribute_Def_Builder> VAR;
+  using VAR = std::unique_ptr<ACEXML_Attribute_Def_Builder>;
 
   enum ATT_TYPE {
     CDATA,
@@ -109,7 +109,7 @@ public:
 class ACEXML_Export ACEXML_Attributes_Def_Builder
 {
 public:
-  typedef std::unique_ptr<ACEXML_Attributes_Def_Builder> VAR;
+  using VAR = std::unique_ptr<ACEXML_Attributes_Def_Builder>;
 
   virtual ~ACEXML_Attributes_Def_Builder () = 0;
 

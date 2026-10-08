@@ -23,7 +23,7 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
+using ACE_TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
 /**
  * @class STDIN_Token
@@ -50,7 +50,7 @@ public:
   int handle_input (ACE_HANDLE);
   int handle_exception (ACE_HANDLE);
 
-  typedef ACE_CString TID;
+  using TID = ACE_CString;
 
 private:
   /// Display options.

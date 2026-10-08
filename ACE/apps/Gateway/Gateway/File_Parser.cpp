@@ -8,7 +8,7 @@
 
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
-typedef FPRT::Return_Type FP_RETURN_TYPE;
+using FP_RETURN_TYPE = FPRT::Return_Type;
 
 // File_Parser stuff.
 

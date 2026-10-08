@@ -21,9 +21,9 @@ class JAWS_Cache_Manager
   friend class JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
 
 public:
-  typedef ACE_Singleton<FACTORY, ACE_SYNCH_MUTEX> Object_Factory;
-  typedef JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC> Cache_Hash;
-  typedef JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC> Cache_Heap;
+  using Object_Factory = ACE_Singleton<FACTORY, ACE_SYNCH_MUTEX>;
+  using Cache_Hash = JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
+  using Cache_Heap = JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
 
   JAWS_Cache_Manager (ACE_Allocator *alloc = 0,
                      JAWS_Cache_Object_Factory *cof = 0,
@@ -143,7 +143,7 @@ template <class KEY, class DATA, class CACHE_MANAGER>
 class JAWS_Cache_Proxy
 {
 public:
-  typedef CACHE_MANAGER Cache_Manager;
+  using Cache_Manager = CACHE_MANAGER;
   typedef ACE_Singleton<Cache_Manager, ACE_SYNCH_MUTEX>
           Cache_Manager_Singleton;
 

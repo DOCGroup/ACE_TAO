@@ -33,8 +33,8 @@ namespace Kokyu
   class DSRT_Dispatcher
   {
   public:
-    typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
-    typedef typename DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
+    using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
+    using DSRT_QoSDescriptor = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
     // = Scheduling methods.
 
@@ -96,7 +96,7 @@ namespace Kokyu
     DSRT_Dispatcher_Factory &operator= (const DSRT_Dispatcher_Factory &) = delete;
     DSRT_Dispatcher_Factory &operator= (DSRT_Dispatcher_Factory &&) = delete;
 
-    typedef std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
+    using DSRT_Dispatcher_Auto_Ptr = std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits>>;
 
     /**
       * Create a dispatcher for dynamic dispatching of threads.
@@ -121,7 +121,7 @@ namespace Kokyu
   class MIF_Comparator
   {
   public:
-    typedef typename QoSDesc::Importance_t Importance_t;
+    using Importance_t = typename QoSDesc::Importance_t;
 
     int operator ()(const QoSDesc& qos1,
                     const QoSDesc& qos2);
@@ -138,7 +138,7 @@ namespace Kokyu
   class Fixed_Priority_Comparator
   {
   public:
-    typedef typename QoSDesc::Priority_t Priority_t;
+    using Priority_t = typename QoSDesc::Priority_t;
 
     int operator ()(const QoSDesc& qos1,
                     const QoSDesc& qos2);
@@ -155,8 +155,8 @@ namespace Kokyu
   class MUF_Comparator
   {
     public:
-    typedef typename QoSDesc::Criticality_t Criticality_t;
-    typedef typename QoSDesc::Time_t Time_t;
+    using Criticality_t = typename QoSDesc::Criticality_t;
+    using Time_t = typename QoSDesc::Time_t;
 
     int operator ()(const QoSDesc& qos1,
                     const QoSDesc& qos2);

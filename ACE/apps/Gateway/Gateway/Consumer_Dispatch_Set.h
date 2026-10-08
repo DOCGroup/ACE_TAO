@@ -21,7 +21,7 @@
 // Forward reference.
 class Connection_Handler;
 
-typedef ACE_Unbounded_Set<Connection_Handler *> Consumer_Dispatch_Set;
-typedef ACE_Unbounded_Set_Iterator<Connection_Handler *> Consumer_Dispatch_Set_Iterator;
+using Consumer_Dispatch_Set = ACE_Unbounded_Set<Connection_Handler *>;
+using Consumer_Dispatch_Set_Iterator = ACE_Unbounded_Set_Iterator<Connection_Handler *>;
 
 #endif /* CONSUMER_DISPATCH_SET */

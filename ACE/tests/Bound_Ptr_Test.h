@@ -31,7 +31,7 @@ struct Printer
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Strong_Bound_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
+using Printer_var = ACE_Strong_Bound_Ptr<Printer, ACE_Thread_Mutex>;
 
 /**
  * @class Scheduler

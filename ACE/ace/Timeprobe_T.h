@@ -66,7 +66,7 @@ public:
   /**
    * ACE_Timeprobe
    */
-  typedef ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator> ACE_Timeprobe;
+  using ACE_Timeprobe = ACE_Timeprobe_Ex<ACE_LOCK, ACE_Allocator>;
 
 
   /// We can hold multiple event description tables.

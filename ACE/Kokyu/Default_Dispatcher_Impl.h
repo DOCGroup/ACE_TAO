@@ -48,7 +48,7 @@ namespace Kokyu
     Dispatcher_Task* find_task_with_preemption_prio (Priority_t);
 
   private:
-    typedef std::unique_ptr<Dispatcher_Task> Dispatcher_Task_Auto_Ptr;
+    using Dispatcher_Task_Auto_Ptr = std::unique_ptr<Dispatcher_Task>;
     std::unique_ptr<Dispatcher_Task_Auto_Ptr[]> tasks_;
     int ntasks_;
     ConfigInfoSet curr_config_info_;

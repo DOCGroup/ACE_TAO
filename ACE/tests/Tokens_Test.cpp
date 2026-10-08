@@ -31,7 +31,7 @@
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
 
-typedef ACE_Token_Invariant_Manager TOKEN_INVARIANTS;
+using TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
 static const ACE_TCHAR *server_host = ACE_DEFAULT_SERVER_HOST;
 static constexpr int server_port = 23456;

@@ -18,10 +18,10 @@ namespace ACE_TMCast
   class MTQueue
   {
   public:
-    typedef T ElementType;
-    typedef M MutexType;
-    typedef C ConditionalType;
-    typedef Q QueueType;
+    using ElementType = T;
+    using MutexType = M;
+    using ConditionalType = C;
+    using QueueType = Q;
 
   public:
 

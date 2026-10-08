@@ -2917,7 +2917,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_static_message_que
                                                                        size_t lwm,
                                                                        ACE_Notification_Strategy *ns)
 {
-  typedef ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> QUEUE_TYPE;
+  using QUEUE_TYPE = ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
   QUEUE_TYPE *tmp = 0;
 
   ACE_NEW_RETURN (tmp,
@@ -2947,7 +2947,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_deadline_message_q
                                                  dynamic_priority_offset),
                   0);
 
-  typedef ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> QUEUE_TYPE;
+  using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
   QUEUE_TYPE *tmp = 0;
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*adms, hwm, lwm, ns),
@@ -2977,7 +2977,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_laxity_message_que
                                                dynamic_priority_offset),
                   0);
 
-  typedef ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> QUEUE_TYPE;
+  using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
   QUEUE_TYPE *tmp = 0;
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*alms, hwm, lwm, ns),

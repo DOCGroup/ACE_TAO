@@ -42,15 +42,15 @@
 #if defined (ACE_LACKS_FORK)
 #  if defined (ACE_HAS_THREADS)
 #    include "ace/Thread_Mutex.h"
-     typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Thread_Mutex;
 #  else
 #    include "ace/Null_Mutex.h"
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Null_Mutex;
 #  endif /* ACE_HAS_THREADS */
 #else
 #  if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
 #    include "ace/Null_Mutex.h"
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Null_Mutex;
 #  else
 #    include "ace/Process_Mutex.h"
      using ACCEPTOR_LOCKING = ACE_Process_Mutex;
@@ -85,7 +85,7 @@ namespace {
   }
 
 #if defined (ACE_LACKS_IOVEC)
-  typedef u_long buffer_len;
+  using buffer_len = u_long;
 #else
   using buffer_len = size_t;
 #endif /* ACE_LACKS_IOVEC */

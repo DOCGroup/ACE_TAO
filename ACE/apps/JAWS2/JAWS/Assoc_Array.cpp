@@ -10,7 +10,7 @@ JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (int maxsize)
     d_array_ (0),
     maxsize_ (maxsize)
 {
-  typedef void * ptr_type;
+  using ptr_type = void *;
 
   this->k_array_ = reinterpret_cast<KEY **> (new ptr_type[this->maxsize_]);
   if (this->k_array_ == 0)

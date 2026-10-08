@@ -50,7 +50,7 @@ namespace ACE
   }
 }
 
-typedef ACE::Monitor_Control::Auto_Update_Starter STARTER;
+using STARTER = ACE::Monitor_Control::Auto_Update_Starter;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

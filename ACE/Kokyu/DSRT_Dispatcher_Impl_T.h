@@ -93,7 +93,7 @@ namespace Kokyu
     /**
      * Facilitates return of the generated function object adapter.
      */
-    typedef MoreEligible RET_FUNC;
+    using RET_FUNC = MoreEligible;
   };
 
   /**
@@ -109,8 +109,8 @@ namespace Kokyu
   class DSRT_Dispatcher_Impl
   {
   public:
-    typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
-    typedef typename DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
+    using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
+    using DSRT_QoSDescriptor = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
     DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                           int sched_scope);

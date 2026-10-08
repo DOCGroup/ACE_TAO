@@ -22,7 +22,7 @@ public:
 A () {};
 };
 
-typedef A* A_ptr;
+using A_ptr = A *;
 
 template<typename T> inline bool is_nil (T x)
 {

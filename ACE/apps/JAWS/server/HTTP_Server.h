@@ -36,12 +36,12 @@ class ACE_Proactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> HTTP_SOCK_Acceptor;
+using HTTP_SOCK_Acceptor = ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX>;
 #else
-typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> HTTP_SOCK_Acceptor;
+using HTTP_SOCK_Acceptor = ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 #endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
-typedef HTTP_SOCK_Acceptor HTTP_Acceptor;
+using HTTP_Acceptor = HTTP_SOCK_Acceptor;
 
 /**
  * @class HTTP_Server
