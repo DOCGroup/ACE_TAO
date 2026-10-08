@@ -314,8 +314,8 @@ public:
          static constexpr int MAX_DIGITS = 31;
          static constexpr int MAX_STRING_SIZE = 4 + MAX_DIGITS; // includes -, 0, ., terminator
 
-         static const Octet POSITIVE = 0xc;
-         static const Octet NEGATIVE = 0xd;
+         static constexpr Octet POSITIVE = 0xc;
+         static constexpr Octet NEGATIVE = 0xd;
 
          static Fixed from_integer (LongLong val = 0);
          static Fixed from_integer (ULongLong val);
