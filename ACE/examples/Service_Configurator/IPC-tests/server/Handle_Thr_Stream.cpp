@@ -194,8 +194,8 @@ CLI_Stream<PR_ST_2>::svc ()
 #endif /* ACE_HAS_TLI */
 #include "ace/INET_Addr.h"
 
-typedef CLI_Stream <THR_STREAM> CLI_STREAM;
-typedef Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR> HANDLE_THR_ACCEPTOR;
+using CLI_STREAM = CLI_Stream<THR_STREAM>;
+using HANDLE_THR_ACCEPTOR = Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
 
 // Service object.
 HANDLE_THR_ACCEPTOR remote_thr_stream;

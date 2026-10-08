@@ -27,7 +27,7 @@ class CriticalLogMessage : public LogMessage
 };
 
 // Listing 1 code/ch14
-typedef ACE_Thread_Mutex MUTEX;
+using MUTEX = ACE_Thread_Mutex;
 class Logger
 {
 public:

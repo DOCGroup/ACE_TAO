@@ -5,14 +5,14 @@
 
 #if defined(RUNNING_ON_UNSAFE_MULTIPROCESSOR)
 // Listing 1 code/ch14
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> SafeUInt;
+using SafeUInt = ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>;
 // Listing 1
 // Listing 2 code/ch14
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> SafeInt;
+using SafeInt = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 // Listing 2
 #else
-typedef ACE_Atomic_Op<ACE_Null_Mutex, unsigned int> SafeUInt;
-typedef ACE_Atomic_Op<ACE_Null_Mutex, int> SafeInt;
+using SafeUInt = ACE_Atomic_Op<ACE_Null_Mutex, unsigned int>;
+using SafeInt = ACE_Atomic_Op<ACE_Null_Mutex, int>;
 #endif /* RUNNING_ON_UNSAFE_MULTIPROCESSOR) */
 
 static constexpr unsigned int Q_SIZE = 2;

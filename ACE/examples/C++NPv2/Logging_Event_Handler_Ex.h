@@ -21,7 +21,7 @@ private:
   const ACE_Time_Value max_client_timeout_;
 
 public:
-  typedef Logging_Event_Handler PARENT;
+  using PARENT = Logging_Event_Handler;
 
   // 3600 seconds == one hour.
   enum { MAX_CLIENT_TIMEOUT = 3600 };

@@ -14,8 +14,8 @@ public:
   int id_;
 };
 
-typedef ACE_DLList<Device> DeviceList;
-typedef ACE_DLList_Iterator<Device> DeviceListIterator;
+using DeviceList = ACE_DLList<Device>;
+using DeviceListIterator = ACE_DLList_Iterator<Device>;
 
 // Listing 1 code/ch14
 class HA_DiscoveryAgent

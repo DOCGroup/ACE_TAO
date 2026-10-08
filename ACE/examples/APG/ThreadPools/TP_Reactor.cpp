@@ -41,7 +41,7 @@ static size_t cli_req_no = 5;
 static int req_delay = 50;
 
 
-typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
 
 
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)

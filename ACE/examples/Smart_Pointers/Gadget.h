@@ -40,10 +40,10 @@ public:
 
 // The Gadget_var smart pointer has shared (reference counted) ownership
 // semantics.
-typedef ACE_Strong_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX> Gadget_var;
+using Gadget_var = ACE_Strong_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX>;
 
 // The Gadget_ptr smart pointer has no ownership semantics, but supports
 // conversion back into a Gadget_var.
-typedef ACE_Weak_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX> Gadget_ptr;
+using Gadget_ptr = ACE_Weak_Bound_Ptr<Gadget, ACE_SYNCH_MUTEX>;
 
 #endif /* GADGET_H */

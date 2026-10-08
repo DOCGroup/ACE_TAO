@@ -17,9 +17,9 @@
 
 #include "Thread_Bounded_Packet_Relay.h"
 
-typedef Thread_Bounded_Packet_Relay_Driver::MYCOMMAND DRIVER_CMD;
-typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> HANDLER_CMD;
-typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> SEND_HANDLER_CMD;
+using DRIVER_CMD = Thread_Bounded_Packet_Relay_Driver::MYCOMMAND;
+using HANDLER_CMD = ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION>;
+using SEND_HANDLER_CMD = ACE_Command_Callback<Send_Handler, Send_Handler::ACTION>;
 
 
 // Constructor.
@@ -746,4 +746,3 @@ Thread_Bounded_Packet_Relay_Driver::run ()
   this->init ();
   return 0;
 }
-
