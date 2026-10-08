@@ -48,6 +48,8 @@
 
 #define ACE_CC_PREPROCESSOR_ARGS "--precompile -std=c++17 -q -o%s"
 #define ACE_CC_PREPROCESSOR "BCC64X.EXE"
+#define ACE_CC_PREPROCESSOR_DIRECT_INPUT 1
+#define ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS "-x c++"
 
 # include "ace/config-win32-common.h"
 

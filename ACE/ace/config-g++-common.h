@@ -10,6 +10,11 @@
 #if !defined (ACE_CC_NAME)
 # define ACE_CC_NAME ACE_TEXT ("g++")
 #endif
+
+// g++ and clang++ require -x c++ when preprocessing IDL files directly.
+# define ACE_CC_PREPROCESSOR_DIRECT_INPUT 1
+# define ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS "-x c++"
+
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)
