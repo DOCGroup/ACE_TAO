@@ -20,7 +20,7 @@
 
 #define ACE_CC_NAME ACE_TEXT ("Visual C++")
 #define ACE_CC_PREPROCESSOR "CL.EXE"
-#define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
+#define ACE_CC_PREPROCESSOR_ARGS "-nologo -E /TP"
 #define ACE_CC_PREPROCESSOR_DIRECT_INPUT 1
 
 #define ACE_CC_MAJOR_VERSION (_MSC_VER / 100 - 6)
