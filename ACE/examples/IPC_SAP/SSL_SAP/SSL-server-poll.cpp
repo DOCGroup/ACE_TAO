@@ -22,7 +22,7 @@
 static int verbose = 0;
 
 // Max number of open handles.
-static const int MAX_HANDLES = 200;
+static constexpr int MAX_HANDLES = 200;
 
 struct Buffer_Info
 {

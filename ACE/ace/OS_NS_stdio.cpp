@@ -850,7 +850,7 @@ namespace { // helpers for vsnprintf_emulation
         }
 
 #ifdef ACE_LACKS_LOCALECONV
-      static const char radix = '.', thousands_sep = 0;
+      static constexpr char radix = '.', thousands_sep = 0;
       static const char grouping[] = "";
 #else
       const std::lconv *const conv = std::localeconv ();

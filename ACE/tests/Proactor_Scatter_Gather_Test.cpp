@@ -44,8 +44,8 @@
 #include <algorithm>
 
 // For the Acceptor/Connector handlers maintenance lists
-static const  int SENDERS   = 1;
-static const  int RECEIVERS = 2;
+static constexpr int SENDERS = 1;
+static constexpr int RECEIVERS = 2;
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;

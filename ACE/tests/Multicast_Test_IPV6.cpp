@@ -60,9 +60,9 @@ extern "C" void handler (int)
   finished = 1;
 }
 
-static const int MCT_ITERATIONS = 10;
-static const int MCT_GROUPS = 5;
-static const int MCT_MIN_GROUPS = 2;
+static constexpr int MCT_ITERATIONS = 10;
+static constexpr int MCT_GROUPS = 5;
+static constexpr int MCT_MIN_GROUPS = 2;
 
 #if defined (ACE_HAS_IPV6)
 static const char MCT_START_GROUP[] = "ff01::1";
@@ -71,9 +71,9 @@ static const char MCT_START_GROUP[] = "ff01::1";
 // IPv6 is not enabled
 static const char MCT_START_GROUP[] = "239.255.0.1";
 #endif /* ACE_HAS_IPV6 */
-static const int  MCT_START_PORT = 16000;
+static constexpr int MCT_START_PORT = 16000;
 
-static const size_t MAX_STRING_SIZE = 200;
+static constexpr size_t MAX_STRING_SIZE = 200;
 
 int advance_addr (ACE_INET_Addr &addr);
 

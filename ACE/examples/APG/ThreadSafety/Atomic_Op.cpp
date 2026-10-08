@@ -15,8 +15,8 @@ typedef ACE_Atomic_Op<ACE_Null_Mutex, unsigned int> SafeUInt;
 typedef ACE_Atomic_Op<ACE_Null_Mutex, int> SafeInt;
 #endif /* RUNNING_ON_UNSAFE_MULTIPROCESSOR) */
 
-static const unsigned int Q_SIZE = 2;
-static const int MAX_PROD = 10;
+static constexpr unsigned int Q_SIZE = 2;
+static constexpr int MAX_PROD = 10;
 
 // Listing 3 code/ch14
 class Producer : public ACE_Task_Base
@@ -122,4 +122,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 // Listing 4
-

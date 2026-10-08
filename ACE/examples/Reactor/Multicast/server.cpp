@@ -57,7 +57,7 @@ private:
 
 static const char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
 static const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
-static const int DURATION = 5;
+static constexpr int DURATION = 5;
 
 ACE_HANDLE
 Server_Events::get_handle () const

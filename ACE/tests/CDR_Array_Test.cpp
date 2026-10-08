@@ -54,7 +54,7 @@
 // Also, you want that your time measuring method has a resolution
 // compatible with this buffer size, if not you will end up measuring 0.
 // You can change this value with -t option.
-static const int default_total = 32*1024;
+static constexpr int default_total = 32*1024;
 
 // Repeat this many times for each tested CDR type.
 // We then take the average time that took for each type and report that.
