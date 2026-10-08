@@ -72,8 +72,7 @@ Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
                 "activate failed"));
 }
 
-Thread_Pool::~Thread_Pool ()
-= default;
+Thread_Pool::~Thread_Pool () = default;
 
 // Simply enqueue the Message_Block into the end of the queue.
 

@@ -8,8 +8,7 @@
 class HA_Device_Repository
 {
 public:
-  HA_Device_Repository ()
-  = default;
+  HA_Device_Repository () = default;
 
   void update_device (int device_id)
   {

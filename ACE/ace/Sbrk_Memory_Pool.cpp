@@ -98,8 +98,7 @@ ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const ACE_TCHAR *,
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
 }
 
-ACE_Sbrk_Memory_Pool::~ACE_Sbrk_Memory_Pool ()
-= default;
+ACE_Sbrk_Memory_Pool::~ACE_Sbrk_Memory_Pool () = default;
 
 void *
 ACE_Sbrk_Memory_Pool::base_addr () const

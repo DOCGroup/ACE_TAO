@@ -1048,8 +1048,7 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void* data, size_t
   this->data_.ptr_ = data;
 }
 
-ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs)
-= default;
+ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs) = default;
 
 ACE_Configuration_Value_IntId& ACE_Configuration_Value_IntId::operator= (const ACE_Configuration_Value_IntId& rhs)
 {
@@ -1076,8 +1075,7 @@ ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_TCHAR* name)
 {
 }
 
-ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs)
-= default;
+ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs) = default;
 
 ACE_Configuration_ExtId& ACE_Configuration_ExtId::operator= (const ACE_Configuration_ExtId& rhs)
 {
@@ -1126,8 +1124,7 @@ ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (VALUE_MAP* val
 {
 }
 
-ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs)
-= default;
+ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs) = default;
 
 ACE_Configuration_Section_IntId&
 ACE_Configuration_Section_IntId::operator= (const ACE_Configuration_Section_IntId& rhs)

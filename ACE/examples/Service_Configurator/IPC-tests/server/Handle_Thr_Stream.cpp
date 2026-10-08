@@ -21,8 +21,7 @@
 #define PR_ST_2 ACE_PEER_STREAM_2
 
 template <class SVH, PR_AC_1>
-Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor ()
-= default;
+Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor () = default;
 
 template <class SVH, PR_AC_1>
 Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor ()

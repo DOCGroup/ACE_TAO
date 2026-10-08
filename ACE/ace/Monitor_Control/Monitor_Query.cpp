@@ -14,8 +14,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Point_Auto_Query::Monitor_Point_Auto_Query ()
-    = default;
+    Monitor_Point_Auto_Query::Monitor_Point_Auto_Query () = default;
 
     int
     Monitor_Point_Auto_Query::handle_timeout (

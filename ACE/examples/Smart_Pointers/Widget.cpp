@@ -9,5 +9,4 @@
 
 #include "Widget.h"
 
-Widget::~Widget ()
-= default;
+Widget::~Widget () = default;

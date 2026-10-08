@@ -28,8 +28,7 @@ Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_
 
 // Destructor.
 
-Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base ()
-= default;
+Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base () = default;
 
 // Sets send input message command in the input device driver object.
 
@@ -173,8 +172,7 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
     }
 }
 
-Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base ()
-= default;
+Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base () = default;
 
 // Constructor.
 

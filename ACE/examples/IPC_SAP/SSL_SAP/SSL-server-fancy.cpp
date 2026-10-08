@@ -151,8 +151,7 @@ Options::reply_message_len () const
   return ACE_Utils::truncate_cast<int> (this->reply_message_len_);
 }
 
-Options::~Options ()
-= default;
+Options::~Options () = default;
 
 Options::Options ()
   : verbose_ (0),
@@ -520,8 +519,7 @@ Handler_Factory::create_handler (
 #endif /* ACE_HAS_THREADS */
 }
 
-Handler_Factory::Handler_Factory ()
-= default;
+Handler_Factory::Handler_Factory () = default;
 
 Handler_Factory::~Handler_Factory ()
 {

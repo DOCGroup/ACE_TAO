@@ -19,8 +19,7 @@ Custom_Handler::Custom_Handler(const ACE_Time_Value &expiration_time)
 {
 }
 
-Custom_Handler::~Custom_Handler ()
-= default;
+Custom_Handler::~Custom_Handler () = default;
 
 void
 Custom_Handler::set_id (int id)

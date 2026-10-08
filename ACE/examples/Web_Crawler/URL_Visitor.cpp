@@ -11,8 +11,7 @@ URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
 {
 }
 
-URL_Processing_Strategy::~URL_Processing_Strategy ()
-= default;
+URL_Processing_Strategy::~URL_Processing_Strategy () = default;
 
 int
 URL_Processing_Strategy::destroy ()
@@ -233,8 +232,7 @@ URL_Validation_Visitation_Strategy_Factory::destroy ()
   return 0;
 }
 
-URL_Visitor::~URL_Visitor ()
-= default;
+URL_Visitor::~URL_Visitor () = default;
 
 URL_Validation_Visitor::URL_Validation_Visitor ()
 {
@@ -458,8 +456,7 @@ URL_Visitation_Strategy_Factory::URL_Visitation_Strategy_Factory (URL *url)
 {
 }
 
-URL_Visitation_Strategy_Factory::~URL_Visitation_Strategy_Factory ()
-= default;
+URL_Visitation_Strategy_Factory::~URL_Visitation_Strategy_Factory () = default;
 
 URL_Download_Visitation_Strategy_Factory::URL_Download_Visitation_Strategy_Factory (URL *url)
   : URL_Visitation_Strategy_Factory (url)

@@ -9,8 +9,7 @@ class LogMessage
 public:
   enum { CRITICAL, NORMAL};
 
-  virtual ~LogMessage ()
-  = default;
+  virtual ~LogMessage () = default;
 
   virtual int priority ()
   {

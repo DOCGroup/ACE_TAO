@@ -24,8 +24,7 @@ namespace
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_TTY_IO::ACE_TTY_IO ()
-= default;
+ACE_TTY_IO::ACE_TTY_IO () = default;
 
 ACE_TTY_IO::Serial_Params::Serial_Params ()
 {

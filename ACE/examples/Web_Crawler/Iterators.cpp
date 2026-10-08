@@ -2,8 +2,7 @@
 #include "Options.h"
 #include "Iterators.h"
 
-URL_Iterator::~URL_Iterator ()
-= default;
+URL_Iterator::~URL_Iterator () = default;
 
 int
 URL_Iterator::destroy ()

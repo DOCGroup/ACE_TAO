@@ -190,8 +190,7 @@ ACE_Event_Handler::remove_reference ()
     }
 }
 
-ACE_Event_Handler::Policy::~Policy ()
-= default;
+ACE_Event_Handler::Policy::~Policy () = default;
 
 ACE_Event_Handler::Reference_Counting_Policy::Reference_Counting_Policy (Reference_Counting_Policy::Value value)
   : value_ (value)

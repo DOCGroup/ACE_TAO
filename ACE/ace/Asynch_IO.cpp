@@ -902,8 +902,7 @@ ACE_Asynch_Transmit_File::Result::Result (ACE_Asynch_Transmit_File_Result_Impl *
 {
 }
 
-ACE_Asynch_Transmit_File::Result::~Result ()
-= default;
+ACE_Asynch_Transmit_File::Result::~Result () = default;
 
 ACE_Asynch_Transmit_File_Result_Impl *
 ACE_Asynch_Transmit_File::Result::implementation () const
@@ -924,8 +923,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::Header_And_Trailer (ACE_Message_Bl
 {
 }
 
-ACE_Asynch_Transmit_File::Header_And_Trailer::~Header_And_Trailer ()
-= default;
+ACE_Asynch_Transmit_File::Header_And_Trailer::~Header_And_Trailer () = default;
 
 void
 ACE_Asynch_Transmit_File::Header_And_Trailer::header_and_trailer (ACE_Message_Block *header,
@@ -1151,11 +1149,9 @@ ACE_Handler::proxy ()
 
 // ************************************************************
 
-ACE_Service_Handler::ACE_Service_Handler ()
-= default;
+ACE_Service_Handler::ACE_Service_Handler () = default;
 
-ACE_Service_Handler::~ACE_Service_Handler ()
-= default;
+ACE_Service_Handler::~ACE_Service_Handler () = default;
 
 void
 ACE_Service_Handler::addresses (const ACE_INET_Addr & /* remote_address */,
@@ -1276,8 +1272,7 @@ ACE_Asynch_Read_Dgram::Result::Result (ACE_Asynch_Read_Dgram_Result_Impl *implem
 {
 }
 
-ACE_Asynch_Read_Dgram::Result::~Result ()
-= default;
+ACE_Asynch_Read_Dgram::Result::~Result () = default;
 
 ACE_Asynch_Read_Dgram_Result_Impl *
 ACE_Asynch_Read_Dgram::Result::implementation () const
@@ -1387,8 +1382,7 @@ ACE_Asynch_Write_Dgram::Result::Result (ACE_Asynch_Write_Dgram_Result_Impl *impl
 {
 }
 
-ACE_Asynch_Write_Dgram::Result::~Result ()
-= default;
+ACE_Asynch_Write_Dgram::Result::~Result () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

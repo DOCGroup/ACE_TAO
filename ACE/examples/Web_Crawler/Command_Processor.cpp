@@ -6,8 +6,7 @@
 #include "URL_Visitor.h"
 
 
-Command::~Command ()
-= default;
+Command::~Command () = default;
 
 URL_Command::URL_Command (URL *url)
   : url_ (url)
@@ -58,11 +57,9 @@ URL_Command::destroy ()
   delete this;
   return 0;
 }
-Command_Processor::Command_Processor ()
-= default;
+Command_Processor::Command_Processor () = default;
 
-Command_Processor::~Command_Processor ()
-= default;
+Command_Processor::~Command_Processor () = default;
 
 int
 Command_Processor::destroy ()

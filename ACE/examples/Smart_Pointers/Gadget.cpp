@@ -9,5 +9,4 @@
 
 #include "Gadget.h"
 
-Gadget::~Gadget ()
-= default;
+Gadget::~Gadget () = default;

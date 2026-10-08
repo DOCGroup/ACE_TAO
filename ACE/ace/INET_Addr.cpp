@@ -734,8 +734,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INET_Addr::~ACE_INET_Addr ()
-= default;
+ACE_INET_Addr::~ACE_INET_Addr () = default;
 
 int
 ACE_INET_Addr::get_host_name (char hostname[],

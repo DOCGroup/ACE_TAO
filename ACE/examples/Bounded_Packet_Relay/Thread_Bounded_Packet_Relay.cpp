@@ -40,8 +40,7 @@ Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_
 
 // Destructor.
 
-Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper ()
-= default;
+Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper () = default;
 
 // Modifies device settings based on passed pointer to a u_long.
 
@@ -467,8 +466,7 @@ BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay &relay,
 
 // Destructor.
 
-BPR_Handler_Base::~BPR_Handler_Base ()
-= default;
+BPR_Handler_Base::~BPR_Handler_Base () = default;
 
 // Helper method: clears all timers.
 
@@ -505,8 +503,7 @@ Send_Handler::Send_Handler (u_long send_count,
 
 // Destructor.
 
-Send_Handler::~Send_Handler ()
-= default;
+Send_Handler::~Send_Handler () = default;
 
 // Call back hook.
 
@@ -591,8 +588,7 @@ Termination_Handler::Termination_Handler (Bounded_Packet_Relay &relay,
 
 // Destructor.
 
-Termination_Handler::~Termination_Handler ()
-= default;
+Termination_Handler::~Termination_Handler () = default;
 
 // Call back hook.
 
@@ -633,8 +629,7 @@ Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_
 
 // Destructor.
 
-Thread_Bounded_Packet_Relay_Driver::~Thread_Bounded_Packet_Relay_Driver ()
-= default;
+Thread_Bounded_Packet_Relay_Driver::~Thread_Bounded_Packet_Relay_Driver () = default;
 
 // Display the user menu.
 

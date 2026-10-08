@@ -32,8 +32,7 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
 {
 }
 
-ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter ()
-= default;
+ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter () = default;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_OS_Thread_Adapter)
 

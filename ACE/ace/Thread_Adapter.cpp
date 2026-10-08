@@ -36,8 +36,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
   ACE_OS_TRACE ("ACE_Thread_Adapter::ACE_Thread_Adapter");
 }
 
-ACE_Thread_Adapter::~ACE_Thread_Adapter ()
-= default;
+ACE_Thread_Adapter::~ACE_Thread_Adapter () = default;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Adapter);
 

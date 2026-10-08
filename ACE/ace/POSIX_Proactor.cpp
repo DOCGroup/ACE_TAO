@@ -1932,8 +1932,7 @@ ACE_POSIX_Wakeup_Completion::ACE_POSIX_Wakeup_Completion
 {
 }
 
-ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion ()
-= default;
+ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion () = default;
 
 void
 ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,

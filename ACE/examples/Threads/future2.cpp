@@ -109,8 +109,7 @@ Method_Request_work::Method_Request_work (Scheduler* new_Scheduler,
 {
 }
 
-Method_Request_work::~Method_Request_work ()
-= default;
+Method_Request_work::~Method_Request_work () = default;
 
 int
 Method_Request_work::call ()

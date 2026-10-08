@@ -16,8 +16,7 @@ Peer_Handler::Peer_Handler (int iterations)
 {
 }
 
-Peer_Handler::~Peer_Handler ()
-= default;
+Peer_Handler::~Peer_Handler () = default;
 
 int
 Peer_Handler::open (void *)
@@ -133,8 +132,7 @@ IPC_Client::IPC_Client ()
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
-IPC_Client::~IPC_Client ()
-= default;
+IPC_Client::~IPC_Client () = default;
 
 // Dynamic linking hooks.
 

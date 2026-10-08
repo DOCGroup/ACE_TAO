@@ -534,8 +534,7 @@ ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify ()
 {
 }
 
-ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify ()
-= default;
+ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify () = default;
 
 void
 ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)

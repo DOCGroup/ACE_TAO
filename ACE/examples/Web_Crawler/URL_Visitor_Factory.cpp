@@ -1,8 +1,7 @@
 /* -*- C++ -*- */
 #include "URL_Visitor_Factory.h"
 
-URL_Visitor_Factory::~URL_Visitor_Factory ()
-= default;
+URL_Visitor_Factory::~URL_Visitor_Factory () = default;
 
 URL_Visitor *
 URL_Validation_Visitor_Factory::make_visitor ()

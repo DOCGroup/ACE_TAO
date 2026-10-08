@@ -19,8 +19,7 @@ Svc_Handler::Svc_Handler ()
   this->mb_.size (BUFSIZ);
 }
 
-Svc_Handler::~Svc_Handler ()
-= default;
+Svc_Handler::~Svc_Handler () = default;
 
 int
 Svc_Handler::open (void *)
@@ -66,8 +65,7 @@ IPC_Server::IPC_Server ()
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
-IPC_Server::~IPC_Server ()
-= default;
+IPC_Server::~IPC_Server () = default;
 
 int
 IPC_Server::handle_signal (int, siginfo_t *, ucontext_t *)

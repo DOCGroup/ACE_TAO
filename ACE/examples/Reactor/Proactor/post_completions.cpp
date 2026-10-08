@@ -70,8 +70,7 @@ public:
     {}
   // Constructor.
 
-  ~My_Result () override
-    = default;
+  ~My_Result () override = default;
   // Destructor.
 
     /**
@@ -296,4 +295,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
-

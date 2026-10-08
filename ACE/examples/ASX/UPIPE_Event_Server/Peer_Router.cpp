@@ -203,8 +203,7 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
 }
 
 template <class PH, class PK>
-Peer_Router<PH, PK>::~Peer_Router ()
-= default;
+Peer_Router<PH, PK>::~Peer_Router () = default;
 
 template <class PH, class PK> int
 Peer_Router<PH, PK>::fini ()
