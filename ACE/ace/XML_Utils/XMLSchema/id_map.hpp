@@ -39,11 +39,11 @@ class ID_Map
 {
  public:
   //Trait to allow for ease of thread specific storage.
-  typedef ACE_TSS<ID_Map> TSS_ID_Map;
-  typedef std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator id_iterator;
-  typedef std::multimap<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator idref_iterator;
-  typedef std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*> ID_MAP;
-  typedef std::multimap<std::basic_string<ACE_TCHAR>, XSCRT::Type*> IDREF_MAP;
+  using TSS_ID_Map = ACE_TSS<ID_Map>;
+  using id_iterator = std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator;
+  using idref_iterator = std::multimap<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator;
+  using ID_MAP = std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>;
+  using IDREF_MAP = std::multimap<std::basic_string<ACE_TCHAR>, XSCRT::Type*>;
 
 
   //Exception Classes
