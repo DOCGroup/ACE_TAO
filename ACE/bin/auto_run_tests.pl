@@ -30,7 +30,7 @@ sub run_command {
 
   my $result = 0;
   if (system($command)) {
-    $result = $? >> 8;
+    $result = ($? & 127) ? 1 : $? >> 8;
     if ($print_error) {
       my $signal = $? & 127;
       my $coredump = $? & 128;
