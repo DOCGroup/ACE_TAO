@@ -7,7 +7,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef Acceptor_Factory<Consumer_Handler, CONSUMER_KEY> CONSUMER_FACTORY;
+using CONSUMER_FACTORY = Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>;
 
 int
 Consumer_Handler::open (void *a)

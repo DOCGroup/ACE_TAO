@@ -37,7 +37,7 @@ Options::~Options ()
 }
 
 // Options Singleton.
-typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 int
 Options::init ()
@@ -364,4 +364,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

@@ -7,7 +7,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY> SUPPLIER_FACTORY;
+using SUPPLIER_FACTORY = Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>;
 
 int
 Supplier_Handler::open (void *a)

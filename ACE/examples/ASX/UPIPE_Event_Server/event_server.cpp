@@ -19,8 +19,8 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
+using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
+using MT_Module = ACE_Module<ACE_MT_SYNCH>;
 
 // Handle SIGINT and terminate the entire application.
 

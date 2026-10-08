@@ -20,9 +20,9 @@
 
 class Consumer_Handler; // Forward declaration....
 
-typedef ACE_HANDLE CONSUMER_KEY;
+using CONSUMER_KEY = ACE_HANDLE;
 
-typedef Peer_Router<Consumer_Handler, CONSUMER_KEY> CONSUMER_ROUTER;
+using CONSUMER_ROUTER = Peer_Router<Consumer_Handler, CONSUMER_KEY>;
 
 class Consumer_Handler
   : public Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>

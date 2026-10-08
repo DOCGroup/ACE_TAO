@@ -191,7 +191,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 // Options Singleton.
-typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 Handler::Handler (ACE_SSL_SOCK_Stream *ssl_stream)
   : total_bytes_ (0),
@@ -602,4 +602,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return server.handle_events ();
 }
-

@@ -11,8 +11,8 @@
 #include "ace/Stream.h"
 
 // Typedef these components to handle multi-threading correctly.
-typedef ACE_Stream<ACE_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_SYNCH> MT_Module;
+using MT_Stream = ACE_Stream<ACE_SYNCH>;
+using MT_Module = ACE_Module<ACE_SYNCH>;
 
 
 class Event_Server : public ACE_Sig_Adapter

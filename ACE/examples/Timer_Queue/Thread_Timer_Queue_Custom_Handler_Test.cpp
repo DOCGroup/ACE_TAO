@@ -180,7 +180,7 @@ Thread_Timer_Queue_Custom_Handler_Test::display_menu ()
 int
 Thread_Timer_Queue_Custom_Handler_Test::init ()
 {
-  typedef Command<Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION> CMD;
+  using CMD = Command<Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION>;
 
   // initialize the <Command> objects with their corresponding
   // methods from <Custom_Handler_Input_Task>

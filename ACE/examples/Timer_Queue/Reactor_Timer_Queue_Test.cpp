@@ -158,7 +158,7 @@ Reactor_Timer_Queue_Test_Driver::display_menu ()
 int
 Reactor_Timer_Queue_Test_Driver::init ()
 {
-  typedef Command<Input_Handler, Input_Handler::ACTION> CMD;
+  using CMD = Command<Input_Handler, Input_Handler::ACTION>;
 
   // initialize <Command>s with their corresponding <Input_Handler>  methods.
   ACE_NEW_RETURN (schedule_cmd_,
