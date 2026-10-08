@@ -18,7 +18,7 @@
 // The default constructor for ACE_Auto_Event sets it initially into
 // the non-signaled state.
 
-typedef ACE_Singleton <ACE_Auto_Event, ACE_Thread_Mutex> EVENT;
+using EVENT = ACE_Singleton <ACE_Auto_Event, ACE_Thread_Mutex>;
 
 // work time for writer
 static int work_time;

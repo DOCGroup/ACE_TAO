@@ -14,9 +14,9 @@
 
 #include "ace/Null_Mutex.h"
 
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> TEST_MALLOC;
-typedef ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_LIFO_ITERATOR;
-typedef ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_FIFO_ITERATOR;
+using TEST_MALLOC = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+using MALLOC_LIFO_ITERATOR = ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+using MALLOC_FIFO_ITERATOR = ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 
 // Shared memory manager.
 static TEST_MALLOC *shmem_allocator = nullptr;
@@ -338,4 +338,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

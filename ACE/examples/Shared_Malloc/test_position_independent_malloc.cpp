@@ -13,12 +13,12 @@
 #include <memory>
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-typedef ACE_PI_Control_Block CONTROL_BLOCK;
+using CONTROL_BLOCK = ACE_PI_Control_Block;
 #else
-typedef ACE_Control_Block CONTROL_BLOCK;
+using CONTROL_BLOCK = ACE_Control_Block;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-typedef ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BLOCK> TEST_MALLOC;
+using TEST_MALLOC = ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BLOCK>;
 
 // Default address for memory-mapped files.
 static void *base_addr = ACE_DEFAULT_BASE_ADDR;
@@ -183,4 +183,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

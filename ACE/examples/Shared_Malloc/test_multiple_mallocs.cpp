@@ -7,7 +7,7 @@
 #include "ace/Process_Mutex.h"
 #include <memory>
 
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> TEST_MALLOC;
+using TEST_MALLOC = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 // The Address for the shared memory mapped files defaults to wherever
@@ -118,4 +118,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   return 0;
 }
-

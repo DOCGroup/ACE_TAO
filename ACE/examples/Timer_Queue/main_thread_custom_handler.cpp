@@ -17,10 +17,9 @@
 #include "Thread_Timer_Queue_Custom_Handler_Test.h"
 #include <memory>
 
-typedef Timer_Queue_Test_Driver<Thread_Timer_Queue,
-                                Custom_Handler_Input_Task,
-                                Custom_Handler_Input_Task::ACTION>
-  THREAD_TIMER_QUEUE_TEST_DRIVER;
+using THREAD_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver<Thread_Timer_Queue,
+                                                                Custom_Handler_Input_Task,
+                                                                Custom_Handler_Input_Task::ACTION>;
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -34,4 +33,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
     return driver->run_test ();
 }
-
