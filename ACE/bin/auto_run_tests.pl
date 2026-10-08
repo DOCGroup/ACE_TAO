@@ -174,6 +174,7 @@ else {
   $startdir = "$ACE_ROOT";
 }
 
+my $failed = 0;
 foreach my $test_lst (@file_list) {
 
     my $config_list = new PerlACE::ConfigList;
@@ -244,18 +245,21 @@ foreach my $test_lst (@file_list) {
           } else {
             print STDERR "ERROR: Cannot chdir to $directory\n";
           }
+          $failed = 1;
           next;
         }
 
         if ($program =~ /(.*?) (.*)/) {
             if (! -e $1) {
                 print STDERR "ERROR: $directory.$1 does not exist\n";
+                $failed = 1;
                 next;
             }
         }
         else {
             if (! -e $program) {
                 print STDERR "ERROR: $directory.$program does not exist\n";
+                $failed = 1;
                 next;
             }
         }
@@ -286,6 +290,7 @@ foreach my $test_lst (@file_list) {
             my $start_time = time();
             my $result = run_command($test, $cmd, !$is_ace_test);
             my $time = time() - $start_time;
+            $failed = 1 if $result;
 
             # see note about tests/run_test.pl printing reports for ace tests individually
             if (!$is_ace_test) {
@@ -295,3 +300,5 @@ foreach my $test_lst (@file_list) {
         }
     }
 }
+
+exit $failed;
