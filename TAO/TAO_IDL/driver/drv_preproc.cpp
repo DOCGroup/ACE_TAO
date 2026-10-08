@@ -111,6 +111,12 @@ char const DIR_DOT_DOT[] = "..";
 static char tmp_file [MAXPATHLEN + 1] = { 0 };
 static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
 
+#if defined (ACE_CC_PREPROCESSOR_DIRECT_INPUT)
+static bool const copy_input_file = false;
+#else
+static bool const copy_input_file = true;
+#endif
+
 // Lines can be 1024 chars long intially -
 // it will expand as required.
 #define LINEBUF_SIZE 1024
@@ -331,6 +337,16 @@ DRV_cpp_init ()
 
   DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
+
+#if defined (ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS)
+  ACE_ARGV direct_input_arglist (
+    ACE_TEXT_CHAR_TO_TCHAR (ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS));
+
+  for (size_t i = 0; i < static_cast<size_t> (direct_input_arglist.argc ()); ++i)
+    {
+      DRV_cpp_putarg (ACE_TEXT_ALWAYS_CHAR (direct_input_arglist[i]));
+    }
+#endif
 
   const char *platform_cpp_args =
     FE_get_cpp_args_from_env ();
@@ -1168,22 +1184,31 @@ DRV_pre_proc (const char *myfile)
     }
 
   ACE_OS::strcpy (tmp_file,  tmpdir);
-  ACE_OS::strcpy (tmp_ifile, tmpdir);
+  if (copy_input_file)
+    {
+      ACE_OS::strcpy (tmp_ifile, tmpdir);
+    }
 
   // Append temporary filename template to temporary directory.
   ACE_OS::strcat (tmp_file,  tao_idlf_template);
-  ACE_OS::strcat (tmp_ifile, tao_idli_template);
-
-  ACE_HANDLE const ti_fd = ACE_OS::mkstemp (tmp_ifile);
-
-  if (ti_fd == ACE_INVALID_HANDLE)
+  if (copy_input_file)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "%C: Unable to create temporary file \"%C\": %m\n",
-                  idl_global->prog_name (),
-                  tmp_ifile));
+      ACE_OS::strcat (tmp_ifile, tao_idli_template);
+    }
 
-      throw Bailout ();
+  ACE_HANDLE ti_fd = ACE_INVALID_HANDLE;
+  if (copy_input_file)
+    {
+      ti_fd = ACE_OS::mkstemp (tmp_ifile);
+      if (ti_fd == ACE_INVALID_HANDLE)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%C: Unable to create temporary file \"%C\": %m\n",
+                      idl_global->prog_name (),
+                      tmp_ifile));
+
+          throw Bailout ();
+        }
     }
 
   ACE_HANDLE const tf_fd = ACE_OS::mkstemp (tmp_file);
@@ -1195,7 +1220,10 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name (),
                   tmp_file));
 
-      (void) ACE_OS::unlink (tmp_ifile);
+      if (copy_input_file)
+        {
+          (void) ACE_OS::unlink (tmp_ifile);
+        }
       throw Bailout ();
     }
 
@@ -1205,12 +1233,19 @@ DRV_pre_proc (const char *myfile)
   // Append C++ source file extension.  Temporary files will be renamed
   // to these filenames.
   ACE_OS::strcpy (tmp_cpp_file,  tmp_file);
-  ACE_OS::strcpy (tmp_cpp_ifile, tmp_ifile);
+  if (copy_input_file)
+    {
+      ACE_OS::strcpy (tmp_cpp_ifile, tmp_ifile);
+    }
   ACE_OS::strcat (tmp_cpp_file,  temp_file_extension);
-  ACE_OS::strcat (tmp_cpp_ifile, temp_file_extension);
+  if (copy_input_file)
+    {
+      ACE_OS::strcat (tmp_cpp_ifile, temp_file_extension);
+    }
 
   char * const t_file  = tmp_cpp_file;
   char * const t_ifile = tmp_cpp_ifile;
+  char const * const input_file = copy_input_file ? t_ifile : myfile;
 
   ACE_OS::close (tf_fd);
 
@@ -1223,15 +1258,28 @@ DRV_pre_proc (const char *myfile)
                   "%C: ERROR: Unable to open file (fopen) \"%C\": %m\n",
                   idl_global->prog_name (),
                   myfile));
-      (void) ACE_OS::unlink (tmp_ifile);
+      if (copy_input_file)
+        {
+          (void) ACE_OS::unlink (tmp_ifile);
+        }
       (void) ACE_OS::unlink (tmp_file);
       throw Bailout ();
     }
 
-  DRV_copy_input (file,
-                  ACE_OS::fdopen (ti_fd, ACE_TEXT("w")),
-                  tmp_ifile,
-                  myfile);
+  if (copy_input_file)
+    {
+      DRV_copy_input (file,
+                      ACE_OS::fdopen (ti_fd, ACE_TEXT("w")),
+                      tmp_ifile,
+                      myfile);
+    }
+  else
+    {
+      while (DRV_get_line (file))
+        {
+          DRV_check_for_include (drv_line);
+        }
+    }
   ACE_OS::fclose (file);
 
   UTL_String *utl_string = nullptr;
@@ -1251,7 +1299,7 @@ DRV_pre_proc (const char *myfile)
 
   UTL_String *real_tmp = nullptr;
   ACE_NEW (real_tmp,
-           UTL_String (t_ifile, true));
+           UTL_String (input_file, true));
 
   idl_global->set_real_filename (real_tmp);
 
@@ -1260,7 +1308,7 @@ DRV_pre_proc (const char *myfile)
   ACE_Process process;
 
   DRV_cpp_expand_output_arg (t_file);
-  DRV_cpp_putarg (t_ifile);
+  DRV_cpp_putarg (input_file);
   DRV_cpp_putarg (nullptr); // Null terminate the DRV_arglist.
 
   // For complex builds, the default
@@ -1281,7 +1329,10 @@ DRV_pre_proc (const char *myfile)
                   idl_global->prog_name (),
                   DRV_arglist[0]));
 
-      (void) ACE_OS::unlink (tmp_ifile);
+      if (copy_input_file)
+        {
+          (void) ACE_OS::unlink (tmp_ifile);
+        }
       (void) ACE_OS::unlink (tmp_file);
       throw Bailout ();
     }
@@ -1304,7 +1355,7 @@ DRV_pre_proc (const char *myfile)
       throw Bailout ();
     }
 
-  if (ACE_OS::rename (tmp_ifile, t_ifile) != 0)
+  if (copy_input_file && ACE_OS::rename (tmp_ifile, t_ifile) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Unable to rename temporary "
@@ -1507,7 +1558,7 @@ DRV_pre_proc (const char *myfile)
       ACE_OS::fclose (preproc);
     }
 
-  if (ACE_OS::unlink (t_ifile) == -1)
+  if (copy_input_file && ACE_OS::unlink (t_ifile) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Could not remove cpp "
