@@ -31,7 +31,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
   mc = reinterpret_cast<Magazine_Creator> (tmp);
 
-  if (mc == 0)
+  if (mc == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p",
@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
   mc = reinterpret_cast<Magazine_Creator> (tmp);
 
-  if (mc == 0)
+  if (mc == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p",

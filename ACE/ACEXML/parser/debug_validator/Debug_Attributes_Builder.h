@@ -21,8 +21,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Queue.h"
 
-typedef ACE_Unbounded_Queue<ACEXML_String> ACEXML_STRING_QUEUE;
-typedef ACE_Unbounded_Queue_Iterator<ACEXML_String> ACEXML_STRING_QUEUE_ITERATOR;
+using ACEXML_STRING_QUEUE = ACE_Unbounded_Queue<ACEXML_String>;
+using ACEXML_STRING_QUEUE_ITERATOR = ACE_Unbounded_Queue_Iterator<ACEXML_String>;
 
 /**
  * @class ACEXML_Debug_Attribute_Builder Debug_Attributes_Builder.h "parser/debug_validator/Debug_Attributes_Builder.h"

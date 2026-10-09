@@ -10,7 +10,7 @@
 class CanceledTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
 
@@ -21,9 +21,9 @@ public:
         if (mgr->testcancel (mgr->thr_self ()))
           return 0;
 
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         ACE_Time_Value tv (0, 1000);
-        tv += ACE_OS::time (0);
+        tv += ACE_OS::time (nullptr);
         int result = this->getq (mb, &tv);
         if (result == -1 && errno == EWOULDBLOCK)
           continue;

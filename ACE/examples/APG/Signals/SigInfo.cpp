@@ -15,11 +15,11 @@ public:
   { }
 
   // Listing A code/ch11
-  int handle_signal (int signum, siginfo_t * siginfo = 0, ucontext_t * = 0)
+  int handle_signal (int signum, siginfo_t * siginfo = nullptr, ucontext_t * = nullptr) override
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("Received signal [%S]\n"),
                 signum));
-    if (siginfo == 0)
+    if (siginfo == nullptr)
       {
         ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("No siginfo_t available for ")

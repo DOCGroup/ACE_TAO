@@ -42,7 +42,8 @@ Message_Block::Message_Block (ACE_Data_Block *data_block,
 {
 }
 
-typedef ACE_Task<ACE_SYNCH> TASK;
+
+using TASK = ACE_Task<ACE_SYNCH>;
 
 class Worker_Task : public TASK
 {
@@ -403,4 +404,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return result;
 }
-

@@ -22,7 +22,7 @@
 #  include "ace/OS_NS_unistd.h"
 #  include "ace/OS_NS_ctype.h"  // Needed for isspace() function
 
-typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
+using ACE_SOCK_IOStream = ACE_IOStream<ACE_SOCK_Stream>;
 
 /* The biggest drawback to an iostream is that it generally
    eats up whitespace when performing a get (>>) operation.
@@ -115,6 +115,7 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
 
   return stream;
 }
+
 
 ACE_SOCK_IOStream &
 operator<< (ACE_SOCK_IOStream &stream, qchar *buf)
@@ -259,6 +260,7 @@ client (void *arg = 0)
 
   return 0;
 }
+
 
 // Test the server's ability to receive data from the client and then
 // begin a two-way conversation.
@@ -460,4 +462,3 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-

@@ -88,8 +88,8 @@ namespace ACE
             protected:
               static const ACE_CString empty_;
 
-              typedef Session_T<ACE_SYNCH>::connection_type connection_type;
-              typedef ACE::IOS::Sock_IOStreamBase<ACE_SYNCH> stream_type;
+              using connection_type = typename Session_T<ACE_SYNCH>::connection_type;
+              using stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH>;
 
               virtual void on_eof ();
 
@@ -125,7 +125,7 @@ namespace ACE
                 : public ACE::INet::ConnectionHolder
                 {
                   public:
-                    typedef Session_T<ACE_SYNCH> session_type;
+                    using session_type = Session_T<ACE_SYNCH>;
 
                     SessionHolder ();
                     virtual ~SessionHolder();

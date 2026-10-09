@@ -171,10 +171,10 @@ public:
 };
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Atomic_Op <ACE_Thread_Mutex, u_long> ACE_LOGGER_COUNTER;
+using ACE_LOGGER_COUNTER = ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
 #define ACE_LOGGER_SYNCH ACE_MT_SYNCH
 #else
-typedef u_long ACE_LOGGER_COUNTER;
+using ACE_LOGGER_COUNTER = u_long;
 #define ACE_LOGGER_SYNCH ACE_NULL_SYNCH
 #endif /* ACE_HAS_THREADS */
 

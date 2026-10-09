@@ -16,8 +16,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Make a typedef to simplify access to the Singleton below.
-typedef ACE_Singleton<ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX> ACE_Token_Connections;
+// Make a type alias to simplify access to the Singleton below.
+using ACE_Token_Connections = ACE_Singleton<ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>;
 
 // Initialize the statics from ACE_TSS_Connection;
 ACE_INET_Addr ACE_TSS_Connection::server_address_;

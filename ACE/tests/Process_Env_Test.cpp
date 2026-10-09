@@ -19,7 +19,7 @@ using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
 
 void create_large_env (setenvfn_t setenv, void *ctx)
 {
-  static const size_t varsize = 1600;
+  static constexpr size_t varsize = 1600;
   for (int i = 0; i < 26; i++)
     {
       char name[2] = { 'A', '\0' };

@@ -11,7 +11,7 @@ class MyTimerHandler : public ACE_Event_Handler
 {
 public:
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void * = 0)
+                      const void * = nullptr) override
   {
     time_t epoch = ((timespec_t)current_time).tv_sec;
     ACE_DEBUG ((LM_INFO,
@@ -34,7 +34,7 @@ public:
   {
   }
 
-  int handle_signal (int sig, siginfo_t * = 0, ucontext_t * = 0)
+  int handle_signal (int sig, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     if (sig == SIGINT)
       {
@@ -76,7 +76,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   MyTimerHandler *handler = new MyTimerHandler ();
   long timerId =
     ACE_Reactor::instance ()->schedule_timer (handler,
-                                              0,
+                                              nullptr,
                                               initialDelay,
                                               interval);
   // Listing 2

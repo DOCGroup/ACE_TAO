@@ -34,20 +34,20 @@ public:
                int n_threads);
   // Constructor activates <n_threads> in the thread pool.
 
-  ~Thread_Pool ();
+  ~Thread_Pool () override;
   // Destructor...
 
-  virtual int svc ();
+  int svc () override;
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 
-  virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb,
+                   ACE_Time_Value *tv = nullptr) override;
   // This allows the producer to pass messages to the <Thread_Pool>.
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
   // Close hook.
   //FUZZ: enable check_for_lack_ACE_OS
 };
@@ -72,9 +72,7 @@ Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
                 "activate failed"));
 }
 
-Thread_Pool::~Thread_Pool ()
-{
-}
+Thread_Pool::~Thread_Pool () = default;
 
 // Simply enqueue the Message_Block into the end of the queue.
 
@@ -101,7 +99,7 @@ Thread_Pool::svc ()
 
   for (;; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) in iteration %d before getq ()\n",
@@ -155,7 +153,7 @@ producer (Thread_Pool &thread_pool)
   for (int n; ;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_NEW (mb,
                ACE_Message_Block (BUFSIZ));
 
@@ -214,7 +212,7 @@ producer (Thread_Pool &thread_pool)
 
               // Enqueue a NULL message to flag each consumer to
               // shutdown.
-              ACE_Message_Block *mb = 0;
+              ACE_Message_Block *mb = nullptr;
               ACE_NEW (mb,
                        ACE_Message_Block);
               if (thread_pool.put (mb) == -1)

@@ -27,7 +27,7 @@
   // This only works on asynch I/O-capable platforms.
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = 0;
+static ACE_TCHAR *host = nullptr;
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -45,7 +45,7 @@ class Receiver : public ACE_Service_Handler
 {
 public:
   Receiver ();
-  ~Receiver ();
+  ~Receiver () override;
 
   int open_addr (const ACE_INET_Addr &localAddr);
 
@@ -54,7 +54,7 @@ protected:
 
   /// This method will be called when an asynchronous read completes on
   /// a UDP socket.
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
 private:
   ACE_SOCK_Dgram sock_dgram_;
@@ -101,7 +101,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
   // read the message header and message body into 2 buffers
 
   // create a message block to read the message header
-  ACE_Message_Block* msg = 0;
+  ACE_Message_Block* msg = nullptr;
   ACE_NEW_RETURN (msg, ACE_Message_Block (1024), -1);
 
   // the next line sets the size of the header, even though we
@@ -111,7 +111,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
   msg->size (20); // size of header to read is 20 bytes
 
   // create a message block to read the message body
-  ACE_Message_Block* body = 0;
+  ACE_Message_Block* body = nullptr;
   ACE_NEW_RETURN (body, ACE_Message_Block (1024), -1);
   // The message body will not exceed 1024 bytes, at least not in this test.
 
@@ -189,7 +189,7 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
   if (result.success () && result.bytes_transferred () != 0)
     {
       // loop through our message block and print out the contents
-      for (const ACE_Message_Block* msg = result.message_block (); msg != 0; msg = msg->cont ())
+      for (const ACE_Message_Block* msg = result.message_block (); msg != nullptr; msg = msg->cont ())
         { // use msg->length () to get the number of bytes written to the message
           // block.
           ACE_DEBUG ((LM_DEBUG, "Buf=[size=<%d>", msg->length ()));
@@ -219,7 +219,7 @@ class Sender : public ACE_Handler
 {
 public:
   Sender ();
-  ~Sender ();
+  ~Sender () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
@@ -230,7 +230,7 @@ protected:
 
   /// This is called when asynchronous writes from the dgram socket
   /// complete
-  virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
 
 private:
   /// Network I/O handle
@@ -278,14 +278,14 @@ Sender::open (const ACE_TCHAR *host,
   // message body using 2 buffers
 
   // create a message block for the message header
-  ACE_Message_Block* msg = 0;
+  ACE_Message_Block* msg = nullptr;
   ACE_NEW_RETURN (msg, ACE_Message_Block (100), -1);
   const char raw_msg [] = "To be or not to be.";
   // Copy buf into the Message_Block and update the wr_ptr ().
   msg->copy (raw_msg, ACE_OS::strlen (raw_msg) + 1);
 
   // create a message block for the message body
-  ACE_Message_Block* body = 0;
+  ACE_Message_Block* body = nullptr;
   ACE_NEW_RETURN (body, ACE_Message_Block (100), -1);
   ACE_OS::memset (body->wr_ptr (), 'X', 100);
   body->wr_ptr (100); // always remember to update the wr_ptr ()
@@ -399,7 +399,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Receiver receiver;
 
   // If passive side
-  if (host == 0)
+  if (host == nullptr)
     {
       if (receiver.open_addr (ACE_INET_Addr (port)) == -1)
         return -1;

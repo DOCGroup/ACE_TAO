@@ -14,7 +14,7 @@ public:
     : count_ (1)
   {}
 
-  virtual int handle_timeout (const ACE_Time_Value &, const void *arg)
+  int handle_timeout (const ACE_Time_Value &, const void *arg) override
   {
     int *times = (int *) arg;
 
@@ -37,7 +37,7 @@ test_functionality (ACE_Timer_Queue *tq)
 
   ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
-  const void *timer_act = 0;
+  const void *timer_act = nullptr;
 
   ACE_NEW (timer_act, int (1));
   long timer_id1 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
@@ -96,13 +96,13 @@ static Timer_Queues timer_queues[] =
 {
   { new ACE_Timer_List, "ACE_Timer_List" },
   { new ACE_Timer_Heap, "ACE_Timer_Heap" },
-  { 0, 0 },
+  { nullptr, nullptr },
 };
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  for (int i = 0; timer_queues[i].name_ != 0; i++)
+  for (int i = 0; timer_queues[i].name_ != nullptr; i++)
     {
       test_functionality (timer_queues[i].queue_);
       delete timer_queues[i].queue_;

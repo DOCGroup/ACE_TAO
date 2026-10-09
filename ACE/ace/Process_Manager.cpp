@@ -60,9 +60,7 @@ ACE_Process_Manager *ACE_Process_Manager::instance_ = nullptr;
 // (we can only delete it safely if we created it!)
 bool ACE_Process_Manager::delete_instance_ = false;
 
-ACE_Process_Manager::Process_Descriptor::~Process_Descriptor ()
-{
-}
+ACE_Process_Manager::Process_Descriptor::~Process_Descriptor () = default;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager::Process_Descriptor)
 

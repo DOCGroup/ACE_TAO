@@ -31,7 +31,7 @@ namespace ACE
               StreamPolicyBase ();
               virtual ~StreamPolicyBase ();
 
-              typedef typename STREAM_BUFFER::char_type char_type;
+              using char_type = typename STREAM_BUFFER::char_type;
 
               virtual int read_from_stream (char_type* buffer, std::streamsize length) = 0;
 

@@ -25,12 +25,12 @@ Options::Options ()
     threads_ (10),
     quit_string_ (ACE_TEXT("q")),
     message_len_ (0),
-    message_buf_ (0),
+    message_buf_ (nullptr),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000),
     oneway_ (1) // Make oneway calls the default.
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , barrier_ (0)
+    , barrier_ (nullptr)
 #endif /* ACE_MT_SAFE */
 {
 }
@@ -42,7 +42,7 @@ Options::~Options ()
 }
 
 // Options Singleton.
-typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 int
 Options::init ()
@@ -219,7 +219,7 @@ Options::shared_client_test (u_short port,
 
   ACE_NEW_RETURN (buf,
                   char[this->message_len()],
-                  0);
+                  nullptr);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) waiting...\n"));
@@ -241,8 +241,8 @@ Options::oneway_client_test (void *)
   // Add 1 to the port to trigger the oneway test!
   char *request = options->shared_client_test (options->port () + 1,
                                                cli_stream);
-  if (request == 0)
-    return 0;
+  if (request == nullptr)
+    return nullptr;
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -294,8 +294,8 @@ Options::twoway_client_test (void *)
 
   char *request = options->shared_client_test (options->port (),
                                                cli_stream);
-  if (request == 0)
-    return 0;
+  if (request == nullptr)
+    return nullptr;
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -425,4 +425,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Options, ACE_SYNCH_RECURSIVE_MUTEX);
-

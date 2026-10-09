@@ -23,7 +23,7 @@ namespace ACE
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT ("\\System\\Threads"))
 #elif defined (ACE_LINUX)
-      , file_ptr_ (0)
+      , file_ptr_ (nullptr)
       , nthreads_ (0UL)
 #endif
     {
@@ -39,7 +39,7 @@ namespace ACE
       this->file_ptr_ = ACE_OS::fopen (ACE_TEXT ("/proc/self/status"),
                                        ACE_TEXT ("r"));
 
-      if (this->file_ptr_ == 0)
+      if (this->file_ptr_ == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Num threads - opening ")
@@ -47,15 +47,15 @@ namespace ACE
           return;
         }
 
-      char *item = 0;
-      char *arg = 0;
+      char *item = nullptr;
+      char *arg = nullptr;
 
-      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != 0)
+      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
         {
           item = ACE_OS::strtok (this->buf_, " \t\n");
-          arg = ACE_OS::strtok (0, "\n");
+          arg = ACE_OS::strtok (nullptr, "\n");
 
-          if (item == 0 || arg == 0)
+          if (item == nullptr || arg == nullptr)
             {
               continue;
             }

@@ -14,7 +14,7 @@
 
 AcceptHandler:: AcceptHandler(ACE_Reactor *reactor) :
         ACE_Event_Handler(),
-        mReactor(reactor == 0 ? ACE_Reactor::instance() : reactor),
+        mReactor(reactor == nullptr ? ACE_Reactor::instance() : reactor),
         mAcceptor() {
     ACE_TRACE("AcceptHandler:: AcceptHandler(ACE_Reactor *)");
 }
@@ -62,9 +62,9 @@ int AcceptHandler::handle_input(ACE_HANDLE) {
     ACE_INET_Addr clientAddr;
 
     // create a new ReadHandler
-    ReadHandler *reader = 0;
+    ReadHandler *reader = nullptr;
     ACE_NEW_NORETURN (reader, ReadHandler());
-    if (reader == 0)
+    if (reader == nullptr)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
                         ACE_TEXT ("reader. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 

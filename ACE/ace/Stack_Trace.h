@@ -89,7 +89,7 @@ public:
    */
   const char* c_str() const;
 
-  static const size_t SYMBUFSIZ = ACE_STACK_TRACE_SYMBUFSIZ;
+  static constexpr size_t SYMBUFSIZ = ACE_STACK_TRACE_SYMBUFSIZ;
 
 private:
   char buf_[SYMBUFSIZ];
@@ -105,4 +105,3 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_STACK_TRACE_H */
-

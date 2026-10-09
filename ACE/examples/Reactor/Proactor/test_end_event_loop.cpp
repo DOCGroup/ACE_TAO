@@ -42,17 +42,17 @@ public:
     {}
 
   /// Destructor.
-  virtual ~My_Task () {}
+  ~My_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // If time_flag is zero do the eventloop indefinitely, otherwise do
   // it for finite amount of time (13secs!!!).
-  int open (void *timed_event_loop)
+  int open (void *timed_event_loop) override
     {
   //FUZZ: enble check_for_lack_ACE_OS
 
       // Set the local variable.
-      if (timed_event_loop == 0)
+      if (timed_event_loop == nullptr)
         this->time_flag_ = 0;
       else
         this->time_flag_ = 1;
@@ -68,7 +68,7 @@ public:
     }
 
   // Thread function.
-  int svc ()
+  int svc () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t):Starting svc routine\n"));
@@ -121,7 +121,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   My_Task task1, task2;
 
   // Test the indefinite run event loop.
-  if (task1.open (0) == -1)
+  if (task1.open (nullptr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):Failed to <open> the task\n"),
                       1);

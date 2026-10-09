@@ -54,12 +54,12 @@
 // Also, you want that your time measuring method has a resolution
 // compatible with this buffer size, if not you will end up measuring 0.
 // You can change this value with -t option.
-static const int default_total = 32*1024;
+static constexpr int default_total = 32*1024;
 
 // Repeat this many times for each tested CDR type.
 // We then take the average time that took for each type and report that.
 // You can change this value with -n option.
-static const int default_niter = 10;
+static constexpr int default_niter = 10;
 
 //
 // A simple cronometer in seconds, that encapsulates our time
@@ -144,8 +144,8 @@ public:
   static T checkval(int i);
 
 private:
-  CDR_Test (const CDR_Test<T, H>&);
-  CDR_Test<T, H>& operator= (const CDR_Test<T, H>&);
+  CDR_Test (const CDR_Test<T, H>&) = delete;
+  CDR_Test<T, H>& operator= (const CDR_Test<T, H>&) = delete;
 };
 
 static ACE_UINT32 seal = 0xdeadbeef;
@@ -995,4 +995,3 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
-

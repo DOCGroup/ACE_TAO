@@ -17,7 +17,7 @@ template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                                 ACE_TCHAR *argv[]) {
   int i;
-  char **array = 0;
+  char **array = nullptr;
   ACE_NEW_RETURN (array, char*[argc], -1);
   std::unique_ptr<char *[]> char_argv (array);
 
@@ -50,7 +50,7 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
                    local_addr.get_port_number ());
   ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp  # Reactor-based logging server\n"));
-  if (*bufferp == 0)
+  if (*bufferp == nullptr)
     *bufferp = ACE::strnew (buf);
   else
     ACE_OS::strncpy (*bufferp, buf, length);

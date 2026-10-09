@@ -13,9 +13,9 @@
 #include "ace/Module.h"
 #include "ace/Task.h"
 
-typedef ACE_Stream<ACE_NULL_SYNCH> JAWS_Pipeline_Stream;
-typedef ACE_Module<ACE_NULL_SYNCH> JAWS_Pipeline_Module;
-typedef ACE_Task<ACE_NULL_SYNCH> JAWS_Pipeline_Task;
+using JAWS_Pipeline_Stream = ACE_Stream<ACE_NULL_SYNCH>;
+using JAWS_Pipeline_Module = ACE_Module<ACE_NULL_SYNCH>;
+using JAWS_Pipeline_Task = ACE_Task<ACE_NULL_SYNCH>;
 
 class JAWS_Pipeline : public JAWS_Pipeline_Task
   // = TITLE

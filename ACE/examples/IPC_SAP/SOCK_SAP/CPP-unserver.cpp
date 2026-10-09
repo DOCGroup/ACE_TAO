@@ -77,7 +77,7 @@ server (void *arg)
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("close")));
 
-  return 0;
+  return nullptr;
 }
 
 static int
@@ -117,7 +117,7 @@ run_event_loop (const ACE_TCHAR rendezvous[])
     {
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
-      if (peer_acceptor.accept (new_stream, 0, &timeout) == -1)
+      if (peer_acceptor.accept (new_stream, nullptr, &timeout) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),

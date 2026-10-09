@@ -39,13 +39,13 @@ public:
   int open (void *v = 0);
 };
 
-typedef size_t ATTRIBUTES;
+using ATTRIBUTES = size_t;
 typedef std::pair<Client_Svc_Handler *, ATTRIBUTES>
         CACHED_HANDLER;
 typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
         ACE_ADDR;
-typedef ACE_Hash<ACE_ADDR> H_KEY;
-typedef ACE_Equal_To<ACE_ADDR> C_KEYS;
+using H_KEY = ACE_Hash<ACE_ADDR>;
+using C_KEYS = ACE_Equal_To<ACE_ADDR>;
 
 typedef ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
         HASH_MAP;
@@ -118,7 +118,7 @@ public:
   int accept_svc_handler (SVC_HANDLER *svc_handler);
 
 protected:
-  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
+  using ACCEPT_STRATEGY_BASE = ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>;
 
   /// Handler for removing cached connections.
   int out_of_sockets_handler ();

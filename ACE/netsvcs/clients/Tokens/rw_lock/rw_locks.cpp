@@ -20,7 +20,7 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
+using ACE_TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
 static ACE_Token_Proxy *global_rlock;
 static ACE_Token_Proxy *global_wlock;

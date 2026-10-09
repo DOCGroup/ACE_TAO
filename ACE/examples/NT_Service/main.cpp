@@ -50,7 +50,7 @@ private:
   int opt_startup;
 };
 
-typedef ACE_Singleton<Process, ACE_Mutex> PROCESS;
+using PROCESS = ACE_Singleton<Process, ACE_Mutex>;
 
 Process::Process ()
   : opt_install (0),

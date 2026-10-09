@@ -50,7 +50,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Construct a new output device wrapper.  Auto ptr ensures memory
   // is freed when we exit this scope.
-  Text_Output_Device_Wrapper *output_device = 0;
+  Text_Output_Device_Wrapper *output_device = nullptr;
   ACE_NEW_RETURN (output_device,
                   Text_Output_Device_Wrapper,
                   -1);
@@ -58,7 +58,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Construct a new bounded packet relay.  Auto ptr ensures memory is
   // freed when we exit this scope.
-  Bounded_Packet_Relay *packet_relay = 0;
+  Bounded_Packet_Relay *packet_relay = nullptr;
   ACE_NEW_RETURN (packet_relay,
                   Bounded_Packet_Relay (input_task_mgr,
                                         input_device,
@@ -69,7 +69,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Construct a receive input callback command for the relay, and register
   // it with the input device.  Auto ptr ensures memory is freed when we exit
   // this scope.
-  INPUT_CALLBACK *input_callback = 0;
+  INPUT_CALLBACK *input_callback = nullptr;
   ACE_NEW_RETURN (input_callback,
                   INPUT_CALLBACK (*packet_relay,
                                   &Bounded_Packet_Relay::receive_input),
@@ -84,7 +84,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Construct a new bounded packet relay driver.  Auto ptr ensures
   // memory is freed when we exit this scope.
-  THREAD_BOUNDED_PACKET_RELAY_DRIVER *tbprd = 0;
+  THREAD_BOUNDED_PACKET_RELAY_DRIVER *tbprd = nullptr;
 
   ACE_NEW_RETURN (tbprd,
                   Thread_Bounded_Packet_Relay_Driver (packet_relay),

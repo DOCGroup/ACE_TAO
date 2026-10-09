@@ -65,7 +65,7 @@ twoway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = 0;
+  char *request = nullptr;
 
   // Read data from client (terminate on error).
 
@@ -100,7 +100,7 @@ twoway_server (void *arg)
           len = ACE_NTOHL (len);
           ACE_NEW_RETURN (request,
                           char [len],
-                          0);
+                          nullptr);
         }
 
       // Subtract off the sizeof the length prefix.
@@ -136,14 +136,14 @@ twoway_server (void *arg)
       message_count++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   // Close new endpoint (listening endpoint stays open).
   new_stream.close ();
 
   delete [] request;
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Function entry point into the oneway server task.
@@ -181,7 +181,7 @@ oneway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = 0;
+  char *request = nullptr;
 
   // Read data from client (terminate on error).
 
@@ -216,7 +216,7 @@ oneway_server (void *arg)
           len = ACE_NTOHL (len);
           ACE_NEW_RETURN (request,
                           char [len],
-                          0);
+                          nullptr);
         }
 
       // Subtract off the sizeof the length prefix.
@@ -246,7 +246,7 @@ oneway_server (void *arg)
       message_count++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   timer.stop ();
@@ -274,7 +274,7 @@ oneway_server (void *arg)
   new_stream.close ();
 
   delete [] request;
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -328,8 +328,8 @@ run_event_loop (u_short port)
 
       int result = ACE_OS::select (ACE_Utils::truncate_cast<int> ((intptr_t)oneway_acceptor.get_handle ()) + 1,
                                    (fd_set *) temp,
-                                   0,
-                                   0,
+                                   nullptr,
+                                   nullptr,
                                    timeout);
       if (result == -1)
         ACE_ERROR ((LM_ERROR,

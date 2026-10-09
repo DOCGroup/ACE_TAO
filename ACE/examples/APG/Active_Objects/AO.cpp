@@ -51,7 +51,7 @@ public:
     ACE_TRACE ("StatusUpdate::StatusUpdate");
   }
 
-  virtual int call ()
+  int call () override
   {
     ACE_TRACE ("StatusUpdate::call");
 
@@ -69,7 +69,7 @@ private:
 class ExitMethod : public ACE_Method_Request
 {
 public:
-  virtual int call ()
+  int call () override
   {
     // Cause exit.
     return -1;
@@ -86,7 +86,7 @@ public:
     this->activate ();
   }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_TRACE ("Scheduler::svc");
 

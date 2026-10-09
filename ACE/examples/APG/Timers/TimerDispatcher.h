@@ -31,8 +31,7 @@ private:
   ACE_Event timer_;
 };
 
-typedef ACE_Singleton<Timer_Dispatcher, ACE_Null_Mutex> Timer;
+using Timer = ACE_Singleton<Timer_Dispatcher, ACE_Null_Mutex>;
 // Listing 1
 
 #endif /*TIMER_DISPATCHER_H*/
-

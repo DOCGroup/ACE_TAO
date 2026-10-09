@@ -6,9 +6,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Dynamic_Time_Policy_Base::~ACE_Dynamic_Time_Policy_Base ()
-{
-}
+ACE_Dynamic_Time_Policy_Base::~ACE_Dynamic_Time_Policy_Base () = default;
 
 
 class NULL_Time_Policy : public ACE_Dynamic_Time_Policy_Base

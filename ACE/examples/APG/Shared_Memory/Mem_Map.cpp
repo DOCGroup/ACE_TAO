@@ -10,7 +10,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   ACE_ASSERT(srcHandle != ACE_INVALID_HANDLE);
 
   ACE_Mem_Map srcMap (srcHandle, static_cast<size_t> (-1), PROT_READ, ACE_MAP_PRIVATE);
-  ACE_ASSERT(srcMap.addr () != 0);
+  ACE_ASSERT(srcMap.addr () != nullptr);
 
   ACE_Mem_Map destMap (argv[2],
                        srcMap.size (),
@@ -18,7 +18,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
                        ACE_DEFAULT_FILE_PERMS,
                        PROT_RDWR,
                        ACE_MAP_SHARED);
-  ACE_ASSERT(destMap.addr () != 0);
+  ACE_ASSERT(destMap.addr () != nullptr);
 
   ACE_OS::memcpy (destMap.addr (),
                   srcMap.addr (),

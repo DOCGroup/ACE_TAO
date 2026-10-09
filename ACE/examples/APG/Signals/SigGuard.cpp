@@ -7,7 +7,7 @@
 class MySignalHandler : public ACE_Event_Handler
   {
   public:
-    virtual int handle_signal(int signo, siginfo_t * = 0, ucontext_t * = 0)
+    int handle_signal(int signo, siginfo_t * = nullptr, ucontext_t * = nullptr) override
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal %d\n"), signo));
       return 0;

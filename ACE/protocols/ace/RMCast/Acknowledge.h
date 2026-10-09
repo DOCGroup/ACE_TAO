@@ -117,7 +117,7 @@ namespace ACE_RMCast
   private:
     struct Queue : ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex>
     {
-      typedef ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex> Base;
+      using Base = ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex>;
 
       // Should never be here but required by ACE_Hash_Blah_Blah.
       //

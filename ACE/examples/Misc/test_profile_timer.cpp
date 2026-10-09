@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 
-static const int DEFAULT_ITERATIONS = 100000000;
+static constexpr int DEFAULT_ITERATIONS = 100000000;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -32,4 +32,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               (et.real_time / double (iterations)) * 1000000));
   return 0;
 }
-

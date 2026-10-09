@@ -12,9 +12,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Auto_Update_Starter::Auto_Update_Starter ()
-    {
-    }
+    Auto_Update_Starter::Auto_Update_Starter () = default;
 
     int
     Auto_Update_Starter::svc ()

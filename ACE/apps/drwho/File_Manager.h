@@ -51,6 +51,6 @@ private:
 };
 
 // Make a Singleton.
-typedef ACE_Singleton <File_Manager, ACE_Null_Mutex> FILE_MANAGER;
+using FILE_MANAGER = ACE_Singleton<File_Manager, ACE_Null_Mutex>;
 
 #endif /* _FILE_MANAGER_H */

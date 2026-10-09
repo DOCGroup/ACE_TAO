@@ -17,9 +17,7 @@ Log_Wrapper::Log_Wrapper ()
   this->log_msg_.app_id = ACE_OS::getpid ();
 }
 
-Log_Wrapper::~Log_Wrapper ()
-{
-}
+Log_Wrapper::~Log_Wrapper () = default;
 
 // Set the log_msg_ host address.
 

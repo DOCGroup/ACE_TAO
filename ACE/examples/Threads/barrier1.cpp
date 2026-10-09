@@ -41,11 +41,11 @@ tester (Tester_Args *args)
       args->tester_barrier_.wait ();
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Default number of threads to spawn.
-static const int DEFAULT_ITERATIONS = 5;
+static constexpr int DEFAULT_ITERATIONS = 5;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

@@ -51,7 +51,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     + 1; // sizeof ('\0'), terminating NUL
   ACE_TCHAR const *format = ACE_TEXT("%") ACE_TEXT_PRIs ACE_TEXT(":%d");
 #if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr (hoststr, ACE_TEXT (':')) != 0)
+  if (ACE_OS::strchr (hoststr, ACE_TEXT (':')) != nullptr)
     {
       total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
       format = ACE_TEXT("[%") ACE_TEXT_PRIs ACE_TEXT("]:%d");
@@ -734,9 +734,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INET_Addr::~ACE_INET_Addr ()
-{
-}
+ACE_INET_Addr::~ACE_INET_Addr () = default;
 
 int
 ACE_INET_Addr::get_host_name (char hostname[],

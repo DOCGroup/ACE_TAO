@@ -25,9 +25,9 @@ class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (JAWS_HAS_THREAD_SAFE_ACCEPT)
-typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> JAWS_IO_SOCK_Acceptor;
+using JAWS_IO_SOCK_Acceptor = ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX>;
 #else
-typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> JAWS_IO_SOCK_Acceptor;
+using JAWS_IO_SOCK_Acceptor = ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 #endif /* JAWS_HAS_THREAD_SAFE_ACCEPT */
 
 class JAWS_Export JAWS_IO_Acceptor

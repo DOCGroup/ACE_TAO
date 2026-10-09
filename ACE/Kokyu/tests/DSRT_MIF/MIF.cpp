@@ -13,11 +13,11 @@ ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> guid=0;
 
 struct mif_scheduler_traits
 {
-  typedef int Guid_t;
+  using Guid_t = int;
 
   struct QoSDescriptor_t
   {
-    typedef long Importance_t;
+    using Importance_t = long;
 
     long importance_;
   };
@@ -30,7 +30,7 @@ struct mif_scheduler_traits
   }
   */
 
-  typedef Kokyu::MIF_Comparator<QoSDescriptor_t> QoSComparator_t;
+  using QoSComparator_t = Kokyu::MIF_Comparator<QoSDescriptor_t>;
 
   struct Guid_Hash
   {
@@ -115,6 +115,9 @@ int MyTask::svc ()
   return 0;
 }
 
+
+
+
 int ACE_TMAIN (int,ACE_TCHAR**)
 {
   Kokyu::DSRT_ConfigInfo config_info;
@@ -178,4 +181,3 @@ int ACE_TMAIN (int,ACE_TCHAR**)
 
   return 0;
 }
-

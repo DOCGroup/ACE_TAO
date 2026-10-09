@@ -36,7 +36,7 @@
 static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 2;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
-static const int MAX_ALLOCS_IN_TEST = 2;
+static constexpr int MAX_ALLOCS_IN_TEST = 2;
 
 static void
 try_ace_new (char **p)

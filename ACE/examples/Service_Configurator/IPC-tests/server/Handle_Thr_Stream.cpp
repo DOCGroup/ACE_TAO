@@ -21,9 +21,7 @@
 #define PR_ST_2 ACE_PEER_STREAM_2
 
 template <class SVH, PR_AC_1>
-Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor ()
-{
-}
+Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor () = default;
 
 template <class SVH, PR_AC_1>
 Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor ()
@@ -46,7 +44,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
   ACE_OS::sprintf (buf, ACE_TEXT("%d/"), sa.get_port_number ());
   ACE_OS::strcat (buf, ACE_TEXT("tcp # tests threaded remote stream\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     {
       return -1;
     }
@@ -89,8 +87,8 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
   // concurrency strategy.
   else if (this->open (local_addr,
                        ACE_Reactor::instance (),
-                       0,
-                       0,
+                       nullptr,
+                       nullptr,
                        &this->thr_strategy_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else
@@ -155,7 +153,7 @@ CLI_Stream<PR_ST_2>::svc ()
   ACE_OS::puts ("----------------------------------------");
   ACE_OS::fflush (stdout);
 
-  time_t t = ACE_OS::time (0L);
+  time_t t = ACE_OS::time (nullptr);
 #if !defined(ACE_LACKS_CUSERID)
   ACE_OS::cuserid (login_name);
 #else
@@ -195,8 +193,8 @@ CLI_Stream<PR_ST_2>::svc ()
 #endif /* ACE_HAS_TLI */
 #include "ace/INET_Addr.h"
 
-typedef CLI_Stream <THR_STREAM> CLI_STREAM;
-typedef Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR> HANDLE_THR_ACCEPTOR;
+using CLI_STREAM = CLI_Stream<THR_STREAM>;
+using HANDLE_THR_ACCEPTOR = Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
 
 // Service object.
 HANDLE_THR_ACCEPTOR remote_thr_stream;

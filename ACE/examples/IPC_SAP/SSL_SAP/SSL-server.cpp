@@ -58,7 +58,7 @@ twoway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = 0;
+  char *request = nullptr;
 
   // Read data from client (terminate on error).
 
@@ -93,7 +93,7 @@ twoway_server (void *arg)
           len = ntohl (len);
           ACE_NEW_RETURN (request,
                           char [len],
-                          0);
+                          nullptr);
         }
 
       // Subtract off the sizeof the length prefix.
@@ -130,7 +130,7 @@ twoway_server (void *arg)
       message_count++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   // Close new endpoint (listening endpoint stays open).
@@ -140,7 +140,7 @@ twoway_server (void *arg)
 
   delete [] request;
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Function entry point into the oneway server task.
@@ -175,7 +175,7 @@ oneway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = 0;
+  char *request = nullptr;
 
   // Read data from client (terminate on error).
 
@@ -210,7 +210,7 @@ oneway_server (void *arg)
           len = ntohl (len);
           ACE_NEW_RETURN (request,
                           char [len],
-                          0);
+                          nullptr);
         }
 
       // Subtract off the sizeof the length prefix.
@@ -240,7 +240,7 @@ oneway_server (void *arg)
       message_count++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   timer.stop ();
@@ -277,7 +277,7 @@ oneway_server (void *arg)
 
   delete [] request;
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -320,7 +320,7 @@ run_event_loop (u_short port)
   handle_set.set_bit (twoway_acceptor.get_handle ());
   handle_set.set_bit (oneway_acceptor.get_handle ());
 
-  ACE_SSL_SOCK_Stream * new_stream = 0;
+  ACE_SSL_SOCK_Stream * new_stream = nullptr;
 
   // Performs the iterative server activities.
   for (;;)
@@ -332,7 +332,7 @@ run_event_loop (u_short port)
 #if !defined (ACE_WIN32)
       select_width = oneway_acceptor.get_handle () + 1;
 #endif /* ACE_WIN32 */
-      int const result = ACE_OS::select (select_width, (fd_set *) temp, 0, 0, timeout);
+      int const result = ACE_OS::select (select_width, (fd_set *) temp, nullptr, nullptr, timeout);
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",

@@ -14,7 +14,7 @@ HTTP_URL::url_addr () const
 HTTP_URL::HTTP_URL (const ACE_URL_Addr &url_addr,
                     HTTP_URL *cp)
   : url_addr_ (url_addr),
-    containing_page_ (cp == 0 ? this : cp)
+    containing_page_ (cp == nullptr ? this : cp)
 {
   ACE_DEBUG ((LM_DEBUG, "HTTP_URL %s\n", url_addr.addr_to_string ()));
 }

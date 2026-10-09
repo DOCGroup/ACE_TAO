@@ -52,7 +52,7 @@ namespace ACE
     {
       for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
         {
-          Monitor_Base **member = 0;
+          Monitor_Base **member = nullptr;
           i.next (member);
           (*member)->clear ();
         }

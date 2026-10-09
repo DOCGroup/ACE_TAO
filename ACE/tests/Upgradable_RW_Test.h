@@ -62,7 +62,7 @@ private:
   ACE_CString *item_;
 };
 
-typedef ACE_Double_Linked_List<Element> Linked_List;
+using Linked_List = ACE_Double_Linked_List<Element>;
 
 /**
  * @class Time_Calculation

@@ -119,9 +119,9 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
                   -1);
   i++;
 
-  test_vector[i] = (IO_Test *) 0;
+  test_vector[i] = (IO_Test *) nullptr;
 
-  for (i = 0; test_vector[i] != 0; i++)
+  for (i = 0; test_vector[i] != nullptr; i++)
     {
       ACE_HANDLE hfile = fileno (output_fp);
       if (ACE_OS::ftruncate (hfile, 0) == -1)
@@ -172,13 +172,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   FILE *output_fp =
     ACE_OS::fopen (output_filename, ACE_TEXT ("w+"));
 
-  if (input_fp == 0)
+  if (input_fp == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        input_filename),
                       -1);
 
-  if (output_fp == 0)
+  if (output_fp == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        output_filename),

@@ -14,9 +14,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Point_Auto_Query::Monitor_Point_Auto_Query ()
-    {
-    }
+    Monitor_Point_Auto_Query::Monitor_Point_Auto_Query () = default;
 
     int
     Monitor_Point_Auto_Query::handle_timeout (
@@ -36,12 +34,12 @@ namespace ACE
     //=========================================================
 
     Monitor_Query::Monitor_Query (const char* monitor_name)
-      : monitor_ (0)
+      : monitor_ (nullptr)
     {
-      ACE_CString name_str (monitor_name, 0, false);
+      ACE_CString name_str (monitor_name, nullptr, false);
       this->monitor_ = Monitor_Point_Registry::instance ()->get (name_str);
 
-      if (this->monitor_ == 0)
+      if (this->monitor_ == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR, "Monitor_Query - monitor lookup failed\n"));
         }
@@ -50,7 +48,7 @@ namespace ACE
     void
     Monitor_Query::query ()
     {
-      if (this->monitor_ == 0)
+      if (this->monitor_ == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR, "Monitor_Query::query - null monitor\n"));
           return;
@@ -70,7 +68,7 @@ namespace ACE
           Constraint_Visitor visitor (data);
           bool satisfied = interpreter.evaluate (visitor);
 
-          if (satisfied && i->second.control_action != 0)
+          if (satisfied && i->second.control_action != nullptr)
             {
               i->second.control_action->execute ();
             }

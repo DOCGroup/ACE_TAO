@@ -10,12 +10,12 @@
 
 
 /* static */
-Options *Options::instance_ = 0;
+Options *Options::instance_ = nullptr;
 
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == 0)
+  if (Options::instance_ == nullptr)
     Options::instance_ = new Options;
 
   return Options::instance_;
@@ -36,9 +36,7 @@ Options::Options ()
 {
 }
 
-Options::~Options ()
-{
-}
+Options::~Options () = default;
 
 void Options::print_results ()
 {

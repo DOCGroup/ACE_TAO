@@ -32,7 +32,7 @@ public:
   Logger (int be_recursive = 1);
 
   /// Logging callback hook.
-  virtual void log (ACE_Log_Record &log_record);
+  void log (ACE_Log_Record &log_record) override;
 
   void verbose (int be_verbose);
 

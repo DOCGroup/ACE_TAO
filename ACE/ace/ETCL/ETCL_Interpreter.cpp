@@ -11,7 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ETCL_Parser_Export ACE_SYNCH_MUTEX ETCL_Interpreter::parserMutex__;
 
 ETCL_Interpreter::ETCL_Interpreter ()
-  : root_ (0)
+  : root_ (nullptr)
 {
 }
 
@@ -30,16 +30,16 @@ ETCL_Interpreter::build_tree (const char* constraints)
 
   Lex_String_Input::reset ((char*)constraints);
 
-  yyval.constraint = 0;
+  yyval.constraint = nullptr;
   int return_value = ::yyparse ();
 
-  if (return_value == 0 && yyval.constraint != 0)
+  if (return_value == 0 && yyval.constraint != nullptr)
     {
       this->root_ = yyval.constraint;
     }
   else
     {
-      this->root_ = 0;
+      this->root_ = nullptr;
     }
 
   return return_value;
@@ -50,7 +50,7 @@ ETCL_Interpreter::is_empty_string (const char* str)
 {
   int return_value = 0;
 
-  if (str != 0)
+  if (str != nullptr)
     {
       int i = 0;
 
@@ -73,9 +73,9 @@ ETCL_Interpreter::is_empty_string (const char* str)
   return return_value;
 }
 
-char* Lex_String_Input::string_ = 0;
-char* Lex_String_Input::current_ = 0;
-char* Lex_String_Input::end_ = 0;
+char* Lex_String_Input::string_ = nullptr;
+char* Lex_String_Input::current_ = nullptr;
+char* Lex_String_Input::end_ = nullptr;
 
 // Routine to have Lex read its input from the constraint string.
 

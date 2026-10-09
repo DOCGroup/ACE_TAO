@@ -14,10 +14,10 @@
 #if defined (ACE_WIN32)
 
 // Number of threads.
-static const int THREAD_COUNT = 5;
+static constexpr int THREAD_COUNT = 5;
 
 // Number of iterations.
-static const int MAX_ITERATIONS = 100;
+static constexpr int MAX_ITERATIONS = 100;
 
 class WFMO_Test : public ACE_Task <ACE_NULL_SYNCH>
 {

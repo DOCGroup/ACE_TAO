@@ -215,13 +215,13 @@ private:
   int update_time ();
 
   /// Allocator (used for reading/writing system time from/to shared memory)
-  typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
-  typedef ACE_Allocator_Adapter<MALLOC> ALLOCATOR;
+  using MALLOC = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+  using ALLOCATOR = ACE_Allocator_Adapter<MALLOC>;
   ALLOCATOR *shmem_;
 
   /// Set of TS_Clerk_Handlers and iterator over the set.
-  typedef ACE_Unbounded_Set <ACE_TS_Clerk_Handler *> HANDLER_SET;
-  typedef ACE_Unbounded_Set_Iterator <ACE_TS_Clerk_Handler *> HANDLER_SET_ITERATOR;
+  using HANDLER_SET = ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>;
+  using HANDLER_SET_ITERATOR = ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;
   HANDLER_SET handler_set_;
 
   struct System_Time

@@ -46,7 +46,7 @@ public:
                 size_t n_tasks,
                 size_t n_threads,
                 size_t n_iterations);
-  virtual int svc ();
+  int svc () override;
   // creats <n_tasks> and wait for them to finish
 
 private:
@@ -64,11 +64,11 @@ public:
   Worker_Task (ACE_Thread_Manager *thr_mgr,
                size_t n_threads,
                size_t n_iterations);
-  virtual int svc ();
+  int svc () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Does a small work...
-  virtual int open (void * = NULL);
+  int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -79,10 +79,10 @@ private:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Not needed for this test.
-  virtual int close (u_long);
+  int close (u_long) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
+  int put (ACE_Message_Block *, ACE_Time_Value *) override { return 0; }
 };
 
 size_t Worker_Task::workers_count_ = 1;
@@ -175,7 +175,7 @@ Invoker_Task::svc ()
 
   ACE_Thread_Manager *thr_mgr =
     ACE_Thread_Manager::instance ();
-  Worker_Task **worker_task = 0;
+  Worker_Task **worker_task = nullptr;
 
   ACE_NEW_RETURN (worker_task,
                   Worker_Task *[n_tasks_],
@@ -252,8 +252,8 @@ Invoker_Task::svc ()
 }
 
 // Default number of tasks and iterations.
-static const size_t DEFAULT_TASKS = 4;
-static const size_t DEFAULT_ITERATIONS = 5;
+static constexpr size_t DEFAULT_TASKS = 4;
+static constexpr size_t DEFAULT_ITERATIONS = 5;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

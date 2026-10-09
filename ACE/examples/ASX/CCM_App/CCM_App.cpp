@@ -6,22 +6,22 @@
 #include "ace/svc_export.h"
 
 
-typedef ACE_Task<ACE_SYNCH> MT_Task;
-typedef ACE_Stream<ACE_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_SYNCH> MT_Module;
+using MT_Task = ACE_Task<ACE_SYNCH>;
+using MT_Stream = ACE_Stream<ACE_SYNCH>;
+using MT_Module = ACE_Module<ACE_SYNCH>;
 
 class ACE_Svc_Export Test_Task : public MT_Task
 {
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
-  virtual int close (u_long);
+  int open (void *) override;
+  int close (u_long) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini ();
-  virtual int suspend ();
-  virtual int resume ();
+  int init (int, ACE_TCHAR *[]) override;
+  int fini () override;
+  int suspend () override;
+  int resume () override;
 };
 
 int

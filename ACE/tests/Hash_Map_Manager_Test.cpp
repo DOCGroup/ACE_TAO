@@ -20,8 +20,8 @@
 #include "ace/Null_Mutex.h"
 
 
-static const size_t STRING_TABLE_ENTRIES = 3 * 2;
-static const size_t MAX_HASH = 6;
+static constexpr size_t STRING_TABLE_ENTRIES = 3 * 2;
+static constexpr size_t MAX_HASH = 6;
 
 using HASH_STRING_ENTRY = ACE_Hash_Map_Entry<const ACE_TCHAR *, const ACE_TCHAR *>;
 

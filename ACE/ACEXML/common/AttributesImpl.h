@@ -112,7 +112,7 @@ private:
 /**
  * @typedef ACE_Array<ACEXML_Attribute> ACEXML_Attribute_Array
  */
-typedef ACE_Array<ACEXML_Attribute> ACEXML_Attribute_Array;
+using ACEXML_Attribute_Array = ACE_Array<ACEXML_Attribute>;
 
 /**
  * @class ACEXML_AttributesImpl AttributesImpl.h "ACEXML/common/AttributesImpl.h"

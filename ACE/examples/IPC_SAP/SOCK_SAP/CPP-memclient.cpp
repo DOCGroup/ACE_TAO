@@ -24,7 +24,7 @@ run_client ()
                        ACE_TEXT ("connect")), -1);
 
   char buf [MAXPATHLEN];
-  while (ACE_OS::fgets (buf, MAXPATHLEN, stdin) != 0)
+  while (ACE_OS::fgets (buf, MAXPATHLEN, stdin) != nullptr)
     {
       stream.send (buf, ACE_OS::strlen (buf)+1);
       stream.recv (buf, MAXPATHLEN);

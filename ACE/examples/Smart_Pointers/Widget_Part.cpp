@@ -9,6 +9,4 @@
 
 #include "Widget_Part.h"
 
-Widget_Part::~Widget_Part ()
-{
-}
+Widget_Part::~Widget_Part () = default;

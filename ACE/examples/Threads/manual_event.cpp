@@ -77,7 +77,7 @@ worker (void *arg)
 
   ACE_DEBUG ((LM_DEBUG, "(%t) dying\n"));
 
-  return 0;
+  return nullptr;
 }
 
 int

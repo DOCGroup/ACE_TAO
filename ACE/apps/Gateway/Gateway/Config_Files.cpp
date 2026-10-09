@@ -7,9 +7,11 @@
 #include "ace/Log_Msg.h"
 #endif /* GATEWAY_DEBUGGING */
 
+
+
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
-typedef FPRT::Return_Type FP_RETURN_TYPE;
+using FP_RETURN_TYPE = FPRT::Return_Type;
 
 FP_RETURN_TYPE
 Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
@@ -212,4 +214,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #endif /* GATEWAY_DEBUGGING */
-

@@ -14,7 +14,7 @@ class QTestApplication: public QApplication
 {
   Q_OBJECT
 public:
-  typedef QApplication inherited;
+  using inherited = QApplication;
 public:
   QTestApplication( int argc, char *argv[] );
   virtual void exec( int msec = 0 );

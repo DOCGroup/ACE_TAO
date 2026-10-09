@@ -188,7 +188,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 // Options Singleton.
-typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 Handler::Handler (ACE_HANDLE handle)
   : total_bytes_ (0),

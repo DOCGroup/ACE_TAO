@@ -9,9 +9,9 @@ public:
   MySignalHandler (int signum) : signum_(signum)
   { }
 
-  virtual ~MySignalHandler () = default;
+  ~MySignalHandler () override = default;
 
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0)
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     ACE_TRACE ("MySignalHandler::handle_signal");
 

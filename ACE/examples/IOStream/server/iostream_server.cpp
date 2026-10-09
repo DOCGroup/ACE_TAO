@@ -67,7 +67,7 @@ Handler::handle_input (ACE_HANDLE)
 // Create a factory object that will accept new connection requests
 // and create handler objects for us.
 
-typedef ACE_Acceptor<Handler, ACE_SOCK_ACCEPTOR> IOStream_Acceptor;
+using IOStream_Acceptor = ACE_Acceptor<Handler, ACE_SOCK_ACCEPTOR>;
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
 
 int
@@ -114,4 +114,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
   return 0;
 }
-

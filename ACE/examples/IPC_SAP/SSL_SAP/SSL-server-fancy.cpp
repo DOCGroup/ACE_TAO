@@ -65,7 +65,7 @@ class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_NULL_SYNCH>
 
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
+  virtual int open (void * = nullptr);
   // Generic initialization method.
 
   virtual int close (u_long);
@@ -114,7 +114,7 @@ public:
   // Constructor.
 
 private:
-  virtual int run ();
+  int run () override;
   // Template Method hook called by <svc>.
 };
 
@@ -126,10 +126,10 @@ public:
   // Constructor.
 
 private:
-  virtual int run ();
+  int run () override;
   // Template Method hook called by <svc>.
 
-  virtual void print_results ();
+  void print_results () override;
   // Print the results.
 };
 
@@ -151,9 +151,7 @@ Options::reply_message_len () const
   return ACE_Utils::truncate_cast<int> (this->reply_message_len_);
 }
 
-Options::~Options ()
-{
-}
+Options::~Options () = default;
 
 Options::Options ()
   : verbose_ (0),
@@ -192,7 +190,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 // Options Singleton.
-typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 Handler::Handler (ACE_SSL_SOCK_Stream *ssl_stream)
   : total_bytes_ (0),
@@ -296,7 +294,7 @@ Twoway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
-  char *request = 0;
+  char *request = nullptr;
 
   for (;;)
     {
@@ -351,7 +349,7 @@ Twoway_Handler::run ()
       this->message_count_++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   delete [] request;
@@ -390,7 +388,7 @@ Oneway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
-  char *request = 0;
+  char *request = nullptr;
 
   for (;;)
     {
@@ -430,7 +428,7 @@ Oneway_Handler::run ()
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   delete [] request;
@@ -521,9 +519,7 @@ Handler_Factory::create_handler (
 #endif /* ACE_HAS_THREADS */
 }
 
-Handler_Factory::Handler_Factory ()
-{
-}
+Handler_Factory::Handler_Factory () = default;
 
 Handler_Factory::~Handler_Factory ()
 {
@@ -604,4 +600,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return server.handle_events ();
 }
-

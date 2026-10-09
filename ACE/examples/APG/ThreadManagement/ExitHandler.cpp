@@ -5,7 +5,7 @@
 class ExitHandler : public ACE_At_Thread_Exit
 {
 public:
-  virtual void apply ()
+  void apply () override
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) is exiting\n")));
 
@@ -20,7 +20,7 @@ public:
   HA_CommandHandler(ExitHandler& eh) : eh_(eh)
   { }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
 

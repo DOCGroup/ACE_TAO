@@ -100,7 +100,7 @@ public:
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
 protected:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> inherited;
+  using inherited = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
   /// Transmit <mb> to the gatewayd.
   int transmit (ACE_Message_Block *mb,
@@ -185,7 +185,7 @@ private:
   /// Our acceptor addr.
   ACE_INET_Addr addr_;
 
-  typedef ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR> inherited;
+  using inherited = ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

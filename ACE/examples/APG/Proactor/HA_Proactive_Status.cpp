@@ -25,7 +25,7 @@ HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
       return;
     }
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_NORETURN (mb, ACE_Message_Block (1024));
   if (this->reader_.read (*mb, mb->space ()) != 0)
     {
@@ -127,7 +127,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                               0,     // pass_addresses
                               ACE_DEFAULT_ASYNCH_BACKLOG,
                               1,     // reuse_addr
-                              0,     // proactor
+                              nullptr,     // proactor
                               1))    // validate_new_connection
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("acceptor open")), 1);

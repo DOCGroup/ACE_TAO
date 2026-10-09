@@ -18,7 +18,7 @@
 // The default constructor for ACE_Auto_Event sets it initially into
 // the non-signaled state.
 
-typedef ACE_Singleton <ACE_Auto_Event, ACE_Thread_Mutex> EVENT;
+using EVENT = ACE_Singleton <ACE_Auto_Event, ACE_Thread_Mutex>;
 
 // work time for writer
 static int work_time;
@@ -43,7 +43,7 @@ reader (void *arg)
   // Read shared data.
   ACE_DEBUG ((LM_DEBUG, "(%t) reader: value of data is: %d\n", data));
 
-  return 0;
+  return nullptr;
 }
 
 // Writer thread.
@@ -68,7 +68,7 @@ writer (void *arg)
       ACE_OS::exit (0);
     }
 
-  return 0;
+  return nullptr;
 }
 
 int

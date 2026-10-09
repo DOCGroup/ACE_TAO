@@ -365,7 +365,7 @@ class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <T
 {
 public:
   // = Trait for commands issued from this driver
-  typedef ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION> MYCOMMAND;
+  using MYCOMMAND = ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION>;
 
   /// Constructor.
   Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);

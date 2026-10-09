@@ -14,7 +14,7 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 class Trigger8k : public Control_Action
 {
-  virtual void execute (const char* /* command */)
+  void execute (const char* /* command */) override
   {
     ACE_DEBUG ((LM_DEBUG, "Total bytes received is above 8k\n"));
   }
@@ -22,7 +22,7 @@ class Trigger8k : public Control_Action
 
 class Trigger16k : public Control_Action
 {
-  virtual void execute (const char* /* command */)
+  void execute (const char* /* command */) override
   {
     ACE_DEBUG ((LM_DEBUG, "Total bytes received is above 16k\n"));
   }
@@ -34,7 +34,7 @@ class Trigger16k : public Control_Action
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  int svc () override
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
@@ -44,7 +44,7 @@ public:
     Monitor_Base *bytes_monitor =
       mgr->admin ().monitor_point ("OS/Network/BytesReceived");
 
-    if (bytes_monitor != 0)
+    if (bytes_monitor != nullptr)
       {
         /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
@@ -73,7 +73,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *bytes_monitor =
-    create_os_monitor<BYTES_RECEIVED_MONITOR> (0, ACE_Time_Value (2));
+    create_os_monitor<BYTES_RECEIVED_MONITOR> (nullptr, ACE_Time_Value (2));
 
   /// Add two constraints, each with its own triggered action.
 

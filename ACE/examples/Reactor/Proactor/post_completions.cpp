@@ -70,8 +70,7 @@ public:
     {}
   // Constructor.
 
-  virtual ~My_Result ()
-    {}
+  ~My_Result () override = default;
   // Destructor.
 
     /**
@@ -83,7 +82,7 @@ public:
   void complete (size_t,
                  int success,
                  const void *completion_key,
-                 u_long error)
+                 u_long error) override
     {
       this->success_ = success;
       this->completion_key_ = completion_key;
@@ -118,10 +117,10 @@ class My_Handler : public  ACE_Handler
 {
 public:
   /// Constructor.
-  My_Handler () {}
+  My_Handler () = default;
 
   /// Destructor.
-  virtual ~My_Handler () {}
+  ~My_Handler () override = default;
 };
 
 /**
@@ -134,13 +133,13 @@ class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
   /// Constructor.
-  My_Task () {}
+  My_Task () = default;
 
   /// Destructor.
-  virtual ~My_Task () {}
+  ~My_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void *proactor)
+  int open (void *proactor) override
     {
   //FUZZ: enable check_for_lack_ACE_OS
       // Store the proactor.
@@ -151,7 +150,7 @@ public:
       return 0;
     }
 
-  int svc ()
+  int svc () override
     {
       // Handle events for 13 seconds.
       ACE_Time_Value run_time (13);
@@ -245,7 +244,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Create the result.
       ACE_NEW_RETURN (result_objects [ri],
                       My_Result (handler,
-                                 0,
+                                 nullptr,
                                  signal_number,
                                  ri),
                       1);
@@ -296,4 +295,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
-

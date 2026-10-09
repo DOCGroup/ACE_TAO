@@ -49,7 +49,7 @@ public:
     ACE_TRACE ("LF_ThreadPool::TP");
   }
 
-  virtual int svc ();
+  int svc () override;
 
   void shut_down ()
   {
@@ -100,7 +100,7 @@ LF_ThreadPool::svc ()
     {
       become_leader ();  // Block until this thread is the leader.
 
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_Time_Value tv (LONG_TIME);
       tv += ACE_OS::gettimeofday ();
 
@@ -152,9 +152,9 @@ LF_ThreadPool::make_follower ()
   ACE_TRACE ("LF_ThreadPool::make_follower");
 
   ACE_GUARD_RETURN
-    (ACE_Thread_Mutex, follower_mon, this->followers_lock_, 0);
+    (ACE_Thread_Mutex, follower_mon, this->followers_lock_, nullptr);
   Follower *fw;
-  ACE_NEW_RETURN (fw, Follower (this->leader_lock_), 0);
+  ACE_NEW_RETURN (fw, Follower (this->leader_lock_), nullptr);
   this->followers_.enqueue_tail (fw);
   return fw;
 }
@@ -222,7 +222,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_OS::sleep (2);
   ACE_Time_Value tv (1L);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   for (int i = 0; i < 30; i++)
     {
       ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof(int)), -1);

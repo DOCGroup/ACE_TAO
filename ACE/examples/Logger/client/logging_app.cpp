@@ -13,7 +13,7 @@
 
 static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
-static const int MAX_ITERATIONS = 10;
+static constexpr int MAX_ITERATIONS = 10;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

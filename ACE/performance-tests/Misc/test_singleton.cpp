@@ -86,7 +86,7 @@ DC_Singleton::instance ()
   return DC_Singleton::instance_;
 }
 
-typedef ACE_Singleton <DC_Singleton, ACE_SYNCH_MUTEX> My_Singleton;
+using My_Singleton = ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

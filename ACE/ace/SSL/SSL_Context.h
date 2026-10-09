@@ -99,7 +99,7 @@ class ACE_SSL_Export ACE_SSL_Context
 {
 public:
 #ifdef ACE_HAS_THREADS
-  typedef ACE_SYNCH_MUTEX lock_type;
+  using lock_type = ACE_SYNCH_MUTEX;
 #endif  /* ACE_HAS_THREADS */
 
   enum {

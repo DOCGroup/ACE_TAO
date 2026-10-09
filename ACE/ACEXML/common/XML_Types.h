@@ -26,18 +26,18 @@
 #include "ace/Functor_String.h"
 
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 2)
-typedef wchar_t ACEXML_UTF16;
+using ACEXML_UTF16 = wchar_t;
 # else
-typedef ACE_UINT16 ACEXML_UTF16;
+using ACEXML_UTF16 = ACE_UINT16;
 # endif /* ACE_HAS_WCHAR && ACE_SIZEOF_WCHAR == 2 */
 
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 4)
-typedef wchar_t ACEXML_UCS4;
+using ACEXML_UCS4 = wchar_t;
 # else
-typedef ACE_UINT32 ACEXML_UCS4;
+using ACEXML_UCS4 = ACE_UINT32;
 # endif /* ACE_HAS_WCHAR && ACE_SIZEOF_WCHAR == 4 */
 
-typedef char ACEXML_UTF8;
+using ACEXML_UTF8 = char;
 
 /**
  * @typedef ACEXML_Char
@@ -52,13 +52,13 @@ typedef char ACEXML_UTF8;
  * using the built-in conversion functions as they only perform simple
  * copy without any encoding conversion.
  */
-typedef ACE_TCHAR ACEXML_Char;
+using ACEXML_Char = ACE_TCHAR;
 # if defined (ACE_USES_WCHAR)
 //typedef ACEXML_UTF16 ACEXML_Char;
-typedef ACE_WString ACEXML_String;
+using ACEXML_String = ACE_WString;
 # else
 //typedef ACEXML_UTF8 ACEXML_Char;
-typedef ACE_CString ACEXML_String;
+using ACEXML_String = ACE_CString;
 # endif /* ACE_USES_WCHAR */
 
 # if (!defined (ACEXML_HAS_INLINE) && defined (__ACE_INLINE__)) ||  (ACEXML_HAS_INLINE == 1)

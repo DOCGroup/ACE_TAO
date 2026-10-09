@@ -7,7 +7,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef Acceptor_Factory<Consumer_Handler, CONSUMER_KEY> CONSUMER_FACTORY;
+using CONSUMER_FACTORY = Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>;
 
 int
 Consumer_Handler::open (void *a)
@@ -40,7 +40,7 @@ Consumer_Router::open (void *)
 
   argv[0] = (ACE_TCHAR *) this->name ();
   argv[1] = (ACE_TCHAR *) options.consumer_file ();
-  argv[2] = 0;
+  argv[2] = nullptr;
 
   if (this->init (1, &argv[1]) == -1)
     return -1;
@@ -67,7 +67,7 @@ Consumer_Router::close (u_long)
 int
 Consumer_Router::svc ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   ACE_ASSERT (this->is_reader ());
 
@@ -123,7 +123,7 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
                    module_name, ACE_TEXT ("upipe"),
                    ACE_TEXT ("# consumer router\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (module_name)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, module_name, length);

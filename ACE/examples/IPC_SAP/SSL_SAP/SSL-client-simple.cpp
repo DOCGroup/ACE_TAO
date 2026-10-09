@@ -23,7 +23,7 @@ Options::Options ()
     port_ (ACE_DEFAULT_SERVER_PORT),
     sleep_time_ (0, 0), // By default, don't sleep between calls.
     message_len_ (0),
-    message_buf_ (0),
+    message_buf_ (nullptr),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000),
     oneway_ (1) // Make oneway calls the default.
@@ -37,7 +37,7 @@ Options::~Options ()
 }
 
 // Options Singleton.
-typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 int
 Options::init ()
@@ -191,7 +191,7 @@ Options::shared_client_test (u_short port,
   char *buf;
   ACE_NEW_RETURN (buf,
                   char[this->message_len ()],
-                  0);
+                  nullptr);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) waiting...\n")));
@@ -208,7 +208,7 @@ Options::oneway_client_test ()
   // Add 1 to the port to trigger the oneway test!
   char *request = this->shared_client_test (this->port () + 1,
                                             cli_stream);
-  if (request == 0)
+  if (request == nullptr)
     return;
 
   // This variable is allocated off the stack to obviate the need for
@@ -255,7 +255,7 @@ Options::twoway_client_test ()
 
   char *request = this->shared_client_test (this->port (),
                                             cli_stream);
-  if (request == 0)
+  if (request == nullptr)
     return;
 
   // This variable is allocated off the stack to obviate the need for
@@ -364,4 +364,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

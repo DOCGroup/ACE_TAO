@@ -123,7 +123,7 @@ protected:
   ACE_WString value_;
 } ;
 
-typedef ACE_Array<ACE_URL_Property> ACE_URL_Property_Seq;
+using ACE_URL_Property_Seq = ACE_Array<ACE_URL_Property>;
 // type of URL_Property collections.
 
 /**
@@ -194,7 +194,7 @@ protected:
   ACE_URL_Property_Seq prop_;
 };
 
-typedef ACE_Array<ACE_URL_Offer> ACE_URL_Offer_Seq;
+using ACE_URL_Offer_Seq = ACE_Array<ACE_URL_Offer>;
 // type of URL offer collections.
 
 #if defined (__ACE_INLINE__)

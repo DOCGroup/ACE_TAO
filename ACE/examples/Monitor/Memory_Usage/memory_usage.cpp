@@ -12,7 +12,7 @@
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  int svc () override
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
@@ -22,7 +22,7 @@ public:
     ACE::Monitor_Control::Monitor_Base *memory_monitor =
       mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
 
-    if (memory_monitor != 0)
+    if (memory_monitor != nullptr)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
@@ -51,7 +51,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Set the timer for memory usage check at 2 sec.
   Monitor_Base *memory_usage_monitor =
-    create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (2));
+    create_os_monitor<MEMORY_USAGE_MONITOR> (nullptr, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
@@ -61,7 +61,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   Monitor_Checker monitor_checker;
   monitor_checker.activate ();
 
-  char * str_array[5] = {0};
+  char * str_array[5] = {nullptr};
 
   for (int i = 0; i < 10; ++i)
     {

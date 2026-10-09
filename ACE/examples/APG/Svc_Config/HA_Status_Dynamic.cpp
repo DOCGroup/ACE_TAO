@@ -97,7 +97,7 @@ HA_Status::info (ACE_TCHAR **str, size_t len) const
     ACE_OS::sprintf (buf,
                      ACE_TEXT ("HAStatus listening on port %hu\n"),
                      this->listen_addr_.get_port_number ());
-    if (*str == 0)
+    if (*str == nullptr)
       *str = ACE::strnew (buf);
     else
       ACE_OS::strncpy (*str, buf, len);

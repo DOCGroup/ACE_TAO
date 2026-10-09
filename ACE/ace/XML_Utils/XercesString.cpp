@@ -14,7 +14,7 @@ namespace XML
 // On unicode windows, ACE_TCHAR == XMLCh
 #if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)
   XStr::XStr (const ACE_TCHAR* str)
-    : _wstr(0)
+    : _wstr(nullptr)
   {
     _wstr = XMLString::transcode(ACE_TEXT_ALWAYS_CHAR (str));
   }
@@ -26,13 +26,13 @@ namespace XML
   }
 
   XStr::XStr (const XMLCh* wstr)
-    : _wstr(0)
+    : _wstr(nullptr)
   {
     _wstr = XMLString::replicate(wstr);
   }
 
   XStr::XStr (const XStr &right)
-    : _wstr(0)
+    : _wstr(nullptr)
   {
     _wstr = XMLString::replicate(right._wstr);
   }
@@ -70,7 +70,7 @@ namespace XML
     void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
     XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
 
-    bool bOK = result != 0;
+    bool bOK = result != nullptr;
     if (bOK)
       {
         XMLCh *target = result;
@@ -95,7 +95,7 @@ namespace XML
         XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
 
         XMLCh *target = result;
-        bOK = target != 0;
+        bOK = target != nullptr;
         if (bOK)
           {
             const XMLCh *cursor = begin();
@@ -129,7 +129,7 @@ namespace XML
   XMLCh * XStr::release ()
   {
     XMLCh* tmp = _wstr;
-    this->_wstr = 0;
+    this->_wstr = nullptr;
     return tmp;
   }
 
@@ -138,7 +138,7 @@ namespace XML
   {
     if (_wstr)
       XMLString::release(&_wstr);
-    _wstr = 0;
+    _wstr = nullptr;
   }
 
   bool operator== (const XStr& lhs, const XStr& rhs)
