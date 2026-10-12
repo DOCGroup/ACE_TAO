@@ -3,6 +3,7 @@
 #include "tao/Connection_Purging_Strategy.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Condition.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -229,7 +230,16 @@ namespace TAO
               ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
               transport->id ()));
           }
-        transport->close_connection ();
+        if (transport->opened_as () == TAO_SERVER_ROLE)
+          {
+            TAO_GIOP_Message_Version version;
+            transport->out_stream ().get_version (version);
+            transport->messaging_object ()->send_close_connection (version, transport);
+          }
+        else
+          {
+            transport->close_connection ();
+          }
       }
   }
 

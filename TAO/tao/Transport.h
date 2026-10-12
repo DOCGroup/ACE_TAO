@@ -49,17 +49,6 @@ class TAO_ServerRequest;
 
 namespace TAO
 {
-  /**
-   * @note Should this be in TAO namespace. Seems like a candidate
-   * that should be in the transport
-   */
-  enum Connection_Role
-    {
-      TAO_UNSPECIFIED_ROLE = 0,
-      TAO_SERVER_ROLE = 1,
-      TAO_CLIENT_ROLE = 2
-    };
-
   namespace Transport
   {
     /// Transport-level statistics. Initially introduced to support

@@ -1443,10 +1443,14 @@ TAO_GIOP_Message_Base::
            transport->id (), ACE_ERRNO_GET));
     }
 
+  size_t const transport_id = transport->id ();
   transport->close_connection ();
-  TAOLIB_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) shut down transport, handle %d\n"),
-      transport-> id ()));
+  if (TAO_debug_level > 4)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) shut down Transport[%d]\n"),
+          transport_id));
+    }
 }
 
 int
