@@ -2025,12 +2025,12 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
-  this->touch_activity ();
-
   if (n <= 0)
     {
       return ACE_Utils::truncate_cast<int> (n);
     }
+
+  this->touch_activity ();
 
   if (TAO_debug_level > 3)
     {
@@ -2247,8 +2247,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
-  this->touch_activity ();
-
   // If there is an error return to the reactor..
   // do not reset partial message in case of n == 0 (EWOULDBLOCK || EAGAIN),
   // we will need it during next try
@@ -2262,6 +2260,8 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
       return ACE_Utils::truncate_cast<int> (n);
     }
+
+  this->touch_activity ();
 
   if (this->partial_message_ != nullptr && this->partial_message_->length () > 0)
     {
