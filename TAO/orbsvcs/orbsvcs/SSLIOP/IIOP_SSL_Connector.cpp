@@ -201,7 +201,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (TAO_debug_level > 2)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
-                "new connection to <%s:%d> on Transport[%d]\n",
+                "new connection to <%s:%d> on Transport[%B]\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
 
@@ -241,7 +241,7 @@ TAO::IIOP_SSL_Connector::make_connection (
 
       if (TAO_debug_level > 0)
         ORBSVCS_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - IIOP_SSL_Connector [%d]::make_connection, "
+                    "TAO (%P|%t) - IIOP_SSL_Connector [%B]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));

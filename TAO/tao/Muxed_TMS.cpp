@@ -50,7 +50,7 @@ TAO_Muxed_TMS::request_id ()
 
   if (TAO_debug_level > 4)
     TAOLIB_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Muxed_TMS[%d]::request_id, [%d]\n",
+                "TAO (%P|%t) - Muxed_TMS[%B]::request_id, [%d]\n",
                 this->transport_->id (),
                 this->request_id_generator_));
 

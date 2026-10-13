@@ -302,7 +302,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                       ACE_TEXT (" (follower), cond <%@>\n"),
                       t_id, follower.get ()));
 
@@ -345,7 +345,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
               {
                 if (TAO_debug_level >= 5)
                   TAOLIB_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                              ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event, ")
                               ACE_TEXT (" (follower) [no timer, cond failed]\n"),
                               t_id));
 
@@ -364,7 +364,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
               {
                 if (TAO_debug_level >= 5)
                   TAOLIB_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait, ")
+                              ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait, ")
                               ACE_TEXT ("(follower) [has timer, follower failed]\n"),
                               t_id ));
 
@@ -396,7 +396,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                       && TAO_debug_level > 0)
                   {
                     TAOLIB_ERROR ((LM_ERROR,
-                                ACE_TEXT("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                                ACE_TEXT("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event, ")
                                 ACE_TEXT("elect_new_leader failed\n"),
                                 t_id ));
                   }
@@ -418,7 +418,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                       ACE_TEXT (" done (follower), successful %d\n"),
                       t_id,
                       event->successful_i ()));
@@ -446,7 +446,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           if (TAO_debug_level >= 5)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                          ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event, ")
                           ACE_TEXT ("Would become client leader, ")
                           ACE_TEXT ("but generating new thread\n"),
                           t_id));
@@ -463,7 +463,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           if (TAO_debug_level >= 5)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event, ")
+                          ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event, ")
                           ACE_TEXT ("Becoming client leader.\n"),
                           t_id));
             }
@@ -494,7 +494,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           // Run the reactor event loop.
           if (TAO_debug_level >= 5)
             TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                        ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                         ACE_TEXT (" (leader) enter reactor event loop\n"),
                         t_id));
 
@@ -529,7 +529,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
           if (TAO_debug_level >= 5)
             TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                        ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                         ACE_TEXT (" (leader) exit reactor event loop\n"),
                         t_id));
         } // End Scope #6: we should now hold the lock again
@@ -552,14 +552,14 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       {
         if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                      ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                       ACE_TEXT (" (client) waking and yielding to allow event thread leadership\n"),
                       t_id));
 
         // Wake up the next leader (in case not yet done)
         if (this->elect_new_leader () == -1)
           TAOLIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                             ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                              ACE_TEXT (" failed to elect new leader\n"),
                              t_id),
                             -1);
@@ -588,14 +588,14 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
   if (this->elect_new_leader () == -1)
     TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                       ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                        ACE_TEXT (" failed to elect new leader\n"),
                        t_id),
                       -1);
 
   if (result == -1 && !this->reactor_->reactor_event_loop_done ())
     TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
+                       ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%B]::wait_for_event,")
                        ACE_TEXT (" handle_events failed\n"),
                        t_id),
                       -1);

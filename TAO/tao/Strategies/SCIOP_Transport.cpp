@@ -74,7 +74,7 @@ TAO_SCIOP_Transport::recv (char *buf,
       errno != ETIME)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%B]::recv, ")
                   ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
     }
@@ -148,7 +148,7 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::send_message, ")
+                    ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%B]::send_message, ")
                     ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
       return -1;

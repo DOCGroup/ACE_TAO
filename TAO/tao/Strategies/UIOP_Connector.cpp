@@ -228,7 +228,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - UIOP_Connector::make_connection, "
-                "new %C connection to <%C> on Transport[%d]\n",
+                "new %C connection to <%C> on Transport[%B]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 uiop_endpoint->rendezvous_point (),
                 svc_handler->peer ().get_handle ()));
@@ -274,7 +274,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - UIOP_Connector [%d]::make_connection, "
+                    "TAO (%P|%t) - UIOP_Connector [%B]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));

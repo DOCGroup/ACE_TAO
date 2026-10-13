@@ -28,7 +28,7 @@ TAO_IIOP_Connection_Handler::add_reference ()
     {
       TAO_Transport *tport = this->transport ();
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%B]::")
                   ACE_TEXT("add_reference, up to %d\n"),
                   tport != 0 ? tport->id () : 0,
                   rc));
@@ -44,7 +44,7 @@ TAO_IIOP_Connection_Handler::remove_reference ()
   if (TAO_debug_level > 9)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%B]::")
                   ACE_TEXT("remove_reference, down to %d\n"),
                   tport != 0 ? tport->id () : 0,
                   rc));
@@ -82,7 +82,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
     {
       TAO_Transport *tport = static_cast<TAO_Transport *> (specific_transport);
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%B]::")
                   ACE_TEXT("IIOP_Connection_Handler, ")
                   ACE_TEXT("this=%@\n"),
                   tport != nullptr ? tport->id () : 0,
@@ -99,7 +99,7 @@ TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler ()
     {
       TAO_Transport *tport = this->transport ();
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%B]::")
                   ACE_TEXT("~IIOP_Connection_Handler, ")
                   ACE_TEXT("this=%@, transport=%@\n"),
                   tport != nullptr ? tport->id () : 0,
@@ -439,7 +439,7 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
   if (TAO_debug_level > 9)
     {
-      TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_IIOP_Connection_Handler[%d]::"
+      TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_IIOP_Connection_Handler[%B]::"
                   "handle_timeout reset state to LFS_TIMEOUT\n",
                   this->transport ()-> id()));
     }

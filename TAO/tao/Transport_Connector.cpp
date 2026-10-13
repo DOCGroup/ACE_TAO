@@ -314,7 +314,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - TAO_Connector::parallel_connect: ")
-                          ACE_TEXT ("found a transport [%d]\n"),
+                          ACE_TEXT ("found a transport [%B]\n"),
                           base_transport->id ()));
             }
           return base_transport;
@@ -351,7 +351,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT ("transport [%d], Connection Timed out.\n"),
+            ACE_TEXT ("transport [%B], Connection Timed out.\n"),
                       transport->id ()));
         }
       transport->purge_entry ();
@@ -363,7 +363,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT ("transport [%d], Connection failed. (%d)\n"),
+            ACE_TEXT ("transport [%B], Connection failed. (%d)\n"),
                       transport->id (), ACE_ERRNO_GET));
         }
 
@@ -382,7 +382,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT("transport [%d], connection is open: no wait.\n"),
+            ACE_TEXT("transport [%B], connection is open: no wait.\n"),
             transport->id () ));
         }
 
@@ -394,7 +394,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT("waiting on transport [%d]\n"),
+            ACE_TEXT("waiting on transport [%B]\n"),
             transport->id () ));
         }
 
@@ -418,7 +418,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
             {
               TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-              ACE_TEXT(" timeout while waiting on transport [%d]\n"),
+              ACE_TEXT(" timeout while waiting on transport [%B]\n"),
               transport->id () ));
             }
         }
@@ -432,7 +432,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
                   --complain10times;
                   TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-                    ACE_TEXT(" unknown error waiting on transport [%d] (%d)\n"),
+                    ACE_TEXT(" unknown error waiting on transport [%B] (%d)\n"),
                     transport->id (),
                     ACE_ERRNO_GET));
                 }
@@ -450,7 +450,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-                ACE_TEXT("transport [%d], wait completed ok.\n"),
+                ACE_TEXT("transport [%B], wait completed ok.\n"),
                 transport->id () ));
             }
           return true;
@@ -462,7 +462,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
-            ACE_TEXT ("Connection not complete [%d] reset state to ")
+            ACE_TEXT ("Connection not complete [%B] reset state to ")
             ACE_TEXT ("LFS_CONNECTION_WAIT\n"), transport->id ()));
         }
       transport->connection_handler ()->reset_state (
@@ -530,7 +530,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
                   TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - Transport_Connector::connect, ")
-                              ACE_TEXT("got an existing %C Transport[%d] in role %C\n"),
+                              ACE_TEXT("got an existing %C Transport[%B] in role %C\n"),
                               base_transport->is_connected () ? "connected" :
                                                                 "unconnected",
                               base_transport->id (),
@@ -578,7 +578,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     {
                       TAOLIB_ERROR ((LM_ERROR,
                                   "TAO (%P|%t) - Transport_Connector::connect, "
-                                  "could not register the transport [%d]"
+                                  "could not register the transport [%B]"
                                   "in the reactor.\n",
                                   base_transport->id ()));
                     }
@@ -598,7 +598,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - ")
                               ACE_TEXT("Transport_Connector::waiting ")
-                              ACE_TEXT("for connection on transport [%d]\n"),
+                              ACE_TEXT("for connection on transport [%B]\n"),
                               base_transport->id ()));
                 }
 
@@ -628,7 +628,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                               ACE_TEXT("TAO (%P|%t) - ")
                               ACE_TEXT("Transport_Connector::non-blocking:")
                               ACE_TEXT("returning unconnected ")
-                              ACE_TEXT("transport [%d]\n"),
+                              ACE_TEXT("transport [%B]\n"),
                     base_transport->id ()));
                 }
 
@@ -676,7 +676,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - ")
                               ACE_TEXT("Transport_Connector::connect, ")
-                              ACE_TEXT("opening Transport[%d] in ")
+                              ACE_TEXT("opening Transport[%B] in ")
                               ACE_TEXT("TAO_CLIENT_ROLE\n"),
                               base_transport->id ()));
                 }
@@ -690,7 +690,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                       TAOLIB_DEBUG ((LM_DEBUG,
                                   ACE_TEXT("TAO (%P|%t) - Post_connect_hook ")
                                   ACE_TEXT("failed. ")
-                                  ACE_TEXT("Purging transport[%d]\n"),
+                                  ACE_TEXT("Purging transport[%B]\n"),
                                   base_transport->id ()));
                     }
                   (void) base_transport->purge_entry ();
@@ -731,7 +731,7 @@ TAO_Connector::wait_for_connection_completion (
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT("wait_for_connection_completion, ")
-                      ACE_TEXT("transport [%d], Failed to cache transport.\n"),
+                      ACE_TEXT("transport [%B], Failed to cache transport.\n"),
                       transport->id ()));
         }
       }
@@ -743,7 +743,7 @@ TAO_Connector::wait_for_connection_completion (
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT("wait_for_connection_completion, ")
-                      ACE_TEXT("transport [%d], Connection timed out.\n"),
+                      ACE_TEXT("transport [%B], Connection timed out.\n"),
                       transport->id ()));
         }
       result = -1;
@@ -756,7 +756,7 @@ TAO_Connector::wait_for_connection_completion (
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT("wait_for_connection_completion, ")
-                      ACE_TEXT("transport [%d], Connection failed. (%d) %p\n"),
+                      ACE_TEXT("transport [%B], Connection failed. (%d) %p\n"),
                       transport->id (), ACE_ERRNO_GET, ACE_TEXT("")));
         }
       result = -1;
@@ -768,7 +768,7 @@ TAO_Connector::wait_for_connection_completion (
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT("wait_for_connection_completion, ")
-                      ACE_TEXT("transport [%d], Connection not complete.\n"),
+                      ACE_TEXT("transport [%B], Connection not complete.\n"),
                       transport->id ()));
         }
 
@@ -786,7 +786,7 @@ TAO_Connector::wait_for_connection_completion (
                               ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                               ACE_TEXT("wait_for_connection_completion, ")
                               ACE_TEXT("going to wait for connection completion on ")
-                              ACE_TEXT("transport[%d]\n"),
+                              ACE_TEXT("transport[%B]\n"),
                               transport->id ()));
                 }
 
@@ -797,7 +797,7 @@ TAO_Connector::wait_for_connection_completion (
                   TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                               ACE_TEXT("wait_for_connection_completion, ")
-                              ACE_TEXT("transport [%d], wait done result = %d\n"),
+                              ACE_TEXT("transport [%B], wait done result = %d\n"),
                               transport->id (), result));
                 }
 
@@ -827,7 +827,7 @@ TAO_Connector::wait_for_connection_completion (
                           TAOLIB_DEBUG ((LM_DEBUG,
                                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                                       ACE_TEXT("wait_for_connection_completion, ")
-                                      ACE_TEXT("transport [%d], Connection timed out.\n"),
+                                      ACE_TEXT("transport [%B], Connection timed out.\n"),
                                       transport->id ()));
                         }
                     }
@@ -840,7 +840,7 @@ TAO_Connector::wait_for_connection_completion (
                           TAOLIB_ERROR ((LM_ERROR,
                                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                                       ACE_TEXT("wait_for_connection_completion, ")
-                                      ACE_TEXT("transport [%d], wait for completion failed")
+                                      ACE_TEXT("transport [%B], wait for completion failed")
                                       ACE_TEXT(" (%d) %p\n"),
                                       transport->id (), ACE_ERRNO_GET, ACE_TEXT("")));
                         }
@@ -858,7 +858,7 @@ TAO_Connector::wait_for_connection_completion (
               if (TAO_debug_level > 9)
                 {
                   TAOLIB_DEBUG ((LM_DEBUG,
-                              ACE_TEXT("TAO (%P|%t) - TAO_Connector[%d]::")
+                              ACE_TEXT("TAO (%P|%t) - TAO_Connector[%B]::")
                               ACE_TEXT("wait_for_connection_completion reset_state to ")
                               ACE_TEXT("LFS_CONNECTION_WAIT\n"), transport->id ()));
                 }
@@ -917,7 +917,7 @@ TAO_Connector::wait_for_connection_completion (
                   count));
       for (unsigned int i = 0; i < count; i++)
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("%d%C"),transport[i]->id (),
+                    ACE_TEXT("%B%C"),transport[i]->id (),
                     (i < (count -1) ? ", " : "]\n")));
     }
 
@@ -940,7 +940,7 @@ TAO_Connector::wait_for_connection_completion (
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT ("wait_for_connection_completion, ")
-                      ACE_TEXT ("winner transport [%d]\n"),
+                      ACE_TEXT ("winner transport [%B]\n"),
                       the_winner->id ()));
         }
     }

@@ -850,7 +850,7 @@ namespace TAO
                               if (TAO_debug_level > 0)
                                 TAOLIB_ERROR ((LM_ERROR,
                                             ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                                            ACE_TEXT ("remote_oneway transport[%d] ")
+                                            ACE_TEXT ("remote_oneway transport[%B] ")
                                             ACE_TEXT ("registration withreactor ")
                                             ACE_TEXT ("returned an error\n"),
                                             transport->id ()));

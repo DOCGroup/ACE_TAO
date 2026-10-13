@@ -194,7 +194,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
-                "new %C connection to <%C:%d> on Transport[%d]\n",
+                "new %C connection to <%C:%d> on Transport[%B]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 shmiop_endpoint->host (),
                 shmiop_endpoint->port (),
@@ -242,7 +242,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - SHMIOP_Connector [%d]::make_connection, "
+                    "TAO (%P|%t) - SHMIOP_Connector [%B]::make_connection, "
                     "could not register the transport in the reactor.\n",
                     transport->id ()));
 
