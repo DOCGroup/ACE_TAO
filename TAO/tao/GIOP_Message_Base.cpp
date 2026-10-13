@@ -1423,14 +1423,10 @@ TAO_GIOP_Message_Base::
                       TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
-  ACE_Data_Block data_block (TAO_GIOP_MESSAGE_HEADER_LEN,
-                             ACE_Message_Block::MB_DATA,
-                             close_message,
-                             nullptr,
-                             nullptr,
-                             ACE_Message_Block::DONT_DELETE,
-                             nullptr);
-  ACE_Message_Block message_block(&data_block);
+  ACE_Message_Block message_block (TAO_GIOP_MESSAGE_HEADER_LEN);
+  std::copy (close_message,
+             close_message + TAO_GIOP_MESSAGE_HEADER_LEN,
+             message_block.wr_ptr ());
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   size_t bt;
