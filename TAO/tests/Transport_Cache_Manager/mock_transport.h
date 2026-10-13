@@ -1,3 +1,21 @@
+// -*- C++ -*-
+
+#include "tao/GIOP_Message_Version.h"
+
+class mock_transport;
+
+class mock_output_cdr
+{
+public:
+  void get_version (TAO_GIOP_Message_Version &) {}
+};
+
+class mock_messaging_object
+{
+public:
+  void send_close_connection (TAO_GIOP_Message_Version const &, mock_transport *) {}
+};
+
 class mock_transport
 {
 public:
@@ -16,6 +34,9 @@ public:
   void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {this->cache_map_entry_ = entry;}
   TCM::HASH_MAP_ENTRY *cache_map_entry () {return this->cache_map_entry_;}
   void close_connection () { purged_count_ = ++global_purged_count;};
+  TAO::Connection_Role opened_as () const { return TAO::TAO_CLIENT_ROLE; }
+  mock_output_cdr &out_stream () { return this->out_stream_; }
+  mock_messaging_object *messaging_object () { return &this->messaging_object_; }
   int purged_count () { return this->purged_count_;}
   bool can_be_purged () { return true;}
 private:
@@ -26,4 +47,6 @@ private:
   unsigned long purging_order_;
   /// When did we got purged
   int purged_count_;
+  mock_output_cdr out_stream_;
+  mock_messaging_object messaging_object_;
 };
