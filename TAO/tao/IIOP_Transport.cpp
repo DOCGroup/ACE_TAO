@@ -59,7 +59,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
       if (TAO_debug_level > 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::send, ")
                       ACE_TEXT ("send failure (errno: %d) - %m\n"),
                       this->id (), ACE_ERRNO_GET));
         }
@@ -139,7 +139,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   if (retval <= 0 && TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::sendfile, ")
                   ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
                   this->id (),
                   ACE_ERRNO_GET));
@@ -165,7 +165,7 @@ TAO_IIOP_Transport::recv (char *buf,
   if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
                   ACE_ERRNO_GET));
@@ -247,7 +247,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send_message, ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::send_message, ")
                       ACE_TEXT ("write failure - %m\n"),
                       this->id ()));
         }

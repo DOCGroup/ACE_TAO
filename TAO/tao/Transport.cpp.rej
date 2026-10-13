@@ -1,0 +1,132 @@
+--- TAO/tao/Transport.cpp
++++ TAO/tao/Transport.cpp
+@@ -183,10 +183,12 @@ TAO_Transport::~TAO_Transport ()
+ {
+   if (TAO_debug_level > 9)
+     {
+-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport\n"),
++      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport, start\n"),
+                   this->id_));
+     }
+ 
++  this->cancel_idle_timer ();
++
+   delete this->messaging_object_;
+ 
+   delete this->ws_;
+@@ -217,6 +219,11 @@ TAO_Transport::~TAO_Transport ()
+ #if TAO_HAS_TRANSPORT_CURRENT == 1
+   delete this->stats_;
+ #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
++  if (TAO_debug_level > 9)
++    {
++      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport, end\n"),
++                  this->id_));
++    }
+ }
+ 
+ void
+@@ -556,12 +572,24 @@ TAO_Transport::make_idle ()
+                   this->id ()));
+     }
+ 
+-  return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
++  int const result = this->transport_cache_manager ().make_idle (this->cache_map_entry_);
++  if (result == 0)
++    {
++      this->schedule_idle_timer ();
++    }
++  return result;
+ }
+ 
+ int
+ TAO_Transport::update_transport ()
+ {
++  if (TAO_debug_level > 3)
++    {
++      TAOLIB_DEBUG ((LM_DEBUG,
++                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::update_transport\n"),
++                  this->id ()));
++    }
++
+   return this->transport_cache_manager ().update_entry (this->cache_map_entry_);
+ }
+ 
+@@ -861,7 +889,7 @@ TAO_Transport::schedule_output_i ()
+   ACE_Event_Handler * const eh = this->event_handler_i ();
+   ACE_Reactor * const reactor = eh->reactor ();
+ 
+-  if (reactor == nullptr)
++  if (!reactor)
+     {
+       if (TAO_debug_level > 1)
+         {
+@@ -949,23 +977,63 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
+       // pending.
+       this->reset_flush_timer ();
+ 
+-      TAO_Flushing_Strategy *flushing_strategy =
+-        this->orb_core ()->flushing_strategy ();
++      TAO_Flushing_Strategy *flushing_strategy = this->orb_core ()->flushing_strategy ();
+       int const result = flushing_strategy->schedule_output (this);
+       if (result == TAO_Flushing_Strategy::MUST_FLUSH)
+         {
+           typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+           TAO_REVERSE_LOCK reverse (*this->handler_lock_);
+           ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
+-          if (flushing_strategy->flush_transport (this, nullptr) == -1) {
+-            return -1;
+-          }
++          if (flushing_strategy->flush_transport (this, nullptr) == -1)
++            {
++              return -1;
++            }
+         }
+     }
+ 
+   return 0;
+ }
+ 
++int
++TAO_Transport::handle_idle_timeout (const ACE_Time_Value & /* current_time */, const void */*act*/)
++{
++  if (TAO_debug_level > 6)
++    {
++      TAOLIB_DEBUG ((LM_DEBUG,
++         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
++         ACE_TEXT ("idle timer expired, closing transport\n"),
++         this->id ()));
++    }
++
++  // Timer has expired, so setting the idle timer id back to -1
++  this->idle_timer_id_ = -1;
++
++  if (this->transport_cache_manager ().purge_entry_when_purgable (this->cache_map_entry_) == -1)
++    {
++      if (TAO_debug_level > 6)
++        TAOLIB_DEBUG ((LM_DEBUG,
++            ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
++            ACE_TEXT ("idle_timeout, transport is not purgable, don't close it, reschedule it\n"),
++            this->id ()));
++
++      this->schedule_idle_timer ();
++    }
++  else
++    {
++      if (TAO_debug_level > 6)
++        TAOLIB_DEBUG ((LM_DEBUG,
++            ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_idle_timeout, ")
++            ACE_TEXT ("idle_timeout, transport purged due to idle timeout\n"),
++            this->id ()));
++
++      // Close the underlying socket.
++      // close_connection() is safe to call from the reactor thread.
++      (void) this->close_connection ();
++    }
++
++  return 0;
++}
++
+ TAO_Transport::Drain_Result
+ TAO_Transport::drain_queue (TAO::Transport::Drain_Constraints const & dc)
+ {

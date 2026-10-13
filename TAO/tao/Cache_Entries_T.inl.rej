@@ -1,0 +1,11 @@
+--- TAO/tao/Cache_Entries_T.inl
++++ TAO/tao/Cache_Entries_T.inl
+@@ -8,7 +8,7 @@ namespace TAO
+ {
+   template <typename TRANSPORT_TYPE> ACE_INLINE
+   Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T ()
+-    : transport_ (0),
++    : transport_ (nullptr),
+       recycle_state_ (ENTRY_UNKNOWN),
+       is_connected_ (false)
+   {

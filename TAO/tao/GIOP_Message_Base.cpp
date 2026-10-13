@@ -1338,7 +1338,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     {
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %u\n"),
+                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %B\n"),
                     transport->id ()));
     }
 
@@ -1440,7 +1440,7 @@ TAO_GIOP_Message_Base::
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
-           ACE_TEXT ("(%P|%t) error closing connection %u, errno = %d\n"),
+           ACE_TEXT ("(%P|%t) error closing connection %B, errno = %d\n"),
            transport->id (), ACE_ERRNO_GET));
     }
 
@@ -1449,7 +1449,7 @@ TAO_GIOP_Message_Base::
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) shut down Transport[%d]\n"),
+          ACE_TEXT ("(%P|%t) shut down Transport[%B]\n"),
           transport_id));
     }
 }

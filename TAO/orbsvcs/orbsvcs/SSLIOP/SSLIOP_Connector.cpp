@@ -498,7 +498,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       if (TAO_debug_level > 2)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
-                    ACE_TEXT ("got existing transport[%d]\n"),
+                    ACE_TEXT ("got existing transport[%B]\n"),
                     transport->id ()));
 
       // When the transport is not connected wait for completion
@@ -703,7 +703,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
           if (TAO_debug_level > 2)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, "
-                        "new SSL connection to port %d on transport[%d]\n",
+                        "new SSL connection to port %d on transport[%B]\n",
                         remote_address.get_port_number (),
                         svc_handler->peer ().get_handle ()));
 
@@ -751,7 +751,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
               if (TAO_debug_level > 0)
                 ORBSVCS_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - SSLIOP_Connector [%d]::ssliop_connect, "
+                            "TAO (%P|%t) - SSLIOP_Connector [%B]::ssliop_connect, "
                             "could not register the transport "
                             "in the reactor.\n",
                             transport->id ()));
