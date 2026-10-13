@@ -95,7 +95,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (1);
   ok = expect_open (partial, true) && expect_open (fragmented, true) && ok;
   ACE_OS::sleep (4);
-  ok = expect_open (partial, false) && expect_open (fragmented, false) && ok;
+  ok = expect_close_connection (partial)
+    && expect_close_connection (fragmented)
+    && expect_open (partial, false)
+    && expect_open (fragmented, false) && ok;
   idle.close ();
   partial.close ();
   fragmented.close ();
