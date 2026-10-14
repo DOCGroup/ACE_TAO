@@ -33,7 +33,7 @@ void
 TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_, BOUND));
@@ -112,7 +112,7 @@ void
 TAO::Inout_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_, BOUND));
@@ -146,7 +146,7 @@ void
 TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_, BOUND));
@@ -180,7 +180,7 @@ void
 TAO::Ret_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_.in (), BOUND));
