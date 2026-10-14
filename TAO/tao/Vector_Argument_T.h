@@ -157,17 +157,16 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Vector_Arg_Traits_T
   {
-    typedef T                                           ret_type;
-    typedef T const &                                   in_type;
-    typedef T &                                         inout_type;
-    typedef T &                                         out_type;
+    using ret_type = T;
+    using in_type = T const &;
+    using inout_type = T &;
+    using out_type = T &;
 
-    typedef In_Vector_Argument_T<T, Insert_Policy>    in_arg_val;
-    typedef In_Vector_Clonable_Argument_T<T, Insert_Policy>
-                                                        in_clonable_arg_val;
-    typedef Inout_Vector_Argument_T<T, Insert_Policy> inout_arg_val;
-    typedef Out_Vector_Argument_T<T, Insert_Policy>   out_arg_val;
-    typedef Ret_Vector_Argument_T<T, Insert_Policy>   ret_val;
+    using in_arg_val = In_Vector_Argument_T<T, Insert_Policy>;
+    using in_clonable_arg_val = In_Vector_Clonable_Argument_T<T, Insert_Policy>;
+    using inout_arg_val = Inout_Vector_Argument_T<T, Insert_Policy>;
+    using out_arg_val = Out_Vector_Argument_T<T, Insert_Policy>;
+    using ret_val = Ret_Vector_Argument_T<T, Insert_Policy>;
   };
 }
 

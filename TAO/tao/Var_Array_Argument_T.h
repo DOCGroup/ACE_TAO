@@ -153,24 +153,16 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Var_Array_Arg_Traits_T
   {
-    typedef typename T_forany::_slice_type *            ret_type;
-    typedef const typename T_forany::_array_type        in_type;
-    typedef typename T_forany::_array_type              inout_type;
-    typedef T_out                                       out_type;
+    using ret_type = typename T_forany::_slice_type *;
+    using in_type = typename T_forany::_array_type const;
+    using inout_type = typename T_forany::_array_type;
+    using out_type = T_out;
 
-    typedef In_Var_Array_Argument_T<T_forany,
-                                    Insert_Policy>      in_arg_val;
-    typedef In_Var_Array_Clonable_Argument_T<T_forany,
-                                             Insert_Policy>
-                                                        in_clonable_arg_val;
-    typedef Inout_Var_Array_Argument_T<T_forany,
-                                       Insert_Policy>   inout_arg_val;
-    typedef Out_Var_Array_Argument_T<T_out,
-                                     T_forany,
-                                     Insert_Policy>     out_arg_val;
-    typedef Ret_Var_Array_Argument_T<typename T_out::_var_type,
-                                     T_forany,
-                                     Insert_Policy>     ret_val;
+    using in_arg_val = In_Var_Array_Argument_T<T_forany, Insert_Policy>;
+    using in_clonable_arg_val = In_Var_Array_Clonable_Argument_T<T_forany, Insert_Policy>;
+    using inout_arg_val = Inout_Var_Array_Argument_T<T_forany, Insert_Policy>;
+    using out_arg_val = Out_Var_Array_Argument_T<T_out, T_forany, Insert_Policy>;
+    using ret_val = Ret_Var_Array_Argument_T<typename T_out::_var_type, T_forany, Insert_Policy>;
   };
 }
 

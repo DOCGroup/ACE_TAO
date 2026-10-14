@@ -166,19 +166,18 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Special_Basic_Arg_Traits_T
   {
-    typedef T                                               ret_type;
-    typedef T                                               in_type;
-    typedef T &                                             inout_type;
-    typedef T &                                             out_type;
+    using ret_type = T;
+    using in_type = T;
+    using inout_type = T &;
+    using out_type = T &;
 
-    typedef In_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>      in_arg_val;
-    typedef In_Special_Basic_Clonable_Argument_T<T,to_T,from_T,Insert_Policy>
-                                                                          in_clonable_arg_val;
-    typedef Inout_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>   inout_arg_val;
-    typedef Out_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>     out_arg_val;
-    typedef Ret_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>     ret_val;
+    using in_arg_val = In_Special_Basic_Argument_T<T, to_T, from_T, Insert_Policy>;
+    using in_clonable_arg_val = In_Special_Basic_Clonable_Argument_T<T, to_T, from_T, Insert_Policy>;
+    using inout_arg_val = Inout_Special_Basic_Argument_T<T, to_T, from_T, Insert_Policy>;
+    using out_arg_val = Out_Special_Basic_Argument_T<T, to_T, from_T, Insert_Policy>;
+    using ret_val = Ret_Special_Basic_Argument_T<T, to_T, from_T, Insert_Policy>;
 
-    typedef Special_Basic_Tag                               idl_tag;
+    using idl_tag = Special_Basic_Tag;
   };
 }
 
