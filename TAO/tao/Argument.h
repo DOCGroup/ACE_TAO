@@ -98,7 +98,7 @@ namespace TAO
     virtual CORBA::ParameterMode mode () const;
   };
 #else
-  typedef Argument InArgument;
+  using InArgument = Argument;
 #endif
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -108,7 +108,7 @@ namespace TAO
     virtual CORBA::ParameterMode mode () const;
   };
 #else
-  typedef Argument InoutArgument;
+  using InoutArgument = Argument;
 #endif
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -118,7 +118,7 @@ namespace TAO
     virtual CORBA::ParameterMode mode () const;
   };
 #else
-  typedef Argument OutArgument;
+  using OutArgument = Argument;
 #endif
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -128,7 +128,7 @@ namespace TAO
     virtual CORBA::ParameterMode mode () const;
   };
 #else
-  typedef Argument RetArgument;
+  using RetArgument = Argument;
 #endif
 
   class TAO_Export Void_Return_Argument : public RetArgument
