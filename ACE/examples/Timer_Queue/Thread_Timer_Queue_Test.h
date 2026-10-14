@@ -30,20 +30,12 @@
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "Driver.h"
 
-// These typedefs ensure that we use the minimal amount of locking
+// These aliases ensure that we use the minimal amount of locking
 // necessary.
-typedef ACE_Event_Handler_Handle_Timeout_Upcall
-        Upcall;
-typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                         Upcall,
-                         ACE_Null_Mutex>
-        Timer_Heap;
-typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-                                  Upcall,
-                                  ACE_Null_Mutex>
-        Timer_Heap_Iterator;
-typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
-        Thread_Timer_Queue;
+using Upcall = ACE_Event_Handler_Handle_Timeout_Upcall;
+using Timer_Heap = ACE_Timer_Heap_T<ACE_Event_Handler *, Upcall, ACE_Null_Mutex>;
+using Timer_Heap_Iterator = ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, Upcall, ACE_Null_Mutex>;
+using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
 
 // Forward declaration.
 class Thread_Timer_Queue_Test_Driver;
@@ -60,7 +52,7 @@ class Thread_Timer_Queue_Test_Driver;
 class Input_Task : public ACE_Task_Base
 {
 public:
-  typedef int (Input_Task::*ACTION) (void *);
+  using ACTION = int (Input_Task::*) (void *);
 
   Input_Task (Thread_Timer_Queue *queue,
               Thread_Timer_Queue_Test_Driver &timer_queue_driver);
