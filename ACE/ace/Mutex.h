@@ -160,7 +160,7 @@ public:
 # define ACE_MUTEX_USE_PROCESS_LOCK
 # define ACE_MUTEX_PROCESS_LOCK_IS_SEMA
   ACE_sema_t process_sema_;
-  typedef ACE_sema_t Process_Lock;
+  using Process_Lock = ACE_sema_t;
 #elif defined ACE_HAS_PTHREADS
 # define ACE_MUTEX_USE_PROCESS_LOCK
 # define ACE_MUTEX_PROCESS_LOCK_IS_MUTEX

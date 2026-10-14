@@ -37,7 +37,7 @@
 # include /**/ <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef std::string ACE_IOStream_String;
+using ACE_IOStream_String = std::string;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
