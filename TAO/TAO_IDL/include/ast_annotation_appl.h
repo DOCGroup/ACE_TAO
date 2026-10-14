@@ -32,9 +32,9 @@ public:
     Identifier *id;
     AST_Expression *expr;
     bool used;
-    typedef ACE_Unbounded_Stack_Iterator<Param*> Iterator;
+    using Iterator = ACE_Unbounded_Stack_Iterator<Param*>;
   };
-  typedef ACE_Unbounded_Stack<Param*> Params;
+  using Params = ACE_Unbounded_Stack<Param*>;
   ///}
 
   /// Delete Annotation Parameters

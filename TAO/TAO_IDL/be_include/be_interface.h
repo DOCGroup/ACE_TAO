@@ -37,9 +37,9 @@ class be_interface : public virtual AST_Interface,
 {
 public:
   // Used to pass functions to the template method.
-  typedef int (*tao_code_emitter) (be_interface *,
-                                   be_interface *,
-                                   TAO_OutStream *);
+  using tao_code_emitter = int (*) (be_interface *,
+                                    be_interface *,
+                                    TAO_OutStream *);
 
   be_interface (UTL_ScopedName *n,
                 AST_Type **ih,
