@@ -25,20 +25,20 @@
 
 #include "ace/Monitor_Control/Auto_Update_Starter.h"
 
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::CPU_Load_Monitor
-  CPU_LOAD_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Memory_Usage_Monitor
-  MEMORY_USAGE_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Num_Threads_Monitor
-  NUM_THREADS_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Sent_Monitor
-  BYTES_SENT_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Sent_Monitor
-  PACKETS_SENT_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Received_Monitor
-  BYTES_RECEIVED_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Received_Monitor
-  PACKETS_RECEIVED_MONITOR;
+using CPU_LOAD_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::CPU_Load_Monitor;
+using MEMORY_USAGE_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Memory_Usage_Monitor;
+using NUM_THREADS_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Num_Threads_Monitor;
+using BYTES_SENT_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Sent_Monitor;
+using PACKETS_SENT_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Sent_Monitor;
+using BYTES_RECEIVED_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Received_Monitor;
+using PACKETS_RECEIVED_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Received_Monitor;
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 

@@ -51,10 +51,8 @@ namespace ACE
       virtual void clear ();
 
     private:
-      typedef ACE_Unbounded_Queue<Monitor_Base *>
-        MEMBERS;
-      typedef ACE_Unbounded_Queue_Const_Iterator<Monitor_Base *>
-        MEMBERS_ITERATOR;
+      using MEMBERS = ACE_Unbounded_Queue<Monitor_Base *>;
+      using MEMBERS_ITERATOR = ACE_Unbounded_Queue_Const_Iterator<Monitor_Base *>;
 
       MEMBERS members_;
     };

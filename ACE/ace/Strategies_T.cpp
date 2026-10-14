@@ -1190,12 +1190,12 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
   REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
   CONNECTION_MAP_ENTRY *&entry)
 {
-  typedef ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
-                                       SVC_HANDLER *,
-                                       ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                       ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                       ACE_Null_Mutex>
-    CONNECTION_MAP_BUCKET_ITERATOR;
+  using CONNECTION_MAP_BUCKET_ITERATOR =
+    ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+                                 SVC_HANDLER *,
+                                 ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                 ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                 ACE_Null_Mutex>;
 
   CONNECTION_MAP_BUCKET_ITERATOR iterator (this->connection_map_,
                                            search_addr);
