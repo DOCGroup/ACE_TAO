@@ -392,7 +392,7 @@ public:
   friend class ACE_Thread_Descriptor;
 
 #if !defined (__GNUG__)
-  typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
+  using ACE_THR_MEMBER_FUNC = int (ACE_Thread_Manager::*) (ACE_Thread_Descriptor *, int);
 #endif /* !__GNUG__ */
 
   /// These are the various states a thread managed by the
@@ -1264,7 +1264,7 @@ private:
 #if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 #define ACE_THREAD_MANAGER_SINGLETON_DEFINE \
         ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
-typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SINGLETON;
+using ACE_THREAD_MANAGER_SINGLETON = ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
 #endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

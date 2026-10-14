@@ -50,8 +50,8 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Add useful typedefs to simplify the following code.
-typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);
-typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
+using ACE_FDS_PTMF = void (ACE_Handle_Set::*) (ACE_HANDLE);
+using ACE_EH_PTMF = int (ACE_Event_Handler::*) (ACE_HANDLE);
 
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
@@ -282,8 +282,8 @@ class ACE_Export ACE_Select_Reactor_Handler_Repository
 public:
   friend class ACE_Select_Reactor_Handler_Repository_Iterator;
 
-  typedef ACE_HANDLE          key_type;
-  typedef ACE_Event_Handler * value_type;
+  using key_type = ACE_HANDLE;
+  using value_type = ACE_Event_Handler *;
 
   // = The mapping from <HANDLES> to <Event_Handlers>.
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
@@ -293,24 +293,24 @@ public:
    * as a void * we can't directly index into this array.  Therefore,
    * we must explicitly map @c ACE_HANDLE to @c ACE_Event_Handler.
    */
-  typedef ACE_Hash_Map_Manager_Ex<key_type,
-                                  value_type,
-                                  ACE_Hash<key_type>,
-                                  std::equal_to<key_type>,
-                                  ACE_Null_Mutex> map_type;
+  using map_type = ACE_Hash_Map_Manager_Ex<key_type,
+                                           value_type,
+                                           ACE_Hash<key_type>,
+                                           std::equal_to<key_type>,
+                                           ACE_Null_Mutex>;
 
-  typedef map_type::size_type max_handlep1_type;
+  using max_handlep1_type = map_type::size_type;
 #else
   /**
    * The UNIX version implements this via a dynamically allocated
    * array of @c ACE_Event_Handler* that is indexed directly using
    * the @c ACE_HANDLE value.
    */
-  typedef ACE_Array_Base<value_type> map_type;
-  typedef ACE_HANDLE max_handlep1_type;
+  using map_type = ACE_Array_Base<value_type>;
+  using max_handlep1_type = ACE_HANDLE;
 #endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
-  typedef map_type::size_type size_type;
+  using size_type = map_type::size_type;
 
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
