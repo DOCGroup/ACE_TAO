@@ -20,8 +20,8 @@ namespace details
 template<typename T, class ref_traits, CORBA::ULong MAX, bool dummy>
 struct bounded_valuetype_allocation_traits
 {
-  typedef T value_type;
-  typedef ref_traits valuetype_traits;
+  using value_type = T;
+  using valuetype_traits = ref_traits;
 
   inline static CORBA::ULong default_maximum()
   {
