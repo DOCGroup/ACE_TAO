@@ -1,7 +1,9 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/CDR_Base.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
 // Probe without consuming anything. A timeout means the peer is still open.
@@ -16,6 +18,25 @@ bool expect_open (ACE_SOCK_Stream &stream, bool open)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) socket open=%d, expected=%d, recv=%d errno=%d\n"),
                   actual, open, result, errno));
+      return false;
+    }
+  return true;
+}
+
+bool expect_close_connection (ACE_SOCK_Stream &stream)
+{
+  unsigned char message[12];
+  ACE_Time_Value timeout (5);
+  ssize_t const result = stream.recv_n (message, sizeof message, &timeout);
+  const unsigned char expected[] = {
+    'G', 'I', 'O', 'P', 1, 2, ACE_CDR_BYTE_ORDER, 5, 0, 0, 0, 0
+  };
+  if (result != static_cast<ssize_t> (sizeof expected)
+      || ACE_OS::memcmp (message, expected, sizeof expected) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) expected GIOP::CloseConnection, recv=%d errno=%d\n"),
+                  result, errno));
       return false;
     }
   return true;
@@ -57,7 +78,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (1);
   bool ok = expect_open (idle, true);
   ACE_OS::sleep (4);
-  ok = expect_open (idle, false)
+  ok = expect_close_connection (idle)
     && expect_open (partial, true)
     && expect_open (fragmented, true) && ok;
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) idle/partial/fragment scan checks: %d\n"), ok));
@@ -74,7 +95,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (1);
   ok = expect_open (partial, true) && expect_open (fragmented, true) && ok;
   ACE_OS::sleep (4);
-  ok = expect_open (partial, false) && expect_open (fragmented, false) && ok;
+  ok = expect_close_connection (partial)
+    && expect_close_connection (fragmented)
+    && expect_open (partial, false)
+    && expect_open (fragmented, false) && ok;
   idle.close ();
   partial.close ();
   fragmented.close ();

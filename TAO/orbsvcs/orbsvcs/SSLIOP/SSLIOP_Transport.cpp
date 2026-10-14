@@ -87,7 +87,7 @@ TAO::SSLIOP::Transport::recv (char *buf,
   if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport[%B]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
                   errno));
@@ -157,7 +157,7 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::send_message, ")
-                    ACE_TEXT ("closing transport %d after fault %p\n"),
+                    ACE_TEXT ("closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
