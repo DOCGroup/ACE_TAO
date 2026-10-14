@@ -154,17 +154,16 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Var_Size_Arg_Traits_T
   {
-    typedef T *                                         ret_type;
-    typedef T const &                                   in_type;
-    typedef T &                                         inout_type;
-    typedef typename T::_out_type                       out_type;
+    using ret_type = T *;
+    using in_type = T const &;
+    using inout_type = T &;
+    using out_type = typename T::_out_type;
 
-    typedef In_Var_Size_Argument_T<T, Insert_Policy>    in_arg_val;
-    typedef In_Var_Size_Clonable_Argument_T<T, Insert_Policy>
-                                                        in_clonable_arg_val;
-    typedef Inout_Var_Size_Argument_T<T, Insert_Policy> inout_arg_val;
-    typedef Out_Var_Size_Argument_T<T, Insert_Policy>   out_arg_val;
-    typedef Ret_Var_Size_Argument_T<T, Insert_Policy>   ret_val;
+    using in_arg_val = In_Var_Size_Argument_T<T, Insert_Policy>;
+    using in_clonable_arg_val = In_Var_Size_Clonable_Argument_T<T, Insert_Policy>;
+    using inout_arg_val = Inout_Var_Size_Argument_T<T, Insert_Policy>;
+    using out_arg_val = Out_Var_Size_Argument_T<T, Insert_Policy>;
+    using ret_val = Ret_Var_Size_Argument_T<T, Insert_Policy>;
   };
 }
 
