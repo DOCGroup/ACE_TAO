@@ -80,8 +80,7 @@ protected:
     (const ACE_Asynch_Write_Stream::Result &result);
 };
 
-typedef ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex>
-        OUTPUT_HANDLER;
+using OUTPUT_HANDLER = ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex>;
 
 
 class AIO_CLD_Connector
@@ -133,7 +132,6 @@ protected:
   SSL *ssl_;
 };
 
-typedef ACE_Unmanaged_Singleton<AIO_CLD_Connector, ACE_Null_Mutex>
-        CLD_CONNECTOR;
+using CLD_CONNECTOR = ACE_Unmanaged_Singleton<AIO_CLD_Connector, ACE_Null_Mutex>;
 
 #endif /* _AIO_CLIENT_LOGGING_DAEMON_H */
