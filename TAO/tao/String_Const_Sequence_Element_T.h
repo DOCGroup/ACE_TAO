@@ -21,11 +21,11 @@ template<typename traits>
 class string_const_sequence_element
 {
 public:
-  typedef typename traits::char_type character_type;
-  typedef character_type * value_type;
-  typedef character_type const * const_value_type;
-  typedef typename traits::string_var string_var;
-  typedef typename traits::string_mgr string_mgr;
+  using character_type = typename traits::char_type;
+  using value_type = character_type *;
+  using const_value_type = character_type const *;
+  using string_var = typename traits::string_var;
+  using string_mgr = typename traits::string_mgr;
 
 public:
   string_const_sequence_element(value_type const & e, CORBA::Boolean release)

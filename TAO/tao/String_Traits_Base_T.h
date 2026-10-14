@@ -35,12 +35,12 @@ struct string_traits_base
 template<>
 struct string_traits_base<char>
 {
-  typedef char char_type;
-  typedef TAO::String_var <char_type> string_var;
-  typedef TAO::String_out <char_type> string_out;
-  typedef TAO::String_Manager_T <char_type> string_mgr;
-  typedef ACE_InputCDR::to_string to_type;
-  typedef ACE_OutputCDR::from_string from_type;
+  using char_type = char;
+  using string_var = TAO::String_var<char_type>;
+  using string_out = TAO::String_out<char_type>;
+  using string_mgr = TAO::String_Manager_T<char_type>;
+  using to_type = ACE_InputCDR::to_string;
+  using from_type = ACE_OutputCDR::from_string;
 
   inline static char_type * default_initializer()
   {
@@ -66,12 +66,12 @@ struct string_traits_base<char>
 template<>
 struct string_traits_base<CORBA::WChar>
 {
-  typedef CORBA::WChar char_type;
-  typedef TAO::String_var <char_type> string_var;
-  typedef TAO::String_out <char_type> string_out;
-  typedef TAO::String_Manager_T <char_type> string_mgr;
-  typedef ACE_InputCDR::to_wstring to_type;
-  typedef ACE_OutputCDR::from_wstring from_type;
+  using char_type = CORBA::WChar;
+  using string_var = TAO::String_var<char_type>;
+  using string_out = TAO::String_out<char_type>;
+  using string_mgr = TAO::String_Manager_T<char_type>;
+  using to_type = ACE_InputCDR::to_wstring;
+  using from_type = ACE_OutputCDR::from_wstring;
 
   inline static char_type * default_initializer()
   {
