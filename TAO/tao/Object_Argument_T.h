@@ -163,24 +163,16 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Object_Arg_Traits_T
   {
-    typedef T_ptr                                         ret_type;
-    typedef T_ptr                                         in_type;
-    typedef T_ptr &                                       inout_type;
-    typedef T_out                                         out_type;
+    using ret_type = T_ptr;
+    using in_type = T_ptr;
+    using inout_type = T_ptr &;
+    using out_type = T_out;
 
-    typedef In_Object_Argument_T<T_ptr,
-                                 Insert_Policy>           in_arg_val;
-    typedef In_Object_Clonable_Argument_T<T_ptr,
-                                          Insert_Policy>  in_clonable_arg_val;
-    typedef Inout_Object_Argument_T<T_ptr,
-                                    T_traits,
-                                    Insert_Policy>        inout_arg_val;
-    typedef Out_Object_Argument_T<T_ptr,
-                                  T_out,
-                                  Insert_Policy>          out_arg_val;
-    typedef Ret_Object_Argument_T<T_ptr,
-                                  T_var,
-                                  Insert_Policy>          ret_val;
+    using in_arg_val = In_Object_Argument_T<T_ptr, Insert_Policy>;
+    using in_clonable_arg_val = In_Object_Clonable_Argument_T<T_ptr, Insert_Policy>;
+    using inout_arg_val = Inout_Object_Argument_T<T_ptr, T_traits, Insert_Policy>;
+    using out_arg_val = Out_Object_Argument_T<T_ptr, T_out, Insert_Policy>;
+    using ret_val = Ret_Object_Argument_T<T_ptr, T_var, Insert_Policy>;
   };
 }
 
