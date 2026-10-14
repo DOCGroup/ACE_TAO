@@ -21,16 +21,16 @@ template<class T, CORBA::ULong MAX, class Tag=int>
 class bounded_value_sequence
 {
 public:
-  typedef T value_type;
-  typedef T element_type;
-  typedef T const const_value_type;
-  typedef value_type & subscript_type;
-  typedef value_type const & const_subscript_type;
-  typedef ::CORBA::ULong size_type;
+  using value_type = T;
+  using element_type = T;
+  using const_value_type = T const;
+  using subscript_type = value_type &;
+  using const_subscript_type = value_type const &;
+  using size_type = ::CORBA::ULong;
 
-  typedef details::bounded_value_allocation_traits<value_type,MAX,true> allocation_traits;
-  typedef details::value_traits<value_type,true> element_traits;
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
+  using allocation_traits = details::bounded_value_allocation_traits<value_type, MAX, true>;
+  using element_traits = details::value_traits<value_type, true>;
+  using implementation_type = details::generic_sequence<value_type, allocation_traits, element_traits>;
 
   inline bounded_value_sequence()
     : impl_()
