@@ -180,7 +180,7 @@ protected:
     QApplication *qapp_ ;
 
     /// Typedef of a map.
-    typedef ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex> MAP;
+    using MAP = ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
 
     /// A notifier for a read
     MAP read_notifier_;

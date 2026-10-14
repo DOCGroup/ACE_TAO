@@ -75,7 +75,7 @@ int TextListenerAcceptor::answer_call ()
 
 CallerId *TextListenerAcceptor::retrieve_callerId ()
 {
-  return 0;
+  return nullptr;
 }
 
 int TextListenerAcceptor::play_message (ACE_FILE_Addr &addr)
@@ -87,7 +87,7 @@ int TextListenerAcceptor::play_message (ACE_FILE_Addr &addr)
 MessageType *TextListenerAcceptor::record_message (ACE_FILE_Addr &addr)
 {
   ACE_UNUSED_ARG(addr);
-  return 0;
+  return nullptr;
 }
 
 
@@ -98,7 +98,7 @@ TextListener::TextListener (TextListenerAcceptor *acceptor)
   ACE_TRACE ("TextListener ctor");
 
   ACE_NEW (this->command_stream_, CommandStream (&(this->peer_)));
-  this->command_stream_->open (0);
+  this->command_stream_->open (nullptr);
 }
 // Listing 01
 
@@ -181,7 +181,7 @@ MessageType *TextListener::record_message (ACE_FILE_Addr &addr)
   c->extra_data_ = &addr;
   c = this->command_stream_->execute (c);
   if (c->numeric_result_ == -1)
-    return 0;
+    return nullptr;
 
   return new MessageType (MessageType::RAWTEXT, addr);
 }

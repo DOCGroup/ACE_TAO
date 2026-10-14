@@ -23,7 +23,7 @@ protected:
   virtual ~Logging_Acceptor () {}; // No-op destructor.
 
 public:
-  typedef ACE_INET_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_INET_Addr;
 
   // Simple constructor.
   Logging_Acceptor (ACE_Reactor *r = ACE_Reactor::instance ())

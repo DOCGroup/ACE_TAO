@@ -13,11 +13,11 @@ class Workers : public ACE_Task<ACE_MT_SYNCH>
 public:
   Workers () = default;
 
-  virtual int svc ()
+  int svc () override
   {
     while (1)
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         if (this->getq (mb) == -1)
           {
             ACE_DEBUG ((LM_INFO,
@@ -62,7 +62,7 @@ public:
     ACE_TRACE ("Manager::Manager");
   }
 
-  int svc ()
+  int svc () override
   {
     ACE_TRACE ("Manager::svc");
 
@@ -74,9 +74,9 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
-        tv += ACE_OS::time (0);
+        tv += ACE_OS::time (nullptr);
 
         // Get a message request.
         if (this->getq (mb, &tv) < 0)
@@ -115,7 +115,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   for (int i = 0; i < 30; i++)
     {
       ACE_NEW_RETURN

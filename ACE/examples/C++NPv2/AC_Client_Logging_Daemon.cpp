@@ -35,7 +35,7 @@ class AC_CLD_Acceptor
   : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR> {
 public:
   // Constructor.
-  AC_CLD_Acceptor (AC_Output_Handler *handler = 0)
+  AC_CLD_Acceptor (AC_Output_Handler *handler = nullptr)
     : output_handler_ (handler), input_handler_ (handler) {}
 
 protected:
@@ -63,8 +63,8 @@ public:
           PARENT;
 
   // Constructor.
-  AC_CLD_Connector (AC_Output_Handler *handler = 0)
-    : handler_ (handler), ssl_ctx_ (0), ssl_ (0) {}
+  AC_CLD_Connector (AC_Output_Handler *handler = nullptr)
+    : handler_ (handler), ssl_ctx_ (nullptr), ssl_ (nullptr) {}
 
   // Destructor frees the SSL resources.
   virtual ~AC_CLD_Connector () {
@@ -192,7 +192,7 @@ int AC_Output_Handler::svc () {
       timeout = ACE_OS::gettimeofday ();
       timeout += FLUSH_TIMEOUT;
     }
-    ACE_Message_Block *mblk = 0;
+    ACE_Message_Block *mblk = nullptr;
     if (getq (mblk, &timeout) == -1) {
       if (errno == ESHUTDOWN) {
         if (connector_->reconnect () == -1) break;
@@ -237,7 +237,7 @@ int AC_Output_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
     }
 
   while (iov_size > 0) {
-    chunk[--iov_size]->release (); chunk[iov_size] = 0;
+    chunk[--iov_size]->release (); chunk[iov_size] = nullptr;
   }
   count = iov_size;
   return result;
@@ -255,7 +255,7 @@ int AC_Input_Handler::open (void *) {
 }
 
 int AC_Input_Handler::close (u_long) {
-  ACE_Message_Block *shutdown_message = 0;
+  ACE_Message_Block *shutdown_message = nullptr;
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
@@ -267,7 +267,7 @@ int AC_Input_Handler::close (u_long) {
 }
 
 int AC_Input_Handler::handle_input (ACE_HANDLE handle) {
-  ACE_Message_Block *mblk = 0;
+  ACE_Message_Block *mblk = nullptr;
   Logging_Handler logging_handler (handle);
 
   if (logging_handler.recv_log_record (mblk) != -1)
@@ -319,7 +319,7 @@ int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
   if (PARENT::open (r, flags) != 0) return -1;
   OpenSSL_add_ssl_algorithms ();
   ssl_ctx_ = SSL_CTX_new (SSLv23_client_method ());
-  if (ssl_ctx_ == 0) return -1;
+  if (ssl_ctx_ == nullptr) return -1;
 
   if (SSL_CTX_use_certificate_file (ssl_ctx_,
                                     CLD_CERTIFICATE_FILENAME,
@@ -331,7 +331,7 @@ int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
     return -1;
 
   ssl_ = SSL_new (ssl_ctx_);
-  if (ssl_ == 0) return -1;
+  if (ssl_ == nullptr) return -1;
   return 0;
 }
 
@@ -353,7 +353,7 @@ int AC_CLD_Connector::connect_svc_handler
   SSL_set_fd (ssl_, svc_handler->get_handle ());
 #endif /* ACE_WIN32 */
 
-  SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
+  SSL_set_verify (ssl_, SSL_VERIFY_PEER, nullptr);
 
   if (SSL_connect (ssl_) == -1
       || SSL_shutdown (ssl_) == -1) return -1;

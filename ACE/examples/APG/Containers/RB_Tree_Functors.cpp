@@ -39,7 +39,7 @@ int Tree_Example::run ()
 {
   ACE_TRACE ("Tree_Example::run");
 
-  DataElement *d  = 0;
+  DataElement *d  = nullptr;
   for (int i = 0; i < 100; i++)
     {
       ACE_NEW_RETURN (d, DataElement (i), -1);
@@ -53,7 +53,7 @@ int Tree_Example::run ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using find:\n")));
   for (int j = 0; j < 100; j++)
     {
-      DataElement* d = 0;
+      DataElement* d = nullptr;
       int result = tree_.find (j, d);
       if (result != 0)
         {
@@ -111,13 +111,13 @@ int Tree_Example::remove_all ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing elements\n")));
   for (int i = 0; i < 100; i++)
     {
-      DataElement * d = 0;
+      DataElement * d = nullptr;
       int result = tree_.unbind (i, d);
       if (result != 0)
         {
           ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Unbind"), -1);
         }
-      ACE_ASSERT (d != 0);
+      ACE_ASSERT (d != nullptr);
       delete d;
     }
 

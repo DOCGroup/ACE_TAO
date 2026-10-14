@@ -367,7 +367,7 @@ namespace ACE_TMCast
 
   private:
     // FUZZ: disable check_for_ACE_Guard
-    typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+    using AutoLock = ACE_Guard<ACE_Thread_Mutex>;
     // FUZZ: enable check_for_ACE_Guard
 
     // bool trace_;

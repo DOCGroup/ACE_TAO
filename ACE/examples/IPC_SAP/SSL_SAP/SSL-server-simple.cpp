@@ -37,7 +37,7 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = 0;
+  char *request = nullptr;
 
   // Read data from client (terminate on error).
 
@@ -108,7 +108,7 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
       message_count++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   // Close new endpoint (listening endpoint stays open).
@@ -149,7 +149,7 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = 0;
+  char *request = nullptr;
 
   // Read data from client (terminate on error).
 
@@ -214,7 +214,7 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
       message_count++;
 
       delete [] request;
-      request = 0;
+      request = nullptr;
     }
 
   timer.stop ();

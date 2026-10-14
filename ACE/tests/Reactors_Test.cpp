@@ -22,7 +22,7 @@
 
 ACE_Thread_Manager *thr_mgr;
 
-static const int MAX_TASKS = 20;
+static constexpr int MAX_TASKS = 20;
 
 /**
  * @class Test_Task

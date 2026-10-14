@@ -30,7 +30,7 @@
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 using MALLOC = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Process_Mutex, ACE_PI_Control_Block>;
 #else
-typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
+using MALLOC = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")

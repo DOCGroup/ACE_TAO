@@ -51,7 +51,7 @@
 class Mem_Map_Stream
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
+  using Svc_Handler = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
   typedef ACE_Strategy_Connector<Svc_Handler,
                                ACE_SOCK_CONNECTOR>

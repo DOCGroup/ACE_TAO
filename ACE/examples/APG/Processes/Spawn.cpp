@@ -70,7 +70,7 @@ private:
 
  // Listing 2 code/ch10
   // prepare() is inherited from ACE_Process.
-  int prepare (ACE_Process_Options &options)
+  int prepare (ACE_Process_Options &options) override
   {
     ACE_TRACE ("Manager::prepare");
 
@@ -110,7 +110,7 @@ private:
   {
     ACE_TRACE ("Manager::setUserID");
     passwd* pw = ACE_OS::getpwnam ("nobody");
-    if (pw == 0)
+    if (pw == nullptr)
       return -1;
     options.seteuid (pw->pw_uid);
     return 0;

@@ -18,9 +18,9 @@ namespace ACE_TMCast
       */
     };
 
-    typedef unsigned short TransactionId;
+    using TransactionId = unsigned short;
 
-    typedef unsigned char  TransactionStatus;
+    using TransactionStatus = unsigned char;
 
     TransactionStatus const TS_BEGIN    = 1;
     TransactionStatus const TS_COMMIT   = 2;

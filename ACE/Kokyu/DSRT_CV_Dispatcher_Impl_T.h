@@ -61,8 +61,8 @@ namespace Kokyu
     int shutdown_i ();
 
   private:
-    typedef ACE_SYNCH_MUTEX cond_lock_t;
-    typedef ACE_SYNCH_CONDITION cond_t;
+    using cond_lock_t = ACE_SYNCH_MUTEX;
+    using cond_t = ACE_SYNCH_CONDITION;
 
     cond_lock_t run_cond_lock_;
     cond_t run_cond_;

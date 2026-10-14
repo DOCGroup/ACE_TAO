@@ -30,7 +30,7 @@
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // This length is used for the "big buffer" send/receive.
-static const size_t big_size = (BUFSIZ * 4);
+static constexpr size_t big_size = (BUFSIZ * 4);
 
 static void *
 client (void *arg)

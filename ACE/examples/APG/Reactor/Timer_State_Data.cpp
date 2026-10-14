@@ -57,7 +57,7 @@ public:
   }
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *arg)
+                      const void *arg) override
   {
     time_t epoch = ((timespec_t)current_time).tv_sec;
 
@@ -99,7 +99,7 @@ private:
 class SigintHandler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0)
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     if (signum == SIGINT)
       {

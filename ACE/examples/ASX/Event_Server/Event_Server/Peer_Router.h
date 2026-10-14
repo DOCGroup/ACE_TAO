@@ -14,7 +14,7 @@
 #include "ace/RW_Thread_Mutex.h"
 
 // Type of search key for CONSUMER_MAP
-typedef ACE_HANDLE ROUTING_KEY;
+using ROUTING_KEY = ACE_HANDLE;
 
 // Forward declarations.
 class Peer_Router;
@@ -139,7 +139,7 @@ protected:
   Peer_Router_Context *context () const;
   // Returns the routing context.
 
-  typedef ACE_Task<ACE_SYNCH> inherited;
+  using inherited = ACE_Task<ACE_SYNCH>;
   // Helpful typedef.
 
 private:

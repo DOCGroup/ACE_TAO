@@ -68,7 +68,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       starting_time_of_day = ACE_OS::gettimeofday ();
 
       // Wait for timeout
-      result = ACE_OS::select (ACE_Utils::truncate_cast<int> ((intptr_t)dummy_pipe.read_handle ()), dummy_handle_set, 0, 0, &timeout);
+      result = ACE_OS::select (ACE_Utils::truncate_cast<int> ((intptr_t)dummy_pipe.read_handle ()), dummy_handle_set, nullptr, nullptr, &timeout);
       ACE_ASSERT (result == 0);
 
       // Note the time after select

@@ -33,22 +33,22 @@ namespace XMLSchema
     {
     };
 
-    typedef Traverser<byte> byte;
-    typedef Traverser<unsignedByte> unsignedByte;
+    using byte = Traverser<byte>;
+    using unsignedByte = Traverser<unsignedByte>;
 
-    typedef Traverser<short_> short_;
-    typedef Traverser<unsignedShort> unsignedShort;
+    using short_ = Traverser<short_>;
+    using unsignedShort = Traverser<unsignedShort>;
 
-    typedef Traverser<int_> int_;
-    typedef Traverser<unsignedInt> unsignedInt;
+    using int_ = Traverser<int_>;
+    using unsignedInt = Traverser<unsignedInt>;
 
-    typedef Traverser<long_> long_;
-    typedef Traverser<unsignedLong> unsignedLong;
+    using long_ = Traverser<long_>;
+    using unsignedLong = Traverser<unsignedLong>;
 
-    typedef Traverser<boolean> boolean;
+    using boolean = Traverser<boolean>;
 
-    typedef Traverser<float_> float_;
-    typedef Traverser<double_> double_;
+    using float_ = Traverser<float_>;
+    using double_ = Traverser<double_>;
 
     template <typename C>
     struct string : Traverser<XMLSchema::string<C> >

@@ -18,9 +18,9 @@
 class CompletionCallBack: public ACE_Future_Observer<ACE_CString*>
 {
 public:
-  virtual void update (const ACE_Future<ACE_CString*> & future)
+  void update (const ACE_Future<ACE_CString*> & future) override
   {
-    ACE_CString *result = 0;
+    ACE_CString *result = nullptr;
 
     // Block for the result.
     future.get (result);
@@ -33,7 +33,7 @@ public:
 class LongWork : public ACE_Method_Request
 {
 public:
-  virtual int call ()
+  int call () override
   {
     ACE_TRACE ("LongWork::call");
     ACE_DEBUG
@@ -68,7 +68,7 @@ private:
 class Exit : public ACE_Method_Request
 {
 public:
-  virtual int call ()
+  int call () override
   {
     ACE_TRACE ("Exit::call");
     return -1;
@@ -99,13 +99,13 @@ public:
     return this->queue_.enqueue (req);
   }
 
-  virtual int svc ()
+  int svc () override
   {
     thread_id_ = ACE_Thread::self ();
     while (1)
       {
         ACE_Method_Request *request = this->queue_.dequeue();
-        if (request == 0)
+        if (request == nullptr)
           return -1;
 
         // Invoke the request
@@ -152,7 +152,7 @@ public:
     return this->queue_.enqueue (req);
   }
 
-  int svc ()
+  int svc () override
   {
     ACE_TRACE ("svc");
 
@@ -164,11 +164,11 @@ public:
     while (!done ())
       {
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
-        tv += ACE_OS::time (0);
+        tv += ACE_OS::time (nullptr);
 
         // Get the next message
         ACE_Method_Request *request = this->queue_.dequeue (&tv);
-        if (request == 0)
+        if (request == nullptr)
           {
             shut_down ();
             break;
@@ -186,7 +186,7 @@ public:
 
   int shut_down ();
 
-  virtual int return_to_work (Worker *worker)
+  int return_to_work (Worker *worker) override
   {
     ACE_GUARD_RETURN
       (ACE_Thread_Mutex, worker_mon, this->workers_lock_, -1);
@@ -202,12 +202,12 @@ private:
   Worker *choose_worker ()
   {
     ACE_GUARD_RETURN
-      (ACE_Thread_Mutex, worker_mon, this->workers_lock_, 0)
+      (ACE_Thread_Mutex, worker_mon, this->workers_lock_, nullptr)
 
       while (this->workers_.is_empty ())
         workers_cond_.wait ();
 
-    Worker *worker = 0;
+    Worker *worker = nullptr;
     this->workers_.dequeue_head (worker);
     return worker;
   }
@@ -251,7 +251,7 @@ Manager::shut_down ()
 {
   ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter = this->workers_.begin ();
-  Worker **worker_ptr = 0;
+  Worker **worker_ptr = nullptr;
   do
     {
       iter.next (worker_ptr);

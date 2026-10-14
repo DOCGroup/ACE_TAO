@@ -178,6 +178,6 @@ private:
   OFSTREAM *output_file_;
 };
 
-typedef ACE_Test_Output ace_file_stream;
+using ace_file_stream = ACE_Test_Output;
 
 #endif /* ACE_TEST_CONFIG_H */

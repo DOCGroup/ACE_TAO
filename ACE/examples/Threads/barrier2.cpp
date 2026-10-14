@@ -42,16 +42,16 @@ public:
   // Perform one message block dependant service.
 
 private:
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv=0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv=nullptr) override;
 
-  virtual int svc ();
+  int svc () override;
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Not needed for this test.
-  virtual int open (void *) { return 0; }
-  virtual int close (u_long)
+  int open (void *) override { return 0; }
+  int close (u_long) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -149,7 +149,7 @@ Worker_Task<BARRIER>::svc ()
 
   for (int iter = 1; ;iter++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       int result = this->getq (mb);
 
@@ -194,7 +194,7 @@ Worker_Task<BARRIER>::producer ()
   for (;;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ),

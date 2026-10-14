@@ -78,7 +78,7 @@ private:
   int remove_session (ACE_QoS_Session *qos_session);
 
   /// Unordered set of QoS Sessions.
-  typedef ACE_Unbounded_Set <ACE_QoS_Session *> QOS_SESSION_SET;
+  using QOS_SESSION_SET = ACE_Unbounded_Set<ACE_QoS_Session *>;
   QOS_SESSION_SET qos_session_set_;
 };
 

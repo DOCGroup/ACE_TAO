@@ -55,7 +55,7 @@ public:
   // but the <kind_> field is currently ignored
 
   /// A Name is an ordered collections of components (ids)
-  typedef ACE_Unbounded_Set<Name_Component> Name;
+  using Name = ACE_Unbounded_Set<Name_Component>;
 
   /// Separator for components in a name
   static const ACE_TCHAR STRING_SEPARATOR[];
@@ -110,7 +110,7 @@ public:
   };
 
   /// A list of bindings
-  typedef ACE_Unbounded_Set<Binding> Binding_List;
+  using Binding_List = ACE_Unbounded_Set<Binding>;
 
   // Forward declaration of iterator
   class Binding_Iterator;

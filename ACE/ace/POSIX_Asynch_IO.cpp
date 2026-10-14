@@ -101,9 +101,7 @@ ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
   return posix_proactor->post_completion (this);
 }
 
-ACE_POSIX_Asynch_Result::~ACE_POSIX_Asynch_Result ()
-{
-}
+ACE_POSIX_Asynch_Result::~ACE_POSIX_Asynch_Result () = default;
 
 ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
   (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -194,9 +192,7 @@ ACE_POSIX_Asynch_Operation::posix_proactor () const
   return this->posix_proactor_;
 }
 
-ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation ()
-{
-}
+ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation () = default;
 
 ACE_POSIX_Asynch_Operation::ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor)
   : posix_proactor_ (posix_proactor),
@@ -268,9 +264,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
     handler->handle_read_stream (result);
 }
 
-ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result ()
-{
-}
+ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result () = default;
 
 // ************************************************************
 
@@ -317,9 +311,7 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Read_Stream::~ACE_POSIX_Asynch_Read_Stream ()
-{
-}
+ACE_POSIX_Asynch_Read_Stream::~ACE_POSIX_Asynch_Read_Stream () = default;
 
 // *********************************************************************
 
@@ -386,9 +378,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
     handler->handle_write_stream (result);
 }
 
-ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result ()
-{
-}
+ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result () = default;
 
 // *********************************************************************
 
@@ -435,9 +425,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream ()
-{
-}
+ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream () = default;
 
 // *********************************************************************
 
@@ -495,9 +483,7 @@ ACE_POSIX_Asynch_Read_File_Result::complete (size_t bytes_transferred,
     handler->handle_read_file (result);
 }
 
-ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result ()
-{
-}
+ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result () = default;
 
 // *********************************************************************
 
@@ -548,9 +534,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Read_File::~ACE_POSIX_Asynch_Read_File ()
-{
-}
+ACE_POSIX_Asynch_Read_File::~ACE_POSIX_Asynch_Read_File () = default;
 
 int
 ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
@@ -622,9 +606,7 @@ ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
     handler->handle_write_file (result);
 }
 
-ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  ()
-{
-}
+ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  () = default;
 
 // *********************************************************************
 
@@ -675,9 +657,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Write_File::~ACE_POSIX_Asynch_Write_File ()
-{
-}
+ACE_POSIX_Asynch_Write_File::~ACE_POSIX_Asynch_Write_File () = default;
 
 int
 ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
@@ -764,9 +744,7 @@ ACE_POSIX_Asynch_Accept_Result::complete (size_t bytes_transferred,
     handler->handle_accept (result);
 }
 
-ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result ()
-{
-}
+ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result () = default;
 
 // *********************************************************************
 
@@ -1176,9 +1154,7 @@ ACE_POSIX_Asynch_Connect_Result::complete (size_t bytes_transferred,
     handler->handle_connect (result);
 }
 
-ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result ()
-{
-}
+ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result () = default;
 
 // *********************************************************************
 
@@ -1708,9 +1684,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
     handler->handle_transmit_file (result);
 }
 
-ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result ()
-{
-}
+ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result () = default;
 
 
 // *********************************************************************
@@ -2121,9 +2095,7 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   return 0;
 }
 
-ACE_POSIX_Asynch_Transmit_File::~ACE_POSIX_Asynch_Transmit_File ()
-{
-}
+ACE_POSIX_Asynch_Transmit_File::~ACE_POSIX_Asynch_Transmit_File () = default;
 
 // *********************************************************************
 size_t
@@ -2310,14 +2282,10 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
     handler->handle_write_dgram (result);
 }
 
-ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result ()
-{
-}
+ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result () = default;
 
 /***************************************************************************/
-ACE_POSIX_Asynch_Read_Dgram::~ACE_POSIX_Asynch_Read_Dgram ()
-{
-}
+ACE_POSIX_Asynch_Read_Dgram::~ACE_POSIX_Asynch_Read_Dgram () = default;
 
 ssize_t
 ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
@@ -2359,9 +2327,7 @@ ACE_POSIX_Asynch_Read_Dgram::ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *po
 
 //***************************************************************************
 
-ACE_POSIX_Asynch_Write_Dgram::~ACE_POSIX_Asynch_Write_Dgram ()
-{
-}
+ACE_POSIX_Asynch_Write_Dgram::~ACE_POSIX_Asynch_Write_Dgram () = default;
 
 ssize_t
 ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,

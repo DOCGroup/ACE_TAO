@@ -242,15 +242,15 @@ protected:
   virtual URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) = 0;
 };
 
-typedef int ATTRIBUTES;
+using ATTRIBUTES = int;
 typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         Client_Svc_Handler;
 typedef std::pair<Client_Svc_Handler *, ATTRIBUTES>
         CACHED_HANDLER;
 typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
         ACE_ADDR;
-typedef ACE_Hash<ACE_ADDR> H_KEY;
-typedef ACE_Equal_To<ACE_ADDR> C_KEYS;
+using H_KEY = ACE_Hash<ACE_ADDR>;
+using C_KEYS = ACE_Equal_To<ACE_ADDR>;
 
 typedef ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
         HASH_MAP;

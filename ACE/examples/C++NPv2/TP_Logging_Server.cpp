@@ -8,9 +8,9 @@
 #include "TP_Logging_Server.h"
 
 int TP_Logging_Handler::handle_input (ACE_HANDLE) {
-  ACE_Message_Block *mblk = 0;
+  ACE_Message_Block *mblk = nullptr;
   if (logging_handler_.recv_log_record (mblk) != -1) {
-    ACE_Message_Block *log_blk = 0;
+    ACE_Message_Block *log_blk = nullptr;
     ACE_NEW_RETURN
       (log_blk, ACE_Message_Block
                   (reinterpret_cast<char *> (this)), -1);

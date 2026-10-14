@@ -13,13 +13,13 @@ public:
   HA_CommandHandler (const char *name) : name_ (name)
   { }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up %C\n"),
                 name_));
 
     ACE_OS::sleep (2);
-    ACE_Message_Block *mb = 0;
+    ACE_Message_Block *mb = nullptr;
     while (this->getq (mb) != -1)
       {
         if (mb->msg_type () == ACE_Message_Block::MB_BREAK)

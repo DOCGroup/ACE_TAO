@@ -16,10 +16,9 @@
 #include "Async_Timer_Queue_Test.h"
 #include <memory>
 
-typedef Timer_Queue_Test_Driver<Async_Timer_Queue *,
-                                Async_Timer_Queue,
-                                Async_Timer_Queue::ACTION>
-        ASYNC_TIMER_QUEUE_TEST_DRIVER;
+using ASYNC_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver<Async_Timer_Queue *,
+                                                              Async_Timer_Queue,
+                                                              Async_Timer_Queue::ACTION>;
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -32,4 +31,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   return driver->run_test ();
 }
-

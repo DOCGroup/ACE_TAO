@@ -64,9 +64,9 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   // Error cases end up here, so we need to release the memory to
   // prevent a leak.
   payload->release ();
-  payload = 0;
+  payload = nullptr;
   mblk->release ();
-  mblk = 0;
+  mblk = nullptr;
   return -1;
 }
 
@@ -103,7 +103,7 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
 
 int Logging_Handler::log_record ()
 {
-  ACE_Message_Block *mblk = 0;
+  ACE_Message_Block *mblk = nullptr;
   if (recv_log_record (mblk) == -1)
     return -1;
   else {

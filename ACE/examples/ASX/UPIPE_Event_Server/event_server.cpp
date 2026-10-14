@@ -19,8 +19,8 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
+using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
+using MT_Module = ACE_Module<ACE_MT_SYNCH>;
 
 // Handle SIGINT and terminate the entire application.
 
@@ -28,7 +28,7 @@ class Quit_Handler : public ACE_Sig_Adapter
 {
 public:
   Quit_Handler ();
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 };
 
 Quit_Handler::Quit_Handler ()
@@ -123,7 +123,7 @@ consumer (void *)
 
     ACE_OS::sleep (2);
     cout << "consumer terminating " << endl;
-    return 0;
+    return nullptr;
 }
 
 static void *
@@ -186,7 +186,7 @@ supplier (void *dummy)
 
   ACE_OS::sleep (2);
   cout << "supplier terminating" << endl;
-  return 0;
+  return nullptr;
 }
 
 int
@@ -211,7 +211,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  new Event_Analyzer,
                                  new Event_Analyzer);
   MT_Module *cr = new MT_Module (ACE_TEXT ("Consumer_Router"),
-                                 0, // 0 triggers the creation of a ACE_Thru_Task...
+                                 nullptr, // 0 triggers the creation of a ACE_Thru_Task...
                                  new Consumer_Router (ACE_Thread_Manager::instance ()));
 
   // Push the modules onto the event_server stream.
@@ -244,7 +244,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // spawn the two threads.
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), (void *) nullptr,
                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 

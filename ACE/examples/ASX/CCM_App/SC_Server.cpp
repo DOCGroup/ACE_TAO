@@ -12,9 +12,9 @@
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask) override;
 };
 
 int

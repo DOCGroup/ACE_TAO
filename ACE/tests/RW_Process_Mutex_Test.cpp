@@ -25,7 +25,7 @@
 // The parent process is number -1. Writer is 0; Readers are 1-3.
 static int child_nr = -1;
 static u_short reporting_port = 0;
-static const int Nr_Processes = 4;
+static constexpr int Nr_Processes = 4;
 static ACE_TString mutex_name;
 static ACE_TCHAR mutex_check[MAXPATHLEN+1];
 

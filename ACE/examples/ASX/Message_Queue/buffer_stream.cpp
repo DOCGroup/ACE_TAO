@@ -20,9 +20,9 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
-typedef ACE_Task<ACE_MT_SYNCH> MT_Task;
+using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
+using MT_Module = ACE_Module<ACE_MT_SYNCH>;
+using MT_Task = ACE_Task<ACE_MT_SYNCH>;
 
 class Common_Task : public MT_Task
   // = TITLE

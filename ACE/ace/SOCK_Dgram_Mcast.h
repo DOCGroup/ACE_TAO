@@ -384,8 +384,8 @@ private:
   int opts_;
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
- typedef ACE_DLList<ip_mreq>  subscription_list_t;
- typedef ACE_DLList_Iterator<ip_mreq>  subscription_list_iter_t;
+ using subscription_list_t = ACE_DLList<ip_mreq>;
+ using subscription_list_iter_t = ACE_DLList_Iterator<ip_mreq>;
  /// List of currently subscribed addr/iface pairs (and assc. types).
  mutable subscription_list_t  subscription_list_;
  /// Lock used to protect subscription list.

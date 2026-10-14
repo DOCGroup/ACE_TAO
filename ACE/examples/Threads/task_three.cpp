@@ -26,8 +26,8 @@
 
 static ACE_OSTREAM_TYPE *out_stream = 0;
 static sig_atomic_t done = 0;
-static const size_t NUM_INVOCATIONS = 100;
-static const size_t TASK_COUNT = 130;
+static constexpr size_t NUM_INVOCATIONS = 100;
+static constexpr size_t TASK_COUNT = 130;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {

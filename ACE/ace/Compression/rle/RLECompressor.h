@@ -97,7 +97,7 @@ public:
 
 ACE_RLECOMPRESSION_SINGLETON_DECLARE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);
 
-typedef class ACE_Singleton<ACE_RLECompressor, ACE_SYNCH_MUTEX> ACE_RLECompression;
+using ACE_RLECompression = ACE_Singleton<ACE_RLECompressor, ACE_SYNCH_MUTEX>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

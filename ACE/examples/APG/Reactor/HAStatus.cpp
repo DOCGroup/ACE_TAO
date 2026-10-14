@@ -11,22 +11,22 @@
 class ClientAcceptor : public ACE_Event_Handler
 {
 public:
-  virtual ~ClientAcceptor ();
+  ~ClientAcceptor () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_INET_Addr &listen_addr);
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle () const
+  ACE_HANDLE get_handle () const override
     { return this->acceptor_.get_handle (); }
 
   // Called when a connection is ready to accept.
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   // Called when this handler is removed from the ACE_Reactor.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
 protected:
   ACE_SOCK_Acceptor acceptor_;
@@ -49,18 +49,18 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle () const
+  ACE_HANDLE get_handle () const override
     { return this->sock_.get_handle (); }
 
   // Called when input is available from the client.
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   // Called when output is possible.
-  virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   // Called when this handler is removed from the ACE_Reactor.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
 protected:
   ACE_SOCK_Stream sock_;
@@ -93,7 +93,7 @@ ClientAcceptor::open (const ACE_INET_Addr &listen_addr)
 int
 ClientAcceptor::handle_input (ACE_HANDLE)
 {
-  ClientService *client = 0;
+  ClientService *client = nullptr;
   ACE_NEW_RETURN (client, ClientService, -1);
   std::unique_ptr<ClientService> p (client);
 
@@ -168,7 +168,7 @@ ClientService::handle_input (ACE_HANDLE)
                       0);
   if (send_cnt == -1)
     send_cnt = 0;
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   size_t remaining =
     static_cast<size_t> ((recv_cnt - send_cnt));
   ACE_NEW_RETURN (mb, ACE_Message_Block (remaining), -1);
@@ -194,7 +194,7 @@ ClientService::handle_input (ACE_HANDLE)
 int
 ClientService::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_Time_Value nowait (ACE_OS::gettimeofday ());
   while (0 <= this->output_queue_.dequeue_head
                                     (mb, &nowait))
@@ -241,7 +241,7 @@ public:
   LoopStopper (int signum = SIGINT);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 };
 
 LoopStopper::LoopStopper (int signum)
@@ -266,13 +266,13 @@ public:
   LogSwitcher (int on_sig, int off_sig);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
   // Called when an exceptional event occurs.
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
 private:
-  LogSwitcher () {}
+  LogSwitcher () = default;
 
   int on_sig_;       // Signal to turn logging on
   int off_sig_;      // Signal to turn logging off

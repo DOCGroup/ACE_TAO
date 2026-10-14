@@ -27,7 +27,7 @@ namespace ACE
       FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
                                 ACE_TEXT ("r"));
 
-      if (fp == 0)
+      if (fp == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("bytes sent - opening ")
@@ -46,7 +46,7 @@ namespace ACE
       ACE_UINT32 iface_index = 0UL;
       ACE_UINT64 total_value = 0UL;
 
-      while (ACE_OS::fgets (buf, sizeof (buf), fp) != 0)
+      while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
         {
           sscanf (buf, this->scan_format_.c_str (), &iface_value);
 
@@ -86,7 +86,7 @@ namespace ACE
       FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
                                 ACE_TEXT ("r"));
 
-      if (fp == 0)
+      if (fp == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("bytes sent - opening ")
@@ -104,7 +104,7 @@ namespace ACE
       unsigned long iface_value = 0UL;
       ACE_UINT32 iface_index = 0UL;
 
-      while (ACE_OS::fgets (buf, sizeof (buf), fp) != 0)
+      while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
         {
           sscanf (buf, this->scan_format_.c_str (), &iface_value);
           this->start_ += iface_value;

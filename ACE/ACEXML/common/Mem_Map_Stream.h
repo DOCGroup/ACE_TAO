@@ -23,8 +23,8 @@
 #include "ace/Svc_Handler.h"
 #include "ACEXML/common/XML_Types.h"
 
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
-typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;
+using Svc_Handler = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+using Connector = ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 
 /**
  * @class ACEXML_Mem_Map_Stream

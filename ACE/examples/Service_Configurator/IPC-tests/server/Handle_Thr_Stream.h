@@ -58,7 +58,7 @@ public:
   // Execute the service.
 
 protected:
-  typedef ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_MT_SYNCH> inherited;
+  using inherited = ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_MT_SYNCH>;
 };
 
 extern ACE_Service_Object_Type rts;

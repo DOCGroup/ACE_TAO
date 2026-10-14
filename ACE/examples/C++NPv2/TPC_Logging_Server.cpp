@@ -52,7 +52,7 @@ int TPC_Logging_Acceptor::open
     return -1;
   OpenSSL_add_ssl_algorithms ();
   ssl_ctx_ = SSL_CTX_new (SSLv23_server_method ());
-  if (ssl_ctx_ == 0) return -1;
+  if (ssl_ctx_ == nullptr) return -1;
 
   if (SSL_CTX_use_certificate_file (ssl_ctx_,
                                     TPC_CERTIFICATE_FILENAME,
@@ -63,7 +63,7 @@ int TPC_Logging_Acceptor::open
       || !SSL_CTX_check_private_key (ssl_ctx_))
     return -1;
   ssl_ = SSL_new (ssl_ctx_);
-  return ssl_ == 0 ? -1 : 0;
+  return ssl_ == nullptr ? -1 : 0;
 }
 
 
@@ -90,7 +90,7 @@ int TPC_Logging_Acceptor::accept_svc_handler
   SSL_set_verify
     (ssl_,
      SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,
-     0);
+     nullptr);
   if (SSL_accept (ssl_) == -1
       || SSL_shutdown (ssl_) == -1) return -1;
   return 0;

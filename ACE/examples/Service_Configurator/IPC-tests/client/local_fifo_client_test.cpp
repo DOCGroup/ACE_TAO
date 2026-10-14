@@ -74,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        "in local_fifo_client_test\n",
                        rendezvous_fifo),
                       -1);
-  void *cp = 0;
+  void *cp = nullptr;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);

@@ -43,11 +43,11 @@
 
 static int iterations = 10;
 
-static const size_t worker_threads = 2;
+static constexpr size_t worker_threads = 2;
 static const char * default_message = "ACE RULES";
-static const size_t default_high_water_mark = 20;
-static const size_t default_low_water_mark = 10;
-static const int watermark_iterations = 2 * default_high_water_mark;
+static constexpr size_t default_high_water_mark = 20;
+static constexpr size_t default_low_water_mark = 10;
+static constexpr int watermark_iterations = 2 * default_high_water_mark;
 
 /**
  * @class Message_Handler
@@ -361,4 +361,3 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-

@@ -30,7 +30,7 @@ namespace ACE
         class Session_T : public SessionBase
           {
             public:
-              typedef ACE::IOS::StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> connection_type;
+              using connection_type = ACE::IOS::StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>;
 
               Session_T (bool keep_alive = false);
 
@@ -54,13 +54,13 @@ namespace ACE
               virtual std::iostream& sock_stream ();
 
             private:
-              typedef ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE> sock_stream_type;
+              using sock_stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE>;
 
               connection_type* connection_;
               sock_stream_type* sock_stream_;
           };
 
-        typedef Session_T<ACE_NULL_SYNCH> Session;
+        using Session = Session_T<ACE_NULL_SYNCH>;
       }
   }
 

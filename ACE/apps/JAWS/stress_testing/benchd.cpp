@@ -16,7 +16,7 @@
 //   is le0 or ie0
 
 // Maximum number of arguments supported for a request
-static const int MAX_ARGS = 16;
+static constexpr int MAX_ARGS = 16;
 // Name of the client benchmarking tool
 static const char *TESTER = "http_tester";
 static int QUIET = 0;

@@ -104,7 +104,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
 
   if (writer_q == 0)
     {
-      typedef ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY> TASK_TYPE;
+      using TASK_TYPE = ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (writer_q,
                         TASK_TYPE);
       ACE_SET_BITS (flags, M_DELETE_WRITER);
@@ -112,7 +112,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
 
   if (reader_q == 0)
     {
-      typedef ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY> TASK_TYPE;
+      using TASK_TYPE = ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (reader_q,
                         TASK_TYPE);
       ACE_SET_BITS (flags, M_DELETE_READER);

@@ -295,7 +295,7 @@ namespace ACE_TMCast
     ACE_Condition<ACE_Thread_Mutex> cond_;
 
 // FUZZ: disable check_for_ACE_Guard
-    typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+    using AutoLock = ACE_Guard<ACE_Thread_Mutex>;
 // FUZZ: enable check_for_ACE_Guard
 
     char id_[Protocol::MEMBER_ID_LENGTH];
@@ -459,7 +459,7 @@ namespace ACE_TMCast
     ACE_Condition<ACE_Thread_Mutex> recv_cond_;
 
     // FUZZ: disable check_for_ACE_Guard
-    typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+    using AutoLock = ACE_Guard<ACE_Thread_Mutex>;
     // FUZZ: enable check_for_ACE_Guard
 
     bool failed_;
@@ -500,4 +500,3 @@ namespace ACE_TMCast
     return pimpl_->recv (msg, size);
   }
 }
-

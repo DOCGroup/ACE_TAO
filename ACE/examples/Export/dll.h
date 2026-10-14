@@ -62,6 +62,6 @@ TEST_SINGLETON_DECLARE (ACE_Singleton, test_class, ACE_Null_Mutex)
 # endif
 #endif
 
-typedef ACE_Singleton<test_class, ACE_Null_Mutex> TEST_SINGLETON;
+using TEST_SINGLETON = ACE_Singleton<test_class, ACE_Null_Mutex>;
 
 Test_Export test_class *get_dll_singleton ();

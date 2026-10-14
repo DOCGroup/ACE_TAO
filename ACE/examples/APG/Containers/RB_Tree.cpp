@@ -35,7 +35,7 @@ int Tree_Example::run ()
 {
   ACE_TRACE ("Tree_Example::run");
 
-  DataElement *d  = 0;
+  DataElement *d  = nullptr;
   for (int i = 0; i < 100; i++)
     {
       ACE_NEW_RETURN (d, DataElement (i), -1);
@@ -109,7 +109,7 @@ int Tree_Example::remove_all ()
   // invalidated after deletions or insertions.
   for (int i = 0; i < 100; i++)
     {
-      DataElement * d = 0;
+      DataElement * d = nullptr;
       int result = tree_.unbind (i, d);
       if (result != 0)
         {
@@ -117,7 +117,7 @@ int Tree_Example::remove_all ()
                              ACE_TEXT ("Unbind")),
                             -1);
         }
-      ACE_ASSERT (d!= 0);
+      ACE_ASSERT (d!= nullptr);
       delete d;
     }
 

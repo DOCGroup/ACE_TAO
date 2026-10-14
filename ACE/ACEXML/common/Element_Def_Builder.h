@@ -33,7 +33,7 @@
 class ACEXML_Export ACEXML_Element_Def_Builder
 {
 public:
-  typedef std::unique_ptr<ACEXML_Element_Def_Builder> VAR;
+  using VAR = std::unique_ptr<ACEXML_Element_Def_Builder>;
 
   typedef enum {
     EMPTY,

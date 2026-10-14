@@ -3,7 +3,7 @@
 // Listing 0 code/ch10
 #include "ace/Process_Manager.h"
 
-static const int NCHILDREN = 2;
+static constexpr int NCHILDREN = 2;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

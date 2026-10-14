@@ -42,6 +42,6 @@ public:
   }
 };
 
-typedef ACE_DLL_Singleton_T < FWCT_DLL_Singleton_Adapter_T <Simple_Service>, ACE_SYNCH_MUTEX > SS_SINGLETON;
+using SS_SINGLETON = ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T<Simple_Service>, ACE_SYNCH_MUTEX>;
 
 #endif /* ACE_TESTS_FRAMEWORK_COMPONENT_TEST_H */

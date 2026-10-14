@@ -245,7 +245,7 @@ protected:
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 using ACE_DEV_POLL_TOKEN = ACE_Token;
 #else
-typedef ACE_Noop_Token ACE_DEV_POLL_TOKEN;
+using ACE_DEV_POLL_TOKEN = ACE_Noop_Token;
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 using ACE_Dev_Poll_Reactor_Token = ACE_Reactor_Token_T<ACE_DEV_POLL_TOKEN>;
 

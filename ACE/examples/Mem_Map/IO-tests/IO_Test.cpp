@@ -14,9 +14,7 @@ IO_Test::IO_Test (const char *name,
 {
 }
 
-IO_Test::~IO_Test ()
-{
-}
+IO_Test::~IO_Test () = default;
 
 const char *
 IO_Test::name ()

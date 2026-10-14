@@ -116,6 +116,6 @@ private:
 };
 
 // Typedef an Options Singleton.
-typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 #endif /* _OPTIONS_H */

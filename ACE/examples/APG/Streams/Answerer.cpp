@@ -236,10 +236,10 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   // Listing 1000 code/ch18
   int open (void *arg,
-            Module *head = 0, Module *tail = 0) override
+            Module *head = nullptr, Module *tail = nullptr) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
-    if (tail == 0)
+    if (tail == nullptr)
       ACE_NEW_RETURN (tail,
                       Module (ACE_TEXT ("End Module"), new TheEndTask ()),
                       -1);
@@ -346,7 +346,7 @@ public:
   // Listing 13 code/ch18
   int record (RecordingDevice *recorder)
   {
-    ACE_Message_Block * mb = 0;
+    ACE_Message_Block * mb = nullptr;
     ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof(Message)), -1);
 
     Message *message = (Message *)mb->wr_ptr ();
@@ -379,7 +379,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   RecordingStream *recording_stream;
   ACE_NEW_RETURN (recording_stream, RecordingStream, -1);
 
-  if (recording_stream->open (0) < 0)
+  if (recording_stream->open (nullptr) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("RecordingStream->open()")),

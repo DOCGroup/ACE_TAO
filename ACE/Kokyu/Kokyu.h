@@ -84,7 +84,7 @@ namespace Kokyu
     std::unique_ptr<Dispatcher_Impl> dispatcher_impl_;
   };
 
-  typedef std::unique_ptr<Dispatcher> Dispatcher_Auto_Ptr;
+  using Dispatcher_Auto_Ptr = std::unique_ptr<Dispatcher>;
 
   /**
    * @class Dispatcher_Factory

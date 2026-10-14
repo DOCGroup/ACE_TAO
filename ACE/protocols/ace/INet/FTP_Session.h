@@ -35,7 +35,7 @@ namespace ACE
         class Session_T
           {
             public:
-              typedef ACE::IOS::StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> connection_type;
+              using connection_type = ACE::IOS::StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>;
 
               enum
               {
@@ -95,7 +95,7 @@ namespace ACE
               ACE_CString host_;
               u_short port_;
 
-              typedef ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE> sock_stream_type;
+              using sock_stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE>;
 
               bool reactive_;
               connection_type* connection_;
@@ -106,7 +106,7 @@ namespace ACE
               bool new_connect_;
           };
 
-        typedef Session_T<ACE_NULL_SYNCH> Session;
+        using Session = Session_T<ACE_NULL_SYNCH>;
       }
   }
 

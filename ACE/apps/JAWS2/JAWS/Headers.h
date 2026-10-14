@@ -43,8 +43,8 @@ private:
   int header_type_;
 };
 
-typedef ACE_DLList<JAWS_Header_Data> JAWS_Header_Table;
-typedef ACE_DLList_Iterator<JAWS_Header_Data> JAWS_Header_Table_Iterator;
+using JAWS_Header_Table = ACE_DLList<JAWS_Header_Data>;
+using JAWS_Header_Table_Iterator = ACE_DLList_Iterator<JAWS_Header_Data>;
 
 class JAWS_Export JAWS_Headers : public JAWS_Header_Table
 {

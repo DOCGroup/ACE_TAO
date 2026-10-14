@@ -80,13 +80,13 @@ namespace ACE_TOKEN_CONST
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // ACE platform supports some form of threading.
-  typedef ACE_Condition_Thread_Mutex COND_VAR;
-  typedef ACE_Thread_Mutex MUTEX;
-  typedef ACE_Guard<ACE_Thread_Mutex> GUARD;
+  using COND_VAR = ACE_Condition_Thread_Mutex;
+  using MUTEX = ACE_Thread_Mutex;
+  using GUARD = ACE_Guard<ACE_Thread_Mutex>;
 #else
-  typedef ACE_Null_Condition COND_VAR;
-  typedef ACE_Null_Mutex MUTEX;
-  typedef ACE_Guard<ACE_Null_Mutex> GUARD;
+  using COND_VAR = ACE_Null_Condition;
+  using MUTEX = ACE_Null_Mutex;
+  using GUARD = ACE_Guard<ACE_Null_Mutex>;
 #endif /* ACE_HAS_THREADS */
 }
 // FUZZ: enable check_for_ACE_Guard
@@ -195,9 +195,9 @@ private:
 
 // b..
 #if defined (ACE_NO_TSS_TOKENS)
-typedef ACE_TPQ_Entry ACE_TPQ_ENTRY;
+using ACE_TPQ_ENTRY = ACE_TPQ_Entry;
 #else
-typedef ACE_TSS<ACE_TPQ_Entry> ACE_TPQ_ENTRY;
+using ACE_TPQ_ENTRY = ACE_TSS<ACE_TPQ_Entry>;
 #endif /* ACE_NO_TSS_TOKENS */
 
 /**
@@ -399,7 +399,7 @@ public:
   // = Accessor methods.
 
   /// Stack of owners.
-  typedef ACE_Unbounded_Stack<ACE_TPQ_Entry *> OWNER_STACK;
+  using OWNER_STACK = ACE_Unbounded_Stack<ACE_TPQ_Entry *>;
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.

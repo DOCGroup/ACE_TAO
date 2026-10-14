@@ -23,6 +23,6 @@
 #include "ace/Reactor.h"
 
 // Our global Reactor Singleton.
-typedef ACE_Singleton<ACE_Reactor, ACE_Null_Mutex> REACTOR;
+using REACTOR = ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>;
 
 #endif /* _REACTOR_SINGLETON_H */

@@ -33,8 +33,8 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 // of the connections to fail.
 // Do NOT use ACE_DEFAULT_BACKLOG here, because that will likely
 // be set to some other value. (i.e. Win32 = SOMAXCONN)
-static const int BACKLOG = 5;
-static const int NUM_CLIENTS = 30;
+static constexpr int BACKLOG = 5;
+static constexpr int NUM_CLIENTS = 30;
 
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 

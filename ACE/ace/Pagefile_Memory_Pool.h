@@ -59,7 +59,7 @@ public:
 class ACE_Export ACE_Pagefile_Memory_Pool
 {
 public:
-  typedef ACE_Pagefile_Memory_Pool_Options OPTIONS;
+  using OPTIONS = ACE_Pagefile_Memory_Pool_Options;
 
   /// Initialize the pool.
   ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,

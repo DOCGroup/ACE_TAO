@@ -25,7 +25,7 @@ namespace ACE
       this->queue_.reset ();
 
       // Evaluate the constraint in root_;
-      if (root != 0)
+      if (root != nullptr)
       {
         if (root->accept (this) == 0 && !this->queue_.is_empty ())
         {

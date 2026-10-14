@@ -42,7 +42,7 @@ myallocator ()
 static const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
 static const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
 
-static const int SHMSZ = 27;
+static constexpr int SHMSZ = 27;
 static const char SHMDATA[SHMSZ] = "abcdefghijklmnopqrstuvwxyz";
 
 static ACE_SV_Semaphore_Complex *parent_mutex = nullptr;

@@ -32,7 +32,7 @@ namespace ACE
           : public StreamPolicyBase<STREAM_BUFFER>
           {
             public:
-              typedef typename STREAM_BUFFER::char_type char_type;
+              using char_type = typename STREAM_BUFFER::char_type;
 
               FixedLengthStreamPolicyBase (std::streamsize length);
               virtual ~FixedLengthStreamPolicyBase ();
@@ -47,7 +47,7 @@ namespace ACE
               std::streamsize count_;
           };
 
-        typedef FixedLengthStreamPolicyBase<StreamBuffer> FixedLengthStreamPolicy;
+        using FixedLengthStreamPolicy = FixedLengthStreamPolicyBase<StreamBuffer>;
 
         /**
         * @class ACE_HTTP_ChunkedTransferStreamPolicy
@@ -61,8 +61,8 @@ namespace ACE
           : public StreamPolicyBase<STREAM_BUFFER>
           {
             public:
-              typedef typename STREAM_BUFFER::char_type char_type;
-              typedef ACE::IOS::String_OStreamBase<char_type> buffer_type;
+              using char_type = typename STREAM_BUFFER::char_type;
+              using buffer_type = ACE::IOS::String_OStreamBase<char_type>;
 
               ChunkedTransferStreamPolicyBase ();
               virtual ~ChunkedTransferStreamPolicyBase ();
@@ -79,7 +79,7 @@ namespace ACE
               buffer_type chunk_;
           };
 
-        typedef ChunkedTransferStreamPolicyBase<StreamBuffer> ChunkedTransferStreamPolicy;
+        using ChunkedTransferStreamPolicy = ChunkedTransferStreamPolicyBase<StreamBuffer>;
       }
   }
 

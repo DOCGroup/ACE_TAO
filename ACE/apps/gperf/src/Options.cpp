@@ -47,7 +47,7 @@ Options option;
 extern const char *version_string;
 
 /// Size to jump on a collision.
-static const int DEFAULT_JUMP_VALUE = 5;
+static constexpr int DEFAULT_JUMP_VALUE = 5;
 
 /// Default name for generated lookup function.
 static const char *const DEFAULT_NAME = "in_word_set";
@@ -839,4 +839,3 @@ Options::total_switches ()
 {
   return total_switches_;
 }
-

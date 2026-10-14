@@ -22,9 +22,9 @@
 
 namespace Kokyu
 {
-  typedef long Priority_t;
-  typedef ACE_Time_Value Deadline_t; //absolute deadline
-  typedef ACE_Time_Value Execution_Time_t; //execution time
+  using Priority_t = long;
+  using Deadline_t = ACE_Time_Value; //absolute deadline
+  using Execution_Time_t = ACE_Time_Value; //execution time
   //typedef int Guid_t;
 
   enum Dispatching_Type_t
@@ -88,7 +88,7 @@ namespace Kokyu
     ConfigInfo ();
   };
 
-  typedef ACE_Array<ConfigInfo> ConfigInfoSet;
+  using ConfigInfoSet = ACE_Array<ConfigInfo>;
 
   class Kokyu_Export Dispatcher_Attributes
   {

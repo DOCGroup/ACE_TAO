@@ -14,7 +14,7 @@
 class Logging_Acceptor_Ex : public Logging_Acceptor
 {
 public:
-  typedef ACE_INET_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_INET_Addr;
 
   // Simple constructor to pass ACE_Reactor to base class.
   Logging_Acceptor_Ex (ACE_Reactor *r = ACE_Reactor::instance ())

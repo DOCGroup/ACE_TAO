@@ -11,10 +11,10 @@ class FIFO_Recv_Handler : public ACE_Event_Handler
 {
 public:
   FIFO_Recv_Handler ();
-  ~FIFO_Recv_Handler ();
+  ~FIFO_Recv_Handler () override;
 
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
 
 private:
   ACE_FIFO_Recv_Msg fifo_reader_;

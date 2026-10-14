@@ -2,7 +2,7 @@
 #include "ace/Process_Manager.h"
 #include "ace/Reactor.h"
 
-static const int NCHILDREN = 2;
+static constexpr int NCHILDREN = 2;
 
 // Listing 1 code/ch10
 class DeathHandler: public ACE_Event_Handler
@@ -13,7 +13,7 @@ public:
     ACE_TRACE ("DeathHandler::DeathHandler");
   }
 
-  virtual int handle_exit (ACE_Process * process)
+  int handle_exit (ACE_Process * process) override
   {
     ACE_TRACE ("DeathHandler::handle_exit");
 

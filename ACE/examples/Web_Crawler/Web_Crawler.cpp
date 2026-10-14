@@ -9,7 +9,7 @@ Web_Crawler::~Web_Crawler ()
 }
 
 Web_Crawler::Web_Crawler ()
-  : url_visitor_factory_ (0)
+  : url_visitor_factory_ (nullptr)
 {
 }
 
@@ -35,7 +35,7 @@ Web_Crawler::run ()
   // Make the appropriate <URL_Visitor>.
   Auto_Destroyer<URL_Visitor> visitor (this->url_visitor_factory_->make_visitor ());
 
-  if (*visitor == 0)
+  if (*visitor == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_visitor"),
@@ -44,7 +44,7 @@ Web_Crawler::run ()
   // Make the appropriate <Command_Processor>.
   Auto_Destroyer<Command_Processor> cp (this->url_visitor_factory_->make_command_processor ());
 
-  if (*cp == 0)
+  if (*cp == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_command_processor"),

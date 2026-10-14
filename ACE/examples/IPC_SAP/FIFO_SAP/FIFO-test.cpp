@@ -28,7 +28,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
 
   char *argv[2];
   argv[0] = const_cast<char *> (EXEC_COMMAND_ARG);
-  argv[1] = 0;
+  argv[1] = nullptr;
 
   if (ACE_OS::execvp (EXEC_NAME, argv) == -1)
     return -1;
@@ -115,7 +115,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // wait for child to ACE_OS::exit.
-      if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) 0, 0) == -1)
+      if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) nullptr, 0) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%n: %p\n%a"),
                     ACE_TEXT ("waitpid"),

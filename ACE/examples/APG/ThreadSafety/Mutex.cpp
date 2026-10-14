@@ -9,9 +9,7 @@ class LogMessage
 public:
   enum { CRITICAL, NORMAL};
 
-  virtual ~LogMessage ()
-  {
-  }
+  virtual ~LogMessage () = default;
 
   virtual int priority ()
   {
@@ -21,14 +19,14 @@ public:
 
 class CriticalLogMessage : public LogMessage
 {
-  virtual int priority ()
+  int priority () override
   {
     return LogMessage::CRITICAL;
   }
 };
 
 // Listing 1 code/ch14
-typedef ACE_Thread_Mutex MUTEX;
+using MUTEX = ACE_Thread_Mutex;
 class Logger
 {
 public:

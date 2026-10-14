@@ -263,7 +263,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           //An enhancement request has been filed under WIND00123307.
           const char *fnName = "(no symbols)";
 
-          static const int N_ARGS = 12;
+          static constexpr int N_ARGS = 12;
           ACE_VX_USR_ARG_T buf[N_ARGS];
           ACE_VX_USR_ARG_T *pArgs = 0;
           int numArgs =

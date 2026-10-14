@@ -570,7 +570,7 @@ public:
   Server_Service_Handler *service_handler_;
 };
 
-typedef ACE_Singleton<Acceptor, ACE_SYNCH_RECURSIVE_MUTEX> Acceptor_Singleton;
+using Acceptor_Singleton = ACE_Singleton<Acceptor, ACE_SYNCH_RECURSIVE_MUTEX>;
 #define ACCEPTOR Acceptor_Singleton::instance ()
 
 Acceptor::Acceptor () :
@@ -1054,7 +1054,7 @@ protected:
   int connecting_;
 };
 
-typedef ACE_Singleton<Connector, ACE_SYNCH_RECURSIVE_MUTEX> Connector_Singleton;
+using Connector_Singleton = ACE_Singleton<Connector, ACE_SYNCH_RECURSIVE_MUTEX>;
 #define CONNECTOR Connector_Singleton::instance ()
 
 Connector::Connector () :

@@ -17,32 +17,32 @@
 
 // Strategic typedefs for memory allocation.
 
-typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> L_ALLOCATOR;
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> M_ALLOCATOR;
+using L_ALLOCATOR = ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
+using M_ALLOCATOR = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 
 #if defined (ACE_LACKS_SYSV_SHMEM)
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> SP_ALLOCATOR;
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> ST_ALLOCATOR;
+using SP_ALLOCATOR = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
+using ST_ALLOCATOR = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #else
-typedef ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex> SP_ALLOCATOR;
-typedef ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX> ST_ALLOCATOR;
+using SP_ALLOCATOR = ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex>;
+using ST_ALLOCATOR = ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #endif /* ACE_LACKS_SYSV_SHMEM */
 
 #if defined (ACE_LACKS_SBRK)
-typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> SB_ALLOCATOR;
+using SB_ALLOCATOR = ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #else
-typedef ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX> SB_ALLOCATOR;
+using SB_ALLOCATOR = ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #endif /* ACE_LACKS_SBRK */
 
 // Singleton
-ACE_Allocator *Malloc::instance_ = 0;
+ACE_Allocator *Malloc::instance_ = nullptr;
 
 // This is a factory that decides what type of allocator to create.
 
 ACE_Allocator *
 Malloc::instance ()
 {
-  if (Malloc::instance_ == 0)
+  if (Malloc::instance_ == nullptr)
     {
       if (Options::instance ()->child ())
         Malloc::instance_ = new ACE_Allocator_Adapter<M_ALLOCATOR>;
@@ -63,4 +63,3 @@ Malloc::instance ()
 
   return Malloc::instance_;
 }
-

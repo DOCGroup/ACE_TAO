@@ -10,7 +10,7 @@
 #include "jaws3/Protocol_Handler.h"
 
 
-typedef ACE_Task<ACE_SYNCH> JAWS_CONCURRENCY_TASK;
+using JAWS_CONCURRENCY_TASK = ACE_Task<ACE_SYNCH>;
 
 class JAWS_Export JAWS_Concurrency_Impl : public JAWS_CONCURRENCY_TASK
 {

@@ -24,9 +24,9 @@ namespace ACE_RMCast
 {
   // Basic types.
   //
-  typedef ACE_CDR::UShort u16;
-  typedef ACE_CDR::ULong u32;
-  typedef ACE_CDR::ULongLong u64;
+  using u16 = ACE_CDR::UShort;
+  using u32 = ACE_CDR::ULong;
+  using u64 = ACE_CDR::ULongLong;
 
   // Protocol parameters
   //
@@ -37,7 +37,7 @@ namespace ACE_RMCast
   //
   //
   //
-  typedef ACE_INET_Addr Address;
+  using Address = ACE_INET_Addr;
 
   struct AddressHasher
   {
@@ -56,9 +56,9 @@ namespace ACE_RMCast
   //@@ Provide stream<< (Address const&)
   //
 
-  typedef ACE_OutputCDR ostream;
-  typedef ACE_SizeCDR sstream;
-  typedef ACE_InputCDR istream;
+  using ostream = ACE_OutputCDR;
+  using sstream = ACE_SizeCDR;
+  using istream = ACE_InputCDR;
 
   struct Profile;
 
@@ -361,7 +361,7 @@ namespace ACE_RMCast
     Profiles profiles_;
   };
 
-  typedef ACE_Vector<Message_ptr, ACE_VECTOR_DEFAULT_SIZE> Messages;
+  using Messages = ACE_Vector<Message_ptr, ACE_VECTOR_DEFAULT_SIZE>;
 
   //
   //
@@ -752,8 +752,8 @@ namespace ACE_RMCast
   public:
     static u16 const id;
 
-    typedef ACE_Vector<u64, ACE_VECTOR_DEFAULT_SIZE> SerialNumbers;
-    typedef SerialNumbers::Iterator iterator;
+    using SerialNumbers = ACE_Vector<u64, ACE_VECTOR_DEFAULT_SIZE>;
+    using iterator = SerialNumbers::Iterator;
 
     NAK (Header const& h, istream& is)
         : Profile (h)

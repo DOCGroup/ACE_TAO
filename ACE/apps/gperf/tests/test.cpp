@@ -6,7 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
-static const int MAX_LEN = 80;
+static constexpr int MAX_LEN = 80;
 
 // Lookup function.
 const char *in_word_set (const char *str, unsigned int len);

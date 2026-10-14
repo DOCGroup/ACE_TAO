@@ -53,7 +53,7 @@ void showRecords ()
   {
     MALLOC_LIFO_ITERATOR iter (*g_allocator);
 
-    for (void *temp = 0; iter.next (temp) != 0; iter.advance ())
+    for (void *temp = nullptr; iter.next (temp) != 0; iter.advance ())
       {
         Record *record =
           reinterpret_cast<Record *> (temp);
@@ -73,7 +73,7 @@ int addRecords ()
       ACE_OS::sprintf (buf, "%s:%d", "Record", i);
 
       void *memory = g_allocator->malloc (sizeof (Record));
-      if (memory == 0)
+      if (memory == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("Unable to malloc")),
@@ -116,7 +116,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
   else
     {
       ACE_MMAP_Memory_Pool_Options options
-        (0, ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
+        (nullptr, ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
       ACE_NEW_RETURN (g_allocator,
                       ALLOCATOR (BACKING_STORE,
                                  BACKING_STORE,

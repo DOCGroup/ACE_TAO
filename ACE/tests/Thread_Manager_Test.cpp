@@ -139,7 +139,7 @@ worker (int iterations)
   return nullptr;
 }
 
-static const int DEFAULT_ITERATIONS = 10000;
+static constexpr int DEFAULT_ITERATIONS = 10000;
 
 // Define a ACE_Task that will serve in the tests related to tasks.
 

@@ -36,7 +36,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     char answer;
 
     // parse the <size> argument
-    if ((argc < 2) || (((size = ACE_OS::strtol(argv[1], 0, 10)) < 1) ||
+    if ((argc < 2) || (((size = ACE_OS::strtol(argv[1], nullptr, 10)) < 1) ||
             (errno == EINVAL)))
         return printUsage(argv[0]);
 
@@ -44,7 +44,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     size *= BASE;
     char *someData = new (std::nothrow) char[size];
 
-    if (someData == 0)
+    if (someData == nullptr)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%N:%l: Failed to allocate ")
                          ACE_TEXT ("data buffer.\n")), -1);
@@ -53,7 +53,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     std::unique_ptr<char[]> pSomeData(someData);
 
     // parse the <count> argument if available
-    if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], 0, 10)) < 1) ||
+    if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], nullptr, 10)) < 1) ||
             (errno == EINVAL)))
         return printUsage(argv[0]);
 

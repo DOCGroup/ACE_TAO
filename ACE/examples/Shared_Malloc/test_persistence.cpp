@@ -14,12 +14,12 @@
 
 #include "ace/Null_Mutex.h"
 
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> TEST_MALLOC;
-typedef ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_LIFO_ITERATOR;
-typedef ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_FIFO_ITERATOR;
+using TEST_MALLOC = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+using MALLOC_LIFO_ITERATOR = ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+using MALLOC_FIFO_ITERATOR = ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 
 // Shared memory manager.
-static TEST_MALLOC *shmem_allocator = 0;
+static TEST_MALLOC *shmem_allocator = nullptr;
 
 // Backing store name.
 static ACE_TCHAR backing_store[MAXPATHLEN + 1] = ACE_TEXT ("");
@@ -27,7 +27,7 @@ static ACE_TCHAR backing_store[MAXPATHLEN + 1] = ACE_TEXT ("");
 class Employee
 {
 public:
-  Employee () : name_ (0), id_ (0) {}
+  Employee () : name_ (nullptr), id_ (0) {}
 
   Employee (const char *name, u_long id) : id_ (id)
   {
@@ -182,7 +182,7 @@ GUI_Handler::insert_employee (const char *name,
                        "Employee already exists\n"),
                       -1);
 
-  Employee *new_employee = 0;
+  Employee *new_employee = nullptr;
 
   ACE_NEW_RETURN (new_employee,
                   Employee (name, id),
@@ -199,7 +199,7 @@ GUI_Handler::insert_employee (const char *name,
 int
 GUI_Handler::find_employee (const char *name)
 {
-  void *temp = 0;
+  void *temp = nullptr;
 
   if (shmem_allocator->find (name,
                              temp) == 0)
@@ -229,7 +229,7 @@ GUI_Handler::list_employees ()
                 "LIFO order:\n"));
     MALLOC_LIFO_ITERATOR iterator (*shmem_allocator);
 
-    for (void *temp = 0;
+    for (void *temp = nullptr;
          iterator.next (temp) != 0;
          iterator.advance ())
       {
@@ -246,7 +246,7 @@ GUI_Handler::list_employees ()
                 "FIFO order:\n"));
     MALLOC_FIFO_ITERATOR iterator (*shmem_allocator);
 
-    for (void *temp = 0;
+    for (void *temp = nullptr;
          iterator.next (temp) != 0;
          iterator.advance ())
       {
@@ -263,7 +263,7 @@ GUI_Handler::list_employees ()
 int
 GUI_Handler::delete_employee (const char *name)
 {
-  void *temp = 0;
+  void *temp = nullptr;
 
   if (shmem_allocator->unbind (name,
                                temp) == 0)
@@ -338,4 +338,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

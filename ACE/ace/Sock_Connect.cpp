@@ -948,9 +948,9 @@ return 0;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 # if defined (ACE_HAS_IPV6)
-  FILE* fp = 0;
+  FILE* fp = nullptr;
 
-  if ((fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"))) != 0)
+  if ((fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"))) != nullptr)
     {
       // Scan the lines according to the expected format but don't really read any input
       while (fscanf (fp, "%*32s %*02x %*02x %*02x %*02x %*8s\n") != EOF)

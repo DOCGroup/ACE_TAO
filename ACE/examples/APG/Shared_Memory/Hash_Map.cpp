@@ -25,20 +25,20 @@ ACE_Process_Mutex coordMutex("Coord-Mutex");
 // Listing 2 code/ch17
 HASH_MAP* smap (ALLOCATOR *shmem_allocator)
 {
-  void *db = 0;
+  void *db = nullptr;
   if (shmem_allocator->find (MAP_NAME, db) == 0)
     return (HASH_MAP *) db;
   size_t hash_table_size = sizeof (HASH_MAP);
   void *hash_map = shmem_allocator->malloc (hash_table_size);
-  if (hash_map == 0)
-    return 0;
+  if (hash_map == nullptr)
+    return nullptr;
   new (hash_map) HASH_MAP (hash_table_size, shmem_allocator);
   if (shmem_allocator->bind (MAP_NAME, hash_map) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                   ACE_TEXT ("allocate_map")));
       shmem_allocator->remove ();
-      return 0;
+      return nullptr;
     }
   return (HASH_MAP*)hash_map;
 }
@@ -138,7 +138,7 @@ int handle_child ()
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, coordMutex, -1);
 
-  ALLOCATOR * shmem_allocator = 0;
+  ALLOCATOR * shmem_allocator = nullptr;
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
@@ -170,7 +170,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
 {
   ACE_TRACE ("handle_parent");
 
-  ALLOCATOR * shmem_allocator = 0;
+  ALLOCATOR * shmem_allocator = nullptr;
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
@@ -187,7 +187,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
   const ACE_TCHAR *args[3];
   args[0] = cmdLine;
   args[1] = ACE_TEXT ("a");
-  args[2] = 0;
+  args[2] = nullptr;
   poptions.command_line (args);
   {
     ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon,

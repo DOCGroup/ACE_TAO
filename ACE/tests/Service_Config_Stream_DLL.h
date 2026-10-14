@@ -13,9 +13,9 @@
 #include "ace/Stream.h"
 #include "ace/Module.h"
 
-typedef ACE_Task<ACE_SYNCH> MT_Task;
-typedef ACE_Stream<ACE_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_SYNCH> MT_Module;
+using MT_Task = ACE_Task<ACE_SYNCH>;
+using MT_Stream = ACE_Stream<ACE_SYNCH>;
+using MT_Module = ACE_Module<ACE_SYNCH>;
 
 class Service_Config_Stream_DLL_Export Test_Task : public MT_Task
 {

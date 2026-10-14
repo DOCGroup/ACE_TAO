@@ -20,7 +20,7 @@ class Record
 {
 public:
   Record (int id1, int id2, char *name)
-    : id1_(id1), id2_(id2), name_(0)
+    : id1_(id1), id2_(id2), name_(nullptr)
   {
     size_t len = ACE_OS::strlen (name) + 1;
     this->name_ =
@@ -47,7 +47,7 @@ void showRecords ()
   {
     MALLOC_LIFO_ITERATOR iter (*g_allocator);
 
-    for (void *temp = 0; iter.next (temp) != 0; iter.advance ())
+    for (void *temp = nullptr; iter.next (temp) != 0; iter.advance ())
       {
         Record *record =
           reinterpret_cast<Record *> (temp);
@@ -69,7 +69,7 @@ int addRecords ()
     {
       ACE_OS::sprintf (buf, "%s:%d", "Record", i);
       void *memory = g_allocator->malloc (sizeof (Record));
-      if (memory == 0)
+      if (memory == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("Unable to malloc")),
                           -1);
