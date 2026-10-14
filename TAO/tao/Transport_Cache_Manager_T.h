@@ -44,6 +44,13 @@ template <class ACE_COND_MUTEX> class TAO_Condition;
 
 namespace TAO
 {
+  enum Connection_Role
+    {
+      TAO_UNSPECIFIED_ROLE = 0,
+      TAO_SERVER_ROLE = 1,
+      TAO_CLIENT_ROLE = 2
+    };
+
   typedef ACE_Unbounded_Set<TAO_Connection_Handler*> Connection_Handler_Set;
   /**
    * @brief The Transport Cache Manager for TAO

@@ -3,6 +3,7 @@
 #include "tao/Connection_Purging_Strategy.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Condition.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -226,10 +227,19 @@ namespace TAO
           {
             TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-              ACE_TEXT ("purge_idle_transports, closing idle Transport[%d]\n"),
+              ACE_TEXT ("purge_idle_transports, closing idle Transport[%B]\n"),
               transport->id ()));
           }
-        transport->close_connection ();
+        if (transport->opened_as () == TAO_SERVER_ROLE)
+          {
+            TAO_GIOP_Message_Version version;
+            transport->out_stream ().get_version (version);
+            transport->messaging_object ()->send_close_connection (version, transport);
+          }
+        else
+          {
+            transport->close_connection ();
+          }
       }
   }
 
@@ -273,7 +283,7 @@ namespace TAO
        {
          TAOLIB_DEBUG ((LM_INFO,
             ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
-            ACE_TEXT ("Transport[%d] @ hash:index{%d:%d}\n"),
+            ACE_TEXT ("Transport[%B] @ hash:index{%d:%d}\n"),
             int_id.transport ()->id (),
             ext_id.hash (),
             ext_id.index ()));
@@ -336,7 +346,7 @@ namespace TAO
                     {
                       TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
-                        ACE_TEXT ("Unable to bind Transport[%d] @ hash:index{%d:%d}. ")
+                        ACE_TEXT ("Unable to bind Transport[%B] @ hash:index{%d:%d}. ")
                         ACE_TEXT ("Trying with a new index\n"),
                         int_id.transport ()->id (),
                         ext_id.hash (),
@@ -362,7 +372,7 @@ namespace TAO
           {
             TAOLIB_DEBUG ((LM_INFO,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
-              ACE_TEXT ("Success Transport[%d] @ hash:index{%d:%d}. ")
+              ACE_TEXT ("Success Transport[%B] @ hash:index{%d:%d}. ")
               ACE_TEXT ("Cache size is [%d]\n"),
               int_id.transport ()->id (),
               ext_id.hash (),
@@ -412,7 +422,7 @@ namespace TAO
                   {
                     if (TAO_debug_level > 0)
                       TAOLIB_ERROR ((LM_ERROR,
-                                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T[%d]")
+                                  ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T[%B]")
                                   ACE_TEXT ("::find_transport, remove_handler failed\n"),
                                   transport->id ()));
                   }
@@ -462,7 +472,7 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("found available Transport[%d] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found available Transport[%B] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
                       entry->ext_id_.index ()));
@@ -474,7 +484,7 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("found connecting Transport[%d] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found connecting Transport[%B] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
                       entry->ext_id_.index ()));
@@ -499,7 +509,7 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("found busy Transport[%d] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found busy Transport[%B] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
                       entry->ext_id_.index ()
@@ -767,7 +777,7 @@ namespace TAO
                     {
                       TAOLIB_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
-                        ACE_TEXT ("Purgable Transport[%d] found in ")
+                        ACE_TEXT ("Purgable Transport[%B] found in ")
                         ACE_TEXT ("cache\n"),
                         transport->id ()));
                     }
@@ -778,7 +788,7 @@ namespace TAO
                         {
                           TAOLIB_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
-                            ACE_TEXT ("::purge, Unable to add transport[%d] ")
+                            ACE_TEXT ("::purge, Unable to add transport[%B] ")
                             ACE_TEXT ("on the to-be-closed set, so ")
                             ACE_TEXT ("it will not be purged\n"),
                             transport->id ()));
