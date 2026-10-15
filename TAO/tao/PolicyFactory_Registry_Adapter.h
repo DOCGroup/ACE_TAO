@@ -26,10 +26,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //-- Forward Declarations--
 namespace CORBA
 {
-  typedef ULong PolicyType;
+  using PolicyType = ULong;
 
   class Policy;
-  typedef Policy *Policy_ptr;
+  using Policy_ptr = Policy *;
 
   class Any;
 }
@@ -37,7 +37,7 @@ namespace CORBA
 namespace PortableInterceptor
 {
   class PolicyFactory;
-  typedef PolicyFactory *PolicyFactory_ptr;
+  using PolicyFactory_ptr = PolicyFactory *;
 }
 
 namespace TAO

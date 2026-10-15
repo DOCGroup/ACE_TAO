@@ -29,8 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  using Object_ptr = Object *;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
 }
 
 class TAO_Stub;

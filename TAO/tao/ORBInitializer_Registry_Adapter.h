@@ -29,9 +29,9 @@ class TAO_ORB_Core;
 namespace PortableInterceptor
 {
   class ORBInitializer;
-  typedef ORBInitializer *ORBInitializer_ptr;
+  using ORBInitializer_ptr = ORBInitializer *;
 
-  typedef CORBA::ULong SlotId;
+  using SlotId = CORBA::ULong;
 }
 
 namespace TAO

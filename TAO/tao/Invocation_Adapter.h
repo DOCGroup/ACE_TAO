@@ -36,8 +36,8 @@ class TAO_Stub;
 namespace  CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  using Object_ptr = Object *;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
 }
 
 namespace TAO

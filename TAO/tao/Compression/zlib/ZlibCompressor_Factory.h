@@ -30,8 +30,8 @@ namespace TAO
   class TAO_ZLIBCOMPRESSOR_Export Zlib_CompressorFactory :
     public ::TAO::CompressorFactory
   {
-    typedef std::map< ::Compression::CompressionLevel,
-        const ::Compression::Compressor_var> ZlibCompressorMap;
+    using ZlibCompressorMap = std::map< ::Compression::CompressionLevel,
+                                        const ::Compression::Compressor_var>;
 
   public:
     Zlib_CompressorFactory ();
