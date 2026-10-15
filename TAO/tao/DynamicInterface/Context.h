@@ -37,22 +37,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  typedef ULong Flags;
+  using Flags = ULong;
 
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class Context;
-  typedef Context * Context_ptr;
+  using Context_ptr = Context *;
 
   class ContextList;
-  typedef ContextList * ContextList_ptr;
+  using ContextList_ptr = ContextList *;
 
-  typedef TAO_Pseudo_Var_T<Context> Context_var;
-  typedef TAO_Pseudo_Out_T<Context> Context_out;
+  using Context_var = TAO_Pseudo_Var_T<Context>;
+  using Context_out = TAO_Pseudo_Out_T<Context>;
 
-  typedef TAO_Pseudo_Var_T<ContextList> ContextList_var;
-  typedef TAO_Pseudo_Out_T<ContextList> ContextList_out;
+  using ContextList_var = TAO_Pseudo_Var_T<ContextList>;
+  using ContextList_out = TAO_Pseudo_Out_T<ContextList>;
 
   /**
    * @class Context
@@ -102,9 +102,9 @@ namespace CORBA
                      CORBA::NVList_ptr &values);
 
     // Useful for template programming.
-    typedef CORBA::Context_ptr _ptr_type;
-    typedef CORBA::Context_var _var_type;
-    typedef CORBA::Context_out _out_type;
+    using _ptr_type = CORBA::Context_ptr;
+    using _var_type = CORBA::Context_var;
+    using _out_type = CORBA::Context_out;
 
   private:
     /// Reference counter.
@@ -163,9 +163,9 @@ namespace CORBA
     void  _decr_refcount ();
 
     // Useful for template programming.
-    typedef CORBA::ContextList_ptr _ptr_type;
-    typedef CORBA::ContextList_var _var_type;
-    typedef CORBA::ContextList_out _out_type;
+    using _ptr_type = CORBA::ContextList_ptr;
+    using _var_type = CORBA::ContextList_var;
+    using _out_type = CORBA::ContextList_out;
 
   private:
     ContextList (const ContextList &) = delete;
