@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Short, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::Short, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::Short, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -38,7 +38,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Long, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::Long, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::Long, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -58,7 +58,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::ULong, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::ULong, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::ULong, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -78,7 +78,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::UShort, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::UShort, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::UShort, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -98,7 +98,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Octet, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::Octet, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::Octet, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -118,7 +118,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Char, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::Char, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::Char, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -139,7 +139,7 @@ namespace TAO {
 # if (defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)) && !defined (ACE_LACKS_NATIVE_WCHAR_T)
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::WChar, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::WChar, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::WChar, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -160,7 +160,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Float, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::Float, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::Float, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -180,7 +180,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Double, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::Double, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::Double, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -200,7 +200,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::LongLong, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::LongLong, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::LongLong, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -220,7 +220,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::ULongLong, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::ULongLong, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::ULongLong, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -240,7 +240,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::LongDouble, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::LongDouble, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::LongDouble, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
@@ -260,7 +260,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Boolean, MAX> & target) {
-    typedef TAO::bounded_value_sequence <CORBA::Boolean, MAX> sequence;
+    using sequence = TAO::bounded_value_sequence<CORBA::Boolean, MAX>;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
