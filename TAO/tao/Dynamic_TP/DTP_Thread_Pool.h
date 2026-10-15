@@ -229,8 +229,8 @@ public:
   void destroy_threadpool (CORBA::ULong threadpool);
 
   /// Collection of thread pools.
-  typedef ACE_Hash_Map_Manager<CORBA::ULong, TAO_DTP_Thread_Pool *,
-                               ACE_Null_Mutex> THREAD_POOLS;
+  using THREAD_POOLS = ACE_Hash_Map_Manager<CORBA::ULong, TAO_DTP_Thread_Pool *,
+                                             ACE_Null_Mutex>;
 
   /// @name Accessors
   // @{

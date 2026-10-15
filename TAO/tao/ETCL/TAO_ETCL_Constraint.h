@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Any;
-  typedef Any *Any_ptr;
+  using Any_ptr = Any *;
 }
 
 class TAO_ETCL_Export TAO_ETCL_Literal_Constraint

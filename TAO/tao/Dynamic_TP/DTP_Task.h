@@ -131,8 +131,8 @@ private:
   bool need_active ();
   bool above_minimum ();
 
-  typedef TAO_SYNCH_MUTEX         LockType;
-  typedef TAO_Condition<LockType> ConditionType;
+  using LockType = TAO_SYNCH_MUTEX;
+  using ConditionType = TAO_Condition<LockType>;
 
   /// Lock used to synchronize the "active_workers_" condition
   LockType aw_lock_;

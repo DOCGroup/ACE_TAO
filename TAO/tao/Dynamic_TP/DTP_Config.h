@@ -70,7 +70,8 @@ public:
   int rebind (const ACE_CString& name, TAO_DTP_Definition &entry);
 
  private:
-  typedef ACE_RB_Tree<ACE_CString, TAO_DTP_Definition, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> Registry;
+  using Registry =
+    ACE_RB_Tree<ACE_CString, TAO_DTP_Definition, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
   Registry registry_;
 };
 

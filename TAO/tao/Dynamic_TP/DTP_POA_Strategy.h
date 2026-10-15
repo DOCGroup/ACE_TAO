@@ -35,8 +35,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DTP_POA_Strategy;
-typedef TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy>
-        TAO_DTP_POA_Strategy_Handle;
+using TAO_DTP_POA_Strategy_Handle =
+  TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy>;
 
 namespace TAO
 {
