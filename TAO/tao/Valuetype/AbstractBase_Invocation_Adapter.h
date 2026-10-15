@@ -25,7 +25,7 @@ namespace CORBA
 {
   class AbstractBase;
 
-  typedef AbstractBase *AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 }
 namespace TAO
 {
