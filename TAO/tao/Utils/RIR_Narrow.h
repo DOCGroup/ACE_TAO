@@ -37,8 +37,8 @@ namespace TAO
     template<class T> class RIR_Narrow
     {
     public:
-      typedef typename T::_ptr_type _ptr_type;
-      typedef typename T::_var_type _var_type;
+      using _ptr_type = typename T::_ptr_type;
+      using _var_type = typename T::_var_type;
 
       /// Use resolve_initial_references to find an object and then
       /// narrow it.

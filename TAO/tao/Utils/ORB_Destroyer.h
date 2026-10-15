@@ -32,7 +32,7 @@ namespace TAO
      */
     struct TAO_UTILS_Export ORB_Destroyer_Functor
     {
-      typedef CORBA::ORB_ptr argument;
+      using argument = CORBA::ORB_ptr;
 
       /// Destroy the ORB
       void operator() (CORBA::ORB_ptr orb) noexcept;
@@ -44,10 +44,7 @@ namespace TAO
      * @brief Helper class to destroy an ORB.
      *
      */
-    typedef ACE_Utils::Auto_Functor<
-      CORBA::ORB,
-      ORB_Destroyer_Functor>
-    ORB_Destroyer;
+    using ORB_Destroyer = ACE_Utils::Auto_Functor<CORBA::ORB, ORB_Destroyer_Functor>;
   } // namespace Utils
 } // namespace TAO
 
