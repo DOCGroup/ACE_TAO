@@ -190,49 +190,49 @@ public:
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
   /// Base class of the id map.
-  typedef ACE_Map<
-  PortableServer::ObjectId,
-    TAO_Active_Object_Map_Entry *> user_id_map;
+  using user_id_map = ACE_Map<
+    PortableServer::ObjectId,
+    TAO_Active_Object_Map_Entry *>;
 
   /// Id hash map.
-  typedef ACE_Hash_Map_Manager_Ex_Adapter<
-  PortableServer::ObjectId,
+  using user_id_hash_map = ACE_Hash_Map_Manager_Ex_Adapter<
+    PortableServer::ObjectId,
     TAO_Active_Object_Map_Entry *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
-    TAO_Incremental_Key_Generator> user_id_hash_map;
+    TAO_Incremental_Key_Generator>;
 
   /// Id linear map.
-  typedef ACE_Map_Manager_Adapter<
-  PortableServer::ObjectId,
+  using user_id_linear_map = ACE_Map_Manager_Adapter<
+    PortableServer::ObjectId,
     TAO_Active_Object_Map_Entry *,
-    TAO_Incremental_Key_Generator> user_id_linear_map;
+    TAO_Incremental_Key_Generator>;
 
   /// Id active map.
-  typedef ACE_Active_Map_Manager_Adapter<
-  PortableServer::ObjectId,
+  using user_id_active_map = ACE_Active_Map_Manager_Adapter<
+    PortableServer::ObjectId,
     TAO_Active_Object_Map_Entry *,
-    TAO_Ignore_Original_Key_Adapter> user_id_active_map;
+    TAO_Ignore_Original_Key_Adapter>;
 
   /// Base class of the servant map.
-  typedef ACE_Map<
-  PortableServer::Servant,
-    TAO_Active_Object_Map_Entry *> servant_map;
+  using servant_map = ACE_Map<
+    PortableServer::Servant,
+    TAO_Active_Object_Map_Entry *>;
 
   /// Servant hash map.
-  typedef ACE_Hash_Map_Manager_Ex_Adapter<
-  PortableServer::Servant,
+  using servant_hash_map = ACE_Hash_Map_Manager_Ex_Adapter<
+    PortableServer::Servant,
     TAO_Active_Object_Map_Entry *,
     TAO_Servant_Hash,
     ACE_Equal_To<PortableServer::Servant>,
-    ACE_Noop_Key_Generator<PortableServer::Servant> > servant_hash_map;
+    ACE_Noop_Key_Generator<PortableServer::Servant> >;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Servant linear map.
-  typedef ACE_Map_Manager_Adapter<
-  PortableServer::Servant,
+  using servant_linear_map = ACE_Map_Manager_Adapter<
+    PortableServer::Servant,
     TAO_Active_Object_Map_Entry *,
-    ACE_Noop_Key_Generator<PortableServer::Servant> > servant_linear_map;
+    ACE_Noop_Key_Generator<PortableServer::Servant> >;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id map.
@@ -655,10 +655,10 @@ public:
   system_id (PortableServer::ObjectId_out system_id,
              TAO_Active_Object_Map_Entry &entry);
 
-  typedef ACE_Active_Map_Manager_Adapter<
-  PortableServer::ObjectId,
+  using system_id_map = ACE_Active_Map_Manager_Adapter<
+    PortableServer::ObjectId,
     TAO_Active_Object_Map_Entry *,
-    TAO_Preserve_Original_Key_Adapter> system_id_map;
+    TAO_Preserve_Original_Key_Adapter>;
 
   system_id_map system_id_map_;
 };

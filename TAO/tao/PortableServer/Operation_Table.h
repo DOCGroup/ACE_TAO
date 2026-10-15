@@ -36,12 +36,12 @@ namespace TAO
   }
 }
 
-typedef void (*TAO_Skeleton)(
+using TAO_Skeleton = void (*) (
     TAO_ServerRequest &,
     TAO::Portable_Server::Servant_Upcall *,
     TAO_ServantBase *);
 
-typedef void (*TAO_Collocated_Skeleton)(
+using TAO_Collocated_Skeleton = void (*) (
     TAO_Abstract_ServantBase *,
     TAO::Argument **);
 

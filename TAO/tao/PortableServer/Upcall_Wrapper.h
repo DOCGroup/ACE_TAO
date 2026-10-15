@@ -33,7 +33,7 @@ class TAO_OutputCDR;
 
 namespace PortableServer
 {
-  typedef ::TAO_ServantBase ServantBase;
+  using ServantBase = ::TAO_ServantBase;
 }
 
 namespace TAO

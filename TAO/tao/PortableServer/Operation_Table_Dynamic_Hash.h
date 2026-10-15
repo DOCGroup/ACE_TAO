@@ -64,12 +64,11 @@ public:
             TAO::Collocation_Strategy s,
             const unsigned int length = 0) override;
 private:
-  typedef ACE_Hash_Map_Manager_Ex<const char *,
+  using OP_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
                                   TAO::Operation_Skeletons,
                                   ACE_Hash<const char *>,
                                   ACE_Equal_To<const char *>,
-                                  ACE_Null_Mutex>
-        OP_MAP_MANAGER;
+                                  ACE_Null_Mutex>;
 
   /// The hash table data structure.
   OP_MAP_MANAGER hash_;

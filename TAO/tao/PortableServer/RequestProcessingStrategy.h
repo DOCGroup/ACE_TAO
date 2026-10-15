@@ -25,7 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableServer
 {
   class ServantManager;
-  typedef ServantManager *ServantManager_ptr;
+  using ServantManager_ptr = ServantManager *;
 }
 
 namespace TAO

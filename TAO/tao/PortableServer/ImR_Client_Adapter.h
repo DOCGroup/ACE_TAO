@@ -30,7 +30,7 @@ class TAO_Root_POA;
 namespace CORBA
 {
   class Object;
-  typedef Object* Object_ptr;
+  using Object_ptr = Object *;
 }
 
 namespace TAO

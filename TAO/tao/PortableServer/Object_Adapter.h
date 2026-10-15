@@ -75,9 +75,9 @@ class TAO_PortableServer_Export TAO_Object_Adapter
 public:
   friend class TAO_Root_POA;
 
-  typedef PortableServer::ObjectId poa_name;
-  typedef PortableServer::ObjectId_var poa_name_var;
-  typedef PortableServer::ObjectId_out poa_name_out;
+  using poa_name = PortableServer::ObjectId;
+  using poa_name_var = PortableServer::ObjectId_var;
+  using poa_name_out = PortableServer::ObjectId_out;
 
   /// Constructor.
   TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
@@ -255,10 +255,10 @@ public:
                                const poa_name &system_name) override;
 
   protected:
-    typedef ACE_Active_Map_Manager_Adapter<
-    poa_name,
+    using persistent_poa_system_map = ACE_Active_Map_Manager_Adapter<
+      poa_name,
       TAO_Root_POA *,
-      TAO_Preserve_Original_Key_Adapter> persistent_poa_system_map;
+      TAO_Preserve_Original_Key_Adapter>;
 
     persistent_poa_system_map persistent_poa_system_map_;
   };
@@ -296,53 +296,53 @@ protected:
   Hint_Strategy *hint_strategy_;
 
   /// Base class of the id map.
-  typedef ACE_Map<
-  poa_name,
-    TAO_Root_POA *> transient_poa_map;
+  using transient_poa_map = ACE_Map<
+    poa_name,
+    TAO_Root_POA *>;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id hash map.
-  typedef ACE_Hash_Map_Manager_Ex_Adapter<
-  poa_name,
+  using transient_poa_hash_map = ACE_Hash_Map_Manager_Ex_Adapter<
+    poa_name,
     TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<poa_name>,
-    TAO_Incremental_Key_Generator> transient_poa_hash_map;
+    TAO_Incremental_Key_Generator>;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id linear map.
-  typedef ACE_Map_Manager_Adapter<
-  poa_name,
+  using transient_poa_linear_map = ACE_Map_Manager_Adapter<
+    poa_name,
     TAO_Root_POA *,
-    TAO_Incremental_Key_Generator> transient_poa_linear_map;
+    TAO_Incremental_Key_Generator>;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id active map.
-  typedef ACE_Active_Map_Manager_Adapter<
-  poa_name,
+  using transient_poa_active_map = ACE_Active_Map_Manager_Adapter<
+    poa_name,
     TAO_Root_POA *,
-    TAO_Ignore_Original_Key_Adapter> transient_poa_active_map;
+    TAO_Ignore_Original_Key_Adapter>;
 
   /// Base class of the name map.
-  typedef ACE_Map<
-  poa_name,
-    TAO_Root_POA *> persistent_poa_name_map;
+  using persistent_poa_name_map = ACE_Map<
+    poa_name,
+    TAO_Root_POA *>;
 
   /// Id hash map.
-  typedef ACE_Hash_Map_Manager_Ex_Adapter<
-  poa_name,
+  using persistent_poa_name_hash_map = ACE_Hash_Map_Manager_Ex_Adapter<
+    poa_name,
     TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
-    ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_hash_map;
+    ACE_Noop_Key_Generator<poa_name> >;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id linear map.
-  typedef ACE_Map_Manager_Adapter<
-  poa_name,
+  using persistent_poa_name_linear_map = ACE_Map_Manager_Adapter<
+    poa_name,
     TAO_Root_POA *,
-    ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_linear_map;
+    ACE_Noop_Key_Generator<poa_name> >;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Strategy for dispatching a request to a servant.
@@ -406,7 +406,7 @@ public:
   class iteratable_poa_name
   {
   public:
-    typedef poa_name_iterator iterator;
+    using iterator = poa_name_iterator;
 
     iteratable_poa_name (const poa_name &folded_name);
 

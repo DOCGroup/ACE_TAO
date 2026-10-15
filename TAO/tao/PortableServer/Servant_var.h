@@ -39,7 +39,7 @@ namespace PortableServer
   class Servant_var
   {
   public:
-    typedef T servant_type;
+    using servant_type = T;
 
     /// Constructor.  Assumes ownership of @c p.
     Servant_var (T * p = 0);

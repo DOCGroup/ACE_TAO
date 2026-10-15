@@ -50,7 +50,7 @@
 namespace PortableServer
 {
   class POAManagerFactory;
-  typedef POAManagerFactory *POAManagerFactory_ptr;
+  using POAManagerFactory_ptr = POAManagerFactory *;
 }
 #endif
 

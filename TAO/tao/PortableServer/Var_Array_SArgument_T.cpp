@@ -61,7 +61,7 @@ TAO::Inout_Var_Array_SArgument_T<S_forany,
                                  Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  typedef typename S_forany::_slice_type slice_type;
+  using slice_type = typename S_forany::_slice_type;
   Insert_Policy<S_forany>::any_insert (
       any,
       S_forany (const_cast <slice_type *>(this->x_)));

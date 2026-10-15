@@ -62,7 +62,7 @@ public:
 private:
   TAO_Object_Adapter &object_adapter_;
 
-  typedef ACE_Unbounded_Set < ::PortableServer::POAManager_ptr> POAMANAGERSET;
+  using POAMANAGERSET = ACE_Unbounded_Set < ::PortableServer::POAManager_ptr>;
 
   POAMANAGERSET poamanager_set_;
 };

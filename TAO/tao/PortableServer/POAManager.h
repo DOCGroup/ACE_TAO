@@ -47,7 +47,7 @@ class TAO_POAManager_Factory;
 namespace PortableServer
 {
   class POAManagerFactory;
-  typedef POAManagerFactory *POAManagerFactory_ptr;
+  using POAManagerFactory_ptr = POAManagerFactory *;
 }
 #endif
 
@@ -127,7 +127,7 @@ protected:
 
   ACE_Lock &lock_;
 
-  typedef ACE_Unbounded_Set<TAO_Root_POA *> POA_COLLECTION;
+  using POA_COLLECTION = ACE_Unbounded_Set<TAO_Root_POA *>;
 
   POA_COLLECTION poa_collection_;
 
