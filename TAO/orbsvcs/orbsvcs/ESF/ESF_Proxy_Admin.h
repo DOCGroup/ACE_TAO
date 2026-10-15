@@ -115,7 +115,7 @@ protected:
 
 private:
   /// Shorthand for the Proxy collection
-  typedef TAO_ESF_Proxy_Collection<PROXY> Collection;
+  using Collection = TAO_ESF_Proxy_Collection<PROXY>;
 
   /// The proxy collection object
   Collection *collection_;

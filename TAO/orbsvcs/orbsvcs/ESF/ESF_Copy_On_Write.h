@@ -57,7 +57,7 @@ class TAO_ESF_Copy_On_Write_Read_Guard
 {
 public:
   /// Constructor
-  typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
   TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &mutex,
                                     Collection *&collection);
 
@@ -86,7 +86,7 @@ class TAO_ESF_Copy_On_Write_Write_Guard
 {
 public:
   /// Constructor
-  typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
   TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &mutex,
                                      ACE_SYNCH_CONDITION_T &cond,
                                      int &pending_writes,
@@ -122,8 +122,8 @@ class TAO_ESF_Copy_On_Write : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   /// Constructor
-  typedef TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_SYNCH_MUTEX_T> Read_Guard;
-  typedef TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE> Write_Guard;
+  using Read_Guard = TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION, ITERATOR, ACE_SYNCH_MUTEX_T>;
+  using Write_Guard = TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION, ITERATOR, ACE_SYNCH_USE>;
   TAO_ESF_Copy_On_Write ();
 
   /// Destructor
@@ -137,7 +137,7 @@ public:
   virtual void shutdown ();
 
 private:
-  typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
 
   /// A mutex to serialize access to the collection pointer.
   ACE_SYNCH_MUTEX_T mutex_;

@@ -98,10 +98,14 @@ public:
   void disconnected_i (PROXY *proxy);
   void shutdown_i ();
 
-  typedef TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Connected_Command;
-  typedef TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Reconnected_Command;
-  typedef TAO_ESF_Disconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Disconnected_Command;
-  typedef TAO_ESF_Shutdown_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE> > Shutdown_Command;
+  using Connected_Command =
+    TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY, COLLECTION, ITERATOR, ACE_SYNCH_USE>, PROXY>;
+  using Reconnected_Command =
+    TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY, COLLECTION, ITERATOR, ACE_SYNCH_USE>, PROXY>;
+  using Disconnected_Command =
+    TAO_ESF_Disconnected_Command<TAO_ESF_Delayed_Changes<PROXY, COLLECTION, ITERATOR, ACE_SYNCH_USE>, PROXY>;
+  using Shutdown_Command =
+    TAO_ESF_Shutdown_Command<TAO_ESF_Delayed_Changes<PROXY, COLLECTION, ITERATOR, ACE_SYNCH_USE>>;
 
   // = The TAO_ESF_Proxy methods
   virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
@@ -113,7 +117,8 @@ public:
 private:
   COLLECTION collection_;
 
-  typedef TAO_ESF_Busy_Lock_Adapter<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE> > Busy_Lock;
+  using Busy_Lock =
+    TAO_ESF_Busy_Lock_Adapter<TAO_ESF_Delayed_Changes<PROXY, COLLECTION, ITERATOR, ACE_SYNCH_USE>>;
 
   Busy_Lock lock_;
 

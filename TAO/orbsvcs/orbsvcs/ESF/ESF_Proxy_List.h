@@ -32,10 +32,10 @@ class TAO_ESF_Proxy_List
 {
 public:
   /// A typedef for the underlying implementaiton class
-  typedef ACE_Unbounded_Set<PROXY*> Implementation;
+  using Implementation = ACE_Unbounded_Set<PROXY *>;
 
   /// A typedef for the underlying iterator
-  typedef ACE_Unbounded_Set_Iterator<PROXY*> Iterator;
+  using Iterator = ACE_Unbounded_Set_Iterator<PROXY *>;
 
   /// Constructor
   TAO_ESF_Proxy_List ();
