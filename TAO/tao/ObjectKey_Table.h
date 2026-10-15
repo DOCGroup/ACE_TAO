@@ -119,10 +119,10 @@ namespace TAO
     ObjectKey_Table &operator= (const ObjectKey_Table &) = delete;
 
     /// Some useful typedefs.
-    typedef ACE_RB_Tree<TAO::ObjectKey,
-                        TAO::Refcounted_ObjectKey *,
-                        TAO::Less_Than_ObjectKey,
-                        ACE_Null_Mutex> TABLE;
+    using TABLE = ACE_RB_Tree<TAO::ObjectKey,
+                              TAO::Refcounted_ObjectKey *,
+                              TAO::Less_Than_ObjectKey,
+                              ACE_Null_Mutex>;
 
     /// Lock for the table.
     TAO_SYNCH_MUTEX lock_;

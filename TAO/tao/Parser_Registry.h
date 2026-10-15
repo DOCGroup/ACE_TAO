@@ -55,7 +55,7 @@ public:
   TAO_IOR_Parser *match_parser (const char *ior_string);
 
   // = Iterator.
-  typedef TAO_IOR_Parser** Parser_Iterator;
+  using Parser_Iterator = TAO_IOR_Parser**;
   Parser_Iterator begin () const;
   Parser_Iterator end () const;
 

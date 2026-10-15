@@ -49,11 +49,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Object_Ref_Table
 {
 public:
-  typedef ACE_Array_Map<CORBA::String_var,
-                        CORBA::Object_var,
-                        TAO::String_Var_Equal_To> Table;
+  using Table = ACE_Array_Map<CORBA::String_var,
+                              CORBA::Object_var,
+                              TAO::String_Var_Equal_To>;
 
-  typedef Table::iterator iterator;
+  using iterator = Table::iterator;
 
   /// Constructor
   TAO_Object_Ref_Table ();

@@ -28,10 +28,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
+  using NamedValue_ptr = NamedValue *;
 }
 
 /**
