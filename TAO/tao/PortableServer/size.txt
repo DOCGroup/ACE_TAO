@@ -1,4 +1,0 @@
-   text    data     bss     dec     hex filename
-1176610   95992    3136 1275738  13775a libTAO_PortableServer.so
-
-
