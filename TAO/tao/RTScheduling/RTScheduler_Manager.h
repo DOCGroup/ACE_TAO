@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
-typedef TAO_RTScheduler_Manager *TAO_RTScheduler_Manager_ptr;
+using TAO_RTScheduler_Manager_ptr = TAO_RTScheduler_Manager *;
 
 /**
  * @class TAO_RTScheduler_Manager
@@ -41,8 +41,8 @@ public:
   RTScheduling::Scheduler_ptr rtscheduler ();
 
 public:
-  typedef TAO_RTScheduler_Manager_ptr _ptr_type;
-  typedef TAO_RTScheduler_Manager_var _var_type;
+  using _ptr_type = TAO_RTScheduler_Manager_ptr;
+  using _var_type = TAO_RTScheduler_Manager_var;
 
   // the static operations
   static TAO_RTScheduler_Manager_ptr _duplicate (TAO_RTScheduler_Manager_ptr obj);
