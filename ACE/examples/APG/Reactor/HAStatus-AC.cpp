@@ -10,8 +10,7 @@
 #include "ace/Reactor.h"
 #include "ace/Acceptor.h"
 
-typedef ACE_Acceptor<ClientService, ACE_SOCK_ACCEPTOR>
-  ClientAcceptor;
+using ClientAcceptor = ACE_Acceptor<ClientService, ACE_SOCK_ACCEPTOR>;
 // Listing 1
 
 // Listing 4 code/ch07

@@ -21,7 +21,7 @@
 class CommandStream : public ACE_Stream<ACE_MT_SYNCH>
 {
 public:
-  typedef ACE_Stream<ACE_MT_SYNCH> inherited;
+  using inherited = ACE_Stream<ACE_MT_SYNCH>;
 
   CommandStream (ACE_SOCK_Stream *peer)
     : inherited (), peer_(peer) { }

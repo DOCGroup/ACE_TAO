@@ -22,7 +22,7 @@
 class Client :
     public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> super;
+  using super = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 public:
   Client () : notifier_ (0, this, ACE_Event_Handler::WRITE_MASK)
