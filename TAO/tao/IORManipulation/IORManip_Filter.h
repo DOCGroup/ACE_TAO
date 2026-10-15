@@ -31,7 +31,7 @@ class TAO_MProfile;
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 class TAO_IORManip_Export TAO_IORManip_Filter
