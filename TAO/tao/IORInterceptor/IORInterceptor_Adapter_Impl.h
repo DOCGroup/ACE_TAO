@@ -29,9 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor,
-                            IORInterceptor_Details>
-    IORInterceptor_List;
+  using IORInterceptor_List = Interceptor_List< ::PortableInterceptor::IORInterceptor,
+                                                IORInterceptor_Details>;
 }
 
 class TAO_Root_POA;
