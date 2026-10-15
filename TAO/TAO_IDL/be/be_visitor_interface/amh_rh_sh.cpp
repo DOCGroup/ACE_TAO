@@ -53,9 +53,8 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   *os << "class " << rh_skel_class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "typedef " << rh_skel_class_name.c_str () << " *"
-      << rh_skel_class_name.c_str()
-      << "_ptr;" << be_nl_2;
+  *os << "using " << rh_skel_class_name.c_str () << "_ptr = "
+      << rh_skel_class_name.c_str () << " *;" << be_nl_2;
 
   ACE_CString inherit_client_parent = node->client_enclosing_scope ();
   inherit_client_parent +=  rh_base_class_name;

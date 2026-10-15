@@ -101,10 +101,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     {
       // Special Implementation for OpenDDS
       *os << be_nl_2
-          << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
+          << "using " << node->original_local_name ()
+          << " = ::TAO::DCPS::ZeroCopyDataSeq< "
           << node->base_type ()->full_name ()
-          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
-          << node->original_local_name ()
+          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE>"
           << ";" << be_nl;
     }
   else
@@ -129,7 +129,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
         }
       else
         {
-          *os << "typedef std::vector< ";
+          *os << "using " << node->local_name () << " = std::vector< ";
 
           // Generate the base type for the buffer.
           be_visitor_context ctx (*this->ctx_);
@@ -145,7 +145,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                                 -1);
             }
 
-          *os << "> " << node->local_name () << ";";
+          *os << ">;";
 
           os->gen_endif ();
           node->cli_hdr_gen (true);
@@ -302,15 +302,11 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
 
   AST_Type::SIZE_TYPE st = elem->size_type ();
 
-  *os << "typedef "
+  *os << "using " << node->local_name () << "_var = "
       << (st == AST_Type::FIXED ? "::TAO_FixedSeq_Var_T<"
                                 : "::TAO_VarSeq_Var_T<")
-      << node->local_name ();
+      << node->local_name () << ">;" << be_nl;
 
-  *os << "> "
-      << node->local_name () << "_var;" << be_nl;
-
-  *os << "typedef ::TAO_Seq_Out_T<"
-      << node->local_name ()
-      << "> " << node->local_name () << "_out;" << be_nl;
+  *os << "using " << node->local_name () << "_out = ::TAO_Seq_Out_T<"
+      << node->local_name () << ">;" << be_nl;
 }

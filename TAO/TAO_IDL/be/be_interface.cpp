@@ -767,8 +767,8 @@ be_interface::gen_var_out_seq_decls ()
     {
       *os << be_nl_2
           << "class AMI_" << lname << "Handler;" << be_nl
-          << "typedef AMI_" << lname << "Handler *AMI_"
-          << lname << "Handler_ptr;";
+          << "using AMI_" << lname << "Handler_ptr = AMI_"
+          << lname << "Handler *;";
      }
 
   if (be_global->ami4ccm_call_back ()
@@ -776,8 +776,8 @@ be_interface::gen_var_out_seq_decls ()
     {
       *os << be_nl_2
           << "class AMI4CCM_" << lname << "Handler;" << be_nl
-          << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
-          << lname << "Handler_ptr;";
+          << "using AMI4CCM_" << lname << "Handler_ptr = AMI4CCM_"
+          << lname << "Handler *;";
     }
 
   *os << be_nl_2

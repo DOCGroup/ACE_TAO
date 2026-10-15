@@ -61,8 +61,8 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << "class " << class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
-      << "_ptr;" << be_nl_2;
+  *os << "using " << class_name.c_str () << "_ptr = "
+      << class_name.c_str () << " *;" << be_nl_2;
 
   // Now generate the class definition.
   *os << "class " << be_global->skel_export_macro ()
