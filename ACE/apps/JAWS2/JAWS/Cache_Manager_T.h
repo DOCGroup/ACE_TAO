@@ -144,8 +144,7 @@ class JAWS_Cache_Proxy
 {
 public:
   using Cache_Manager = CACHE_MANAGER;
-  typedef ACE_Singleton<Cache_Manager, ACE_SYNCH_MUTEX>
-          Cache_Manager_Singleton;
+  using Cache_Manager_Singleton = ACE_Singleton<Cache_Manager, ACE_SYNCH_MUTEX>;
 
   JAWS_Cache_Proxy (const KEY &, Cache_Manager * = 0);
   // Corresponds to a GET
