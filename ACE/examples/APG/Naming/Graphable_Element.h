@@ -45,7 +45,7 @@ private:
   float temp_;
 };
 
-typedef std::list<Graphable_Element> Graphable_Element_List;
+using Graphable_Element_List = std::list<Graphable_Element>;
 // Listing 4
 
 #endif /* GRAPHABLE_ELEMENT_H */
