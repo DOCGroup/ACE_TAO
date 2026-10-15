@@ -126,7 +126,7 @@ namespace TAO
         // operator kind of like a "toString()" for debug statements
         operator const char * () const;
       };
-      typedef ReferenceKeyType OBJECT_KEY;
+      using OBJECT_KEY = ReferenceKeyType;
       // This is typedef'd because we might try to do something fancier
       // where, rather than having just a string as the key, we have a
       // structure and the structure precomputes some of the information
@@ -134,12 +134,11 @@ namespace TAO
       // comparison functors so that they use the precomputed information
       // rather than computing it each time.  For now, though, I want to
       // make this easy to get things working.
-      typedef ACE_Hash_Map_Manager_Ex<OBJECT_KEY,
-                                      CORBA::Boolean, // access_allowed?
-                                      ACE_Hash<OBJECT_KEY>,
-                                      ACE_Equal_To<OBJECT_KEY>,
-                                      ACE_Null_Mutex> // not sure this is right
-      ACCESS_MAP_TYPE;
+      using ACCESS_MAP_TYPE = ACE_Hash_Map_Manager_Ex<OBJECT_KEY,
+                                                       CORBA::Boolean, // access_allowed?
+                                                       ACE_Hash<OBJECT_KEY>,
+                                                       ACE_Equal_To<OBJECT_KEY>,
+                                                       ACE_Null_Mutex>; // not sure this is right
 
       ACCESS_MAP_TYPE access_map_;
 

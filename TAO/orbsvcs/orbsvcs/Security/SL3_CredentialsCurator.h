@@ -42,9 +42,9 @@ namespace TAO
     class CredentialsAcquirerFactory;
 
     class CredentialsCurator;
-    typedef CredentialsCurator* CredentialsCurator_ptr;
-    typedef TAO_Pseudo_Var_T<CredentialsCurator> CredentialsCurator_var;
-    typedef TAO_Pseudo_Out_T<CredentialsCurator> CredentialsCurator_out;
+    using CredentialsCurator_ptr = CredentialsCurator *;
+    using CredentialsCurator_var = TAO_Pseudo_Var_T<CredentialsCurator>;
+    using CredentialsCurator_out = TAO_Pseudo_Out_T<CredentialsCurator>;
 
     /**
      * @class CredentialsCurator
@@ -60,25 +60,25 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      typedef CredentialsCurator_ptr _ptr_type;
-      typedef CredentialsCurator_var _var_type;
-      typedef CredentialsCurator_out _out_type;
+      using _ptr_type = CredentialsCurator_ptr;
+      using _var_type = CredentialsCurator_var;
+      using _out_type = CredentialsCurator_out;
 
       /**
        * The type of table that maps acquisition method to acquirer
        * factory.
        */
-      typedef ACE_Map_Manager<const char *,
-                              TAO::SL3::CredentialsAcquirerFactory *,
-                              ACE_Null_Mutex> Acquirer_Factory_Table;
-      typedef Acquirer_Factory_Table::iterator Factory_Iterator;
+      using Acquirer_Factory_Table = ACE_Map_Manager<const char *,
+                                                      TAO::SL3::CredentialsAcquirerFactory *,
+                                                      ACE_Null_Mutex>;
+      using Factory_Iterator = Acquirer_Factory_Table::iterator;
 
-      typedef ACE_Hash_Map_Manager_Ex <const char *,
-                                       SecurityLevel3::OwnCredentials_var,
-                                       ACE_Hash<const char *>,
-                                       ACE_Equal_To<const char *>,
-                                       ACE_Null_Mutex> Credentials_Table;
-      typedef Credentials_Table::iterator Credentials_Iterator;
+      using Credentials_Table = ACE_Hash_Map_Manager_Ex<const char *,
+                                                         SecurityLevel3::OwnCredentials_var,
+                                                         ACE_Hash<const char *>,
+                                                         ACE_Equal_To<const char *>,
+                                                         ACE_Null_Mutex>;
+      using Credentials_Iterator = Credentials_Table::iterator;
 
       /// Constructor
       CredentialsCurator ();
