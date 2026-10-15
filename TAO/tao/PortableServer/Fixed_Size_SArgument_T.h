@@ -183,22 +183,22 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Fixed_Size_SArg_Traits_T
   {
-    typedef T                                               ret_type;
-    typedef T const &                                       in_type;
-    typedef T &                                             inout_type;
-    typedef T &                                             out_type;
+    using ret_type = T;
+    using in_type = T const &;
+    using inout_type = T &;
+    using out_type = T &;
 
-    typedef In_Fixed_Size_SArgument_T<T,Insert_Policy>      in_arg_val;
-    typedef Inout_Fixed_Size_SArgument_T<T,Insert_Policy>   inout_arg_val;
-    typedef Out_Fixed_Size_SArgument_T<T,Insert_Policy>     out_arg_val;
-    typedef Ret_Fixed_Size_SArgument_T<T,Insert_Policy>     ret_val;
+    using in_arg_val = In_Fixed_Size_SArgument_T<T, Insert_Policy>;
+    using inout_arg_val = Inout_Fixed_Size_SArgument_T<T, Insert_Policy>;
+    using out_arg_val = Out_Fixed_Size_SArgument_T<T, Insert_Policy>;
+    using ret_val = Ret_Fixed_Size_SArgument_T<T, Insert_Policy>;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                                         in_arg_type;
-    typedef inout_type                                      inout_arg_type;
-    typedef out_type                                        out_arg_type;
-    typedef out_type                                        ret_arg_type;
+    using in_arg_type = in_type;
+    using inout_arg_type = inout_type;
+    using out_arg_type = out_type;
+    using ret_arg_type = out_type;
   };
 }
 
