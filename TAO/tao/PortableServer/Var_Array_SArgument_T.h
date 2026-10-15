@@ -129,28 +129,24 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Var_Array_SArg_Traits_T
   {
-    typedef typename T_forany::_slice_type *            ret_type;
-    typedef const typename T_forany::_array_type        in_type;
-    typedef typename T_forany::_array_type              inout_type;
-    typedef T_out                                       out_type;
+    using ret_type = typename T_forany::_slice_type *;
+    using in_type = typename T_forany::_array_type const;
+    using inout_type = typename T_forany::_array_type;
+    using out_type = T_out;
 
-    typedef In_Var_Array_SArgument_T<T_forany,
-                                     Insert_Policy>     in_arg_val;
-    typedef Inout_Var_Array_SArgument_T<T_forany,
-                                        Insert_Policy>  inout_arg_val;
-    typedef Out_Var_Array_SArgument_T<typename T_out::_var_type,
-                                      T_forany,
-                                      Insert_Policy>    out_arg_val;
-    typedef Ret_Var_Array_SArgument_T<typename T_out::_var_type,
-                                      T_forany,
-                                      Insert_Policy>    ret_val;
+    using in_arg_val = In_Var_Array_SArgument_T<T_forany, Insert_Policy>;
+    using inout_arg_val = Inout_Var_Array_SArgument_T<T_forany, Insert_Policy>;
+    using out_arg_val =
+      Out_Var_Array_SArgument_T<typename T_out::_var_type, T_forany, Insert_Policy>;
+    using ret_val =
+      Ret_Var_Array_SArgument_T<typename T_out::_var_type, T_forany, Insert_Policy>;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef typename T_forany::_slice_type const *      in_arg_type;
-    typedef ret_type                                    inout_arg_type;
-    typedef ret_type &                                  out_arg_type;
-    typedef ret_type &                                  ret_arg_type;
+    using in_arg_type = typename T_forany::_slice_type const *;
+    using inout_arg_type = ret_type;
+    using out_arg_type = ret_type &;
+    using ret_arg_type = ret_type &;
   };
 }
 
