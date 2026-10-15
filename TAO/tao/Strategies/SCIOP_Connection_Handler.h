@@ -38,8 +38,8 @@ template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATIO
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
-        TAO_SCIOP_SVC_HANDLER;
+using TAO_SCIOP_SVC_HANDLER =
+  ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 
 // ****************************************************************
 

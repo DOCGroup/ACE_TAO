@@ -64,19 +64,17 @@ public:
   virtual char object_key_delimiter () const;
 
 public:
-  typedef TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>
-          TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY;
+  using TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY =
+    TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
 
-  typedef TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>
-          TAO_SCIOP_CONNECT_CREATION_STRATEGY;
+  using TAO_SCIOP_CONNECT_CREATION_STRATEGY =
+    TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
 
-  typedef ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler,
-                               ACE_SOCK_SEQPACK_CONNECTOR>
-          TAO_SCIOP_CONNECT_STRATEGY;
+  using TAO_SCIOP_CONNECT_STRATEGY = ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler,
+                                                           ACE_SOCK_SEQPACK_CONNECTOR>;
 
-  typedef ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler,
-                                 ACE_SOCK_SEQPACK_CONNECTOR>
-          TAO_SCIOP_BASE_CONNECTOR;
+  using TAO_SCIOP_BASE_CONNECTOR = ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler,
+                                                           ACE_SOCK_SEQPACK_CONNECTOR>;
 
 protected:
   // = The TAO_Connector methods, please check the documentation on
