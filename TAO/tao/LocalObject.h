@@ -34,9 +34,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class LocalObject;
-  typedef LocalObject *LocalObject_ptr;
-  typedef TAO_Pseudo_Var_T<LocalObject> LocalObject_var;
-  typedef TAO_Pseudo_Out_T<LocalObject> LocalObject_out;
+  using LocalObject_ptr = LocalObject *;
+  using LocalObject_var = TAO_Pseudo_Var_T<LocalObject>;
+  using LocalObject_out = TAO_Pseudo_Out_T<LocalObject>;
 
   /**
    * @class LocalObject
@@ -146,9 +146,9 @@ namespace CORBA
     virtual TAO::ObjectKey * _key ();
 
     /// Useful for template programming.
-    typedef LocalObject_ptr _ptr_type;
-    typedef LocalObject_var _var_type;
-    typedef LocalObject_out _out_type;
+    using _ptr_type = LocalObject_ptr;
+    using _var_type = LocalObject_var;
+    using _out_type = LocalObject_out;
 
   protected:
     /// Default constructor.

@@ -35,10 +35,10 @@ class TAO_Abstract_ServantBase;
 namespace CORBA
 {
   class AbstractBase;
-  typedef AbstractBase * AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 
-  typedef TAO_Pseudo_Var_T<AbstractBase> AbstractBase_var;
-  typedef TAO_Pseudo_Out_T<AbstractBase> AbstractBase_out;
+  using AbstractBase_var = TAO_Pseudo_Var_T<AbstractBase>;
+  using AbstractBase_out = TAO_Pseudo_Out_T<AbstractBase>;
 
   /**
    * @class AbstractBase
@@ -61,9 +61,9 @@ namespace CORBA
                   CORBA::Boolean,
                   TAO_Abstract_ServantBase *);
 
-    typedef CORBA::AbstractBase_ptr _ptr_type;
-    typedef CORBA::AbstractBase_var _var_type;
-    typedef CORBA::AbstractBase_out _out_type;
+    using _ptr_type = CORBA::AbstractBase_ptr;
+    using _var_type = CORBA::AbstractBase_var;
+    using _out_type = CORBA::AbstractBase_out;
 
     static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj);
     static CORBA::AbstractBase_ptr _duplicate (CORBA::AbstractBase_ptr obj);
