@@ -118,12 +118,12 @@ public:
 namespace CORBA
 {
   class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
+  using ValueFactory = ValueFactoryBase *;
 
   class ValueBase;
 
-  typedef TAO_Value_Var_T<ValueBase> ValueBase_var;
-  typedef TAO_Value_Out_T<ValueBase> ValueBase_out;
+  using ValueBase_var = TAO_Value_Var_T<ValueBase>;
+  using ValueBase_out = TAO_Value_Out_T<ValueBase>;
 
   /**
    * @class ValueBase
@@ -137,11 +137,11 @@ namespace CORBA
   public:
     friend class TAO_ChunkInfo;
 
-    typedef ValueBase* _ptr_type;
-    typedef ValueBase_var _var_type;
-    typedef ValueBase_out _out_type;
+    using _ptr_type = ValueBase *;
+    using _var_type = ValueBase_var;
+    using _out_type = ValueBase_out;
 
-    typedef ACE_Vector < ACE_CString > Repository_Id_List;
+    using Repository_Id_List = ACE_Vector<ACE_CString>;
 
     virtual CORBA::ValueBase* _copy_value () TAO_local_COPY_VALUE_IS_PURE;
 
