@@ -1,12 +1,8 @@
 #include "DLL_Service.h"
 
-ACE_DLL_Service::ACE_DLL_Service ()
-{
-}
+ACE_DLL_Service::ACE_DLL_Service () = default;
 
-ACE_DLL_Service::~ACE_DLL_Service ()
-{
-}
+ACE_DLL_Service::~ACE_DLL_Service () = default;
 
 int ACE_DLL_Service::init (int, ACE_TCHAR *[])
 {

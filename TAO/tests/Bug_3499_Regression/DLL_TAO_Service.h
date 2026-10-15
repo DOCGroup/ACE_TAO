@@ -10,11 +10,11 @@ class ACE_DLL_TAO_Service : public ACE_DLL_Service
 public:
   ACE_DLL_TAO_Service ();
 
-  virtual ~ACE_DLL_TAO_Service ();
+  ~ACE_DLL_TAO_Service () override;
 
-  virtual int init (int argc, ACE_TCHAR * argv []);
+  int init (int argc, ACE_TCHAR * argv []) override;
 
-  virtual int fini ();
+  int fini () override;
 
 private:
   CORBA::ORB_var orb_;
