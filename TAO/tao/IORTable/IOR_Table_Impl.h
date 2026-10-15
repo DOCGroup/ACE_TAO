@@ -34,9 +34,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IORTable_Export TAO_IOR_Table_Impl;
-typedef TAO_IOR_Table_Impl *TAO_IOR_Table_Impl_ptr;
-typedef TAO_Objref_Var_T <TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_var;
-typedef TAO_Objref_Out_T <TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_out;
+using TAO_IOR_Table_Impl_ptr = TAO_IOR_Table_Impl *;
+using TAO_IOR_Table_Impl_var = TAO_Objref_Var_T <TAO_IOR_Table_Impl>;
+using TAO_IOR_Table_Impl_out = TAO_Objref_Out_T <TAO_IOR_Table_Impl>;
 
 class TAO_IORTable_Export TAO_IOR_Table_Impl
   : public virtual IORTable::Table,

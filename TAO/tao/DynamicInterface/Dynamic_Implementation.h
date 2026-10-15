@@ -28,11 +28,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  typedef char *RepositoryId;
-  typedef String_var RepositoryId_var;
+  using RepositoryId = char *;
+  using RepositoryId_var = String_var;
 
   class ServerRequest;
-  typedef ServerRequest *ServerRequest_ptr;
+  using ServerRequest_ptr = ServerRequest *;
 }
 
 /**

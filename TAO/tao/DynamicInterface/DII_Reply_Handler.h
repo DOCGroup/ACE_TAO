@@ -25,7 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declaration
 class TAO_DII_Reply_Handler;
-typedef TAO_DII_Reply_Handler* TAO_DII_Reply_Handler_ptr;
+using TAO_DII_Reply_Handler_ptr = TAO_DII_Reply_Handler*;
 
 /**
  * @class TAO_DII_Reply_Handler_var
@@ -95,8 +95,8 @@ public:
 
   static int _tao_class_id;
 
-  typedef TAO_DII_Reply_Handler_ptr _ptr_type;
-  typedef TAO_DII_Reply_Handler_var _var_type;
+  using _ptr_type = TAO_DII_Reply_Handler_ptr;
+  using _var_type = TAO_DII_Reply_Handler_var;
 
   TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &) = delete;
   TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &) = delete;

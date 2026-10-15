@@ -36,7 +36,7 @@ namespace CORBA
 
 class TAO_AMH_Locate_ResponseHandler;
 
-typedef TAO_AMH_Locate_ResponseHandler *TAO_AMH_Locate_ResponseHandler_ptr;
+using TAO_AMH_Locate_ResponseHandler_ptr = TAO_AMH_Locate_ResponseHandler *;
 
 /**
  * @class TAO_AMH_Locate_ResponseHandler_var
@@ -98,8 +98,8 @@ class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler
   : public virtual TAO_AMH_Response_Handler
 {
 public:
-  typedef TAO_AMH_Locate_ResponseHandler_ptr _ptr_type;
-  typedef TAO_AMH_Locate_ResponseHandler_var _var_type;
+  using _ptr_type = TAO_AMH_Locate_ResponseHandler_ptr;
+  using _var_type = TAO_AMH_Locate_ResponseHandler_var;
 
   TAO_AMH_Locate_ResponseHandler (TAO_ServerRequest &sr);
   ~TAO_AMH_Locate_ResponseHandler ();
@@ -133,7 +133,7 @@ private:
 namespace IORTable
 {
   // satisfy the native type requirement for the asnyc locate interface
-  typedef const TAO_AMH_Locate_ResponseHandler_var &Locate_ResponseHandler;
+  using Locate_ResponseHandler = const TAO_AMH_Locate_ResponseHandler_var &;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

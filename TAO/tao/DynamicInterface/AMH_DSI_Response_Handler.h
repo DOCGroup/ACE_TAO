@@ -27,7 +27,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_AMH_DSI_Response_Handler;
-typedef TAO_AMH_DSI_Response_Handler *TAO_AMH_DSI_Response_Handler_ptr;
+using TAO_AMH_DSI_Response_Handler_ptr = TAO_AMH_DSI_Response_Handler *;
 
 /**
  * @class TAO_AMH_DSI_Response_Handler_var
@@ -65,7 +65,7 @@ private:
 };
 
 class TAO_AMH_DSI_Exception_Holder;
-typedef TAO_AMH_DSI_Exception_Holder *TAO_AMH_DSI_Exception_Holder_ptr;
+using TAO_AMH_DSI_Exception_Holder_ptr = TAO_AMH_DSI_Exception_Holder *;
 
 /**
  * @class TAO_AMH_DSI_Exception_Holder_var
@@ -141,7 +141,7 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
     public virtual CORBA::ValueBase
 {
 public:
-  typedef TAO_AMH_DSI_Exception_Holder_var _var_type;
+  using _var_type = TAO_AMH_DSI_Exception_Holder_var;
   TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
   virtual ~TAO_AMH_DSI_Exception_Holder ();
@@ -204,8 +204,8 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Response_Handler
   : public virtual TAO_AMH_Response_Handler
 {
 public:
-  typedef TAO_AMH_DSI_Response_Handler_ptr _ptr_type;
-  typedef TAO_AMH_DSI_Response_Handler_var _var_type;
+  using _ptr_type = TAO_AMH_DSI_Response_Handler_ptr;
+  using _var_type = TAO_AMH_DSI_Response_Handler_var;
 
   TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
   ~TAO_AMH_DSI_Response_Handler ();
