@@ -26,30 +26,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
   class ORB;
-  typedef ORB *ORB_ptr;
+  using ORB_ptr = ORB *;
 
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
+  using NamedValue_ptr = NamedValue *;
 
   class ExceptionList;
-  typedef ExceptionList *ExceptionList_ptr;
+  using ExceptionList_ptr = ExceptionList *;
 
   class Request;
-  typedef Request *Request_ptr;
+  using Request_ptr = Request *;
 
   class Context;
-  typedef Context *Context_ptr;
+  using Context_ptr = Context *;
 
   class ServerRequest;
-  typedef ServerRequest *ServerRequest_ptr;
+  using ServerRequest_ptr = ServerRequest *;
 
-  typedef ULong Flags;
+  using Flags = ULong;
 }
 
 /**
