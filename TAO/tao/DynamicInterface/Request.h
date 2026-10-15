@@ -47,13 +47,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class Context;
-  typedef Context *Context_ptr;
+  using Context_ptr = Context *;
 
   class ContextList;
-  typedef ContextList *ContextList_ptr;
+  using ContextList_ptr = ContextList *;
 
   /**
    * @class Request
@@ -189,9 +189,9 @@ namespace CORBA
     CORBA::Boolean response_received ();
 
     // Useful for template programming.
-    typedef CORBA::Request_ptr _ptr_type;
-    typedef CORBA::Request_var _var_type;
-    typedef CORBA::Request_out _out_type;
+    using _ptr_type = CORBA::Request_ptr;
+    using _var_type = CORBA::Request_var;
+    using _out_type = CORBA::Request_out;
 
   private:
     friend class ::TAO_Dynamic_Adapter_Impl;
