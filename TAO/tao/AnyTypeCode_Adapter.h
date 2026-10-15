@@ -31,12 +31,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
   class Any;
 
   class Policy;
-  typedef Policy *Policy_ptr;
+  using Policy_ptr = Policy *;
 
   class BooleanSeq;
   class OctetSeq;

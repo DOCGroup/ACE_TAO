@@ -30,19 +30,19 @@ class TAO_OutputCDR;
 namespace CORBA
 {
   class InterfaceDef;
-  typedef InterfaceDef *InterfaceDef_ptr;
+  using InterfaceDef_ptr = InterfaceDef *;
 
   class ORB;
-  typedef ORB *ORB_ptr;
+  using ORB_ptr = ORB *;
 
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
   class OperationDef;
-  typedef OperationDef *OperationDef_ptr;
+  using OperationDef_ptr = OperationDef *;
 
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 }
 
 /**
