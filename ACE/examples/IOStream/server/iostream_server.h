@@ -15,7 +15,7 @@
 // like an iostream.  The new ACE_SOCK_IOStream type can be used
 // anywhere an ACE_SOCK_Stream is used.
 
-typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
+using ACE_SOCK_IOStream = ACE_IOStream<ACE_SOCK_Stream>;
 
 class Handler : public ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_NULL_SYNCH>
   // = TITLE
