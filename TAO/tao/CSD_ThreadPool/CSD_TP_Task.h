@@ -35,7 +35,7 @@ namespace TAO
   namespace CSD
   {
     /// Typedef for the number of threads.
-    typedef unsigned long Thread_Counter;
+    using Thread_Counter = unsigned long;
 
     /**
      * @class TP_Task
@@ -102,8 +102,8 @@ namespace TAO
       void cancel_servant (PortableServer::Servant servant);
 
     private:
-      typedef TAO_SYNCH_MUTEX         LockType;
-      typedef TAO_Condition<LockType> ConditionType;
+      using LockType = TAO_SYNCH_MUTEX;
+      using ConditionType = TAO_Condition<LockType>;
 
       /// Lock to protect the "state" (all of the data members) of this object.
       LockType lock_;
@@ -141,7 +141,7 @@ namespace TAO
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TP_Queue queue_;
 
-      typedef ACE_Vector <ACE_thread_t> Thread_Ids;
+      using Thread_Ids = ACE_Vector <ACE_thread_t>;
 
       /// The list of ids for the threads launched by this task.
       Thread_Ids activated_threads_;

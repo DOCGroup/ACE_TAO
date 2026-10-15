@@ -71,10 +71,10 @@ namespace TAO
       };
 
       /// Thread lock type
-      typedef TAO_SYNCH_MUTEX LockType;
+      using LockType = TAO_SYNCH_MUTEX;
 
       /// Thread condition type
-      typedef TAO_Condition<LockType> ConditionType;
+      using ConditionType = TAO_Condition<LockType>;
 
       /// Lock used to protect the state and condition.
       LockType lock_;

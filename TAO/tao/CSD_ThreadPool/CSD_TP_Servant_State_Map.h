@@ -62,11 +62,11 @@ namespace TAO
     private:
       /// Underlying Map Type - Hash-Based -
       /// Key Type: void*, Value Type: TP_Servant_State::HandleType
-      typedef ACE_Hash_Map_Manager_Ex<void*,
-                                      TP_Servant_State::HandleType,
-                                      ACE_Hash<void*>,
-                                      ACE_Equal_To<void*>,
-                                      TAO_SYNCH_MUTEX>            MapType;
+      using MapType = ACE_Hash_Map_Manager_Ex<void*,
+                                                TP_Servant_State::HandleType,
+                                                ACE_Hash<void*>,
+                                                ACE_Equal_To<void*>,
+                                                TAO_SYNCH_MUTEX>;
 
       /// The underlying map of servant state objects.
       MapType map_;
