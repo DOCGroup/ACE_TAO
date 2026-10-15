@@ -26,25 +26,25 @@
 #if defined (ACE_HAS_FORE_ATM_XTI)
 #include "ace/TLI.h"
 #define ATM_PROTOCOL_DEFAULT 0
-typedef struct t_info Param_Info;
-typedef struct netbuf Param_Udata;
+using Param_Info = struct t_info;
+using Param_Udata = struct netbuf;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
 #include "ace/SOCK.h"
 #define ATM_PROTOCOL_DEFAULT ATMPROTO_AAL5
 #define ACE_XTI_ATM_DEVICE ""
-typedef int Param_Info;
-typedef int Param_Udata;
+using Param_Info = int;
+using Param_Udata = int;
 #elif defined (ACE_HAS_LINUX_ATM)
 #include /**/ "atm.h"
 #define AF_ATM PF_ATMSVC
 #define ACE_XTI_ATM_DEVICE ""
 #define ATM_PROTOCOL_DEFAULT ATM_AAL5
-typedef int Param_Info;
-typedef int Param_Udata;
+using Param_Info = int;
+using Param_Udata = int;
 #else
 #define ACE_XTI_ATM_DEVICE ""
-typedef int Param_Info;
-typedef int Param_Udata;
+using Param_Info = int;
+using Param_Udata = int;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -41,17 +41,17 @@
 
 #if defined (ACE_WIN32)
 #  include "ace/WIN32_Asynch_IO.h"
-typedef ACE_WIN32_Asynch_Result              A_RESULT;
-typedef ACE_WIN32_Asynch_Read_Stream_Result  ARS_RESULT;
-typedef ACE_WIN32_Asynch_Write_Stream_Result AWS_RESULT;
+using A_RESULT = ACE_WIN32_Asynch_Result;
+using ARS_RESULT = ACE_WIN32_Asynch_Read_Stream_Result;
+using AWS_RESULT = ACE_WIN32_Asynch_Write_Stream_Result;
 
 # define ERR_CANCELED ERROR_OPERATION_ABORTED
 
 #else
 #  include "ace/POSIX_Asynch_IO.h"
-typedef ACE_POSIX_Asynch_Result              A_RESULT;
-typedef ACE_POSIX_Asynch_Read_Stream_Result  ARS_RESULT;
-typedef ACE_POSIX_Asynch_Write_Stream_Result AWS_RESULT;
+using A_RESULT = ACE_POSIX_Asynch_Result;
+using ARS_RESULT = ACE_POSIX_Asynch_Read_Stream_Result;
+using AWS_RESULT = ACE_POSIX_Asynch_Write_Stream_Result;
 
 # define ERR_CANCELED ECANCELED
 
