@@ -5,8 +5,8 @@
 #include "CPP-connector.h"
 
 
-typedef Peer_Handler<ACE_SOCK_STREAM> PEER_HANDLER;
-typedef IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR> IPC_CLIENT;
+using PEER_HANDLER = Peer_Handler<ACE_SOCK_STREAM>;
+using IPC_CLIENT = IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
 
 // ACE_SOCK Client.
 

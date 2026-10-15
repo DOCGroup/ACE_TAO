@@ -7,8 +7,8 @@
 
 #if defined (ACE_HAS_TLI)
 
-typedef Peer_Handler<ACE_TLI_STREAM> PEER_HANDLER;
-typedef IPC_Client<PEER_HANDLER, ACE_TLI_CONNECTOR> IPC_CLIENT;
+using PEER_HANDLER = Peer_Handler<ACE_TLI_STREAM>;
+using IPC_CLIENT = IPC_Client<PEER_HANDLER, ACE_TLI_CONNECTOR>;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
