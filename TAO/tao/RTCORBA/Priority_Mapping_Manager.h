@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Priority_Mapping_Manager;
 class TAO_Priority_Mapping_Manager_var;
-typedef TAO_Priority_Mapping_Manager *TAO_Priority_Mapping_Manager_ptr;
+using TAO_Priority_Mapping_Manager_ptr = TAO_Priority_Mapping_Manager *;
 
 
 /**
@@ -53,8 +53,8 @@ public:
   RTCORBA::PriorityMapping *mapping ();
 
 public:
-  typedef TAO_Priority_Mapping_Manager_ptr _ptr_type;
-  typedef TAO_Priority_Mapping_Manager_var _var_type;
+  using _ptr_type = TAO_Priority_Mapping_Manager_ptr;
+  using _var_type = TAO_Priority_Mapping_Manager_var;
 
   // the static operations
   static TAO_Priority_Mapping_Manager_ptr _duplicate (TAO_Priority_Mapping_Manager_ptr obj);

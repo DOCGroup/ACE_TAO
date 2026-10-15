@@ -395,7 +395,7 @@ public:
   TAO_Thread_Pool *get_threadpool (RTCORBA::ThreadpoolId thread_pool_id);
 
   /// Collection of thread pools.
-  typedef ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Null_Mutex> THREAD_POOLS;
+  using THREAD_POOLS = ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Null_Mutex>;
 
   /// @name Accessors
   // @{
