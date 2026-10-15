@@ -60,11 +60,9 @@ namespace TAO
     class HTIOP_Export Connector : public TAO_Connector
     {
     public:
-      typedef TAO_Connect_Concurrency_Strategy<Connection_Handler>
-      CONNECT_CONCURRENCY_STRATEGY;
+      using CONNECT_CONCURRENCY_STRATEGY = TAO_Connect_Concurrency_Strategy<Connection_Handler>;
 
-      typedef TAO_Connect_Creation_Strategy<Connection_Handler>
-      CONNECT_CREATION_STRATEGY;
+      using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<Connection_Handler>;
 
       /// Initialization and termination methods.
       /// Constructor.

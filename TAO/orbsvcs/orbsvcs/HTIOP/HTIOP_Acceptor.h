@@ -75,10 +75,10 @@ namespace TAO
       /// Returns the array of endpoints in this acceptor
       const ACE::HTBP::Addr *endpoints ();
 
-      typedef TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
-      typedef Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
-      typedef Concurrency_Strategy<Completion_Handler> CONCURRENCY_STRATEGY;
-      typedef Accept_Strategy<Completion_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+      using BASE_ACCEPTOR = TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR>;
+      using CREATION_STRATEGY = Creation_Strategy<Completion_Handler>;
+      using CONCURRENCY_STRATEGY = Concurrency_Strategy<Completion_Handler>;
+      using ACCEPT_STRATEGY = Accept_Strategy<Completion_Handler, ACE_SOCK_ACCEPTOR>;
 
       /**
        * The TAO::Acceptor methods, check the documentation in
