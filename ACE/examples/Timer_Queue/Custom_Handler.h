@@ -58,9 +58,7 @@ class Custom_Handler
 class ACE_Svc_Export Custom_Handler_Upcall
 {
     public:
-        typedef ACE_Timer_Queue_T<Custom_Handler*,
-                                  Custom_Handler_Upcall,
-                                  ACE_Null_Mutex> TTimerQueue;
+        using TTimerQueue = ACE_Timer_Queue_T<Custom_Handler *, Custom_Handler_Upcall, ACE_Null_Mutex>;
 
         // Default constructor
         Custom_Handler_Upcall()
