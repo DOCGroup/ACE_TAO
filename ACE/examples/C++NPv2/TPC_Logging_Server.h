@@ -54,8 +54,7 @@ protected:
   SSL *ssl_;
 
 public:
-  typedef ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_ACCEPTOR>
-          PARENT;
+  using PARENT = ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_ACCEPTOR>;
   using PEER_ADDR = ACE_SOCK_Acceptor::PEER_ADDR;
 
   // Constructor.

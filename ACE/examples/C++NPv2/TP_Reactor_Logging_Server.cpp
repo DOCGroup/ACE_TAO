@@ -19,8 +19,7 @@
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 
-typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
-        Server_Logging_Daemon;
+using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_Ex>;
 
 
 class Quit_Handler : public ACE_Event_Handler {
