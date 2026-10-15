@@ -32,7 +32,7 @@ class TAO_LogMgr_i;
 namespace CORBA
 {
   class ORB;
-  typedef ORB* ORB_ptr;
+  using ORB_ptr = ORB *;
 }
 
 /**

@@ -92,9 +92,9 @@ private:
   ACE_SYNCH_RW_MUTEX  lock_;
 
   /// Define the HASHMAP.
-  typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
-                                TAO_Hash_LogRecordStore*,
-                                ACE_Null_Mutex> HASHMAP;
+  using HASHMAP = ACE_Hash_Map_Manager<DsLogAdmin::LogId,
+                                       TAO_Hash_LogRecordStore *,
+                                       ACE_Null_Mutex>;
 
   /// The map of Logs created.
   HASHMAP hash_map_;
