@@ -51,13 +51,13 @@ namespace Dynamic
 {
   class ParameterList;
   class ExceptionList;
-  typedef CORBA::StringSeq RequestContext;
-  typedef CORBA::StringSeq ContextList;
+  using RequestContext = CORBA::StringSeq;
+  using ContextList = CORBA::StringSeq;
 }
 
 namespace Messaging
 {
-  typedef CORBA::Short SyncScope;
+  using SyncScope = CORBA::Short;
 }
 
 /**

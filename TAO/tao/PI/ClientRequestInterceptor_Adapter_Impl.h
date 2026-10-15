@@ -38,9 +38,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor,
-                            ClientRequestDetails>
-    ClientRequestInterceptor_List;
+  using ClientRequestInterceptor_List =
+    Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor,
+                      ClientRequestDetails>;
 }
 
 class TAO_ClientRequestInfo;

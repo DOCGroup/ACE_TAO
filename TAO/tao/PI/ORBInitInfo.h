@@ -33,13 +33,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_ORBInitInfo;
-typedef TAO_ORBInitInfo *TAO_ORBInitInfo_ptr;
+using TAO_ORBInitInfo_ptr = TAO_ORBInitInfo *;
 
-typedef TAO_Objref_Var_T<TAO_ORBInitInfo>
-                         TAO_ORBInitInfo_var;
+using TAO_ORBInitInfo_var = TAO_Objref_Var_T<TAO_ORBInitInfo>;
 
-typedef TAO_Objref_Out_T<TAO_ORBInitInfo>
-                         TAO_ORBInitInfo_out;
+using TAO_ORBInitInfo_out = TAO_Objref_Out_T<TAO_ORBInitInfo>;
 
 /**
  * @class TAO_ORBInitInfo
@@ -190,8 +188,8 @@ public:
    * TAO_ORBInitInfo-specific methods and types.
    */
   //@{
-  typedef TAO_ORBInitInfo_ptr _ptr_type;
-  typedef TAO_ORBInitInfo_var _var_type;
+  using _ptr_type = TAO_ORBInitInfo_ptr;
+  using _var_type = TAO_ORBInitInfo_var;
 
   static TAO_ORBInitInfo_ptr _duplicate (TAO_ORBInitInfo_ptr obj);
 
