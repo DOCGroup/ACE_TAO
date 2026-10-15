@@ -18,7 +18,7 @@
 
 // ****************************************************************
 
-typedef ACE_CDR::UShort ACE_UTF16_T;
+using ACE_UTF16_T = ACE_CDR::UShort;
 static constexpr size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
 static constexpr ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE = static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
 static constexpr unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
