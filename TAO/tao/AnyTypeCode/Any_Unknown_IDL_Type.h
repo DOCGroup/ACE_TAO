@@ -76,9 +76,8 @@ namespace TAO
     // initialized at the first invocation. Using ACE_Refcounted_Auto_Ptr
     // ensures that the ref count will not drop to zero until the library
     // is unloaded *and* all Unknown_IDL_Type instances have been destroyed.
-    typedef ACE_Refcounted_Auto_Ptr<ACE_Lock,
-                                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
-      LOCK;
+    using LOCK = ACE_Refcounted_Auto_Ptr<ACE_Lock,
+                                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
     static LOCK const lock_i ();
     LOCK const lock_;
     mutable TAO_InputCDR cdr_;
