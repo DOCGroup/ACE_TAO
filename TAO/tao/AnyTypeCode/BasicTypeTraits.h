@@ -224,9 +224,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::Char * insert_type;
-    typedef const CORBA::Char * extract_type;
-    typedef const CORBA::Char * return_type;
+    using insert_type = CORBA::Char *;
+    using extract_type = const CORBA::Char *;
+    using return_type = const CORBA::Char *;
 
     static return_type convert (extract_type& et);
   };
@@ -237,9 +237,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::WChar * insert_type;
-    typedef const CORBA::WChar * extract_type;
-    typedef const CORBA::WChar * return_type;
+    using insert_type = CORBA::WChar *;
+    using extract_type = const CORBA::WChar *;
+    using return_type = const CORBA::WChar *;
 
     static return_type convert (extract_type& et);
   };
@@ -250,9 +250,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::Any insert_type;
-    typedef const CORBA::Any * extract_type;
-    typedef const CORBA::Any * return_type;
+    using insert_type = CORBA::Any;
+    using extract_type = const CORBA::Any *;
+    using return_type = const CORBA::Any *;
 
     static return_type convert (extract_type& et);
   };
@@ -263,9 +263,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::Object_ptr insert_type;
-    typedef CORBA::Object_ptr extract_type;
-    typedef CORBA::Object_ptr return_type;
+    using insert_type = CORBA::Object_ptr;
+    using extract_type = CORBA::Object_ptr;
+    using return_type = CORBA::Object_ptr;
 
     static return_type convert (extract_type& et);
   };
@@ -276,9 +276,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::TypeCode_ptr insert_type;
-    typedef const CORBA::TypeCode_ptr extract_type;
-    typedef CORBA::TypeCode_ptr return_type;
+    using insert_type = CORBA::TypeCode_ptr;
+    using extract_type = const CORBA::TypeCode_ptr;
+    using return_type = CORBA::TypeCode_ptr;
 
     static return_type convert (extract_type& et);
   };
