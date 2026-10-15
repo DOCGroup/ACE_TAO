@@ -121,22 +121,22 @@ namespace TAO
   template<typename T, typename T_var, typename T_out>
   struct UB_String_SArg_Traits_T
   {
-    typedef T *                                         ret_type;
-    typedef const T *                                   in_type;
-    typedef T *&                                        inout_type;
-    typedef T_out                                       out_type;
+    using ret_type = T *;
+    using in_type = T const *;
+    using inout_type = T *&;
+    using out_type = T_out;
 
-    typedef In_UB_String_SArgument_T<T,T_var>           in_arg_val;
-    typedef Inout_UB_String_SArgument_T<T,T_var>        inout_arg_val;
-    typedef Out_UB_String_SArgument_T<T,T_var>          out_arg_val;
-    typedef Ret_UB_String_SArgument_T<T,T_var>          ret_val;
+    using in_arg_val = In_UB_String_SArgument_T<T, T_var>;
+    using inout_arg_val = Inout_UB_String_SArgument_T<T, T_var>;
+    using out_arg_val = Out_UB_String_SArgument_T<T, T_var>;
+    using ret_val = Ret_UB_String_SArgument_T<T, T_var>;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                                     in_arg_type;
-    typedef inout_type                                  inout_arg_type;
-    typedef inout_type                                  out_arg_type;
-    typedef inout_type                                  ret_arg_type;
+    using in_arg_type = in_type;
+    using inout_arg_type = inout_type;
+    using out_arg_type = inout_type;
+    using ret_arg_type = inout_type;
   };
 }
 
