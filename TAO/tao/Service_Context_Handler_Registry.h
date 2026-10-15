@@ -60,13 +60,13 @@ class TAO_Export TAO_Service_Context_Registry
       TAO_OutputCDR &msg);
 
   private:
-    typedef ACE_Array_Map<IOP::ServiceId,
-                          TAO_Service_Context_Handler*> Table;
-    typedef Table::key_type   key_type;
-    typedef Table::data_type  data_type;
-    typedef Table::value_type value_type;
-    typedef Table::size_type  size_type;
-    typedef value_type *      iterator;
+    using Table = ACE_Array_Map<IOP::ServiceId,
+                                TAO_Service_Context_Handler*>;
+    using key_type = Table::key_type;
+    using data_type = Table::data_type;
+    using value_type = Table::value_type;
+    using size_type = Table::size_type;
+    using iterator = value_type *;
 
     Table registry_;
 };

@@ -68,14 +68,14 @@ namespace TAO
      */
     ORB_Table ();
 
-    typedef ACE_Array_Map<CORBA::String_var,
-                          ORB_Core_Ref_Counter,
-                          TAO::String_Var_Equal_To> Table;
-    typedef Table::key_type   key_type;
-    typedef Table::data_type  data_type;
-    typedef Table::value_type value_type;
-    typedef Table::size_type  size_type;
-    typedef Table::iterator   iterator;
+    using Table = ACE_Array_Map<CORBA::String_var,
+                                ORB_Core_Ref_Counter,
+                                TAO::String_Var_Equal_To>;
+    using key_type = Table::key_type;
+    using data_type = Table::data_type;
+    using value_type = Table::value_type;
+    using size_type = Table::size_type;
+    using iterator = Table::iterator;
 
     /**
      * @name The canonical ACE_Map methods.
