@@ -10,7 +10,7 @@
 #define BACKING_STORE "queue.dat"
 #define QUEUE_NAME "queue.db"
 
-typedef ACE_Allocator_Adapter<ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> > ALLOCATOR;
+using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>>;
 
 ACE_Process_Mutex coordMutex("Coord-Mutex");
 
@@ -19,7 +19,7 @@ template <class T>
 class Unbounded_Queue : public ACE_Unbounded_Queue<T>
 {
 public:
-  typedef ACE_Unbounded_Queue<T> BASE;
+  using BASE = ACE_Unbounded_Queue<T>;
 
   Unbounded_Queue(ACE_Allocator* allocator)
     : ACE_Unbounded_Queue<T> (allocator)
@@ -47,7 +47,7 @@ public:
 
 #include "Record.h"
 
-typedef Unbounded_Queue<Record> QUEUE;
+using QUEUE = Unbounded_Queue<Record>;
 
 QUEUE* squeue(ALLOCATOR* shmem_allocator)
 {
