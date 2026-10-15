@@ -36,10 +36,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ServerRequest;
-  typedef ServerRequest *ServerRequest_ptr;
+  using ServerRequest_ptr = ServerRequest *;
 
-  typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
-  typedef TAO_Pseudo_Out_T<ServerRequest> ServerRequest_out;
+  using ServerRequest_var = TAO_Pseudo_Var_T<ServerRequest>;
+  using ServerRequest_out = TAO_Pseudo_Out_T<ServerRequest>;
 
   /**
    * @class ServerRequest
@@ -125,9 +125,9 @@ namespace CORBA
     void gateway_exception_reply (ACE_CString &raw_exception);
 
     /// Useful for template programming.
-    typedef CORBA::ServerRequest_ptr _ptr_type;
-    typedef CORBA::ServerRequest_var _var_type;
-    typedef CORBA::ServerRequest_out _out_type;
+    using _ptr_type = CORBA::ServerRequest_ptr;
+    using _var_type = CORBA::ServerRequest_var;
+    using _out_type = CORBA::ServerRequest_out;
 
   private:
     /// If zero then the NVList is evaluated ASAP.
