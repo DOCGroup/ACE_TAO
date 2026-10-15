@@ -17,7 +17,7 @@ class Session;
 class HostProcess;
 class Invocation;
 
-typedef ACE_DLList<HostProcess> HostProcesses;
+using HostProcesses = ACE_DLList<HostProcess>;
 
 class Incident
 {
@@ -29,7 +29,7 @@ public:
   Invocation *invocation_;
 };
 
-typedef ACE_Unbounded_Queue<Incident> IncidentList;
+using IncidentList = ACE_Unbounded_Queue<Incident>;
 
 
 class Log

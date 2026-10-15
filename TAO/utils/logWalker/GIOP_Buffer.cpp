@@ -80,7 +80,7 @@ struct ReplyHeader_1_0 { // Renamed from ReplyHeader
          ReplyStatusType_1_0          reply_status;
     };
     // GIOP 1.1
-    typedef ReplyHeader_1_0 ReplyHeader_1_1;
+    using ReplyHeader_1_1 = ReplyHeader_1_0;
     // Same Header contents for 1.0 and 1.1
 #else
     // GIOP 1.2, 1.3

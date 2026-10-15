@@ -59,10 +59,10 @@ public:
 };
 
 
-typedef ACE_RB_Tree<u_long, PeerObject*, ACE_Less_Than<u_long>, ACE_Null_Mutex> PeerObjectTable;
-typedef ACE_RB_Tree<long, PeerObject*, ACE_Less_Than<long>, ACE_Null_Mutex> ObjectByIndex;
-typedef ACE_DLList<Invocation> InvocationList;
-typedef ACE_DLList<Transport> TransportList;
+using PeerObjectTable = ACE_RB_Tree<u_long, PeerObject *, ACE_Less_Than<u_long>, ACE_Null_Mutex>;
+using ObjectByIndex = ACE_RB_Tree<long, PeerObject *, ACE_Less_Than<long>, ACE_Null_Mutex>;
+using InvocationList = ACE_DLList<Invocation>;
+using TransportList = ACE_DLList<Transport>;
 
 class PeerProcess
 {

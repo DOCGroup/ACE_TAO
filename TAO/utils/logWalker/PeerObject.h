@@ -12,8 +12,8 @@
 class PeerProcess;
 class Invocation;
 
-typedef ACE_Unbounded_Queue<Invocation*> Invocations;
-typedef ACE_Unbounded_Queue_Iterator<Invocation*> InvocationIter;
+using Invocations = ACE_Unbounded_Queue<Invocation *>;
+using InvocationIter = ACE_Unbounded_Queue_Iterator<Invocation *>;
 
 class PeerObject
 {
