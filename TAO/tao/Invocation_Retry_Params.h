@@ -33,7 +33,7 @@ namespace TAO
   {
     Invocation_Retry_Params();
 
-    typedef ACE_Array_Map<int, int> exception_limit_map_type;
+    using exception_limit_map_type = ACE_Array_Map<int, int>;
 
     /**
      * The maximum number of retry attempts per exception type

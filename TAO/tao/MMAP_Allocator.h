@@ -31,7 +31,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // An ACE_Lite_MMAP_Memory_Pool is used since sync()ing is not
 // needed.  All memory allocated by the TAO_MMAP_Allocator is meant
 // for strictly transient data, not persistent.
-typedef ACE_Allocator_Adapter <ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX> > TAO_MMAP_Allocator_Base;
+using TAO_MMAP_Allocator_Base =
+  ACE_Allocator_Adapter <ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX> >;
 
 /**
  * @class TAO_MMAP_Allocator
