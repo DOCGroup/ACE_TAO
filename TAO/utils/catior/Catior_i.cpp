@@ -857,7 +857,7 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
 CORBA::Boolean
 Catior_i::cat_security_association (const CORBA::UShort& a) {
   // Copied from Security.idl
-  typedef CORBA::UShort AssociationOptions;
+  using AssociationOptions = CORBA::UShort;
   const AssociationOptions NoProtection = 1;
   const AssociationOptions Integrity = 2;
   const AssociationOptions Confidentiality = 4;
@@ -892,7 +892,7 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
     Decode the following from the stream (copied from SSLIOP.idl)
 
       module Security {
-        typedef unsigned short AssociationOptions;
+        using AssociationOptions = unsigned short;
       };
       ...
       module SSLIOP {
