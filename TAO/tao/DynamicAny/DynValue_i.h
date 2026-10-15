@@ -87,7 +87,7 @@ public:
 
 private:
   /// List of base types.
-  typedef ACE_Array_Base<CORBA::TypeCode_var> BaseTypesList_t;
+  using BaseTypesList_t = ACE_Array_Base<CORBA::TypeCode_var>;
 
   /// Decompose the given TypeCode into its hierarchical list of
   /// basetypes. The first element of the list is our actual type,
