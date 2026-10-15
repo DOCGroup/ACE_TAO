@@ -40,8 +40,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
-  typedef TAO_Pseudo_Out_T<TypeCode> TypeCode_out;
+  using TypeCode_var = TAO_Pseudo_Var_T<TypeCode>;
+  using TypeCode_out = TAO_Pseudo_Out_T<TypeCode>;
 
   /**
    * @class TypeCode
@@ -416,9 +416,9 @@ namespace CORBA
     /// Destruction callback for Anys.
     static void _tao_any_destructor (void * x);
 
-    typedef CORBA::TypeCode_ptr _ptr_type;
-    typedef CORBA::TypeCode_var _var_type;
-    typedef CORBA::TypeCode_out _out_type;
+    using _ptr_type = CORBA::TypeCode_ptr;
+    using _var_type = CORBA::TypeCode_var;
+    using _out_type = CORBA::TypeCode_out;
 
   protected:
     /// Constructor.

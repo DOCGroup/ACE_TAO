@@ -37,15 +37,15 @@ namespace TAO
 namespace CORBA
 {
   class Any;
-  typedef Any *Any_ptr;
+  using Any_ptr = Any *;
   class Any_var;
   class Any_out;
 
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
   class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 
   class ValueBase;
   class Exception;
@@ -62,9 +62,9 @@ namespace CORBA
   class TAO_AnyTypeCode_Export Any
   {
   public:
-    typedef Any_ptr _ptr_type;
-    typedef Any_var _var_type;
-    typedef Any_out _out_type;
+    using _ptr_type = Any_ptr;
+    using _var_type = Any_var;
+    using _out_type = Any_out;
 
     Any () = default;
     Any (const Any &);
@@ -82,12 +82,12 @@ namespace CORBA
     /// that they be here, we just typedef to the already-defined
     /// ACE_OutputCDR types.
 
-    typedef ACE_OutputCDR::from_boolean from_boolean;
-    typedef ACE_OutputCDR::from_octet from_octet;
-    typedef ACE_OutputCDR::from_char from_char;
-    typedef ACE_OutputCDR::from_wchar from_wchar;
-    typedef ACE_OutputCDR::from_string from_string;
-    typedef ACE_OutputCDR::from_wstring from_wstring;
+    using from_boolean = ACE_OutputCDR::from_boolean;
+    using from_octet = ACE_OutputCDR::from_octet;
+    using from_char = ACE_OutputCDR::from_char;
+    using from_wchar = ACE_OutputCDR::from_wchar;
+    using from_string = ACE_OutputCDR::from_string;
+    using from_wstring = ACE_OutputCDR::from_wstring;
 
     /// Insertion of the special types.
 
@@ -101,12 +101,12 @@ namespace CORBA
     /// These extract octets, chars, booleans, bounded strings, and
     /// object references. All these are defined in ACE_InputCDR.
 
-    typedef ACE_InputCDR::to_boolean to_boolean;
-    typedef ACE_InputCDR::to_char to_char;
-    typedef ACE_InputCDR::to_wchar to_wchar;
-    typedef ACE_InputCDR::to_octet to_octet;
-    typedef ACE_InputCDR::to_string to_string;
-    typedef ACE_InputCDR::to_wstring to_wstring;
+    using to_boolean = ACE_InputCDR::to_boolean;
+    using to_char = ACE_InputCDR::to_char;
+    using to_wchar = ACE_InputCDR::to_wchar;
+    using to_octet = ACE_InputCDR::to_octet;
+    using to_string = ACE_InputCDR::to_string;
+    using to_wstring = ACE_InputCDR::to_wstring;
 
     /// These are not in ACE.
 

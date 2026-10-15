@@ -56,8 +56,8 @@ namespace TAO
     public:
       /// @typedef Type of individual case array element, not the
       ///          array itself.
-      typedef TAO::TypeCode::Case<char const *,
-                                  CORBA::TypeCode_ptr const *> case_type;
+      using case_type = TAO::TypeCode::Case<char const *,
+                                             CORBA::TypeCode_ptr const *>;
 
       /// Constructor.
       Union (char const * id,

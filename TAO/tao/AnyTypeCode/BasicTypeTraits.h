@@ -289,9 +289,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::BooleanSeq insert_type;
-    typedef const CORBA::BooleanSeq * extract_type;
-    typedef const CORBA::BooleanSeq * return_type;
+    using insert_type = CORBA::BooleanSeq;
+    using extract_type = const CORBA::BooleanSeq *;
+    using return_type = const CORBA::BooleanSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -302,9 +302,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value ;
 
-    typedef CORBA::OctetSeq insert_type;
-    typedef const CORBA::OctetSeq * extract_type;
-    typedef const CORBA::OctetSeq * return_type;
+    using insert_type = CORBA::OctetSeq;
+    using extract_type = const CORBA::OctetSeq *;
+    using return_type = const CORBA::OctetSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -315,9 +315,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::CharSeq insert_type;
-    typedef const CORBA::CharSeq * extract_type;
-    typedef const CORBA::CharSeq * return_type;
+    using insert_type = CORBA::CharSeq;
+    using extract_type = const CORBA::CharSeq *;
+    using return_type = const CORBA::CharSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -328,9 +328,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::WCharSeq insert_type;
-    typedef const CORBA::WCharSeq * extract_type;
-    typedef const CORBA::WCharSeq * return_type;
+    using insert_type = CORBA::WCharSeq;
+    using extract_type = const CORBA::WCharSeq *;
+    using return_type = const CORBA::WCharSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -341,9 +341,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::ShortSeq insert_type;
-    typedef const CORBA::ShortSeq * extract_type;
-    typedef const CORBA::ShortSeq * return_type;
+    using insert_type = CORBA::ShortSeq;
+    using extract_type = const CORBA::ShortSeq *;
+    using return_type = const CORBA::ShortSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -354,9 +354,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::UShortSeq insert_type;
-    typedef const CORBA::UShortSeq * extract_type;
-    typedef const CORBA::UShortSeq * return_type;
+    using insert_type = CORBA::UShortSeq;
+    using extract_type = const CORBA::UShortSeq *;
+    using return_type = const CORBA::UShortSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -367,9 +367,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::LongSeq insert_type;
-    typedef const CORBA::LongSeq * extract_type;
-    typedef const CORBA::LongSeq * return_type;
+    using insert_type = CORBA::LongSeq;
+    using extract_type = const CORBA::LongSeq *;
+    using return_type = const CORBA::LongSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -380,9 +380,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::ULongSeq insert_type;
-    typedef const CORBA::ULongSeq * extract_type;
-    typedef const CORBA::ULongSeq * return_type;
+    using insert_type = CORBA::ULongSeq;
+    using extract_type = const CORBA::ULongSeq *;
+    using return_type = const CORBA::ULongSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -393,9 +393,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::LongLongSeq insert_type;
-    typedef const CORBA::LongLongSeq * extract_type;
-    typedef const CORBA::LongLongSeq * return_type;
+    using insert_type = CORBA::LongLongSeq;
+    using extract_type = const CORBA::LongLongSeq *;
+    using return_type = const CORBA::LongLongSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -406,9 +406,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::ULongLongSeq insert_type;
-    typedef const CORBA::ULongLongSeq * extract_type;
-    typedef const CORBA::ULongLongSeq * return_type;
+    using insert_type = CORBA::ULongLongSeq;
+    using extract_type = const CORBA::ULongLongSeq *;
+    using return_type = const CORBA::ULongLongSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -419,9 +419,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::FloatSeq insert_type;
-    typedef const CORBA::FloatSeq * extract_type;
-    typedef const CORBA::FloatSeq * return_type;
+    using insert_type = CORBA::FloatSeq;
+    using extract_type = const CORBA::FloatSeq *;
+    using return_type = const CORBA::FloatSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -432,9 +432,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::DoubleSeq insert_type;
-    typedef const CORBA::DoubleSeq * extract_type;
-    typedef const CORBA::DoubleSeq * return_type;
+    using insert_type = CORBA::DoubleSeq;
+    using extract_type = const CORBA::DoubleSeq *;
+    using return_type = const CORBA::DoubleSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -445,9 +445,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::LongDoubleSeq insert_type;
-    typedef const CORBA::LongDoubleSeq * extract_type;
-    typedef const CORBA::LongDoubleSeq * return_type;
+    using insert_type = CORBA::LongDoubleSeq;
+    using extract_type = const CORBA::LongDoubleSeq *;
+    using return_type = const CORBA::LongDoubleSeq *;
 
     static return_type convert (extract_type& et);
   };
@@ -458,9 +458,9 @@ namespace TAO
     static CORBA::TypeCode_ptr const tc_value;
     static CORBA::TCKind const tckind_value;
 
-    typedef CORBA::AnySeq insert_type;
-    typedef const CORBA::AnySeq * extract_type;
-    typedef const CORBA::AnySeq * return_type;
+    using insert_type = CORBA::AnySeq;
+    using extract_type = const CORBA::AnySeq *;
+    using return_type = const CORBA::AnySeq *;
 
     static return_type convert (extract_type& et);
   };

@@ -102,11 +102,11 @@ namespace TAO
         { "completed", &CORBA::_tc_CompletionStatus }
       };
 
-    typedef TAO::TypeCode::Struct<char const *,
-                                  CORBA::TypeCode_ptr const *,
-                                  TAO::TypeCode::Struct_Field<char const *,
-                                                              CORBA::TypeCode_ptr const *> const *,
-                                  TAO::Null_RefCount_Policy> tc_SystemException;
+    using tc_SystemException = TAO::TypeCode::Struct<char const *,
+                                                      CORBA::TypeCode_ptr const *,
+                                                      TAO::TypeCode::Struct_Field<char const *,
+                                                                                  CORBA::TypeCode_ptr const *> const *,
+                                                      TAO::Null_RefCount_Policy>;
   }
 }
 
