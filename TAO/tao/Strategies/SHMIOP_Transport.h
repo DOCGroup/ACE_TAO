@@ -37,8 +37,7 @@ class TAO_SHMIOP_Connection_Handler;
 class TAO_Target_Specification;
 class Tao_Operation_Details;
 
-typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
-         TAO_SHMIOP_SVC_HANDLER;
+using TAO_SHMIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
 
 /**
  * @class TAO_SHMIOP_Transport

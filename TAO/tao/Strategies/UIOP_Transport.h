@@ -35,8 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Core;
 class TAO_UIOP_Connection_Handler;
 
-typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_UIOP_SVC_HANDLER;
+using TAO_UIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
 
 /**
  * @class TAO_UIOP_Transport

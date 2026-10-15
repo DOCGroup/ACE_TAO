@@ -35,8 +35,7 @@ class TAO_Operation_Details;
 class TAO_Acceptor;
 
 // Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_COIOP_SVC_HANDLER;
+using TAO_COIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 /**
  * @class TAO_COIOP_Transport

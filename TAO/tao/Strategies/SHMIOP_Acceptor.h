@@ -46,10 +46,10 @@ public:
   /// Destructor.
   ~TAO_SHMIOP_Acceptor ();
 
-  typedef TAO_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_ACCEPT_STRATEGY;
+  using TAO_SHMIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;
+  using TAO_SHMIOP_CREATION_STRATEGY = TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
+  using TAO_SHMIOP_CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;
+  using TAO_SHMIOP_ACCEPT_STRATEGY = TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;
 
   /**
    * @name The TAO_Acceptor Methods

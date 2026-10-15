@@ -51,10 +51,10 @@ public:
   /// Destructor
   virtual ~TAO_UIOP_Acceptor ();
 
-  typedef TAO_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_ACCEPT_STRATEGY;
+  using TAO_UIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
+  using TAO_UIOP_CREATION_STRATEGY = TAO_Creation_Strategy<TAO_UIOP_Connection_Handler>;
+  using TAO_UIOP_CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
+  using TAO_UIOP_ACCEPT_STRATEGY = TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
 
   /**
    * @name The TAO_Acceptor Methods

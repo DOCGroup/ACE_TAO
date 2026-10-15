@@ -58,10 +58,10 @@ public:
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints ();
 
-  typedef TAO_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR> TAO_SCIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_SCIOP_Connection_Handler> TAO_SCIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_SCIOP_Connection_Handler> TAO_SCIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR> TAO_SCIOP_ACCEPT_STRATEGY;
+  using TAO_SCIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
+  using TAO_SCIOP_CREATION_STRATEGY = TAO_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
+  using TAO_SCIOP_CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
+  using TAO_SCIOP_ACCEPT_STRATEGY = TAO_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
 
   /**
    * The TAO_Acceptor methods, check the documentation in

@@ -77,19 +77,17 @@ public:
   //@}
 
 public:
-  typedef TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
-          TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY;
+  using TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY =
+    TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
 
-  typedef TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>
-          TAO_UIOP_CONNECT_CREATION_STRATEGY;
+  using TAO_UIOP_CONNECT_CREATION_STRATEGY =
+    TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>;
 
-  typedef ACE_Connect_Strategy<TAO_UIOP_Connection_Handler,
-                               ACE_LSOCK_CONNECTOR>
-          TAO_UIOP_CONNECT_STRATEGY;
+  using TAO_UIOP_CONNECT_STRATEGY =
+    ACE_Connect_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
 
-  typedef ACE_Strategy_Connector<TAO_UIOP_Connection_Handler,
-                                 ACE_LSOCK_CONNECTOR>
-          TAO_UIOP_BASE_CONNECTOR;
+  using TAO_UIOP_BASE_CONNECTOR =
+    ACE_Strategy_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
 
 protected:
   /**
