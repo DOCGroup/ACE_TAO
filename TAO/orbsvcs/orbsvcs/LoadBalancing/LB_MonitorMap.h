@@ -27,12 +27,12 @@
 
 
 /// Load monitor hash map.
-typedef ACE_Hash_Map_Manager_Ex<
+using TAO_LB_MonitorMap = ACE_Hash_Map_Manager_Ex<
   PortableGroup::Location,
   CosLoadBalancing::LoadMonitor_var,
   TAO_PG_Location_Hash,
   TAO_PG_Location_Equal_To,
-  ACE_Null_Mutex> TAO_LB_MonitorMap;
+  ACE_Null_Mutex>;
 
 
 #include /**/ "ace/post.h"
