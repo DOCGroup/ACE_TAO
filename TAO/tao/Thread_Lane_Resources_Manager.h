@@ -70,8 +70,9 @@ public:
   // @}
 
 private:
-  void operator= (const TAO_Thread_Lane_Resources_Manager &);
-  TAO_Thread_Lane_Resources_Manager (const TAO_Thread_Lane_Resources_Manager &);
+  TAO_Thread_Lane_Resources_Manager (TAO_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_Thread_Lane_Resources_Manager &operator= (
+    TAO_Thread_Lane_Resources_Manager const &) = delete;
 
 protected:
   /// The ORB Core.
