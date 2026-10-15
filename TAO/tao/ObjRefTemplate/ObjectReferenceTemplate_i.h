@@ -35,8 +35,8 @@ namespace PortableServer
 {
   class POA;
 
-  typedef POA *POA_ptr;
-  typedef TAO_Objref_Var_T<POA> POA_var;
+  using POA_ptr = POA *;
+  using POA_var = TAO_Objref_Var_T<POA>;
 }
 
 namespace TAO
