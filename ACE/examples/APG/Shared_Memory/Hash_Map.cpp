@@ -13,11 +13,10 @@
 
 #include "Record.h"
 
-typedef ACE_Allocator_Adapter<ACE_Malloc_T <ACE_MMAP_MEMORY_POOL,
-                                            ACE_Process_Mutex,
-                                            ACE_Control_Block>
-                             > ALLOCATOR;
-typedef ACE_Hash_Map_With_Allocator<int, Record> HASH_MAP;
+using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,
+                                                     ACE_Process_Mutex,
+                                                     ACE_Control_Block>>;
+using HASH_MAP = ACE_Hash_Map_With_Allocator<int, Record>;
 
 ACE_Process_Mutex coordMutex("Coord-Mutex");
 // Listing 1
