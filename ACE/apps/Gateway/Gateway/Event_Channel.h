@@ -114,13 +114,10 @@ private:
   /// Used to establish connections passively and create Consumers.
   Connection_Handler_Acceptor consumer_acceptor_;
 
-  // = Make life easier by defining typedefs.
-  typedef ACE_Map_Manager<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>
-  CONNECTION_MAP;
-  typedef ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>
-  CONNECTION_MAP_ITERATOR;
-  typedef ACE_Map_Entry<CONNECTION_ID, Connection_Handler *>
-  CONNECTION_MAP_ENTRY;
+  // = Make life easier by defining aliases.
+  using CONNECTION_MAP = ACE_Map_Manager<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
+  using CONNECTION_MAP_ITERATOR = ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
+  using CONNECTION_MAP_ENTRY = ACE_Map_Entry<CONNECTION_ID, Connection_Handler *>;
 
   /// Table that maps <CONNECTION_ID>s to <Connection_Handler> *'s.
   CONNECTION_MAP connection_map_;
