@@ -55,16 +55,18 @@ public:
   TAO_Default_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector_Factory ();
+  ~TAO_Default_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
+  TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
   // Prevent copying/assignment.
-  TAO_Default_Endpoint_Selector_Factory (TAO_Default_Endpoint_Selector_Factory const &);
-  void operator= (TAO_Default_Endpoint_Selector_Factory const &);
+  TAO_Default_Endpoint_Selector_Factory (
+    TAO_Default_Endpoint_Selector_Factory const &) = delete;
+  TAO_Default_Endpoint_Selector_Factory &operator= (
+    TAO_Default_Endpoint_Selector_Factory const &) = delete;
 
 protected:
   /// The possible endpoint selector strategies that can be
