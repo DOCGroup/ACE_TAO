@@ -60,8 +60,7 @@ public:
   }
 };
 
-typedef ACE_Connector <HTTP_Sink_Svc_Handler, ACE_SOCK_CONNECTOR>
-        HTTP_Sink_Connector;
+using HTTP_Sink_Connector = ACE_Connector<HTTP_Sink_Svc_Handler, ACE_SOCK_CONNECTOR>;
 
 
 class HTTP_Make_Request_Event_Handler
@@ -147,10 +146,8 @@ public:
   }
 };
 
-typedef ACE_Select_Reactor_Token_T<ACE_Noop_Token>
-        ACE_Select_Reactor_Noop_Token;
-typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>
-        ACE_Select_NULL_LOCK_Reactor;
+using ACE_Select_Reactor_Noop_Token = ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
+using ACE_Select_NULL_LOCK_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

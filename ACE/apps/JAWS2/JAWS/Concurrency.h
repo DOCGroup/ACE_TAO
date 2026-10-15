@@ -118,13 +118,10 @@ private:
   int maxthreads_;
 };
 
-typedef ACE_Singleton<JAWS_Dispatcher, ACE_SYNCH_MUTEX>
-        JAWS_Dispatcher_Singleton;
+using JAWS_Dispatcher_Singleton = ACE_Singleton<JAWS_Dispatcher, ACE_SYNCH_MUTEX>;
 
-typedef ACE_Singleton<JAWS_Thread_Pool_Task, ACE_SYNCH_MUTEX>
-        JAWS_Thread_Pool_Singleton;
+using JAWS_Thread_Pool_Singleton = ACE_Singleton<JAWS_Thread_Pool_Task, ACE_SYNCH_MUTEX>;
 
-typedef ACE_Singleton<JAWS_Thread_Per_Task, ACE_SYNCH_MUTEX>
-        JAWS_Thread_Per_Singleton;
+using JAWS_Thread_Per_Singleton = ACE_Singleton<JAWS_Thread_Per_Task, ACE_SYNCH_MUTEX>;
 
 #endif /* !defined (JAWS_CONCURRENCY_H) */

@@ -125,10 +125,8 @@ private:
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 };
 
-typedef ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>
-        JAWS_IO_Synch_Acceptor_Singleton;
+using JAWS_IO_Synch_Acceptor_Singleton = ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>;
 
-typedef ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>
-        JAWS_IO_Asynch_Acceptor_Singleton;
+using JAWS_IO_Asynch_Acceptor_Singleton = ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>;
 
 #endif /* !defined (JAWS_IO_ACCEPTOR_H) */

@@ -45,10 +45,8 @@ public:
   virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
 };
 
-typedef ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>
-        JAWS_Pipeline_Accept_Task_Singleton;
+using JAWS_Pipeline_Accept_Task_Singleton = ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>;
 
-typedef ACE_Singleton<JAWS_Pipeline_Done_Task, ACE_SYNCH_NULL_MUTEX>
-        JAWS_Pipeline_Done_Task_Singleton;
+using JAWS_Pipeline_Done_Task_Singleton = ACE_Singleton<JAWS_Pipeline_Done_Task, ACE_SYNCH_NULL_MUTEX>;
 
 #endif /* !defined (JAWS_PIPELINE_TASKS_H) */
