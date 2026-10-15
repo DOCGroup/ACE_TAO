@@ -31,7 +31,7 @@ namespace TAO
   {
     template <typename StringType, typename TypeCodeType> class Case;
 
-    typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
+    using Case_Dynamic = Case<CORBA::String_var, CORBA::TypeCode_var>;
   }
 }
 
