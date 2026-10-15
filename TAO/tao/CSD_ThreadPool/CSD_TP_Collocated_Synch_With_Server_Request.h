@@ -29,9 +29,8 @@ namespace TAO
   namespace CSD
   {
     class TP_Collocated_Synch_With_Server_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle
-            <TP_Collocated_Synch_With_Server_Request>
-                              TP_Collocated_Synch_With_Server_Request_Handle;
+    using TP_Collocated_Synch_With_Server_Request_Handle =
+      TAO_Intrusive_Ref_Count_Handle<TP_Collocated_Synch_With_Server_Request>;
 
     /**
      * @class TP_Collocated_Synch_With_Server_Request

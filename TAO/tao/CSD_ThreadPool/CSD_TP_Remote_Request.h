@@ -28,8 +28,7 @@ namespace TAO
   namespace CSD
   {
     class TP_Remote_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Remote_Request>
-                                             TP_Remote_Request_Handle;
+    using TP_Remote_Request_Handle = TAO_Intrusive_Ref_Count_Handle<TP_Remote_Request>;
 
     /**
      * @class TP_Remote_Request

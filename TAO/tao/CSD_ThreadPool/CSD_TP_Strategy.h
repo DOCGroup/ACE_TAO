@@ -33,7 +33,7 @@ namespace TAO
   namespace CSD
   {
     class TP_Strategy;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Strategy> TP_Strategy_Handle;
+    using TP_Strategy_Handle = TAO_Intrusive_Ref_Count_Handle<TP_Strategy>;
 
     class TP_Custom_Request_Operation;
 

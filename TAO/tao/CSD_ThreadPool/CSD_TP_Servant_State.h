@@ -55,7 +55,7 @@ namespace TAO
     {
     public:
       /// Handle Type (aka, Smart Pointer Type).
-      typedef TAO_Intrusive_Ref_Count_Handle<TP_Servant_State> HandleType;
+      using HandleType = TAO_Intrusive_Ref_Count_Handle<TP_Servant_State>;
 
       /// Default Constructor.
       TP_Servant_State();

@@ -32,8 +32,7 @@ namespace TAO
   namespace CSD
   {
     class TP_Corba_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Corba_Request>
-                                             TP_Corba_Request_Handle;
+    using TP_Corba_Request_Handle = TAO_Intrusive_Ref_Count_Handle<TP_Corba_Request>;
 
     /**
      * @class TP_Corba_Request
