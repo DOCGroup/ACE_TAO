@@ -118,10 +118,10 @@ private:
 
   void validate_state_change (LFS_STATE new_state);
 
-  typedef ACE_Hash_Map_Manager_Ex <TAO_LF_Follower *, int,
-                                   ACE_Hash<void *>,
-                                   ACE_Equal_To<TAO_LF_Follower *>,
-                                   TAO_SYNCH_MUTEX>                  HASH_MAP;
+  using HASH_MAP = ACE_Hash_Map_Manager_Ex <TAO_LF_Follower *, int,
+                                            ACE_Hash<void *>,
+                                            ACE_Equal_To<TAO_LF_Follower *>,
+                                            TAO_SYNCH_MUTEX>;
   HASH_MAP followers_;
 };
 
