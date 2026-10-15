@@ -273,7 +273,7 @@ public:
   int close ();
 
   /// Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_INET_Addr;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
