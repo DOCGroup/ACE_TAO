@@ -26,15 +26,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
   class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 
   class ValueBase;
 
   class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
+  using ValueFactory = ValueFactoryBase *;
 }
 
 class TAO_InputCDR;

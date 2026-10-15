@@ -67,7 +67,7 @@ public:
   /// Add a new codeset
   void add_translator (const ACE_TCHAR* name);
 
-  typedef ACE_Unbounded_Queue_Iterator<ACE_TCHAR*> iterator;
+  using iterator = ACE_Unbounded_Queue_Iterator<ACE_TCHAR*>;
 
   /// Iterate through the registered translators
   iterator translators ();

@@ -49,7 +49,7 @@ namespace CORBA
 
 namespace TAO
 {
-  typedef CORBA::SystemException* (*excp_factory)();
+  using excp_factory = CORBA::SystemException* (*) ();
 }
 
 namespace CORBA

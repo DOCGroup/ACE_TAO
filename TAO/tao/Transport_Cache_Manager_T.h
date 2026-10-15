@@ -263,7 +263,7 @@ namespace TAO
     static int cpscmp(const void* a, const void* b);
 #endif
 
-    typedef HASH_MAP_ENTRY** DESCRIPTOR_SET;
+    using DESCRIPTOR_SET = HASH_MAP_ENTRY**;
 
     /// Sort the list of entries
     void sort_set (DESCRIPTOR_SET& entries, int size);

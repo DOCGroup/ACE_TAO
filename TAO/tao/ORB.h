@@ -39,14 +39,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef enum
+enum TAO_Service_ID
 {
   TAO_SERVICEID_NAMESERVICE,
   TAO_SERVICEID_TRADINGSERVICE,
   TAO_SERVICEID_IMPLREPOSERVICE,
   TAO_SERVICEID_INTERFACEREPOSERVICE,
   TAO_SERVICEID_MCASTSERVER
-} TAO_Service_ID;
+};
 
 /// Forward declarations.
 class TAO_MProfile;
@@ -97,17 +97,9 @@ namespace CORBA
 
   // TODO - implement OMG's 'ORBid CORBA::ORB::id ()'.
 
-  typedef
-    TAO_VarSeq_Var_T<
-        ORB_ObjectIdList
-      >
-    ORB_ObjectIdList_var;
+  using ORB_ObjectIdList_var = TAO_VarSeq_Var_T<ORB_ObjectIdList>;
 
-  typedef
-    TAO_Seq_Out_T<
-        ORB_ObjectIdList
-      >
-    ORB_ObjectIdList_out;
+  using ORB_ObjectIdList_out = TAO_Seq_Out_T<ORB_ObjectIdList>;
 
   class ValueFactoryBase;
   using ValueFactory = ValueFactoryBase *;
@@ -130,23 +122,12 @@ namespace CORBA
 
     // Typedefs for CORBA::RequestSeq, which is an argument of
     // send_multiple_requests_*().
-    typedef
-      TAO::unbounded_object_reference_sequence<
-          CORBA::Request, CORBA::Request_var
-        >
-      RequestSeq;
+    using RequestSeq = TAO::unbounded_object_reference_sequence<CORBA::Request,
+                                                                  CORBA::Request_var>;
 
-    typedef
-      TAO_VarSeq_Var_T<
-          RequestSeq
-        >
-      RequestSeq_var;
+    using RequestSeq_var = TAO_VarSeq_Var_T<RequestSeq>;
 
-    typedef
-      TAO_Seq_Out_T<
-          RequestSeq
-        >
-      RequestSeq_out;
+    using RequestSeq_out = TAO_Seq_Out_T<RequestSeq>;
 #endif
 
   /**

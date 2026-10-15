@@ -27,10 +27,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
   class ORB;
-  typedef ORB *ORB_ptr;
+  using ORB_ptr = ORB *;
 }
 
 /**

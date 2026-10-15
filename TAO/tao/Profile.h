@@ -386,7 +386,7 @@ private:
 
 // A helper class to handle the various kinds of octet sequences used
 // inside the ORB.
-typedef TAO::unbounded_value_sequence<CORBA::Octet> TAO_opaque;
+using TAO_opaque = TAO::unbounded_value_sequence<CORBA::Octet>;
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const TAO_opaque&);

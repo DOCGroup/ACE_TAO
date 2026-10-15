@@ -751,7 +751,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // block for a long time writing out data.
   int flush_result;
   {
-    typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+    using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
     TAO_REVERSE_LOCK reverse (*this->handler_lock_);
     ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
 
@@ -837,7 +837,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
     }
   else if (result == TAO_Flushing_Strategy::MUST_FLUSH)
     {
-      typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+      using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
       TAO_REVERSE_LOCK reverse (*this->handler_lock_);
       ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
       (void) flushing_strategy->flush_transport (this, nullptr);
@@ -971,7 +971,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
       int const result = flushing_strategy->schedule_output (this);
       if (result == TAO_Flushing_Strategy::MUST_FLUSH)
         {
-          typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+          using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
           TAO_REVERSE_LOCK reverse (*this->handler_lock_);
           ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
           if (flushing_strategy->flush_transport (this, nullptr) == -1)
@@ -1705,7 +1705,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
           size_t const sent_byte = sent_byte_count_;
           int ret = 0;
           {
-            typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+            using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
             TAO_REVERSE_LOCK reverse (*this->handler_lock_);
             ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
             ret = flushing_strategy->flush_transport (this, max_wait_time);

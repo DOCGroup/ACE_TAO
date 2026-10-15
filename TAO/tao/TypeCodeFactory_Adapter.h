@@ -35,10 +35,10 @@ namespace CORBA
   class UnionMemberSeq;
   class ValueMemberSeq;
 
-  typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
-  typedef TAO_Pseudo_Out_T<TypeCode> TypeCode_out;
+  using TypeCode_var = TAO_Pseudo_Var_T<TypeCode>;
+  using TypeCode_out = TAO_Pseudo_Out_T<TypeCode>;
 
-  typedef CORBA::Short ValueModifier;
+  using ValueModifier = CORBA::Short;
 }
 
 namespace TAO

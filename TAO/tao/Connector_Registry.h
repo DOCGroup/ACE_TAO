@@ -32,7 +32,7 @@ class TAO_MProfile;
 class TAO_Profile;
 class TAO_InputCDR;
 
-typedef TAO_Connector** TAO_ConnectorSetIterator;
+using TAO_ConnectorSetIterator = TAO_Connector**;
 
 /**
  * @class TAO_Connector_Registry

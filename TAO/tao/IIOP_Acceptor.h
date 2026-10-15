@@ -64,10 +64,10 @@ public:
   /// Set address for default endpoint
   void set_default_address (const ACE_INET_Addr& addr);
 
-  typedef TAO_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+  using BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+  using CREATION_STRATEGY = TAO_Creation_Strategy<TAO_IIOP_Connection_Handler>;
+  using CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
+  using ACCEPT_STRATEGY = TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
   /**
    * The TAO_Acceptor methods, check the documentation in

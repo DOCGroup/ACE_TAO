@@ -54,7 +54,7 @@ class TAO_AMH_Response_Handler;
 namespace CORBA
 {
   class ORB;
-  typedef ORB *ORB_ptr;
+  using ORB_ptr = ORB *;
 
   class Exception;
 }

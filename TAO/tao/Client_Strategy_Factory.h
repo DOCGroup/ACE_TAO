@@ -44,7 +44,7 @@ class TAO_Connect_Strategy;
 
 namespace Messaging
 {
-  typedef ::CORBA::Short SyncScope;
+  using SyncScope = ::CORBA::Short;
 }
 
 /**

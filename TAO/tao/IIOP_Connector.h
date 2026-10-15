@@ -67,19 +67,17 @@ public:
   virtual char object_key_delimiter () const;
 
 public:
-  typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
-          TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY;
+  using TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY =
+    TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
 
-  typedef TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>
-          TAO_IIOP_CONNECT_CREATION_STRATEGY;
+  using TAO_IIOP_CONNECT_CREATION_STRATEGY =
+    TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>;
 
-  typedef ACE_Connect_Strategy<TAO_IIOP_Connection_Handler,
-                               ACE_SOCK_CONNECTOR>
-          TAO_IIOP_CONNECT_STRATEGY;
+  using TAO_IIOP_CONNECT_STRATEGY = ACE_Connect_Strategy<TAO_IIOP_Connection_Handler,
+                                                          ACE_SOCK_CONNECTOR>;
 
-  typedef ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
-                                 ACE_SOCK_CONNECTOR>
-          TAO_IIOP_BASE_CONNECTOR;
+  using TAO_IIOP_BASE_CONNECTOR = ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
+                                                          ACE_SOCK_CONNECTOR>;
 
 protected:
   /// A flag indicating the actual connector supports parallel
