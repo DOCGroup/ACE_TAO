@@ -72,10 +72,10 @@ public:
   //@}
 
 protected:
-  typedef ACE_Hash_Map_Manager_Ex <ACE_CString, ACE_CString,
-                                   ACE_Hash <ACE_CString>,
-                                   ACE_Equal_To <ACE_CString>,
-                                   ACE_Null_Mutex> Map;
+  using Map = ACE_Hash_Map_Manager_Ex <ACE_CString, ACE_CString,
+                                       ACE_Hash <ACE_CString>,
+                                       ACE_Equal_To <ACE_CString>,
+                                       ACE_Null_Mutex>;
 
   /// The map
   Map map_;
