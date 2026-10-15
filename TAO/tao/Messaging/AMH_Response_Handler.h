@@ -40,7 +40,7 @@ class TAO_Output_CDR;
 class TAO_ORB_Core;
 class TAO_ServerRequest;
 
-typedef ACE_Allocator TAO_AMH_BUFFER_ALLOCATOR;
+using TAO_AMH_BUFFER_ALLOCATOR = ACE_Allocator;
 
 /**
  * @class TAO_AMH_Response_Handler
