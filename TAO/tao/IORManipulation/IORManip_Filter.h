@@ -46,13 +46,13 @@ public:
   /// Perform filtering using the profile passed in as a guide.
   /// If no profile is provided, filter using the profile_matches() method.
   CORBA::Object_ptr sanitize_profiles (CORBA::Object_ptr object,
-                                       TAO_Profile* profile = 0);
+                                       TAO_Profile* profile = nullptr);
 
 protected:
   /// This will be the bulk of the filtering code.
   virtual void filter_and_add (TAO_Profile* profile,
                                TAO_MProfile& profiles,
-                               TAO_Profile* guideline = 0) = 0;
+                               TAO_Profile* guideline = nullptr) = 0;
 
 private:
   /// The sanitize_profiles() methods call this to do the work.

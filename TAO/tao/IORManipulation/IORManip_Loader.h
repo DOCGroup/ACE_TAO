@@ -31,9 +31,9 @@ public:
   TAO_IORManip_Loader ();
 
   /// Creates a IORManip factory and returns it.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv []);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv []) override;
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
