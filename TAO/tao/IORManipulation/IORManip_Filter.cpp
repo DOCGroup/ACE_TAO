@@ -11,9 +11,7 @@ TAO_IORManip_Filter::TAO_IORManip_Filter ()
 }
 
 
-TAO_IORManip_Filter::~TAO_IORManip_Filter ()
-{
-}
+TAO_IORManip_Filter::~TAO_IORManip_Filter () = default;
 
 
 CORBA::Object_ptr
@@ -30,9 +28,9 @@ TAO_IORManip_Filter::sanitize (CORBA::Object_ptr object,
 {
   TAO_MProfile profiles = object->_stubobj ()->base_profiles ();
   TAO_MProfile new_profiles (profiles.profile_count ());
-  TAO_Profile* profile = 0;
+  TAO_Profile *profile = nullptr;
 
-  while ((profile = profiles.get_next ()) != 0)
+  while ((profile = profiles.get_next ()) != nullptr)
     {
       // Call the filter implementation
       this->filter_and_add (profile, new_profiles, guideline);
@@ -43,7 +41,7 @@ TAO_IORManip_Filter::sanitize (CORBA::Object_ptr object,
       CORBA::string_dup (object->_stubobj ()->type_id.in ());
 
   TAO_ORB_Core *orb_core = object->_stubobj ()->orb_core ();
-  if (orb_core == 0)
+  if (orb_core == nullptr)
     orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (),  // give the id string to stub

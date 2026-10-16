@@ -15,9 +15,7 @@ TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter ()
 }
 
 
-TAO_IORManip_IIOP_Filter::~TAO_IORManip_IIOP_Filter ()
-{
-}
+TAO_IORManip_IIOP_Filter::~TAO_IORManip_IIOP_Filter () = default;
 
 
 CORBA::Boolean
@@ -56,7 +54,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
       CORBA::Boolean matches = false;
       this->fill_profile_info (profile, pinfo);
 
-      if (guideline == 0)
+      if (guideline == nullptr)
         {
           matches = this->profile_info_matches (pinfo);
         }
@@ -93,7 +91,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
         pinfo.port_ = endpoints[i].port;
 
         CORBA::Boolean matches = false;
-        if (guideline == 0)
+        if (guideline == nullptr)
           {
             matches = this->profile_info_matches (pinfo);
           }
@@ -110,7 +108,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
               {
                 TAO_IIOP_Endpoint* ep = dynamic_cast<TAO_IIOP_Endpoint*> (
                                           new_profile->endpoint ());
-                if (ep == 0)
+                if (ep == nullptr)
                   {
                     new_profile->_decr_refcnt ();
                     return;
@@ -160,13 +158,13 @@ TAO_IORManip_IIOP_Filter::fill_profile_info (
 {
   static const int host_length = 384;
   int status = 0;
-  if (profile != 0)
+  if (profile != nullptr)
     {
       char host[host_length] = "";
       if (profile->endpoint ()->addr_to_string (host, host_length) != -1)
         {
           char* delim = std::strchr (host, ':');
-          if (delim != 0)
+          if (delim != nullptr)
             {
               *delim = '\0';
               pinfo.port_ = static_cast<CORBA::UShort> (ACE_OS::atoi (delim + 1));
