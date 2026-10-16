@@ -70,16 +70,17 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Network_Priority_Mapping_Manager ();
+  ~TAO_Network_Priority_Mapping_Manager () override;
 
 private:
-  TAO_Network_Priority_Mapping_Manager (const TAO_Network_Priority_Mapping_Manager &);
-  void operator= (const TAO_Network_Priority_Mapping_Manager &);
+  TAO_Network_Priority_Mapping_Manager (const TAO_Network_Priority_Mapping_Manager &) = delete;
+  TAO_Network_Priority_Mapping_Manager &operator= (
+    const TAO_Network_Priority_Mapping_Manager &) = delete;
 
 private:
   TAO_Network_Priority_Mapping *mapping_;
