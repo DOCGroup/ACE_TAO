@@ -50,23 +50,23 @@ public:
   /// Copy constructor.
   TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs);
 
-  virtual ~TAO_EndpointPolicy_i () = default;
+  ~TAO_EndpointPolicy_i () override = default;
 
   /// Returns a copy of this>
   virtual TAO_EndpointPolicy_i *clone () const;
 
   // = The EndpointPolicy::Policy methods
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   // Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  virtual EndpointPolicy::EndpointList * value ();
+  EndpointPolicy::EndpointList * value () override;
 
 private:
   /// The attribute
