@@ -209,7 +209,7 @@ namespace TAO
   namespace ImR_Client
   {
     ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl ()
-     : server_object_ (0)
+     : server_object_ (nullptr)
     {
     }
 
@@ -442,7 +442,7 @@ namespace TAO
 
           root_poa->deactivate_object_i (id.in ());
 
-          this->server_object_ = 0;
+          this->server_object_ = nullptr;
         }
     }
 
