@@ -38,11 +38,11 @@ class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
 {
 public:
   /// Destructor
-  virtual ~TAO_Smart_Proxy_Base ();
+  ~TAO_Smart_Proxy_Base () override;
 
 protected:
   /// Constructor.
-  TAO_Smart_Proxy_Base ();
+  TAO_Smart_Proxy_Base () = default;
 
   /// Constructor.
   TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);
