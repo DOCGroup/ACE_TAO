@@ -46,7 +46,7 @@ namespace TAO
     {
     public:
       /// Virtual Destructor.
-      virtual ~TP_Corba_Request();
+      ~TP_Corba_Request() override;
 
     protected:
       /// Constructor.
