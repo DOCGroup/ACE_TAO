@@ -49,10 +49,10 @@ public:
   TAO_CodecFactory (TAO_ORB_Core * orb_core);
 
   /// Create a Coder/Decoder for the given type of encoding.
-  virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc);
+  IOP::Codec_ptr create_codec (const IOP::Encoding & enc) override;
 
   /// Create a Coder/Decoder for the given type of encoding and codesets.
-  virtual IOP::Codec_ptr create_codec_with_codesets (const IOP::Encoding_1_2 & enc);
+  IOP::Codec_ptr create_codec_with_codesets (const IOP::Encoding_1_2 & enc) override;
 
 private:
   TAO_CodecFactory (const TAO_CodecFactory &) = delete;

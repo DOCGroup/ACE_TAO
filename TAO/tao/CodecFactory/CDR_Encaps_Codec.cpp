@@ -64,7 +64,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       && (cdr << data))
     {
-      CORBA::OctetSeq * octet_seq = 0;
+      CORBA::OctetSeq * octet_seq = nullptr;
 
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
@@ -136,7 +136,7 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data)
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      CORBA::Any * any = 0;
+      CORBA::Any * any = nullptr;
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
@@ -205,7 +205,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
 
       // TAO extension: replace the contents of the octet sequence with
       // the CDR stream.
-      CORBA::OctetSeq * octet_seq = 0;
+      CORBA::OctetSeq * octet_seq = nullptr;
 
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
@@ -296,7 +296,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      CORBA::Any * any = 0;
+      CORBA::Any * any = nullptr;
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
@@ -310,7 +310,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
       CORBA::Any_var safe_any = any;
 
       // Stick it into the Any.
-      TAO::Unknown_IDL_Type *unk = 0;
+      TAO::Unknown_IDL_Type *unk = nullptr;
       ACE_NEW_RETURN (unk,
                       TAO::Unknown_IDL_Type (tc, cdr),
                       0);

@@ -18,8 +18,8 @@ TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)
 IOP::Codec_ptr
 TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc)
 {
-  TAO_Codeset_Translator_Base *char_trans = 0;
-  TAO_Codeset_Translator_Base *wchar_trans = 0;
+  TAO_Codeset_Translator_Base *char_trans = nullptr;
+  TAO_Codeset_Translator_Base *wchar_trans = nullptr;
   CONV_FRAME::CodeSetId ncsc;
   CONV_FRAME::CodeSetId ncsw;
 
@@ -37,14 +37,14 @@ TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc)
       throw IOP::CodecFactory::UnsupportedCodeset (enc.wchar_codeset);
     }
 
-  if (wchar_trans == 0 &&
+  if (wchar_trans == nullptr &&
       enc.wchar_codeset != ACE_CODESET_ID_ISO_UTF_16 &&
       enc.wchar_codeset != ncsw)
     {
       throw IOP::CodecFactory::UnsupportedCodeset (enc.wchar_codeset);
     }
 
-  if (char_trans == 0 &&
+  if (char_trans == nullptr &&
       enc.char_codeset != ncsc)
     {
       throw IOP::CodecFactory::UnsupportedCodeset (enc.char_codeset);
