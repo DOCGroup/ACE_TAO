@@ -105,7 +105,7 @@ public:
 
 protected:
   /// Do the real work
-  virtual int run (TAO_ORB_Core &orb_core);
+  int run (TAO_ORB_Core &orb_core) override;
 };
 
 class TAO_Thread_Pool;

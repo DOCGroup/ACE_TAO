@@ -101,25 +101,25 @@ public:
    * consistant priority inheritance/piority ceiling semantics
    * can be guaranteed.
    */
-  virtual RTCORBA::Mutex_ptr create_mutex ();
+  RTCORBA::Mutex_ptr create_mutex () override;
 
   /**
    * Destroy a mutex.  Currently this is a no-op since RTCORBA::Mutex
    * instances are destroyed as soon as their reference counts go to
    * 0.
    */
-  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
+  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex) override;
 
   /**
    * Create a mutex and assign a name to it.  If the
    * mutex already exists, it is returned and the created_flag
    * is set to 0.
    */
-  virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                                 CORBA::Boolean_out created_flag);
+  RTCORBA::Mutex_ptr create_named_mutex (const char *name,
+                                         CORBA::Boolean_out created_flag) override;
 
   /// Retrieve a previously created mutex.
-  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name);
+  RTCORBA::Mutex_ptr open_named_mutex (const char * name) override;
 
   /**
    * Create and return a TCPProtocolProperties instance with the specified
@@ -161,68 +161,68 @@ public:
                                              CORBA::Boolean enable_network_priority);
 
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
-  virtual RTCORBA::ThreadpoolId
+  RTCORBA::ThreadpoolId
   create_threadpool (CORBA::ULong stacksize,
                      CORBA::ULong static_threads,
                      CORBA::ULong dynamic_threads,
                      RTCORBA::Priority default_priority,
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
-                     CORBA::ULong max_request_buffer_size);
+                     CORBA::ULong max_request_buffer_size) override;
 
   /**
    * Create a threadpool and separate it into subsets based on
    * priorities.
    */
-  virtual RTCORBA::ThreadpoolId
+  RTCORBA::ThreadpoolId
   create_threadpool_with_lanes (CORBA::ULong stacksize,
                                 const RTCORBA::ThreadpoolLanes & lanes,
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
-                                CORBA::ULong max_request_buffer_size);
+                                CORBA::ULong max_request_buffer_size) override;
 
   /// Free the resources associated with the specified threadpool.
-  virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool);
+  void destroy_threadpool (RTCORBA::ThreadpoolId threadpool) override;
 
   /// Create a priority model policy for use when configuring a POA.
-  virtual RTCORBA::PriorityModelPolicy_ptr
+  RTCORBA::PriorityModelPolicy_ptr
   create_priority_model_policy (RTCORBA::PriorityModel priority_model,
-                                RTCORBA::Priority server_priority);
+                                RTCORBA::Priority server_priority) override;
 
   /// Create a ThreadpoolPolicy instance for POA creation
-  virtual RTCORBA::ThreadpoolPolicy_ptr
-  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool);
+  RTCORBA::ThreadpoolPolicy_ptr
+  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool) override;
 
   /**
    * Create a PriorityBandedConnectionPolicy instance
    * for use on either the client or server side
    */
-  virtual RTCORBA::PriorityBandedConnectionPolicy_ptr
+  RTCORBA::PriorityBandedConnectionPolicy_ptr
   create_priority_banded_connection_policy (const RTCORBA::PriorityBands &
-                                            priority_bands);
+                                            priority_bands) override;
 
   /**
    * Create a PrivateConnectionPolicy instance to use on client
    * to request a private (non-multiplexed) transport connection
    * to the server.
    */
-  virtual RTCORBA::PrivateConnectionPolicy_ptr
-  create_private_connection_policy ();
+  RTCORBA::PrivateConnectionPolicy_ptr
+  create_private_connection_policy () override;
 
   /**
    * Create a ServerProtocolPolicy instance to select and configure
    * communication protocols on the server side.
    */
-  virtual RTCORBA::ServerProtocolPolicy_ptr
-  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols);
+  RTCORBA::ServerProtocolPolicy_ptr
+  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols) override;
 
   /**
    * Create a ClientProtocolPolicy instance to select and configure
    * communication protocols on the client side.
    */
-  virtual RTCORBA::ClientProtocolPolicy_ptr
-  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols);
+  RTCORBA::ClientProtocolPolicy_ptr
+  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols) override;
 
   /// Reference to our creating ORB Core.
   TAO_ORB_Core *orb_core () const;
@@ -250,7 +250,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_RT_ORB ();
+  ~TAO_RT_ORB () override;
 
 protected:
   /// Reference to our creating ORB Core.
