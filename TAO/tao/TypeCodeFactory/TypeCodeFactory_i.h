@@ -72,25 +72,25 @@ public:
       const char *name,
       const CORBA::EnumMemberSeq &members) override;
 
-  virtual CORBA::TypeCode_ptr create_alias_tc (
+  CORBA::TypeCode_ptr create_alias_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr original_type);
+      CORBA::TypeCode_ptr original_type) override;
 
-  virtual CORBA::TypeCode_ptr create_exception_tc (
+  CORBA::TypeCode_ptr create_exception_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members);
+      const CORBA::StructMemberSeq &members) override;
 
-  virtual CORBA::TypeCode_ptr create_interface_tc (
+  CORBA::TypeCode_ptr create_interface_tc (
       const char *id,
-      const char *name);
+      const char *name) override;
 
-  virtual CORBA::TypeCode_ptr create_string_tc (
-      CORBA::ULong bound);
+  CORBA::TypeCode_ptr create_string_tc (
+      CORBA::ULong bound) override;
 
-  virtual CORBA::TypeCode_ptr create_wstring_tc (
-      CORBA::ULong bound);
+  CORBA::TypeCode_ptr create_wstring_tc (
+      CORBA::ULong bound) override;
 
   virtual CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
