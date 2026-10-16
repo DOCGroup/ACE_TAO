@@ -19,7 +19,7 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
                         ACE_Time_Value const &dynamic_thread_time)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (0),
+    tp_manager_ (nullptr),
     lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time)
 {

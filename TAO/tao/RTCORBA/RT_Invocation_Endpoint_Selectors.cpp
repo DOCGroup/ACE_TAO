@@ -229,7 +229,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                 }
 
               // If there are no bands.
-              if (bands_policy.ptr () == 0)
+              if (bands_policy.ptr () == nullptr)
                 {
                   // Match the priority of the client thread with the
                   // endpoint.
