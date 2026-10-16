@@ -20,9 +20,7 @@ namespace TAO
   {
   }
 
-  ObjectReferenceTemplate::~ObjectReferenceTemplate ()
-  {
-  }
+  ObjectReferenceTemplate::~ObjectReferenceTemplate () = default;
 
   ::CORBA::ValueBase *
   ObjectReferenceTemplate::_copy_value ()
@@ -78,7 +76,7 @@ namespace TAO
     if (CORBA::is_nil (this->poa_.in ()))
       throw ::CORBA::BAD_INV_ORDER ();
 
-    TAO_Root_POA* const tao_poa =
+    TAO_Root_POA *const tao_poa =
       dynamic_cast<TAO_Root_POA*> (this->poa_.in());
 
     if (!tao_poa)
