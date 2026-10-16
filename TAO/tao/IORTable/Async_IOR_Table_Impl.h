@@ -46,7 +46,7 @@ public:
   virtual void async_find (::IORTable::Locate_ResponseHandler rh,
                            const char *object_key);
 
-  virtual void set_locator (IORTable::Locator_ptr locator);
+  void set_locator (IORTable::Locator_ptr locator) override;
 
 private:
   /// The locator
