@@ -622,12 +622,12 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
         (this->protocols_[i].protocol_type, in_cdr.orb_core ());
 
       if (is_read_ok
-          && (this->protocols_[i].orb_protocol_properties.ptr () != 0))
+          && (this->protocols_[i].orb_protocol_properties.ptr () != nullptr))
         is_read_ok =
           this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
 
       if (is_read_ok
-          && (this->protocols_[i].transport_protocol_properties.ptr () != 0))
+          && (this->protocols_[i].transport_protocol_properties.ptr () != nullptr))
         is_read_ok =
           this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
     }

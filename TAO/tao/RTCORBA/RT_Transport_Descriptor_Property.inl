@@ -3,7 +3,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_RT_Transport_Descriptor_Property::TAO_RT_Transport_Descriptor_Property ()
-  : next_ (0)
+  : next_ (nullptr)
 {
 }
 
