@@ -49,7 +49,7 @@ public:
                  const TAO_MProfile &profiles,
                  TAO_ORB_Core *orb_core);
 
-  virtual ~TAO_ZIOP_Stub ();
+  ~TAO_ZIOP_Stub () override;
 
   /**
    * Returns the effective policy if @a type is a known client-exposed
