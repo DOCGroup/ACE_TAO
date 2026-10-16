@@ -14,7 +14,7 @@ TAO_IORInterceptor_Adapter_Factory_Impl::~
 TAO_IORInterceptor_Adapter *
 TAO_IORInterceptor_Adapter_Factory_Impl::create ()
 {
-  TAO_IORInterceptor_Adapter_Impl *nia = 0;
+  TAO_IORInterceptor_Adapter_Impl *nia = nullptr;
   ACE_NEW_THROW_EX (nia,
                     TAO_IORInterceptor_Adapter_Impl (),
                     CORBA::NO_MEMORY ());

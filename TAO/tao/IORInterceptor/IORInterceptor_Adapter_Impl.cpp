@@ -44,7 +44,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA* poa)
   if (interceptor_count == 0)
     return;
 
-  TAO_IORInfo *tao_info = 0;
+  TAO_IORInfo *tao_info = nullptr;
   ACE_NEW_THROW_EX (tao_info,
                     TAO_IORInfo (poa),
                     CORBA::NO_MEMORY (
@@ -80,7 +80,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA* poa)
                 this->ior_interceptor_list_.interceptor (i)->name ();
               // @@ What do we do if we get an exception here?
 
-              if (name.in () != 0)
+              if (name.in () != nullptr)
                 {
                   TAOLIB_DEBUG ((LM_WARNING,
                               "(%P|%t) Exception thrown while processing "
