@@ -72,7 +72,7 @@ public:
   TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Private_Connection_Property ();
+  ~TAO_RT_Transport_Descriptor_Private_Connection_Property () override;
 
   /// Init
   void init (long object_id);
@@ -109,7 +109,7 @@ public:
                                                           CORBA::Short high_priority);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property ();
+  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property () override;
 
   /// Init
   void init (CORBA::Short low_priority, CORBA::Short high_priority);

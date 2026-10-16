@@ -40,7 +40,7 @@ public:
                                CORBA::Boolean flag = false);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor ();
+  ~TAO_RT_Transport_Descriptor () override;
 
   /// Insert Properties.
   void insert (TAO_RT_Transport_Descriptor_Property *descriptor_property);
