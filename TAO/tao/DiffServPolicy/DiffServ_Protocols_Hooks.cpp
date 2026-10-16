@@ -22,7 +22,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Service_Context &sc)
 {
   CORBA::Long dscp_codepoint = 0;
-  const IOP::ServiceContext *context = 0;
+  const IOP::ServiceContext *context = nullptr;
 
   if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
     {

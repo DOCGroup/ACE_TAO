@@ -39,9 +39,9 @@ class TAO_DiffServPolicy_Export TAO_DiffServPolicy_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
   /// Register DiffServ policy factories.

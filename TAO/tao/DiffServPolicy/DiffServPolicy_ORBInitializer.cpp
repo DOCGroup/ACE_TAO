@@ -30,7 +30,7 @@ TAO_DiffServPolicy_ORBInitializer::pre_init (
     }
 
   // Bind the service context handler for Diffserv
-  TAO_DiffServ_Service_Context_Handler* h = 0;
+  TAO_DiffServ_Service_Context_Handler* h = nullptr;
   ACE_NEW (h,
            TAO_DiffServ_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::REP_NWPRIORITY, h);

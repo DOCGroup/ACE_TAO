@@ -67,7 +67,7 @@ TAO_Server_Network_Priority_Policy::policy_type ()
 TAO_Server_Network_Priority_Policy *
 TAO_Server_Network_Priority_Policy::clone () const
 {
-  TAO_Server_Network_Priority_Policy *copy = 0;
+  TAO_Server_Network_Priority_Policy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_Server_Network_Priority_Policy (*this),
                   0);
@@ -116,7 +116,7 @@ TAO_Server_Network_Priority_Policy::network_priority_model (
 CORBA::Policy_ptr
 TAO_Server_Network_Priority_Policy::copy ()
 {
-  TAO_Server_Network_Priority_Policy* servant = 0;
+  TAO_Server_Network_Priority_Policy* servant = nullptr;
   ACE_NEW_THROW_EX (servant,
                     TAO_Server_Network_Priority_Policy (*this),
                     CORBA::NO_MEMORY ());
