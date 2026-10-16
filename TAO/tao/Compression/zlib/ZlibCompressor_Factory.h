@@ -36,8 +36,8 @@ namespace TAO
   public:
     Zlib_CompressorFactory ();
 
-    virtual ::Compression::Compressor_ptr get_compressor (
-        ::Compression::CompressionLevel compression_level);
+    ::Compression::Compressor_ptr get_compressor (
+        ::Compression::CompressionLevel compression_level) override;
 
   private:
     Zlib_CompressorFactory (const Zlib_CompressorFactory &) = delete;

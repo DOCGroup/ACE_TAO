@@ -32,8 +32,8 @@ namespace TAO
     public:
         RLE_CompressorFactory();
 
-        virtual ::Compression::Compressor_ptr get_compressor (
-            ::Compression::CompressionLevel = 0);
+        ::Compression::Compressor_ptr get_compressor (
+            ::Compression::CompressionLevel = 0) override;
 
     private:
         ::Compression::Compressor_var compressor_;
