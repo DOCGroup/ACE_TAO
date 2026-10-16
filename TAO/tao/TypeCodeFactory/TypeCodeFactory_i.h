@@ -104,24 +104,24 @@ public:
       CORBA::ULong length,
       CORBA::TypeCode_ptr element_type) override;
 
-  virtual CORBA::TypeCode_ptr create_value_tc (
+  CORBA::TypeCode_ptr create_value_tc (
       const char *id,
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members);
+      const CORBA::ValueMemberSeq &members) override;
 
-  virtual CORBA::TypeCode_ptr create_value_box_tc (
+  CORBA::TypeCode_ptr create_value_box_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr boxed_type);
+      CORBA::TypeCode_ptr boxed_type) override;
 
-  virtual CORBA::TypeCode_ptr create_native_tc (
+  CORBA::TypeCode_ptr create_native_tc (
       const char *id,
-      const char *name);
+      const char *name) override;
 
-  virtual CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id);
+  CORBA::TypeCode_ptr create_recursive_tc (
+      const char *id) override;
 
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
