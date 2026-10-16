@@ -50,15 +50,15 @@ public:
   /// Returns a copy of this CompressorIdLevelListPolicy.
   virtual CompressorIdLevelListPolicy *clone () const;
 
-  virtual ::Compression::CompressorIdLevelList * compressor_ids ();
+  ::Compression::CompressorIdLevelList * compressor_ids () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const;
@@ -96,15 +96,15 @@ public:
   virtual CompressionEnablingPolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::Boolean compression_enabled ();
+  ::CORBA::Boolean compression_enabled () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const;
@@ -140,15 +140,15 @@ public:
   virtual CompressionLowValuePolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::ULong low_value ();
+  ::CORBA::ULong low_value () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute
@@ -174,15 +174,15 @@ public:
   /// Returns a copy of this CompressionMinRatioPolicy.
   virtual CompressionMinRatioPolicy *clone () const;
 
-  virtual ::Compression::CompressionRatio ratio ();
+  ::Compression::CompressionRatio ratio () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute
