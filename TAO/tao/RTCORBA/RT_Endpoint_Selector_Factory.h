@@ -55,13 +55,13 @@ public:
   RT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~RT_Endpoint_Selector_Factory ();
+  ~RT_Endpoint_Selector_Factory () override;
 
-  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
+  TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
-  void operator= (const RT_Endpoint_Selector_Factory &);
-  RT_Endpoint_Selector_Factory (const RT_Endpoint_Selector_Factory &);
+  RT_Endpoint_Selector_Factory (const RT_Endpoint_Selector_Factory &) = delete;
+  void operator= (const RT_Endpoint_Selector_Factory &) = delete;
 
 private:
   TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_;

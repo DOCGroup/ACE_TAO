@@ -59,14 +59,14 @@ public:
                               int policy = ACE_SCHED_FIFO);
 
   /// The destructor
-  virtual ~TAO_Multi_Priority_Mapping ();
+  ~TAO_Multi_Priority_Mapping () override;
 
-  virtual CORBA::Boolean
+  CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,
-                 RTCORBA::NativePriority &native_priority);
-  virtual CORBA::Boolean
+                 RTCORBA::NativePriority &native_priority) override;
+  CORBA::Boolean
       to_CORBA (RTCORBA::NativePriority native_priority,
-                RTCORBA::Priority &corba_priority);
+                RTCORBA::Priority &corba_priority) override;
 
 private:
   /// The base settings

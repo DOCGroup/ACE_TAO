@@ -77,9 +77,9 @@ public:
   /// Init
   void init (long object_id);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate ();
+  TAO_RT_Transport_Descriptor_Property *duplicate () override;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
+  CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) override;
 
 private:
   /**
@@ -114,9 +114,9 @@ public:
   /// Init
   void init (CORBA::Short low_priority, CORBA::Short high_priority);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate ();
+  TAO_RT_Transport_Descriptor_Property *duplicate () override;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
+  CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) override;
 
 protected:
   /// The low priority of the Band.
