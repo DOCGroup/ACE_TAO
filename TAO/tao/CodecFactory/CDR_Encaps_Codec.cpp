@@ -32,9 +32,7 @@ TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (
 {
 }
 
-TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec ()
-{
-}
+TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec () = default;
 
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)

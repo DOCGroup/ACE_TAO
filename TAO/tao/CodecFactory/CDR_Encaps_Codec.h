@@ -89,7 +89,7 @@ protected:
 
 private:
   TAO_CDR_Encaps_Codec (const TAO_CDR_Encaps_Codec &) = delete;
-  void operator= (const TAO_CDR_Encaps_Codec &) = delete;
+  TAO_CDR_Encaps_Codec &operator= (const TAO_CDR_Encaps_Codec &) = delete;
 
 private:
   /// The major GIOP version associated with this Codec.

@@ -56,7 +56,7 @@ public:
 
 private:
   TAO_CodecFactory (const TAO_CodecFactory &) = delete;
-  void operator= (const TAO_CodecFactory &) = delete;
+  TAO_CodecFactory &operator= (const TAO_CodecFactory &) = delete;
 
   IOP::Codec_ptr create_codec_i (CORBA::Octet major,
                                  CORBA::Octet minor,
