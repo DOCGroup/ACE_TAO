@@ -74,7 +74,7 @@ TAO_DTP_POA_Strategy::poa_activated_event_i (TAO_ORB_Core& orb_core)
       ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
         ("DTP_Config_Registry");
 
-      if (config_repo == 0)
+      if (config_repo == nullptr)
         {
           if (TAO_debug_level > 0)
             {

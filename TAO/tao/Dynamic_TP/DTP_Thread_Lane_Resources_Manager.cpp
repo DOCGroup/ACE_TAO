@@ -105,7 +105,7 @@ TAO_Thread_Lane_Resources_Manager *
 TAO_DTP_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (
   TAO_ORB_Core &core)
 {
-  TAO_Thread_Lane_Resources_Manager *manager = 0;
+  TAO_Thread_Lane_Resources_Manager *manager = nullptr;
 
   /// Create the RT Thread Lane Resources Manager.
   ACE_NEW_RETURN (manager,
