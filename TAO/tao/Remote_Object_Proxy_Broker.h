@@ -50,9 +50,11 @@ namespace TAO
 
   CORBA::Boolean _non_existent (CORBA::Object_ptr target) override;
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::InterfaceDef * _get_interface (CORBA::Object_ptr target) override;
 
   CORBA::Object_ptr _get_component (CORBA::Object_ptr target) override;
+#endif /* !CORBA_E_COMPACT && !CORBA_E_MICRO */
 
   char * _repository_id (CORBA::Object_ptr target) override;
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
