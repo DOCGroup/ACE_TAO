@@ -66,7 +66,7 @@ public:
    */
   int init (int &argc,
             ACE_TCHAR *argv[],
-            const char *orb_name = 0);
+            const char *orb_name = nullptr);
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -80,7 +80,7 @@ public:
   int init_child_poa (int &argc,
                       ACE_TCHAR *argv[],
                       const char *poa_name,
-                      const char *orb_name = 0);
+                      const char *orb_name = nullptr);
 #endif /* CORBA_E_MICRO */
 
   /**
