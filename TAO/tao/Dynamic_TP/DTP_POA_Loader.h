@@ -35,10 +35,10 @@ public:
   TAO_DTP_POA_Loader ();
 
   /// Destructor.
-  virtual ~TAO_DTP_POA_Loader ();
+  ~TAO_DTP_POA_Loader () override;
 
   /// Initialize the DynamicTP loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   /// Set to true after init is called.
