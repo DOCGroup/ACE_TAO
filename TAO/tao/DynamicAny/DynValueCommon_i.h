@@ -48,11 +48,11 @@ public:
   void init_common ();
 
   // = Functions specific to DynValueCommon.
-  virtual CORBA::Boolean is_null ();
+  CORBA::Boolean is_null () override;
 
-  virtual void set_to_null ();
+  void set_to_null () override;
 
-  virtual void set_to_value () = 0;
+  void set_to_value () override = 0;
 
 private:
   // = Use copy() or assign() instead of these.
