@@ -50,9 +50,7 @@ namespace TAO
       {
       }
 
-      Current_Loader::~Current_Loader ()
-      {
-      }
+      Current_Loader::~Current_Loader () = default;
     }
   }
 }

@@ -28,9 +28,7 @@ namespace TAO
     }
 
     /// dtor
-    Current_Impl::~Current_Impl ()
-    {
-    }
+    Current_Impl::~Current_Impl () = default;
 
     /// Obtains the current transport. Throws a NoContext exception
     /// if, there was no "current" transport selected on the current
