@@ -22,7 +22,7 @@ TAO_RT_Transport_Descriptor_Property*
 TAO_RT_Transport_Descriptor_Private_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
-  TAO_RT_Transport_Descriptor_Private_Connection_Property *desc_prop = 0;
+  TAO_RT_Transport_Descriptor_Private_Connection_Property *desc_prop = nullptr;
 
   ACE_NEW_RETURN (desc_prop,
                   TAO_RT_Transport_Descriptor_Private_Connection_Property (this->object_id_),
@@ -36,7 +36,7 @@ TAO_RT_Transport_Descriptor_Private_Connection_Property::is_equivalent (const TA
 {
   const TAO_RT_Transport_Descriptor_Private_Connection_Property *rhs =
     dynamic_cast<const TAO_RT_Transport_Descriptor_Private_Connection_Property*> (other_prop);
-  return (rhs != 0 &&
+  return (rhs != nullptr &&
           this->object_id_ == rhs->object_id_);
 }
 
@@ -50,7 +50,7 @@ TAO_RT_Transport_Descriptor_Property*
 TAO_RT_Transport_Descriptor_Banded_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
-  TAO_RT_Transport_Descriptor_Banded_Connection_Property *desc_prop = 0;
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property *desc_prop = nullptr;
 
   ACE_NEW_RETURN (desc_prop,
                   TAO_RT_Transport_Descriptor_Banded_Connection_Property (this->low_priority_,
@@ -66,7 +66,7 @@ TAO_RT_Transport_Descriptor_Banded_Connection_Property::is_equivalent (const TAO
   const TAO_RT_Transport_Descriptor_Banded_Connection_Property *rhs =
     dynamic_cast<const TAO_RT_Transport_Descriptor_Banded_Connection_Property*> (other_prop);
 
-  return (rhs != 0 &&
+  return (rhs != nullptr &&
           this->low_priority_ == rhs->low_priority_ &&
           this->high_priority_ == rhs->high_priority_);
 }

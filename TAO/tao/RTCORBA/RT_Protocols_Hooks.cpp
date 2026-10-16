@@ -81,7 +81,7 @@ TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
   TAO_ServerProtocolPolicy *server_protocols =
     dynamic_cast<TAO_ServerProtocolPolicy *> (server_protocol_policy.in ());
 
-  if (server_protocols == 0)
+  if (server_protocols == nullptr)
     return RTCORBA::ProtocolProperties::_nil ();
 
   // TAO_ServerProtocolPolicy
@@ -116,7 +116,7 @@ TAO_RT_Protocols_Hooks::client_protocol_properties (IOP::ProfileId protocol_tag,
   TAO_ClientProtocolPolicy *client_protocols =
     dynamic_cast<TAO_ClientProtocolPolicy *> (client_protocol_policy.in ());
 
-  if (client_protocols == 0)
+  if (client_protocols == nullptr)
     return RTCORBA::ProtocolProperties::_nil ();
 
   // TAO_ClientProtocolPolicy

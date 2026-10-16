@@ -84,7 +84,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
 
   // Bind the service context handler for RTCORBA
-  TAO_RT_Service_Context_Handler* h = 0;
+  TAO_RT_Service_Context_Handler* h = nullptr;
   ACE_NEW (h,
            TAO_RT_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::RTCorbaPriority, h);
@@ -110,7 +110,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   tao_info->orb_core ()->orb_params ()->poa_factory_directive (rt_poa_factory_directive);
 
   // Create the initial priority mapping instance.
-  TAO_Priority_Mapping *pm = 0;
+  TAO_Priority_Mapping *pm = nullptr;
   switch (this->priority_mapping_type_)
     {
     case TAO_PRIORITY_MAPPING_CONTINUOUS:
@@ -129,7 +129,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
 
   // Set the Priority_Mapping_Manager
-  TAO_Priority_Mapping_Manager *manager = 0;
+  TAO_Priority_Mapping_Manager *manager = nullptr;
 
   ACE_NEW_THROW_EX (manager,
                     TAO_Priority_Mapping_Manager (pm),
@@ -144,7 +144,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   info->register_initial_reference ("PriorityMappingManager", manager);
 
   // Create the initial priority mapping instance.
-  TAO_Network_Priority_Mapping *npm = 0;
+  TAO_Network_Priority_Mapping *npm = nullptr;
   switch (this->network_priority_mapping_type_)
     {
     default:
@@ -155,7 +155,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
 
   // Set the Priority_Mapping_Manager
-  TAO_Network_Priority_Mapping_Manager * network_manager = 0;
+  TAO_Network_Priority_Mapping_Manager * network_manager = nullptr;
 
   // @@ There is a potential memory leak here.  If the new() below
   //    throws an exception, the memory for the network priority

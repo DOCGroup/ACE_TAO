@@ -26,7 +26,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *val)
 {
-  if (r == 0)
+  if (r == nullptr)
     throw ::CORBA::INTERNAL ();
 
   CORBA::Policy_var client_protocol_policy_base =
@@ -94,7 +94,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
        ++protocol_index)
     {
       // Find the profiles that match the current protocol.
-      TAO_Profile *profile = 0;
+      TAO_Profile *profile = nullptr;
       TAO_MProfile &mprofile = (r.stub ()->forward_profiles() == 0) ?
         r.stub ()->base_profiles () : *r.stub ()->forward_profiles();
 
@@ -193,7 +193,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
       TAO_Protocols_Hooks *protocol_hooks =
         r.stub ()->orb_core ()->get_protocols_hooks ();
 
-      if (protocol_hooks != 0)
+      if (protocol_hooks != nullptr)
         {
           CORBA::Short server_priority = 0;
           CORBA::Boolean is_client_propagated = false;
@@ -273,7 +273,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
   TAO_Endpoint *ep = r.profile ()->endpoint ();
 
-  while (ep != 0)
+  while (ep != nullptr)
     {
       // Get the priority of the endpoint.
       CORBA::Short endpoint_priority = ep->priority ();
