@@ -35,9 +35,9 @@ class TAO_Monitor_Export TAO_Monitor_Init : public TAO_Object_Loader
 public:
   TAO_Monitor_Init ();
 
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv []);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv []) override;
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();

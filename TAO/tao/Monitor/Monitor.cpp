@@ -28,7 +28,7 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
 
       mgr->activate ();
 
-      Monitor_Impl *servant = 0;
+      Monitor_Impl *servant = nullptr;
       ACE_NEW_RETURN (servant,
                       Monitor_Impl (orb),
                       CORBA::Object::_nil ());
