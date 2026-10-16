@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
   ACE_Reactor *reactor)
-  : tms_ (0),
+  : tms_ (nullptr),
     request_id_ (0),
     reactor_ (reactor)
 {

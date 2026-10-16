@@ -58,18 +58,18 @@ public:
 
   // = The TAO::Buffering_Constraint_Policy methods
 
-  virtual TAO::BufferingConstraint buffering_constraint ();
+  TAO::BufferingConstraint buffering_constraint () override;
 
   void get_buffering_constraint (TAO::BufferingConstraint &) const;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   /// Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute

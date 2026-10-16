@@ -64,7 +64,7 @@ namespace TAO
         // New reply dispatcher on the heap or allocator, because
         // we will go out of scope and hand over the reply dispatcher
         // to the ORB.
-        TAO_Asynch_Reply_Dispatcher *rd = 0;
+        TAO_Asynch_Reply_Dispatcher *rd = nullptr;
 
         // Get the allocator we could use.
         ACE_Allocator* ami_allocator =
@@ -88,10 +88,10 @@ namespace TAO
                      TAO_Asynch_Reply_Dispatcher (reply_handler_stub,
                                                   reply_handler_ptr,
                                                   stub->orb_core (),
-                                                  0));
+                                                  nullptr));
           }
 
-        if (rd == 0)
+        if (rd == nullptr)
           {
             throw ::CORBA::NO_MEMORY ();
           }
@@ -99,7 +99,7 @@ namespace TAO
         this->safe_rd_.reset (rd);
       }
 
-    Invocation_Adapter::invoke (0, 0);
+    Invocation_Adapter::invoke (nullptr, 0);
   }
 
   void
@@ -138,7 +138,7 @@ namespace TAO
       }
     else
       {
-        ACE_Time_Value *max_wait_time = 0;
+        ACE_Time_Value *max_wait_time = nullptr;
         return Invocation_Adapter::invoke_remote_i (stub,
                                                     details,
                                                     effective_target,

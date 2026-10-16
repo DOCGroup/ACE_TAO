@@ -32,10 +32,10 @@ public:
   TAO_Messaging_Loader ();
 
   /// Destructor.
-  virtual ~TAO_Messaging_Loader ();
+  ~TAO_Messaging_Loader () override;
 
   /// Initialize the Messaging loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   /// Set to true after init is called.
