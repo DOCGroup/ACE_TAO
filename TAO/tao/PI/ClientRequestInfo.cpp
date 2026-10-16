@@ -42,12 +42,12 @@ TAO_ClientRequestInfo::setup_picurrent ()
 
   // If the slot count is zero, then there is nothing to copy.
   // Prevent any copying (and hence TSS accesses) from occurring.
-  if (pi_current != 0 && pi_current->slot_count () != 0)
+  if (pi_current != nullptr && pi_current->slot_count () != 0)
     {
       // Retrieve the thread scope current.
       TAO::PICurrent_Impl *tsc = pi_current->tsc ();
 
-      if (tsc != 0)
+      if (tsc != nullptr)
         {
           // Logically copy the TSC's slot table to the RSC.
           this->rs_pi_current_.take_lazy_copy (tsc);
@@ -95,7 +95,7 @@ TAO_ClientRequestInfo::effective_profile ()
 {
   this->check_validity ();
 
-  IOP::TaggedProfile *tagged_profile = 0;
+  IOP::TaggedProfile *tagged_profile = nullptr;
   ACE_NEW_THROW_EX (tagged_profile,
                     IOP::TaggedProfile,
                     CORBA::NO_MEMORY (
@@ -112,7 +112,7 @@ TAO_ClientRequestInfo::effective_profile ()
   IOP::TaggedProfile *ep =
     stub->profile_in_use ()->create_tagged_profile ();
 
-  if (ep == 0)
+  if (ep == nullptr)
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
     }
@@ -141,7 +141,7 @@ TAO_ClientRequestInfo::received_exception ()
   // The spec says that if it is a user exception which can't be
   // inserted then the UNKNOWN exception needs to be thrown with minor
   // code 1.
-  CORBA::Any * temp = 0;
+  CORBA::Any * temp = nullptr;
 
   ACE_NEW_THROW_EX (temp,
                     CORBA::Any,
@@ -156,7 +156,7 @@ TAO_ClientRequestInfo::received_exception ()
   CORBA::Exception *caught_exception =
     invocation_->caught_exception ();
 
-  if (caught_exception != 0)
+  if (caught_exception != nullptr)
     *temp <<= *(caught_exception);
 
   return caught_exception_var._retn ();
@@ -169,7 +169,7 @@ TAO_ClientRequestInfo::received_exception_id ()
 
   CORBA::Exception *caught_exception = invocation_->caught_exception ();
 
-  if (caught_exception == 0)
+  if (caught_exception == nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
@@ -193,7 +193,7 @@ TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
     {
       if (components[i].tag == id)
         {
-          IOP::TaggedComponent *tagged_component = 0;
+          IOP::TaggedComponent *tagged_component = nullptr;
 
           // Only allocate a sequence if we have a tagged component
           // that matches the given IOP::ComponentId.
@@ -230,7 +230,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
-  IOP::TaggedComponentSeq *tagged_components = 0;
+  IOP::TaggedComponentSeq *tagged_components = nullptr;
   IOP::TaggedComponentSeq_var safe_tagged_components;
 
   const CORBA::ULong len = components.length ();
@@ -238,7 +238,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
     {
       if (components[i].tag == id)
         {
-          if (tagged_components == 0)
+          if (tagged_components == nullptr)
             {
               // Only allocate a sequence if we have tagged components
               // to place into the sequence.
@@ -260,7 +260,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
         }
     }
 
-  if (tagged_components == 0)
+  if (tagged_components == nullptr)
     {
       // No tagged component sequence was allocated, meaning no tagged
       // components were found that matched the given
@@ -502,7 +502,7 @@ TAO_ClientRequestInfo::result ()
   this->check_validity ();
 
   // Generate the result on demand.
-  static const CORBA::Boolean tk_void_any = 0;
+  static constexpr CORBA::Boolean tk_void_any = false;
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any);
 
@@ -608,7 +608,7 @@ TAO_ClientRequestInfo::get_reply_service_context (IOP::ServiceId id)
 void
 TAO_ClientRequestInfo::check_validity ()
 {
-  if (this->invocation_ == 0)
+  if (this->invocation_ == nullptr)
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 

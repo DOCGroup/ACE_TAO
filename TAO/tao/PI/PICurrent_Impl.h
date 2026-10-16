@@ -48,9 +48,9 @@ namespace TAO
   {
   public:
     /// Constructor.
-    PICurrent_Impl (TAO_ORB_Core *orb_core= 0,
+    PICurrent_Impl (TAO_ORB_Core *orb_core= nullptr,
                     size_t tss_slot= 0,
-                    PICurrent_Impl *pop= 0);
+                    PICurrent_Impl *pop= nullptr);
     /// Destructor.
     ~PICurrent_Impl ();
 

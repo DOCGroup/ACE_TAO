@@ -11,7 +11,7 @@ TAO_ORBInitInfo::orb_core () const
 ACE_INLINE void
 TAO_ORBInitInfo::invalidate ()
 {
-  this->orb_core_ = 0;
+  this->orb_core_ = nullptr;
 }
 
 ACE_INLINE PortableInterceptor::SlotId
