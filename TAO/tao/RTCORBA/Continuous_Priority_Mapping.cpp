@@ -13,9 +13,7 @@ TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
 {
 }
 
-TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping ()
-{
-}
+TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping () = default;
 
 CORBA::Boolean
 TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,

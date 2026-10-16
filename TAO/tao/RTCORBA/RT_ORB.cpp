@@ -36,9 +36,7 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
     &rt_thread_lane_resources_manager->tp_manager ();
 }
 
-TAO_RT_ORB::~TAO_RT_ORB ()
-{
-}
+TAO_RT_ORB::~TAO_RT_ORB () = default;
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_mutex ()
@@ -72,9 +70,7 @@ TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager ()
 {
 }
 
-TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager ()
-{
-}
+TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager () = default;
 
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_mutex ()

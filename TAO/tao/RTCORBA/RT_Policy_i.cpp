@@ -41,9 +41,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy ()
 {
 }
 
-TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy ()
-{
-}
+TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy () = default;
 
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::create (const CORBA::Any &)
@@ -151,9 +149,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
 {
 }
 
-TAO_ThreadpoolPolicy::~TAO_ThreadpoolPolicy ()
-{
-}
+TAO_ThreadpoolPolicy::~TAO_ThreadpoolPolicy () = default;
 
 CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::create (const CORBA::Any &val)
@@ -231,9 +227,7 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConne
 {
 }
 
-TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy ()
-{
-}
+TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy () = default;
 
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::create (const CORBA::Any &)
@@ -308,9 +302,7 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy ()
 {
 }
 
-TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy ()
-{
-}
+TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy () = default;
 
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
@@ -414,9 +406,7 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPoli
 {
 }
 
-TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy ()
-{
-}
+TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy () = default;
 
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
@@ -513,9 +503,7 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPoli
 {
 }
 
-TAO_ClientProtocolPolicy::~TAO_ClientProtocolPolicy ()
-{
-}
+TAO_ClientProtocolPolicy::~TAO_ClientProtocolPolicy () = default;
 
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::create (const CORBA::Any &val)
@@ -658,9 +646,7 @@ TAO_TCP_Protocol_Properties::TAO_TCP_Protocol_Properties (CORBA::Long send_buffe
 {
 }
 
-TAO_TCP_Protocol_Properties::~TAO_TCP_Protocol_Properties ()
-{
-}
+TAO_TCP_Protocol_Properties::~TAO_TCP_Protocol_Properties () = default;
 
 CORBA::Long
 TAO_TCP_Protocol_Properties::send_buffer_size ()
@@ -771,9 +757,7 @@ TAO_UnixDomain_Protocol_Properties::TAO_UnixDomain_Protocol_Properties
 {
 }
 
-TAO_UnixDomain_Protocol_Properties::~TAO_UnixDomain_Protocol_Properties ()
-{
-}
+TAO_UnixDomain_Protocol_Properties::~TAO_UnixDomain_Protocol_Properties () = default;
 
 CORBA::Long
 TAO_UnixDomain_Protocol_Properties::send_buffer_size ()
@@ -834,9 +818,7 @@ TAO_SharedMemory_Protocol_Properties::TAO_SharedMemory_Protocol_Properties (CORB
 {
 }
 
-TAO_SharedMemory_Protocol_Properties::~TAO_SharedMemory_Protocol_Properties ()
-{
-}
+TAO_SharedMemory_Protocol_Properties::~TAO_SharedMemory_Protocol_Properties () = default;
 
 
 CORBA::Long
@@ -987,9 +969,7 @@ TAO_UserDatagram_Protocol_Properties::TAO_UserDatagram_Protocol_Properties (
 {
 }
 
-TAO_UserDatagram_Protocol_Properties::~TAO_UserDatagram_Protocol_Properties ()
-{
-}
+TAO_UserDatagram_Protocol_Properties::~TAO_UserDatagram_Protocol_Properties () = default;
 
 CORBA::Boolean
 TAO_UserDatagram_Protocol_Properties::enable_network_priority ()
@@ -1056,9 +1036,7 @@ TAO_StreamControl_Protocol_Properties::TAO_StreamControl_Protocol_Properties (CO
 {
 }
 
-TAO_StreamControl_Protocol_Properties::~TAO_StreamControl_Protocol_Properties ()
-{
-}
+TAO_StreamControl_Protocol_Properties::~TAO_StreamControl_Protocol_Properties () = default;
 
 CORBA::Long
 TAO_StreamControl_Protocol_Properties::send_buffer_size ()
@@ -1165,9 +1143,7 @@ TAO_GIOP_Protocol_Properties::TAO_GIOP_Protocol_Properties ()
 {
 }
 
-TAO_GIOP_Protocol_Properties::~TAO_GIOP_Protocol_Properties ()
-{
-}
+TAO_GIOP_Protocol_Properties::~TAO_GIOP_Protocol_Properties () = default;
 
 CORBA::Boolean
 TAO_GIOP_Protocol_Properties::_tao_encode (TAO_OutputCDR &)

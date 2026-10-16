@@ -353,9 +353,7 @@ TAO_Thread_Lane::open ()
                  CORBA::COMPLETED_NO);
 }
 
-TAO_Thread_Lane::~TAO_Thread_Lane ()
-{
-}
+TAO_Thread_Lane::~TAO_Thread_Lane () = default;
 
 void
 TAO_Thread_Lane::finalize ()

@@ -33,9 +33,7 @@ TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks ()
 }
 
 
-TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks ()
-{
-}
+TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks () = default;
 
 void
 TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)

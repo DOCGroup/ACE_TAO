@@ -11,9 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory ()
-{
-}
+TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory () = default;
 
 TAO_Stub *
 TAO_RT_Stub_Factory::create_stub (const char *repository_id,
