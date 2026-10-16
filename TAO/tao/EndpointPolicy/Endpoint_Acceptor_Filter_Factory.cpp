@@ -13,7 +13,7 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
   CORBA::PolicyList& policies = poamanager.get_policies ();
 
   EndpointPolicy::EndpointList endpoints;
-  TAO_Acceptor_Filter* filter = 0;
+  TAO_Acceptor_Filter* filter = nullptr;
 
   for (CORBA::ULong i = 0; i < policies.length(); ++i)
     {
