@@ -100,7 +100,7 @@ TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return 0;
+      return nullptr;
     }
 
   return dynamic_cast<TAO_TypeCodeFactory_i *> (_tao_objref);
@@ -127,12 +127,12 @@ TAO_TypeCodeFactory_i::create_union_tc (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -308,7 +308,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       elem_type & element = cases[ci];
-      TAO::TypeCode::Case_Dynamic * the_case = 0;
+      TAO::TypeCode::Case_Dynamic *the_case = nullptr;
 
       if (index == raw_default_index)
         {
@@ -318,7 +318,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                                        members,
                                        the_case);
 
-          if (the_case == 0)
+          if (the_case == nullptr)
             {
               // Should never throw since label kind was
               // verified earlier.
@@ -598,12 +598,12 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -769,7 +769,7 @@ TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1096,13 +1096,13 @@ TAO_TypeCodeFactory_i::create_tc_common (
 
   )
 {
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   // Repo id may not be null for object or native type.
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1174,12 +1174,12 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1213,7 +1213,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
       char const * const member_name = members[index].name;
 
-      if (member_name == 0 || !this->valid_name (member_name))
+      if (member_name == nullptr || !this->valid_name (member_name))
         {
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
@@ -1284,12 +1284,12 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1328,12 +1328,12 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1366,7 +1366,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
       const char * const member_name = members[index].name;
 
-      if (member_name == 0 || !this->valid_name (member_name))
+      if (member_name == nullptr || !this->valid_name (member_name))
         {
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
@@ -1781,7 +1781,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                   {
                     char const * member_tc_id = member_tc->id ();
 
-                    if (working_id != 0
+                    if (working_id != nullptr
                         && ACE_OS::strcmp (working_id, member_tc_id) == 0)
                       {
                         // We've found a recursion at a lower level but
@@ -1823,7 +1823,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
         CORBA::TCKind const content_tc_kind =
           content_tc->kind ();
 
-        char const * content_tc_id = 0;
+        char const *content_tc_id = nullptr;
 
         if (content_tc_kind == CORBA::tk_struct
             || content_tc_kind == CORBA::tk_union
@@ -1832,8 +1832,8 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
             content_tc_id = content_tc->id ();
           }
 
-        if (working_id != 0
-            && content_tc_id != 0
+        if (working_id != nullptr
+            && content_tc_id != nullptr
             && ACE_OS::strcmp (working_id, content_tc_id) == 0)
           {
             // We've found a recursion at a lower level but
@@ -1875,7 +1875,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
             id,
             content_tc.in (),
             recursive_tc,
-            content_tc_id != 0 ? content_tc_id : working_id);
+            content_tc_id != nullptr ? content_tc_id : working_id);
       }
 
     default:
