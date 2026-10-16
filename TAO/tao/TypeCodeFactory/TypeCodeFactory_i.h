@@ -123,28 +123,28 @@ public:
   CORBA::TypeCode_ptr create_recursive_tc (
       const char *id) override;
 
-  virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
+  CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
-      const char *name);
+      const char *name) override;
 
-  virtual CORBA::TypeCode_ptr create_local_interface_tc (
+  CORBA::TypeCode_ptr create_local_interface_tc (
       const char *id,
-      const char *name);
+      const char *name) override;
 
-  virtual CORBA::TypeCode_ptr create_component_tc (
+  CORBA::TypeCode_ptr create_component_tc (
       const char *id,
-      const char *name);
+      const char *name) override;
 
-  virtual CORBA::TypeCode_ptr create_home_tc (
+  CORBA::TypeCode_ptr create_home_tc (
       const char *id,
-      const char *name);
+      const char *name) override;
 
-  virtual CORBA::TypeCode_ptr create_event_tc (
+  CORBA::TypeCode_ptr create_event_tc (
       const char *id,
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members);
+      const CORBA::ValueMemberSeq &members) override;
 
 private:
   /// Finds a legal default label value.
