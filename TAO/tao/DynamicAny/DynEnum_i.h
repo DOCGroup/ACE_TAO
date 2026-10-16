@@ -58,25 +58,25 @@ public:
 
   // = Functions specific to DynEnum.
 
-  virtual char * get_as_string ();
+  char * get_as_string () override;
 
-  virtual void set_as_string (const char * value);
+  void set_as_string (const char * value) override;
 
-  virtual CORBA::ULong get_as_ulong ();
+  CORBA::ULong get_as_ulong () override;
 
-  virtual void set_as_ulong (CORBA::ULong value);
+  void set_as_ulong (CORBA::ULong value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (const CORBA::Any & value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
 private:
   // Called by both versions of init().
