@@ -32,7 +32,7 @@ namespace TAO
       int
       Current_Loader::init (int, ACE_TCHAR *[])
       {
-        PortableInterceptor::ORBInitializer_ptr tmp = 0;
+        PortableInterceptor::ORBInitializer_ptr tmp = nullptr;
         ACE_NEW_THROW_EX (tmp,
                           Current_ORBInitializer<IIOP_Current_Impl> (ACE_TEXT ("TAO::Transport::IIOP::Current")),
                           CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (TAO::VMCID,

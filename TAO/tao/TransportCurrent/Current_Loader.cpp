@@ -34,7 +34,7 @@ namespace TAO
     int
     Current_Loader::init (int, ACE_TCHAR *[])
     {
-      PortableInterceptor::ORBInitializer_ptr tmp = 0;
+      PortableInterceptor::ORBInitializer_ptr tmp = nullptr;
       ACE_NEW_THROW_EX (tmp,
                         Current_ORBInitializer<Current_Impl>
                           (ACE_TEXT ("TAO::Transport::Current")),
