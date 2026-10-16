@@ -32,8 +32,8 @@ namespace TAO
       public:
         Lzo_CompressorFactory ();
 
-        virtual ::Compression::Compressor_ptr get_compressor (
-            ::Compression::CompressionLevel compression_level);
+        ::Compression::Compressor_ptr get_compressor (
+            ::Compression::CompressionLevel compression_level) override;
        private:
          ::Compression::Compressor_var compressor_;
     };
