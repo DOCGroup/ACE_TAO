@@ -56,21 +56,21 @@ public:
   /// = LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);
 
-  virtual CORBA::TypeCode_ptr create_struct_tc (
+  CORBA::TypeCode_ptr create_struct_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members);
+      const CORBA::StructMemberSeq &members) override;
 
-  virtual CORBA::TypeCode_ptr create_union_tc (
+  CORBA::TypeCode_ptr create_union_tc (
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members);
+      const CORBA::UnionMemberSeq &members) override;
 
-  virtual CORBA::TypeCode_ptr create_enum_tc (
+  CORBA::TypeCode_ptr create_enum_tc (
       const char *id,
       const char *name,
-      const CORBA::EnumMemberSeq &members);
+      const CORBA::EnumMemberSeq &members) override;
 
   virtual CORBA::TypeCode_ptr create_alias_tc (
       const char *id,
