@@ -92,17 +92,17 @@ public:
   CORBA::TypeCode_ptr create_wstring_tc (
       CORBA::ULong bound) override;
 
-  virtual CORBA::TypeCode_ptr create_fixed_tc (
+  CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
-      CORBA::UShort scale);
+      CORBA::UShort scale) override;
 
-  virtual CORBA::TypeCode_ptr create_sequence_tc (
+  CORBA::TypeCode_ptr create_sequence_tc (
       CORBA::ULong bound,
-      CORBA::TypeCode_ptr element_type);
+      CORBA::TypeCode_ptr element_type) override;
 
-  virtual CORBA::TypeCode_ptr create_array_tc (
+  CORBA::TypeCode_ptr create_array_tc (
       CORBA::ULong length,
-      CORBA::TypeCode_ptr element_type);
+      CORBA::TypeCode_ptr element_type) override;
 
   virtual CORBA::TypeCode_ptr create_value_tc (
       const char *id,
