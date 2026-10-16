@@ -39,9 +39,9 @@ class TAO_Async_IOR_Table_Impl : public virtual TAO_IOR_Table_Impl
 public:
   /// Constructor
   TAO_Async_IOR_Table_Impl ();
-  virtual ~TAO_Async_IOR_Table_Impl ();
+  ~TAO_Async_IOR_Table_Impl () override;
 
-  virtual bool async_available () { return true; }
+  bool async_available () override { return true; }
 
   virtual void async_find (::IORTable::Locate_ResponseHandler rh,
                            const char *object_key);

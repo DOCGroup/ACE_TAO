@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
 TAO_AMH_Locate_ResponseHandler::_duplicate (TAO_AMH_Locate_ResponseHandler_ptr x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
       x->_add_ref ();
     }

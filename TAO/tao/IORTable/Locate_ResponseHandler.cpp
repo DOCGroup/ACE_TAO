@@ -35,12 +35,10 @@ TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
   : TAO_AMH_Response_Handler (),
     orb_ (CORBA::ORB::_duplicate (sr.orb()))
 {
-  this->init (sr,0);
+  this->init (sr, nullptr);
 }
 
-TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler ()
-{
-}
+TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler () = default;
 
 void
 TAO_AMH_Locate_ResponseHandler::raise_excep (const CORBA::Exception &ex)
@@ -81,7 +79,7 @@ TAO_AMH_Locate_ResponseHandler::_unchecked_narrow (CORBA::Object_ptr obj)
 const char*
 TAO_AMH_Locate_ResponseHandler::_interface_repository_id () const
 {
-  return 0;
+  return nullptr;
 }
 
 

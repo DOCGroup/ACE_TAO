@@ -15,9 +15,7 @@ TAO_Async_IOR_Table_Impl::TAO_Async_IOR_Table_Impl ()
 {
 }
 
-TAO_Async_IOR_Table_Impl::~TAO_Async_IOR_Table_Impl ()
-{
-}
+TAO_Async_IOR_Table_Impl::~TAO_Async_IOR_Table_Impl () = default;
 
 void
 TAO_Async_IOR_Table_Impl::async_find (::IORTable::Locate_ResponseHandler handler,
