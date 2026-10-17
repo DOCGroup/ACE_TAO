@@ -97,6 +97,12 @@ namespace TAO
 
     /// Intended byte order for message output stream
     int byte_order_;
+
+  private:
+    Remote_Invocation (Remote_Invocation const &) = delete;
+    Remote_Invocation &operator= (Remote_Invocation const &) = delete;
+    Remote_Invocation (Remote_Invocation &&) = delete;
+    Remote_Invocation &operator= (Remote_Invocation &&) = delete;
   };
 
   struct TAO_Export CDR_Byte_Order_Guard
@@ -107,6 +113,11 @@ namespace TAO
     void reset ();
     CDR_Byte_Order_Guard (TAO_OutputCDR&, int);
     ~CDR_Byte_Order_Guard ();
+
+    CDR_Byte_Order_Guard (CDR_Byte_Order_Guard const &) = delete;
+    CDR_Byte_Order_Guard &operator= (CDR_Byte_Order_Guard const &) = delete;
+    CDR_Byte_Order_Guard (CDR_Byte_Order_Guard &&) = delete;
+    CDR_Byte_Order_Guard &operator= (CDR_Byte_Order_Guard &&) = delete;
   };
 }
 
