@@ -9,7 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (
-  const ACE_Message_Block *contents,
+  ACE_Message_Block const *contents,
   TAO_ORB_Core *oc,
   ACE_Allocator *alloc,
   bool is_heap_allocated)
@@ -28,7 +28,7 @@ TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message ()
     }
 }
 
-const ACE_Message_Block *
+ACE_Message_Block const *
 TAO_Synch_Queued_Message::current_block () const
 {
   return this->current_block_;
@@ -58,7 +58,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
 {
   ACE_ASSERT (iovcnt_max > iovcnt);
 
-  for (const ACE_Message_Block *message_block = this->current_block_;
+  for (ACE_Message_Block const *message_block = this->current_block_;
        message_block != nullptr && iovcnt < iovcnt_max;
        message_block = message_block->cont ())
     {
@@ -121,7 +121,7 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
   // associated copying.
   ACE_Message_Block *mb = this->current_block_->clone ();
 
-  if (alloc)
+  if (alloc != nullptr)
     {
       ACE_NEW_MALLOC_RETURN (qm,
                              static_cast<TAO_Synch_Queued_Message *> (
@@ -156,7 +156,7 @@ TAO_Synch_Queued_Message::destroy ()
     {
       // If we have an allocator release the memory to the allocator
       // pool.
-      if (this->allocator_)
+      if (this->allocator_ != nullptr)
         {
           ACE_DES_FREE_THIS (this->allocator_->free,
                              TAO_Synch_Queued_Message);
@@ -169,13 +169,13 @@ TAO_Synch_Queued_Message::destroy ()
 }
 
 void
-TAO_Synch_Queued_Message::copy_if_necessary (const ACE_Message_Block* chain)
+TAO_Synch_Queued_Message::copy_if_necessary (ACE_Message_Block const *chain)
 {
   if (!this->own_contents_)
     {
       // Go through the message block chain looking for the message block
       // that matches our "current" message block.
-      for (const ACE_Message_Block* mb = chain; mb != nullptr; mb = mb->cont ())
+      for (ACE_Message_Block const *mb = chain; mb != nullptr; mb = mb->cont ())
         {
           if (mb == this->current_block_)
             {
