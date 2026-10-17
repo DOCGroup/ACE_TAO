@@ -46,7 +46,7 @@ public:
 
   void create_request (CORBA::Object_ptr obj,
                        CORBA::ORB_ptr orb,
-                       const char *operation,
+                       char const* operation,
                        CORBA::NVList_ptr arg_list,
                        CORBA::NamedValue_ptr result,
                        CORBA::ExceptionList_ptr exceptions,
@@ -55,7 +55,7 @@ public:
 
   CORBA::Request_ptr request (CORBA::Object_ptr obj,
                               CORBA::ORB_ptr orb,
-                              const char *op) override;
+                              char const* op) override;
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
