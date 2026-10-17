@@ -14,9 +14,7 @@ TAO::In_Vector_SArgument_T<S,Insert_Policy>::arg () const
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Inout_Vector_SArgument_T<S,Insert_Policy>::Inout_Vector_SArgument_T ()
-{
-}
+TAO::Inout_Vector_SArgument_T<S,Insert_Policy>::Inout_Vector_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -31,9 +29,7 @@ TAO::Inout_Vector_SArgument_T<S,Insert_Policy>::arg ()
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Out_Vector_SArgument_T<S,Insert_Policy>::Out_Vector_SArgument_T ()
-{
-}
+TAO::Out_Vector_SArgument_T<S,Insert_Policy>::Out_Vector_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -48,9 +44,7 @@ TAO::Out_Vector_SArgument_T<S,Insert_Policy>::arg ()
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Vector_SArgument_T<S,Insert_Policy>::Ret_Vector_SArgument_T ()
-{
-}
+TAO::Ret_Vector_SArgument_T<S,Insert_Policy>::Ret_Vector_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
