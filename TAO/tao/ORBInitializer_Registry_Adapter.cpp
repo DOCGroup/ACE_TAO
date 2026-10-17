@@ -4,9 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ORBInitializer_Registry_Adapter::~ORBInitializer_Registry_Adapter ()
-  {
-  }
+  ORBInitializer_Registry_Adapter::~ORBInitializer_Registry_Adapter () = default;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
