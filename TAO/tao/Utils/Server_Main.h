@@ -67,17 +67,17 @@ namespace TAO
     class Server_Main
     {
     public:
-      Server_Main(const char * name);
-      Server_Main (const Server_Main &) = delete;
+      Server_Main (char const *name);
+      Server_Main (Server_Main const &) = delete;
       Server_Main (Server_Main &&) = delete;
-      Server_Main &operator= (const Server_Main &) = delete;
+      Server_Main &operator= (Server_Main const &) = delete;
       Server_Main &operator= (Server_Main &&) = delete;
       ~Server_Main();
 
       int run (int argc, ACE_TCHAR *argv[]);
 
     private:
-      const char * name_;
+      char const *name_;
     };
   } // namespace UTILS
 } // namespace TAO
