@@ -25,7 +25,7 @@ CORBA::Request::target () const
 }
 
 // Return the operation name for the request.
-ACE_INLINE const CORBA::Char *
+ACE_INLINE CORBA::Char const*
 CORBA::Request::operation () const
 {
   return this->opname_;
@@ -67,7 +67,7 @@ CORBA::Request::add_in_arg ()
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_in_arg (const CORBA::Char *name)
+CORBA::Request::add_in_arg (CORBA::Char const* name)
 {
   return this->args_->add_item (name, CORBA::ARG_IN)->any_;
 }
@@ -79,7 +79,7 @@ CORBA::Request::add_inout_arg ()
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_inout_arg (const CORBA::Char *name)
+CORBA::Request::add_inout_arg (CORBA::Char const* name)
 {
   return this->args_->add_item (name, CORBA::ARG_INOUT)->any_;
 }
@@ -91,7 +91,7 @@ CORBA::Request::add_out_arg ()
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::add_out_arg (const CORBA::Char *name)
+CORBA::Request::add_out_arg (CORBA::Char const* name)
 {
   return this->args_->add_item (name, CORBA::ARG_OUT)->any_;
 }

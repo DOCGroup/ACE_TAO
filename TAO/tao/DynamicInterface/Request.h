@@ -70,7 +70,7 @@ namespace CORBA
     CORBA::Object_ptr target () const;
 
     /// Return the operation name for the request.
-    const CORBA::Char *operation () const;
+    CORBA::Char const* operation () const;
 
     /// Return the arguments for the request.
     CORBA::NVList_ptr arguments ();
@@ -100,11 +100,11 @@ namespace CORBA
      */
     //@{
     CORBA::Any &add_in_arg ();
-    CORBA::Any &add_in_arg (const char* name);
+    CORBA::Any &add_in_arg (char const* name);
     CORBA::Any &add_inout_arg ();
-    CORBA::Any &add_inout_arg (const char* name);
+    CORBA::Any &add_inout_arg (char const* name);
     CORBA::Any &add_out_arg ();
-    CORBA::Any &add_out_arg (const char* name);
+    CORBA::Any &add_out_arg (char const* name);
     //@}
 
     /// Initialize the return type.
@@ -200,7 +200,7 @@ namespace CORBA
     // friend class.
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op,
+             CORBA::Char const* op,
              CORBA::NVList_ptr args,
              CORBA::NamedValue_ptr result,
              CORBA::Flags flags,
@@ -208,7 +208,7 @@ namespace CORBA
 
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op);
+             CORBA::Char const* op);
 
     ~Request ();
 
@@ -220,7 +220,7 @@ namespace CORBA
     CORBA::ORB_var orb_;
 
     /// Operation name.
-    const char * opname_;
+    char const* opname_;
 
     /// Parameter list.
     CORBA::NVList_ptr args_;
