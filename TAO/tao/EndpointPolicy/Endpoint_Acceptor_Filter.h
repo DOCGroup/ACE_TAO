@@ -55,6 +55,11 @@ public:
                     CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
 private:
+  TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter const &) = delete;
+  TAO_Endpoint_Acceptor_Filter &operator= (TAO_Endpoint_Acceptor_Filter const &) = delete;
+  TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter &&) = delete;
+  TAO_Endpoint_Acceptor_Filter &operator= (TAO_Endpoint_Acceptor_Filter &&) = delete;
+
   // this is the list of endpoints as obtained from the policy value supplied
   // to the constructor.
   EndpointPolicy::EndpointList endpoints_;
