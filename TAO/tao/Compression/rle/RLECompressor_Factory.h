@@ -36,6 +36,11 @@ namespace TAO
             ::Compression::CompressionLevel = 0) override;
 
     private:
+        RLE_CompressorFactory (RLE_CompressorFactory const &) = delete;
+        RLE_CompressorFactory &operator= (RLE_CompressorFactory const &) = delete;
+        RLE_CompressorFactory (RLE_CompressorFactory &&) = delete;
+        RLE_CompressorFactory &operator= (RLE_CompressorFactory &&) = delete;
+
         ::Compression::Compressor_var compressor_;
     };
 }

@@ -38,6 +38,12 @@ namespace TAO
         void decompress (
             ::Compression::Buffer const &source,
             ::Compression::Buffer &target) override;
+
+    private:
+        RLECompressor (RLECompressor const &) = delete;
+        RLECompressor &operator= (RLECompressor const &) = delete;
+        RLECompressor (RLECompressor &&) = delete;
+        RLECompressor &operator= (RLECompressor &&) = delete;
     };
 }
 
