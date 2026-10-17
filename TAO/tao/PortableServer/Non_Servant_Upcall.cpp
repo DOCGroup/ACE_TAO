@@ -15,7 +15,7 @@ namespace TAO
     Non_Servant_Upcall::Non_Servant_Upcall (::TAO_Root_POA &poa)
       : object_adapter_ (poa.object_adapter ()),
         poa_ (poa),
-        previous_ (0)
+        previous_ (nullptr)
     {
       // Check if this is a nested non_servant_upcall.
       if (this->object_adapter_.non_servant_upcall_nesting_level_ != 0)
@@ -69,7 +69,7 @@ namespace TAO
                 {
                   this->poa_.complete_destruction_i ();
                 }
-              catch (const::CORBA::Exception&ex)
+              catch (::CORBA::Exception const &ex)
                 {
                   // Ignore exceptions
                   ex._tao_print_exception ("TAO_POA::complete_destruction_i");
