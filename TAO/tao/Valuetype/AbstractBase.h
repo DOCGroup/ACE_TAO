@@ -131,7 +131,7 @@ namespace CORBA
     CORBA::Boolean is_objref_;
 
   private:
-    AbstractBase & operator= (const AbstractBase &);
+    AbstractBase & operator= (AbstractBase const &) = delete;
 
     virtual CORBA::ValueBase *_tao_to_value ();
 

@@ -44,19 +44,19 @@ class TAO_Value_Var_T : private TAO_Base_var
 public:
   TAO_Value_Var_T ();
   TAO_Value_Var_T (T *);
-  TAO_Value_Var_T (const TAO_Value_Var_T<T> &);
+  TAO_Value_Var_T (TAO_Value_Var_T<T> const &);
 
   // (TAO extension)
-  TAO_Value_Var_T (const T *);
+  TAO_Value_Var_T (T const *);
 
   ~TAO_Value_Var_T ();
 
   TAO_Value_Var_T &operator= (T *);
-  TAO_Value_Var_T &operator= (const TAO_Value_Var_T<T> &);
+  TAO_Value_Var_T &operator= (TAO_Value_Var_T<T> const &);
 
   T * operator-> () const;
 
-  operator const T * () const;
+  operator T const * () const;
   operator T *& ();
 
   using _in_type = T *;
@@ -75,8 +75,8 @@ public:
 
 private:
   // Prevent widening assignment.
-  TAO_Value_Var_T (const TAO_Base_var &);
-  void operator= (const TAO_Base_var &);
+  TAO_Value_Var_T (TAO_Base_var const &) = delete;
+  void operator= (TAO_Base_var const &) = delete;
 
 private:
   T * ptr_;
@@ -93,9 +93,9 @@ class TAO_Value_Out_T
 public:
   TAO_Value_Out_T (T *&);
   TAO_Value_Out_T (TAO_Value_Var_T<T> &);
-  TAO_Value_Out_T (const TAO_Value_Out_T<T> &);
+  TAO_Value_Out_T (TAO_Value_Out_T<T> const &);
 
-  TAO_Value_Out_T &operator= (const TAO_Value_Out_T<T> &);
+  TAO_Value_Out_T &operator= (TAO_Value_Out_T<T> const &);
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
@@ -106,7 +106,7 @@ public:
 private:
   T *& ptr_;
   /// Assignment from _var not allowed.
-  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
+  TAO_Value_Out_T &operator= (TAO_Value_Var_T<T> const &) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

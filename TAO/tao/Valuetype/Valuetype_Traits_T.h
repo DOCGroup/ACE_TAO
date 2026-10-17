@@ -30,7 +30,7 @@ struct valuetype_traits_decorator
   inline static void zero_range(
       object_type ** begin, object_type ** end)
   {
-    ACE_OS::memset (begin, 0, (end - begin) * sizeof (object_type*));
+    std::fill (begin, end, nullptr);
   }
 
   inline static void initialize_range(
@@ -63,7 +63,7 @@ struct valuetype_traits_decorator
 
   inline static object_type const * initialize_if_zero(object_type * & element)
   {
-    if (element == 0)
+    if (element == nullptr)
     {
       element = derived::nil();
     }

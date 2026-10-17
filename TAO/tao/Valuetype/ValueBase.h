@@ -305,7 +305,7 @@ namespace CORBA
     static CORBA::Boolean _tao_read_codebase_url (TAO_InputCDR& strm,
                                                   ACE_CString& codebase_url);
   private:
-    ValueBase & operator= (const ValueBase &);
+    ValueBase & operator= (ValueBase const &) = delete;
   }; // ValueBase
 
   /// Valuetype-related type codes.
@@ -357,16 +357,16 @@ namespace CORBA
  */
 namespace TAO_OBV_GIOP_Flags
 {
-  const CORBA::Long Value_tag_base    = 0x7fffff00L;
-  const CORBA::Long Value_tag_sigbits = 0x7fffff00L;
-  const CORBA::Long Codebase_url      = 1;
-  const CORBA::Long Type_info_sigbits = 6;
-  const CORBA::Long Type_info_none    = 0;
-  const CORBA::Long Type_info_single  = 2;
-  const CORBA::Long Type_info_list    = 6;
-  const CORBA::Long Chunking_tag_sigbits = 8;
-  const CORBA::Long Indirection_tag   = -1; // 0xffffffff
-  const CORBA::Long Null_tag          = 0;
+  constexpr CORBA::Long Value_tag_base = 0x7fffff00L;
+  constexpr CORBA::Long Value_tag_sigbits = 0x7fffff00L;
+  constexpr CORBA::Long Codebase_url = 1;
+  constexpr CORBA::Long Type_info_sigbits = 6;
+  constexpr CORBA::Long Type_info_none = 0;
+  constexpr CORBA::Long Type_info_single = 2;
+  constexpr CORBA::Long Type_info_list = 6;
+  constexpr CORBA::Long Chunking_tag_sigbits = 8;
+  constexpr CORBA::Long Indirection_tag = -1; // 0xffffffff
+  constexpr CORBA::Long Null_tag = 0;
 
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long tag);

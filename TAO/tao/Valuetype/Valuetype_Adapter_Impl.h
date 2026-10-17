@@ -39,6 +39,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
   : public TAO_Valuetype_Adapter
 {
 public:
+  TAO_Valuetype_Adapter_Impl () = default;
   ~TAO_Valuetype_Adapter_Impl () override = default;
 
   CORBA::Object_ptr abstractbase_to_object (
@@ -66,6 +67,11 @@ public:
   CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *) override;
 
 private:
+  TAO_Valuetype_Adapter_Impl (TAO_Valuetype_Adapter_Impl const &) = delete;
+  TAO_Valuetype_Adapter_Impl &operator= (TAO_Valuetype_Adapter_Impl const &) = delete;
+  TAO_Valuetype_Adapter_Impl (TAO_Valuetype_Adapter_Impl &&) = delete;
+  TAO_Valuetype_Adapter_Impl &operator= (TAO_Valuetype_Adapter_Impl &&) = delete;
+
   TAO_ValueFactory_Map map_;
 };
 
