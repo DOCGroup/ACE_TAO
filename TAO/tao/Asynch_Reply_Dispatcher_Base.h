@@ -77,9 +77,12 @@ protected:
   ~TAO_Asynch_Reply_Dispatcher_Base () override;
 
 private:
+  TAO_Asynch_Reply_Dispatcher_Base (TAO_Asynch_Reply_Dispatcher_Base const &) = delete;
   TAO_Asynch_Reply_Dispatcher_Base &operator= (
       TAO_Asynch_Reply_Dispatcher_Base const &) = delete;
-  TAO_Asynch_Reply_Dispatcher_Base (TAO_Asynch_Reply_Dispatcher_Base const &) = delete;
+  TAO_Asynch_Reply_Dispatcher_Base (TAO_Asynch_Reply_Dispatcher_Base &&) = delete;
+  TAO_Asynch_Reply_Dispatcher_Base &operator= (
+      TAO_Asynch_Reply_Dispatcher_Base &&) = delete;
 
 protected:
   /// The service context list.

@@ -101,6 +101,11 @@ protected:
   GIOP::ReplyStatusType reply_status_;
 
 private:
+  TAO_Reply_Dispatcher (TAO_Reply_Dispatcher const &) = delete;
+  TAO_Reply_Dispatcher &operator= (TAO_Reply_Dispatcher const &) = delete;
+  TAO_Reply_Dispatcher (TAO_Reply_Dispatcher &&) = delete;
+  TAO_Reply_Dispatcher &operator= (TAO_Reply_Dispatcher &&) = delete;
+
   /// Support for intrusive reference counting
   std::atomic<uint32_t> refcount_;
 

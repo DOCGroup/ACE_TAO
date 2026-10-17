@@ -64,6 +64,11 @@ protected:
   IOP::ServiceContextList &reply_service_info_;
 
 private:
+  TAO_Synch_Reply_Dispatcher (TAO_Synch_Reply_Dispatcher const &) = delete;
+  TAO_Synch_Reply_Dispatcher &operator= (TAO_Synch_Reply_Dispatcher const &) = delete;
+  TAO_Synch_Reply_Dispatcher (TAO_Synch_Reply_Dispatcher &&) = delete;
+  TAO_Synch_Reply_Dispatcher &operator= (TAO_Synch_Reply_Dispatcher &&) = delete;
+
   /// Cache the ORB Core pointer.
   TAO_ORB_Core *orb_core_;
 
