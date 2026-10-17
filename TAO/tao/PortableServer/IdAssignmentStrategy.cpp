@@ -15,10 +15,10 @@ namespace TAO
     void
     IdAssignmentStrategy::create_key (
       CORBA::Octet *buffer,
-      CORBA::ULong& starting_at)
+      CORBA::ULong &starting_at)
     {
       // Copy the system id byte.
-      buffer[starting_at] = (CORBA::Octet) this->id_assignment_key_type ();
+      buffer[starting_at] = static_cast<CORBA::Octet> (this->id_assignment_key_type ());
       starting_at += this->key_type_length ();
     }
 
