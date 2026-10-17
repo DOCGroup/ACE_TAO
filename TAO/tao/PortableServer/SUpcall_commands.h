@@ -234,7 +234,7 @@ public:
   {
   }
 
-  virtual void execute ();
+  void execute () override;
 
 private:
   TAO_ServantBase * const servant_;
