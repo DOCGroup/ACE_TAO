@@ -98,6 +98,11 @@ public:
                             ACE_Time_Value *max_time_wait = 0);
 
 private:
+  TAO_DIOP_Transport (TAO_DIOP_Transport const &) = delete;
+  TAO_DIOP_Transport &operator= (TAO_DIOP_Transport const &) = delete;
+  TAO_DIOP_Transport (TAO_DIOP_Transport &&) = delete;
+  TAO_DIOP_Transport &operator= (TAO_DIOP_Transport &&) = delete;
+
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_DIOP_Connection_Handler *connection_handler_;

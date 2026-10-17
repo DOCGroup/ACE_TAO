@@ -140,6 +140,11 @@ protected:
   // DIOP Additions - End
 
 private:
+  TAO_DIOP_Connection_Handler (TAO_DIOP_Connection_Handler const &) = delete;
+  TAO_DIOP_Connection_Handler &operator= (TAO_DIOP_Connection_Handler const &) = delete;
+  TAO_DIOP_Connection_Handler (TAO_DIOP_Connection_Handler &&) = delete;
+  TAO_DIOP_Connection_Handler &operator= (TAO_DIOP_Connection_Handler &&) = delete;
+
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
