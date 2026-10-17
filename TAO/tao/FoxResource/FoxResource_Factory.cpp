@@ -15,7 +15,7 @@ namespace TAO
   ACE_Reactor_Impl *
   FoxResource_Factory::reactor_impl ()
   {
-    if (this->fxapp_ == 0)
+    if (this->fxapp_ == nullptr)
       return 0;
 
     // synchronized by external locks
