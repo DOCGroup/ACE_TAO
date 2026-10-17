@@ -41,8 +41,10 @@ namespace TAO
   private:
     ::Compression::CompressorId const compressor_id_;
 
-    CompressorFactory (CompressorFactory const&) = delete;
-    CompressorFactory &operator = (CompressorFactory const&) = delete;
+    CompressorFactory (CompressorFactory const &) = delete;
+    CompressorFactory &operator= (CompressorFactory const &) = delete;
+    CompressorFactory (CompressorFactory &&) = delete;
+    CompressorFactory &operator= (CompressorFactory &&) = delete;
   };
 }
 

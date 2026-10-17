@@ -40,8 +40,10 @@ namespace TAO
         ::Compression::CompressionLevel compression_level) override;
 
   private:
-    Zlib_CompressorFactory (const Zlib_CompressorFactory &) = delete;
-    Zlib_CompressorFactory &operator= (const Zlib_CompressorFactory &) = delete;
+    Zlib_CompressorFactory (Zlib_CompressorFactory const &) = delete;
+    Zlib_CompressorFactory &operator= (Zlib_CompressorFactory const &) = delete;
+    Zlib_CompressorFactory (Zlib_CompressorFactory &&) = delete;
+    Zlib_CompressorFactory &operator= (Zlib_CompressorFactory &&) = delete;
 
     // Ensure we can lock with imutability (i.e. const)
     mutable TAO_SYNCH_MUTEX mutex_;
