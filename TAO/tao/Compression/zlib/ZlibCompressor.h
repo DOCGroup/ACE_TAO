@@ -41,6 +41,12 @@ namespace TAO
       void decompress (
           ::Compression::Buffer const & source,
           ::Compression::Buffer & target) override;
+
+    private:
+      ZlibCompressor (ZlibCompressor const &) = delete;
+      ZlibCompressor &operator= (ZlibCompressor const &) = delete;
+      ZlibCompressor (ZlibCompressor &&) = delete;
+      ZlibCompressor &operator= (ZlibCompressor &&) = delete;
   };
 }
 
