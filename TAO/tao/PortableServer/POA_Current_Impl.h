@@ -139,8 +139,10 @@ namespace TAO
 
     private:
       // = Hidden because we don't allow these
-      POA_Current_Impl (const POA_Current_Impl &);
-      void operator= (const POA_Current_Impl &);
+      POA_Current_Impl (POA_Current_Impl const &) = delete;
+      POA_Current_Impl &operator= (POA_Current_Impl const &) = delete;
+      POA_Current_Impl (POA_Current_Impl &&) = delete;
+      POA_Current_Impl &operator= (POA_Current_Impl &&) = delete;
 
     protected:
       /// The POA implementation invoking an upcall
@@ -158,22 +160,22 @@ namespace TAO
       PortableServer::ObjectId object_id_;
 
       /// The object key of the current context.
-      const TAO::ObjectKey *object_key_;
+      TAO::ObjectKey const *object_key_ {};
 
       /// The servant for the current upcall.
-      PortableServer::Servant servant_;
+      PortableServer::Servant servant_ {};
 
       /// The priority for the current upcall.
       CORBA::Short priority_;
 
       /// Current previous from <this>.
-      POA_Current_Impl *previous_current_impl_;
+      POA_Current_Impl *previous_current_impl_ {};
 
       /// Is setup complete?
-      bool setup_done_;
+      bool setup_done_ {};
 
       /// Pointer to tss resources.
-      TAO_TSS_Resources *tss_resources_;
+      TAO_TSS_Resources *tss_resources_ {};
     };
   }
 }

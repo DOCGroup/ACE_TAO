@@ -17,16 +17,12 @@ namespace TAO
   {
     POA_Current_Impl::POA_Current_Impl ()
       : object_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, object_id_buf_),
-        object_key_ (0),
-        servant_ (0),
-        priority_ (TAO_INVALID_PRIORITY),
-        previous_current_impl_ (0),
-        setup_done_ (false)
+        priority_ (TAO_INVALID_PRIORITY)
     {
     }
 
     void
-    POA_Current_Impl::setup (::TAO_Root_POA *p, const TAO::ObjectKey &key)
+    POA_Current_Impl::setup (::TAO_Root_POA *p, TAO::ObjectKey const &key)
     {
       // Remember information about this upcall.
       this->poa_ = p;
@@ -69,12 +65,12 @@ namespace TAO
     PortableServer::ObjectId *
     POA_Current_Impl::get_object_id ()
     {
-      PortableServer::ObjectId *objid = 0;
+      PortableServer::ObjectId *objid {};
 
       // Create a new one and pass it back
       ACE_NEW_RETURN (objid,
                       PortableServer::ObjectId (this->object_id_),
-                      0);
+                      nullptr);
       return objid;
     }
 
