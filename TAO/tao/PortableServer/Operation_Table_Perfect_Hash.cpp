@@ -4,7 +4,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Operation_Table_Timeprobe_Description[] =
+static char const *TAO_Operation_Table_Timeprobe_Description[] =
   {
     "TAO_Perfect_Hash_OpTable::find - start",
     "TAO_Perfect_Hash_OpTable::find - end",
@@ -26,9 +26,9 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Perfect_Hash_OpTable::find (const char *opname,
+TAO_Perfect_Hash_OpTable::find (char const *opname,
                                 TAO_Skeleton &skelfunc,
-                                const unsigned int length)
+                                unsigned int const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
@@ -51,10 +51,10 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 }
 
 int
-TAO_Perfect_Hash_OpTable::find (const char *opname,
+TAO_Perfect_Hash_OpTable::find (char const *opname,
                                 TAO_Collocated_Skeleton &skelfunc,
                                 TAO::Collocation_Strategy st,
-                                const unsigned int length)
+                                unsigned int const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
@@ -82,7 +82,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 }
 
 int
-TAO_Perfect_Hash_OpTable::bind (const char *, const TAO::Operation_Skeletons)
+TAO_Perfect_Hash_OpTable::bind (char const *, TAO::Operation_Skeletons const)
 {
   return 0;
 }

@@ -37,22 +37,22 @@ public:
   ~TAO_Linear_Search_OpTable () override = default;
 
   /// See the documentation in the base class for details.
-  int find (const char *opname,
+  int find (char const *opname,
             TAO_Skeleton &skel_ptr,
-            const unsigned int length = 0) override;
+            unsigned int const length = 0) override;
 
-  int find (const char *opname,
+  int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            const unsigned int length = 0) override;
+            unsigned int const length = 0) override;
 
-  int bind (const char *opname,
-            const TAO::Operation_Skeletons skelptr) override;
+  int bind (char const *opname,
+            TAO::Operation_Skeletons const skelptr) override;
 
 private:
   // = Method that should defined by the subclasses. GPERF program
   //   will generate this routine routines.
-  virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
+  virtual TAO_operation_db_entry const *lookup (char const *str) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
