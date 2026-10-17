@@ -49,7 +49,11 @@ namespace TAO
 
     CORBA::Boolean demarshal (TAO_InputCDR &) override;
 
+#if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
+#else
+    void interceptor_value (CORBA::Any *any) const;
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
     int byte_order () const;
 
