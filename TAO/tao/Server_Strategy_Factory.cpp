@@ -3,14 +3,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory ()
-  : active_object_map_creation_parameters_ ()
-{
-}
+TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory () = default;
 
-TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory()
-{
-}
+TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory () = default;
 
 const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
 TAO_Server_Strategy_Factory::active_object_map_creation_parameters () const
