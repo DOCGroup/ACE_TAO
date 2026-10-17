@@ -42,7 +42,7 @@ namespace TAO
     S const * arg () const;
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -65,7 +65,7 @@ namespace TAO
     S *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -87,7 +87,7 @@ namespace TAO
     S *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -109,7 +109,7 @@ namespace TAO
     S *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
