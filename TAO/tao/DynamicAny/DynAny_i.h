@@ -49,14 +49,14 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   // = LocalObject methods.
   static TAO_DynAny_i *_narrow (CORBA::Object_ptr obj);
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  void from_any (const CORBA::Any & value) override;
+  void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
 
@@ -77,8 +77,8 @@ private:
   void init_common ();
 
   // Use copy() or assign() instead of these.
-  TAO_DynAny_i (const TAO_DynAny_i &src) = delete;
-  TAO_DynAny_i &operator= (const TAO_DynAny_i &src) = delete;
+  TAO_DynAny_i (TAO_DynAny_i const& src) = delete;
+  TAO_DynAny_i &operator= (TAO_DynAny_i const& src) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
