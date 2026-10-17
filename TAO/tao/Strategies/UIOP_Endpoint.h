@@ -44,7 +44,7 @@ public:
   TAO_UIOP_Endpoint ();
 
   /// Constructor.
-  TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
+  TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
@@ -56,28 +56,33 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next ();
-  virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate ();
+  TAO_Endpoint *next () override;
+  int addr_to_string (char *buffer, size_t length) override;
+  TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their rendezvous points are the same.
-  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash ();
+  CORBA::ULong hash () override;
   //@}
 
   // = UIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_UNIX_Addr &object_addr () const;
+  ACE_UNIX_Addr const &object_addr () const;
 
   /// Return a pointer to the rendezvous point string.
   /// This object maintains ownership of the returned string.
-  const char *rendezvous_point () const;
+  char const *rendezvous_point () const;
 
 private:
+  TAO_UIOP_Endpoint (TAO_UIOP_Endpoint const &) = delete;
+  TAO_UIOP_Endpoint &operator= (TAO_UIOP_Endpoint const &) = delete;
+  TAO_UIOP_Endpoint (TAO_UIOP_Endpoint &&) = delete;
+  TAO_UIOP_Endpoint &operator= (TAO_UIOP_Endpoint &&) = delete;
+
   /// Cached instance of <ACE_UNIX_Addr> for use in making
   /// invocations, etc.
   ACE_UNIX_Addr object_addr_;
