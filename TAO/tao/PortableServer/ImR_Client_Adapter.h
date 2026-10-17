@@ -52,20 +52,20 @@ namespace TAO
       public ACE_Service_Object
     {
     public:
-      virtual ~ImR_Client_Adapter ();
+      ~ImR_Client_Adapter () override;
 
       /// ImplRepo helper method, notify the ImplRepo on startup
-      virtual void imr_notify_startup (TAO_Root_POA* poa ) = 0;
+      virtual void imr_notify_startup (TAO_Root_POA *poa) = 0;
 
       /// ImplRepo helper method, notify the ImplRepo on shutdown
-      virtual void imr_notify_shutdown (TAO_Root_POA* poa ) = 0;
+      virtual void imr_notify_shutdown (TAO_Root_POA *poa) = 0;
 
       /// ImplRepo helper method, create an IMR-ified object for a
       /// key with a given type
-      virtual CORBA::Object_ptr imr_key_to_object(
-        TAO_Root_POA* poa,
-        const TAO::ObjectKey &key,
-        const char *type_id) const = 0;
+      virtual CORBA::Object_ptr imr_key_to_object (
+        TAO_Root_POA *poa,
+        TAO::ObjectKey const &key,
+        char const *type_id) const = 0;
     };
   }
 }
