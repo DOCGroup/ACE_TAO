@@ -51,16 +51,16 @@ public:
 
   TAO_Array_Forany_T ();
   TAO_Array_Forany_T (_slice_type *, CORBA::Boolean nocopy = false);
-  TAO_Array_Forany_T (const TAO_Array_Forany_T<T,T_slice,TAG> &);
+  TAO_Array_Forany_T (TAO_Array_Forany_T<T,T_slice,TAG> const &);
   ~TAO_Array_Forany_T ();
 
   static void _tao_any_destructor (void *);
 
   TAO_Array_Forany_T & operator= (_slice_type *);
-  TAO_Array_Forany_T & operator= (const TAO_Array_Forany_T<T,T_slice,TAG> &);
+  TAO_Array_Forany_T & operator= (TAO_Array_Forany_T<T,T_slice,TAG> const &);
 
   _slice_type & operator[] (CORBA::ULong index);
-  const _slice_type & operator[] (CORBA::ULong index) const;
+  _slice_type const & operator[] (CORBA::ULong index) const;
 
   operator _slice_type * const & () const;
   operator _slice_type *& ();
@@ -101,7 +101,7 @@ public:
 
   TAO_Array_Var_Base_T ();
   TAO_Array_Var_Base_T (_slice_type *);
-  TAO_Array_Var_Base_T (const TAO_Array_Var_Base_T<T,T_slice,TAG> &);
+  TAO_Array_Var_Base_T (TAO_Array_Var_Base_T<T,T_slice,TAG> const &);
   ~TAO_Array_Var_Base_T ();
 
   _subscript_type operator[] (CORBA::ULong index);
@@ -141,11 +141,11 @@ public:
 
   TAO_FixedArray_Var_T ();
   TAO_FixedArray_Var_T (_slice_type *);
-  TAO_FixedArray_Var_T (const TAO_FixedArray_Var_T<T,T_slice,TAG> &);
+  TAO_FixedArray_Var_T (TAO_FixedArray_Var_T<T,T_slice,TAG> const &);
 
   TAO_FixedArray_Var_T<T,T_slice,TAG> &operator= (_slice_type *);
   TAO_FixedArray_Var_T<T,T_slice,TAG> &operator= (
-      const TAO_FixedArray_Var_T<T,T_slice,TAG> &);
+      TAO_FixedArray_Var_T<T,T_slice,TAG> const &);
 
   _out_type     out ();
 
@@ -170,11 +170,11 @@ public:
 
   TAO_VarArray_Var_T ();
   TAO_VarArray_Var_T (_slice_type *);
-  TAO_VarArray_Var_T (const TAO_VarArray_Var_T<T,T_slice,TAG> &);
+  TAO_VarArray_Var_T (TAO_VarArray_Var_T<T,T_slice,TAG> const &);
 
   TAO_VarArray_Var_T<T,T_slice,TAG> &operator= (_slice_type *);
   TAO_VarArray_Var_T<T,T_slice,TAG> &operator= (
-      const TAO_VarArray_Var_T<T,T_slice,TAG> &);
+      TAO_VarArray_Var_T<T,T_slice,TAG> const &);
 
   _out_type     out ();
 
@@ -201,24 +201,24 @@ public:
 
   TAO_Array_Out_T (_slice_type *&);
   TAO_Array_Out_T (_value_type &);
-  TAO_Array_Out_T (const TAO_Array_Out_T<T,T_var,T_slice,TAG> &);
+  TAO_Array_Out_T (TAO_Array_Out_T<T,T_var,T_slice,TAG> const &);
 
   TAO_Array_Out_T<T,T_var,T_slice,TAG> &operator= (
-      const TAO_Array_Out_T<T,T_var,T_slice,TAG> &);
+      TAO_Array_Out_T<T,T_var,T_slice,TAG> const &);
   TAO_Array_Out_T<T,T_var,T_slice,TAG> &operator= (_slice_type *);
 
   operator _slice_type *& ();
   _slice_type *& ptr ();
 
   _slice_type & operator[] (CORBA::ULong index);
-  const _slice_type & operator[] (CORBA::ULong index) const;
+  _slice_type const & operator[] (CORBA::ULong index) const;
 private:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;
   using THIS_OUT_TYPE = TAO_Array_Out_T<T, T_var, T_slice, TAG>;
   _slice_type *& ptr_;
 
   // Assignment from T_var not allowed.
-  void operator= (const _value_type &);
+  void operator= (_value_type const &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
