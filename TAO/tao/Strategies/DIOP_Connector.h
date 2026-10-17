@@ -87,6 +87,11 @@ protected:
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 private:
+  TAO_DIOP_Connector (TAO_DIOP_Connector const &) = delete;
+  TAO_DIOP_Connector &operator= (TAO_DIOP_Connector const &) = delete;
+  TAO_DIOP_Connector (TAO_DIOP_Connector &&) = delete;
+  TAO_DIOP_Connector &operator= (TAO_DIOP_Connector &&) = delete;
+
   /// Return the remote endpoint, a helper function
   TAO_DIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 };
