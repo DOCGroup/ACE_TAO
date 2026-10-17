@@ -6,14 +6,13 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
-In_BD_String_SArgument_T ()
-{}
+In_BD_String_SArgument_T () = default;
 
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
 ACE_INLINE
-const typename S_var::s_traits::char_type *
+typename S_var::s_traits::char_type const *
 TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
 arg () const
 {
@@ -27,8 +26,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
-Inout_BD_String_SArgument_T ()
-{}
+Inout_BD_String_SArgument_T () = default;
 
 template<typename S_var,
          size_t BOUND,
@@ -48,8 +46,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
-Out_BD_String_SArgument_T ()
-{}
+Out_BD_String_SArgument_T () = default;
 
 template<typename S_var,
          size_t BOUND,
@@ -69,8 +66,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
-Ret_BD_String_SArgument_T ()
-{}
+Ret_BD_String_SArgument_T () = default;
 
 template<typename S_var,
          size_t BOUND,

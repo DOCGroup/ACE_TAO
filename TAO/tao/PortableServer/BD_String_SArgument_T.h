@@ -45,10 +45,10 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const typename S_var::s_traits::char_type * arg () const;
+    typename S_var::s_traits::char_type const * arg () const;
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -73,7 +73,7 @@ namespace TAO
     typename S_var::s_traits::char_type *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -97,7 +97,7 @@ namespace TAO
     typename S_var::s_traits::char_type *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -121,7 +121,7 @@ namespace TAO
     typename S_var::s_traits::char_type *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**

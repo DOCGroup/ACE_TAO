@@ -17,7 +17,7 @@ TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr)
 {
   CORBA::Boolean const demarshalled = cdr >> this->x_.out ();
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -50,7 +50,7 @@ CORBA::Boolean
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr)
 {
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -65,7 +65,7 @@ TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr)
 {
   CORBA::Boolean const demarshalled = cdr >> this->x_.out ();
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -98,7 +98,7 @@ CORBA::Boolean
 TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR &cdr)
 {
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
