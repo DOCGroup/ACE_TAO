@@ -43,7 +43,7 @@ public:
    * used to determine where the memory comes from (usually from
    * ACE_Static_Allocator_Base).
    */
-  TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
+  TAO_Dynamic_Hash_OpTable (TAO_operation_db_entry const *db,
                             CORBA::ULong dbsize,
                             CORBA::ULong hashtblsize,
                             ACE_Allocator *alloc);
@@ -51,18 +51,23 @@ public:
   /// Destructor
   ~TAO_Dynamic_Hash_OpTable () override;
 
+  TAO_Dynamic_Hash_OpTable (TAO_Dynamic_Hash_OpTable const &) = delete;
+  TAO_Dynamic_Hash_OpTable &operator= (TAO_Dynamic_Hash_OpTable const &) = delete;
+  TAO_Dynamic_Hash_OpTable (TAO_Dynamic_Hash_OpTable &&) = delete;
+  TAO_Dynamic_Hash_OpTable &operator= (TAO_Dynamic_Hash_OpTable &&) = delete;
+
   /// See the documentation in the base class for details.
-  int bind (const char *opname,
-            const TAO::Operation_Skeletons skel_ptr) override;
+  int bind (char const *opname,
+            TAO::Operation_Skeletons const skel_ptr) override;
 
-  int find (const char *opname,
+  int find (char const *opname,
             TAO_Skeleton &skelfunc,
-            const unsigned int length = 0) override;
+            unsigned int const length = 0) override;
 
-  int find (const char *opname,
+  int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            const unsigned int length = 0) override;
+            unsigned int const length = 0) override;
 private:
   using OP_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
                                   TAO::Operation_Skeletons,
