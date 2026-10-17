@@ -94,8 +94,10 @@ namespace TAO
 
   private:
     Asynch_Invocation_Adapter () = delete;
-    Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &) = delete;
-    Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &) = delete;
+    Asynch_Invocation_Adapter (Asynch_Invocation_Adapter const &) = delete;
+    Asynch_Invocation_Adapter &operator= (Asynch_Invocation_Adapter const &) = delete;
+    Asynch_Invocation_Adapter (Asynch_Invocation_Adapter &&) = delete;
+    Asynch_Invocation_Adapter &operator= (Asynch_Invocation_Adapter &&) = delete;
   };
 } // End namespace TAO
 

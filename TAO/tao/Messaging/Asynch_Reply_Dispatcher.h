@@ -56,6 +56,11 @@ public:
                        const ACE_Time_Value &max_wait_time);
 
 private:
+  TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher const &) = delete;
+  TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher const &) = delete;
+  TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher &&) = delete;
+  TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher &&) = delete;
+
   /// Stub for the call back method in the Reply Handler.
   TAO_Reply_Handler_Stub const reply_handler_stub_;
 

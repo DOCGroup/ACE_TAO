@@ -116,8 +116,10 @@ protected:
   GIOP::ReplyStatusType reply_status_;
 
 private:
-  TAO_AMH_Response_Handler (const TAO_AMH_Response_Handler&) = delete;
-  TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&) = delete;
+  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler const &) = delete;
+  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler const &) = delete;
+  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler &&) = delete;
+  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler &&) = delete;
 
   /// Pointer to the original message-base
   TAO_GIOP_Message_Base *mesg_base_;
