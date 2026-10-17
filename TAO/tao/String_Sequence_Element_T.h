@@ -129,7 +129,7 @@ public:
 
 private:
   // This function is not implemented
-  string_sequence_element();
+  string_sequence_element() = delete;
 
 private:
   value_type * element_;

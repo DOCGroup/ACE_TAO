@@ -60,7 +60,7 @@ public:
 
 private:
   // This function is not implemented
-  string_const_sequence_element();
+  string_const_sequence_element() = delete;
   string_const_sequence_element & operator=(string_const_sequence_element const & rhs);
 
 private:

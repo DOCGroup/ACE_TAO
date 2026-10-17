@@ -66,7 +66,7 @@ public:
 
 private:
   // This function is not implemented
-  object_reference_const_sequence_element();
+  object_reference_const_sequence_element() = delete;
   object_reference_const_sequence_element & operator=(
       object_reference_const_sequence_element const & rhs);
 

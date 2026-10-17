@@ -119,7 +119,7 @@ public:
 
 private:
   // This function is not implemented
-  object_reference_sequence_element();
+  object_reference_sequence_element() = delete;
 
 private:
   value_type * element_;
