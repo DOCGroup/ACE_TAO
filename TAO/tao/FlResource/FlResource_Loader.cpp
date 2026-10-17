@@ -9,7 +9,7 @@ namespace TAO
 {
   FlResource_Loader::FlResource_Loader ()
   {
-    FlResource_Factory *tmp = 0;
+    FlResource_Factory *tmp = nullptr;
 
     ACE_NEW (tmp,
              FlResource_Factory ());
@@ -17,9 +17,7 @@ namespace TAO
     TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
-  FlResource_Loader::~FlResource_Loader ()
-  {
-  }
+  FlResource_Loader::~FlResource_Loader () = default;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
