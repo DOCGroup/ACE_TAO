@@ -51,7 +51,7 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   // = LocalObject methods.
   static TAO_DynEnum_i *_narrow (CORBA::Object_ptr obj);
@@ -60,7 +60,7 @@ public:
 
   char * get_as_string () override;
 
-  void set_as_string (const char * value) override;
+  void set_as_string (char const* value) override;
 
   CORBA::ULong get_as_ulong () override;
 
@@ -68,7 +68,7 @@ public:
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  void from_any (const CORBA::Any & value) override;
+  void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
 
@@ -83,8 +83,8 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these.
-  TAO_DynEnum_i (const TAO_DynEnum_i &src) = delete;
-  TAO_DynEnum_i &operator= (const TAO_DynEnum_i &src) = delete;
+  TAO_DynEnum_i (TAO_DynEnum_i const& src) = delete;
+  TAO_DynEnum_i &operator= (TAO_DynEnum_i const& src) = delete;
 
 private:
   /// Current numeric value of the enum.
