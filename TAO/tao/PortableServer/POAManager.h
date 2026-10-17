@@ -92,7 +92,7 @@ public:
 
   PortableServer::POAManager::State get_state_i ();
 
-  virtual CORBA::ORB_ptr _get_orb ();
+  CORBA::ORB_ptr _get_orb () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::PolicyList& get_policies ();
