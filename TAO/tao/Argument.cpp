@@ -3,9 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Argument::~Argument ()
-{
-}
+TAO::Argument::~Argument () = default;
 
 CORBA::Boolean
 TAO::Argument::marshal (TAO_OutputCDR &)
