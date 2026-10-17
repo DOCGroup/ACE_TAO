@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory ()
-{
-}
+TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -44,7 +44,7 @@ class TAO_Export TAO_Collocation_Resolver
 {
 public:
   /// Destructor.
-  virtual ~TAO_Collocation_Resolver ();
+  ~TAO_Collocation_Resolver () override;
 
   /// Is @a object collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const = 0;
