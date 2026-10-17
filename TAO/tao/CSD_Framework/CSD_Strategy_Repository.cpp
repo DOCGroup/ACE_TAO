@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CSD_Strategy_Repository::TAO_CSD_Strategy_Repository() :
-  strategy_list_head_ (0)
+  strategy_list_head_ (nullptr)
 {
 }
 
@@ -25,17 +25,17 @@ TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
     return 0;
 
   initialized = 1;
-  this->strategy_list_head_ = 0;
+  this->strategy_list_head_ = nullptr;
   return 0;
 }
 
 CSD_Framework::Strategy_ptr
 TAO_CSD_Strategy_Repository::find (const ACE_CString& name)
 {
-  if (this->strategy_list_head_ != 0)
+  if (this->strategy_list_head_ != nullptr)
     {
       Strategy_Node *node = this->strategy_list_head_->find(name);
-      if (node != 0)
+      if (node != nullptr)
         return CSD_Framework::Strategy::_duplicate (node->strategy_.in());
     }
 
@@ -47,9 +47,9 @@ int
 TAO_CSD_Strategy_Repository::add_strategy (const ACE_CString& name,
                                            CSD_Framework::Strategy_ptr strat)
 {
-  Strategy_Node *node = 0;
+  Strategy_Node *node = nullptr;
   ACE_NEW_RETURN (node, Strategy_Node(name,strat),-1);
-  if (this->strategy_list_head_ == 0)
+  if (this->strategy_list_head_ == nullptr)
     this->strategy_list_head_ = node;
   else
     this->strategy_list_head_->add_node(node);
