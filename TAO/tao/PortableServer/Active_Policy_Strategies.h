@@ -54,23 +54,23 @@ namespace TAO
     public:
       Active_Policy_Strategies () = default;
 
-      void update (Cached_Policies &policies, TAO_Root_POA* poa);
+      void update (Cached_Policies &policies, TAO_Root_POA *poa);
 
       void cleanup ();
 
-      ThreadStrategy *thread_strategy () const;
+      ThreadStrategy * thread_strategy () const;
 
-      RequestProcessingStrategy *request_processing_strategy () const;
+      RequestProcessingStrategy * request_processing_strategy () const;
 
-      IdAssignmentStrategy *id_assignment_strategy () const;
+      IdAssignmentStrategy * id_assignment_strategy () const;
 
-      IdUniquenessStrategy *id_uniqueness_strategy () const;
+      IdUniquenessStrategy * id_uniqueness_strategy () const;
 
-      LifespanStrategy *lifespan_strategy () const;
+      LifespanStrategy * lifespan_strategy () const;
 
-      ImplicitActivationStrategy *implicit_activation_strategy () const;
+      ImplicitActivationStrategy * implicit_activation_strategy () const;
 
-      ServantRetentionStrategy *servant_retention_strategy () const;
+      ServantRetentionStrategy * servant_retention_strategy () const;
 
     private:
       void create (::PortableServer::ThreadPolicyValue value);
@@ -104,7 +104,7 @@ namespace TAO
       Active_Policy_Strategies *_retn ();
 
     private:
-      Active_Policy_Strategies *ptr_;
+      Active_Policy_Strategies *ptr_ {};
     };
   }
 }
