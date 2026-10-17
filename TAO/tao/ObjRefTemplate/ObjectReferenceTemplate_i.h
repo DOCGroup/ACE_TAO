@@ -95,6 +95,11 @@ namespace TAO
     ~ObjectReferenceTemplate () override;
 
   private:
+    ObjectReferenceTemplate (ObjectReferenceTemplate const &) = delete;
+    ObjectReferenceTemplate &operator= (ObjectReferenceTemplate const &) = delete;
+    ObjectReferenceTemplate (ObjectReferenceTemplate &&) = delete;
+    ObjectReferenceTemplate &operator= (ObjectReferenceTemplate &&) = delete;
+
     const char *server_id_;
     const char *orb_id_;
     PortableInterceptor::AdapterName_var adapter_name_;

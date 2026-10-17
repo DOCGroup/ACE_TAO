@@ -37,6 +37,8 @@ namespace TAO
     : public ORT_Adapter
   {
   public:
+    ORT_Adapter_Impl () = default;
+
     /// Activate this adapter
     int activate (const char *server_id,
                   const char *orb_id,
@@ -83,6 +85,11 @@ namespace TAO
     //@}
 
   private:
+    ORT_Adapter_Impl (ORT_Adapter_Impl const &) = delete;
+    ORT_Adapter_Impl &operator= (ORT_Adapter_Impl const &) = delete;
+    ORT_Adapter_Impl (ORT_Adapter_Impl &&) = delete;
+    ORT_Adapter_Impl &operator= (ORT_Adapter_Impl &&) = delete;
+
     /// The ORT Template, this is the factory and its identity.
     PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 

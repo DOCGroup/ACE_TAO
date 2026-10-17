@@ -40,6 +40,8 @@ namespace TAO
     : public ORT_Adapter_Factory
   {
   public:
+    ORT_Adapter_Factory_Impl () = default;
+
     /// Create an adapter
     TAO::ORT_Adapter *create () override;
 
@@ -48,6 +50,12 @@ namespace TAO
 
     /// Used to force the initialization of the code.
     static int Initializer ();
+
+  private:
+    ORT_Adapter_Factory_Impl (ORT_Adapter_Factory_Impl const &) = delete;
+    ORT_Adapter_Factory_Impl &operator= (ORT_Adapter_Factory_Impl const &) = delete;
+    ORT_Adapter_Factory_Impl (ORT_Adapter_Factory_Impl &&) = delete;
+    ORT_Adapter_Factory_Impl &operator= (ORT_Adapter_Factory_Impl &&) = delete;
   };
 }
 
