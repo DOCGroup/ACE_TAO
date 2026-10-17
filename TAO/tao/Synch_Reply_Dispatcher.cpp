@@ -31,9 +31,7 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
 }
 
 // Destructor.
-TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher ()
-{
-}
+TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher () = default;
 
 TAO_InputCDR &
 TAO_Synch_Reply_Dispatcher::reply_cdr ()
