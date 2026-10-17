@@ -25,6 +25,8 @@ class FTEC_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
+  FTEC_ORBInitializer () = default;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
