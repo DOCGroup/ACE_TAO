@@ -13,7 +13,7 @@ TAO::CSD::TP_Dispatchable_Visitor::reset()
 {
   // Set the handle to 0 to have it release any request it may currently
   // be referencing.
-  this->request_ = 0;
+  this->request_ = nullptr;
 }
 
 
