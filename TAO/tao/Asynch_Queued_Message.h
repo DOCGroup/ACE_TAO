@@ -101,8 +101,10 @@ protected:
                              bool is_heap_allocated);
 
 private:
-  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
   TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message const &) = delete;
+  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
+  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message &&) = delete;
+  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message &&) = delete;
 
 private:
   /// The number of bytes in the buffer
