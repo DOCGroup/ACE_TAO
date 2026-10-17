@@ -74,6 +74,11 @@ namespace TAO
       virtual void cancel_i() = 0;
 
     private:
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation &&) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation &&) = delete;
+
       PortableServer::ServantBase_var servant_;
     };
   }

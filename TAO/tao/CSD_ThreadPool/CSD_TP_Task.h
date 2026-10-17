@@ -86,7 +86,7 @@ namespace TAO
       bool add_request(TP_Request* request);
 
       /// Activate the worker threads
-      int open(void* args = 0) override;
+      int open(void* args = nullptr) override;
 
       /// The "mainline" executed by each worker thread.
       int svc() override;
@@ -102,6 +102,11 @@ namespace TAO
       void cancel_servant (PortableServer::Servant servant);
 
     private:
+      TP_Task (TP_Task const &) = delete;
+      TP_Task &operator= (TP_Task const &) = delete;
+      TP_Task (TP_Task &&) = delete;
+      TP_Task &operator= (TP_Task &&) = delete;
+
       using LockType = TAO_SYNCH_MUTEX;
       using ConditionType = TAO_Condition<LockType>;
 

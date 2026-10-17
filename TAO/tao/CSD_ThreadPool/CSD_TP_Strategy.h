@@ -145,6 +145,11 @@ namespace TAO
                                      const PortableServer::ObjectId& oid) override;
 
     private:
+      TP_Strategy (TP_Strategy const &) = delete;
+      TP_Strategy &operator= (TP_Strategy const &) = delete;
+      TP_Strategy (TP_Strategy &&) = delete;
+      TP_Strategy &operator= (TP_Strategy &&) = delete;
+
       /**
       * Helper method that is responsible for looking up the servant
       * state object in the servant state map *if* the "serialize

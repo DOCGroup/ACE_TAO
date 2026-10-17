@@ -70,6 +70,11 @@ namespace TAO
       void busy_flag(bool new_value);
 
     private:
+      TP_Servant_State (TP_Servant_State const &) = delete;
+      TP_Servant_State &operator= (TP_Servant_State const &) = delete;
+      TP_Servant_State (TP_Servant_State &&) = delete;
+      TP_Servant_State &operator= (TP_Servant_State &&) = delete;
+
       /// The servant's current "busy" state (true == busy, false == not busy)
       bool busy_flag_;
     };

@@ -60,6 +60,11 @@ namespace TAO
       void remove(PortableServer::Servant servant);
 
     private:
+      TP_Servant_State_Map (TP_Servant_State_Map const &) = delete;
+      TP_Servant_State_Map &operator= (TP_Servant_State_Map const &) = delete;
+      TP_Servant_State_Map (TP_Servant_State_Map &&) = delete;
+      TP_Servant_State_Map &operator= (TP_Servant_State_Map &&) = delete;
+
       /// Underlying Map Type - Hash-Based -
       /// Key Type: void*, Value Type: TP_Servant_State::HandleType
       using MapType = ACE_Hash_Map_Manager_Ex<void*,
