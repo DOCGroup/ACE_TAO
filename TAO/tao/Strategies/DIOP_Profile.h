@@ -95,6 +95,11 @@ protected:
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
+  TAO_DIOP_Profile (TAO_DIOP_Profile const &) = delete;
+  TAO_DIOP_Profile &operator= (TAO_DIOP_Profile const &) = delete;
+  TAO_DIOP_Profile (TAO_DIOP_Profile &&) = delete;
+  TAO_DIOP_Profile &operator= (TAO_DIOP_Profile &&) = delete;
+
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least
