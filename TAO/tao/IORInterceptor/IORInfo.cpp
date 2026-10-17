@@ -18,9 +18,7 @@ TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
 {
 }
 
-TAO_IORInfo::~TAO_IORInfo ()
-{
-}
+TAO_IORInfo::~TAO_IORInfo () = default;
 
 CORBA::Policy_ptr
 TAO_IORInfo::get_effective_policy (CORBA::PolicyType type)
@@ -43,7 +41,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type)
 }
 
 void
-TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component)
+TAO_IORInfo::add_ior_component (IOP::TaggedComponent const& component)
 {
   this->check_validity ();
 
@@ -56,7 +54,7 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component)
 
 void
 TAO_IORInfo::add_ior_component_to_profile (
-    const IOP::TaggedComponent &component,
+    IOP::TaggedComponent const& component,
     IOP::ProfileId profile_id)
 {
   this->check_validity ();

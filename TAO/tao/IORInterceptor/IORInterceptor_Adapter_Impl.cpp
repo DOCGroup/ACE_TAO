@@ -9,9 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORInterceptor_Adapter_Impl::~TAO_IORInterceptor_Adapter_Impl ()
-{
-}
+TAO_IORInterceptor_Adapter_Impl::~TAO_IORInterceptor_Adapter_Impl () = default;
 
 void
 TAO_IORInterceptor_Adapter_Impl::add_interceptor (
@@ -23,7 +21,7 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
 void
 TAO_IORInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::IORInterceptor_ptr i,
-    const CORBA::PolicyList& policies)
+    CORBA::PolicyList const& policies)
 {
   this->ior_interceptor_list_.add_interceptor (i, policies);
 }
@@ -37,7 +35,7 @@ TAO_IORInterceptor_Adapter_Impl::destroy_interceptors ()
 }
 
 void
-TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA* poa)
+TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
 {
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
@@ -140,7 +138,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
-      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
+      TAO::ObjectReferenceTemplate_Array const& array_obj_ref_template,
       PortableInterceptor::AdapterState state)
 {
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
@@ -179,7 +177,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
-      const char * id,
+      char const* id,
       PortableInterceptor::AdapterState state)
 {
   /// Whenever the POAManager state is changed, the

@@ -55,22 +55,22 @@ public:
 
   void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      CORBA::PolicyList const &policies) override;
+      CORBA::PolicyList const& policies) override;
 
   void destroy_interceptors () override;
 
-  void establish_components (TAO_Root_POA *poa) override;
+  void establish_components (TAO_Root_POA * poa) override;
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
   void components_established (PortableInterceptor::IORInfo_ptr info) override;
 
   void adapter_state_changed (
-      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
+      TAO::ObjectReferenceTemplate_Array const& array_obj_ref_template,
       PortableInterceptor::AdapterState state) override;
 
   void adapter_manager_state_changed (
-      const char *id,
+      char const* id,
       PortableInterceptor::AdapterState state) override;
 
 private:

@@ -59,12 +59,12 @@ public:
   CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type) override;
 
   /// Add the given tagged component to all profiles.
-  void add_ior_component (const IOP::TaggedComponent & component) override;
+  void add_ior_component (IOP::TaggedComponent const& component) override;
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   void add_ior_component_to_profile (
-      const IOP::TaggedComponent & component,
+      IOP::TaggedComponent const& component,
       IOP::ProfileId profile_id) override;
 
   char * manager_id () override;
@@ -112,8 +112,8 @@ protected:
   void check_validity ();
 
 private:
-  TAO_IORInfo (const TAO_IORInfo &) = delete;
-  void operator= (const TAO_IORInfo &) = delete;
+  TAO_IORInfo (TAO_IORInfo const&) = delete;
+  void operator= (TAO_IORInfo const&) = delete;
 
 private:
   /// Pointer to POA
