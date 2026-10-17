@@ -28,10 +28,10 @@ class TAO_BiDIR_Service_Context_Handler :
 {
 public:
   int process_service_context (TAO_Transport& transport,
-                               const IOP::ServiceContext& context,
+                               IOP::ServiceContext const& context,
                                TAO_ServerRequest *request) override;
   int generate_service_context (
-    TAO_Stub* stub,
+    TAO_Stub * stub,
     TAO_Transport &transport,
     TAO_Operation_Details &opdetails,
     TAO_Target_Specification &spec,
