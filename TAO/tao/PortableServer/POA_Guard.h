@@ -40,6 +40,9 @@ namespace TAO
     public:
       POA_Guard (::TAO_Root_POA &poa, bool check_for_destruction = true);
 
+      POA_Guard (POA_Guard const &) = delete;
+      POA_Guard &operator= (POA_Guard const &) = delete;
+
     private:
 // FUZZ: disable check_for_ACE_Guard
       ACE_Guard<ACE_Lock> guard_;
