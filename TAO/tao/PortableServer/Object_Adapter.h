@@ -148,19 +148,19 @@ public:
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open ();
-  virtual void close (int wait_for_completion);
-  virtual void check_close (int wait_for_completion);
-  virtual int priority () const;
-  virtual int dispatch (TAO::ObjectKey &key,
-                        TAO_ServerRequest &request,
-                        CORBA::Object_out forward_to);
-  virtual const char *name () const;
-  virtual CORBA::Object_ptr root ();
-  virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                                      const TAO_MProfile &);
+  void open () override;
+  void close (int wait_for_completion) override;
+  void check_close (int wait_for_completion) override;
+  int priority () const override;
+  int dispatch (TAO::ObjectKey &key,
+                TAO_ServerRequest &request,
+                CORBA::Object_out forward_to) override;
+  char const *name () const override;
+  CORBA::Object_ptr root () override;
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *,
+                                              TAO_MProfile const &) override;
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
+  CORBA::Long initialize_collocated_object (TAO_Stub *) override;
 
 protected:
   int locate_servant_i (const TAO::ObjectKey &key);
