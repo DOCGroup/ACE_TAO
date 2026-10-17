@@ -31,6 +31,8 @@ namespace TAO
     public virtual ::CORBA::LocalObject
   {
   public:
+    CompressionManager () = default;
+
     ~CompressionManager () override;
 
     void register_factory (::Compression::CompressorFactory_ptr
@@ -49,6 +51,11 @@ namespace TAO
     ::Compression::CompressorFactorySeq *get_factories () override;
 
   private:
+    CompressionManager (CompressionManager const &) = delete;
+    CompressionManager &operator= (CompressionManager const &) = delete;
+    CompressionManager (CompressionManager &&) = delete;
+    CompressionManager &operator= (CompressionManager &&) = delete;
+
     TAO_SYNCH_MUTEX mutex_;
     ::Compression::CompressorFactorySeq factories_;
   };

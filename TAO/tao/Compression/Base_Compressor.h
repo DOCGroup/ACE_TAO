@@ -62,6 +62,12 @@ namespace TAO
     ::Compression::CompressorFactory *compressor_factory_;
     ::CORBA::ULongLong compressed_bytes_;
     ::CORBA::ULongLong uncompressed_bytes_;
+
+  private:
+    BaseCompressor (BaseCompressor const &) = delete;
+    BaseCompressor &operator= (BaseCompressor const &) = delete;
+    BaseCompressor (BaseCompressor &&) = delete;
+    BaseCompressor &operator= (BaseCompressor &&) = delete;
   };
 }
 
