@@ -42,6 +42,8 @@ namespace TAO
 
       POA_Guard (POA_Guard const &) = delete;
       POA_Guard &operator= (POA_Guard const &) = delete;
+      POA_Guard (POA_Guard &&) = delete;
+      POA_Guard &operator= (POA_Guard &&) = delete;
 
     private:
 // FUZZ: disable check_for_ACE_Guard
