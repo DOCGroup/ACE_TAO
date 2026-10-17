@@ -42,7 +42,7 @@ public:
   ~TAO_DynValue_i () = default;
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   /// Initialize using a TypeCode and an input stream
   void init (CORBA::TypeCode_ptr tc, TAO_InputCDR &in);
@@ -60,15 +60,15 @@ public:
 
   DynamicAny::NameValuePairSeq * get_members () override;
 
-  void set_members (const DynamicAny::NameValuePairSeq & value) override;
+  void set_members (DynamicAny::NameValuePairSeq const& value) override;
 
   DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any () override;
 
   void set_members_as_dyn_any (
-      const DynamicAny::NameDynAnyPairSeq & value) override;
+      DynamicAny::NameDynAnyPairSeq const& value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
-  void from_any (const CORBA::Any & value) override;
+  void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
 
@@ -103,19 +103,19 @@ private:
   /// index (0..total_members-1) from the given hierarchical list of
   /// the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_correct_base_type (
-    const BaseTypesList_t &base_types,
+    BaseTypesList_t const& base_types,
     CORBA::ULong &index);
 
   /// Return the member_type at index (0..total_members-1) from
   /// the given hierarchical list of the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_member_type (
-    const BaseTypesList_t &,
+    BaseTypesList_t const&,
     CORBA::ULong index);
 
   /// Return the member_name at index (0..total_members-1) from
   /// the given hierarchical list of the derived type and it basetypes.
-  static const char * get_member_name (
-    const BaseTypesList_t &,
+  static char const* get_member_name (
+    BaseTypesList_t const&,
     CORBA::ULong index);
 
   /// Check if the typecode is acceptable.
@@ -127,7 +127,7 @@ private:
 
   /// Code common to the init(Any) and the member
   /// function from_any().
-  void from_any_helper (const CORBA::Any &any);
+  void from_any_helper (CORBA::Any const& any);
 
   /// Write the value to the output stream.
   void to_outputCDR (TAO_OutputCDR &);
@@ -137,8 +137,8 @@ private:
 
   /// These are not implemented!
   /// Use copy() or assign() instead of these.
-  TAO_DynValue_i (const TAO_DynValue_i &src) = delete;
-  TAO_DynValue_i &operator= (const TAO_DynValue_i &src) = delete;
+  TAO_DynValue_i (TAO_DynValue_i const& src) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i const& src) = delete;
 
   /// Each component of DynValue and DynValueBox is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
