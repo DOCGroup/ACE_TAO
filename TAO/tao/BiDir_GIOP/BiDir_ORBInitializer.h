@@ -36,11 +36,18 @@ class TAO_BiDir_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_BiDir_ORBInitializer () = default;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
+  TAO_BiDir_ORBInitializer (TAO_BiDir_ORBInitializer const &) = delete;
+  TAO_BiDir_ORBInitializer &operator= (TAO_BiDir_ORBInitializer const &) = delete;
+  TAO_BiDir_ORBInitializer (TAO_BiDir_ORBInitializer &&) = delete;
+  TAO_BiDir_ORBInitializer &operator= (TAO_BiDir_ORBInitializer &&) = delete;
+
   /// Register BiDir policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
