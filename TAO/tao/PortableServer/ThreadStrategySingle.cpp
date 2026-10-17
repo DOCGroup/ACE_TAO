@@ -14,13 +14,13 @@ namespace TAO
     int
     ThreadStrategySingle::enter ()
     {
-      return lock_.acquire();
+      return this->lock_.acquire ();
     }
 
     int
     ThreadStrategySingle::exit ()
     {
-      return lock_.release();
+      return this->lock_.release ();
     }
   }
 }
