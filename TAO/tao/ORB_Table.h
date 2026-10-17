@@ -119,8 +119,10 @@ namespace TAO
 
   private:
     // Prevent copying
-    ORB_Table (const ORB_Table &);
-    void operator= (const ORB_Table &);
+    ORB_Table (ORB_Table const &) = delete;
+    ORB_Table &operator= (ORB_Table const &) = delete;
+    ORB_Table (ORB_Table &&) = delete;
+    ORB_Table &operator= (ORB_Table &&) = delete;
 
     /// Return @c TAO_ORB_Core corresponding to ORB with given @a
     /// orb_id.  (underlying unlocked implementation).
@@ -132,13 +134,13 @@ namespace TAO
 
     /// Variable to check if the first ORB decides not to be the
     /// default.
-    bool first_orb_not_default_;
+    bool first_orb_not_default_ {};
 
     /// The underlying table.
     Table table_;
 
     /// The first ORB created by the user
-    ::TAO_ORB_Core * first_orb_;
+    ::TAO_ORB_Core * first_orb_ {};
   };
 
   // -----------------------------------------------
