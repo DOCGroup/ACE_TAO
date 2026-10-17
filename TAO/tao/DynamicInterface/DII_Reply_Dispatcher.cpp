@@ -21,7 +21,7 @@ int
 TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params)
 {
-  if (params.input_cdr_ == 0)
+  if (params.input_cdr_ == nullptr)
     return -1;
 
   this->reply_status_ = params.reply_status ();
@@ -30,7 +30,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
-  if (db == 0)
+  if (db == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -113,7 +113,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed ()
 }
 
 TAO_DII_Asynch_Reply_Dispatcher::TAO_DII_Asynch_Reply_Dispatcher (
-    const Messaging::ReplyHandler_ptr callback,
+    Messaging::ReplyHandler_ptr const callback,
     TAO_ORB_Core *orb_core)
   : TAO_Asynch_Reply_Dispatcher_Base (orb_core),
     db_ (sizeof buf_,
