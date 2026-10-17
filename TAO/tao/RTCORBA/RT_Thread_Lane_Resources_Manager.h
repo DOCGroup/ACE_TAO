@@ -74,9 +74,13 @@ public:
 
 private:
   TAO_RT_Thread_Lane_Resources_Manager &operator= (
-    const TAO_RT_Thread_Lane_Resources_Manager &) = delete;
+    TAO_RT_Thread_Lane_Resources_Manager const &) = delete;
   TAO_RT_Thread_Lane_Resources_Manager (
-    const TAO_RT_Thread_Lane_Resources_Manager &) = delete;
+    TAO_RT_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_RT_Thread_Lane_Resources_Manager &operator= (
+    TAO_RT_Thread_Lane_Resources_Manager &&) = delete;
+  TAO_RT_Thread_Lane_Resources_Manager (
+    TAO_RT_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
   /// Default lane resources.

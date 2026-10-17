@@ -60,8 +60,10 @@ public:
   TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
-  RT_Endpoint_Selector_Factory (const RT_Endpoint_Selector_Factory &) = delete;
-  void operator= (const RT_Endpoint_Selector_Factory &) = delete;
+  RT_Endpoint_Selector_Factory (RT_Endpoint_Selector_Factory const &) = delete;
+  void operator= (RT_Endpoint_Selector_Factory const &) = delete;
+  RT_Endpoint_Selector_Factory (RT_Endpoint_Selector_Factory &&) = delete;
+  void operator= (RT_Endpoint_Selector_Factory &&) = delete;
 
 private:
   TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_;
