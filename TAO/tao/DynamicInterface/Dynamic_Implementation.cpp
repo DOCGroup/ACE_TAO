@@ -15,7 +15,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_DynamicImplementation::_is_a (char const* logical_type_id)
+TAO_DynamicImplementation::_is_a (char const *logical_type_id)
 {
   CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
@@ -61,7 +61,7 @@ TAO_DynamicImplementation::_get_interface ()
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (), id.in ());
 }
 
-char const*
+char const *
 TAO_DynamicImplementation::_interface_repository_id () const
 {
   // This should never be called.
@@ -69,7 +69,7 @@ TAO_DynamicImplementation::_interface_repository_id () const
 }
 
 void *
-TAO_DynamicImplementation::_downcast (char const*)
+TAO_DynamicImplementation::_downcast (char const *)
 {
   // Don't know enough to do better.
   return this;
