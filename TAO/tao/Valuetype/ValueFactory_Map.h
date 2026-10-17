@@ -68,6 +68,11 @@ public:
   static TAO_ValueFactory_Map * instance ();
 
 private:
+  TAO_ValueFactory_Map (TAO_ValueFactory_Map const &) = delete;
+  TAO_ValueFactory_Map &operator= (TAO_ValueFactory_Map const &) = delete;
+  TAO_ValueFactory_Map (TAO_ValueFactory_Map &&) = delete;
+  TAO_ValueFactory_Map &operator= (TAO_ValueFactory_Map &&) = delete;
+
   /// The hash table data structure.
   using FACTORY_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
                                                        CORBA::ValueFactory,

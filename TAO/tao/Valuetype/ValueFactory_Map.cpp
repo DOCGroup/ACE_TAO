@@ -17,16 +17,16 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
   // _remove_ref () on the internal ids.
   FACTORY_MAP_MANAGER::ITERATOR iterator (this->map_);
 
-  for (FACTORY_MAP_MANAGER::ENTRY *entry = 0;
+  for (FACTORY_MAP_MANAGER::ENTRY *entry = nullptr;
        iterator.next (entry) != 0;
        iterator.advance ())
     {
       // We had allocated memory and stored the string. So we free the
       // memory.
       CORBA::string_free ((char *) entry->ext_id_);
-      entry->ext_id_ = 0;
+      entry->ext_id_ = nullptr;
       entry->int_id_->_remove_ref ();
-      entry->int_id_ = 0;
+      entry->int_id_ = nullptr;
     }
 }
 
@@ -36,8 +36,8 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
-  const char *prev_repo_id = 0;
-  CORBA::ValueFactory prev_factory = 0;
+  char const *prev_repo_id = nullptr;
+  CORBA::ValueFactory prev_factory = nullptr;
   int const ret = this->map_.rebind (CORBA::string_dup (repo_id),
                                      factory,
                                      prev_repo_id,
@@ -63,7 +63,7 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
-  FACTORY_MAP_MANAGER::ENTRY *prev_entry = 0;
+  FACTORY_MAP_MANAGER::ENTRY *prev_entry = nullptr;
   int ret = this->map_.find (repo_id, prev_entry);
 
   if (ret == 0)    // there was a matching factory

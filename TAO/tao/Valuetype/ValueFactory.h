@@ -66,6 +66,11 @@ namespace CORBA
     virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();
 
   private:
+    ValueFactoryBase (ValueFactoryBase const &) = delete;
+    ValueFactoryBase &operator= (ValueFactoryBase const &) = delete;
+    ValueFactoryBase (ValueFactoryBase &&) = delete;
+    ValueFactoryBase &operator= (ValueFactoryBase &&) = delete;
+
     /// Reference counter.
     std::atomic<uint32_t> refcount_;
   };
