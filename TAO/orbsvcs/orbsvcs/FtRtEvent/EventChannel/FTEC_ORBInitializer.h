@@ -25,9 +25,15 @@ class FTEC_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+private:
+  FTEC_ORBInitializer (FTEC_ORBInitializer const &) = delete;
+  FTEC_ORBInitializer &operator= (FTEC_ORBInitializer const &) = delete;
+  FTEC_ORBInitializer (FTEC_ORBInitializer &&) = delete;
+  FTEC_ORBInitializer &operator= (FTEC_ORBInitializer &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

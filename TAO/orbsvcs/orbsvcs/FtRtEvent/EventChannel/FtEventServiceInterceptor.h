@@ -26,20 +26,20 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_Event_Channel_Impl;
-typedef FtRtecEventChannelAdmin::CachedResult CachedRequestInfo;
+using CachedRequestInfo = FtRtecEventChannelAdmin::CachedResult;
 
 class CachedRequestTable
 {
 public:
-    bool is_new_request(const ACE_CString& client_id, CORBA::Long retention_id);
-    int update(const ACE_CString& client_id,
+    bool is_new_request (ACE_CString const &client_id, CORBA::Long retention_id);
+    int update (ACE_CString const &client_id,
          CORBA::Long retention_id,
-         const CORBA::Any&);
-    CORBA::Any get_result(const ACE_CString& client_id);
-    void get_state(FtRtecEventChannelAdmin::CachedOptionResults& state);
-    void set_state(const FtRtecEventChannelAdmin::CachedOptionResults& state);
+         CORBA::Any const &);
+    CORBA::Any get_result (ACE_CString const &client_id);
+    void get_state (FtRtecEventChannelAdmin::CachedOptionResults &state);
+    void set_state (FtRtecEventChannelAdmin::CachedOptionResults const &state);
 private:
-   typedef ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, TAO_SYNCH_MUTEX> TableImpl;
+   using TableImpl = ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, TAO_SYNCH_MUTEX>;
    TableImpl table_;
 };
 
@@ -48,28 +48,33 @@ class FtEventServiceInterceptor :
   public PortableInterceptor::ServerRequestInterceptor
 {
 public:
-  FtEventServiceInterceptor();
-  ~FtEventServiceInterceptor();
+  FtEventServiceInterceptor ();
+  ~FtEventServiceInterceptor () override = default;
 
-  static FtEventServiceInterceptor* instance();
-  virtual char * name ();
+  static FtEventServiceInterceptor *instance ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (
+        PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  void get_state(FtRtecEventChannelAdmin::CachedOptionResults& state);
-  void set_state(const FtRtecEventChannelAdmin::CachedOptionResults& state);
+  void get_state (FtRtecEventChannelAdmin::CachedOptionResults &state);
+  void set_state (FtRtecEventChannelAdmin::CachedOptionResults const &state);
 private:
+  FtEventServiceInterceptor (FtEventServiceInterceptor const &) = delete;
+  FtEventServiceInterceptor &operator= (FtEventServiceInterceptor const &) = delete;
+  FtEventServiceInterceptor (FtEventServiceInterceptor &&) = delete;
+  FtEventServiceInterceptor &operator= (FtEventServiceInterceptor &&) = delete;
+
   PortableInterceptor::Current_var pic(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   CORBA::ORB_var orb_;
