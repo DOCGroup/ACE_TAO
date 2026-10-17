@@ -47,9 +47,9 @@ namespace TAO
   public:
     NamedValue_Argument (CORBA::NamedValue_ptr);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 
     int byte_order () const;
 
@@ -71,9 +71,9 @@ namespace TAO
     NVList_Argument (CORBA::NVList_ptr,
                      bool lazy_eval);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 
     // Not an override of a base class method, but a new one that
     // deals with the argument list as a whole.
