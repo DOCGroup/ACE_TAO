@@ -51,32 +51,32 @@ namespace CORBA
     UnknownUserException (CORBA::Any& exception);
 
     /// Copy constructor.
-    UnknownUserException (const UnknownUserException& e);
+    UnknownUserException (UnknownUserException const& e);
 
     /// Destructor.
-    virtual ~UnknownUserException ();
+    ~UnknownUserException () override;
 
     /// Return the any containing the user exception.
     CORBA::Any& exception ();
 
     /// To throw an UnknownUserException of this type.
-    virtual void _raise () const;
+    void _raise () const override;
 
-    virtual CORBA::Exception *_tao_duplicate () const;
-    virtual void _tao_encode (TAO_OutputCDR &cdr) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr);
+    CORBA::Exception *_tao_duplicate () const override;
+    void _tao_encode (TAO_OutputCDR &cdr) const override;
+    void _tao_decode (TAO_InputCDR &cdr) override;
 
     /// Narrow to an UnknowUserException.
     static UnknownUserException * _downcast (CORBA::Exception *ex);
     static UnknownUserException const * _downcast (CORBA::Exception const * ex);
 
     /// Return the repository ID of the Exception.
-    virtual const char * _rep_id () const;
+    char const* _rep_id () const override;
 
     // = TAO specific extension.
 
     /// This class has a specific typecode.
-    virtual CORBA::TypeCode_ptr _tao_type () const;
+    CORBA::TypeCode_ptr _tao_type () const override;
 
   private:
     /// Holder for the actual exception.
