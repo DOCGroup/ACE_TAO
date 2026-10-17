@@ -58,11 +58,11 @@ public:
   /// POA_ptr as input parameters and returns a valid RepositoryId
   /// representing the most-derived interface for that oid.
   virtual CORBA::RepositoryId _primary_interface (
-      const PortableServer::ObjectId &oid,
+      PortableServer::ObjectId const& oid,
       PortableServer::POA_ptr poa) = 0;
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  virtual CORBA::Boolean _is_a (const char *logical_type_id);
+  virtual CORBA::Boolean _is_a (char const* logical_type_id);
 
   /// Returns a CORBA::Object_ptr for the target object.
   CORBA::Object_ptr _this ();
@@ -72,10 +72,10 @@ public:
 
 protected:
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id () const;
+  virtual char const* _interface_repository_id () const;
 
   /// Simply returns "this"
-  virtual void *_downcast (const char *repository_id);
+  virtual void *_downcast (char const* repository_id);
 
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub ();

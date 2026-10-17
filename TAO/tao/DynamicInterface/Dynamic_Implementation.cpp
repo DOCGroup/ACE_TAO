@@ -15,7 +15,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_DynamicImplementation::_is_a (const char *logical_type_id)
+TAO_DynamicImplementation::_is_a (char const* logical_type_id)
 {
   CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
@@ -49,7 +49,7 @@ TAO_DynamicImplementation::_get_interface ()
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ());
 
-  if (adapter == 0)
+  if (adapter == nullptr)
     {
       throw ::CORBA::INTF_REPOS ();
     }
@@ -61,15 +61,15 @@ TAO_DynamicImplementation::_get_interface ()
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (), id.in ());
 }
 
-const char *
+char const*
 TAO_DynamicImplementation::_interface_repository_id () const
 {
   // This should never be called.
-  return 0;
+  return nullptr;
 }
 
 void *
-TAO_DynamicImplementation::_downcast (const char *)
+TAO_DynamicImplementation::_downcast (char const*)
 {
   // Don't know enough to do better.
   return this;
@@ -86,7 +86,7 @@ TAO_DynamicImplementation::_create_stub ()
     static_cast <TAO::Portable_Server::POA_Current_Impl *>
                      (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  if (poa_current_impl == 0
+  if (poa_current_impl == nullptr
       || this != poa_current_impl->servant ())
     {
       throw PortableServer::POA::WrongPolicy ();
@@ -135,7 +135,7 @@ TAO_DynamicImplementation::_dispatch (
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = 0;
+  CORBA::ServerRequest *dsi_request = nullptr;
   ACE_NEW (dsi_request,
            CORBA::ServerRequest (request));
 
@@ -183,7 +183,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface ()
     static_cast <TAO::Portable_Server::POA_Current_Impl *>
                      (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  if (poa_current_impl == 0
+  if (poa_current_impl == nullptr
       || this != poa_current_impl->servant ())
     {
       throw PortableServer::POA::WrongPolicy ();
