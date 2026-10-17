@@ -107,6 +107,11 @@ public:
   CORBA::UShort port (CORBA::UShort p);
 
 private:
+  TAO_DIOP_Endpoint (TAO_DIOP_Endpoint const &) = delete;
+  TAO_DIOP_Endpoint &operator= (TAO_DIOP_Endpoint const &) = delete;
+  TAO_DIOP_Endpoint (TAO_DIOP_Endpoint &&) = delete;
+  TAO_DIOP_Endpoint &operator= (TAO_DIOP_Endpoint &&) = delete;
+
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
