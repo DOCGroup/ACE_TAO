@@ -69,7 +69,7 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
     TAO::NETWORK_PRIORITY_TYPE
   };
 
-  const CORBA::PolicyType *end =
+  CORBA::PolicyType const* end =
     type + sizeof (type) / sizeof (type[0]);
 
   for (CORBA::PolicyType const * i = type;

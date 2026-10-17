@@ -49,13 +49,13 @@ public:
 
   /// Constructor.
   TAO_Server_Network_Priority_Policy (
-     const TAO::DiffservCodepoint &request_diffserv_codepoint,
-     const TAO::DiffservCodepoint &reply_diffserv_codepoint,
+     TAO::DiffservCodepoint const& request_diffserv_codepoint,
+     TAO::DiffservCodepoint const& reply_diffserv_codepoint,
      TAO::NetworkPriorityModel &network_priority_model);
 
   /// Copy constructor.
   TAO_Server_Network_Priority_Policy (
-     const TAO_Server_Network_Priority_Policy &rhs);
+     TAO_Server_Network_Priority_Policy const& rhs);
 
   /// Returns a copy of <this>.
   TAO_Server_Network_Priority_Policy *clone () const;
@@ -72,7 +72,7 @@ public:
 
   void network_priority_model (TAO::NetworkPriorityModel npm) override;
 
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const& val);
 
   CORBA::PolicyType policy_type () override;
 

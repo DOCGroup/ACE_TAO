@@ -16,13 +16,11 @@ TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy ()
 {
 }
 
-TAO_Server_Network_Priority_Policy::~TAO_Server_Network_Priority_Policy ()
-{
-}
+TAO_Server_Network_Priority_Policy::~TAO_Server_Network_Priority_Policy () = default;
 
 TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
-  const TAO::DiffservCodepoint &request_diffserv_codepoint,
-  const TAO::DiffservCodepoint &reply_diffserv_codepoint,
+  TAO::DiffservCodepoint const& request_diffserv_codepoint,
+  TAO::DiffservCodepoint const& reply_diffserv_codepoint,
   TAO::NetworkPriorityModel &network_priority_model)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
@@ -35,7 +33,7 @@ TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
 }
 
 TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
-   const TAO_Server_Network_Priority_Policy &rhs)
+   TAO_Server_Network_Priority_Policy const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::NetworkPriorityPolicy ()
@@ -47,7 +45,7 @@ TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
 }
 
 CORBA::Policy_ptr
-TAO_Server_Network_Priority_Policy::create (const CORBA::Any &)
+TAO_Server_Network_Priority_Policy::create (CORBA::Any const&)
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
@@ -70,7 +68,7 @@ TAO_Server_Network_Priority_Policy::clone () const
   TAO_Server_Network_Priority_Policy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_Server_Network_Priority_Policy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 

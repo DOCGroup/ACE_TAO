@@ -41,7 +41,7 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_PolicyFactory
 {
 public:
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any &value) override;
+                                   CORBA::Any const& value) override;
 
   CORBA::Policy_ptr _create_policy (CORBA::PolicyType type) override;
 };
