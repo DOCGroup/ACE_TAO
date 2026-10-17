@@ -4,8 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::In_Basic_SArgument_T<S,Insert_Policy>::In_Basic_SArgument_T ()
-{}
+TAO::In_Basic_SArgument_T<S,Insert_Policy>::In_Basic_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -21,8 +20,7 @@ TAO::In_Basic_SArgument_T<S,Insert_Policy>::arg () const
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::Inout_Basic_SArgument_T ()
-{}
+TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::Inout_Basic_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -38,8 +36,7 @@ TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::arg ()
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Out_Basic_SArgument_T<S,Insert_Policy>::Out_Basic_SArgument_T ()
-{}
+TAO::Out_Basic_SArgument_T<S,Insert_Policy>::Out_Basic_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -55,8 +52,7 @@ TAO::Out_Basic_SArgument_T<S,Insert_Policy>::arg ()
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Basic_SArgument_T<S,Insert_Policy>::Ret_Basic_SArgument_T ()
-{}
+TAO::Ret_Basic_SArgument_T<S,Insert_Policy>::Ret_Basic_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
