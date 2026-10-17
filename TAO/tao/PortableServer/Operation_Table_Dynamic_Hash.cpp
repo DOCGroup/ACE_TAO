@@ -58,7 +58,7 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable ()
   OP_MAP_MANAGER::ITERATOR iterator (this->hash_);
 
   for (OP_MAP_MANAGER::ENTRY *entry = nullptr;
-       iterator.next (entry) != nullptr;
+       iterator.next (entry) != 0;
        iterator.advance ())
     {
       // We had allocated memory and stored the string. So we free the
