@@ -48,7 +48,7 @@ namespace TAO
     S_ptr arg () const;
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -73,7 +73,7 @@ namespace TAO
     S_ptr & arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -98,7 +98,7 @@ namespace TAO
     S_out arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -122,7 +122,7 @@ namespace TAO
     S_ptr & arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
