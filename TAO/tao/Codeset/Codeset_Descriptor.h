@@ -50,6 +50,11 @@ public:
   Translator_Node *translators ();
 
 private:
+  TAO_Codeset_Descriptor (TAO_Codeset_Descriptor const &) = delete;
+  TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor const &) = delete;
+  TAO_Codeset_Descriptor (TAO_Codeset_Descriptor &&) = delete;
+  TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor &&) = delete;
+
   ACE_CDR::ULong ncs_;
   int max_bytes_;
   int num_translators_;

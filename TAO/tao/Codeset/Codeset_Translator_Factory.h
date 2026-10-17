@@ -55,8 +55,8 @@ class TAO_Codeset_Export TAO_Codeset_Translator_Factory :
 {
 public:
   TAO_Codeset_Translator_Factory () = default;
-  virtual ~TAO_Codeset_Translator_Factory () = default;
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  ~TAO_Codeset_Translator_Factory () override = default;
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
 protected:
   /// Assign the translator to the supplied input CDR. The template instance
@@ -79,6 +79,12 @@ protected:
   /// translator, so the compiler will select the appropriate call from
   /// assign().
   void assign_i (TAO_OutputCDR *, ACE_WChar_Codeset_Translator*) const;
+
+ private:
+  TAO_Codeset_Translator_Factory (TAO_Codeset_Translator_Factory const &) = delete;
+  TAO_Codeset_Translator_Factory &operator= (TAO_Codeset_Translator_Factory const &) = delete;
+  TAO_Codeset_Translator_Factory (TAO_Codeset_Translator_Factory &&) = delete;
+  TAO_Codeset_Translator_Factory &operator= (TAO_Codeset_Translator_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -39,9 +39,17 @@ class TAO_Codeset_Export TAO_Codeset_Manager_Factory :
   public TAO_Codeset_Manager_Factory_Base
 {
 public:
+  TAO_Codeset_Manager_Factory () = default;
+
   ~TAO_Codeset_Manager_Factory () override;
   TAO_Codeset_Manager *create () override;
   bool is_default () const override;
+
+ private:
+  TAO_Codeset_Manager_Factory (TAO_Codeset_Manager_Factory const &) = delete;
+  TAO_Codeset_Manager_Factory &operator= (TAO_Codeset_Manager_Factory const &) = delete;
+  TAO_Codeset_Manager_Factory (TAO_Codeset_Manager_Factory &&) = delete;
+  TAO_Codeset_Manager_Factory &operator= (TAO_Codeset_Manager_Factory &&) = delete;
 };
 
 

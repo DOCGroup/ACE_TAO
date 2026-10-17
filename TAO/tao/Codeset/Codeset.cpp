@@ -28,7 +28,7 @@ TAO_Codeset_Initializer::init ()
 
   TAO_Codeset_Manager_Factory *cmf = ACE_Dynamic_Service<TAO_Codeset_Manager_Factory>::instance("TAO_Codeset");
 
-  if (cmf != 0)
+  if (cmf != nullptr)
     {
       return result;
     }
