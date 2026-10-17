@@ -42,13 +42,13 @@ public:
   CompressorIdLevelListPolicy ();
 
   /// Constructor.
-  CompressorIdLevelListPolicy (const ::Compression::CompressorIdLevelList& val);
+  CompressorIdLevelListPolicy (::Compression::CompressorIdLevelList const& val);
 
   /// Copy constructor.
-  CompressorIdLevelListPolicy (const CompressorIdLevelListPolicy &rhs);
+  CompressorIdLevelListPolicy (CompressorIdLevelListPolicy const& rhs);
 
   /// Returns a copy of this CompressorIdLevelListPolicy.
-  virtual CompressorIdLevelListPolicy *clone () const;
+  CompressorIdLevelListPolicy *clone () const;
 
   ::Compression::CompressorIdLevelList * compressor_ids () override;
 
@@ -87,13 +87,13 @@ public:
   CompressionEnablingPolicy ();
 
   /// Constructor.
-  CompressionEnablingPolicy (const ::CORBA::Boolean val);
+  CompressionEnablingPolicy (::CORBA::Boolean val);
 
   /// Copy constructor.
-  CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs);
+  CompressionEnablingPolicy (CompressionEnablingPolicy const& rhs);
 
   /// Returns a copy of this CompressionEnablingPolicy.
-  virtual CompressionEnablingPolicy *clone () const;
+  CompressionEnablingPolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
   ::CORBA::Boolean compression_enabled () override;
@@ -131,13 +131,13 @@ class CompressionLowValuePolicy
 {
 public:
   /// Constructor.
-  CompressionLowValuePolicy (const ::CORBA::ULong val);
+  CompressionLowValuePolicy (::CORBA::ULong val);
 
   /// Copy constructor.
-  CompressionLowValuePolicy (const CompressionLowValuePolicy &rhs);
+  CompressionLowValuePolicy (CompressionLowValuePolicy const& rhs);
 
   /// Returns a copy of this CompressionLowValuePolicy.
-  virtual CompressionLowValuePolicy *clone () const;
+  CompressionLowValuePolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
   ::CORBA::ULong low_value () override;
@@ -166,13 +166,13 @@ class CompressionMinRatioPolicy
 {
 public:
   /// Constructor.
-  CompressionMinRatioPolicy (const ::Compression::CompressionRatio val);
+  CompressionMinRatioPolicy (::Compression::CompressionRatio val);
 
   /// Copy constructor.
-  CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs);
+  CompressionMinRatioPolicy (CompressionMinRatioPolicy const& rhs);
 
   /// Returns a copy of this CompressionMinRatioPolicy.
-  virtual CompressionMinRatioPolicy *clone () const;
+  CompressionMinRatioPolicy *clone () const;
 
   ::Compression::CompressionRatio ratio () override;
 
