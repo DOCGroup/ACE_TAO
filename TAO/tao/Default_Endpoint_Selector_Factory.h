@@ -67,6 +67,10 @@ private:
     TAO_Default_Endpoint_Selector_Factory const &) = delete;
   TAO_Default_Endpoint_Selector_Factory &operator= (
     TAO_Default_Endpoint_Selector_Factory const &) = delete;
+  TAO_Default_Endpoint_Selector_Factory (
+    TAO_Default_Endpoint_Selector_Factory &&) = delete;
+  TAO_Default_Endpoint_Selector_Factory &operator= (
+    TAO_Default_Endpoint_Selector_Factory &&) = delete;
 
 protected:
   /// The possible endpoint selector strategies that can be
