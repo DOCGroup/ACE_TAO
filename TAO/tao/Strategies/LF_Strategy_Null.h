@@ -46,6 +46,12 @@ public:
   void reset_event_loop_thread (int call_reset,
                                 TAO_Leader_Follower &) override;
   //@}
+
+private:
+  TAO_LF_Strategy_Null (TAO_LF_Strategy_Null const &) = delete;
+  TAO_LF_Strategy_Null &operator= (TAO_LF_Strategy_Null const &) = delete;
+  TAO_LF_Strategy_Null (TAO_LF_Strategy_Null &&) = delete;
+  TAO_LF_Strategy_Null &operator= (TAO_LF_Strategy_Null &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
