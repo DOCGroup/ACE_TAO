@@ -16,7 +16,7 @@ TAO_POA_Policy_Set::TAO_POA_Policy_Set ()
 {
 }
 
-TAO_POA_Policy_Set::TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs)
+TAO_POA_Policy_Set::TAO_POA_Policy_Set (TAO_POA_Policy_Set const &rhs)
   : impl_ (rhs.impl_)
 {
 }
