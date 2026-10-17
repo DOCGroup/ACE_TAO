@@ -98,8 +98,8 @@ namespace CORBA
 
   private:
     // = Not allowed.
-    ExceptionList (const ExceptionList &);
-    ExceptionList &operator= (const ExceptionList &);
+    ExceptionList (ExceptionList const&) = delete;
+    ExceptionList &operator= (ExceptionList const&) = delete;
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_;

@@ -25,7 +25,7 @@ ACE_INLINE
 CORBA::ExceptionList_ptr
 CORBA::ExceptionList::_duplicate (CORBA::ExceptionList_ptr x)
 {
-  if (x)
+  if (x != nullptr)
     {
       x->_incr_refcount ();
     }
