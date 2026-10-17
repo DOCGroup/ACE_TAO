@@ -5,7 +5,7 @@ ACE_INLINE
 CORBA::Context_ptr
 CORBA::Context::_duplicate (CORBA::Context_ptr x)
 {
-  if (x)
+  if (x != nullptr)
     {
       x->_incr_refcount ();
     }
@@ -42,7 +42,7 @@ ACE_INLINE
 CORBA::ContextList_ptr
 CORBA::ContextList::_duplicate (CORBA::ContextList_ptr x)
 {
-  if (x)
+  if (x != nullptr)
     {
       x->_incr_refcount ();
     }

@@ -83,22 +83,22 @@ namespace CORBA
     // = All the spec-required functions below will just throw a
     //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-    const char *context_name () const;
+    char const* context_name () const;
 
     CORBA::Context_ptr parent () const;
 
-    void create_child (const char *child_ctx_name,
+    void create_child (char const* child_ctx_name,
                        CORBA::Context_out child_ctx);
 
-    void set_one_value (const char *propname, const CORBA::Any &propvalue);
+    void set_one_value (char const* propname, CORBA::Any const& propvalue);
 
     void set_values (CORBA::NVList_ptr values);
 
-    void delete_values (const char *propname);
+    void delete_values (char const* propname);
 
-    void get_values (const char *start_scope,
+    void get_values (char const* start_scope,
                      CORBA::Flags op_flags,
-                     const char *pattern,
+                     char const* pattern,
                      CORBA::NVList_ptr &values);
 
     // Useful for template programming.
@@ -168,8 +168,8 @@ namespace CORBA
     using _out_type = CORBA::ContextList_out;
 
   private:
-    ContextList (const ContextList &) = delete;
-    ContextList &operator= (const ContextList &) = delete;
+    ContextList (ContextList const&) = delete;
+    ContextList &operator= (ContextList const&) = delete;
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_;
