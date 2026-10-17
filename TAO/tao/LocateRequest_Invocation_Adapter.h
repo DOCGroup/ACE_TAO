@@ -65,6 +65,11 @@ namespace TAO
     CORBA::PolicyList *get_inconsistent_policies ();
 
   private:
+    LocateRequest_Invocation_Adapter (LocateRequest_Invocation_Adapter const &) = delete;
+    LocateRequest_Invocation_Adapter &operator= (LocateRequest_Invocation_Adapter const &) = delete;
+    LocateRequest_Invocation_Adapter (LocateRequest_Invocation_Adapter &&) = delete;
+    LocateRequest_Invocation_Adapter &operator= (LocateRequest_Invocation_Adapter &&) = delete;
+
     bool get_timeout (ACE_Time_Value &val);
 
     /// Helper method that takes care of setting the profiles within

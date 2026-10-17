@@ -79,6 +79,11 @@ namespace TAO
     void sleep () const;
 
   private:
+    Invocation_Retry_State (Invocation_Retry_State const &) = delete;
+    Invocation_Retry_State &operator= (Invocation_Retry_State const &) = delete;
+    Invocation_Retry_State (Invocation_Retry_State &&) = delete;
+    Invocation_Retry_State &operator= (Invocation_Retry_State &&) = delete;
+
     using Ex_Count_Map = ACE_Array_Map<int, int>;
     Ex_Count_Map ex_count_map_;
     int forward_on_reply_closed_count_;

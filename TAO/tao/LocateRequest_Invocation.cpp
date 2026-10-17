@@ -37,6 +37,11 @@ namespace TAO
     ~First_Request_Guard ();
 
   private:
+    First_Request_Guard (First_Request_Guard const &) = delete;
+    First_Request_Guard &operator= (First_Request_Guard const &) = delete;
+    First_Request_Guard (First_Request_Guard &&) = delete;
+    First_Request_Guard &operator= (First_Request_Guard &&) = delete;
+
     /// The transport that we guard.
     TAO_Transport &transport_;
 

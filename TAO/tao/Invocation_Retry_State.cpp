@@ -105,9 +105,7 @@ TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
     }
 }
 
-TAO::Invocation_Retry_State::~Invocation_Retry_State ()
-{
-}
+TAO::Invocation_Retry_State::~Invocation_Retry_State () = default;
 
 bool
 TAO::Invocation_Retry_State::forward_on_exception_limit_used () const
