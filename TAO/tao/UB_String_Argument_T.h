@@ -36,13 +36,13 @@ namespace TAO
   class In_UB_String_Argument_T : public InArgument
   {
   public:
-    In_UB_String_Argument_T (const typename S_var::s_traits::char_type * x);
+    In_UB_String_Argument_T (typename S_var::s_traits::char_type const * x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const typename S_var::s_traits::char_type * arg () const;
+    typename S_var::s_traits::char_type const * arg () const;
 
   protected:
     typename S_var::s_traits::char_type const * x_;
@@ -60,13 +60,13 @@ namespace TAO
             public In_UB_String_Argument_T<S_var, Insert_Policy>
   {
   public:
-    In_UB_String_Clonable_Argument_T (const typename S_var::s_traits::char_type * x);
-    virtual ~In_UB_String_Clonable_Argument_T ();
+    In_UB_String_Clonable_Argument_T (typename S_var::s_traits::char_type const * x);
+    ~In_UB_String_Clonable_Argument_T () override;
 
-    virtual Argument* clone ();
+    Argument* clone () override;
 
   private:
-    bool is_clone_;
+    bool is_clone_ {};
   };
 
   /**
@@ -82,10 +82,10 @@ namespace TAO
   public:
     Inout_UB_String_Argument_T (typename S_var::s_traits::char_type *& x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
 
@@ -106,9 +106,9 @@ namespace TAO
   public:
     Out_UB_String_Argument_T (typename S_var::s_traits::string_out & x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
 
@@ -129,16 +129,16 @@ namespace TAO
   public:
     Ret_UB_String_Argument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
     typename S_var::s_traits::char_type * excp ();
     typename S_var::s_traits::char_type * retn ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
