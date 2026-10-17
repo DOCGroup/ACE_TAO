@@ -5,7 +5,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::
-In_Fixed_Array_Argument_T (const typename S_forany::_slice_type * x)
+In_Fixed_Array_Argument_T (typename S_forany::_slice_type const * x)
   : x_ (const_cast<typename S_forany::_slice_type *> (x))
 {
 }
@@ -13,7 +13,7 @@ In_Fixed_Array_Argument_T (const typename S_forany::_slice_type * x)
 template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
-const typename S_forany::_slice_type *
+typename S_forany::_slice_type const *
 TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::arg () const
 {
   return this->x_.in ();
@@ -23,9 +23,8 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::
-In_Fixed_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x)
-  : In_Fixed_Array_Argument_T<S_forany,Insert_Policy> (x),
-    is_clone_ (false)
+In_Fixed_Array_Clonable_Argument_T (typename S_forany::_slice_type const * x)
+  : In_Fixed_Array_Argument_T<S_forany,Insert_Policy> (x)
 {
 }
 
@@ -77,8 +76,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::
-Ret_Fixed_Array_Argument_T ()
-{}
+Ret_Fixed_Array_Argument_T () = default;
 
 template<typename S_var,
          typename S_forany,
