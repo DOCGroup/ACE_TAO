@@ -56,7 +56,7 @@ namespace TAO
       bool & is_forwarded,
       TAO::Argument ** args,
       int num_args,
-      const char * op,
+      char const * op,
       size_t op_len,
       TAO::Collocation_Strategy strategy);
   };
