@@ -51,7 +51,7 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   // = LocalObject methods
   static TAO_DynArray_i *_narrow (CORBA::Object_ptr obj);
@@ -60,15 +60,15 @@ public:
 
   DynamicAny::AnySeq * get_elements () override;
 
-  void set_elements (const DynamicAny::AnySeq & value) override;
+  void set_elements (DynamicAny::AnySeq const& value) override;
 
   DynamicAny::DynAnySeq * get_elements_as_dyn_any () override;
 
-  void set_elements_as_dyn_any (const DynamicAny::DynAnySeq & value) override;
+  void set_elements_as_dyn_any (DynamicAny::DynAnySeq const& value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  void from_any (const CORBA::Any & value) override;
+  void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
 
@@ -89,8 +89,8 @@ private:
   void init_common ();
 
   // Use copy() or assign() instead of these.
-  TAO_DynArray_i (const TAO_DynArray_i &src) = delete;
-  TAO_DynArray_i &operator= (const TAO_DynArray_i &src) = delete;
+  TAO_DynArray_i (TAO_DynArray_i const& src) = delete;
+  TAO_DynArray_i &operator= (TAO_DynArray_i const& src) = delete;
 
 private:
   /// Each component is also a DynAny.

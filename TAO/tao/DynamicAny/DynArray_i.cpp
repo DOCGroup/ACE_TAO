@@ -52,14 +52,14 @@ TAO_DynArray_i::init (const CORBA::Any & any)
   // Get the CDR stream of the Any, if there isn't one, make one.
   TAO::Any_Impl *impl = any.impl ();
   TAO_OutputCDR out;
-  TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
+  TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (nullptr));
 
   if (impl->encoded  ())
     {
       TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-      if (!unk)
+      if (unk == nullptr)
         throw CORBA::INTERNAL ();
 
       cdr = unk->_tao_get_cdr ();
@@ -77,7 +77,7 @@ TAO_DynArray_i::init (const CORBA::Any & any)
   for (CORBA::ULong i = 0; i < numfields; ++i)
     {
       CORBA::Any field_any;
-      TAO::Unknown_IDL_Type *field_unk = 0;
+      TAO::Unknown_IDL_Type *field_unk = nullptr;
       TAO_InputCDR unk_in (cdr);
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
@@ -171,7 +171,7 @@ TAO_DynArray_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return 0;
+      return nullptr;
     }
 
   return dynamic_cast<TAO_DynArray_i *> (_tao_objref);
@@ -189,7 +189,7 @@ TAO_DynArray_i::get_elements ()
 
   CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
-  DynamicAny::AnySeq *elements = 0;
+  DynamicAny::AnySeq *elements = nullptr;
   ACE_NEW_THROW_EX (elements,
                     DynamicAny::AnySeq (length),
                     CORBA::NO_MEMORY ());
@@ -211,7 +211,7 @@ TAO_DynArray_i::get_elements ()
 }
 
 void
-TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value)
+TAO_DynArray_i::set_elements (DynamicAny::AnySeq const& value)
 {
   if (this->destroyed_)
     {
@@ -260,7 +260,7 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  DynamicAny::DynAnySeq *retval = 0;
+  DynamicAny::DynAnySeq *retval = nullptr;
   ACE_NEW_THROW_EX (retval,
                     DynamicAny::DynAnySeq (this->component_count_),
                     CORBA::NO_MEMORY ());
@@ -340,7 +340,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
       // Get the CDR stream of the Any,if there isn't one, make one.
       TAO::Any_Impl *impl = any.impl ();
       TAO_OutputCDR out;
-      TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
+      TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (nullptr));
 
       if (impl->encoded ())
         {
@@ -373,7 +373,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
         {
           CORBA::Any field_any;
           TAO_InputCDR unk_in (cdr);
-          TAO::Unknown_IDL_Type *field_unk = 0;
+          TAO::Unknown_IDL_Type *field_unk = nullptr;
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
           field_any.replace (field_unk);
@@ -419,14 +419,14 @@ TAO_DynArray_i::to_any ()
 
       TAO::Any_Impl *field_impl = field_any->impl ();
       TAO_OutputCDR field_out;
-      TAO_InputCDR field_cdr (static_cast<ACE_Message_Block *> (0));
+      TAO_InputCDR field_cdr (static_cast<ACE_Message_Block *> (nullptr));
 
       if (field_impl->encoded ())
         {
           TAO::Unknown_IDL_Type * const field_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
 
-          if (!field_unk)
+          if (field_unk == nullptr)
             throw CORBA::INTERNAL ();
 
           field_cdr = field_unk->_tao_get_cdr ();
@@ -445,12 +445,12 @@ TAO_DynArray_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval = nullptr;
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk = nullptr;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
