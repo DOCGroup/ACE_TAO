@@ -58,10 +58,24 @@ private:
     void add_node (Strategy_Node *);
     Strategy_Node *find(const ACE_CString& name);
 
+  private:
+    Strategy_Node (Strategy_Node const &) = delete;
+    Strategy_Node &operator= (Strategy_Node const &) = delete;
+    Strategy_Node (Strategy_Node &&) = delete;
+    Strategy_Node &operator= (Strategy_Node &&) = delete;
+
+  public:
+
     ACE_CString poa_name_;
     CSD_Framework::Strategy_var strategy_;
     Strategy_Node * next_;
   };
+
+  TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository const &) = delete;
+  TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository const &) = delete;
+  TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository &&) = delete;
+  TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository &&) = delete;
+
   Strategy_Node * strategy_list_head_;
 };
 
