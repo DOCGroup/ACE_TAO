@@ -60,9 +60,11 @@ protected:
   ~TAO_RTScheduler_Manager () = default;
 
 private:
-  TAO_RTScheduler_Manager (const TAO_RTScheduler_Manager &) = delete;
-  void operator= (const TAO_RTScheduler_Manager &) = delete;
-  TAO_ORB_Core* orb_ {};
+  TAO_RTScheduler_Manager (TAO_RTScheduler_Manager const &) = delete;
+  void operator= (TAO_RTScheduler_Manager const &) = delete;
+  TAO_RTScheduler_Manager (TAO_RTScheduler_Manager &&) = delete;
+  void operator= (TAO_RTScheduler_Manager &&) = delete;
+  TAO_ORB_Core *orb_ {};
 
 private:
   RTScheduling::Scheduler_var rtscheduler_;
