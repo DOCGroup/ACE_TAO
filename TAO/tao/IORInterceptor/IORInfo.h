@@ -112,8 +112,10 @@ protected:
   void check_validity ();
 
 private:
-  TAO_IORInfo (TAO_IORInfo const&) = delete;
-  void operator= (TAO_IORInfo const&) = delete;
+  TAO_IORInfo (TAO_IORInfo const &) = delete;
+  void operator= (TAO_IORInfo const &) = delete;
+  TAO_IORInfo (TAO_IORInfo &&) = delete;
+  void operator= (TAO_IORInfo &&) = delete;
 
 private:
   /// Pointer to POA
