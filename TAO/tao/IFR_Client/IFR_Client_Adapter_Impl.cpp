@@ -11,9 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl ()
-{
-}
+TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl () = default;
 
 CORBA::Boolean
 TAO_IFR_Client_Adapter_Impl::interfacedef_cdr_insert (

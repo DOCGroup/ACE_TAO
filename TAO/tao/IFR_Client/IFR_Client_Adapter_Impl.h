@@ -39,6 +39,8 @@ class TAO_IFR_CLIENT_Export TAO_IFR_Client_Adapter_Impl
   : public TAO_IFR_Client_Adapter
 {
 public:
+  TAO_IFR_Client_Adapter_Impl () = default;
+
   ~TAO_IFR_Client_Adapter_Impl () override;
 
   CORBA::Boolean interfacedef_cdr_insert (
@@ -67,6 +69,12 @@ public:
 
   // Used to force the initialization of the ORB code.
   static int Initializer ();
+
+private:
+  TAO_IFR_Client_Adapter_Impl (TAO_IFR_Client_Adapter_Impl const &) = delete;
+  TAO_IFR_Client_Adapter_Impl &operator= (TAO_IFR_Client_Adapter_Impl const &) = delete;
+  TAO_IFR_Client_Adapter_Impl (TAO_IFR_Client_Adapter_Impl &&) = delete;
+  TAO_IFR_Client_Adapter_Impl &operator= (TAO_IFR_Client_Adapter_Impl &&) = delete;
 };
 
 static int
