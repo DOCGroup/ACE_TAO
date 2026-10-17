@@ -50,7 +50,7 @@ public:
    *       need to hear when the connection timeouts or closes, but
    *       cannot block waiting for the message to be delivered.
    */
-  TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
+  TAO_Asynch_Queued_Message (ACE_Message_Block const *contents,
                              TAO_ORB_Core *oc,
                              ACE_Time_Value *timeout,
                              ACE_Allocator *alloc,
@@ -58,22 +58,22 @@ public:
 
 
   /// Destructor
-  virtual ~TAO_Asynch_Queued_Message ();
+  ~TAO_Asynch_Queued_Message () override;
 
   /**
    * @name Implement the Template Methods from TAO_Queued_Message
    */
   //@{
-  virtual size_t message_length () const;
-  virtual int all_data_sent () const;
-  virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
-  virtual void bytes_transferred (size_t &byte_count);
+  size_t message_length () const override;
+  int all_data_sent () const override;
+  void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const override;
+  void bytes_transferred (size_t &byte_count) override;
   /// @note No reason to believe why this would be called. But have
   /// it here for the sake of uniformity.
-  virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
-  virtual void destroy ();
-  virtual bool is_expired (const ACE_Time_Value &now) const;
-  virtual void copy_if_necessary (const ACE_Message_Block* chain);
+  TAO_Queued_Message *clone (ACE_Allocator *alloc) override;
+  void destroy () override;
+  bool is_expired (ACE_Time_Value const &now) const override;
+  void copy_if_necessary (ACE_Message_Block const *chain) override;
   //@}
 
 protected:
@@ -101,8 +101,8 @@ protected:
                              bool is_heap_allocated);
 
 private:
-  void operator= (const TAO_Asynch_Queued_Message &);
-  TAO_Asynch_Queued_Message (const TAO_Asynch_Queued_Message &);
+  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
+  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message const &) = delete;
 
 private:
   /// The number of bytes in the buffer
