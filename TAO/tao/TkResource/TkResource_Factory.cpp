@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   TkResource_Factory::TkResource_Factory ()
-    : reactor_impl_ (0)
+    : reactor_impl_ (nullptr)
   {
   }
 
