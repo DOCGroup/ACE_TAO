@@ -39,14 +39,14 @@ class TAO_DynamicInterface_Export TAO_DII_Reply_Handler_var
 public:
   TAO_DII_Reply_Handler_var ();
   TAO_DII_Reply_Handler_var (TAO_DII_Reply_Handler_ptr);
-  TAO_DII_Reply_Handler_var (const TAO_DII_Reply_Handler_var &);
+  TAO_DII_Reply_Handler_var (TAO_DII_Reply_Handler_var const&);
   ~TAO_DII_Reply_Handler_var ();
 
   TAO_DII_Reply_Handler_var &operator= (TAO_DII_Reply_Handler_ptr);
-  TAO_DII_Reply_Handler_var &operator= (const TAO_DII_Reply_Handler_var &);
+  TAO_DII_Reply_Handler_var &operator= (TAO_DII_Reply_Handler_var const&);
   TAO_DII_Reply_Handler_ptr operator-> () const;
 
-  operator const TAO_DII_Reply_Handler_ptr &() const;
+  operator TAO_DII_Reply_Handler_ptr const&() const;
   operator TAO_DII_Reply_Handler_ptr &();
 
   TAO_DII_Reply_Handler_ptr in () const;
@@ -98,8 +98,8 @@ public:
   using _ptr_type = TAO_DII_Reply_Handler_ptr;
   using _var_type = TAO_DII_Reply_Handler_var;
 
-  TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &) = delete;
-  TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &) = delete;
+  TAO_DII_Reply_Handler (TAO_DII_Reply_Handler const&) = delete;
+  TAO_DII_Reply_Handler &operator = (TAO_DII_Reply_Handler const&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

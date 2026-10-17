@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE TAO_DII_Reply_Handler_ptr
 TAO_DII_Reply_Handler::_duplicate (TAO_DII_Reply_Handler_ptr x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
       x->_add_ref ();
     }
@@ -39,7 +39,7 @@ TAO_DII_Reply_Handler_var::ptr () const
 
 ACE_INLINE
 TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (
-    const TAO_DII_Reply_Handler_var &p)
+    TAO_DII_Reply_Handler_var const& p)
   : ptr_ (TAO_DII_Reply_Handler::_duplicate (p.ptr ()))
 {}
 
@@ -52,7 +52,7 @@ TAO_DII_Reply_Handler_var::operator= (TAO_DII_Reply_Handler_ptr p)
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_var &
-TAO_DII_Reply_Handler_var::operator= (const TAO_DII_Reply_Handler_var &p)
+TAO_DII_Reply_Handler_var::operator= (TAO_DII_Reply_Handler_var const& p)
 {
   if (this != &p)
     {
@@ -63,7 +63,7 @@ TAO_DII_Reply_Handler_var::operator= (const TAO_DII_Reply_Handler_var &p)
 }
 
 ACE_INLINE
-TAO_DII_Reply_Handler_var::operator const TAO_DII_Reply_Handler_ptr &() const
+TAO_DII_Reply_Handler_var::operator TAO_DII_Reply_Handler_ptr const&() const
 {
   return this->ptr_;
 }
