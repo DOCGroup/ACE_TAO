@@ -46,7 +46,7 @@ public:
   ~TAO_DynUnion_i () = default;
 
   /// Constructor taking an Any argument.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   /// Constructor taking a typecode argument.
   void init (CORBA::TypeCode_ptr tc);
@@ -76,7 +76,7 @@ public:
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  void from_any (const CORBA::Any & value) override;
+  void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
 
@@ -89,18 +89,18 @@ public:
 private:
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
-  void set_from_any (const CORBA::Any &any);
+  void set_from_any (CORBA::Any const& any);
 
   /// Called by both versions of init().
   void init_common ();
 
   /// Iterative check for label value match.
-  CORBA::Boolean label_match (const CORBA::Any &my_any,
-                              const CORBA::Any &other_any);
+  CORBA::Boolean label_match (CORBA::Any const& my_any,
+                              CORBA::Any const& other_any);
 
   /// Use copy() or assign() instead of these.
-  TAO_DynUnion_i (const TAO_DynUnion_i &src) = delete;
-  TAO_DynUnion_i &operator= (const TAO_DynUnion_i &src) = delete;
+  TAO_DynUnion_i (TAO_DynUnion_i const& src) = delete;
+  TAO_DynUnion_i &operator= (TAO_DynUnion_i const& src) = delete;
 
 private:
   /// Just two components.
