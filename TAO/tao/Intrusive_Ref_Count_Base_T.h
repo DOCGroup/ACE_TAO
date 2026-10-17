@@ -47,11 +47,13 @@ protected:
   TAO_Intrusive_Ref_Count_Base ();
 
 private:
-    std::atomic<uint32_t> refcount_;
+  std::atomic<uint32_t> refcount_ {};
 
   // Prevent copying/assignment.
-  TAO_Intrusive_Ref_Count_Base (const TAO_Intrusive_Ref_Count_Base&);
-  TAO_Intrusive_Ref_Count_Base& operator= (const TAO_Intrusive_Ref_Count_Base&);
+  TAO_Intrusive_Ref_Count_Base (TAO_Intrusive_Ref_Count_Base const &) = delete;
+  TAO_Intrusive_Ref_Count_Base &operator= (TAO_Intrusive_Ref_Count_Base const &) = delete;
+  TAO_Intrusive_Ref_Count_Base (TAO_Intrusive_Ref_Count_Base &&) = delete;
+  TAO_Intrusive_Ref_Count_Base &operator= (TAO_Intrusive_Ref_Count_Base &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
