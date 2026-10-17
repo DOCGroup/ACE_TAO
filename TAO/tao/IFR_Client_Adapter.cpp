@@ -3,9 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IFR_Client_Adapter::~TAO_IFR_Client_Adapter ()
-{
-}
+TAO_IFR_Client_Adapter::~TAO_IFR_Client_Adapter () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
