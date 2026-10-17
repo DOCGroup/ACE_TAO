@@ -88,8 +88,10 @@ protected:
   void check_type_for_encoding (CORBA::Any const& data);
 
 private:
-  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const&) = delete;
-  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const&) = delete;
+  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const &) = delete;
+  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const &) = delete;
+  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec &&) = delete;
+  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec &&) = delete;
 
 private:
   /// The major GIOP version associated with this Codec.
