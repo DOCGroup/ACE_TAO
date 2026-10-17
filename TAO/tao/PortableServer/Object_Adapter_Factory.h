@@ -28,6 +28,12 @@ class TAO_PortableServer_Export TAO_Object_Adapter_Factory
   : public TAO_Adapter_Factory
 {
 public:
+  TAO_Object_Adapter_Factory () = default;
+  TAO_Object_Adapter_Factory (TAO_Object_Adapter_Factory const &) = delete;
+  TAO_Object_Adapter_Factory &operator= (TAO_Object_Adapter_Factory const &) = delete;
+  TAO_Object_Adapter_Factory (TAO_Object_Adapter_Factory &&) = delete;
+  TAO_Object_Adapter_Factory &operator= (TAO_Object_Adapter_Factory &&) = delete;
+
   // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   // details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;

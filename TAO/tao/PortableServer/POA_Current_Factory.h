@@ -28,6 +28,12 @@ class TAO_PortableServer_Export TAO_POA_Current_Factory
   : public TAO_Object_Loader
 {
 public:
+  TAO_POA_Current_Factory () = default;
+  TAO_POA_Current_Factory (TAO_POA_Current_Factory const &) = delete;
+  TAO_POA_Current_Factory &operator= (TAO_POA_Current_Factory const &) = delete;
+  TAO_POA_Current_Factory (TAO_POA_Current_Factory &&) = delete;
+  TAO_POA_Current_Factory &operator= (TAO_POA_Current_Factory &&) = delete;
+
   /// Creates a PICurrent and returns it.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
