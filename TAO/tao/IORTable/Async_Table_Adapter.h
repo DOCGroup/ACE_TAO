@@ -60,6 +60,12 @@ public:
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
+
+private:
+  TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory const &) = delete;
+  TAO_Async_Table_Adapter_Factory &operator= (TAO_Async_Table_Adapter_Factory const &) = delete;
+  TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory &&) = delete;
+  TAO_Async_Table_Adapter_Factory &operator= (TAO_Async_Table_Adapter_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

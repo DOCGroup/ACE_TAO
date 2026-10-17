@@ -40,9 +40,7 @@ TAO::Objref_Traits <TAO_IOR_Table_Impl>::marshal (const TAO_IOR_Table_Impl_ptr,
   return false;
 }
 
-TAO_IOR_Table_Impl::TAO_IOR_Table_Impl ()
-{
-}
+TAO_IOR_Table_Impl::TAO_IOR_Table_Impl () = default;
 
 char *
 TAO_IOR_Table_Impl::find (const char *object_key)

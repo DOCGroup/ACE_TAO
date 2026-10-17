@@ -85,6 +85,12 @@ protected:
 
   /// Synchronization
   TAO_SYNCH_MUTEX lock_;
+
+private:
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl &&) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl &&) = delete;
 };
 
 // Traits specializations.

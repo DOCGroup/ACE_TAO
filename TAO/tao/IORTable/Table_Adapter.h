@@ -71,6 +71,12 @@ protected:
   bool closed_;
   TAO_SYNCH_MUTEX thread_lock_;
   ACE_Lock *lock_;
+
+private:
+  TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter (TAO_Table_Adapter &&) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter &&) = delete;
 };
 
 // ****************************************************************
@@ -84,6 +90,12 @@ public:
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
+
+private:
+  TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory const &) = delete;
+  TAO_Table_Adapter_Factory &operator= (TAO_Table_Adapter_Factory const &) = delete;
+  TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory &&) = delete;
+  TAO_Table_Adapter_Factory &operator= (TAO_Table_Adapter_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

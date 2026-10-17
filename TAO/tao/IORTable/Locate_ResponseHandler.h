@@ -126,6 +126,11 @@ protected:
   virtual void *_downcast (const char *repository_id);
 
 private:
+  TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler const &) = delete;
+  TAO_AMH_Locate_ResponseHandler &operator= (TAO_AMH_Locate_ResponseHandler const &) = delete;
+  TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler &&) = delete;
+  TAO_AMH_Locate_ResponseHandler &operator= (TAO_AMH_Locate_ResponseHandler &&) = delete;
+
   CORBA::ORB_var orb_;
 };
 
