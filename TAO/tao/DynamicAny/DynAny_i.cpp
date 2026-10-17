@@ -20,9 +20,7 @@ TAO_DynAny_i::TAO_DynAny_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynAny_i::~TAO_DynAny_i ()
-{
-}
+TAO_DynAny_i::~TAO_DynAny_i () = default;
 
 void
 TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
