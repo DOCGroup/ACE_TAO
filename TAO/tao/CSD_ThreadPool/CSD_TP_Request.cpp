@@ -6,9 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Request::~TP_Request()
-{
-}
+TAO::CSD::TP_Request::~TP_Request() = default;
 
 
 void
