@@ -44,6 +44,11 @@ namespace TAO
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
+    FoxResource_Factory (FoxResource_Factory const &) = delete;
+    FoxResource_Factory &operator= (FoxResource_Factory const &) = delete;
+    FoxResource_Factory (FoxResource_Factory &&) = delete;
+    FoxResource_Factory &operator= (FoxResource_Factory &&) = delete;
+
     /// Reactor created by this factory.
     ACE_FoxReactor *reactor_impl_;
 
