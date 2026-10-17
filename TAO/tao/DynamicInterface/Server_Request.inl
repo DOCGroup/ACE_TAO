@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE CORBA::ServerRequest_ptr
 CORBA::ServerRequest::_duplicate (CORBA::ServerRequest_ptr x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
       x->_incr_refcount ();
     }
@@ -30,7 +30,7 @@ CORBA::ServerRequest::ctx (CORBA::Context_ptr ctx)
   this->ctx_ = ctx;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const*
 CORBA::ServerRequest::operation () const
 {
   return this->orb_server_request_.operation ();

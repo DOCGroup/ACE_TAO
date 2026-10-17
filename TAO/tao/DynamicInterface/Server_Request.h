@@ -70,14 +70,14 @@ namespace CORBA
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_result (const CORBA::Any &value);
+    void set_result (CORBA::Any const& value);
 
     /// Implementation uses this to provide the exception value which is
     /// the only result of this particular invocation.
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_exception (const CORBA::Any &value);
+    void set_exception (CORBA::Any const& value);
 
     // = Get various universal call attributes.
 
@@ -98,7 +98,7 @@ namespace CORBA
     void ctx (CORBA::Context_ptr);
 
     /// Get the operation name.
-    const char *operation () const;
+    char const* operation () const;
 
     // Pseudo object methods.
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
