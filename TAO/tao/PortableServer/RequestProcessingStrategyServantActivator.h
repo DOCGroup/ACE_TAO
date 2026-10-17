@@ -35,39 +35,43 @@ namespace TAO
     {
     public:
       RequestProcessingStrategyServantActivator () = default;
+      RequestProcessingStrategyServantActivator (RequestProcessingStrategyServantActivator const &) = delete;
+      RequestProcessingStrategyServantActivator &operator= (RequestProcessingStrategyServantActivator const &) = delete;
+      RequestProcessingStrategyServantActivator (RequestProcessingStrategyServantActivator &&) = delete;
+      RequestProcessingStrategyServantActivator &operator= (RequestProcessingStrategyServantActivator &&) = delete;
 
-      void strategy_cleanup() override;
+      void strategy_cleanup () override;
 
       PortableServer::ServantManager_ptr get_servant_manager () override;
 
       void set_servant_manager (PortableServer::ServantManager_ptr imgr) override;
 
       TAO_Servant_Location locate_servant (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         PortableServer::Servant &servant) override;
 
       PortableServer::Servant locate_servant (
-        const char *operation,
-        const PortableServer::ObjectId &system_id,
+        char const *operation,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
         bool &wait_occurred_restart_call) override;
 
       void cleanup_servant (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id) override;
+        PortableServer::ObjectId const &user_id) override;
 
       void etherealize_objects (CORBA::Boolean etherealize_objects) override;
 
-      void post_invoke_servant_cleanup(
-        const PortableServer::ObjectId &system_id,
-        const TAO::Portable_Server::Servant_Upcall &servant_upcall) override;
+      void post_invoke_servant_cleanup (
+        PortableServer::ObjectId const &system_id,
+        TAO::Portable_Server::Servant_Upcall const &servant_upcall) override;
 
     private:
       PortableServer::Servant incarnate_servant (
-        const PortableServer::ObjectId& object_id);
+        PortableServer::ObjectId const &object_id);
 
-      void etherealize_servant (const PortableServer::ObjectId& object_id,
+      void etherealize_servant (PortableServer::ObjectId const &object_id,
         PortableServer::Servant servant,
         CORBA::Boolean cleanup_in_progress);
 

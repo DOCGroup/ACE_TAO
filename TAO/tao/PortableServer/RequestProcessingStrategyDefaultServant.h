@@ -38,8 +38,12 @@ namespace TAO
     {
     public:
       RequestProcessingStrategyDefaultServant () = default;
+      RequestProcessingStrategyDefaultServant (RequestProcessingStrategyDefaultServant const &) = delete;
+      RequestProcessingStrategyDefaultServant &operator= (RequestProcessingStrategyDefaultServant const &) = delete;
+      RequestProcessingStrategyDefaultServant (RequestProcessingStrategyDefaultServant &&) = delete;
+      RequestProcessingStrategyDefaultServant &operator= (RequestProcessingStrategyDefaultServant &&) = delete;
 
-      void strategy_cleanup() override;
+      void strategy_cleanup () override;
 
       PortableServer::ServantManager_ptr get_servant_manager () override;
 
@@ -50,34 +54,34 @@ namespace TAO
       void set_servant (PortableServer::Servant servant) override;
 
       TAO_Servant_Location locate_servant (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         PortableServer::Servant &servant) override;
 
       PortableServer::Servant locate_servant (
-        const char *operation,
-        const PortableServer::ObjectId &system_id,
+        char const *operation,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
         bool &wait_occurred_restart_call) override;
 
       PortableServer::Servant system_id_to_servant (
-        const PortableServer::ObjectId &system_id) override;
+        PortableServer::ObjectId const &system_id) override;
 
       PortableServer::Servant id_to_servant (
-        const PortableServer::ObjectId &id) override;
+        PortableServer::ObjectId const &id) override;
 
       void cleanup_servant (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id) override;
+        PortableServer::ObjectId const &user_id) override;
 
       void etherealize_objects (CORBA::Boolean etherealize_objects) override;
 
       PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant) override;
 
-      void post_invoke_servant_cleanup(
-        const PortableServer::ObjectId &system_id,
-        const TAO::Portable_Server::Servant_Upcall &servant_upcall) override;
+      void post_invoke_servant_cleanup (
+        PortableServer::ObjectId const &system_id,
+        TAO::Portable_Server::Servant_Upcall const &servant_upcall) override;
 
     private:
       PortableServer::ServantBase_var default_servant_ {};
