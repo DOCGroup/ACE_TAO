@@ -34,6 +34,10 @@ namespace TAO
     {
     public:
       ServantRetentionStrategyNonRetain () = default;
+      ServantRetentionStrategyNonRetain (ServantRetentionStrategyNonRetain const &) = delete;
+      ServantRetentionStrategyNonRetain &operator= (ServantRetentionStrategyNonRetain const &) = delete;
+      ServantRetentionStrategyNonRetain (ServantRetentionStrategyNonRetain &&) = delete;
+      ServantRetentionStrategyNonRetain &operator= (ServantRetentionStrategyNonRetain &&) = delete;
 
       void strategy_init (TAO_Root_POA *poa) override;
 
