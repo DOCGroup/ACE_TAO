@@ -61,7 +61,7 @@ TAO_RT_POA::new_POA (const String &name,
                      TAO_ORB_Core &orb_core,
                      TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa = 0;
+  TAO_RT_POA *poa = nullptr;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
@@ -125,7 +125,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
   // case, bands do not matter since matching the lanes priority is a
   // stricter condition than meeting the band ranges.  In addition,
   // when the POA was created, the bands had to match the lanes.
-  if (this->thread_pool_ != 0 && this->thread_pool_->with_lanes ())
+  if (this->thread_pool_ != nullptr && this->thread_pool_->with_lanes ())
     {
       TAO_Thread_Lane **lanes = this->thread_pool_->lanes ();
 
@@ -230,12 +230,12 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   // If this POA is using the default thread pool or a thread pool
   // without lanes, create the IOR with the acceptors in the thread
   // pool.
-  if (this->thread_pool_ == 0 ||
+  if (this->thread_pool_ == nullptr ||
       !this->thread_pool_->with_lanes ())
     {
-      TAO_Acceptor_Registry *acceptor_registry = 0;
+      TAO_Acceptor_Registry *acceptor_registry = nullptr;
 
-      if (this->thread_pool_ == 0)
+      if (this->thread_pool_ == nullptr)
         {
           TAO_Thread_Lane_Resources_Manager &thread_lane_resources_manager =
             this->orb_core_.thread_lane_resources_manager ();
@@ -404,7 +404,7 @@ int
 TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
                            TAO_PriorityBandedConnectionPolicy *priority_bands)
 {
-  if (priority_bands == 0)
+  if (priority_bands == nullptr)
     return 1;
 
   RTCORBA::PriorityBands &bands =
@@ -425,7 +425,7 @@ TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
 CORBA::PolicyList *
 TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority)
 {
-  CORBA::PolicyList *client_exposed_policies = 0;
+  CORBA::PolicyList *client_exposed_policies = nullptr;
   ACE_NEW_THROW_EX (client_exposed_policies,
                     CORBA::PolicyList (),
                     CORBA::NO_MEMORY (TAO::VMCID,

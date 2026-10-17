@@ -21,7 +21,7 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
           ace_svc_desc_TAO_RT_Collocation_Resolver);
     }
 
-  TAO_Object_Adapter *object_adapter = 0;
+  TAO_Object_Adapter *object_adapter = nullptr;
   ACE_NEW_RETURN (object_adapter,
                   TAO_Object_Adapter (orb_core->server_factory ()->
                                         active_object_map_creation_parameters (),
@@ -29,14 +29,14 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
                   0);
 
   // Create and register the RT servant dispatcher.
-  TAO_RT_Servant_Dispatcher *rt_servant_dispatcher = 0;
+  TAO_RT_Servant_Dispatcher *rt_servant_dispatcher = nullptr;
   ACE_NEW_RETURN (rt_servant_dispatcher,
                   TAO_RT_Servant_Dispatcher,
                   0);
   object_adapter->servant_dispatcher (rt_servant_dispatcher);
 
   // Create and add the RT policy validator.
-  TAO_POA_RT_Policy_Validator *rt_validator = 0;
+  TAO_POA_RT_Policy_Validator *rt_validator = nullptr;
   ACE_NEW_RETURN (rt_validator,
                   TAO_POA_RT_Policy_Validator (*orb_core),
                   0);

@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POA_RT_Policy_Validator::TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core),
-    thread_pool_ (0)
+    thread_pool_ (nullptr)
 {
 }
 
@@ -176,7 +176,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
     // If priority model was not specified, then we better not have a
     // thread pool with lanes.
     {
-      if (this->thread_pool_ != 0 &&
+      if (this->thread_pool_ != nullptr &&
           this->thread_pool_->with_lanes ())
         throw PortableServer::POA::InvalidPolicy ();
     }
@@ -201,7 +201,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
   //  4. If this POA has a thread pool with lanes, then for each band,
   //  there must be at least one thread lane that can service it,
   //  i.e., whose priority falls into the band's range.
-  if (bands_policy != 0)
+  if (bands_policy != nullptr)
     {
       // Checks 0.
       if (rt_priority_model == TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
@@ -257,7 +257,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // If this POA is using the default thread pool (which doesn't
       // have lanes) or a thread pool without lanes, we are done with
       // the checks.
-      if (this->thread_pool_ == 0 ||
+      if (this->thread_pool_ == nullptr ||
           !this->thread_pool_->with_lanes ())
         return;
 
@@ -300,7 +300,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // If this POA is using the default thread pool (which doesn't
       // have lanes) or a thread pool without lanes, we are done with
       // the checks.
-      if (this->thread_pool_ == 0 ||
+      if (this->thread_pool_ == nullptr ||
           !this->thread_pool_->with_lanes ())
         return;
 
@@ -440,7 +440,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
     }
 
   // Set ServerProtocolPolicy.
-  TAO_ServerProtocolPolicy *server_protocol_policy = 0;
+  TAO_ServerProtocolPolicy *server_protocol_policy = nullptr;
   ACE_NEW_RETURN (server_protocol_policy,
                   TAO_ServerProtocolPolicy (protocols),
                   0);
@@ -460,7 +460,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
        acceptor != end;
        ++acceptor)
     {
-      if (*acceptor == 0)
+      if (*acceptor == nullptr)
         continue;
 
       CORBA::ULong current_length = protocols.length ();
@@ -525,7 +525,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
   TAO_Thread_Pool * const thread_pool =
     tp_manager.get_threadpool (thread_pool_id);
 
-  if (thread_pool == 0)
+  if (thread_pool == nullptr)
     throw PortableServer::POA::InvalidPolicy ();
 
   return thread_pool;
