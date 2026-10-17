@@ -170,6 +170,13 @@ namespace TAO
       {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
 
   private:
+    ServerRequestInterceptor_Adapter_Impl (ServerRequestInterceptor_Adapter_Impl const &) = delete;
+    ServerRequestInterceptor_Adapter_Impl &operator= (
+      ServerRequestInterceptor_Adapter_Impl const &) = delete;
+    ServerRequestInterceptor_Adapter_Impl (ServerRequestInterceptor_Adapter_Impl &&) = delete;
+    ServerRequestInterceptor_Adapter_Impl &operator= (
+      ServerRequestInterceptor_Adapter_Impl &&) = delete;
+
     /// List of registered interceptors.
     ServerRequestInterceptor_List interceptor_list_;
   };

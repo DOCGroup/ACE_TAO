@@ -29,8 +29,16 @@ class TAO_PortableServer_PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_PortableServer_PolicyFactory () = default;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any & value) override;
+
+private:
+  TAO_PortableServer_PolicyFactory (TAO_PortableServer_PolicyFactory const &) = delete;
+  TAO_PortableServer_PolicyFactory &operator= (TAO_PortableServer_PolicyFactory const &) = delete;
+  TAO_PortableServer_PolicyFactory (TAO_PortableServer_PolicyFactory &&) = delete;
+  TAO_PortableServer_PolicyFactory &operator= (TAO_PortableServer_PolicyFactory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

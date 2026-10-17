@@ -38,7 +38,18 @@ class TAO_PI_Server_Export TAO_ServerRequestInterceptor_Adapter_Factory_Impl
   : public TAO_ServerRequestInterceptor_Adapter_Factory
 {
 public:
+  TAO_ServerRequestInterceptor_Adapter_Factory_Impl () = default;
   TAO::ServerRequestInterceptor_Adapter *create () override;
+
+private:
+  TAO_ServerRequestInterceptor_Adapter_Factory_Impl (
+    TAO_ServerRequestInterceptor_Adapter_Factory_Impl const &) = delete;
+  TAO_ServerRequestInterceptor_Adapter_Factory_Impl &operator= (
+    TAO_ServerRequestInterceptor_Adapter_Factory_Impl const &) = delete;
+  TAO_ServerRequestInterceptor_Adapter_Factory_Impl (
+    TAO_ServerRequestInterceptor_Adapter_Factory_Impl &&) = delete;
+  TAO_ServerRequestInterceptor_Adapter_Factory_Impl &operator= (
+    TAO_ServerRequestInterceptor_Adapter_Factory_Impl &&) = delete;
 };
 
 

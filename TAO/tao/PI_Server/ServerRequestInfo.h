@@ -216,6 +216,11 @@ namespace TAO
         IOP::ServiceId id);
 
   protected:
+    ServerRequestInfo (ServerRequestInfo const &) = delete;
+    ServerRequestInfo &operator= (ServerRequestInfo const &) = delete;
+    ServerRequestInfo (ServerRequestInfo &&) = delete;
+    ServerRequestInfo &operator= (ServerRequestInfo &&) = delete;
+
     /// Underlying request object that contains much of the
     /// information encapsulated by this @c ServerRequestInfo
     /// implementation.

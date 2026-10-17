@@ -29,6 +29,8 @@ class TAO_PortableServer_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_PortableServer_ORBInitializer () = default;
+
   /**
    * @name PortableInterceptor::ORBInitializer methods
    *
@@ -42,6 +44,11 @@ public:
   //@}
 
 private:
+  TAO_PortableServer_ORBInitializer (TAO_PortableServer_ORBInitializer const &) = delete;
+  TAO_PortableServer_ORBInitializer &operator= (TAO_PortableServer_ORBInitializer const &) = delete;
+  TAO_PortableServer_ORBInitializer (TAO_PortableServer_ORBInitializer &&) = delete;
+  TAO_PortableServer_ORBInitializer &operator= (TAO_PortableServer_ORBInitializer &&) = delete;
+
   /// Register PortableServer policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
