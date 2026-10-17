@@ -55,15 +55,13 @@ namespace
 // /dev/zero file descriptor simply returns zero, as /dev/zero was
 // designed to do.  So unfortunate. :)
 TAO_MMAP_Allocator::TAO_MMAP_Allocator ()
-  : TAO_MMAP_Allocator_Base ((char const *) nullptr /* pool name */,
+  : TAO_MMAP_Allocator_Base (static_cast<char const *> (nullptr) /* pool name */,
                              nullptr,  // No need to explicitly name the lock.
                              &the_pool_options)
 {
 }
 
-TAO_MMAP_Allocator::~TAO_MMAP_Allocator ()
-{
-}
+TAO_MMAP_Allocator::~TAO_MMAP_Allocator () = default;
 
 // @@ Should be const but underlying allocator methods are not!
 ACE_HANDLE
@@ -74,7 +72,7 @@ TAO_MMAP_Allocator::handle ()
 
 // @@ Should be const but underlying allocator methods are not!
 off_t
-TAO_MMAP_Allocator::offset (void * p)
+TAO_MMAP_Allocator::offset (void *p)
 {
   ACE_Mem_Map const & m = this->alloc ().memory_pool ().mmap ();
 

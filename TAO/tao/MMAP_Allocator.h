@@ -49,7 +49,7 @@ public:
   TAO_MMAP_Allocator ();
 
   /// Destructor.
-  virtual ~TAO_MMAP_Allocator ();
+  ~TAO_MMAP_Allocator () override;
 
   /// Return backing store handle.
   ACE_HANDLE handle ();
@@ -60,9 +60,9 @@ public:
 
 private:
   TAO_MMAP_Allocator (TAO_MMAP_Allocator const &) = delete;
-  void operator= (TAO_MMAP_Allocator const &) = delete;
+  TAO_MMAP_Allocator &operator= (TAO_MMAP_Allocator const &) = delete;
   TAO_MMAP_Allocator (TAO_MMAP_Allocator &&) = delete;
-  void operator= (TAO_MMAP_Allocator &&) = delete;
+  TAO_MMAP_Allocator &operator= (TAO_MMAP_Allocator &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
