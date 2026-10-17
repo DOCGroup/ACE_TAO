@@ -45,12 +45,19 @@ class TAO_ZIOP_Export TAO_ZIOP_Stub_Factory : public TAO_Stub_Factory
 {
 public:
   // -- Ctor/Dtor --
+  TAO_ZIOP_Stub_Factory () = default;
   ~TAO_ZIOP_Stub_Factory () override;
 
   /// Creates a Stub Object.
   TAO_Stub *create_stub (const char *repository_id,
                          const TAO_MProfile &profiles,
                          TAO_ORB_Core *orb_core) override;
+
+private:
+  TAO_ZIOP_Stub_Factory (TAO_ZIOP_Stub_Factory const &) = delete;
+  TAO_ZIOP_Stub_Factory &operator= (TAO_ZIOP_Stub_Factory const &) = delete;
+  TAO_ZIOP_Stub_Factory (TAO_ZIOP_Stub_Factory &&) = delete;
+  TAO_ZIOP_Stub_Factory &operator= (TAO_ZIOP_Stub_Factory &&) = delete;
 };
 
 

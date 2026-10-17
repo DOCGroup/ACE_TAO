@@ -63,6 +63,11 @@ public:
   static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
 private:
+  TAO_ZIOP_Loader (TAO_ZIOP_Loader const &) = delete;
+  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader const &) = delete;
+  TAO_ZIOP_Loader (TAO_ZIOP_Loader &&) = delete;
+  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader &&) = delete;
+
   /// Set to true after init is called.
   bool initialized_;
 

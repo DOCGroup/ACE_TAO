@@ -45,8 +45,8 @@ namespace TAO
 class TAO_ZIOP_Export TAO_ZIOP_Stub : public TAO_Stub
 {
 public:
-  TAO_ZIOP_Stub (const char *repository_id,
-                 const TAO_MProfile &profiles,
+  TAO_ZIOP_Stub (char const *repository_id,
+                 TAO_MProfile const &profiles,
                  TAO_ORB_Core *orb_core);
 
   ~TAO_ZIOP_Stub () override;
@@ -87,10 +87,10 @@ private:
   CORBA::Boolean are_policies_parsed_;
 
 private:
-  TAO_ZIOP_Stub (const TAO_ZIOP_Stub &) = delete;
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;
   TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
-  TAO_ZIOP_Stub &operator = (const TAO_ZIOP_Stub &) = delete;
-  TAO_ZIOP_Stub &operator = (TAO_ZIOP_Stub &&) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub const &) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
