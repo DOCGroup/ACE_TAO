@@ -59,6 +59,11 @@ namespace TAO
     Invocation_Status handle_user_exception (TAO_InputCDR &cdr) override;
 
   private:
+    DII_Invocation (DII_Invocation const &) = delete;
+    DII_Invocation &operator= (DII_Invocation const &) = delete;
+    DII_Invocation (DII_Invocation &&) = delete;
+    DII_Invocation &operator= (DII_Invocation &&) = delete;
+
     CORBA::ExceptionList *excp_list_;
 
     /// Back pointer to the DII request that created us.
@@ -80,6 +85,12 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS ==1
     virtual Dynamic::ParameterList *arguments ();
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
+
+  private:
+    DII_Deferred_Invocation (DII_Deferred_Invocation const &) = delete;
+    DII_Deferred_Invocation &operator= (DII_Deferred_Invocation const &) = delete;
+    DII_Deferred_Invocation (DII_Deferred_Invocation &&) = delete;
+    DII_Deferred_Invocation &operator= (DII_Deferred_Invocation &&) = delete;
   };
 }
 

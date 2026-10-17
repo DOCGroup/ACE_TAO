@@ -117,8 +117,10 @@ namespace TAO
     TAO::Exception_Data *ex_data_;
   private:
     DII_Invocation_Adapter () = delete;
-    DII_Invocation_Adapter (DII_Invocation_Adapter const&) = delete;
-    DII_Invocation_Adapter & operator= (DII_Invocation_Adapter const&) = delete;
+    DII_Invocation_Adapter (DII_Invocation_Adapter const &) = delete;
+    DII_Invocation_Adapter &operator= (DII_Invocation_Adapter const &) = delete;
+    DII_Invocation_Adapter (DII_Invocation_Adapter &&) = delete;
+    DII_Invocation_Adapter &operator= (DII_Invocation_Adapter &&) = delete;
   };
 
   /**
@@ -159,6 +161,11 @@ namespace TAO
         Collocation_Strategy strat) override;
 
   private:
+    DII_Deferred_Invocation_Adapter (DII_Deferred_Invocation_Adapter const &) = delete;
+    DII_Deferred_Invocation_Adapter &operator= (DII_Deferred_Invocation_Adapter const &) = delete;
+    DII_Deferred_Invocation_Adapter (DII_Deferred_Invocation_Adapter &&) = delete;
+    DII_Deferred_Invocation_Adapter &operator= (DII_Deferred_Invocation_Adapter &&) = delete;
+
     CORBA::Request *request_;
 
     /// Reply dispatcher for the current Invocation.
@@ -194,6 +201,12 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Collocation_Strategy strat) override;
+
+  private:
+    DII_Oneway_Invocation_Adapter (DII_Oneway_Invocation_Adapter const &) = delete;
+    DII_Oneway_Invocation_Adapter &operator= (DII_Oneway_Invocation_Adapter const &) = delete;
+    DII_Oneway_Invocation_Adapter (DII_Oneway_Invocation_Adapter &&) = delete;
+    DII_Oneway_Invocation_Adapter &operator= (DII_Oneway_Invocation_Adapter &&) = delete;
   };
 } // End namespace TAO
 

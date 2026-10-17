@@ -168,8 +168,10 @@ namespace CORBA
     using _out_type = CORBA::ContextList_out;
 
   private:
-    ContextList (ContextList const&) = delete;
-    ContextList &operator= (ContextList const&) = delete;
+    ContextList (ContextList const &) = delete;
+    ContextList &operator= (ContextList const &) = delete;
+    ContextList (ContextList &&) = delete;
+    ContextList &operator= (ContextList &&) = delete;
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_;
