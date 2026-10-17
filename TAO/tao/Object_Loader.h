@@ -48,7 +48,7 @@ class TAO_Export TAO_Object_Loader : public ACE_Service_Object
 {
 public:
   /// The destructor
-  virtual ~TAO_Object_Loader ();
+  ~TAO_Object_Loader () override;
 
   /**
    * Create and activate a new object into the orb.
@@ -57,7 +57,7 @@ public:
    */
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR* argv []) = 0;
+                                           ACE_TCHAR *argv []) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
