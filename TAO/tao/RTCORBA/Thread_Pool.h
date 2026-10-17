@@ -72,7 +72,7 @@ public:
   TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
   /// Method executed when a thread is spawned.
-  int svc ();
+  int svc () override;
 
   /// Accessor to the lane to which this thread belongs to.
   TAO_Thread_Lane &lane () const;
@@ -87,6 +87,12 @@ protected:
 
   /// Lane to which this thread belongs to.
   TAO_Thread_Lane &lane_;
+
+private:
+  TAO_Thread_Pool_Threads (TAO_Thread_Pool_Threads const &) = delete;
+  TAO_Thread_Pool_Threads &operator= (TAO_Thread_Pool_Threads const &) = delete;
+  TAO_Thread_Pool_Threads (TAO_Thread_Pool_Threads &&) = delete;
+  TAO_Thread_Pool_Threads &operator= (TAO_Thread_Pool_Threads &&) = delete;
 };
 
 /**
@@ -106,6 +112,14 @@ public:
 protected:
   /// Do the real work
   int run (TAO_ORB_Core &orb_core) override;
+
+private:
+  TAO_Dynamic_Thread_Pool_Threads (TAO_Dynamic_Thread_Pool_Threads const &) = delete;
+  TAO_Dynamic_Thread_Pool_Threads &operator= (
+    TAO_Dynamic_Thread_Pool_Threads const &) = delete;
+  TAO_Dynamic_Thread_Pool_Threads (TAO_Dynamic_Thread_Pool_Threads &&) = delete;
+  TAO_Dynamic_Thread_Pool_Threads &operator= (
+    TAO_Dynamic_Thread_Pool_Threads &&) = delete;
 };
 
 class TAO_Thread_Pool;
