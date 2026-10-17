@@ -25,11 +25,11 @@ TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core * orb_core)
 CORBA::Policy_ptr
 TAO_EndpointPolicy_Factory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value)
+    CORBA::Any const& value)
 {
   if (type == EndpointPolicy::ENDPOINT_POLICY_TYPE)
     {
-      const EndpointPolicy::EndpointList* endpoint_list = nullptr;
+      EndpointPolicy::EndpointList const* endpoint_list = nullptr;
       if (!(value >>= endpoint_list))
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
@@ -71,7 +71,7 @@ TAO_EndpointPolicy_Factory::create_policy (
             dynamic_cast <TAO_Endpoint_Value_Impl const *> (
               (*endpoint_list)[idx].in ());
 
-          if (!evi)
+          if (evi == nullptr)
             continue;
 
           for (TAO_Acceptor** acceptor = acceptors_begin;

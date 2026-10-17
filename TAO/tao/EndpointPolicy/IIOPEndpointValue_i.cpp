@@ -15,19 +15,19 @@ IIOPEndpointValue_i::IIOPEndpointValue_i ()
 {
 }
 
-IIOPEndpointValue_i::IIOPEndpointValue_i (const char *host, CORBA::UShort port)
+IIOPEndpointValue_i::IIOPEndpointValue_i (char const* host, CORBA::UShort port)
   :host_(host),
    port_(port)
 {
-  if (this->addr_.set(port, host) != 0 || host == 0 || host[0] == 0)
+  if (this->addr_.set(port, host) != 0 || host == nullptr || host[0] == 0)
     this->addr_.set_type (-1);
 }
 
 CORBA::Boolean
-IIOPEndpointValue_i::is_equivalent (const TAO_Endpoint * endpoint) const
+IIOPEndpointValue_i::is_equivalent (TAO_Endpoint const* endpoint) const
 {
-  const TAO_IIOP_Endpoint *iep =
-    dynamic_cast<const TAO_IIOP_Endpoint *>(endpoint);
+  TAO_IIOP_Endpoint const* iep =
+    dynamic_cast<TAO_IIOP_Endpoint const*> (endpoint);
   if (iep == nullptr)
     return false;
   return this->addr_.get_type() != -1 ? this->addr_ == iep->object_addr() :
@@ -36,7 +36,7 @@ IIOPEndpointValue_i::is_equivalent (const TAO_Endpoint * endpoint) const
 
 CORBA::Boolean
 IIOPEndpointValue_i::is_equivalent_i (CORBA::UShort port,
-                                      const char *host) const
+                                      char const* host) const
 {
   bool is_eq = this->port_ == port;
   if (is_eq)
@@ -90,7 +90,7 @@ IIOPEndpointValue_i::host ()
 }
 
 void
-IIOPEndpointValue_i::host (const char *h)
+IIOPEndpointValue_i::host (char const* h)
 {
   this->host_ = h;
   if (this->addr_.set(this->port_, this->host_.in ()) != 0)

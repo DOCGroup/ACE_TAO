@@ -21,7 +21,7 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
         {
           EndpointPolicy::Policy_var cur_policy = EndpointPolicy::Policy::_narrow (policies[i]);
           if (CORBA::is_nil (cur_policy.in ()))
-            return 0;
+            return nullptr;
 
           EndpointPolicy::EndpointList_var cur_endpoints = cur_policy->value ();
           CORBA::ULong cur_num_endpoints = cur_endpoints->length ();
@@ -39,12 +39,12 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
   if (endpoints.length () > 0)
     ACE_NEW_RETURN (filter,
                     TAO_Endpoint_Acceptor_Filter (endpoints),
-                    0);
+                    nullptr);
   else
     // no policy was in force, just return a default filter
     ACE_NEW_RETURN (filter,
                     TAO_Default_Acceptor_Filter (),
-                    0);
+                    nullptr);
 
   return filter;
 }

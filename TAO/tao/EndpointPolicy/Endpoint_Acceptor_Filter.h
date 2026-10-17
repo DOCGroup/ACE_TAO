@@ -44,15 +44,15 @@ class TAO_EndpointPolicy_Export TAO_Endpoint_Acceptor_Filter
   : public TAO_Default_Acceptor_Filter
 {
 public:
-  TAO_Endpoint_Acceptor_Filter (const EndpointPolicy::EndpointList & eps);
+  TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const& eps);
 
   /// Populate @a mprofile with endpoints match the POAManager endpoint
   /// policy.
-  int fill_profile (const TAO::ObjectKey &object_key,
+  int fill_profile (TAO::ObjectKey const& object_key,
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
                     TAO_Acceptor **acceptors_end,
-                    CORBA::Short priority = TAO_INVALID_PRIORITY);
+                    CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
 private:
   // this is the list of endpoints as obtained from the policy value supplied

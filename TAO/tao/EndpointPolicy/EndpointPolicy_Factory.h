@@ -44,7 +44,7 @@ public:
   TAO_EndpointPolicy_Factory (TAO_ORB_Core * orb_core);
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any & value) override;
+                                   CORBA::Any const& value) override;
 private:
   TAO_ORB_Core * orb_core_;
 };

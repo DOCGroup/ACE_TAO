@@ -40,11 +40,11 @@ class TAO_Acceptor;
 class TAO_EndpointPolicy_Export  TAO_Endpoint_Value_Impl
 {
 public:
-  virtual ~TAO_Endpoint_Value_Impl();
+  virtual ~TAO_Endpoint_Value_Impl ();
 
   /// This method is used to compare a candidate IOR endpoint with the
   /// endpoint defined by this policy value.
-  virtual CORBA::Boolean is_equivalent (const TAO_Endpoint * ) const = 0;
+  virtual CORBA::Boolean is_equivalent (TAO_Endpoint const*) const = 0;
 
   /// This method is used by the framework to validate that an
   /// acceptor is available to produce an endpoint required by at

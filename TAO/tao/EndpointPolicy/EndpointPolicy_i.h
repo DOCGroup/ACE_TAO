@@ -45,10 +45,10 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_i
 {
 public:
   /// Constructor.
-  TAO_EndpointPolicy_i (const EndpointPolicy::EndpointList &value);
+  TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const& value);
 
   /// Copy constructor.
-  TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs);
+  TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const& rhs);
 
   ~TAO_EndpointPolicy_i () override = default;
 

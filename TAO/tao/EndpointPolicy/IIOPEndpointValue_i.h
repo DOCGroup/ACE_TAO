@@ -64,14 +64,14 @@ public:
 
   /// Value initializing constructor, this is typically for creation
   /// of one-off values.
-  IIOPEndpointValue_i (const char *host, CORBA::UShort port);
+  IIOPEndpointValue_i (char const* host, CORBA::UShort port);
 
   ~IIOPEndpointValue_i () override = default;
 
   /// The is_equivalent test is used by the endpoint policy framework
   /// for testing if a target endpoint is the same as the endpoint
   /// defined by this value.
-  CORBA::Boolean is_equivalent (const TAO_Endpoint * endpoint) const override;
+  CORBA::Boolean is_equivalent (TAO_Endpoint const* endpoint) const override;
 
   /// The validate_acceptor method is used during EndpointPolicy
   /// creation to ensure there is an acceptor which provides this
@@ -84,7 +84,7 @@ public:
 
   /// Host attribute get/set operators.
   char * host () override;
-  void host (const char * h) override;
+  void host (char const* h) override;
 
   /// Port attribute get/set operators.
   CORBA::UShort port () override;
@@ -94,7 +94,7 @@ public:
   CORBA::ULong protocol_tag () override;
 
 private:
-  CORBA::Boolean is_equivalent_i (CORBA::UShort port, const char *host) const;
+  CORBA::Boolean is_equivalent_i (CORBA::UShort port, char const* host) const;
 
   CORBA::String_var host_;
   CORBA::UShort     port_;
