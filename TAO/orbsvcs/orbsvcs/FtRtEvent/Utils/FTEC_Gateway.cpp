@@ -17,11 +17,10 @@ class FTEC_Gateway_ConsumerAdmin
   : public POA_RtecEventChannelAdmin::ConsumerAdmin
 {
 public:
-  FTEC_Gateway_ConsumerAdmin(FTEC_Gateway_Impl* impl);
-  ~FTEC_Gateway_ConsumerAdmin();
+  FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_ConsumerAdmin () override;
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
-  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier ();
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -29,11 +28,10 @@ class FTEC_Gateway_SupplierAdmin
   : public POA_RtecEventChannelAdmin::SupplierAdmin
 {
 public:
-  FTEC_Gateway_SupplierAdmin(FTEC_Gateway_Impl* impl);
-  ~FTEC_Gateway_SupplierAdmin();
+  FTEC_Gateway_SupplierAdmin (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_SupplierAdmin () override;
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
-  virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer ();
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -41,15 +39,15 @@ class FTEC_Gateway_ProxyPushSupplier
   : public POA_RtecEventChannelAdmin::ProxyPushSupplier
 {
 public:
-  FTEC_Gateway_ProxyPushSupplier(FTEC_Gateway_Impl* impl);
-  ~FTEC_Gateway_ProxyPushSupplier();
+  FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_ProxyPushSupplier () override;
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
+  void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier ();
-  virtual void suspend_connection ();
-  virtual void resume_connection ();
+                RtecEventChannelAdmin::ConsumerQOS const &qos) override;
+  void disconnect_push_supplier () override;
+  void suspend_connection () override;
+  void resume_connection () override;
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -57,15 +55,15 @@ class FTEC_Gateway_ProxyPushConsumer
   : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 {
 public:
-  FTEC_Gateway_ProxyPushConsumer(FTEC_Gateway_Impl* impl);
-  ~FTEC_Gateway_ProxyPushConsumer();
+  FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_Impl *impl);
+  ~FTEC_Gateway_ProxyPushConsumer () override;
 
-  virtual void push (const RtecEventComm::EventSet & data);
+  void push (RtecEventComm::EventSet const &data) override;
       // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
+  void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos);
-  virtual void disconnect_push_consumer ();
+                RtecEventChannelAdmin::SupplierQOS const &qos) override;
+  void disconnect_push_consumer () override;
 
   FTEC_Gateway_Impl* impl_;
 };
@@ -73,11 +71,11 @@ public:
 class PushConsumerHandler : public POA_FtRtecEventComm::AMI_PushConsumerHandler
 {
 public:
-  PushConsumerHandler();
-  ~PushConsumerHandler();
-  virtual void push ();
+  PushConsumerHandler ();
+  ~PushConsumerHandler () override;
+  void push () override;
 
-  virtual void push_excep (::Messaging::ExceptionHolder * excep_holder);
+  void push_excep (::Messaging::ExceptionHolder *excep_holder) override;
 };
 
 /**

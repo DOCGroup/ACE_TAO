@@ -38,7 +38,7 @@ inline RefHolder<T> ByRef(T& t)
 
 class ScopeGuardImplBase
 {
-  ScopeGuardImplBase& operator =(const ScopeGuardImplBase&);
+  ScopeGuardImplBase &operator= (ScopeGuardImplBase const &) = delete;
 protected:
   ~ScopeGuardImplBase()
   {
@@ -72,7 +72,7 @@ public:
   }
 };
 
-typedef const ScopeGuardImplBase& ScopeGuard;
+using ScopeGuard = ScopeGuardImplBase const &;
 
 template <typename F>
 class ScopeGuardImpl0 : public ScopeGuardImplBase
