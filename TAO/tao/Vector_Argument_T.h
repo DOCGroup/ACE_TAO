@@ -37,9 +37,9 @@ namespace TAO
   public:
     In_Vector_Argument_T (S const & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S const & arg () const;
 
@@ -61,12 +61,12 @@ namespace TAO
   {
   public:
     In_Vector_Clonable_Argument_T (S const & x);
-    virtual ~In_Vector_Clonable_Argument_T ();
+    ~In_Vector_Clonable_Argument_T () override;
 
-    virtual Argument* clone ();
+    Argument* clone () override;
 
   private:
-    bool is_clone_;
+    bool is_clone_ {};
   };
 
   /**
@@ -83,10 +83,10 @@ namespace TAO
   public:
     Inout_Vector_Argument_T (S & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -108,9 +108,9 @@ namespace TAO
   public:
     Out_Vector_Argument_T (S & x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -131,9 +131,9 @@ namespace TAO
   public:
     Ret_Vector_Argument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -141,7 +141,7 @@ namespace TAO
     S retn ();
 
   protected:
-    S x_;
+    S x_ {};
   };
 
   /**
