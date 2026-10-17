@@ -78,7 +78,7 @@ public:
   bool add_request(TAO::CSD::TP_Request* request);
 
   /// Activate the worker threads
-  int open(void* args = 0) override;
+  int open (void *args = nullptr) override;
 
   /// The "mainline" executed by each worker thread.
   int svc() override;
@@ -117,6 +117,11 @@ public:
   void cancel_servant (PortableServer::Servant servant);
 
 private:
+  TAO_DTP_Task (TAO_DTP_Task const &) = delete;
+  TAO_DTP_Task &operator= (TAO_DTP_Task const &) = delete;
+  TAO_DTP_Task (TAO_DTP_Task &&) = delete;
+  TAO_DTP_Task &operator= (TAO_DTP_Task &&) = delete;
+
   /// get the next available request. Return true if one available, nonblocking
   bool request_ready (TAO::CSD::TP_Dispatchable_Visitor &v,
                       TAO::CSD::TP_Request_Handle &r);

@@ -17,9 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/)
-{
-}
+TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/) = default;
 
 void
 TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
@@ -83,7 +81,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   ACE_Service_Gestalt *gestalt = tao_info->orb_core ()->configuration();
 
-  const char *dtp_name =
+  char const *dtp_name =
     tao_info->orb_core ()->orb_params ()->dynamic_thread_pool_config_name ();
 
   if (dtp_name != nullptr && dtp_name[0] != 0)

@@ -53,6 +53,14 @@ class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
 {
  public:
   TAO_DTP_Config_Registry_Installer ();
+
+ private:
+  TAO_DTP_Config_Registry_Installer (TAO_DTP_Config_Registry_Installer const &) = delete;
+  TAO_DTP_Config_Registry_Installer &operator= (
+    TAO_DTP_Config_Registry_Installer const &) = delete;
+  TAO_DTP_Config_Registry_Installer (TAO_DTP_Config_Registry_Installer &&) = delete;
+  TAO_DTP_Config_Registry_Installer &operator= (
+    TAO_DTP_Config_Registry_Installer &&) = delete;
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry : public ACE_Service_Object
@@ -70,6 +78,11 @@ public:
   int rebind (const ACE_CString& name, TAO_DTP_Definition &entry);
 
  private:
+  TAO_DTP_Config_Registry (TAO_DTP_Config_Registry const &) = delete;
+  TAO_DTP_Config_Registry &operator= (TAO_DTP_Config_Registry const &) = delete;
+  TAO_DTP_Config_Registry (TAO_DTP_Config_Registry &&) = delete;
+  TAO_DTP_Config_Registry &operator= (TAO_DTP_Config_Registry &&) = delete;
+
   using Registry =
     ACE_RB_Tree<ACE_CString, TAO_DTP_Definition, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
   Registry registry_;
@@ -96,6 +109,11 @@ public:
   int init (int argc, ACE_TCHAR* []) override;
 
 private:
+  TAO_DTP_Config (TAO_DTP_Config const &) = delete;
+  TAO_DTP_Config &operator= (TAO_DTP_Config const &) = delete;
+  TAO_DTP_Config (TAO_DTP_Config &&) = delete;
+  TAO_DTP_Config &operator= (TAO_DTP_Config &&) = delete;
+
   int parse_long (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, long &value);
   int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, bool &value);
   int parse_string (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, ACE_TCHAR *&value);

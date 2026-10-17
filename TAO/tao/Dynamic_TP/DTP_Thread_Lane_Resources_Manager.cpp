@@ -15,8 +15,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager
   (TAO_ORB_Core &orb_core)
     : TAO_Thread_Lane_Resources_Manager (orb_core),
-      default_lane_resources_ (0),
-      tp_manager_ (0)
+      default_lane_resources_ (nullptr),
+      tp_manager_ (nullptr)
 {
   // Create the default resources.
   ACE_NEW (this->default_lane_resources_,

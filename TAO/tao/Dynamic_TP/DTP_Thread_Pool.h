@@ -56,6 +56,12 @@ public:
   bool no_leaders_available () override;
 
 private:
+  TAO_DTP_New_Leader_Generator (TAO_DTP_New_Leader_Generator const &) = delete;
+  TAO_DTP_New_Leader_Generator &operator= (
+    TAO_DTP_New_Leader_Generator const &) = delete;
+  TAO_DTP_New_Leader_Generator (TAO_DTP_New_Leader_Generator &&) = delete;
+  TAO_DTP_New_Leader_Generator &operator= (TAO_DTP_New_Leader_Generator &&) = delete;
+
   /// Pool associated with this leader generator.
   TAO_DTP_Thread_Pool &pool_;
 };
@@ -86,6 +92,13 @@ protected:
 
   /// Pool to which this thread belongs to.
   TAO_DTP_Thread_Pool &pool_;
+
+ private:
+  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool_Threads const &) = delete;
+  TAO_DTP_Thread_Pool_Threads &operator= (
+    TAO_DTP_Thread_Pool_Threads const &) = delete;
+  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool_Threads &&) = delete;
+  TAO_DTP_Thread_Pool_Threads &operator= (TAO_DTP_Thread_Pool_Threads &&) = delete;
 };
 
 /**
@@ -107,6 +120,13 @@ public:
 protected:
   /// Pool to which this thread belongs to.
   TAO_DTP_Thread_Pool &pool_;
+
+ private:
+  TAO_DTP_Termination_Waiter (TAO_DTP_Termination_Waiter const &) = delete;
+  TAO_DTP_Termination_Waiter &operator= (
+    TAO_DTP_Termination_Waiter const &) = delete;
+  TAO_DTP_Termination_Waiter (TAO_DTP_Termination_Waiter &&) = delete;
+  TAO_DTP_Termination_Waiter &operator= (TAO_DTP_Termination_Waiter &&) = delete;
 };
 
 /**
@@ -172,6 +192,11 @@ public:
   // @}
 
 private:
+  TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool const &) = delete;
+  TAO_DTP_Thread_Pool &operator= (TAO_DTP_Thread_Pool const &) = delete;
+  TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool &&) = delete;
+  TAO_DTP_Thread_Pool &operator= (TAO_DTP_Thread_Pool &&) = delete;
+
   int create_threads_i (size_t count);
 
   TAO_DTP_Thread_Pool_Manager &manager_;
@@ -238,6 +263,12 @@ public:
   // @}
 
 private:
+  TAO_DTP_Thread_Pool_Manager (TAO_DTP_Thread_Pool_Manager const &) = delete;
+  TAO_DTP_Thread_Pool_Manager &operator= (
+    TAO_DTP_Thread_Pool_Manager const &) = delete;
+  TAO_DTP_Thread_Pool_Manager (TAO_DTP_Thread_Pool_Manager &&) = delete;
+  TAO_DTP_Thread_Pool_Manager &operator= (TAO_DTP_Thread_Pool_Manager &&) = delete;
+
   /// @name Helpers
   // @{
   CORBA::ULong
