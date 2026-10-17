@@ -31,7 +31,7 @@ namespace TAO
   {
     void
     Active_Policy_Strategies::update (Cached_Policies &policies,
-                                      ::TAO_Root_POA *poa)
+                                      TAO_Root_POA *poa)
     {
       this->create (policies.thread());
       this->create (policies.id_assignment());
@@ -213,8 +213,8 @@ namespace TAO
 
     void
     Active_Policy_Strategies::create (
-        ::PortableServer::RequestProcessingPolicyValue value,
-        ::PortableServer::ServantRetentionPolicyValue srvalue)
+      ::PortableServer::RequestProcessingPolicyValue value,
+      ::PortableServer::ServantRetentionPolicyValue srvalue)
     {
       switch (value)
       {

@@ -53,6 +53,10 @@ namespace TAO
     {
     public:
       Active_Policy_Strategies () = default;
+      Active_Policy_Strategies (Active_Policy_Strategies const &) = delete;
+      Active_Policy_Strategies &operator= (Active_Policy_Strategies const &) = delete;
+      Active_Policy_Strategies (Active_Policy_Strategies &&) = delete;
+      Active_Policy_Strategies &operator= (Active_Policy_Strategies &&) = delete;
 
       void update (Cached_Policies &policies, TAO_Root_POA *poa);
 
@@ -79,7 +83,9 @@ namespace TAO
       void create (::PortableServer::ServantRetentionPolicyValue value);
       void create (::PortableServer::LifespanPolicyValue value);
       void create (::PortableServer::ImplicitActivationPolicyValue value);
-      void create (::PortableServer::RequestProcessingPolicyValue value, ::PortableServer::ServantRetentionPolicyValue srvalue);
+      void create (
+        ::PortableServer::RequestProcessingPolicyValue value,
+        ::PortableServer::ServantRetentionPolicyValue srvalue);
 
     private:
       std::unique_ptr<ThreadStrategy> thread_strategy_ {};
@@ -99,8 +105,14 @@ namespace TAO
     {
     public:
       Active_Policy_Strategies_Cleanup_Guard () = delete;
-      Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
+      explicit Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
       ~Active_Policy_Strategies_Cleanup_Guard ();
+      Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies_Cleanup_Guard const &) = delete;
+      Active_Policy_Strategies_Cleanup_Guard &operator= (
+        Active_Policy_Strategies_Cleanup_Guard const &) = delete;
+      Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies_Cleanup_Guard &&) = delete;
+      Active_Policy_Strategies_Cleanup_Guard &operator= (
+        Active_Policy_Strategies_Cleanup_Guard &&) = delete;
       Active_Policy_Strategies *_retn ();
 
     private:
