@@ -12,12 +12,12 @@ namespace TAO
 {
   CORBA::Boolean
   Collocated_Object_Proxy_Broker::_is_a (CORBA::Object_ptr target,
-                                         const char *type_id)
+                                         char const *type_id)
   {
     TAO_Stub *stub = target->_stubobj ();
 
     // Which collocation strategy should we use?
-    if (stub != 0 &&
+    if (stub != nullptr &&
         stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
           == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
       {
@@ -36,7 +36,7 @@ namespace TAO
       }
 
     // Direct collocation strategy is used.
-    if (target->_servant () != 0)
+    if (target->_servant () != nullptr)
       {
         return target->_servant ()->_is_a (type_id);
       }
@@ -55,7 +55,7 @@ namespace TAO
     try
       {
         // Which collocation strategy should we use?
-        if (stub != 0 &&
+        if (stub != nullptr &&
             stub->servant_orb_var ()->orb_core ()
               ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
@@ -72,12 +72,12 @@ namespace TAO
               servant_upcall.servant ()->_repository_id ();
           }
         // Direct collocation strategy is used.
-        else if (target->_servant () != 0)
+        else if (target->_servant () != nullptr)
           {
             _tao_retval = target->_servant ()->_repository_id ();
           }
       }
-    catch (const ::CORBA::OBJECT_NOT_EXIST&)
+    catch (::CORBA::OBJECT_NOT_EXIST const &)
       {
         // Ignore this exception.
       }
@@ -93,7 +93,7 @@ namespace TAO
     TAO_Stub *stub = target->_stubobj ();
 
     // Which collocation strategy should we use?
-    if (stub != 0 &&
+    if (stub != nullptr &&
         stub->servant_orb_var ()->orb_core ()
         ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
       {
@@ -112,7 +112,7 @@ namespace TAO
         _tao_retval = servant_upcall.servant ()->_non_existent ();
       }
     // Direct collocation strategy is used.
-    else if (target->_servant () != 0)
+    else if (target->_servant () != nullptr)
       {
         _tao_retval = target->_servant ()->_non_existent ();
       }
@@ -131,7 +131,7 @@ namespace TAO
     try
       {
         // Which collocation strategy should we use?
-        if (stub != 0 &&
+        if (stub != nullptr &&
             stub->servant_orb_var ()->orb_core ()
               ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
@@ -147,12 +147,12 @@ namespace TAO
             _tao_retval = servant_upcall.servant ()->_get_component ();
           }
         // Direct collocation strategy is used.
-        else if (target->_servant () != 0)
+        else if (target->_servant () != nullptr)
           {
             _tao_retval = target->_servant ()->_get_component ();
           }
       }
-    catch (const ::CORBA::OBJECT_NOT_EXIST&)
+    catch (::CORBA::OBJECT_NOT_EXIST const &)
       {
         // Ignore this exception.
       }
@@ -170,7 +170,7 @@ namespace TAO
     try
       {
         // Which collocation strategy should we use?
-        if (stub != 0 &&
+        if (stub != nullptr &&
             stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
               == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
@@ -190,12 +190,12 @@ namespace TAO
               servant_upcall.servant ()->_get_interface ();
           }
         // Direct collocation strategy is used.
-        else if (target->_servant () != 0)
+        else if (target->_servant () != nullptr)
           {
             _tao_retval = target->_servant ()->_get_interface ();
           }
       }
-    catch (const ::CORBA::OBJECT_NOT_EXIST&)
+    catch (::CORBA::OBJECT_NOT_EXIST const &)
       {
         // Ignore this exception.
       }

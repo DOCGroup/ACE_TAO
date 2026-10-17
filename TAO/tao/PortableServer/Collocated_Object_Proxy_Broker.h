@@ -43,7 +43,7 @@ namespace TAO
     /// Please see the documentation in Object_Proxy_Broker.h for
     /// details.
     CORBA::Boolean _is_a (CORBA::Object_ptr target,
-                          const char *logical_type_id) override;
+                          char const *logical_type_id) override;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
