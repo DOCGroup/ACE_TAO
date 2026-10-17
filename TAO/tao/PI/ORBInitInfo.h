@@ -218,8 +218,10 @@ protected:
   void check_validity ();
 
 private:
-  TAO_ORBInitInfo (const TAO_ORBInitInfo &) = delete;
-  void operator= (const TAO_ORBInitInfo &) = delete;
+  TAO_ORBInitInfo (TAO_ORBInitInfo const &) = delete;
+  void operator= (TAO_ORBInitInfo const &) = delete;
+  TAO_ORBInitInfo (TAO_ORBInitInfo &&) = delete;
+  void operator= (TAO_ORBInitInfo &&) = delete;
 
 private:
   /// Reference to the ORB Core.

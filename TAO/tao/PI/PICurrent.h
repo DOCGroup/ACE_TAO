@@ -101,8 +101,10 @@ namespace TAO
     ~PICurrent () override = default;
 
   private:
-    PICurrent (const PICurrent &) = delete;
-    void operator= (const PICurrent &) = delete;
+    PICurrent (PICurrent const &) = delete;
+    void operator= (PICurrent const &) = delete;
+    PICurrent (PICurrent &&) = delete;
+    void operator= (PICurrent &&) = delete;
 
   private:
     /// Reference to the orb core.
