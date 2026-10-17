@@ -78,6 +78,12 @@ public:
 protected:
   /// Destructor
   ~TAO_IOR_Manipulation_impl () override;
+
+private:
+  TAO_IOR_Manipulation_impl (TAO_IOR_Manipulation_impl const &) = delete;
+  TAO_IOR_Manipulation_impl &operator= (TAO_IOR_Manipulation_impl const &) = delete;
+  TAO_IOR_Manipulation_impl (TAO_IOR_Manipulation_impl &&) = delete;
+  TAO_IOR_Manipulation_impl &operator= (TAO_IOR_Manipulation_impl &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

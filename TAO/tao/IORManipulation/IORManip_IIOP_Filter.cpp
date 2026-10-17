@@ -156,7 +156,7 @@ TAO_IORManip_IIOP_Filter::fill_profile_info (
                              TAO_Profile* profile,
                              TAO_IORManip_IIOP_Filter::Profile_Info& pinfo)
 {
-  static const int host_length = 384;
+  static constexpr int host_length = 384;
   int status = 0;
   if (profile != nullptr)
     {
@@ -225,7 +225,7 @@ TAO_IIOP_Profile*
 TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile* profile)
 {
   ACE_INET_Addr addr;
-  TAO_IIOP_Profile* new_profile = 0;
+  TAO_IIOP_Profile* new_profile = nullptr;
   ACE_NEW_THROW_EX (new_profile,
                    TAO_IIOP_Profile (addr,
                                      profile->object_key (),

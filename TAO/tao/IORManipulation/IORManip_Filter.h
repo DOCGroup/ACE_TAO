@@ -55,6 +55,11 @@ protected:
                                TAO_Profile* guideline = nullptr) = 0;
 
 private:
+  TAO_IORManip_Filter (TAO_IORManip_Filter const &) = delete;
+  TAO_IORManip_Filter &operator= (TAO_IORManip_Filter const &) = delete;
+  TAO_IORManip_Filter (TAO_IORManip_Filter &&) = delete;
+  TAO_IORManip_Filter &operator= (TAO_IORManip_Filter &&) = delete;
+
   /// The sanitize_profiles() methods call this to do the work.
   CORBA::Object_ptr sanitize (CORBA::Object_ptr object,
                               TAO_Profile* profile);

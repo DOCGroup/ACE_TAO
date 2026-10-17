@@ -37,6 +37,12 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
+
+private:
+  TAO_IORManip_Loader (TAO_IORManip_Loader const &) = delete;
+  TAO_IORManip_Loader &operator= (TAO_IORManip_Loader const &) = delete;
+  TAO_IORManip_Loader (TAO_IORManip_Loader &&) = delete;
+  TAO_IORManip_Loader &operator= (TAO_IORManip_Loader &&) = delete;
 };
 
 static int

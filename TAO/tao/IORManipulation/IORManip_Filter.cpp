@@ -6,9 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORManip_Filter::TAO_IORManip_Filter ()
-{
-}
+TAO_IORManip_Filter::TAO_IORManip_Filter () = default;
 
 
 TAO_IORManip_Filter::~TAO_IORManip_Filter () = default;
