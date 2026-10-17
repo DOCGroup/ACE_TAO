@@ -17,7 +17,7 @@ TAO_Async_IOR_Table_Impl::~TAO_Async_IOR_Table_Impl () = default;
 
 void
 TAO_Async_IOR_Table_Impl::async_find (::IORTable::Locate_ResponseHandler handler,
-                                      const char *object_key)
+                                      char const *object_key)
 {
   // We don't want the lock held during locate, so make it go out
   // of scope before then.
@@ -44,7 +44,7 @@ TAO_Async_IOR_Table_Impl::async_find (::IORTable::Locate_ResponseHandler handler
                 ior = this->locator_->locate (object_key);
                 rh->forward_ior (ior.c_str(), false);
               }
-            catch (const CORBA::Exception &ex)
+            catch (CORBA::Exception const &ex)
               {
                 rh->raise_excep (ex);
               }

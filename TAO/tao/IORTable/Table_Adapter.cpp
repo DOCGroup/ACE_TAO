@@ -86,7 +86,7 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
     return TAO_Adapter::DS_MISMATCHED_KEY;
 }
 
-const char *
+char const *
 TAO_Table_Adapter::name () const
 {
   return "IORTable";
@@ -100,7 +100,7 @@ TAO_Table_Adapter::root ()
 
 CORBA::Object_ptr
 TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
-                                             const TAO_MProfile &)
+                                             TAO_MProfile const &)
 {
   CORBA::Object_ptr result = CORBA::Object::_nil ();
 
@@ -124,8 +124,8 @@ CORBA::Long
 TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
 {
   // Get the effective profile set.
-  const TAO_MProfile &mp = stub->forward_profiles () ? *(stub->forward_profiles ())
-                                                     : stub->base_profiles ();
+  TAO_MProfile const &mp = stub->forward_profiles () ? *(stub->forward_profiles ())
+                                                       : stub->base_profiles ();
   TAO_PHandle j = 0;
   // We only look at the key from the 0th profile but we only really care about
   // corbaloc's here where all profiles share a single object key
@@ -138,7 +138,7 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
     {
       found = this->find_object (key, forward_to.out ());
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -177,7 +177,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
       CORBA::String_var ior = this->root_->find (object_key.in ());
       forward_to = this->orb_core_.orb ()->string_to_object (ior.in ());
     }
-  catch (const ::IORTable::NotFound&)
+  catch (::IORTable::NotFound const &)
     {
       return false;
     }

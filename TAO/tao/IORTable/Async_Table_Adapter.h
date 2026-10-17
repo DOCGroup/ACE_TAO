@@ -46,6 +46,12 @@ protected:
   /// Helper method to find an object bound in the table.
   void find_object (::IORTable::Locate_ResponseHandler rh,
                     TAO::ObjectKey &key);
+
+private:
+  TAO_Async_Table_Adapter (TAO_Async_Table_Adapter const &) = delete;
+  TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter const &) = delete;
+  TAO_Async_Table_Adapter (TAO_Async_Table_Adapter &&) = delete;
+  TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter &&) = delete;
 };
 
 // ****************************************************************

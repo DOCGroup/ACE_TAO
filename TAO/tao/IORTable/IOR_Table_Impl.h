@@ -54,7 +54,7 @@ public:
   virtual bool async_available () { return false; }
 
   /// Find the object, using the locator if it is not on the table.
-  char *find (const char *object_key);
+  char *find (char const *object_key);
 
   /**
    * @name The IORTable::Table methods
@@ -62,11 +62,11 @@ public:
    * Please check the IORTable.pidl file for details.
    */
   //@{
-  void bind (const char * object_key, const char * IOR) override;
+  void bind (char const *object_key, char const *IOR) override;
 
-  void rebind (const char * object_key, const char * IOR) override;
+  void rebind (char const *object_key, char const *IOR) override;
 
-  void unbind (const char * object_key) override;
+  void unbind (char const *object_key) override;
 
   void set_locator (IORTable::Locator_ptr the_locator) override;
   //@}
@@ -106,7 +106,7 @@ namespace TAO
 
     static TAO_IOR_Table_Impl_ptr nil ();
 
-    static ::CORBA::Boolean marshal (const TAO_IOR_Table_Impl_ptr p,
+    static ::CORBA::Boolean marshal (TAO_IOR_Table_Impl_ptr const p,
                                      TAO_OutputCDR &cdr);
   }
   ;

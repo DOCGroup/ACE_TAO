@@ -48,10 +48,10 @@ public:
                 TAO_ServerRequest &request,
                 CORBA::Object_out foward_to) override;
 
-  const char *name () const override;
+  char const *name () const override;
   CORBA::Object_ptr root () override;
   CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                              const TAO_MProfile &) override;
+                                              TAO_MProfile const &) override;
 
   CORBA::Long initialize_collocated_object (TAO_Stub *stub) override;
 

@@ -44,11 +44,16 @@ public:
   bool async_available () override { return true; }
 
   virtual void async_find (::IORTable::Locate_ResponseHandler rh,
-                           const char *object_key);
+                           char const *object_key);
 
   void set_locator (IORTable::Locator_ptr locator) override;
 
 private:
+  TAO_Async_IOR_Table_Impl (TAO_Async_IOR_Table_Impl const &) = delete;
+  TAO_Async_IOR_Table_Impl &operator= (TAO_Async_IOR_Table_Impl const &) = delete;
+  TAO_Async_IOR_Table_Impl (TAO_Async_IOR_Table_Impl &&) = delete;
+  TAO_Async_IOR_Table_Impl &operator= (TAO_Async_IOR_Table_Impl &&) = delete;
+
   /// The locator
   IORTable::AsyncLocator_var async_locator_;
 };

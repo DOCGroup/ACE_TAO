@@ -51,16 +51,16 @@ public:
   TAO_AMH_Locate_ResponseHandler_var ();
   TAO_AMH_Locate_ResponseHandler_var (TAO_AMH_Locate_ResponseHandler_ptr);
   TAO_AMH_Locate_ResponseHandler_var (
-      const TAO_AMH_Locate_ResponseHandler_var &);
+      TAO_AMH_Locate_ResponseHandler_var const &);
   ~TAO_AMH_Locate_ResponseHandler_var ();
 
   TAO_AMH_Locate_ResponseHandler_var &operator= (
       TAO_AMH_Locate_ResponseHandler_ptr);
   TAO_AMH_Locate_ResponseHandler_var &operator= (
-      const TAO_AMH_Locate_ResponseHandler_var &);
+      TAO_AMH_Locate_ResponseHandler_var const &);
   TAO_AMH_Locate_ResponseHandler_ptr operator-> () const;
 
-  operator const TAO_AMH_Locate_ResponseHandler_ptr &() const;
+  operator TAO_AMH_Locate_ResponseHandler_ptr const &() const;
   operator TAO_AMH_Locate_ResponseHandler_ptr &();
 
   TAO_AMH_Locate_ResponseHandler_ptr in () const;
@@ -102,11 +102,11 @@ public:
   using _var_type = TAO_AMH_Locate_ResponseHandler_var;
 
   TAO_AMH_Locate_ResponseHandler (TAO_ServerRequest &sr);
-  ~TAO_AMH_Locate_ResponseHandler ();
+  ~TAO_AMH_Locate_ResponseHandler () override;
 
-  virtual void raise_excep (const CORBA::Exception &ex);
+  virtual void raise_excep (CORBA::Exception const &ex);
 
-  virtual void forward_ior (const char *ior, CORBA::Boolean is_perm);
+  virtual void forward_ior (char const *ior, CORBA::Boolean is_perm);
 
   /// Returns a CORBA::Object_ptr for the target object.
   CORBA::Object_ptr _this ();
@@ -120,10 +120,10 @@ public:
 
 protected:
   /// Return 0.  Should never be used.
-  const char *_interface_repository_id () const override;
+  char const *_interface_repository_id () const override;
 
   /// Simply returns "this"
-  virtual void *_downcast (const char *repository_id);
+  virtual void *_downcast (char const *repository_id);
 
 private:
   TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler const &) = delete;
@@ -138,7 +138,7 @@ private:
 namespace IORTable
 {
   // satisfy the native type requirement for the asnyc locate interface
-  using Locate_ResponseHandler = const TAO_AMH_Locate_ResponseHandler_var &;
+  using Locate_ResponseHandler = TAO_AMH_Locate_ResponseHandler_var const &;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
