@@ -41,6 +41,12 @@ public:
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
+
+ private:
+  TAO_Monitor_Init (TAO_Monitor_Init const &) = delete;
+  TAO_Monitor_Init &operator= (TAO_Monitor_Init const &) = delete;
+  TAO_Monitor_Init (TAO_Monitor_Init &&) = delete;
+  TAO_Monitor_Init &operator= (TAO_Monitor_Init &&) = delete;
 };
 
 //#if defined (TAO_AS_STATIC_LIBS)

@@ -48,6 +48,11 @@ public:
       const ::Monitor::ConstraintStructList & constraint) override;
 
 private:
+  Monitor_Impl (Monitor_Impl const &) = delete;
+  Monitor_Impl &operator= (Monitor_Impl const &) = delete;
+  Monitor_Impl (Monitor_Impl &&) = delete;
+  Monitor_Impl &operator= (Monitor_Impl &&) = delete;
+
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;

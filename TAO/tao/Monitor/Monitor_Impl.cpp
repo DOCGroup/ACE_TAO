@@ -14,7 +14,7 @@ public:
   {
   }
 
-  virtual void execute (const char* /* command */)
+  void execute (char const* /* command */) override
   {
     try
       {
@@ -28,6 +28,11 @@ public:
   }
 
 private:
+  TAO_Control_Action (TAO_Control_Action const &) = delete;
+  TAO_Control_Action &operator= (TAO_Control_Action const &) = delete;
+  TAO_Control_Action (TAO_Control_Action &&) = delete;
+  TAO_Control_Action &operator= (TAO_Control_Action &&) = delete;
+
   ::Monitor::Subscriber_var sub_;
 };
 

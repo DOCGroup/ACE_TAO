@@ -6,9 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Monitor_Init::TAO_Monitor_Init ()
-{
-}
+TAO_Monitor_Init::TAO_Monitor_Init () = default;
 
 CORBA::Object_ptr
 TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
