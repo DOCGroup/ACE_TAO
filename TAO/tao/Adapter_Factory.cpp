@@ -4,8 +4,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Adapter_Factory::~TAO_Adapter_Factory ()
-{
-}
+TAO_Adapter_Factory::~TAO_Adapter_Factory () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

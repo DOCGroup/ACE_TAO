@@ -94,7 +94,7 @@ public:
 
   /// Return the name, i.e. the object id used to resolve it in the
   /// ORB.
-  virtual const char *name () const = 0;
+  virtual char const *name () const = 0;
 
   /**
    * Return the root of the Object Adapter.
@@ -105,7 +105,7 @@ public:
 
   /// Create a collocated object using the given profile and stub.
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                                      const TAO_MProfile &) = 0;
+                                                      TAO_MProfile const &) = 0;
 
   /// Initialize a collocated object using the given stub
   /// pointer for lazily evaluated object references.
