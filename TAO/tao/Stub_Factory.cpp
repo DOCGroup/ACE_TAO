@@ -3,8 +3,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Stub_Factory::~TAO_Stub_Factory ()
-{
-}
+TAO_Stub_Factory::~TAO_Stub_Factory () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

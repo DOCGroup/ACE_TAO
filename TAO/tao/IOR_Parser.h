@@ -48,7 +48,7 @@ class TAO_Export TAO_IOR_Parser : public ACE_Service_Object
 public:
   /// The destructor
   TAO_IOR_Parser () = default;
-  virtual ~TAO_IOR_Parser ();
+  ~TAO_IOR_Parser () override;
 
   /// Return true if @a ior_string starts with a prefix known to this IOR
   /// parser
