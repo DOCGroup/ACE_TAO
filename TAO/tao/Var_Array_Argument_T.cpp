@@ -52,7 +52,7 @@ TAO::Argument*
 TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone ()
 {
   using ARRAY_TRAITS = TAO::details::array_traits<S_forany>;
-  typename ARRAY_TRAITS::slice_type * tmp_ptr = 0;
+  typename ARRAY_TRAITS::slice_type * tmp_ptr = nullptr;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
                         nullptr);
@@ -112,7 +112,7 @@ TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::demarshal (
   using ARRAY_TRAITS = TAO::Array_Traits<S_forany>;
   ACE_ALLOCATOR_RETURN (this->x_,
                         ARRAY_TRAITS::alloc (),
-                        0);
+                        false);
   S_forany tmp (this->x_);
   return cdr >> tmp;
 }
@@ -143,10 +143,10 @@ TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::demarshal (
   )
 {
   using ARRAY_TRAITS = TAO::Array_Traits<S_forany>;
-  typename S_forany::_slice_type * tmp_ptr = 0;
+  typename S_forany::_slice_type * tmp_ptr = nullptr;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
-                        0);
+                        false);
   this->x_ = tmp_ptr;
   S_forany tmp (this->x_.ptr ());
   return cdr >> tmp;
