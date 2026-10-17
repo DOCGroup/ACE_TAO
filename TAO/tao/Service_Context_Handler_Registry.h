@@ -33,6 +33,8 @@ class TAO_ServerRequest;
 class TAO_Export TAO_Service_Context_Registry
 {
   public:
+    TAO_Service_Context_Registry () = default;
+
     /// Destructor
 
     ~TAO_Service_Context_Registry ();
@@ -60,6 +62,11 @@ class TAO_Export TAO_Service_Context_Registry
       TAO_OutputCDR &msg);
 
   private:
+    TAO_Service_Context_Registry (TAO_Service_Context_Registry const &) = delete;
+    TAO_Service_Context_Registry &operator= (TAO_Service_Context_Registry const &) = delete;
+    TAO_Service_Context_Registry (TAO_Service_Context_Registry &&) = delete;
+    TAO_Service_Context_Registry &operator= (TAO_Service_Context_Registry &&) = delete;
+
     using Table = ACE_Array_Map<IOP::ServiceId,
                                 TAO_Service_Context_Handler*>;
     using key_type = Table::key_type;

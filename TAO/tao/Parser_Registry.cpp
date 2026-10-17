@@ -11,11 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Parser_Registry::TAO_Parser_Registry ()
-  : parsers_ (nullptr),
-    size_ (0)
-{
-}
+TAO_Parser_Registry::TAO_Parser_Registry () = default;
 
 TAO_Parser_Registry::~TAO_Parser_Registry ()
 {

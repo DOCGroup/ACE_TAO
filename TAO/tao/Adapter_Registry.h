@@ -91,8 +91,10 @@ public:
   TAO_Adapter *find_adapter (const char *name) const;
 
 private:
-  TAO_Adapter_Registry (const TAO_Adapter_Registry &) = delete;
-  TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &) = delete;
+  TAO_Adapter_Registry (TAO_Adapter_Registry const &) = delete;
+  TAO_Adapter_Registry &operator= (TAO_Adapter_Registry const &) = delete;
+  TAO_Adapter_Registry (TAO_Adapter_Registry &&) = delete;
+  TAO_Adapter_Registry &operator= (TAO_Adapter_Registry &&) = delete;
 
   /**
    * @name A simple array of adapters.
