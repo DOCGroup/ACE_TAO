@@ -39,15 +39,22 @@ class TAO_DiffServPolicy_Export TAO_DiffServPolicy_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_DiffServPolicy_ORBInitializer () = default;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
+  TAO_DiffServPolicy_ORBInitializer (TAO_DiffServPolicy_ORBInitializer const &) = delete;
+  TAO_DiffServPolicy_ORBInitializer &operator= (
+    TAO_DiffServPolicy_ORBInitializer const &) = delete;
+  TAO_DiffServPolicy_ORBInitializer (TAO_DiffServPolicy_ORBInitializer &&) = delete;
+  TAO_DiffServPolicy_ORBInitializer &operator= (TAO_DiffServPolicy_ORBInitializer &&) = delete;
+
   /// Register DiffServ policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 
-private:
   PortableInterceptor::PolicyFactory_var policy_factory_;
 };
 

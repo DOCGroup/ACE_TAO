@@ -40,10 +40,18 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_DiffServ_PolicyFactory () = default;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    CORBA::Any const& value) override;
 
   CORBA::Policy_ptr _create_policy (CORBA::PolicyType type) override;
+
+private:
+  TAO_DiffServ_PolicyFactory (TAO_DiffServ_PolicyFactory const &) = delete;
+  TAO_DiffServ_PolicyFactory &operator= (TAO_DiffServ_PolicyFactory const &) = delete;
+  TAO_DiffServ_PolicyFactory (TAO_DiffServ_PolicyFactory &&) = delete;
+  TAO_DiffServ_PolicyFactory &operator= (TAO_DiffServ_PolicyFactory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
