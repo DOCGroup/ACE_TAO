@@ -5,9 +5,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Fixed_Array_SArgument_T<S_forany,
-                                Insert_Policy>::In_Fixed_Array_SArgument_T ()
-{
-}
+                                Insert_Policy>::In_Fixed_Array_SArgument_T () = default;
 
 template<typename S_forany,
          template <typename> class Insert_Policy>
@@ -27,9 +25,7 @@ template<typename S_forany,
 ACE_INLINE
 TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::
-Inout_Fixed_Array_SArgument_T ()
-{
-}
+Inout_Fixed_Array_SArgument_T () = default;
 
 template<typename S_forany,
          template <typename> class Insert_Policy>
@@ -49,9 +45,7 @@ template<typename S_forany,
 ACE_INLINE
 TAO::Out_Fixed_Array_SArgument_T<S_forany,
                                  Insert_Policy>::
-Out_Fixed_Array_SArgument_T ()
-{
-}
+Out_Fixed_Array_SArgument_T () = default;
 
 template<typename S_forany,
          template <typename> class Insert_Policy>
@@ -73,9 +67,7 @@ ACE_INLINE
 TAO::Ret_Fixed_Array_SArgument_T<S_var,
                                  S_forany,
                                  Insert_Policy>::
-Ret_Fixed_Array_SArgument_T ()
-{
-}
+Ret_Fixed_Array_SArgument_T () = default;
 
 template<typename S_var,
          typename S_forany,
