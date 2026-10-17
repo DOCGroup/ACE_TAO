@@ -40,9 +40,9 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
 
   // The POA is a local interface (IDL terminology), and thus we know that
   // we can downcast the POA_ptr to its (TAO) implementation type.
-  TAO_CSD_POA* poa_impl = dynamic_cast<TAO_CSD_POA*>(poa);
+  TAO_CSD_POA *poa_impl = dynamic_cast<TAO_CSD_POA*> (poa);
 
-  if (poa_impl == 0)
+  if (poa_impl == nullptr)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR((LM_ERROR,

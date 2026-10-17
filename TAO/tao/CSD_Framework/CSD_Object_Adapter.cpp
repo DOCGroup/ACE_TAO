@@ -12,9 +12,7 @@ TAO_CSD_Object_Adapter::TAO_CSD_Object_Adapter (
 {
 }
 
-TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter ()
-{
-}
+TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter () = default;
 
 void
 TAO_CSD_Object_Adapter::do_dispatch (
@@ -22,9 +20,9 @@ TAO_CSD_Object_Adapter::do_dispatch (
   TAO::Portable_Server::Servant_Upcall& upcall)
 {
   TAO_Root_POA& poa = upcall.poa ();
-  TAO_CSD_POA* csd_poa = dynamic_cast<TAO_CSD_POA*> (&poa);
+  TAO_CSD_POA *csd_poa = dynamic_cast<TAO_CSD_POA*> (&poa);
 
-  if (csd_poa == 0)
+  if (csd_poa == nullptr)
     {
       throw ::CORBA::BAD_PARAM ();
     }
