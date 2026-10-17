@@ -50,7 +50,7 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   // = LocalObject methods.
   static TAO_DynStruct_i *_narrow (CORBA::Object_ptr obj);
@@ -63,16 +63,16 @@ public:
 
   DynamicAny::NameValuePairSeq *get_members () override;
 
-  void set_members (const DynamicAny::NameValuePairSeq& value) override;
+  void set_members (DynamicAny::NameValuePairSeq const& value) override;
 
   DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any () override;
 
   void set_members_as_dyn_any (
-      const DynamicAny::NameDynAnyPairSeq & value) override;
+      DynamicAny::NameDynAnyPairSeq const& value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  void from_any (const CORBA::Any & value) override;
+  void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
 
@@ -88,14 +88,14 @@ private:
 
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
-  void set_from_any (const CORBA::Any &any);
+  void set_from_any (CORBA::Any const& any);
 
   /// Called by both versions of init().
   void init_common ();
 
   // = Use copy() or assign() instead of these.
-  TAO_DynStruct_i (const TAO_DynStruct_i &src) = delete;
-  TAO_DynStruct_i &operator= (const TAO_DynStruct_i &src) = delete;
+  TAO_DynStruct_i (TAO_DynStruct_i const& src) = delete;
+  TAO_DynStruct_i &operator= (TAO_DynStruct_i const& src) = delete;
 
 private:
   /// Each component is also a DynAny.
