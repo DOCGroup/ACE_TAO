@@ -31,6 +31,10 @@ namespace TAO
     {
     public:
       LifespanStrategyTransient ();
+      LifespanStrategyTransient (LifespanStrategyTransient const &) = delete;
+      LifespanStrategyTransient &operator= (LifespanStrategyTransient const &) = delete;
+      LifespanStrategyTransient (LifespanStrategyTransient &&) = delete;
+      LifespanStrategyTransient &operator= (LifespanStrategyTransient &&) = delete;
 
       void notify_startup () override;
 
