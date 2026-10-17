@@ -80,7 +80,7 @@ public:
 
 protected:
   /// Parse protocol specific options.
-  virtual int parse_options (const char *options);
+  virtual int parse_options (char const *options);
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
