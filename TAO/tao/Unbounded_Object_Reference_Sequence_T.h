@@ -21,20 +21,20 @@ template<typename object_t, typename object_t_var>
 class unbounded_object_reference_sequence
 {
 public:
-  typedef object_t object_type;
-  typedef object_type * value_type;
-  typedef value_type const const_value_type;
-  typedef ::CORBA::ULong size_type;
+  using object_type = object_t;
+  using value_type = object_type *;
+  using const_value_type = value_type const;
+  using size_type = ::CORBA::ULong;
 
-  typedef details::object_reference_traits<object_type,object_t_var,true> element_traits;
-  typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;
+  using element_traits = details::object_reference_traits<object_type, object_t_var, true>;
+  using allocation_traits = details::unbounded_reference_allocation_traits<value_type, element_traits, true>;
 
-  typedef details::object_reference_sequence_element<element_traits> element_type;
-  typedef details::object_reference_const_sequence_element<element_traits> const_element_type;
-  typedef element_type subscript_type;
-  typedef value_type const & const_subscript_type;
+  using element_type = details::object_reference_sequence_element<element_traits>;
+  using const_element_type = details::object_reference_const_sequence_element<element_traits>;
+  using subscript_type = element_type;
+  using const_subscript_type = value_type const &;
 
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
+  using implementation_type = details::generic_sequence<value_type, allocation_traits, element_traits>;
 
   inline unbounded_object_reference_sequence()
     : impl_()

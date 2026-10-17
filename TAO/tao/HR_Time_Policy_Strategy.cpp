@@ -17,10 +17,10 @@ ACE_Timer_Queue * TAO_HR_Time_Policy_Strategy::create_timer_queue ()
 {
   ACE_Timer_Queue * tmq = nullptr;
 
-  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                           ACE_Event_Handler_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX,
-                           ACE_HR_Time_Policy> timer_queue_type;
+  using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *,
+                                             ACE_Event_Handler_Handle_Timeout_Upcall,
+                                             ACE_SYNCH_RECURSIVE_MUTEX,
+                                             ACE_HR_Time_Policy>;
   ACE_NEW_RETURN (tmq, timer_queue_type (), nullptr);
 
   return tmq;

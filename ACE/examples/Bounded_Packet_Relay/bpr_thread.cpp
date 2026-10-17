@@ -16,11 +16,9 @@
 #include "Thread_Bounded_Packet_Relay.h"
 #include <memory>
 
-typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
-  THREAD_BOUNDED_PACKET_RELAY_DRIVER;
+using THREAD_BOUNDED_PACKET_RELAY_DRIVER = Bounded_Packet_Relay_Driver<Thread_Timer_Queue>;
 
-typedef ACE_Command_Callback<Bounded_Packet_Relay,Bounded_Packet_Relay::ACTION>
-  INPUT_CALLBACK;
+using INPUT_CALLBACK = ACE_Command_Callback<Bounded_Packet_Relay, Bounded_Packet_Relay::ACTION>;
 
 // A snippet from Andrew Marvell (Oliver Cromwell's poet laureate)
 static const char input_text [] =

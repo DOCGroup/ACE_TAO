@@ -65,7 +65,7 @@ TAO_DynValueBox_i::init (CORBA::TypeCode_ptr tc)
 }
 
 void
-TAO_DynValueBox_i::init (const CORBA::Any & any)
+TAO_DynValueBox_i::init (CORBA::Any const& any)
 {
   CORBA::TypeCode_ptr tc = any._tao_get_typecode ();
   this->check_typecode (tc);
@@ -77,7 +77,7 @@ TAO_DynValueBox_i *
 TAO_DynValueBox_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   return (CORBA::is_nil (_tao_objref)) ?
-         0 :
+         nullptr :
          dynamic_cast<TAO_DynValueBox_i *> (_tao_objref);
 }
 
@@ -98,7 +98,7 @@ TAO_DynValueBox_i::get_boxed_value ()
 }
 
 void
-TAO_DynValueBox_i::set_boxed_value (const CORBA::Any & boxed)
+TAO_DynValueBox_i::set_boxed_value (CORBA::Any const& boxed)
 {
   if (this->destroyed_)
     {
@@ -116,7 +116,7 @@ TAO_DynValueBox_i::set_boxed_value (const CORBA::Any & boxed)
     }
 
   this->boxed_ =
-    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&>
+    TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&>
       (boxed._tao_get_typecode (), boxed, this->allow_truncation_);
   this->set_to_value ();
 }
@@ -136,7 +136,7 @@ TAO_DynValueBox_i::get_boxed_value_as_dyn_any ()
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
   // Set the flag so the caller can't destroy.
-  this->set_flag (this->boxed_.in (), 0);
+  this->set_flag (this->boxed_.in (), false);
 
   return DynamicAny::DynAny::_duplicate (this->boxed_.in ());
 }
@@ -163,7 +163,7 @@ TAO_DynValueBox_i::set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed )
 }
 
 void
-TAO_DynValueBox_i::from_any (const CORBA::Any & any)
+TAO_DynValueBox_i::from_any (CORBA::Any const& any)
 {
   if (this->destroyed_)
     {
@@ -195,7 +195,7 @@ TAO_DynValueBox_i::equal (DynamicAny::DynAny_ptr rhs)
 
   DynamicAny::DynValueBox_ptr rhs_v=
     dynamic_cast<DynamicAny::DynValueBox_ptr> (rhs);
-  if (!rhs_v || this->is_null () != rhs_v->is_null ())
+  if (rhs_v == nullptr || this->is_null () != rhs_v->is_null ())
     {
       return false;
     }
@@ -223,11 +223,11 @@ TAO_DynValueBox_i::destroy ()
       // Do a deep destroy.
       if (!CORBA::is_nil (this->boxed_.in ()))
         {
-          this->set_flag (this->boxed_.in (), 1);
+          this->set_flag (this->boxed_.in (), true);
           this->boxed_.in ()->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
@@ -245,24 +245,24 @@ TAO_DynValueBox_i::current_component ()
       return DynamicAny::DynAny::_nil ();
     }
 
-  this->set_flag (this->boxed_.in (), 0);
+  this->set_flag (this->boxed_.in (), false);
   return DynamicAny::DynAny::_duplicate (this->boxed_.in ());
 }
 
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
-TAO_DynValueBox_i::set_from_any (const CORBA::Any & any)
+TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
 {
   // Get the CDR stream of the Any, if there isn't one, make one.
   TAO_OutputCDR out;
-  TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+  TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
   TAO::Any_Impl *impl = any.impl ();
   if (impl->encoded ())
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-      if (!unk)
+      if (unk == nullptr)
         throw CORBA::INTERNAL ();
 
       in = unk->_tao_get_cdr ();
@@ -306,14 +306,14 @@ TAO_DynValueBox_i::set_from_any (const CORBA::Any & any)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::TypeCode_var boxed_tc (unaliased_tc->content_type ());
-  TAO::Unknown_IDL_Type * unk = 0;
+  TAO::Unknown_IDL_Type *unk = nullptr;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (boxed_tc.in (), in),
                     CORBA::NO_MEMORY ());
   CORBA::Any boxed_any;
   boxed_any.replace (unk);
   this->boxed_ =
-    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&>
+    TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&>
       (boxed_any._tao_get_typecode (), boxed_any, this->allow_truncation_);
   this->init_common ();
 }
@@ -331,7 +331,7 @@ TAO_DynValueBox_i::to_any ()
   // Is this an NULL Valuetype?
   if (!CORBA::ValueBase::_tao_write_special_value (
        out_cdr, reinterpret_cast <CORBA::ValueBase *> (
-         this->is_null_ ? 0 : this)))
+         this->is_null_ ? nullptr : this)))
     {
       // Build <value-tag>, which states if chunking is used
       // and if type information ((list of) repository id(s))
@@ -351,14 +351,14 @@ TAO_DynValueBox_i::to_any ()
 
       // Now write the boxed value itself
 
-      TAO_InputCDR boxed_in_cdr (static_cast<ACE_Message_Block *> (0));
+      TAO_InputCDR boxed_in_cdr (static_cast<ACE_Message_Block *> (nullptr));
       CORBA::Any_var boxed_any (this->boxed_->to_any ());
       TAO::Any_Impl * boxed_impl = boxed_any->impl ();
       if (boxed_impl->encoded ())
         {
           TAO::Unknown_IDL_Type * boxed_unk=
             dynamic_cast<TAO::Unknown_IDL_Type *> (boxed_impl);
-          if (!boxed_unk)
+          if (boxed_unk == nullptr)
             {
               throw CORBA::INTERNAL ();
             }
@@ -380,11 +380,11 @@ TAO_DynValueBox_i::to_any ()
 
   // Convert the out_cdr into a new any.
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type * unk = 0;
+  TAO::Unknown_IDL_Type *unk = nullptr;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
                     CORBA::NO_MEMORY ());
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval = nullptr;
   ACE_NEW_THROW_EX (retval, CORBA::Any, CORBA::NO_MEMORY ());
   retval->replace (unk);
   return retval;

@@ -66,7 +66,7 @@ protected:
   TAO_Time_Service_Clerk *clerk_;
 
   /// The set of server IORs.
-  typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
+  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

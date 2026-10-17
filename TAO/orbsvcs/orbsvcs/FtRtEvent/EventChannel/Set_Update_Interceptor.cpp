@@ -12,10 +12,6 @@ TAO_Set_Update_Interceptor::TAO_Set_Update_Interceptor ()
 {
 }
 
-TAO_Set_Update_Interceptor::~TAO_Set_Update_Interceptor ()
-{
-}
-
 char *
 TAO_Set_Update_Interceptor::name ()
 {

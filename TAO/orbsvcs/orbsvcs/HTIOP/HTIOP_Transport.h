@@ -43,8 +43,7 @@ namespace TAO
     class Connection_Handler;
 
     // Service Handler for this transport
-    typedef ACE_Svc_Handler<ACE::HTBP::Stream, ACE_NULL_SYNCH>
-    SVC_HANDLER;
+    using SVC_HANDLER = ACE_Svc_Handler<ACE::HTBP::Stream, ACE_NULL_SYNCH>;
 
     /**
      * @class Transport

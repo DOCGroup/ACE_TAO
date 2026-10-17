@@ -37,10 +37,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ExceptionList;
-  typedef ExceptionList * ExceptionList_ptr;
+  using ExceptionList_ptr = ExceptionList *;
 
-  typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
-  typedef TAO_Pseudo_Out_T<ExceptionList> ExceptionList_out;
+  using ExceptionList_var = TAO_Pseudo_Var_T<ExceptionList>;
+  using ExceptionList_out = TAO_Pseudo_Out_T<ExceptionList>;
 
   /**
    * @class ExceptionList
@@ -92,14 +92,16 @@ namespace CORBA
     void _decr_refcount ();
 
     /// Useful for template programming.
-    typedef CORBA::ExceptionList_ptr _ptr_type;
-    typedef CORBA::ExceptionList_var _var_type;
-    typedef CORBA::ExceptionList_out _out_type;
+    using _ptr_type = CORBA::ExceptionList_ptr;
+    using _var_type = CORBA::ExceptionList_var;
+    using _out_type = CORBA::ExceptionList_out;
 
   private:
     // = Not allowed.
-    ExceptionList (const ExceptionList &);
-    ExceptionList &operator= (const ExceptionList &);
+    ExceptionList (ExceptionList const &) = delete;
+    ExceptionList &operator= (ExceptionList const &) = delete;
+    ExceptionList (ExceptionList &&) = delete;
+    ExceptionList &operator= (ExceptionList &&) = delete;
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_;

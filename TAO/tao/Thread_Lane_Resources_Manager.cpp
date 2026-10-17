@@ -26,8 +26,6 @@ TAO_Thread_Lane_Resources_Manager::lf_strategy ()
   return *this->lf_strategy_;
 }
 
-TAO_Thread_Lane_Resources_Manager_Factory::~TAO_Thread_Lane_Resources_Manager_Factory ()
-{
-}
+TAO_Thread_Lane_Resources_Manager_Factory::~TAO_Thread_Lane_Resources_Manager_Factory () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

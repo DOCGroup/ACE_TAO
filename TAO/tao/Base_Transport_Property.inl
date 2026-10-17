@@ -9,7 +9,7 @@ TAO_Base_Transport_Property::
 }
 
 ACE_INLINE
-TAO_Base_Transport_Property::TAO_Base_Transport_Property (const TAO_Base_Transport_Property &rhs)
+TAO_Base_Transport_Property::TAO_Base_Transport_Property (TAO_Base_Transport_Property const &rhs)
   : TAO_Transport_Descriptor_Interface (rhs.endpoint_->duplicate (), true)
 {
 }

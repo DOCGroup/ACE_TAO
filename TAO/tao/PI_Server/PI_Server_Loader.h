@@ -30,12 +30,17 @@ public:
   TAO_PI_Server_Loader ();
 
   /// Destructor.
-  virtual ~TAO_PI_Server_Loader ();
+  ~TAO_PI_Server_Loader () override;
 
   /// Initialize the PI_Server loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
+  TAO_PI_Server_Loader (TAO_PI_Server_Loader const &) = delete;
+  TAO_PI_Server_Loader &operator= (TAO_PI_Server_Loader const &) = delete;
+  TAO_PI_Server_Loader (TAO_PI_Server_Loader &&) = delete;
+  TAO_PI_Server_Loader &operator= (TAO_PI_Server_Loader &&) = delete;
+
   /// Set to true after init is called.
   bool initialized_;
 };

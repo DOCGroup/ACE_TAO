@@ -37,9 +37,9 @@ namespace TAO
   public:
     In_Object_Argument_T (S_ptr x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr arg () const;
 
@@ -67,12 +67,12 @@ namespace TAO
   {
   public:
     In_Object_Clonable_Argument_T (S_ptr x);
-    virtual ~In_Object_Clonable_Argument_T ();
+    ~In_Object_Clonable_Argument_T () override;
 
-    virtual Argument* clone ();
+    Argument* clone () override;
 
   private:
-    bool is_clone_;
+    bool is_clone_ {};
   };
 
   /**
@@ -89,10 +89,10 @@ namespace TAO
   public:
     Inout_Object_Argument_T (S_ptr & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr & arg ();
 
@@ -114,9 +114,9 @@ namespace TAO
   public:
     Out_Object_Argument_T (S_out & x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
+    CORBA::Boolean demarshal (TAO_InputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_out arg ();
 
@@ -138,9 +138,9 @@ namespace TAO
   public:
     Ret_Object_Argument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr & arg ();
 
@@ -148,7 +148,7 @@ namespace TAO
     S_ptr retn ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -163,24 +163,16 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Object_Arg_Traits_T
   {
-    typedef T_ptr                                         ret_type;
-    typedef T_ptr                                         in_type;
-    typedef T_ptr &                                       inout_type;
-    typedef T_out                                         out_type;
+    using ret_type = T_ptr;
+    using in_type = T_ptr;
+    using inout_type = T_ptr &;
+    using out_type = T_out;
 
-    typedef In_Object_Argument_T<T_ptr,
-                                 Insert_Policy>           in_arg_val;
-    typedef In_Object_Clonable_Argument_T<T_ptr,
-                                          Insert_Policy>  in_clonable_arg_val;
-    typedef Inout_Object_Argument_T<T_ptr,
-                                    T_traits,
-                                    Insert_Policy>        inout_arg_val;
-    typedef Out_Object_Argument_T<T_ptr,
-                                  T_out,
-                                  Insert_Policy>          out_arg_val;
-    typedef Ret_Object_Argument_T<T_ptr,
-                                  T_var,
-                                  Insert_Policy>          ret_val;
+    using in_arg_val = In_Object_Argument_T<T_ptr, Insert_Policy>;
+    using in_clonable_arg_val = In_Object_Clonable_Argument_T<T_ptr, Insert_Policy>;
+    using inout_arg_val = Inout_Object_Argument_T<T_ptr, T_traits, Insert_Policy>;
+    using out_arg_val = Out_Object_Argument_T<T_ptr, T_out, Insert_Policy>;
+    using ret_val = Ret_Object_Argument_T<T_ptr, T_var, Insert_Policy>;
   };
 }
 

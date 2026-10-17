@@ -56,8 +56,8 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  os_ << "typedef " << global << sname << "::CCM_" << lname
-      << " _exec_type;" << be_nl;
+  os_ << "using _exec_type = " << global << sname << "::CCM_" << lname
+      << ";" << be_nl;
 
   os_ << be_nl
       << lname << "_Servant (" << be_idt_nl

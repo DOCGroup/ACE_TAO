@@ -32,10 +32,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Principal;
-  typedef Principal *Principal_ptr;
+  using Principal_ptr = Principal *;
 
-  typedef TAO_Pseudo_Var_T<Principal> Principal_var;
-  typedef TAO_Pseudo_Out_T<Principal> Principal_out;
+  using Principal_var = TAO_Pseudo_Var_T<Principal>;
+  using Principal_out = TAO_Pseudo_Out_T<Principal>;
 
   /**
    * @class Principal
@@ -70,8 +70,8 @@ namespace CORBA
     Principal ();
 
     // Useful for template programming.
-    typedef Principal_ptr _ptr_type;
-    typedef Principal_var _var_type;
+    using _ptr_type = Principal_ptr;
+    using _var_type = Principal_var;
 
   protected:
     /// Destructor
@@ -83,12 +83,14 @@ namespace CORBA
 
   private:
     // = Prevent copying
-    Principal &operator = (const CORBA::Principal_ptr &);
-    Principal (const CORBA::Principal_ptr &);
+    Principal (Principal const &) = delete;
+    Principal &operator= (Principal const &) = delete;
+    Principal (Principal &&) = delete;
+    Principal &operator= (Principal &&) = delete;
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {};
   };
 }  // End CORBA namespace
 

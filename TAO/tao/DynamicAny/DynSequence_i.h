@@ -50,37 +50,37 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   // = LocalObject methods.
   static TAO_DynSequence_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynSequence.
 
-  virtual CORBA::ULong get_length ();
+  CORBA::ULong get_length () override;
 
-  virtual void set_length (CORBA::ULong len);
+  void set_length (CORBA::ULong len) override;
 
-  virtual DynamicAny::AnySeq * get_elements ();
+  DynamicAny::AnySeq * get_elements () override;
 
-  virtual void set_elements (const DynamicAny::AnySeq & value);
+  void set_elements (DynamicAny::AnySeq const& value) override;
 
-  virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any ();
+  DynamicAny::DynAnySeq * get_elements_as_dyn_any () override;
 
-  virtual void set_elements_as_dyn_any (const DynamicAny::DynAnySeq & value);
+  void set_elements_as_dyn_any (DynamicAny::DynAnySeq const& value) override;
 
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (CORBA::Any const& value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
 private:
   // Utility, turns the type of elements contained in the sequence.
@@ -90,8 +90,10 @@ private:
   void init_common ();
 
   // = Use copy() or assign() instead of these
-  TAO_DynSequence_i (const TAO_DynSequence_i &src) = delete;
-  TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src) = delete;;
+  TAO_DynSequence_i (TAO_DynSequence_i const &src) = delete;
+  TAO_DynSequence_i &operator= (TAO_DynSequence_i const &src) = delete;
+  TAO_DynSequence_i (TAO_DynSequence_i &&) = delete;
+  TAO_DynSequence_i &operator= (TAO_DynSequence_i &&) = delete;
 
 private:
   /// Each component is also a DynAny.

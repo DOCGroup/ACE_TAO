@@ -45,7 +45,7 @@ namespace TAO
 
         TAO_Buffering_Constraint_Policy* bcp =
           dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcpv.in ());
-        if (bcp == 0)
+        if (bcp == nullptr)
           {
             return true;
           }

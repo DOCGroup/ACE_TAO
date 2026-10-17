@@ -46,8 +46,7 @@ public:
 
 protected:
   /// Make life easier later on.
-  typedef ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>
-          inherited;
+  using inherited = ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
   /// Reference to the event channel.
   Event_Channel &event_channel_;

@@ -6,11 +6,8 @@
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
 
-typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-  ALLOCATOR;
-typedef ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL,
-                                  ACE_Null_Mutex>
-  MALLOC_LIFO_ITERATOR;
+using ALLOCATOR = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+using MALLOC_LIFO_ITERATOR = ACE_Malloc_LIFO_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 
 ALLOCATOR  *g_allocator;
 // Listing 1

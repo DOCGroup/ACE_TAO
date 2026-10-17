@@ -13,9 +13,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv [])
   {
     ACE_DLL module;
 
-    ACE_Service_Gestalt * gestalt = 0;
+    ACE_Service_Gestalt * gestalt = nullptr;
     ACE_NEW_NORETURN (gestalt, ACE_Service_Gestalt ());
-    if (gestalt == 0)
+    if (gestalt == nullptr)
       {
         ACE_throw_bad_alloc;
       }
@@ -36,20 +36,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv [])
 
     void * symbol = module.symbol (ACE_TEXT ("_make_ACE_DLL_TAO_Service"));
 
-    if (symbol == 0)
+    if (symbol == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("failed to load symbol _make_ACE_DLL_TAO_Service\n")),
                          -1);
     }
 
-    typedef ACE_DLL_Service * (*factory_type) ();
+    using factory_type = ACE_DLL_Service * (*) ();
     ptrdiff_t tmp_ptr = reinterpret_cast <ptrdiff_t> (symbol);
     factory_type f = reinterpret_cast <factory_type> (tmp_ptr);
 
     ACE_DLL_Service * svc = (*f) ();
 
-    if (svc != 0)
+    if (svc != nullptr)
     {
       // Initialize the service.
       //

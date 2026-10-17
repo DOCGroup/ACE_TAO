@@ -166,8 +166,8 @@ public:
 
   /// Meta-type info
   //@{
-  typedef ACE_INET_Addr PEER_ADDR;
-  typedef ACE_SSL_SOCK_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_INET_Addr;
+  using PEER_STREAM = ACE_SSL_SOCK_Stream;
   //@}
 
   /// Declare the dynamic allocation hooks.

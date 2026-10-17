@@ -37,7 +37,7 @@ class TAO_ServerRequest;
 namespace PortableServer
 {
   class POAManager;
-  typedef POAManager *POAManager_ptr;
+  using POAManager_ptr = POAManager *;
 }
 
 /**

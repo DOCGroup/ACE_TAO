@@ -29,12 +29,9 @@ class ACE_RB_Tree_Test
 public:
   // = Traits
 
-  typedef ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
-          TREE;
-  typedef ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
-          ITERATOR;
-  typedef ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
-          REVERSE_ITERATOR;
+  using TREE = ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  using ITERATOR = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  using REVERSE_ITERATOR = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
 
   /// Constructor.
   ACE_RB_Tree_Test (int entry_count,

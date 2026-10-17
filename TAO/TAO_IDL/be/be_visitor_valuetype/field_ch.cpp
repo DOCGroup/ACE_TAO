@@ -558,8 +558,8 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       // Generate the anonymous sequence member typedef.
       // This provides a consistent name to use instead of the
       // implementation-specific name.
-      *os << be_nl_2 << "typedef " << bt->nested_type_name (bu)
-          << " _" << ub->local_name () << "_seq;" << be_nl;
+      *os << be_nl_2 << "using _" << ub->local_name () << "_seq = "
+          << bt->nested_type_name (bu) << ";" << be_nl;
     }
 
   // Set method.

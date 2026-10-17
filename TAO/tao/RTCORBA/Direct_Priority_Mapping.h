@@ -40,14 +40,14 @@ public:
   TAO_Direct_Priority_Mapping (long);
 
   /// The destructor
-  virtual ~TAO_Direct_Priority_Mapping ();
+  ~TAO_Direct_Priority_Mapping () override;
 
-  virtual CORBA::Boolean
+  CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,
-                 RTCORBA::NativePriority &native_priority);
-  virtual CORBA::Boolean
+                 RTCORBA::NativePriority &native_priority) override;
+  CORBA::Boolean
       to_CORBA (RTCORBA::NativePriority native_priority,
-                RTCORBA::Priority &corba_priority);
+                RTCORBA::Priority &corba_priority) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -9,7 +9,7 @@
 
 class UTL_StrList;
 class UTL_IdList;
-typedef UTL_IdList UTL_ScopedName;
+using UTL_ScopedName = UTL_IdList;
 class UTL_NameList;
 class AST_PortType;
 class AST_Enum;
@@ -30,7 +30,7 @@ struct TAO_IDL_FE_Export FE_Utils
     T_Param_Info ();
   };
 
-  typedef ACE_Unbounded_Queue<T_Param_Info> T_PARAMLIST_INFO;
+  using T_PARAMLIST_INFO = ACE_Unbounded_Queue<T_Param_Info>;
 
   static bool duplicate_param_id (T_PARAMLIST_INFO *params);
 

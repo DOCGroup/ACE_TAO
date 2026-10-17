@@ -41,14 +41,14 @@ namespace TAO
   public:
     In_BD_String_SArgument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const typename S_var::s_traits::char_type * arg () const;
+    typename S_var::s_traits::char_type const * arg () const;
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -65,15 +65,15 @@ namespace TAO
   public:
     Inout_BD_String_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -90,14 +90,14 @@ namespace TAO
   public:
     Out_BD_String_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -114,14 +114,14 @@ namespace TAO
   public:
     Ret_BD_String_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_var::s_traits::char_type *& arg ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -135,30 +135,22 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct BD_String_SArg_Traits_T
   {
-    typedef typename T_var::s_traits::char_type *       ret_type;
-    typedef const typename T_var::s_traits::char_type * in_type;
-    typedef typename T_var::s_traits::char_type *&      inout_type;
-    typedef typename T_var::s_traits::string_out        out_type;
+    using ret_type = typename T_var::s_traits::char_type *;
+    using in_type = typename T_var::s_traits::char_type const *;
+    using inout_type = typename T_var::s_traits::char_type *&;
+    using out_type = typename T_var::s_traits::string_out;
 
-    typedef In_BD_String_SArgument_T<T_var,
-                                     BOUND,
-                                     Insert_Policy>     in_arg_val;
-    typedef Inout_BD_String_SArgument_T<T_var,
-                                        BOUND,
-                                        Insert_Policy>  inout_arg_val;
-    typedef Out_BD_String_SArgument_T<T_var,
-                                      BOUND,
-                                      Insert_Policy>    out_arg_val;
-    typedef Ret_BD_String_SArgument_T<T_var,
-                                      BOUND,
-                                      Insert_Policy>    ret_val;
+    using in_arg_val = In_BD_String_SArgument_T<T_var, BOUND, Insert_Policy>;
+    using inout_arg_val = Inout_BD_String_SArgument_T<T_var, BOUND, Insert_Policy>;
+    using out_arg_val = Out_BD_String_SArgument_T<T_var, BOUND, Insert_Policy>;
+    using ret_val = Ret_BD_String_SArgument_T<T_var, BOUND, Insert_Policy>;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                                     in_arg_type;
-    typedef inout_type                                  inout_arg_type;
-    typedef inout_type                                  out_arg_type;
-    typedef inout_type                                  ret_arg_type;
+    using in_arg_type = in_type;
+    using inout_arg_type = inout_type;
+    using out_arg_type = inout_type;
+    using ret_arg_type = inout_type;
   };
 }
 

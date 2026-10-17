@@ -50,7 +50,7 @@ namespace
   class randomize_element
   {
   public:
-    typedef T &argument_type;
+    using argument_type = T &;
     using result_type = void;
 
     randomize_element (T * array, size_t size, unsigned int seed)

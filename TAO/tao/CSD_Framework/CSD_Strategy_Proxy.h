@@ -87,6 +87,11 @@ namespace TAO
                                     const PortableServer::ObjectId& oid);
 
     private:
+      Strategy_Proxy (Strategy_Proxy const &) = delete;
+      Strategy_Proxy &operator= (Strategy_Proxy const &) = delete;
+      Strategy_Proxy (Strategy_Proxy &&) = delete;
+      Strategy_Proxy &operator= (Strategy_Proxy &&) = delete;
+
       /// Smart Pointer to a custom servant dispatching strategy object.
       /// This smart pointer will be in the "nil" state when the "default"
       /// strategy is to be applied.

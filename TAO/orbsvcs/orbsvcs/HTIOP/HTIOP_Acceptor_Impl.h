@@ -71,7 +71,7 @@ namespace TAO
 
     protected:
       /// Base class.
-      typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
+      using ACCEPT_STRATEGY_BASE = ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>;
 
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;
@@ -97,7 +97,7 @@ namespace TAO
 
     protected:
       /// Base class.
-      typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY_BASE;
+      using CONCURRENCY_STRATEGY_BASE = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;

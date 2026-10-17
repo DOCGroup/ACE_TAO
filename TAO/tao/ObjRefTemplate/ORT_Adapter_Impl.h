@@ -37,26 +37,28 @@ namespace TAO
     : public ORT_Adapter
   {
   public:
+    ORT_Adapter_Impl () = default;
+
     /// Activate this adapter
-    virtual int activate (const char *server_id,
-                          const char *orb_id,
-                          PortableInterceptor::AdapterName *adapter_name,
-                          PortableServer::POA_ptr poa);
+    int activate (const char *server_id,
+                  const char *orb_id,
+                  PortableInterceptor::AdapterName *adapter_name,
+                  PortableServer::POA_ptr poa) override;
 
     /// Accessor methods to ObjectReferenceTemplate template
-    virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template ();
+    PortableInterceptor::ObjectReferenceTemplate *get_adapter_template () override;
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-    virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory ();
+    PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory () override;
 
     /// Set a different ort_factory to be used.
-    virtual int set_obj_ref_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory);
+    int set_obj_ref_factory (
+      PortableInterceptor::ObjectReferenceFactory *current_factory) override;
 
     /**
      * @see @c TAO::ORT_Adapter for details.
      */
-    virtual void release (PortableInterceptor::ObjectReferenceTemplate * ort);
+    void release (PortableInterceptor::ObjectReferenceTemplate *ort) override;
 
     /**
      * @name Adapter methods for PortableInterceptor::ObjectReferenceTemplate
@@ -77,12 +79,17 @@ namespace TAO
      * PortableInterceptor::ObjectReferenceFactory ValueType.
      */
     //@{
-    virtual CORBA::Object_ptr make_object (
-        const char * repository_id,
-        const PortableInterceptor::ObjectId & id);
+    CORBA::Object_ptr make_object (
+        const char *repository_id,
+        PortableInterceptor::ObjectId const &id) override;
     //@}
 
   private:
+    ORT_Adapter_Impl (ORT_Adapter_Impl const &) = delete;
+    ORT_Adapter_Impl &operator= (ORT_Adapter_Impl const &) = delete;
+    ORT_Adapter_Impl (ORT_Adapter_Impl &&) = delete;
+    ORT_Adapter_Impl &operator= (ORT_Adapter_Impl &&) = delete;
+
     /// The ORT Template, this is the factory and its identity.
     PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 

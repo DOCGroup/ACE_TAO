@@ -259,12 +259,11 @@ public:
   // value.
 
 protected:
-  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          COSPROPERTY_HASH_MAP;
-  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          COSPROPERTY_HASH_ENTRY;
-  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          COSPROPERTY_HASH_ITERATOR;
+  using COSPROPERTY_HASH_MAP =
+    ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+  using COSPROPERTY_HASH_ENTRY = ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>;
+  using COSPROPERTY_HASH_ITERATOR =
+    ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
   // Typedefs are useful.
 
   CORBA::Boolean is_type_allowed (CORBA::TypeCode_ptr type);
@@ -433,12 +432,11 @@ public:
   virtual void destroy ();
   // Destroys the iterator.
 private:
-  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          COSPROPERTY_HASH_MAP;
-  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          COSPROPERTY_HASH_ITERATOR;
-  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          COSPROPERTY_HASH_ENTRY;
+  using COSPROPERTY_HASH_MAP =
+    ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+  using COSPROPERTY_HASH_ITERATOR =
+    ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+  using COSPROPERTY_HASH_ENTRY = ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>;
 
   COSPROPERTY_HASH_ITERATOR iterator_;
   // The Iterator object.
@@ -489,12 +487,11 @@ public:
   // Destroys the iterator.
 
 private:
-  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          COSPROPERTY_HASH_MAP;
-  typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          COSPROPERTY_HASH_ITERATOR;
-  typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
-          COSPROPERTY_HASH_ENTRY;
+  using COSPROPERTY_HASH_MAP =
+    ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+  using COSPROPERTY_HASH_ITERATOR =
+    ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+  using COSPROPERTY_HASH_ENTRY = ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>;
 
   COSPROPERTY_HASH_ITERATOR iterator_;
   // The iterator object.

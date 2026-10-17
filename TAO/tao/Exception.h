@@ -50,12 +50,12 @@ class TAO_InputCDR;
 namespace CORBA
 {
   class TypeCode;
-  typedef TypeCode * TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
   class Environment;
 
   class Any;
-  typedef Any * Any_ptr;
+  using Any_ptr = Any *;
 
   class SystemException;
 

@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 TAO_IORInfo::invalidate ()
 {
-  this->poa_ = 0;
+  this->poa_ = nullptr;
 }
 
 ACE_INLINE void

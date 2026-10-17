@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 namespace TAO
@@ -38,7 +38,7 @@ namespace TAO
   class Narrow_Utils
   {
   public:
-    typedef T *T_ptr;
+    using T_ptr = T *;
 
     static T_ptr narrow (CORBA::Object_ptr,
                          const char *repo_id);

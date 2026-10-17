@@ -100,7 +100,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
       x[0] = '\x00';
       return 1;
     }
-  x = 0;
+  x = nullptr;
   return 0;
 }
 
@@ -207,7 +207,7 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
                                      const ACE_CDR::Char *x)
 {
   // we'll accept a null pointer but only for an empty string
-  if (x == 0 && len != 0)
+  if (x == nullptr && len != 0)
     return 0;
 
   ACE_CDR::ULong l = len;

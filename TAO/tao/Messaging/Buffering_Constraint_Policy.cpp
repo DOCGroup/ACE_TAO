@@ -39,11 +39,11 @@ TAO_Buffering_Constraint_Policy::policy_type ()
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val)
 {
-  const TAO::BufferingConstraint *buffering_constraint = 0;
+  const TAO::BufferingConstraint *buffering_constraint = nullptr;
   if ((val >>= buffering_constraint) == 0)
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_Buffering_Constraint_Policy *servant = 0;
+  TAO_Buffering_Constraint_Policy *servant = nullptr;
   ACE_NEW_THROW_EX (servant,
                     TAO_Buffering_Constraint_Policy (*buffering_constraint),
                     CORBA::NO_MEMORY ());
@@ -55,7 +55,7 @@ TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val)
 TAO_Buffering_Constraint_Policy *
 TAO_Buffering_Constraint_Policy::clone () const
 {
-  TAO_Buffering_Constraint_Policy *copy = 0;
+  TAO_Buffering_Constraint_Policy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_Buffering_Constraint_Policy (*this),
                   0);
@@ -71,7 +71,7 @@ TAO_Buffering_Constraint_Policy::buffering_constraint ()
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::copy ()
 {
-  TAO_Buffering_Constraint_Policy* servant = 0;
+  TAO_Buffering_Constraint_Policy* servant = nullptr;
   ACE_NEW_THROW_EX (servant,
                     TAO_Buffering_Constraint_Policy (*this),
                     CORBA::NO_MEMORY ());

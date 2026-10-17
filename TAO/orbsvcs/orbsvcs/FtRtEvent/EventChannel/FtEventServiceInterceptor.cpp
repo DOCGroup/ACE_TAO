@@ -10,20 +10,20 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-CachedRequestTable::is_new_request(const ACE_CString& client_id, CORBA::Long retention_id)
+CachedRequestTable::is_new_request (ACE_CString const &client_id, CORBA::Long retention_id)
 {
-  TableImpl::ENTRY* entry = 0;
+  TableImpl::ENTRY *entry = nullptr;
   return table_.find(client_id, entry) !=0 || entry->int_id_.retention_id != retention_id;
 }
 
 int
-CachedRequestTable::update(const ACE_CString& client_id,
+CachedRequestTable::update (ACE_CString const &client_id,
                            CORBA::Long retention_id,
-                           const CORBA::Any& result)
+                           CORBA::Any const &result)
 {
   CachedRequestInfo info;
   info.retention_id = retention_id;
-  TableImpl::ENTRY* entry=0;
+  TableImpl::ENTRY *entry = nullptr;
   if (table_.bind(client_id, info, entry))
   {
     entry->int_id_.result = result;
@@ -34,9 +34,9 @@ CachedRequestTable::update(const ACE_CString& client_id,
 
 
 CORBA::Any
-CachedRequestTable::get_result(const ACE_CString& client_id)
+CachedRequestTable::get_result (ACE_CString const &client_id)
 {
-  TableImpl::ENTRY* entry = 0;
+  TableImpl::ENTRY *entry = nullptr;
   if (table_.find(client_id, entry)) {
     return entry->int_id_.result;
   }
@@ -45,7 +45,7 @@ CachedRequestTable::get_result(const ACE_CString& client_id)
 
 
 void
-CachedRequestTable::get_state(FtRtecEventChannelAdmin::CachedOptionResults& state)
+CachedRequestTable::get_state (FtRtecEventChannelAdmin::CachedOptionResults &state)
 {
   state.length(table_.current_size());
   TableImpl::iterator last = table_.end();
@@ -64,7 +64,7 @@ CachedRequestTable::get_state(FtRtecEventChannelAdmin::CachedOptionResults& stat
 }
 
 void
-CachedRequestTable::set_state(const FtRtecEventChannelAdmin::CachedOptionResults& state)
+CachedRequestTable::set_state (FtRtecEventChannelAdmin::CachedOptionResults const &state)
 {
   for (size_t i = 0; i < state.length(); ++i)
   {
@@ -159,16 +159,12 @@ get_sequence_number_context(
 
 
 namespace {
-FtEventServiceInterceptor* interceptor;
+FtEventServiceInterceptor *interceptor = nullptr;
 }
 
 FtEventServiceInterceptor::FtEventServiceInterceptor ()
 {
   interceptor = this;
-}
-
-FtEventServiceInterceptor::~FtEventServiceInterceptor ()
-{
 }
 
 FtEventServiceInterceptor*

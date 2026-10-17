@@ -226,8 +226,8 @@ protected:
 class RecordingStream : public ACE_Stream<ACE_MT_SYNCH>
 {
 public:
-  typedef ACE_Stream<ACE_MT_SYNCH> inherited;
-  typedef ACE_Module<ACE_MT_SYNCH> Module;
+  using inherited = ACE_Stream<ACE_MT_SYNCH>;
+  using Module = ACE_Module<ACE_MT_SYNCH>;
 
   RecordingStream () : inherited()
   { }

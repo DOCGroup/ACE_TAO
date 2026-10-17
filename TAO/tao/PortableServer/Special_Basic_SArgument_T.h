@@ -40,9 +40,9 @@ namespace TAO
   public:
     In_Special_Basic_SArgument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S const & arg () const;
 
@@ -65,10 +65,10 @@ namespace TAO
   public:
     Inout_Special_Basic_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -91,9 +91,9 @@ namespace TAO
   public:
     Out_Special_Basic_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -116,9 +116,9 @@ namespace TAO
   public:
     Ret_Special_Basic_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -136,22 +136,22 @@ namespace TAO
   template<typename T, typename to_T, typename from_T, template <typename> class Insert_Policy>
   struct Special_Basic_SArg_Traits_T
   {
-    typedef T                                               ret_type;
-    typedef T                                               in_type;
-    typedef T &                                             inout_type;
-    typedef T &                                             out_type;
+    using ret_type = T;
+    using in_type = T;
+    using inout_type = T &;
+    using out_type = T &;
 
-    typedef In_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>     in_arg_val;
-    typedef Inout_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>  inout_arg_val;
-    typedef Out_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>    out_arg_val;
-    typedef Ret_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>    ret_val;
+    using in_arg_val = In_Special_Basic_SArgument_T<T, to_T, from_T, Insert_Policy>;
+    using inout_arg_val = Inout_Special_Basic_SArgument_T<T, to_T, from_T, Insert_Policy>;
+    using out_arg_val = Out_Special_Basic_SArgument_T<T, to_T, from_T, Insert_Policy>;
+    using ret_val = Ret_Special_Basic_SArgument_T<T, to_T, from_T, Insert_Policy>;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef T const &                                       in_arg_type;
-    typedef inout_type                                      inout_arg_type;
-    typedef out_type                                        out_arg_type;
-    typedef out_type                                        ret_arg_type;
+    using in_arg_type = T const &;
+    using inout_arg_type = inout_type;
+    using out_arg_type = out_type;
+    using ret_arg_type = out_type;
   };
 }
 

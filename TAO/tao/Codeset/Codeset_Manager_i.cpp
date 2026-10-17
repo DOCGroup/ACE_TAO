@@ -377,7 +377,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
     }
 #endif
   //
-  TAO_Codeset_Service_Context_Handler* h = 0;
+  TAO_Codeset_Service_Context_Handler *h = nullptr;
   ACE_NEW (h,
            TAO_Codeset_Service_Context_Handler());
   core.service_context_registry ().bind (IOP::CodeSets, h);
@@ -427,7 +427,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
         ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::instance
         (tlist->name_);
 
-      if (tlist->translator_factory_ == 0)
+      if (tlist->translator_factory_ == nullptr)
         {
           if (TAO_debug_level)
             TAOLIB_ERROR ((LM_ERROR,
@@ -447,7 +447,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                         ACE_TEXT ("has wrong ncs (%d), %m\n"),
                         tlist->name_,
                         tlist->translator_factory_->ncs()));
-          tlist->translator_factory_ = 0;
+          tlist->translator_factory_ = nullptr;
           continue;
         }
 

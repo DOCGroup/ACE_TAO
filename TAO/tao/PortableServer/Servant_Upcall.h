@@ -38,9 +38,9 @@ struct TAO_Active_Object_Map_Entry;
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
+  using Object_ptr = Object *;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
+  using Object_out = TAO_Pseudo_Out_T<Object>;
 }
 
 namespace TAO

@@ -47,12 +47,12 @@ public:
   TAO_Linear_Priority_Mapping (long policy);
 
   /// The destructor
-  virtual ~TAO_Linear_Priority_Mapping ();
+  ~TAO_Linear_Priority_Mapping () override;
 
-  virtual CORBA::Boolean to_native (RTCORBA::Priority corba_priority,
-                                    RTCORBA::NativePriority &native_priority);
-  virtual CORBA::Boolean to_CORBA (RTCORBA::NativePriority native_priority,
-                                   RTCORBA::Priority &corba_priority);
+  CORBA::Boolean to_native (RTCORBA::Priority corba_priority,
+                            RTCORBA::NativePriority &native_priority) override;
+  CORBA::Boolean to_CORBA (RTCORBA::NativePriority native_priority,
+                           RTCORBA::Priority &corba_priority) override;
 
 private:
   /// The scheduling policy

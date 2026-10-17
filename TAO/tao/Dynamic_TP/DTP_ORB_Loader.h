@@ -37,14 +37,19 @@ public:
   TAO_DTP_ORB_Loader ();
 
   /// Destructor.
-  virtual ~TAO_DTP_ORB_Loader ();
+  ~TAO_DTP_ORB_Loader () override;
 
   /// Initialize the DynamicTP loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
+  TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader const &) = delete;
+  TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader const &) = delete;
+  TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader &&) = delete;
+  TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader &&) = delete;
+
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {};
 };
 
 

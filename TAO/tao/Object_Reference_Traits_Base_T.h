@@ -19,10 +19,10 @@ namespace details
 template<typename object_t, typename object_t_var>
 struct object_reference_traits_base
 {
-  typedef object_t object_type;
-  typedef object_type * value_type;
-  typedef object_type const * const_value_type;
-  typedef object_t_var object_type_var;
+  using object_type = object_t;
+  using value_type = object_type *;
+  using const_value_type = object_type const *;
+  using object_type_var = object_t_var;
 
   inline static void release(object_type * object)
   {

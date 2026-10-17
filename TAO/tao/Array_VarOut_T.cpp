@@ -27,7 +27,7 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
 template<typename T, typename T_slice, typename TAG>
 TAO_FixedArray_Var_T<T,T_slice,TAG> &
 TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (
-    const TAO_FixedArray_Var_T<T,T_slice,TAG> & p)
+    TAO_FixedArray_Var_T<T,T_slice,TAG> const & p)
 {
   if (this != &p)
     {
@@ -60,7 +60,7 @@ TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
 template<typename T, typename T_slice, typename TAG>
 TAO_VarArray_Var_T<T,T_slice,TAG> &
 TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (
-    const TAO_VarArray_Var_T<T,T_slice,TAG> & p)
+    TAO_VarArray_Var_T<T,T_slice,TAG> const & p)
 {
   if (this != &p)
     {

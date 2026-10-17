@@ -27,7 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableInterceptor
 {
   class Interceptor;
-  typedef Interceptor *Interceptor_ptr;
+  using Interceptor_ptr = Interceptor *;
 }
 
 namespace CORBA
@@ -50,8 +50,8 @@ namespace TAO
   {
   public:
     /// Define the traits for the underlying portable interceptor array.
-    typedef typename InterceptorType::_var_type InterceptorType_var_type;
-    typedef typename InterceptorType::_ptr_type InterceptorType_ptr_type;
+    using InterceptorType_var_type = typename InterceptorType::_var_type;
+    using InterceptorType_ptr_type = typename InterceptorType::_ptr_type;
 
     struct RegisteredInterceptor
     {
@@ -79,7 +79,7 @@ namespace TAO
     size_t size () const;
 
   private:
-    typedef ACE_Array_Base<RegisteredInterceptor > RegisteredArray;
+    using RegisteredArray = ACE_Array_Base<RegisteredInterceptor >;
 
     /// Dynamic array of registered interceptors.
     RegisteredArray interceptors_;

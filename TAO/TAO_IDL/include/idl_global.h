@@ -391,11 +391,11 @@ public:
   void             reset_flag_seen ();
 
   // = Types & methods supporting DDS DCPS sequence definitions (from #pragma)
-  typedef ACE_Unbounded_Queue<char *> DCPS_Sequence_Types_List;
+  using DCPS_Sequence_Types_List = ACE_Unbounded_Queue<char *>;
 
 
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
-  typedef ACE_Unbounded_Queue<ACE_TString> DCPS_Key_List;
+  using DCPS_Key_List = ACE_Unbounded_Queue<ACE_TString>;
 
   struct DCPS_Data_Type_Info
   {
@@ -403,14 +403,13 @@ public:
     DCPS_Key_List   key_list_;
   };
 
-  typedef ACE_Unbounded_Queue_Iterator<ACE_TString> DCPS_Data_Type_Info_Iter;
+  using DCPS_Data_Type_Info_Iter = ACE_Unbounded_Queue_Iterator<ACE_TString>;
 
-  typedef ACE_Hash_Map_Manager_Ex< const char*,
-                                   DCPS_Data_Type_Info*,
-                                   ACE_Hash<char*>,
-                                   ACE_Equal_To<char*>,
-                                   ACE_Null_Mutex>
-    DCPS_Type_Info_Map;
+  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager_Ex<const char*,
+                                                      DCPS_Data_Type_Info*,
+                                                      ACE_Hash<char*>,
+                                                      ACE_Equal_To<char*>,
+                                                      ACE_Null_Mutex>;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
   void add_dcps_data_type (const char* id);
@@ -674,10 +673,8 @@ public:
     bool is_system_;
   };
 
-  typedef ACE_Unbounded_Queue<Include_Path_Info>
-    Unbounded_Paths_Queue;
-  typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info>
-    Unbounded_Paths_Queue_Iterator;
+  using Unbounded_Paths_Queue = ACE_Unbounded_Queue<Include_Path_Info>;
+  using Unbounded_Paths_Queue_Iterator = ACE_Unbounded_Queue_Iterator<Include_Path_Info>;
 
   Unbounded_Paths_Queue &include_paths ();
   // Accessor for the member.

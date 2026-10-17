@@ -240,7 +240,7 @@ private:
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock_;
 
   /// Implement the Leader/Followers set using an intrusive list
-  typedef ACE_Intrusive_List<TAO_LF_Follower> Follower_Set;
+  using Follower_Set = ACE_Intrusive_List<TAO_LF_Follower>;
   Follower_Set follower_set_;
 
   /// Use a free list to allocate and release Follower objects
@@ -295,7 +295,7 @@ private:
   };
 
   /// The set of deferred event handlers.
-  typedef ACE_Intrusive_List<Deferred_Event> Deferred_Event_Set;
+  using Deferred_Event_Set = ACE_Intrusive_List<Deferred_Event>;
   Deferred_Event_Set deferred_event_set_;
 };
 

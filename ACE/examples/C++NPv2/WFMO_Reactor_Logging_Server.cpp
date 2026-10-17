@@ -113,8 +113,7 @@ static ACE_THR_FUNC_RETURN event_loop (void *arg) {
 }
 
 
-typedef Reactor_Logging_Server<Logging_Acceptor_WFMO>
-        Server_Logging_Daemon;
+using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_WFMO>;
 
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])

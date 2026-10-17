@@ -6,8 +6,8 @@
 #include "CPP-acceptor.h"
 
 #if defined (ACE_HAS_TLI)
-typedef Svc_Handler<ACE_TLI_STREAM> SVC_HANDLER;
-typedef IPC_Server<SVC_HANDLER, ACE_TLI_ACCEPTOR> IPC_SERVER;
+using SVC_HANDLER = Svc_Handler<ACE_TLI_STREAM>;
+using IPC_SERVER = IPC_Server<SVC_HANDLER, ACE_TLI_ACCEPTOR>;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

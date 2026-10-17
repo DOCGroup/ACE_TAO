@@ -84,7 +84,7 @@
 // i.e. determining the type at compile-time rather than at
 // preprocessing-time, will work for all platforms, and does not
 // depend on ACE developer-defined configuration parameters.
-typedef ACE::If_Then_Else<
+using intptr_t = ACE::If_Then_Else<
   (sizeof (void*) == sizeof (signed int)),
   signed int,
   ACE::If_Then_Else<
@@ -96,9 +96,9 @@ typedef ACE::If_Then_Else<
       void /* Unknown. Force an invalid type */
       >::result_type
     >::result_type
-  >::result_type intptr_t;
+  >::result_type;
 
-typedef ACE::If_Then_Else<
+using uintptr_t = ACE::If_Then_Else<
   (sizeof (void*) == sizeof (unsigned int)),
   unsigned int,
   ACE::If_Then_Else<
@@ -110,7 +110,7 @@ typedef ACE::If_Then_Else<
       void /* Unknown. Force an invalid type */
       >::result_type
     >::result_type
-  >::result_type uintptr_t;
+  >::result_type;
 
 #endif  /* ACE_LACKS_INTPTR_T */
 

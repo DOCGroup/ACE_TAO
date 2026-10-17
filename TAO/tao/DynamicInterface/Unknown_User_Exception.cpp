@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::UnknownUserException::UnknownUserException ()
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
                           "UnknownUserException"),
-    exception_ (0)
+    exception_ (nullptr)
 {
 }
 
@@ -28,7 +28,7 @@ CORBA::UnknownUserException::UnknownUserException (CORBA::Any &ex)
 }
 
 CORBA::UnknownUserException::UnknownUserException (
-    const CORBA::UnknownUserException& e
+    CORBA::UnknownUserException const& e
   )
   : CORBA::UserException (e._rep_id (),
                          e._name ())
@@ -55,7 +55,7 @@ CORBA::UnknownUserException::_downcast (CORBA::Exception *ex)
 }
 
 CORBA::UnknownUserException const *
-CORBA::UnknownUserException::_downcast (CORBA::Exception const * ex)
+CORBA::UnknownUserException::_downcast (CORBA::Exception const* ex)
 {
   return dynamic_cast<CORBA::UnknownUserException const *> (ex);
 }
@@ -89,7 +89,7 @@ CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &)
   throw ::CORBA::MARSHAL ();
 }
 
-const char *
+char const*
 CORBA::UnknownUserException::_rep_id () const
 {
   return this->exception_->_tao_get_typecode ()->id ();

@@ -40,7 +40,7 @@ class TAO_Output_CDR;
 class TAO_ORB_Core;
 class TAO_ServerRequest;
 
-typedef ACE_Allocator TAO_AMH_BUFFER_ALLOCATOR;
+using TAO_AMH_BUFFER_ALLOCATOR = ACE_Allocator;
 
 /**
  * @class TAO_AMH_Response_Handler
@@ -73,7 +73,7 @@ public:
    * Releases the transport and in case of an error, sends the appropriate
    * exception back to the client
    */
-  virtual ~TAO_AMH_Response_Handler ();
+  ~TAO_AMH_Response_Handler () override;
 
   /**
    * Stores necessary information from a TAO_Server_Request onto the heap
@@ -83,7 +83,7 @@ public:
 
   /// @name Mutators for refcount
   //@{
-  virtual void _remove_ref ();
+  void _remove_ref () override;
   //@}
 
 protected:
@@ -116,8 +116,10 @@ protected:
   GIOP::ReplyStatusType reply_status_;
 
 private:
-  TAO_AMH_Response_Handler (const TAO_AMH_Response_Handler&) = delete;
-  TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&) = delete;
+  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler const &) = delete;
+  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler const &) = delete;
+  TAO_AMH_Response_Handler (TAO_AMH_Response_Handler &&) = delete;
+  TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler &&) = delete;
 
   /// Pointer to the original message-base
   TAO_GIOP_Message_Base *mesg_base_;

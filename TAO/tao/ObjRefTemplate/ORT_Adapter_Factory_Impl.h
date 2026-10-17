@@ -40,14 +40,22 @@ namespace TAO
     : public ORT_Adapter_Factory
   {
   public:
+    ORT_Adapter_Factory_Impl () = default;
+
     /// Create an adapter
-    virtual TAO::ORT_Adapter * create ();
+    TAO::ORT_Adapter *create () override;
 
     /// Destroy an adapter that is created by this factory
-    virtual void destroy (TAO::ORT_Adapter * adapter);
+    void destroy (TAO::ORT_Adapter *adapter) override;
 
     /// Used to force the initialization of the code.
     static int Initializer ();
+
+  private:
+    ORT_Adapter_Factory_Impl (ORT_Adapter_Factory_Impl const &) = delete;
+    ORT_Adapter_Factory_Impl &operator= (ORT_Adapter_Factory_Impl const &) = delete;
+    ORT_Adapter_Factory_Impl (ORT_Adapter_Factory_Impl &&) = delete;
+    ORT_Adapter_Factory_Impl &operator= (ORT_Adapter_Factory_Impl &&) = delete;
   };
 }
 

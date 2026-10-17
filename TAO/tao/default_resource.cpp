@@ -829,9 +829,9 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 }
 
 
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,TAO_SYNCH_MUTEX> LOCKED_MALLOC;
-typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR_POOL;
-typedef ACE_New_Allocator LOCKED_ALLOCATOR_NO_POOL;
+using LOCKED_MALLOC = ACE_Malloc<ACE_LOCAL_MEMORY_POOL, TAO_SYNCH_MUTEX>;
+using LOCKED_ALLOCATOR_POOL = ACE_Allocator_Adapter<LOCKED_MALLOC>;
+using LOCKED_ALLOCATOR_NO_POOL = ACE_New_Allocator;
 
 void
 TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)

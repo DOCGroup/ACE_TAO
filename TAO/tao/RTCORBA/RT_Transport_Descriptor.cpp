@@ -35,10 +35,10 @@ TAO_RT_Transport_Descriptor::duplicate ()
   // Get a copy of the underlying endpoint
   TAO_Endpoint *endpoint =
     this->endpoint_->duplicate ();
-  if (endpoint == 0)
-    return 0;
+  if (endpoint == nullptr)
+    return nullptr;
 
-  TAO_RT_Transport_Descriptor *new_descriptor = 0;
+  TAO_RT_Transport_Descriptor *new_descriptor = nullptr;
 
   ACE_NEW_RETURN (new_descriptor,
                   TAO_RT_Transport_Descriptor (endpoint, 1),
@@ -48,8 +48,8 @@ TAO_RT_Transport_Descriptor::duplicate ()
   TAO_RT_Transport_Descriptor_Property *current_property =
     this->property_list_;
 
-  TAO_RT_Transport_Descriptor_Property *current_new_property = 0;
-  TAO_RT_Transport_Descriptor_Property *new_property = 0;
+  TAO_RT_Transport_Descriptor_Property *current_new_property = nullptr;
+  TAO_RT_Transport_Descriptor_Property *new_property = nullptr;
 
   while (current_property)
     {
@@ -57,9 +57,9 @@ TAO_RT_Transport_Descriptor::duplicate ()
         current_property->duplicate ();
 
       // Note that we cannot use <insert> because that will reverse the stack.
-      if (new_descriptor->property_list_ == 0)
+      if (new_descriptor->property_list_ == nullptr)
         new_descriptor->property_list_ = new_property;
-      else if (current_new_property != 0)
+      else if (current_new_property != nullptr)
         current_new_property->next_ = new_property;
 
       current_new_property = new_property;
@@ -75,7 +75,7 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
   const TAO_RT_Transport_Descriptor *rhs =
     dynamic_cast<const TAO_RT_Transport_Descriptor*> (other_prop);
 
-  if (rhs == 0)
+  if (rhs == nullptr)
     return false;
 
   // Check if endpoint is equivalent.
@@ -91,7 +91,7 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
 
   while (current || rhs_current)
     {
-      if (rhs_current == 0 || current == 0)
+      if (rhs_current == nullptr || current == nullptr)
         return false;
 
       if (current->is_equivalent (rhs_current) == 0)

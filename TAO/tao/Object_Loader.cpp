@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Object_Loader::~TAO_Object_Loader ()
-{
-}
+TAO_Object_Loader::~TAO_Object_Loader () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

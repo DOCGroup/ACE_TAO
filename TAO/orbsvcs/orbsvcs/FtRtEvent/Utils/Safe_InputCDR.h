@@ -25,7 +25,7 @@ public:
    * or not. If the buffer is not properly aligned, it will make a copy
    * of the buffer.
    */
-  Safe_InputCDR(const char* buf, int size);
+  Safe_InputCDR (char const *buf, int size);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

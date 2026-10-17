@@ -22,10 +22,10 @@ template<typename obj_ref_traits>
 class valuetype_sequence_element
 {
 public:
-  typedef typename obj_ref_traits::object_type valuetype_type;
-  typedef valuetype_type * value_type;
-  typedef valuetype_type const * const_value_type;
-  typedef typename obj_ref_traits::object_type_var valuetype_var;
+  using valuetype_type = typename obj_ref_traits::object_type;
+  using value_type = valuetype_type *;
+  using const_value_type = valuetype_type const *;
+  using valuetype_var = typename obj_ref_traits::object_type_var;
 
 private:
   inline valuetype_sequence_element<obj_ref_traits> & pseudo_copy_swap(

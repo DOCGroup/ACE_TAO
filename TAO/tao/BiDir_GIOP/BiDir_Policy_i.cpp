@@ -9,7 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
-    const BiDirPolicy::BidirectionalPolicyValue  val)
+    BiDirPolicy::BidirectionalPolicyValue val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::BiDirPolicy::BidirectionalPolicy ()
@@ -18,7 +18,7 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
 {
 }
 
-TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs)
+TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::BiDirPolicy::BidirectionalPolicy ()

@@ -44,10 +44,10 @@ namespace TAO
      * are known so the stream may be handed off to either an existing
      * session, or to a newly created one.
      */
-    typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY2;
-    typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY2;
+    using CREATION_STRATEGY2 = TAO_Creation_Strategy<Connection_Handler>;
+    using CONCURRENCY_STRATEGY2 = TAO_Concurrency_Strategy<Connection_Handler>;
 
-    typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> COMPLETION_BASE;
+    using COMPLETION_BASE = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {

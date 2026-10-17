@@ -55,7 +55,7 @@ namespace TAO
         TAO::NVList_Argument * const tmp_arg =
           dynamic_cast <TAO::NVList_Argument*> (args[1]);
 
-        if (tmp_arg)
+        if (tmp_arg != nullptr)
           {
             // Generate the argument list on demand.
             Dynamic::ParameterList * const parameter_list =
@@ -93,18 +93,18 @@ namespace TAO
                              0);
 
     // Pull the exception ID out of the marshaling buffer.
-    if (tmp_stream.read_string (buf.inout ()) == 0)
+    if (!tmp_stream.read_string (buf.inout ()))
       {
         throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_YES);
       }
 
     for (CORBA::ULong i = 0;
-         this->excp_list_ != 0 && i < this->excp_list_->count ();
+         this->excp_list_ != nullptr && i < this->excp_list_->count ();
          i++)
       {
           CORBA::TypeCode_var tc = this->excp_list_->item (i);
 
-          const char *xid = tc->id ();
+          char const* xid = tc->id ();
 
           if (ACE_OS::strcmp (buf.in (), xid) != 0)
             {
@@ -112,7 +112,7 @@ namespace TAO
             }
 
           CORBA::Any any;
-          TAO::Unknown_IDL_Type *unk = 0;
+          TAO::Unknown_IDL_Type *unk = nullptr;
           ACE_NEW_RETURN (unk,
                           TAO::Unknown_IDL_Type (
                               tc.in (),
@@ -174,7 +174,7 @@ namespace TAO
         TAO::NVList_Argument * const tmp_arg =
           dynamic_cast <TAO::NVList_Argument*> (args[1]);
 
-        if (tmp_arg)
+        if (tmp_arg != nullptr)
           {
             // Generate the argument list on demand.
             Dynamic::ParameterList * const parameter_list =

@@ -49,8 +49,8 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   // So traverse mods_ and and reverse the list, then iterate over it to push
   // the modules in the stream in the correct order.
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  typedef std::list<const ACE_Static_Node *,
-                    ACE_Allocator_Std_Adapter<const ACE_Static_Node *> > list_t;
+  using list_t = std::list<const ACE_Static_Node *,
+                           ACE_Allocator_Std_Adapter<const ACE_Static_Node *>>;
 #else
   using list_t = std::list<const ACE_Static_Node *>;
 #endif /* ACE_HAS_ALLOC_HOOKS */

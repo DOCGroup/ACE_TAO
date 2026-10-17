@@ -472,8 +472,8 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
   return impl;
 }
 
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
-typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
+using NULL_LOCK_MALLOC = ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
+using NULL_LOCK_ALLOCATOR = ACE_Allocator_Adapter<NULL_LOCK_MALLOC>;
 
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator ()

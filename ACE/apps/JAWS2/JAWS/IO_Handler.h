@@ -255,8 +255,7 @@ public:
 using JAWS_Synch_IO_Handler = JAWS_IO_Handler;
 using JAWS_Synch_IO_Handler_Factory = JAWS_IO_Handler_Factory;
 
-typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
-        JAWS_Synch_IO_Handler_Factory_Singleton;
+using JAWS_Synch_IO_Handler_Factory_Singleton = ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>;
 
 #if defined(ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS)
 
@@ -302,7 +301,6 @@ using JAWS_Asynch_IO_Handler_Factory = JAWS_IO_Handler_Factory;
 
 #endif /* defined(ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS) */
 
-typedef ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
-        JAWS_Asynch_IO_Handler_Factory_Singleton;
+using JAWS_Asynch_IO_Handler_Factory_Singleton = ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>;
 
 #endif /* JAWS_IO_HANDLER_H */

@@ -18,11 +18,11 @@ class AST_Annotation_Decl;
 class TAO_IDL_FE_Export AST_Annotation_Appls {
 public:
 //FUZZ: disable check_for_ACE_SYNCH_MUTEX
-  typedef ACE_Strong_Bound_Ptr<AST_Annotation_Appl, ACE_SYNCH_MUTEX> AST_Annotation_Appl_Ptr;
+  using AST_Annotation_Appl_Ptr = ACE_Strong_Bound_Ptr<AST_Annotation_Appl, ACE_SYNCH_MUTEX>;
 //FUZZ: enable check_for_ACE_SYNCH_MUTEX
-  typedef ACE_Vector<AST_Annotation_Appl_Ptr> AST_Annotation_Appl_Ptrs;
-  typedef AST_Annotation_Appl_Ptrs::iterator iterator;
-  typedef AST_Annotation_Appl_Ptrs::const_iterator const_iterator;
+  using AST_Annotation_Appl_Ptrs = ACE_Vector<AST_Annotation_Appl_Ptr>;
+  using iterator = AST_Annotation_Appl_Ptrs::iterator;
+  using const_iterator = AST_Annotation_Appl_Ptrs::const_iterator;
 
   AST_Annotation_Appls ();
   AST_Annotation_Appls (const AST_Annotation_Appls& other);

@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_DS_Network_Priority_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)
+TAO_DS_Network_Priority_Protocols_Hooks::init_hooks (TAO_ORB_Core * orb_core)
 {
   this->orb_core_ = orb_core;
 }
@@ -22,12 +22,12 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Service_Context &sc)
 {
   CORBA::Long dscp_codepoint = 0;
-  const IOP::ServiceContext *context = 0;
+  IOP::ServiceContext const* context = nullptr;
 
   if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
     {
       TAO_InputCDR cdr (reinterpret_cast
-                        <const char*>
+                        <char const*>
                         (context->context_data.get_buffer ()),
                         context->context_data.length ());
 
@@ -49,7 +49,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
 CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
-  TAO_Stub *stub, CORBA::Object *object)
+  TAO_Stub * stub, CORBA::Object * object)
 {
   CORBA::Long dscp = 0;
   TAO::DiffservCodepoint diffserv_codepoint;

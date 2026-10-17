@@ -337,35 +337,34 @@ typedef struct _dbghelp_functions
   DWORD64 (WINAPI *SymGetModuleBase64) (HANDLE hProc, DWORD64 dwAddr);
   PVOID (WINAPI *SymFunctionTableAccess64) (HANDLE hProc, DWORD64 AddrBase);
 
-  typedef BOOL (WINAPI *SymFromAddr_t)
+  using SymFromAddr_t = BOOL (WINAPI *)
     (HANDLE hProc, DWORD64 Addr, PDWORD64 Disp, PSYMBOL_INFO Symbol);
   SymFromAddr_t SymFromAddr;
 
-  typedef BOOL (WINAPI *SymGetLineFromAddr64_t) (HANDLE hProc, DWORD64 dwAddr,
-                                                 PDWORD pdwDisplacement,
-                                                 PIMAGEHLP_LINE64 Line);
+  using SymGetLineFromAddr64_t = BOOL (WINAPI *) (HANDLE hProc, DWORD64 dwAddr,
+                                                   PDWORD pdwDisplacement,
+                                                   PIMAGEHLP_LINE64 Line);
   SymGetLineFromAddr64_t SymGetLineFromAddr64;
 
-  typedef DWORD (WINAPI *SymSetOptions_t) (DWORD SymOptions);
+  using SymSetOptions_t = DWORD (WINAPI *) (DWORD SymOptions);
   SymSetOptions_t SymSetOptions;
 
-  typedef DWORD (WINAPI *SymGetOptions_t) ();
+  using SymGetOptions_t = DWORD (WINAPI *) ();
   SymGetOptions_t SymGetOptions;
 
-  typedef BOOL (WINAPI *SymInitialize_t) (HANDLE hProc, PCTSTR UserSearchPath,
-                                          BOOL invasive);
+  using SymInitialize_t = BOOL (WINAPI *) (HANDLE hProc, PCTSTR UserSearchPath,
+                                            BOOL invasive);
   SymInitialize_t SymInitialize;
 
-  typedef BOOL
-  (WINAPI *StackWalk64_t) (DWORD MachineType, HANDLE hPRoc, HANDLE hThr,
-                           LPSTACKFRAME64 StackFrame, PVOID ContextRecord,
-                           PREAD_PROCESS_MEMORY_ROUTINE64 RMRoutine,
-                           PFUNCTION_TABLE_ACCESS_ROUTINE64 FTARoutine,
-                           PGET_MODULE_BASE_ROUTINE64 GMBRoutine,
-                           PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress);
+  using StackWalk64_t = BOOL (WINAPI *) (DWORD MachineType, HANDLE hPRoc, HANDLE hThr,
+                                         LPSTACKFRAME64 StackFrame, PVOID ContextRecord,
+                                         PREAD_PROCESS_MEMORY_ROUTINE64 RMRoutine,
+                                         PFUNCTION_TABLE_ACCESS_ROUTINE64 FTARoutine,
+                                         PGET_MODULE_BASE_ROUTINE64 GMBRoutine,
+                                         PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress);
   StackWalk64_t StackWalk64;
 
-  typedef BOOL (WINAPI *SymCleanup_t) (HANDLE hProc);
+  using SymCleanup_t = BOOL (WINAPI *) (HANDLE hProc);
   SymCleanup_t SymCleanup;
 } dbghelp_functions;
 

@@ -42,16 +42,16 @@ public:
   TAO_LF_Connect_Strategy (TAO_ORB_Core *orb, bool no_upcall);
 
   /// Destructor
-  ~TAO_LF_Connect_Strategy ();
+  ~TAO_LF_Connect_Strategy () override;
 
   /**
    * Concrete implementation for this class. Please see
    * Connect_Strategy.h for details
    */
-  virtual void synch_options (ACE_Time_Value *val, ACE_Synch_Options &opt);
+  void synch_options (ACE_Time_Value *val, ACE_Synch_Options &opt) override;
 
 protected:
-  virtual int wait_i (TAO_LF_Event *ev, TAO_Transport *t, ACE_Time_Value *val);
+  int wait_i (TAO_LF_Event *ev, TAO_Transport *t, ACE_Time_Value *val) override;
 
   bool no_upcall_;
 };

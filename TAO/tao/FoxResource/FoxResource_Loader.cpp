@@ -8,7 +8,7 @@ namespace TAO
 {
   FoxResource_Loader::FoxResource_Loader (FXApp *app)
   {
-    FoxResource_Factory *tmp = 0;
+    FoxResource_Factory *tmp = nullptr;
 
     ACE_NEW (tmp,
              FoxResource_Factory (app));
@@ -16,9 +16,7 @@ namespace TAO
     TAO_ORB_Core::set_gui_resource_factory( tmp );
   }
 
-  FoxResource_Loader::~FoxResource_Loader ()
-  {
-  }
+  FoxResource_Loader::~FoxResource_Loader () = default;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

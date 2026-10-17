@@ -45,8 +45,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "Thread_Pool_Reactor_SSL_Test.h"
-typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SSL_SOCK_Acceptor>
-   ACCEPTOR;
+using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SSL_SOCK_Acceptor>;
 
 // Accepting end point.  This is actually "localhost:10010", but some
 // platform couldn't resolve the name so we use the IP address

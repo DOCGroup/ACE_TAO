@@ -37,8 +37,8 @@ namespace Dynamic
 {
   class ParameterList;
   class ExceptionList;
-  typedef CORBA::StringSeq ContextList;
-  typedef CORBA::StringSeq RequestContext;
+  using ContextList = CORBA::StringSeq;
+  using RequestContext = CORBA::StringSeq;
 }
 
 /**

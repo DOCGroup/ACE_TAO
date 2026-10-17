@@ -93,7 +93,7 @@ twoway_server (void *arg)
           len = ntohl (len);
           ACE_NEW_RETURN (request,
                           char [len],
-                          nullptr);
+                          ACE_THR_FUNC_RETURN_NULL);
         }
 
       // Subtract off the sizeof the length prefix.
@@ -210,7 +210,7 @@ oneway_server (void *arg)
           len = ntohl (len);
           ACE_NEW_RETURN (request,
                           char [len],
-                          nullptr);
+                          ACE_THR_FUNC_RETURN_NULL);
         }
 
       // Subtract off the sizeof the length prefix.

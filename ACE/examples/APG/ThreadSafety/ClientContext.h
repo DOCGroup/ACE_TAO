@@ -9,8 +9,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
 
-typedef ACE_Hash_Map_Manager<const char *, void *, ACE_Null_Mutex>
-Map;
+using Map = ACE_Hash_Map_Manager<const char *, void *, ACE_Null_Mutex>;
 
 // Listing 1 code/ch14
 // Client-specific context information.

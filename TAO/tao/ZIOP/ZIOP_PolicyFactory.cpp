@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_ZIOP_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value)
+    CORBA::Any const& value)
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
@@ -38,7 +38,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID :
     {
-      const ::Compression::CompressorIdLevelList* val = 0;
+      ::Compression::CompressorIdLevelList const* val = nullptr;
 
       // Extract the value from the any.
       if (!(value >>= val))

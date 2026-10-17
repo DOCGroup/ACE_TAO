@@ -54,6 +54,11 @@ public:
   static int Initializer ();
 
 private:
+  TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader const &) = delete;
+  TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader const &) = delete;
+  TAO_BiDirGIOP_Loader (TAO_BiDirGIOP_Loader &&) = delete;
+  TAO_BiDirGIOP_Loader &operator= (TAO_BiDirGIOP_Loader &&) = delete;
+
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
   bool initialized_ {false};

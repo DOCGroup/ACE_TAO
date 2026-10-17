@@ -6,8 +6,7 @@
 #include "Logging_Acceptor_Ex.h"
 #include "ace/Log_Msg.h"
 
-typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
-        Server_Logging_Daemon;
+using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_Ex>;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

@@ -60,7 +60,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// this: Firstly the lock modes are ordered from weakest to strongest
 /// in the internal representation, and secondly it is possible to
 /// indicate a 'non-mode' (CC_EM)
-typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
+enum CC_LockModeEnum { CC_EM = -1, CC_IR = 0, CC_R, CC_U, CC_IW, CC_W };
 
 /**
  * @class CC_LockSet

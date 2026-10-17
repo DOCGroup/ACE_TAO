@@ -53,9 +53,7 @@ class Mem_Map_Stream
 public:
   using Svc_Handler = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
-  typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR>
-        STRAT_CONNECTOR;
+  using STRAT_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 
   // Mem_Map_Stream ();
   // constructor added:KIRTHIKA

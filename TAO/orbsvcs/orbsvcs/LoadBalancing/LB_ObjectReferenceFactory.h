@@ -72,15 +72,15 @@ class TAO_LB_ObjectReferenceFactory
       const PortableInterceptor::ObjectId & id);
   //@}
 
-  typedef ACE_Hash_Map_Manager_Ex<
+  using Table = ACE_Hash_Map_Manager_Ex<
     ACE_CString,
     PortableGroup::ObjectGroup_var,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
-    ACE_Null_Mutex> Table;
+    ACE_Null_Mutex>;
 
-  typedef ACE_Array_Base<
-    PortableGroup::GenericFactory::FactoryCreationId_var> fcid_list;
+  using fcid_list = ACE_Array_Base<
+    PortableGroup::GenericFactory::FactoryCreationId_var>;
 
 protected:
   /// Destructor

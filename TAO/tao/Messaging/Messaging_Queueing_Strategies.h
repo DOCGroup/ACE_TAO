@@ -35,7 +35,7 @@ namespace TAO
 
 namespace TimeBase
 {
-  typedef CORBA::ULongLong TimeT;
+  using TimeT = CORBA::ULongLong;
 }
 
 namespace TAO

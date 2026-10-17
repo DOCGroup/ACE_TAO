@@ -2,11 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Smart_Proxy_Base::TAO_Smart_Proxy_Base ()
-{
-}
-
-ACE_INLINE
 TAO_Smart_Proxy_Base::TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy)
   : base_proxy_(proxy)
 {

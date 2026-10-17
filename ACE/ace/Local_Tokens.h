@@ -106,7 +106,7 @@ class ACE_Export ACE_TPQ_Entry
 {
   friend class ACE_Token_Manager;
 public:
-  typedef void (*PTVF) (void *);
+  using PTVF = void (*) (void *);
 
   /// Null constructor.
   ACE_TPQ_Entry ();

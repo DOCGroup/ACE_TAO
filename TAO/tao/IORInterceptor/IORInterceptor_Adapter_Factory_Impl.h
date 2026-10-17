@@ -39,12 +39,22 @@ class TAO_IORInterceptor_Export TAO_IORInterceptor_Adapter_Factory_Impl
   : public TAO_IORInterceptor_Adapter_Factory
 {
 public:
-  virtual ~TAO_IORInterceptor_Adapter_Factory_Impl ();
+  TAO_IORInterceptor_Adapter_Factory_Impl () = default;
 
-  virtual TAO_IORInterceptor_Adapter *create ();
+  ~TAO_IORInterceptor_Adapter_Factory_Impl () override;
+
+  TAO_IORInterceptor_Adapter *create () override;
 
   // Used to force the initialization of the ORB code.
   static int Initializer ();
+
+private:
+  TAO_IORInterceptor_Adapter_Factory_Impl (TAO_IORInterceptor_Adapter_Factory_Impl const &) = delete;
+  TAO_IORInterceptor_Adapter_Factory_Impl &operator= (
+    TAO_IORInterceptor_Adapter_Factory_Impl const &) = delete;
+  TAO_IORInterceptor_Adapter_Factory_Impl (TAO_IORInterceptor_Adapter_Factory_Impl &&) = delete;
+  TAO_IORInterceptor_Adapter_Factory_Impl &operator= (
+    TAO_IORInterceptor_Adapter_Factory_Impl &&) = delete;
 };
 
 static int

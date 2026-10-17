@@ -33,23 +33,23 @@ namespace TAO
     class Creation_Time
     {
     public:
-      explicit Creation_Time (const ACE_Time_Value &creation_time);
+      explicit Creation_Time (ACE_Time_Value const &creation_time);
 
       Creation_Time ();
 
-      void creation_time (const void *creation_time);
+      void creation_time (void const *creation_time);
 
-      const void *creation_time () const;
+      void const *creation_time () const;
 
       static CORBA::ULong creation_time_length ();
 
-      bool operator== (const Creation_Time &rhs) const;
+      bool operator== (Creation_Time const &rhs) const;
 
-      bool operator!= (const Creation_Time &rhs) const;
+      bool operator!= (Creation_Time const &rhs) const;
 
-      bool operator== (const Temporary_Creation_Time &rhs) const;
+      bool operator== (Temporary_Creation_Time const &rhs) const;
 
-      bool operator!= (const Temporary_Creation_Time &rhs) const;
+      bool operator!= (Temporary_Creation_Time const &rhs) const;
 
     protected:
       enum
@@ -59,7 +59,7 @@ namespace TAO
       };
 
       /// Timestamp
-      CORBA::ULong time_stamp_[2];
+      CORBA::ULong time_stamp_[2] {};
     };
 
     /**
@@ -75,14 +75,14 @@ namespace TAO
     public:
       Temporary_Creation_Time ();
 
-      void creation_time (const void *creation_time);
+      void creation_time (void const *creation_time);
 
-      bool operator== (const Creation_Time &rhs) const;
+      bool operator== (Creation_Time const &rhs) const;
 
-      bool operator!= (const Creation_Time &rhs) const;
+      bool operator!= (Creation_Time const &rhs) const;
 
     protected:
-      void *time_stamp_;
+      void const *time_stamp_ {};
     };
   }
 }

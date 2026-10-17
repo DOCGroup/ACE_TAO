@@ -52,8 +52,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     {
       *os << be_nl_2
           << "class " << node->local_name () << "Consumer;" << be_nl
-          << "typedef " << node->local_name () << "Consumer *"
-          << node->local_name () << "Consumer_ptr;";
+          << "using " << node->local_name () << "Consumer_ptr = "
+          << node->local_name () << "Consumer *;";
     }
 
   // Now generate the class definition.

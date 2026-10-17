@@ -37,7 +37,7 @@ class TAO_Stub;
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 namespace IOP

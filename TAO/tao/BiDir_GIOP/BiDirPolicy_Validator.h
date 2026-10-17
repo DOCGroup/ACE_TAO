@@ -43,6 +43,12 @@ public:
   void merge_policies_impl (TAO_Policy_Set &policies) override;
 
   CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
+
+ private:
+  TAO_BiDirPolicy_Validator (TAO_BiDirPolicy_Validator const &) = delete;
+  TAO_BiDirPolicy_Validator &operator= (TAO_BiDirPolicy_Validator const &) = delete;
+  TAO_BiDirPolicy_Validator (TAO_BiDirPolicy_Validator &&) = delete;
+  TAO_BiDirPolicy_Validator &operator= (TAO_BiDirPolicy_Validator &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

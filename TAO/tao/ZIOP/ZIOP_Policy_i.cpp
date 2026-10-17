@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 CompressorIdLevelListPolicy::CompressorIdLevelListPolicy (
-    const ::Compression::CompressorIdLevelList& val)
+    ::Compression::CompressorIdLevelList const& val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdLevelListPolicy ()
@@ -27,7 +27,7 @@ CompressorIdLevelListPolicy::CompressorIdLevelListPolicy ()
 {
 }
 
-CompressorIdLevelListPolicy::CompressorIdLevelListPolicy (const CompressorIdLevelListPolicy &rhs)
+CompressorIdLevelListPolicy::CompressorIdLevelListPolicy (CompressorIdLevelListPolicy const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdLevelListPolicy ()
@@ -103,7 +103,7 @@ CompressorIdLevelListPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 }
 
 CompressionEnablingPolicy::CompressionEnablingPolicy (
-    const ::CORBA::Boolean val)
+    ::CORBA::Boolean val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionEnablingPolicy ()
@@ -121,7 +121,7 @@ CompressionEnablingPolicy::CompressionEnablingPolicy ()
 {
 }
 
-CompressionEnablingPolicy::CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs)
+CompressionEnablingPolicy::CompressionEnablingPolicy (CompressionEnablingPolicy const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionEnablingPolicy ()
@@ -201,7 +201,7 @@ CompressionEnablingPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 }
 
 CompressionLowValuePolicy::CompressionLowValuePolicy (
-    const ::CORBA::ULong val)
+    ::CORBA::ULong val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionLowValuePolicy ()
@@ -210,7 +210,7 @@ CompressionLowValuePolicy::CompressionLowValuePolicy (
 {
 }
 
-CompressionLowValuePolicy::CompressionLowValuePolicy (const CompressionLowValuePolicy &rhs)
+CompressionLowValuePolicy::CompressionLowValuePolicy (CompressionLowValuePolicy const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionLowValuePolicy ()
@@ -271,7 +271,7 @@ CompressionLowValuePolicy::_tao_cached_type () const
 }
 
 CompressionMinRatioPolicy::CompressionMinRatioPolicy (
-    const ::Compression::CompressionRatio val)
+    ::Compression::CompressionRatio val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionMinRatioPolicy ()
@@ -280,7 +280,7 @@ CompressionMinRatioPolicy::CompressionMinRatioPolicy (
 {
 }
 
-CompressionMinRatioPolicy::CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs)
+CompressionMinRatioPolicy::CompressionMinRatioPolicy (CompressionMinRatioPolicy const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressionMinRatioPolicy ()

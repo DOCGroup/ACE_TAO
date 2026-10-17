@@ -31,8 +31,8 @@ namespace TAO
   namespace CSD
   {
     class TP_Custom_Request_Operation;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request_Operation>
-                                          TP_Custom_Request_Operation_Handle;
+    using TP_Custom_Request_Operation_Handle =
+      TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request_Operation>;
 
 
     /**
@@ -74,6 +74,11 @@ namespace TAO
       virtual void cancel_i() = 0;
 
     private:
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation &&) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation &&) = delete;
+
       PortableServer::ServantBase_var servant_;
     };
   }

@@ -45,14 +45,14 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
   // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
     {
-      *os << be_nl_2 << "typedef " << node->full_name () << " ";
+      *os << be_nl_2 << "using ";
 
       if (!node->is_nested ())
         {
           *os << "OBV_";
         }
 
-      *os << node->local_name () << ";" << be_nl;
+      *os << node->local_name () << " = " << node->full_name () << ";" << be_nl;
     }
   else
     {

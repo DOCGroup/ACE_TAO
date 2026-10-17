@@ -38,8 +38,8 @@ template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATIO
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
-        TAO_SCIOP_SVC_HANDLER;
+using TAO_SCIOP_SVC_HANDLER =
+  ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 
 // ****************************************************************
 
@@ -58,7 +58,7 @@ class TAO_Strategies_Export TAO_SCIOP_Connection_Handler
     public TAO_Connection_Handler
 {
 public:
-  TAO_SCIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
   /// Constructor.
   TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core);
@@ -70,27 +70,27 @@ public:
   /**
    * Connection_Handler overloads
    */
-  virtual int open_handler (void *);
+  int open_handler (void *) override;
   //@}
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
-  virtual int open (void *);
+  int open (void *) override;
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
-  int close (u_long = 0);
+  int close (u_long = 0) override;
 
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler ();
-  virtual int close_connection ();
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_output (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+  int resume_handler () override;
+  int close_connection () override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
   //@}
 
   /// Add ourselves to Cache.
@@ -100,8 +100,8 @@ public:
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
 
   /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  int set_dscp_codepoint (CORBA::Long dscp);
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
+  int set_dscp_codepoint (CORBA::Long dscp) override;
 
 protected:
   /// Helper method needed by the set_dscp_codepoint () methods
@@ -112,11 +112,16 @@ protected:
    * @name TAO_Connection Handler overloads
    */
   //  void handle_close_i ();
-  virtual int release_os_resources ();
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
+  int release_os_resources () override;
+  int handle_write_ready (ACE_Time_Value const *timeout) override;
   //@}
 
 private:
+  TAO_SCIOP_Connection_Handler (TAO_SCIOP_Connection_Handler const &) = delete;
+  TAO_SCIOP_Connection_Handler &operator= (TAO_SCIOP_Connection_Handler const &) = delete;
+  TAO_SCIOP_Connection_Handler (TAO_SCIOP_Connection_Handler &&) = delete;
+  TAO_SCIOP_Connection_Handler &operator= (TAO_SCIOP_Connection_Handler &&) = delete;
+
   /// Stores the type of service value.
   int dscp_codepoint_;
 };

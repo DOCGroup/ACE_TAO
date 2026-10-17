@@ -39,17 +39,17 @@ public:
   TAO_Reactive_Connect_Strategy (TAO_ORB_Core *orb);
 
   /// Destructor
-  ~TAO_Reactive_Connect_Strategy ();
+  ~TAO_Reactive_Connect_Strategy () override;
 
   /*
    * Concrete implementation for this class. Please see
    * Connect_Strategy.h for details
    */
-  virtual void synch_options (ACE_Time_Value *val,
-                              ACE_Synch_Options &opt);
+  void synch_options (ACE_Time_Value *val,
+                      ACE_Synch_Options &opt) override;
 
 protected:
-  virtual int wait_i (TAO_LF_Event *ch, TAO_Transport *, ACE_Time_Value *val);
+  int wait_i (TAO_LF_Event *ch, TAO_Transport *, ACE_Time_Value *val) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

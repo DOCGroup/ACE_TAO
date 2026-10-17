@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 }
 
 namespace TAO
@@ -32,7 +32,7 @@ namespace TAO
   class AbstractBase_Narrow_Utils
   {
   public:
-    typedef T *T_ptr;
+    using T_ptr = T *;
 
     static T_ptr narrow (CORBA::AbstractBase_ptr,
                          const char *repo_id);

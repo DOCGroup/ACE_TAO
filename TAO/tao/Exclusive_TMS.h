@@ -42,7 +42,7 @@ public:
   TAO_Exclusive_TMS (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Exclusive_TMS ();
+  ~TAO_Exclusive_TMS () override;
 
   /**
    * @name The TAO_Transport_Mux_Strategy overrided methods
@@ -51,18 +51,18 @@ public:
    * for details.
    */
   //@{
-  virtual CORBA::ULong request_id ();
-  virtual int bind_dispatcher (CORBA::ULong request_id,
-                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
-  virtual int unbind_dispatcher (CORBA::ULong request_id);
+  CORBA::ULong request_id () override;
+  int bind_dispatcher (CORBA::ULong request_id,
+                       ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
+  int unbind_dispatcher (CORBA::ULong request_id) override;
 
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
-  virtual int reply_timed_out (CORBA::ULong request_id);
+  int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
+  int reply_timed_out (CORBA::ULong request_id) override;
 
-  virtual bool idle_after_send ();
-  virtual bool idle_after_reply ();
-  virtual void connection_closed ();
-  virtual bool has_request ();
+  bool idle_after_send () override;
+  bool idle_after_reply () override;
+  void connection_closed () override;
+  bool has_request () override;
   //@}
 
 protected:

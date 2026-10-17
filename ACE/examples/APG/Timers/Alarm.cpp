@@ -5,7 +5,7 @@
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/Timer_Heap.h"
 
-typedef ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap> Timer;
+using Timer = ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
 // Listing 1
 
 class CB : public ACE_Event_Handler

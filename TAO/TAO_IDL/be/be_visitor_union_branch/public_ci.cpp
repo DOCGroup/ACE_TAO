@@ -348,9 +348,9 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
   bool bt_is_defined = node->is_defined ();
 
   *os << ";" << be_nl
-      << "typedef "
+      << "using OBJECT_FIELD = "
       << bt->nested_type_name (bu, "_var")
-      << " OBJECT_FIELD;" << be_nl
+      << ";" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
       << "this->u_." << ub->local_name () << "_," << be_nl;
 
@@ -439,9 +439,9 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
   bool bt_is_defined = node->full_definition ()->is_defined ();
 
   *os << ";" << be_nl
-      << "typedef "
+      << "using OBJECT_FIELD = "
       << bt->nested_type_name (bu, "_var")
-      << " OBJECT_FIELD;" << be_nl
+      << ";" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
       << "this->u_." << ub->local_name () << "_," << be_nl;
 
@@ -547,9 +547,9 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
 
   *os << ";" << be_nl
       << "::CORBA::add_ref (val);" << be_nl
-      << "typedef "
+      << "using OBJECT_FIELD = "
       << bt->nested_type_name (bu, "_var")
-      << " OBJECT_FIELD;" << be_nl
+      << ";" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
       << "this->u_." << ub->local_name () << "_," << be_nl
       << "OBJECT_FIELD (val)" << be_uidt_nl
@@ -653,7 +653,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   switch (pt)
     {
       case AST_PredefinedType::PT_object:
-        *os << "typedef ::CORBA::Object_var OBJECT_FIELD;" << be_nl
+        *os << "using OBJECT_FIELD = ::CORBA::Object_var;" << be_nl
             << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name () << "_," << be_nl
             << "OBJECT_FIELD (::CORBA::Object::_duplicate (val))"
@@ -662,7 +662,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
 
         break;
       case AST_PredefinedType::PT_abstract:
-        *os << "typedef ::CORBA::AbstractBase_var OBJECT_FIELD;" << be_nl
+        *os << "using OBJECT_FIELD = ::CORBA::AbstractBase_var;" << be_nl
             << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name () << "_," << be_nl
             << "OBJECT_FIELD (::CORBA::AbstractBase::_duplicate (val))"

@@ -118,12 +118,12 @@ public:
 namespace CORBA
 {
   class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
+  using ValueFactory = ValueFactoryBase *;
 
   class ValueBase;
 
-  typedef TAO_Value_Var_T<ValueBase> ValueBase_var;
-  typedef TAO_Value_Out_T<ValueBase> ValueBase_out;
+  using ValueBase_var = TAO_Value_Var_T<ValueBase>;
+  using ValueBase_out = TAO_Value_Out_T<ValueBase>;
 
   /**
    * @class ValueBase
@@ -137,11 +137,11 @@ namespace CORBA
   public:
     friend class TAO_ChunkInfo;
 
-    typedef ValueBase* _ptr_type;
-    typedef ValueBase_var _var_type;
-    typedef ValueBase_out _out_type;
+    using _ptr_type = ValueBase *;
+    using _var_type = ValueBase_var;
+    using _out_type = ValueBase_out;
 
-    typedef ACE_Vector < ACE_CString > Repository_Id_List;
+    using Repository_Id_List = ACE_Vector<ACE_CString>;
 
     virtual CORBA::ValueBase* _copy_value () TAO_local_COPY_VALUE_IS_PURE;
 
@@ -305,7 +305,7 @@ namespace CORBA
     static CORBA::Boolean _tao_read_codebase_url (TAO_InputCDR& strm,
                                                   ACE_CString& codebase_url);
   private:
-    ValueBase & operator= (const ValueBase &);
+    ValueBase & operator= (ValueBase const &) = delete;
   }; // ValueBase
 
   /// Valuetype-related type codes.
@@ -357,16 +357,16 @@ namespace CORBA
  */
 namespace TAO_OBV_GIOP_Flags
 {
-  const CORBA::Long Value_tag_base    = 0x7fffff00L;
-  const CORBA::Long Value_tag_sigbits = 0x7fffff00L;
-  const CORBA::Long Codebase_url      = 1;
-  const CORBA::Long Type_info_sigbits = 6;
-  const CORBA::Long Type_info_none    = 0;
-  const CORBA::Long Type_info_single  = 2;
-  const CORBA::Long Type_info_list    = 6;
-  const CORBA::Long Chunking_tag_sigbits = 8;
-  const CORBA::Long Indirection_tag   = -1; // 0xffffffff
-  const CORBA::Long Null_tag          = 0;
+  constexpr CORBA::Long Value_tag_base = 0x7fffff00L;
+  constexpr CORBA::Long Value_tag_sigbits = 0x7fffff00L;
+  constexpr CORBA::Long Codebase_url = 1;
+  constexpr CORBA::Long Type_info_sigbits = 6;
+  constexpr CORBA::Long Type_info_none = 0;
+  constexpr CORBA::Long Type_info_single = 2;
+  constexpr CORBA::Long Type_info_list = 6;
+  constexpr CORBA::Long Chunking_tag_sigbits = 8;
+  constexpr CORBA::Long Indirection_tag = -1; // 0xffffffff
+  constexpr CORBA::Long Null_tag = 0;
 
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long tag);

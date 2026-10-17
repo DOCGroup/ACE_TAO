@@ -10,9 +10,9 @@ TAO_Operation_Table::~TAO_Operation_Table ()
 
 /**************************************************************/
 TAO::Operation_Skeletons::Operation_Skeletons ()
-  : skel_ptr (0)
-  , thruPOA_skel_ptr (0)
-  , direct_skel_ptr (0)
+  : skel_ptr (nullptr)
+  , thruPOA_skel_ptr (nullptr)
+  , direct_skel_ptr (nullptr)
 {
 }
 

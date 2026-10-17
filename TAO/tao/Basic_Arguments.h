@@ -35,11 +35,10 @@ namespace TAO
   class TAO_Export Arg_Traits<void>
   {
     public:
-    typedef void        ret_type;
+    using ret_type = void;
 
-    typedef RetArgument ret_val;
-    typedef Void_Return_Argument
-                        clonable_ret_val;
+    using ret_val = RetArgument;
+    using clonable_ret_val = Void_Return_Argument;
   };
 
   /**

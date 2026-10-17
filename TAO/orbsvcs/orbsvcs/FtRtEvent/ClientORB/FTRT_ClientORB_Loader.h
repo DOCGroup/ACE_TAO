@@ -36,11 +36,17 @@ namespace TAO_FTRT {
     FTRT_ClientORB_Loader ();
 
     /// Destructor.
-    virtual ~FTRT_ClientORB_Loader ();
+    ~FTRT_ClientORB_Loader () override;
 
     /// Initialize the TransactionDepth loader hooks.
-    virtual int init (int argc,
-      ACE_TCHAR* []);
+    int init (int argc,
+      ACE_TCHAR *[]) override;
+
+  private:
+    FTRT_ClientORB_Loader (FTRT_ClientORB_Loader const &) = delete;
+    FTRT_ClientORB_Loader &operator= (FTRT_ClientORB_Loader const &) = delete;
+    FTRT_ClientORB_Loader (FTRT_ClientORB_Loader &&) = delete;
+    FTRT_ClientORB_Loader &operator= (FTRT_ClientORB_Loader &&) = delete;
   };
 }
 

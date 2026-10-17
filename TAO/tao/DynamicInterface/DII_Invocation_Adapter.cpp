@@ -23,7 +23,7 @@ namespace TAO
   DII_Invocation_Adapter::DII_Invocation_Adapter (CORBA::Object *target,
                                                   Argument **args,
                                                   int arg_number,
-                                                  const char *operation,
+                                                  char const* operation,
                                                   size_t op_len,
                                                   CORBA::ExceptionList *excp,
                                                   CORBA::Request *r,
@@ -39,7 +39,7 @@ namespace TAO
                           mode)
       , exception_list_ (excp)
       , request_ (r)
-      , ex_data_ (0)
+      , ex_data_ (nullptr)
   {
   }
 
@@ -49,7 +49,7 @@ namespace TAO
   }
 
   void
-  DII_Invocation_Adapter::invoke (const TAO::Exception_Data * /*ex_data*/,
+  DII_Invocation_Adapter::invoke (TAO::Exception_Data const* /*ex_data*/,
                                   unsigned long ex_count)
   {
     // Convert DII exception list to a form the invocation can use
@@ -110,7 +110,7 @@ namespace TAO
 
     TAO_Transport* const transport = r.transport ();
 
-    if (!transport)
+    if (transport == nullptr)
       {
         // Way back, we failed to find a profile we could connect to.
         // We've come this far only so we reach the interception points
@@ -150,7 +150,7 @@ namespace TAO
       CORBA::Object *target,
       Argument **args,
       int arg_number,
-      const char *operation,
+      char const* operation,
       size_t op_len,
       int collocation_opportunity,
       TAO_ORB_Core *oc,
@@ -172,7 +172,7 @@ namespace TAO
 
   void
   DII_Deferred_Invocation_Adapter::invoke (
-      const TAO::Exception_Data *ex,
+      TAO::Exception_Data const* ex,
       unsigned long ex_count)
   {
     // New reply dispatcher on the heap, because we will go out of
@@ -181,7 +181,7 @@ namespace TAO
     // to prevent memory leaks. The invoke may encounter errors
     // before being able to handover the dispatcher to the invocation
     // using and managing it.
-    TAO_DII_Deferred_Reply_Dispatcher *new_rd = 0;
+    TAO_DII_Deferred_Reply_Dispatcher *new_rd = nullptr;
     ACE_NEW_THROW_EX (new_rd,
         TAO_DII_Deferred_Reply_Dispatcher (this->request_,
                                            this->orb_core_),
@@ -233,7 +233,7 @@ namespace TAO
 
     TAO_Transport* const transport = r.transport ();
 
-    if (!transport)
+    if (transport == nullptr)
       {
         // Way back, we failed to find a profile we could connect to.
         // We've come this far only so we reach the interception points
@@ -271,7 +271,7 @@ namespace TAO
       CORBA::Object *target,
       Argument **args,
       int arg_count,
-      const char *operation,
+      char const* operation,
       int op_len,
       TAO::Invocation_Mode mode)
     : Invocation_Adapter (target,

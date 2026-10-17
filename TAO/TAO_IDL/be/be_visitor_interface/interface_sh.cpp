@@ -76,8 +76,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "class " << class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "typedef " << class_name.c_str () << " *"
-      << class_name.c_str () << "_ptr;";
+  *os << "using " << class_name.c_str () << "_ptr = "
+      << class_name.c_str () << " *;";
 
 
   if (be_global->gen_direct_collocation ())
@@ -106,11 +106,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // Some useful typedefs.
   *os << "/// Useful for template programming." << be_nl
-      << "typedef ::" << node->name () << " _stub_type;"
+      << "using _stub_type = ::" << node->name () << ";"
       << be_nl
-      << "typedef ::" << node->name () << "_ptr _stub_ptr_type;"
+      << "using _stub_ptr_type = ::" << node->name () << "_ptr;"
       << be_nl
-      << "typedef ::" << node->name () << "_var _stub_var_type;"
+      << "using _stub_var_type = ::" << node->name () << "_var;"
       << be_nl_2;
 
   // Copy constructor and destructor.

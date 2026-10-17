@@ -17,9 +17,7 @@ TAO_UIOP_Protocol_Factory::TAO_UIOP_Protocol_Factory ()
 {
 }
 
-TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory ()
-{
-}
+TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory () = default;
 
 int
 TAO_UIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)

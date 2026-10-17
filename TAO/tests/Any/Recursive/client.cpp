@@ -455,8 +455,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      typedef void (*test_func) (CORBA::ORB_ptr,
-                                 Test::Hello_ptr);
+      using test_func = void (*) (CORBA::ORB_ptr,
+                                  Test::Hello_ptr);
 
       static test_func const tests[] =
         {

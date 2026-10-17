@@ -57,14 +57,14 @@ public:
    * Please check the documentation in Transport_Connector.h for details.
    */
   //@{
-  int open (TAO_ORB_Core *orb_core);
-  int close ();
+  int open (TAO_ORB_Core *orb_core) override;
+  int close () override;
 
-  TAO_Profile *create_profile (TAO_InputCDR& cdr);
+  TAO_Profile *create_profile (TAO_InputCDR &cdr) override;
 
-  virtual int check_prefix (const char *endpoint);
+  int check_prefix (char const *endpoint) override;
 
-  virtual char object_key_delimiter () const;
+  char object_key_delimiter () const override;
   //@}
 
 protected:
@@ -74,19 +74,24 @@ protected:
    * Please check the documentation in Transport_Connector.h for details.
    */
   //@{
-  int set_validate_endpoint (TAO_Endpoint *ep);
+  int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
+                                  ACE_Time_Value *timeout = nullptr) override;
 
-  virtual TAO_Profile * make_profile ();
+  TAO_Profile *make_profile () override;
   //@}
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 private:
+  TAO_DIOP_Connector (TAO_DIOP_Connector const &) = delete;
+  TAO_DIOP_Connector &operator= (TAO_DIOP_Connector const &) = delete;
+  TAO_DIOP_Connector (TAO_DIOP_Connector &&) = delete;
+  TAO_DIOP_Connector &operator= (TAO_DIOP_Connector &&) = delete;
+
   /// Return the remote endpoint, a helper function
   TAO_DIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 };

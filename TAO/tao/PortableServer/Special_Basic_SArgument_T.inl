@@ -7,9 +7,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-In_Special_Basic_SArgument_T ()
-{
-}
+In_Special_Basic_SArgument_T () = default;
 
 template<typename S,
          typename to_S,
@@ -30,9 +28,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-Inout_Special_Basic_SArgument_T ()
-{
-}
+Inout_Special_Basic_SArgument_T () = default;
 
 template<typename S,
          typename to_S,
@@ -53,9 +49,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-Out_Special_Basic_SArgument_T ()
-{
-}
+Out_Special_Basic_SArgument_T () = default;
 
 template<typename S,
          typename to_S,
@@ -75,9 +69,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
-Ret_Special_Basic_SArgument_T ()
-{
-}
+Ret_Special_Basic_SArgument_T () = default;
 
 template<typename S,
          typename to_S,

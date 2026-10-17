@@ -67,10 +67,10 @@ public:
   operator typename T::_ptr_type  const & () const;
   operator typename T::_ptr_type & ();
 
-  typedef typename T::_ptr_type    _in_type;
-  typedef typename T::_ptr_type &  _inout_type;
-  typedef typename T::_ptr_type &  _out_type;
-  typedef typename T::_ptr_type    _retn_type;
+  using _in_type = typename T::_ptr_type;
+  using _inout_type = typename T::_ptr_type &;
+  using _out_type = typename T::_ptr_type &;
+  using _retn_type = typename T::_ptr_type;
 
   _in_type      in () const;
   _inout_type   inout ();

@@ -41,6 +41,12 @@ namespace TAO
     class ThreadStrategySingle : public ThreadStrategy
     {
     public:
+      ThreadStrategySingle () = default;
+      ThreadStrategySingle (ThreadStrategySingle const &) = delete;
+      ThreadStrategySingle &operator= (ThreadStrategySingle const &) = delete;
+      ThreadStrategySingle (ThreadStrategySingle &&) = delete;
+      ThreadStrategySingle &operator= (ThreadStrategySingle &&) = delete;
+
       int enter () override;
 
       int exit () override;

@@ -26,15 +26,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
   class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 
   class ValueBase;
 
   class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
+  using ValueFactory = ValueFactoryBase *;
 }
 
 class TAO_InputCDR;
@@ -51,7 +51,7 @@ class TAO_InputCDR;
 class TAO_Export TAO_Valuetype_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Valuetype_Adapter ();
+  ~TAO_Valuetype_Adapter () override;
 
   virtual CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr p) = 0;

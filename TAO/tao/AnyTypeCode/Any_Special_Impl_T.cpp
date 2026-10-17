@@ -104,8 +104,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl * const impl = any.impl ();
 
-      typedef TAO::Any_Special_Impl_T<T, from_T, to_T>
-        BOUNDED_TSTRING_ANY_IMPL;
+      using BOUNDED_TSTRING_ANY_IMPL = TAO::Any_Special_Impl_T<T, from_T, to_T>;
 
       if (impl && !impl->encoded ())
         {

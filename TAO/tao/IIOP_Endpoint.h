@@ -74,7 +74,7 @@ public:
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
 
-  virtual TAO_Endpoint *next ();
+  TAO_Endpoint *next () override;
 
   /**
    * Return the next endpoint in the list, but use protocol-specific
@@ -91,19 +91,19 @@ public:
    *        ep != 0;
    *        ep = ep->next_filtered(orb_core, root_endpoint)) { }
    */
-  virtual TAO_Endpoint *next_filtered (TAO_ORB_Core *, TAO_Endpoint *root);
+  TAO_Endpoint *next_filtered (TAO_ORB_Core *, TAO_Endpoint *root) override;
 
-  virtual int addr_to_string (char *buffer, size_t length);
+  int addr_to_string (char *buffer, size_t length) override;
 
   /// Makes a copy of @c this
-  virtual TAO_Endpoint *duplicate ();
+  TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
-  virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash ();
+  CORBA::ULong hash () override;
 
   // = IIOP_Endpoint-specific methods.
 

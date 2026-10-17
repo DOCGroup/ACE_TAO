@@ -34,6 +34,10 @@ namespace TAO
     {
     public:
       ServantRetentionStrategyRetain () = default;
+      ServantRetentionStrategyRetain (ServantRetentionStrategyRetain const &) = delete;
+      ServantRetentionStrategyRetain &operator= (ServantRetentionStrategyRetain const &) = delete;
+      ServantRetentionStrategyRetain (ServantRetentionStrategyRetain &&) = delete;
+      ServantRetentionStrategyRetain &operator= (ServantRetentionStrategyRetain &&) = delete;
 
       CORBA::ULong waiting_servant_deactivation () const override;
 

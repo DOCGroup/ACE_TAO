@@ -20,14 +20,12 @@ namespace TAO
   {
   }
 
-  ObjectReferenceTemplate::~ObjectReferenceTemplate ()
-  {
-  }
+  ObjectReferenceTemplate::~ObjectReferenceTemplate () = default;
 
   ::CORBA::ValueBase *
   ObjectReferenceTemplate::_copy_value ()
   {
-    ::CORBA::ValueBase *ret_val= 0;
+    ::CORBA::ValueBase *ret_val = nullptr;
     ACE_NEW_THROW_EX (
       ret_val,
       ObjectReferenceTemplate (
@@ -56,7 +54,7 @@ namespace TAO
   PortableInterceptor::AdapterName *
   ObjectReferenceTemplate::adapter_name ()
   {
-    PortableInterceptor::AdapterName *adapter_name = 0;
+    PortableInterceptor::AdapterName *adapter_name = nullptr;
 
     ACE_NEW_THROW_EX (adapter_name,
                       PortableInterceptor::AdapterName (
@@ -78,7 +76,7 @@ namespace TAO
     if (CORBA::is_nil (this->poa_.in ()))
       throw ::CORBA::BAD_INV_ORDER ();
 
-    TAO_Root_POA* const tao_poa =
+    TAO_Root_POA *const tao_poa =
       dynamic_cast<TAO_Root_POA*> (this->poa_.in());
 
     if (!tao_poa)

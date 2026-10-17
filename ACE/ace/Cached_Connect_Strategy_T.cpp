@@ -472,12 +472,12 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
                                               ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry)
 {
-  typedef ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
-                                       std::pair<SVC_HANDLER *, ATTRIBUTES>,
-                                       ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                       ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                       ACE_Null_Mutex>
-    CONNECTION_CACHE_BUCKET_ITERATOR;
+  using CONNECTION_CACHE_BUCKET_ITERATOR =
+    ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+                                 std::pair<SVC_HANDLER *, ATTRIBUTES>,
+                                 ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                 ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                 ACE_Null_Mutex>;
 
   CONNECTION_CACHE_BUCKET_ITERATOR iterator (this->connection_cache_.map (),
                                              search_addr);

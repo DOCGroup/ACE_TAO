@@ -51,24 +51,26 @@ public:
   static TAO_DynFixed_i *_narrow (CORBA::Object_ptr obj);
 
   // = DynFixed operations.
-  virtual char * get_value ();
-  virtual CORBA::Boolean set_value (char const* value);
+  char * get_value () override;
+  CORBA::Boolean set_value (char const* value) override;
 
   // = DynAny operations.
-  virtual void from_any (CORBA::Any const& value);
-  virtual CORBA::Any * to_any ();
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
-  virtual void destroy ();
-  virtual DynamicAny::DynAny_ptr current_component ();
+  void from_any (CORBA::Any const& value) override;
+  CORBA::Any * to_any () override;
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
+  void destroy () override;
+  DynamicAny::DynAny_ptr current_component () override;
 
 private:
   void init_common ();
-  bool read_value (TAO_InputCDR& cdr, ACE_CDR::Fixed& value) const;
+  bool read_value (TAO_InputCDR &cdr, ACE_CDR::Fixed &value) const;
 
   ACE_CDR::Fixed value_;
 
-  TAO_DynFixed_i (TAO_DynFixed_i const&) = delete;
-  TAO_DynFixed_i& operator= (TAO_DynFixed_i const&) = delete;
+  TAO_DynFixed_i (TAO_DynFixed_i const &) = delete;
+  TAO_DynFixed_i &operator= (TAO_DynFixed_i const &) = delete;
+  TAO_DynFixed_i (TAO_DynFixed_i &&) = delete;
+  TAO_DynFixed_i &operator= (TAO_DynFixed_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

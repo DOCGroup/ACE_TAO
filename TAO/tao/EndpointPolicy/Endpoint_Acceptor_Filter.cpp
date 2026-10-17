@@ -10,13 +10,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (const EndpointPolicy::EndpointList & eps)
+TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const& eps)
 : endpoints_(eps)
 {
 }
 
 int
-TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
+TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
                                             TAO_MProfile &mprofile,
                                             TAO_Acceptor **acceptors_begin,
                                             TAO_Acceptor **acceptors_end,
@@ -64,7 +64,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
 
       bool first_endpoint = true;
       // Iterate the endpoints in the profile.
-      while (ep_in_pfile != 0 && pfile->endpoint_count() > 0)
+      while (ep_in_pfile != nullptr && pfile->endpoint_count() > 0)
         {
           // Iterate the endpoints in the endpoint policy to see if the endpoint
           // in the profile matches.
@@ -75,11 +75,11 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
               if (endpoints_[ep_ndx]->protocol_tag() != pfile->tag())
                 continue;
 
-              const EndpointPolicy::EndpointValueBase_ptr evb =
+              EndpointPolicy::EndpointValueBase_ptr const evb =
                 endpoints_[ep_ndx];
 
-              const TAO_Endpoint_Value_Impl *evi =
-                dynamic_cast <const TAO_Endpoint_Value_Impl*>(evb);
+              TAO_Endpoint_Value_Impl const* evi =
+                dynamic_cast<TAO_Endpoint_Value_Impl const*> (evb);
 
               epmatch = evi->is_equivalent(ep_in_pfile);
             }

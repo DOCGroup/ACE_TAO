@@ -39,9 +39,17 @@ class TAO_Strategies_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  TAO_Strategies_ORBInitializer () = default;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+private:
+  TAO_Strategies_ORBInitializer (TAO_Strategies_ORBInitializer const &) = delete;
+  TAO_Strategies_ORBInitializer &operator= (TAO_Strategies_ORBInitializer const &) = delete;
+  TAO_Strategies_ORBInitializer (TAO_Strategies_ORBInitializer &&) = delete;
+  TAO_Strategies_ORBInitializer &operator= (TAO_Strategies_ORBInitializer &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

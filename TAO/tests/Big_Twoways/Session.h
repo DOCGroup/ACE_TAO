@@ -85,9 +85,9 @@ private:
 
   /// Barrier to start all threads simultaenously
 #if defined(ACE_HAS_THREADS)
-  typedef ACE_Thread_Barrier Barrier;
+  using Barrier = ACE_Thread_Barrier;
 #else
-  typedef ACE_Null_Barrier Barrier;
+  using Barrier = ACE_Null_Barrier;
 #endif /* ACE_HAS_THREADS */
   Barrier barrier_;
 };

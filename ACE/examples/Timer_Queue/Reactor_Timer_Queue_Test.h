@@ -45,7 +45,7 @@ class Reactor_Timer_Queue_Test_Driver;
 class Input_Handler : public ACE_Event_Handler
 {
 public:
-  typedef int (Input_Handler::*ACTION) (void *);
+  using ACTION = int (Input_Handler::*) (void *);
 
   /// Sets <done_> flag to 0, <driver_> to <timer_queue_driver> and
   /// timer queue <tq_> to <tq>

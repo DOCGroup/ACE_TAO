@@ -33,8 +33,8 @@ class TAO_ServerRequest;
 namespace CORBA
 {
   class Object;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
+  using Object_out = TAO_Pseudo_Out_T<Object>;
 }
 
 /**

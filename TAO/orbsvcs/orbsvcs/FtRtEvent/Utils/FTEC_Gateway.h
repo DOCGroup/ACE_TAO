@@ -24,9 +24,9 @@ namespace TAO_FTRTEC
     public POA_RtecEventChannelAdmin::EventChannel
   {
   public:
-      FTEC_Gateway(CORBA::ORB_ptr orb,
-                   FtRtecEventChannelAdmin::EventChannel_ptr ftec);
-      ~FTEC_Gateway();
+      FTEC_Gateway (CORBA::ORB_ptr orb,
+                    FtRtecEventChannelAdmin::EventChannel_ptr ftec);
+      ~FTEC_Gateway () override;
 
       RtecEventChannelAdmin::EventChannel_ptr activate
           (PortableServer::POA_ptr poa);
@@ -35,22 +35,25 @@ namespace TAO_FTRTEC
         _this();
 
       //= The RtecEventChannelAdmin::EventChannel methods
-      virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-        for_consumers ();
+      RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-      virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-        for_suppliers ();
+      RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
-      virtual void destroy ();
+      void destroy () override;
 
-      virtual RtecEventChannelAdmin::Observer_Handle
-        append_observer (RtecEventChannelAdmin::Observer_ptr observer);
+      RtecEventChannelAdmin::Observer_Handle
+        append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
 
-      virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
+      void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
       void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
                 const RtecEventComm::EventSet & data);
   private:
+      FTEC_Gateway (FTEC_Gateway const &) = delete;
+      FTEC_Gateway &operator= (FTEC_Gateway const &) = delete;
+      FTEC_Gateway (FTEC_Gateway &&) = delete;
+      FTEC_Gateway &operator= (FTEC_Gateway &&) = delete;
+
       struct FTEC_Gateway_Impl  *impl_;
   };
 }

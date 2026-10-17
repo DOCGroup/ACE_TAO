@@ -111,8 +111,8 @@ public:
                 ACE_Time_Value *timeout = 0);
 
   // = Meta-type info
-  typedef ACE_ATM_Addr PEER_ADDR;
-  typedef ACE_TLI_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_ATM_Addr;
+  using PEER_STREAM = ACE_TLI_Stream;
 
   /// Dump the state of an object.
   void dump () const;

@@ -5,8 +5,8 @@
 #include "CPP-acceptor.h"
 
 #if !defined (ACE_WIN32)
-typedef Svc_Handler<ACE_SPIPE_STREAM> SVC_HANDLER;
-typedef IPC_Server<SVC_HANDLER, ACE_SPIPE_ACCEPTOR> IPC_SERVER;
+using SVC_HANDLER = Svc_Handler<ACE_SPIPE_STREAM>;
+using IPC_SERVER = IPC_Server<SVC_HANDLER, ACE_SPIPE_ACCEPTOR>;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

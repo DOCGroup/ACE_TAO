@@ -35,9 +35,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableInterceptor
 {
   class ServerRequestInterceptor;
-  typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
+  using ServerRequestInterceptor_ptr = ServerRequestInterceptor *;
 
-  typedef CORBA::Short ReplyStatus;
+  using ReplyStatus = CORBA::Short;
 }
 
 namespace CORBA

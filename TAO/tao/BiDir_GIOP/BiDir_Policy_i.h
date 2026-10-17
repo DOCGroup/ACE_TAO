@@ -43,13 +43,13 @@ class TAO_BidirectionalPolicy
 {
 public:
   /// Constructor.
-  TAO_BidirectionalPolicy (const BiDirPolicy::BidirectionalPolicyValue val);
+  TAO_BidirectionalPolicy (BiDirPolicy::BidirectionalPolicyValue val);
 
   /// Copy constructor.
-  TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs);
+  TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const& rhs);
 
   /// Returns a copy of this.
-  virtual TAO_BidirectionalPolicy *clone () const;
+  TAO_BidirectionalPolicy *clone () const;
 
   /// = The BiDir::BidirectionalPolicy methods
   BiDirPolicy::BidirectionalPolicyValue value () override;
@@ -63,6 +63,10 @@ public:
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
+  TAO_BidirectionalPolicy (TAO_BidirectionalPolicy &&) = delete;
+  TAO_BidirectionalPolicy &operator= (TAO_BidirectionalPolicy const &) = delete;
+  TAO_BidirectionalPolicy &operator= (TAO_BidirectionalPolicy &&) = delete;
+
   /// The attribute
   BiDirPolicy::BidirectionalPolicyValue value_;
 };

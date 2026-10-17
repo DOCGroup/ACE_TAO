@@ -37,7 +37,7 @@ TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Fixed_Array
 {
   if (this->is_clone_)
     {
-      typedef TAO::details::array_traits<S_forany> ARRAY_TRAITS;
+      using ARRAY_TRAITS = TAO::details::array_traits<S_forany>;
       typename ARRAY_TRAITS::slice_type * tmp =
                const_cast<typename ARRAY_TRAITS::slice_type *>(this->x_.in ());
       ARRAY_TRAITS::free (tmp);
@@ -49,8 +49,8 @@ template<typename S_forany,
 TAO::Argument*
 TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone ()
 {
-  typedef TAO::details::array_traits<S_forany> ARRAY_TRAITS;
-  typename ARRAY_TRAITS::slice_type * tmp_ptr = 0;
+  using ARRAY_TRAITS = TAO::details::array_traits<S_forany>;
+  typename ARRAY_TRAITS::slice_type * tmp_ptr = nullptr;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
                         nullptr);
@@ -128,8 +128,8 @@ CORBA::Boolean
 TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::
   demarshal (TAO_InputCDR & cdr)
 {
-  typedef TAO::Array_Traits<S_forany> ARRAY_TRAITS;
-  typename S_forany::_slice_type * tmp_ptr = 0;
+  using ARRAY_TRAITS = TAO::Array_Traits<S_forany>;
+  typename S_forany::_slice_type * tmp_ptr = nullptr;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
                         false);

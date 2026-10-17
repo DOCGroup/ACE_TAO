@@ -51,40 +51,42 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   // = LocalObject methods.
   static TAO_DynEnum_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynEnum.
 
-  virtual char * get_as_string ();
+  char * get_as_string () override;
 
-  virtual void set_as_string (const char * value);
+  void set_as_string (char const* value) override;
 
-  virtual CORBA::ULong get_as_ulong ();
+  CORBA::ULong get_as_ulong () override;
 
-  virtual void set_as_ulong (CORBA::ULong value);
+  void set_as_ulong (CORBA::ULong value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (CORBA::Any const& value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
 private:
   // Called by both versions of init().
   void init_common ();
 
   // = Use copy() or assign() instead of these.
-  TAO_DynEnum_i (const TAO_DynEnum_i &src) = delete;
-  TAO_DynEnum_i &operator= (const TAO_DynEnum_i &src) = delete;
+  TAO_DynEnum_i (TAO_DynEnum_i const &src) = delete;
+  TAO_DynEnum_i &operator= (TAO_DynEnum_i const &src) = delete;
+  TAO_DynEnum_i (TAO_DynEnum_i &&) = delete;
+  TAO_DynEnum_i &operator= (TAO_DynEnum_i &&) = delete;
 
 private:
   /// Current numeric value of the enum.

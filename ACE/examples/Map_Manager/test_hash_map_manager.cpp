@@ -9,7 +9,7 @@
 
 const int MAX_KEY_LEN = 1000;
 
-typedef ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX> MAP_MANAGER;
+using MAP_MANAGER = ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

@@ -45,6 +45,12 @@ namespace TAO
     XtResource_Loader  (XtAppContext context);
 
     virtual ~XtResource_Loader ();
+
+  private:
+    XtResource_Loader (XtResource_Loader const &) = delete;
+    XtResource_Loader &operator= (XtResource_Loader const &) = delete;
+    XtResource_Loader (XtResource_Loader &&) = delete;
+    XtResource_Loader &operator= (XtResource_Loader &&) = delete;
   };
 }
 

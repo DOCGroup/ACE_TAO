@@ -81,7 +81,7 @@ class TAO_Active_Object_Map;
 namespace PortableInterceptor
 {
   class IORInfo;
-  typedef IORInfo *IORInfo_ptr;
+  using IORInfo_ptr = IORInfo *;
 }
 
 namespace TAO
@@ -100,7 +100,7 @@ namespace TAO
 namespace PortableServer
 {
   class POAManager;
-  typedef POAManager *POAManager_ptr;
+  using POAManager_ptr = POAManager *;
 }
 
 /**
@@ -122,7 +122,7 @@ public:
   friend class TAO_RT_Collocation_Resolver;
   friend class TAO_IORInfo;
 
-  typedef ACE_CString String;
+  using String = ACE_CString;
 
   /// @note Temporarily for debugging, useful for debugging and status retrieval,
   /// could be removed with future rework of the AOM.
@@ -713,14 +713,12 @@ protected:
   PortableServer::AdapterActivator_var adapter_activator_;
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  typedef
-    ACE_Hash_Map_Manager_Ex<
+  using CHILDREN = ACE_Hash_Map_Manager_Ex<
         ACE_CString, TAO_Root_POA *,
         ACE_Hash<ACE_CString>,
         ACE_Equal_To<ACE_CString>,
         ACE_Null_Mutex
-      >
-    CHILDREN;
+      >;
 
   CHILDREN children_;
 

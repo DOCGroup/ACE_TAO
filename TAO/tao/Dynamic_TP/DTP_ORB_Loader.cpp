@@ -14,14 +14,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_ORB_Loader::TAO_DTP_ORB_Loader ()
-  : initialized_ (false)
-{
-}
+TAO_DTP_ORB_Loader::TAO_DTP_ORB_Loader () = default;
 
-TAO_DTP_ORB_Loader::~TAO_DTP_ORB_Loader ()
-{
-}
+TAO_DTP_ORB_Loader::~TAO_DTP_ORB_Loader () = default;
 
 int
 TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])

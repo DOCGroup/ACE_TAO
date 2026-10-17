@@ -24,7 +24,7 @@ TAO::CSD::TP_Cancel_Visitor::visit_request(TP_Request* request,
   // we are supposed to cancel only requests that target our specific
   // servant_.
 
-  if ((this->servant_.in() == 0) || (request->is_target(this->servant_.in())))
+  if ((this->servant_.in() == nullptr) || (request->is_target(this->servant_.in())))
     {
       // Set the remove_flag to true so that this request is removed
       // (and released) from the queue when we finish our visit.

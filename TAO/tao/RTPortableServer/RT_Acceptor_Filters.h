@@ -59,6 +59,11 @@ public:
   int encode_endpoints (TAO_MProfile &mprofile) override;
 
 private:
+  TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
+  TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
+  TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
+  TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
+
   /// Value of the ServerProtocolPolicy used for endpoint
   /// selection.
   RTCORBA::ProtocolList &protocols_;

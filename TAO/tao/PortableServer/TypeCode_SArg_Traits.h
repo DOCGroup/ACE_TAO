@@ -29,10 +29,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
-  typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
-  typedef TAO_Pseudo_Out_T<TypeCode> TypeCode_out;
+  using TypeCode_var = TAO_Pseudo_Var_T<TypeCode>;
+  using TypeCode_out = TAO_Pseudo_Out_T<TypeCode>;
 }
 
 // --------------------------------------------------------------

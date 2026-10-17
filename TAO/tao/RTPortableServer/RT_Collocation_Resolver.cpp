@@ -36,7 +36,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
 
   // If the target POA does not have a dedicated thread pool, then all
   // calls to it are collocated.
-  if (target_thread_pool == 0)
+  if (target_thread_pool == nullptr)
     return true;
 
   /// Get the ORB_Core's TSS resources.
@@ -47,7 +47,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   TAO_Thread_Lane *current_thread_lane =
     static_cast <TAO_Thread_Lane *> (tss.lane_);
 
-  TAO_Thread_Pool *current_thread_pool = 0;
+  TAO_Thread_Pool *current_thread_pool = nullptr;
 
   // If we don't have a lane, we don't have a pool.
   if (current_thread_lane)
@@ -62,7 +62,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
 
   // If the current thread and the POA are in the default thread pool,
   // then the object is collocated.
-  if (current_thread_pool == 0)
+  if (current_thread_pool == nullptr)
     return true;
 
   // If the current thread and the POA are in a thread pool without

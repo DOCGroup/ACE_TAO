@@ -57,22 +57,18 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 // ----------------------------------------
 
 // Our Reactor Singleton.
-typedef ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>
-REACTOR;
+using REACTOR = ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>;
 
 // Our Options Singleton.
-typedef ACE_Singleton<Options, ACE_Null_Mutex>
-OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 // Our ACE_Test_and_Set Singleton.
-typedef ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex>
-QUIT_HANDLER;
+using QUIT_HANDLER = ACE_Singleton<ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex>;
 
 // ----------------------------------------
 
 // Specialize a Logging Acceptor.
-typedef ACE_Acceptor <Logging_Handler, ACE_SOCK_ACCEPTOR>
-Logging_Acceptor;
+using Logging_Acceptor = ACE_Acceptor<Logging_Handler, ACE_SOCK_ACCEPTOR>;
 
 // Default constructor.
 

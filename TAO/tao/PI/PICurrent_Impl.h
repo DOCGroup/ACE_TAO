@@ -48,9 +48,9 @@ namespace TAO
   {
   public:
     /// Constructor.
-    PICurrent_Impl (TAO_ORB_Core *orb_core= 0,
+    PICurrent_Impl (TAO_ORB_Core *orb_core= nullptr,
                     size_t tss_slot= 0,
-                    PICurrent_Impl *pop= 0);
+                    PICurrent_Impl *pop= nullptr);
     /// Destructor.
     ~PICurrent_Impl ();
 
@@ -84,7 +84,7 @@ namespace TAO
     void set_callback_for_impending_change (PICurrent_Impl *p);
 
     /// Typedef for the underyling "slot table."
-    typedef ACE_Array_Base<CORBA::Any> Table;
+    using Table = ACE_Array_Base<CORBA::Any>;
 
     /// Return a reference to the slot table currently associated
     /// with this PICurrent_Impl object.
@@ -94,8 +94,10 @@ namespace TAO
      */
     Table & current_slot_table ();
 
-    PICurrent_Impl (const PICurrent_Impl &) = delete;
-    void operator= (const PICurrent_Impl &) = delete;
+    PICurrent_Impl (PICurrent_Impl const &) = delete;
+    void operator= (PICurrent_Impl const &) = delete;
+    PICurrent_Impl (PICurrent_Impl &&) = delete;
+    void operator= (PICurrent_Impl &&) = delete;
 
   private:
     /// Allow for stack of PICurrent_Impl as required.

@@ -31,9 +31,7 @@ CORBA::ValueFactoryBase::ValueFactoryBase ()
 {
 }
 
-CORBA::ValueFactoryBase::~ValueFactoryBase ()
-{
-}
+CORBA::ValueFactoryBase::~ValueFactoryBase () = default;
 
 void
 CORBA::ValueFactoryBase::_add_ref ()
@@ -54,7 +52,7 @@ CORBA::ValueFactoryBase::_remove_ref ()
 CORBA::AbstractBase *
 CORBA::ValueFactoryBase::create_for_unmarshal_abstract ()
 {
-  return 0;
+  return nullptr;
 }
 
 // =============== Template Specializations =====================

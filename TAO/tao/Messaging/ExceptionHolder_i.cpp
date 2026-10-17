@@ -12,10 +12,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ExceptionHolder::ExceptionHolder () :
-    data_ (0),
+    data_ (nullptr),
     count_ (0),
-    char_translator_ (0),
-    wchar_translator_ (0)
+    char_translator_ (nullptr),
+    wchar_translator_ (nullptr)
   {
   }
 
@@ -139,7 +139,7 @@ namespace TAO
   CORBA::ValueBase*
   ExceptionHolder::_copy_value ()
   {
-    TAO::ExceptionHolder* ret_val = 0;
+    TAO::ExceptionHolder* ret_val = nullptr;
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());
@@ -157,7 +157,7 @@ namespace TAO
   CORBA::ValueBase *
   ExceptionHolderFactory::create_for_unmarshal ()
   {
-    TAO::ExceptionHolder* ret_val = 0;
+    TAO::ExceptionHolder* ret_val = nullptr;
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());

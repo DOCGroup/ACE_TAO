@@ -27,10 +27,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
   class ORB;
-  typedef ORB *ORB_ptr;
+  using ORB_ptr = ORB *;
 }
 
 /**
@@ -48,7 +48,7 @@ class TAO_Export TAO_IOR_Parser : public ACE_Service_Object
 public:
   /// The destructor
   TAO_IOR_Parser () = default;
-  virtual ~TAO_IOR_Parser ();
+  ~TAO_IOR_Parser () override;
 
   /// Return true if @a ior_string starts with a prefix known to this IOR
   /// parser

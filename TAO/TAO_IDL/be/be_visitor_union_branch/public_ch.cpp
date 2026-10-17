@@ -568,8 +568,8 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
       // This provides a consistent name to use instead of the
       // implementation-specific name.
       *os << be_nl_2
-          << "typedef " << bt->nested_type_name (bu)
-          << " _" << ub->local_name () << "_" << kind << ";";
+          << "using _" << ub->local_name () << "_" << kind << " = "
+          << bt->nested_type_name (bu) << ";";
     }
 
   TAO_INSERT_COMMENT (os);

@@ -47,7 +47,7 @@ class TAO_POAManager_Factory;
 namespace PortableServer
 {
   class POAManagerFactory;
-  typedef POAManagerFactory *POAManagerFactory_ptr;
+  using POAManagerFactory_ptr = POAManagerFactory *;
 }
 #endif
 
@@ -92,7 +92,7 @@ public:
 
   PortableServer::POAManager::State get_state_i ();
 
-  virtual CORBA::ORB_ptr _get_orb ();
+  CORBA::ORB_ptr _get_orb () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::PolicyList& get_policies ();
@@ -127,7 +127,7 @@ protected:
 
   ACE_Lock &lock_;
 
-  typedef ACE_Unbounded_Set<TAO_Root_POA *> POA_COLLECTION;
+  using POA_COLLECTION = ACE_Unbounded_Set<TAO_Root_POA *>;
 
   POA_COLLECTION poa_collection_;
 

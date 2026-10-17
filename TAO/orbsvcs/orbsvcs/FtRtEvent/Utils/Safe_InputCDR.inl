@@ -4,8 +4,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-Safe_InputCDR::Safe_InputCDR(const char* buf, int size)
-: TAO_InputCDR((ACE_Message_Block*)0)
+Safe_InputCDR::Safe_InputCDR (char const *buf, int size)
+  : TAO_InputCDR (static_cast<ACE_Message_Block *> (nullptr))
 {
   if (ACE_ptr_align_binary(buf, ACE_CDR::MAX_ALIGNMENT) != buf) {
     ACE_CDR::grow(&start_,size);

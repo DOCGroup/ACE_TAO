@@ -41,22 +41,20 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   if (ACE_OS::strcmp (node_name, "PortableServer::ServantLocator::Cookie") == 0)
     {
-      *os << "typedef void *Cookie;" << be_nl;
+      *os << "using Cookie = void *;" << be_nl;
     }
   else if (ACE_OS::strcmp (node_name, "CORBA::VoidData") == 0)
     {
-      *os << "typedef void *VoidData;" << be_nl;
+      *os << "using VoidData = void *;" << be_nl;
     }
   else if (idl_global->dcps_support_zero_copy_read ()
            && 0 == ACE_OS::strcmp (node->full_name (),"DDS::SampleInfoSeq"))
     {
       // DDS/DCPS zero-copy read sequence type support.
       *os << be_nl_2
-          << "typedef ::TAO::DCPS::ZeroCopyInfoSeq< "
+          << "using SampleInfoSeq = ::TAO::DCPS::ZeroCopyInfoSeq< "
           << "SampleInfo"
-          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
-          << "SampleInfo"
-          << "Seq;" << be_nl;
+          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE>;" << be_nl;
     }
   else if (idl_global->dcps_support_zero_copy_read ())
     {
@@ -76,11 +74,9 @@ be_visitor_native_ch::visit_native (be_native *node)
       sample_name[node_name_length - 3] = '\0';
 
       *os << be_nl_2
-          << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
+          << "using " << node->local_name () << " = ::TAO::DCPS::ZeroCopyDataSeq< "
           << sample_name
-          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
-          << node->local_name ()
-          << ";" << be_nl;
+          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE>;" << be_nl;
     }
 
   node->cli_hdr_gen (true);

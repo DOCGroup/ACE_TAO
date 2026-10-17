@@ -106,7 +106,18 @@ int be_visitor_array_ch::visit_array (be_array *node)
     }
 
   *os << be_nl_2
-      << "typedef ";
+      << "using ";
+
+  be_typedef *td = this->ctx_->tdef ();
+
+  if (td == nullptr)
+    {
+      // We are dealing with an anonymous array case. Generate an alias with
+      // an _ prepended to the name.
+      *os << "_";
+    }
+
+  *os << node->local_name () << " = ";
 
   if (bt->accept (this) == -1)
     {
@@ -116,19 +127,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
                          "base type decl failed\n"),
                         -1);
     }
-
-  *os << " ";
-
-  be_typedef *td = this->ctx_->tdef ();
-
-  if (td == nullptr)
-    {
-      // We are dealing with an anonymous array case. Generate a typedef with
-      // an _ prepended to the name.
-      *os << "_";
-    }
-
-  *os << node->local_name ();
 
   if (node->gen_dimensions (os) == -1)
     {
@@ -142,18 +140,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   *os << ";" << be_nl;
 
   // Now define the slice type and other required operations
-  *os << "typedef ";
-
-  if (bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ch::"
-                         "visit_array - "
-                         "base type decl failed\n"),
-                        -1);
-    }
-
-  *os << " ";
+  *os << "using ";
 
   char anon_p [2];
   ACE_OS::memset (anon_p,
@@ -170,7 +157,16 @@ int be_visitor_array_ch::visit_array (be_array *node)
                        "_");
     }
 
-  *os << anon_p << node->local_name () << "_slice";
+  *os << anon_p << node->local_name () << "_slice = ";
+
+  if (bt->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_ch::"
+                         "visit_array - "
+                         "base type decl failed\n"),
+                        -1);
+    }
 
   if (node->gen_dimensions (os, 1) == -1)
     {
@@ -195,48 +191,44 @@ int be_visitor_array_ch::visit_array (be_array *node)
       if (node->size_type () == AST_Type::VARIABLE)
         {
           *os << be_nl_2
-              << "typedef" << be_idt_nl
+              << "using " << node->local_name () << "_var = " << be_idt_nl
               << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
               << node->local_name () << "_slice," << be_nl
               << node->local_name () << "_tag" << be_uidt_nl
-              << ">" << be_uidt_nl
-              << node->local_name () << "_var;" << be_uidt;
+              << ">;" << be_uidt;
 
           *os << be_nl_2
-              << "typedef" << be_idt_nl
+              << "using " << node->local_name () << "_out = " << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
               << node->local_name () << "_var," << be_nl
               << node->local_name () << "_slice," << be_nl
               << node->local_name () << "_tag" << be_uidt_nl
-              << ">" << be_uidt_nl
-              << node->local_name () << "_out;" << be_uidt;
+              << ">;" << be_uidt;
         }
       else
         {
           *os << be_nl_2
-              << "typedef" << be_idt_nl
+              << "using " << node->local_name () << "_var = " << be_idt_nl
               << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
               << node->local_name () << "_slice," << be_nl
               << node->local_name () << "_tag" << be_uidt_nl
-              << ">" << be_uidt_nl
-              << node->local_name () << "_var;" << be_uidt;
+              << ">;" << be_uidt;
 
           *os << be_nl_2
-              << "typedef" << be_idt_nl << node->local_name () << be_nl
-              << node->local_name () << "_out;" << be_uidt;
+              << "using " << node->local_name () << "_out = "
+              << node->local_name () << ";" << be_uidt;
         }
     }
 
   // Generate _forany decl.
   *os << be_nl_2
-      << "typedef TAO_Array_Forany_T<"
+      << "using " << anon_p << node->local_name () << "_forany = TAO_Array_Forany_T<"
       << anon_p << node->local_name () << ", "
       << anon_p << node->local_name () << "_slice, "
-      << anon_p << node->local_name () << "_tag> "
-      << anon_p << node->local_name () << "_forany;";
+      << anon_p << node->local_name () << "_tag>;";
 
   *os << be_nl_2;
 

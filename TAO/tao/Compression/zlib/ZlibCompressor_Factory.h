@@ -30,18 +30,20 @@ namespace TAO
   class TAO_ZLIBCOMPRESSOR_Export Zlib_CompressorFactory :
     public ::TAO::CompressorFactory
   {
-    typedef std::map< ::Compression::CompressionLevel,
-        const ::Compression::Compressor_var> ZlibCompressorMap;
+    using ZlibCompressorMap = std::map< ::Compression::CompressionLevel,
+                                        const ::Compression::Compressor_var>;
 
   public:
     Zlib_CompressorFactory ();
 
-    virtual ::Compression::Compressor_ptr get_compressor (
-        ::Compression::CompressionLevel compression_level);
+    ::Compression::Compressor_ptr get_compressor (
+        ::Compression::CompressionLevel compression_level) override;
 
   private:
-    Zlib_CompressorFactory (const Zlib_CompressorFactory &) = delete;
-    Zlib_CompressorFactory &operator= (const Zlib_CompressorFactory &) = delete;
+    Zlib_CompressorFactory (Zlib_CompressorFactory const &) = delete;
+    Zlib_CompressorFactory &operator= (Zlib_CompressorFactory const &) = delete;
+    Zlib_CompressorFactory (Zlib_CompressorFactory &&) = delete;
+    Zlib_CompressorFactory &operator= (Zlib_CompressorFactory &&) = delete;
 
     // Ensure we can lock with imutability (i.e. const)
     mutable TAO_SYNCH_MUTEX mutex_;

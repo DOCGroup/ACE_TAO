@@ -41,7 +41,7 @@ public:
   friend class Timer_Helper;
 
   /// Unbounded set of IORs.
-  typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
+  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
 
   /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,

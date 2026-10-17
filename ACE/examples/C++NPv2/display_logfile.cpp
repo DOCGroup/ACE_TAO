@@ -33,7 +33,7 @@ private:
   TASK task_;
 };
 #define LOGREC_MODULE(NAME) \
-  typedef Logrec_Module<NAME> NAME##_Module
+  using NAME##_Module = Logrec_Module<NAME>
 
 class Logrec_Reader : public ACE_Task<ACE_SYNCH>
 {
@@ -237,7 +237,7 @@ LOGREC_MODULE (Logrec_Writer);
 class Logrec_Formatter : public ACE_Task<ACE_SYNCH>
 {
 public:
-  typedef void (*FORMATTER[5])(ACE_Message_Block *);
+  using FORMATTER = void (*[5])(ACE_Message_Block *);
 private:
   static FORMATTER format_; // Array of format static methods.
 

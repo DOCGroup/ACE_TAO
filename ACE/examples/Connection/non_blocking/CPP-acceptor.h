@@ -33,8 +33,7 @@ public:
   // Handles acceptor timeouts.
 
 private:
-  typedef ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
-          SVC_HANDLER;
+  using SVC_HANDLER = ACE_Svc_Handler<PEER_STREAM, ACE_NULL_SYNCH>;
 };
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
@@ -66,8 +65,7 @@ public:
   // Run the interative service.
 
 private:
-  typedef ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
-          inherited;
+  using inherited = ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>;
 
   typename PEER_ACCEPTOR::PEER_ADDR server_addr_;
   // Address of this server.

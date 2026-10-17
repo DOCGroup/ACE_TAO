@@ -3,10 +3,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
-  :  policy_list_ (0),
+  :  policy_list_ (nullptr),
      is_policy_list_initialized_ (false),
-     forward_from_(0),
-     pfiles_ (0),
+     forward_from_(nullptr),
+     pfiles_ (nullptr),
      current_ (0),
      size_ (0),
      last_ (0)
@@ -16,10 +16,10 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
-  :  policy_list_ (0),
+  :  policy_list_ (nullptr),
      is_policy_list_initialized_ (false),
-     forward_from_(0),
-     pfiles_ (0),
+     forward_from_(nullptr),
+     pfiles_ (nullptr),
      current_ (0),
      size_ (0),
      last_ (0)
@@ -42,7 +42,7 @@ ACE_INLINE TAO_Profile *
 TAO_MProfile::get_cnext ()
 {
   if (last_ == 0)
-    return 0;
+    return nullptr;
 
   if (current_ == last_)
     current_ = 0;
@@ -57,7 +57,7 @@ TAO_MProfile::get_next ()
 {
   // Nolist or EndOfList
   if (last_ == 0 || current_ == last_)
-    return 0;
+    return nullptr;
   else
     return pfiles_[current_++];
 }
@@ -66,7 +66,7 @@ ACE_INLINE TAO_Profile *
 TAO_MProfile::get_cprev ()
 {
   if (last_ == 0)
-    return 0;
+    return nullptr;
   else if (last_ == 1)
     current_=1;
   else if (current_ > 1)
@@ -82,7 +82,7 @@ TAO_MProfile::get_prev ()
 {
   if (last_ == 0 || current_ <= 1)
     // No List of BeginningOfList
-    return 0;
+    return nullptr;
   if (current_ > 1)
     --current_;
 
@@ -96,14 +96,14 @@ TAO_MProfile::get_profile (TAO_PHandle handle)
   if (handle < last_)
     return pfiles_[handle];
   else
-    return 0;
+    return nullptr;
 }
 
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_current_profile ()
 {
   if (last_ == 0)
-    return 0;
+    return nullptr;
   if (current_ == 0)
     // means list has not been read before.
     current_ = 1;
@@ -179,7 +179,7 @@ ACE_INLINE const TAO_Profile*
 TAO_MProfile::get_profile (CORBA::ULong slot) const
 {
   if (slot >= this->last_)
-    return 0;
+    return nullptr;
   return this->pfiles_[slot];
 }
 

@@ -43,7 +43,7 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
 }
 
 ACE_INLINE
-TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
+TAO_Queued_Data::TAO_Queued_Data (TAO_Queued_Data const &qd)
   : msg_block_ (qd.msg_block_->duplicate ()),
     missing_data_ (qd.missing_data_),
     state_ (qd.state_),

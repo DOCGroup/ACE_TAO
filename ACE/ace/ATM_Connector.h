@@ -27,12 +27,12 @@
 #if defined (ACE_WIN32) || defined (ACE_HAS_LINUX_ATM)
 #include "ace/SOCK_Connector.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ACE_SOCK_Connector ATM_Connector;
+using ATM_Connector = ACE_SOCK_Connector;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #include "ace/XTI_ATM_Mcast.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ACE_XTI_ATM_Mcast ATM_Connector;
+using ATM_Connector = ACE_XTI_ATM_Mcast;
 // Open versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif
@@ -136,8 +136,8 @@ public:
   bool reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
-  typedef ACE_ATM_Addr PEER_ADDR;
-  typedef ACE_ATM_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_ATM_Addr;
+  using PEER_STREAM = ACE_ATM_Stream;
 
   /// Dump the state of an object.
   void dump () const;

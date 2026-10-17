@@ -4,7 +4,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Operation_Table_Timeprobe_Description[] =
+static char const *TAO_Operation_Table_Timeprobe_Description[] =
   {
     "TAO_Dynamic_Hash_OpTable::find - start",
     "TAO_Dynamic_Hash_OpTable::find - end",
@@ -57,28 +57,28 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable ()
   // these are strings.
   OP_MAP_MANAGER::ITERATOR iterator (this->hash_);
 
-  for (OP_MAP_MANAGER::ENTRY *entry = 0;
+  for (OP_MAP_MANAGER::ENTRY *entry = nullptr;
        iterator.next (entry) != 0;
        iterator.advance ())
     {
       // We had allocated memory and stored the string. So we free the
       // memory.
-      CORBA::string_free ((char *) entry->ext_id_);
-      entry->ext_id_ = 0;
+      CORBA::string_free (const_cast<char *> (entry->ext_id_));
+      entry->ext_id_ = nullptr;
     }
 }
 
 int
-TAO_Dynamic_Hash_OpTable::bind (const char *opname,
-                                const TAO::Operation_Skeletons skel_ptr)
+TAO_Dynamic_Hash_OpTable::bind (char const *opname,
+                                TAO::Operation_Skeletons const skel_ptr)
 {
   return this->hash_.bind (CORBA::string_dup (opname), skel_ptr);
 }
 
 int
-TAO_Dynamic_Hash_OpTable::find (const char *opname,
-                                TAO_Skeleton& skel_ptr,
-                                const unsigned int )
+TAO_Dynamic_Hash_OpTable::find (char const *opname,
+                                TAO_Skeleton &skel_ptr,
+                                unsigned int const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
   TAO::Operation_Skeletons s;
@@ -94,10 +94,10 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
 }
 
 int
-TAO_Dynamic_Hash_OpTable::find (const char *opname,
-                                TAO_Collocated_Skeleton& skel_ptr,
+TAO_Dynamic_Hash_OpTable::find (char const *opname,
+                                TAO_Collocated_Skeleton &skel_ptr,
                                 TAO::Collocation_Strategy s,
-                                const unsigned int )
+                                unsigned int const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
 

@@ -44,7 +44,7 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base ()
   if (this->transport_ != nullptr)
     this->transport_->remove_reference ();
 
-  if (this->lock_)
+  if (this->lock_ != nullptr)
     delete this->lock_;
 }
 

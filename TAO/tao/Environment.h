@@ -40,9 +40,9 @@ namespace CORBA
   class Exception;
 
   class Environment;
-  typedef Environment *Environment_ptr;
-  typedef TAO_Pseudo_Var_T<Environment> Environment_var;
-  typedef TAO_Pseudo_Out_T<Environment> Environment_out;
+  using Environment_ptr = Environment *;
+  using Environment_var = TAO_Pseudo_Var_T<Environment>;
+  using Environment_out = TAO_Pseudo_Out_T<Environment>;
 
   /**
    * @class Environment
@@ -130,9 +130,9 @@ namespace CORBA
     static CORBA::Environment &default_environment ();
 
     // Useful for template programming.
-    typedef CORBA::Environment_ptr _ptr_type;
-    typedef CORBA::Environment_var _var_type;
-    typedef CORBA::Environment_out _out_type;
+    using _ptr_type = CORBA::Environment_ptr;
+    using _var_type = CORBA::Environment_var;
+    using _out_type = CORBA::Environment_out;
 
   private:
     /// Initialize using a well known ORB Core; this is intended for

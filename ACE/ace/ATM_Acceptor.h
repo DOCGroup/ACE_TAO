@@ -32,12 +32,12 @@
 #if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
 #include "ace/SOCK_Acceptor.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ACE_SOCK_Acceptor ATM_Acceptor;
+using ATM_Acceptor = ACE_SOCK_Acceptor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_FORE_ATM_XTI)
 #include "ace/TLI_Acceptor.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ACE_TLI_Acceptor ATM_Acceptor;
+using ATM_Acceptor = ACE_TLI_Acceptor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif // ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
 
@@ -93,8 +93,8 @@ public:
   int get_local_addr(ACE_ATM_Addr &local_addr);
 
   // = Meta-type info
-  typedef ACE_ATM_Addr PEER_ADDR;
-  typedef ACE_ATM_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_ATM_Addr;
+  using PEER_STREAM = ACE_ATM_Stream;
 
   /// Dump the state of an object.
   void dump () const;

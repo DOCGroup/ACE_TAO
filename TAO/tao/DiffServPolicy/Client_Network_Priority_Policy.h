@@ -49,42 +49,42 @@ public:
 
   /// Constructor.
   TAO_Client_Network_Priority_Policy (
-     const TAO::DiffservCodepoint request_diffserv_codepoint,
-     const TAO::DiffservCodepoint reply_diffserv_codepoint,
+     TAO::DiffservCodepoint request_diffserv_codepoint,
+     TAO::DiffservCodepoint reply_diffserv_codepoint,
      TAO::NetworkPriorityModel network_priority_model);
 
   /// Copy constructor.
   TAO_Client_Network_Priority_Policy (
-     const TAO_Client_Network_Priority_Policy &rhs);
+     TAO_Client_Network_Priority_Policy const& rhs);
 
   /// Returns a copy of <this>.
   TAO_Client_Network_Priority_Policy *clone () const;
 
-  TAO::DiffservCodepoint request_diffserv_codepoint ();
+  TAO::DiffservCodepoint request_diffserv_codepoint () override;
 
-  void request_diffserv_codepoint (TAO::DiffservCodepoint req_dscp);
+  void request_diffserv_codepoint (TAO::DiffservCodepoint req_dscp) override;
 
-  TAO::DiffservCodepoint reply_diffserv_codepoint ();
+  TAO::DiffservCodepoint reply_diffserv_codepoint () override;
 
-  void reply_diffserv_codepoint (TAO::DiffservCodepoint reply_dscp);
+  void reply_diffserv_codepoint (TAO::DiffservCodepoint reply_dscp) override;
 
-  TAO::NetworkPriorityModel network_priority_model ();
+  TAO::NetworkPriorityModel network_priority_model () override;
 
-  void network_priority_model (TAO::NetworkPriorityModel npm);
+  void network_priority_model (TAO::NetworkPriorityModel npm) override;
 
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (CORBA::Any const& val);
 
-  CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  void destroy ();
+  void destroy () override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
 private:
   /// The attribute

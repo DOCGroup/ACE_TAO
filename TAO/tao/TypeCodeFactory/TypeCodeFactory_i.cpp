@@ -38,56 +38,51 @@ namespace TCF
 {
   namespace Struct
   {
-    typedef
+    using field_array_type =
       ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                 CORBA::TypeCode_var> >
-        field_array_type;
+                                                  CORBA::TypeCode_var> >;
 
-    typedef TAO::TypeCode::Struct<CORBA::String_var,
-                                  CORBA::TypeCode_var,
-                                  field_array_type,
-                                  TAO::True_RefCount_Policy> typecode_type;
+    using typecode_type = TAO::TypeCode::Struct<CORBA::String_var,
+                                                CORBA::TypeCode_var,
+                                                field_array_type,
+                                                TAO::True_RefCount_Policy>;
 
-    typedef TAO::TypeCode::Recursive_Type<typecode_type,
-                                          CORBA::TypeCode_var,
-                                          field_array_type>
-      recursive_typecode_type;
+    using recursive_typecode_type = TAO::TypeCode::Recursive_Type<typecode_type,
+                                                                    CORBA::TypeCode_var,
+                                                                    field_array_type>;
   }  // End namespace Struct
 
   namespace Union
   {
     // Use an ACE::Value_Ptr to provide exception safety and proper
     // copying semantics.
-    typedef ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic> elem_type;
-    typedef ACE_Array_Base<elem_type> case_array_type;
+    using elem_type = ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic>;
+    using case_array_type = ACE_Array_Base<elem_type>;
 
-    typedef TAO::TypeCode::Union<CORBA::String_var,
-                                 CORBA::TypeCode_var,
-                                 case_array_type,
-                                 TAO::True_RefCount_Policy> typecode_type;
+    using typecode_type = TAO::TypeCode::Union<CORBA::String_var,
+                                               CORBA::TypeCode_var,
+                                               case_array_type,
+                                               TAO::True_RefCount_Policy>;
 
-    typedef TAO::TypeCode::Recursive_Type<
-      typecode_type,
-      CORBA::TypeCode_var,
-      case_array_type> recursive_typecode_type;
+    using recursive_typecode_type = TAO::TypeCode::Recursive_Type<typecode_type,
+                                                                    CORBA::TypeCode_var,
+                                                                    case_array_type>;
   }  // End namespace Union
 
   namespace Value
   {
-    typedef
+    using field_array_type =
       ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                CORBA::TypeCode_var> >
-        field_array_type;
+                                                 CORBA::TypeCode_var> >;
 
-    typedef TAO::TypeCode::Value<CORBA::String_var,
-                                 CORBA::TypeCode_var,
-                                 field_array_type,
-                                 TAO::True_RefCount_Policy> typecode_type;
+    using typecode_type = TAO::TypeCode::Value<CORBA::String_var,
+                                               CORBA::TypeCode_var,
+                                               field_array_type,
+                                               TAO::True_RefCount_Policy>;
 
-    typedef TAO::TypeCode::Recursive_Type<typecode_type,
-                                          CORBA::TypeCode_var,
-                                          field_array_type>
-      recursive_typecode_type;
+    using recursive_typecode_type = TAO::TypeCode::Recursive_Type<typecode_type,
+                                                                    CORBA::TypeCode_var,
+                                                                    field_array_type>;
   }  // End namespace Value
 }
 
@@ -105,7 +100,7 @@ TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return 0;
+      return nullptr;
     }
 
   return dynamic_cast<TAO_TypeCodeFactory_i *> (_tao_objref);
@@ -132,12 +127,12 @@ TAO_TypeCodeFactory_i::create_union_tc (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -313,7 +308,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       elem_type & element = cases[ci];
-      TAO::TypeCode::Case_Dynamic * the_case = 0;
+      TAO::TypeCode::Case_Dynamic *the_case = nullptr;
 
       if (index == raw_default_index)
         {
@@ -323,7 +318,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                                        members,
                                        the_case);
 
-          if (the_case == 0)
+          if (the_case == nullptr)
             {
               // Should never throw since label kind was
               // verified earlier.
@@ -367,9 +362,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                 CORBA::ULong label;
                 for_reading.read_ulong (label);
 
-                typedef TAO::TypeCode::Case_T<CORBA::ULong,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::ULong,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -388,9 +383,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::ULong,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::ULong,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -409,9 +404,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::Long,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::Long,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -430,9 +425,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::UShort,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::UShort,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -451,9 +446,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::Short,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::Short,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -472,9 +467,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::Char,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::Char,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -493,9 +488,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::Boolean,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::Boolean,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -514,9 +509,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::LongLong,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::LongLong,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -535,9 +530,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       CORBA::COMPLETED_NO);
                   }
 
-                typedef TAO::TypeCode::Case_T<CORBA::ULongLong,
-                                              CORBA::String_var,
-                                              CORBA::TypeCode_var> case_type;
+                using case_type = TAO::TypeCode::Case_T<CORBA::ULongLong,
+                                                        CORBA::String_var,
+                                                        CORBA::TypeCode_var>;
 
                 ACE_NEW_THROW_EX (the_case,
                                   case_type (label),
@@ -603,12 +598,12 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -633,10 +628,10 @@ TAO_TypeCodeFactory_i::create_enum_tc (
       enumerators[index] = members[index];
     }
 
-  typedef TAO::TypeCode::Enum<
+  using typecode_type = TAO::TypeCode::Enum<
     CORBA::String_var,
     ACE_Array_Base<CORBA::String_var>,
-    TAO::True_RefCount_Policy> typecode_type;
+    TAO::True_RefCount_Policy>;
 
   ACE_NEW_THROW_EX (tc,
                     typecode_type (id,
@@ -774,7 +769,7 @@ TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1009,9 +1004,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
   {
     case CORBA::tk_char:
       {
-        typedef TAO::TypeCode::Case_T<CORBA::Char,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::Char,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.char_val));
@@ -1019,9 +1014,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
       break;
     case CORBA::tk_boolean:
       {
-        typedef TAO::TypeCode::Case_T<CORBA::Boolean,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::Boolean,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.bool_val));
@@ -1029,9 +1024,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
       break;
     case CORBA::tk_short:
       {
-        typedef TAO::TypeCode::Case_T<CORBA::Short,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::Short,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.short_val));
@@ -1039,9 +1034,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
       break;
     case CORBA::tk_ushort:
       {
-        typedef TAO::TypeCode::Case_T<CORBA::UShort,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::UShort,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.ushort_val));
@@ -1049,9 +1044,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
       break;
     case CORBA::tk_long:
       {
-        typedef TAO::TypeCode::Case_T<CORBA::Long,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::Long,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.long_val));
@@ -1059,9 +1054,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
       break;
     case CORBA::tk_ulong:
       {
-        typedef TAO::TypeCode::Case_T<CORBA::ULong,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::ULong,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.ulong_val));
@@ -1069,9 +1064,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
       break;
     case CORBA::tk_ulonglong:
       {
-        typedef TAO::TypeCode::Case_T<CORBA::ULongLong,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::ULongLong,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.ulonglong_val));
@@ -1080,9 +1075,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
     case CORBA::tk_enum:
       {
         // Enumerators are encoded as CORBA::ULong.
-        typedef TAO::TypeCode::Case_T<CORBA::ULong,
-                                      CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+        using case_type = TAO::TypeCode::Case_T<CORBA::ULong,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
         ACE_NEW (the_case,
                  case_type (dv.enum_val));
@@ -1101,21 +1096,21 @@ TAO_TypeCodeFactory_i::create_tc_common (
 
   )
 {
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   // Repo id may not be null for object or native type.
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   CORBA::TypeCode_ptr tc;
 
-  typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                TAO::True_RefCount_Policy> typecode_type;
+  using typecode_type = TAO::TypeCode::Objref<CORBA::String_var,
+                                              TAO::True_RefCount_Policy>;
 
   ACE_NEW_THROW_EX (tc,
                     typecode_type (kind, id, name),
@@ -1158,8 +1153,8 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
 
   CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (element_type));
 
-  typedef TAO::TypeCode::Sequence<CORBA::TypeCode_var,
-                                  TAO::True_RefCount_Policy> typecode_type;
+  using typecode_type = TAO::TypeCode::Sequence<CORBA::TypeCode_var,
+                                                TAO::True_RefCount_Policy>;
 
   ACE_NEW_THROW_EX (tc,
                     typecode_type (kind, tmp, bound),
@@ -1179,12 +1174,12 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1218,7 +1213,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
       char const * const member_name = members[index].name;
 
-      if (member_name == 0 || !this->valid_name (member_name))
+      if (member_name == nullptr || !this->valid_name (member_name))
         {
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
@@ -1289,12 +1284,12 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1309,9 +1304,9 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 
   CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (underlying_type));
 
-  typedef TAO::TypeCode::Alias<CORBA::String_var,
-    CORBA::TypeCode_var,
-    TAO::True_RefCount_Policy> typecode_type;
+  using typecode_type = TAO::TypeCode::Alias<CORBA::String_var,
+                                              CORBA::TypeCode_var,
+                                              TAO::True_RefCount_Policy>;
 
   ACE_NEW_THROW_EX (tc,
                     typecode_type (kind, id, name, tmp),
@@ -1333,12 +1328,12 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
-  if (name == 0 || !this->valid_name (name))
+  if (name == nullptr || !this->valid_name (name))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
-  if (id == 0 || !this->valid_id (id))
+  if (id == nullptr || !this->valid_id (id))
     {
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
@@ -1371,7 +1366,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
       const char * const member_name = members[index].name;
 
-      if (member_name == 0 || !this->valid_name (member_name))
+      if (member_name == nullptr || !this->valid_name (member_name))
         {
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
@@ -1786,7 +1781,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                   {
                     char const * member_tc_id = member_tc->id ();
 
-                    if (working_id != 0
+                    if (working_id != nullptr
                         && ACE_OS::strcmp (working_id, member_tc_id) == 0)
                       {
                         // We've found a recursion at a lower level but
@@ -1828,7 +1823,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
         CORBA::TCKind const content_tc_kind =
           content_tc->kind ();
 
-        char const * content_tc_id = 0;
+        char const *content_tc_id = nullptr;
 
         if (content_tc_kind == CORBA::tk_struct
             || content_tc_kind == CORBA::tk_union
@@ -1837,8 +1832,8 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
             content_tc_id = content_tc->id ();
           }
 
-        if (working_id != 0
-            && content_tc_id != 0
+        if (working_id != nullptr
+            && content_tc_id != nullptr
             && ACE_OS::strcmp (working_id, content_tc_id) == 0)
           {
             // We've found a recursion at a lower level but
@@ -1880,7 +1875,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
             id,
             content_tc.in (),
             recursive_tc,
-            content_tc_id != 0 ? content_tc_id : working_id);
+            content_tc_id != nullptr ? content_tc_id : working_id);
       }
 
     default:

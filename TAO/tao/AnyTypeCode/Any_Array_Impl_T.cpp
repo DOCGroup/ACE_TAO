@@ -42,7 +42,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::insert (CORBA::Any & any,
                                                   T_slice * const value)
 {
   TAO::Any_Array_Impl_T<T_slice, T_forany> *new_impl = 0;
-  typedef TAO::Any_Array_Impl_T<T_slice, T_forany> ARRAY_ANY_IMPL;
+  using ARRAY_ANY_IMPL = TAO::Any_Array_Impl_T<T_slice, T_forany>;
   ACE_NEW (new_impl,
            ARRAY_ANY_IMPL (destructor,
                            tc,
@@ -86,7 +86,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
         }
 
       TAO::Any_Array_Impl_T<T_slice, T_forany> *replacement = 0;
-      typedef TAO::Any_Array_Impl_T<T_slice, T_forany> ARRAY_ANY_IMPL;
+      using ARRAY_ANY_IMPL = TAO::Any_Array_Impl_T<T_slice, T_forany>;
       ACE_NEW_RETURN (replacement,
                       ARRAY_ANY_IMPL (destructor,
                                       any_tc,

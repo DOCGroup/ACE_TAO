@@ -31,8 +31,8 @@ template <typename T>
 class TAO_Seq_Out_T
 {
 public:
-  typedef typename T::subscript_type T_elem;
-  typedef typename T::_var_type T_var;
+  using T_elem = typename T::subscript_type;
+  using T_var = typename T::_var_type;
 
   TAO_Seq_Out_T (T *&);
   TAO_Seq_Out_T (T_var &);

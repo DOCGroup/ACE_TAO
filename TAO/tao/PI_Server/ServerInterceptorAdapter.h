@@ -38,9 +38,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor,
-                            ServerRequestDetails>
-    ServerRequestInterceptor_List;
+  using ServerRequestInterceptor_List =
+    Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor,
+                      ServerRequestDetails>;
 }
 
 namespace CORBA
@@ -147,29 +147,36 @@ namespace TAO
     //@}
 
     /// Register an interceptor.
-    virtual void add_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
+    void add_interceptor (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor) override;
 
-    virtual void add_interceptor (
+    void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies);
+      const CORBA::PolicyList& policies) override;
 
-    virtual void destroy_interceptors ();
+    void destroy_interceptors () override;
 
-    virtual TAO::PICurrent_Impl *allocate_pi_current ();
+    TAO::PICurrent_Impl *allocate_pi_current () override;
 
-    virtual void deallocate_pi_current (TAO::PICurrent_Impl *picurrent);
+    void deallocate_pi_current (TAO::PICurrent_Impl *picurrent) override;
 
-    virtual void execute_command (
+    void execute_command (
         TAO_ServerRequest &server_request,
-        TAO::Upcall_Command &command);
+        TAO::Upcall_Command &command) override;
 
-    void popTSC (TAO_ORB_Core *orb_core)
+    void popTSC (TAO_ORB_Core *orb_core) override
       {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
-    void pushTSC (TAO_ORB_Core *orb_core)
+    void pushTSC (TAO_ORB_Core *orb_core) override
       {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
 
   private:
+    ServerRequestInterceptor_Adapter_Impl (ServerRequestInterceptor_Adapter_Impl const &) = delete;
+    ServerRequestInterceptor_Adapter_Impl &operator= (
+      ServerRequestInterceptor_Adapter_Impl const &) = delete;
+    ServerRequestInterceptor_Adapter_Impl (ServerRequestInterceptor_Adapter_Impl &&) = delete;
+    ServerRequestInterceptor_Adapter_Impl &operator= (
+      ServerRequestInterceptor_Adapter_Impl &&) = delete;
+
     /// List of registered interceptors.
     ServerRequestInterceptor_List interceptor_list_;
   };

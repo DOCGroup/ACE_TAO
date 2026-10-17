@@ -16,7 +16,7 @@ TAO_AMH_DSI_Response_Handler::_tao_byte_order ()
 ACE_INLINE TAO_AMH_DSI_Response_Handler_ptr
 TAO_AMH_DSI_Response_Handler::_duplicate (TAO_AMH_DSI_Response_Handler_ptr x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
       x->_add_ref ();
     }

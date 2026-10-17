@@ -222,12 +222,12 @@ public:
 /* protected: */
   /// Defines types to represent the container that maps RecordIds to
   /// LogRecords.
-  typedef ACE_RB_Tree <DsLogAdmin::RecordId,
-                       DsLogAdmin::LogRecord,
-                       ACE_Less_Than<DsLogAdmin::RecordId>,
-                       ACE_Null_Mutex> LOG_RECORD_STORE;
-  typedef LOG_RECORD_STORE::ITERATOR LOG_RECORD_STORE_ITER;
-  typedef LOG_RECORD_STORE::ENTRY LOG_RECORD_STORE_ENTRY;
+  using LOG_RECORD_STORE = ACE_RB_Tree<DsLogAdmin::RecordId,
+                                       DsLogAdmin::LogRecord,
+                                       ACE_Less_Than<DsLogAdmin::RecordId>,
+                                       ACE_Null_Mutex>;
+  using LOG_RECORD_STORE_ITER = LOG_RECORD_STORE::ITERATOR;
+  using LOG_RECORD_STORE_ENTRY = LOG_RECORD_STORE::ENTRY;
 
 protected:
   /// Set rec to the pointer to the LogRecord with the given

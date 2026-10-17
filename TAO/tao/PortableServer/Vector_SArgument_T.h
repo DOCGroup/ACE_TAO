@@ -34,14 +34,14 @@ namespace TAO
   class In_Vector_SArgument_T : public InArgument
   {
   public:
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S const & arg () const;
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -58,15 +58,15 @@ namespace TAO
   public:
     Inout_Vector_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -83,14 +83,14 @@ namespace TAO
   public:
     Out_Vector_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -107,14 +107,14 @@ namespace TAO
   public:
     Ret_Vector_SArgument_T ();
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
   private:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -130,22 +130,22 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Vector_SArg_Traits_T
   {
-    typedef T                                               ret_type;
-    typedef const T &                                       in_type;
-    typedef T &                                             inout_type;
-    typedef T &                                             out_type;
+    using ret_type = T;
+    using in_type = T const &;
+    using inout_type = T &;
+    using out_type = T &;
 
-    typedef In_Vector_SArgument_T<T,Insert_Policy>        in_arg_val;
-    typedef Inout_Vector_SArgument_T<T,Insert_Policy>     inout_arg_val;
-    typedef Out_Vector_SArgument_T<T,Insert_Policy>       out_arg_val;
-    typedef Ret_Vector_SArgument_T<T,Insert_Policy>       ret_val;
+    using in_arg_val = In_Vector_SArgument_T<T, Insert_Policy>;
+    using inout_arg_val = Inout_Vector_SArgument_T<T, Insert_Policy>;
+    using out_arg_val = Out_Vector_SArgument_T<T, Insert_Policy>;
+    using ret_val = Ret_Vector_SArgument_T<T, Insert_Policy>;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                                         in_arg_type;
-    typedef inout_type                                      inout_arg_type;
-    typedef ret_type &                                      out_arg_type;
-    typedef ret_type &                                      ret_arg_type;
+    using in_arg_type = in_type;
+    using inout_arg_type = inout_type;
+    using out_arg_type = ret_type &;
+    using ret_arg_type = ret_type &;
   };
 }
 

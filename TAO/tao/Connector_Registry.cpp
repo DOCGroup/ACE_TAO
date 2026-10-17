@@ -15,11 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Connector_Registry::TAO_Connector_Registry ()
-  : connectors_ (nullptr),
-    size_ (0)
-{
-}
+TAO_Connector_Registry::TAO_Connector_Registry () = default;
 
 TAO_Connector_Registry::~TAO_Connector_Registry ()
 {

@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableInterceptor
 {
   class ORBInitializer;
-  typedef ORBInitializer *ORBInitializer_ptr;
+  using ORBInitializer_ptr = ORBInitializer *;
 
   /// Register an ORBInitializer with the global ORBInitializer
   /// table.

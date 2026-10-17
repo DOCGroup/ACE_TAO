@@ -23,7 +23,7 @@ public:
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  typedef ACE_Event_Handler_T<ACE_Test_Sig_Handler> EH_SH;
+  using EH_SH = ACE_Event_Handler_T<ACE_Test_Sig_Handler>;
 
   // Tie the ACE_Event_Handler_T together with the methods from ACE_Test_Sig_Handler.
   EH_SH tied_sh (new ACE_Test_Sig_Handler, 1,

@@ -51,7 +51,7 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Any_var my_any =
         hello->get_any (the_any);
 
-      const T * my_foo = 0;
+      T const * my_foo = nullptr;
       if (!(my_any.in () >>= my_foo))
         throw Test::Demarshaling_From_Any_Failed ();
 
@@ -152,15 +152,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      typedef void (*test_func) (CORBA::ORB_ptr,
-                                 Test::Hello_ptr);
+      using test_func = void (*) (CORBA::ORB_ptr,
+                                  Test::Hello_ptr);
 
       static test_func const tests[] =
         {
           nested_recursive_struct_test
         };
 
-      static size_t const test_count = sizeof (tests) / sizeof (test_func);
+      static constexpr size_t test_count = sizeof (tests) / sizeof (test_func);
 
       // Have some fun with the STL.  :-)
       Caller<test_func> c =

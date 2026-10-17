@@ -80,34 +80,34 @@ public:
    */
   void remove_endpoint (TAO_IIOP_Endpoint *endp);
 
-  virtual void remove_generic_endpoint (TAO_Endpoint *ep);
+  void remove_generic_endpoint (TAO_Endpoint *ep) override;
 
   /// Add an endpoint when the specific endpoint type is unknown
-  virtual void add_generic_endpoint (TAO_Endpoint *ep);
+  void add_generic_endpoint (TAO_Endpoint *ep) override;
 
   /// The object key delimiter that IIOP uses or expects.
-  virtual char object_key_delimiter () const;
+  char object_key_delimiter () const override;
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char * to_string () const;
+  char * to_string () const override;
 
   /// Encode endpoints for RT profiles, using a single TAO_TAG_ENDPOINT
   /// component.
-  virtual int encode_endpoints ();
+  int encode_endpoints () override;
 
   /// Encode alternate endpoints for non-RT profiles, using multiple
   /// TAG_ALTERNATE_IIOP_ADDRESS components, one endpoint per component
-  virtual int encode_alternate_endpoints ();
-  virtual TAO_Endpoint *endpoint ();
+  int encode_alternate_endpoints () override;
+  TAO_Endpoint *endpoint () override;
 
   /// Since SSLIOP_Profile derives from IIOP_Profile, but SSLIOP_Endpoint
   /// does not derive from IIOP_Endpoint, it is necessary to have a way
   /// of always getting the IIOP_Endpoint using a generic interface
   /// regardless of the final type of the profile.
-  virtual TAO_Endpoint *base_endpoint ();
+  TAO_Endpoint *base_endpoint () override;
 
-  virtual CORBA::ULong endpoint_count () const;
-  virtual CORBA::ULong hash (CORBA::ULong max);
+  CORBA::ULong endpoint_count () const override;
+  CORBA::ULong hash (CORBA::ULong max) override;
 
 protected:
   /// Destructor is to be called only through <_decr_refcnt>.
@@ -129,11 +129,11 @@ protected:
   int encode_endpoints_for_rt ();
 
   /// Template methods. Please see Profile.h for the documentation.
-  virtual int decode_profile (TAO_InputCDR &cdr);
-  virtual int decode_endpoints ();
-  virtual void parse_string_i (const char *string);
-  virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
+  int decode_profile (TAO_InputCDR &cdr) override;
+  int decode_endpoints () override;
+  void parse_string_i (char const *string) override;
+  void create_profile_body (TAO_OutputCDR &cdr) const override;
+  CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
 protected:
   /**

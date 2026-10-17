@@ -39,8 +39,7 @@ class TAO_Operation_Details;
 class TAO_Acceptor;
 
 // Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>
-        TAO_DIOP_SVC_HANDLER;
+using TAO_DIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
 
 /**
  * @class TAO_DIOP_Transport
@@ -59,46 +58,51 @@ public:
   ~TAO_DIOP_Transport () = default;
 
   /// Look for the documentation in Transport.h.
-  virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0);
+  int handle_input (TAO_Resume_Handle &rh,
+                    ACE_Time_Value *max_wait_time = nullptr) override;
 protected:
   /** @name Overridden Template Methods
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  virtual ACE_Event_Handler * event_handler_i ();
-  virtual TAO_Connection_Handler *connection_handler_i ();
+  ACE_Event_Handler *event_handler_i () override;
+  TAO_Connection_Handler *connection_handler_i () override;
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send (iovec *iov, int iovcnt,
-                        size_t &bytes_transferred,
-                        const ACE_Time_Value *max_wait_time);
+  ssize_t send (iovec *iov, int iovcnt,
+                size_t &bytes_transferred,
+                ACE_Time_Value const *max_wait_time) override;
 
   /// Read len bytes from into buf.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0);
+  ssize_t recv (char *buf,
+                size_t len,
+                ACE_Time_Value const *s = nullptr) override;
 
-  virtual int register_handler ();
+  int register_handler () override;
 
   ///@}
 public:
   /// @todo These methods IMHO should have more meaningful names.
   /// The names seem to indicate nothing.
-  virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core,
-                            TAO_OutputCDR &stream,
-                            TAO_Message_Semantics message_semantics,
-                            ACE_Time_Value *max_wait_time);
+  int send_request (TAO_Stub *stub,
+                    TAO_ORB_Core *orb_core,
+                    TAO_OutputCDR &stream,
+                    TAO_Message_Semantics message_semantics,
+                    ACE_Time_Value *max_wait_time) override;
 
-  virtual int send_message (TAO_OutputCDR &stream,
-                            TAO_Stub *stub = 0,
-                            TAO_ServerRequest *request = 0,
-                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
-                            ACE_Time_Value *max_time_wait = 0);
+  int send_message (TAO_OutputCDR &stream,
+                    TAO_Stub *stub = nullptr,
+                    TAO_ServerRequest *request = nullptr,
+                    TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
+                    ACE_Time_Value *max_time_wait = nullptr) override;
 
 private:
+  TAO_DIOP_Transport (TAO_DIOP_Transport const &) = delete;
+  TAO_DIOP_Transport &operator= (TAO_DIOP_Transport const &) = delete;
+  TAO_DIOP_Transport (TAO_DIOP_Transport &&) = delete;
+  TAO_DIOP_Transport &operator= (TAO_DIOP_Transport &&) = delete;
+
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_DIOP_Connection_Handler *connection_handler_;

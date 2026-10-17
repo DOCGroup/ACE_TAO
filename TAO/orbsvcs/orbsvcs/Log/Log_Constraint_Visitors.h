@@ -107,11 +107,11 @@ private:
   /// TODO: define inline once VC6 support is deprecated.
   static const size_t property_lookup_size_;
 
-  typedef ACE_Hash_Map_Manager <ACE_CString,
-                                CORBA::Any,
-                                ACE_Null_Mutex> HASH_MAP;
+  using HASH_MAP = ACE_Hash_Map_Manager<ACE_CString,
+                                        CORBA::Any,
+                                        ACE_Null_Mutex>;
 
-  typedef HASH_MAP::ENTRY HASH_ENTRY;
+  using HASH_ENTRY = HASH_MAP::ENTRY;
 
   /// Used to lookup property name and values.
   HASH_MAP property_lookup_;

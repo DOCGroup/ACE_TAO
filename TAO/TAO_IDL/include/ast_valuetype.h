@@ -66,7 +66,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   static AST_Decl::NodeType const NT;
-  typedef AST_ValueTypeFwd FWD_TYPE;
+  using FWD_TYPE = AST_ValueTypeFwd;
 
 protected:
   AST_Type **pd_supports;

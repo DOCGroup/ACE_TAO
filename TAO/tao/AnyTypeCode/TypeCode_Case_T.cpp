@@ -79,9 +79,9 @@ TAO::TypeCode::Case_T<DiscriminatorType,
 {
   Case<StringType, TypeCodeType> * p = 0;
 
-  typedef Case_T<DiscriminatorType,
-                 StringType,
-                 TypeCodeType> case_type;
+  using case_type = Case_T<DiscriminatorType,
+                           StringType,
+                           TypeCodeType>;
 
   // The compiler generated memberwise copy constructor is sufficient.
   ACE_NEW_RETURN (p,

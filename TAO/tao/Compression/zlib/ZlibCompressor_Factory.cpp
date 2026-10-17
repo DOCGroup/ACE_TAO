@@ -21,7 +21,7 @@ Zlib_CompressorFactory::get_compressor (
                                     ::Compression::CompressionLevel(Z_BEST_COMPRESSION), // Max value
                                     compression_level); // Argument value
 
-    ::Compression::Compressor_ptr compressor = 0;
+    ::Compression::Compressor_ptr compressor = nullptr;
 
     {   // Ensure scoped lock for compressor Map container
 

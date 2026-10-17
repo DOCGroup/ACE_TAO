@@ -17,9 +17,7 @@ TAO_Queued_Message::TAO_Queued_Message (TAO_ORB_Core *oc,
 {
 }
 
-TAO_Queued_Message::~TAO_Queued_Message ()
-{
-}
+TAO_Queued_Message::~TAO_Queued_Message () = default;
 
 void
 TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,

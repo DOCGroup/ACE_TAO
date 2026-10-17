@@ -24,8 +24,8 @@ TAO::TypeCode::Case_Enum_T<StringType,
 {
   Case<StringType, TypeCodeType> * p = 0;
 
-  typedef Case_Enum_T<StringType,
-                      TypeCodeType> case_type;
+  using case_type = Case_Enum_T<StringType,
+                                TypeCodeType>;
 
   // The compiler generated memberwise copy constructor is sufficient.
   ACE_NEW_RETURN (p,

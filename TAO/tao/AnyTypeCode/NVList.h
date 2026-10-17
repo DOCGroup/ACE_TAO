@@ -54,10 +54,10 @@ namespace CORBA
     RESP_NO_WAIT            = 0x400
   };
 
-  typedef TAO_Pseudo_Var_T<NamedValue> NamedValue_var;
-  typedef TAO_Pseudo_Out_T<NamedValue> NamedValue_out;
+  using NamedValue_var = TAO_Pseudo_Var_T<NamedValue>;
+  using NamedValue_out = TAO_Pseudo_Out_T<NamedValue>;
 
-  typedef ULong Flags;
+  using Flags = ULong;
 
   /**
    * @class NamedValue
@@ -97,9 +97,9 @@ namespace CORBA
     ULong _decr_refcount ();
 
     // Useful for template programming.
-    typedef NamedValue_ptr _ptr_type;
-    typedef NamedValue_var _var_type;
-    typedef NamedValue_out _out_type;
+    using _ptr_type = NamedValue_ptr;
+    using _var_type = NamedValue_var;
+    using _out_type = NamedValue_out;
 
   protected:
     /// Destructor
@@ -130,8 +130,8 @@ namespace CORBA
 
   // ****************************************************************
 
-  typedef TAO_Pseudo_Var_T<NVList> NVList_var;
-  typedef TAO_Pseudo_Out_T<NVList> NVList_out;
+  using NVList_var = TAO_Pseudo_Var_T<NVList>;
+  using NVList_out = TAO_Pseudo_Out_T<NVList>;
 
   /**
    * @class NVList
@@ -224,9 +224,9 @@ namespace CORBA
     Boolean _lazy_has_arguments () const;
 
     // Useful for template programming.
-    typedef NVList_ptr _ptr_type;
-    typedef NVList_var _var_type;
-    typedef NVList_out _out_type;
+    using _ptr_type = NVList_ptr;
+    using _var_type = NVList_var;
+    using _out_type = NVList_out;
 
   protected:
     /// Destructor

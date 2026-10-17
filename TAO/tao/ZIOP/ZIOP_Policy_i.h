@@ -42,23 +42,23 @@ public:
   CompressorIdLevelListPolicy ();
 
   /// Constructor.
-  CompressorIdLevelListPolicy (const ::Compression::CompressorIdLevelList& val);
+  CompressorIdLevelListPolicy (::Compression::CompressorIdLevelList const& val);
 
   /// Copy constructor.
-  CompressorIdLevelListPolicy (const CompressorIdLevelListPolicy &rhs);
+  CompressorIdLevelListPolicy (CompressorIdLevelListPolicy const& rhs);
 
   /// Returns a copy of this CompressorIdLevelListPolicy.
-  virtual CompressorIdLevelListPolicy *clone () const;
+  CompressorIdLevelListPolicy *clone () const;
 
-  virtual ::Compression::CompressorIdLevelList * compressor_ids ();
+  ::Compression::CompressorIdLevelList * compressor_ids () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const;
@@ -87,24 +87,24 @@ public:
   CompressionEnablingPolicy ();
 
   /// Constructor.
-  CompressionEnablingPolicy (const ::CORBA::Boolean val);
+  CompressionEnablingPolicy (::CORBA::Boolean val);
 
   /// Copy constructor.
-  CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs);
+  CompressionEnablingPolicy (CompressionEnablingPolicy const& rhs);
 
   /// Returns a copy of this CompressionEnablingPolicy.
-  virtual CompressionEnablingPolicy *clone () const;
+  CompressionEnablingPolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::Boolean compression_enabled ();
+  ::CORBA::Boolean compression_enabled () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const;
@@ -131,24 +131,24 @@ class CompressionLowValuePolicy
 {
 public:
   /// Constructor.
-  CompressionLowValuePolicy (const ::CORBA::ULong val);
+  CompressionLowValuePolicy (::CORBA::ULong val);
 
   /// Copy constructor.
-  CompressionLowValuePolicy (const CompressionLowValuePolicy &rhs);
+  CompressionLowValuePolicy (CompressionLowValuePolicy const& rhs);
 
   /// Returns a copy of this CompressionLowValuePolicy.
-  virtual CompressionLowValuePolicy *clone () const;
+  CompressionLowValuePolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::CORBA::ULong low_value ();
+  ::CORBA::ULong low_value () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute
@@ -166,23 +166,23 @@ class CompressionMinRatioPolicy
 {
 public:
   /// Constructor.
-  CompressionMinRatioPolicy (const ::Compression::CompressionRatio val);
+  CompressionMinRatioPolicy (::Compression::CompressionRatio val);
 
   /// Copy constructor.
-  CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs);
+  CompressionMinRatioPolicy (CompressionMinRatioPolicy const& rhs);
 
   /// Returns a copy of this CompressionMinRatioPolicy.
-  virtual CompressionMinRatioPolicy *clone () const;
+  CompressionMinRatioPolicy *clone () const;
 
-  virtual ::Compression::CompressionRatio ratio ();
+  ::Compression::CompressionRatio ratio () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute

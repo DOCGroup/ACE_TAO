@@ -10,9 +10,7 @@ TAO_CSD_Framework_Loader::TAO_CSD_Framework_Loader ()
 {
 }
 
-TAO_CSD_Framework_Loader::~TAO_CSD_Framework_Loader ()
-{
-}
+TAO_CSD_Framework_Loader::~TAO_CSD_Framework_Loader () = default;
 
 
 int
