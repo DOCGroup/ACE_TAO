@@ -83,12 +83,14 @@ namespace CORBA
 
   private:
     // = Prevent copying
-    Principal &operator = (const CORBA::Principal_ptr &);
-    Principal (const CORBA::Principal_ptr &);
+    Principal (Principal const &) = delete;
+    Principal &operator= (Principal const &) = delete;
+    Principal (Principal &&) = delete;
+    Principal &operator= (Principal &&) = delete;
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {};
   };
 }  // End CORBA namespace
 
