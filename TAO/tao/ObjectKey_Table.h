@@ -115,8 +115,10 @@ namespace TAO
     int unbind_i (Refcounted_ObjectKey *&key);
 
   private:
-    ObjectKey_Table (const ObjectKey_Table &) = delete;
-    ObjectKey_Table &operator= (const ObjectKey_Table &) = delete;
+    ObjectKey_Table (ObjectKey_Table const &) = delete;
+    ObjectKey_Table &operator= (ObjectKey_Table const &) = delete;
+    ObjectKey_Table (ObjectKey_Table &&) = delete;
+    ObjectKey_Table &operator= (ObjectKey_Table &&) = delete;
 
     /// Some useful typedefs.
     using TABLE = ACE_RB_Tree<TAO::ObjectKey,
