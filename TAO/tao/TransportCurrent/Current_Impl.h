@@ -79,8 +79,10 @@ namespace TAO
         ~Current_Impl () override;
 
       private:
-        Current_Impl (const Current_Impl &) = delete;
-        void operator= (const Current_Impl &) = delete;
+        Current_Impl (Current_Impl const &) = delete;
+        void operator= (Current_Impl const &) = delete;
+        Current_Impl (Current_Impl &&) = delete;
+        void operator= (Current_Impl &&) = delete;
 
       private:
         // The ORB (core) that owes us.

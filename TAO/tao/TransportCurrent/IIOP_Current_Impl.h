@@ -79,8 +79,10 @@ namespace TAO
       TAO_IIOP_Connection_Handler* handler ();
 
     private:
-      IIOP_Current_Impl (const IIOP_Current_Impl &) = delete;
-      void operator= (const IIOP_Current_Impl &) = delete;
+      IIOP_Current_Impl (IIOP_Current_Impl const &) = delete;
+      void operator= (IIOP_Current_Impl const &) = delete;
+      IIOP_Current_Impl (IIOP_Current_Impl &&) = delete;
+      void operator= (IIOP_Current_Impl &&) = delete;
     };
   }
 }
