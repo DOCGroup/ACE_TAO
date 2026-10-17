@@ -63,12 +63,14 @@ public:
 
 private:
   void init_common ();
-  bool read_value (TAO_InputCDR& cdr, ACE_CDR::Fixed& value) const;
+  bool read_value (TAO_InputCDR &cdr, ACE_CDR::Fixed &value) const;
 
   ACE_CDR::Fixed value_;
 
-  TAO_DynFixed_i (TAO_DynFixed_i const&) = delete;
-  TAO_DynFixed_i& operator= (TAO_DynFixed_i const&) = delete;
+  TAO_DynFixed_i (TAO_DynFixed_i const &) = delete;
+  TAO_DynFixed_i &operator= (TAO_DynFixed_i const &) = delete;
+  TAO_DynFixed_i (TAO_DynFixed_i &&) = delete;
+  TAO_DynFixed_i &operator= (TAO_DynFixed_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

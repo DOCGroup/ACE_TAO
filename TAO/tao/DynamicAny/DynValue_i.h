@@ -137,8 +137,10 @@ private:
 
   /// These are not implemented!
   /// Use copy() or assign() instead of these.
-  TAO_DynValue_i (TAO_DynValue_i const& src) = delete;
-  TAO_DynValue_i &operator= (TAO_DynValue_i const& src) = delete;
+  TAO_DynValue_i (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i (TAO_DynValue_i &&) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i &&) = delete;
 
   /// Each component of DynValue and DynValueBox is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;

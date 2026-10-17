@@ -89,8 +89,10 @@ private:
   void init_common ();
 
   // Use copy() or assign() instead of these.
-  TAO_DynArray_i (TAO_DynArray_i const& src) = delete;
-  TAO_DynArray_i &operator= (TAO_DynArray_i const& src) = delete;
+  TAO_DynArray_i (TAO_DynArray_i const &src) = delete;
+  TAO_DynArray_i &operator= (TAO_DynArray_i const &src) = delete;
+  TAO_DynArray_i (TAO_DynArray_i &&) = delete;
+  TAO_DynArray_i &operator= (TAO_DynArray_i &&) = delete;
 
 private:
   /// Each component is also a DynAny.

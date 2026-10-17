@@ -67,8 +67,10 @@ public:
   static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc);
 
 private:
-  TAO_DynAnyFactory (TAO_DynAnyFactory const& src) = delete;
-  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory const& src) = delete;
+  TAO_DynAnyFactory (TAO_DynAnyFactory const &src) = delete;
+  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory const &src) = delete;
+  TAO_DynAnyFactory (TAO_DynAnyFactory &&) = delete;
+  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
