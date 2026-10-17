@@ -24,10 +24,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 DynamicAny::DynAny_ptr
-TAO_DynAnyFactory::create_dyn_any (const CORBA::Any & value)
+TAO_DynAnyFactory::create_dyn_any (CORBA::Any const& value)
 {
   return
-    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
       value._tao_get_typecode (),
       value,
       true );  // Allow truncation
@@ -47,10 +47,10 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (CORBA::TypeCode_ptr type)
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_without_truncation (
-  const CORBA::Any &value)
+  CORBA::Any const& value)
 {
   return
-    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
       value._tao_get_typecode (),
       value,
       false );  // Do NOT allow truncation
@@ -58,7 +58,7 @@ TAO_DynAnyFactory::create_dyn_any_without_truncation (
 
 DynamicAny::DynAnySeq *
 TAO_DynAnyFactory::create_multiple_dyn_anys (
-    const DynamicAny::AnySeq &values,
+    DynamicAny::AnySeq const& values,
     ::CORBA::Boolean allow_truncate)
 {
   // NOTE: Since each any is self contained and holds a streamed
@@ -91,7 +91,7 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
 
 DynamicAny::AnySeq *
 TAO_DynAnyFactory::create_multiple_anys (
-    const DynamicAny::DynAnySeq &values)
+    DynamicAny::DynAnySeq const& values)
 {
   // NOTE: Since each any is self contained and holds a streamed
   // representation of the DynAny contents, it is not possible

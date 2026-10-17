@@ -42,20 +42,20 @@ public:
   TAO_DynAnyFactory () = default;
 
   // = The DynamicAnyFactory methods.
-  DynamicAny::DynAny_ptr create_dyn_any (const CORBA::Any & value) override;
+  DynamicAny::DynAny_ptr create_dyn_any (CORBA::Any const& value) override;
 
   DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
       CORBA::TypeCode_ptr type) override;
 
   DynamicAny::DynAny_ptr create_dyn_any_without_truncation (
-      const CORBA::Any & value) override;
+      CORBA::Any const& value) override;
 
   DynamicAny::DynAnySeq * create_multiple_dyn_anys (
-      const DynamicAny::AnySeq & values,
+      DynamicAny::AnySeq const& values,
       ::CORBA::Boolean allow_truncate) override;
 
   DynamicAny::AnySeq * create_multiple_anys (
-      const DynamicAny::DynAnySeq & values) override;
+      DynamicAny::DynAnySeq const& values) override;
 
   /// TAO-specific methods.
 
@@ -67,8 +67,8 @@ public:
   static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc);
 
 private:
-  TAO_DynAnyFactory (const TAO_DynAnyFactory &src) = delete;
-  TAO_DynAnyFactory &operator= (const TAO_DynAnyFactory &src) = delete;
+  TAO_DynAnyFactory (TAO_DynAnyFactory const& src) = delete;
+  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory const& src) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
