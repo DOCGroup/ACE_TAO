@@ -63,6 +63,11 @@ namespace TAO
                                             const TAO::ObjectKey &key,
                                             const char *type_id) const override;
     private:
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl &&) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl &&) = delete;
+
       /// Implementation Repository Server Object
       ServerObject_i *server_object_;
     };

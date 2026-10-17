@@ -132,6 +132,11 @@ namespace
         }
     }
   private:
+    ImRifyProfiles (ImRifyProfiles const &) = delete;
+    ImRifyProfiles &operator= (ImRifyProfiles const &) = delete;
+    ImRifyProfiles (ImRifyProfiles &&) = delete;
+    ImRifyProfiles &operator= (ImRifyProfiles &&) = delete;
+
     bool combine_profile(const CORBA::ULong i)
     {
       try
