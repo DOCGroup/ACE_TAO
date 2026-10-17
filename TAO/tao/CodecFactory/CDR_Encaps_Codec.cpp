@@ -35,7 +35,7 @@ TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (
 TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec () = default;
 
 CORBA::OctetSeq *
-TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
+TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
@@ -43,9 +43,9 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
 
   TAO_OutputCDR cdr ((size_t) 0,            // size
                      (int) TAO_ENCAP_BYTE_ORDER,
-                     (ACE_Allocator *) 0,   // buffer_allocator
-                     (ACE_Allocator *) 0,   // data_block_allocator
-                     (ACE_Allocator *) 0,   // message_block_allocator
+                     nullptr,               // buffer_allocator
+                     nullptr,               // data_block_allocator
+                     nullptr,               // message_block_allocator
                      0,                     // memcpy_tradeoff
                      this->major_,
                      this->minor_);
@@ -77,8 +77,8 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
       octet_seq->length (static_cast<CORBA::ULong> (cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
 
-      for (const ACE_Message_Block *i = cdr.begin ();
-           i != 0;
+      for (ACE_Message_Block const* i = cdr.begin ();
+           i != nullptr;
            i = i->cont ())
         {
           size_t const len = i->length ();
@@ -93,7 +93,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
 }
 
 CORBA::Any *
-TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data)
+TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
 {
   // @todo How do we check for a format mismatch so that we can throw
   //       a IOP::Codec::FormatMismatch exception?
@@ -153,16 +153,16 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data)
 }
 
 CORBA::OctetSeq *
-TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
+TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
   // ----------------------------------------------------------------
   TAO_OutputCDR cdr ((size_t) 0,            // size
                      (int) TAO_ENCAP_BYTE_ORDER,
-                     (ACE_Allocator *) 0,   // buffer_allocator
-                     (ACE_Allocator *) 0,   // data_block_allocator
-                     (ACE_Allocator *) 0,   // message_block_allocator
+                     nullptr,               // buffer_allocator
+                     nullptr,               // data_block_allocator
+                     nullptr,               // message_block_allocator
                      0,                     // memcpy_tradeoff
                      this->major_,
                      this->minor_);
@@ -185,7 +185,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
           TAO::Unknown_IDL_Type * const unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-          if (!unk)
+          if (unk == nullptr)
             throw ::CORBA::INTERNAL ();
 
           // We don't want unk's rd_ptr to move, in case we are shared by
@@ -220,8 +220,8 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
       octet_seq->length (static_cast<CORBA::ULong> (cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
 
-      for (const ACE_Message_Block *i = cdr.begin ();
-           i != 0;
+      for (ACE_Message_Block const* i = cdr.begin ();
+           i != nullptr;
            i = i->cont ())
         {
           size_t len = i->length ();
@@ -238,7 +238,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
 }
 
 CORBA::Any *
-TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
+TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
                                     CORBA::TypeCode_ptr tc)
 {
   // The ACE_CDR::mb_align() call can shift the rd_ptr by up
@@ -311,7 +311,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
       TAO::Unknown_IDL_Type *unk = nullptr;
       ACE_NEW_RETURN (unk,
                       TAO::Unknown_IDL_Type (tc, cdr),
-                      0);
+                      nullptr);
       any->replace (unk);
       return safe_any._retn ();
     }
@@ -320,7 +320,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 }
 
 void
-TAO_CDR_Encaps_Codec::check_type_for_encoding (const CORBA::Any & data)
+TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data)
 {
   // @@ TODO: Are there any other conditions we need to check?
 

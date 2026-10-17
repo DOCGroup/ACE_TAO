@@ -55,19 +55,19 @@ public:
 
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
-  CORBA::OctetSeq * encode (const CORBA::Any & data) override;
+  CORBA::OctetSeq * encode (CORBA::Any const& data) override;
 
   /// Extract the TypeCode and the value from the octet sequence and
   /// place them into an Any.
-  CORBA::Any * decode (const CORBA::OctetSeq & data) override;
+  CORBA::Any * decode (CORBA::OctetSeq const& data) override;
 
   /// Encode the given data, excluding the TypeCode, into an octet
   /// sequence.
-  CORBA::OctetSeq * encode_value (const CORBA::Any & data) override;
+  CORBA::OctetSeq * encode_value (CORBA::Any const& data) override;
 
   /// Extract the value from the octet sequence, based on the given
   /// TypeCode,  and place it into an Any.
-  CORBA::Any * decode_value (const CORBA::OctetSeq & data,
+  CORBA::Any * decode_value (CORBA::OctetSeq const& data,
                              CORBA::TypeCode_ptr tc) override;
 
 protected:
@@ -85,11 +85,11 @@ protected:
    * that isn't supported for the version of GIOP associated with this
    * Codec.
    */
-  void check_type_for_encoding (const CORBA::Any & data);
+  void check_type_for_encoding (CORBA::Any const& data);
 
 private:
-  TAO_CDR_Encaps_Codec (const TAO_CDR_Encaps_Codec &) = delete;
-  TAO_CDR_Encaps_Codec &operator= (const TAO_CDR_Encaps_Codec &) = delete;
+  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const&) = delete;
+  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const&) = delete;
 
 private:
   /// The major GIOP version associated with this Codec.
