@@ -48,6 +48,8 @@ class TAO_IORInterceptor_Adapter_Impl
   : public TAO_IORInterceptor_Adapter
 {
 public:
+  TAO_IORInterceptor_Adapter_Impl () = default;
+
   ~TAO_IORInterceptor_Adapter_Impl () override;
 
   void add_interceptor (
@@ -74,6 +76,11 @@ public:
       PortableInterceptor::AdapterState state) override;
 
 private:
+  TAO_IORInterceptor_Adapter_Impl (TAO_IORInterceptor_Adapter_Impl const &) = delete;
+  TAO_IORInterceptor_Adapter_Impl &operator= (TAO_IORInterceptor_Adapter_Impl const &) = delete;
+  TAO_IORInterceptor_Adapter_Impl (TAO_IORInterceptor_Adapter_Impl &&) = delete;
+  TAO_IORInterceptor_Adapter_Impl &operator= (TAO_IORInterceptor_Adapter_Impl &&) = delete;
+
   /// List of IOR interceptors maintained
   TAO::IORInterceptor_List ior_interceptor_list_;
 };
