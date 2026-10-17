@@ -42,26 +42,26 @@ class TAO_Strategies_Export TAO_SCIOP_Profile : public TAO_Profile
 {
 public:
   /// The object key delimiter that SCIOP uses or expects.
-  static const char object_key_delimiter_;
-  virtual char object_key_delimiter () const;
+  static char const object_key_delimiter_;
+  char object_key_delimiter () const override;
 
   /// Return the char string prefix.
-  static const char *prefix ();
+  static char const *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
-  TAO_SCIOP_Profile (const ACE_INET_Addr &addr,
-                    const TAO::ObjectKey &object_key,
-                    const TAO_GIOP_Message_Version &version,
+  TAO_SCIOP_Profile (ACE_INET_Addr const &addr,
+                    TAO::ObjectKey const &object_key,
+                    TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
   ///  Profile constructor, this is the most efficient since it
   /// doesn't require any address resolution processing.
-  TAO_SCIOP_Profile (const char *host,
+  TAO_SCIOP_Profile (char const *host,
                     CORBA::UShort port,
-                    const TAO::ObjectKey &object_key,
-                    const ACE_INET_Addr &addr,
-                    const TAO_GIOP_Message_Version &version,
+                    TAO::ObjectKey const &object_key,
+                    ACE_INET_Addr const &addr,
+                    TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, default.
@@ -71,11 +71,11 @@ public:
   ~TAO_SCIOP_Profile ();
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char * to_string () const;
-  virtual int encode_endpoints ();
-  virtual TAO_Endpoint *endpoint ();
-  virtual CORBA::ULong endpoint_count () const;
-  virtual CORBA::ULong hash (CORBA::ULong max);
+  char *to_string () const override;
+  int encode_endpoints () override;
+  TAO_Endpoint *endpoint () override;
+  CORBA::ULong endpoint_count () const override;
+  CORBA::ULong hash (CORBA::ULong max) override;
   /**
    * Add <endp> to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
@@ -85,13 +85,18 @@ public:
 
 protected:
   /// Template methods. Please see Profile.h for the documentation.
-  virtual int decode_profile (TAO_InputCDR &cdr);
-  virtual int decode_endpoints ();
-  virtual void parse_string_i (const char *string);
-  virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
+  int decode_profile (TAO_InputCDR &cdr) override;
+  int decode_endpoints () override;
+  void parse_string_i (char const *string) override;
+  void create_profile_body (TAO_OutputCDR &cdr) const override;
+  CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
 protected:
+  TAO_SCIOP_Profile (TAO_SCIOP_Profile const &) = delete;
+  TAO_SCIOP_Profile &operator= (TAO_SCIOP_Profile const &) = delete;
+  TAO_SCIOP_Profile (TAO_SCIOP_Profile &&) = delete;
+  TAO_SCIOP_Profile &operator= (TAO_SCIOP_Profile &&) = delete;
+
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least
