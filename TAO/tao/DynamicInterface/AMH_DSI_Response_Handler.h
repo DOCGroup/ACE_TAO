@@ -144,29 +144,29 @@ public:
   using _var_type = TAO_AMH_DSI_Exception_Holder_var;
   TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
-  virtual ~TAO_AMH_DSI_Exception_Holder ();
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ~TAO_AMH_DSI_Exception_Holder () override;
+  ::CORBA::ValueBase *_copy_value () override;
 
-  static TAO_AMH_DSI_Exception_Holder* _downcast ( CORBA::ValueBase* );
+  static TAO_AMH_DSI_Exception_Holder* _downcast (CORBA::ValueBase*);
 
   static CORBA::Boolean _tao_unmarshal ( TAO_InputCDR &,
                                          TAO_AMH_DSI_Exception_Holder *& );
-  virtual const char* _tao_obv_repository_id () const;
+  char const* _tao_obv_repository_id () const override;
   static const char* _tao_obv_static_repository_id ();
 
   static void _tao_any_destructor (void *);
 
-  virtual void raise_invoke ( );
+  void raise_invoke ();
 
-  CORBA::TypeCode_ptr _tao_type () const;
-  void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
-  CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
+  CORBA::TypeCode_ptr _tao_type () const override;
+  void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const override;
+  CORBA::Boolean _tao_match_formal_type (ptrdiff_t) const override;
 
 protected:
   TAO_AMH_DSI_Exception_Holder ();
   ///  *** Terrible Hack ? ***
-  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
-  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+  CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const override;
+  CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) override;
 
 private:
   TAO_AMH_DSI_Exception_Holder (const TAO_AMH_DSI_Exception_Holder &);
@@ -208,7 +208,7 @@ public:
   using _var_type = TAO_AMH_DSI_Response_Handler_var;
 
   TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
-  ~TAO_AMH_DSI_Response_Handler ();
+  ~TAO_AMH_DSI_Response_Handler () override;
 
   virtual void invoke_reply (CORBA::NVList_ptr args,
                              CORBA::NamedValue_ptr result);
@@ -250,7 +250,7 @@ public:
 
 protected:
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id () const;
+  char const* _interface_repository_id () const override;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);
