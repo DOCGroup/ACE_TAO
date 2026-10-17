@@ -471,8 +471,10 @@ namespace CORBA
 
   private:
     // Prevent copying and assignment.
-    TypeCode (TypeCode const &);
-    void operator= (TypeCode const &);
+    TypeCode (TypeCode const &) = delete;
+    void operator= (TypeCode const &) = delete;
+    TypeCode (TypeCode &&) = delete;
+    void operator= (TypeCode &&) = delete;
 
   protected:
     /// The kind of TypeCode.
