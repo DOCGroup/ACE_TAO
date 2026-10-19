@@ -56,13 +56,13 @@ class TAO_CEC_TypedConsumerAdmin;
 class TAO_CEC_TypedSupplierAdmin;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushConsumer> TAO_CEC_ProxyPushConsumer_Collection;
+using TAO_CEC_ProxyPushConsumer_Collection = TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushConsumer>;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-typedef TAO_ESF_Proxy_Collection<TAO_CEC_TypedProxyPushConsumer> TAO_CEC_TypedProxyPushConsumer_Collection;
+using TAO_CEC_TypedProxyPushConsumer_Collection = TAO_ESF_Proxy_Collection<TAO_CEC_TypedProxyPushConsumer>;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullConsumer> TAO_CEC_ProxyPullConsumer_Collection;
-typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushSupplier> TAO_CEC_ProxyPushSupplier_Collection;
-typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSupplier_Collection;
+using TAO_CEC_ProxyPullConsumer_Collection = TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullConsumer>;
+using TAO_CEC_ProxyPushSupplier_Collection = TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushSupplier>;
+using TAO_CEC_ProxyPullSupplier_Collection = TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier>;
 
 /**
  * @class TAO_CEC_Factory
