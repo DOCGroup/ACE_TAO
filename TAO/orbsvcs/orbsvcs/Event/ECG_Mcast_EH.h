@@ -67,7 +67,7 @@ public:
                     CORBA::ULong buf_sz = 0);
 
   /// Destructor.
-  virtual ~TAO_ECG_Mcast_EH ();
+  virtual ~TAO_ECG_Mcast_EH () override;
 
   /**
    * Register for changes in the EC subscription list.
@@ -88,12 +88,12 @@ public:
    * multicast groups, close the sockets and deregister from the
    * reactor.
    */
-  virtual int shutdown ();
+  virtual int shutdown () override;
   //@}
 
   /// Reactor callback.  Notify receiver_ that a dgram corresponding
   /// to \a fd is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_input (ACE_HANDLE fd) override;
 
 private:
   /**
