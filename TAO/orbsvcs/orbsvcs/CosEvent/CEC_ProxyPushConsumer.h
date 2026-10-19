@@ -56,6 +56,11 @@ public:
   /// destructor...
   ~TAO_CEC_ProxyPushConsumer () override;
 
+  TAO_CEC_ProxyPushConsumer (TAO_CEC_ProxyPushConsumer const &) = delete;
+  TAO_CEC_ProxyPushConsumer (TAO_CEC_ProxyPushConsumer &&) = delete;
+  TAO_CEC_ProxyPushConsumer &operator= (TAO_CEC_ProxyPushConsumer const &) = delete;
+  TAO_CEC_ProxyPushConsumer &operator= (TAO_CEC_ProxyPushConsumer &&) = delete;
+
   /// Activate in the POA
   virtual void activate (
       CosEventChannelAdmin::ProxyPushConsumer_ptr &activated_proxy);

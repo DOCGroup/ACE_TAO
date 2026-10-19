@@ -61,6 +61,11 @@ public:
   /// destructor...
   ~TAO_CEC_ProxyPullSupplier () override;
 
+  TAO_CEC_ProxyPullSupplier (TAO_CEC_ProxyPullSupplier const &) = delete;
+  TAO_CEC_ProxyPullSupplier (TAO_CEC_ProxyPullSupplier &&) = delete;
+  TAO_CEC_ProxyPullSupplier &operator= (TAO_CEC_ProxyPullSupplier const &) = delete;
+  TAO_CEC_ProxyPullSupplier &operator= (TAO_CEC_ProxyPullSupplier &&) = delete;
+
   /// Activate in the POA
   virtual void activate (
       CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy);
