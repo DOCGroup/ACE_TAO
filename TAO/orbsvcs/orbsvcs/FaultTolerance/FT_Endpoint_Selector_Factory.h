@@ -58,6 +58,11 @@ private:
 
   /// Mutex to prevent multiple initializations
   TAO_SYNCH_MUTEX mutex_;
+
+  TAO_FT_Endpoint_Selector_Factory (TAO_FT_Endpoint_Selector_Factory const&) = delete;
+  TAO_FT_Endpoint_Selector_Factory& operator= (TAO_FT_Endpoint_Selector_Factory const&) = delete;
+  TAO_FT_Endpoint_Selector_Factory (TAO_FT_Endpoint_Selector_Factory&&) = delete;
+  TAO_FT_Endpoint_Selector_Factory& operator= (TAO_FT_Endpoint_Selector_Factory&&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

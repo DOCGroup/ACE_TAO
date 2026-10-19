@@ -117,6 +117,11 @@ namespace TAO
     /// Transmit a TAG_FT_GROUP component in place of the
     /// FT_GROUP_VERSION data required by the spec.
     CORBA::Boolean ft_send_extended_sc_;
+
+    FT_ClientRequest_Interceptor (FT_ClientRequest_Interceptor const&) = delete;
+    FT_ClientRequest_Interceptor& operator= (FT_ClientRequest_Interceptor const&) = delete;
+    FT_ClientRequest_Interceptor (FT_ClientRequest_Interceptor&&) = delete;
+    FT_ClientRequest_Interceptor& operator= (FT_ClientRequest_Interceptor&&) = delete;
   };
 }
 
