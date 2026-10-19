@@ -625,10 +625,10 @@ public:
    * service of another trader in the performance of its own trading
    * service operations.
    */
-  virtual void add_link (const char *name,
-                         CosTrading::Lookup_ptr target,
-                         CosTrading::FollowOption def_pass_on_follow_rule,
-                         CosTrading::FollowOption limiting_follow_rule);
+  void add_link (char const* name,
+                 CosTrading::Lookup_ptr target,
+                 CosTrading::FollowOption def_pass_on_follow_rule,
+                 CosTrading::FollowOption limiting_follow_rule) override;
 
   // The "name" parameter is used in subsequent link management
   // operations to identify the intended link. If the parameter is not
@@ -666,7 +666,7 @@ public:
   // creation of the link.
   // END SPEC
 
-  virtual void remove_link (const char *name);
+  void remove_link (char const* name) override;
 
   // BEGIN SPEC
   // The remove_link operation removes all knowledge of the target
@@ -679,7 +679,7 @@ public:
   // not in the trader.
   // END SPEC
 
-  virtual CosTrading::Link::LinkInfo* describe_link (const char *name);
+  CosTrading::Link::LinkInfo* describe_link (char const* name) override;
 
   // BEGIN SPEC
   // The describe_link operation returns information on a link held in
@@ -704,7 +704,7 @@ public:
   // state.
   // END SPEC
 
-  virtual CosTrading::LinkNameSeq* list_links ();
+  CosTrading::LinkNameSeq* list_links () override;
 
   // BEGIN SPEC
   // The list_links operation returns a list of the names of all
@@ -713,9 +713,9 @@ public:
   // describe_link or remove_link.
   // END SPEC
 
-  virtual void modify_link (const char *name,
-                            CosTrading::FollowOption def_pass_on_follow_rule,
-                            CosTrading::FollowOption limiting_follow_rule);
+  void modify_link (char const* name,
+                    CosTrading::FollowOption def_pass_on_follow_rule,
+                    CosTrading::FollowOption limiting_follow_rule) override;
 
   // BEGIN SPEC
   // The modify_link operation is used to change the existing link
@@ -741,18 +741,16 @@ public:
   // END SPEC
 
 private:
-  void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Link (TAO_Link const&) = delete;
+  TAO_Link& operator= (TAO_Link const&) = delete;
+  TAO_Link (TAO_Link&&) = delete;
+  TAO_Link& operator= (TAO_Link&&) = delete;
 
-  typedef ACE_Hash_Map_Manager_Ex
-  <
-  CORBA::String_var,
-  CosTrading::Link::LinkInfo,
-  ACE_Hash<CORBA::String_var>,
-  ACE_Equal_To<CORBA::String_var>,
-  MAP_LOCK_TYPE
-  >
-  Links;
+  using Links = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                        CosTrading::Link::LinkInfo,
+                                        ACE_Hash<CORBA::String_var>,
+                                        ACE_Equal_To<CORBA::String_var>,
+                                        MAP_LOCK_TYPE>;
 
   /// The collection of link connecting this trader to others in the
   /// federation.
@@ -774,28 +772,30 @@ public:
 
   ~TAO_Proxy ();
 
-  virtual CosTrading::OfferId
+  CosTrading::OfferId
     export_proxy (CosTrading::Lookup_ptr,
-                  const char *,
-                  const CosTrading::PropertySeq &,
+                  char const*,
+                  CosTrading::PropertySeq const&,
                   CORBA::Boolean if_match_all,
-                  const char *,
-                  const CosTrading::PolicySeq &);
+                  char const*,
+                  CosTrading::PolicySeq const&) override;
 
-  virtual void withdraw_proxy (const char *);
+  void withdraw_proxy (char const*) override;
 
-  virtual CosTrading::Proxy::ProxyInfo *
-  describe_proxy (const char *);
+  CosTrading::Proxy::ProxyInfo*
+  describe_proxy (char const*) override;
 
    // = CosTrading::TraderComponents methods.
 
-  virtual void list_proxies (CORBA::ULong,
-                             CosTrading::OfferIdSeq *&,
-                             CosTrading::OfferIdIterator_ptr &);
+  void list_proxies (CORBA::ULong,
+                     CosTrading::OfferIdSeq*&,
+                     CosTrading::OfferIdIterator_ptr&);
 
 private:
-  void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Proxy (TAO_Proxy const&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy const&) = delete;
+  TAO_Proxy (TAO_Proxy&&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy&&) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };
