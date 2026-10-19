@@ -27,7 +27,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
+using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 // TAO_CEC_ProxyPushSupplier Constructure (Un-typed EC)
 TAO_CEC_ProxyPushSupplier::
@@ -191,7 +191,7 @@ TAO_CEC_ProxyPushSupplier::shutdown ()
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 }
 
-typedef TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier> Destroy_Guard;
+using Destroy_Guard = TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel, TAO_CEC_ProxyPushSupplier>;
 
 void
 TAO_CEC_ProxyPushSupplier::push (const CORBA::Any &event)
@@ -219,7 +219,8 @@ TAO_CEC_ProxyPushSupplier::push (const CORBA::Any &event)
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-typedef TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier> Destroy_Guard_Typed;
+using Destroy_Guard_Typed =
+  TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_TypedEventChannel, TAO_CEC_ProxyPushSupplier>;
 
 void
 TAO_CEC_ProxyPushSupplier::invoke (const TAO_CEC_TypedEvent& typed_event)
