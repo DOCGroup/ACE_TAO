@@ -137,7 +137,7 @@ public:
                                 = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  virtual ~TAO_Transient_Naming_Context ();
+  ~TAO_Transient_Naming_Context () override;
 
   // = Utility methods.
   /**
@@ -158,7 +158,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context ();
+  CosNaming::NamingContext_ptr new_context () override;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -166,9 +166,9 @@ public:
    * are returned with a BindingIterator.  In the naming context does
    * not contain any additional bindings <bi> returned as null.
    */
-  virtual void list (CORBA::ULong how_many,
-                     CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi);
+  void list (CORBA::ULong how_many,
+             CosNaming::BindingList_out &bl,
+             CosNaming::BindingIterator_out &bi) override;
 
 protected:
   /// Counter used for generation of POA ids for children Naming

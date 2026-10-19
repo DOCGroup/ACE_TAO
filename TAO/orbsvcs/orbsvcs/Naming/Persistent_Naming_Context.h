@@ -178,7 +178,7 @@ public:
                                  ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_Persistent_Naming_Context ();
+  ~TAO_Persistent_Naming_Context () override;
 
   // = Utility methods.
   /**
@@ -200,7 +200,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context ();
+  CosNaming::NamingContext_ptr new_context () override;
 
   /**
    * Returns at most the requested number of bindings @a how_many in
@@ -208,9 +208,9 @@ public:
    * are returned with a BindingIterator.  In the naming context does
    * not contain any additional bindings @a bi returned as null.
    */
-  virtual void list (CORBA::ULong how_many,
-                     CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi);
+  void list (CORBA::ULong how_many,
+             CosNaming::BindingList_out &bl,
+             CosNaming::BindingIterator_out &bi) override;
 
 protected:
   /**
