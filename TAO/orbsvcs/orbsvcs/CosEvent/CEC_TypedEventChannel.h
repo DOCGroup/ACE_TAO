@@ -114,16 +114,16 @@ public:
   class ServantBaseHash
   {
   public:
-    u_long operator() (PortableServer::ServantBase* const & ptr) const {
+    u_long operator() (PortableServer::ServantBase *const &ptr) const {
       return ACE_Utils::truncate_cast<u_long> ((intptr_t)ptr);
     }
   };
 
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*,
-                                  unsigned int,
-                                  ServantBaseHash,
-                                  ACE_Equal_To<PortableServer::ServantBase*>,
-                                  TAO_SYNCH_MUTEX> ServantRetryMap;
+  using ServantRetryMap = ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*,
+                                                  unsigned int,
+                                                  ServantBaseHash,
+                                                  ACE_Equal_To<PortableServer::ServantBase*>,
+                                                  TAO_SYNCH_MUTEX>;
 
   /**
    * Constructor
@@ -131,12 +131,12 @@ public:
    * If the @a factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
-  TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attributes,
-                             TAO_CEC_Factory* factory = 0,
+  TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attributes,
+                             TAO_CEC_Factory *factory = nullptr,
                              int own_factory = 0);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedEventChannel ();
+  ~TAO_CEC_TypedEventChannel () override;
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
@@ -214,8 +214,12 @@ public:
   int disconnect_callbacks () const;
 
   // Hash map which will operate as a IFR cache for the Supported Interface's operations and parameters
-  typedef ACE_Hash_Map_Manager_Ex<const char *, TAO_CEC_Operation_Params *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex> InterfaceDescription;
-  typedef InterfaceDescription::iterator Iterator;
+  using InterfaceDescription = ACE_Hash_Map_Manager_Ex<char const *,
+                                                       TAO_CEC_Operation_Params *,
+                                                       ACE_Hash<char const *>,
+                                                       ACE_Equal_To<char const *>,
+                                                       ACE_Null_Mutex>;
+  using Iterator = InterfaceDescription::iterator;
 
   /// Finds a operation/parameter from the IFR cache
   TAO_CEC_Operation_Params * find_from_ifr_cache (const char *operation);
@@ -244,13 +248,11 @@ public:
                             CORBA::NVList_out new_list);
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
-  virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-    for_consumers ();
+  ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr for_consumers () override;
 
-  virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-    for_suppliers ();
+  ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr for_suppliers () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   ServantRetryMap& get_servant_retry_map ();
 

@@ -104,16 +104,16 @@ public:
   class ServantBaseHash
   {
   public:
-    u_long operator() (PortableServer::ServantBase* const & ptr) const {
+    u_long operator() (PortableServer::ServantBase *const &ptr) const {
       return ACE_Utils::truncate_cast<u_long> ((intptr_t)ptr);
     }
   };
 
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*,
-                                  unsigned int,
-                                  ServantBaseHash,
-                                  ACE_Equal_To<PortableServer::ServantBase*>,
-                                  TAO_SYNCH_MUTEX> ServantRetryMap;
+  using ServantRetryMap = ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*,
+                                                  unsigned int,
+                                                  ServantBaseHash,
+                                                  ACE_Equal_To<PortableServer::ServantBase*>,
+                                                  TAO_SYNCH_MUTEX>;
 
   /**
    * constructor
@@ -121,12 +121,12 @@ public:
    * If the factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
-  TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attributes,
-                        TAO_CEC_Factory* factory = 0,
+  TAO_CEC_EventChannel (TAO_CEC_EventChannel_Attributes const &attributes,
+                        TAO_CEC_Factory *factory = nullptr,
                         int own_factory = 0);
 
   /// destructor
-  virtual ~TAO_CEC_EventChannel ();
+  ~TAO_CEC_EventChannel () override;
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
@@ -227,16 +227,14 @@ public:
   // = The CosEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers ();
+  CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this (env);
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers ();
+  CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
   /// Commit suicide.
-  virtual void destroy ();
+  void destroy () override;
 
   ServantRetryMap& get_servant_retry_map ();
 
