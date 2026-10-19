@@ -48,6 +48,11 @@ public:
   /// destructor...
   ~TAO_CEC_Default_Factory () override;
 
+  TAO_CEC_Default_Factory (TAO_CEC_Default_Factory const &) = delete;
+  TAO_CEC_Default_Factory (TAO_CEC_Default_Factory &&) = delete;
+  TAO_CEC_Default_Factory &operator= (TAO_CEC_Default_Factory const &) = delete;
+  TAO_CEC_Default_Factory &operator= (TAO_CEC_Default_Factory &&) = delete;
+
   /// Helper function to register the default factory into the service
   /// configurator.
   static int init_svcs ();

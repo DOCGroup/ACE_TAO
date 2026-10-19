@@ -128,6 +128,11 @@ public:
   /// destructor
   ~TAO_CEC_EventChannel () override;
 
+  TAO_CEC_EventChannel (TAO_CEC_EventChannel const &) = delete;
+  TAO_CEC_EventChannel (TAO_CEC_EventChannel &&) = delete;
+  TAO_CEC_EventChannel &operator= (TAO_CEC_EventChannel const &) = delete;
+  TAO_CEC_EventChannel &operator= (TAO_CEC_EventChannel &&) = delete;
+
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
   virtual void activate ();

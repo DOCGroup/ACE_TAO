@@ -59,6 +59,11 @@ public:
   /// destructor...
   ~TAO_CEC_SupplierAdmin () override = default;
 
+  TAO_CEC_SupplierAdmin (TAO_CEC_SupplierAdmin const &) = delete;
+  TAO_CEC_SupplierAdmin (TAO_CEC_SupplierAdmin &&) = delete;
+  TAO_CEC_SupplierAdmin &operator= (TAO_CEC_SupplierAdmin const &) = delete;
+  TAO_CEC_SupplierAdmin &operator= (TAO_CEC_SupplierAdmin &&) = delete;
+
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker);
 
