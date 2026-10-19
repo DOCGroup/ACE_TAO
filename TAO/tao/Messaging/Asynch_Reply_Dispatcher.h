@@ -53,7 +53,7 @@ public:
 
   /// Install the timeout handler
   long schedule_timer (CORBA::ULong request_id,
-                       const ACE_Time_Value &max_wait_time);
+                       const ACE_Time_Value &max_wait_time) override;
 
 private:
   TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher const &) = delete;

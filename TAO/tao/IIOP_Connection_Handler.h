@@ -75,7 +75,7 @@ public:
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
-  int close (u_long = 0);
+  int close (u_long = 0) override;
 
   //@{
   /** @name Event Handler overloads
@@ -99,8 +99,8 @@ public:
   int enable_network_priority ();
 
   /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint) override;
 
   int open_handler (void *) override;
 
