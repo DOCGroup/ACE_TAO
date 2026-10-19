@@ -39,16 +39,16 @@ public:
   TAO_EnumDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_EnumDef_i ();
+  ~TAO_EnumDef_i () override;
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  CORBA::DefinitionKind def_kind () override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ();
+  CORBA::TypeCode_ptr type () override;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ();
+  CORBA::TypeCode_ptr type_i () override;
 
   virtual CORBA::EnumMemberSeq *members ();
 
