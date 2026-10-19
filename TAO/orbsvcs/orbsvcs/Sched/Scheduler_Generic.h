@@ -105,9 +105,9 @@ private:
   Config_Info config_info_;
 
 #if defined (ACE_HAS_THREADS)
-  typedef TAO_SYNCH_RECURSIVE_MUTEX LOCK;
+  using LOCK = TAO_SYNCH_RECURSIVE_MUTEX;
 #else
-  typedef ACE_Null_Mutex LOCK;
+  using LOCK = ACE_Null_Mutex;
 #endif /* ACE_HAS_THREADS */
 
   /// This protects access to the scheduler during configuration runs.

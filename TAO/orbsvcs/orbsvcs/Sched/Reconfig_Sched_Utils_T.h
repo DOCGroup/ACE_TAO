@@ -42,18 +42,18 @@ class TAO_RSE_Dependency_Visitor :
 public:
   /// Type of map used for O(1) lookup of RT_Info
   /// dependency sets by caller or called handle.
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-                                  RtecScheduler::Dependency_Set*,
-                                  ACE_Hash<RtecScheduler::handle_t>,
-                                  ACE_Equal_To<RtecScheduler::handle_t>,
-                                  ACE_LOCK> DEPENDENCY_SET_MAP;
+  using DEPENDENCY_SET_MAP = ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                                      RtecScheduler::Dependency_Set *,
+                                                      ACE_Hash<RtecScheduler::handle_t>,
+                                                      ACE_Equal_To<RtecScheduler::handle_t>,
+                                                      ACE_LOCK>;
 
   /// Type of map used for O(1) lookup of RT_Infos by their handles.
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-                                  TAO_RT_Info_Ex*,
-                                  ACE_Hash<RtecScheduler::handle_t>,
-                                  ACE_Equal_To<RtecScheduler::handle_t>,
-                                  ACE_LOCK> RT_INFO_MAP;
+  using RT_INFO_MAP = ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                              TAO_RT_Info_Ex *,
+                                              ACE_Hash<RtecScheduler::handle_t>,
+                                              ACE_Equal_To<RtecScheduler::handle_t>,
+                                              ACE_LOCK>;
 
   /// Constructor.
   TAO_RSE_Dependency_Visitor
