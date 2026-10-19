@@ -9,8 +9,8 @@ TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
                                 TAO_LogMgr_i &logmgr_i,
                                 DsLogAdmin::LogMgr_ptr factory,
                                 DsLogAdmin::LogId id)
-  : TAO_Log_i (orb, logmgr_i, factory, id, 0),
-    poa_(PortableServer::POA::_duplicate(poa))
+  : TAO_Log_i (orb, logmgr_i, factory, id, nullptr),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
   // No-Op.
 }
@@ -21,7 +21,7 @@ TAO_BasicLog_i::~TAO_BasicLog_i ()
 }
 
 DsLogAdmin::Log_ptr
-TAO_BasicLog_i::copy (DsLogAdmin::LogId &id)
+TAO_BasicLog_i::copy (DsLogAdmin::LogId_out id)
 {
   DsLogAdmin::BasicLogFactory_var basicLogFactory =
     DsLogAdmin::BasicLogFactory::_narrow (factory_.in ());
