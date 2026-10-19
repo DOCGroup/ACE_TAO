@@ -43,7 +43,7 @@ public:
   TAO_Transient_Bindings_Map (size_t hash_table_size);
 
   /// Destructor.
-  virtual ~TAO_Transient_Bindings_Map ();
+  ~TAO_Transient_Bindings_Map () override;
 
   // = Accessors.
 
@@ -55,7 +55,7 @@ public:
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size ();
+  size_t current_size () override;
 
   // = Name bindings manipulation methods.
 
@@ -64,10 +64,10 @@ public:
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with <id> and <kind>.
    */
-  virtual int bind (const char *id,
+  int bind (const char *id,
                     const char *kind,
                     CORBA::Object_ptr obj,
-                    CosNaming::BindingType type);
+                    CosNaming::BindingType type) override;
 
   /**
    * Overwrite a binding containing <id> and <kind> (or create a new
@@ -75,17 +75,17 @@ public:
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
    */
-  virtual int rebind (const char *id,
+  int rebind (const char *id,
                       const char *kind,
                       CORBA::Object_ptr obj,
-                      CosNaming::BindingType type);
+                      CosNaming::BindingType type) override;
 
   /**
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  virtual int unbind (const char * id,
-                      const char * kind);
+  int unbind (const char * id,
+              const char * kind) override;
 
   /**
    * Find the binding containing <id> and <kind> in the table, and
@@ -94,10 +94,10 @@ public:
    * reference is assigned to <obj>, so the caller is responsible for
    * its deallocation.
    */
-  virtual int find (const char * id,
+  int find (const char * id,
                     const char * kind,
                     CORBA::Object_ptr & obj,
-                    CosNaming::BindingType &type);
+                    CosNaming::BindingType &type) override;
 
 private:
   /// Helper: factors common code from <bind> and <rebind>.
