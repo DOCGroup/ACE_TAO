@@ -25,8 +25,8 @@ template <class EC_PROXY_ADMIN, class Proxy,
 class FT_ProxyAdmin : public FT_ProxyAdmin_Base
 {
 public:
-  typedef typename ProxyInterface::_ptr_type ProxyInterface_ptr;
-  typedef typename ProxyInterface::_var_type ProxyInterface_var;
+  using ProxyInterface_ptr = typename ProxyInterface::_ptr_type;
+  using ProxyInterface_var = typename ProxyInterface::_var_type;
 
   FT_ProxyAdmin(EC_PROXY_ADMIN* admin,
               PortableServer::POA_var poa);

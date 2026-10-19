@@ -45,9 +45,9 @@ extern "C" {
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>
-                      SCTP_ConnectionAcceptHandler;
-typedef ConnectionDetectHandler<ACE_SOCK_SEQPACK_ASSOCIATION> SCTP_ConnectionDetectHandler;
+using SCTP_ConnectionAcceptHandler =
+  ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>;
+using SCTP_ConnectionDetectHandler = ConnectionDetectHandler<ACE_SOCK_SEQPACK_ASSOCIATION>;
 
 class SCTP_Connector : public ACE_SOCK_SEQPACK_Connector
 {

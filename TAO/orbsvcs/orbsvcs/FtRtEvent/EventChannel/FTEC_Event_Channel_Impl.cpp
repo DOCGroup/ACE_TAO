@@ -165,8 +165,8 @@ void resume_connection(TAO_FTEC_Event_Channel_Impl* ec,
 }
 
 
-typedef void (*Set_update_fun)(TAO_FTEC_Event_Channel_Impl* ec,
-                               FtRtecEventChannelAdmin::Operation& op);
+using Set_update_fun = void (*) (TAO_FTEC_Event_Channel_Impl* ec,
+                                 FtRtecEventChannelAdmin::Operation& op);
 
 Set_update_fun const update_table[] = {
     &obtain_push_supplier,

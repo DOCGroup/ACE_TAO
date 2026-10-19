@@ -19,8 +19,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class Dynamic_Bitset
 {
-  typedef unsigned block;
-  typedef unsigned size_type;
+  using block = unsigned;
+  using size_type = unsigned;
   enum {
     BYTES_PER_BLOCK = sizeof(block),
     BITS_PER_BLOCK = sizeof(block)*8
@@ -28,7 +28,7 @@ class Dynamic_Bitset
 public:
   class reference {
   public:
-    typedef unsigned size_type;
+    using size_type = unsigned;
     reference(Dynamic_Bitset* bitset, size_type bit);
     reference operator = (bool val);
     explicit operator bool () const;

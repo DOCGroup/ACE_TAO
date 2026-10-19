@@ -25,13 +25,13 @@ class TAO_FTEC_Event_Channel_Impl;
 namespace PortableInterceptor
 {
   class ORBInitInfo;
-  typedef ORBInitInfo *ORBInitInfo_ptr;
+  using ORBInitInfo_ptr = ORBInitInfo *;
 
   class ServerRequestInfo;
-  typedef ServerRequestInfo *ServerRequestInfo_ptr;
+  using ServerRequestInfo_ptr = ServerRequestInfo *;
 
   class ClientRequestInfo;
-  typedef ClientRequestInfo *ClientRequestInfo_ptr;
+  using ClientRequestInfo_ptr = ClientRequestInfo *;
 }
 
 /**

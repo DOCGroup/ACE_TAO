@@ -45,13 +45,12 @@ class TAO_FTEC_SupplierAdmin
 public:
   static const FtRtecEventChannelAdmin::OperationType OBTAIN_ID;
 
-  typedef FT_ProxyAdmin<TAO_FTEC_SupplierAdmin,
+  using FT_Aspect = FT_ProxyAdmin<TAO_FTEC_SupplierAdmin,
                          TAO_FTEC_ProxyPushConsumer,
              RtecEventChannelAdmin::ProxyPushConsumer,
-             FtRtecEventChannelAdmin::SupplierAdminState>
-          FT_Aspect;
+             FtRtecEventChannelAdmin::SupplierAdminState>;
 
-  typedef ProxyConsumerStateWorker  StateWorker;
+  using StateWorker = ProxyConsumerStateWorker;
 
   /// constructor...
   TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);

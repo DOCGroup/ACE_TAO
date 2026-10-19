@@ -23,11 +23,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_ProxyPushConsumer : public TAO_EC_Default_ProxyPushConsumer
 {
-  typedef TAO_EC_Default_ProxyPushConsumer Inherited;
+  using Inherited = TAO_EC_Default_ProxyPushConsumer;
 public:
-  typedef RtecEventChannelAdmin::ProxyPushConsumer Interface;
-  typedef FtRtecEventChannelAdmin::ProxyPushConsumerStat State;
-  typedef POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr Skeleton;
+  using Interface = RtecEventChannelAdmin::ProxyPushConsumer;
+  using State = FtRtecEventChannelAdmin::ProxyPushConsumerStat;
+  using Skeleton = POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr;
 
   TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
@@ -44,8 +44,8 @@ public:
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
   void set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
 
-  typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-    (const FtRtecEventChannelAdmin::ObjectId&);
+  using RollbackOperation = void (FtRtecEventChannelAdmin::EventChannelFacade::*)
+    (FtRtecEventChannelAdmin::ObjectId const&);
 
   static const RollbackOperation rollback_obtain;
 private:

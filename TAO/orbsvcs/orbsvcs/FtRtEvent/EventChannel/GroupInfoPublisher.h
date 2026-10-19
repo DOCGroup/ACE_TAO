@@ -29,7 +29,7 @@ class TAO_FTEC_Become_Primary_Listener;
 class GroupInfoPublisherBase
 {
 public:
-  typedef FtRtecEventChannelAdmin::EventChannelList BackupList;
+  using BackupList = FtRtecEventChannelAdmin::EventChannelList;
 
   struct Info {
     bool primary;
@@ -38,7 +38,7 @@ public:
     BackupList backups;
   };
 
-  typedef std::unique_ptr<Info> Info_ptr;
+  using Info_ptr = std::unique_ptr<Info>;
 
   void subscribe(TAO_FTEC_Become_Primary_Listener* listener);
   void set_naming_context(CosNaming::NamingContext_var naming_context);
@@ -64,7 +64,7 @@ public:
 
 private:
   CosNaming::NamingContext_var naming_context_;
-  typedef ACE_Vector<TAO_FTEC_Become_Primary_Listener*, 2> Subscribers;
+  using Subscribers = ACE_Vector<TAO_FTEC_Become_Primary_Listener*, 2>;
   Subscribers subscribers_;
   PortableServer::ObjectId object_id_;
   CosNaming::Name name_;
@@ -76,7 +76,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FTRTEC_SINGLETON_DECLARE(ACE_Singleton, GroupInfoPublisherBase, TAO_SYNCH_MUTEX)
-typedef ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX> GroupInfoPublisher;
+using GroupInfoPublisher = ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

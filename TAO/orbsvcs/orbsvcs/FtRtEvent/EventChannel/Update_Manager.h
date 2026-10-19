@@ -21,7 +21,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef Dynamic_Bitset bit_vector;
+using bit_vector = Dynamic_Bitset;
 
 class Update_Manager
 {

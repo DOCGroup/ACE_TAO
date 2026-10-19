@@ -100,7 +100,7 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
     ProxyInterface_var
       proxy_ior = admin_->obtain();
 
-    typedef typename Proxy::Skeleton Skeleton;
+    using Skeleton = typename Proxy::Skeleton;
     const void *temp = &proxy_state.object_id;
     const PortableServer::ObjectId *oid =
       reinterpret_cast<const PortableServer::ObjectId *> (temp);

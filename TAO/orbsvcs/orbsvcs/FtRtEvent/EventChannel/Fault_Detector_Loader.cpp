@@ -13,10 +13,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {
-  typedef Fault_Detector_T<
+  using TCP_Fault_Detector = Fault_Detector_T<
     ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_STREAM> , ACE_SOCK_ACCEPTOR>,
-    ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >
-    TCP_Fault_Detector;
+    ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >;
 
   Fault_Detector_Loader::Fault_Detector_Loader ()
   {

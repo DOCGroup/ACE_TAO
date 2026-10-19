@@ -45,8 +45,8 @@ namespace FTRTEC
      */
     void check_validity();
 
-    typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-      (const FtRtecEventChannelAdmin::ObjectId&);
+    using RollbackOperation = void (FtRtecEventChannelAdmin::EventChannelFacade::*)
+      (FtRtecEventChannelAdmin::ObjectId const&);
 
    /**
     * Replicate a request.
