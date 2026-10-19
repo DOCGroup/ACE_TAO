@@ -163,34 +163,34 @@ private:
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 
   // trait for the scheduler implementation base class
-  typedef ACE_DynScheduler BaseSchedImplType;
+  using BaseSchedImplType = ACE_DynScheduler;
 
   // traits for the scheduler strategy
 #if defined (TAO_USES_MUF_SCHEDULING)
 
-  typedef ACE_MUF_Scheduler_Strategy Scheduler_Strategy;
+  using Scheduler_Strategy = ACE_MUF_Scheduler_Strategy;
 
 #elif defined (TAO_USES_MLF_SCHEDULING)
 #  if ! defined (TAO_MIN_CRITICAL_PRIORITY)
 #    define TAO_MIN_CRITICAL_PRIORITY 0
 #  endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
-  typedef ACE_MLF_Scheduler_Strategy Scheduler_Strategy;
+  using Scheduler_Strategy = ACE_MLF_Scheduler_Strategy;
 
 #elif defined (TAO_USES_EDF_SCHEDULING)
 
 #  if ! defined (TAO_MIN_CRITICAL_PRIORITY)
 #    define TAO_MIN_CRITICAL_PRIORITY 0
 #  endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
-  typedef ACE_EDF_Scheduler_Strategy Scheduler_Strategy;
+  using Scheduler_Strategy = ACE_EDF_Scheduler_Strategy;
 
 #elif defined (TAO_USES_RMS_SCHEDULING)
 #  if ! defined (TAO_MIN_CRITICAL_PRIORITY)
 #    define TAO_MIN_CRITICAL_PRIORITY 0
 #  endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
-  typedef ACE_RMS_Scheduler_Strategy Scheduler_Strategy;
+  using Scheduler_Strategy = ACE_RMS_Scheduler_Strategy;
 
 #elif defined (TAO_USES_CRITICALITY_SCHEDULING)
-  typedef ACE_Criticality_Scheduler_Strategy Scheduler_Strategy;
+  using Scheduler_Strategy = ACE_Criticality_Scheduler_Strategy;
 
 #else
   #error scheduling strategy must be defined
@@ -202,7 +202,7 @@ private:
 #else /* ! defined (TAO_USES_STRATEGY_SCHEDULER) */
 
   // trait for the scheduler implementation base class
-  typedef ACE_Scheduler BaseSchedImplType;
+  using BaseSchedImplType = ACE_Scheduler;
 
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
