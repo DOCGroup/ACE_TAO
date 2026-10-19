@@ -39,23 +39,28 @@ class TAO_Log_Serv_Export TAO_LogActivator
 public:
   /// @brief Constructor
   ///
-  TAO_LogActivator(TAO_LogMgr_i& logmgr_i);
+  TAO_LogActivator (TAO_LogMgr_i & logmgr_i);
 
   /// @brief Destructor
   ///
-  virtual ~TAO_LogActivator();
+  ~TAO_LogActivator () override;
 
-  virtual PortableServer::Servant incarnate (const PortableServer::ObjectId& oid,
-                                             PortableServer::POA_ptr poa);
+  PortableServer::Servant incarnate (PortableServer::ObjectId const & oid,
+                                     PortableServer::POA_ptr poa) override;
 
-  virtual void etherealize (const PortableServer::ObjectId& oid,
-                            PortableServer::POA_ptr poa,
-                            PortableServer::Servant servant,
-                            CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations);
+  void etherealize (PortableServer::ObjectId const & oid,
+                    PortableServer::POA_ptr poa,
+                    PortableServer::Servant servant,
+                    CORBA::Boolean cleanup_in_progress,
+                    CORBA::Boolean remaining_activations) override;
 
 private:
-  TAO_LogMgr_i& logmgr_i_;
+  TAO_LogActivator (TAO_LogActivator const &) = delete;
+  TAO_LogActivator (TAO_LogActivator &&) = delete;
+  TAO_LogActivator &operator= (TAO_LogActivator const &) = delete;
+  TAO_LogActivator &operator= (TAO_LogActivator &&) = delete;
+
+  TAO_LogMgr_i & logmgr_i_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
