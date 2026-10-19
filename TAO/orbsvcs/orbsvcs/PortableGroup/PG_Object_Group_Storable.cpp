@@ -214,7 +214,7 @@ TAO::Object_Group_File_Guard::create_stream (const  char * mode)
 }
 
 // Make shortcut to get to Method_Type enums
-typedef TAO::Storable_File_Guard SFG;
+using SFG = TAO::Storable_File_Guard;
 
 TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   CORBA::ORB_ptr orb,

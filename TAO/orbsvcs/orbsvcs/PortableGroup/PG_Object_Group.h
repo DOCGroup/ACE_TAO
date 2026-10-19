@@ -92,20 +92,20 @@ namespace TAO
       ~MemberInfo();
     };
 
-    typedef TAO_SYNCH_MUTEX MemberMapMutex;
-    typedef ACE_Hash_Map_Manager_Ex <
+    using MemberMapMutex = TAO_SYNCH_MUTEX;
+    using MemberMap = ACE_Hash_Map_Manager_Ex<
       PortableGroup::Location,
       MemberInfo *,
       TAO_PG_Location_Hash,
       TAO_PG_Location_Equal_To,
-      MemberMapMutex>  MemberMap;
-    typedef ACE_Hash_Map_Entry <PortableGroup::Location, MemberInfo *> MemberMap_Entry;
-    typedef ACE_Hash_Map_Iterator_Ex <
+      MemberMapMutex>;
+    using MemberMap_Entry = ACE_Hash_Map_Entry<PortableGroup::Location, MemberInfo *>;
+    using MemberMap_Iterator = ACE_Hash_Map_Iterator_Ex<
       PortableGroup::Location,
       MemberInfo *,
       TAO_PG_Location_Hash,
       TAO_PG_Location_Equal_To,
-      MemberMapMutex> MemberMap_Iterator;
+      MemberMapMutex>;
 
     /////////////////////
     // Construct/Destruct

@@ -11,9 +11,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace
 {
-  typedef TAO_UIPMC_Mcast_Transport::Packets_Map::iterator HASH_MAP_ITER;
-  typedef TAO_UIPMC_Mcast_Transport::Packets_Map::value_type HASH_MAP_ENTRY;
-  typedef HASH_MAP_ENTRY** DESCRIPTOR_SET;
+  using HASH_MAP_ITER = TAO_UIPMC_Mcast_Transport::Packets_Map::iterator;
+  using HASH_MAP_ENTRY = TAO_UIPMC_Mcast_Transport::Packets_Map::value_type;
+  using DESCRIPTOR_SET = HASH_MAP_ENTRY**;
 
   // The two functions below are stolen from Transport_Cache_Manager.
 #if !defined (ACE_LACKS_QSORT)

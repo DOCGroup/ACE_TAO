@@ -65,13 +65,13 @@ public:
   PortableGroup::Properties properties;
 };
 
-/// ObjectId hash map typedef.
-typedef ACE_Hash_Map_Manager_Ex<
+/// ObjectId hash map.
+using TAO_PG_ObjectGroup_Map = ACE_Hash_Map_Manager_Ex<
   PortableServer::ObjectId,
   TAO_PG_ObjectGroup_Map_Entry *,
   TAO_ObjectId_Hash,
   ACE_Equal_To<PortableServer::ObjectId>,
-  ACE_Null_Mutex> TAO_PG_ObjectGroup_Map;
+  ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

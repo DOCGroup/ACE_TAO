@@ -55,7 +55,7 @@ namespace TAO_PG
       /// Meaningless method to keep ACE_Vector happy
       bool operator != (const NamedValue &rhs) const;
     };
-    typedef ACE_Vector<NamedValue, 10> NamedValueVec;
+    using NamedValueVec = ACE_Vector<NamedValue, 10>;
 
   public:
     /**

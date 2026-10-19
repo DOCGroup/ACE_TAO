@@ -59,10 +59,10 @@ namespace TAO
 
       RoleInfo(size_t estimated_number_entries = 5);
     };
-    typedef ACE_Null_Mutex MapMutex;
-    typedef ACE_Hash_Map_Manager <ACE_CString, RoleInfo *, MapMutex>  RegistryType;
-    typedef ACE_Hash_Map_Entry <ACE_CString, RoleInfo *> RegistryType_Entry;
-    typedef ACE_Hash_Map_Iterator <ACE_CString, RoleInfo *, MapMutex> RegistryType_Iterator;
+    using MapMutex = ACE_Null_Mutex;
+    using RegistryType = ACE_Hash_Map_Manager<ACE_CString, RoleInfo *, MapMutex>;
+    using RegistryType_Entry = ACE_Hash_Map_Entry<ACE_CString, RoleInfo *>;
+    using RegistryType_Iterator = ACE_Hash_Map_Iterator<ACE_CString, RoleInfo *, MapMutex>;
 
     //////////////////////
     // non-CORBA interface

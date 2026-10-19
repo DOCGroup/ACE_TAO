@@ -91,9 +91,9 @@ namespace TAO_PG
       CORBA::UShort len;
     };
 
-    typedef ACE_Hash_Map_Manager<CORBA::ULong,
+    using Fragments_Map = ACE_Hash_Map_Manager<CORBA::ULong,
                                  Fragment,
-                                 ACE_SYNCH_NULL_MUTEX> Fragments_Map;
+                                 ACE_SYNCH_NULL_MUTEX>;
     Fragments_Map fragments_;
   };
 } // namespace TAO_PG

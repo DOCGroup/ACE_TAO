@@ -112,12 +112,12 @@ public:
   //@}
 
   /// Type-specific property hash map.
-  typedef ACE_Hash_Map_Manager_Ex<
+  using Type_Prop_Table = ACE_Hash_Map_Manager_Ex<
     ACE_CString,
     PortableGroup::Properties,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
-    ACE_Null_Mutex> Type_Prop_Table;
+    ACE_Null_Mutex>;
 
 private:
   /// Remove properties "to_be_removed" from the given list of

@@ -48,9 +48,9 @@ class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Transport : public TAO_Transport
   friend class TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard;
 
 public:
-  typedef ACE_Hash_Map_Manager<u_long,
+  using Packets_Map = ACE_Hash_Map_Manager<u_long,
                                TAO_PG::UIPMC_Recv_Packet *,
-                               ACE_SYNCH_NULL_MUTEX> Packets_Map;
+                               ACE_SYNCH_NULL_MUTEX>;
 
   /// Constructor.
   TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Connection_Handler *handler,
@@ -135,7 +135,7 @@ private:
   TAO_SYNCH_MUTEX recv_lock_;
 
   /// Complete packets.
-  typedef ACE_Unbounded_Queue<TAO_PG::UIPMC_Recv_Packet *> Packets_Queue;
+  using Packets_Queue = ACE_Unbounded_Queue<TAO_PG::UIPMC_Recv_Packet *>;
   Packets_Queue complete_;
 
   /// A lock for access synchronization to complete queue.

@@ -34,16 +34,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Forward declarations.
 struct TAO_PG_ObjectGroup_Map_Entry;
 
-typedef ACE_Array_Base<TAO_PG_ObjectGroup_Map_Entry *>
-  TAO_PG_ObjectGroup_Array;
+using TAO_PG_ObjectGroup_Array = ACE_Array_Base<TAO_PG_ObjectGroup_Map_Entry *>;
 
 /// Location hash map.
-typedef ACE_Hash_Map_Manager_Ex<
+using TAO_PG_Location_Map = ACE_Hash_Map_Manager_Ex<
   PortableGroup::Location,
   TAO_PG_ObjectGroup_Array *,
   TAO_PG_Location_Hash,
   TAO_PG_Location_Equal_To,
-  ACE_Null_Mutex> TAO_PG_Location_Map;
+  ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
