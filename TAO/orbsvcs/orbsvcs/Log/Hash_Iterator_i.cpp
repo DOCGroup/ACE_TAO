@@ -7,18 +7,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
   PortableServer::POA_ptr poa,
-  ACE_Reactor* reactor,
-  TAO_Hash_LogRecordStore* recordstore,
+  ACE_Reactor * reactor,
+  TAO_Hash_LogRecordStore * recordstore,
   TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
   TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
   CORBA::ULong start,
-  const char *constraint,
+  char const * constraint,
   CORBA::ULong max_rec_list_len)
-  : TAO_Iterator_i(poa, reactor),
+  : TAO_Iterator_i (poa, reactor),
     recordstore_ (recordstore),
     iter_ (iter),
     iter_end_ (iter_end),
-    current_position_(start),
+    current_position_ (start),
     constraint_ (constraint),
     max_rec_list_len_ (max_rec_list_len)
 {
@@ -55,7 +55,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)
   // meet the constraints.
 
   // Allocate the list of <how_many> length.
-  DsLogAdmin::RecordList* rec_list = 0;
+  DsLogAdmin::RecordList *rec_list = nullptr;
   ACE_NEW_THROW_EX (rec_list,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());

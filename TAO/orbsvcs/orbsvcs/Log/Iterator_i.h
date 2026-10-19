@@ -45,24 +45,30 @@ class TAO_Log_Serv_Export TAO_Iterator_i
 {
 public:
   /// Constructor.
-  TAO_Iterator_i (PortableServer::POA_ptr poa, ACE_Reactor* reactor);
+  TAO_Iterator_i (PortableServer::POA_ptr poa, ACE_Reactor * reactor);
 
   /// Destructor.
-  virtual ~TAO_Iterator_i ();
+  ~TAO_Iterator_i () override;
 
   /// Gets a list of LogRecords.
-  virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
-                                       CORBA::ULong how_many) = 0;
+  DsLogAdmin::RecordList *get (CORBA::ULong position,
+                               CORBA::ULong how_many) override = 0;
 
   /// This destroys the iterator.
-  virtual void destroy ();
+  void destroy () override;
+
+private:
+  TAO_Iterator_i (TAO_Iterator_i const &) = delete;
+  TAO_Iterator_i (TAO_Iterator_i &&) = delete;
+  TAO_Iterator_i &operator= (TAO_Iterator_i const &) = delete;
+  TAO_Iterator_i &operator= (TAO_Iterator_i &&) = delete;
 
 protected:
   /// POA
   PortableServer::POA_var poa_;
 
   /// Reactor
-  ACE_Reactor* reactor_;
+  ACE_Reactor * reactor_;
 
   /// Timeout
   static ACE_Time_Value timeout_;
@@ -70,7 +76,7 @@ protected:
   /// Timer ID
   long timer_id_;
 
-  virtual int handle_timeout (const ACE_Time_Value&, const void *);
+  int handle_timeout (ACE_Time_Value const &, void const *) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
