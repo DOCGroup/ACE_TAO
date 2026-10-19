@@ -111,6 +111,11 @@ class TAO_CEC_Propagate_Event_Push : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupp
 public:
   TAO_CEC_Propagate_Event_Push (const CORBA::Any& event);
 
+  TAO_CEC_Propagate_Event_Push (TAO_CEC_Propagate_Event_Push const &) = delete;
+  TAO_CEC_Propagate_Event_Push (TAO_CEC_Propagate_Event_Push &&) = delete;
+  TAO_CEC_Propagate_Event_Push &operator= (TAO_CEC_Propagate_Event_Push const &) = delete;
+  TAO_CEC_Propagate_Event_Push &operator= (TAO_CEC_Propagate_Event_Push &&) = delete;
+
   void work (TAO_CEC_ProxyPushSupplier *supplier) override;
 
 private:
@@ -124,6 +129,11 @@ class TAO_CEC_Propagate_Event_Pull : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupp
 {
 public:
   TAO_CEC_Propagate_Event_Pull (const CORBA::Any& event);
+
+  TAO_CEC_Propagate_Event_Pull (TAO_CEC_Propagate_Event_Pull const &) = delete;
+  TAO_CEC_Propagate_Event_Pull (TAO_CEC_Propagate_Event_Pull &&) = delete;
+  TAO_CEC_Propagate_Event_Pull &operator= (TAO_CEC_Propagate_Event_Pull const &) = delete;
+  TAO_CEC_Propagate_Event_Pull &operator= (TAO_CEC_Propagate_Event_Pull &&) = delete;
 
   void work (TAO_CEC_ProxyPullSupplier *supplier) override;
 

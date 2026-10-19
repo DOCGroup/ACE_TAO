@@ -98,6 +98,12 @@ public:
   TAO_CEC_Propagate_Typed_Event (const TAO_CEC_TypedEvent& typed_event,
                                  TAO_CEC_TypedEventChannel*);
 
+  TAO_CEC_Propagate_Typed_Event (TAO_CEC_Propagate_Typed_Event const &) = delete;
+  TAO_CEC_Propagate_Typed_Event (TAO_CEC_Propagate_Typed_Event &&) = delete;
+  TAO_CEC_Propagate_Typed_Event &operator= (
+      TAO_CEC_Propagate_Typed_Event const &) = delete;
+  TAO_CEC_Propagate_Typed_Event &operator= (TAO_CEC_Propagate_Typed_Event &&) = delete;
+
   void work (TAO_CEC_ProxyPushSupplier *supplier) override;
 
 private:

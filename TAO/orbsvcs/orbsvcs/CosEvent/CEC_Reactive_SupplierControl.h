@@ -174,6 +174,11 @@ class TAO_CEC_Ping_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPushConsum
 public:
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
 
+  TAO_CEC_Ping_Push_Supplier (TAO_CEC_Ping_Push_Supplier const &) = delete;
+  TAO_CEC_Ping_Push_Supplier (TAO_CEC_Ping_Push_Supplier &&) = delete;
+  TAO_CEC_Ping_Push_Supplier &operator= (TAO_CEC_Ping_Push_Supplier const &) = delete;
+  TAO_CEC_Ping_Push_Supplier &operator= (TAO_CEC_Ping_Push_Supplier &&) = delete;
+
   void work (TAO_CEC_ProxyPushConsumer *consumer) override;
 
 private:
@@ -188,6 +193,12 @@ class TAO_CEC_Ping_Typed_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_TypedProx
 public:
   TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
 
+  TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_Ping_Typed_Push_Supplier const &) = delete;
+  TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_Ping_Typed_Push_Supplier &&) = delete;
+  TAO_CEC_Ping_Typed_Push_Supplier &operator= (
+      TAO_CEC_Ping_Typed_Push_Supplier const &) = delete;
+  TAO_CEC_Ping_Typed_Push_Supplier &operator= (TAO_CEC_Ping_Typed_Push_Supplier &&) = delete;
+
   void work (TAO_CEC_TypedProxyPushConsumer *consumer) override;
 
 private:
@@ -201,6 +212,11 @@ class TAO_CEC_Ping_Pull_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsum
 {
 public:
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
+
+  TAO_CEC_Ping_Pull_Supplier (TAO_CEC_Ping_Pull_Supplier const &) = delete;
+  TAO_CEC_Ping_Pull_Supplier (TAO_CEC_Ping_Pull_Supplier &&) = delete;
+  TAO_CEC_Ping_Pull_Supplier &operator= (TAO_CEC_Ping_Pull_Supplier const &) = delete;
+  TAO_CEC_Ping_Pull_Supplier &operator= (TAO_CEC_Ping_Pull_Supplier &&) = delete;
 
   void work (TAO_CEC_ProxyPullConsumer *consumer) override;
 

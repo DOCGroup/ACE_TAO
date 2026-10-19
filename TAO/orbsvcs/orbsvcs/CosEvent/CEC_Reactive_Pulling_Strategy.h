@@ -127,6 +127,11 @@ public:
   TAO_CEC_Pull_Event (TAO_CEC_ConsumerAdmin *consumer_admin,
                       TAO_CEC_SupplierControl *);
 
+  TAO_CEC_Pull_Event (TAO_CEC_Pull_Event const &) = delete;
+  TAO_CEC_Pull_Event (TAO_CEC_Pull_Event &&) = delete;
+  TAO_CEC_Pull_Event &operator= (TAO_CEC_Pull_Event const &) = delete;
+  TAO_CEC_Pull_Event &operator= (TAO_CEC_Pull_Event &&) = delete;
+
   void work (TAO_CEC_ProxyPullConsumer *consumer) override;
 
 private:
