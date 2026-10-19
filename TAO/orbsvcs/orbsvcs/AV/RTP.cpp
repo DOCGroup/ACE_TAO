@@ -120,7 +120,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   if (csrc_count > 15)
     csrc_count = 15; // Only 15 contributing sources can be specified.
 
-  if (csrc_list != 0)
+  if (csrc_list != nullptr)
     for (unsigned char i=0; i<csrc_count; i++)
       {
         size+=4;
@@ -380,9 +380,9 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   int result = -1;
   RTP_Packet *rtp_packet;
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
-  ACE_UINT32 *csrc_list = 0;
+  ACE_UINT32 *csrc_list = nullptr;
 
-  if (frame_info != 0)
+  if (frame_info != nullptr)
     {
       if (frame_info->format != this->format_)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -493,9 +493,9 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
                                TAO_AV_frame_info *frame_info)
 {
   int result = -1;
-  RTP_Packet *rtp_packet = 0;
+  RTP_Packet *rtp_packet = nullptr;
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
-  ACE_UINT32 *csrc_list = 0;
+  ACE_UINT32 *csrc_list = nullptr;
 
   if (this->connection_gone_)
     {
@@ -503,7 +503,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       return -1;
     }
 
-  if (frame_info != 0)
+  if (frame_info != nullptr)
     {
       if (frame_info->format != this->format_)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -659,7 +659,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 {
   this->policy_list_ = policy_list;
   CORBA::ULong const num_policies = this->policy_list_.length ();
-  TAO_AV_Policy *policy = 0;
+  TAO_AV_Policy *policy = nullptr;
 
   for (u_int i=0; i< num_policies;i++)
     {
@@ -670,7 +670,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
           {
             TAO_AV_Payload_Type_Policy *payload_policy =
               static_cast<TAO_AV_Payload_Type_Policy *> (policy);
-            if (payload_policy == 0)
+            if (payload_policy == nullptr)
               ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
             this->format_ = payload_policy->value ();
           }
@@ -679,7 +679,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
           {
             TAO_AV_SSRC_Policy *ssrc_policy =
               static_cast<TAO_AV_SSRC_Policy *> (policy);
-            if (ssrc_policy == 0)
+            if (ssrc_policy == nullptr)
               ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
             this->ssrc_ = ssrc_policy->value ();
           }
@@ -737,13 +737,13 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Flow_Handler *handler,
                                                TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = 0;
+  TAO_AV_Callback *callback = nullptr;
 
   if( endpoint->get_callback (entry->flowname (), callback) ) {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
-  TAO_AV_Protocol_Object *object = 0;
+  TAO_AV_Protocol_Object *object = nullptr;
   ACE_NEW_RETURN (object,
                   TAO_AV_RTP_Object (callback,
                                      transport),
