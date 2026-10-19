@@ -271,7 +271,7 @@ public:
   ACE_RMS_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
     /// = Virtual destructor.
-  virtual ~ACE_RMS_Scheduler_Strategy ();
+  ~ACE_RMS_Scheduler_Strategy () override;
 
     /// Returns an instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance ();
@@ -281,34 +281,37 @@ public:
      *   first Dispatch_Entry is greater in the order, 0 if they're equivalent,
      *   or 1 if the second Dispatch_Entry is greater in the order.
      */
-  virtual int priority_comp (const Dispatch_Entry &first_entry,
-                             const Dispatch_Entry &second_entry);
+  int priority_comp (Dispatch_Entry const &first_entry,
+                     Dispatch_Entry const &second_entry) override;
 
     /// = Sorts the dispatch entry link pointer array in
     ///   descending RMS (rate) order.
-  virtual void sort (Dispatch_Entry **dispatch_entries,
-                     u_int count);
+  void sort (Dispatch_Entry **dispatch_entries,
+             u_int count) override;
 
     /// = Determine the minimum critical priority number.
-  virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
+  ACE_DynScheduler::Preemption_Priority minimum_critical_priority () override;
 
     /// = Provide the dispatching queue type for the given dispatch entry.
-  virtual ACE_DynScheduler::Dispatching_Type
-    dispatch_type (const Dispatch_Entry &entry);
+  ACE_DynScheduler::Dispatching_Type dispatch_type (Dispatch_Entry const &entry) override;
 
 protected:
     /// = Just returns 0: all operations have
     ///   the same dynamic subpriority value.
-    virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                      RtecScheduler::Time current_time);
+    long dynamic_subpriority (Dispatch_Entry &entry,
+                              RtecScheduler::Time current_time) override;
 
     /// = All dispatches in a given priority level have the same dynamic
     ///   subpriority under RMS: just returns 0.
-  virtual int dynamic_subpriority_comp
-    (const Dispatch_Entry &first_entry,
-     const Dispatch_Entry &second_entry);
+  int dynamic_subpriority_comp (Dispatch_Entry const &first_entry,
+                                Dispatch_Entry const &second_entry) override;
 
 private:
+  ACE_RMS_Scheduler_Strategy (ACE_RMS_Scheduler_Strategy const &) = delete;
+  ACE_RMS_Scheduler_Strategy (ACE_RMS_Scheduler_Strategy &&) = delete;
+  ACE_RMS_Scheduler_Strategy &operator= (ACE_RMS_Scheduler_Strategy const &) = delete;
+  ACE_RMS_Scheduler_Strategy &operator= (ACE_RMS_Scheduler_Strategy &&) = delete;
+
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void *arg1, void *arg2);
 
