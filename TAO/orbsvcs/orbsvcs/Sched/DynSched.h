@@ -147,9 +147,9 @@ public:
    */
   void init (const OS_Priority minimum_priority,
              const OS_Priority maximum_priority,
-             const char *runtime_filename = 0,
-             const char *rt_info_filename = 0,
-             const char *timeline_filename = 0);
+             const char *runtime_filename = nullptr,
+             const char *rt_info_filename = nullptr,
+             const char *timeline_filename = nullptr);
 
   /**
    * Prepare for another schedule computation: once a reasonable schedule
@@ -463,8 +463,10 @@ private:
   status_t calculate_utilization_params ();
 
   // the following functions are not implememented
-  ACE_DynScheduler (const ACE_DynScheduler &);
-  ACE_DynScheduler &operator= (const ACE_DynScheduler &);
+  ACE_DynScheduler (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler (ACE_DynScheduler &&) = delete;
+  ACE_DynScheduler &operator= (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler &operator= (ACE_DynScheduler &&) = delete;
 
   //////////////////////////
   // private data members //
