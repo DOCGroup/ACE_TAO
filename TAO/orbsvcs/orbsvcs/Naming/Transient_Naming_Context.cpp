@@ -232,12 +232,11 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
-  typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>::ITERATOR ITER_DEF;
-  typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>::ENTRY ENTRY_DEF;
+  using ITER_DEF = ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>::ITERATOR;
+  using ENTRY_DEF = ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>::ENTRY;
 
-  // Typedef to the type of BindingIterator servant for ease of use.
-  typedef TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>
-    ITER_SERVANT;
+  // BindingIterator servant type alias.
+  using ITER_SERVANT = TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>;
 
   // A pointer to BindingIterator servant.
   ITER_SERVANT *bind_iter = 0;

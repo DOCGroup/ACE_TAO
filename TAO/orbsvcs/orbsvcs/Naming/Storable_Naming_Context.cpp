@@ -376,7 +376,7 @@ File_Open_Lock_and_Check::create_stream (const char * mode)
 }
 
 // Make shortcut to get to Method_Type enums
-typedef TAO::Storable_File_Guard SFG;
+using SFG = TAO::Storable_File_Guard;
 
 TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                CORBA::ORB_ptr orb,
@@ -954,15 +954,15 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
-  typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
-                               TAO_Storable_IntId,
-                               ACE_Null_Mutex>::ITERATOR ITER_DEF;
-  typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
-                               TAO_Storable_IntId,
-                               ACE_Null_Mutex>::ENTRY ENTRY_DEF;
+  using ITER_DEF = ACE_Hash_Map_Manager<TAO_Storable_ExtId,
+                                        TAO_Storable_IntId,
+                                        ACE_Null_Mutex>::ITERATOR;
+  using ENTRY_DEF = ACE_Hash_Map_Manager<TAO_Storable_ExtId,
+                                         TAO_Storable_IntId,
+                                         ACE_Null_Mutex>::ENTRY;
 
   // Typedef to the type of BindingIterator servant for ease of use.
-  typedef TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF> ITER_SERVANT;
+  using ITER_SERVANT = TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>;
 
   // A pointer to BindingIterator servant.
   ITER_SERVANT *bind_iter = 0;

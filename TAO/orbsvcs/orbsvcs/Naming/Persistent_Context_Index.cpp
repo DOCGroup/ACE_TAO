@@ -170,8 +170,8 @@ TAO_Persistent_Context_Index::recreate_all ()
   std::unique_ptr<CONTEXT_INDEX::ITERATOR> it (index_iter);
 
   // Because of broken old g++!!!
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
-    TAO_Persistent_Index_IntId>  IND_DEF;
+  using IND_DEF = ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
+                                              TAO_Persistent_Index_IntId>;
 
   IND_DEF::ENTRY *entry = 0;
 
