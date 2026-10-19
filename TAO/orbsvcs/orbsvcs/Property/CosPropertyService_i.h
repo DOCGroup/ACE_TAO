@@ -45,19 +45,21 @@ public:
   CosProperty_Hash_Key ();
   // Default constructor.
 
-  CosProperty_Hash_Key (const char * &name);
+  CosProperty_Hash_Key (char const * & name);
   // Constructor from a const string.
 
-  CosProperty_Hash_Key (const CosPropertyService::PropertyName &name);
+  CosProperty_Hash_Key (CosPropertyService::PropertyName const & name);
   // Costructor that takes PropertyName.
 
-  CosProperty_Hash_Key (const CosProperty_Hash_Key &hash_key);
+  CosProperty_Hash_Key (CosProperty_Hash_Key const & hash_key);
   // Copy constructor.
+
+  CosProperty_Hash_Key &operator= (CosProperty_Hash_Key const &) = default;
 
   virtual ~CosProperty_Hash_Key ();
   // Destructor.
 
-  virtual bool operator == (const CosProperty_Hash_Key &hash_key) const;
+  virtual bool operator == (CosProperty_Hash_Key const & hash_key) const;
   // The operator for hash binding and "find"ing.
 
   virtual u_long hash () const;
@@ -77,12 +79,14 @@ public:
   CosProperty_Hash_Value ();
   // Default constructor.
 
-  CosProperty_Hash_Value (const CORBA::Any &any,
-                          const CosPropertyService::PropertyModeType &mode);
+  CosProperty_Hash_Value (CORBA::Any const & any,
+                          CosPropertyService::PropertyModeType const & mode);
   // Constructor with the property_value and the property_mode.
 
-  CosProperty_Hash_Value (const CosProperty_Hash_Value &hash_value);
+  CosProperty_Hash_Value (CosProperty_Hash_Value const & hash_value);
   // Copy constructor.
+
+  CosProperty_Hash_Value &operator= (CosProperty_Hash_Value const &) = default;
 
   virtual ~CosProperty_Hash_Value ();
   // Destructor.

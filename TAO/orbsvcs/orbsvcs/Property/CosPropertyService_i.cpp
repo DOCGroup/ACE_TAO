@@ -23,23 +23,23 @@ CosProperty_Hash_Key::CosProperty_Hash_Key ()
 {
 }
 
-CosProperty_Hash_Key::CosProperty_Hash_Key (const char * &name)
+CosProperty_Hash_Key::CosProperty_Hash_Key (char const * & name)
   : pname_ (CORBA::string_dup (name))
 {
 }
 
-CosProperty_Hash_Key::CosProperty_Hash_Key (const CosPropertyService::PropertyName &name)
+CosProperty_Hash_Key::CosProperty_Hash_Key (CosPropertyService::PropertyName const & name)
   : pname_ (CORBA::string_dup (name))
 {
 }
 
-CosProperty_Hash_Key::CosProperty_Hash_Key (const CosProperty_Hash_Key &src)
+CosProperty_Hash_Key::CosProperty_Hash_Key (CosProperty_Hash_Key const & src)
   : pname_ (src.pname_)
 {
 }
 
 bool
-CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &hash_key) const
+CosProperty_Hash_Key::operator == (CosProperty_Hash_Key const & hash_key) const
 {
   return (ACE_OS::strcmp (this->pname_,
                           hash_key.pname_) == 0);
@@ -54,8 +54,7 @@ CosProperty_Hash_Key::hash () const
 }
 
 CosProperty_Hash_Key::~CosProperty_Hash_Key ()
-{
-}
+= default;
 
 //======================================================================
 
@@ -63,22 +62,21 @@ CosProperty_Hash_Value::CosProperty_Hash_Value ()
 {
 }
 
-CosProperty_Hash_Value::CosProperty_Hash_Value (const CORBA::Any &any,
-                                                const CosPropertyService::PropertyModeType &mode)
+CosProperty_Hash_Value::CosProperty_Hash_Value (CORBA::Any const & any,
+                                                CosPropertyService::PropertyModeType const & mode)
   : pvalue_ (any),
     pmode_ (mode)
 {
 }
 
-CosProperty_Hash_Value::CosProperty_Hash_Value (const CosProperty_Hash_Value &src)
+CosProperty_Hash_Value::CosProperty_Hash_Value (CosProperty_Hash_Value const & src)
   : pvalue_ (src.pvalue_),
     pmode_ (src.pmode_)
 {
 }
 
 CosProperty_Hash_Value::~CosProperty_Hash_Value ()
-{
-}
+= default;
 
 //======================================================================
 
