@@ -155,7 +155,7 @@ namespace TAO
           ri->orb_id ();
 
         int argc = 0;
-        ACE_TCHAR **argv = 0;
+        ACE_TCHAR **argv = nullptr;
 
         this->orb_ =
           CORBA::ORB_init (argc,
@@ -172,7 +172,7 @@ namespace TAO
     if (param->length () != 3 )
       throw CORBA::TRANSIENT ();
 
-    const char *str = 0;
+    char const* str = nullptr;
 
     (*param)[0].argument >>= str;
     (*param)[1].argument >>= this->object_group_ref_version_;
