@@ -44,11 +44,17 @@ class TAO_Log_Serv_Export TAO_Log_Persistence_Strategy
   : public ACE_Service_Object
 {
 public:
+  TAO_Log_Persistence_Strategy () = default;
+
   /// @brief Log Store Factory
-  virtual TAO_LogStore*
-    create_log_store (TAO_LogMgr_i* logmgr_i) = 0;
+  virtual TAO_LogStore *
+    create_log_store (TAO_LogMgr_i * logmgr_i) = 0;
 
 private:
+  TAO_Log_Persistence_Strategy (TAO_Log_Persistence_Strategy const &) = delete;
+  TAO_Log_Persistence_Strategy (TAO_Log_Persistence_Strategy &&) = delete;
+  TAO_Log_Persistence_Strategy &operator= (TAO_Log_Persistence_Strategy const &) = delete;
+  TAO_Log_Persistence_Strategy &operator= (TAO_Log_Persistence_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
