@@ -40,8 +40,10 @@ public:
                                TAO_EC_Supplier_Filter *filter) override;
 
 private:
-  TAO_EC_Group_Scheduling (const TAO_EC_Group_Scheduling&);
-  TAO_EC_Group_Scheduling& operator= (const TAO_EC_Group_Scheduling&);
+  TAO_EC_Group_Scheduling (TAO_EC_Group_Scheduling const &) = delete;
+  TAO_EC_Group_Scheduling (TAO_EC_Group_Scheduling &&) = delete;
+  TAO_EC_Group_Scheduling& operator= (TAO_EC_Group_Scheduling const &) = delete;
+  TAO_EC_Group_Scheduling& operator= (TAO_EC_Group_Scheduling &&) = delete;
 };
 
 #if defined (__ACE_INLINE__)

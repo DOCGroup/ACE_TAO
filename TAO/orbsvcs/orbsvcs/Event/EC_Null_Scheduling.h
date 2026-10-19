@@ -43,8 +43,10 @@ public:
                                TAO_EC_Supplier_Filter *filter) override;
 
 private:
-  TAO_EC_Null_Scheduling (const TAO_EC_Null_Scheduling&);
-  TAO_EC_Null_Scheduling& operator= (const TAO_EC_Null_Scheduling&);
+  TAO_EC_Null_Scheduling (TAO_EC_Null_Scheduling const &) = delete;
+  TAO_EC_Null_Scheduling (TAO_EC_Null_Scheduling &&) = delete;
+  TAO_EC_Null_Scheduling& operator= (TAO_EC_Null_Scheduling const &) = delete;
+  TAO_EC_Null_Scheduling& operator= (TAO_EC_Null_Scheduling &&) = delete;
 };
 
 #if defined (__ACE_INLINE__)
