@@ -41,7 +41,7 @@ public:
   TAO_EC_Null_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Null_Factory ();
+  virtual ~TAO_EC_Null_Factory () override;
 
   TAO_EC_Null_Factory (TAO_EC_Null_Factory const &) = delete;
   TAO_EC_Null_Factory (TAO_EC_Null_Factory &&) = delete;

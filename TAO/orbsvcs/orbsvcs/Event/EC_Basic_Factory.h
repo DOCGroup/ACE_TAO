@@ -43,7 +43,7 @@ public:
   TAO_EC_Basic_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Basic_Factory ();
+  virtual ~TAO_EC_Basic_Factory () override;
 
   TAO_EC_Basic_Factory (TAO_EC_Basic_Factory const &) = delete;
   TAO_EC_Basic_Factory (TAO_EC_Basic_Factory &&) = delete;

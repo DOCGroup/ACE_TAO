@@ -33,7 +33,7 @@ public:
   TAO_EC_TPC_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_TPC_Factory ();
+  virtual ~TAO_EC_TPC_Factory () override;
 
   TAO_EC_TPC_Factory (TAO_EC_TPC_Factory const &) = delete;
   TAO_EC_TPC_Factory (TAO_EC_TPC_Factory &&) = delete;
@@ -45,7 +45,7 @@ public:
   static int init_svcs ();
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]) override;
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
