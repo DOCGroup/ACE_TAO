@@ -30,11 +30,11 @@ class TAO_AV_Export TAO_AV_TCP_Factory : public TAO_AV_Transport_Factory
 public:
   /// Initialization hook.
   TAO_AV_TCP_Factory ();
-  virtual ~TAO_AV_TCP_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *protocol_string);
-  virtual TAO_AV_Acceptor *make_acceptor ();
-  virtual TAO_AV_Connector *make_connector ();
+  ~TAO_AV_TCP_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int match_protocol (const char *protocol_string) override;
+  TAO_AV_Acceptor *make_acceptor () override;
+  TAO_AV_Connector *make_connector () override;
 };
 
 class TAO_AV_TCP_Flow_Handler;
