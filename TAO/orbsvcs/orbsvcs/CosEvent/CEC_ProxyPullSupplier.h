@@ -51,15 +51,15 @@ class TAO_CEC_ProxyPullConsumer;
 class TAO_Event_Serv_Export TAO_CEC_ProxyPullSupplier : public POA_CosEventChannelAdmin::ProxyPullSupplier
 {
 public:
-  typedef CosEventChannelAdmin::ProxyPullSupplier_ptr _ptr_type;
-  typedef CosEventChannelAdmin::ProxyPullSupplier_var _var_type;
+  using _ptr_type = CosEventChannelAdmin::ProxyPullSupplier_ptr;
+  using _var_type = CosEventChannelAdmin::ProxyPullSupplier_var;
 
   /// constructor...
   TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel,
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPullSupplier ();
+  ~TAO_CEC_ProxyPullSupplier () override;
 
   /// Activate in the POA
   virtual void activate (
@@ -93,20 +93,19 @@ public:
   void push (const CORBA::Any &event);
 
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
-  virtual void connect_pull_consumer (
-                CosEventComm::PullConsumer_ptr pull_consumer);
-  virtual CORBA::Any * pull ();
-  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event);
-  virtual void disconnect_pull_supplier ();
+  void connect_pull_consumer (CosEventComm::PullConsumer_ptr pull_consumer) override;
+  CORBA::Any *pull () override;
+  CORBA::Any *try_pull (CORBA::Boolean_out has_event) override;
+  void disconnect_pull_supplier () override;
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA ();
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 protected:
   /// Set the consumer, used by some implementations to change the

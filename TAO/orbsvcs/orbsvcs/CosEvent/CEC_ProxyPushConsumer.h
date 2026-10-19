@@ -46,15 +46,15 @@ class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer
   : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
 public:
-  typedef CosEventChannelAdmin::ProxyPushConsumer_ptr _ptr_type;
-  typedef CosEventChannelAdmin::ProxyPushConsumer_var _var_type;
+  using _ptr_type = CosEventChannelAdmin::ProxyPushConsumer_ptr;
+  using _var_type = CosEventChannelAdmin::ProxyPushConsumer_var;
 
   /// constructor...
   TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel,
                              const ACE_Time_Value &timeout);
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPushConsumer ();
+  ~TAO_CEC_ProxyPushConsumer () override;
 
   /// Activate in the POA
   virtual void activate (
@@ -85,15 +85,14 @@ public:
   CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
-                CosEventComm::PushSupplier_ptr push_supplier);
-  virtual void push (const CORBA::Any& event);
-  virtual void disconnect_push_consumer ();
+  void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
+  void push (CORBA::Any const &event) override;
+  void disconnect_push_consumer () override;
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA ();
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 protected:
   /// Set the supplier, used by some implementations to change the
