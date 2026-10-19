@@ -54,6 +54,11 @@ public:
   /// Constructor
   TAO_CEC_SupplierControl_Adapter (TAO_CEC_Reactive_SupplierControl *adaptee);
 
+  TAO_CEC_SupplierControl_Adapter (TAO_CEC_SupplierControl_Adapter const &) = delete;
+  TAO_CEC_SupplierControl_Adapter (TAO_CEC_SupplierControl_Adapter &&) = delete;
+  TAO_CEC_SupplierControl_Adapter &operator= (TAO_CEC_SupplierControl_Adapter const &) = delete;
+  TAO_CEC_SupplierControl_Adapter &operator= (TAO_CEC_SupplierControl_Adapter &&) = delete;
+
   // = Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
@@ -98,6 +103,11 @@ public:
 
   /// destructor...
   ~TAO_CEC_Reactive_SupplierControl () override = default;
+
+  TAO_CEC_Reactive_SupplierControl (TAO_CEC_Reactive_SupplierControl const &) = delete;
+  TAO_CEC_Reactive_SupplierControl (TAO_CEC_Reactive_SupplierControl &&) = delete;
+  TAO_CEC_Reactive_SupplierControl &operator= (TAO_CEC_Reactive_SupplierControl const &) = delete;
+  TAO_CEC_Reactive_SupplierControl &operator= (TAO_CEC_Reactive_SupplierControl &&) = delete;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,

@@ -56,6 +56,11 @@ public:
   /// Constructor
   TAO_CEC_ConsumerControl_Adapter (TAO_CEC_Reactive_ConsumerControl *adaptee);
 
+  TAO_CEC_ConsumerControl_Adapter (TAO_CEC_ConsumerControl_Adapter const &) = delete;
+  TAO_CEC_ConsumerControl_Adapter (TAO_CEC_ConsumerControl_Adapter &&) = delete;
+  TAO_CEC_ConsumerControl_Adapter &operator= (TAO_CEC_ConsumerControl_Adapter const &) = delete;
+  TAO_CEC_ConsumerControl_Adapter &operator= (TAO_CEC_ConsumerControl_Adapter &&) = delete;
+
   // = Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
@@ -100,6 +105,11 @@ public:
 
   /// destructor...
   ~TAO_CEC_Reactive_ConsumerControl () override = default;
+
+  TAO_CEC_Reactive_ConsumerControl (TAO_CEC_Reactive_ConsumerControl const &) = delete;
+  TAO_CEC_Reactive_ConsumerControl (TAO_CEC_Reactive_ConsumerControl &&) = delete;
+  TAO_CEC_Reactive_ConsumerControl &operator= (TAO_CEC_Reactive_ConsumerControl const &) = delete;
+  TAO_CEC_Reactive_ConsumerControl &operator= (TAO_CEC_Reactive_ConsumerControl &&) = delete;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
@@ -174,6 +184,11 @@ class TAO_CEC_Ping_Push_Consumer
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
 
+  TAO_CEC_Ping_Push_Consumer (TAO_CEC_Ping_Push_Consumer const &) = delete;
+  TAO_CEC_Ping_Push_Consumer (TAO_CEC_Ping_Push_Consumer &&) = delete;
+  TAO_CEC_Ping_Push_Consumer &operator= (TAO_CEC_Ping_Push_Consumer const &) = delete;
+  TAO_CEC_Ping_Push_Consumer &operator= (TAO_CEC_Ping_Push_Consumer &&) = delete;
+
   void work (TAO_CEC_ProxyPushSupplier *supplier) override;
 
 private:
@@ -187,6 +202,11 @@ class TAO_CEC_Ping_Pull_Consumer
 {
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
+
+  TAO_CEC_Ping_Pull_Consumer (TAO_CEC_Ping_Pull_Consumer const &) = delete;
+  TAO_CEC_Ping_Pull_Consumer (TAO_CEC_Ping_Pull_Consumer &&) = delete;
+  TAO_CEC_Ping_Pull_Consumer &operator= (TAO_CEC_Ping_Pull_Consumer const &) = delete;
+  TAO_CEC_Ping_Pull_Consumer &operator= (TAO_CEC_Ping_Pull_Consumer &&) = delete;
 
   void work (TAO_CEC_ProxyPullSupplier *supplier) override;
 

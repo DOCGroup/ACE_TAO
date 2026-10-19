@@ -51,6 +51,11 @@ public:
   /// Constructor
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
 
+  TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
+  TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
+  TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
+  TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
+
   // = Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
@@ -79,6 +84,12 @@ public:
                                      const ACE_Time_Value &relative_timeout,
                                      TAO_CEC_EventChannel *event_channel,
                                      CORBA::ORB_ptr orb);
+
+  TAO_CEC_Reactive_Pulling_Strategy (TAO_CEC_Reactive_Pulling_Strategy const &) = delete;
+  TAO_CEC_Reactive_Pulling_Strategy (TAO_CEC_Reactive_Pulling_Strategy &&) = delete;
+  TAO_CEC_Reactive_Pulling_Strategy &operator= (
+      TAO_CEC_Reactive_Pulling_Strategy const &) = delete;
+  TAO_CEC_Reactive_Pulling_Strategy &operator= (TAO_CEC_Reactive_Pulling_Strategy &&) = delete;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
