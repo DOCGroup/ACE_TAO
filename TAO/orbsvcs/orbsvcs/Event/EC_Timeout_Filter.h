@@ -77,8 +77,10 @@ public:
                                 const TAO_EC_QOS_Info &qos_info) override;
 
 private:
-  TAO_EC_Timeout_Filter (const TAO_EC_Timeout_Filter&);
-  TAO_EC_Timeout_Filter& operator= (const TAO_EC_Timeout_Filter&);
+  TAO_EC_Timeout_Filter (TAO_EC_Timeout_Filter const &) = delete;
+  TAO_EC_Timeout_Filter (TAO_EC_Timeout_Filter &&) = delete;
+  TAO_EC_Timeout_Filter& operator= (TAO_EC_Timeout_Filter const &) = delete;
+  TAO_EC_Timeout_Filter& operator= (TAO_EC_Timeout_Filter &&) = delete;
 
 private:
   /// The event channel.

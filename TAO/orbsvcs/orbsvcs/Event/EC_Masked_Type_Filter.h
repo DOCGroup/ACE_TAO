@@ -67,8 +67,10 @@ public:
                                 const TAO_EC_QOS_Info &qos_info) override;
 
 private:
-  TAO_EC_Masked_Type_Filter (const TAO_EC_Masked_Type_Filter&);
-  TAO_EC_Masked_Type_Filter& operator= (const TAO_EC_Masked_Type_Filter&);
+  TAO_EC_Masked_Type_Filter (TAO_EC_Masked_Type_Filter const &) = delete;
+  TAO_EC_Masked_Type_Filter (TAO_EC_Masked_Type_Filter &&) = delete;
+  TAO_EC_Masked_Type_Filter& operator= (TAO_EC_Masked_Type_Filter const &) = delete;
+  TAO_EC_Masked_Type_Filter& operator= (TAO_EC_Masked_Type_Filter &&) = delete;
 
 private:
   /// The bitmasks

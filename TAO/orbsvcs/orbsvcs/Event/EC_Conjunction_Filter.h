@@ -69,11 +69,13 @@ public:
   using Word = unsigned int;
 
 private:
+  TAO_EC_Conjunction_Filter (TAO_EC_Conjunction_Filter const &) = delete;
+  TAO_EC_Conjunction_Filter (TAO_EC_Conjunction_Filter &&) = delete;
+  TAO_EC_Conjunction_Filter& operator= (TAO_EC_Conjunction_Filter const &) = delete;
+  TAO_EC_Conjunction_Filter& operator= (TAO_EC_Conjunction_Filter &&) = delete;
+
   /// Determine if all the children have received their events.
   int all_received () const;
-
-  TAO_EC_Conjunction_Filter (const TAO_EC_Conjunction_Filter&);
-  TAO_EC_Conjunction_Filter& operator= (const TAO_EC_Conjunction_Filter&);
 
 private:
   /// The children
