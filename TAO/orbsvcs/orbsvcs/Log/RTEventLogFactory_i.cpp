@@ -18,8 +18,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i () :
-  impl (0),
-  notifier_ (0)
+  impl (nullptr),
+  notifier_ (nullptr)
 {
 }
 
@@ -39,7 +39,7 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
 
   TAO_EC_Event_Channel_Attributes attr (defPOA.in (), defPOA.in ());
 
-  this->impl = 0;
+  this->impl = nullptr;
   ACE_NEW_THROW_EX (impl,
                     TAO_EC_Event_Channel (attr),
                     CORBA::NO_MEMORY ());
@@ -91,9 +91,8 @@ RTEventLogAdmin::EventLog_ptr
 TAO_RTEventLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id_out
-      )
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
+        DsLogAdmin::LogId_out id_out)
 {
   this->create_i (full_action,
                   max_size,
@@ -124,8 +123,7 @@ TAO_RTEventLogFactory_i::create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-      )
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds)
 {
   this->create_with_id_i (id,
                           full_action,
@@ -159,7 +157,7 @@ TAO_RTEventLogFactory_i::create_repositoryid ()
 PortableServer::ServantBase*
 TAO_RTEventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 {
-  TAO_RTEventLog_i* event_log_i;
+  TAO_RTEventLog_i * event_log_i;
 
   ACE_NEW_THROW_EX (event_log_i,
                     TAO_RTEventLog_i (this->orb_.in (),

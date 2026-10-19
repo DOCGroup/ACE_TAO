@@ -54,7 +54,7 @@ public:
   TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
 
   /// Destructor.
-  ~TAO_NotifyLogFactory_i ();
+  ~TAO_NotifyLogFactory_i () override;
 
   /// Activate this servant with the ORB and POA passed in.
   DsNotifyLogAdmin::NotifyLogFactory_ptr
@@ -64,20 +64,19 @@ public:
   DsNotifyLogAdmin::NotifyLog_ptr create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        const CosNotification::QoSProperties & initial_qos,
-        const CosNotification::AdminProperties & initial_admin,
-        DsLogAdmin::LogId_out id);
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
+        CosNotification::QoSProperties const & initial_qos,
+        CosNotification::AdminProperties const & initial_admin,
+        DsLogAdmin::LogId_out id) override;
 
   /// Same as create (), but allows clients to specify the id.
   DsNotifyLogAdmin::NotifyLog_ptr create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        const CosNotification::QoSProperties & initial_qos,
-        const CosNotification::AdminProperties & initial_admin
-      );
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
+        CosNotification::QoSProperties const & initial_qos,
+        CosNotification::AdminProperties const & initial_admin) override;
 
 
   // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
@@ -131,11 +130,9 @@ public:
   void remove_all_filters ();
 
 protected:
-  virtual CORBA::RepositoryId
-    create_repositoryid ();
+  CORBA::RepositoryId create_repositoryid () override;
 
-  virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id);
+  PortableServer::ServantBase * create_log_servant (DsLogAdmin::LogId id) override;
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
@@ -156,10 +153,16 @@ protected:
   //CosEventChannelAdmin::ConsumerAdmin_var es_consumer_admin_;
 
   /// Used for log-generated events.
-  TAO_NotifyLogNotification* notifier_;
+  TAO_NotifyLogNotification * notifier_;
 
   /// The EventChannelFactory used to create an EventChannel.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
+
+private:
+  TAO_NotifyLogFactory_i (TAO_NotifyLogFactory_i const &) = delete;
+  TAO_NotifyLogFactory_i (TAO_NotifyLogFactory_i &&) = delete;
+  TAO_NotifyLogFactory_i & operator= (TAO_NotifyLogFactory_i const &) = delete;
+  TAO_NotifyLogFactory_i & operator= (TAO_NotifyLogFactory_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
