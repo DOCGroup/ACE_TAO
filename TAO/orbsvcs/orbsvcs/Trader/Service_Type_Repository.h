@@ -36,12 +36,11 @@ public:
    * probably best. The Service_Type_Repository assumes control of the
    * lock.
    */
-  TAO_Service_Type_Repository (ACE_Lock *lock = 0);
+  TAO_Service_Type_Repository (ACE_Lock* lock = nullptr);
 
-  ~TAO_Service_Type_Repository ();
+  ~TAO_Service_Type_Repository () override;
 
-  virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-    incarnation ();
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation () override;
 
   /**
    * BEGIN SPEC
@@ -52,11 +51,11 @@ public:
    * for this service type, and the service type names of the
    * immediate super-types to this service type.
    */
-  virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-  add_type (const char *name,
-            const char *if_name,
-            const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber
+  add_type (char const* name,
+            char const* if_name,
+            CosTradingRepos::ServiceTypeRepository::PropStructSeq const& props,
+            CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const& super_types) override;
 
   // If the type creation is successful, an incarnation number is
   // returned as the value of the operation. Incarnation numbers are
@@ -103,10 +102,10 @@ public:
    * "name" has a service type which has been derived from it, then
    * the HasSubTypes exception is raised.  END SPEC
    */
-  virtual void remove_type (const char  *name);
+  void remove_type (char const* name) override;
 
-  virtual CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
-  list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types);
+  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq*
+  list_types (CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes const& which_types) override;
 
   // BEGIN SPEC
   // The list_types operation permits a client to obtain the names of
@@ -128,8 +127,8 @@ public:
    * CosTrading::UnknownServiceType exception is raised.
    * END SPEC
    */
-  virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
-  describe_type (const char *name);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct*
+  describe_type (char const* name) override;
 
   /**
    * BEGIN SPEC
@@ -144,8 +143,8 @@ public:
    * the CosTrading::UnknownServiceType exception is raised.
    * END SPEC
    */
-  virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
-  fully_describe_type (const char *name);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct*
+  fully_describe_type (char const* name) override;
 
   /**
    * BEGIN SPEC
@@ -161,7 +160,7 @@ public:
    * exception is raised.
    * END SPEC
    */
-  virtual void mask_type (const char *name);
+  void mask_type (char const* name) override;
 
   /**
    * BEGIN SPEC
@@ -175,7 +174,7 @@ public:
    * exception is raised.
    * END SPEC
    */
-  virtual void unmask_type (const char  *name);
+  void unmask_type (char const* name) override;
 
 private:
   /**
@@ -193,26 +192,23 @@ private:
     CORBA::Boolean has_subtypes_;
   };
 
-  typedef ACE_Hash_Map_Manager_Ex <CORBA::String_var,
-                                  CosTradingRepos::ServiceTypeRepository::PropStruct *,
-                                  ACE_Hash<CORBA::String_var>,
-                                  ACE_Equal_To<CORBA::String_var>,
-                                  ACE_Null_Mutex>
-                                  Prop_Map;
+  using Prop_Map = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                           CosTradingRepos::ServiceTypeRepository::PropStruct*,
+                                           ACE_Hash<CORBA::String_var>,
+                                           ACE_Equal_To<CORBA::String_var>,
+                                           ACE_Null_Mutex>;
 
-  typedef ACE_Hash_Map_Manager_Ex <CORBA::String_var,
-                                   Type_Info *,
-                                   ACE_Hash<CORBA::String_var>,
-                                   ACE_Equal_To<CORBA::String_var>,
-                                   ACE_Null_Mutex>
-                                   Service_Type_Map;
+  using Service_Type_Map = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                                    Type_Info*,
+                                                    ACE_Hash<CORBA::String_var>,
+                                                    ACE_Equal_To<CORBA::String_var>,
+                                                    ACE_Null_Mutex>;
 
-  typedef ACE_Hash_Map_Iterator_Ex<CORBA::String_var,
-                                   Type_Info *,
-                                   ACE_Hash<CORBA::String_var>,
-                                   ACE_Equal_To<CORBA::String_var>,
-                                   ACE_Null_Mutex>
-                                   Service_Type_Map_Iterator;
+  using Service_Type_Map_Iterator = ACE_Hash_Map_Iterator_Ex<CORBA::String_var,
+                                                              Type_Info*,
+                                                              ACE_Hash<CORBA::String_var>,
+                                                              ACE_Equal_To<CORBA::String_var>,
+                                                              ACE_Null_Mutex>;
 
   /**
    * Build a sequence aggregating the property names from all
@@ -249,8 +245,10 @@ private:
                         Prop_Map &prop_map,
                         Service_Type_Map &super_map);
 
-  TAO_Service_Type_Repository (const TAO_Service_Type_Repository &);
-  TAO_Service_Type_Repository &operator= (const TAO_Service_Type_Repository &);
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository&&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
 
   /// Lock with which to serialize access to the service type map.
   ACE_Lock *lock_;
