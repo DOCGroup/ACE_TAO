@@ -44,10 +44,10 @@ class TAO_Event_Serv_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH
 {
 public:
   /// Constructor
-  TAO_CEC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0);
+  TAO_CEC_Dispatching_Task (ACE_Thread_Manager *thr_manager = nullptr);
 
   /// Process the events in the queue.
-  virtual int svc ();
+  int svc () override;
 
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
                      CORBA::Any& event);
@@ -71,14 +71,14 @@ class TAO_Event_Serv_Export TAO_CEC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   /// Constructor, it will allocate its own data block
-  TAO_CEC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
+  TAO_CEC_Dispatch_Command (ACE_Allocator *mb_allocator = nullptr);
 
   /// Constructor, it assumes ownership of the data block
   TAO_CEC_Dispatch_Command (ACE_Data_Block*,
-                           ACE_Allocator *mb_allocator = 0);
+                           ACE_Allocator *mb_allocator = nullptr);
 
   /// Destructor
-  virtual ~TAO_CEC_Dispatch_Command ();
+  ~TAO_CEC_Dispatch_Command () override;
 
   /// Command callback
   virtual int execute () = 0;
@@ -90,7 +90,7 @@ class TAO_Event_Serv_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispa
 {
 public:
   /// Constructor
-  TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
+  TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
 
   /// Command callback
   int execute () override;
