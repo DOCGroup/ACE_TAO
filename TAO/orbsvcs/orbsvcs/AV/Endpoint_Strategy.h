@@ -78,7 +78,7 @@ public:
   TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Process_Strategy ();
+  ~TAO_AV_Endpoint_Process_Strategy () override;
 
   /// creates a new child process, and waits on a semaphore
   /// until the child process has finished creating the endpoints
@@ -127,15 +127,15 @@ public:
   TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Process_Strategy_A ();
+  ~TAO_AV_Endpoint_Process_Strategy_A () override;
 
 protected:
   /// Creates an "A" type stream endpoint, and a vdev
-  virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev);
+  int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
+                AVStreams::VDev_ptr &vdev) override;
 
   /// Gets the "A" type stream endpoint from the child process
-  virtual int get_stream_endpoint ();
+  int get_stream_endpoint () override;
 };
 
 // ----------------------------------------------------------------------
@@ -152,16 +152,16 @@ public:
   TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Process_Strategy_B ();
+  ~TAO_AV_Endpoint_Process_Strategy_B () override;
 
 protected:
   /// Creates a "B" type stream endpoint, and a vdev
-  virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev);
+  int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
+                AVStreams::VDev_ptr &vdev) override;
 
 
   /// Gets the object reference of the "B" type streamendpoint.
-  virtual int get_stream_endpoint ();
+  int get_stream_endpoint () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
