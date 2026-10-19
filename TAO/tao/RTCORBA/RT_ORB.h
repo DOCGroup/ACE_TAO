@@ -131,11 +131,11 @@ public:
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
                                   CORBA::Boolean no_delay,
-                                  CORBA::Boolean enable_network_priority);
+                                  CORBA::Boolean enable_network_priority) override;
 
   RTCORBA::UnixDomainProtocolProperties_ptr
   create_unix_domain_protocol_properties (CORBA::Long send_buffer_size,
-                                          CORBA::Long recv_buffer_size);
+                                          CORBA::Long recv_buffer_size) override;
 
   RTCORBA::SharedMemoryProtocolProperties_ptr
   create_shared_memory_protocol_properties (CORBA::Long send_buffer_size,
@@ -145,12 +145,12 @@ public:
                                             CORBA::Boolean no_delay,
                                             CORBA::Long preallocate_buffer_size,
                                             const char *mmap_filename,
-                                            const char *mmap_lockname);
+                                            const char *mmap_lockname) override;
 
   RTCORBA::UserDatagramProtocolProperties_ptr
   create_user_datagram_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Long recv_buffer_size,
-                                            CORBA::Boolean enable_network_priority);
+                                            CORBA::Boolean enable_network_priority) override;
 
   RTCORBA::StreamControlProtocolProperties_ptr
   create_stream_control_protocol_properties (CORBA::Long send_buffer_size,
@@ -158,7 +158,7 @@ public:
                                              CORBA::Boolean keep_alive,
                                              CORBA::Boolean dont_route,
                                              CORBA::Boolean no_delay,
-                                             CORBA::Boolean enable_network_priority);
+                                             CORBA::Boolean enable_network_priority) override;
 
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
   RTCORBA::ThreadpoolId
