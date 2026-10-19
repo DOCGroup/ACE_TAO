@@ -52,13 +52,13 @@ class TAO_LB_ObjectReferenceFactory
   /// Constructor
   TAO_LB_ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf,
-    const CORBA::StringSeq & object_groups,
-    const CORBA::StringSeq & repository_ids,
-    const char * location,
+    CORBA::StringSeq const & object_groups,
+    CORBA::StringSeq const & repository_ids,
+    char const * location,
     CORBA::ORB_ptr orb,
     CosLoadBalancing::LoadManager_ptr lm);
 
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ::CORBA::ValueBase * _copy_value () override;
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -67,9 +67,9 @@ class TAO_LB_ObjectReferenceFactory
    * PortableInterceptor::ObjectReferenceFactory interface.
    */
   //@{
-  virtual CORBA::Object_ptr make_object (
-      const char * repository_id,
-      const PortableInterceptor::ObjectId & id);
+  CORBA::Object_ptr make_object (
+      char const * repository_id,
+      PortableInterceptor::ObjectId const & id) override;
   //@}
 
   using Table = ACE_Hash_Map_Manager_Ex<
@@ -82,22 +82,27 @@ class TAO_LB_ObjectReferenceFactory
   using fcid_list = ACE_Array_Base<
     PortableGroup::GenericFactory::FactoryCreationId_var>;
 
+  TAO_LB_ObjectReferenceFactory (TAO_LB_ObjectReferenceFactory const &) = delete;
+  TAO_LB_ObjectReferenceFactory (TAO_LB_ObjectReferenceFactory &&) = delete;
+  TAO_LB_ObjectReferenceFactory & operator= (TAO_LB_ObjectReferenceFactory const &) = delete;
+  TAO_LB_ObjectReferenceFactory & operator= (TAO_LB_ObjectReferenceFactory &&) = delete;
+
 protected:
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management via
    * reference counting.
    */
-  ~TAO_LB_ObjectReferenceFactory ();
+  ~TAO_LB_ObjectReferenceFactory () override;
 
   /// Retrieve the object group reference for objects with the given
   /// RepositoryId.
-  CORBA::Boolean find_object_group (const char * repository_id,
+  CORBA::Boolean find_object_group (char const * repository_id,
                                     CORBA::ULong & index,
                                     PortableGroup::ObjectGroup_out object_group);
 
   /// Determine if object with given RepositoryId is load managed.
-  CORBA::Boolean load_managed_object (const char * repository_id,
+  CORBA::Boolean load_managed_object (char const * repository_id,
                                       CORBA::ULong & i);
 private:
   /// The old ObjectReferenceFactory used to create object references.
@@ -118,7 +123,7 @@ private:
    * The special string "CREATE" denotes that creation of a new object
    * group should be performed.
    */
-  const CORBA::StringSeq object_groups_;
+  CORBA::StringSeq const object_groups_;
 
   /// List of RepositoryIds for object that will be load
   /// managed/balanced.
@@ -127,7 +132,7 @@ private:
    * correspondence to the stringified object references found in the
    * object_groups_ member above.
    */
-  const CORBA::StringSeq repository_ids_;
+  CORBA::StringSeq const repository_ids_;
 
   /// The configured location for the server within which this
   /// ObjectReferenceFactory resides.
