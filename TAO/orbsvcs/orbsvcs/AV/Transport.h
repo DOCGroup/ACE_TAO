@@ -254,8 +254,8 @@ protected:
   ACE_CString flowname_;
 };
 
-typedef ACE_Unbounded_Set<TAO_AV_Connector*> TAO_AV_ConnectorSet;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Connector*> TAO_AV_ConnectorSetItor;
+using TAO_AV_ConnectorSet = ACE_Unbounded_Set<TAO_AV_Connector*>;
+using TAO_AV_ConnectorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
 
 /**
  * @class TAO_AV_Connector_Registry
@@ -283,8 +283,8 @@ protected:
   TAO_AV_ConnectorSet connectors_;
 };
 
-typedef ACE_Unbounded_Set<TAO_AV_Acceptor*> TAO_AV_AcceptorSet;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*> TAO_AV_AcceptorSetItor;
+using TAO_AV_AcceptorSet = ACE_Unbounded_Set<TAO_AV_Acceptor*>;
+using TAO_AV_AcceptorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
 
 /**
  * @class TAO_AV_Acceptor_Registry

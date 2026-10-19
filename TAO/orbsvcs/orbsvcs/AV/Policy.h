@@ -98,7 +98,7 @@ protected:
   int value_;
 };
 
-typedef TAO::unbounded_value_sequence<TAO_AV_Policy*> TAO_AV_PolicyList;
+using TAO_AV_PolicyList = TAO::unbounded_value_sequence<TAO_AV_Policy*>;
 
 class TAO_AV_Protocol_Object;
 class TAO_AV_Transport;

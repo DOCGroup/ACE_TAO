@@ -29,12 +29,13 @@ extern "C" {
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Unbounded_Set <ACE_CString> Interface_Seq;
-typedef ACE_Unbounded_Set_Iterator <ACE_CString> Interface_Seq_Itor;
+using Interface_Seq = ACE_Unbounded_Set<ACE_CString>;
+using Interface_Seq_Itor = ACE_Unbounded_Set_Iterator<ACE_CString>;
 
-typedef ACE_Hash_Map_Manager <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map;
-typedef ACE_Hash_Map_Entry <ACE_CString,Interface_Seq> Secondary_Addr_Map_Entry;
-typedef ACE_Hash_Map_Iterator <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map_Iterator;
+using Secondary_Addr_Map = ACE_Hash_Map_Manager<ACE_CString, Interface_Seq, ACE_Null_Mutex>;
+using Secondary_Addr_Map_Entry = ACE_Hash_Map_Entry<ACE_CString, Interface_Seq>;
+using Secondary_Addr_Map_Iterator =
+  ACE_Hash_Map_Iterator<ACE_CString, Interface_Seq, ACE_Null_Mutex>;
 
 /**
  * @class TAO_AV_SCTP_SEQ_Factory

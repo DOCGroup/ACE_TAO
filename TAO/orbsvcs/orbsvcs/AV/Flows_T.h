@@ -83,9 +83,9 @@ public:
 
 protected:
   ACE_DLList <TAO_FlowProducer> producer_list_;
-  typedef ACE_DLList_Iterator <TAO_FlowProducer> PRODUCER_LIST_ITERATOR;
+  using PRODUCER_LIST_ITERATOR = ACE_DLList_Iterator<TAO_FlowProducer>;
   ACE_DLList <TAO_FlowConsumer> consumer_list_;
-  typedef ACE_DLList_Iterator <TAO_FlowConsumer> CONSUMER_LIST_ITERATOR;
+  using CONSUMER_LIST_ITERATOR = ACE_DLList_Iterator<TAO_FlowConsumer>;
   CORBA::String_var flowname_;
 };
 
