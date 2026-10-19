@@ -19,9 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Methods to deal with ACE_Hash_Map_Manager.
 
-CosProperty_Hash_Key::CosProperty_Hash_Key ()
-{
-}
+CosProperty_Hash_Key::CosProperty_Hash_Key () = default;
 
 CosProperty_Hash_Key::CosProperty_Hash_Key (char const * & name)
   : pname_ (CORBA::string_dup (name))
@@ -58,9 +56,7 @@ CosProperty_Hash_Key::~CosProperty_Hash_Key ()
 
 //======================================================================
 
-CosProperty_Hash_Value::CosProperty_Hash_Value ()
-{
-}
+CosProperty_Hash_Value::CosProperty_Hash_Value () = default;
 
 CosProperty_Hash_Value::CosProperty_Hash_Value (CORBA::Any const & any,
                                                 CosPropertyService::PropertyModeType const & mode)
@@ -81,9 +77,7 @@ CosProperty_Hash_Value::~CosProperty_Hash_Value ()
 //======================================================================
 
 // Constructor.
-TAO_PropertySetFactory::TAO_PropertySetFactory ()
-{
-}
+TAO_PropertySetFactory::TAO_PropertySetFactory () = default;
 
 // Destructor.
 TAO_PropertySetFactory::~TAO_PropertySetFactory ()
@@ -212,9 +206,7 @@ TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory ()
 //======================================================================
 
 // Constrctor.
-TAO_PropertySetDefFactory::TAO_PropertySetDefFactory ()
-{
-}
+TAO_PropertySetDefFactory::TAO_PropertySetDefFactory () = default;
 
 // Returns a  new TAO_PropertySetDef object. "The property setdef
 // returned  will *not* have any initial properties."
@@ -331,9 +323,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (
 // Makes default sized hash_table_. All the sequences are set the max
 // length as 0.
 
-TAO_PropertySet::TAO_PropertySet ()
-{
-}
+TAO_PropertySet::TAO_PropertySet () = default;
 
 // Init values that the PropertySetFactory will want to specify. Write
 // the allowed properties in the Hash Table with *fixed-normal* mode.
@@ -1033,9 +1023,7 @@ TAO_PropertySet::is_property_defined (char const *property_name)
 
 // Makes default sized hash_table_.
 
-TAO_PropertySetDef::TAO_PropertySetDef ()
-{
-}
+TAO_PropertySetDef::TAO_PropertySetDef () = default;
 
 // Constructor that the factory uses.
 
