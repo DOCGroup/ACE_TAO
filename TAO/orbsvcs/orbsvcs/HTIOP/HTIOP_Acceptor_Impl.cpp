@@ -30,7 +30,7 @@ TAO::HTIOP::Creation_Strategy<SVC_HANDLER>::Creation_Strategy (TAO_ORB_Core *orb
 template <class SVC_HANDLER> int
 TAO::HTIOP::Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
-  if (sh == 0)
+  if (sh == nullptr)
     {
       ACE_NEW_RETURN (sh,
                       SVC_HANDLER (this->orb_core_),

@@ -52,25 +52,25 @@ namespace TAO
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
     public:
-      Completion_Handler (ACE_Thread_Manager* t = 0);
+      Completion_Handler (ACE_Thread_Manager* t = nullptr);
       /// Constructor.
       Completion_Handler (TAO_ORB_Core *orb_core,
                           CORBA::Boolean = false);
 
       /// Destructor.
-      ~Completion_Handler ();
+      ~Completion_Handler () override;
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected. Argument is unused.
-      virtual int open (void *);
+      int open (void *) override;
 
       //@{
       /** @name Event Handler overloads
        */
-      virtual int handle_input (ACE_HANDLE);
+      int handle_input (ACE_HANDLE) override;
 
-      virtual int resume_handler ();
-      virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+      int resume_handler () override;
+      int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
       //@}
 
     private:

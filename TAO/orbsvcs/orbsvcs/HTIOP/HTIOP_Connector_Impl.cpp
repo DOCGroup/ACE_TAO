@@ -20,7 +20,7 @@ Connect_Creation_Strategy (ACE_Thread_Manager* t,
 template <class SVC_HANDLER> int
 TAO::HTIOP::Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
-  if (sh == 0)
+  if (sh == nullptr)
     ACE_NEW_RETURN (sh,
                     SVC_HANDLER (this->orb_core_,
                                  this->arg_),

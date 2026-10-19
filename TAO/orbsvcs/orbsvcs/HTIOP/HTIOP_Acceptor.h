@@ -66,7 +66,7 @@ namespace TAO
                 int is_inside);
 
       /// Destructor.
-      ~Acceptor ();
+      ~Acceptor () override;
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
@@ -84,31 +84,31 @@ namespace TAO
        * The TAO::Acceptor methods, check the documentation in
        * Transport_Acceptor.h for details.
        */
-      virtual int open (TAO_ORB_Core *orb_core,
+      int open (TAO_ORB_Core *orb_core,
                         ACE_Reactor *reactor,
                         int version_major,
                         int version_minor,
                         const char *address,
-                        const char *options = 0);
+                        const char *options = nullptr) override;
 
-      virtual int open_default (TAO_ORB_Core *orb_core,
+      int open_default (TAO_ORB_Core *orb_core,
                                 ACE_Reactor *reactor,
                                 int version_major,
                                 int version_minor,
-                                const char *options = 0);
+                                const char *options = nullptr) override;
 
-      virtual int close ();
+      int close () override;
 
-      virtual int create_profile (const TAO::ObjectKey &object_key,
+      int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
-                                  CORBA::Short priority);
+                                  CORBA::Short priority) override;
 
-      virtual int is_collocated (const TAO_Endpoint *endpoint);
+      int is_collocated (const TAO_Endpoint *endpoint) override;
 
-      virtual CORBA::ULong endpoint_count ();
+      CORBA::ULong endpoint_count () override;
 
-      virtual int object_key (IOP::TaggedProfile &profile,
-                              TAO::ObjectKey &key);
+      int object_key (IOP::TaggedProfile &profile,
+                              TAO::ObjectKey &key) override;
 
       /**
        * Set the host name for the given addr.
@@ -120,7 +120,7 @@ namespace TAO
       int hostname (TAO_ORB_Core *orb_core,
                     ACE_INET_Addr &addr,
                     char *&host,
-                    const char *specified_hostname = 0);
+                    const char *specified_hostname = nullptr);
 
       /**
        * Set the host name for the given address using the dotted decimal

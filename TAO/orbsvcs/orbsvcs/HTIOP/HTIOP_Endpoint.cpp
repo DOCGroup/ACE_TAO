@@ -21,7 +21,7 @@ TAO::HTIOP::Endpoint::Endpoint (const ACE::HTBP::Addr &addr,
     htid_ (),
     object_addr_ (addr),
     object_addr_set_ (0),
-    next_ (0)
+    next_ (nullptr)
 {
   this->set (addr, use_dotted_decimal_addresses);
 }
@@ -36,11 +36,11 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     htid_ (),
     object_addr_ (addr),
     object_addr_set_ (0),
-    next_ (0)
+    next_ (nullptr)
 {
-  if (host != 0)
+  if (host != nullptr)
     this->host_ = host;
-  if (htid != 0)
+  if (htid != nullptr)
     this->htid_ = htid;
 }
 
@@ -51,7 +51,7 @@ TAO::HTIOP::Endpoint::Endpoint ()
     htid_ (),
     object_addr_ (),
     object_addr_set_ (0),
-    next_ (0)
+    next_ (nullptr)
 {
 }
 
@@ -64,11 +64,11 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     htid_ (),
     object_addr_ (),
     object_addr_set_ (0),
-    next_ (0)
+    next_ (nullptr)
 {
-  if (host != 0)
+  if (host != nullptr)
     this->host_ = host;
-  if (htid != 0)
+  if (htid != nullptr)
     this->htid_ = htid;
 }
 
@@ -86,7 +86,7 @@ TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
       const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
+      if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
@@ -172,7 +172,7 @@ TAO::HTIOP::Endpoint::duplicate ()
   // using this method for some other purpose later, this will be a
   // seed for bugs.
 
-  TAO::HTIOP::Endpoint *endpoint = 0;
+  TAO::HTIOP::Endpoint *endpoint = nullptr;
 
   ACE_NEW_RETURN (endpoint,
                   TAO::HTIOP::Endpoint (this->host_.in (),
@@ -192,7 +192,7 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 
   TAO::HTIOP::Endpoint *endpoint =
     dynamic_cast<TAO::HTIOP::Endpoint *> (endpt);
-  if (endpoint == 0)
+  if (endpoint == nullptr)
     return 0;
 
   if (this->htid_.in() && ACE_OS::strlen (this->htid_.in()))

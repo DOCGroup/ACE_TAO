@@ -82,7 +82,7 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO::HTIOP::Endpoint *htiop_endpoint =
     this->remote_endpoint (endpoint);
 
-  if (htiop_endpoint == 0)
+  if (htiop_endpoint == nullptr)
     return -1;
 
    const ACE::HTBP::Addr &remote_address =
@@ -135,8 +135,8 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO::HTIOP::Endpoint *htiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
 
-  if (htiop_endpoint == 0)
-    return 0;
+  if (htiop_endpoint == nullptr)
+    return nullptr;
 
 
   ACE::HTBP::Session_Id_t session_id;
@@ -158,7 +158,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   if (proxy_port == 0)
-    return 0;
+    return nullptr;
 
   session_id.peer_ = htiop_endpoint->object_addr ();
   session_id.id_ = ACE::HTBP::Session::next_session_id();
@@ -185,17 +185,17 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   // This is where we need to set the ACE::HTBP::Stream to the connection
   // handler.
-  TAO::HTIOP::Connection_Handler *svc_handler = 0;
+  TAO::HTIOP::Connection_Handler *svc_handler = nullptr;
 
   // In more traditional connectors, the following code would be part of a
   // strategized connector's connect() method. This include making the
   // handler, attaching the session, and activating the handler.
 
   // Instantiate a ACE::HTBP::Session
-  ACE::HTBP::Session *session = 0;
+  ACE::HTBP::Session *session = nullptr;
   if (ACE::HTBP::Session::find_session (session_id, session) == -1)
     {
-      ACE_INET_Addr *proxy = 0;
+      ACE_INET_Addr *proxy = nullptr;
       ACE_NEW_RETURN (proxy,
                       ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
                       0);
@@ -329,7 +329,7 @@ TAO::HTIOP::Connector::create_profile (TAO_InputCDR& cdr)
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;
@@ -346,7 +346,7 @@ TAO::HTIOP::Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO::HTIOP::Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -397,8 +397,8 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
   TAO::HTIOP::Endpoint *htiop_endpoint =
     dynamic_cast<TAO::HTIOP::Endpoint *> (endpoint );
 
- if (htiop_endpoint == 0)
-    return 0;
+ if (htiop_endpoint == nullptr)
+    return nullptr;
 
   return htiop_endpoint;
 }
