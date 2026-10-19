@@ -49,13 +49,13 @@ public:
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
-      create_dispatching (TAO_EC_Event_Channel_Base*);
+      create_dispatching (TAO_EC_Event_Channel_Base*) override;
 
   virtual TAO_EC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*);
+      create_proxy_push_supplier (TAO_EC_Event_Channel_Base*) override;
 
   virtual TAO_EC_ProxyPushConsumer*
-      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*);
+      create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) override;
 };
 
 extern unsigned long TAO_EC_TPC_debug_level;
