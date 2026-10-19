@@ -5,16 +5,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Hash_LogStore::TAO_Hash_LogStore(TAO_LogMgr_i* logmgr_i)
+TAO_Hash_LogStore::TAO_Hash_LogStore (TAO_LogMgr_i * logmgr_i)
   : next_id_ (0),
     logmgr_i_ (logmgr_i)
 {
 }
 
 
-TAO_Hash_LogStore::~TAO_Hash_LogStore()
-{
-}
+TAO_Hash_LogStore::~TAO_Hash_LogStore () = default;
 
 
 DsLogAdmin::LogList*
@@ -41,7 +39,7 @@ TAO_Hash_LogStore::list_logs ()
   HASHMAP::ITERATOR iter (hash_map_);
 
   // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry = 0;
+  HASHMAP::ENTRY *hash_entry = nullptr;
 
   for (CORBA::ULong i = 0; i < len; i++)
     {
@@ -77,7 +75,7 @@ TAO_Hash_LogStore::list_logs_by_id ()
   HASHMAP::ITERATOR iter (hash_map_);
 
   // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry = 0;
+  HASHMAP::ENTRY *hash_entry = nullptr;
 
   for (CORBA::ULong i = 0; i < len; i++)
     {
@@ -129,7 +127,7 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
                             lock_,
                             CORBA::INTERNAL ());
 
-  TAO_Hash_LogRecordStore* recordstore = 0;
+  TAO_Hash_LogRecordStore *recordstore = nullptr;
 
   int retval = this->hash_map_.unbind (id, recordstore);
   if (retval == 0)
@@ -142,10 +140,10 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
 
 
 void
-TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
-                                      CORBA::ULongLong max_size,
-                                      const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-                                      DsLogAdmin::LogId_out id_out)
+TAO_Hash_LogStore::create (DsLogAdmin::LogFullActionType full_action,
+                           CORBA::ULongLong max_size,
+                           DsLogAdmin::CapacityAlarmThresholdList const * thresholds,
+                           DsLogAdmin::LogId_out id_out)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -158,7 +156,7 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
     ;
   id_out = id;
 
-  TAO_Hash_LogRecordStore* impl = 0;
+  TAO_Hash_LogRecordStore *impl = nullptr;
   ACE_NEW_THROW_EX (impl,
                     TAO_Hash_LogRecordStore (this->logmgr_i_,
                                              id,
@@ -181,9 +179,9 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
 
 void
 TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
-                                               DsLogAdmin::LogFullActionType full_action,
-                                               CORBA::ULongLong max_size,
-                                               const DsLogAdmin::CapacityAlarmThresholdList* thresholds)
+                                   DsLogAdmin::LogFullActionType full_action,
+                                   CORBA::ULongLong max_size,
+                                   DsLogAdmin::CapacityAlarmThresholdList const * thresholds)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -195,7 +193,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
       throw DsLogAdmin::LogIdAlreadyExists ();
     }
 
-  TAO_Hash_LogRecordStore* impl = 0;
+  TAO_Hash_LogRecordStore *impl = nullptr;
   ACE_NEW_THROW_EX (impl,
                     TAO_Hash_LogRecordStore (this->logmgr_i_,
                                              id,
@@ -216,7 +214,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
 }
 
 
-TAO_LogRecordStore*
+TAO_LogRecordStore *
 TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id)
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
@@ -224,11 +222,11 @@ TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id)
                            lock_,
                            CORBA::INTERNAL ());
 
-  TAO_Hash_LogRecordStore* recordstore = 0;
+  TAO_Hash_LogRecordStore *recordstore = nullptr;
 
   if (hash_map_.find (id, recordstore) != 0)
     {
-      return 0;
+      return nullptr;
     }
 
   return recordstore;

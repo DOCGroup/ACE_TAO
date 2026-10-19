@@ -41,43 +41,38 @@ class TAO_Log_Serv_Export TAO_Hash_LogStore
 {
 public:
   /// Constructor.
-  TAO_Hash_LogStore (TAO_LogMgr_i* mgr);
+  TAO_Hash_LogStore (TAO_LogMgr_i * mgr);
 
   /// Destructor.
-  virtual ~TAO_Hash_LogStore ();
+  ~TAO_Hash_LogStore () override;
 
 
   /// Lists all logs created by the log factory.
-  virtual DsLogAdmin::LogList *
-    list_logs ();
+  DsLogAdmin::LogList *list_logs () override;
 
   /// Lists all log ids.
-  virtual DsLogAdmin::LogIdList *
-    list_logs_by_id ();
+  DsLogAdmin::LogIdList *list_logs_by_id () override;
 
   /// Returns a reference to the log with the supplied id.
-  virtual DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr find_log (DsLogAdmin::LogId id) override;
 
   /// Returns true if log exists, otherwise false
-  virtual bool exists (DsLogAdmin::LogId id);
+  bool exists (DsLogAdmin::LogId id) override;
 
   /// Remove the given entry from the hash table.
-  virtual int remove (DsLogAdmin::LogId id);
+  int remove (DsLogAdmin::LogId id) override;
 
   /// @brief Create log
-  virtual void
-    create (DsLogAdmin::LogFullActionType full_action,
-            CORBA::ULongLong max_size,
-            const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-            DsLogAdmin::LogId_out id_out);
+  void create (DsLogAdmin::LogFullActionType full_action,
+               CORBA::ULongLong max_size,
+               DsLogAdmin::CapacityAlarmThresholdList const * thresholds,
+               DsLogAdmin::LogId_out id_out) override;
 
   /// @brief Create log
-  virtual void
-    create_with_id (DsLogAdmin::LogId id,
-                    DsLogAdmin::LogFullActionType full_action,
-                    CORBA::ULongLong max_size,
-                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
+  void create_with_id (DsLogAdmin::LogId id,
+                       DsLogAdmin::LogFullActionType full_action,
+                       CORBA::ULongLong max_size,
+                       DsLogAdmin::CapacityAlarmThresholdList const * thresholds) override;
 
   /// @brief Get log record store
   ///
@@ -85,10 +80,14 @@ public:
   ///
   /// @param id log id
   ///
-  virtual TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id);
+  TAO_LogRecordStore *get_log_record_store (DsLogAdmin::LogId id) override;
 
 private:
+  TAO_Hash_LogStore (TAO_Hash_LogStore const &) = delete;
+  TAO_Hash_LogStore (TAO_Hash_LogStore &&) = delete;
+  TAO_Hash_LogStore &operator= (TAO_Hash_LogStore const &) = delete;
+  TAO_Hash_LogStore &operator= (TAO_Hash_LogStore &&) = delete;
+
   ACE_SYNCH_RW_MUTEX  lock_;
 
   /// Define the HASHMAP.
@@ -103,7 +102,7 @@ private:
   /// taken by create_with_id().
   DsLogAdmin::LogId     next_id_;
 
-  TAO_LogMgr_i*         logmgr_i_;
+  TAO_LogMgr_i *         logmgr_i_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
