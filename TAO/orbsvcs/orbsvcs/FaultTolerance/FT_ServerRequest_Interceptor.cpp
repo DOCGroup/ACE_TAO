@@ -15,8 +15,8 @@ namespace TAO
   FT_ServerRequest_Interceptor::FT_ServerRequest_Interceptor ()
     : object_group_ref_version_ (0)
     , is_primary_ (false)
-    , iogr_ (0)
-    , orb_ (0)
+    , iogr_ (nullptr)
+    , orb_ (nullptr)
   {
   }
 
@@ -149,7 +149,7 @@ namespace TAO
   FT_ServerRequest_Interceptor::update_iogr (
       PortableInterceptor::ServerRequestInfo_ptr ri)
   {
-    if (this->orb_.in () == 0)
+    if (this->orb_.in () == nullptr)
       {
         CORBA::String_var orb_id =
           ri->orb_id ();

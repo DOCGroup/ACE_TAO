@@ -11,7 +11,7 @@ TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
 
 ACE_INLINE
 TAO_FT_IOGR_Property::TAO_FT_IOGR_Property ()
-  :ft_group_tagged_component_ (0)
+  :ft_group_tagged_component_ (nullptr)
 {
 }
 
