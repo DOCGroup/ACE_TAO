@@ -9,12 +9,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 TAO_Trader (TAO_Trader_Base::Trader_Components components)
+  : ifs_ {}
 {
   // @@ Seth, we need a way to propagate the exception out.  This will
   // not work on platforms using environment variable.
-  for (int i = LOOKUP_IF; i <= LINK_IF; i++)
-    this->ifs_[i] = 0;
-
   if (ACE_BIT_ENABLED (components, LOOKUP))
     {
       TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup;
@@ -85,7 +83,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader ()
 
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
     {
-      if (this->ifs_[i] != 0)
+      if (this->ifs_[i] != nullptr)
         {
           try
             {
