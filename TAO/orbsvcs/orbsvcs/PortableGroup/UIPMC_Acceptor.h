@@ -94,7 +94,7 @@ public:
   int hostname (TAO_ORB_Core *orb_core,
                 ACE_INET_Addr &addr,
                 char *&host,
-                const char *specified_hostname = 0);
+                const char *specified_hostname = nullptr);
 
   /**
    * Set the host name for the given address using the dotted decimal

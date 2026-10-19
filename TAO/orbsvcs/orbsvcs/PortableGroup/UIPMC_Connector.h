@@ -62,7 +62,7 @@ protected:
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
+                                  ACE_Time_Value *timeout = nullptr);
 
   virtual TAO_Profile * make_profile ();
 

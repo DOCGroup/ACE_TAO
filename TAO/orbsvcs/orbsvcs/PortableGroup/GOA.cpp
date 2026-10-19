@@ -94,7 +94,7 @@ TAO_GOA::new_POA (const String &name,
                   TAO_ORB_Core &orb_core,
                   TAO_Object_Adapter *object_adapter)
 {
-  TAO_GOA *poa = 0;
+  TAO_GOA *poa = nullptr;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_GOA (name,

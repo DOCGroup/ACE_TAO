@@ -38,7 +38,7 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_co
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
     send_hi_water_mark_ (0u)
 {
-  TAO_UIPMC_Transport* specific_transport = 0;
+  TAO_UIPMC_Transport* specific_transport = nullptr;
   ACE_NEW(specific_transport,
           TAO_UIPMC_Transport (this, orb_core));
 
@@ -122,7 +122,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph != nullptr)
     {
       try
         {
@@ -505,7 +505,7 @@ TAO_UIPMC_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
       TAO_Protocols_Hooks *tph =
         this->orb_core ()->get_protocols_hooks ();
 
-      if (tph != 0 )
+      if (tph != nullptr)
         {
           CORBA::Long codepoint =
             tph->get_dscp_codepoint ();

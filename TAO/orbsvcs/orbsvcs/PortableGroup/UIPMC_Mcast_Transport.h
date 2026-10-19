@@ -61,7 +61,7 @@ public:
 
   /// Look for the documentation in Transport.h.
   virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0);
+                            ACE_Time_Value *max_wait_time = nullptr);
 
 protected:
   /** @name Overridden Template Methods

@@ -50,7 +50,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_Connection_Handler
 {
 public:
-  TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = nullptr);
 
   /// Constructor. arg parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
@@ -79,7 +79,7 @@ public:
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+                              const void *act = nullptr);
   virtual int open (void *);
   //@}
 

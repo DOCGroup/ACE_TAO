@@ -48,7 +48,7 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_UIPMC_Endpoint *uipmc_endpoint =
     dynamic_cast<TAO_UIPMC_Endpoint *> (endpoint);
 
-  if (uipmc_endpoint == 0)
+  if (uipmc_endpoint == nullptr)
     return -1;
 
   const ACE_INET_Addr &remote_address =
@@ -87,7 +87,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO_UIPMC_Endpoint *uipmc_endpoint =
     dynamic_cast<TAO_UIPMC_Endpoint *> (desc.endpoint ());
 
-  if (uipmc_endpoint == 0)
+  if (uipmc_endpoint == nullptr)
     return 0;
 
   const ACE_INET_Addr &remote_address =
@@ -116,7 +116,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 #endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
 
-  TAO_UIPMC_Connection_Handler *svc_handler = 0;
+  TAO_UIPMC_Connection_Handler *svc_handler = nullptr;
 
   ACE_NEW_RETURN (svc_handler,
                   TAO_UIPMC_Connection_Handler (this->orb_core ()),
@@ -138,7 +138,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   svc_handler->addr (remote_address);
 
   int retval= 0;
-  while (uipmc_endpoint != 0)
+  while (uipmc_endpoint != nullptr)
     {
       if (uipmc_endpoint->is_preferred_network ())
         {
@@ -228,7 +228,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO_Transport *transport = svc_handler->transport ();
 
   // In case of errors transport is zero
-  if (transport == 0)
+  if (transport == nullptr)
     {
       svc_handler->close ();
 
@@ -296,7 +296,7 @@ TAO_UIPMC_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_UIPMC_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (

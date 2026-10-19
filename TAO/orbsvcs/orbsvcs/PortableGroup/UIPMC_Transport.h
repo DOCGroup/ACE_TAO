@@ -63,7 +63,7 @@ protected:
   /// Shouldn't ever be called on the client side (read len bytes into buf).
   virtual ssize_t recv (char *buf,
                         size_t len,
-                        ACE_Time_Value const *s = 0);
+                        ACE_Time_Value const *s = nullptr);
 
   virtual int register_handler ();
 
@@ -77,11 +77,11 @@ public:
                             ACE_Time_Value *max_wait_time);
 
   virtual int send_message (TAO_OutputCDR &stream,
-                            TAO_Stub *stub = 0,
-                            TAO_ServerRequest *request = 0,
+                            TAO_Stub *stub = nullptr,
+                            TAO_ServerRequest *request = nullptr,
                             TAO_Message_Semantics message_semantics =
                               TAO_Message_Semantics (),
-                            ACE_Time_Value *max_time_wait = 0);
+                            ACE_Time_Value *max_time_wait = nullptr);
   //@}
 
 private:

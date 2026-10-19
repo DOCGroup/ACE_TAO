@@ -86,7 +86,7 @@ TAO_UIPMC_Acceptor::open (
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -96,7 +96,7 @@ TAO_UIPMC_Acceptor::open (
                         -1);
     }
 
-  if (address == 0)
+  if (address == nullptr)
     return -1;
 
   if (major >= 0 && minor >= 0)
@@ -109,7 +109,7 @@ TAO_UIPMC_Acceptor::open (
   ACE_INET_Addr addr;
 
   const char *port_separator_loc = ACE_OS::strchr (address, ':');
-  const char *specified_hostname = 0;
+  const char *specified_hostname = nullptr;
   char tmp_host[MAXHOSTNAMELEN + 1];
 
 #if defined (ACE_HAS_IPV6)
@@ -125,7 +125,7 @@ TAO_UIPMC_Acceptor::open (
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
       const char *cp_pos = ACE_OS::strchr(address, ']');
-      if (cp_pos == 0)
+      if (cp_pos == nullptr)
         {
           // No valid IPv6 address specified.
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -155,7 +155,7 @@ TAO_UIPMC_Acceptor::open (
     }
 
   // Both host and port have to be specified.
-  if (port_separator_loc == 0)
+  if (port_separator_loc == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open, ")
@@ -279,7 +279,7 @@ TAO_UIPMC_Acceptor::open_i (
     } // End loop replacing all preferred_interfaces tokens.
 
   // Create our connection handler and pass it our configurtion options.
-  TAO_UIPMC_Mcast_Connection_Handler *connection_handler = 0;
+  TAO_UIPMC_Mcast_Connection_Handler *connection_handler = nullptr;
   ACE_NEW_RETURN (connection_handler,
                   TAO_UIPMC_Mcast_Connection_Handler (this->orb_core_),
                   -1);
@@ -380,7 +380,7 @@ TAO_UIPMC_Acceptor::object_key (
 int
 TAO_UIPMC_Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in
