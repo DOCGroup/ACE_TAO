@@ -55,38 +55,43 @@ namespace TAO
     public:
       /*! Constructor */
       AccessDecision ();
-      ~AccessDecision ();
+      ~AccessDecision () override;
 
-      virtual ::CORBA::Boolean access_allowed (
-        const ::SecurityLevel2::CredentialsList & cred_list,
+      ::CORBA::Boolean access_allowed (
+        ::SecurityLevel2::CredentialsList const & cred_list,
         ::CORBA::Object_ptr target,
-        const char * operation_name,
-        const char * target_interface_name);
+        char const * operation_name,
+        char const * target_interface_name) override;
 
-      virtual ::CORBA::Boolean access_allowed_ex (
-          const char * orb_id,
-          const ::CORBA::OctetSeq & adapter_id,
-          const ::CORBA::OctetSeq & object_id,
-          const ::SecurityLevel2::CredentialsList & cred_list,
-          const char * operation_name,
-          ::CORBA::Boolean collocated_invocation);
+      ::CORBA::Boolean access_allowed_ex (
+          char const * orb_id,
+          ::CORBA::OctetSeq const & adapter_id,
+          ::CORBA::OctetSeq const & object_id,
+          ::SecurityLevel2::CredentialsList const & cred_list,
+          char const * operation_name,
+          ::CORBA::Boolean collocated_invocation) override;
 
-      virtual ::CORBA::Boolean default_decision ();
-      virtual void default_decision (::CORBA::Boolean d);
+      ::CORBA::Boolean default_decision () override;
+      void default_decision (::CORBA::Boolean d) override;
 
-      virtual ::CORBA::Boolean default_collocated_decision ();
-      virtual void default_collocated_decision (::CORBA::Boolean d);
+      ::CORBA::Boolean default_collocated_decision () override;
+      void default_collocated_decision (::CORBA::Boolean d) override;
 
-      virtual void add_object (const char * orbid,
-                               const ::CORBA::OctetSeq & adapter_id,
-                               const ::CORBA::OctetSeq & object_id,
-                               ::CORBA::Boolean allow_insecure_access);
+      void add_object (char const * orbid,
+                       ::CORBA::OctetSeq const & adapter_id,
+                       ::CORBA::OctetSeq const & object_id,
+                       ::CORBA::Boolean allow_insecure_access) override;
 
-      virtual void remove_object (const char * orbid,
-                                  const ::CORBA::OctetSeq & adapter_id,
-                                  const ::CORBA::OctetSeq & object_id);
+      void remove_object (char const * orbid,
+                          ::CORBA::OctetSeq const & adapter_id,
+                          ::CORBA::OctetSeq const & object_id) override;
 
     private:
+      AccessDecision (AccessDecision const &) = delete;
+      AccessDecision (AccessDecision &&) = delete;
+      AccessDecision &operator= (AccessDecision const &) = delete;
+      AccessDecision &operator= (AccessDecision &&) = delete;
+
       /*!
        * This is the default value that's returned from access_allowed()
        * when the access table doesn't contain an entry for the reference.
@@ -120,11 +125,11 @@ namespace TAO
 
         // operations/methods necessary for functors in HashMap; might
         // need to add operator< if we decide to use an RB_Tree
-        bool operator== (const ReferenceKeyType& other) const;
+        bool operator== (ReferenceKeyType const & other) const;
         CORBA::ULong hash() const;
 
         // operator kind of like a "toString()" for debug statements
-        operator const char * () const;
+        operator char const * () const;
       };
       using OBJECT_KEY = ReferenceKeyType;
       // This is typedef'd because we might try to do something fancier
@@ -159,8 +164,8 @@ namespace TAO
       //
       // This is the private implementation that is common to both
       // access_allowed and access_allowed_ex.
-      ::CORBA::Boolean access_allowed_i (OBJECT_KEY& key,
-                                         const char *operation_name,
+      ::CORBA::Boolean access_allowed_i (OBJECT_KEY & key,
+                                         char const * operation_name,
                                          CORBA::Boolean collocated = false);
     };
 
@@ -185,15 +190,15 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual ::Security::MechandOptionsList* supported_mechanisms ();
-      virtual SecurityLevel2::CredentialsList* own_credentials ();
-      virtual SecurityLevel2::RequiredRights_ptr required_rights_object ();
-      virtual SecurityLevel2::PrincipalAuthenticator_ptr principal_authenticator ();
-      virtual SecurityLevel2::AccessDecision_ptr access_decision ();
-      virtual SecurityLevel2::AuditDecision_ptr audit_decision ();
-      virtual SecurityLevel2::TargetCredentials_ptr get_target_credentials (CORBA::Object_ptr o);
-      virtual void remove_own_credentials (SecurityLevel2::Credentials_ptr creds);
-      virtual CORBA::Policy_ptr get_security_policy (CORBA::PolicyType policy_type);
+      ::Security::MechandOptionsList * supported_mechanisms () override;
+      SecurityLevel2::CredentialsList * own_credentials () override;
+      SecurityLevel2::RequiredRights_ptr required_rights_object () override;
+      SecurityLevel2::PrincipalAuthenticator_ptr principal_authenticator () override;
+      SecurityLevel2::AccessDecision_ptr access_decision () override;
+      SecurityLevel2::AuditDecision_ptr audit_decision () override;
+      SecurityLevel2::TargetCredentials_ptr get_target_credentials (CORBA::Object_ptr o) override;
+      void remove_own_credentials (SecurityLevel2::Credentials_ptr creds) override;
+      CORBA::Policy_ptr get_security_policy (CORBA::PolicyType policy_type) override;
       //@}
 
     protected:
@@ -202,9 +207,14 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      virtual ~SecurityManager ();
+      ~SecurityManager () override;
 
     private:
+      SecurityManager (SecurityManager const &) = delete;
+      SecurityManager (SecurityManager &&) = delete;
+      SecurityManager &operator= (SecurityManager const &) = delete;
+      SecurityManager &operator= (SecurityManager &&) = delete;
+
       /// The ORB-specific SecurityLevel2::PrincipalAuthenticator
       /// reference.
       // Except we're not going to have one of these right now

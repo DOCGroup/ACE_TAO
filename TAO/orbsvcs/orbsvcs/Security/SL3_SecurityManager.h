@@ -56,23 +56,23 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredentialsCurator_ptr credentials_curator ();
+      SecurityLevel3::CredentialsCurator_ptr credentials_curator () override;
 
-      virtual SecurityLevel3::TargetCredentials_ptr get_target_credentials (
-          CORBA::Object_ptr the_object);
+      SecurityLevel3::TargetCredentials_ptr get_target_credentials (
+          CORBA::Object_ptr the_object) override;
 
-      virtual SecurityLevel3::ContextEstablishmentPolicy_ptr
+      SecurityLevel3::ContextEstablishmentPolicy_ptr
       create_context_estab_policy (
           SecurityLevel3::CredsDirective creds_directive,
-          const SecurityLevel3::OwnCredentialsList & creds_list,
+          SecurityLevel3::OwnCredentialsList const & creds_list,
           SecurityLevel3::FeatureDirective use_client_auth,
           SecurityLevel3::FeatureDirective use_target_auth,
           SecurityLevel3::FeatureDirective use_confidentiality,
-          SecurityLevel3::FeatureDirective use_integrity);
+          SecurityLevel3::FeatureDirective use_integrity) override;
 
-      virtual SecurityLevel3::ObjectCredentialsPolicy_ptr
+      SecurityLevel3::ObjectCredentialsPolicy_ptr
       create_object_creds_policy (
-          const SecurityLevel3::OwnCredentialsList & cred_list);
+          SecurityLevel3::OwnCredentialsList const & cred_list) override;
       //@}
 
     protected:
@@ -81,9 +81,14 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      virtual ~SecurityManager ();
+      ~SecurityManager () override;
 
     private:
+      SecurityManager (SecurityManager const &) = delete;
+      SecurityManager (SecurityManager &&) = delete;
+      SecurityManager &operator= (SecurityManager const &) = delete;
+      SecurityManager &operator= (SecurityManager &&) = delete;
+
       /// The ORB-specific SecurityLevel3::CredentialsCurator
       /// reference.
       SecurityLevel3::CredentialsCurator_var credentials_curator_;
