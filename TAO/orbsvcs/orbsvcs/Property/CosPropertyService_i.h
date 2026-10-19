@@ -117,27 +117,31 @@ public:
   TAO_PropertySetFactory ();
   // Constructor.
 
-  virtual ~TAO_PropertySetFactory ();
+  ~TAO_PropertySetFactory () override;
   // Destructor.
 
-  virtual CosPropertyService::PropertySet_ptr
-  create_propertyset ();
+  CosPropertyService::PropertySet_ptr create_propertyset () override;
   // Returns a  new TAO_PropertySet object. "The property set returned
   // will *not* have any initial properties."
 
-  virtual CosPropertyService::PropertySet_ptr
-  create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types,
-                                  const CosPropertyService::Properties &allowed_properties);
+  CosPropertyService::PropertySet_ptr
+  create_constrained_propertyset (CosPropertyService::PropertyTypes const & allowed_property_types,
+                                  CosPropertyService::Properties const & allowed_properties) override;
     // Allows a client to create a new TAO_PropertySet with specific
     // constraints. "All the properties will have *fixed-normal* modes".
 
-  virtual CosPropertyService::PropertySet_ptr
-  create_initial_propertyset (const CosPropertyService::Properties &initial_properties);
+  CosPropertyService::PropertySet_ptr
+  create_initial_propertyset (CosPropertyService::Properties const & initial_properties) override;
   // Allows a client to create a new TAO_PropertySet with specific
   // initial properties."All the properties will have *fixed-normal"
   // modes".
 
 private:
+  TAO_PropertySetFactory (TAO_PropertySetFactory const &) = delete;
+  TAO_PropertySetFactory (TAO_PropertySetFactory &&) = delete;
+  TAO_PropertySetFactory &operator= (TAO_PropertySetFactory const &) = delete;
+  TAO_PropertySetFactory &operator= (TAO_PropertySetFactory &&) = delete;
+
   TAO::unbounded_value_sequence<TAO_PropertySet*> propertyset_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
@@ -161,25 +165,29 @@ public:
   TAO_PropertySetDefFactory();
   // Constructor.
 
-  virtual ~TAO_PropertySetDefFactory ();
+  ~TAO_PropertySetDefFactory () override;
   // Destructor.
 
-  virtual CosPropertyService::PropertySetDef_ptr
-  create_propertysetdef ();
+  CosPropertyService::PropertySetDef_ptr create_propertysetdef () override;
   // Returns a new TAO_PropertySetDef object.
 
-  virtual CosPropertyService::PropertySetDef_ptr
-  create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types,
-                                     const CosPropertyService::PropertyDefs &allowed_property_defs);
+  CosPropertyService::PropertySetDef_ptr
+  create_constrained_propertysetdef (CosPropertyService::PropertyTypes const & allowed_property_types,
+                                     CosPropertyService::PropertyDefs const & allowed_property_defs) override;
   // Allows a client to create a new TAO_PropertySetDef with specific
   // constraints.
 
-  virtual CosPropertyService::PropertySetDef_ptr
-  create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs);
+  CosPropertyService::PropertySetDef_ptr
+  create_initial_propertysetdef (CosPropertyService::PropertyDefs const & initial_property_defs) override;
   // Allows a client to create a new TAO_PropertySetDef with specific
   // initial properties.
 
 private:
+  TAO_PropertySetDefFactory (TAO_PropertySetDefFactory const &) = delete;
+  TAO_PropertySetDefFactory (TAO_PropertySetDefFactory &&) = delete;
+  TAO_PropertySetDefFactory &operator= (TAO_PropertySetDefFactory const &) = delete;
+  TAO_PropertySetDefFactory &operator= (TAO_PropertySetDefFactory &&) = delete;
+
   TAO::unbounded_value_sequence<TAO_PropertySetDef*> propertysetdef_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
