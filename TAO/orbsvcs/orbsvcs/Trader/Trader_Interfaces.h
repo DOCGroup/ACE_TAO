@@ -521,56 +521,48 @@ public:
 
   /// Search card is the cardinality of the offers searched for
   /// constraint compliance.
-  virtual CORBA::ULong set_def_search_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_search_card (CORBA::ULong value);
+  CORBA::ULong set_def_search_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_search_card (CORBA::ULong value) override;
 
 
   /// Match card is the cardinality of offers found compliant with the
   /// constraints.
-  virtual CORBA::ULong set_def_match_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_match_card (CORBA::ULong value);
+  CORBA::ULong set_def_match_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_match_card (CORBA::ULong value) override;
 
   /// Return card is the cardinality of the offers returned from
   /// Lookup.
-  virtual CORBA::ULong set_def_return_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_return_card (CORBA::ULong value);
+  CORBA::ULong set_def_return_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_return_card (CORBA::ULong value) override;
 
   /// Types of offers available for consideration. Ween out those
   /// offers with modifiable properties
-  virtual CORBA::ULong set_max_list (CORBA::ULong value);
-  virtual CORBA::Boolean
-    set_supports_modifiable_properties (CORBA::Boolean value);
-  virtual CORBA::Boolean
-    set_supports_dynamic_properties (CORBA::Boolean value);
-  virtual CORBA::Boolean
-    set_supports_proxy_offers (CORBA::Boolean value);
+  CORBA::ULong set_max_list (CORBA::ULong value) override;
+  CORBA::Boolean set_supports_modifiable_properties (CORBA::Boolean value) override;
+  CORBA::Boolean set_supports_dynamic_properties (CORBA::Boolean value) override;
+  CORBA::Boolean set_supports_proxy_offers (CORBA::Boolean value) override;
 
   // = Link Interface parameters
 
-  virtual CORBA::ULong set_def_hop_count (CORBA::ULong value);
-  virtual CORBA::ULong set_max_hop_count (CORBA::ULong value);
+  CORBA::ULong set_def_hop_count (CORBA::ULong value) override;
+  CORBA::ULong set_max_hop_count (CORBA::ULong value) override;
 
-  virtual CosTrading::FollowOption
-    set_def_follow_policy (CosTrading::FollowOption policy);
-  virtual CosTrading::FollowOption
-    set_max_follow_policy (CosTrading::FollowOption policy);
-  virtual CosTrading::FollowOption
-    set_max_link_follow_policy (CosTrading::FollowOption policy);
+  CosTrading::FollowOption set_def_follow_policy (CosTrading::FollowOption policy) override;
+  CosTrading::FollowOption set_max_follow_policy (CosTrading::FollowOption policy) override;
+  CosTrading::FollowOption set_max_link_follow_policy (CosTrading::FollowOption policy) override;
 
   // = Set Type Repository
 
-  virtual CosTrading::TypeRepository_ptr
-    set_type_repos (CosTrading::TypeRepository_ptr repository);
+  CosTrading::TypeRepository_ptr set_type_repos (CosTrading::TypeRepository_ptr repository) override;
 
-  virtual CosTrading::Admin::OctetSeq*
-    request_id_stem ();
+  CosTrading::Admin::OctetSeq* request_id_stem () override;
 
-  virtual CosTrading::Admin::OctetSeq*
-    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem);
+  CosTrading::Admin::OctetSeq*
+    set_request_id_stem (CosTrading::Admin::OctetSeq const& stem) override;
 
-  virtual void list_offers (CORBA::ULong how_many,
-                            CosTrading::OfferIdSeq_out ids,
-                            CosTrading::OfferIdIterator_out id_itr);
+  void list_offers (CORBA::ULong how_many,
+                    CosTrading::OfferIdSeq_out ids,
+                    CosTrading::OfferIdIterator_out id_itr) override;
 
 
   // BEGIN SPEC
@@ -591,13 +583,15 @@ public:
   // the "id_itr" is nil.
   // END SPEC
 
-  virtual void list_proxies (CORBA::ULong,
-                             CosTrading::OfferIdSeq_out,
-                             CosTrading::OfferIdIterator_out);
+  void list_proxies (CORBA::ULong,
+                     CosTrading::OfferIdSeq_out,
+                     CosTrading::OfferIdIterator_out) override;
 
 private:
-  void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Admin (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Admin (TAO_Admin const&) = delete;
+  TAO_Admin& operator= (TAO_Admin const&) = delete;
+  TAO_Admin (TAO_Admin&&) = delete;
+  TAO_Admin& operator= (TAO_Admin&&) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
