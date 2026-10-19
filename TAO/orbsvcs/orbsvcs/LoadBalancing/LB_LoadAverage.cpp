@@ -68,8 +68,8 @@ TAO_LB_LoadAverage::get_properties ()
 
 void
 TAO_LB_LoadAverage::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads)
+    PortableGroup::Location const & the_location,
+    CosLoadBalancing::LoadList const & loads)
 {
   // Only the first load is used by this load balancing strategy.
   if (loads.length () == 0)
@@ -84,15 +84,15 @@ TAO_LB_LoadAverage::push_loads (
 
 void
 TAO_LB_LoadAverage::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads,
+    PortableGroup::Location const & the_location,
+    CosLoadBalancing::LoadList const & loads,
     CosLoadBalancing::Load & load)
 {
   if (loads.length () == 0)
     throw CORBA::BAD_PARAM ();
 
   // Only the first load is used by this load balancing strategy.
-  const CosLoadBalancing::Load & new_load = loads[0];
+  CosLoadBalancing::Load const & new_load = loads[0];
 
   if (this->load_map_ != 0)
     {
@@ -325,16 +325,16 @@ TAO_LB_LoadAverage::_default_POA ()
 }
 
 void
-TAO_LB_LoadAverage::init (const PortableGroup::Properties & props)
+TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
 {
   CORBA::Float tolerance = TAO_LB::LA_DEFAULT_TOLERANCE;
   CORBA::Float dampening = TAO_LB::LA_DEFAULT_DAMPENING;
   CORBA::Float per_balance_load = TAO_LB::LA_DEFAULT_PER_BALANCE_LOAD;
 
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      const PortableGroup::Property & property = props[i];
+      PortableGroup::Property const & property = props[i];
       if (ACE_OS::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LoadAverage.Tolerance") == 0)
         {
@@ -386,7 +386,7 @@ TAO_LB_LoadAverage::init (const PortableGroup::Properties & props)
 
 void
 TAO_LB_LoadAverage::extract_float_property (
-  const PortableGroup::Property & property,
+  PortableGroup::Property const & property,
   CORBA::Float & value)
 {
   if (!(property.val >>= value))

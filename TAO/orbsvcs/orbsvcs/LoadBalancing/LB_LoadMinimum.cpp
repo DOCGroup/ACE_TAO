@@ -69,8 +69,8 @@ TAO_LB_LoadMinimum::get_properties ()
 
 void
 TAO_LB_LoadMinimum::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads)
+    PortableGroup::Location const & the_location,
+    CosLoadBalancing::LoadList const & loads)
 {
   // Only the first load is used by this load balancing strategy.
   if (loads.length () == 0)
@@ -85,15 +85,15 @@ TAO_LB_LoadMinimum::push_loads (
 
 void
 TAO_LB_LoadMinimum::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads,
+    PortableGroup::Location const & the_location,
+    CosLoadBalancing::LoadList const & loads,
     CosLoadBalancing::Load & load)
 {
   if (loads.length () == 0)
     throw CORBA::BAD_PARAM ();
 
   // Only the first load is used by this load balancing strategy.
-  const CosLoadBalancing::Load & new_load = loads[0];
+  CosLoadBalancing::Load const & new_load = loads[0];
 
   if (this->load_map_ != 0)
     {
@@ -143,7 +143,7 @@ TAO_LB_LoadMinimum::push_loads (
 
 CosLoadBalancing::LoadList *
 TAO_LB_LoadMinimum::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                               const PortableGroup::Location & the_location)
+                               PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -364,7 +364,7 @@ TAO_LB_LoadMinimum::_default_POA ()
 CORBA::Boolean
 TAO_LB_LoadMinimum::get_location (
   CosLoadBalancing::LoadManager_ptr load_manager,
-  const PortableGroup::Locations & locations,
+  PortableGroup::Locations const & locations,
   PortableGroup::Location & location)
 {
   CORBA::Float min_load = FLT_MAX;  // Start out with the largest
@@ -524,16 +524,16 @@ TAO_LB_LoadMinimum::get_location (
 }
 
 void
-TAO_LB_LoadMinimum::init (const PortableGroup::Properties & props)
+TAO_LB_LoadMinimum::init (PortableGroup::Properties const & props)
 {
   CORBA::Float tolerance = TAO_LB::LM_DEFAULT_TOLERANCE;
   CORBA::Float dampening = TAO_LB::LM_DEFAULT_DAMPENING;
   CORBA::Float per_balance_load = TAO_LB::LM_DEFAULT_PER_BALANCE_LOAD;
 
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      const PortableGroup::Property & property = props[i];
+      PortableGroup::Property const & property = props[i];
       if (ACE_OS::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LoadMinimum.Tolerance") == 0)
         {
@@ -585,7 +585,7 @@ TAO_LB_LoadMinimum::init (const PortableGroup::Properties & props)
 
 void
 TAO_LB_LoadMinimum::extract_float_property (
-  const PortableGroup::Property & property,
+  PortableGroup::Property const & property,
   CORBA::Float & value)
 {
   if (!(property.val >>= value))
