@@ -104,7 +104,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method an "intermediate" server side interception point.
     void receive_request (
@@ -113,7 +113,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -123,7 +123,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -133,7 +133,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -143,7 +143,7 @@ namespace TAO
         size_t nargs,
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions) override;
     //@}
 
     /// Register an interceptor.
