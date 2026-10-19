@@ -48,13 +48,13 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogNotification :
 {
 public:
   /// Constructor.
-  TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr);
+  TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr event_channel);
 
   /// Destructor.
-  ~TAO_RTEventLogNotification ();
+  ~TAO_RTEventLogNotification () override;
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 protected:
   // = Helper methods
@@ -64,9 +64,14 @@ protected:
   void obtainProxyConsumer ();
 
   // Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any);
+  void send_notification (CORBA::Any const & any) override;
 
 private:
+  TAO_RTEventLogNotification (TAO_RTEventLogNotification const &) = delete;
+  TAO_RTEventLogNotification (TAO_RTEventLogNotification &&) = delete;
+  TAO_RTEventLogNotification & operator= (TAO_RTEventLogNotification const &) = delete;
+  TAO_RTEventLogNotification & operator= (TAO_RTEventLogNotification &&) = delete;
+
   /// The ORB reference.
   CORBA::ORB_var orb_;
 

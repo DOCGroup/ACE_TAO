@@ -5,8 +5,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EventLogNotification::TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr ec)
-: TAO_LogNotification (), event_channel_ (CosEventChannelAdmin::EventChannel::_duplicate (ec))
+TAO_EventLogNotification::TAO_EventLogNotification (
+  CosEventChannelAdmin::EventChannel_ptr event_channel)
+  : TAO_LogNotification (),
+    event_channel_ (CosEventChannelAdmin::EventChannel::_duplicate (event_channel))
 {
   obtain_proxy_consumer ();
 }
@@ -37,7 +39,7 @@ TAO_EventLogNotification::obtain_proxy_consumer()
 }
 
 void
-TAO_EventLogNotification::send_notification (const CORBA::Any& any)
+TAO_EventLogNotification::send_notification (CORBA::Any const & any)
 {
   consumer_->push (any);
 }
