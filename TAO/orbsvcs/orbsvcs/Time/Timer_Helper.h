@@ -51,17 +51,22 @@ public:
   Timer_Helper ();
 
   /// Destructor.
-  ~Timer_Helper ();
+  ~Timer_Helper () override;
 
   /// Constructor that sets the clerk.
-  Timer_Helper (TAO_Time_Service_Clerk *clerk);
+  Timer_Helper (TAO_Time_Service_Clerk * clerk);
 
   /// This method is called periodically by the Reactor to update the
   /// clerk's time.
-  int handle_timeout (const ACE_Time_Value &time,
-                      const void *arg);
+  int handle_timeout (ACE_Time_Value const & time,
+                      void const * arg) override;
 
 protected:
+  Timer_Helper (Timer_Helper const &) = delete;
+  Timer_Helper (Timer_Helper &&) = delete;
+  Timer_Helper &operator= (Timer_Helper const &) = delete;
+  Timer_Helper &operator= (Timer_Helper &&) = delete;
+
   /// Clerk's instance that this class helps to update time.
   TAO_Time_Service_Clerk *clerk_;
 

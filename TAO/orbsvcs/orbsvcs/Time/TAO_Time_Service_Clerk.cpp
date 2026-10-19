@@ -13,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
                                                 int timer_value_usecs,
-                                                const IORS& servers)
+                                                IORS const & servers)
   : server_ (servers),
     helper_ (this)
 {
@@ -33,8 +33,7 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
 // Destructor.
 
 TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk ()
-{
-}
+= default;
 
 // This method returns the global time and an estimate of inaccuracy
 // in a UTO.
@@ -42,7 +41,7 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk ()
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time ()
 {
-  TAO_UTO *uto = 0;
+  TAO_UTO * uto = nullptr;
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO (this->get_time (),
@@ -71,7 +70,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
                                             TimeBase::TdfT tdf)
 {
-  TAO_UTO *uto = 0;
+  TAO_UTO * uto = nullptr;
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO (time,
@@ -85,9 +84,9 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 // This creates a new UTO given a time in the UtcT form.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc)
+TAO_Time_Service_Clerk::uto_from_utc (TimeBase::UtcT const & utc)
 {
-  TAO_UTO *uto = 0;
+  TAO_UTO * uto = nullptr;
 
   // Use the low and high values of inaccuracy
   // to calculate the total inaccuracy.
@@ -110,7 +109,7 @@ CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                                       TimeBase::TimeT upper)
 {
-  TAO_TIO *tio = 0;
+  TAO_TIO * tio = nullptr;
 
   ACE_NEW_THROW_EX (tio,
                     TAO_TIO (lower,

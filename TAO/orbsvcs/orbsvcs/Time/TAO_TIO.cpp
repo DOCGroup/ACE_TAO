@@ -12,8 +12,7 @@ TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
 
 // Destructor.
 TAO_TIO::~TAO_TIO ()
-{
-}
+= default;
 
 // This is the get method for the attribute time interval.
 
@@ -33,7 +32,7 @@ CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
                 CosTime::TIO_out overlap)
 {
-  TAO_TIO *tio = 0;
+  TAO_TIO * tio = nullptr;
 
   try
     {
@@ -144,7 +143,7 @@ CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                    CosTime::TIO_out overlap)
 {
-  TAO_TIO *tio_i = 0;
+  TAO_TIO * tio_i = nullptr;
 
   TimeBase::TimeT lb1 =
     this->time_interval ().lower_bound;
@@ -235,7 +234,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 CosTime::UTO_ptr
 TAO_TIO::time ()
 {
-  TAO_UTO *uto = 0;
+  TAO_UTO * uto = nullptr;
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO ((this->time_interval ().upper_bound -
