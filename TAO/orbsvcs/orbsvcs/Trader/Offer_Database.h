@@ -51,7 +51,7 @@ class TAO_Offer_Database
   friend class TAO_Service_Offer_Iterator<LOCK_TYPE>;
 public:
   // Traits
-  typedef TAO_Service_Offer_Iterator<LOCK_TYPE> offer_iterator;
+  using offer_iterator = TAO_Service_Offer_Iterator<LOCK_TYPE>;
 
   /// No arg constructor.
   TAO_Offer_Database ();
@@ -88,15 +88,11 @@ public:
     LOCK_TYPE lock_;
   };
 
-  typedef ACE_Hash_Map_Manager_Ex
-    <
-    CORBA::String_var,
-    Offer_Map_Entry*,
-    ACE_Hash<CORBA::String_var>,
-    ACE_Equal_To<CORBA::String_var>,
-    ACE_Null_Mutex
-    >
-    Offer_Database;
+  using Offer_Database = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                                  Offer_Map_Entry*,
+                                                  ACE_Hash<CORBA::String_var>,
+                                                  ACE_Equal_To<CORBA::String_var>,
+                                                  ACE_Null_Mutex>;
 
 private:
   // The internal id is a pointer here, not only to avoid copying,
@@ -128,8 +124,10 @@ private:
                               CORBA::ULong& id);
 
   // = Disallow these operations.
-  void operator= (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
-  TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
+  TAO_Offer_Database (TAO_Offer_Database const&) = delete;
+  TAO_Offer_Database& operator= (TAO_Offer_Database const&) = delete;
+  TAO_Offer_Database (TAO_Offer_Database&&) = delete;
+  TAO_Offer_Database& operator= (TAO_Offer_Database&&) = delete;
 
   LOCK_TYPE db_lock_;
 
@@ -149,7 +147,7 @@ template <class LOCK_TYPE>
 class TAO_Service_Offer_Iterator
 {
 public:
-  typedef TAO_Offer_Database<LOCK_TYPE> Offer_Database;
+  using Offer_Database = TAO_Offer_Database<LOCK_TYPE>;
 
   TAO_Service_Offer_Iterator (const char* type,
                               TAO_Offer_Database<LOCK_TYPE>& offer_database);
@@ -170,6 +168,11 @@ public:
   void next_offer ();
 
  private:
+  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator const&) = delete;
+  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator const&) = delete;
+  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator&&) = delete;
+  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator&&) = delete;
+
   /// Lock the top_level map.
   TAO_Offer_Database<LOCK_TYPE>& stm_;
 

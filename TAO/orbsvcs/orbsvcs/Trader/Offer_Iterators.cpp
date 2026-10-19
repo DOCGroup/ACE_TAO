@@ -62,7 +62,7 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
-      CosTrading::Offer *source = 0;
+      CosTrading::Offer* source = nullptr;
       this->offers_.dequeue_head (source);
       this->pfilter_.filter_offer (source, offers[i]);
     }
@@ -78,7 +78,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
 {
   while (! this->iters_.is_empty ())
     {
-      CosTrading::OfferIterator* offer_iter = 0;
+      CosTrading::OfferIterator* offer_iter = nullptr;
       this->iters_.dequeue_head (offer_iter);
 
       try
@@ -119,7 +119,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
     {
       CORBA::ULong offset = 0;
       CORBA::Boolean any_left = 0;
-      CosTrading::OfferIterator* iter =  0;
+      CosTrading::OfferIterator* iter = nullptr;
       this->iters_.dequeue_head (iter);
 
       // Determine how many offers we should retrieve from this
@@ -163,7 +163,7 @@ TAO_Offer_Iterator_Collection::destroy ()
        ! iters_iter.done ();
        iters_iter.advance ())
     {
-      CosTrading::OfferIterator** iter = 0;
+      CosTrading::OfferIterator** iter = nullptr;
 
       iters_iter.next (iter);
       (*iter)->destroy ();
