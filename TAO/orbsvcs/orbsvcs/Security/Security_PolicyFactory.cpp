@@ -35,7 +35,7 @@ TAO::Security::PolicyFactory::create_policy (
             EINVAL),
           CORBA::COMPLETED_NO);
 
-      TAO::Security::QOPPolicy * qop_policy = 0;
+      TAO::Security::QOPPolicy * qop_policy = nullptr;
       ACE_NEW_THROW_EX (qop_policy,
                         TAO::Security::QOPPolicy (qop),
                         CORBA::NO_MEMORY (
@@ -49,7 +49,7 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == ::Security::SecEstablishTrustPolicy)
     {
-      const ::Security::EstablishTrust *trust = 0;
+      ::Security::EstablishTrust const *trust = nullptr;
 
       // Extract the desired establishing of trust value from the
       // given Any.
@@ -60,7 +60,7 @@ TAO::Security::PolicyFactory::create_policy (
             EINVAL),
           CORBA::COMPLETED_NO);
 
-      TAO::Security::EstablishTrustPolicy * trust_policy = 0;
+      TAO::Security::EstablishTrustPolicy * trust_policy = nullptr;
       ACE_NEW_THROW_EX (trust_policy,
                         TAO::Security::EstablishTrustPolicy (*trust),
                         CORBA::NO_MEMORY (
@@ -74,7 +74,7 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
-      const SecurityLevel3::ContextEstablishmentPolicyArgument * args = 0;
+      SecurityLevel3::ContextEstablishmentPolicyArgument const * args = nullptr;
 
       // Extract the desired establishing of trust value from the
       // given Any.
@@ -85,7 +85,7 @@ TAO::Security::PolicyFactory::create_policy (
             EINVAL),
           CORBA::COMPLETED_NO);
 
-      TAO::SL3::ContextEstablishmentPolicy * policy = 0;
+      TAO::SL3::ContextEstablishmentPolicy * policy = nullptr;
       ACE_NEW_THROW_EX (policy,
                         TAO::SL3::ContextEstablishmentPolicy (
                           args->creds_directive,
@@ -105,7 +105,7 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
     {
-      const SecurityLevel3::OwnCredentialsList * creds = 0;
+      SecurityLevel3::OwnCredentialsList const * creds = nullptr;
 
       // Extract the desired establishing of trust value from the
       // given Any.
@@ -116,7 +116,7 @@ TAO::Security::PolicyFactory::create_policy (
             EINVAL),
           CORBA::COMPLETED_NO);
 
-      TAO::SL3::ObjectCredentialsPolicy * policy = 0;
+      TAO::SL3::ObjectCredentialsPolicy * policy = nullptr;
       ACE_NEW_THROW_EX (policy,
                         TAO::SL3::ObjectCredentialsPolicy (*creds),
                         CORBA::NO_MEMORY (
