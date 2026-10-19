@@ -84,7 +84,7 @@ protected:
   //@}
 
   /// Cancel the passed cvs handler from the connector
-  int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+  int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
 
 private:
   TAO_DIOP_Connector (TAO_DIOP_Connector const &) = delete;

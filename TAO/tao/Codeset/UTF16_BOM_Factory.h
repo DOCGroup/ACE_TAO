@@ -32,9 +32,9 @@ public:
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// ncs returns the translator's native codeset ID.
-  CONV_FRAME::CodeSetId ncs () const;
+  CONV_FRAME::CodeSetId ncs () const override;
   /// tcs returns the translator's transmission codeset ID.
-  CONV_FRAME::CodeSetId tcs () const;
+  CONV_FRAME::CodeSetId tcs () const override;
 
   /// Assign the translator to the input CDR. The inherited assign_i is used
   /// to assign either a char or wchar translator, depending on the base type
