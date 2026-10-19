@@ -53,13 +53,13 @@ static int (*dispatch_table[]) (TAO_Constraint_Visitor*,
   TAO_Binary_Constraint::visit_less_than_equal,
   TAO_Binary_Constraint::visit_equal,
   TAO_Binary_Constraint::visit_not_equal,
-  0,
+  nullptr,
   TAO_Binary_Constraint::visit_and,
   TAO_Binary_Constraint::visit_or,
-  0,
+  nullptr,
   TAO_Binary_Constraint::visit_in,
   TAO_Binary_Constraint::visit_twiddle,
-  0,
+  nullptr,
   TAO_Binary_Constraint::visit_add,
   TAO_Binary_Constraint::visit_sub,
   TAO_Binary_Constraint::visit_mult,
@@ -74,7 +74,7 @@ TAO_Binary_Constraint::accept (TAO_Constraint_Visitor* visitor)
   int offset = this->op_ - TAO_GT,
     return_value = -1;
 
-  if (dispatch_table[offset] != 0)
+  if (dispatch_table[offset] != nullptr)
     return_value = dispatch_table[offset] (visitor, this);
 
   return return_value;
@@ -497,12 +497,12 @@ TAO_Literal_Constraint::operator CORBA::Double () const
 
 TAO_Literal_Constraint::operator const char* () const
 {
-  return (this->type_ == TAO_STRING) ? this->op_.str_ : 0;
+  return (this->type_ == TAO_STRING) ? this->op_.str_ : nullptr;
 }
 
 TAO_Literal_Constraint::operator const CORBA::Any* () const
 {
-  return (this->type_ == TAO_SEQUENCE) ? this->op_.any_ : 0;
+  return (this->type_ == TAO_SEQUENCE) ? this->op_.any_ : nullptr;
 }
 
 TAO_Expression_Type
@@ -678,7 +678,7 @@ operator== (const TAO::String_Manager& left,
 {
   bool result = false;
 
-  if ((const char*) right != 0)
+  if (static_cast<const char*> (right) != nullptr)
     result = ACE_OS::strcmp ((const char*) left,
                              (const char*) right) == 0;
   return result;
