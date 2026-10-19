@@ -48,7 +48,7 @@ public:
                          RtecEventComm::Time period);
 
   /// Destructor.
-  virtual ~TAO_EC_Timeout_Filter ();
+  virtual ~TAO_EC_Timeout_Filter () override;
 
   /// Return the QOS_Info for this Timeout filter.
   const TAO_EC_QOS_Info& qos_info () const;
@@ -63,18 +63,18 @@ public:
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info);
+                      TAO_EC_QOS_Info& qos_info) override;
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info);
+                             TAO_EC_QOS_Info& qos_info) override;
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
+                     TAO_EC_QOS_Info& qos_info) override;
   virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
-  virtual void clear ();
-  virtual CORBA::ULong max_event_size () const;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const;
+                            TAO_EC_QOS_Info& qos_info) override;
+  virtual void clear () override;
+  virtual CORBA::ULong max_event_size () const override;
+  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info);
+                                const TAO_EC_QOS_Info &qos_info) override;
 
 private:
   TAO_EC_Timeout_Filter (const TAO_EC_Timeout_Filter&);

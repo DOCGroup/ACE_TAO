@@ -42,27 +42,27 @@ public:
   TAO_EC_Negation_Filter (TAO_EC_Filter* child);
 
   /// Destructor
-  virtual ~TAO_EC_Negation_Filter ();
+  virtual ~TAO_EC_Negation_Filter () override;
 
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual ChildrenIterator begin () const;
-  virtual ChildrenIterator end () const;
-  virtual int size () const;
+  virtual ChildrenIterator begin () const override;
+  virtual ChildrenIterator end () const override;
+  virtual int size () const override;
   virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info);
+                      TAO_EC_QOS_Info& qos_info) override;
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info);
+                             TAO_EC_QOS_Info& qos_info) override;
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
+                     TAO_EC_QOS_Info& qos_info) override;
   virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
-  virtual void clear ();
-  virtual CORBA::ULong max_event_size () const;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const;
+                            TAO_EC_QOS_Info& qos_info) override;
+  virtual void clear () override;
+  virtual CORBA::ULong max_event_size () const override;
+  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info);
+                                const TAO_EC_QOS_Info &qos_info) override;
 
 private:
   TAO_EC_Negation_Filter (const TAO_EC_Negation_Filter&);
