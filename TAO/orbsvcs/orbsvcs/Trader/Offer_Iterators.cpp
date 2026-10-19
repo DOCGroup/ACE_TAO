@@ -108,7 +108,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
                                        CosTrading::OfferSeq_out offers)
 {
   CORBA::ULong offers_left = n;
-  CORBA::Boolean return_value = 1;
+  CORBA::Boolean return_value = true;
   CosTrading::OfferSeq_var out_offers;
 
   ACE_NEW_THROW_EX (offers,
@@ -118,7 +118,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
   while (offers_left > 0 && ! this->iters_.is_empty ())
     {
       CORBA::ULong offset = 0;
-      CORBA::Boolean any_left = 0;
+      CORBA::Boolean any_left = false;
       CosTrading::OfferIterator* iter = nullptr;
       this->iters_.dequeue_head (iter);
 
@@ -131,7 +131,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
                       CosTrading::OfferSeq_out (out_offers.out ()));
 
       // If we've exhausted this iterator, destroy it.
-      if (any_left == 0)
+      if (!any_left)
         {
           iter->destroy ();
           CORBA::release (iter);
@@ -150,7 +150,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
   // Determine if we have anything left to offer.
   if (this->iters_.is_empty ())
-    return_value = 0;
+    return_value = false;
 
   return return_value;
 }

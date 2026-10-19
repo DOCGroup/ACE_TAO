@@ -43,8 +43,8 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
       ACE_INET_Addr localhost ((u_short) 0);
       if (localhost.get_host_name (host_name, sizeof (host_name)) != 0)
         {
-          const char *tmp = localhost.get_host_addr ();
-          if (tmp == 0)
+          char const* tmp = localhost.get_host_addr ();
+          if (tmp == nullptr)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
                         ACE_TEXT ("TAO_Trading_Loader ")
@@ -215,7 +215,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
     return CORBA::Object::_nil ();
 
   // Dump the ior to a file.
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != nullptr)
     {
       ACE_OS::fprintf (this->ior_output_file_,
                        "%s",
@@ -444,7 +444,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
               this->ior_output_file_ =
                 ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
-              if (this->ior_output_file_ == 0)
+              if (this->ior_output_file_ == nullptr)
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    "Unable to open %s for writing: %p\n",
                                    file_name), -1);
