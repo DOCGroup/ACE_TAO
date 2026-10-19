@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRecord &rec)
+TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord const & rec)
   : property_lookup_ (property_lookup_size_)
 {
   CORBA::Any val_id;
@@ -1237,6 +1237,5 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
   return true;
 }
 
-const size_t TAO_Log_Constraint_Visitor::property_lookup_size_ = 31;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
