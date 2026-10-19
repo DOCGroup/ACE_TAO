@@ -36,12 +36,12 @@ class TAO_Log_Serv_Export TAO_Log_Compaction_Handler
 {
 public:
   /// Constructor.
-  TAO_Log_Compaction_Handler (ACE_Reactor* reactor,
-                              TAO_Log_i* log,
-                              const ACE_Time_Value& interval);
+  TAO_Log_Compaction_Handler (ACE_Reactor * reactor,
+                              TAO_Log_i * log,
+                              ACE_Time_Value const & interval);
 
   /// Destructor.
-  ~TAO_Log_Compaction_Handler ();
+  ~TAO_Log_Compaction_Handler () override;
 
   /// Schedule Timer.
   void schedule ();
@@ -49,13 +49,18 @@ public:
   /// Cancel Timer.
   void cancel ();
 
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  int handle_timeout (ACE_Time_Value const & tv, void const * arg) override;
 
 private:
-  long                          timer_id_;
-  ACE_Reactor*                  reactor_;
-  TAO_Log_i*                    log_;
-  const ACE_Time_Value          interval_;
+  TAO_Log_Compaction_Handler (TAO_Log_Compaction_Handler const &) = delete;
+  TAO_Log_Compaction_Handler (TAO_Log_Compaction_Handler &&) = delete;
+  TAO_Log_Compaction_Handler &operator= (TAO_Log_Compaction_Handler const &) = delete;
+  TAO_Log_Compaction_Handler &operator= (TAO_Log_Compaction_Handler &&) = delete;
+
+  long timer_id_;
+  ACE_Reactor * reactor_;
+  TAO_Log_i * log_;
+  ACE_Time_Value const interval_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
