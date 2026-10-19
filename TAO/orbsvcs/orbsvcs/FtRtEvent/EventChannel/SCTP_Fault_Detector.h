@@ -72,9 +72,9 @@ class SCTP_Fault_Detector : public Fault_Detector_T<
           SCTP_ConnectionDetectHandler >
 {
 public:
-    virtual ~SCTP_Fault_Detector();
+    ~SCTP_Fault_Detector() override;
 private:
-    virtual int parse_conf(int argc, ACE_TCHAR** argv);
+    int parse_conf(int argc, ACE_TCHAR** argv) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -28,8 +28,8 @@ public:
   ProxyConsumerStateWorker(FtRtecEventChannelAdmin::ProxyConsumerStates& states);
   ~ProxyConsumerStateWorker();
 
-  virtual void set_size(size_t size);
-  virtual void work(TAO_EC_ProxyPushConsumer* object);
+  void set_size(size_t size) override;
+  void work(TAO_EC_ProxyPushConsumer* object) override;
 private:
   int index_;
   FtRtecEventChannelAdmin::ProxyConsumerStates& consumerStates_;

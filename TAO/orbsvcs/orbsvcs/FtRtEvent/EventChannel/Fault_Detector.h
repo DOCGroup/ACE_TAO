@@ -35,7 +35,7 @@ public:
   void stop();
   void set_listener(TAO_FTEC_Fault_Listener*);
   const FTRT::Location& my_location() const;
-  virtual int connect(const FTRT::Location& location)=0;
+  virtual int connect(FTRT::Location const& location) = 0;
 
 private:
   virtual int init_acceptor()=0;
@@ -47,7 +47,7 @@ protected:
   public:
     // ctor
     ReactorTask();
-    virtual int svc ();
+    int svc () override;
     ACE_Reactor reactor_;
   };
 

@@ -25,12 +25,12 @@ class Fault_Detector_T : public Fault_Detector
 public:
   Fault_Detector_T();
   ~Fault_Detector_T();
-  int connect(const FTRT::Location& addr);
+  int connect(FTRT::Location const& addr) override;
 protected:
   ACCEPTOR acceptor_;
   CONNECTOR connector_;
 private:
-  virtual int init_acceptor();
+  int init_acceptor() override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
