@@ -118,9 +118,9 @@ public:
    */
   virtual void init (const int minimum_priority,
                      const int maximum_priority,
-                     const char *runtime_filename = 0,
-                     const char *rt_info_filename = 0,
-                     const char *timeline_filename = 0) = 0;
+                     const char *runtime_filename = nullptr,
+                     const char *rt_info_filename = nullptr,
+                     const char *timeline_filename = nullptr) = 0;
 
   // = Registers a task.
   /**
@@ -288,8 +288,10 @@ private:
   u_int output_level_;
 
   // the following functions are not implememented
-  ACE_Scheduler (const ACE_Scheduler &);
-  ACE_Scheduler &operator= (const ACE_Scheduler &);
+  ACE_Scheduler (const ACE_Scheduler &) = delete;
+  ACE_Scheduler (ACE_Scheduler &&) = delete;
+  ACE_Scheduler &operator= (const ACE_Scheduler &) = delete;
+  ACE_Scheduler &operator= (ACE_Scheduler &&) = delete;
 };
 
 using Scheduler = ACE_Scheduler;
