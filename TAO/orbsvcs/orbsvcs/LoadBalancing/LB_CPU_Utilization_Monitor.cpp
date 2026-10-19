@@ -61,13 +61,13 @@ double calc_cpu_loading ()
   return percent_cpu_load;
 }
 
-TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * location_id,
-                                                                const char * location_kind)
+TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (char const * location_id,
+                                                                char const * location_kind)
   : location_ (1)
 {
   this->location_.length (1);
 
-  if (location_id == 0)
+  if (location_id == nullptr)
     {
       char host[MAXHOSTNAMELEN + 1];
       if (ACE_OS::hostname (host, sizeof (host)) != 0)
@@ -94,14 +94,12 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * loc
     {
       this->location_[0].id = CORBA::string_dup (location_id);
 
-      if (location_kind != 0)
+      if (location_kind != nullptr)
         this->location_[0].kind = CORBA::string_dup (location_kind);
     }
 }
 
-TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor ()
-{
-}
+TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor () = default;
 
 CosLoadBalancing::Location *
 TAO_LB_CPU_Utilization_Monitor::the_location ()
@@ -127,7 +125,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
   double load_double = calc_cpu_loading ();
   load = load_double;
 
-  CosLoadBalancing::LoadList * tmp = 0;
+  CosLoadBalancing::LoadList * tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (
