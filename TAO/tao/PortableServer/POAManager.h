@@ -108,13 +108,13 @@ protected:
   /// of POAManager changed.
   void adapter_manager_state_changed (PortableServer::POAManager::State state);
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
   void hold_requests_i (CORBA::Boolean wait_for_completion);
 
   void discard_requests_i (CORBA::Boolean wait_for_completion);
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   ACE_Lock &lock ();
 

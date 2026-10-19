@@ -166,7 +166,7 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
     }
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 void
 TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
@@ -269,7 +269,7 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
   this->adapter_manager_state_changed (this->state_);
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 int
 TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
