@@ -126,13 +126,13 @@ public:
   void callback (TAO_AV_Callback *callback);
 
   /// Handle timeout. called from reactor.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  virtual int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr);
 
   /// set the remote address.
   virtual int set_remote_address (ACE_Addr *address);
 
   /// get the underlying event handler. To be overridden by the derived clases.
-  virtual ACE_Event_Handler* event_handler () = 0;
+  virtual ACE_Event_Handler *event_handler () = 0;
 
   virtual int change_qos (AVStreams::QoS);
 
@@ -167,34 +167,34 @@ public:
   virtual int mtu () = 0;
   virtual ACE_Addr *get_peer_addr () = 0;
   virtual ACE_Addr *get_local_addr ();
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        ACE_Time_Value *s = 0) = 0;
+  virtual ssize_t send (ACE_Message_Block const *mblk,
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Write the contents of the buffer of length len to the connection.
-  virtual ssize_t send (const char *buf,
+  virtual ssize_t send (char const *buf,
                         size_t len,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Write the contents of iovcnt iovec's to the connection.
-  virtual ssize_t send (const iovec *iov,
+  virtual ssize_t send (iovec const *iov,
                         int iovcnt,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Read len bytes from into buf using flags.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         int flags,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   ///  Read received data into the iovec buffers.
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 };
 
 class TAO_Base_StreamEndPoint;
@@ -318,7 +318,7 @@ class TAO_AV_Export TAO_AV_Transport_Factory : public ACE_Service_Object
 public:
   /// Initialization hook.
   TAO_AV_Transport_Factory ();
-  virtual ~TAO_AV_Transport_Factory ();
+  ~TAO_AV_Transport_Factory () override;
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();
