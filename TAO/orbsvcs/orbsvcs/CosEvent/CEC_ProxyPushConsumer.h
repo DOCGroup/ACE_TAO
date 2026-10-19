@@ -170,6 +170,11 @@ public:
   /// Destructor
   ~TAO_CEC_ProxyPushConsumer_Guard ();
 
+  TAO_CEC_ProxyPushConsumer_Guard (TAO_CEC_ProxyPushConsumer_Guard const &) = delete;
+  TAO_CEC_ProxyPushConsumer_Guard (TAO_CEC_ProxyPushConsumer_Guard &&) = delete;
+  TAO_CEC_ProxyPushConsumer_Guard &operator= (TAO_CEC_ProxyPushConsumer_Guard const &) = delete;
+  TAO_CEC_ProxyPushConsumer_Guard &operator= (TAO_CEC_ProxyPushConsumer_Guard &&) = delete;
+
   /// Returns true if the reference count successfully acquired
   bool locked () const;
 

@@ -163,6 +163,13 @@ public:
   /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer_Guard ();
 
+  TAO_CEC_TypedProxyPushConsumer_Guard (TAO_CEC_TypedProxyPushConsumer_Guard const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer_Guard (TAO_CEC_TypedProxyPushConsumer_Guard &&) = delete;
+  TAO_CEC_TypedProxyPushConsumer_Guard &operator= (
+      TAO_CEC_TypedProxyPushConsumer_Guard const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer_Guard &operator= (
+      TAO_CEC_TypedProxyPushConsumer_Guard &&) = delete;
+
   /// Returns 1 if the reference count successfully acquired
   int locked () const;
 
