@@ -29,9 +29,9 @@ ACE_Config_Scheduler::~ACE_Config_Scheduler ()
 RtecScheduler::handle_t
 ACE_Config_Scheduler::create (const char * entry_point)
 {
-  typedef RtecScheduler::RT_Info* RT_Info_ptr;
+  using RT_Info_ptr = RtecScheduler::RT_Info*;
 
-  RtecScheduler::RT_Info** rt_info = 0;
+  RtecScheduler::RT_Info** rt_info = nullptr;
   ACE_NEW_RETURN (rt_info, RT_Info_ptr[1], -1);
 
   ACE_NEW_RETURN (rt_info[0], RtecScheduler::RT_Info, -1);
@@ -78,7 +78,7 @@ ACE_Config_Scheduler::create (const char * entry_point)
 RtecScheduler::handle_t
 ACE_Config_Scheduler::lookup (const char * entry_point)
 {
-  RtecScheduler::RT_Info* rt_info = 0;
+  RtecScheduler::RT_Info* rt_info = nullptr;
   switch (impl->get_rt_info (entry_point, rt_info))
     {
     case BaseSchedImplType::SUCCEEDED:
@@ -98,14 +98,14 @@ ACE_Config_Scheduler::lookup (const char * entry_point)
 RtecScheduler::RT_Info*
 ACE_Config_Scheduler::get (RtecScheduler::handle_t handle)
 {
-  RtecScheduler::RT_Info* rt_info = 0;
+  RtecScheduler::RT_Info* rt_info = nullptr;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
     case BaseSchedImplType::SUCCEEDED:
       {
         // IDL memory management semantics require that we return a copy.
         RtecScheduler::RT_Info* copy;
-        ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), 0);
+        ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), nullptr);
         return copy;
       }
       ACE_NOTREACHED (break);
@@ -117,7 +117,7 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle)
       // @@ TODO: throw something.
       break;
     }
-  return 0;
+  return nullptr;
 }
 
 void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
@@ -131,7 +131,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
                                 CORBA::Long threads,
                                 RtecScheduler::Info_Type_t info_type)
 {
-  RtecScheduler::RT_Info* rt_info = 0;
+  RtecScheduler::RT_Info* rt_info = nullptr;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
     case BaseSchedImplType::SUCCEEDED:
@@ -183,7 +183,7 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                            RtecScheduler::Dependency_Type_t
                                              dependency_type)
 {
-  RtecScheduler::RT_Info* rt_info = 0;
+  RtecScheduler::RT_Info* rt_info = nullptr;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
     case BaseSchedImplType::SUCCEEDED:
@@ -227,7 +227,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   BaseSchedImplType::status_t schedule_status;
   schedule_status = impl->schedule (anomaly_set);
 
-  if (dependencies.ptr () == 0)
+  if (dependencies.ptr () == nullptr)
     {
       dependencies = new RtecScheduler::Dependency_Set ();
     }
@@ -236,12 +236,12 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // it in the set of anomalies to return, and determining the worst
   // anomaly severity.
   RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
-  RtecScheduler::Scheduling_Anomaly **anomaly = 0;
+  RtecScheduler::Scheduling_Anomaly **anomaly = nullptr;
   const char *anomaly_severity_msg = "NONE";
   CORBA::ULong anomaly_index = 0;
   CORBA::ULong anomaly_set_size =
                     static_cast<CORBA::ULong> (anomaly_set.size ());
-  if (anomalies.ptr () == 0)
+  if (anomalies.ptr () == nullptr)
     {
       anomalies =
         new RtecScheduler::Scheduling_Anomaly_Set (anomaly_set_size);
@@ -253,7 +253,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
        anomaly_iter.next (anomaly);
        anomaly_iter.advance (), ++anomaly_index)
     {
-      if (0 == *anomaly)
+      if (nullptr == *anomaly)
         {
           // if for some reason we stored a null anomaly pointer,
           // just give default values to that entry in the sequence.
@@ -351,7 +351,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
     }
 
   // return the set of scheduled RT_Infos
-  if (infos.ptr () == 0)
+  if (infos.ptr () == nullptr)
     {
       infos = new RtecScheduler::RT_Info_Set (impl->tasks ());
     }
@@ -360,7 +360,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
        handle <= static_cast<RtecScheduler::handle_t> (impl->tasks ());
        ++handle)
     {
-      RtecScheduler::RT_Info* rt_info = 0;
+      RtecScheduler::RT_Info* rt_info = nullptr;
       switch (impl->lookup_rt_info (handle, rt_info))
         {
         case BaseSchedImplType::SUCCEEDED:
@@ -378,7 +378,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
     }
 
   // return the set of scheduled Config_Infos
-  if (configs.ptr () == 0)
+  if (configs.ptr () == nullptr)
     {
       configs =
         new RtecScheduler::Config_Info_Set(impl->minimum_priority_queue () + 1);
@@ -389,7 +389,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
          static_cast<RtecScheduler::Preemption_Priority_t> (impl->minimum_priority_queue ());
        ++priority)
     {
-      RtecScheduler::Config_Info* config_info = 0;
+      RtecScheduler::Config_Info* config_info = nullptr;
       switch (impl->lookup_config_info (priority, config_info))
         {
         case BaseSchedImplType::SUCCEEDED:
