@@ -30,12 +30,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Event_Loader::TAO_CEC_Event_Loader () :
-  attributes_ (0)
-  , factory_ (0)
-  , ec_impl_ (0)
+  attributes_ (nullptr)
+  , factory_ (nullptr)
+  , ec_impl_ (nullptr)
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  , typed_attributes_ (0)
-  , typed_ec_impl_ (0)
+  , typed_attributes_ (nullptr)
+  , typed_ec_impl_ (nullptr)
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 {
   // Constructor
@@ -87,8 +87,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtdb"));
       int opt;
       const ACE_TCHAR *service_name = ACE_TEXT("CosEventService");
-      const ACE_TCHAR *ior_file = 0;
-      const ACE_TCHAR *pid_file = 0;
+      ACE_TCHAR const *ior_file = nullptr;
+      ACE_TCHAR const *pid_file = nullptr;
       this->bind_to_naming_service_ = 1;
       int use_rebind = 0;
       int disconnect_callbacks = 0;
@@ -197,7 +197,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       this->attributes_->disconnect_callbacks = disconnect_callbacks;
 
-      this->factory_ = 0;
+      this->factory_ = nullptr;
 
       this->ec_impl_ = new TAO_CEC_EventChannel (*this->attributes_,
                                                  this->factory_,
@@ -208,23 +208,23 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       CosEventChannelAdmin::EventChannel_var event_channel =
         this->ec_impl_->_this ();
 
-      if (ior_file != 0)
+      if (ior_file != nullptr)
         {
           CORBA::String_var ior =
             orb->object_to_string (event_channel.in ());
 
           FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
-          if (iorf != 0)
+          if (iorf != nullptr)
             {
               ACE_OS::fprintf (iorf, "%s\n", ior.in ());
               ACE_OS::fclose (iorf);
             }
         }
 
-      if (pid_file != 0)
+      if (pid_file != nullptr)
         {
           FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
-          if (pidf != 0)
+          if (pidf != nullptr)
             {
               ACE_OS::fprintf (pidf,
                                "%ld\n",
@@ -324,7 +324,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           this->typed_attributes_->disconnect_callbacks = disconnect_callbacks;
 
-          this->factory_ = 0;
+          this->factory_ = nullptr;
 
           this->typed_ec_impl_ = new TAO_CEC_TypedEventChannel (*this->typed_attributes_,
                                                                 this->factory_,
@@ -335,23 +335,23 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           CosTypedEventChannelAdmin::TypedEventChannel_var event_channel =
             this->typed_ec_impl_->_this ();
 
-          if (ior_file != 0)
+          if (ior_file != nullptr)
             {
               CORBA::String_var ior =
                 orb->object_to_string (event_channel.in ());
 
               FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
-              if (iorf != 0)
+              if (iorf != nullptr)
                 {
                   ACE_OS::fprintf (iorf, "%s\n", ior.in ());
                   ACE_OS::fclose (iorf);
                 }
             }
 
-          if (pid_file != 0)
+          if (pid_file != nullptr)
             {
               FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
-              if (pidf != 0)
+              if (pidf != nullptr)
                 {
                   ACE_OS::fprintf (pidf,
                                    "%ld\n",
