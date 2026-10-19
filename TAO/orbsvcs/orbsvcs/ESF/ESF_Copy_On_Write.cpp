@@ -59,7 +59,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     this->cond_.wait ();
 
   this->collection_->_decr_refcnt ();
-  this->collection_ = 0;
+  this->collection_ = nullptr;
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
@@ -138,7 +138,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
                                        int &p,
                                        int &w,
                                        Collection*& cr)
-      :  copy (0),
+      :  copy (nullptr),
          mutex (m),
          cond (c),
          pending_writes (p),
@@ -177,7 +177,7 @@ template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     ~TAO_ESF_Copy_On_Write_Write_Guard ()
 {
-  Collection *tmp = 0;
+  Collection *tmp = nullptr;
   {
     ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->mutex);
 

@@ -94,7 +94,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 {
   while (!this->command_queue_.is_empty ())
     {
-      ACE_Command_Base* command = 0;
+      ACE_Command_Base* command = nullptr;
       this->command_queue_.dequeue_head (command);
 
       command->execute ();
@@ -119,7 +119,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     }
   else
     {
-      ACE_Command_Base* command = 0;
+      ACE_Command_Base* command = nullptr;
       ACE_NEW (command,
                Connected_Command (this,
                                   proxy));
