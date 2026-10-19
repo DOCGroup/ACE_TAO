@@ -33,8 +33,8 @@ class TAO_Naming_Serv_Export TAO_Persistent_Bindings_Map
   : public TAO_Bindings_Map
 {
 public:
-  /// Underlying data structure - typedef for ease of use.
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId> HASH_MAP;
+  /// Underlying data structure.
+  using HASH_MAP = ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
 
   /// Constructor.
   TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
@@ -157,8 +157,8 @@ class TAO_Persistent_Context_Index;
 class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context : public TAO_Hash_Naming_Context
 {
 public:
-  /// Underlying data structure - typedef for ease of use.
-  typedef TAO_Persistent_Bindings_Map::HASH_MAP HASH_MAP;
+  /// Underlying data structure.
+  using HASH_MAP = TAO_Persistent_Bindings_Map::HASH_MAP;
 
   /// Allocate the underlying data structure from persistent storage.
   /// Returns 0 on success and -1 on failure.

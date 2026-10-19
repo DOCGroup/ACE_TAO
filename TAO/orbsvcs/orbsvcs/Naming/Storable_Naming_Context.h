@@ -122,10 +122,10 @@ public:
 class TAO_Naming_Serv_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map
 {
 public:
-  /// Underlying data structure - typedef for ease of use.
-  typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
-                               TAO_Storable_IntId,
-                               ACE_Null_Mutex> HASH_MAP;
+  /// Underlying data structure.
+  using HASH_MAP = ACE_Hash_Map_Manager<TAO_Storable_ExtId,
+                                        TAO_Storable_IntId,
+                                        ACE_Null_Mutex>;
 
   /// Constructor.
   TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
@@ -216,8 +216,8 @@ private:
 class TAO_Naming_Serv_Export TAO_Storable_Naming_Context : public TAO_Hash_Naming_Context
 {
 public:
-  /// Underlying data structure - typedef for ease of use.
-  typedef TAO_Storable_Bindings_Map::HASH_MAP HASH_MAP;
+  /// Underlying data structure.
+  using HASH_MAP = TAO_Storable_Bindings_Map::HASH_MAP;
 
   /// Constructor.
   TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,

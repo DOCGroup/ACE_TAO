@@ -47,19 +47,18 @@ class TAO_Persistent_Naming_Context_Factory;
 class TAO_Naming_Serv_Export TAO_Persistent_Context_Index
 {
 public:
-  // = Some typedefs for convenience.
+  // = Some aliases for convenience.
 
   /// Hash map in which we will store info about each Persistent Naming Context.
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
-    TAO_Persistent_Index_IntId> CONTEXT_INDEX;
+  using CONTEXT_INDEX = ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
+                                                     TAO_Persistent_Index_IntId>;
 
   /// Hash map used by Persistent Naming Context to keep its state.
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
-    TAO_Persistent_IntId> CONTEXT;
+  using CONTEXT = ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
+                                              TAO_Persistent_IntId>;
 
   /// Allocator we will be using to make the Naming Service persistent.
-  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX>
-  > ALLOCATOR;
+  using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX>>;
 
   /// Constructor.
   TAO_Persistent_Context_Index (
