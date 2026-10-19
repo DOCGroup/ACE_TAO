@@ -368,6 +368,11 @@ class TAO_Event_Serv_Export TAO_CEC_Operation_Params
   /// destructor
   ~TAO_CEC_Operation_Params ();
 
+  TAO_CEC_Operation_Params (TAO_CEC_Operation_Params const &) = delete;
+  TAO_CEC_Operation_Params (TAO_CEC_Operation_Params &&) = delete;
+  TAO_CEC_Operation_Params &operator= (TAO_CEC_Operation_Params const &) = delete;
+  TAO_CEC_Operation_Params &operator= (TAO_CEC_Operation_Params &&) = delete;
+
 private:
   /// Only the TypedEventChannel can read the private fields.
   friend class TAO_CEC_TypedEventChannel;
