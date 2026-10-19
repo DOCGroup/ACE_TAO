@@ -82,8 +82,8 @@ private:
   int support_multicast_;
 };
 
-// Typedef an Options Singleton.
-typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
+// Options Singleton.
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
