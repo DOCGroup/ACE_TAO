@@ -73,20 +73,20 @@ namespace TAO
     FT_ClientRequest_Interceptor ();
 
     /// Canonical name of the interceptor.
-    virtual char * name ();
+    char * name () override;
 
 
-    virtual void destroy ();
+    void destroy () override;
 
-    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+    void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+    void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+    void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+    void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+    void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
     void ft_send_extended_sc (CORBA::Boolean send);
 

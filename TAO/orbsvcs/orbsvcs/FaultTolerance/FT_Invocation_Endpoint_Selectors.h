@@ -49,13 +49,13 @@ public:
   TAO_FT_Invocation_Endpoint_Selector ();
 
   /// Destructor.
-  virtual ~TAO_FT_Invocation_Endpoint_Selector ();
+  ~TAO_FT_Invocation_Endpoint_Selector () override;
 
   /// Implementation for FT. Please refer to
   /// $TAO_ROOT/tao/Invocation_Endpoint_Selectors.h  for details of
   /// documentation.
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val);
+  void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                        ACE_Time_Value *val) override;
 
 protected:
   /// Select the primary and try connecting to it.
