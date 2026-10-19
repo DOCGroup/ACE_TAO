@@ -39,10 +39,10 @@ public:
   //@{
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert ();
+  void enable_alert () override;
 
   /// Stop forwarding requests, and begin accepting them again.
-  virtual void disable_alert ();
+  void disable_alert () override;
 
   //@}
 
@@ -50,13 +50,18 @@ public:
   /// by the LoadManager.
   CORBA::Boolean alerted () const;
 
+  TAO_LB_LoadAlert (TAO_LB_LoadAlert const &) = delete;
+  TAO_LB_LoadAlert (TAO_LB_LoadAlert &&) = delete;
+  TAO_LB_LoadAlert & operator= (TAO_LB_LoadAlert const &) = delete;
+  TAO_LB_LoadAlert & operator= (TAO_LB_LoadAlert &&) = delete;
+
 // protected:
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  virtual ~TAO_LB_LoadAlert ();
+  ~TAO_LB_LoadAlert () override;
 
 private:
   /// Has this LoadAlert servant been alerted of a high load condition

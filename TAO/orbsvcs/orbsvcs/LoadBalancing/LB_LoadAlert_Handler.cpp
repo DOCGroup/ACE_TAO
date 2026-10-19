@@ -4,9 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler ()
-{
-}
+TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler () = default;
 
 void
 TAO_LB_LoadAlert_Handler::enable_alert ()
