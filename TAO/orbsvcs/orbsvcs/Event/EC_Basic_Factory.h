@@ -100,10 +100,10 @@ public:
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
 
-  virtual ACE_Lock* create_consumer_lock ();
-  virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock ();
-  virtual void destroy_supplier_lock (ACE_Lock*);
+  virtual ACE_Lock* create_consumer_lock () override;
+  virtual void destroy_consumer_lock (ACE_Lock*) override;
+  virtual ACE_Lock* create_supplier_lock () override;
+  virtual void destroy_supplier_lock (ACE_Lock*) override;
 
   virtual TAO_EC_ConsumerControl*
       create_consumer_control (TAO_EC_Event_Channel_Base*);
