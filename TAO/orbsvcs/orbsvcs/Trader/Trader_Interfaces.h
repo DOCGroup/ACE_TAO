@@ -61,16 +61,16 @@ public:
 
   ~TAO_Lookup ();
 
-  virtual void
-    query (const char *type,
-           const char *constr,
-           const char *pref,
-           const CosTrading::PolicySeq& policies,
-           const CosTrading::Lookup::SpecifiedProps& desired_props,
+  void
+    query (char const* type,
+           char const* constr,
+           char const* pref,
+           CosTrading::PolicySeq const& policies,
+           CosTrading::Lookup::SpecifiedProps const& desired_props,
            CORBA::ULong how_many,
            CosTrading::OfferSeq_out offers,
            CosTrading::OfferIterator_out offer_itr,
-           CosTrading::PolicyNameSeq_out limits_applied);
+           CosTrading::PolicyNameSeq_out limits_applied) override;
 
   // BEGIN SPEC
   // The query operation is the means by which an object can obtain
@@ -237,15 +237,17 @@ private:
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
                                   const CosTrading::Admin::OctetSeq*& seq);
 
-  void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Lookup (TAO_Lookup const&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup const&) = delete;
+  TAO_Lookup (TAO_Lookup&&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup&&) = delete;
 
   const unsigned int IDS_SAVED;
 
   /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
-  typedef ACE_Unbounded_Queue<const CosTrading::Admin::OctetSeq*> Request_Ids;
+  using Request_Ids = ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq const*>;
 
   /// A list of recent request_id_stems
   Request_Ids request_ids_;
@@ -267,11 +269,11 @@ class TAO_Register :
 public:
   TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  virtual ~TAO_Register ();
+  ~TAO_Register () override;
 
-  virtual CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
-                                           const char *type,
-                                           const CosTrading::PropertySeq& properties);
+  CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
+                                   char const* type,
+                                   CosTrading::PropertySeq const& properties) override;
 
   // BEGIN SPEC
   // The export operation is the means by which a service is
@@ -327,7 +329,7 @@ public:
   // parameter, the DuplicatePropertyName exception is raised.
   // END SPEC
 
-  virtual void withdraw (const char *id);
+  void withdraw (char const* id) override;
 
   // BEGIN SPEC
   // The withdraw operation removes the service offer from the trader
@@ -342,8 +344,8 @@ public:
   // ProxyOfferId exception is raised.
   // END SPEC
 
-  virtual CosTrading::Register::OfferInfo*
-    describe (const char * id);
+  CosTrading::Register::OfferInfo*
+    describe (char const* id) override;
 
   // BEGIN SPEC
   // The describe operation returns the information about an offered
@@ -359,9 +361,9 @@ public:
   // ordinary offer, then a ProxyOfferId exception is raised.
   // END SPEC
 
-  virtual void modify (const char * id,
-                       const CosTrading::PropertyNameSeq& del_list,
-                       const CosTrading::PropertySeq& modify_list);
+  void modify (char const* id,
+               CosTrading::PropertyNameSeq const& del_list,
+               CosTrading::PropertySeq const& modify_list) override;
 
   // BEGIN SPEC
   // The modify operation is used to change the description of a
@@ -416,8 +418,8 @@ public:
   // supports_modifiable_properties attribute yields FALSE.
   // END SPEC
 
-  virtual void withdraw_using_constraint (const char *type,
-                                          const char *constr);
+  void withdraw_using_constraint (char const* type,
+                                  char const* constr) override;
 
   // BEGIN SPEC
   // The withdraw_using_constraint operation withdraws a set of offers
@@ -442,8 +444,8 @@ public:
   // service type, then a NoMatchingOffers exception is raised.
   // END SPEC
 
-  virtual CosTrading::Register_ptr
-    resolve (const CosTrading::TraderName &name);
+  CosTrading::Register_ptr
+    resolve (CosTrading::TraderName const& name) override;
 
   // BEGIN SPEC
   // This operation is used to resolve a context relative name for
@@ -473,8 +475,10 @@ public:
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                             const CosTrading::PropertySeq& properties);
 
-  void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Register (TAO_Register const&) = delete;
+  TAO_Register& operator= (TAO_Register const&) = delete;
+  TAO_Register (TAO_Register&&) = delete;
+  TAO_Register& operator= (TAO_Register&&) = delete;
 
  private:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
