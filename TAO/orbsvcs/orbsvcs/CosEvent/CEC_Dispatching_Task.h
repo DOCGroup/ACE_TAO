@@ -46,6 +46,11 @@ public:
   /// Constructor
   TAO_CEC_Dispatching_Task (ACE_Thread_Manager *thr_manager = nullptr);
 
+  TAO_CEC_Dispatching_Task (TAO_CEC_Dispatching_Task const &) = delete;
+  TAO_CEC_Dispatching_Task (TAO_CEC_Dispatching_Task &&) = delete;
+  TAO_CEC_Dispatching_Task &operator= (TAO_CEC_Dispatching_Task const &) = delete;
+  TAO_CEC_Dispatching_Task &operator= (TAO_CEC_Dispatching_Task &&) = delete;
+
   /// Process the events in the queue.
   int svc () override;
 
@@ -80,6 +85,11 @@ public:
   /// Destructor
   ~TAO_CEC_Dispatch_Command () override;
 
+  TAO_CEC_Dispatch_Command (TAO_CEC_Dispatch_Command const &) = delete;
+  TAO_CEC_Dispatch_Command (TAO_CEC_Dispatch_Command &&) = delete;
+  TAO_CEC_Dispatch_Command &operator= (TAO_CEC_Dispatch_Command const &) = delete;
+  TAO_CEC_Dispatch_Command &operator= (TAO_CEC_Dispatch_Command &&) = delete;
+
   /// Command callback
   virtual int execute () = 0;
 };
@@ -91,6 +101,11 @@ class TAO_Event_Serv_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispa
 public:
   /// Constructor
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
+
+  TAO_CEC_Shutdown_Task_Command (TAO_CEC_Shutdown_Task_Command const &) = delete;
+  TAO_CEC_Shutdown_Task_Command (TAO_CEC_Shutdown_Task_Command &&) = delete;
+  TAO_CEC_Shutdown_Task_Command &operator= (TAO_CEC_Shutdown_Task_Command const &) = delete;
+  TAO_CEC_Shutdown_Task_Command &operator= (TAO_CEC_Shutdown_Task_Command &&) = delete;
 
   /// Command callback
   int execute () override;
@@ -109,6 +124,11 @@ public:
 
   /// Destructor
   ~TAO_CEC_Push_Command () override;
+
+  TAO_CEC_Push_Command (TAO_CEC_Push_Command const &) = delete;
+  TAO_CEC_Push_Command (TAO_CEC_Push_Command &&) = delete;
+  TAO_CEC_Push_Command &operator= (TAO_CEC_Push_Command const &) = delete;
+  TAO_CEC_Push_Command &operator= (TAO_CEC_Push_Command &&) = delete;
 
   /// Command callback
   int execute () override;
@@ -135,6 +155,11 @@ public:
 
   /// Destructor
   ~TAO_CEC_Invoke_Command () override;
+
+  TAO_CEC_Invoke_Command (TAO_CEC_Invoke_Command const &) = delete;
+  TAO_CEC_Invoke_Command (TAO_CEC_Invoke_Command &&) = delete;
+  TAO_CEC_Invoke_Command &operator= (TAO_CEC_Invoke_Command const &) = delete;
+  TAO_CEC_Invoke_Command &operator= (TAO_CEC_Invoke_Command &&) = delete;
 
   /// Command callback
   int execute () override;
