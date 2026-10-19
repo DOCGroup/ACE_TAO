@@ -66,9 +66,9 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ();
+      SecurityLevel3::ClientCredentials_ptr client_credentials () override;
 
-      virtual CORBA::Boolean request_is_local ();
+      CORBA::Boolean request_is_local () override;
       //@}
 
       /// Return the TSS slot ID assigned to the "SecurityCurrent"
@@ -85,7 +85,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityCurrent ();
+      ~SecurityCurrent () override;
 
     private:
       /// Set the thread-specific storage
@@ -110,8 +110,10 @@ namespace TAO
        * assignment operator.
        */
       //@{
-      SecurityCurrent (const SecurityCurrent &);
-      void operator= (const SecurityCurrent &);
+      SecurityCurrent (SecurityCurrent const &) = delete;
+      SecurityCurrent (SecurityCurrent &&) = delete;
+      void operator= (SecurityCurrent const &) = delete;
+      void operator= (SecurityCurrent &&) = delete;
       //@}
 
     private:
