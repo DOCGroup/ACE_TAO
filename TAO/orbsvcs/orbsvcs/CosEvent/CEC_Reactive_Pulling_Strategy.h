@@ -52,8 +52,8 @@ public:
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
 
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
 private:
   /// The adapted object
@@ -85,8 +85,8 @@ public:
                        const void* arg);
 
   // = The CEC_Pulling_Strategy methods.
-  virtual void activate ();
-  virtual void shutdown ();
+  void activate () override;
+  void shutdown () override;
 
 private:
   /// The Adapter for the reactor events
@@ -127,7 +127,7 @@ public:
   TAO_CEC_Pull_Event (TAO_CEC_ConsumerAdmin *consumer_admin,
                       TAO_CEC_SupplierControl *);
 
-  virtual void work (TAO_CEC_ProxyPullConsumer *consumer);
+  void work (TAO_CEC_ProxyPullConsumer *consumer) override;
 
 private:
   /// Used to propagate the events.

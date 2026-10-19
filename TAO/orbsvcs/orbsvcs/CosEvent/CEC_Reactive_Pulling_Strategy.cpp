@@ -87,7 +87,7 @@ TAO_CEC_Reactive_Pulling_Strategy::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
-                                            0,
+                                            nullptr,
                                             this->rate_,
                                             this->rate_);
   if (timer_id_ == -1)
@@ -129,7 +129,7 @@ TAO_CEC_Reactive_Pulling_Strategy::shutdown ()
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   this->reactor_->cancel_timer (timer_id_);
 #endif /* TAO_HAS_CORBA_MESSAGING */
-  this->adapter_.reactor (0);
+  this->adapter_.reactor (nullptr);
 }
 
 // ****************************************************************
