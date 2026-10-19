@@ -69,6 +69,11 @@ public:
   PortableServer::POA_ptr _default_POA () override;
 
 private:
+  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin const &) = delete;
+  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin &&) = delete;
+  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin const &) = delete;
+  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin &&) = delete;
+
   /// The Event Channel we belong to
   TAO_CEC_TypedEventChannel *typed_event_channel_;
 

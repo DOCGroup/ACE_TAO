@@ -99,6 +99,12 @@ protected:
   (CosEventComm::PushSupplier_ptr pre);
 
 private:
+  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer &&) = delete;
+  TAO_CEC_TypedProxyPushConsumer &operator= (
+      TAO_CEC_TypedProxyPushConsumer const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer &operator= (TAO_CEC_TypedProxyPushConsumer &&) = delete;
+
   /// The typed supplier admin, used for activation and memory management.
   TAO_CEC_TypedEventChannel* typed_event_channel_;
 

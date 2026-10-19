@@ -271,6 +271,11 @@ protected:
   int clear_ifr_cache ();
 
 private:
+  TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel const &) = delete;
+  TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel &&) = delete;
+  TAO_CEC_TypedEventChannel &operator= (TAO_CEC_TypedEventChannel const &) = delete;
+  TAO_CEC_TypedEventChannel &operator= (TAO_CEC_TypedEventChannel &&) = delete;
+
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.
   PortableServer::POA_var typed_supplier_poa_;
