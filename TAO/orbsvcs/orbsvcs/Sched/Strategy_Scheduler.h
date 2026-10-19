@@ -335,23 +335,22 @@ public:
   ACE_MLF_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
     /// = Virtual destructor.
-  virtual ~ACE_MLF_Scheduler_Strategy ();
+  ~ACE_MLF_Scheduler_Strategy () override;
 
     /// = Returns an instance of the strategy.
   static ACE_MLF_Scheduler_Strategy *instance ();
 
     /// = Just returns 0, as all dispatch entries are of equivalent
     ///   static priority under MLF.
-  virtual int priority_comp (const Dispatch_Entry &first_entry,
-                             const Dispatch_Entry &second_entry);
+  int priority_comp (Dispatch_Entry const &first_entry,
+                     Dispatch_Entry const &second_entry) override;
 
     /// = Sorts the dispatch entry link pointer array in ascending laxity order.
-  virtual void sort (Dispatch_Entry **dispatch_entries,
-                     u_int count);
+  void sort (Dispatch_Entry **dispatch_entries,
+             u_int count) override;
 
   /// = Provide the dispatching queue type for the given dispatch entry.
-  virtual ACE_DynScheduler::Dispatching_Type
-    dispatch_type (const Dispatch_Entry &entry);
+  ACE_DynScheduler::Dispatching_Type dispatch_type (Dispatch_Entry const &entry) override;
 
 protected:
     /**
@@ -361,19 +360,23 @@ protected:
      *   laxity gives a higher dynamic subpriority; if the operation
      *   has negative laxity, the value is the (negative) laxity value.
      */
-    virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                      RtecScheduler::Time current_time);
+    long dynamic_subpriority (Dispatch_Entry &entry,
+                              RtecScheduler::Time current_time) override;
 
     /**
      * = Orders two dispatch entries by ascending laxity: returns -1 if the
      *   first Dispatch_Entry is greater in the order, 0 if they're equivalent,
      *   or 1 if the second Dispatch_Entry is greater in the order.
      */
-  virtual int dynamic_subpriority_comp
-    (const Dispatch_Entry &first_entry,
-     const Dispatch_Entry &second_entry);
+  int dynamic_subpriority_comp (Dispatch_Entry const &first_entry,
+                                Dispatch_Entry const &second_entry) override;
 
 private:
+  ACE_MLF_Scheduler_Strategy (ACE_MLF_Scheduler_Strategy const &) = delete;
+  ACE_MLF_Scheduler_Strategy (ACE_MLF_Scheduler_Strategy &&) = delete;
+  ACE_MLF_Scheduler_Strategy &operator= (ACE_MLF_Scheduler_Strategy const &) = delete;
+  ACE_MLF_Scheduler_Strategy &operator= (ACE_MLF_Scheduler_Strategy &&) = delete;
+
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
   static int sort_function (void *arg1, void *arg2);
 
