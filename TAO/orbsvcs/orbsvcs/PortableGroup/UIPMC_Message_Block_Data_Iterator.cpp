@@ -6,9 +6,9 @@ UIPMC_Message_Block_Data_Iterator::UIPMC_Message_Block_Data_Iterator (iovec *iov
   iov_ (iov),
   iovcnt_ (iovcnt),
   iov_index_ (0),
-  iov_ptr_ (0),
+  iov_ptr_ (nullptr),
   iov_len_left_ (0),
-  state_ (INTER_BLOCK)
+  state_ (State::INTER_BLOCK)
 {
 }
 
@@ -16,7 +16,7 @@ bool
 UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
                                                iovec &block)
 {
-  if (this->state_ == INTER_BLOCK)
+  if (this->state_ == State::INTER_BLOCK)
     {
       // Check that there are some iovec buffers left.
       if (this->iov_index_ >= this->iovcnt_)
@@ -46,7 +46,7 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
             this->iov_[this->iov_index_].iov_len - max_length;
           this->iov_ptr_ =
             reinterpret_cast<char *> (block.iov_base) + max_length;
-          this->state_ = INTRA_BLOCK;
+          this->state_ = State::INTRA_BLOCK;
 
           return true;
         }
@@ -64,7 +64,7 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
           ++this->iov_index_;
 
           // Update the state.
-          this->state_ = INTER_BLOCK;
+          this->state_ = State::INTER_BLOCK;
 
           return true;
         }

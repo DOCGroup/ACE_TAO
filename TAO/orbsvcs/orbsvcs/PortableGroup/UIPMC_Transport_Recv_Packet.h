@@ -38,6 +38,11 @@ namespace TAO_PG
 
     ~UIPMC_Recv_Packet_Cleanup_Guard ();
 
+    UIPMC_Recv_Packet_Cleanup_Guard (UIPMC_Recv_Packet_Cleanup_Guard const &) = delete;
+    UIPMC_Recv_Packet_Cleanup_Guard (UIPMC_Recv_Packet_Cleanup_Guard &&) = delete;
+    UIPMC_Recv_Packet_Cleanup_Guard &operator= (UIPMC_Recv_Packet_Cleanup_Guard const &) = delete;
+    UIPMC_Recv_Packet_Cleanup_Guard &operator= (UIPMC_Recv_Packet_Cleanup_Guard &&) = delete;
+
   private:
     TAO_UIPMC_Mcast_Transport *transport_;
   };
@@ -54,6 +59,11 @@ namespace TAO_PG
     UIPMC_Recv_Packet ();
 
     ~UIPMC_Recv_Packet ();
+
+    UIPMC_Recv_Packet (UIPMC_Recv_Packet const &) = delete;
+    UIPMC_Recv_Packet (UIPMC_Recv_Packet &&) = delete;
+    UIPMC_Recv_Packet &operator= (UIPMC_Recv_Packet const &) = delete;
+    UIPMC_Recv_Packet &operator= (UIPMC_Recv_Packet &&) = delete;
 
     /// Adds a new fragment to the packet and if it fails marks the packet
     /// as broken.
