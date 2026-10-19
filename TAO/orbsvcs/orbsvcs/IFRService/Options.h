@@ -63,6 +63,11 @@ public:
   int support_multicast_discovery () const;
 
 private:
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
+
   /// File where the IOR of the server object is stored.
   char *ior_output_file_;
 
