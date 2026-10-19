@@ -43,36 +43,36 @@ class TAO_Reconfig_Scheduler :
 {
 public:
   /// Type of map used for O(1) lookup of RT_Infos by their handles.
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-                                  TAO_RT_Info_Ex *,
-                                  ACE_Hash<RtecScheduler::handle_t>,
-                                  ACE_Equal_To<RtecScheduler::handle_t>,
-                                  ACE_LOCK> RT_INFO_MAP;
+  using RT_INFO_MAP = ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                              TAO_RT_Info_Ex *,
+                                              ACE_Hash<RtecScheduler::handle_t>,
+                                              ACE_Equal_To<RtecScheduler::handle_t>,
+                                              ACE_LOCK>;
 
   /// Type of tree used for O(log n) lookup of RT_Infos by their names.
-  typedef ACE_RB_Tree<const char *,
-                      TAO_RT_Info_Ex*,
-                      ACE_Less_Than<const char *>,
-                      ACE_LOCK> RT_INFO_TREE;
+  using RT_INFO_TREE = ACE_RB_Tree<const char *,
+                                  TAO_RT_Info_Ex *,
+                                  ACE_Less_Than<const char *>,
+                                  ACE_LOCK>;
 
   /// Type of map used for O(1) lookup of Config_Infos by their priorities.
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::Preemption_Priority_t,
-                                  RtecScheduler::Config_Info*,
-                                  ACE_Hash<RtecScheduler::Preemption_Priority_t>,
-                                  ACE_Equal_To<RtecScheduler::Preemption_Priority_t>,
-                                  ACE_LOCK> CONFIG_INFO_MAP;
+  using CONFIG_INFO_MAP = ACE_Hash_Map_Manager_Ex<RtecScheduler::Preemption_Priority_t,
+                                                  RtecScheduler::Config_Info *,
+                                                  ACE_Hash<RtecScheduler::Preemption_Priority_t>,
+                                                  ACE_Equal_To<RtecScheduler::Preemption_Priority_t>,
+                                                  ACE_LOCK>;
 
   /// Type of map used for O(1) lookup of RT_Info
   /// dependency sets by caller or called handle.
-  typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-                                  RtecScheduler::Dependency_Set*,
-                                  ACE_Hash<RtecScheduler::handle_t>,
-                                  ACE_Equal_To<RtecScheduler::handle_t>,
-                                  ACE_LOCK> DEPENDENCY_SET_MAP;
+  using DEPENDENCY_SET_MAP = ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                                      RtecScheduler::Dependency_Set *,
+                                                      ACE_Hash<RtecScheduler::handle_t>,
+                                                      ACE_Equal_To<RtecScheduler::handle_t>,
+                                                      ACE_LOCK>;
 
   /// Type of iterator for traversal of RT_Info dependency sets by
   /// caller or called handle.
-  typedef typename DEPENDENCY_SET_MAP::ITERATOR DEPENDENCY_SET_MAP_ITERATOR;
+  using DEPENDENCY_SET_MAP_ITERATOR = typename DEPENDENCY_SET_MAP::ITERATOR;
 
   /// Default constructor.
   TAO_Reconfig_Scheduler (int enforce_schedule_stability = 0,
