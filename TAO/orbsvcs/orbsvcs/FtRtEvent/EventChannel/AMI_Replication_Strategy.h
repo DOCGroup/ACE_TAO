@@ -36,16 +36,16 @@ public:
    */
   AMI_Replication_Strategy(bool mt);
   ~AMI_Replication_Strategy();
-  virtual void replicate_request(const FTRT::State& state,
+  void replicate_request(FTRT::State const& state,
     RollbackOperation rollback,
-    const FtRtecEventChannelAdmin::ObjectId& oid);
-  virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version);
-  virtual Replication_Strategy* make_primary_strategy();
+    FtRtecEventChannelAdmin::ObjectId const& oid) override;
+  void add_member(FTRT::ManagerInfo const& info,
+                  CORBA::ULong object_group_ref_version) override;
+  Replication_Strategy* make_primary_strategy() override;
 
-  virtual int  acquire_read ();
-  virtual int  acquire_write ();
-  virtual int  release ();
+  int acquire_read () override;
+  int acquire_write () override;
+  int release () override;
 private:
   bool mt_;
 };

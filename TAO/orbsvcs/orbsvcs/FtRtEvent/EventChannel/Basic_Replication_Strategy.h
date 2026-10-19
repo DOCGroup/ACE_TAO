@@ -33,17 +33,17 @@ public:
   Basic_Replication_Strategy(bool mt);
   ~Basic_Replication_Strategy();
 
-  virtual void check_validity();
+  void check_validity() override;
 
-  virtual void replicate_request(const FTRT::State& state,
+  void replicate_request(FTRT::State const& state,
     RollbackOperation rollback,
-    const FtRtecEventChannelAdmin::ObjectId& oid);
-  virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version);
+    FtRtecEventChannelAdmin::ObjectId const& oid) override;
+  void add_member(FTRT::ManagerInfo const& info,
+                  CORBA::ULong object_group_ref_version) override;
 
-  virtual int  acquire_read ();
-  virtual int  acquire_write ();
-  virtual int  release ();
+  int acquire_read () override;
+  int acquire_write () override;
+  int release () override;
 
 private:
   FTRT::SequenceNumber sequence_num_;

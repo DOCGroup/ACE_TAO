@@ -35,12 +35,12 @@ public:
  virtual void activate (
        RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
     // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
+  void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier ();
-  virtual void suspend_connection ();
-  virtual void resume_connection ();
+                RtecEventChannelAdmin::ConsumerQOS const& qos) override;
+  void disconnect_push_supplier () override;
+  void suspend_connection () override;
+  void resume_connection () override;
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 

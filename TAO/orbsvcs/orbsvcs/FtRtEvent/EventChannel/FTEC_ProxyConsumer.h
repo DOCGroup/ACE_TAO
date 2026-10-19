@@ -35,10 +35,10 @@ public:
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy);
 
     // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
+  void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos);
-  virtual void disconnect_push_consumer ();
+                RtecEventChannelAdmin::SupplierQOS const& qos) override;
+  void disconnect_push_consumer () override;
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
