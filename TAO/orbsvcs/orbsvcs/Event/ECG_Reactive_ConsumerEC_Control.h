@@ -72,16 +72,16 @@ public:
                                        CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_ECG_Reactive_ConsumerEC_Control ();
+  virtual ~TAO_ECG_Reactive_ConsumerEC_Control () override;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_ConsumerControl
-  virtual int activate ();
-  virtual int shutdown ();
-  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway);
+  virtual int activate () override;
+  virtual int shutdown () override;
+  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway) override;
   virtual void system_exception (TAO_EC_Gateway_IIOP *gateway,
                                  CORBA::SystemException &);
 
