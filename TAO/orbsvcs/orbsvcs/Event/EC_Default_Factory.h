@@ -51,6 +51,11 @@ public:
   /// destructor...
   virtual ~TAO_EC_Default_Factory ();
 
+  TAO_EC_Default_Factory (TAO_EC_Default_Factory const &) = delete;
+  TAO_EC_Default_Factory (TAO_EC_Default_Factory &&) = delete;
+  TAO_EC_Default_Factory &operator= (TAO_EC_Default_Factory const &) = delete;
+  TAO_EC_Default_Factory &operator= (TAO_EC_Default_Factory &&) = delete;
+
   /// Helper function to register the default factory into the service
   /// configurator.
   static int init_svcs ();

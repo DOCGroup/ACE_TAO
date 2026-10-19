@@ -43,6 +43,11 @@ public:
   TAO_EC_Gateway_IIOP_Factory ();
   virtual ~TAO_EC_Gateway_IIOP_Factory ();
 
+  TAO_EC_Gateway_IIOP_Factory (TAO_EC_Gateway_IIOP_Factory const &) = delete;
+  TAO_EC_Gateway_IIOP_Factory (TAO_EC_Gateway_IIOP_Factory &&) = delete;
+  TAO_EC_Gateway_IIOP_Factory &operator= (TAO_EC_Gateway_IIOP_Factory const &) = delete;
+  TAO_EC_Gateway_IIOP_Factory &operator= (TAO_EC_Gateway_IIOP_Factory &&) = delete;
+
   /// The Service_Object entry points.
   //@{
   virtual int init (int argc, ACE_TCHAR* argv[]);

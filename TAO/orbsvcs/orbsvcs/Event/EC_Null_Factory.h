@@ -43,6 +43,11 @@ public:
   /// destructor...
   virtual ~TAO_EC_Null_Factory ();
 
+  TAO_EC_Null_Factory (TAO_EC_Null_Factory const &) = delete;
+  TAO_EC_Null_Factory (TAO_EC_Null_Factory &&) = delete;
+  TAO_EC_Null_Factory &operator= (TAO_EC_Null_Factory const &) = delete;
+  TAO_EC_Null_Factory &operator= (TAO_EC_Null_Factory &&) = delete;
+
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*);
