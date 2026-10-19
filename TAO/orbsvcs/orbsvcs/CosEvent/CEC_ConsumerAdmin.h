@@ -57,7 +57,7 @@ public:
   TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
 
   /// Destructor...
-  virtual ~TAO_CEC_ConsumerAdmin () = default;
+  ~TAO_CEC_ConsumerAdmin () override = default;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
@@ -80,13 +80,11 @@ public:
   virtual void shutdown ();
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
-  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier ();
-  virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-      obtain_pull_supplier ();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// The Event Channel we belong to
@@ -96,10 +94,14 @@ private:
   PortableServer::POA_var default_POA_;
 
   /// Implement the push side of this class
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier> push_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
+                      TAO_CEC_ProxyPushSupplier,
+                      CosEventChannelAdmin::ProxyPushSupplier> push_admin_;
 
   /// Implement the pull side of this class
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier> pull_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
+                      TAO_CEC_ProxyPullSupplier,
+                      CosEventChannelAdmin::ProxyPullSupplier> pull_admin_;
 };
 
 // ****************************************************************
@@ -109,7 +111,7 @@ class TAO_CEC_Propagate_Event_Push : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupp
 public:
   TAO_CEC_Propagate_Event_Push (const CORBA::Any& event);
 
-  void work (TAO_CEC_ProxyPushSupplier *supplier);
+  void work (TAO_CEC_ProxyPushSupplier *supplier) override;
 
 private:
   /// The event
@@ -123,7 +125,7 @@ class TAO_CEC_Propagate_Event_Pull : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupp
 public:
   TAO_CEC_Propagate_Event_Pull (const CORBA::Any& event);
 
-  void work (TAO_CEC_ProxyPullSupplier *supplier);
+  void work (TAO_CEC_ProxyPullSupplier *supplier) override;
 
 private:
   /// The event

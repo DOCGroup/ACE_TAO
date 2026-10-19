@@ -40,7 +40,7 @@ public:
   TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
 
   // Destructor
-  virtual ~TAO_CEC_TypedConsumerAdmin () = default;
+  ~TAO_CEC_TypedConsumerAdmin () override = default;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
@@ -59,20 +59,18 @@ public:
   virtual void shutdown ();
 
   // = The CosTypedEventChannelAdmin::TypedConsumerAdmin methods...
-  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_typed_push_supplier (const char * uses_interface);
-  virtual CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
-    obtain_typed_pull_supplier (const char * supported_interface);
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_typed_push_supplier (
+      char const *uses_interface) override;
+  CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr obtain_typed_pull_supplier (
+      char const *supported_interface) override;
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
-  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier ();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
-  virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier ();
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// The Event Channel we belong to
@@ -82,7 +80,9 @@ private:
   PortableServer::POA_var default_POA_;
 
   /// Implement the push side of this class
-  TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier> typed_push_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,
+                      TAO_CEC_ProxyPushSupplier,
+                      CosEventChannelAdmin::ProxyPushSupplier> typed_push_admin_;
 };
 
 // ****************************************************************
@@ -93,7 +93,7 @@ public:
   TAO_CEC_Propagate_Typed_Event (const TAO_CEC_TypedEvent& typed_event,
                                  TAO_CEC_TypedEventChannel*);
 
-  void work (TAO_CEC_ProxyPushSupplier *supplier);
+  void work (TAO_CEC_ProxyPushSupplier *supplier) override;
 
 private:
   /// The typed event

@@ -57,7 +57,7 @@ public:
   TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel* event_channel);
 
   /// destructor...
-  virtual ~TAO_CEC_SupplierAdmin () = default;
+  ~TAO_CEC_SupplierAdmin () override = default;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker);
@@ -78,13 +78,11 @@ public:
   virtual void shutdown ();
 
   /// The CosEventChannelAdmin::SupplierAdmin methods...
-  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer ();
-  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-      obtain_pull_consumer ();
+  CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
+  CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer () override;
 
   /// The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// The Event Channel we belong to

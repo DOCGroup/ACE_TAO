@@ -39,7 +39,7 @@ public:
    TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedSupplierAdmin () = default;
+  ~TAO_CEC_TypedSupplierAdmin () override = default;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker);
@@ -54,21 +54,19 @@ public:
   virtual void shutdown ();
 
   // = The CosTypedEventChannelAdmin::TypedSupplierAdmin methods...
-  virtual CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
-    obtain_typed_push_consumer (const char * supported_interface);
+  CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr obtain_typed_push_consumer (
+      char const *supported_interface) override;
 
-  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_typed_pull_consumer (const char * uses_interface);
+  CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_typed_pull_consumer (
+      char const *uses_interface) override;
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
-  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-    obtain_push_consumer ();
+  CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
 
-  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_pull_consumer ();
+  CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer () override;
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// The Event Channel we belong to
