@@ -89,7 +89,7 @@ public:
                       const char *carrier_protocol,
                       ACE_Addr *fwd_address,
                       //ACE_Addr *peer_address,
-                      ACE_Addr *control_address = 0);
+                      ACE_Addr *control_address = nullptr);
 
   TAO_FlowSpec_Entry (const char *flowname,
                       const char *direction,
@@ -99,7 +99,7 @@ public:
                       //const char *peer_address);
 
   /// construct the entry from a string specified by the flowSpec grammar.
-  virtual int parse (const char* flowSpec_entry) = 0;
+  virtual int parse (char const *flowSpec_entry) = 0;
 
   /// virtual destructor.
   virtual ~TAO_FlowSpec_Entry ();
@@ -277,7 +277,7 @@ public:
                               const char *flow_protocol,
                               const char *carrier_protocol,
                               ACE_Addr *address,
-                              ACE_Addr *control_address = 0);
+                              ACE_Addr *control_address = nullptr);
 
   TAO_Forward_FlowSpec_Entry (const char *flowname,
                               const char *direction,
@@ -285,15 +285,15 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  virtual ~TAO_Forward_FlowSpec_Entry ();
+  ~TAO_Forward_FlowSpec_Entry () override;
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string ();
+  char const *entry_to_string () override;
 
-  virtual Role role ();
+  Role role () override;
 
   /// construct the entry from a string specified by the flowSpec grammar.
-  virtual int parse (const char* flowSpec_entry);
+  int parse (char const *flowSpec_entry) override;
 };
 
 /**
@@ -320,7 +320,7 @@ public:
                               const char *flow_protocol,
                               const char *carrier_protocol,
                               ACE_Addr *address,
-                              ACE_Addr *control_address = 0);
+                              ACE_Addr *control_address = nullptr);
 
   // Takes the address in protocol=endpoint form.
   TAO_Reverse_FlowSpec_Entry (const char *flowname,
@@ -329,15 +329,15 @@ public:
                               const char *flow_protocol,
                               const char *address);
 
-  virtual ~TAO_Reverse_FlowSpec_Entry ();
+  ~TAO_Reverse_FlowSpec_Entry () override;
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string ();
+  char const *entry_to_string () override;
 
-  virtual Role role ();
+  Role role () override;
 
   /// construct the entry from a string specified by the flowSpec grammar.
-  virtual int parse (const char* flowSpec_entry);
+  int parse (char const *flowSpec_entry) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

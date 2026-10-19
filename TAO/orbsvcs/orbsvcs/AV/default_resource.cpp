@@ -58,7 +58,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           curarg++;
           if (curarg < argc)
             {
-              TAO_AV_Transport_Item *item = 0;
+              TAO_AV_Transport_Item *item = nullptr;
               ACE_NEW_RETURN (item,
                               TAO_AV_Transport_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
@@ -76,7 +76,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           curarg++;
           if (curarg < argc)
             {
-              TAO_AV_Flow_Protocol_Item *item = 0;
+              TAO_AV_Flow_Protocol_Item *item = nullptr;
               ACE_NEW_RETURN (item,
                               TAO_AV_Flow_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
