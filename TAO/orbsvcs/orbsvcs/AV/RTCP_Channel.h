@@ -65,7 +65,10 @@ private:
   RTCP_Channel_In();
 
   /// Don't want copy constructor.
-  RTCP_Channel_In(const RTCP_Channel_In &ch);
+  RTCP_Channel_In (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In (RTCP_Channel_In &&) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In &&) = delete;
 
   /// The synchronization source id of the source this channel represents.
   ACE_UINT32 remote_ssrc_;

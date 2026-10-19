@@ -251,7 +251,7 @@ RTCP_Channel_In::getRRBlock()
 
   this->no_data_counter_ = 0;
 
-  RR_Block *local_block_ptr = 0;
+  RR_Block *local_block_ptr = nullptr;
 
   ACE_NEW_RETURN (local_block_ptr,
                   RR_Block,
