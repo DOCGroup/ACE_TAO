@@ -56,9 +56,9 @@ public:
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type) override;
 
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type) override;
 
 private:
   /// Helper method used to parse the policies.

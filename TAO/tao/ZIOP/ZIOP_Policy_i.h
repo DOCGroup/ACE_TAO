@@ -61,13 +61,13 @@ public:
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 private:
   /// The attribute
@@ -107,13 +107,13 @@ public:
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 private:
   /// The attribute
