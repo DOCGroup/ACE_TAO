@@ -87,6 +87,11 @@ public:
   /// info.
   TAO_CEC_Reactive_Dispatching ();
 
+  TAO_CEC_Reactive_Dispatching (TAO_CEC_Reactive_Dispatching const &) = delete;
+  TAO_CEC_Reactive_Dispatching (TAO_CEC_Reactive_Dispatching &&) = delete;
+  TAO_CEC_Reactive_Dispatching &operator= (TAO_CEC_Reactive_Dispatching const &) = delete;
+  TAO_CEC_Reactive_Dispatching &operator= (TAO_CEC_Reactive_Dispatching &&) = delete;
+
   // = The CEC_Dispatching methods.
   void activate () override;
   void shutdown () override;

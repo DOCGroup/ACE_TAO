@@ -46,6 +46,11 @@ public:
                          int force_activate,
                          bool shutdown_completion);
 
+  TAO_CEC_MT_Dispatching (TAO_CEC_MT_Dispatching const &) = delete;
+  TAO_CEC_MT_Dispatching (TAO_CEC_MT_Dispatching &&) = delete;
+  TAO_CEC_MT_Dispatching &operator= (TAO_CEC_MT_Dispatching const &) = delete;
+  TAO_CEC_MT_Dispatching &operator= (TAO_CEC_MT_Dispatching &&) = delete;
+
   // = The EC_Dispatching methods.
   void activate () override;
   void shutdown () override;
