@@ -131,7 +131,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
              CosTrading::Offer* offer,
              CosTrading::OfferId offer_id)
 {
-  if (this->root_ != 0)
+  if (this->root_ != nullptr)
     {
       Preference_Info pref_info;
 
@@ -165,7 +165,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
                    offer_iter.done () == 0;
                    offer_iter.advance (), i++)
                 {
-                  Preference_Info* current_offer = 0;
+                  Preference_Info* current_offer = nullptr;
                   offer_iter.next (current_offer);
 
                   // Maintain the sorted order in the first partition.

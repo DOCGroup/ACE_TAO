@@ -40,8 +40,8 @@ template<>
 class TAO_Trading_Serv_Export ACE_Less_Than<CORBA::String_var>
 {
 public:
-  int operator () (const CORBA::String_var &lhs,
-                   const CORBA::String_var &rhs) const
+  int operator () (CORBA::String_var const& lhs,
+                   CORBA::String_var const& rhs) const
   {
     return ACE_OS::strcmp (lhs.in (), rhs.in ()) < 0;
   }
@@ -51,25 +51,23 @@ template<>
 class TAO_Trading_Serv_Export ACE_Equal_To<CORBA::String_var>
 {
 public:
-  int operator () (const CORBA::String_var &lhs,
-                   const CORBA::String_var &rhs) const
+  int operator () (CORBA::String_var const& lhs,
+                   CORBA::String_var const& rhs) const
   {
     return ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0;
   }
 };
 
-typedef ACE_Hash_Map_Manager_Ex<CORBA::String_var,
-                                int,
-                                ACE_Hash<CORBA::String_var>,
-                                ACE_Equal_To<CORBA::String_var>,
-                                ACE_Null_Mutex>
-  TAO_Lookup_Table;
-typedef ACE_Hash_Map_Manager_Ex<CORBA::String_var,
-                                CORBA::TypeCode_ptr,
-                                ACE_Hash<CORBA::String_var>,
-                                ACE_Equal_To<CORBA::String_var>,
-                                ACE_Null_Mutex>
-  TAO_Typecode_Table;
+using TAO_Lookup_Table = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                                  int,
+                                                  ACE_Hash<CORBA::String_var>,
+                                                  ACE_Equal_To<CORBA::String_var>,
+                                                  ACE_Null_Mutex>;
+using TAO_Typecode_Table = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                                    CORBA::TypeCode_ptr,
+                                                    ACE_Hash<CORBA::String_var>,
+                                                    ACE_Equal_To<CORBA::String_var>,
+                                                    ACE_Null_Mutex>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -95,7 +95,7 @@ public:
                               const char* preference);
 
   /// Destructor
-  ~TAO_Preference_Interpreter();
+  ~TAO_Preference_Interpreter ();
 
   void order_offer (CosTrading::Offer* offer,
                     CosTrading::OfferId offer_id = 0);
@@ -131,7 +131,7 @@ public:
     CosTrading::Offer* offer_;
   };
 
-  typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
+  using Ordered_Offers = ACE_Unbounded_Queue<Preference_Info>;
 
 private:
   TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;
