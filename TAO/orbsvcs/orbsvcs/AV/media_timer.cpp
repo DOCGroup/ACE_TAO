@@ -43,7 +43,7 @@ static const char rcsid[] =
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-MediaTimer* MediaTimer::instance_;
+MediaTimer *MediaTimer::instance_;
 
 MediaTimer::MediaTimer()
 {
@@ -53,7 +53,7 @@ MediaTimer::MediaTimer()
 
 MediaTimer::~MediaTimer()
 {
-        instance_ = 0;
+        instance_ = nullptr;
 }
 
 /*

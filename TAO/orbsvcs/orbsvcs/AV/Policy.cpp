@@ -40,7 +40,7 @@ TAO_AV_SFP_Credit_Policy::TAO_AV_SFP_Credit_Policy ()
 
 // TAO_AV_Callback
 TAO_AV_Callback::TAO_AV_Callback ()
-   :protocol_object_ (0)
+   :protocol_object_ (nullptr)
 {
 }
 
@@ -100,7 +100,7 @@ TAO_AV_Callback::get_timeout (ACE_Time_Value *& tv,
                               void *& /*arg*/)
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::get_timeout\n"));
-  tv = 0;
+  tv = nullptr;
 }
 
 int

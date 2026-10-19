@@ -132,7 +132,7 @@ public:
   virtual int schedule_timer ();
 
   virtual int receive_frame (ACE_Message_Block *frame,
-                             TAO_AV_frame_info *frame_info = 0,
+                             TAO_AV_frame_info *frame_info = nullptr,
                              const ACE_Addr &address = ACE_Addr::sap_any);
 
   // Called when a frame arrives for a FlowConsumer.
