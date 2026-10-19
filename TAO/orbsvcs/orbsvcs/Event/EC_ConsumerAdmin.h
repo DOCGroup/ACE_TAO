@@ -59,6 +59,11 @@ public:
   /// Destructor...
   virtual ~TAO_EC_ConsumerAdmin ();
 
+  TAO_EC_ConsumerAdmin (TAO_EC_ConsumerAdmin const &) = delete;
+  TAO_EC_ConsumerAdmin (TAO_EC_ConsumerAdmin &&) = delete;
+  TAO_EC_ConsumerAdmin &operator= (TAO_EC_ConsumerAdmin const &) = delete;
+  TAO_EC_ConsumerAdmin &operator= (TAO_EC_ConsumerAdmin &&) = delete;
+
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
       obtain_push_supplier ();

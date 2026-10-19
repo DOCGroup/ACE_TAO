@@ -190,6 +190,11 @@ public:
   /// Destructor
   ~TAO_EC_ProxyPushConsumer_Guard ();
 
+  TAO_EC_ProxyPushConsumer_Guard (TAO_EC_ProxyPushConsumer_Guard const &) = delete;
+  TAO_EC_ProxyPushConsumer_Guard (TAO_EC_ProxyPushConsumer_Guard &&) = delete;
+  TAO_EC_ProxyPushConsumer_Guard &operator= (TAO_EC_ProxyPushConsumer_Guard const &) = delete;
+  TAO_EC_ProxyPushConsumer_Guard &operator= (TAO_EC_ProxyPushConsumer_Guard &&) = delete;
+
   /// Returns true if the reference count successfully acquired
   bool locked () const;
 
