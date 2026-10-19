@@ -34,7 +34,7 @@ public:
   virtual void disconnect_push_consumer ();
 
 private:
-  typedef TAO_EC_Default_ProxyPushConsumer BASECLASS;
+  using BASECLASS = TAO_EC_Default_ProxyPushConsumer;
   TAO_EC_TPC_Dispatching* tpc_dispatching ();
 };
 

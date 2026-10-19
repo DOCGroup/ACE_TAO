@@ -54,9 +54,9 @@ class TAO_EC_Supplier_Filter;
 class TAO_RTEvent_Serv_Export TAO_EC_ProxyPushConsumer
 {
 public:
-  typedef RtecEventChannelAdmin::ProxyPushConsumer Interface;
-  typedef RtecEventChannelAdmin::ProxyPushConsumer_var _var_type;
-  typedef RtecEventChannelAdmin::ProxyPushConsumer_ptr _ptr_type;
+  using Interface = RtecEventChannelAdmin::ProxyPushConsumer;
+  using _var_type = RtecEventChannelAdmin::ProxyPushConsumer_var;
+  using _ptr_type = RtecEventChannelAdmin::ProxyPushConsumer_ptr;
 
   /// constructor...
   TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);

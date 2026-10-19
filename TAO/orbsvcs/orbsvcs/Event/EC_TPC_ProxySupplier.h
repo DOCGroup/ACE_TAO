@@ -41,7 +41,7 @@ public:
   virtual void disconnect_push_supplier ();
 
 private:
-  typedef TAO_EC_Default_ProxyPushSupplier BASECLASS;
+  using BASECLASS = TAO_EC_Default_ProxyPushSupplier;
   TAO_EC_TPC_Dispatching* tpc_dispatching ();
 };
 

@@ -66,9 +66,9 @@ public:
   static int matches (const RtecEventComm::EventHeader& rhs,
                       const RtecEventComm::EventHeader& lhs);
 
-  typedef TAO_EC_Filter* value_type;
-  typedef TAO_EC_Filter* const const_value_type;
-  typedef const_value_type* ChildrenIterator;
+  using value_type = TAO_EC_Filter *;
+  using const_value_type = TAO_EC_Filter * const;
+  using ChildrenIterator = const_value_type *;
 
   /**
    * STL-like iterators

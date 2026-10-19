@@ -173,12 +173,15 @@ public:
                      const RtecEventComm::EventHeader& rhs) const;
   };
 
-  typedef ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map;
-  typedef ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map_Iterator;
+  using Observer_Map =
+    ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle, Observer_Entry, ACE_Null_Mutex>;
+  using Observer_Map_Iterator =
+    ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle, Observer_Entry, ACE_Null_Mutex>;
 
 
-  typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
-  typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
+  using Headers = ACE_RB_Tree<RtecEventComm::EventHeader, int, Header_Compare, ACE_Null_Mutex>;
+  using HeadersIterator =
+    ACE_RB_Tree_Iterator<RtecEventComm::EventHeader, int, Header_Compare, ACE_Null_Mutex>;
 
 protected:
   /// Helpers.

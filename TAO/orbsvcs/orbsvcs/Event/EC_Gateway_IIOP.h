@@ -205,8 +205,12 @@ protected:
   bool supplier_is_active_;
 
   // We use a different Consumer_Proxy
-  typedef ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map;
-  typedef ACE_Map_Iterator<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map_Iterator;
+  using Consumer_Map =
+    ACE_Map_Manager<RtecEventComm::EventSourceID,
+                    RtecEventChannelAdmin::ProxyPushConsumer_ptr, ACE_Null_Mutex>;
+  using Consumer_Map_Iterator =
+    ACE_Map_Iterator<RtecEventComm::EventSourceID,
+                     RtecEventChannelAdmin::ProxyPushConsumer_ptr, ACE_Null_Mutex>;
 
   /// We talk to the EC (as a supplier) using either an per-supplier
   /// proxy or a generic proxy for the type only subscriptions. We push the

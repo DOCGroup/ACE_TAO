@@ -198,8 +198,8 @@ private:
   /// Helper for fragmenting and sending cdr-encoded events using udp.
   TAO_ECG_CDR_Message_Sender cdr_sender_;
 
-  typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command>
-  ECG_Sender_Auto_Proxy_Disconnect;
+  using ECG_Sender_Auto_Proxy_Disconnect =
+    TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command>;
   /// Manages our connection to Supplier Proxy.
   ECG_Sender_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };

@@ -69,7 +69,10 @@ private:
   /// The priority of the dispatching threads.
   int thread_priority_;
 
-  typedef ACE_Hash_Map_Manager_Ex<RtecEventComm::PushConsumer_ptr,TAO_EC_Dispatching_Task*,ACE_Pointer_Hash<RtecEventComm::PushConsumer_ptr>,ACE_Equal_To<RtecEventComm::PushConsumer_ptr>,ACE_Null_Mutex> MAPTYPE;
+  using MAPTYPE =
+    ACE_Hash_Map_Manager_Ex<RtecEventComm::PushConsumer_ptr, TAO_EC_Dispatching_Task *,
+                            ACE_Pointer_Hash<RtecEventComm::PushConsumer_ptr>,
+                            ACE_Equal_To<RtecEventComm::PushConsumer_ptr>, ACE_Null_Mutex>;
 
   // Tweak the default size of this map by #defining
   //    TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE

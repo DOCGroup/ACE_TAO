@@ -215,8 +215,8 @@ private:
   /// opportunity to clean up resources.
   TAO_ECG_Refcounted_Handler handler_rptr_;
 
-  typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Receiver_Disconnect_Command>
-  ECG_Receiver_Auto_Proxy_Disconnect;
+  using ECG_Receiver_Auto_Proxy_Disconnect =
+    TAO_EC_Auto_Command<TAO_ECG_UDP_Receiver_Disconnect_Command>;
   /// Manages our connection to Consumer Proxy.
   ECG_Receiver_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };

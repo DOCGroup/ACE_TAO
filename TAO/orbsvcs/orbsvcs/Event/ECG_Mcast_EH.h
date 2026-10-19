@@ -140,7 +140,7 @@ private:
   void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
 
 
-  typedef ACE_Unbounded_Set<ACE_INET_Addr> Address_Set;
+  using Address_Set = ACE_Unbounded_Set<ACE_INET_Addr>;
 
   /// Helpers for updating multicast subscriptions based on changes in
   /// consumer subscriptions.
@@ -221,7 +221,7 @@ private:
     ACE_INET_Addr mcast_addr;
     ACE_SOCK_Dgram_Mcast* dgram;
   } Subscription;
-  typedef ACE_Array_Base<Subscription> Subscriptions;
+  using Subscriptions = ACE_Array_Base<Subscription>;
 
   /// List of multicast addresses we subscribe to and dgrams we use.
   /*

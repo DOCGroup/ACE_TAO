@@ -28,7 +28,7 @@ activate (T & obj_ref,
 
   // Don't try to use T::_obj_type::_narrow, some compilers don't like it so
   // do this in two steps
-  typedef typename T::_obj_type my_object_type;
+  using my_object_type = typename T::_obj_type;
 
   obj_ref =
     my_object_type::_narrow (obj.in());

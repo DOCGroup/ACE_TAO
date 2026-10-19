@@ -90,8 +90,8 @@ private:
   /// event type to mcast groups.
   int is_source_mapping_;
 
-  typedef ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr,
-    ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex> MAP;
+  using MAP = ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr,
+                                      ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;
 
   MAP mcast_mapping_;
 

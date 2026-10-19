@@ -156,8 +156,9 @@ TAO_EC_Null_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
 TAO_EC_ProxyPushConsumer_Collection*
 TAO_EC_Null_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base *)
 {
-  // This typedef is a workaround for a SunCC 4.2 bug
-  typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator TAO_EC_Consumer_List_Iterator;
+  // This alias works around a SunCC 4.2 bug.
+  using TAO_EC_Consumer_List_Iterator =
+    TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator;
   return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
@@ -173,8 +174,9 @@ TAO_EC_Null_Factory::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushCon
 TAO_EC_ProxyPushSupplier_Collection*
 TAO_EC_Null_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base *)
 {
-  // This typedef is a workaround for a SunCC 4.2 bug
-  typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator TAO_EC_Supplier_List_Iterator;
+  // This alias works around a SunCC 4.2 bug.
+  using TAO_EC_Supplier_List_Iterator =
+    TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator;
   return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,

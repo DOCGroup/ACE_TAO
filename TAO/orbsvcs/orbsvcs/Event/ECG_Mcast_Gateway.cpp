@@ -21,11 +21,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Sender> >
-UDP_Sender_Shutdown;
+using UDP_Sender_Shutdown =
+  TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Sender>>;
 
-typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Receiver> >
-UDP_Receiver_Shutdown;
+using UDP_Receiver_Shutdown =
+  TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Receiver>>;
 
 int
 TAO_ECG_Mcast_Gateway::init_svcs ()

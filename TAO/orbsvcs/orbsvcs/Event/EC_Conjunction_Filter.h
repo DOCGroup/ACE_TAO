@@ -66,7 +66,7 @@ public:
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
                                 const TAO_EC_QOS_Info &qos_info);
 
-  typedef unsigned int Word;
+  using Word = unsigned int;
 
 private:
   /// Determine if all the children have received their events.
