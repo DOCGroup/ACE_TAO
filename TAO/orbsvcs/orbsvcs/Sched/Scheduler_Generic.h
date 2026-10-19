@@ -34,11 +34,11 @@ public:
   ~Scheduler_Generic () override;
 
   // = Initialize the scheduler.
-  virtual void init (const int minimum_priority,
-                     const int maximum_priority,
-                     const char *runtime_filename = nullptr,
-                     const char *rt_info_filename = nullptr,
-                     const char *timeline_filename = nullptr) override;
+  void init (const int minimum_priority,
+             const int maximum_priority,
+             const char *runtime_filename = nullptr,
+             const char *rt_info_filename = nullptr,
+             const char *timeline_filename = nullptr) override;
 
   // = Registers a task.
   status_t register_task (RT_Info *[],
