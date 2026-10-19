@@ -61,7 +61,7 @@ class TAO_PortableServer_Export TAO_POA_Manager :
 public:
   void activate () override;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
   void hold_requests (CORBA::Boolean wait_for_completion) override;
 
@@ -70,7 +70,7 @@ public:
   void deactivate (CORBA::Boolean etherealize_objects,
                    CORBA::Boolean wait_for_completion) override;
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   PortableServer::POAManager::State get_state () override;
 
