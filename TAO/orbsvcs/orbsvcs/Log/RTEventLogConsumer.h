@@ -51,32 +51,37 @@ class TAO_RTEventLogFactory_i;
  * Log when events are 'pushed' to the RTEventLog which is an
  * EventChannel.
  */
-class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
+class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer : public virtual POA_RtecEventComm::PushConsumer
 {
 public:
   /// Constructor.
-  TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log);
+  TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log);
 
   /// Destructor.
-  ~TAO_Rtec_LogConsumer ();
+  ~TAO_Rtec_LogConsumer () override;
 
   /// Connect to RTEventLog.
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
   /// Disconnect from EventLog.
-  void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.
-  void push (const RtecEventComm::EventSet& events);
+  void push (RtecEventComm::EventSet const & events) override;
+
+  TAO_Rtec_LogConsumer (TAO_Rtec_LogConsumer const &) = delete;
+  TAO_Rtec_LogConsumer (TAO_Rtec_LogConsumer &&) = delete;
+  TAO_Rtec_LogConsumer & operator= (TAO_Rtec_LogConsumer const &) = delete;
+  TAO_Rtec_LogConsumer & operator= (TAO_Rtec_LogConsumer &&) = delete;
 
   /// ProxyPushSupplier used to connect to RTEventLog.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
   /// The RTEventLog that this consumer connects to
   /// and whose events are to be logged.
-  TAO_RTEventLog_i *log_;
+  TAO_RTEventLog_i * log_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
