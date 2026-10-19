@@ -643,9 +643,9 @@ TAO_Trader_Factory::create_trader (int& argc, ACE_TCHAR** argv)
 
 TAO_Trader_Factory::TAO_Trader_Factory (int& argc, ACE_TCHAR** argv)
   : conformance_ (TAO_TRADER_LINKED),
-    threadsafe_ (0),
-    supports_dynamic_properties_ (1),
-    supports_modifiable_properties_ (1),
+    threadsafe_ (false),
+    supports_dynamic_properties_ (true),
+    supports_modifiable_properties_ (true),
     def_search_card_ (20),
     max_search_card_ (50),
     def_match_card_ (20),
@@ -663,15 +663,15 @@ TAO_Trader_Factory::TAO_Trader_Factory (int& argc, ACE_TCHAR** argv)
 TAO_Trader_Factory::TAO_TRADER *
 TAO_Trader_Factory::manufacture_trader ()
 {
-  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TRADER;
+  using TRADER = TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
 
 #if defined ACE_HAS_THREADS
-  typedef TAO_Trader<TAO_SYNCH_MUTEX, TAO_SYNCH_RW_MUTEX>  MT_TRADER;
+  using MT_TRADER = TAO_Trader<TAO_SYNCH_MUTEX, TAO_SYNCH_RW_MUTEX>;
 #else
-  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  MT_TRADER;
+  using MT_TRADER = TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
 #endif /* ACE_HAS_THREADS */
 
-  TAO_TRADER* return_value = 0;
+  TAO_TRADER* return_value = nullptr;
   int components = static_cast<int> (TAO_Trader_Base::LOOKUP);
 
   if (this->conformance_ >= TAO_TRADER_SIMPLE)

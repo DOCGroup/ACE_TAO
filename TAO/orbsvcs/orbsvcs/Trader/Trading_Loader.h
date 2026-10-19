@@ -40,11 +40,11 @@ public:
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini ();
+  int fini () override;
 
   /// Run the Trading Service
   int run ();
@@ -95,10 +95,10 @@ protected:
   CORBA::Boolean bootstrapper_;
 
 private:
-  TAO_Trading_Loader (const TAO_Trading_Loader &) = delete;
-  TAO_Trading_Loader &operator= (const TAO_Trading_Loader &) = delete;
-  TAO_Trading_Loader (TAO_Trading_Loader &&) = delete;
-  TAO_Trading_Loader &operator= (TAO_Trading_Loader &&) = delete;
+  TAO_Trading_Loader (TAO_Trading_Loader const&) = delete;
+  TAO_Trading_Loader& operator= (TAO_Trading_Loader const&) = delete;
+  TAO_Trading_Loader (TAO_Trading_Loader&&) = delete;
+  TAO_Trading_Loader& operator= (TAO_Trading_Loader&&) = delete;
 };
 
 ACE_FACTORY_DECLARE (TAO_Trading_Serv, TAO_Trading_Loader)

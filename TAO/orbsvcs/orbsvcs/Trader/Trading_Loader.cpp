@@ -29,13 +29,13 @@
 #include "ace/os_include/os_netdb.h"
 
 TAO_Trading_Loader::TAO_Trading_Loader ()
-  : federate_ (0),
-    ior_output_file_ (0),
-    bootstrapper_ (0)
+  : federate_ (false),
+    ior_output_file_ (nullptr),
+    bootstrapper_ (false)
 {
   char *trader_name = CORBA::string_alloc (MAXHOSTNAMELEN + 10);
 
-  if (trader_name != 0)
+  if (trader_name != nullptr)
     {
       // The trader name is the concatenation of the local host name
       // and the server's process id.
@@ -59,8 +59,8 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
                        host_name,
                        static_cast<long> (ACE_OS::getpid ()));
 
-      for (char *dot = 0;
-           (dot = ACE_OS::strchr (trader_name, '.')) != 0;
+      for (char* dot = nullptr;
+           (dot = ACE_OS::strchr (trader_name, '.')) != nullptr;
            *dot = '_')
         continue;
 
@@ -108,7 +108,7 @@ TAO_Trading_Loader::fini ()
 {
   try
     {
-      if (this->trader_.get () != 0)
+      if (this->trader_.get () != nullptr)
         {
           TAO_Trading_Components_i& trd_comp
             = this->trader_->trading_components ();
