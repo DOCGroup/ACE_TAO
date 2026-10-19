@@ -38,6 +38,12 @@ public:
 
   TAO_FT_Naming_Server &owner_;
   bool iors_;
+
+private:
+  TAO_FTNS_Notifier (TAO_FTNS_Notifier const &) = delete;
+  TAO_FTNS_Notifier (TAO_FTNS_Notifier &&) = delete;
+  TAO_FTNS_Notifier &operator= (TAO_FTNS_Notifier const &) = delete;
+  TAO_FTNS_Notifier &operator= (TAO_FTNS_Notifier &&) = delete;
 };
 
 
