@@ -19,13 +19,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
-                                 , CosNotifyChannelAdmin::ProxyConsumer
-                                 , CosNotifyChannelAdmin::ProxyConsumer_ptr
-                                 , CosNotifyChannelAdmin::ProxyNotFound>
-TAO_Notify_ProxyConsumer_Find_Worker;
+using TAO_Notify_ProxyConsumer_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_Proxy,
+                           CosNotifyChannelAdmin::ProxyConsumer,
+                           CosNotifyChannelAdmin::ProxyConsumer_ptr,
+                           CosNotifyChannelAdmin::ProxyNotFound>;
 
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Seq_Worker;
+using TAO_Notify_Proxy_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>;
 
 TAO_Notify_SupplierAdmin::TAO_Notify_SupplierAdmin ()
   : TAO_Notify_Admin ()
