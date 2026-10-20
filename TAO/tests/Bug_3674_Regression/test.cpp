@@ -15,15 +15,15 @@ namespace
 {
   //------------------------------------------------------------------
   // For simplicity most of the main variables are available GLOBALLY.
-  int Result = 0;
+  int Result {};
   CORBA::ORB_var orb;
   PortableInterceptor::Current_var PICurrent;
   PortableInterceptor::SlotId slot_id = 2093843221;
   testInterface_var server;
 
-  void isCorrect (const CORBA::Any &data, const CORBA::Long correct, const ACE_TCHAR *const ID)
+  void isCorrect (CORBA::Any const &data, CORBA::Long const correct, ACE_TCHAR const * const ID)
     {
-      CORBA::Long actual= 0;
+      CORBA::Long actual {};
       if (data >>= actual)
         if (correct == actual)
           ACE_DEBUG ((LM_DEBUG,
@@ -34,14 +34,14 @@ namespace
             ACE_DEBUG ((LM_DEBUG,
                         ". %s retrieved **INCORRECT** long (%d should be %d) from TSC.\n",
                         ID, actual, correct));
-            Result= 1;
+            Result = 1;
           }
       else
         {
            ACE_DEBUG ((LM_DEBUG,
                        ". %s can't retrieved long from the TSC.\n",
                        ID));
-            Result= 1;
+            Result = 1;
         }
     }
 
