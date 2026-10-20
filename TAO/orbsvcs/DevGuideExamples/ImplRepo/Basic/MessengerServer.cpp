@@ -3,7 +3,7 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("messenger.ior");
+ACE_TCHAR const * ior_output_file = ACE_TEXT ("messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,8 +33,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 
 PortableServer::POA_ptr
-createPersistentPOA(PortableServer::POA_ptr root_poa,
-                    const char* poa_name)
+createPersistentPOA (PortableServer::POA_ptr root_poa,
+                     char const * poa_name)
 {
   CORBA::PolicyList policies;
   policies.length(2);
@@ -66,7 +66,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POAManager_var mgr = root_poa->the_POAManager();
 
-    const char* poa_name = "MessengerService";
+    char const * poa_name = "MessengerService";
 
     PortableServer::POA_var poa = createPersistentPOA(root_poa.in(), poa_name);
 
@@ -81,10 +81,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::String_var ior = orb->object_to_string(obj.in());
 
     // If the ior_output_file exists, output the ior to it
-    if (ior_output_file != 0)
+    if (ior_output_file != nullptr)
     {
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
-      if (output_file == 0)
+      FILE * output_file = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
 
     return 0;
-  } catch(const CORBA::Exception& ex) {
+  } catch (CORBA::Exception const & ex) {
     std::cerr << "Server main() Caught Exception" << ex << std::endl;
   }
   return 1;
