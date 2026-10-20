@@ -183,7 +183,7 @@ ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
           ++d;
         } while (--count != 0);
 
-      *d = nullptr;
+      *d = 0;
     }
 
   return destination;

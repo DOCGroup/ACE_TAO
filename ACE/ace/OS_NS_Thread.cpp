@@ -4203,7 +4203,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   // We can't get the status of the thread
   if (status != 0)
     {
-      *status = nullptr;
+      *status = 0;
     }
 
   // This method can not support joining all threads
