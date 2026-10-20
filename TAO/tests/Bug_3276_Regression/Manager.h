@@ -11,7 +11,12 @@ public:
 
   ~Manager ();
 
-  int init (int argc, ACE_TCHAR *argv[]);
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
+
+  int init (int argc, ACE_TCHAR * argv[]);
   // Initialize the ORB, POA etc.
 
   int activate_servant ();

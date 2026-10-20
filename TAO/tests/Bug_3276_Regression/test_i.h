@@ -9,9 +9,9 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual void remote_call ();
+  void remote_call () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

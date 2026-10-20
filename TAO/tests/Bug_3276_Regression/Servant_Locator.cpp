@@ -4,9 +4,9 @@
 #include "ace/OS_NS_string.h"
 
 PortableServer::Servant
-Servant_Locator::preinvoke (const PortableServer::ObjectId & /* oid */,
+Servant_Locator::preinvoke (PortableServer::ObjectId const & /* oid */,
                             PortableServer::POA_ptr /* poa_ptr */,
-                            const char * /* op */,
+                            char const * /* op */,
                             PortableServer::ServantLocator::Cookie & /* cookie */)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -16,10 +16,10 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId & /* oid */,
 }
 
 void
-Servant_Locator::postinvoke (const PortableServer::ObjectId &,
-                             PortableServer::POA_ptr ,
-                             const char *,
-                             PortableServer::ServantLocator::Cookie ,
+Servant_Locator::postinvoke (PortableServer::ObjectId const &,
+                             PortableServer::POA_ptr,
+                             char const *,
+                             PortableServer::ServantLocator::Cookie,
                              PortableServer::Servant)
 {
 }
