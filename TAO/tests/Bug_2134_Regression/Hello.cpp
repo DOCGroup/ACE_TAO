@@ -9,19 +9,23 @@
 
 namespace Test
 {
-class Hello_impl: virtual public POA_Test::Hello
+class Hello_impl : virtual public POA_Test::Hello
 {
 public:
-  void say_hello()
-  {
-  };
+  Hello_impl () = default;
+  Hello_impl (Hello_impl const &) = delete;
+  Hello_impl &operator= (Hello_impl const &) = delete;
+  Hello_impl (Hello_impl &&) = delete;
+  Hello_impl &operator= (Hello_impl &&) = delete;
+
+  void say_hello () override {}
 };
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
-  CORBA::ORB_var orb = CORBA::ORB::_nil();
+  CORBA::ORB_var orb = CORBA::ORB::_nil ();
 
   try
     {
@@ -92,7 +96,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                   policy_list,
                                                   CORBA::SET_OVERRIDE);
 
-      policy_list[0]->destroy();
+      policy_list[0]->destroy ();
 
       Test::Hello_var hello2 = Test::Hello::_narrow (rtt_obj.in ());
 
@@ -110,7 +114,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "Test succeeded !!!\n"));
         }
 
-      orb->destroy();
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
