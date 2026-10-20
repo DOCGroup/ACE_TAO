@@ -41,7 +41,7 @@ public:
 
   virtual TAO_RT_Transport_Descriptor_Property *duplicate () = 0;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) = 0;
+  virtual CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) = 0;
 
 protected:
   /// Properties can be chanined using the <next_> pointer;
@@ -79,7 +79,7 @@ public:
 
   TAO_RT_Transport_Descriptor_Property *duplicate () override;
 
-  CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) override;
+  CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) override;
 
 private:
   /**
@@ -116,7 +116,7 @@ public:
 
   TAO_RT_Transport_Descriptor_Property *duplicate () override;
 
-  CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) override;
+  CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) override;
 
 protected:
   /// The low priority of the Band.
