@@ -334,9 +334,7 @@ TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
 {
 }
 
-TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory ()
-{
-}
+TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory () = default;
 
 int
 TAO_AV_RTCP_Flow_Factory::match_protocol (const char *flow_string)
@@ -431,15 +429,14 @@ TAO_AV_RTCP_Object::send_frame (const char*,
 TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
                                         TAO_AV_RTCP_Callback *&rtcp_cb,
                                         TAO_AV_Transport *transport)
-  :TAO_AV_Protocol_Object (&rtcp_cb_, transport)
+  : TAO_AV_Protocol_Object (&rtcp_cb_, transport)
+  , client_cb_ (client_cb)
+  , ssrc_ (0)
 {
   rtcp_cb = &this->rtcp_cb_;
-  this->client_cb_ = client_cb;
 }
 
-TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object ()
-{
-}
+TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object () = default;
 
 int
 TAO_AV_RTCP_Object::destroy ()
