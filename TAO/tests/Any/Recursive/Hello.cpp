@@ -6,9 +6,9 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 CORBA::Any *
-Hello::get_any (CORBA::Any const & the_any)
+Hello::get_any (CORBA::Any const &the_any)
 {
-  CORBA::Any * retval = 0;
+  CORBA::Any *retval = nullptr;
 
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any (the_any),
