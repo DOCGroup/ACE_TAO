@@ -46,7 +46,7 @@ TAO_UIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_UIOP_Endpoint::duplicate ()
 {
-  TAO_UIOP_Endpoint *endpoint = 0;
+  TAO_UIOP_Endpoint *endpoint = nullptr;
   ACE_NEW_RETURN (endpoint,
                   TAO_UIOP_Endpoint (this->object_addr_,
                                      this->priority ()),
@@ -62,7 +62,7 @@ TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 
   TAO_UIOP_Endpoint *endpoint = dynamic_cast<TAO_UIOP_Endpoint *> (endpt);
 
-  if (endpoint == 0)
+  if (endpoint == nullptr)
     return 0;
 
   return ACE_OS::strcmp (this->rendezvous_point (),

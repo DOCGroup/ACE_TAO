@@ -56,7 +56,7 @@ TAO_COIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_COIOP_Endpoint::duplicate ()
 {
-  TAO_COIOP_Endpoint *endpoint = 0;
+  TAO_COIOP_Endpoint *endpoint = nullptr;
 
   ACE_NEW_RETURN (endpoint,
                   TAO_COIOP_Endpoint (this->uuid_),
@@ -71,7 +71,7 @@ TAO_COIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
   TAO_COIOP_Endpoint *endpoint = dynamic_cast<TAO_COIOP_Endpoint *> (endpt);
-  if (endpoint == 0)
+  if (endpoint == nullptr)
     return false;
 
   return (this->uuid_ == endpoint->uuid_);

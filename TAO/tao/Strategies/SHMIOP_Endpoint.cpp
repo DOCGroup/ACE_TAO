@@ -52,7 +52,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     , object_addr_set_ (0)
     , next_ (0)
 {
-  if (host != 0)
+  if (host != nullptr)
     this->host_ = host;
 }
 
@@ -76,7 +76,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     , object_addr_set_ (0)
     , next_ (0)
 {
-  if (host != 0)
+  if (host != nullptr)
     this->host_ = host;
 
   this->priority (priority);
@@ -102,8 +102,8 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
                       ACE_TEXT ("- %p cannot determine hostname\n")));
         }
 
-      const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
+      char const *tmp = addr.get_host_addr ();
+      if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -159,7 +159,7 @@ TAO_SHMIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_SHMIOP_Endpoint::duplicate ()
 {
-  TAO_SHMIOP_Endpoint *endpoint = 0;
+  TAO_SHMIOP_Endpoint *endpoint = nullptr;
   ACE_NEW_RETURN (endpoint,
                   TAO_SHMIOP_Endpoint (this->host_.in (),
                                        this->port_,
@@ -177,7 +177,7 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   const TAO_SHMIOP_Endpoint *endpoint = dynamic_cast <const TAO_SHMIOP_Endpoint *>
                                                      (other_endpoint);
 
-  if (endpoint == 0)
+  if (endpoint == nullptr)
     return 0;
 
   return

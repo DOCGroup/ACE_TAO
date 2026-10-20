@@ -102,8 +102,8 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
                       ACE_TEXT ("cannot determine hostname")));
         }
 
-      const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
+      char const *tmp = addr.get_host_addr ();
+      if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -180,7 +180,7 @@ TAO_DIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_DIOP_Endpoint::duplicate ()
 {
-  TAO_DIOP_Endpoint *endpoint = 0;
+  TAO_DIOP_Endpoint *endpoint = nullptr;
 
   ACE_NEW_RETURN (endpoint,
                   TAO_DIOP_Endpoint (this->host_.in (),
@@ -198,7 +198,7 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
   TAO_DIOP_Endpoint *endpoint = dynamic_cast<TAO_DIOP_Endpoint *> (endpt);
-  if (endpoint == 0)
+  if (endpoint == nullptr)
     return 0;
 
   return (this->port () == endpoint->port ()
