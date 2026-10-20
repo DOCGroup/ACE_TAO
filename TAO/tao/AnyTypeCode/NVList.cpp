@@ -109,7 +109,7 @@ CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -137,7 +137,7 @@ CORBA::NVList::add_value (const char *name,
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -158,7 +158,7 @@ CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -185,7 +185,7 @@ CORBA::NVList::add_value_consume (char * name,
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -222,7 +222,7 @@ CORBA::NVList::add_element (CORBA::Flags flags)
   if (this->values_.enqueue_tail (nv) == -1)
     {
       delete nv;
-      return 0;
+      return nullptr;
     }
 
   ++this->max_;
