@@ -51,7 +51,7 @@ namespace TAO
                 bool check_host);
 
       /// Destructor.
-      ~Acceptor ();
+      ~Acceptor () override;
 
       using BASE_ACCEPTOR = TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor>;
       using CREATION_STRATEGY = TAO_Creation_Strategy<Connection_Handler>;
@@ -64,22 +64,22 @@ namespace TAO
        * Check the documentation in tao/Pluggable.h for details.
        */
       //@{
-      virtual int open (TAO_ORB_Core *orb_core,
+      int open (TAO_ORB_Core *orb_core,
+                ACE_Reactor *reactor,
+                int version_major,
+                int version_minor,
+                const char *address,
+                const char *options = nullptr) override;
+      int open_default (TAO_ORB_Core *orb_core,
                         ACE_Reactor *reactor,
                         int version_major,
                         int version_minor,
-                        const char *address,
-                        const char *options = 0);
-      virtual int open_default (TAO_ORB_Core *orb_core,
-                                ACE_Reactor *reactor,
-                                int version_major,
-                                int version_minor,
-                                const char *options = 0);
-      virtual int close ();
-      virtual int create_profile (const TAO::ObjectKey &object_key,
-                                  TAO_MProfile &mprofile,
-                                  CORBA::Short priority);
-      virtual int is_collocated (const TAO_Endpoint* endpoint);
+                        const char *options = nullptr) override;
+      int close () override;
+      int create_profile (const TAO::ObjectKey &object_key,
+                          TAO_MProfile &mprofile,
+                          CORBA::Short priority) override;
+      int is_collocated (const TAO_Endpoint* endpoint) override;
       //@}
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
@@ -93,7 +93,7 @@ namespace TAO
                          ACE_Reactor *reactor);
 
       /// Parse protocol specific options.
-      virtual int parse_options_i (int &argc, ACE_CString ** argv);
+      int parse_options_i (int &argc, ACE_CString ** argv) override;
 
       /// Ensure that neither the endpoint configuration nor the ORB
       /// configuration violate security measures.
