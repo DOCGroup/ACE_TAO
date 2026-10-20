@@ -71,7 +71,7 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
 {
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   TAO_Notify_Tracker::Entry e = TAO_Notify_Tracker::get_instance().find( this );
-  if ( e.obj != 0 )
+  if ( e.obj != nullptr )
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d destroyed incorrectly.\n",
         e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.value() ));
@@ -185,7 +185,7 @@ TAO_Notify_Tracker::get_instance()
 void
 TAO_Notify_Tracker::add( TAO_Notify_Refcountable* p )
 {
-  if ( p == 0 ) return;
+  if ( p == nullptr ) return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int id = ++id_counter_;
@@ -209,7 +209,7 @@ TAO_Notify_Tracker::add( TAO_Notify_Refcountable* p )
 void
 TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
 {
-  if ( p == 0 ) return;
+  if ( p == nullptr ) return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int ref_id = p->ref_id_;
@@ -230,8 +230,8 @@ TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
 TAO_Notify_Tracker::Entry
 TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p) const
 {
-  Entry e = { 0, "" };
-  if ( p == 0 ) return e;
+  Entry e = { nullptr, "" };
+  if ( p == nullptr ) return e;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int ref_id = p->ref_id_;

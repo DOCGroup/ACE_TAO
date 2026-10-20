@@ -70,7 +70,7 @@ ACE_Time_Value
 TAO_Notify_Buffering_Strategy::oldest_event ()
 {
   ACE_Time_Value tv (ACE_Time_Value::max_time);
-  ACE_Message_Block* mb = 0;
+  ACE_Message_Block* mb = nullptr;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, tv);
   TAO_Notify_Message_Queue::ITERATOR itr (this->msg_queue_);
@@ -78,7 +78,7 @@ TAO_Notify_Buffering_Strategy::oldest_event ()
     {
       TAO_Notify_Method_Request_Queueable* event =
         dynamic_cast<TAO_Notify_Method_Request_Queueable*> (mb);
-      if (event != 0)
+      if (event != nullptr)
         {
           const ACE_Time_Value& etime = event->creation_time ();
           if (etime < tv)
@@ -105,7 +105,7 @@ TAO_Notify_Buffering_Strategy::Tracker::~Tracker ()
 void
 TAO_Notify_Buffering_Strategy::Tracker::register_child (TAO_Notify_Buffering_Strategy::Tracker * child)
 {
-  if (this->child_ == 0)
+  if (this->child_ == nullptr)
     {
       this->child_ = child;
     }
@@ -123,7 +123,7 @@ TAO_Notify_Buffering_Strategy::Tracker::unregister_child (TAO_Notify_Buffering_S
     {
       this->child_ = this->child_->child_;
     }
-  else if (this->child_ != 0)
+  else if (this->child_ != nullptr)
     {
       this->child_->unregister_child (child);
     }
@@ -173,7 +173,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
               continue;
             }
         }
-      if (tracker_ != 0)
+      if (tracker_ != nullptr)
         {
           tracker_->count_queue_overflow (local_overflow, global_overflow);
         }
@@ -209,7 +209,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
     }
 
   size_t count = this->msg_queue_.message_count ();
-  if (this->tracker_ != 0)
+  if (this->tracker_ != nullptr)
     {
       this->tracker_->update_queue_count (count);
     }
@@ -220,7 +220,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 int
 TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &method_request, const ACE_Time_Value *abstime)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -241,14 +241,14 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
   if (this->msg_queue_.dequeue (mb) == -1)
     return -1;
 
-  if (this->tracker_ != 0)
+  if (this->tracker_ != nullptr)
     {
       this->tracker_->update_queue_count (this->msg_queue_.message_count ());
     }
 
   method_request = dynamic_cast<TAO_Notify_Method_Request_Queueable*>(mb);
 
-  if (method_request == 0)
+  if (method_request == nullptr)
     return -1;
 
   --this->global_queue_length_;
@@ -262,7 +262,7 @@ void
 TAO_Notify_Buffering_Strategy::set_tracker (
                         TAO_Notify_Buffering_Strategy::Tracker* tracker)
 {
-  if (this->tracker_ == 0)
+  if (this->tracker_ == nullptr)
     {
       this->tracker_ = tracker;
     }
@@ -316,7 +316,7 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
       return false;
     }
 
-  ACE_Message_Block* mb = 0;
+  ACE_Message_Block* mb = nullptr;
   int result = -1;
 
   if (this->discard_policy_.is_valid() == 0 ||
