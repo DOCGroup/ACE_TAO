@@ -154,19 +154,17 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
 //------------------------------------------------------------
 
 TAO_AV_UDP_Transport::TAO_AV_UDP_Transport ()
-  :handler_ (0)
+  : handler_ (nullptr)
 {
 }
 
 TAO_AV_UDP_Transport::TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler)
-  :handler_ (handler),
-   addr_ (0)
+  : handler_ (handler)
+  , addr_ (nullptr)
 {
 }
 
-TAO_AV_UDP_Transport::~TAO_AV_UDP_Transport ()
-{
-}
+TAO_AV_UDP_Transport::~TAO_AV_UDP_Transport () = default;
 
 int
 TAO_AV_UDP_Transport::set_remote_address (const ACE_INET_Addr &address)
@@ -913,9 +911,7 @@ TAO_AV_UDP_Factory::TAO_AV_UDP_Factory ()
 {
 }
 
-TAO_AV_UDP_Factory::~TAO_AV_UDP_Factory ()
-{
-}
+TAO_AV_UDP_Factory::~TAO_AV_UDP_Factory () = default;
 
 int
 TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
@@ -1013,10 +1009,7 @@ TAO_AV_UDP_Object::TAO_AV_UDP_Object (TAO_AV_Callback *callback,
   this->frame_.size (this->transport_->mtu ());
 }
 
-TAO_AV_UDP_Object::~TAO_AV_UDP_Object ()
-{
-  //no-op
-}
+TAO_AV_UDP_Object::~TAO_AV_UDP_Object () = default;
 
 int
 TAO_AV_UDP_Object::destroy ()
@@ -1035,9 +1028,7 @@ TAO_AV_UDP_Flow_Factory::TAO_AV_UDP_Flow_Factory ()
 {
 }
 
-TAO_AV_UDP_Flow_Factory::~TAO_AV_UDP_Flow_Factory ()
-{
-}
+TAO_AV_UDP_Flow_Factory::~TAO_AV_UDP_Flow_Factory () = default;
 
 int
 TAO_AV_UDP_Flow_Factory::init (int /* argc */,
