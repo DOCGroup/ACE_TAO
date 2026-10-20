@@ -45,7 +45,7 @@ namespace TAO
        */
       static ::SSL * _duplicate (::SSL * st)
       {
-        if (st != 0)
+        if (st != nullptr)
         {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
           ::SSL_up_ref(st);

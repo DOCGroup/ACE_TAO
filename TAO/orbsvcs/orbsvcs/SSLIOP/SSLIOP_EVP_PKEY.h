@@ -42,7 +42,7 @@ namespace TAO
        */
       static ::EVP_PKEY * _duplicate (::EVP_PKEY * st)
       {
-        if (st != 0)
+        if (st != nullptr)
         {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
           ::EVP_PKEY_up_ref(st);

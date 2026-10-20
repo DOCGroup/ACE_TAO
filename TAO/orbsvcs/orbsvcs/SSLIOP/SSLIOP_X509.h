@@ -43,7 +43,7 @@ namespace TAO
        */
       static ::X509 * _duplicate (::X509 * st)
       {
-        if (st != 0)
+        if (st != nullptr)
         {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
           ::X509_up_ref(st);
