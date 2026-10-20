@@ -419,7 +419,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   iteratable_poa_name::iterator end = ipn.end ();
 
   TAO_Root_POA *parent = this->root_;
-  if (parent == 0 || parent->name () != *iterator)
+  if (parent == nullptr || parent->name () != *iterator)
     throw ::CORBA::OBJ_ADAPTER ();
   else
     ++iterator;
@@ -704,7 +704,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
   try
     {
-      if (sri_adapter != 0)
+      if (sri_adapter != nullptr)
         {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
           CORBA::OctetSeq_var ocs;
@@ -766,7 +766,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           request.reply_status (GIOP::LOCATION_FORWARD);
           request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
           request.forward_location (forward_to.ptr ());
-          if (sri_adapter != 0)
+          if (sri_adapter != nullptr)
             {
               sri_adapter->send_other (request,
                                        0,  // args
@@ -786,7 +786,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
       PortableInterceptor::ReplyStatus status =
         PortableInterceptor::SYSTEM_EXCEPTION;
 
-      if (sri_adapter != 0)
+      if (sri_adapter != nullptr)
         {
           request.caught_exception (&ex);
 
@@ -880,7 +880,7 @@ void
 TAO_Object_Adapter::release_poa_manager_factory (
                                      TAO_POAManager_Factory *factory)
 {
-  if (factory != 0)
+  if (factory != nullptr)
     {
       factory->remove_all_poamanagers ();
       ::CORBA::release (factory);
