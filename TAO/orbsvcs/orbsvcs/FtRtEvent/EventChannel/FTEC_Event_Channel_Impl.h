@@ -34,7 +34,7 @@ class TAO_FTEC_Event_Channel_Impl : public TAO_EC_Event_Channel_Base
 public:
   TAO_FTEC_Event_Channel_Impl(const TAO_EC_Event_Channel_Attributes& attributes);
 
-  ~TAO_FTEC_Event_Channel_Impl();
+  ~TAO_FTEC_Event_Channel_Impl() override;
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
