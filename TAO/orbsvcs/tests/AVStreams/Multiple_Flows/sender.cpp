@@ -8,7 +8,7 @@
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 
 int

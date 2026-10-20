@@ -9,7 +9,7 @@ int endstream = 0;
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
-typedef ACE_Unmanaged_Singleton<Receiver,ACE_Null_Mutex> RECEIVER;
+using RECEIVER = ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>;
 
 
 int
