@@ -5,7 +5,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 {
 }
 
-Test::ObjectSeq*
+Test::ObjectSeq *
 Hello::get_objects ()
 {
   Test::ObjectSeq_var my_seq = new Test::ObjectSeq (1);
