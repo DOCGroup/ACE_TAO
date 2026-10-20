@@ -24,16 +24,20 @@ public:
   /// Constructor
   Big_Reply_i (CORBA::ORB_ptr orb,
                CORBA::ULong length);
+  Big_Reply_i (Big_Reply_i const &) = delete;
+  Big_Reply_i (Big_Reply_i &&) = delete;
+  Big_Reply_i &operator= (Big_Reply_i const &) = delete;
+  Big_Reply_i &operator= (Big_Reply_i &&) = delete;
 
   ///Destructor
-  virtual ~Big_Reply_i ();
+  ~Big_Reply_i () override;
 
   // = The skeleton methods
-  virtual Test::Octet_Seq *get_big_reply ();
+  Test::Octet_Seq *get_big_reply () override;
 
-  virtual void ping ();
+  void ping () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Our local ORB ptr

@@ -4,20 +4,20 @@
 #include "ace/Task.h"
 
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 // We can change this value if wanted..
-const CORBA::ULong data_size = 4000000;
+CORBA::ULong constexpr data_size = 4000000;
 
 class OrbTask : public ACE_Task_Base
 {
 public:
-  OrbTask(const CORBA::ORB_ptr orb)
-      : orb_(CORBA::ORB::_duplicate(orb))
+  OrbTask (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
 
-  virtual int svc()
+  int svc () override
   {
       try
         {
@@ -39,7 +39,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:t:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -92,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Big_Reply_i *big_reply_gen = 0;
+      Big_Reply_i *big_reply_gen {};
 
       ACE_NEW_RETURN (big_reply_gen,
                       Big_Reply_i (orb.in (),
@@ -100,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       1);
 
 
-      PortableServer::ServantBase_var big_reply_owner_transfer(big_reply_gen);
+      PortableServer::ServantBase_var big_reply_owner_transfer (big_reply_gen);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (big_reply_gen);
@@ -114,8 +114,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (big_reply.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
@@ -138,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
