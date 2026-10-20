@@ -52,26 +52,26 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
-  : orb_ (0)
-  , poa_ (0)
-  , object_id_ (0)
-  , ior_output_file_(0)
-  , ns_name_(0)
-  , naming_context_ (0)
+  : orb_ (nullptr)
+  , poa_ (nullptr)
+  , object_id_ (nullptr)
+  , ior_output_file_(nullptr)
+  , ns_name_(nullptr)
+  , naming_context_ (nullptr)
   , this_name_ (1)
   , rm_register_ (1)
-  , replication_manager_ (0)
+  , replication_manager_ (nullptr)
   , registered_ (0)
   , identity_ ("")
   , proxy_infos_ (0)
   , consumer_connects_(0)
   , consumer_disconnects_(0)
-  , notify_channel_ (0)
-  , filter_factory_ (0)
-  , supplier_admin_ (0)
-  , consumer_admin_ (0)
-  , structured_proxy_push_consumer_ (0)
-  , sequence_proxy_push_consumer_ (0)
+  , notify_channel_ (nullptr)
+  , filter_factory_ (nullptr)
+  , supplier_admin_ (nullptr)
+  , consumer_admin_ (nullptr)
+  , structured_proxy_push_consumer_ (nullptr)
+  , sequence_proxy_push_consumer_ (nullptr)
   , quit_on_idle_(0)
   , quitting_(0)
   , gone_(0)
@@ -211,15 +211,15 @@ void TAO::FT_FaultNotifier_i::_remove_ref ()
 
 int TAO::FT_FaultNotifier_i::fini ()
 {
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != nullptr)
   {
     ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = 0;
+    this->ior_output_file_ = nullptr;
   }
-  if (this->ns_name_ != 0 && this->naming_context_.in() != 0)
+  if (this->ns_name_ != nullptr && this->naming_context_.in() != nullptr)
   {
     this->naming_context_->unbind (this_name_);
-    this->ns_name_ = 0;
+    this->ns_name_ = nullptr;
   }
 
   if (this->registered_)
@@ -415,7 +415,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 
   if(result == 0)
   {
-    if (this->ior_output_file_ != 0)
+    if (this->ior_output_file_ != nullptr)
     {
       this->identity_ = "file:";
       this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
@@ -425,7 +425,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 
   if (result == 0)
   {
-    if (this->ns_name_ != 0)
+    if (this->ns_name_ != nullptr)
     {
       this->identity_ = "name:";
       this->identity_ += this->ns_name_;
@@ -461,7 +461,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 // CORBA METHODS
 
 void TAO::FT_FaultNotifier_i::push_structured_fault (
-    const CosNotification::StructuredEvent & event
+    CosNotification::StructuredEvent const & event
   )
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_structured_fault);
@@ -472,7 +472,7 @@ void TAO::FT_FaultNotifier_i::push_structured_fault (
 }
 
 void TAO::FT_FaultNotifier_i::push_sequence_fault (
-    const CosNotification::EventBatch & events
+    CosNotification::EventBatch const & events
   )
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_sequence_fault);
@@ -483,7 +483,7 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
 }
 
 ::CosNotifyFilter::Filter_ptr TAO::FT_FaultNotifier_i::create_subscription_filter (
-    const char * constraint_grammar
+    char const * constraint_grammar
   )
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::create_subscription_filter);
@@ -697,7 +697,7 @@ TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo ()
 {
 }
 
-TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (const ProxyInfo & rhs)
+TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (ProxyInfo const & rhs)
   : proxyId_ (rhs.proxyId_)
   , proxyVar_ (rhs.proxyVar_)
 {
