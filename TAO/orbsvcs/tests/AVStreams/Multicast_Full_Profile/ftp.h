@@ -44,9 +44,9 @@ protected:
 };
 
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> ENDPOINT_STRATEGY;
+using ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
 
-typedef TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer> FTP_Client_FDev;
+using FTP_Client_FDev = TAO_FDev<FTP_Client_Producer, TAO_FlowConsumer>;
 class Client
 {
 public:
@@ -81,6 +81,6 @@ private:
   int use_sfp_;
 };
 
-typedef ACE_Unmanaged_Singleton<Client,ACE_Null_Mutex> CLIENT;
+using CLIENT = ACE_Unmanaged_Singleton<Client, ACE_Null_Mutex>;
 
 #endif /* TAO_AV_FTP_H */

@@ -44,7 +44,7 @@ protected:
   TAO_AV_Protocol_Object *protocol_object_;
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> ENDPOINT_STRATEGY;
+using ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
 
 class Client
 {
@@ -82,6 +82,6 @@ private:
   AVStreams::FlowProducer_var fep_a_obj_;
 };
 
-typedef ACE_Unmanaged_Singleton<Client,ACE_Null_Mutex> CLIENT;
+using CLIENT = ACE_Unmanaged_Singleton<Client, ACE_Null_Mutex>;
 
 #endif /* TAO_AV_FTP_H */
