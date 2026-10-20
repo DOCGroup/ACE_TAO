@@ -48,39 +48,44 @@ public:
   TAO_IOR_Multicast ();
 
   /// Constructor taking the ior of the service.
-  TAO_IOR_Multicast (const char *ior,
+  TAO_IOR_Multicast (char const* ior,
                      u_short port,
-                     const char *mcast_addr,
+                     char const* mcast_addr,
                      TAO_Service_ID service_id);
 
   /// Initialization method.
-  int init (const char *ior,
+  int init (char const* ior,
             u_short port,
-            const char *mcast_addr,
+            char const* mcast_addr,
             TAO_Service_ID service_id);
 
   /// Initialization method. Takes in "address:port" string as a
   /// parameter.
-  int init (const char *ior,
-            const char *mcast_addr,
+  int init (char const* ior,
+            char const* mcast_addr,
             TAO_Service_ID service_id);
 
   /// Destructor.
-  virtual ~TAO_IOR_Multicast ();
+  ~TAO_IOR_Multicast () override;
+
+  TAO_IOR_Multicast (TAO_IOR_Multicast const&) = delete;
+  TAO_IOR_Multicast (TAO_IOR_Multicast&&) = delete;
+  TAO_IOR_Multicast& operator= (TAO_IOR_Multicast const&) = delete;
+  TAO_IOR_Multicast& operator= (TAO_IOR_Multicast&&) = delete;
 
   /// Callback when input is received on the handle.
-  virtual int handle_input (ACE_HANDLE n);
+  int handle_input (ACE_HANDLE n) override;
 
   /// Callback when a timeout has occurred.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (ACE_Time_Value const& tv,
+                      void const* arg) override;
 
   /// Returns the internal handle used to receive multicast.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
 private:
   /// Factor common functionality from the two init functions.
-  int common_init (const char *ior,
+  int common_init (char const* ior,
                    TAO_Service_ID service_id);
 
   /// Service id that we're waiting for.
