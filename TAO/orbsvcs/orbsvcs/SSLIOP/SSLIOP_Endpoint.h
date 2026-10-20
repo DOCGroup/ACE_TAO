@@ -58,7 +58,7 @@ namespace TAO
                 TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
-      virtual ~TAO_SSLIOP_Endpoint ();
+      ~TAO_SSLIOP_Endpoint () override;
 
       /// Need to have an assignment operator since the SSLIOP_Profile class
       /// may have to reorder its list of endpoints based on filtering by
@@ -71,8 +71,8 @@ namespace TAO
        * See Endpoint.h for their documentation.
        */
       //@{
-      virtual TAO_Endpoint *next ();
-      virtual int addr_to_string (char *buffer, size_t length);
+      TAO_Endpoint *next () override;
+      int addr_to_string (char *buffer, size_t length) override;
 
       /// Return true if this endpoint is equivalent to @a
       /// other_endpoint The relationship is defined as equivalency of
@@ -80,11 +80,11 @@ namespace TAO
       /// Two endpoints may be equivalent even if their iiop counterparts are
       /// not. In fact, there are cases (as with the LPL processing)
       /// when those counterparts are not known at all.
-      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
 
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
-      virtual TAO_Endpoint *duplicate ();
+      TAO_Endpoint *duplicate () override;
 
       /// Return a hash value for this object.  Note that only the IP
       /// address and port are used to generate the hash value. This may
@@ -96,7 +96,7 @@ namespace TAO
       /// be used as keys in the cache manager and match other fully
       /// qualified endpoint. (which were  used earlier to cache a
       /// particular transport)
-      virtual CORBA::ULong hash ();
+      CORBA::ULong hash () override;
       //@}
 
       /**
@@ -219,7 +219,7 @@ namespace TAO
       TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
-      virtual ~TAO_SSLIOP_Synthetic_Endpoint ();
+      ~TAO_SSLIOP_Synthetic_Endpoint () override;
 
       /**
        * Return true if this endpoint is equivalent to @p other_endpoint.
@@ -227,11 +227,11 @@ namespace TAO
        * equivalent, and, if both have non-zero ssl ports, their ssl
        * ports are the same.
        */
-      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
 
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
-      virtual TAO_Endpoint *duplicate ();
+      TAO_Endpoint *duplicate () override;
 
     private:
       TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
