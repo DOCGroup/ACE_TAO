@@ -17,20 +17,20 @@
 
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb,
                         CORBA::Long in_l,
-                        const char * in_str,
+                        char const *in_str,
                         bool check_params)
-  :  orb_ (CORBA::ORB::_duplicate (orb)),
-     yadda_ ((CORBA::Long) 140474),
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+     yadda_ (140474),
      in_l_ (in_l),
-     in_str_(CORBA::string_dup(in_str)),
-     check_params_(check_params)
+     in_str_ (CORBA::string_dup (in_str)),
+     check_params_ (check_params)
 {
 }
 
 CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
-                 const char* in_str)
+                 char const *in_str)
 {
   out_l = 931233;
 
@@ -49,7 +49,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
   if (check_params_)
     {
-      if (in_l_ != in_l || ACE_OS::strcmp(in_str_.in (), in_str) != 0)
+      if (in_l_ != in_l || ACE_OS::strcmp (in_str_.in (), in_str) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: Parameter corruption on in parameters: %d %d %C %C.\n",
