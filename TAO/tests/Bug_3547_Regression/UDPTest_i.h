@@ -7,10 +7,14 @@
 class UDPTest_i : public virtual POA_UDPTestI
 {
 public:
-   UDPTest_i ();
-   virtual ~UDPTest_i ();
+  UDPTest_i ();
+  UDPTest_i (UDPTest_i const &) = delete;
+  UDPTest_i (UDPTest_i &&) = delete;
+  UDPTest_i &operator= (UDPTest_i const &) = delete;
+  UDPTest_i &operator= (UDPTest_i &&) = delete;
+  ~UDPTest_i () override;
 
-   virtual void send(const ::UDPTestI::BufferT Msg);
+  void send (::UDPTestI::BufferT const Msg) override;
 
    bool received_send_;
 };
