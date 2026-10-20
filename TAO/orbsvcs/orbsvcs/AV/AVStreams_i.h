@@ -42,13 +42,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map;
-typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowEndPoint_var> FlowEndPoint_Map_Entry;
-typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
+using FlowEndPoint_Map = ACE_Hash_Map_Manager <ACE_CString, AVStreams::FlowEndPoint_var, ACE_Null_Mutex>;
+using FlowEndPoint_Map_Entry = ACE_Hash_Map_Entry <ACE_CString, AVStreams::FlowEndPoint_var>;
+using FlowEndPoint_Map_Iterator = ACE_Hash_Map_Iterator <ACE_CString, AVStreams::FlowEndPoint_var, ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Manager <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map;
-typedef ACE_Hash_Map_Entry <ACE_CString,TAO_AV_Flow_Handler*> Flow_Handler_Map_Entry;
-typedef ACE_Hash_Map_Iterator <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map_Iterator;
+using Flow_Handler_Map = ACE_Hash_Map_Manager <ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
+using Flow_Handler_Map_Entry = ACE_Hash_Map_Entry <ACE_CString, TAO_AV_Flow_Handler*>;
+using Flow_Handler_Map_Iterator = ACE_Hash_Map_Iterator <ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 
 
 class TAO_AV_Export AV_Null_MediaCtrl
@@ -126,9 +126,9 @@ protected:
   AVStreams::StreamEndPoint_B_var sep_b_;
 
   /// Hash table for the flow names and its corresponding flowconnection object reference.
-  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowConnection_var,ACE_Null_Mutex> FlowConnection_Map;
-  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowConnection_var,ACE_Null_Mutex> FlowConnection_Map_Iterator;
-  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowConnection_var> FlowConnection_Map_Entry;
+  using FlowConnection_Map = ACE_Hash_Map_Manager <ACE_CString, AVStreams::FlowConnection_var, ACE_Null_Mutex>;
+  using FlowConnection_Map_Iterator = ACE_Hash_Map_Iterator <ACE_CString, AVStreams::FlowConnection_var, ACE_Null_Mutex>;
+  using FlowConnection_Map_Entry = ACE_Hash_Map_Entry <ACE_CString, AVStreams::FlowConnection_var>;
   FlowConnection_Map flow_connection_map_;
   AVStreams::FlowConnection_seq flowConnections_;
 
@@ -258,8 +258,8 @@ protected:
     AVStreams::streamQoS qos_;
   };
 
-  typedef ACE_Hash_Map_Manager <MMDevice_Map_Hash_Key,MMDevice_Map_Entry,ACE_Null_Mutex> MMDevice_Map;
-  typedef ACE_Hash_Map_Iterator <MMDevice_Map_Hash_Key,MMDevice_Map_Entry,ACE_Null_Mutex> MMDevice_Map_Iterator;
+  using MMDevice_Map = ACE_Hash_Map_Manager <MMDevice_Map_Hash_Key, MMDevice_Map_Entry, ACE_Null_Mutex>;
+  using MMDevice_Map_Iterator = ACE_Hash_Map_Iterator <MMDevice_Map_Hash_Key, MMDevice_Map_Entry, ACE_Null_Mutex>;
 
   MMDevice_Map mmdevice_a_map_;
   MMDevice_Map mmdevice_b_map_;
@@ -754,9 +754,9 @@ protected:
   /// current flow number used for system generation of flow names.
   u_int flow_num_;
 
-  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FDev_var,ACE_Null_Mutex> FDev_Map;
-  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FDev_var,ACE_Null_Mutex> FDev_Map_Iterator;
-  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FDev_var> FDev_Map_Entry;
+  using FDev_Map = ACE_Hash_Map_Manager <ACE_CString, AVStreams::FDev_var, ACE_Null_Mutex>;
+  using FDev_Map_Iterator = ACE_Hash_Map_Iterator <ACE_CString, AVStreams::FDev_var, ACE_Null_Mutex>;
+  using FDev_Map_Entry = ACE_Hash_Map_Entry <ACE_CString, AVStreams::FDev_var>;
 
   /// hash table for the flownames and its corresponding flowEndpoint
   /// reference.
@@ -831,10 +831,10 @@ public:
   int set_mcast_addr (ACE_CString addr,u_short port);
   void set_protocol (const char *protocol);
 protected:
-  typedef ACE_Unbounded_Set<AVStreams::FlowProducer_ptr> FlowProducer_Set;
-  typedef ACE_Unbounded_Set_Iterator<AVStreams::FlowProducer_ptr> FlowProducer_SetItor;
-  typedef ACE_Unbounded_Set<AVStreams::FlowConsumer_ptr> FlowConsumer_Set;
-  typedef ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer_ptr> FlowConsumer_SetItor;
+  using FlowProducer_Set = ACE_Unbounded_Set<AVStreams::FlowProducer_ptr>;
+  using FlowProducer_SetItor = ACE_Unbounded_Set_Iterator<AVStreams::FlowProducer_ptr>;
+  using FlowConsumer_Set = ACE_Unbounded_Set<AVStreams::FlowConsumer_ptr>;
+  using FlowConsumer_SetItor = ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer_ptr>;
 
   /// The multicast address returned by the producer.
   FlowProducer_Set flow_producer_set_;
