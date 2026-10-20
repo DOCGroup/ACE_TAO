@@ -3,7 +3,7 @@
 #include "tao/SystemException.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -32,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -42,9 +42,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object("iiop://1\"/2$/$3211:2500/EndPoint");
+        orb->string_to_object ("iiop://1\"/2$/$3211:2500/EndPoint");
     }
-  catch (const CORBA::INV_OBJREF&)
+  catch (CORBA::INV_OBJREF const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
     }
@@ -55,12 +55,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   // Write dummy file to trigger the test framework we are ready.
-  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-  if (output_file == 0)
-     ACE_ERROR_RETURN ((LM_ERROR,
+  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+  if (output_file == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR,
                         "Cannot open output file for writing IOR: %s\n",
-                         ior_output_file),
-                         1);
+                       ior_output_file),
+                      1);
   ACE_OS::fprintf (output_file, "dummy");
   ACE_OS::fclose (output_file);
 
