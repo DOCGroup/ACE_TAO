@@ -2,16 +2,16 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+static ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 
-static int shutdown_server = 0;
+static int shutdown_server {};
 // Flag to tell server to shutdown.
 
 static CORBA::UShort call_count = 2;
 // # of nested calls to be made.
 
-static int quiet = 0;
+static int quiet {};
 // The test is quiet...
 
 class Client_Task
@@ -19,6 +19,10 @@ class Client_Task
 public:
   Client_Task (client_ptr c,
                server_ptr s);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
   int svc ();
 
   bool exception () const;
@@ -49,7 +53,7 @@ Client_Task::svc ()
       this->server_->start (this->client_.in (),
                             call_count);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_Task::svc");
       return -1;
@@ -62,7 +66,7 @@ parse_args (int argc,
             ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("qxn:k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -96,7 +100,7 @@ parse_args (int argc,
                           -1);
       }
 
-  if (ior == 0)
+  if (ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s: no nested up calls server ior specified\n",
                        argv[0]),
@@ -110,7 +114,7 @@ int
 ACE_TMAIN (int argc,
       ACE_TCHAR **argv)
 {
-  int result = 0;
+  int result {};
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -158,7 +162,7 @@ ACE_TMAIN (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client::main");
       return -1;
