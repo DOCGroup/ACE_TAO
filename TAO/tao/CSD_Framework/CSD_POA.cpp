@@ -60,7 +60,7 @@ TAO_CSD_POA::new_POA (const String &name,
                       TAO_ORB_Core &orb_core,
                       TAO_Object_Adapter *object_adapter)
 {
-  TAO_CSD_POA *poa = 0;
+  TAO_CSD_POA *poa = nullptr;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_CSD_POA (name,

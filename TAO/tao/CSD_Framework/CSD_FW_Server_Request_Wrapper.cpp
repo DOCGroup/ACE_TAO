@@ -18,7 +18,7 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
   if (this->is_clone_)
     {
       //  The TAO_Tagged_Profile type_id_ may have been duplicated.
-      if (this->request_->profile_.type_id_ != 0)
+      if (this->request_->profile_.type_id_ != nullptr)
         CORBA::string_free (
                  const_cast<char*> (this->request_->profile_.type_id_));
 
@@ -31,13 +31,13 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
 
       //  Get the start message block that reference to the data allocated
       //  on the heap.
-      if (this->request_->outgoing_ != 0)
+      if (this->request_->outgoing_ != nullptr)
         {
           char* buffer = this->request_->outgoing_->begin ()->base ();
           delete [] buffer;
           delete this->request_->outgoing_;
         }
-      if (this->request_->operation_details_ != 0)
+      if (this->request_->operation_details_ != nullptr)
         {
           char* opname =
             const_cast<char*> (this->request_->operation_details_->opname_);
@@ -57,7 +57,7 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
           delete this->request_->operation_details_;
         }
 
-      if (this->request_->transport_ != 0)
+      if (this->request_->transport_ != nullptr)
         this->request_->transport_->remove_reference ();
 
       delete this->request_;
@@ -154,7 +154,7 @@ TAO_ServerRequest*
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
 {
   // TBD-CSD: Ultimately add an argument for an allocator.
-  TAO_ServerRequest* clone_obj = 0;
+  TAO_ServerRequest *clone_obj = nullptr;
   ACE_NEW_RETURN (clone_obj,
                   TAO_ServerRequest (),
                   0);
@@ -179,14 +179,14 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
 
   // TYPE: TAO_InputCDR*
   // ACTION: This *must* be "cloned".
-  if (request->incoming_ != 0)
+  if (request->incoming_ != nullptr)
     {
       clone_obj->incoming_ = this->clone (request->incoming_);
     }
 
   // TYPE: TAO_OutputCDR*
   // ACTION: This *must* be "cloned".
-  if (request->outgoing_ != 0)
+  if (request->outgoing_ != nullptr)
     {
       clone_obj->outgoing_ = this->create_new_output_cdr ();
     }
@@ -194,7 +194,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   // TYPE: TAO_Transport*
   // ACTION: Assuming that a shallow-copy is ok here.
   clone_obj->transport_ = request->transport_;
-  if (clone_obj->transport_ != 0)
+  if (clone_obj->transport_ != nullptr)
     clone_obj->transport_->add_reference ();
 
   // TYPE: CORBA::Boolean
@@ -247,9 +247,9 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
 
   // TYPE: TAO_Operation_Details const * const
   // ACTION: Need to clone this.
-  if (request->operation_details_ != 0)
+  if (request->operation_details_ != nullptr)
     {
-      ACE_ASSERT (request->incoming_ == 0);
+      ACE_ASSERT (request->incoming_ == nullptr);
       if (this->clone (request->operation_details_,
                        clone_obj->operation_details_,
                        clone_obj->incoming_) == false)
@@ -281,7 +281,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   //clone_obj->result_seq_ = request->result_seq_;
   #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-  if (clone_obj->transport_ != 0)
+  if (clone_obj->transport_ != nullptr)
     {
       clone_obj->transport_->assign_translators(clone_obj->incoming_,
                                                 clone_obj->outgoing_);
@@ -293,7 +293,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
 TAO_InputCDR*
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_InputCDR*& from)
 {
-  TAO_InputCDR* clone_ptr = 0;
+  TAO_InputCDR *clone_ptr = nullptr;
   ACE_NEW_RETURN (clone_ptr,
                   TAO_InputCDR(*from),
                   0);
@@ -309,7 +309,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   TAO_Operation_Details *& from_non_const
     = const_cast <TAO_Operation_Details *&>(from);
 
-  char* cloned_op_name = 0;
+  char *cloned_op_name = nullptr;
   ACE_NEW_RETURN (cloned_op_name,
                   char[from_non_const->opname_len_ + 1],
                   false);
@@ -319,12 +319,12 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   // See if we can clone arguments.  If we can, the user compiled the
   // idl with the clonable arguments option, great.  If not, then
   // use the marshaling technique to copy the arguments
-  TAO::Argument** cloned_args = 0;
+  TAO::Argument **cloned_args = nullptr;
   CORBA::ULong num_cloned_args = 0;
   if (from->num_args_ > 0)
     {
       TAO::Argument* retval = from->args_[0]->clone();
-      if (retval != 0)
+      if (retval != nullptr)
         {
           ACE_NEW_RETURN (cloned_args,
                           TAO::Argument*[from->num_args_],
@@ -345,7 +345,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
 
           // To avoid duplicating and copying the data block, allow the
           // TAO_OutputCDR to share the data block of TAO_InputCDR's message block.
-          ACE_Message_Block* mb = const_cast<ACE_Message_Block*> (cdr->start ());
+          ACE_Message_Block *mb = const_cast<ACE_Message_Block *> (cdr->start ());
           TAO_OutputCDR outcdr (mb);
 
           if (! from_non_const->marshal_args (outcdr))
@@ -360,7 +360,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
           // held by the message block owned by the TAO_InputCDR.  We need to
           // make sure that the results of marshaling are propagated back to the
           // message block in the TAO_InputCDR.
-          const ACE_Message_Block* begin = outcdr.begin ();
+          ACE_Message_Block const *begin = outcdr.begin ();
           if (begin == outcdr.current ())
             {
               // A chain was not made, so we can just adjust the read and write
@@ -382,7 +382,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   // CSD-TBD: Eventually need to use allocators.
 
   // CSD-TBD: Assert that this->ex_data_ and this->ex_count_ are both == 0
-  TAO_Operation_Details* to_non_const = 0;
+  TAO_Operation_Details *to_non_const = nullptr;
   ACE_NEW_RETURN (to_non_const,
                   TAO_Operation_Details(cloned_op_name,
                                         from_non_const->opname_len_,
@@ -440,7 +440,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Tagged_Profile& from,
   to.object_key_           = from.object_key_;
   to.profile_              = from.profile_;
   to.profile_index_        = from.profile_index_;
-  to.type_id_              = from.type_id_ == 0 ? 0 :
+  to.type_id_              = from.type_id_ == nullptr ? nullptr :
                                CORBA::string_dup (from.type_id_);
 }
 
@@ -455,10 +455,10 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Service_Context& from,
 TAO_OutputCDR*
 TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
 {
-  TAO_OutputCDR* cdr = 0;
+  TAO_OutputCDR *cdr = nullptr;
 
   // A buffer that we will use to initialise the CDR stream
-  char* repbuf = 0;
+  char *repbuf = nullptr;
   ACE_NEW_RETURN (repbuf,
                  char[ACE_CDR::DEFAULT_BUFSIZE],
                  0);
