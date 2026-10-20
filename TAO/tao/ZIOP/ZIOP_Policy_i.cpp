@@ -48,7 +48,7 @@ CompressorIdLevelListPolicy::policy_type ()
 CompressorIdLevelListPolicy *
 CompressorIdLevelListPolicy::clone () const
 {
-  CompressorIdLevelListPolicy *copy = 0;
+  CompressorIdLevelListPolicy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   CompressorIdLevelListPolicy (*this),
                   0);
@@ -58,7 +58,7 @@ CompressorIdLevelListPolicy::clone () const
 CORBA::Policy_ptr
 CompressorIdLevelListPolicy::copy ()
 {
-  CompressorIdLevelListPolicy* tmp = 0;
+  CompressorIdLevelListPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, CompressorIdLevelListPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -142,7 +142,7 @@ CompressionEnablingPolicy::policy_type ()
 CompressionEnablingPolicy *
 CompressionEnablingPolicy::clone () const
 {
-  CompressionEnablingPolicy *copy = 0;
+  CompressionEnablingPolicy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   CompressionEnablingPolicy (*this),
                   0);
@@ -155,7 +155,7 @@ CompressionEnablingPolicy::copy ()
   // Future policy implementors: notice how the following code is
  // exception safe!
 
-  CompressionEnablingPolicy* tmp = 0;
+  CompressionEnablingPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, CompressionEnablingPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -231,7 +231,7 @@ CompressionLowValuePolicy::policy_type ()
 CompressionLowValuePolicy *
 CompressionLowValuePolicy::clone () const
 {
-  CompressionLowValuePolicy *copy = 0;
+  CompressionLowValuePolicy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   CompressionLowValuePolicy (*this),
                   0);
@@ -244,7 +244,7 @@ CompressionLowValuePolicy::copy ()
   // Future policy implementors: notice how the following code is
  // exception safe!
 
-  CompressionLowValuePolicy* tmp = 0;
+  CompressionLowValuePolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, CompressionLowValuePolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -301,7 +301,7 @@ CompressionMinRatioPolicy::policy_type ()
 CompressionMinRatioPolicy *
 CompressionMinRatioPolicy::clone () const
 {
-  CompressionMinRatioPolicy *copy = 0;
+  CompressionMinRatioPolicy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   CompressionMinRatioPolicy (*this),
                   0);
@@ -314,7 +314,7 @@ CompressionMinRatioPolicy::copy ()
   // Future policy implementors: notice how the following code is
  // exception safe!
 
-  CompressionMinRatioPolicy* tmp = 0;
+  CompressionMinRatioPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, CompressionMinRatioPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));

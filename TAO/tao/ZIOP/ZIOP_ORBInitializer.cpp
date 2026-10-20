@@ -41,7 +41,7 @@ TAO_ZIOP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   // Bind the service context handler for ZIOP
-  TAO_ZIOP_Service_Context_Handler* h = 0;
+  TAO_ZIOP_Service_Context_Handler* h = nullptr;
   ACE_NEW (h,
            TAO_ZIOP_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::INVOCATION_POLICIES, h);

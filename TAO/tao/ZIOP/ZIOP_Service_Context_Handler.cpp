@@ -56,7 +56,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
             {
             case ::ZIOP::COMPRESSION_ENABLING_POLICY_ID:
               {
-                TAO::CompressionEnablingPolicy *enabled= 0;
+                TAO::CompressionEnablingPolicy *enabled = nullptr;
                 ACE_NEW_RETURN (enabled, TAO::CompressionEnablingPolicy (), 0);
                 std::unique_ptr<TAO::CompressionEnablingPolicy> guard (enabled);
                 if (enabled->_tao_decode (policy_cdr))
@@ -68,7 +68,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 
             case ::ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID:
               {
-                TAO::CompressorIdLevelListPolicy *id_list= 0;
+                TAO::CompressorIdLevelListPolicy *id_list = nullptr;
                 ACE_NEW_RETURN (id_list, TAO::CompressorIdLevelListPolicy (), 0);
                 std::unique_ptr<TAO::CompressorIdLevelListPolicy> guard (id_list);
                 if (id_list->_tao_decode (policy_cdr))
@@ -134,8 +134,8 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
           CORBA::Octet *buf = policy_value_seq[i].pvalue.get_buffer ();
 
           // Copy the CDR buffer data into the octet sequence buffer.
-          for (const ACE_Message_Block *iterator = out_CDR.begin ();
-             iterator != 0;
+          for (ACE_Message_Block const *iterator = out_CDR.begin ();
+             iterator != nullptr;
              iterator = iterator->cont ())
           {
             ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
@@ -162,8 +162,8 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
           CORBA::Octet *buf = policy_value_seq[i].pvalue.get_buffer ();
 
           // Copy the CDR buffer data into the octet sequence buffer.
-          for (const ACE_Message_Block *iterator = out_CDR.begin ();
-             iterator != 0;
+          for (ACE_Message_Block const *iterator = out_CDR.begin ();
+             iterator != nullptr;
              iterator = iterator->cont ())
           {
             ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
