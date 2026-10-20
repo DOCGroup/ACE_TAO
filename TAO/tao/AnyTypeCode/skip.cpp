@@ -603,7 +603,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   // For CORBA basic types, the skip can be optimized
   CORBA::TCKind const kind = tc2->kind ();
 
-  char *dummy = 0;
+  char *dummy = nullptr;
   switch (kind)
     {
     case CORBA::tk_octet:
@@ -871,7 +871,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
         }
 
       TAO_ORB_Core *orb_core = stream->orb_core ();
-      if (orb_core == 0)
+      if (orb_core == nullptr)
         {
           orb_core = TAO_ORB_Core_instance ();
 
