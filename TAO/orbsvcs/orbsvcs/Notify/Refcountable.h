@@ -73,7 +73,7 @@ public:
   CORBA::ULong _decr_refcnt ();
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
-  static void diagnostic_dump( const char* title = 0 );
+  static void diagnostic_dump( const char* title = nullptr );
 #endif
 
 private:
