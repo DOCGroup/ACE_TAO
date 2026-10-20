@@ -38,9 +38,9 @@ class TAO_Notify_Serv_Export TAO_Notify_Proxy
   friend class TAO_Notify_Peer;
 
 public:
-  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Proxy> Ptr;
-  typedef CosNotifyChannelAdmin::ProxyIDSeq SEQ;
-  typedef CosNotifyChannelAdmin::ProxyIDSeq_var SEQ_VAR;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Proxy>;
+  using SEQ = CosNotifyChannelAdmin::ProxyIDSeq;
+  using SEQ_VAR = CosNotifyChannelAdmin::ProxyIDSeq_var;
 
   /// Constructor
   TAO_Notify_Proxy ();

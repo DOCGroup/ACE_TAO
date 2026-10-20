@@ -43,7 +43,7 @@ class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task
   : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  typedef TAO_Condition<TAO_SYNCH_MUTEX> CONDITION;
+  using CONDITION = TAO_Condition<TAO_SYNCH_MUTEX>;
 
   /// Constructor.  It does not assume ownership of the <event_channel>
   /// parameter.

@@ -36,7 +36,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer
   : public virtual TAO_Notify_Proxy
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer>;
   /// Constructor
   TAO_Notify_ProxyConsumer ();
 

@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Timer : public TAO_Notify_Refcountable
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer > Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer >;
   /// Destructor
   virtual ~TAO_Notify_Timer () = default;
 

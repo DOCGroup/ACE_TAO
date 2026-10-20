@@ -40,9 +40,9 @@ namespace TAO_Notify
    */
   class TAO_Notify_Serv_Export Routing_Slip_Queue
   {
-    typedef ACE_Unbounded_Queue <Routing_Slip_Ptr> Queue;
+    using Queue = ACE_Unbounded_Queue <Routing_Slip_Ptr>;
 // FUZZ: disable check_for_ACE_Guard
-    typedef ACE_Guard< TAO_SYNCH_MUTEX > Guard;
+    using Guard = ACE_Guard< TAO_SYNCH_MUTEX >;
 // FUZZ: enable check_for_ACE_Guard
   public:
     /**

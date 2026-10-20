@@ -51,7 +51,7 @@ public:
   };
 
 public:
-typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer > Ptr;
+using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
 
   /// Constructor
   TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
@@ -125,7 +125,7 @@ protected:
   /// the connected consumer or nil if there is none.
   virtual CORBA::Object_ptr get_consumer () = 0;
 
-  typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
+  using Request_Queue = ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *>;
 
   DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event * request);
 
