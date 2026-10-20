@@ -3,13 +3,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 // Create a singleton instance of the Sender.
 
-static FILE *output_file = 0;
+static FILE *output_file = nullptr;
 // File handle of the file into which received data is written.
 
-static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
+static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
 
@@ -51,7 +51,7 @@ Sender_Callback::receive_frame (ACE_Message_Block *frame,
               "Sender_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
       size_t result =
@@ -74,14 +74,15 @@ Sender_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 Sender::Sender ()
-  : sender_mmdevice_ (0),
-    streamctrl_ (0),
+  : sender_mmdevice_ (nullptr),
+    streamctrl_ (nullptr),
     frame_count_ (0),
     filename_ ("input"),
-    input_file_ (0),
+    input_file_ (nullptr),
     protocol_ ("UDP"),
     frame_rate_ (30),
     mb_ (BUFSIZ),
+    protocol_object_ (nullptr),
     eof_ (0)
 {
 }
@@ -110,7 +111,7 @@ Sender::shutdown ()
     this->streamctrl_->destroy (stop_spec);
 
       // Shut the orb down.
-    TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+    TAO_AV_CORE::instance ()->orb ()->shutdown (false);
   }
   catch (const CORBA::Exception& ex)
     {
@@ -203,7 +204,7 @@ Sender::init (int argc,
     ACE_OS::fopen (this->filename_.c_str (),
                    "r");
 
-  if (this->input_file_ == 0)
+  if (this->input_file_ == nullptr)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
                        this->filename_.c_str ()),
@@ -272,7 +273,7 @@ Sender::init (int argc,
                                   the_qos.inout (),
                                   flow_spec);
 
-  if (bind_result == 0)
+  if (!bind_result)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "streamctrl::bind_devs failed\n"),
                       -1);
@@ -442,7 +443,7 @@ ACE_TMAIN (int argc,
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
                                    "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),
