@@ -7,7 +7,7 @@
 #include <iostream>
 
 PortableServer::POA_ptr
-createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
+createPOA (PortableServer::POA_ptr root_poa, char const * poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POAManager_var mgr = root_poa->the_POAManager();
 
-    const char* poa_name = "MessengerService";
+    char const * poa_name = "MessengerService";
 
     PortableServer::POA_var messenger_poa = createPOA(root_poa.in(), poa_name);
 
@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Use a TAO extension to get the non imrified poa
     // to avoid forwarding requests back to the ImR.
 
-    TAO_Root_POA* tpoa = dynamic_cast<TAO_Root_POA*>(messenger_poa.in());
+    TAO_Root_POA * tpoa = dynamic_cast<TAO_Root_POA *>(messenger_poa.in());
     obj = tpoa->id_to_reference_i(object_id.in(), false);
     CORBA::String_var messenger_ior = orb->object_to_string(obj.in());
     obj = orb->resolve_initial_references("IORTable");
@@ -92,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     root_poa->destroy(1,1);
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const & ex) {
     std::cerr << "Server main() Caught CORBA::Exception" << ex << std::endl;
     return 1;
   }
