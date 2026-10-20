@@ -24,8 +24,8 @@ public:
   void activate ();
 
   /// Thread entry point
-  int handle_timeout(ACE_Time_Value const & tv, void const *);
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_timeout (ACE_Time_Value const &tv, void const *) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
 private:
   /// Reference to the test interface
