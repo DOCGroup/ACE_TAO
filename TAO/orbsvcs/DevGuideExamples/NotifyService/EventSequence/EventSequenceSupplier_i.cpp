@@ -19,8 +19,8 @@ EventSequenceSupplier_i::disconnect_sequence_push_supplier ()
 
 void
 EventSequenceSupplier_i::subscription_change (
-        const CosNotification::EventTypeSeq &,
-        const CosNotification::EventTypeSeq &
+        CosNotification::EventTypeSeq const &,
+        CosNotification::EventTypeSeq const &
       )
 {
 }
