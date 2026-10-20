@@ -35,7 +35,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
   : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
-  TAO_UIOP_Transport* specific_transport = 0;
+  TAO_UIOP_Transport *specific_transport = nullptr;
   ACE_NEW (specific_transport,
            TAO_UIOP_Transport (this, orb_core));
 
@@ -81,7 +81,7 @@ TAO_UIOP_Connection_Handler::open (void*)
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph != nullptr)
     {
       try
         {
