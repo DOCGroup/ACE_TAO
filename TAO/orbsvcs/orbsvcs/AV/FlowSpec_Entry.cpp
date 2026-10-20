@@ -146,7 +146,7 @@ TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry ()
     delete address_;
   if (this->clean_up_control_address_)
     delete control_address_;
-  if (local_control_addr_ != 0)
+  if (local_control_addr_ != nullptr)
     delete local_control_addr_;
 }
 
@@ -200,7 +200,7 @@ TAO_FlowSpec_Entry::set_protocol ()
         }
     }
 
-  if (this->address_ != 0)
+  if (this->address_ != nullptr)
     {
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::set_protocol address is not 0\n"));
@@ -241,7 +241,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%C]\n", address));
 
-  if (address == 0)
+  if (address == nullptr)
     return 0;
   if (ACE_OS::strcmp (address,"") == 0)
     return 0;
@@ -253,7 +253,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
   if (result < 0)
     return result;
 
-  if (protocol_tokenizer [1] != 0)
+  if (protocol_tokenizer [1] != nullptr)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "Protocol tokenixer is not null\n"));
@@ -388,7 +388,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
             {
               control_addr += address_tokenizer[0];
               control_addr += ":";
-              if (port_tokenizer[1] != 0)
+              if (port_tokenizer[1] != nullptr)
                 control_addr += port_tokenizer[1];
               else
                 control_addr += control_port_str;
@@ -461,14 +461,14 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 char *
 TAO_FlowSpec_Entry::get_local_addr_str ()
 {
-  if (this->local_addr_ == 0)
-    return 0;
+  if (this->local_addr_ == nullptr)
+    return nullptr;
 
   switch (this->local_addr_->get_type ())
     {
     case AF_INET:
       {
-        ACE_TCHAR *buf = 0;
+        ACE_TCHAR *buf = nullptr;
         ACE_NEW_RETURN (buf,
                         ACE_TCHAR [BUFSIZ],
                         0);
@@ -541,19 +541,19 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
                   "TAO_Forward_FlowSpec_Entry::parse [%C]\n",
                   flowSpec_entry));
 
-  if (tokenizer [TAO_AV_DIRECTION] != 0)
+  if (tokenizer [TAO_AV_DIRECTION] != nullptr)
     this->set_direction (tokenizer [TAO_AV_DIRECTION]);
 
-  if (tokenizer [TAO_AV_FORMAT] != 0)
+  if (tokenizer [TAO_AV_FORMAT] != nullptr)
     this->format_ = tokenizer [TAO_AV_FORMAT];
 
-  if (tokenizer [TAO_AV_ADDRESS] != 0)
+  if (tokenizer [TAO_AV_ADDRESS] != nullptr)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
       return -1;
 
-  if (tokenizer [TAO_AV_PEER_ADDR] != 0)
+  if (tokenizer [TAO_AV_PEER_ADDR] != nullptr)
     {
-      ACE_INET_Addr *addr = 0;
+      ACE_INET_Addr *addr = nullptr;
 
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
@@ -598,7 +598,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
                   buf));
     }
 
-  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
+  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != nullptr)
     if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
       return -1;
 
@@ -634,7 +634,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
   ACE_CString address_str;
   ACE_CString peer_address_str;
 
-  if (this->address_ != 0)
+  if (this->address_ != nullptr)
     {
       switch (this->protocol_)
         {
@@ -679,8 +679,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
     }
 
 
-  if ( (this->address_ != 0) &&
-       (this->control_address_ == 0) &&
+  if ( (this->address_ != nullptr) &&
+       (this->control_address_ == nullptr) &&
        (ACE_OS::strncasecmp (this->flow_protocol_.c_str(), "RTP", 3) == 0))
     {
       u_short control_port;
@@ -714,7 +714,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
     }
 
 
-  if (this->peer_addr_ != 0)
+  if (this->peer_addr_ != nullptr)
     {
       switch (this->protocol_)
         {
@@ -758,7 +758,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
     }
 
-  if (this->control_address_ != 0)
+  if (this->control_address_ != nullptr)
     {
       u_short control_port = 0;
 
@@ -800,7 +800,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
   this->entry_ += "\\";
   this->entry_ += address_str;
 
-  if (this->peer_addr_ != 0)
+  if (this->peer_addr_ != nullptr)
     {
       this->entry_ += "\\";
       this->entry_ += peer_address_str;
@@ -888,11 +888,11 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
                 "TAO_Reverse_FlowSpec_Entry::parse [%C]\n",
                 flowSpec_entry));
 
-  if (tokenizer [TAO_AV_ADDRESS] != 0)
+  if (tokenizer [TAO_AV_ADDRESS] != nullptr)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
       return -1;
 
-  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
+  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != nullptr)
     if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
       return -1;
 
@@ -908,7 +908,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 
   ACE_TCHAR address [BUFSIZ];
   ACE_CString address_str;
-  if (this->address_ != 0)
+  if (this->address_ != nullptr)
     {
       switch (this->protocol_)
         {
@@ -949,7 +949,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
       address_str = "";
     }
 
-  if (this->control_address_ != 0)
+  if (this->control_address_ != nullptr)
     {
       u_short control_port = 0;
 
