@@ -1,10 +1,10 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 
-static FILE *output_file = 0;
+static FILE *output_file = nullptr;
 // File handle of the file into which received data is written.
 
-static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
+static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
 int
@@ -39,7 +39,8 @@ Receiver_StreamEndPoint::get_callback (const char *,
 }
 
 Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (0)
+  : frame_count_ (0),
+    streamctrl_ (nullptr)
 {
 }
 
@@ -66,7 +67,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               ++this->frame_count_));
 
 
-  if (this->streamctrl_ != 0)
+  if (this->streamctrl_ != nullptr)
     {
       // Modify QoS after receiving 20 frames
       if (frame_count_ == 20)
@@ -105,7 +106,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   else ACE_DEBUG ((LM_DEBUG,
                    "No Stream Ctrl\n"));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
       size_t result =
@@ -134,7 +135,7 @@ Receiver_Callback::handle_destroy ()
 
   try
     {
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+      TAO_AV_CORE::instance ()->orb ()->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -146,13 +147,11 @@ Receiver_Callback::handle_destroy ()
 }
 
 Receiver::Receiver ()
-  : mmdevice_ (0)
+  : mmdevice_ (nullptr)
 {
 }
 
-Receiver::~Receiver ()
-{
-}
+Receiver::~Receiver () = default;
 
 
 int
@@ -261,7 +260,7 @@ ACE_TMAIN (int argc,
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
                                    "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),

@@ -8,7 +8,7 @@
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 // The time that should lapse between two consecutive frames sent.
 ACE_Time_Value inter_frame_time;
@@ -35,7 +35,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 
 CORBA::Boolean
 Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
-                                   const AVStreams::flowSpec &/* the_flows */)
+                                   AVStreams::flowSpec const &/* the_flows */)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sender_StreamEndPoint::modify_QoS\n"));
@@ -60,18 +60,19 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
         }
     }
 
-  return 1;
+  return true;
 }
 
 Sender::Sender ()
-  : sender_mmdevice_ (0),
-    streamctrl_ (0),
+  : sender_mmdevice_ (nullptr),
+    streamctrl_ (nullptr),
     frame_count_ (0),
     filename_ ("input"),
-    input_file_ (0),
+    input_file_ (nullptr),
     protocol_ ("UDP"),
     frame_rate_ (1),
-    mb_ (BUFSIZ)
+    mb_ (BUFSIZ),
+    protocol_object_ (nullptr)
 {
 }
 
@@ -168,7 +169,7 @@ Sender::init (int argc,
     ACE_OS::fopen (this->filename_.c_str (),
                    "r");
 
-  if (this->input_file_ == 0)
+  if (this->input_file_ == nullptr)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
                        this->filename_.c_str ()),
@@ -227,7 +228,7 @@ Sender::init (int argc,
                                   the_qos.inout (),
                                   flow_spec);
 
-  if (bind_result == 0)
+  if (!bind_result)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "streamctrl::bind_devs failed\n"),
                       -1);
@@ -336,7 +337,7 @@ Sender::pace_data ()
       this->streamctrl_->destroy (stop_spec);
 
         // Shut the orb down.
-        TAO_AV_CORE::instance ()->orb ()->shutdown (1);
+        TAO_AV_CORE::instance ()->orb ()->shutdown (true);
     }
   catch (const CORBA::Exception& ex)
     {

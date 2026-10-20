@@ -25,11 +25,11 @@ public:
   /// sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
-                     const ACE_Addr &peer_address);
+                     ACE_Addr const &peer_address) override;
 
   /// Called when the sender is done sending data and wants to close
   /// down the connection.
-  int handle_destroy ();
+  int handle_destroy () override;
 
   /// Set the related stream control for this flow.
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
@@ -48,7 +48,7 @@ class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
 private:
   Receiver_Callback callback_;
@@ -64,6 +64,10 @@ public:
 
   ~Receiver ();
   /// Destructor.
+  Receiver (Receiver const &) = delete;
+  Receiver &operator= (Receiver const &) = delete;
+  Receiver (Receiver &&) = delete;
+  Receiver &operator= (Receiver &&) = delete;
 
   int init (int argc,
             ACE_TCHAR *argv[]);
