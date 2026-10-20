@@ -111,7 +111,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           TAO::Any_Special_Impl_T<T, from_T, to_T> * const narrow_impl =
             dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
 
-          if (narrow_impl == 0)
+          if (narrow_impl == nullptr)
             {
               return false;
             }
@@ -120,7 +120,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           return true;
         }
 
-      TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = 0;
+      TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = nullptr;
       ACE_NEW_RETURN (replacement,
                       BOUNDED_TSTRING_ANY_IMPL (destructor,
                                                 tc,
