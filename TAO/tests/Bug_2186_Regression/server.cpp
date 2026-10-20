@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,7 +39,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -59,7 +59,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
+      PortableServer::ServantBase_var owner_transfer (hello_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (hello_impl);
@@ -73,8 +73,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),

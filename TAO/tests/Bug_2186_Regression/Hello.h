@@ -12,13 +12,17 @@ class Hello
 public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
+  Hello (Hello const &) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello &&) = delete;
 
   // = The skeleton methods
-  virtual char * get_string ();
+  char *get_string () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void request_callback (Test::Hello_ptr call_me);
+  void request_callback (Test::Hello_ptr call_me) override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
