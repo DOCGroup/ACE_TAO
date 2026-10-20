@@ -10,16 +10,16 @@
 
 TAO_SYNCH_MUTEX test_lock;
 ACE_Condition<TAO_SYNCH_MUTEX> cond (test_lock);
-bool is_ok = false;
+bool is_ok {};
 CORBA::ORB_var orb;
 
-const ACE_TCHAR *ior = ACE_TEXT ("corbaloc::localhost:5678/Test");
+ACE_TCHAR const *ior = ACE_TEXT ("corbaloc::localhost:5678/Test");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -43,17 +43,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 ACE_THR_FUNC_RETURN failsafe (void *)
 {
-  test_lock.acquire();
-  ACE_Time_Value timeout = ACE_OS::gettimeofday() + ACE_Time_Value (10,0);
-  cond.wait(&timeout);
-  test_lock.release();
+  test_lock.acquire ();
+  ACE_Time_Value const timeout = ACE_OS::gettimeofday () + ACE_Time_Value (10, 0);
+  cond.wait (&timeout);
+  test_lock.release ();
   if (!is_ok)
     {
       ACE_DEBUG ((LM_DEBUG, "FAILURE: failsafe timed out\n"));
-      orb->shutdown(0);
-      ACE_OS::exit(1);
+      orb->shutdown (false);
+      ACE_OS::exit (1);
     }
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -100,11 +100,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread::spawn (failsafe);
 
       object = orb->string_to_object ("corbaloc::localhost:5678/Test");
-      Test::Hello_var hello = Test::Hello::_narrow(object.in());
+      Test::Hello_var hello = Test::Hello::_narrow (object.in ());
 
       is_ok = true;
       test_lock.acquire ();
-      cond.signal();
+      cond.signal ();
       test_lock.release ();
       ACE_DEBUG ((LM_DEBUG, "SUCCESS: test did not spin.\n"));
 
@@ -116,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       hello->shutdown ();
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
