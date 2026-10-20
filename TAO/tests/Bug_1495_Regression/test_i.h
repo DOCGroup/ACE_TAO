@@ -38,13 +38,17 @@ class  Bug1495_i : public virtual POA_Bug1495_Regression::Bug1495
 {
 public:
   Bug1495_i (CORBA::ORB_ptr orb);
+  Bug1495_i (Bug1495_i const &) = delete;
+  Bug1495_i &operator= (Bug1495_i const &) = delete;
+  Bug1495_i (Bug1495_i &&) = delete;
+  Bug1495_i &operator= (Bug1495_i &&) = delete;
 
   //Destructor
-  virtual ~Bug1495_i ();
+  ~Bug1495_i () override = default;
 
-  virtual void get_thread_id (Bug1495_Regression::ThreadId_out thread_id);
+  void get_thread_id (Bug1495_Regression::ThreadId_out thread_id) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 private:
   CORBA::ORB_var orb_;
 };

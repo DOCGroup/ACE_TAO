@@ -4,14 +4,13 @@
 #include "interceptors.h"
 
 Client_ORBInitializer::Client_ORBInitializer ()
-{
-}
+= default;
 
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
 {
-        // No Op
+  // No Op
 }
 
 void

@@ -14,10 +14,6 @@ Bug1495_i::Bug1495_i (CORBA::ORB_ptr orb)
 {
 }
 
-Bug1495_i::~Bug1495_i ()
-{
-}
-
 void
 Bug1495_i::get_thread_id (Bug1495_Regression::ThreadId_out thread_id)
 {

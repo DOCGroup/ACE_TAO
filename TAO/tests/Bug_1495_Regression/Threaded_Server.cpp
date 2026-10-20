@@ -5,8 +5,8 @@
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
-const ACE_TCHAR *ior_input_file = ACE_TEXT("file://thr_server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_input_file = ACE_TEXT("file://thr_server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -44,7 +44,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Create the ORB initializer.
-      Server_ORBInitializer *temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);
@@ -83,9 +83,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create the interceptor.
       Echo_Server_Request_Interceptor * server_interceptor =
-        temp_initializer->server_interceptor();
+        temp_initializer->server_interceptor ();
 
-      if (server_interceptor == 0)
+      if (server_interceptor == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
             "(%P|%t) Could not obtain reference to "
@@ -121,11 +121,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       // Output the server IOR to a file
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
 
-          if (output_file == 0)
+          if (output_file == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Cannot open output file for writing the "
@@ -141,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run (tv);
 
-      if (server_interceptor->forward_location_done() == false)
+      if (!server_interceptor->forward_location_done ())
         {
           ACE_ERROR ((LM_ERROR, "ERROR: Forward location has not occurred!\n"));
         }
