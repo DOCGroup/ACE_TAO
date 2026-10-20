@@ -1,7 +1,7 @@
 
 #include "MyInterfaceImpl.h"
 
-const char*
+char const *
 MyInterfaceImpl::my_string = "a string";
 
 MyInterfaceImpl::MyInterfaceImpl (CORBA::ORB_ptr orb)
@@ -9,7 +9,7 @@ MyInterfaceImpl::MyInterfaceImpl (CORBA::ORB_ptr orb)
 {
 }
 CORBA::Boolean
-MyInterfaceImpl::myMethod (const char* mystring)
+MyInterfaceImpl::myMethod (char const *mystring)
 {
   return mystring == my_string;
 }

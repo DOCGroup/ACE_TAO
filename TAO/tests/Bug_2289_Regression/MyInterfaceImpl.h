@@ -6,11 +6,15 @@ class MyInterfaceImpl
 {
   public:
   MyInterfaceImpl (CORBA::ORB_ptr orb);
+  MyInterfaceImpl (MyInterfaceImpl const &) = delete;
+  MyInterfaceImpl &operator= (MyInterfaceImpl const &) = delete;
+  MyInterfaceImpl (MyInterfaceImpl &&) = delete;
+  MyInterfaceImpl &operator= (MyInterfaceImpl &&) = delete;
 
-  static const char* my_string;
+  static char const *my_string;
 
   // = The skeleton methods
-  virtual CORBA::Boolean myMethod (const char* stringParam);
+  CORBA::Boolean myMethod (char const *stringParam) override;
 
 private:
   CORBA::ORB_var orb_;
