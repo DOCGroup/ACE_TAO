@@ -122,7 +122,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg = nullptr;
   while (arg_shifter.is_anything_left ())
     {
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBReactorRegistry")) == 0)
@@ -304,7 +304,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
   // for this factory is used (and init() is not called).
   TAO_Resource_Factory *default_resource_factory =
     ACE_Dynamic_Service<TAO_Resource_Factory>::instance ("Resource_Factory");
-  if (default_resource_factory != 0)
+  if (default_resource_factory != nullptr)
     {
       default_resource_factory->disable_factory();
     }
