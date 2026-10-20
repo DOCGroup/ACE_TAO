@@ -14,9 +14,9 @@ public:
   Service (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void run_test (Test::Callback_ptr callback);
+  void run_test (Test::Callback_ptr callback) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.
