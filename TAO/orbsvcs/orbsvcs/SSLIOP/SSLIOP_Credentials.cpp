@@ -18,11 +18,11 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
 {
   ::X509 *x = cert;
 
-  if (x != 0)
+  if (x != nullptr)
     {
       // We use the X.509 certificate's serial number as the
       // credentials Id.
-      BIGNUM * bn = ASN1_INTEGER_to_BN (::X509_get_serialNumber (x), 0);
+      BIGNUM * bn = ASN1_INTEGER_to_BN (::X509_get_serialNumber (x), nullptr);
       if (BN_is_zero (bn))
         this->id_ = CORBA::string_dup ("X509: 00");
       else
@@ -99,7 +99,7 @@ TAO::SSLIOP_Credentials::creds_state ()
 
   // The pointer to the underlying X509 structure should only be zero
   // if destroy() was called on this Credentials object.
-  if (x == 0)
+  if (x == nullptr)
     throw CORBA::BAD_OPERATION ();
 
   if (this->creds_state_ == SecurityLevel3::CS_Valid)
@@ -175,8 +175,8 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
   return
     lct == rct
     && this->creds_usage_ == rhs.creds_usage_
-    && ((xa == xb) || (xa != 0 && xb != 0 && ::X509_cmp (xa, xb) == 0))
-//     && ((ea == eb) || (ea != 0 && eb != 0 && ::EVP_PKEY_cmp (ea, eb) == 0))
+    && ((xa == xb) || (xa != nullptr && xb != nullptr && ::X509_cmp (xa, xb) == 0))
+//     && ((ea == eb) || (ea != nullptr && eb != nullptr && ::EVP_PKEY_cmp (ea, eb) == 0))
     ;
 }
 
@@ -185,7 +185,7 @@ TAO::SSLIOP_Credentials::hash () const
 {
   ::X509 * x509 = this->x509_.in ();
 
-  return (x509 == 0 ? 0 : ::X509_issuer_name_hash (x509));
+  return (x509 == nullptr ? 0 : ::X509_issuer_name_hash (x509));
 }
 
 TAO::SSLIOP::Credentials_ptr
