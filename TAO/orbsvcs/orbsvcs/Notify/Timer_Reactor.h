@@ -41,12 +41,12 @@ public:
   virtual ~TAO_Notify_Timer_Reactor ();
 
   /// Schedule a timer
-  virtual long schedule_timer (ACE_Event_Handler *handler,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval);
+  long schedule_timer (ACE_Event_Handler *handler,
+                       const ACE_Time_Value &delay_time,
+                       const ACE_Time_Value &interval) override;
 
   /// Cancel Timer
-  virtual int cancel_timer (long timer_id);
+  int cancel_timer (long timer_id) override;
 
 protected:
   /// The instance reactor that we use.

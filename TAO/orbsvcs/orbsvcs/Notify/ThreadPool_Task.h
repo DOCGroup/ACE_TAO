@@ -50,32 +50,32 @@ public:
   virtual ~TAO_Notify_ThreadPool_Task ();
 
   /// Call the base class init
-  virtual int init (int argc, ACE_TCHAR **argv);
+  int init (int argc, ACE_TCHAR **argv) override;
 
   /// release reference to my self.
-  virtual int close (u_long flags);
+  int close (u_long flags) override;
 
   /// Activate the threadpool
   void init (const NotifyExt::ThreadPoolParams& tp_params, const TAO_Notify_AdminProperties::Ptr& admin_properties);
 
   /// Queue the request
-  virtual void execute (TAO_Notify_Method_Request& method_request);
+  void execute (TAO_Notify_Method_Request& method_request) override;
 
   /// Shutdown task
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Update QoS Properties.
-  virtual void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
+  void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties) override;
 
   /// The object used by clients to register timers.
-  virtual TAO_Notify_Timer* timer ();
+  TAO_Notify_Timer* timer () override;
 
   /// Provide access to the underlying buffering strategy
   TAO_Notify_Buffering_Strategy* buffering_strategy ();
 
 protected:
   /// Task svc
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Release
