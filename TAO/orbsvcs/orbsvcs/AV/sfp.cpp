@@ -844,10 +844,7 @@ TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
   this->state_.static_frame_.size (2* this->transport_->mtu ());
 }
 
-TAO_SFP_Object::~TAO_SFP_Object ()
-{
-  //no-op
-}
+TAO_SFP_Object::~TAO_SFP_Object () = default;
 
 int
 TAO_SFP_Object::destroy ()
@@ -1225,9 +1222,7 @@ TAO_AV_SFP_Factory::TAO_AV_SFP_Factory ()
 {
 }
 
-TAO_AV_SFP_Factory::~TAO_AV_SFP_Factory ()
-{
-}
+TAO_AV_SFP_Factory::~TAO_AV_SFP_Factory () = default;
 
 // Initialization hook from service configurator.
 int
