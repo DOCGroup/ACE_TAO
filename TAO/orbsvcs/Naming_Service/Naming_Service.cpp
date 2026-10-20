@@ -15,7 +15,7 @@ TAO_Naming_Service::TAO_Naming_Service ()
 }
 
 // Constructor taking command-line arguments.
-TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
+TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR * argv[])
   : time_ (0),
     num_threads_ (1)
 {
@@ -25,7 +25,7 @@ TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
 
 // Initialize the state of the TAO_Naming_Service object
 int
-TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
+TAO_Naming_Service::init (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -60,7 +60,7 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
+TAO_Naming_Service::parse_args (int & argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:n:"));
   int c;
@@ -122,7 +122,7 @@ public:
       time_(t)
   {}
 
-  int svc ()
+  int svc () override
   {
   if (!CORBA::is_nil (orb_.in ()))
     {
@@ -153,8 +153,8 @@ TAO_Naming_Service::run ()
     return runner.svc();
   else
     {
-      int grpid = runner.activate ( THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-                                    this->num_threads_);
+      int const grpid = runner.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                                         this->num_threads_);
       if (grpid == -1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
@@ -198,6 +198,4 @@ TAO_Naming_Service::fini ()
 }
 
 // Destructor.
-TAO_Naming_Service::~TAO_Naming_Service ()
-{
-}
+TAO_Naming_Service::~TAO_Naming_Service () = default;

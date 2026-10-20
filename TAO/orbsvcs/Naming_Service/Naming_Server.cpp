@@ -10,14 +10,14 @@
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {
 public:
-  Naming_Svc_Shutdown(TAO_Naming_Service& ns);
+  Naming_Svc_Shutdown (TAO_Naming_Service & ns);
 
   void operator() (int which_signal);
 private:
   TAO_Naming_Service& ns_;
 };
 
-Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_Naming_Service &ns)
+Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_Naming_Service & ns)
   : ns_(ns)
 {
 }
@@ -35,7 +35,7 @@ Naming_Svc_Shutdown::operator() (int which_signal)
 // Driver function for the TAO Naming Service.
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   TAO_Naming_Service naming_service;
 
