@@ -49,50 +49,50 @@ private:
   int home_test ();
 
   // Also tests eventtype.
-  int valuetype_test (const char *repo_id,
-                      const char *prefix);
+  int valuetype_test (char const* repo_id,
+                      char const* prefix);
 
   int component_attribute_test (
-      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &);
+      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var&);
 
-  int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var &);
+  int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var&);
 
-  int component_port_test (CORBA::ComponentIR::ComponentDef_var &);
+  int component_port_test (CORBA::ComponentIR::ComponentDef_var&);
 
-  int provides_test (const CORBA::ComponentIR::ProvidesDescriptionSeq &);
+  int provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq const&);
 
-  int uses_test (const CORBA::ComponentIR::UsesDescriptionSeq &);
+  int uses_test (CORBA::ComponentIR::UsesDescriptionSeq const&);
 
-  int event_port_test (const CORBA::ComponentIR::EventPortDescriptionSeq &,
+  int event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq const&,
                        CORBA::ULong seq_length,
-                       const char *port_type,
-                       const char **names,
-                       const char **ids);
+                       char const* port_type,
+                       char const* const* names,
+                       char const* const* ids);
 
-  int valuetype_inheritance_test (CORBA::ExtValueDef_var &,
-                                  const char *prefix);
+  int valuetype_inheritance_test (CORBA::ExtValueDef_var&,
+                                  char const* prefix);
 
   int valuetype_attribute_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix);
+      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      char const* prefix);
 
   int valuetype_operation_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix);
+      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      char const* prefix);
 
   int valuetype_member_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix);
+      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      char const* prefix);
 
   int valuetype_factory_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix);
+      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      char const* prefix);
 
-  int home_inheritance_test (CORBA::ComponentIR::HomeDef_var &);
+  int home_inheritance_test (CORBA::ComponentIR::HomeDef_var&);
 
-  int home_factory_test (const CORBA::ComponentIR::HomeDescription *);
+  int home_factory_test (CORBA::ComponentIR::HomeDescription const*);
 
-  int home_finder_test (const CORBA::ComponentIR::HomeDescription *);
+  int home_finder_test (CORBA::ComponentIR::HomeDescription const*);
 
 private:
   /// Flag to output detailed error messages.
