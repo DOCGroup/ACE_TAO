@@ -4,10 +4,10 @@
 
 CORBA::ORB_var m_ORB_p;
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
@@ -36,16 +36,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class IF_Test_impl : public POA_IF_EXE_M_R::IF_ExeCtrlData
 {
 public:
-  virtual void
-  shutdown ()
+  IF_Test_impl () = default;
+
+  IF_Test_impl (IF_Test_impl const &) = delete;
+  IF_Test_impl (IF_Test_impl &&) = delete;
+  IF_Test_impl &operator= (IF_Test_impl const &) = delete;
+  IF_Test_impl &operator= (IF_Test_impl &&) = delete;
+
+  void shutdown () override
   {
     m_ORB_p->shutdown (0);
   }
 
-  virtual void
-  foo (const ::IF_EXE_M_R::Test_Struct &ts)
+  void foo (::IF_EXE_M_R::Test_Struct const &ts) override
   {
-    const IF_EXE_M_R::CORBA_FOOIInPlan *anUnion_p = new IF_EXE_M_R::CORBA_FOOIInPlan;
+    IF_EXE_M_R::CORBA_FOOIInPlan const *anUnion_p = new IF_EXE_M_R::CORBA_FOOIInPlan;
     if (ts.whatEver >>= anUnion_p)
       {
         ACE_DEBUG((LM_DEBUG, "Any successfully marshalled\nAny is %@\nID: %C\nNAME: %C\nKIND: %d\n", &ts.whatEver,
@@ -75,11 +80,11 @@ public:
 class Main_C
 {
 public:
-  int Create (int argc, ACE_TCHAR *argv[]);
+  int Create (int argc, ACE_TCHAR * argv[]);
 };
 
 int
-Main_C::Create (int argc, ACE_TCHAR *argv[])
+Main_C::Create (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -96,7 +101,7 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
 
       IF_Test_impl *servant = new IF_Test_impl;
 
-      PortableServer::ServantBase_var owner_transfer(servant);
+      PortableServer::ServantBase_var owner_transfer (servant);
 
       PortableServer::ObjectId_var id =
         poa->activate_object (servant);
@@ -109,7 +114,7 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN((LM_ERROR,
                           "Cannot open output file for writing IOR: %s\n",
                           ior_output_file),
@@ -119,7 +124,7 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
 
       m_ORB_p->run ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -128,7 +133,7 @@ Main_C::Create (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   m_ORB_p = CORBA::ORB_init (argc, argv);
 
