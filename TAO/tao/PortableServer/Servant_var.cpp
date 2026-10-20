@@ -39,7 +39,7 @@ PortableServer::Servant_var<T>::~Servant_var ()  /* noexcept */
   // destructor.
   try
     {
-      if (this->ptr_ != 0)
+      if (this->ptr_ != nullptr)
         {
           this->ptr_->_remove_ref ();
         }

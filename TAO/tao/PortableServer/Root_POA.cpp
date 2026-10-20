@@ -1996,7 +1996,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
   CORBA::PolicyList_var client_exposed_policies =
     this->client_exposed_policies (priority);
 
-  TAO_Acceptor_Filter* filter = 0;
+  TAO_Acceptor_Filter *filter = nullptr;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   if (this->filter_factory_)
