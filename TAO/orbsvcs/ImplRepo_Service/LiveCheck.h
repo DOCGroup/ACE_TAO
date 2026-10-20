@@ -95,7 +95,7 @@ class Locator_Export LiveListener
   std::atomic<int> refcount_;
 };
 
-typedef TAO_Intrusive_Ref_Count_Handle<LiveListener> LiveListener_ptr;
+using LiveListener_ptr = TAO_Intrusive_Ref_Count_Handle<LiveListener>;
 
 //---------------------------------------------------------------------------
 /*
@@ -152,7 +152,7 @@ class Locator_Export LiveEntry
   int max_retry_;
   bool may_ping_;
 
-  typedef ACE_Unbounded_Set<LiveListener_ptr> Listen_Set;
+  using Listen_Set = ACE_Unbounded_Set<LiveListener_ptr>;
   Listen_Set listeners_;
   TAO_SYNCH_MUTEX lock_;
   PortableServer::ServantBase_var callback_;
@@ -256,7 +256,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
              const ACE_Time_Value &interval);
   void shutdown ();
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act = 0);
+                      const void *act = nullptr);
   bool has_server (const char *server);
   void add_server (const char *server,
                    bool may_ping,
