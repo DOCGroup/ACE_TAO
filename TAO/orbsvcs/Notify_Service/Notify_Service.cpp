@@ -32,10 +32,10 @@
 #include "ace/Logging_Strategy.h"
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver ()
-: notify_service_ (0)
+: notify_service_ (nullptr)
 , bootstrap_ (false)
 , use_name_svc_ (true)
-, ior_output_file_name_ (0)
+, ior_output_file_name_ (nullptr)
 , notify_factory_name_ (NOTIFY_KEY)
 , register_event_channel_ (false)
 , nthreads_ (1)
@@ -47,12 +47,10 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver ()
 {
 }
 
-TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver ()
-{
-}
+TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver () = default;
 
 int
-TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
+TAO_Notify_Service_Driver::init_ORB (int & argc, ACE_TCHAR * argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -81,7 +79,7 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
 }
 
 int
-TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv [])
+TAO_Notify_Service_Driver::init_dispatching_ORB (int & argc, ACE_TCHAR * argv [])
 {
   this->dispatching_orb_ = CORBA::ORB_init (argc, argv, "dispatcher");
 
@@ -122,7 +120,7 @@ TAO_Notify_Service_Driver::apply_timeout (CORBA::ORB_ptr orb)
 }
 
 int
-TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
+TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR * argv[])
 {
   // Check if -ORBDaemon is specified and if so, daemonize at this moment,
   // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
@@ -137,7 +135,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   this->notify_service_ = TAO_Notify_Service::load_default ();
 
-  if (this->notify_service_ == 0)
+  if (this->notify_service_ == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -273,10 +271,10 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
               CosNotification::AdminProperties initial_admin;
 
               CosNotifyChannelAdmin::EventChannel_var ec;
-              TAO_Notify_EventChannelFactory* factory_impl =
-                dynamic_cast<TAO_Notify_EventChannelFactory*> (
+              TAO_Notify_EventChannelFactory * factory_impl =
+                dynamic_cast<TAO_Notify_EventChannelFactory *> (
                   this->notify_factory_->_servant ());
-              if (factory_impl == 0)
+              if (factory_impl == nullptr)
                 {
                   ec = this->notify_factory_->create_channel (initial_qos,
                                                               initial_admin,
@@ -311,9 +309,9 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   if (this->ior_output_file_name_)
     {
-       FILE* ior_output_file = ACE_OS::fopen (ior_output_file_name_,
+       FILE * ior_output_file = ACE_OS::fopen (ior_output_file_name_,
                                               ACE_TEXT("w"));
-       if (ior_output_file == 0)
+       if (ior_output_file == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
@@ -472,11 +470,11 @@ TAO_Notify_Service_Driver::fini ()
 }
 
 int
-TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
+TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const * current_arg = nullptr;
   while (arg_shifter.is_anything_left ())
     {
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))))
@@ -644,7 +642,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 /*****************************************************************/
-LoggingWorker::LoggingWorker(TAO_Notify_Service_Driver* ns)
+LoggingWorker::LoggingWorker (TAO_Notify_Service_Driver * ns)
 : ns_ (ns),
   started_ (false),
   timer_id_ (-1)
@@ -654,9 +652,9 @@ LoggingWorker::LoggingWorker(TAO_Notify_Service_Driver* ns)
 void
 LoggingWorker::start ()
 {
-  ACE_Logging_Strategy* logging_strategy =
+  ACE_Logging_Strategy * logging_strategy =
     ACE_Dynamic_Service<ACE_Logging_Strategy>::instance ("Logging_Strategy");
-  if (logging_strategy == 0)
+  if (logging_strategy == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) logging_strategy == 0\n")));
     }

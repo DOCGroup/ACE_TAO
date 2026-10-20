@@ -35,13 +35,17 @@ class TAO_Notify_Service_Driver;
 class LoggingWorker : public ACE_Task_Base
 {
 public:
-  LoggingWorker (TAO_Notify_Service_Driver* ns);
-  virtual int svc ();
+  LoggingWorker (TAO_Notify_Service_Driver * ns);
+  LoggingWorker (LoggingWorker const &) = delete;
+  LoggingWorker (LoggingWorker &&) = delete;
+  LoggingWorker &operator= (LoggingWorker const &) = delete;
+  LoggingWorker &operator= (LoggingWorker &&) = delete;
+  int svc () override;
   void start ();
   void end ();
 private:
   ACE_Reactor logging_reactor_;
-  TAO_Notify_Service_Driver* ns_;
+  TAO_Notify_Service_Driver * ns_;
   bool started_;
   long timer_id_;
 };
@@ -59,10 +63,15 @@ public:
   /// ctor
   Worker ();
 
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
   void orb (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// The orb
@@ -85,11 +94,16 @@ public:
   TAO_Notify_Service_Driver ();
 
   /// Destructor.
-  virtual ~TAO_Notify_Service_Driver ();
+  ~TAO_Notify_Service_Driver () override;
 
   /// Initializes the Service.
   /// Returns 0 on success, -1 on error.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  TAO_Notify_Service_Driver (TAO_Notify_Service_Driver const &) = delete;
+  TAO_Notify_Service_Driver (TAO_Notify_Service_Driver &&) = delete;
+  TAO_Notify_Service_Driver &operator= (TAO_Notify_Service_Driver const &) = delete;
+  TAO_Notify_Service_Driver &operator= (TAO_Notify_Service_Driver &&) = delete;
+
+  int init (int argc, ACE_TCHAR * argv[]) override;
 
   /// run the Service.
   /// Returns 0 on success, -1 on error.
@@ -97,25 +111,25 @@ public:
 
   /// Shutdown the Service.
   /// Returns 0 on success, -1 on error.
-  virtual int fini ();
+  int fini () override;
 
 protected:
   /// initialize the ORB.
-  int init_ORB (int& argc, ACE_TCHAR *argv []);
+  int init_ORB (int & argc, ACE_TCHAR * argv []);
 
   /// initialize the dispatching ORB.
-  int init_dispatching_ORB (int& argc, ACE_TCHAR *argv []);
+  int init_dispatching_ORB (int & argc, ACE_TCHAR * argv []);
 
   /// Apply a relative round-trip timeout to the ORB
   void apply_timeout (CORBA::ORB_ptr orb);
 
-  TAO_Notify_Service* notify_service_;
+  TAO_Notify_Service * notify_service_;
 
   /// Resolve the naming service.
   int resolve_naming_service ();
 
   /// Parses the command line arguments.
-  int parse_args (int argc, ACE_TCHAR *argv []);
+  int parse_args (int argc, ACE_TCHAR * argv []);
 
   // = Data members
 
@@ -126,7 +140,7 @@ protected:
   bool use_name_svc_;
 
   /// File name where the IOR of the server object is stored.
-  const ACE_TCHAR *ior_output_file_name_;
+  ACE_TCHAR const * ior_output_file_name_;
 
   /// The Factory name.
   ACE_CString notify_factory_name_;
