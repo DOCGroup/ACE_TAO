@@ -8,13 +8,13 @@ ACE_TCHAR const *orb1_args =
   ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBSvcConf MY_TEST_ORB_1.conf");
 ACE_TCHAR const *orb2_args =
   ACE_TEXT ("BBB");
-int expected_value = 0;
+int expected_value {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:e:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -73,7 +73,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       TAO_Resource_Factory *trf1 = orb1->orb_core ()->resource_factory ();
 
-      if (trf1 == 0)
+      if (trf1 == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("ERROR: Can not resolve ")
@@ -83,7 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       TAO_Resource_Factory *trf2 = orb2->orb_core ()->resource_factory ();
 
-      if (trf2 == 0)
+      if (trf2 == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("ERROR: Can not resolve ")
@@ -108,7 +108,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("'-ORBConnectionCacheMax' is applied to the first ")
                   ACE_TEXT ("ORB only as expected.\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught Exception in main:\n");
       return 1;
