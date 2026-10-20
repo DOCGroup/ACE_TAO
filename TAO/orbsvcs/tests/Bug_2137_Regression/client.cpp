@@ -31,9 +31,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 // Returns false if calling is_equivalent in both directions on the two supplied
 // IORs does not produce expected result.
 CORBA::Boolean
-check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expected_result)
+check_is_equivalent (char const *ior1, char const *ior2, CORBA::Boolean expected_result)
 {
-  CORBA::Boolean result = 1;
+  CORBA::Boolean result = true;
   try
     {
       CORBA::Object_var object1 =
@@ -42,27 +42,27 @@ check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expecte
       CORBA::Object_var object2 =
         orb->string_to_object (ior2);
 
-      const char* expected_result_string = (expected_result ? "true" : "false");
+      char const *expected_result_string = expected_result ? "true" : "false";
 
       if ((object1->_is_equivalent (object2.in ())) != expected_result)
         {
           ACE_DEBUG ((LM_ERROR, "Error: Result of <%s>->_is_equivalent (<%s>) is not %s when it should be...\n",
                                 ior1, ior2, expected_result_string));
-          result = 0;
+          result = false;
         }
 
       if ((object2->_is_equivalent (object1.in ())) != expected_result)
         {
           ACE_DEBUG ((LM_ERROR, "Error: Result of <%s>->_is_equivalent (<%s>) is not %s when it should be...\n",
                                 ior2, ior1, expected_result_string));
-          result = 0;
+          result = false;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_ERROR, "Vastly unexpected exception comparing %s and %s:\n", ior1, ior2));
       ex._tao_print_exception ("Exception:");
-      result = 0;
+      result = false;
     }
   return result;
 }
@@ -70,7 +70,7 @@ check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expecte
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   try
     {
       orb =
