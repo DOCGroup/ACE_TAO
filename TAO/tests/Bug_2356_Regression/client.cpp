@@ -16,7 +16,7 @@
 #include "ami_testS.h"
 #include "tao/Codeset/Codeset.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int niterations = 5;
 int shutdown_flag = 1;
 int debug = 0;
@@ -59,11 +59,16 @@ public:
   /// Destructor.
   ~Handler () = default;
 
-  void foo ()
+  Handler (Handler const &) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler &&) = delete;
+
+  void foo () override
     {
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"
@@ -78,17 +83,17 @@ public:
                       "... exception received successfully: <%d>\n",
                       ex.id));
 #if defined(ACE_HAS_WCHAR) || defined(ACE_HAS_XPG4_MULTIBYTE_CHAR)
-          ACE_HEX_DUMP((LM_DEBUG,
-                        reinterpret_cast<char const *>(ex.whatDidTheRightThing.in()),
-                        ACE_OS::strlen(ex.whatDidTheRightThing.in()) * sizeof(CORBA::WChar)
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         reinterpret_cast<char const *> (ex.whatDidTheRightThing.in ()),
+                         ACE_OS::strlen (ex.whatDidTheRightThing.in ()) * sizeof (CORBA::WChar)
                         ));
 
-          CORBA::WChar const* wstring = L"Hello world";
+          CORBA::WChar const *wstring = L"Hello world";
 #else
           CORBA::WChar const empty[] = { 0 };
-          CORBA::WChar const* wstring = empty;
+          CORBA::WChar const *wstring = empty;
 #endif
-          if (ACE_OS::strcmp (wstring, ex.whatDidTheRightThing.in()) != 0)
+          if (ACE_OS::strcmp (wstring, ex.whatDidTheRightThing.in ()) != 0)
             {
               ex._tao_print_exception ("ERROR");
                  ACE_ERROR ((LM_ERROR,
@@ -103,7 +108,7 @@ public:
                       "... caught the wrong exception -> ERROR\n"));
           result = 1;
         }
-    };
+    }
 };
 
 int
