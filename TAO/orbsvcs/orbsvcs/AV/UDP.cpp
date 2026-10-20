@@ -18,6 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_UDP_Flow_Handler::TAO_AV_UDP_Flow_Handler ()
+  : av_core_ (nullptr)
 {
   ACE_NEW (this->transport_,
            TAO_AV_UDP_Transport (this));
