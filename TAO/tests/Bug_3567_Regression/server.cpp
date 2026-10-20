@@ -16,7 +16,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-const ACE_TCHAR *ior_output_file = 0;
+ACE_TCHAR const *ior_output_file {};
 int nthreads = 5;
 
 /**
@@ -45,8 +45,8 @@ private:
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:d"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
