@@ -1079,36 +1079,36 @@ public:
    * UDP if the producer is listening and the consumer connects (logically) then the producer needs to
    * know the reverse channel on its peer fep to send data to.
    */
-  virtual char * get_rev_channel (const char * pcol_name);
+  char *get_rev_channel (const char *pcol_name) override;
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop ();
+  void stop () override;
 
   /// start this flow, to be overridden by the application.
-  virtual void start ();
+  void start () override;
 
-  virtual char * go_to_listen (AVStreams::QoS & the_qos,
-                               CORBA::Boolean is_mcast,
-                               AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol);
+  char *go_to_listen (AVStreams::QoS &the_qos,
+                      CORBA::Boolean is_mcast,
+                      AVStreams::FlowEndPoint_ptr peer,
+                      char *&flowProtocol) override;
 
-  virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
-                                          const char * address,
-                                          const char * use_flow_protocol);
+  CORBA::Boolean connect_to_peer (AVStreams::QoS &the_qos,
+                                  const char *address,
+                                  const char *use_flow_protocol) override;
 
   /// connect to the multicast address, not implemented.
-  virtual char * connect_mcast (AVStreams::QoS & the_qos,
-                                CORBA::Boolean_out is_met,
-                                const char * address,
-                                const char * use_flow_protocol);
+  char *connect_mcast (AVStreams::QoS &the_qos,
+                       CORBA::Boolean_out is_met,
+                       const char *address,
+                       const char *use_flow_protocol) override;
 
 
   /// sets the public key  to be used for encryption of the data.
-  virtual void set_key (const AVStreams::key & the_key);
+  void set_key (const AVStreams::key &the_key) override;
 
   /// sets the source id of this flow producer so that it can be used
   /// to distinguish this producer from others in the multicast case.
-  virtual void set_source_id (CORBA::Long source_id);
+  void set_source_id (CORBA::Long source_id) override;
 
 protected:
   /// source id of this producer.
@@ -1133,19 +1133,19 @@ public:
                     const char *format);
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop ();
+  void stop () override;
 
   /// start this flow, to be overridden by the application.
-  virtual void start ();
+  void start () override;
 
-  virtual char * go_to_listen (AVStreams::QoS & the_qos,
-                               CORBA::Boolean is_mcast,
-                               AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol);
+  char *go_to_listen (AVStreams::QoS &the_qos,
+                      CORBA::Boolean is_mcast,
+                      AVStreams::FlowEndPoint_ptr peer,
+                      char *&flowProtocol) override;
 
-  virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
-                                          const char * address,
-                                          const char * use_flow_protocol);
+  CORBA::Boolean connect_to_peer (AVStreams::QoS &the_qos,
+                                  const char *address,
+                                  const char *use_flow_protocol) override;
 };
 
 /**
