@@ -36,6 +36,11 @@ public:
 
   ~TAO_FTEC_Event_Channel_Impl() override;
 
+  TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl const&) = delete;
+  TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl&&) = delete;
+  TAO_FTEC_Event_Channel_Impl& operator=(TAO_FTEC_Event_Channel_Impl const&) = delete;
+  TAO_FTEC_Event_Channel_Impl& operator=(TAO_FTEC_Event_Channel_Impl&&) = delete;
+
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
   virtual void activate_object (

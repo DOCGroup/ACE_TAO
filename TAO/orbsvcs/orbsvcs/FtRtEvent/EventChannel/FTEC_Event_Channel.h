@@ -31,6 +31,11 @@ public:
 
   ~TAO_FTEC_Event_Channel() override;
 
+  TAO_FTEC_Event_Channel(TAO_FTEC_Event_Channel const&) = delete;
+  TAO_FTEC_Event_Channel(TAO_FTEC_Event_Channel&&) = delete;
+  TAO_FTEC_Event_Channel& operator=(TAO_FTEC_Event_Channel const&) = delete;
+  TAO_FTEC_Event_Channel& operator=(TAO_FTEC_Event_Channel&&) = delete;
+
   enum MEMBERSHIP {
     UNSPECIFIED,
     PRIMARY,

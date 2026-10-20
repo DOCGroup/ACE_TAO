@@ -27,8 +27,13 @@ class TAO_FTEC_Event_Channel_Impl;
 class Replication_Strategy
 {
 public:
-    Replication_Strategy();
-    virtual ~Replication_Strategy();
+  Replication_Strategy();
+  virtual ~Replication_Strategy();
+
+  Replication_Strategy(Replication_Strategy const&) = delete;
+  Replication_Strategy(Replication_Strategy&&) = delete;
+  Replication_Strategy& operator=(Replication_Strategy const&) = delete;
+  Replication_Strategy& operator=(Replication_Strategy&&) = delete;
 
   /**
    * Check if the incoming set_update() request is out of sequence. This is only
