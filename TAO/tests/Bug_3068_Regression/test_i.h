@@ -23,7 +23,7 @@ public:
   Caller (Callback_ptr cb, CORBA::ORB_ptr orb);
   void go ();
 
-  int svc ();
+  int svc () override;
 
 private:
   Callback_var cbobj_;
@@ -50,10 +50,10 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
 
   /// Safe way to shutdown
-  void shutdown ();
+  void shutdown () override;
 
   /// The callback method
-  void callback_method (const CORBA::OctetSeq& payload);
+  void callback_method (CORBA::OctetSeq const &payload) override;
 
 private:
   /// The orb
@@ -75,20 +75,20 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb);
 
   // = The Simple_Server methods.
-  void ow_test ();
+  void ow_test () override;
 
-  CORBA::Long test_method (CORBA::Boolean do_callback);
+  CORBA::Long test_method (CORBA::Boolean do_callback) override;
 
-  void callback_object (Callback_ptr callback);
+  void callback_object (Callback_ptr callback) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB
   CORBA::ORB_var orb_;
 
   /// Callback Object
-  Caller *caller_;
+  Caller *caller_ {};
 
   /// Number of times the callback needs to be called
   int ow_count_;
