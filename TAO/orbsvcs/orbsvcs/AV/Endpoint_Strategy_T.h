@@ -32,7 +32,11 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy ();
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy ();
+  ~TAO_AV_Endpoint_Reactive_Strategy () override;
+  TAO_AV_Endpoint_Reactive_Strategy (TAO_AV_Endpoint_Reactive_Strategy const &) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy &operator= (TAO_AV_Endpoint_Reactive_Strategy const &) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy (TAO_AV_Endpoint_Reactive_Strategy &&) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy &operator= (TAO_AV_Endpoint_Reactive_Strategy &&) = delete;
 
   /// creates and activates the streamendpoint, vdev, and mediacontrol
   virtual int activate ();
@@ -92,15 +96,19 @@ public:
   int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy_A ();
+  ~TAO_AV_Endpoint_Reactive_Strategy_A () override;
+  TAO_AV_Endpoint_Reactive_Strategy_A (TAO_AV_Endpoint_Reactive_Strategy_A const &) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy_A &operator= (TAO_AV_Endpoint_Reactive_Strategy_A const &) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy_A (TAO_AV_Endpoint_Reactive_Strategy_A &&) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy_A &operator= (TAO_AV_Endpoint_Reactive_Strategy_A &&) = delete;
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// an "A" type endpoint
-  virtual int activate_stream_endpoint ();
+  int activate_stream_endpoint () override;
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
-  virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev);
+  int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
+                AVStreams::VDev_ptr &vdev) override;
 };
 
 // ----------------------------------------------------------------------
@@ -117,17 +125,21 @@ public:
   TAO_AV_Endpoint_Reactive_Strategy_B ();
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy_B ();
+  ~TAO_AV_Endpoint_Reactive_Strategy_B () override;
+  TAO_AV_Endpoint_Reactive_Strategy_B (TAO_AV_Endpoint_Reactive_Strategy_B const &) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy_B &operator= (TAO_AV_Endpoint_Reactive_Strategy_B const &) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy_B (TAO_AV_Endpoint_Reactive_Strategy_B &&) = delete;
+  TAO_AV_Endpoint_Reactive_Strategy_B &operator= (TAO_AV_Endpoint_Reactive_Strategy_B &&) = delete;
 
   int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// a "B" type endpoint
-  virtual int activate_stream_endpoint ();
+  int activate_stream_endpoint () override;
 
   /// Called by the MMDevice, when it needs to create a B type endpoint
-  virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev);
+  int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
+                AVStreams::VDev_ptr &vdev) override;
 };
 
 // ----------------------------------------------------------------------
@@ -147,6 +159,10 @@ public:
 
   /// Destructor
   virtual ~TAO_AV_Child_Process ();
+  TAO_AV_Child_Process (TAO_AV_Child_Process const &) = delete;
+  TAO_AV_Child_Process &operator= (TAO_AV_Child_Process const &) = delete;
+  TAO_AV_Child_Process (TAO_AV_Child_Process &&) = delete;
+  TAO_AV_Child_Process &operator= (TAO_AV_Child_Process &&) = delete;
 
   /// Initializes the ORB, creates and activates the
   /// T_StreamEndpoint, T_VDev, T_MediaCtrl in the POA
@@ -243,7 +259,11 @@ public:
   TAO_AV_Child_Process_A ();
 
   /// Destructor.
-  virtual ~TAO_AV_Child_Process_A ();
+  ~TAO_AV_Child_Process_A () override;
+  TAO_AV_Child_Process_A (TAO_AV_Child_Process_A const &) = delete;
+  TAO_AV_Child_Process_A &operator= (TAO_AV_Child_Process_A const &) = delete;
+  TAO_AV_Child_Process_A (TAO_AV_Child_Process_A &&) = delete;
+  TAO_AV_Child_Process_A &operator= (TAO_AV_Child_Process_A &&) = delete;
 };
 
 // ----------------------------------------------------------------------
@@ -261,7 +281,11 @@ public:
   TAO_AV_Child_Process_B ();
 
   /// Destructor.
-  virtual ~TAO_AV_Child_Process_B ();
+  ~TAO_AV_Child_Process_B () override;
+  TAO_AV_Child_Process_B (TAO_AV_Child_Process_B const &) = delete;
+  TAO_AV_Child_Process_B &operator= (TAO_AV_Child_Process_B const &) = delete;
+  TAO_AV_Child_Process_B (TAO_AV_Child_Process_B &&) = delete;
+  TAO_AV_Child_Process_B &operator= (TAO_AV_Child_Process_B &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -43,6 +43,10 @@ public:
 
   /// Destructor
   virtual ~TAO_AV_Endpoint_Strategy ();
+  TAO_AV_Endpoint_Strategy (TAO_AV_Endpoint_Strategy const &) = delete;
+  TAO_AV_Endpoint_Strategy &operator= (TAO_AV_Endpoint_Strategy const &) = delete;
+  TAO_AV_Endpoint_Strategy (TAO_AV_Endpoint_Strategy &&) = delete;
+  TAO_AV_Endpoint_Strategy &operator= (TAO_AV_Endpoint_Strategy &&) = delete;
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
@@ -79,6 +83,10 @@ public:
 
   /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy () override;
+  TAO_AV_Endpoint_Process_Strategy (TAO_AV_Endpoint_Process_Strategy const &) = delete;
+  TAO_AV_Endpoint_Process_Strategy &operator= (TAO_AV_Endpoint_Process_Strategy const &) = delete;
+  TAO_AV_Endpoint_Process_Strategy (TAO_AV_Endpoint_Process_Strategy &&) = delete;
+  TAO_AV_Endpoint_Process_Strategy &operator= (TAO_AV_Endpoint_Process_Strategy &&) = delete;
 
   /// creates a new child process, and waits on a semaphore
   /// until the child process has finished creating the endpoints
@@ -128,6 +136,10 @@ public:
 
   /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_A () override;
+  TAO_AV_Endpoint_Process_Strategy_A (TAO_AV_Endpoint_Process_Strategy_A const &) = delete;
+  TAO_AV_Endpoint_Process_Strategy_A &operator= (TAO_AV_Endpoint_Process_Strategy_A const &) = delete;
+  TAO_AV_Endpoint_Process_Strategy_A (TAO_AV_Endpoint_Process_Strategy_A &&) = delete;
+  TAO_AV_Endpoint_Process_Strategy_A &operator= (TAO_AV_Endpoint_Process_Strategy_A &&) = delete;
 
 protected:
   /// Creates an "A" type stream endpoint, and a vdev
@@ -153,6 +165,10 @@ public:
 
   /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_B () override;
+  TAO_AV_Endpoint_Process_Strategy_B (TAO_AV_Endpoint_Process_Strategy_B const &) = delete;
+  TAO_AV_Endpoint_Process_Strategy_B &operator= (TAO_AV_Endpoint_Process_Strategy_B const &) = delete;
+  TAO_AV_Endpoint_Process_Strategy_B (TAO_AV_Endpoint_Process_Strategy_B &&) = delete;
+  TAO_AV_Endpoint_Process_Strategy_B &operator= (TAO_AV_Endpoint_Process_Strategy_B &&) = delete;
 
 protected:
   /// Creates a "B" type stream endpoint, and a vdev
