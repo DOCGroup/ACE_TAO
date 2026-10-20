@@ -5,11 +5,14 @@ class  AdderServant :
   public POA_AMI_test::adder {
 public:
   AdderServant () = default;
+  AdderServant (AdderServant const &) = delete;
+  AdderServant &operator= (AdderServant const &) = delete;
+  AdderServant (AdderServant &&) = delete;
+  AdderServant &operator= (AdderServant &&) = delete;
 
-  virtual ~AdderServant () = default;
+  ~AdderServant () override = default;
 
-  virtual
-  CORBA::Long add (CORBA::Long a, CORBA::Long b)
+  CORBA::Long add (CORBA::Long a, CORBA::Long b) override
     {
       return a + b;
     }
