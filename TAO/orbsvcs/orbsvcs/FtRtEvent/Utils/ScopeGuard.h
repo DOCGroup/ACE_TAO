@@ -26,8 +26,8 @@ public:
     return ref_;
   }
 private:
-    // Disable assignment - not implemented
-    RefHolder& operator=(const RefHolder&);
+  RefHolder& operator=(RefHolder const&) = delete;
+  RefHolder& operator=(RefHolder&&) = delete;
 };
 
 template <class T>
@@ -38,12 +38,11 @@ inline RefHolder<T> ByRef(T& t)
 
 class ScopeGuardImplBase
 {
-  ScopeGuardImplBase &operator= (ScopeGuardImplBase const &) = delete;
+  ScopeGuardImplBase& operator= (ScopeGuardImplBase const&) = delete;
+  ScopeGuardImplBase& operator= (ScopeGuardImplBase&&) = delete;
 protected:
-  ~ScopeGuardImplBase()
-  {
-  }
-  ScopeGuardImplBase(const ScopeGuardImplBase& other) noexcept
+  ~ScopeGuardImplBase() = default;
+  ScopeGuardImplBase(ScopeGuardImplBase const& other) noexcept
     : dismissed_(other.dismissed_)
   {
     other.Dismiss();
