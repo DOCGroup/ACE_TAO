@@ -15,11 +15,6 @@ namespace FTRTEC {
   {
   }
 
-  Identification_Service::~Identification_Service()
-  {
-  }
-
-
   Identification_Service* Identification_Service::instance()
   {
     return service;

@@ -30,10 +30,6 @@ namespace FTRTEC
     service = this;
   }
 
-  Replication_Service::~Replication_Service()
-  {
-  }
-
   int Replication_Service::init (int argc, ACE_TCHAR* argv[])
   {
     static int initialized = 0;

@@ -25,7 +25,7 @@ class UpdateableHandler : public POA_FTRT::AMI_UpdateableHandler
 {
 public:
   UpdateableHandler(AMI_Primary_Replication_Strategy* strategy);
-  ~UpdateableHandler();
+  ~UpdateableHandler() override = default;
 
   FTRT::AMI_UpdateableHandler_ptr activate(
     Update_Manager* mgr, int id,
