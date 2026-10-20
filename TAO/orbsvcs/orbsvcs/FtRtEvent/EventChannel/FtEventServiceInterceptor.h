@@ -31,16 +31,23 @@ using CachedRequestInfo = FtRtecEventChannelAdmin::CachedResult;
 class CachedRequestTable
 {
 public:
-    bool is_new_request (ACE_CString const &client_id, CORBA::Long retention_id);
-    int update (ACE_CString const &client_id,
-         CORBA::Long retention_id,
-         CORBA::Any const &);
-    CORBA::Any get_result (ACE_CString const &client_id);
-    void get_state (FtRtecEventChannelAdmin::CachedOptionResults &state);
-    void set_state (FtRtecEventChannelAdmin::CachedOptionResults const &state);
+  CachedRequestTable() = default;
+
+  CachedRequestTable(CachedRequestTable const&) = delete;
+  CachedRequestTable(CachedRequestTable&&) = delete;
+  CachedRequestTable& operator=(CachedRequestTable const&) = delete;
+  CachedRequestTable& operator=(CachedRequestTable&&) = delete;
+
+  bool is_new_request (ACE_CString const& client_id, CORBA::Long retention_id);
+  int update (ACE_CString const& client_id,
+              CORBA::Long retention_id,
+              CORBA::Any const&);
+  CORBA::Any get_result (ACE_CString const& client_id);
+  void get_state (FtRtecEventChannelAdmin::CachedOptionResults& state);
+  void set_state (FtRtecEventChannelAdmin::CachedOptionResults const& state);
 private:
-   using TableImpl = ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, TAO_SYNCH_MUTEX>;
-   TableImpl table_;
+  using TableImpl = ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, TAO_SYNCH_MUTEX>;
+  TableImpl table_;
 };
 
 
