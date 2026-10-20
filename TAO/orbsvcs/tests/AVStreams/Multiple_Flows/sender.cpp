@@ -32,11 +32,11 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 }
 
 Sender::Sender ()
-  : sender_mmdevice_ (0),
-    streamctrl_ (0),
+  : sender_mmdevice_ (nullptr),
+    streamctrl_ (nullptr),
     frame_count_ (0),
     filename_ ("input"),
-    input_file_ (0),
+    input_file_ (nullptr),
     protocol_ ("UDP"),
     frame_rate_ (30),
     mb_ (BUFSIZ)
@@ -59,7 +59,7 @@ Sender::shutdown ()
   this->streamctrl_->destroy (stop_spec);
 
       // Shut the orb down.
-  TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+  TAO_AV_CORE::instance ()->orb ()->shutdown (false);
 }
 
 int
@@ -147,7 +147,7 @@ Sender::init (int argc,
     ACE_OS::fopen (this->filename_.c_str (),
                    "r");
 
-  if (this->input_file_ == 0)
+  if (this->input_file_ == nullptr)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
                        this->filename_.c_str ()),
@@ -218,7 +218,7 @@ Sender::init (int argc,
                                   the_qos.inout (),
                                   flow_spec);
 
-  if (bind_result == 0)
+  if (!bind_result)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "streamctrl::bind_devs failed\n"),
                       -1);

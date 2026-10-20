@@ -16,7 +16,7 @@ int
 Receiver_StreamEndPoint::get_callback (const char *flow_name,
                                        TAO_AV_Callback *&callback)
 {
-  Receiver_Callback *callback_;
+  Receiver_Callback *callback_ = nullptr;
   ACE_NEW_RETURN (callback_,
                   Receiver_Callback,
                   -1);
@@ -42,7 +42,8 @@ Receiver_StreamEndPoint::set_protocol_object (const char * flowname,
 
 Receiver_Callback::Receiver_Callback ()
   : frame_count_ (1),
-      mb_ (BUFSIZ)
+      mb_ (BUFSIZ),
+      output_file_ (nullptr)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::Receiver_Callback\n"));
@@ -56,7 +57,7 @@ Receiver_Callback::flowname (const char* flow_name)
   // Make sure we have a valid <output_file>
   this->output_file_ = ACE_OS::fopen (this->flowname_.c_str (),
                                       "w");
-  if (this->output_file_ == 0)
+  if (this->output_file_ == nullptr)
     ACE_ERROR ((LM_DEBUG,
                 "Cannot open output file %C\n",
                 this->flowname_.c_str ()));
@@ -82,7 +83,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               this->frame_count_++,
               this->flowname_.c_str ()));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
       size_t result =
@@ -115,17 +116,16 @@ Receiver_Callback::handle_destroy ()
 }
 
 Receiver::Receiver ()
-  : mmdevice_ (0),
+  : mmdevice_ (nullptr),
     frame_rate_ (30),
+    protocol_object_ (nullptr),
     frame_count_ (0),
     filename_ ("input"),
     mb_ (BUFSIZ)
 {
 }
 
-Receiver::~Receiver ()
-{
-}
+Receiver::~Receiver () = default;
 
 void
 Receiver::protocol_object (TAO_AV_Protocol_Object *object)
