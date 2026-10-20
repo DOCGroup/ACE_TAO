@@ -62,7 +62,7 @@ public:
   AV_Null_MediaCtrl &operator= (AV_Null_MediaCtrl &&) = delete;
 
 protected:
-  virtual ~AV_Null_MediaCtrl ();
+  ~AV_Null_MediaCtrl () override;
 };
 
 /**
@@ -702,7 +702,7 @@ public:
 protected:
   /// Destructor for a servant should be protected or private.
   /// Use _remove_ref() to delete this servant.
-  virtual ~TAO_VDev ();
+  ~TAO_VDev () override;
 
   /// hook called after set_peer is done to set the media ctrl of the peer vdev.
   virtual CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl);
@@ -787,7 +787,7 @@ public:
   void remove_fdev (const char *flow_name) override;
 
   /// Destructor
-  virtual ~TAO_MMDevice ();
+  ~TAO_MMDevice () override;
 
 protected:
   /// Helper method to implement add_fdev()
