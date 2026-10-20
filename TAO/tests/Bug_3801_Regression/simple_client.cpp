@@ -16,16 +16,16 @@
 
 #include "ami_testS.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int shutdown_flag = 0;
-int debug = 0;
-int result = 0;
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+int shutdown_flag {};
+int debug {};
+int result {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -60,9 +60,13 @@ public:
   Handler () = default;
 
   /// Destructor.
-    ~Handler () = default;
+  ~Handler () override = default;
+  Handler (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler &operator= (Handler &&) = delete;
 
-  void get_yadda (CORBA::Long result)
+  void get_yadda (CORBA::Long result) override
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_yadda> called: result <%d>\n",
@@ -70,7 +74,7 @@ public:
       result = 1;
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *excep_holder)
+  void get_yadda_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
@@ -78,7 +82,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThingB& ex)
+      catch (A::DidTheRightThingB const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
@@ -97,7 +101,7 @@ public:
               result = 1;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("ERROR");
           ACE_ERROR ((LM_ERROR,
@@ -105,14 +109,14 @@ public:
         }
     };
 
-  void set_yadda ()
+  void set_yadda () override
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <set_yadda> called:\n"));
       result = 1;
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *excep_holder)
+  void set_yadda_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
@@ -120,7 +124,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThing& ex)
+      catch (A::DidTheRightThing const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
@@ -139,7 +143,7 @@ public:
               result = 1;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("ERROR");
           ACE_ERROR ((LM_ERROR,
@@ -147,7 +151,7 @@ public:
         }
     };
 
-  void get_dadda (CORBA::Long result)
+  void get_dadda (CORBA::Long result) override
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_dadda> called: result <%d>\n",
@@ -155,7 +159,7 @@ public:
       result = 1;
     };
 
-  void get_dadda_excep (::Messaging::ExceptionHolder *excep_holder)
+  void get_dadda_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_dadda_excep> called:\n"));
@@ -163,7 +167,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThing& ex)
+      catch (A::DidTheRightThing const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
@@ -182,7 +186,7 @@ public:
               result = 1;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("ERROR");
           ACE_ERROR ((LM_ERROR,
@@ -190,13 +194,13 @@ public:
         }
     };
 
-  void inout_arg_test (const char *)
+  void inout_arg_test (char const *) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Callback method <set_yadda_excep> called:\n"));
   }
 
-  void inout_arg_test_excep (::Messaging::ExceptionHolder *)
+  void inout_arg_test_excep (::Messaging::ExceptionHolder *) override
   {
   }
 };
@@ -277,7 +281,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
