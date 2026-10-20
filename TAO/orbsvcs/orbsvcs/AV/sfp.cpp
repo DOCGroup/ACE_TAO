@@ -836,6 +836,7 @@ TAO_SFP_Base::dump_buf (char *buffer,int size)
 TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
                                 TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport),
+   sequence_num_ (0),
    source_id_ (10),
    max_credit_ (-1),
    current_credit_ (-1)
@@ -1218,9 +1219,7 @@ TAO_SFP_Producer_Object::handle_input ()
 }
 
 // TAO_AV_SFP_Factory
-TAO_AV_SFP_Factory::TAO_AV_SFP_Factory ()
-{
-}
+TAO_AV_SFP_Factory::TAO_AV_SFP_Factory () = default;
 
 TAO_AV_SFP_Factory::~TAO_AV_SFP_Factory () = default;
 

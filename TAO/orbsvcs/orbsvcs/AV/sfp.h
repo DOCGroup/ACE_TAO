@@ -80,6 +80,10 @@ class TAO_AV_Export TAO_SFP_Frame_State
 {
 public:
   TAO_SFP_Frame_State ();
+  TAO_SFP_Frame_State (TAO_SFP_Frame_State const &) = delete;
+  TAO_SFP_Frame_State (TAO_SFP_Frame_State &&) = delete;
+  TAO_SFP_Frame_State &operator= (TAO_SFP_Frame_State const &) = delete;
+  TAO_SFP_Frame_State &operator= (TAO_SFP_Frame_State &&) = delete;
   CORBA::Boolean is_complete ();
 
   int reset ();
@@ -141,6 +145,10 @@ public:
   };
 
   TAO_SFP_Base ();
+  TAO_SFP_Base (TAO_SFP_Base const &) = delete;
+  TAO_SFP_Base (TAO_SFP_Base &&) = delete;
+  TAO_SFP_Base &operator= (TAO_SFP_Base const &) = delete;
+  TAO_SFP_Base &operator= (TAO_SFP_Base &&) = delete;
   static CORBA::Boolean start_frame (CORBA::Octet flags,
                                      flowProtocol::MsgType type,
                                      TAO_OutputCDR &msg);
@@ -217,6 +225,10 @@ class TAO_AV_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
 public:
   TAO_SFP_Object (TAO_AV_Callback *callback,
                   TAO_AV_Transport *transport);
+  TAO_SFP_Object (TAO_SFP_Object const &) = delete;
+  TAO_SFP_Object (TAO_SFP_Object &&) = delete;
+  TAO_SFP_Object &operator= (TAO_SFP_Object const &) = delete;
+  TAO_SFP_Object &operator= (TAO_SFP_Object &&) = delete;
   // We should add a sfp options parameter.
 
   ~TAO_SFP_Object () override;
@@ -284,6 +296,10 @@ class TAO_AV_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
   TAO_AV_SFP_Factory ();
+  TAO_AV_SFP_Factory (TAO_AV_SFP_Factory const &) = delete;
+  TAO_AV_SFP_Factory (TAO_AV_SFP_Factory &&) = delete;
+  TAO_AV_SFP_Factory &operator= (TAO_AV_SFP_Factory const &) = delete;
+  TAO_AV_SFP_Factory &operator= (TAO_AV_SFP_Factory &&) = delete;
   ~TAO_AV_SFP_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialization hook.
