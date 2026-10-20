@@ -14,9 +14,7 @@ TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory ()
 {
 }
 
-TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory ()
-{
-}
+TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory () = default;
 
 int
 TAO_AV_Flow_Protocol_Factory::init (int /* argc */,
@@ -71,9 +69,7 @@ TAO_AV_Protocol_Object::open (TAO_AV_Callback *callback,
   return 0;
 }
 
-TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object ()
-{
-}
+TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object () = default;
 
 int
 TAO_AV_Protocol_Object::start ()
