@@ -32,7 +32,7 @@ namespace TAO_Notify
   Topology_Saver*
   XML_Topology_Factory::create_saver ()
   {
-    XML_Saver *saver = 0;
+    XML_Saver *saver = nullptr;
 
     ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), 0);
 
@@ -48,7 +48,7 @@ namespace TAO_Notify
   Topology_Loader*
   XML_Topology_Factory::create_loader()
   {
-    XML_Loader *loader = 0;
+    XML_Loader *loader = nullptr;
     ACE_NEW_NORETURN(loader, XML_Loader);
 
     if (! loader->open(this->load_base_path_))

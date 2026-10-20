@@ -26,13 +26,13 @@ Event_Persistence_Factory *
 Standard_Event_Persistence::get_factory ()
 {
   //@@todo guard? ; doublecheck?
-  if (this->factory_ == 0)
+  if (this->factory_ == nullptr)
   {
     ACE_NEW_NORETURN (
       this->factory_,
       Standard_Event_Persistence_Factory ());
 
-    if (this->factory_ != 0)
+    if (this->factory_ != nullptr)
     {
       if (!this->factory_->open (this->filename_.c_str ()))
       {
@@ -129,7 +129,7 @@ Standard_Event_Persistence_Factory::open (const ACE_TCHAR* filename,
     this->is_reloading_ = this->root_.load(ROUTING_SLIP_ROOT_BLOCK_NUMBER, ROUTING_SLIP_ROOT_SERIAL_NUMBER);
     if (! this->is_reloading_)
     {
-      ACE_ASSERT (this->psb_ == 0);
+      ACE_ASSERT (this->psb_ == nullptr);
 //      this->psb_ = this->allocator_.allocate();
       this->root_.store_root();
     }
@@ -156,7 +156,7 @@ Routing_Slip_Persistence_Manager*
 Standard_Event_Persistence_Factory::create_routing_slip_persistence_manager(
   Persistent_Callback* callback)
 {
-  Routing_Slip_Persistence_Manager* rspm = 0;
+  Routing_Slip_Persistence_Manager* rspm = nullptr;
   ACE_NEW_RETURN(rspm, Routing_Slip_Persistence_Manager(this), rspm);
   rspm->set_callback(callback);
   return rspm;
@@ -165,7 +165,7 @@ Standard_Event_Persistence_Factory::create_routing_slip_persistence_manager(
 Routing_Slip_Persistence_Manager *
 Standard_Event_Persistence_Factory::first_reload_manager()
 {
-  Routing_Slip_Persistence_Manager * result = 0;
+  Routing_Slip_Persistence_Manager * result = nullptr;
   if (this->is_reloading_)
   {
     result = this->root_.load_next();
@@ -178,7 +178,7 @@ Standard_Event_Persistence_Factory::done_reloading(
   Persistent_Storage_Block * next_psb,
   ACE_UINT64 current_serial_number)
 {
-  ACE_ASSERT (this->psb_ == 0);
+  ACE_ASSERT (this->psb_ == nullptr);
   this->psb_ = next_psb;
   this->serial_number_ = current_serial_number;
   this->is_reloading_ = false;
