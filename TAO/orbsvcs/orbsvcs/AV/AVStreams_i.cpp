@@ -400,7 +400,8 @@ MMDevice_Map_Hash_Key::hash ()  const
 // ----------------------------------------------------------------------
 
 TAO_StreamCtrl::TAO_StreamCtrl ()
-  :mcastconfigif_ (0)
+  :mcastconfigif_ (nullptr),
+   source_id_ (0)
 {
   try
     {
@@ -1553,7 +1554,8 @@ TAO_Base_StreamEndPoint::set_control_flow_handler (const char *flowname,
 TAO_StreamEndPoint::TAO_StreamEndPoint ()
   :flow_count_ (0),
    flow_num_ (0),
-   mcast_port_ (ACE_DEFAULT_MULTICAST_PORT+1)
+   mcast_port_ (ACE_DEFAULT_MULTICAST_PORT+1),
+   sfp_status_ (nullptr)
 {
   //is->mcast_addr_ = ACE_OS::inet_addr (ACE_DEFAULT_MULTICAST_ADDR);
   this->mcast_addr_.set (ACE_DEFAULT_MULTICAST_ADDR);
@@ -2933,7 +2935,7 @@ TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
   : endpoint_strategy_ (endpoint_strategy),
     flow_count_ (0),
     flow_num_ (0),
-    stream_ctrl_ (0)
+    stream_ctrl_ (nullptr)
 {
 }
 
@@ -3353,7 +3355,8 @@ TAO_MMDevice::~TAO_MMDevice ()
 // default constructor.
 TAO_FlowConnection::TAO_FlowConnection ()
   :fp_name_ (CORBA::string_dup ("")),
-   ip_multicast_ (0)
+   ip_multicast_ (0),
+   mcastconfigif_i_ (nullptr)
 {
 }
 
@@ -4272,12 +4275,14 @@ TAO_FlowEndPoint::set_protocol_object (const char * /*flowname*/,
 
 //default constructor
 TAO_FlowProducer::TAO_FlowProducer ()
+  : source_id_ (0)
 {
 }
 
 TAO_FlowProducer::TAO_FlowProducer (const char *flowname,
                                     AVStreams::protocolSpec protocols,
                                     const char *format)
+  : source_id_ (0)
 {
   this->open (flowname, protocols, format);
 }
