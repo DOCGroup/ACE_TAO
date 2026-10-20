@@ -2,7 +2,7 @@
 #include "tao/StringSeqC.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -10,14 +10,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::StringSeq foo;
       foo.length (1);
       foo[0] = "Hello World";
-      const CORBA::StringSeq & bar = foo;
+      CORBA::StringSeq const &bar = foo;
       ACE_DEBUG ((LM_DEBUG, "String: %C\n", bar[0].in ()));
       CORBA::String_var mystring = bar[0].in ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Exception caught: %s\"%s\"\n"
-      , ex._name(), ex._rep_id ()));
+                  , ex._name(), ex._rep_id ()));
       return 1;
     }
 
