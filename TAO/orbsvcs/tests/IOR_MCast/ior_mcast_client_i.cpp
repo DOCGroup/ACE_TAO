@@ -7,13 +7,9 @@ ior_mcast_Client_i::ior_mcast_Client_i ()
   // Constructor
 }
 
-ior_mcast_Client_i::~ior_mcast_Client_i ()
-{
-}
-
 int
 ior_mcast_Client_i::init (int& argc,
-                          ACE_TCHAR *argv[])
+                          ACE_TCHAR* argv[])
 {
   try
     {

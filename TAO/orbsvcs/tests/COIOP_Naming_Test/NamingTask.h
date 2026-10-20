@@ -9,7 +9,7 @@
 class NamingTask : public ACE_Task_Base
 {
 public:
-  NamingTask (char const * orbname, int argc, ACE_TCHAR ** argv);
+  NamingTask (char const* orbname, int argc, ACE_TCHAR** argv);
 
   NamingTask (NamingTask const &) = delete;
   NamingTask (NamingTask &&) = delete;

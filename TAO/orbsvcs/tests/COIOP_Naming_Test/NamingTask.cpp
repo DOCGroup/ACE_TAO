@@ -4,7 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
-NamingTask::NamingTask (char const * orbname, int argc, ACE_TCHAR ** argv)
+NamingTask::NamingTask (char const* orbname, int argc, ACE_TCHAR** argv)
   : initialized_ (false)
 {
   ACE_Argv_Type_Converter satc (argc, argv);
