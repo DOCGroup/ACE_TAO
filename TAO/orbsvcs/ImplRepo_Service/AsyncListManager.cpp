@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-AsyncListManager::AsyncListManager (const Locator_Repository *repo,
+AsyncListManager::AsyncListManager (Locator_Repository const *repo,
                                     PortableServer::POA_ptr poa,
                                     LiveCheck *pinger)
   :repo_ (repo),
@@ -333,7 +333,7 @@ AsyncListManager::_remove_ref ()
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-ListLiveListener::ListLiveListener (const char *server,
+ListLiveListener::ListLiveListener (char const *server,
                                     int pid,
                                     CORBA::ULong index,
                                     AsyncListManager *owner,
@@ -348,9 +348,7 @@ ListLiveListener::ListLiveListener (const char *server,
 {
 }
 
-ListLiveListener::~ListLiveListener ()
-{
-}
+ListLiveListener::~ListLiveListener () = default;
 
 bool
 ListLiveListener::start ()
