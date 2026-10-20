@@ -12,6 +12,11 @@ public:
 
   ~ACE_DLL_TAO_Service () override;
 
+  ACE_DLL_TAO_Service (ACE_DLL_TAO_Service const &) = delete;
+  ACE_DLL_TAO_Service (ACE_DLL_TAO_Service &&) = delete;
+  ACE_DLL_TAO_Service &operator= (ACE_DLL_TAO_Service const &) = delete;
+  ACE_DLL_TAO_Service &operator= (ACE_DLL_TAO_Service &&) = delete;
+
   int init (int argc, ACE_TCHAR * argv []) override;
 
   int fini () override;
