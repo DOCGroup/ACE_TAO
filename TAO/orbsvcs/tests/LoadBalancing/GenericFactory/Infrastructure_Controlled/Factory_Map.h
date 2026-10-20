@@ -12,12 +12,12 @@
 #include "Factory_Struct.h"
 #include "ace/Hash_Map_Manager_T.h"
 
-typedef ACE_Hash_Map_Manager_Ex<
+using Factory_Map = ACE_Hash_Map_Manager_Ex<
   ACE_UINT32,
   Factory_Struct,
   ACE_Hash<ACE_UINT32>,
   ACE_Equal_To<ACE_UINT32>,
-  ACE_Null_Mutex> Factory_Map;
+  ACE_Null_Mutex>;
 
 
 #include /**/ "ace/post.h"

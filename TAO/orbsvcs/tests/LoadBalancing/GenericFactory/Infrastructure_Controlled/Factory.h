@@ -23,19 +23,19 @@ public:
   /// In this way, LoadManager can decide when to create the object group
   /// members.
 
-  virtual CORBA::Object_ptr create_object (
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
+  CORBA::Object_ptr create_object (
+      char const* type_id,
+      PortableGroup::Criteria const& the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id);
+        factory_creation_id) override;
 
   /// The LoadManager is passed the FactoryCreationId, it received
   /// from the create_object () call.
   /// The LoadManager destroys the factory object created.
 
-  virtual void delete_object (
-      const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id);
+  void delete_object (
+      PortableGroup::GenericFactory::FactoryCreationId const&
+        factory_creation_id) override;
 private:
   /// The factory creation id.
   CORBA::ULong fcid_;

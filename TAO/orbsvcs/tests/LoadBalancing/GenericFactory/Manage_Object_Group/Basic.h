@@ -21,15 +21,15 @@ public:
          CosLoadBalancing::LoadManager_ptr lm,
          CORBA::ORB_ptr orb,
          CORBA::Short num,
-         const char *loc);
+         char const* loc);
 
-  virtual char * get_string ();
+  char* get_string () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void remove_member ();
+  void remove_member () override;
 
-  virtual CORBA::Short number ();
+  CORBA::Short number ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
