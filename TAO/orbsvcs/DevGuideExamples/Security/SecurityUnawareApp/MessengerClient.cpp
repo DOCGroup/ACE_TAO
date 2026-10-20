@@ -4,7 +4,7 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
+ACE_TCHAR const * ior = ACE_TEXT("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -63,7 +63,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "message was sent" << std::endl;
   }
 
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const & ex) {
     std::cerr << "Caught CORBA excepti.o.n: " << ex << std::endl;
     return 1;
   }
