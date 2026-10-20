@@ -21,7 +21,7 @@ void
 TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
                                                        , const NotifyExt::ThreadPoolParams& tp_params)
 {
-  TAO_Notify_RT_POA_Helper* proxy_poa = 0;
+  TAO_Notify_RT_POA_Helper* proxy_poa = nullptr;
 
   // Bootstrap EC Proxy POA
   ACE_NEW_THROW_EX (proxy_poa,
@@ -42,7 +42,7 @@ void
 TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
                                                 , const NotifyExt::ThreadPoolLanesParams& tpl_params)
 {
-  TAO_Notify_RT_POA_Helper* proxy_poa = 0;
+  TAO_Notify_RT_POA_Helper* proxy_poa = nullptr;
 
   // Bootstrap EC Proxy POA
   ACE_NEW_THROW_EX (proxy_poa,
