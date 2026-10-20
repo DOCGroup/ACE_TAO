@@ -28,12 +28,12 @@ public:
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 
 protected:
   /// Application callback.
@@ -58,6 +58,10 @@ class Sender
 public:
   /// Constructor
   Sender ();
+  Sender (Sender const &) = delete;
+  Sender &operator= (Sender const &) = delete;
+  Sender (Sender &&) = delete;
+  Sender &operator= (Sender &&) = delete;
 
   /// Method to initialize the various data components.
   int init (int argc,
@@ -113,16 +117,16 @@ private:
   TAO_AV_Protocol_Object *protocol_object_;
 
   /// Destination Address.
-  char* address_;
+  char *address_;
 
   /// Destination Address.
-  char* peer_address_;
+  char *peer_address_;
 
   /// Local secondary addresses
-  char** local_sec_addrs_;
+  char **local_sec_addrs_;
 
   /// Peer secondary addresses
-  char** peer_sec_addrs_;
+  char **peer_sec_addrs_;
 
   int num_local_sec_addrs_;
   int num_peer_sec_addrs_;
