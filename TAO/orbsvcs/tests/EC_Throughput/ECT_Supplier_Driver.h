@@ -31,9 +31,9 @@ class ECT_Supplier_Driver : public ECT_Driver
   //
 public:
   ECT_Supplier_Driver ();
-  virtual ~ECT_Supplier_Driver ();
+  ~ECT_Supplier_Driver () override;
 
-  virtual void shutdown_consumer (void* consumer_cookie);
+  void shutdown_consumer (void* consumer_cookie) override;
   // Not used....
 
   enum {

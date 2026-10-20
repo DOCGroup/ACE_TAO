@@ -30,7 +30,7 @@ ECT_Consumer_Driver::ECT_Consumer_Driver ()
     type_count_ (1),
     stall_length_(0),
     shutdown_event_channel_ (1),
-    pid_file_name_ (0),
+    pid_file_name_ (nullptr),
     active_count_ (0)
 {
 }
@@ -82,10 +82,10 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
                       this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
         }
 
-      if (this->pid_file_name_ != 0)
+      if (this->pid_file_name_ != nullptr)
         {
           FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
-          if (pid != 0)
+          if (pid != nullptr)
             {
               ACE_OS::fprintf (pid, "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
@@ -258,7 +258,7 @@ ECT_Consumer_Driver::disconnect_consumers ()
       this->consumers_[i]->disconnect ();
 
       delete this->consumers_[i];
-      this->consumers_[i] = 0;
+      this->consumers_[i] = nullptr;
     }
 }
 
@@ -290,7 +290,7 @@ ECT_Consumer_Driver::parse_args (int argc, ACE_TCHAR *argv [])
                 char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
+                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->type_count_ = ACE_OS::atoi (arg);
           }
           break;
