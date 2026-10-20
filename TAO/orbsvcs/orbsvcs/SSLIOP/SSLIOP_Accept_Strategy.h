@@ -71,7 +71,7 @@ namespace TAO
 
       /// Overridden method that forces a passive connection timeout value
       /// to be passed to the underlying acceptor.
-      virtual int accept_svc_handler (handler_type * svc_handler);
+      int accept_svc_handler (handler_type * svc_handler) override;
 
     private:
       /// The accept() timeout.
