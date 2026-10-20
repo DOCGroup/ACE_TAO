@@ -30,12 +30,12 @@ public:
   char* gen_string (int maxlength);
   CORBA::WChar* gen_wstring ();
   CORBA::WChar* gen_wstring (int maxlength);
-  const Alt_Mapping::Fixed_Struct gen_fixed_struct ();
+  Alt_Mapping::Fixed_Struct const gen_fixed_struct ();
 
  private:
   Alt_Mapping::Fixed_Struct fixed_struct_;
 };
 
-typedef ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX> GENERATOR;
+using GENERATOR = ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX>;
 
 #endif /* HELPER_H */

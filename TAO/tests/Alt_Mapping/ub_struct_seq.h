@@ -32,7 +32,7 @@ public:
   int run_sii_test (Alt_Mapping_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Alt_Mapping_ptr objref);
@@ -48,11 +48,11 @@ public:
 
 protected:
   /// compare
-  CORBA::Boolean compare (const Alt_Mapping::StructSeq &s1,
-                          const Alt_Mapping::StructSeq &s2);
+  CORBA::Boolean compare (Alt_Mapping::StructSeq const &s1,
+                          Alt_Mapping::StructSeq const &s2);
 
   /// print individual sequence
-  void print_sequence (const Alt_Mapping::StructSeq &s);
+  void print_sequence (Alt_Mapping::StructSeq const &s);
 
 private:
  char *opname_;
