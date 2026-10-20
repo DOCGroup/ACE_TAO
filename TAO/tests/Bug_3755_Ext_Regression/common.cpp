@@ -3,14 +3,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 
-ACE_TCHAR const *orb1_args = 0;
-ACE_TCHAR const *orb2_args = 0;
+ACE_TCHAR const *orb1_args = nullptr;
+ACE_TCHAR const *orb2_args = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -72,7 +72,7 @@ do_main (int argc, ACE_TCHAR *argv[], orbs_check_callback check)
                             1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught Exception in do_main:\n");
       return 1;
