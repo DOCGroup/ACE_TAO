@@ -11,14 +11,19 @@ class EchoEventConsumer_i : public virtual POA_CosEventComm::PushConsumer
 {
   public:
     // Constructor
-    EchoEventConsumer_i(CORBA::ORB_ptr orb,
-                        CosEventChannelAdmin::ProxyPushSupplier_ptr supplier,
-                        int event_limit);
+    EchoEventConsumer_i (CORBA::ORB_ptr orb,
+                         CosEventChannelAdmin::ProxyPushSupplier_ptr supplier,
+                         int event_limit);
+
+    EchoEventConsumer_i (EchoEventConsumer_i const &) = delete;
+    EchoEventConsumer_i (EchoEventConsumer_i &&) = delete;
+    EchoEventConsumer_i &operator= (EchoEventConsumer_i const &) = delete;
+    EchoEventConsumer_i &operator= (EchoEventConsumer_i &&) = delete;
 
     // Override operations from PushConsumer interface.
-    virtual void push(const CORBA::Any & data);
+    void push (CORBA::Any const & data) override;
 
-    virtual void disconnect_push_consumer();
+    void disconnect_push_consumer () override;
 
   private:
     CORBA::ORB_var orb_;
