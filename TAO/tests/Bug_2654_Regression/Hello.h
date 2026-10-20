@@ -10,12 +10,17 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
+
+  Hello (Hello const &) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello &&) = delete;
 
   // = The skeleton methods
-  virtual void method (CORBA::Short count);
+  void method (CORBA::Short count) override;
 
-  virtual void set_callback (Test::CallBack_ptr cb);
+  void set_callback (Test::CallBack_ptr cb) override;
 
 
 private:
