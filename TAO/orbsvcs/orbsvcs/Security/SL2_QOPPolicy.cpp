@@ -22,7 +22,7 @@ TAO::Security::QOPPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO::Security::QOPPolicy::copy ()
 {
-  TAO::Security::QOPPolicy * policy = 0;
+  TAO::Security::QOPPolicy * policy = nullptr;
   ACE_NEW_THROW_EX (policy,
                     TAO::Security::QOPPolicy (this->qop_),
                     CORBA::NO_MEMORY (
