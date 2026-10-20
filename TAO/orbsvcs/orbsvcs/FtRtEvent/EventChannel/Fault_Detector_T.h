@@ -24,7 +24,7 @@ class Fault_Detector_T : public Fault_Detector
 {
 public:
   Fault_Detector_T();
-  ~Fault_Detector_T();
+  ~Fault_Detector_T() override;
   int connect(FTRT::Location const& addr) override;
 protected:
   ACCEPTOR acceptor_;
