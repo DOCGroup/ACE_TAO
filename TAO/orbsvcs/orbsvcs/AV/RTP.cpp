@@ -621,9 +621,10 @@ TAO_AV_RTP_Object::send_frame (const char*,
 
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
-  :TAO_AV_Protocol_Object (callback,transport),
-   control_object_ (0),
-   connection_gone_ (0)
+  : TAO_AV_Protocol_Object (callback, transport)
+  , format_ (0)
+  , control_object_ (nullptr)
+  , connection_gone_ (0)
 {
   this->sequence_num_ = static_cast<ACE_UINT16> (ACE_OS::rand ());
   this->timestamp_offset_ = ACE_OS::rand ();
@@ -638,9 +639,7 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
   this->frame_.size (2 * this->transport_->mtu ());
 }
 
-TAO_AV_RTP_Object::~TAO_AV_RTP_Object ()
-{
-}
+TAO_AV_RTP_Object::~TAO_AV_RTP_Object () = default;
 
 int
 TAO_AV_RTP_Object::destroy ()
@@ -720,9 +719,7 @@ TAO_AV_RTP_Flow_Factory::TAO_AV_RTP_Flow_Factory ()
 {
 }
 
-TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory ()
-{
-}
+TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory () = default;
 
 int
 TAO_AV_RTP_Flow_Factory::init (int /* argc */,
