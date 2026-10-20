@@ -480,65 +480,65 @@ public:
   TAO_StreamEndPoint &operator= (TAO_StreamEndPoint &&) = delete;
 
    /// Stop the stream. Empty the_spec means, for all the flows
-  virtual void stop (const AVStreams::flowSpec &the_spec);
+  void stop (const AVStreams::flowSpec &the_spec) override;
 
   /// Start the stream, Empty the_spec means, for all the flows
-  virtual void start (const AVStreams::flowSpec &the_spec);
+  void start (const AVStreams::flowSpec &the_spec) override;
 
   /// Destroy the stream, Empty the_spec means, for all the flows
-  virtual void destroy (const AVStreams::flowSpec &the_spec);
+  void destroy (const AVStreams::flowSpec &the_spec) override;
 
   /// Called by StreamCtrl. responder is the peer to connect to
-  virtual CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
-                                  AVStreams::streamQoS& qos_spec,
-                                  const AVStreams::flowSpec& the_spec);
+  CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
+                          AVStreams::streamQoS& qos_spec,
+                          const AVStreams::flowSpec& the_spec) override;
 
   /// Called by the peer StreamEndPoint. The flow_spec indicates the
   /// flows (which contain transport addresses etc.)
-  virtual CORBA::Boolean request_connection (AVStreams::StreamEndPoint_ptr initiator,
-                                             CORBA::Boolean is_mcast,
-                                             AVStreams::streamQoS &qos,
-                                             AVStreams::flowSpec &the_spec);
+  CORBA::Boolean request_connection (AVStreams::StreamEndPoint_ptr initiator,
+                                     CORBA::Boolean is_mcast,
+                                     AVStreams::streamQoS &qos,
+                                     AVStreams::flowSpec &the_spec) override;
 
   /// Change the transport qos on a stream
-  virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                                     const AVStreams::flowSpec &the_flows);
+  CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
+                             const AVStreams::flowSpec &the_flows) override;
 
   virtual int change_qos (AVStreams::streamQoS &new_qos,
                           const AVStreams::flowSpec &the_flows);
 
   /// Used to restrict the set of protocols
-  virtual CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec);
+  CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec) override;
 
   /// disconnect the flows
-  virtual void disconnect (const AVStreams::flowSpec &the_spec);
+  void disconnect (const AVStreams::flowSpec &the_spec) override;
 
   /// Used to control the flow
-  virtual void set_FPStatus (const AVStreams::flowSpec &the_spec,
-                             const char *fp_name,
-                             const CORBA::Any &fp_settings);
+  void set_FPStatus (const AVStreams::flowSpec &the_spec,
+                     const char *fp_name,
+                     const CORBA::Any &fp_settings) override;
 
   /// Not implemented in the light profile, throws notsupported
-  virtual CORBA::Object_ptr get_fep (const char *flow_name);
+  CORBA::Object_ptr get_fep (const char *flow_name) override;
 
   /// Not implemented in the light profile, throws notsupported
-  virtual char * add_fep (CORBA::Object_ptr the_fep);
+  char *add_fep (CORBA::Object_ptr the_fep) override;
 
   /// Not implemented in the light profile, throws notsupported
-  virtual void remove_fep (const char *fep_name);
+  void remove_fep (const char *fep_name) override;
 
   /// Used to "attach" a negotiator to the endpoint
-  virtual void set_negotiator (AVStreams::Negotiator_ptr new_negotiator);
+  void set_negotiator (AVStreams::Negotiator_ptr new_negotiator) override;
 
   /// Used for public key encryption.
-  virtual void set_key (const char *flow_name,
-                        const AVStreams::key & the_key);
+  void set_key (const char *flow_name,
+                const AVStreams::key &the_key) override;
 
   /// Used to set a unique id for packets sent by this streamendpoint
-  virtual void set_source_id (CORBA::Long source_id);
+  void set_source_id (CORBA::Long source_id) override;
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint ();
+  ~TAO_StreamEndPoint () override;
 
   CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                AVStreams::flowSpec &the_spec);
