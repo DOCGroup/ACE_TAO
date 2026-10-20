@@ -13,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_TCP_Transport::TAO_AV_TCP_Transport ()
-  :handler_ (0)
+  : handler_ (nullptr)
 {
 }
 
@@ -22,9 +22,7 @@ TAO_AV_TCP_Transport::TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler)
 {
 }
 
-TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport ()
-{
-}
+TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport () = default;
 
 int
 TAO_AV_TCP_Transport::open (ACE_Addr * /*address*/)
@@ -157,9 +155,7 @@ TAO_AV_TCP_Factory::TAO_AV_TCP_Factory ()
 {
 }
 
-TAO_AV_TCP_Factory::~TAO_AV_TCP_Factory ()
-{
-}
+TAO_AV_TCP_Factory::~TAO_AV_TCP_Factory () = default;
 
 int
 TAO_AV_TCP_Factory::init (int /* argc */,
@@ -249,10 +245,7 @@ TAO_AV_TCP_Object::TAO_AV_TCP_Object (TAO_AV_Callback *callback,
   this->frame_.size (BUFSIZ);
 }
 
-TAO_AV_TCP_Object::~TAO_AV_TCP_Object ()
-{
-  // No-op
-}
+TAO_AV_TCP_Object::~TAO_AV_TCP_Object () = default;
 int
 TAO_AV_TCP_Object::destroy ()
 {
@@ -268,9 +261,7 @@ TAO_AV_TCP_Flow_Factory::TAO_AV_TCP_Flow_Factory ()
 {
 }
 
-TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory ()
-{
-}
+TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory () = default;
 
 int
 TAO_AV_TCP_Flow_Factory::init (int /* argc */,
