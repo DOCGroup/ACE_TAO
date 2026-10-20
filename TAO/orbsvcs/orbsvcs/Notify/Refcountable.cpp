@@ -39,7 +39,7 @@ public:
 
   Entry find( const TAO_Notify_Refcountable* p) const;
 
-  void dump( const char* title = 0 );
+  void dump( const char* title = nullptr );
 
 private:
   TAO_Notify_Tracker();
@@ -48,7 +48,7 @@ private:
   friend class std::unique_ptr< TAO_Notify_Tracker >;
   static std::unique_ptr< TAO_Notify_Tracker > s_instance;
   mutable TAO_SYNCH_MUTEX lock_;
-  typedef std::map<int, Entry> EntityMap;
+  using EntityMap = std::map<int, Entry>;
   EntityMap map_;
   int id_counter_;
   int last_dump_count_;
