@@ -115,6 +115,10 @@ class TAO_AV_Export TAO_AV_Callback
 public:
   TAO_AV_Callback ();
   virtual ~TAO_AV_Callback ();
+  TAO_AV_Callback (TAO_AV_Callback const &) = delete;
+  TAO_AV_Callback &operator= (TAO_AV_Callback const &) = delete;
+  TAO_AV_Callback (TAO_AV_Callback &&) = delete;
+  TAO_AV_Callback &operator= (TAO_AV_Callback &&) = delete;
 
   /// Called for opening the callback.
   int open (TAO_AV_Protocol_Object *object,

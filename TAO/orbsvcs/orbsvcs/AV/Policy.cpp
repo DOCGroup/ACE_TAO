@@ -40,13 +40,12 @@ TAO_AV_SFP_Credit_Policy::TAO_AV_SFP_Credit_Policy ()
 
 // TAO_AV_Callback
 TAO_AV_Callback::TAO_AV_Callback ()
-   :protocol_object_ (nullptr)
+  : protocol_object_ (nullptr)
+  , handler_ (nullptr)
 {
 }
 
-TAO_AV_Callback::~TAO_AV_Callback ()
-{
-}
+TAO_AV_Callback::~TAO_AV_Callback () = default;
 
 int
 TAO_AV_Callback::open (TAO_AV_Protocol_Object *object,
