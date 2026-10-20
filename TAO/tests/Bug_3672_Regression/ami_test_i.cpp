@@ -16,7 +16,7 @@
 #include "ace/OS_NS_unistd.h"
 
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
