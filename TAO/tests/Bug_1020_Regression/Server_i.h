@@ -11,9 +11,13 @@
 class Server : public POA_Test::Server
 {
 public:
-  Server(CORBA::ORB_ptr orb);
+  Server (CORBA::ORB_ptr orb);
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
 
-  virtual void start_task(Test::Echo_ptr client);
+  void start_task (Test::Echo_ptr client) override;
 
 private:
   CORBA::ORB_var orb_;
