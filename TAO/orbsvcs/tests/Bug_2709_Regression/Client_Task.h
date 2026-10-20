@@ -10,23 +10,28 @@ public:
   /// Constructor
   Client_Task (CORBA::ORB_ptr corb,
     ACE_Thread_Manager *thr_mgr,
-    const ACE_TString& collocated_ior_file,
-    const ACE_TString& server_ior_file);
+    ACE_TString const & collocated_ior_file,
+    ACE_TString const & server_ior_file);
+
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   CORBA::Object_ptr make_iogr (
-     const char* domain_id,
+     char const * domain_id,
      CORBA::ULongLong group_id,
      CORBA::ULong group_version);
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var corb_;
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm_;
 
-  const ACE_TString& collocated_ior_file_;
+  ACE_TString const & collocated_ior_file_;
 
-  const ACE_TString& server_ior_file_;
+  ACE_TString const & server_ior_file_;
 };
