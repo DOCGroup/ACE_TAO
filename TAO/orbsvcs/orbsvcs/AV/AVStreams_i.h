@@ -311,19 +311,19 @@ public:
   /// Dtor
   ~TAO_MCastConfigIf ();
 
-  virtual CORBA::Boolean set_peer (CORBA::Object_ptr peer,
-                                   AVStreams::streamQoS & the_qos,
-                                   const AVStreams::flowSpec & the_spec);
+  CORBA::Boolean set_peer (CORBA::Object_ptr peer,
+                           AVStreams::streamQoS &the_qos,
+                           const AVStreams::flowSpec &the_spec) override;
 
-  virtual void configure (const CosPropertyService::Property & a_configuration);
+  void configure (const CosPropertyService::Property &a_configuration) override;
 
-  virtual void set_initial_configuration (const CosPropertyService::Properties & initial);
+  void set_initial_configuration (const CosPropertyService::Properties &initial) override;
 
-  virtual void set_format (const char * flowName,
-                           const char * format_name);
+  void set_format (const char *flowName,
+                   const char *format_name) override;
 
-  virtual void set_dev_params (const char * flowName,
-                               const CosPropertyService::Properties & new_params);
+  void set_dev_params (const char *flowName,
+                       const CosPropertyService::Properties &new_params) override;
 
 protected:
   /// checks whether the flowname is  in the flow_spec.
@@ -673,31 +673,31 @@ public:
   TAO_VDev &operator= (TAO_VDev &&) = delete;
 
   /// Called to tell the vdev who the streamctrl, peer vdev is
-  virtual CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
-                                   AVStreams::VDev_ptr the_peer_dev,
-                                   AVStreams::streamQoS &the_qos,
-                                   const AVStreams::flowSpec &the_spec);
+  CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
+                           AVStreams::VDev_ptr the_peer_dev,
+                           AVStreams::streamQoS &the_qos,
+                           const AVStreams::flowSpec &the_spec) override;
 
   /// Used to set the streamctrl and multicast device
-  virtual CORBA::Boolean set_Mcast_peer (AVStreams::StreamCtrl_ptr the_ctrl,
-                                         AVStreams::MCastConfigIf_ptr a_mcastconfigif,
-                                         AVStreams::streamQoS &the_qos,
-                                         const AVStreams::flowSpec &the_spec);
+  CORBA::Boolean set_Mcast_peer (AVStreams::StreamCtrl_ptr the_ctrl,
+                                 AVStreams::MCastConfigIf_ptr a_mcastconfigif,
+                                 AVStreams::streamQoS &the_qos,
+                                 const AVStreams::flowSpec &the_spec) override;
 
   /// Called by the peer VDev to configure the device (catch all)
-  virtual void configure (const CosPropertyService::Property &the_config_mesg);
+  void configure (const CosPropertyService::Property &the_config_mesg) override;
 
   /// Used to set a format on a flowname
-  virtual void set_format (const char *flowName,
-                           const char *format_name);
+  void set_format (const char *flowName,
+                   const char *format_name) override;
 
   /// Used to set device parameters
-  virtual void set_dev_params (const char *flowName,
-                               const CosPropertyService::Properties &new_params);
+  void set_dev_params (const char *flowName,
+                       const CosPropertyService::Properties &new_params) override;
 
   /// Called to change QoS of the device
-  virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &the_qos,
-                                     const AVStreams::flowSpec &the_spec);
+  CORBA::Boolean modify_QoS (AVStreams::streamQoS &the_qos,
+                             const AVStreams::flowSpec &the_spec) override;
 
 protected:
   /// Destructor for a servant should be protected or private.
@@ -736,55 +736,55 @@ public:
   TAO_MMDevice &operator= (TAO_MMDevice const &) = delete;
   TAO_MMDevice &operator= (TAO_MMDevice &&) = delete;
 
-  virtual AVStreams::StreamEndPoint_ptr create_A_B (MMDevice_Type type,
-                                                    AVStreams::StreamCtrl_ptr the_requester,
-                                                     AVStreams::VDev_out the_vdev,
-                                                     AVStreams::streamQoS &the_qos,
-                                                     CORBA::Boolean_out met_qos,
-                                                     char *&named_vdev,
-                                                     const AVStreams::flowSpec &the_spec);
+  AVStreams::StreamEndPoint_ptr create_A_B (MMDevice_Type type,
+                                            AVStreams::StreamCtrl_ptr the_requester,
+                                            AVStreams::VDev_out the_vdev,
+                                            AVStreams::streamQoS &the_qos,
+                                            CORBA::Boolean_out met_qos,
+                                            char *&named_vdev,
+                                            const AVStreams::flowSpec &the_spec);
 
   /// Can be used to request the MMDevice to create a new StreamCtrl,
   /// and call bind_devs on it
-  virtual AVStreams::StreamCtrl_ptr  bind (AVStreams::MMDevice_ptr peer_device,
-                                           AVStreams::streamQoS &the_qos,
-                                           CORBA::Boolean_out is_met,
-                                           const AVStreams::flowSpec &the_spec);
+  AVStreams::StreamCtrl_ptr bind (AVStreams::MMDevice_ptr peer_device,
+                                  AVStreams::streamQoS &the_qos,
+                                  CORBA::Boolean_out is_met,
+                                  const AVStreams::flowSpec &the_spec) override;
 
   /// Multicast bind
-  virtual AVStreams::StreamCtrl_ptr  bind_mcast (AVStreams::MMDevice_ptr first_peer,
-                                                 AVStreams::streamQoS &the_qos,
-                                                 CORBA::Boolean_out is_met,
-                                                 const AVStreams::flowSpec &the_spec);
+  AVStreams::StreamCtrl_ptr bind_mcast (AVStreams::MMDevice_ptr first_peer,
+                                        AVStreams::streamQoS &the_qos,
+                                        CORBA::Boolean_out is_met,
+                                        const AVStreams::flowSpec &the_spec) override;
 
   /// Called by StreamCtrl to create a "A" type streamandpoint and vdev
-  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester,
-                                                     AVStreams::VDev_out the_vdev,
-                                                     AVStreams::streamQoS &the_qos,
-                                                     CORBA::Boolean_out met_qos,
-                                                     char *&named_vdev,
-                                                     const AVStreams::flowSpec &the_spec);
+  AVStreams::StreamEndPoint_A_ptr create_A (AVStreams::StreamCtrl_ptr the_requester,
+                                            AVStreams::VDev_out the_vdev,
+                                            AVStreams::streamQoS &the_qos,
+                                            CORBA::Boolean_out met_qos,
+                                            char *&named_vdev,
+                                            const AVStreams::flowSpec &the_spec) override;
 
   /// Called by StreamCtrl to create a "B" type streamandpoint and vdev
-  virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester,
-                                                     AVStreams::VDev_out the_vdev,
-                                                     AVStreams::streamQoS &the_qos,
-                                                     CORBA::Boolean_out met_qos,
-                                                     char *&named_vdev,
-                                                     const AVStreams::flowSpec &the_spec);
+  AVStreams::StreamEndPoint_B_ptr create_B (AVStreams::StreamCtrl_ptr the_requester,
+                                            AVStreams::VDev_out the_vdev,
+                                            AVStreams::streamQoS &the_qos,
+                                            CORBA::Boolean_out met_qos,
+                                            char *&named_vdev,
+                                            const AVStreams::flowSpec &the_spec) override;
 
   /// Remove the StreamEndPoint and the related vdev
-  virtual void destroy (AVStreams::StreamEndPoint_ptr the_ep,
-                        const char *vdev_name);
+  void destroy (AVStreams::StreamEndPoint_ptr the_ep,
+                const char *vdev_name) override;
 
   /// Not supported in the light profile, raises notsupported
-  virtual char * add_fdev (CORBA::Object_ptr the_fdev);
+  char *add_fdev (CORBA::Object_ptr the_fdev) override;
 
   /// Not supported in the light profile, raises notsupported
-  virtual CORBA::Object_ptr get_fdev (const char *flow_name);
+  CORBA::Object_ptr get_fdev (const char *flow_name) override;
 
   /// Not supported in the light profile, raises notsupported
-  virtual void remove_fdev (const char *flow_name);
+  void remove_fdev (const char *flow_name) override;
 
   /// Destructor
   virtual ~TAO_MMDevice ();
