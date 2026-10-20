@@ -14,14 +14,12 @@
 #include "ace/OS_NS_sys_time.h"
 
 TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 ()
-: orb_ (0),
-  client_id_ (0)
+  : orb_ (nullptr)
+  , client_id_ (0)
 {
 }
 
-TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 ()
-{
-}
+TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 () = default;
 
 
 char *
