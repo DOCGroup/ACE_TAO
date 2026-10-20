@@ -53,7 +53,7 @@ void
 Persistent_Storage_Block::set_no_write()
 {
   this->no_write_ = true;
-  this->reassign_data(0, true);
+  this->reassign_data(nullptr, true);
 }
 
 bool
