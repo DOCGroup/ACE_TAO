@@ -29,25 +29,25 @@ using Server_Info_Ptr = ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>;
 struct Server_Info
 {
   Server_Info ();
-  Server_Info (const Server_Info & other);
+  Server_Info (Server_Info const &other);
 
-  Server_Info (const ACE_CString& fqname,
-               const ACE_CString& aname,
-               const ACE_CString& cmdline,
-               const ImplementationRepository::EnvironmentList& env,
-               const ACE_CString& working_dir,
+  Server_Info (ACE_CString const& fqname,
+               ACE_CString const& aname,
+               ACE_CString const& cmdline,
+               ImplementationRepository::EnvironmentList const& env,
+               ACE_CString const& working_dir,
                ImplementationRepository::ActivationMode amode,
                int start_limit,
-               const ACE_CString& partial_ior = ACE_CString(""),
-               const ACE_CString& server_ior = ACE_CString(""),
+               ACE_CString const& partial_ior = ACE_CString(""),
+               ACE_CString const& server_ior = ACE_CString(""),
                ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil());
 
-  Server_Info (const ACE_CString& serverId,
-               const ACE_CString& pname,
+  Server_Info (ACE_CString const& serverId,
+               ACE_CString const& pname,
                bool jacorb,
                Server_Info_Ptr alt);
 
-  Server_Info & operator= (const Server_Info& other);
+  Server_Info & operator= (Server_Info const& other);
 
   void clear ();
 
@@ -57,8 +57,8 @@ struct Server_Info
 
   void reset_runtime ();
 
-  bool is_server (const char *name) const;
-  bool has_peer (const char *name) const;
+  bool is_server (char const *name) const;
+  bool has_peer (char const *name) const;
   bool is_mode (ImplementationRepository::ActivationMode m) const;
   ImplementationRepository::ActivationMode mode () const;
 
@@ -69,27 +69,27 @@ struct Server_Info
   // transform the supplied limit to always be at least 1
   void start_limit (int lim);
 
-  void update_options (const ImplementationRepository::StartupOptions &options);
-  void set_contact (const char *pior,
-                    const char *sior,
+  void update_options (ImplementationRepository::StartupOptions const& options);
+  void set_contact (char const *pior,
+                    char const *sior,
                     ImplementationRepository::ServerObject_ptr svrobj);
 
   Server_Info *active_info ();
-  const Server_Info *active_info () const;
+  Server_Info const *active_info () const;
 
-  const char * ping_id () const;
+  char const * ping_id () const;
 
-  static bool parse_id (const char * id,
+  static bool parse_id (char const * id,
                         ACE_CString& server_id,
                         ACE_CString& poa_name);
 
-  static void gen_id (const Server_Info *si, ACE_CString& id);
+  static void gen_id (Server_Info const *si, ACE_CString& id);
 
-  static void gen_key (const ACE_CString& server_id,
-                       const ACE_CString& poa_name,
+  static void gen_key (ACE_CString const& server_id,
+                       ACE_CString const& poa_name,
                        ACE_CString& key);
 
-  static void fqname_to_key (const char * fqname, ACE_CString& key);
+  static void fqname_to_key (char const * fqname, ACE_CString& key);
 
   /// The name of the server instance.
   ACE_CString server_id;
