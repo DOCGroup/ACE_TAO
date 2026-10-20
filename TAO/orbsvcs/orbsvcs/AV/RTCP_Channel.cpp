@@ -22,7 +22,7 @@ RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
 {
   const ACE_INET_Addr *const_inet_addr = dynamic_cast<const ACE_INET_Addr*> (peer_addr);
 
-  ACE_INET_Addr *inet_addr;
+  ACE_INET_Addr *inet_addr = nullptr;
   ACE_NEW (inet_addr,
            ACE_INET_Addr (*const_inet_addr));
 
@@ -148,9 +148,9 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
 {
   // The following is taken from RFC 1889 Appendix A.1
   ACE_UINT16 udelta = seq - this->max_seq_;
-  const int MAX_DROPOUT = 3000;
-  const int MAX_MISORDER = 100;
-  const int MIN_SEQUENTIAL = 2;
+  constexpr int MAX_DROPOUT = 3000;
+  constexpr int MAX_MISORDER = 100;
+  constexpr int MIN_SEQUENTIAL = 2;
 
   // Source is not valid until MIN_SEQUENTIAL packets with
   // sequential sequence numbers have been received.
