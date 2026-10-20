@@ -10,13 +10,18 @@ class bug_2677_regression_Export DllORB: public ACE_Service_Object
 {
 public:
   DllORB ();
-  virtual ~DllORB ();
+  ~DllORB () override;
+
+  DllORB (DllORB const &) = delete;
+  DllORB &operator= (DllORB const &) = delete;
+  DllORB (DllORB &&) = delete;
+  DllORB &operator= (DllORB &&) = delete;
 
   CORBA::ORB_ptr orb () const;
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int fini ();
+  int fini () override;
 
 private:
   unsigned int                   failPrePostInit_;
