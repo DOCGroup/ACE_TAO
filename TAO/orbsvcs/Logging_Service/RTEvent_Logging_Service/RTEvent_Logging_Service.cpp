@@ -6,22 +6,20 @@
 #include "ace/OS_NS_unistd.h"
 
 RTEvent_Logging_Service::RTEvent_Logging_Service ()
-  : service_name_ ("RTEventLogFactory"),
-    ior_file_name_ (0),
-    pid_file_name_ (0),
+  : rtevent_log_factory_ (nullptr),
+    service_name_ ("RTEventLogFactory"),
+    ior_file_name_ (nullptr),
+    pid_file_name_ (nullptr),
     bind_to_naming_service_ (true),
     nthreads_ (0)
 {
   // No-Op.
 }
 
-RTEvent_Logging_Service::~RTEvent_Logging_Service ()
-{
-  // No-Op.
-}
+RTEvent_Logging_Service::~RTEvent_Logging_Service () = default;
 
 void
-RTEvent_Logging_Service::init_ORB (int& argc, ACE_TCHAR *argv[])
+RTEvent_Logging_Service::init_ORB (int & argc, ACE_TCHAR * argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -39,7 +37,7 @@ RTEvent_Logging_Service::init_ORB (int& argc, ACE_TCHAR *argv[])
 
 
 int
-RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
+RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
   int opt;
@@ -87,7 +85,7 @@ RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
+RTEvent_Logging_Service::init (int argc, ACE_TCHAR * argv[])
 {
   // initialize the ORB.
   this->init_ORB (argc, argv);
@@ -126,10 +124,10 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
       adapter->bind("RTEventLogService", ior.in ());
     }
 
-  if (this->ior_file_name_ != 0)
+  if (this->ior_file_name_ != nullptr)
     {
-      FILE* iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
-      if (iorf == 0)
+      FILE * iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
+      if (iorf == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
@@ -140,10 +138,10 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
       ACE_OS::fclose (iorf);
     }
 
-  if (this->pid_file_name_ != 0)
+  if (this->pid_file_name_ != nullptr)
     {
-      FILE* pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
-      if (pidf != 0)
+      FILE * pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
+      if (pidf != nullptr)
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",

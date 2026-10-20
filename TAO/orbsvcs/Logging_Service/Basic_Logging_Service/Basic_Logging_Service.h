@@ -32,10 +32,15 @@ public:
   Basic_Logging_Service ();
   // Constructor.
 
-  virtual ~Basic_Logging_Service ();
+  ~Basic_Logging_Service () override;
   // Destructor.
 
-  int init (int argc, ACE_TCHAR *argv[]);
+  Basic_Logging_Service (Basic_Logging_Service const &) = delete;
+  Basic_Logging_Service (Basic_Logging_Service &&) = delete;
+  Basic_Logging_Service &operator= (Basic_Logging_Service const &) = delete;
+  Basic_Logging_Service &operator= (Basic_Logging_Service &&) = delete;
+
+  int init (int argc, ACE_TCHAR * argv[]);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -48,16 +53,16 @@ public:
   // Returns 0 on success, -1 on error.
 
 protected:
-  void init_ORB (int& argc, ACE_TCHAR *argv []);
+  void init_ORB (int & argc, ACE_TCHAR * argv []);
   // initialize the ORB.
 
-  int parse_args (int argc, ACE_TCHAR *argv []);
+  int parse_args (int argc, ACE_TCHAR * argv []);
   // Parses the command line arguments.
 
   void resolve_naming_service ();
   // Resolve the naming service.
 
-  int svc ();
+  int svc () override;
   // Run worker threads.
 
   // = Data members
@@ -76,10 +81,10 @@ protected:
   ACE_CString service_name_;
   // The name we use to bind with the NameService
 
-  const ACE_TCHAR* ior_file_name_;
+  ACE_TCHAR const * ior_file_name_;
   // The name of the file where we output the factory IOR.
 
-  const ACE_TCHAR* pid_file_name_;
+  ACE_TCHAR const * pid_file_name_;
   // The name of the file where we output the process id.
 
   bool bind_to_naming_service_;
