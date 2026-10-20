@@ -48,7 +48,7 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_DIOP_Endpoint *diop_endpoint =
     this->remote_endpoint (endpoint);
 
-  if (diop_endpoint == 0)
+  if (diop_endpoint == nullptr)
     return -1;
 
   const ACE_INET_Addr &remote_address =
@@ -87,7 +87,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO_DIOP_Endpoint *diop_endpoint =
     this->remote_endpoint (desc.endpoint ());
 
-  if (diop_endpoint == 0)
+  if (diop_endpoint == nullptr)
     return 0;
 
   const ACE_INET_Addr &remote_address =
@@ -115,7 +115,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 #endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
 
-  TAO_DIOP_Connection_Handler *svc_handler = 0;
+  TAO_DIOP_Connection_Handler *svc_handler = nullptr;
 
   ACE_NEW_RETURN (svc_handler,
                   TAO_DIOP_Connection_Handler (this->orb_core ()),
@@ -164,7 +164,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     dynamic_cast <TAO_DIOP_Transport *> (svc_handler->transport ());
 
   // In case of errors transport is zero
-  if (transport == 0)
+  if (transport == nullptr)
     {
       svc_handler->close ();
 
@@ -207,7 +207,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_DIOP_Profile (this->orb_core ()),
                   0);
@@ -229,7 +229,7 @@ TAO_DIOP_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_DIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
