@@ -3,18 +3,24 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Task.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker(CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb))
+  Worker (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
 
-  int svc()
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
+  int svc () override
   {
-    orb_->run();
+    orb_->run ();
     return 0;
   }
 
@@ -26,7 +32,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -57,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -72,11 +78,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      TestServer *test_impl = 0;
+      TestServer *test_impl = nullptr;
       ACE_NEW_RETURN (test_impl,
                       TestServer (),
                       1);
-      PortableServer::ServantBase_var owner_transfer(test_impl);
+      PortableServer::ServantBase_var owner_transfer (test_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (test_impl);
@@ -88,8 +94,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (test.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
@@ -100,24 +106,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Run a CORBA worker thread
-      Worker work (orb.in());
+      Worker work (orb.in ());
       work.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 1);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - waiting for client to call\n"));
       ACE_OS::sleep (10);
-      if (test_impl->got_callback() == false) {
+      if (!test_impl->got_callback ()) {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - client did not make call\n"));
           return 1;
       }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - making repeated calls to client\n"));
-      for (int i = 0; i < 10; i++)
+      for (int i {}; i < 10; ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - calling client attempt %d\n", i));
-          test_impl->make_callback();
+          test_impl->make_callback ();
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - stopping client\n"));
-      test_impl->shutdown_client();
+      test_impl->shutdown_client ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - test completed\n"));
 
@@ -129,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

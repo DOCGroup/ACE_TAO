@@ -9,8 +9,14 @@ class TestServer
   : public virtual POA_Test::TestServer
 {
 public:
+  TestServer () = default;
+  TestServer (TestServer const &) = delete;
+  TestServer (TestServer &&) = delete;
+  TestServer &operator= (TestServer const &) = delete;
+  TestServer &operator= (TestServer &&) = delete;
+
   // = The skeleton methods
-  virtual void pass_callback (Test::TestCallback_ptr test);
+  void pass_callback (Test::TestCallback_ptr test) override;
 
   bool got_callback ();
   void make_callback ();
