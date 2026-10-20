@@ -9,10 +9,16 @@
 class NamingTask : public ACE_Task_Base
 {
 public:
-  NamingTask (const char* orbname, int argc, ACE_TCHAR** argv);
-  virtual int svc();
+  NamingTask (char const * orbname, int argc, ACE_TCHAR ** argv);
+
+  NamingTask (NamingTask const &) = delete;
+  NamingTask (NamingTask &&) = delete;
+  NamingTask &operator= (NamingTask const &) = delete;
+  NamingTask &operator= (NamingTask &&) = delete;
+
+  int svc () override;
   void waitInit ();
-  void end();
+  void end ();
 
   CosNaming::NamingContext_ptr root () const;
 

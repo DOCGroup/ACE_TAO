@@ -21,8 +21,13 @@ public:
                ACE_Thread_Manager *thr_mgr,
                CORBA::Boolean result);
 
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
+
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   CosNaming::NamingContext_var root_context_;

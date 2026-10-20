@@ -27,8 +27,13 @@ public:
                ACE_Manual_Event &me,
                ACE_Thread_Manager *thr_mgr);
 
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
+
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   CosNaming::NamingContext_var root_context_;

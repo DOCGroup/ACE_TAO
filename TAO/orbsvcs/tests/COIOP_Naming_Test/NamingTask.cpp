@@ -4,8 +4,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
-NamingTask::NamingTask (const char* orbname, int argc, ACE_TCHAR** argv)
- : initialized_(false)
+NamingTask::NamingTask (char const * orbname, int argc, ACE_TCHAR ** argv)
+  : initialized_ (false)
 {
   ACE_Argv_Type_Converter satc (argc, argv);
   orb_ = CORBA::ORB_init(satc.get_argc (), satc.get_TCHAR_argv (), orbname);
@@ -19,7 +19,7 @@ void NamingTask::waitInit ()
   }
 }
 
-void NamingTask::end()
+void NamingTask::end ()
 {
   orb_->shutdown(0);
   this->wait();
@@ -31,7 +31,7 @@ NamingTask::root () const
   return CosNaming::NamingContext::_duplicate (root_);
 }
 
-int NamingTask::svc()
+int NamingTask::svc ()
 {
   try {
     // Get reference to Root POA
@@ -66,7 +66,7 @@ int NamingTask::svc()
       ACE_ERROR ((LM_ERROR, "Error, Unable to initialize the Naming Service.\n"));
     }
   }
-  catch (const CORBA::Exception& ex) {
+  catch (CORBA::Exception const & ex) {
     ex._tao_print_exception ("CORBA exception: NamingTask::svc() ");
   }
 
