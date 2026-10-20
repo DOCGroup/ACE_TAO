@@ -609,20 +609,20 @@ public:
   TAO_StreamEndPoint_A &operator= (TAO_StreamEndPoint_A &&) = delete;
 
   /// Used for ATM-style multicast
-  virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
-                                       AVStreams::flowSpec &the_spec);
+  CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
+                               AVStreams::flowSpec &the_spec) override;
 
   /// Used for ATM-style multicast
-  virtual CORBA::Boolean connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
-                                       AVStreams::streamQoS &the_qos,
-                                       const AVStreams::flowSpec &the_flows);
+  CORBA::Boolean connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
+                               AVStreams::streamQoS &the_qos,
+                               const AVStreams::flowSpec &the_flows) override;
 
   /// Used to remove a multicast leaf
-  virtual void disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
-                                const AVStreams::flowSpec &theSpec);
+  void disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
+                        const AVStreams::flowSpec &theSpec) override;
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint_A ();
+  ~TAO_StreamEndPoint_A () override;
 };
 
 // For backward compatibility.
@@ -648,11 +648,11 @@ public:
   TAO_StreamEndPoint_B &operator= (TAO_StreamEndPoint_B &&) = delete;
 
   /// Used for internet-style multicast
-  virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
-                                       AVStreams::flowSpec &the_spec);
+  CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
+                               AVStreams::flowSpec &the_spec) override;
 
   /// Destructor
-  virtual ~TAO_StreamEndPoint_B ();
+  ~TAO_StreamEndPoint_B () override;
 };
 
 /**
