@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "HelloC.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const* ior = ACE_TEXT ("file://test.ior");
 CORBA::ULong payload_length = 1000;
 CORBA::ULong client_threads = 5;
 CORBA::ULong id_offset = 0;
@@ -94,7 +94,7 @@ public:
   {
   }
 
-  virtual int svc ()
+  int svc () override
   {
     try
       {
@@ -103,7 +103,7 @@ public:
         Test::Octets seq (this->payload_);
         seq.length (this->payload_);
 
-        CORBA::Octet *buff = seq.get_buffer ();
+        CORBA::Octet* buff = seq.get_buffer ();
         ACE_OS::memset (buff, Test::ClientIDs[i], this->payload_);
 
         for (CORBA::ULong j = 0; j < this->calls_; ++j)

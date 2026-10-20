@@ -4,9 +4,9 @@
 #include "orbsvcs/PortableGroup/GOA.h"
 #include "Hello_Impl.h"
 
-ACE_TCHAR const *uipmc_url =
+ACE_TCHAR const* uipmc_url =
   ACE_TEXT ("corbaloc:miop:1.0@1.0-test-1/225.1.1.8:32158");
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const* ior_output_file = ACE_TEXT ("test.ior");
 CORBA::ULong orb_threads = 10;
 CORBA::ULong payload_length = 1000;
 CORBA::ULong client_threads = 5;
@@ -71,7 +71,7 @@ public:
   {
   }
 
-  virtual int svc ()
+  int svc () override
   {
     try
       {
