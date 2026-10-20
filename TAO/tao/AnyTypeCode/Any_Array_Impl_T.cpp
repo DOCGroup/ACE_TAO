@@ -57,7 +57,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                                                    CORBA::TypeCode_ptr tc,
                                                    T_slice *& _tao_elem)
 {
-  _tao_elem = 0;
+  _tao_elem = nullptr;
 
   try
     {

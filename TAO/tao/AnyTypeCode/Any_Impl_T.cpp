@@ -56,7 +56,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                              CORBA::TypeCode_ptr tc,
                              T *& _tao_elem)
 {
-  _tao_elem = 0;
+  _tao_elem = nullptr;
 
   try
     {
@@ -88,7 +88,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
       ACE_NEW_RETURN (replacement,
                       TAO::Any_Impl_T<T> (destructor,
                                           any_tc,
-                                          0),
+                                          nullptr),
                       false);
 
       std::unique_ptr<TAO::Any_Impl_T<T> > replacement_safety (replacement);
@@ -172,7 +172,7 @@ TAO::Any_Impl_T<T>::free_value ()
     }
 
   ::CORBA::release (this->type_);
-  this->value_ = 0;
+  this->value_ = nullptr;
 }
 
 template<typename T>

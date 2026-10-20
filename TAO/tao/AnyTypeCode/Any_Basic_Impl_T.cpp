@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename T>
 TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
                                             const T & val)
-  : Any_Impl (0,
+  : Any_Impl (nullptr,
               tc),
     value_ (val)
 {
@@ -130,7 +130,7 @@ template<typename T>
 TAO::Any_Basic_Impl_T<T> *
 TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
 {
-  TAO::Any_Basic_Impl_T<T> * retval = 0;
+  TAO::Any_Basic_Impl_T<T> * retval = nullptr;
   ACE_NEW_RETURN (retval,
                   TAO::Any_Basic_Impl_T<T> (tc,
                                             static_cast<T> (0)),
