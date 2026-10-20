@@ -23,7 +23,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
   , no_write_(false)
   , sync_(false)
   , block_size_(block_size)
-  , callback_(0)
+  , callback_(nullptr)
   , allocator_owns_(true)
 {
   ACE_NEW(this->data_, unsigned char[this->block_size_]);
@@ -46,7 +46,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(
 Persistent_Storage_Block::~Persistent_Storage_Block()
 {
   delete [] this->data_;
-  this->data_ = 0;
+  this->data_ = nullptr;
 }
 
 void
@@ -362,7 +362,7 @@ Persistent_File_Allocator::run()
         blk = *pblk;
       }
     }
-    if (0 != blk)
+    if (blk != nullptr)
     {
       Persistent_Callback *callback = blk->get_callback();
       if (!blk->get_no_write())
@@ -381,9 +381,9 @@ Persistent_File_Allocator::run()
       if (blk->get_allocator_owns())
       {
         delete blk;
-        blk = 0;
+        blk = nullptr;
       }
-      if (0 != callback)
+      if (callback != nullptr)
       {
         callback->persist_complete();
       }

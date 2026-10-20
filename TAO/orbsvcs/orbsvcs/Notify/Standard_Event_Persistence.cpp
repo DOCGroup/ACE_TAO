@@ -13,7 +13,7 @@ namespace TAO_Notify
 Standard_Event_Persistence::Standard_Event_Persistence ()
   : filename_ (ACE_TEXT ("__PERSISTENT_EVENT__.DB"))
   , block_size_ (512)
-  , factory_ (0)
+  , factory_ (nullptr)
 {
 }
 
@@ -36,7 +36,7 @@ Standard_Event_Persistence::get_factory ()
     {
       if (!this->factory_->open (this->filename_.c_str ()))
       {
-        this->factory_ = 0;
+        this->factory_ = nullptr;
       }
     }
   }
@@ -48,7 +48,7 @@ void
 Standard_Event_Persistence::reset ()
 {
   delete this->factory_;
-  this->factory_ = 0;
+  this->factory_ = nullptr;
 }
 
 int
@@ -106,14 +106,14 @@ int
 Standard_Event_Persistence::fini ()
 {
   delete this->factory_;
-  this->factory_ = 0;
+  this->factory_ = nullptr;
   return 0;
 }
 
 Standard_Event_Persistence_Factory::Standard_Event_Persistence_Factory ()
   : allocator_()
   , root_(this)
-  , psb_(0)
+  , psb_(nullptr)
   , serial_number_(ROUTING_SLIP_ROOT_SERIAL_NUMBER + 1)
   , is_reloading_ (false)
 {
@@ -148,7 +148,7 @@ Standard_Event_Persistence_Factory::~Standard_Event_Persistence_Factory()
   }
   this->root_.release_all ();
   delete this->psb_;
-  this->psb_ = 0;
+  this->psb_ = nullptr;
   this->allocator_.shutdown();
 }
 
