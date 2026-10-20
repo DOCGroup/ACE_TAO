@@ -5,14 +5,14 @@
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 bool shutdown_server = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -41,8 +41,12 @@ class Client : public ACE_Task_Base
 {
 public:
   Client (CORBA::ORB_ptr server);
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -59,28 +63,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Set round-trip timeout
-      const int timeout_secs = 5;
+      int const timeout_secs {5};
 
       CORBA::Object_var obj = orb->resolve_initial_references ("ORBPolicyManager");
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (obj.in());
+        CORBA::PolicyManager::_narrow (obj.in ());
 
       CORBA::PolicyList policy_list;
-      policy_list.length(0);
-      policy_manager->set_policy_overrides(policy_list, CORBA::SET_OVERRIDE);
+      policy_list.length (0);
+      policy_manager->set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
 
-      TimeBase::TimeT timeout = timeout_secs * 10000000;
+      TimeBase::TimeT const timeout = timeout_secs * 10000000;
       CORBA::Any orb_timeout;
       orb_timeout <<= timeout;
-      policy_list.length(1);
-      policy_list[0] = orb->create_policy(
+      policy_list.length (1);
+      policy_list[0] = orb->create_policy (
         Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, orb_timeout);
 
-      policy_manager->set_policy_overrides(policy_list, CORBA::SET_OVERRIDE);
+      policy_manager->set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
-      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var hello = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -128,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -138,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 Client::Client (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -152,7 +156,7 @@ Client::svc ()
                   "(%P|%t) Shutting down ORB\n"));
       orb_->shutdown (true);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;
