@@ -16,11 +16,15 @@ public:
   /// Constructor
   EventNode (CORBA::ORB_ptr orb,
              ACE_thread_t thr_id);
+  EventNode (EventNode const &) = delete;
+  EventNode &operator= (EventNode const &) = delete;
+  EventNode (EventNode &&) = delete;
+  EventNode &operator= (EventNode &&) = delete;
 
   // = The skeleton methods
-  virtual void registerHello (::Test::Hello_ptr h);
+  void registerHello (::Test::Hello_ptr h) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

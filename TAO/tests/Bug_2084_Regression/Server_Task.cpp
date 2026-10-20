@@ -5,7 +5,7 @@
 #include "ace/Manual_Event.h"
 #include "tao/ORB_Core.h"
 
-Server_Task::Server_Task (const ACE_TCHAR *output,
+Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
