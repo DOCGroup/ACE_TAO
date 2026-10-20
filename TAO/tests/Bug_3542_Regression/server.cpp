@@ -14,7 +14,7 @@ ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
 ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
 
 int
-ACE_TMAIN(int, ACE_TCHAR **)
+ACE_TMAIN (int, ACE_TCHAR **)
 {
   int result = 0;
 #if 0
@@ -44,25 +44,25 @@ ACE_TMAIN(int, ACE_TCHAR **)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.open done\n")));
 #endif
 
-  for(int cnt = 0; cnt < 1000; ++cnt)
-  {
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Loading ORB cnt = %d\n"), cnt));
-    result = ACE_Service_Config::process_directive(scpc_loadOrb);
-    if(0 != result)
+  for (int cnt = 0; cnt < 1000; ++cnt)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error loading ORB failed (%d)\n"), result));
-      return result;
-    }
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Loading ORB done\n")));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Loading ORB cnt = %d\n"), cnt));
+      result = ACE_Service_Config::process_directive (scpc_loadOrb);
+      if (0 != result)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error loading ORB failed (%d)\n"), result));
+          return result;
+        }
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Loading ORB done\n")));
 
-    result = ACE_Service_Config::process_directive(scpc_unloadOrb);
-    if(0 != result)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error unloading ORB failed (%d)\n"), result));
-      return result;
+      result = ACE_Service_Config::process_directive (scpc_unloadOrb);
+      if (0 != result)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error unloading ORB failed (%d)\n"), result));
+          return result;
+        }
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Unloading ORB done\n")));
     }
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Unloading ORB done\n")));
-  }
 
   return result;
 }
