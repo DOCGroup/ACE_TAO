@@ -3,7 +3,7 @@
 #include "testS.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 
 /**
@@ -33,7 +33,7 @@ public:
     return CORBA::string_dup ("hello from client");
   }
 
-  virtual void client_done ()
+  void client_done () override
   {
     ACE_ERROR ((LM_ERROR, "Unexpected call\n"));
   }
@@ -49,7 +49,7 @@ private:
 
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:s:"));
   int c;
@@ -90,7 +90,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual int svc ();
+  int svc () override;
   // The thread entry point.
 
 private:
@@ -99,7 +99,7 @@ private:
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -168,7 +168,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P|%t) Exception caught: \n%s\n"),
                   ACE_TEXT_CHAR_TO_TCHAR (ex._info ().c_str ())));
