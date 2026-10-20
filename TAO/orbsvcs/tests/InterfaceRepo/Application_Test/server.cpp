@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("iorfile");
+static ACE_TCHAR const* ior_output_file = ACE_TEXT("iorfile");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -53,11 +53,11 @@ private:
 };
 
 static int
-write_ior_to_file (const char *ior)
+write_ior_to_file (char const* ior)
 {
-  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+  FILE* output_file = ACE_OS::fopen (ior_output_file, "w");
 
-  if (output_file == 0)
+  if (output_file == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Cannot open output files for writing IOR: %s\n",

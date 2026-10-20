@@ -16,6 +16,11 @@ public:
   IFR_DII_Client ();
   ~IFR_DII_Client ();
 
+  IFR_DII_Client (IFR_DII_Client const&) = delete;
+  IFR_DII_Client (IFR_DII_Client&&) = delete;
+  IFR_DII_Client& operator= (IFR_DII_Client const&) = delete;
+  IFR_DII_Client& operator= (IFR_DII_Client&&) = delete;
+
   int init (int argc,
             ACE_TCHAR *argv[]);
   // Initialize the client.
@@ -78,7 +83,7 @@ private:
   bool debug_;
   // Display results and debugging info?
 
-  const ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR const* ior_output_file_;
 };
 
 #endif /* IFR_DII_CLIENT_H */
