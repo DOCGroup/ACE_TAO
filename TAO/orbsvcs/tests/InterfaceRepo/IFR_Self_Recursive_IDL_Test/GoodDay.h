@@ -18,11 +18,11 @@ public:
   GoodDay (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string ();
+  char* get_string () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual ::Test::GoodDay::RoughWeek * this_week ();
+  ::Test::GoodDay::RoughWeek* this_week () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

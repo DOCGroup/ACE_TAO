@@ -3,10 +3,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *location = ACE_TEXT("MyLocation");
+ACE_TCHAR const* location = ACE_TEXT("MyLocation");
 
-const int MAX_RETRIES = 10;
-const CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
+constexpr int MAX_RETRIES = 10;
+constexpr CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-check_loads (const CosLoadBalancing::LoadList & loads)
+check_loads (CosLoadBalancing::LoadList const& loads)
 {
   if (loads.length () != 1)
     {
@@ -83,13 +83,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Boolean retrieved_load = false;
 
       // Try a few times until a load is capable of being retrieved.
-      for (int i = 0; i < MAX_RETRIES && retrieved_load == 0; ++i)
+      for (int i = 0; i < MAX_RETRIES && !retrieved_load; ++i)
         {
           try
             {
               loads = lm->get_loads (the_location);
 
-              retrieved_load = 1;
+              retrieved_load = true;
             }
           catch (const CORBA::Exception&)
             {
@@ -101,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      if (retrieved_load == 0)
+      if (!retrieved_load)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\nERROR: Unable to retrieve loads "
                            "from LoadManager.\n"),
