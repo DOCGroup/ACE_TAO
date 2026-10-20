@@ -12,6 +12,10 @@ class Coordinator
 public:
   /// Constructor
   Coordinator (CORBA::ULong peer_count);
+  Coordinator (Coordinator const &) = delete;
+  Coordinator (Coordinator &&) = delete;
+  Coordinator &operator= (Coordinator const &) = delete;
+  Coordinator &operator= (Coordinator &&) = delete;
 
   /// Check if all the peers have registered already
   int has_all_peers () const;
@@ -27,11 +31,11 @@ public:
   void shutdown_all_peers ();
 
   // = The skeleton methods
-  virtual void add_peer (Test::Peer_ptr peer);
+  void add_peer (Test::Peer_ptr peer) override;
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
-  virtual ~Coordinator ();
+  ~Coordinator () override;
 
 private:
   /// Store a reference to each peer
