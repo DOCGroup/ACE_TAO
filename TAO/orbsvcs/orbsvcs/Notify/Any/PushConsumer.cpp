@@ -150,7 +150,7 @@ TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consu
 {
   TAO_Notify_PushConsumer* tmp =
     dynamic_cast<TAO_Notify_PushConsumer*> (old_consumer);
-  ACE_ASSERT(tmp != 0);
+  ACE_ASSERT(tmp != nullptr);
   this->init(tmp->push_consumer_.in());
   this->schedule_timer(false);
 }
