@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
-NamingTask::NamingTask (const char* orbname, int argc, ACE_TCHAR **argv, unsigned short port)
+NamingTask::NamingTask (char const *orbname, int argc, ACE_TCHAR **argv, unsigned short port)
  : initialized_(false)
 {
   ACE_TCHAR **my_argv = new ACE_TCHAR *[argc + 2];
@@ -12,7 +12,7 @@ NamingTask::NamingTask (const char* orbname, int argc, ACE_TCHAR **argv, unsigne
   for(; my_argc<argc ;++my_argc)
     my_argv[my_argc] = argv[my_argc];
   ACE_OS::sprintf (buf, ACE_TEXT ("iiop://localhost:%d"), port);
-  const ACE_TCHAR* epopt = ACE_TEXT ("-ORBEndpoint");
+  ACE_TCHAR const *epopt = ACE_TEXT ("-ORBEndpoint");
   my_argv[my_argc++] = const_cast<ACE_TCHAR *> (epopt);
   my_argv[my_argc++] = buf;
 
@@ -29,18 +29,18 @@ void NamingTask::waitInit ()
   }
 }
 
-void NamingTask::end()
+void NamingTask::end ()
 {
-  orb_->shutdown(0);
-  this->wait();
+  orb_->shutdown(false);
+  this->wait ();
 }
 
-const char* NamingTask::ior()
+char const *NamingTask::ior ()
 {
   return ior_.in ();
 }
 
-int NamingTask::svc()
+int NamingTask::svc ()
 {
   try {
     // Get reference to Root POA
@@ -75,7 +75,7 @@ int NamingTask::svc()
       ACE_ERROR ((LM_ERROR, "Unable to initialize the Naming Service.\n"));
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
       ex._tao_print_exception ("NamingTask::svc() CORBA::Exception: ");
   }

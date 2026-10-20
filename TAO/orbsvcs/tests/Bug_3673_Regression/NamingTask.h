@@ -9,12 +9,18 @@
 class NamingTask : public ACE_Task_Base
 {
 public:
-  NamingTask (const char* orbname, int argc, ACE_TCHAR **argv, unsigned short port);
-  virtual int svc();
-  void waitInit ();
-  void end();
+  NamingTask (char const *orbname, int argc, ACE_TCHAR **argv, unsigned short port);
 
-  const char* ior ();
+  NamingTask (NamingTask const &) = delete;
+  NamingTask (NamingTask &&) = delete;
+  NamingTask &operator= (NamingTask const &) = delete;
+  NamingTask &operator= (NamingTask &&) = delete;
+
+  int svc () override;
+  void waitInit ();
+  void end ();
+
+  char const *ior ();
 
 private:
   CORBA::ORB_var orb_;
