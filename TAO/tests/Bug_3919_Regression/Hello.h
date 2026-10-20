@@ -22,11 +22,15 @@ class Hello
 public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
   // Return the any provide as an "in" argument.
-  virtual CORBA::Any * get_any (CORBA::Any const & the_any);
+  CORBA::Any *get_any (CORBA::Any const &the_any) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB which will be shutdown by Hello::shutdown().

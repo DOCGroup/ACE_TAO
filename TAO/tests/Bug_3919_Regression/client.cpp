@@ -7,13 +7,13 @@
 #include <algorithm>
 #include <functional>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,9 +37,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-template<typename T> void dump (T *); // Forward declaration.
+template <typename T> void dump (T *); // Forward declaration.
 
-template<typename T>
+template <typename T>
 void
 perform_invocation (Test::Hello_ptr hello,
                     CORBA::Any const & the_any)
@@ -51,7 +51,7 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Any_var my_any =
         hello->get_any (the_any);
 
-      const T * my_foo = 0;
+      T const *my_foo = nullptr;
       if (!(my_any.in () >>= my_foo))
         throw Test::Demarshaling_From_Any_Failed ();
 
@@ -224,8 +224,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      typedef void (*test_func) (CORBA::ORB_ptr,
-                                 Test::Hello_ptr);
+      using test_func = void (*) (CORBA::ORB_ptr, Test::Hello_ptr);
 
       static test_func const tests[] =
         {
@@ -249,7 +248,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
