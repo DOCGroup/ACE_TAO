@@ -49,7 +49,7 @@ TAO_SHMIOP_Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO_SHMIOP_Protocol_Factory::make_acceptor ()
 {
-  TAO_SHMIOP_Acceptor *acceptor = 0;
+  TAO_SHMIOP_Acceptor *acceptor = nullptr;
 
   ACE_NEW_RETURN (acceptor,
                   TAO_SHMIOP_Acceptor,
@@ -72,7 +72,7 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = 0;
+      ACE_TCHAR const *current_arg = nullptr;
 
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MMAPFileSize"))))
         {
@@ -96,7 +96,7 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
 TAO_Connector *
 TAO_SHMIOP_Protocol_Factory::make_connector ()
 {
-  TAO_Connector *connector = 0;
+  TAO_Connector *connector = nullptr;
 
   ACE_NEW_RETURN (connector,
                   TAO_SHMIOP_Connector,
