@@ -26,7 +26,7 @@ Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset::size_type size)
 }
 
 
-Dynamic_Bitset& Dynamic_Bitset::operator = (const Dynamic_Bitset& other)
+Dynamic_Bitset& Dynamic_Bitset::operator = (Dynamic_Bitset const& other)
 {
   Dynamic_Bitset temp(other);
   // swap buffer
@@ -39,7 +39,7 @@ Dynamic_Bitset& Dynamic_Bitset::operator = (const Dynamic_Bitset& other)
   return *this;
 }
 
-Dynamic_Bitset& Dynamic_Bitset::operator &=(const Dynamic_Bitset& other)
+Dynamic_Bitset& Dynamic_Bitset::operator &= (Dynamic_Bitset const& other)
 {
   assert(other.bit_size_ == this->bit_size_);
 
@@ -118,7 +118,7 @@ void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
     bit_size_ = num_bits;
 }
 
-bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs)
+bool operator == (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs)
 {
   Dynamic_Bitset::size_type bit_size = lhs.size();
   if (bit_size != rhs.size())

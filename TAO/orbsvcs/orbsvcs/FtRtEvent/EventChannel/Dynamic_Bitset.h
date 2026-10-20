@@ -21,10 +21,8 @@ class Dynamic_Bitset
 {
   using block = unsigned;
   using size_type = unsigned;
-  enum {
-    BYTES_PER_BLOCK = sizeof(block),
-    BITS_PER_BLOCK = sizeof(block)*8
-  };
+  static constexpr size_type BYTES_PER_BLOCK = sizeof(block);
+  static constexpr size_type BITS_PER_BLOCK = sizeof(block) * 8;
 public:
   class reference {
   public:
@@ -37,11 +35,11 @@ public:
     size_type bit_;
   };
 
-  Dynamic_Bitset(size_type size=0);
+  Dynamic_Bitset(size_type size = 0);
   ~Dynamic_Bitset();
-  Dynamic_Bitset(const Dynamic_Bitset& other);
-  Dynamic_Bitset& operator = (const Dynamic_Bitset& other);
-  Dynamic_Bitset& operator &=(const Dynamic_Bitset& other);
+  Dynamic_Bitset(Dynamic_Bitset const& other);
+  Dynamic_Bitset& operator = (Dynamic_Bitset const& other);
+  Dynamic_Bitset& operator &=(Dynamic_Bitset const& other);
 
   reference operator[](size_type bit);
 
@@ -52,15 +50,15 @@ public:
   void flip();
   void resize(size_type num_bits, bool value = false);
 
-  friend bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
+  friend bool operator == (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs);
 private:
   size_type buffer_size_;
   size_type bit_size_;
   block* buffer_;
 };
 
-bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
-Dynamic_Bitset operator & (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
+bool operator == (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs);
+Dynamic_Bitset operator & (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
