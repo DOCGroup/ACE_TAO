@@ -72,20 +72,20 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * creds_id ();
+      char * creds_id () override;
 
-      virtual SecurityLevel3::CredentialsType creds_type () = 0;
+      SecurityLevel3::CredentialsType creds_type () override = 0;
 
-      virtual SecurityLevel3::CredentialsUsage creds_usage ();
+      SecurityLevel3::CredentialsUsage creds_usage () override;
 
-      virtual TimeBase::UtcT expiry_time ();
+      TimeBase::UtcT expiry_time () override;
 
-      virtual SecurityLevel3::CredentialsState creds_state ();
+      SecurityLevel3::CredentialsState creds_state () override;
 
-      virtual char * add_relinquished_listener (
-          SecurityLevel3::RelinquishedCredentialsListener_ptr listener);
+      char * add_relinquished_listener (
+          SecurityLevel3::RelinquishedCredentialsListener_ptr listener) override;
 
-      virtual void remove_relinquished_listener (const char * id);
+      void remove_relinquished_listener (const char * id) override;
       //@}
 
 

@@ -70,7 +70,7 @@ namespace TAO
        * interface.
        */
       //@{
-      SecurityLevel3::CredentialsType creds_type ();
+      SecurityLevel3::CredentialsType creds_type () override;
       //@}
 
       /**
@@ -80,11 +80,11 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredsInitiator_ptr creds_initiator ();
+      SecurityLevel3::CredsInitiator_ptr creds_initiator () override;
 
-      virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor ();
+      SecurityLevel3::CredsAcceptor_ptr creds_acceptor () override;
 
-      virtual void release_credentials ();
+      void release_credentials () override;
       //@}
 
     protected:
