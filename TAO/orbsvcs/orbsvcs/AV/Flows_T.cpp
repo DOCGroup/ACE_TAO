@@ -116,7 +116,7 @@ TAO_FDev<T_Producer, T_Consumer>::make_consumer (AVStreams::FlowConnection_ptr /
   try
     {
       // Activate the consumer implementation under the Root POA.
-      T_Consumer *consumer_i;
+  T_Consumer *consumer_i = nullptr;
       ACE_NEW_RETURN (consumer_i, T_Consumer, 0 );
 
       this->consumer_list_.insert_tail (consumer_i);
@@ -153,7 +153,7 @@ TAO_FDev<T_Producer, T_Consumer>::bind (AVStreams::FDev_ptr peer_device,
   ACE_UNUSED_ARG (peer_device);
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
-  return 0;
+  return nullptr;
 }
 
 template <class T_Producer, class T_Consumer>
@@ -166,7 +166,7 @@ TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
   ACE_UNUSED_ARG (first_peer);
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
-  return 0;
+  return nullptr;
 }
 
 template <class T_Producer, class T_Consumer>
@@ -177,20 +177,20 @@ TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep
   // @@ Shouldn't the parameters be made use of!
   // Destroy/delete all the producers and consumers.
 
-  TAO_FlowProducer *producer_i;
+  TAO_FlowProducer *producer_i = nullptr;
 
   for (PRODUCER_LIST_ITERATOR producer_list_iterator (this->producer_list_);
-       (producer_i = producer_list_iterator.next ()) != 0;
+       (producer_i = producer_list_iterator.next ()) != nullptr;
        producer_list_iterator.advance ())
     {
       TAO_AV_Core::deactivate_servant (producer_i);
       delete producer_i;
     }
 
-  TAO_FlowConsumer *consumer_i;
+  TAO_FlowConsumer *consumer_i = nullptr;
 
   for (CONSUMER_LIST_ITERATOR consumer_list_iterator (this->consumer_list_);
-       (consumer_i = consumer_list_iterator.next ()) != 0;
+       (consumer_i = consumer_list_iterator.next ()) != nullptr;
        consumer_list_iterator.advance ())
     {
       TAO_AV_Core::deactivate_servant (consumer_i);
