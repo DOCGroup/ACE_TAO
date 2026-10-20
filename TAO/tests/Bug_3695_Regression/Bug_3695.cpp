@@ -11,42 +11,49 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #include "tao/IIOP_Profile.h"
 
-struct IIOP_Profile_var
+class IIOP_Profile_var
 {
+public:
   explicit IIOP_Profile_var (TAO_IIOP_Profile *pro)
     : pro_ (pro)
   {}
+
+  IIOP_Profile_var (IIOP_Profile_var const &) = delete;
+  IIOP_Profile_var (IIOP_Profile_var &&) = delete;
+  IIOP_Profile_var &operator= (IIOP_Profile_var const &) = delete;
+  IIOP_Profile_var &operator= (IIOP_Profile_var &&) = delete;
 
   ~IIOP_Profile_var ()
   {
     this->pro_->_decr_refcnt ();
   }
 
-  TAO_IIOP_Profile *operator->()
+  TAO_IIOP_Profile *operator-> () const
   {
     return this->pro_;
   }
 
-  TAO_IIOP_Profile *get()
+  TAO_IIOP_Profile *get () const
   {
     return this->pro_;
   }
 
-  TAO_IIOP_Profile *pro_;
+private:
+  TAO_IIOP_Profile *const pro_;
 };
 
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-  TAO_ORB_Core *orb_core = orb->orb_core ();
+  TAO_ORB_Core *const orb_core = orb->orb_core ();
 
   // 1. Construct a profile with at least 2 *alternate* endpoints
 
   ACE_INET_Addr addr (9238, "localhost"), addr2 (9239, "localhost"),
     addr3 (9240, "localhost");
   TAO::ObjectKey okey;
-  TAO_GIOP_Message_Version version;
+  TAO_GIOP_Message_Version version {};
   IIOP_Profile_var test_profile (
     new TAO_IIOP_Profile ("localhost", 9238, okey,
                           addr, version, orb_core));
