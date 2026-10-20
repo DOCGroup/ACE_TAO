@@ -3,7 +3,7 @@
 #include "tao/PolicyC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("corbaloc:iiop:localhost:12345/MyObjectKey");
+ACE_TCHAR const *ior = ACE_TEXT ("corbaloc:iiop:localhost:12345/MyObjectKey");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -32,34 +32,35 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
-  {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-    CORBA::Object_var obj = orb->string_to_object (ior);
-    CORBA::PolicyList_var policies;
-    CORBA::Boolean result = obj->_validate_connection (policies.out());
-    if (result)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      CORBA::Object_var obj = orb->string_to_object (ior);
+      CORBA::PolicyList_var policies;
+      CORBA::Boolean const result = obj->_validate_connection (policies.out ());
+      if (result)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) got true from _validate_connection\n"),
                           1);
+        }
     }
-  }
-  catch (const CORBA::TRANSIENT&)
-  {
-    ACE_DEBUG ((LM_DEBUG, "Caught transient as expected\n"));
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("Exception caught:");
-    return 1;
-  }
+  catch (CORBA::TRANSIENT const &)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Caught transient as expected\n"));
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Exception caught:");
+      return 1;
+    }
   return 0;
 }
 
