@@ -5,7 +5,7 @@ ACE_INLINE
 TAO::Null_SSL_State_Guard::Null_SSL_State_Guard (
   TAO::SSLIOP::Current_ptr current,
   int &result)
-  : previous_current_impl_ (0),
+  : previous_current_impl_ (nullptr),
     current_ (current), // No need to duplicate
     setup_done_ (false)
 {
@@ -13,7 +13,7 @@ TAO::Null_SSL_State_Guard::Null_SSL_State_Guard (
   // from a previous SSL connection is not confused with this non-SSL
   // connection.
   current->setup (this->previous_current_impl_,
-                  0, // Null SSL state
+                  nullptr, // Null SSL state
                   this->setup_done_);
 
   result = 0;

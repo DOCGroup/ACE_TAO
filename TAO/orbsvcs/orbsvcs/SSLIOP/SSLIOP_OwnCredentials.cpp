@@ -30,7 +30,7 @@ TAO::SSLIOP::OwnCredentials::_narrow (CORBA::Object_ptr obj)
 TAO::SSLIOP::OwnCredentials_ptr
 TAO::SSLIOP::OwnCredentials::_nil ()
 {
-  return (OwnCredentials *) 0;
+  return nullptr;
 }
 
 SecurityLevel3::CredentialsType

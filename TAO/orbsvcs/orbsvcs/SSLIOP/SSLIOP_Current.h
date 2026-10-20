@@ -113,7 +113,7 @@ namespace TAO
 
       static Current_ptr _nil ()
       {
-        return (Current_ptr)0;
+        return nullptr;
       }
 
       const char* _interface_repository_id () const override;

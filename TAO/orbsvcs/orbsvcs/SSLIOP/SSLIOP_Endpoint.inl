@@ -12,9 +12,9 @@ ACE_INLINE void
 TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
                                       bool destroy)
 {
-  if (iiop_endpoint != 0)
+  if (iiop_endpoint != nullptr)
     {
-      TAO_IIOP_Endpoint *new_endpoint = 0;
+      TAO_IIOP_Endpoint *new_endpoint = nullptr;
 
       if (destroy)
         {
