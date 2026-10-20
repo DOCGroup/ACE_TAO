@@ -112,7 +112,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   ssize_t nbytes = 0;
 
   for (const ACE_Message_Block *i = mblk;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       // Make sure there is something to send!
