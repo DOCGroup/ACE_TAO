@@ -32,6 +32,10 @@ public:
 
   /// destructor.
   ~TAO_Tokenizer ();
+  TAO_Tokenizer (TAO_Tokenizer const &) = delete;
+  TAO_Tokenizer &operator= (TAO_Tokenizer const &) = delete;
+  TAO_Tokenizer (TAO_Tokenizer &&) = delete;
+  TAO_Tokenizer &operator= (TAO_Tokenizer &&) = delete;
 
   /// parses the string and tokenizes it.
   int parse (const char *string,char delimiter);
@@ -103,6 +107,10 @@ public:
 
   /// virtual destructor.
   virtual ~TAO_FlowSpec_Entry ();
+  TAO_FlowSpec_Entry (TAO_FlowSpec_Entry const &) = delete;
+  TAO_FlowSpec_Entry &operator= (TAO_FlowSpec_Entry const &) = delete;
+  TAO_FlowSpec_Entry (TAO_FlowSpec_Entry &&) = delete;
+  TAO_FlowSpec_Entry &operator= (TAO_FlowSpec_Entry &&) = delete;
 
   /// accessor to the direction.
   int direction ();
@@ -286,6 +294,10 @@ public:
                               const char *address);
 
   ~TAO_Forward_FlowSpec_Entry () override;
+  TAO_Forward_FlowSpec_Entry (TAO_Forward_FlowSpec_Entry const &) = delete;
+  TAO_Forward_FlowSpec_Entry &operator= (TAO_Forward_FlowSpec_Entry const &) = delete;
+  TAO_Forward_FlowSpec_Entry (TAO_Forward_FlowSpec_Entry &&) = delete;
+  TAO_Forward_FlowSpec_Entry &operator= (TAO_Forward_FlowSpec_Entry &&) = delete;
 
   /// converts the entry to a string.
   char const *entry_to_string () override;
@@ -330,6 +342,10 @@ public:
                               const char *address);
 
   ~TAO_Reverse_FlowSpec_Entry () override;
+  TAO_Reverse_FlowSpec_Entry (TAO_Reverse_FlowSpec_Entry const &) = delete;
+  TAO_Reverse_FlowSpec_Entry &operator= (TAO_Reverse_FlowSpec_Entry const &) = delete;
+  TAO_Reverse_FlowSpec_Entry (TAO_Reverse_FlowSpec_Entry &&) = delete;
+  TAO_Reverse_FlowSpec_Entry &operator= (TAO_Reverse_FlowSpec_Entry &&) = delete;
 
   /// converts the entry to a string.
   char const *entry_to_string () override;
