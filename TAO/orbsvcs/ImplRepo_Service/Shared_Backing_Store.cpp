@@ -25,7 +25,7 @@ namespace {
   public:
     Lockable_File ()
       : file_lock_ (),
-        file_ (0),
+        file_ (nullptr),
         flags_ (0),
         locked_ (false),
         unlink_in_destructor_ (false),
@@ -37,7 +37,7 @@ namespace {
                    const int flags,
                    bool unlink_in_destructor = false)
       : file_lock_ (),
-        file_(0),
+        file_(nullptr),
         flags_(0),
         locked_(false),
         unlink_in_destructor_(false),
@@ -53,7 +53,7 @@ namespace {
 
     void release ()
     {
-      if (this->file_ != 0)
+      if (this->file_ != nullptr)
         {
           close_file ();
           this->file_lock_.reset ();
@@ -105,12 +105,12 @@ namespace {
 
     void close_file ()
     {
-      if (this->file_ == 0)
+      if (this->file_ == nullptr)
         return;
 
       ACE_OS::fflush (this->file_);
       ACE_OS::fclose (this->file_);
-      this->file_ = 0;
+      this->file_ = nullptr;
 #if defined (ACE_WIN32)
       if (this->unlink_in_destructor_)
         {
@@ -126,7 +126,7 @@ namespace {
       if (this->locked_)
         return;
 
-      if (file_lock_.get () == 0)
+      if (file_lock_.get () == nullptr)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("(%P|%t) ERROR: Shared_Backing_Store ")
@@ -426,7 +426,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   Lockable_File server_file (fname, O_WRONLY);
   const ACE_TString bfname = fname + ACE_TEXT (".bak");
   FILE* fp = server_file.get_file();
-  if (fp == 0)
+  if (fp == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
         fname.c_str()));
@@ -434,7 +434,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
     }
   // successful added file (if adding), so release the listing file lock
   listing_lf.release();
-  if (fp != 0)
+  if (fp != nullptr)
     {
       ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
 
@@ -493,7 +493,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   Lockable_File activator_file (fname, O_WRONLY);
   const ACE_TString bfname = fname + ACE_TEXT (".bak");
   FILE* fp = activator_file.get_file();
-  if (fp == 0)
+  if (fp == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
@@ -682,7 +682,7 @@ Shared_Backing_Store::XMLHandler_Ptr
 Shared_Backing_Store::get_listings (Lockable_File& listing_lf,
                                     bool only_changes) const
 {
-  LocatorListings_XMLHandler *raw_xml = 0;
+  LocatorListings_XMLHandler *raw_xml = nullptr;
   if (only_changes)
     {
       ACE_NEW_RETURN (raw_xml,
@@ -775,7 +775,7 @@ Shared_Backing_Store::write_listing (FILE* list)
   UniqueId uid;
 
   // Save servers
-  Locator_Repository::SIMap::ENTRY* sientry = 0;
+  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
@@ -788,7 +788,7 @@ Shared_Backing_Store::write_listing (FILE* list)
     }
 
   // Save Activators
-  Locator_Repository::AIMap::ENTRY* aientry = 0;
+  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
@@ -806,7 +806,7 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
 {
   //  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->sync_lock_, -1);
   FILE* list = listing_lf.get_file (this->listing_file_, O_WRONLY);
-  if (list == 0)
+  if (list == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("Couldn't write to file %s\n"),
@@ -820,7 +820,7 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
 
   // Write backup file
   FILE* baklist = ACE_OS::fopen (bfname.c_str(), ACE_TEXT("w"));
-  if (baklist == 0)
+  if (baklist == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("Couldn't write to file %s\n"),
@@ -850,7 +850,7 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
   const char* const replica_name(IMR_REPLICA[this->imr_type_]);
   ACE_CString replica_filename = replica_ior_filename(false);
   FILE* fp = ACE_OS::fopen (replica_filename.c_str (), "w");
-  if (fp == 0)
+  if (fp == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ImR: Could not open file: %C\n"),
@@ -1122,7 +1122,7 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
 
   // otherwise we need to combine the primary and backup ior to make
   // the fault tolerant ImR ior
-  char* combined_ior = 0;
+  char* combined_ior = nullptr;
   CORBA::String_var reason;
   try
     {
@@ -1141,7 +1141,7 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
       reason = "duplicate profile";
     }
 
-  if (combined_ior == 0)
+  if (combined_ior == nullptr)
     {
       // give back the original pointer and don't clean it up
       ft_imr_ior = ior._retn();
@@ -1190,14 +1190,14 @@ Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
 : dir_(dir),
   only_changes_(true)
 {
-  Locator_Repository::SIMap::ENTRY* sientry = 0;
+  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
   Locator_Repository::SIMap::CONST_ITERATOR siit (servers);
   for (; siit.next (sientry); siit.advance() )
     {
       unmatched_servers_.bind (sientry->ext_id_, sientry->int_id_);
     }
 
-  Locator_Repository::AIMap::ENTRY* aientry = 0;
+  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
   Locator_Repository::AIMap::CONST_ITERATOR aiit (activators);
   for (; aiit.next (aientry); aiit.advance() )
     {
@@ -1220,7 +1220,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
       return;
     }
 
-  if (attrs != 0 && attrs->getLength () == 2)
+  if (attrs != nullptr && attrs->getLength () == 2)
     {
       ACE_TString fname = attrs->getValue ((size_t)0);
       bool store_fname = !only_changes_;
@@ -1243,7 +1243,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
       ORBSVCS_DEBUG(( LM_DEBUG,
                       ACE_TEXT ("LocatorListings_XMLHandler::startElement ")
                       ACE_TEXT ("incorrect number of attrs, %d not 2\n"),
-                      attrs == 0 ? 0 : attrs->getLength ()));
+                      attrs == nullptr ? 0 : attrs->getLength ()));
     }
 }
 
@@ -1259,7 +1259,7 @@ void
 Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
   Locator_Repository& repo)
 {
-  Locator_Repository::SIMap::ENTRY* sientry = 0;
+  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->unmatched_servers_);
   for (; siit.next (sientry); siit.advance() )
     {
@@ -1272,7 +1272,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
         }
     }
 
-  Locator_Repository::AIMap::ENTRY* aientry = 0;
+  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->unmatched_activators_);
   for (; aiit.next (aientry); aiit.advance ())
     {
