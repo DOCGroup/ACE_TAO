@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <functional>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-template<typename T> void dump (T *); // Forward declaration.
+template <typename T> void dump (T *); // Forward declaration.
 
 template<typename T>
 void
@@ -51,7 +51,7 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Any_var my_any =
         hello->get_any (the_any);
 
-      T const * my_foo = nullptr;
+      T const *my_foo = nullptr;
       if (!(my_any.in () >>= my_foo))
         throw Test::Demarshaling_From_Any_Failed ();
 
@@ -107,14 +107,14 @@ struct Caller : public std::function<void(T)>
   }
 
   /// Function call operator overload.
-  void operator() (T f)
+  void operator() (T const f)
   {
     try
       {
         f (orb.in (),
            hello.in ());
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Exception thrown:");
 
@@ -128,7 +128,7 @@ struct Caller : public std::function<void(T)>
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -139,10 +139,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -160,7 +160,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           nested_recursive_struct_test
         };
 
-      static constexpr size_t test_count = sizeof (tests) / sizeof (test_func);
+      static constexpr size_t test_count = sizeof (tests) / sizeof (tests[0]);
 
       // Have some fun with the STL.  :-)
       Caller<test_func> c =
@@ -176,7 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
