@@ -92,6 +92,10 @@ public:
 
   /// Destructor.
   ~TAO_AV_Core ();
+  TAO_AV_Core (TAO_AV_Core const &) = delete;
+  TAO_AV_Core &operator= (TAO_AV_Core const &) = delete;
+  TAO_AV_Core (TAO_AV_Core &&) = delete;
+  TAO_AV_Core &operator= (TAO_AV_Core &&) = delete;
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa);

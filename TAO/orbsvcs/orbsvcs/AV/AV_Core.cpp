@@ -31,8 +31,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_Core::TAO_AV_Core ()
-  :connector_registry_ (0),
-   acceptor_registry_ (0)
+  : connector_registry_ (nullptr)
+  , acceptor_registry_ (nullptr)
+  , reactor_ (nullptr)
+  , stop_run_ (false)
 {
   ACE_NEW (this->connector_registry_,
            TAO_AV_Connector_Registry
@@ -126,14 +128,14 @@ TAO_AV_Core::flow_protocol_factories ()
 int
 TAO_AV_Core::stop_run ()
 {
-  this->stop_run_ = 1;
+  this->stop_run_ = true;
   return 0;
 }
 
 int
 TAO_AV_Core::run ()
 {
-  this->stop_run_ = 0;
+  this->stop_run_ = false;
   while (!this->stop_run_ && this->orb_->work_pending ())
     this->orb_->perform_work ();
   return 0;
