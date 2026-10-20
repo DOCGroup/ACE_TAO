@@ -33,6 +33,11 @@ public:
   /// Destructor
   ~Latency_Query_Client ();
 
+  Latency_Query_Client (Latency_Query_Client const&) = delete;
+  Latency_Query_Client (Latency_Query_Client&&) = delete;
+  Latency_Query_Client& operator= (Latency_Query_Client const&) = delete;
+  Latency_Query_Client& operator= (Latency_Query_Client&&) = delete;
+
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);

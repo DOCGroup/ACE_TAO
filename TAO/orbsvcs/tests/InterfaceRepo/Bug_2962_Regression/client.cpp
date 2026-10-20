@@ -5,8 +5,8 @@
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ifr_ior= ACE_TEXT("file://ifr.ior");
-const ACE_TCHAR *member_type_id= ACE_TEXT("IDL:arrayOfStruct:1.0");
+ACE_TCHAR const* ifr_ior = ACE_TEXT("file://ifr.ior");
+ACE_TCHAR const* member_type_id = ACE_TEXT("IDL:arrayOfStruct:1.0");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -88,12 +88,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orig_type = the_alias->original_type_def ();
       CORBA::TypeCode_var
         tc_content = orig_type->type ();
-      const CORBA::ULong
-        length= tc_content->length ();
+      CORBA::ULong const length = tc_content->length ();
       CORBA::TypeCode_var
         cont_type = tc_content->content_type ();
-      const char
-        *name= cont_type->name ();
+      char const* name = cont_type->name ();
       ACE_DEBUG ((LM_DEBUG,
                   " = %C [%u]\n",
                   name,
@@ -109,7 +107,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 2;
         }
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const& ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
       return 1;
