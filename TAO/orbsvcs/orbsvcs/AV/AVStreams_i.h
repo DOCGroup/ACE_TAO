@@ -838,48 +838,48 @@ public:
   TAO_FlowConnection &operator= (TAO_FlowConnection &&) = delete;
 
   /// stop this flow.
-  virtual void stop ();
+  void stop () override;
 
   /// start this flow.
-  virtual void start ();
+  void start () override;
 
   /// destroy this flow.
-  virtual void destroy ();
+  void destroy () override;
 
   /// modify the QoS for this flow.
-  virtual CORBA::Boolean modify_QoS (AVStreams::QoS & new_qos);
+  CORBA::Boolean modify_QoS (AVStreams::QoS &new_qos) override;
 
   /// use the specified flow protocol for this flow.
-  virtual CORBA::Boolean use_flow_protocol (const char * fp_name,
-                                            const CORBA::Any & fp_settings);
+  CORBA::Boolean use_flow_protocol (const char *fp_name,
+                                    const CORBA::Any &fp_settings) override;
 
   /// pushes an event , to be handled by the application.
-  virtual void push_event (const AVStreams::streamEvent & the_event);
+  void push_event (const AVStreams::streamEvent &the_event) override;
 
 
   /// connect 2 Flow Devices.
-  virtual CORBA::Boolean connect_devs (AVStreams::FDev_ptr a_party,
-                                       AVStreams::FDev_ptr b_party,
-                                       AVStreams::QoS & the_qos);
+  CORBA::Boolean connect_devs (AVStreams::FDev_ptr a_party,
+                               AVStreams::FDev_ptr b_party,
+                               AVStreams::QoS &the_qos) override;
 
   /// Connect a flow producer and consumer under this flow connection.
-  virtual CORBA::Boolean connect (AVStreams::FlowProducer_ptr flow_producer,
-                                  AVStreams::FlowConsumer_ptr flow_consumer,
-                                  AVStreams::QoS & the_qos);
+  CORBA::Boolean connect (AVStreams::FlowProducer_ptr flow_producer,
+                          AVStreams::FlowConsumer_ptr flow_consumer,
+                          AVStreams::QoS &the_qos) override;
 
   /// disconnect this flow connection.
-  virtual CORBA::Boolean disconnect ();
+  CORBA::Boolean disconnect () override;
 
   /// adds the producer to this flow connection.
-  virtual CORBA::Boolean add_producer (AVStreams::FlowProducer_ptr flow_producer,
-                                       AVStreams::QoS & the_qos);
+  CORBA::Boolean add_producer (AVStreams::FlowProducer_ptr flow_producer,
+                               AVStreams::QoS &the_qos) override;
 
   /// adds a consumer to this flow connection.
-  virtual CORBA::Boolean add_consumer (AVStreams::FlowConsumer_ptr flow_consumer,
-                                       AVStreams::QoS & the_qos);
+  CORBA::Boolean add_consumer (AVStreams::FlowConsumer_ptr flow_consumer,
+                               AVStreams::QoS &the_qos) override;
 
   /// drops a flow endpoint from the flow.
-  virtual CORBA::Boolean drop (AVStreams::FlowEndPoint_ptr target);
+  CORBA::Boolean drop (AVStreams::FlowEndPoint_ptr target) override;
 
   int set_mcast_addr (ACE_CString addr,u_short port);
   void set_protocol (const char *protocol);
