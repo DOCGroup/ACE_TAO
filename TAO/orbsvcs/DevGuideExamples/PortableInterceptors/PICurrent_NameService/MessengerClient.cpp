@@ -45,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       while ( CORBA::is_nil( obj.in() ) ) {
         try {
           obj = root->resolve( name );
-        } catch (const CosNaming::NamingContext::NotFound&) {
+        } catch (CosNaming::NamingContext::NotFound const &) {
           // Sleep for a second and try again
           ACE_OS::sleep(1);
         }
@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       messenger->send_message( "TAO User", "TAO Test", message.inout() );
     }
 
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       std::cerr << "Caught CORBA exception: " << ex << std::endl;
       return 1;

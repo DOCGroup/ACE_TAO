@@ -16,24 +16,29 @@ class ClientInterceptor:
                      PortableInterceptor::Current_ptr thePic,
                      PortableInterceptor::SlotId theSlot);
 
-  virtual ~ClientInterceptor ();
+  ~ClientInterceptor () override;
 
-  virtual char * name ();
+  ClientInterceptor (ClientInterceptor const &) = delete;
+  ClientInterceptor (ClientInterceptor &&) = delete;
+  ClientInterceptor &operator= (ClientInterceptor const &) = delete;
+  ClientInterceptor &operator= (ClientInterceptor &&) = delete;
 
-  virtual void destroy ();
+  char * name () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void destroy () override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
+
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
  private:
-  const char *myname_;
+  char const * myname_;
   Messenger_var messenger;
   PortableInterceptor::Current_ptr pic;
   PortableInterceptor::SlotId slot;

@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include <iostream>
 
-const CORBA::ULong service_ctx_id = 0xdeed;
+constexpr CORBA::ULong service_ctx_id = 0xdeed;
 
 ClientInterceptor::
 ClientInterceptor (Messenger_var theMessenger,
@@ -53,10 +53,10 @@ ClientInterceptor::send_request (
   IOP::ServiceContext sc;
   sc.context_id = service_ctx_id;
 
-  const char user_name[] = "Ron Klein";
+  char const user_name[] = "Ron Klein";
   std::cout << "User's Name: " << user_name << std::endl;
   CORBA::ULong string_len = sizeof (user_name) + 1;
-  CORBA::Octet *buf = 0;
+  CORBA::Octet * buf = nullptr;
   buf = new CORBA::Octet [string_len];
 
   ACE_OS::strcpy (reinterpret_cast<char*> (buf), user_name);
@@ -79,7 +79,7 @@ ClientInterceptor::send_request (
       std::cout << "Server Time = " << messenger->get_time() << std::endl;
     }
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0);
+  ri->add_request_service_context (sc, false);
 
   // reset recursion test
   flag <<= 0;
