@@ -81,13 +81,13 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
         }
 
       // Get the dependency set for the current entry.
-      RtecScheduler::Dependency_Set *dependency_set = 0;
+      RtecScheduler::Dependency_Set *dependency_set = nullptr;
       if (dependency_map_.find (rse.actual_rt_info ()->handle,
                                 dependency_set) == 0)
         {
           // Iterate over the set of dependencies for the current entry.
-          TAO_Reconfig_Scheduler_Entry * next_rse = 0;
-          TAO_RT_Info_Ex *next_rt_info = 0;
+          TAO_Reconfig_Scheduler_Entry * next_rse = nullptr;
+          TAO_RT_Info_Ex *next_rt_info = nullptr;
           for (u_int i = 0; i < dependency_set->length (); ++i)
             {
               // Skip over disabled dependencies
