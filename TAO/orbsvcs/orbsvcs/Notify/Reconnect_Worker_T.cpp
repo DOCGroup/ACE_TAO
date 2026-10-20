@@ -28,7 +28,7 @@ namespace TAO_Notify
   void
   Reconnect_Worker<TOPOOBJ>::work (TOPOOBJ* o)
   {
-    ACE_ASSERT(o != 0);
+  ACE_ASSERT(o != nullptr);
     o->reconnect ();
   }
 } // namespace TAO_Notify

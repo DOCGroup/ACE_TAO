@@ -42,7 +42,7 @@ TAO_Notify_Object::~TAO_Notify_Object ()
 void
 TAO_Notify_Object::initialize (TAO_Notify_Object* parent)
 {
-  ACE_ASSERT (parent != 0 && this->event_manager_.get() == 0);
+  ACE_ASSERT (parent != nullptr && this->event_manager_.get() == nullptr);
 
   // Do not use sets to avoid asserts.
   // Object must be able to inherit NULL references
@@ -60,7 +60,7 @@ TAO_Notify_Object::initialize (TAO_Notify_Object* parent)
 void
 TAO_Notify_Object::set_event_manager( TAO_Notify_Event_Manager* event_manager )
 {
-  ACE_ASSERT( event_manager != 0 );
+  ACE_ASSERT( event_manager != nullptr );
   this->event_manager_.reset( event_manager );
 }
 
@@ -142,12 +142,12 @@ TAO_Notify_Object::shutdown_worker_task ()
 void
 TAO_Notify_Object::destroy_proxy_poa ()
 {
-  if (this->proxy_poa_ != 0)
+  if (this->proxy_poa_ != nullptr)
   {
     try
     {
-      if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = 0;
-      if ( this->proxy_poa_ == this->poa_ ) this->poa_ = 0;
+      if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = nullptr;
+      if ( this->proxy_poa_ == this->poa_ ) this->poa_ = nullptr;
 
       if ( this->own_proxy_poa_ == true )
       {
@@ -155,7 +155,7 @@ TAO_Notify_Object::destroy_proxy_poa ()
         std::unique_ptr< TAO_Notify_POA_Helper > app( proxy_poa_ );
         this->proxy_poa_->destroy ();
       }
-      this->proxy_poa_ = 0;
+      this->proxy_poa_ = nullptr;
     }
     catch (const CORBA::Exception& ex)
     {
@@ -168,12 +168,12 @@ TAO_Notify_Object::destroy_proxy_poa ()
 void
 TAO_Notify_Object::destroy_object_poa ()
 {
-  if (this->object_poa_ != 0)
+  if (this->object_poa_ != nullptr)
   {
     try
     {
-      if (this->object_poa_ == this->proxy_poa_) this->proxy_poa_ = 0;
-      if (this->object_poa_ == this->poa_) this->poa_ = 0;
+      if (this->object_poa_ == this->proxy_poa_) this->proxy_poa_ = nullptr;
+      if (this->object_poa_ == this->poa_) this->poa_ = nullptr;
 
       if (this->own_object_poa_ == true)
       {
@@ -181,7 +181,7 @@ TAO_Notify_Object::destroy_object_poa ()
         std::unique_ptr<TAO_Notify_POA_Helper> aop (object_poa_);
         this->object_poa_->destroy ();
       }
-      this->object_poa_ = 0;
+      this->object_poa_ = nullptr;
     }
     catch (const CORBA::Exception& ex)
     {
@@ -194,13 +194,13 @@ TAO_Notify_Object::destroy_object_poa ()
 /// Shutdown the current poa.
 void TAO_Notify_Object::destroy_poa ()
 {
-  this->poa_ = 0;
+  this->poa_ = nullptr;
 }
 
 void
 TAO_Notify_Object::set_worker_task (TAO_Notify_Worker_Task* worker_task)
 {
-  ACE_ASSERT( worker_task != 0 );
+  ACE_ASSERT( worker_task != nullptr );
 
   // shutdown the current worker.
   this->shutdown_worker_task ();
@@ -313,7 +313,7 @@ TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties
 TAO_Notify_Timer*
 TAO_Notify_Object::timer ()
 {
-  ACE_ASSERT (worker_task_.get() != 0);
+  ACE_ASSERT (worker_task_.get() != nullptr);
   return this->worker_task_->timer ();
 }
 

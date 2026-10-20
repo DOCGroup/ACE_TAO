@@ -24,7 +24,7 @@ namespace TAO_Notify
   void
   Validate_Worker<TOPOOBJ>::work (TOPOOBJ* o)
   {
-    if (o == 0)
+    if (o == nullptr)
     {
       if (TAO_debug_level > 0)
       {

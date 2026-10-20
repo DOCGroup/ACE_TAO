@@ -160,7 +160,7 @@ namespace TAO_Notify
       }
       else
       {
-        p = 0;
+        p = nullptr;
       }
     }
   }

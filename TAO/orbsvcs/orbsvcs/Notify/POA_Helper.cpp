@@ -137,7 +137,7 @@ TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id) const
   // may want to think about that....
 
   // Create and return a new ID
-  PortableServer::ObjectId *obj_id = 0;
+  PortableServer::ObjectId *obj_id = nullptr;
   ACE_NEW_THROW_EX (obj_id,
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
