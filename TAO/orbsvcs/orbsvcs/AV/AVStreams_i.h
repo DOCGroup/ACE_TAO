@@ -56,6 +56,10 @@ class TAO_AV_Export AV_Null_MediaCtrl
 {
 public:
   AV_Null_MediaCtrl ();
+  AV_Null_MediaCtrl (AV_Null_MediaCtrl const &) = delete;
+  AV_Null_MediaCtrl (AV_Null_MediaCtrl &&) = delete;
+  AV_Null_MediaCtrl &operator= (AV_Null_MediaCtrl const &) = delete;
+  AV_Null_MediaCtrl &operator= (AV_Null_MediaCtrl &&) = delete;
 
 protected:
   virtual ~AV_Null_MediaCtrl ();
@@ -73,6 +77,10 @@ class TAO_AV_Export TAO_Basic_StreamCtrl
 public:
   /// Default Constructor
   TAO_Basic_StreamCtrl ();
+  TAO_Basic_StreamCtrl (TAO_Basic_StreamCtrl const &) = delete;
+  TAO_Basic_StreamCtrl (TAO_Basic_StreamCtrl &&) = delete;
+  TAO_Basic_StreamCtrl &operator= (TAO_Basic_StreamCtrl const &) = delete;
+  TAO_Basic_StreamCtrl &operator= (TAO_Basic_StreamCtrl &&) = delete;
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
@@ -141,6 +149,11 @@ class TAO_AV_Export TAO_Negotiator
   : public POA_AVStreams::Negotiator
 {
 public:
+  TAO_Negotiator () = default;
+  TAO_Negotiator (TAO_Negotiator const &) = delete;
+  TAO_Negotiator (TAO_Negotiator &&) = delete;
+  TAO_Negotiator &operator= (TAO_Negotiator const &) = delete;
+  TAO_Negotiator &operator= (TAO_Negotiator &&) = delete;
   virtual CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
                                     const AVStreams::streamQoS &qos_spec);
 };
@@ -190,6 +203,10 @@ class TAO_AV_Export TAO_StreamCtrl
 public:
   /// Default Constructor
   TAO_StreamCtrl ();
+  TAO_StreamCtrl (TAO_StreamCtrl const &) = delete;
+  TAO_StreamCtrl (TAO_StreamCtrl &&) = delete;
+  TAO_StreamCtrl &operator= (TAO_StreamCtrl const &) = delete;
+  TAO_StreamCtrl &operator= (TAO_StreamCtrl &&) = delete;
 
   /// virtual destructor.
   virtual ~TAO_StreamCtrl ();
@@ -286,6 +303,10 @@ public:
 
   /// Default constructor.
   TAO_MCastConfigIf ();
+  TAO_MCastConfigIf (TAO_MCastConfigIf const &) = delete;
+  TAO_MCastConfigIf (TAO_MCastConfigIf &&) = delete;
+  TAO_MCastConfigIf &operator= (TAO_MCastConfigIf const &) = delete;
+  TAO_MCastConfigIf &operator= (TAO_MCastConfigIf &&) = delete;
 
   /// Dtor
   ~TAO_MCastConfigIf ();
@@ -328,6 +349,10 @@ class TAO_AV_Export TAO_AV_QoS
 public:
   /// constructor.
   TAO_AV_QoS ();
+  TAO_AV_QoS (TAO_AV_QoS const &) = delete;
+  TAO_AV_QoS (TAO_AV_QoS &&) = delete;
+  TAO_AV_QoS &operator= (TAO_AV_QoS const &) = delete;
+  TAO_AV_QoS &operator= (TAO_AV_QoS &&) = delete;
 
   /// constructor taking a stream qos parameter.
   TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
@@ -374,6 +399,10 @@ class TAO_AV_Export TAO_Base_StreamEndPoint
   // @@Naga: Rename this class to TAO_Base_EndPoint since both stream and flowendpoints derive from it.
 public:
   TAO_Base_StreamEndPoint ();
+  TAO_Base_StreamEndPoint (TAO_Base_StreamEndPoint const &) = delete;
+  TAO_Base_StreamEndPoint (TAO_Base_StreamEndPoint &&) = delete;
+  TAO_Base_StreamEndPoint &operator= (TAO_Base_StreamEndPoint const &) = delete;
+  TAO_Base_StreamEndPoint &operator= (TAO_Base_StreamEndPoint &&) = delete;
   virtual ~TAO_Base_StreamEndPoint ();
 
   /// called when streamendpoint is instantiated
@@ -445,6 +474,10 @@ class TAO_AV_Export TAO_StreamEndPoint
 public:
   /// Constructor
   TAO_StreamEndPoint ();
+  TAO_StreamEndPoint (TAO_StreamEndPoint const &) = delete;
+  TAO_StreamEndPoint (TAO_StreamEndPoint &&) = delete;
+  TAO_StreamEndPoint &operator= (TAO_StreamEndPoint const &) = delete;
+  TAO_StreamEndPoint &operator= (TAO_StreamEndPoint &&) = delete;
 
    /// Stop the stream. Empty the_spec means, for all the flows
   virtual void stop (const AVStreams::flowSpec &the_spec);
@@ -570,6 +603,10 @@ class TAO_AV_Export TAO_StreamEndPoint_A :
 public:
   /// Constructor
   TAO_StreamEndPoint_A ();
+  TAO_StreamEndPoint_A (TAO_StreamEndPoint_A const &) = delete;
+  TAO_StreamEndPoint_A (TAO_StreamEndPoint_A &&) = delete;
+  TAO_StreamEndPoint_A &operator= (TAO_StreamEndPoint_A const &) = delete;
+  TAO_StreamEndPoint_A &operator= (TAO_StreamEndPoint_A &&) = delete;
 
   /// Used for ATM-style multicast
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
@@ -605,6 +642,10 @@ class TAO_AV_Export TAO_StreamEndPoint_B :
 public:
   /// Constructor
   TAO_StreamEndPoint_B ();
+  TAO_StreamEndPoint_B (TAO_StreamEndPoint_B const &) = delete;
+  TAO_StreamEndPoint_B (TAO_StreamEndPoint_B &&) = delete;
+  TAO_StreamEndPoint_B &operator= (TAO_StreamEndPoint_B const &) = delete;
+  TAO_StreamEndPoint_B &operator= (TAO_StreamEndPoint_B &&) = delete;
 
   /// Used for internet-style multicast
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
@@ -626,6 +667,10 @@ class TAO_AV_Export TAO_VDev
 public:
   /// Default Constructor
   TAO_VDev ();
+  TAO_VDev (TAO_VDev const &) = delete;
+  TAO_VDev (TAO_VDev &&) = delete;
+  TAO_VDev &operator= (TAO_VDev const &) = delete;
+  TAO_VDev &operator= (TAO_VDev &&) = delete;
 
   /// Called to tell the vdev who the streamctrl, peer vdev is
   virtual CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
@@ -686,6 +731,10 @@ public:
   /// Constructor
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
   TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
+  TAO_MMDevice (TAO_MMDevice const &) = delete;
+  TAO_MMDevice (TAO_MMDevice &&) = delete;
+  TAO_MMDevice &operator= (TAO_MMDevice const &) = delete;
+  TAO_MMDevice &operator= (TAO_MMDevice &&) = delete;
 
   virtual AVStreams::StreamEndPoint_ptr create_A_B (MMDevice_Type type,
                                                     AVStreams::StreamCtrl_ptr the_requester,
@@ -783,6 +832,10 @@ class TAO_AV_Export TAO_FlowConnection
 public:
   /// default constructor.
   TAO_FlowConnection ();
+  TAO_FlowConnection (TAO_FlowConnection const &) = delete;
+  TAO_FlowConnection (TAO_FlowConnection &&) = delete;
+  TAO_FlowConnection &operator= (TAO_FlowConnection const &) = delete;
+  TAO_FlowConnection &operator= (TAO_FlowConnection &&) = delete;
 
   /// stop this flow.
   virtual void stop ();
@@ -1010,6 +1063,10 @@ class TAO_AV_Export TAO_FlowProducer:
 public:
   /// default constructor
   TAO_FlowProducer ();
+  TAO_FlowProducer (TAO_FlowProducer const &) = delete;
+  TAO_FlowProducer (TAO_FlowProducer &&) = delete;
+  TAO_FlowProducer &operator= (TAO_FlowProducer const &) = delete;
+  TAO_FlowProducer &operator= (TAO_FlowProducer &&) = delete;
 
   TAO_FlowProducer (const char *flowname,
                     AVStreams::protocolSpec protocols,
@@ -1066,6 +1123,10 @@ class TAO_AV_Export TAO_FlowConsumer :
 public:
   /// default constructor.
   TAO_FlowConsumer ();
+  TAO_FlowConsumer (TAO_FlowConsumer const &) = delete;
+  TAO_FlowConsumer (TAO_FlowConsumer &&) = delete;
+  TAO_FlowConsumer &operator= (TAO_FlowConsumer const &) = delete;
+  TAO_FlowConsumer &operator= (TAO_FlowConsumer &&) = delete;
 
   TAO_FlowConsumer (const char *flowname,
                     AVStreams::protocolSpec protocols,
@@ -1099,6 +1160,10 @@ class TAO_AV_Export TAO_MediaControl
 public:
   /// default constructor
   TAO_MediaControl ();
+  TAO_MediaControl (TAO_MediaControl const &) = delete;
+  TAO_MediaControl (TAO_MediaControl &&) = delete;
+  TAO_MediaControl &operator= (TAO_MediaControl const &) = delete;
+  TAO_MediaControl &operator= (TAO_MediaControl &&) = delete;
 
   virtual AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
                                                   AVStreams::PositionKey a_key) = 0;
