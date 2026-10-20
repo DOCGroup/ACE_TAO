@@ -5,18 +5,9 @@
 #include "tao/TAO_Singleton_Manager.h"
 
 
-DllOrb::DllOrb ()
- :
-   ma_barrier_(),
-   mv_orb_ (),
-   mv_rootPOA_ ()
-{
-}
+DllOrb::DllOrb () = default;
 
-
-DllOrb::~DllOrb ()
-{
-}
+DllOrb::~DllOrb () = default;
 
 
 int
@@ -27,10 +18,10 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
   try
   {
     ACE_Arg_Shifter as (argc, argv);
-    const ACE_TCHAR *currentArg = 0;
+    ACE_TCHAR const *currentArg = nullptr;
     while (as.is_anything_left ())
     {
-      if (0 != (currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
+      if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))) != nullptr)
       {
         int num = ACE_OS::atoi (currentArg);
         if (num >= 1)
@@ -76,11 +67,11 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
 
   ma_barrier_.reset (new ACE_Thread_Barrier (threadCnt + 1));
 
-  this->activate(
-    THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
+  this->activate (
+    THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
     threadCnt);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() ...\n")));
-  ma_barrier_->wait();
+  ma_barrier_->wait ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() done\n")));
 
   return 0;
@@ -102,7 +93,7 @@ DllOrb::fini ()
 
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() ...\n")));
     // wait for our threads to finish
-    wait();
+    wait ();
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() done\n")));
 
     ma_barrier_.reset ();
@@ -118,7 +109,7 @@ DllOrb::fini ()
     mv_orb_->destroy ();
     mv_orb_ = CORBA::ORB::_nil ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Exception caught:");
     return -1;
@@ -128,10 +119,11 @@ DllOrb::fini ()
 }
 
 
-int DllOrb::svc ()
+int
+DllOrb::svc ()
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("svc mp_barrier->wait() ...\n")));
-  ma_barrier_->wait();
+  ma_barrier_->wait ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("svc mp_barrier->wait() done\n")));
 
   try
@@ -139,13 +131,13 @@ int DllOrb::svc ()
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("mv_orb->run ...\n")));
     try
     {
-      mv_orb_->run();
+      mv_orb_->run ();
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("mv_orb->run returned\n")));
     }
-    catch(CORBA::BAD_INV_ORDER const & rc_ex)
+    catch (CORBA::BAD_INV_ORDER const &rc_ex)
     {
-      const CORBA::ULong VMCID = rc_ex.minor() & 0xFFFFF000U;
-      const CORBA::ULong minorCode = rc_ex.minor() & 0xFFFU;
+      CORBA::ULong const VMCID = rc_ex.minor () & 0xFFFFF000U;
+      CORBA::ULong const minorCode = rc_ex.minor () & 0xFFFU;
       if (VMCID == CORBA::OMGVMCID && minorCode == 4)
       {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("ignored 'CORBA::BAD_INV_ORDER: ORB has shutdown.'\n")));

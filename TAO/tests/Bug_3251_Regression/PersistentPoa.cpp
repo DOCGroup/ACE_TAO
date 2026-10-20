@@ -4,32 +4,24 @@
 
 #include "PersistentPoa.h"
 
-PersistentPoa::PersistentPoa ()
-{
-}
-
-PersistentPoa::~PersistentPoa () noexcept
-{
-}
-
 int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter as (argc, argv);
   m_poaName = std::string (ACE_TEXT_ALWAYS_CHAR (as.get_current ()));
   as.ignore_arg ();
 
-  std::string orbName (ACE_TEXT_ALWAYS_CHAR (as.get_current()));
+  std::string orbName (ACE_TEXT_ALWAYS_CHAR (as.get_current ()));
   as.ignore_arg ();
 
   while (as.is_anything_left ())
   {
-    as.ignore_arg();
+    as.ignore_arg ();
   }
 
   try
   {
     // left out all safety checks
-    DllOrb * p_orb = ACE_Dynamic_Service<DllOrb>::instance (orbName.c_str ());
+    DllOrb *p_orb = ACE_Dynamic_Service<DllOrb>::instance (orbName.c_str ());
     mv_orb = p_orb->orb ();
     CORBA::Object_var v_poa = mv_orb->resolve_initial_references ("RootPOA");
     mv_rootPOA = PortableServer::POA::_narrow (v_poa.in ());
@@ -71,7 +63,7 @@ int PersistentPoa::fini ()
     mv_thisPOA->destroy (1, 1);
     mv_thisPOA = PortableServer::POA::_nil ();
   }
-  catch(...)
+  catch (...)
   {
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("deactivate failed\n")));
     return -1;
