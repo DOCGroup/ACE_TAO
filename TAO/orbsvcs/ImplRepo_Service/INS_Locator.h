@@ -31,8 +31,8 @@ public:
   INS_Loc_ResponseHandler (const char *key, ::IORTable::Locate_ResponseHandler rh);
 
   // dummy implementations used for internal operations
-  virtual void send_ior (const char *pior);
-  virtual void send_exception (CORBA::Exception *ex);
+  void send_ior (char const* pior) override;
+  void send_exception (CORBA::Exception *ex) override;
 
 private:
   CORBA::String_var key_str_;
