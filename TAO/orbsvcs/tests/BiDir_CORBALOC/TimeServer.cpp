@@ -10,17 +10,22 @@ class Time_impl :
   public POA_TimeModule::Time
 {
 public:
-  virtual TimeModule::TimeOfDay
-    get_gmt ();
+  Time_impl () = default;
+  Time_impl (Time_impl const &) = delete;
+  Time_impl (Time_impl &&) = delete;
+  Time_impl &operator= (Time_impl const &) = delete;
+  Time_impl &operator= (Time_impl &&) = delete;
 
-  void Shutdown ();
+  TimeModule::TimeOfDay get_gmt () override;
+
+  void Shutdown () override;
 };
 
 
 TimeModule::TimeOfDay Time_impl::get_gmt ()
 {
-  time_t time_now   = ACE_OS::time(0);
-  struct tm *time_p = ACE_OS::gmtime(&time_now);
+  time_t time_now = ACE_OS::time (nullptr);
+  tm *time_p = ACE_OS::gmtime (&time_now);
 
   TimeModule::TimeOfDay tod;
 
@@ -34,7 +39,7 @@ TimeModule::TimeOfDay Time_impl::get_gmt ()
 void
 Time_impl::Shutdown ()
 {
-  ACE_OS::exit(0);
+  ACE_OS::exit (0);
 }
 
 int
@@ -72,14 +77,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Any CallbackPolicy;
       CallbackPolicy <<= BiDirPolicy::BOTH;
-      const char* sServerPoaName = "TelemetryServer";
+      char const * sServerPoaName = "TelemetryServer";
 
       PolicyList [2] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                             CallbackPolicy);
 
       poa = rootpoa->create_POA (sServerPoaName,
-                                 mgr.in(),
+                                 mgr.in (),
                                  PolicyList);
 
 
@@ -124,11 +129,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Accept requests
       orb->run (&tv);
 
-      rootpoa->destroy (0 , 0);
+      rootpoa->destroy (false, false);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught an exception\n");
 
