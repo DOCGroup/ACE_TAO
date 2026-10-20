@@ -3,13 +3,13 @@
 #include "server.h"
 #include "ace/Get_Opt.h"
 
-static FILE *output_file = 0;
+static FILE *output_file = nullptr;
 // File into which the received data is written.
 
-static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
+static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
 // File handle of the file into which data is written.
 
-int done = 0;
+bool done = false;
 
 
 int
@@ -32,7 +32,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,
               "FTP_Server_Callback::receive_frame\n"));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
       size_t result = ACE_OS::fwrite (frame->rd_ptr (),
@@ -56,12 +56,12 @@ FTP_Server_Callback::handle_destroy ()
   // Called when the ftp client requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
               "FTP_Server_Callback::end_stream\n"));
-  done = 1;
+  done = true;
   return 0;
 }
 
 Server::Server ()
-  : mmdevice_ (0)
+  : mmdevice_ (nullptr)
 {
 }
 
@@ -152,7 +152,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
                                    "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),

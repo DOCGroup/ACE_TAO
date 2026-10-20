@@ -56,12 +56,12 @@ public:
 
   /// Create the application client callback and return its handle to the
   /// AVStreams for further application callbacks
-  virtual int get_callback (const char *flowname,
-                            TAO_AV_Callback *&callback);
+  int get_callback (const char *flowname,
+                    TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol chosen.
-  virtual int set_protocol_object (const char *flowname,
-                                   TAO_AV_Protocol_Object *object);
+  int set_protocol_object (const char *flowname,
+                           TAO_AV_Protocol_Object *object) override;
 
 protected:
   /// reference to the cllient application callback.
@@ -84,6 +84,10 @@ class Client
 public:
   /// Constructor
   Client ();
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
 
   /// Method to initialize the various data components.
   int init (int argc,
@@ -99,7 +103,7 @@ public:
   FILE *file ();
 
   /// The stream control interface that manages the stream set up
-  TAO_StreamCtrl* streamctrl ();
+  TAO_StreamCtrl *streamctrl ();
 
   /// name of the flow set up.
   char *flowname ();
@@ -160,7 +164,7 @@ private:
   ACE_Message_Block mb;
 
   /// Protocol object corresponding to the transport protocol selected.
-  TAO_AV_Protocol_Object* protocol_object_;
+  TAO_AV_Protocol_Object *protocol_object_;
 };
 
 using CLIENT = ACE_Unmanaged_Singleton<Client, ACE_Null_Mutex>;
