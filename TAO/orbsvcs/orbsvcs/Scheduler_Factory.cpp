@@ -14,7 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize static class members.
-RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
+RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = nullptr;
 ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
   ACE_Scheduler_Factory::UNINITIALIZED;
 
@@ -78,11 +78,11 @@ void ACE_Scheduler_Factory::rt_info_enable_state_default(RtecScheduler::RT_Info_
 // This symbols are extern because the automatic template
 // instantiation mechanism in SunCC gets confused otherwise.
 int TAO_SF_config_count = -1;
-ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info = 0;
+ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info = nullptr;
 int TAO_SF_entry_count = -1;
-ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = 0;
+ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = nullptr;
 int TAO_SF_dependency_count = -1;
-ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info = 0;
+ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info = nullptr;
 
 struct ACE_Scheduler_Factory_Data
 {
@@ -118,14 +118,14 @@ struct ACE_Scheduler_Factory_Data
   }
 };
 
-static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = 0;
+static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = nullptr;
 
 int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_Config_Info cfgi[],
                                         int ec,
                                         POD_RT_Info rti[])
 {
-  if (server_ != 0 || TAO_SF_entry_count != -1)
+  if (server_ != nullptr || TAO_SF_entry_count != -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
                        ACE_TEXT("server already configured\n")),
@@ -142,7 +142,7 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
 static RtecScheduler::Scheduler_ptr
 static_server ()
 {
-  RtecScheduler::Scheduler_ptr server_ = 0;
+  RtecScheduler::Scheduler_ptr server_ = nullptr;
 
   // This isn't thread safe, but the static instance that it replaces
   // wasn't thread safe either.  Hola, Sr. Sandiego :-) If it needs to
@@ -151,8 +151,8 @@ static_server ()
   if (! ace_scheduler_factory_data  &&
       (ace_scheduler_factory_data =
          ACE_Singleton<ACE_Scheduler_Factory_Data,
-                       ACE_Null_Mutex>::instance ()) == 0)
-        return 0;
+                       ACE_Null_Mutex>::instance ()) == nullptr)
+        return nullptr;
 
   try
     {
@@ -182,7 +182,7 @@ int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
                                    const char* name)
 {
-  if (server_ != 0 || TAO_SF_entry_count != -1)
+  if (server_ != nullptr || TAO_SF_entry_count != -1)
     // No errors, runtime execution simply takes precedence over
     // config runs.
     return 0;
@@ -200,7 +200,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
     }
   catch (const CORBA::Exception& ex)
     {
-      server_ = 0;
+      server_ = nullptr;
       ex._tao_print_exception (
         ACE_TEXT("ACE_Scheduler_Factory::use_config - ")
         ACE_TEXT(" exception while resolving server\n"));
@@ -213,7 +213,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
 int
 ACE_Scheduler_Factory::server (RtecScheduler::Scheduler_ptr sptr)
 {
-  if (server_ != 0 || TAO_SF_entry_count != -1)
+  if (server_ != nullptr || TAO_SF_entry_count != -1)
     return -1;
 
   server_ = RtecScheduler::Scheduler::_duplicate (sptr);
@@ -223,10 +223,10 @@ ACE_Scheduler_Factory::server (RtecScheduler::Scheduler_ptr sptr)
 RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server ()
 {
-  if (server_ == 0 && TAO_SF_entry_count != -1)
+  if (server_ == nullptr && TAO_SF_entry_count != -1)
     server_ = static_server ();
 
-  if (server_ == 0)
+  if (server_ == nullptr)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("ACE_Scheduler_Factor::server - ")
                        ACE_TEXT("no scheduling service configured\n")),
@@ -304,7 +304,7 @@ int ACE_Scheduler_Factory::dump_schedule
   char entry_point [BUFSIZ];
 
   // Default format for printing RT_Info output.
-  if (rt_info_format == 0)
+  if (rt_info_format == nullptr)
     rt_info_format = "{%20s, /* entry_point */\n"
                      "%10d, /* handle */\n"
                      "%10d, /* worst_case_execution_time */,\n"
@@ -323,21 +323,21 @@ int ACE_Scheduler_Factory::dump_schedule
 
 
   // Default format for printing dependency output.
-  if (dependency_format == 0)
+  if (dependency_format == nullptr)
       dependency_format = "  { (RtecScheduler::Dependency_Type_t) %d, %10d, "
                           "%10d, %10d,"
                           "(RtecScheduler::Dependency_Enabled_Type_t) %d }";
 
   // Default format for printing Config_Info output.
-  if (config_info_format == 0)
+  if (config_info_format == nullptr)
     config_info_format = "  { %10d, %10d, "
                          "(RtecScheduler::Dispatching_Type_t) %d }";
 
   FILE* file = stdout;
-  if (file_name != 0)
+  if (file_name != nullptr)
     {
       file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
-      if (file == 0)
+      if (file == nullptr)
           return -1;
     }
   ACE_OS::fprintf (file, "%s", header);
@@ -521,7 +521,7 @@ int ACE_Scheduler_Factory::dump_schedule
 
 void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * entry, FILE* file)
 {
-   if( entry == 0 )
+   if( entry == nullptr )
    {
       ACE_OS::fprintf (file, "Entry is NULL");
       return;
@@ -567,7 +567,7 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    TAO_RT_Info_Tuple* current_admitted_tuple = entry->current_admitted_tuple();
 
    ACE_OS::fprintf(file, "\n   Current admitted Tuple:\n");
-   if( current_admitted_tuple == 0 )
+   if( current_admitted_tuple == nullptr )
    {
       ACE_OS::fprintf (file, "   =>NONE_ADMITTED\n");
    }
@@ -620,7 +620,7 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
    {
       // Get a pointer to the tuple COPY under the iterator.
       if (tuple_iter.next (tuple_ptr_ptr) == 0
-         || tuple_ptr_ptr == 0 || ((*tuple_ptr_ptr) == 0) )
+         || tuple_ptr_ptr == nullptr || ((*tuple_ptr_ptr) == nullptr) )
       {
          //FUZZ: disable check_for_NULL
          ACE_OS::fprintf (file, "{ NULL TUPLE POINTER }\n");
@@ -652,10 +652,10 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
 {
    // Open the file
    FILE* file = stdout;
-   if (file_name != 0)
+   if (file_name != nullptr)
    {
       file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
-      if (file == 0)
+      if (file == nullptr)
         return -1;
     }
 
@@ -682,10 +682,10 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
 {
    // Open the file
    FILE* file = stdout;
-   if (file_name != 0)
+   if (file_name != nullptr)
    {
       file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
-      if (file == 0)
+      if (file == nullptr)
         return;
     }
 
@@ -744,7 +744,7 @@ ACE_Scheduler_Factory::set_preemption_priority
   if (!ace_scheduler_factory_data
       && (ace_scheduler_factory_data =
           ACE_Singleton<ACE_Scheduler_Factory_Data,
-          ACE_Null_Mutex>::instance ()) == 0)
+          ACE_Null_Mutex>::instance ()) == nullptr)
         return;
 
   ace_scheduler_factory_data->preemption_priority_->

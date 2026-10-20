@@ -168,10 +168,10 @@ public:
                             const RtecScheduler::Dependency_Set& dependencies,
                             const RtecScheduler::Config_Info_Set& configs,
                             const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
-                            const ACE_TCHAR* file_name = 0,
-                            const char* rt_info_format = 0,
-                            const char* dependency_format = 0,
-                            const char* config_info_format = 0,
+                            const ACE_TCHAR* file_name = nullptr,
+                            const char* rt_info_format = nullptr,
+                            const char* dependency_format = nullptr,
+                            const char* config_info_format = nullptr,
                             int dump_disabled_infos = 0,
                             int dump_disabled_dependencies = 0);
 
