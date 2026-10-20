@@ -21,13 +21,17 @@ public:
                  unsigned long timeToWait);
 
   ~TimeoutClient ();
+  TimeoutClient (TimeoutClient const &) = delete;
+  TimeoutClient &operator= (TimeoutClient const &) = delete;
+  TimeoutClient (TimeoutClient &&) = delete;
+  TimeoutClient &operator= (TimeoutClient &&) = delete;
 
 private:
   // Initialize the context of this class.
   int initialize ();
 
   // Run in a separate thread.
-  virtual int svc ();
+  int svc () override;
 
   // Wrapps complex invocations logic.
   void send (CORBA::Boolean async,
@@ -53,7 +57,7 @@ private:
   AMI_TimeoutObjHandler_var replyHandlerObject_;
 
   // A pointer to the actual C++ reply handler implementation
-  TimeoutHandler_i *timeoutHandler_i_;
+  TimeoutHandler_i *timeoutHandler_i_ {};
 
   // Remember the policy manager.
   CORBA::PolicyManager_var policy_manager_;
@@ -61,9 +65,9 @@ private:
   // Count test local exceptions
   unsigned short local_reply_excep_counter_;
 
-  const CORBA::Boolean INVOKE_SYNCH;
+  CORBA::Boolean const INVOKE_SYNCH;
 
-  const CORBA::Boolean INVOKE_ASYNCH;
+  CORBA::Boolean const INVOKE_ASYNCH;
 
   unsigned long timeToWait_;
 };

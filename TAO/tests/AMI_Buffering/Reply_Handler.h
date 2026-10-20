@@ -12,16 +12,20 @@ class Reply_Handler
 public:
   /// Constructor
   Reply_Handler ();
+  Reply_Handler (Reply_Handler const &) = delete;
+  Reply_Handler &operator= (Reply_Handler const &) = delete;
+  Reply_Handler (Reply_Handler &&) = delete;
+  Reply_Handler &operator= (Reply_Handler &&) = delete;
 
   // = The skeleton methods
-  virtual void receive_data ();
-  virtual void receive_data_excep (::Messaging::ExceptionHolder *holder);
+  void receive_data () override;
+  void receive_data_excep (::Messaging::ExceptionHolder *holder) override;
 
-  virtual void sync ();
-  virtual void sync_excep (::Messaging::ExceptionHolder *holder);
+  void sync () override;
+  void sync_excep (::Messaging::ExceptionHolder *holder) override;
 
-  virtual void shutdown ();
-  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
+  void shutdown () override;
+  void shutdown_excep (::Messaging::ExceptionHolder *holder) override;
 };
 
 #include /**/ "ace/post.h"

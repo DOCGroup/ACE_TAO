@@ -12,17 +12,21 @@ class AMI_Buffering_Admin
 public:
   /// Constructor
   AMI_Buffering_Admin (CORBA::ORB_ptr orb);
+  AMI_Buffering_Admin (AMI_Buffering_Admin const &) = delete;
+  AMI_Buffering_Admin &operator= (AMI_Buffering_Admin const &) = delete;
+  AMI_Buffering_Admin (AMI_Buffering_Admin &&) = delete;
+  AMI_Buffering_Admin &operator= (AMI_Buffering_Admin &&) = delete;
 
   // = The skeleton methods
-  virtual CORBA::ULong request_count ();
+  CORBA::ULong request_count () override;
 
-  virtual CORBA::ULong bytes_received_count ();
+  CORBA::ULong bytes_received_count () override;
 
-  virtual void request_received (CORBA::ULong payload_length);
+  void request_received (CORBA::ULong payload_length) override;
 
-  virtual void flush ();
+  void flush () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.
