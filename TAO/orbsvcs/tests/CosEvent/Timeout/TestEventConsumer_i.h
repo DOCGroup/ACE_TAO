@@ -13,9 +13,9 @@ public:
   TestEventConsumer_i (CORBA::ORB_ptr orb, bool hang);
 
   // Override operations from PushConsumer interface.
-  virtual void push (const CORBA::Any & data);
+  void push (CORBA::Any const &data) override;
 
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
   void activate ();
 
