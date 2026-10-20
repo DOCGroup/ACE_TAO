@@ -3,15 +3,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const* ior_output_file = ACE_TEXT ("test.ior");
 
 class TestTask : public ACE_Task_Base
 {
 public:
-  TestTask (int argc, ACE_TCHAR **argv);
-  virtual int svc ();
+  TestTask (int argc, ACE_TCHAR** argv);
+  int svc () override;
 
-  int parse_args (int argc, ACE_TCHAR **argv);
+  int parse_args (int argc, ACE_TCHAR** argv);
 
   void end();
 private:
@@ -19,7 +19,7 @@ private:
   CORBA::Boolean shutdown_ns_;
 };
 
-TestTask::TestTask(int argc, ACE_TCHAR **argv)
+TestTask::TestTask(int argc, ACE_TCHAR** argv)
 {
   orb_ = CORBA::ORB_init (argc, argv, "ServerORB");
   shutdown_ns_ = false;
@@ -33,7 +33,7 @@ void TestTask::end()
 }
 
 int
-TestTask::parse_args (int argc, ACE_TCHAR **argv)
+TestTask::parse_args (int argc, ACE_TCHAR** argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s"));
   int c;
@@ -124,8 +124,8 @@ int TestTask::svc()
       orb_->object_to_string (obj.in ());
 
     // Output the IOR to the <ior_output_file>
-    FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-    if (output_file == 0)
+    FILE* output_file= ACE_OS::fopen (ior_output_file, "w");
+    if (output_file == nullptr)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Cannot open output file %s for writing ")
                          ACE_TEXT ("IOR: %C\n"),
