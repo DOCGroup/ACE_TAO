@@ -45,17 +45,17 @@ TAO_Notify_Admin::~TAO_Notify_Admin ()
 void
 TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
 {
-  ACE_ASSERT (this->ec_.get() == 0);
+  ACE_ASSERT (this->ec_.get() == nullptr);
 
   this->ec_.reset (dynamic_cast<TAO_Notify_EventChannel *>(parent));
-  ACE_ASSERT (this->ec_.get() != 0);
+  ACE_ASSERT (this->ec_.get() != nullptr);
 
   filter_admin_.event_channel (this->ec_.get ());
 
   // this-> on the following line confuses VC6
   initialize (parent);
 
-  TAO_Notify_Proxy_Container* proxy_container = 0;
+  TAO_Notify_Proxy_Container* proxy_container = nullptr;
   ACE_NEW_THROW_EX (proxy_container,
                     TAO_Notify_Proxy_Container (),
                     CORBA::INTERNAL ());
@@ -164,7 +164,7 @@ void
 TAO_Notify_Admin::load_attrs(const TAO_Notify::NVPList& attrs)
 {
   TAO_Notify_Object::load_attrs (attrs);
-  const char* value = 0;
+  const char* value = nullptr;
   if (attrs.find ("InterFilterGroupOperator", value))
     {
       this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (ACE_OS::atoi (value));
