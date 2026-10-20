@@ -525,7 +525,7 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (
                       hex_idstr.c_str()));
         }
 
-      if (entry->servant_ != 0)
+      if (entry->servant_ != nullptr)
         {
           result =
             this->active_object_map_->servant_map_->unbind (entry->servant_);
@@ -800,7 +800,7 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (
         {
           result = -1;
         }
-      else if (entry->servant_ == 0)
+      else if (entry->servant_ == nullptr)
         {
           result = -1;
         }
@@ -819,7 +819,7 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (
             {
               result = -1;
             }
-          else if (entry->servant_ == 0)
+          else if (entry->servant_ == nullptr)
             {
               result = -1;
             }
@@ -832,7 +832,7 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (
 
   if (result == -1)
     {
-      entry = 0;
+      entry = nullptr;
     }
 
   return result;
@@ -857,7 +857,7 @@ TAO_Active_Object_Map_Entry *&entry)
         {
           result = -1;
         }
-      else if (entry->servant_ == 0)
+      else if (entry->servant_ == nullptr)
         {
           result = -1;
         }
@@ -877,7 +877,7 @@ TAO_Active_Object_Map_Entry *&entry)
             {
               result = -1;
             }
-          else if (entry->servant_ == 0)
+          else if (entry->servant_ == nullptr)
             {
               result = -1;
             }
@@ -890,7 +890,7 @@ TAO_Active_Object_Map_Entry *&entry)
 
   if (result == -1)
     {
-      entry = 0;
+      entry = nullptr;
     }
 
   return result;
