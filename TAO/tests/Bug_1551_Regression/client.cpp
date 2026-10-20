@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int nthreads = 1;
 
@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'n':
-        nthreads = ACE_OS::atoi(get_opts.opt_arg());
+        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -52,10 +52,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -66,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -92,16 +92,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
 
-      ACE_Time_Value thread_deadline = ACE_OS::gettimeofday();
+      ACE_Time_Value thread_deadline = ACE_OS::gettimeofday ();
       thread_deadline += 30;
 
-      if(client.thr_mgr ()->wait (&thread_deadline) == -1)
-      {
-        ACE_ERROR((LM_ERROR,
-                             "ERROR - Timeout waiting for client threads\n"));
+      if (client.thr_mgr ()->wait (&thread_deadline) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR - Timeout waiting for client threads\n"));
 
-        retval = 1;
-      }
+          retval = 1;
+        }
 
       root_poa->destroy (true,  // ethernalize objects
                          false); // wait for completion

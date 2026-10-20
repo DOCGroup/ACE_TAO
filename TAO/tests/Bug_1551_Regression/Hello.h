@@ -11,9 +11,13 @@ class Hello
 {
 public:
   /// Constructor
-  Hello(CORBA::ORB_ptr orb, bool simulate_crashes);
+  Hello (CORBA::ORB_ptr orb, bool simulate_crashes);
+  Hello (Hello const &) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello &&) = delete;
 
-  virtual void short_sleep ();
+  void short_sleep () override;
 
 private:
   CORBA::ORB_var orb_;

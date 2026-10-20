@@ -11,8 +11,12 @@ class Server_Task : public ACE_Task_Base
 public:
   Server_Task (CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);
+  Server_Task (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;

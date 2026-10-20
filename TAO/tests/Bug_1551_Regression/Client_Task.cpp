@@ -11,10 +11,6 @@ Client_Task::Client_Task (Test::Hello_ptr receiver,
 {
 }
 
-Client_Task::~Client_Task ()
-{
-}
-
 int
 Client_Task::svc ()
 {
@@ -42,7 +38,7 @@ Client_Task::svc ()
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE);
 
-      policy_list[0]->destroy();
+      policy_list[0]->destroy ();
 
       // Start 25 separate concurrent request streams
       for (CORBA::Short i = 0; i != 25; ++i)
@@ -50,8 +46,8 @@ Client_Task::svc ()
         this->receiver_->sendc_short_sleep (this->handler_var_.in ());
       }
 
-      ACE_Time_Value tv(10, 0);
-      orb_->run(tv);
+      ACE_Time_Value tv (10, 0);
+      this->orb_->run (tv);
     }
   catch (const CORBA::TIMEOUT&)
     {

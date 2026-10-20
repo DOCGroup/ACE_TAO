@@ -13,13 +13,17 @@ public:
   Reply_Handler (
       Test::Hello_ptr hello,
       CORBA::ORB_ptr orb);
+  Reply_Handler (Reply_Handler const &) = delete;
+  Reply_Handler &operator= (Reply_Handler const &) = delete;
+  Reply_Handler (Reply_Handler &&) = delete;
+  Reply_Handler &operator= (Reply_Handler &&) = delete;
 
-  void short_sleep ();
+  void short_sleep () override;
 
-  void short_sleep_excep (::Messaging::ExceptionHolder * excep_holder);
+  void short_sleep_excep (::Messaging::ExceptionHolder *excep_holder) override;
 
 private:
-  void check_counter();
+  void check_counter ();
 
 private:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> counter_;
