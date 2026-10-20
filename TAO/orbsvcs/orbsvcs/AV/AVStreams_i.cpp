@@ -1334,7 +1334,7 @@ TAO_MCastConfigIf::configure (const CosPropertyService::Property & a_configurati
   try
     {
       for (this->peer_list_iterator_.first ();
-           (info = this->peer_list_iterator_.next ()) != 0;
+           (info = this->peer_list_iterator_.next ()) != nullptr;
            this->peer_list_iterator_.advance ())
         {
           info->peer_->configure (a_configuration);
@@ -1364,7 +1364,7 @@ TAO_MCastConfigIf::set_format (const char * flowName,
   try
     {
       for (this->peer_list_iterator_.first ();
-           (info = this->peer_list_iterator_.next ()) != 0;
+           (info = this->peer_list_iterator_.next ()) != nullptr;
            this->peer_list_iterator_.advance ())
         {
           if (this->in_flowSpec (info->flow_spec_, flowName))
@@ -1389,7 +1389,7 @@ TAO_MCastConfigIf::set_dev_params (const char * flowName,
   try
     {
       for (this->peer_list_iterator_.first ();
-           (info = this->peer_list_iterator_.next ()) != 0;
+           (info = this->peer_list_iterator_.next ()) != nullptr;
            this->peer_list_iterator_.advance ())
         {
           if (this->in_flowSpec (info->flow_spec_, flowName))
@@ -2053,7 +2053,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
 
       for (CORBA::ULong i = 0; i < flow_spec.length (); ++i)
         {
-          TAO_Forward_FlowSpec_Entry *entry = 0;
+          TAO_Forward_FlowSpec_Entry *entry = nullptr;
           ACE_NEW_RETURN (entry,
                           TAO_Forward_FlowSpec_Entry,
                           0);
@@ -2210,7 +2210,7 @@ TAO_StreamEndPoint::get_fep (const char *flow_name)
   AVStreams::FlowEndPoint_var fep_entry;
   if (this->fep_map_.find (fep_name_key, fep_entry) == 0)
     return fep_entry._retn();
-  return 0;
+  return nullptr;
 }
 
 char*
@@ -2694,7 +2694,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
               TAO_FlowSpec_Entry *mcast_entry = nullptr;
               ACE_INET_Addr *mcast_addr;
               mcast_addr = dynamic_cast<ACE_INET_Addr *> (forward_entry->address ());
-              if (mcast_addr == 0)
+              if (mcast_addr == nullptr)
                 ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_StreamEndPoint_B::multiconnect::Address missing in flowspec_entry\n"), 0);
               result = this->mcast_entry_map_.find (mcast_key, mcast_entry);
               if (result == 0)
@@ -2788,7 +2788,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
       CORBA::Any_var anyptr;
       anyptr = this->peer_->get_property_value ("Related_MediaCtrl");
 
-      CORBA::Object_ptr media_ctrl_obj = 0;
+      CORBA::Object_ptr media_ctrl_obj = nullptr;
 
       anyptr.in () >>= CORBA::Any::to_object(media_ctrl_obj);
 
@@ -2900,7 +2900,7 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
           this->get_property_value ("Related_StreamEndpoint");
 
           *streamendpoint_a_any >>= sep_a;
-          if (sep_a != 0)
+          if (sep_a != nullptr)
             {
               sep_a->modify_QoS (the_qos, flowspec);
             }
@@ -3160,7 +3160,7 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
                         char *&named_vdev,
                         const AVStreams::flowSpec &flow_spec)
 {
-  AVStreams::StreamEndPoint_A_ptr sep_a = 0;
+  AVStreams::StreamEndPoint_A_ptr sep_a = nullptr;
   AVStreams::StreamEndPoint_var sep;
   try
     {
@@ -3308,7 +3308,7 @@ TAO_MMDevice::get_fdev (const char *flow_name)
   AVStreams::FDev_var fdev_entry;
   if (this->fdev_map_.find (fdev_name_key, fdev_entry) == 0)
     return fdev_entry._retn() ;
-  return 0;
+  return nullptr;
 }
 
 // Removes the fdev from this MMDevice.
