@@ -83,7 +83,7 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
 
   ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
 
-  svc->replicate_request(update, 0);
+  svc->replicate_request(update, nullptr);
 }
 
 

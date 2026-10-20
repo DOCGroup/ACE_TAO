@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy(bool mt)
   : handler_(this),
-    mutex_ (mt ? new ACE_SYNCH_RW_MUTEX : 0)
+    mutex_ (mt ? new ACE_SYNCH_RW_MUTEX : nullptr)
 {
 }
 
