@@ -14,7 +14,7 @@
 #include "ImR_LocatorC.h"
 
 class Locator_Repository;
-typedef ACE_Strong_Bound_Ptr<Locator_Repository, ACE_Null_Mutex> Repository_Ptr;
+using Repository_Ptr = ACE_Strong_Bound_Ptr<Locator_Repository, ACE_Null_Mutex>;
 
 /**
 * @class UpdateableServerInfo

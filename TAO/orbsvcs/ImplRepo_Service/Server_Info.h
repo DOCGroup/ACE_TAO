@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 struct Server_Info;
-typedef ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> Server_Info_Ptr;
+using Server_Info_Ptr = ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex>;
 
 /**
 * @brief Information about IMR registered servers.

@@ -43,11 +43,11 @@ public:
   ImR_Adapter();
 
   /// Called when a POA needs to be created.
-  virtual CORBA::Boolean unknown_adapter (
+  CORBA::Boolean unknown_adapter (
     PortableServer::POA_ptr parent,
-    const char *name);
+    char const *name) override;
 
-  void init(TAO_ServantBase * servant);
+  void init (TAO_ServantBase *servant);
 private:
   /// the default servant used.
   TAO_ServantBase *default_servant_;
