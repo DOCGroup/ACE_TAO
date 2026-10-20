@@ -18,20 +18,25 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
+
   // = The skeleton methods
-  virtual char * get_string ();
+  char * get_string ();
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void throw_exception ();
+  void throw_exception () override;
 
-  virtual CORBA::Boolean call_me_back (Test::Hello_ptr me);
+  CORBA::Boolean call_me_back (Test::Hello_ptr me) override;
 
-  virtual CORBA::Boolean call_back ();
+  CORBA::Boolean call_back () override;
 
-  virtual CORBA::Boolean check_request_id ();
+  CORBA::Boolean check_request_id () override;
 
-  virtual CORBA::ULong drop_down_dead ();
+  CORBA::ULong drop_down_dead () override;
 
   static CORBA::Boolean ids_differ_;
 
