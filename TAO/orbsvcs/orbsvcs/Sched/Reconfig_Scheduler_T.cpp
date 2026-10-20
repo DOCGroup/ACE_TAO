@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
 {
-typedef int (*COMP_FUNC) (const void*, const void*);
+using COMP_FUNC = int (*) (const void *, const void *);
 }
 
 
