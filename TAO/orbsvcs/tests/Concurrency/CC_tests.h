@@ -79,10 +79,10 @@ public:
                               CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
-  virtual ~Test_Single_Lock_With_Mode ();
+  ~Test_Single_Lock_With_Mode () override;
 
   /// Runs the test the specified number of times.
-  virtual int run (int times_to_run = 1);
+  int run (int times_to_run = 1) override;
 
 private:
   /// The lock mode of the lock being tested
@@ -107,10 +107,10 @@ public:
                       char *name);
 
   /// Destructor
-  virtual ~Test_Setup_LockSet ();
+  ~Test_Setup_LockSet () override;
 
   /// Runs the test the specified number of times.
-  virtual int run (int times_to_run = 1);
+  int run (int times_to_run = 1) override;
 
 private:
   /// The name of the lock
@@ -135,10 +135,10 @@ public:
                                    char *name);
 
   /// Destructor
-  virtual ~Test_Use_Already_Created_LockSet ();
+  ~Test_Use_Already_Created_LockSet () override;
 
   /// Runs the test the specified number of times.
-  virtual int run (int times_to_run = 1);
+  int run (int times_to_run = 1) override;
 
 private:
   /// The name of the lock
@@ -163,10 +163,10 @@ public:
                                        char *name);
 
   /// Destructor
-  virtual ~Test_Unlock_Already_Created_LockSet ();
+  ~Test_Unlock_Already_Created_LockSet () override;
 
   /// Runs the test the specified number of times.
-  virtual int run (int times_to_run = 1);
+  int run (int times_to_run = 1) override;
 
 private:
   /// The name of the lock
@@ -188,10 +188,10 @@ public:
                                 CosConcurrencyControl::lock_mode mode_);
 
   /// Destructor
-  virtual ~Test_Release_Not_Held_Lock ();
+  ~Test_Release_Not_Held_Lock () override;
 
   /// Runs the test the specified number of times.
-  virtual int run (int times_to_run = 1);
+  int run (int times_to_run = 1) override;
 
 private:
   /// The lock mode of the lock being tested
