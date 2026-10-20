@@ -185,7 +185,7 @@ TAO_ComponentDef_i::describe_i ()
     }
 
   cd.supported_interfaces.length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   CORBA::ULong i = 0;
 
   for (i = 0; i < count; ++i)
@@ -265,7 +265,7 @@ TAO_ComponentDef_i::describe_i ()
 
   cd.type = this->type_i ();
 
-  CORBA::Contained::Description *cont_desc_ptr = 0;
+  CORBA::Contained::Description *cont_desc_ptr = nullptr;
   ACE_NEW_THROW_EX (cont_desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -319,7 +319,7 @@ TAO_ComponentDef_i::supported_interfaces ()
 CORBA::InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces_i ()
 {
-  CORBA::InterfaceDefSeq *seq = 0;
+  CORBA::InterfaceDefSeq *seq = nullptr;
   ACE_NEW_RETURN (seq,
                   CORBA::InterfaceDefSeq (0),
                   0);
@@ -340,7 +340,7 @@ TAO_ComponentDef_i::supported_interfaces_i ()
                                                  "count",
                                                  count);
       retval->length (count);
-      char *stringified = 0;
+      char *stringified = nullptr;
       ACE_TString path;
       CORBA::Object_var tmp;
 
@@ -391,7 +391,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
                                         inherited_key);
 
   CORBA::String_var name;
-  char *supported_path = 0;
+  char *supported_path = nullptr;
   ACE_Configuration_Section_Key supported_key;
 
   for (CORBA::ULong i = 0; i < length; ++i)

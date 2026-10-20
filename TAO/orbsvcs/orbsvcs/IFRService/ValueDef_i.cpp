@@ -72,7 +72,7 @@ TAO_ValueDef_i::describe ()
 CORBA::Contained::Description *
 TAO_ValueDef_i::describe_i ()
 {
-  CORBA::ValueDescription *vd = 0;
+  CORBA::ValueDescription *vd = nullptr;
   ACE_NEW_RETURN (vd,
                   CORBA::ValueDescription,
                   0);
@@ -80,7 +80,7 @@ TAO_ValueDef_i::describe_i ()
 
   this->fill_value_description (safe_vd.inout ());
 
-  CORBA::Contained::Description *cd = 0;
+  CORBA::Contained::Description *cd = nullptr;
   ACE_NEW_RETURN (cd,
                   CORBA::Contained::Description,
                   0);
@@ -125,7 +125,7 @@ TAO_ValueDef_i::supported_interfaces ()
 CORBA::InterfaceDefSeq *
 TAO_ValueDef_i::supported_interfaces_i ()
 {
-  CORBA::InterfaceDefSeq *seq = 0;
+  CORBA::InterfaceDefSeq *seq = nullptr;
   ACE_NEW_RETURN (seq,
                   CORBA::InterfaceDefSeq,
                   0);
@@ -149,7 +149,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
                                              "count",
                                              count);
   seq->length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_TString holder;
   CORBA::Object_var obj;
 
@@ -200,9 +200,9 @@ TAO_ValueDef_i::supported_interfaces_i (
   this->repo_->config ()->set_integer_value (supported_key,
                                              "count",
                                              count);
-  char *stringified = 0;
-  const char *supported_id = 0;
-  const char *supported_path = 0;
+  char *stringified = nullptr;
+  const char *supported_id = nullptr;
+  const char *supported_path = nullptr;
   CORBA::ULong kind = 0;
   CORBA::Boolean concrete_seen = 0;
   CORBA::DefinitionKind def_kind;
@@ -269,7 +269,7 @@ TAO_ValueDef_i::initializers ()
 CORBA::InitializerSeq *
 TAO_ValueDef_i::initializers_i ()
 {
-  CORBA::InitializerSeq *iseq = 0;
+  CORBA::InitializerSeq *iseq = nullptr;
   ACE_NEW_RETURN (iseq,
                   CORBA::InitializerSeq,
                   0);
@@ -293,7 +293,7 @@ TAO_ValueDef_i::initializers_i ()
                                              "count",
                                              count);
   iseq->length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_Configuration_Section_Key initializer_key, params_key, arg_key;
   ACE_TString holder;
   CORBA::ULong arg_count = 0;
@@ -470,7 +470,7 @@ TAO_ValueDef_i::abstract_base_values ()
 CORBA::ValueDefSeq *
 TAO_ValueDef_i::abstract_base_values_i ()
 {
-  CORBA::ValueDefSeq *vd_seq = 0;
+  CORBA::ValueDefSeq *vd_seq = nullptr;
   ACE_NEW_RETURN (vd_seq,
                   CORBA::ValueDefSeq,
                   0);
@@ -494,7 +494,7 @@ TAO_ValueDef_i::abstract_base_values_i ()
                                              "count",
                                              count);
   vd_seq->length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_TString holder;
   CORBA::Object_var obj;
 
@@ -551,9 +551,9 @@ TAO_ValueDef_i::abstract_base_values_i (
   this->repo_->config ()->set_integer_value (bases_key,
                                              "count",
                                              count);
-  const char *base_id = 0;
-  const char *base_path = 0;
-  char *stringified = 0;
+  const char *base_id = nullptr;
+  const char *base_path = nullptr;
+  char *stringified = nullptr;
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
@@ -769,7 +769,7 @@ TAO_ValueDef_i::is_a_i (const char *id)
   this->repo_->config ()->get_integer_value (bases_key,
                                              "count",
                                              count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_Configuration_Section_Key base_key;
   CORBA::Boolean success = 0;
 
@@ -812,7 +812,7 @@ TAO_ValueDef_i::describe_value ()
 CORBA::ValueDef::FullValueDescription *
 TAO_ValueDef_i::describe_value_i ()
 {
-  CORBA::ValueDef::FullValueDescription *fv_desc = 0;
+  CORBA::ValueDef::FullValueDescription *fv_desc = nullptr;
   ACE_NEW_RETURN (fv_desc,
                   CORBA::ValueDef::FullValueDescription,
                   0);
@@ -859,10 +859,10 @@ TAO_ValueDef_i::describe_value_i ()
                                           ops_key);
   CORBA::ULong count = 0;
   CORBA::ULong param_count = 0;
-  char *stringified = 0;
+  char *stringified = nullptr;
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
-  TAO_IDLType_i *idl_type = 0;
+  TAO_IDLType_i *idl_type = nullptr;
   CORBA::Object_var obj;
 
   if (status == 0)
@@ -1519,7 +1519,7 @@ TAO_ValueDef_i::create_operation_i (
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path = 0;
+      char *type_path = nullptr;
 
       for (i = 0; i < length; ++i)
         {
@@ -1577,7 +1577,7 @@ TAO_ValueDef_i::create_operation_i (
       this->repo_->config ()->set_integer_value (excepts_key,
                                                  "count",
                                                  length);
-      char *type_path = 0;
+      char *type_path = nullptr;
 
       for (i = 0; i < length; ++i)
         {
