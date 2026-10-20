@@ -20,21 +20,21 @@
 
 // This const char * is used for adding a new type to the service repository
 // the added types will be subclasses of this.
-const char * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID =
+char const * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID =
   "IDL:omg.org/CosLifeCycle/GenericFactory:1.0";
 
 
 Factory_Trader::Factory_Trader (int debug_level)
-  : trader_ptr_(0),
-    trading_Components_ptr_ (0),
-    support_Attributes_ptr_(0),
+  : trader_ptr_(nullptr),
+    trading_Components_ptr_ (nullptr),
+    support_Attributes_ptr_(nullptr),
     debug_level_ (debug_level)
 {
   try
     {
       int argc = 0;
       // create the trader
-      this->trader_ptr_ = TAO_Trader_Factory::create_trader (argc, 0);
+      this->trader_ptr_ = TAO_Trader_Factory::create_trader (argc, nullptr);
       this->support_Attributes_ptr_ = &(trader_ptr_->support_attributes ());
       // this pointer is deleted when the trader_ptr is deleted
       this->trading_Components_ptr_ = &(trader_ptr_->trading_components ());
@@ -105,10 +105,10 @@ Factory_Trader::add_type ()
 
 
 void
-Factory_Trader::_cxx_export (const char * name,
-                             const char * location,
-                             const char * description,
-                             const CORBA::Object_ptr object_ptr)
+Factory_Trader::_cxx_export (char const * name,
+                             char const * location,
+                             char const * description,
+                             CORBA::Object_ptr object_ptr)
 {
   try
     {
@@ -147,7 +147,7 @@ Factory_Trader::_cxx_export (const char * name,
 
 
 CORBA::Object_ptr
-Factory_Trader::query (const char* constraint)
+Factory_Trader::query (char const * constraint)
 {
   try
     {
@@ -155,9 +155,9 @@ Factory_Trader::query (const char* constraint)
       specifiedProps._d(CosTrading::Lookup::all);
 
       // Get some pointers for the out parameters of the call.
-      CosTrading::OfferSeq *offerSeq_ptr =  0;
-      CosTrading::OfferIterator_ptr offerIterator_ptr = 0;
-      CosTrading::PolicyNameSeq *policyNameSeq_ptr = 0;
+      CosTrading::OfferSeq * offerSeq_ptr = nullptr;
+      CosTrading::OfferIterator_ptr offerIterator_ptr = nullptr;
+      CosTrading::PolicyNameSeq * policyNameSeq_ptr = nullptr;
 
       // An empty policy sequence
       CosTrading::PolicySeq policySeq;
@@ -179,10 +179,10 @@ Factory_Trader::query (const char* constraint)
                          );
 
       // Initialize
-      CORBA::Object_ptr object_ptr = 0;
+      CORBA::Object_ptr object_ptr = nullptr;
 
       // Check if an offer was made
-      if (offerSeq_ptr != 0)
+      if (offerSeq_ptr != nullptr)
         {
           // Insert the pointer into the out class
           CosTrading::OfferSeq_var offerSeq_var(offerSeq_ptr);
@@ -210,5 +210,5 @@ Factory_Trader::query (const char* constraint)
         "Factory_Trader::query: Failed.\n");
     }
   // @@ ACE_CHECK_RETURN (?)
-  return 0;
+  return nullptr;
 }

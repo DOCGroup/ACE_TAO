@@ -33,26 +33,31 @@ public:
   /// Default constructor
   Life_Cycle_Service_Server ();
 
+  Life_Cycle_Service_Server (Life_Cycle_Service_Server const &) = delete;
+  Life_Cycle_Service_Server (Life_Cycle_Service_Server &&) = delete;
+  Life_Cycle_Service_Server &operator= (Life_Cycle_Service_Server const &) = delete;
+  Life_Cycle_Service_Server &operator= (Life_Cycle_Service_Server &&) = delete;
+
   /// Destructor
   ~Life_Cycle_Service_Server ();
 
   /// Initialize the Server state - parsing arguments and ...
   int init (int argc,
-            ACE_TCHAR *argv[]);
+            ACE_TCHAR * argv[]);
 
   /// Run the orb.
   int run ();
 
   /// Parse the passed parameters.
   u_int parse_args (int argc,
-                    ACE_TCHAR* argv[]);
+                    ACE_TCHAR * argv[]);
 
 private:
   /// instance of the ORB Manager
   TAO_ORB_Manager orb_manager_;
 
   /// Instance of the creation service
-  Life_Cycle_Service_i *life_Cycle_Service_i_ptr_;
+  Life_Cycle_Service_i * life_Cycle_Service_i_ptr_;
 
   /// reference to the naming service
   CosNaming::NamingContext_var namingContext_var_;
