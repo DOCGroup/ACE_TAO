@@ -28,6 +28,11 @@ public:
   TAO_FTEC_Group_Manager();
   ~TAO_FTEC_Group_Manager() override;
 
+  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager const&) = delete;
+  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager&&) = delete;
+  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager const&) = delete;
+  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager&&) = delete;
+
   bool init(CORBA::ORB_ptr orb);
 
   virtual CORBA::Boolean start (

@@ -20,6 +20,13 @@ class ObjectGroupManagerHandler
 {
 public:
   ObjectGroupManagerHandler(ACE_Auto_Event& evt, int num_backups);
+  ~ObjectGroupManagerHandler() override = default;
+
+  ObjectGroupManagerHandler(ObjectGroupManagerHandler const&) = delete;
+  ObjectGroupManagerHandler(ObjectGroupManagerHandler&&) = delete;
+  ObjectGroupManagerHandler& operator=(ObjectGroupManagerHandler const&) = delete;
+  ObjectGroupManagerHandler& operator=(ObjectGroupManagerHandler&&) = delete;
+
   void start (CORBA::Boolean ami_return_val,
               const FTRT::Location & the_location) override;
 
