@@ -39,7 +39,7 @@ namespace TAO_Notify
     if (! saver->open ( this->save_base_path_.c_str (), this->backup_count_))
     {
       delete saver;
-      saver = 0;
+      saver = nullptr;
     }
     return static_cast<Topology_Saver *> (saver);
   }
@@ -54,7 +54,7 @@ namespace TAO_Notify
     if (! loader->open(this->load_base_path_))
     {
       delete loader;
-      loader = 0;
+      loader = nullptr;
     }
     return static_cast<Topology_Loader *> (loader);
   }

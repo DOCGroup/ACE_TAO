@@ -15,7 +15,7 @@ namespace TAO_Notify
   extern const char TOPOLOGY_ID_NAME[];
 
   XML_Saver::XML_Saver(bool timestamp)
-    : output_ (0)
+    : output_ (nullptr)
     , close_out_ (false)
     , backup_count_ (1)
     , timestamp_ (timestamp)
@@ -24,7 +24,7 @@ namespace TAO_Notify
 
   XML_Saver::~XML_Saver()
   {
-    if (this->output_ != 0)
+    if (this->output_ != nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) XML_Saver warning close not called or failed\n")
@@ -43,12 +43,12 @@ namespace TAO_Notify
   void
   XML_Saver::close ()
   {
-    if (this->close_out_ && this->output_ != 0)
+    if (this->close_out_ && this->output_ != nullptr)
     {
       this->end_object(0, "notification_service");
 
       ACE_OS::fclose(this->output_);
-      this->output_ = 0;
+      this->output_ = nullptr;
 
       // delete the oldest backup file (if it exists)
       size_t nfile = this->backup_count_ - 1;
@@ -75,7 +75,7 @@ namespace TAO_Notify
       new_name += ACE_TEXT(".new");
       ACE_OS::rename (new_name.c_str (), xml_name.c_str ());
     }
-    this->output_ = 0;
+    this->output_ = nullptr;
   }
 
   bool
@@ -107,7 +107,7 @@ namespace TAO_Notify
             base_name.c_str()));
       }
     }
-    if (this->output_ != 0)
+    if (this->output_ != nullptr)
     {
       FILE * const out = this->output_;
 
@@ -140,15 +140,15 @@ namespace TAO_Notify
         ex._tao_print_exception (
           ACE_TEXT (
             "(%P|%t) XML_Saver Unknown exception\n"));
-        if (this->close_out_ && this->output_ != 0)
+        if (this->close_out_ && this->output_ != nullptr)
           {
             (void) ACE_OS::fclose (this->output_);
           }
 
-        this->output_ = 0;
+        this->output_ = nullptr;
       }
     }
-    return this->output_ != 0;
+    return this->output_ != nullptr;
   }
 
   bool
@@ -157,7 +157,7 @@ namespace TAO_Notify
                           const NVPList& attrs,
                           bool /* changed */)
   {
-    ACE_ASSERT(this->output_ != 0);
+    ACE_ASSERT(this->output_ != nullptr);
 
     FILE * const out = this->output_;
 
@@ -187,7 +187,7 @@ namespace TAO_Notify
   void XML_Saver::end_object (CORBA::Long /* id */,
                               const ACE_CString& type)
   {
-    ACE_ASSERT(this->output_ != 0);
+    ACE_ASSERT(this->output_ != nullptr);
     FILE * const out = this->output_;
     if (this->indent_.length() >= 2)
     {
