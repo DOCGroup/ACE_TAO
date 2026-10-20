@@ -5,18 +5,23 @@ class MessageImpl : public virtual OBV_Message,
                     public virtual CORBA::DefaultValueRefCountBase
 {
   public:
-    MessageImpl ();
-    MessageImpl (const char *user, const char *subject, const char *text);
-    virtual ::CORBA::ValueBase *_copy_value ();
+    MessageImpl () = default;
+    MessageImpl (char const *user, char const *subject, char const *text);
+    MessageImpl (MessageImpl const &) = delete;
+    MessageImpl &operator= (MessageImpl const &) = delete;
+    MessageImpl (MessageImpl &&) = delete;
+    MessageImpl &operator= (MessageImpl &&) = delete;
 
-    virtual char *user ();
-    virtual void user (const char *);
+    ::CORBA::ValueBase *_copy_value () override;
 
-    virtual char *subject ();
-    virtual void subject (const char *);
+    char *user () override;
+    void user (char const *) override;
 
-    virtual char *text ();
-    virtual void text (const char *);
+    char *subject () override;
+    void subject (char const *) override;
 
-    virtual void print ();
+    char *text () override;
+    void text (char const *) override;
+
+    void print () override;
 };
