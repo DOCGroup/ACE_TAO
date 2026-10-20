@@ -10,19 +10,18 @@
 
 // Constructor.
 Server_i::Server_i ()
-  : ior_output_file_ (0)
+  : ior_output_file_ (nullptr),
+    time_service_server_impl_ (nullptr)
 {
 }
 
 // Destructor.
-Server_i::~Server_i ()
-{
-}
+Server_i::~Server_i () = default;
 
 // Parse the command-line arguments and set options.
 int
 Server_i::parse_args (int argc,
-                      ACE_TCHAR* argv[])
+                      ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:"));
   int c;
@@ -37,7 +36,7 @@ Server_i::parse_args (int argc,
         this->ior_output_file_ =
           ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a"));
 
-        if (this->ior_output_file_ == 0)
+        if (this->ior_output_file_ == nullptr)
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
@@ -188,7 +187,7 @@ Server_i::register_server ()
 
 int
 Server_i::init (int argc,
-                ACE_TCHAR *argv[])
+                ACE_TCHAR * argv[])
 {
   try
     {
