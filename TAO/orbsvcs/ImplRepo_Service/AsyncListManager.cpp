@@ -46,7 +46,7 @@ AsyncListManager::init_list ()
 {
   CORBA::ULong const len =
     static_cast<CORBA::ULong> (this->repo_->servers ().current_size ());
-  Locator_Repository::SIMap::ENTRY* entry = 0;
+  Locator_Repository::SIMap::ENTRY* entry = nullptr;
   Locator_Repository::SIMap::CONST_ITERATOR it (this->repo_->servers ());
   this->server_list_.length (len);
   this->waiters_ = 0;
@@ -57,9 +57,9 @@ AsyncListManager::init_list ()
 
       Server_Info_Ptr info = entry->int_id_;
       info->setImRInfo (&this->server_list_[i]);
-      if (this->pinger_ != 0)
+      if (this->pinger_ != nullptr)
         {
-          ListLiveListener *l = 0;
+          ListLiveListener *l = nullptr;
           ACE_NEW (l, ListLiveListener (info->ping_id (),
                                         info->pid,
                                         i,
@@ -102,7 +102,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
   si = ImplementationRepository::ServerInformationIterator::_nil ();
   try
     {
-      ImR_AsyncIterator* imr_iter = 0;
+      ImR_AsyncIterator* imr_iter = nullptr;
       ACE_NEW_THROW_EX (imr_iter,
                         ImR_AsyncIterator (start, this),
                         CORBA::NO_MEMORY ());
@@ -153,10 +153,10 @@ AsyncListManager::final_state ()
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncListManager(%@)::final_state, ")
                       ACE_TEXT ("waiters count = %d, has pinger? %d\n"),
-                      this, this->waiters_, (this->pinger_ != 0)));
+                      this, this->waiters_, (this->pinger_ != nullptr)));
     }
 
-  if (this->pinger_ != 0 && this->waiters_ > 0)
+  if (this->pinger_ != nullptr && this->waiters_ > 0)
     {
       return;
     }
