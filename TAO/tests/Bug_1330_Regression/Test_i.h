@@ -15,9 +15,9 @@ public:
   ~Test_i ();
 
   /// A method
-  virtual void test_method();
+  void test_method () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
