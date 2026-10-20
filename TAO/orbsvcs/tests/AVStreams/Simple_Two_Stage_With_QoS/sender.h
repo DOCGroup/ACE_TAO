@@ -42,11 +42,10 @@ protected:
   TAO_AV_Callback callback_;
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A
+using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
           <Sender_StreamEndPoint,
            TAO_VDev,
-           AV_Null_MediaCtrl>
-        SENDER_ENDPOINT_STRATEGY;
+           AV_Null_MediaCtrl>;
 
 /**
  * @class Sender
