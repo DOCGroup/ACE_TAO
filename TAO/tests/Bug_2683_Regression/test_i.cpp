@@ -1,8 +1,8 @@
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
 
-test_i::test_i (ORB_Killer *k)
-  : killer_ (k)
+test_i::test_i (ORB_Killer *killer)
+  : killer_ (killer)
 {
 }
 
@@ -14,7 +14,7 @@ test_i::ping ()
 void
 test_i::shutdown ()
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) requesting shutdown\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) requesting shutdown\n"));
   this->killer_->activate ();
 }
 
@@ -28,8 +28,8 @@ int
 ORB_Killer::svc ()
 {
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) doing shutdown\n"));
-  orb_->shutdown(1);
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) shutdown complete\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) doing shutdown\n"));
+  orb_->shutdown (true);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutdown complete\n"));
   return 0;
 }

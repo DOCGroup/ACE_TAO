@@ -6,7 +6,7 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -41,15 +41,20 @@ private:
 
 public:
   ORB_Run_Task (CORBA::ORB_ptr orb)
-    : orb_(CORBA::ORB::_duplicate(orb))
+    : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
 
-  int svc ()
+  ORB_Run_Task (ORB_Run_Task const &) = delete;
+  ORB_Run_Task &operator= (ORB_Run_Task const &) = delete;
+  ORB_Run_Task (ORB_Run_Task &&) = delete;
+  ORB_Run_Task &operator= (ORB_Run_Task &&) = delete;
+
+  int svc () override
   {
     try
       {
-        this->orb_->run();
+        this->orb_->run ();
       }
     catch (const CORBA::Exception &ex)
       {
@@ -85,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ());
@@ -95,10 +100,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      obj = orb->resolve_initial_references("IORTable");
+      obj = orb->resolve_initial_references ("IORTable");
 
       IORTable::Table_var iortable =
-        IORTable::Table::_narrow(obj.in());
+        IORTable::Table::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -110,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (servant,
                       test_i (&killer),
                       1);
-      PortableServer::ServantBase_var owner_transfer(servant);
+      PortableServer::ServantBase_var owner_transfer (servant);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (servant);
@@ -123,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (target.in ());
 
-      iortable->bind ("Racer",ior.in());
+      iortable->bind ("Racer", ior.in ());
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
@@ -132,14 +137,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) server - activating ORB threads\n"));
 
-      ORB_Run_Task ort (orb.in());
+      ORB_Run_Task ort (orb.in ());
       ort.activate (THR_NEW_LWP | THR_JOINABLE, 3);
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) server - ORB running\n"));
 
 
       // Output the IOR to the <ior_output_file> - to signal readiness.
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
@@ -147,8 +152,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      ACE_Thread_Manager *tm = ort.thr_mgr();
-      tm->wait();
+      ACE_Thread_Manager *tm = ort.thr_mgr ();
+      tm->wait ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       orb->destroy ();

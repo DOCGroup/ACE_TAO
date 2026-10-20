@@ -11,8 +11,13 @@ class ORB_Killer : public ACE_Task_Base
 {
 public:
   /// Constructor
-  ORB_Killer (CORBA::ORB_ptr orb);
-  virtual int svc ();
+  explicit ORB_Killer (CORBA::ORB_ptr orb);
+  ORB_Killer (ORB_Killer const &) = delete;
+  ORB_Killer &operator= (ORB_Killer const &) = delete;
+  ORB_Killer (ORB_Killer &&) = delete;
+  ORB_Killer &operator= (ORB_Killer &&) = delete;
+
+  int svc () override;
 private:
   CORBA::ORB_var orb_;
 };
@@ -23,12 +28,16 @@ class test_i
 {
 public:
   /// Constructor
-  test_i (ORB_Killer *k);
+  explicit test_i (ORB_Killer *killer);
+  test_i (test_i const &) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   // = The skeleton methods
-  virtual void ping ();
+  void ping () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
