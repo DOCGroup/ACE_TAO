@@ -2,7 +2,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "Messenger_i.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -30,12 +30,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       //init the orb
-      CORBA::ORB_var orb=CORBA::ORB_init(argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       //get the root poa
       CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
@@ -49,8 +50,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Get a reference to the IOR Table
-      CORBA::Object_var tobj = orb->resolve_initial_references("IORTable");
-      IORTable::Table_var table = IORTable::Table::_narrow(tobj.in());
+      CORBA::Object_var tobj = orb->resolve_initial_references ("IORTable");
+      IORTable::Table_var table = IORTable::Table::_narrow (tobj.in ());
 
       //get an object id for the name
       PortableServer::ObjectId_var oid =
@@ -58,16 +59,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       //activate the object for the given id
       Messenger_i messenger (orb.in ());
-      poa->activate_object_with_id(oid.in (), &messenger);
+      poa->activate_object_with_id (oid.in (), &messenger);
       CORBA::Object_var messenger_obj = poa->id_to_reference (oid.in ());
 
       //bind the ior string to the name
-      CORBA::String_var messenger_ior_string = orb->object_to_string(messenger_obj.in());
-      table->bind("Messenger", messenger_ior_string.in());
+      CORBA::String_var messenger_ior_string = orb->object_to_string (messenger_obj.in ());
+      table->bind ("Messenger", messenger_ior_string.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
