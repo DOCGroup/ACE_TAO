@@ -64,7 +64,7 @@ TAO_MonitorSupplierAdmin::register_stats_controls (
                                           const ACE_CString& base)
 {
   this->control_name_ = base;
-  SupplierAdminControl* control = 0;
+  SupplierAdminControl* control = nullptr;
   ACE_NEW_THROW_EX (control,
                     SupplierAdminControl (mec,
                                           this->control_name_.c_str (),

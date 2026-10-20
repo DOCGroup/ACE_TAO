@@ -385,7 +385,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
   // The view from the outside sees a supplier proxy as a consumer.
   // So, we'll register a RemoveConsumerSupplierControl for each supplier
   // proxy indicating a consumer (false)
-  RemoveConsumerSupplierControl* rcsc = 0;
+  RemoveConsumerSupplierControl* rcsc = nullptr;
   ACE_NEW_THROW_EX (rcsc,
                     RemoveConsumerSupplierControl (this, full, id, false),
                     CORBA::NO_MEMORY ());
@@ -434,7 +434,7 @@ TAO_MonitorEventChannel::map_consumer_proxy (
   // The view from the outside sees a consumer proxy as a supplier.
   // So, we'll register a RemoveConsumerSupplierControl for each consumer
   // proxy indicating a supplier (true)
-  RemoveConsumerSupplierControl* rcsc = 0;
+  RemoveConsumerSupplierControl* rcsc = nullptr;
   ACE_NEW_THROW_EX (rcsc,
                     RemoveConsumerSupplierControl (this, full, id, true),
                     CORBA::NO_MEMORY ());
@@ -536,7 +536,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       ACE_CString dir_name (this->name_ + "/");
       ACE_CString stat_name = dir_name +
                               NotifyMonitoringExt::EventChannelCreationTime;
-      Monitor_Base* timestamp = 0;
+      Monitor_Base* timestamp = nullptr;
       ACE_NEW_THROW_EX (timestamp,
                         Timestamp_Monitor (stat_name.c_str ()),
                         CORBA::NO_MEMORY ());
@@ -555,7 +555,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerCount;
-      EventChannelConsumersSuppliers* consumers = 0;
+      EventChannelConsumersSuppliers* consumers = nullptr;
       ACE_NEW_THROW_EX (consumers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -595,7 +595,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelTimedoutConsumerNames;
-      EventChannelTimedoutConsumers* tconsumers = 0;
+      EventChannelTimedoutConsumers* tconsumers = nullptr;
       ACE_NEW_THROW_EX (tconsumers,
                         EventChannelTimedoutConsumers (
                           this,
@@ -615,7 +615,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierCount;
-      EventChannelConsumersSuppliers* suppliers = 0;
+      EventChannelConsumersSuppliers* suppliers = nullptr;
       ACE_NEW_THROW_EX (suppliers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -657,7 +657,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerAdminCount;
-      EventChannelConsumerSupplierAdmins* conadmins = 0;
+      EventChannelConsumerSupplierAdmins* conadmins = nullptr;
       ACE_NEW_THROW_EX (conadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -697,7 +697,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierAdminCount;
-      EventChannelConsumerSupplierAdmins* supadmins = 0;
+      EventChannelConsumerSupplierAdmins* supadmins = nullptr;
       ACE_NEW_THROW_EX (supadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -738,7 +738,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       supadmins->remove_ref ();
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelQueueSize;
-      QueuedEvents* events = 0;
+      QueuedEvents* events = nullptr;
       ACE_NEW_THROW_EX (events,
                         QueuedEvents (this,
                                       stat_name.c_str (),
@@ -770,7 +770,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       events->remove_ref ();
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelOldestEvent;
-      OldestEvent* oldest = 0;
+      OldestEvent* oldest = nullptr;
       ACE_NEW_THROW_EX (oldest,
                         OldestEvent (this, stat_name.c_str (),
                                      Monitor_Control_Types::MC_TIME),
@@ -788,7 +788,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSlowestConsumers;
-      SlowestConsumers* slowest = 0;
+      SlowestConsumers* slowest = nullptr;
       ACE_NEW_THROW_EX (slowest,
                         SlowestConsumers (this,
                                           stat_name.c_str (),
@@ -807,7 +807,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name +
                   NotifyMonitoringExt::EventChannelQueueOverflows;
-      QueueOverflows* overflows = 0;
+      QueueOverflows* overflows = nullptr;
       ACE_NEW_THROW_EX (overflows,
                         QueueOverflows (stat_name.c_str ()),
                         CORBA::NO_MEMORY ());
@@ -821,7 +821,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
       TAO_Control_Registry* cinstance =
         TAO_Control_Registry::instance ();
 
-      ShutdownControl* sd = 0;
+      ShutdownControl* sd = nullptr;
       ACE_NEW_THROW_EX (sd,
                         ShutdownControl (this,
                                          this->name_),
@@ -1037,7 +1037,7 @@ TAO_MonitorEventChannel::get_timedout_consumers (
   ACE_READ_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->timedout_supplier_mutex_);
 
   Map::const_iterator itr (this->timedout_supplier_map_);
-  Map::value_type* entry = 0;
+  Map::value_type* entry = nullptr;
   while (itr.next (entry))
     {
       names->push_back (entry->item ());
@@ -1338,7 +1338,7 @@ TAO_MonitorEventChannel::is_duplicate_name (
   const ACE_CString& name) const
 {
   Map::const_iterator itr (map);
-  Map::value_type* entry = 0;
+  Map::value_type* entry = nullptr;
 
   while (itr.next (entry))
     {
