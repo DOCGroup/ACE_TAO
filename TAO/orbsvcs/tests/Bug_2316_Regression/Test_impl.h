@@ -7,8 +7,13 @@ class Server_impl   : public virtual POA_server
 {
 public:
   Server_impl (CORBA::ORB_ptr orb);
-  virtual void method (CORBA::Object_ptr object);
-  virtual void shutdown ();
+  Server_impl (Server_impl const &) = delete;
+  Server_impl (Server_impl &&) = delete;
+  Server_impl &operator= (Server_impl const &) = delete;
+  Server_impl &operator= (Server_impl &&) = delete;
+
+  void method (CORBA::Object_ptr object) override;
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
