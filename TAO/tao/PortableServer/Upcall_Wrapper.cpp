@@ -154,7 +154,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #if TAO_HAS_INTERCEPTORS == 1
       server_request.caught_exception (&ex);
 
-      if (interceptor_adapter != 0)
+      if (interceptor_adapter != nullptr)
         {
           interceptor_adapter->send_exception (server_request,
                                                the_args,

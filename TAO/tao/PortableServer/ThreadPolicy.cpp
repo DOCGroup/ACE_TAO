@@ -20,7 +20,7 @@ namespace TAO
     CORBA::Policy_ptr
     ThreadPolicy::copy ()
     {
-      ThreadPolicy *copy = 0;
+      ThreadPolicy *copy = nullptr;
       ACE_NEW_THROW_EX (copy,
                         ThreadPolicy (this->value_),
                         CORBA::NO_MEMORY ());
