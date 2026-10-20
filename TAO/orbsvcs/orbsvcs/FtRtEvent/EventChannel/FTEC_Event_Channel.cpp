@@ -65,7 +65,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
 
     detector_loader->init(0, 0);
 
-    if (FTRTEC::Identification_Service::instance() == 0)
+    if (FTRTEC::Identification_Service::instance() == nullptr)
       ORBSVCS_ERROR_RETURN((LM_ERROR, "No Identification\n"), 0);
 
     // initialize naming_contex
@@ -95,7 +95,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
       persistent_poa_.in ());
 
 
-    TAO_FTEC_Event_Channel_Impl* ec = 0;
+    TAO_FTEC_Event_Channel_Impl* ec = nullptr;
     ACE_NEW_THROW_EX (ec,
       TAO_FTEC_Event_Channel_Impl (attr),
       CORBA::NO_MEMORY());

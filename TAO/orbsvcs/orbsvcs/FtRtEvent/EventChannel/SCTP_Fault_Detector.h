@@ -55,7 +55,7 @@ public:
   SCTP_Connector();
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
                const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = 0,
+               ACE_Time_Value const *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,

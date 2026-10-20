@@ -27,7 +27,7 @@ namespace FTRTEC {
 
   int Identification_Service::init(int argc, ACE_TCHAR* argv[])
   {
-    if (service != 0)
+    if (service != nullptr)
       return 0;
     name_.length(1);
     name_[0].id = CORBA::string_dup("FT_EventService");
