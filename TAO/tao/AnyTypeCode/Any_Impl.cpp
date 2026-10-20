@@ -29,7 +29,7 @@ TAO::Any_Impl::~Any_Impl ()
 CORBA::Boolean
 TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {
-  CORBA::ValueBase * vb = 0;
+  CORBA::ValueBase *vb = nullptr;
   if (this->to_value (vb) && vb)
     {
       // Since we ARE a value type, we need to

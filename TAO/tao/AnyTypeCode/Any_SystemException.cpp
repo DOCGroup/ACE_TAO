@@ -50,7 +50,7 @@ TAO::Any_SystemException::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
                                   CORBA::SystemException * const value)
 {
-  Any_SystemException *new_impl = 0;
+  Any_SystemException *new_impl = nullptr;
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
                                 tc,
@@ -64,7 +64,7 @@ TAO::Any_SystemException::insert_copy (CORBA::Any & any,
                                        CORBA::TypeCode_ptr tc,
                                        const CORBA::SystemException & value)
 {
-  Any_SystemException *new_impl = 0;
+  Any_SystemException *new_impl = nullptr;
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
                                 tc,
@@ -98,7 +98,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           TAO::Any_SystemException *narrow_impl =
             dynamic_cast <TAO::Any_SystemException *> (impl);
 
-          if (narrow_impl == 0)
+          if (narrow_impl == nullptr)
             {
               return false;
             }
@@ -109,7 +109,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 
       CORBA::SystemException *empty_value =  (*f) ();
 
-      TAO::Any_SystemException *replacement = 0;
+      TAO::Any_SystemException *replacement = nullptr;
       ACE_NEW_RETURN (replacement,
                       TAO::Any_SystemException (destructor,
                                                 any_tc,
@@ -150,7 +150,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 void
 TAO::Any_SystemException::free_value ()
 {
-  if (this->value_destructor_ != 0)
+  if (this->value_destructor_ != nullptr)
     {
       (*this->value_destructor_) (this->value_);
       this->value_destructor_ = 0;

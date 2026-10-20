@@ -202,7 +202,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase* & val) const
         }
 
       TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
-      if (orb_core == 0)
+      if (orb_core == nullptr)
         {
           orb_core = TAO_ORB_Core_instance ();
 
@@ -243,7 +243,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr & obj) const
         }
 
       TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
-      if (orb_core == 0)
+      if (orb_core == nullptr)
         {
           orb_core = TAO_ORB_Core_instance ();
 
