@@ -64,7 +64,7 @@ namespace TAO
 
       static CORBA::TypeCode_ptr get_typecode (typecode_type const & tc)
       {
-        return (tc == 0 ? CORBA::TypeCode::_nil () : *tc);
+        return (tc == nullptr ? CORBA::TypeCode::_nil () : *tc);
       }
     };
 
@@ -97,7 +97,7 @@ namespace TAO
 
       static CORBA::TypeCode_ptr get_typecode (typecode_type const & tc)
       {
-        return (tc == 0 ? CORBA::TypeCode::_nil () : *tc);
+        return (tc == nullptr ? CORBA::TypeCode::_nil () : *tc);
       }
     };
 

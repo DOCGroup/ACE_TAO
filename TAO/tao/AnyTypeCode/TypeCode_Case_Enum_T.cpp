@@ -22,7 +22,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType> *
 TAO::TypeCode::Case_Enum_T<StringType,
                            TypeCodeType>::clone () const
 {
-  Case<StringType, TypeCodeType> * p = 0;
+  Case<StringType, TypeCodeType> *p = nullptr;
 
   using case_type = Case_Enum_T<StringType,
                                 TypeCodeType>;
@@ -80,13 +80,13 @@ TAO::TypeCode::Case_Enum_T<StringType,
 
     out_cdr.write_ulong (this->label_);
 
-    CORBA::Any *retval = 0;
+    CORBA::Any *retval = nullptr;
     ACE_NEW_THROW_EX (retval,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());
 
     TAO_InputCDR in_cdr (out_cdr);
-    TAO::Unknown_IDL_Type *unk = 0;
+    TAO::Unknown_IDL_Type *unk = nullptr;
     ACE_NEW_THROW_EX (unk,
                       TAO::Unknown_IDL_Type (this->discriminator_tc_.in (),
                                              in_cdr),

@@ -63,11 +63,11 @@ void
 TAO::TypeCode::Indirected_Type::set_recursive_tc (CORBA::TypeCode_ptr tc)
 {
   // link only once (should never happen that this is called twice but test anyway)
-  if (this->recursive_tc_ == 0)
+  if (this->recursive_tc_ == nullptr)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-    if (tc == 0)  // should never happen
+    if (tc == nullptr)  // should never happen
       return;
 
     // make sure we are the right kind
