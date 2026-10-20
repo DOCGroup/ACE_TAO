@@ -42,10 +42,10 @@ namespace TAO
   class IIOP_SSL_Acceptor : public TAO_IIOP_Acceptor
   {
   public:
-    typedef ACE_Strategy_Acceptor<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_BASE_ACCEPTOR;
-    typedef TAO_Creation_Strategy<IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CREATION_STRATEGY;
-    typedef TAO_Concurrency_Strategy<IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CONCURRENCY_STRATEGY;
-    typedef TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_ACCEPT_STRATEGY;
+    using TAO_IIOP_SSL_BASE_ACCEPTOR = ACE_Strategy_Acceptor<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+    using TAO_IIOP_SSL_CREATION_STRATEGY = TAO_Creation_Strategy<IIOP_SSL_Connection_Handler>;
+    using TAO_IIOP_SSL_CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<IIOP_SSL_Connection_Handler>;
+    using TAO_IIOP_SSL_ACCEPT_STRATEGY = TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
     /// Constructor.
     IIOP_SSL_Acceptor ();

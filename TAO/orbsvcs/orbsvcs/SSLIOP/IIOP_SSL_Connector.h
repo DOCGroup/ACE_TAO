@@ -51,19 +51,13 @@ namespace TAO
     int close ();
 
   public:
-    typedef TAO_Connect_Concurrency_Strategy<IIOP_SSL_Connection_Handler>
-            CONNECT_CONCURRENCY_STRATEGY;
+    using CONNECT_CONCURRENCY_STRATEGY = TAO_Connect_Concurrency_Strategy<IIOP_SSL_Connection_Handler>;
 
-    typedef TAO_Connect_Creation_Strategy<IIOP_SSL_Connection_Handler>
-            CONNECT_CREATION_STRATEGY;
+    using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<IIOP_SSL_Connection_Handler>;
 
-    typedef ACE_Connect_Strategy<IIOP_SSL_Connection_Handler,
-                                 ACE_SOCK_CONNECTOR>
-            CONNECT_STRATEGY;
+    using CONNECT_STRATEGY = ACE_Connect_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
 
-    typedef ACE_Strategy_Connector<IIOP_SSL_Connection_Handler,
-                                   ACE_SOCK_CONNECTOR>
-            BASE_CONNECTOR;
+    using BASE_CONNECTOR = ACE_Strategy_Connector<IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
 
   protected:
     /**

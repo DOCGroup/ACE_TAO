@@ -53,10 +53,10 @@ namespace TAO
       /// Destructor.
       ~Acceptor ();
 
-      typedef TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor> BASE_ACCEPTOR;
-      typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY;
-      typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY;
-      typedef Accept_Strategy ACCEPT_STRATEGY;
+      using BASE_ACCEPTOR = TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor>;
+      using CREATION_STRATEGY = TAO_Creation_Strategy<Connection_Handler>;
+      using CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<Connection_Handler>;
+      using ACCEPT_STRATEGY = Accept_Strategy;
 
       /**
        * @name The TAO_Acceptor Methods

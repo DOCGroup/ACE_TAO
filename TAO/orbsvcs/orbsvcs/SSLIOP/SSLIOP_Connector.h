@@ -112,19 +112,13 @@ namespace TAO
                                                           SSL *ssl);
 
     public:
-      typedef TAO_Connect_Concurrency_Strategy<Connection_Handler>
-          CONNECT_CONCURRENCY_STRATEGY;
+      using CONNECT_CONCURRENCY_STRATEGY = TAO_Connect_Concurrency_Strategy<Connection_Handler>;
 
-      typedef TAO_Connect_Creation_Strategy<Connection_Handler>
-          CONNECT_CREATION_STRATEGY;
+      using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<Connection_Handler>;
 
-      typedef ACE_Connect_Strategy<Connection_Handler,
-                                   ACE_SSL_SOCK_Connector>
-          CONNECT_STRATEGY;
+      using CONNECT_STRATEGY = ACE_Connect_Strategy<Connection_Handler, ACE_SSL_SOCK_Connector>;
 
-      typedef ACE_Strategy_Connector<Connection_Handler,
-                                     ACE_SSL_SOCK_Connector>
-          BASE_CONNECTOR;
+      using BASE_CONNECTOR = ACE_Strategy_Connector<Connection_Handler, ACE_SSL_SOCK_Connector>;
 
     private:
       /// If zero, connect to IIOP over SSL port by default.
