@@ -13,7 +13,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var Orb = CORBA::ORB_init(argc, argv);
 
       // Set round-trip timeout
-      const int timeout_secs = 5;
+      int const timeout_secs = 5;
 
       CORBA::Object_var obj = Orb->resolve_initial_references ("ORBPolicyManager");
       CORBA::PolicyManager_var policy_manager =
@@ -34,7 +34,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Now try to contact a server.
       // Use a remote machine that is unreachable on the network.
-      const char * obj_ref = "corbaloc:iiop:1.0@10.123.123.123:4567/NameService";
+      char const *obj_ref = "corbaloc:iiop:1.0@10.123.123.123:4567/NameService";
 
       obj = Orb->string_to_object(obj_ref);
 
@@ -47,18 +47,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               inc = CosNaming::NamingContext::_narrow(obj.in());
               ACE_DEBUG(( LM_INFO, "OK\n" ));
             }
-          catch(const CORBA::TRANSIENT &)
+          catch(CORBA::TRANSIENT const &)
             {
               ACE_ERROR ((LM_ERROR, "Error, caught transient exception\n"));
               retval = 1;
             }
-          catch(const CORBA::TIMEOUT &)
+          catch(CORBA::TIMEOUT const &)
             {
               ACE_DEBUG ((LM_DEBUG, "Caught correct timeout\n"));
             }
         }
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
       ++retval;
