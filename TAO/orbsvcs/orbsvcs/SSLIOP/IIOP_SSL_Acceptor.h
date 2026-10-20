@@ -51,9 +51,9 @@ namespace TAO
     IIOP_SSL_Acceptor ();
 
     /// Destructor.
-    ~IIOP_SSL_Acceptor ();
+    ~IIOP_SSL_Acceptor () override;
 
-    virtual int close ();
+    int close () override;
 
   private:
     /// The concrete acceptor, as a pointer to it's base class.
