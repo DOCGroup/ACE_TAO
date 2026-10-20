@@ -79,11 +79,11 @@ class CC_Start_Cmd : public CC_Command
   CC_Start_Cmd (const char *config_file_name);
 
   /// Destructor
-  virtual ~CC_Start_Cmd();
+  ~CC_Start_Cmd() override;
 
   /// Start the child process. The current version does not wait for the
   /// process to terminate.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name of the script file
@@ -106,11 +106,11 @@ class CC_CreateLockSet_Cmd : public CC_Command
   CC_CreateLockSet_Cmd (const char *lock_set_name);
 
   /// Destructor
-  virtual ~CC_CreateLockSet_Cmd ();
+  ~CC_CreateLockSet_Cmd () override;
 
   /// Executes the command, i.e. creates the lock set and binds the name
   /// in the naming service.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name used to bind in the naming service.
@@ -133,11 +133,11 @@ class CC_Lock_Cmd:public CC_Command
               CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
-  virtual ~CC_Lock_Cmd();
+  ~CC_Lock_Cmd() override;
 
   /// Executes the command, i.e. looks up the lock set with the requested
   /// name in the naming server and executes the lock command on that lock set.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name to look up in the naming service.
@@ -163,14 +163,14 @@ class CC_UnLock_Cmd:public CC_Command
                 CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
-  virtual ~CC_UnLock_Cmd();
+  ~CC_UnLock_Cmd() override;
 
   /**
    * Executes the command, i.e. looks up the lock set with the requested
    * name in the naming server and executes the unlock command on that
    * lock set.
    */
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name to look up in the naming service.
