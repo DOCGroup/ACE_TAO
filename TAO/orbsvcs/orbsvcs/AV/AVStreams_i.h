@@ -1165,18 +1165,18 @@ public:
   TAO_MediaControl &operator= (TAO_MediaControl const &) = delete;
   TAO_MediaControl &operator= (TAO_MediaControl &&) = delete;
 
-  virtual AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
-                                                  AVStreams::PositionKey a_key) = 0;
+  AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
+                                          AVStreams::PositionKey a_key) override = 0;
 
-  virtual void set_media_position (const AVStreams::Position & a_position) = 0;
+  void set_media_position (const AVStreams::Position &a_position) override = 0;
 
-  virtual void start (const AVStreams::Position & a_position) = 0;
+  void start (const AVStreams::Position &a_position) override = 0;
 
-  virtual void pause (const AVStreams::Position & a_position) = 0;
+  void pause (const AVStreams::Position &a_position) override = 0;
 
-  virtual void resume (const AVStreams::Position & a_position) = 0;
+  void resume (const AVStreams::Position &a_position) override = 0;
 
-  virtual void stop (const AVStreams::Position & a_position) = 0;
+  void stop (const AVStreams::Position &a_position) override = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
