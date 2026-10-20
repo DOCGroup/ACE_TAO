@@ -42,16 +42,16 @@ struct ACE_Hash_pid_t
 
 struct ACE_Equal_To_pid_t
 {
-  int operator () (const pid_t lhs, const pid_t rhs) const
+  int operator () (pid_t const lhs, pid_t const rhs) const
   {
     return lhs == rhs;
   }
 };
 
 #if (ACE_SIZEOF_VOID_P == 8)
-typedef ACE_INT64 Act_token_type;
+using Act_token_type = ACE_INT64;
 #else
-typedef ACE_INT32 Act_token_type;
+using Act_token_type = ACE_INT32;
 #endif
 
 #if defined (ACE_WIN32)
@@ -61,7 +61,7 @@ class Activator_Export Watchdog : public ACE_Task_Base
 {
 public:
   Watchdog (ACE_Process_Manager& procman);
-  virtual int svc ();
+  int svc () override;
   bool start ();
   void stop ();
 private:
@@ -127,13 +127,13 @@ private:
   bool in_upcall ();
 
 private:
-  typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;
+  using UniqueServerList = ACE_Unbounded_Set<ACE_CString>;
 
-  typedef ACE_Hash_Map_Manager_Ex<pid_t,
-                                  ACE_CString,
-                                  ACE_Hash_pid_t,
-                                  ACE_Equal_To_pid_t,
-                                  ACE_Null_Mutex> ProcessMap;
+  using ProcessMap = ACE_Hash_Map_Manager_Ex<pid_t,
+                                              ACE_CString,
+                                              ACE_Hash_pid_t,
+                                              ACE_Equal_To_pid_t,
+                                              ACE_Null_Mutex>;
 
   ACE_Process_Manager process_mgr_;
 
