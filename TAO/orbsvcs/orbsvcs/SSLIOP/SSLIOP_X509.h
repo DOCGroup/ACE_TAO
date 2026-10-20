@@ -71,7 +71,7 @@ namespace TAO
       }
     };
 
-    typedef OpenSSL_st_var< ::X509 > X509_var;
+    using X509_var = OpenSSL_st_var< ::X509 >;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

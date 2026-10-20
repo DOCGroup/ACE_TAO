@@ -67,7 +67,7 @@ namespace TAO
       }
     };
 
-    typedef OpenSSL_st_var< ::EVP_PKEY > EVP_PKEY_var;
+    using EVP_PKEY_var = OpenSSL_st_var< ::EVP_PKEY >;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
