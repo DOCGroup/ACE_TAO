@@ -45,7 +45,7 @@ public:
 
   // = Documented in ACE_Event_Handler.
   virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+                              void const *arg = nullptr);
 
 private:
   /// The adapted object

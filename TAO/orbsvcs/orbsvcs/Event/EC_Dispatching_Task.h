@@ -79,7 +79,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 public:
   TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
                 size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
-                ACE_Notification_Strategy * = 0);
+                ACE_Notification_Strategy * = nullptr);
 
 protected:
   // = Override the default definition in the Message_Queue, to count
@@ -98,10 +98,10 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNC
 public:
 #ifdef ACE_WIN32_VC14
   // Work around for Connect #2869042 Bugzilla #4215
-  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = 0);
+  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = nullptr);
   TAO_EC_Dispatching_Task ();
 #else
-  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager = 0, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = 0);
+  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager = nullptr, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = nullptr);
 #endif
 
   /// Process the events in the queue.
@@ -130,11 +130,11 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   /// Constructor, it will allocate its own data block
-  TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
+  TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator = nullptr);
 
   /// Constructor, it assumes ownership of the data block
   TAO_EC_Dispatch_Command (ACE_Data_Block*,
-                           ACE_Allocator *mb_allocator = 0);
+                           ACE_Allocator *mb_allocator = nullptr);
 
   /// Destructor
   virtual ~TAO_EC_Dispatch_Command ();
@@ -149,7 +149,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispa
 {
 public:
   /// Constructor
-  TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
+  TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
 
   /// Command callback
   virtual int execute () override;
