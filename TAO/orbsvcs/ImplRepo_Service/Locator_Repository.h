@@ -43,17 +43,17 @@ class ImR_Locator_i;
 class Locator_Repository
 {
 public:
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+  using SIMap = ACE_Hash_Map_Manager_Ex<ACE_CString,
     Server_Info_Ptr,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
-    ACE_Null_Mutex> SIMap;
+    ACE_Null_Mutex>;
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+  using AIMap = ACE_Hash_Map_Manager_Ex<ACE_CString,
     Activator_Info_Ptr,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
-    ACE_Null_Mutex> AIMap;
+    ACE_Null_Mutex>;
 
   Locator_Repository(const Options& opts, CORBA::ORB_ptr orb);
 
