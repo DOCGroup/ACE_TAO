@@ -46,6 +46,10 @@ public:
   /// Creator method, the Transport name can only be set when the
   /// object is created.
   TAO_AV_Transport_Item (const ACE_CString &name);
+  TAO_AV_Transport_Item (TAO_AV_Transport_Item const &) = delete;
+  TAO_AV_Transport_Item &operator= (TAO_AV_Transport_Item const &) = delete;
+  TAO_AV_Transport_Item (TAO_AV_Transport_Item &&) = delete;
+  TAO_AV_Transport_Item &operator= (TAO_AV_Transport_Item &&) = delete;
 
   /// Return a reference to the character representation of the Transport
   /// factories name.
@@ -77,6 +81,10 @@ public:
   /// creator method, the Flow_Protocol name can only be set when the
   /// object is created.
   TAO_AV_Flow_Protocol_Item (const ACE_CString &name);
+  TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item const &) = delete;
+  TAO_AV_Flow_Protocol_Item &operator= (TAO_AV_Flow_Protocol_Item const &) = delete;
+  TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item &&) = delete;
+  TAO_AV_Flow_Protocol_Item &operator= (TAO_AV_Flow_Protocol_Item &&) = delete;
 
   /// return a reference to the character representation of the Flow_Protocol
   /// factories name.
@@ -107,6 +115,10 @@ public:
   TAO_AV_Flow_Handler ();
 
   virtual ~TAO_AV_Flow_Handler ();
+  TAO_AV_Flow_Handler (TAO_AV_Flow_Handler const &) = delete;
+  TAO_AV_Flow_Handler &operator= (TAO_AV_Flow_Handler const &) = delete;
+  TAO_AV_Flow_Handler (TAO_AV_Flow_Handler &&) = delete;
+  TAO_AV_Flow_Handler &operator= (TAO_AV_Flow_Handler &&) = delete;
   /// Start/stop the flow handler.
   virtual int start (TAO_FlowSpec_Entry::Role role);
   virtual int stop  (TAO_FlowSpec_Entry::Role role);
@@ -158,6 +170,10 @@ public:
   TAO_AV_Transport ();
 
   virtual ~TAO_AV_Transport ();
+  TAO_AV_Transport (TAO_AV_Transport const &) = delete;
+  TAO_AV_Transport &operator= (TAO_AV_Transport const &) = delete;
+  TAO_AV_Transport (TAO_AV_Transport &&) = delete;
+  TAO_AV_Transport &operator= (TAO_AV_Transport &&) = delete;
 
   virtual int open (ACE_Addr *address) = 0;
 
@@ -210,6 +226,10 @@ class TAO_AV_Export TAO_AV_Acceptor
 public:
   TAO_AV_Acceptor ();
   virtual ~TAO_AV_Acceptor ();
+  TAO_AV_Acceptor (TAO_AV_Acceptor const &) = delete;
+  TAO_AV_Acceptor &operator= (TAO_AV_Acceptor const &) = delete;
+  TAO_AV_Acceptor (TAO_AV_Acceptor &&) = delete;
+  TAO_AV_Acceptor &operator= (TAO_AV_Acceptor &&) = delete;
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
@@ -239,6 +259,10 @@ class TAO_AV_Export TAO_AV_Connector
 public:
   TAO_AV_Connector ();
   virtual ~TAO_AV_Connector ();
+  TAO_AV_Connector (TAO_AV_Connector const &) = delete;
+  TAO_AV_Connector &operator= (TAO_AV_Connector const &) = delete;
+  TAO_AV_Connector (TAO_AV_Connector &&) = delete;
+  TAO_AV_Connector &operator= (TAO_AV_Connector &&) = delete;
   const char *flowname ();
 
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
@@ -272,6 +296,10 @@ public:
    */
   TAO_AV_Connector_Registry ();
   ~TAO_AV_Connector_Registry ();
+  TAO_AV_Connector_Registry (TAO_AV_Connector_Registry const &) = delete;
+  TAO_AV_Connector_Registry &operator= (TAO_AV_Connector_Registry const &) = delete;
+  TAO_AV_Connector_Registry (TAO_AV_Connector_Registry &&) = delete;
+  TAO_AV_Connector_Registry &operator= (TAO_AV_Connector_Registry &&) = delete;
   int open (TAO_Base_StreamEndPoint *endpoint,
             TAO_AV_Core *av_core,
             TAO_AV_FlowSpecSet &flow_spec_set);
@@ -295,6 +323,10 @@ class TAO_AV_Export TAO_AV_Acceptor_Registry
 public:
   TAO_AV_Acceptor_Registry ();
   ~TAO_AV_Acceptor_Registry ();
+  TAO_AV_Acceptor_Registry (TAO_AV_Acceptor_Registry const &) = delete;
+  TAO_AV_Acceptor_Registry &operator= (TAO_AV_Acceptor_Registry const &) = delete;
+  TAO_AV_Acceptor_Registry (TAO_AV_Acceptor_Registry &&) = delete;
+  TAO_AV_Acceptor_Registry &operator= (TAO_AV_Acceptor_Registry &&) = delete;
   int open (TAO_Base_StreamEndPoint *endpoint,
             TAO_AV_Core *av_core,
             TAO_AV_FlowSpecSet &flow_spec_set);
@@ -319,6 +351,10 @@ public:
   /// Initialization hook.
   TAO_AV_Transport_Factory ();
   ~TAO_AV_Transport_Factory () override;
+  TAO_AV_Transport_Factory (TAO_AV_Transport_Factory const &) = delete;
+  TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory const &) = delete;
+  TAO_AV_Transport_Factory (TAO_AV_Transport_Factory &&) = delete;
+  TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory &&) = delete;
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();

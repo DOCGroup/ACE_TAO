@@ -29,8 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
 TAO_AV_Transport_Item::TAO_AV_Transport_Item (const ACE_CString &name)
-  :   name_ (name),
-      factory_ (0)
+  : name_ (name)
+  , factory_ (nullptr)
 {
 }
 
@@ -38,8 +38,8 @@ TAO_AV_Transport_Item::TAO_AV_Transport_Item (const ACE_CString &name)
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
 TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (const ACE_CString &name)
-  :   name_ (name),
-      factory_ (0)
+  : name_ (name)
+  , factory_ (nullptr)
 {
 }
 
