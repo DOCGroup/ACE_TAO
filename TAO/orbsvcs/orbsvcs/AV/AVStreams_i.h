@@ -84,45 +84,45 @@ public:
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
-  virtual void stop (const AVStreams::flowSpec &the_spec);
+  void stop (const AVStreams::flowSpec &the_spec) override;
 
   /// Start the transfer of data in the stream.
   /// Empty the_spec means apply operation to all flows
-  virtual void start (const AVStreams::flowSpec &the_spec);
+  void start (const AVStreams::flowSpec &the_spec) override;
 
   /**
    * Tears down the stream. This will close the connection, and delete
    * the streamendpoint and vdev associated with this stream
    * Empty the_spec means apply operation to all flows
    */
-  virtual void destroy (const AVStreams::flowSpec &the_spec);
+  void destroy (const AVStreams::flowSpec &the_spec) override;
 
   /// Changes the QoS associated with the stream
   /// Empty the_spec means apply operation to all flows
-  virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                                     const AVStreams::flowSpec &the_spec);
+  CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
+                             const AVStreams::flowSpec &the_spec) override;
 
   /// Used by StreamEndPoint and VDev to inform StreamCtrl of events.
   /// E.g., loss of flow, reestablishment of flow, etc..
-  virtual void push_event (const struct CosPropertyService::Property & the_event);
+  void push_event (const struct CosPropertyService::Property &the_event) override;
 
   /// Used to control the flow protocol parameters.
-  virtual void set_FPStatus (const AVStreams::flowSpec &the_spec,
-                             const char *fp_name,
-                             const CORBA::Any &fp_settings);
+  void set_FPStatus (const AVStreams::flowSpec &the_spec,
+                     const char *fp_name,
+                     const CORBA::Any &fp_settings) override;
 
   /// Not implemented in the light profile, will raise the notsupported
   /// exception
-  virtual CORBA::Object_ptr get_flow_connection (const char *flow_name);
+  CORBA::Object_ptr get_flow_connection (const char *flow_name) override;
 
   /// Not implemented in the light profile, will raise the notsupported
   /// exception
-  virtual void set_flow_connection (const char *flow_name,
-                                    CORBA::Object_ptr flow_connection);
+  void set_flow_connection (const char *flow_name,
+                            CORBA::Object_ptr flow_connection) override;
 
 protected:
   /// Destructor.
-  virtual ~TAO_Basic_StreamCtrl ();
+  ~TAO_Basic_StreamCtrl () override;
 
 
   /// The Virtual Devices for this stream
@@ -154,8 +154,8 @@ public:
   TAO_Negotiator (TAO_Negotiator &&) = delete;
   TAO_Negotiator &operator= (TAO_Negotiator const &) = delete;
   TAO_Negotiator &operator= (TAO_Negotiator &&) = delete;
-  virtual CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
-                                    const AVStreams::streamQoS &qos_spec);
+  CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
+                            const AVStreams::streamQoS &qos_spec) override;
 };
 
 class TAO_MCastConfigIf;
@@ -209,22 +209,22 @@ public:
   TAO_StreamCtrl &operator= (TAO_StreamCtrl &&) = delete;
 
   /// virtual destructor.
-  virtual ~TAO_StreamCtrl ();
+  ~TAO_StreamCtrl () override;
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
-  virtual void stop (const AVStreams::flowSpec &the_spec);
+  void stop (const AVStreams::flowSpec &the_spec) override;
 
   /// Start the transfer of data in the stream.
   /// Empty the_spec means apply operation to all flows
-  virtual void start (const AVStreams::flowSpec &the_spec);
+  void start (const AVStreams::flowSpec &the_spec) override;
 
   /**
    * Tears down the stream. This will close the connection, and delete
    * the streamendpoint and vdev associated with this stream
    * Empty the_spec means apply operation to all flows
    */
-  virtual void destroy (const AVStreams::flowSpec &the_spec);
+  void destroy (const AVStreams::flowSpec &the_spec) override;
 
   /**
    * Establish a stream between a_party and b_party,
@@ -233,38 +233,38 @@ public:
    * Causes a connection to be established between the StreamEndpoints.
    * Returns success/failure
    */
-  virtual CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party,
-                                    AVStreams::MMDevice_ptr b_party,
-                                    AVStreams::streamQoS& the_qos,
-                                    const AVStreams::flowSpec& the_flows);
+  CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party,
+                            AVStreams::MMDevice_ptr b_party,
+                            AVStreams::streamQoS& the_qos,
+                            const AVStreams::flowSpec& the_flows) override;
 
   /**
    * Establish a connection between two streamendpoints. This can
    * be used if the streamendpoints have been created independent of
    * a MMDevice
    */
-  virtual CORBA::Boolean bind (AVStreams::StreamEndPoint_A_ptr a_party,
-                               AVStreams::StreamEndPoint_B_ptr b_party,
-                               AVStreams::streamQoS &the_qos,
-                               const AVStreams::flowSpec &the_flows);
+  CORBA::Boolean bind (AVStreams::StreamEndPoint_A_ptr a_party,
+                       AVStreams::StreamEndPoint_B_ptr b_party,
+                       AVStreams::streamQoS &the_qos,
+                       const AVStreams::flowSpec &the_flows) override;
 
-  virtual void unbind_dev (AVStreams::MMDevice_ptr dev,
-                           const AVStreams::flowSpec & the_spec);
+  void unbind_dev (AVStreams::MMDevice_ptr dev,
+                   const AVStreams::flowSpec &the_spec) override;
 
   /// Unbind the_ep from the stream. Empty the_spec means apply to all flows.
-  virtual void unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
-                             const AVStreams::flowSpec &the_spec);
+  void unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
+                     const AVStreams::flowSpec &the_spec) override;
 
   /// unbind the stream. Same effect as Basic_StreamCtrl::destroy ()
-  virtual void unbind ();
+  void unbind () override;
 
-  virtual AVStreams::VDev_ptr get_related_vdev (AVStreams::MMDevice_ptr adev,
-                                                AVStreams::StreamEndPoint_out sep);
+  AVStreams::VDev_ptr get_related_vdev (AVStreams::MMDevice_ptr adev,
+                                        AVStreams::StreamEndPoint_out sep) override;
 
   /// Changes the QoS associated with the stream
   /// Empty the_spec means apply operation to all flows
-  virtual CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                                     const AVStreams::flowSpec &the_spec);
+  CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
+                             const AVStreams::flowSpec &the_spec) override;
 
 protected:
   struct MMDevice_Map_Entry
