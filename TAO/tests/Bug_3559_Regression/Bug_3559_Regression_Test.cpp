@@ -12,7 +12,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:"));
 
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -48,7 +48,7 @@ check_logging ()
       ///When verbose is on, a line contains a timestamp and a @ character
       if (ACE_OS::strchr (buf, ACE_TEXT('@')) != nullptr)
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("Test OK, a timestamp was found\n")));
           (void) ACE_OS::fclose (fp);
           return 0;
@@ -63,7 +63,7 @@ check_logging ()
 int
 check_flags (u_long flags, int verbose)
 {
-  int result = 0;
+  int result {};
   switch (verbose)
     {
       case 0:
@@ -101,14 +101,14 @@ check_flags (u_long flags, int verbose)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-  int extra_argc = 25;
+  int result {};
+  int const extra_argc = 25;
 
   try
     {
       if (parse_args (argc, argv) != 0)
       {
-        ACE_ERROR((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                    ACE_TEXT ("Usage:\n\n")
                    ACE_TEXT ("OPTIONS:\n\n")
                    ACE_TEXT ("\t[-l Log file]\n\n")));
@@ -173,7 +173,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           CORBA::ORB_var orb = CORBA::ORB_init (orb_argc, largv.data (), orb_name);
 
-          u_long log_flags = ACE_LOG_MSG->flags();
+          u_long const log_flags = ACE_LOG_MSG->flags ();
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("log flags %d verbose: %d\n"),
