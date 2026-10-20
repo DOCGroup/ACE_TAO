@@ -49,6 +49,12 @@ public:
   /// Destructor.
   virtual ~TAO_FT_Naming_Service ();
 
+private:
+  TAO_FT_Naming_Service (TAO_FT_Naming_Service const &) = delete;
+  TAO_FT_Naming_Service (TAO_FT_Naming_Service &&) = delete;
+  TAO_FT_Naming_Service & operator= (TAO_FT_Naming_Service const &) = delete;
+  TAO_FT_Naming_Service & operator= (TAO_FT_Naming_Service &&) = delete;
+
 protected:
   /// Parse the command line arguments to find
   /// the timeout period.

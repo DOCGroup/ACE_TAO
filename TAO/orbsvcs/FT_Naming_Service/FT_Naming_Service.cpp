@@ -123,7 +123,7 @@ public:
       time_(t)
   {}
 
-  int svc ()
+  int svc () override
   {
   if (!CORBA::is_nil (orb_.in ()))
     {
@@ -142,6 +142,11 @@ public:
   }
 
 private:
+  ORB_Runner (ORB_Runner const &) = delete;
+  ORB_Runner (ORB_Runner &&) = delete;
+  ORB_Runner & operator= (ORB_Runner const &) = delete;
+  ORB_Runner & operator= (ORB_Runner &&) = delete;
+
   CORBA::ORB_var orb_;
   long time_;
 };
@@ -199,6 +204,4 @@ TAO_FT_Naming_Service::fini ()
 }
 
 // Destructor.
-TAO_FT_Naming_Service::~TAO_FT_Naming_Service ()
-{
-}
+TAO_FT_Naming_Service::~TAO_FT_Naming_Service () = default;
