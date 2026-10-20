@@ -10,10 +10,10 @@
 #include "orbsvcs/CosNamingC.h"
 
 #include <iostream>
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-const int EVENT_LIMIT = 10;
+constexpr int EVENT_LIMIT = 10;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -22,10 +22,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    const ACE_TCHAR *ecname = ACE_TEXT ("EventService");
-    for (int i = 0; argv[i] != 0; i++) {
+    ACE_TCHAR const * ecname = ACE_TEXT ("EventService");
+    for (int i = 0; argv[i] != nullptr; ++i) {
       if (ACE_OS::strcmp(argv[i], ACE_TEXT("-ecname")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           ecname = argv[i+1];
         } else {
           std::cerr << "Missing Event channel name" << std::endl;
@@ -96,7 +96,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& exc)
+  catch (CORBA::Exception const & exc)
   {
     std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
   }
