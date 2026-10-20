@@ -19,13 +19,13 @@ Consumer_i::get_typed_consumer ()
 }
 
 // Override the push() operation.
-void Consumer_i::push(const CORBA::Any &)
+void Consumer_i::push (CORBA::Any const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 // Override the disconnect_push_consumer() operation.
-void Consumer_i::disconnect_push_consumer()
+void Consumer_i::disconnect_push_consumer ()
 {
   // Deactivate this object.
   CORBA::Object_var obj = orb_->resolve_initial_references("POACurrent");

@@ -8,7 +8,7 @@
 #include <iostream>
 #include "MessengerC.h"
 
-const int EVENT_DELAY_MS = 10;
+constexpr int EVENT_DELAY_MS = 10;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -52,10 +52,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Messenger_var messenger = Messenger::_narrow(messenger_obj.in () );
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup("Hello, world.");
+    CORBA::String_var const eventData = CORBA::string_dup("Hello, world.");
 
     // Send one event per second. (approx)
-    while (1) {
+    while (true) {
       messenger->send_message("King Lizard",
                               "Proclamations",
                               eventData.in());
@@ -65,7 +65,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     std::cerr << "Caught CORBA::Exception. " << std::endl << ex << std::endl;
   }
