@@ -35,11 +35,11 @@ public:
   // sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
-                     const ACE_Addr &peer_address);
+                     ACE_Addr const &peer_address) override;
 
   // Called when the sender is done sending data and wants to close
   // down the connection.
-  int handle_destroy ();
+  int handle_destroy () override;
 
 private:
   /// Keeping a count of the incoming frames.
@@ -58,7 +58,7 @@ class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 public:
   // Create a receiver application callback.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
 private:
   /// Receiver application callback.
@@ -81,6 +81,10 @@ public:
 
   /// Destructor.
   ~Receiver ();
+  Receiver (Receiver const &) = delete;
+  Receiver &operator= (Receiver const &) = delete;
+  Receiver (Receiver &&) = delete;
+  Receiver &operator= (Receiver &&) = delete;
 
   /// Initialize data components.
   int init (int argc,

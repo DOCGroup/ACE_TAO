@@ -28,15 +28,15 @@ public:
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &/* the_flows */);
+                             AVStreams::flowSpec const &/* the_flows */) override;
 protected:
   /// Application callback.
   TAO_AV_Callback callback_;
@@ -60,6 +60,10 @@ class Sender
 public:
   /// Constructor
   Sender ();
+  Sender (Sender const &) = delete;
+  Sender &operator= (Sender const &) = delete;
+  Sender (Sender &&) = delete;
+  Sender &operator= (Sender &&) = delete;
 
   /// Method to initialize the various data components.
   int init (int argc,
