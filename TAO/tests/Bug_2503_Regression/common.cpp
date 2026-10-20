@@ -2,13 +2,13 @@
 #include "tao/PortableServer/PortableServer.h"
 
 CORBA::ORB_ptr
-initialize_orb_and_poa(int & argc, ACE_TCHAR * argv[])
+initialize_orb_and_poa (int &argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var poa_object =
-    orb->resolve_initial_references("RootPOA");
+    orb->resolve_initial_references ("RootPOA");
 
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (poa_object.in ());
@@ -18,25 +18,25 @@ initialize_orb_and_poa(int & argc, ACE_TCHAR * argv[])
 
   poa_manager->activate ();
 
-  return orb._retn();
+  return orb._retn ();
 }
 
-void report_exception()
+void report_exception ()
 {
   try
   {
     throw;
   }
-  catch(CORBA::Exception & ex)
+  catch (CORBA::Exception &ex)
   {
     ex._tao_print_exception ("CORBA Exception raised:");
   }
-  catch(char const * msg)
+  catch (char const *msg)
   {
     ACE_ERROR ((LM_ERROR, "Exception (char const*) raised: %s\n",
             msg));
   }
-  catch(...)
+  catch (...)
   {
     ACE_ERROR ((LM_ERROR, "Unknown exception raised\n"));
   }
