@@ -8,7 +8,7 @@
 
 DllORB::DllORB ()
  : failPrePostInit_ (3),
-   mp_barrier_ (0),
+   mp_barrier_ (nullptr),
    mv_orb_ (),
    mv_rootPOA_ ()
 {
@@ -29,7 +29,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
   try
     {
       ACE_Arg_Shifter as (argc, argv);
-      const ACE_TCHAR *currentArg = 0;
+      ACE_TCHAR const *currentArg = nullptr;
       while (as.is_anything_left ())
         {
           if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
@@ -136,7 +136,7 @@ DllORB::fini ()
 {
   try
     {
-      mv_poaManager_->deactivate (1, 1);
+      mv_poaManager_->deactivate (true, true);
       mv_poaManager_ = PortableServer::POAManager::_nil ();
 
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
@@ -154,14 +154,14 @@ DllORB::fini ()
   this->wait ();
 
   delete mp_barrier_;
-  mp_barrier_ = 0;
+  mp_barrier_ = nullptr;
 
   try
     {
       mv_orb_->destroy ();
       mv_orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
