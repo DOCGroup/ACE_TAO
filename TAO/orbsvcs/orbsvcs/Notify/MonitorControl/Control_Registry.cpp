@@ -13,7 +13,7 @@ TAO_Control_Registry::~TAO_Control_Registry ()
   ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
 
   Map::iterator itr (this->map_);
-  Map::value_type* entry = 0;
+  Map::value_type* entry = nullptr;
 
   while (itr.next (entry))
     {
@@ -80,7 +80,7 @@ TAO_Control_Registry::names ()
         {
           CORBA::ULong length = 0;
           Map::iterator itr (this->map_);
-          Map::value_type* entry = 0;
+          Map::value_type* entry = nullptr;
 
           while (itr.next (entry))
             {
