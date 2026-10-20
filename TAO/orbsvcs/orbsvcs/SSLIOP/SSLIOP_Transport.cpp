@@ -241,7 +241,7 @@ TAO::SSLIOP::Transport::get_listen_point (
   TAO::SSLIOP::Acceptor *ssliop_acceptor =
     dynamic_cast<TAO::SSLIOP::Acceptor *> (acceptor);
 
-  if (ssliop_acceptor == 0)
+  if (ssliop_acceptor == nullptr)
     return -1;
 
   // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
@@ -289,9 +289,9 @@ TAO::SSLIOP::Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
   // If this is an IPv6 decimal linklocal address containing a scopeid than
   // remove the scopeid from the information being sent.
-  const char *cp_scope = 0;
+  const char *cp_scope = nullptr;
   if (local_addr.get_type () == PF_INET6 &&
-        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != 0)
+        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != nullptr)
     {
       CORBA::ULong len = cp_scope - local_interface.in ();
       local_interface[len] = '\0';

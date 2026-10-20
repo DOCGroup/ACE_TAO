@@ -35,7 +35,7 @@ TAO::SSLIOP::Util::current (TAO_ORB_Core *orb_core)
         ex._tao_print_exception (
           "Could not resolve \"SSLIOPCurrent\" object");
 
-      return 0;
+      return nullptr;
     }
 }
 
