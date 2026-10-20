@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -43,9 +43,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var obj = orb->string_to_object(ior);
+      CORBA::Object_var obj = orb->string_to_object (ior);
 
-      const char* the_string = 0;
+      char const *the_string = nullptr;
 
       ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Synchronous twoway DII\n"));
 
@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       req->send_deferred ();
       do {
-        ACE_OS::sleep(1);
+        ACE_OS::sleep (1);
         ACE_DEBUG ((LM_INFO, "(%P|%t) - Polling...\n"));
       } while (!req->poll_response ());
       req->return_value () >>= the_string;
@@ -93,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
