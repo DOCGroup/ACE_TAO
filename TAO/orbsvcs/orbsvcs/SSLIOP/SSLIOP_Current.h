@@ -39,9 +39,9 @@ namespace TAO
   namespace SSLIOP
   {
     class Current;
-    typedef Current * Current_ptr;
-    typedef TAO_Pseudo_Var_T<Current> Current_var;
-    typedef TAO_Pseudo_Out_T<Current> Current_out;
+    using Current_ptr = Current *;
+    using Current_var = TAO_Pseudo_Var_T<Current>;
+    using Current_out = TAO_Pseudo_Out_T<Current>;
 
     /**
      * @class Current
@@ -58,9 +58,9 @@ namespace TAO
         public ::CORBA::LocalObject
     {
     public:
-      typedef Current_ptr _ptr_type;
-      typedef Current_var _var_type;
-      typedef Current_out _out_type;
+      using _ptr_type = Current_ptr;
+      using _var_type = Current_var;
+      using _out_type = Current_out;
 
       /// Constructor.
       Current (TAO_ORB_Core *orb_core);

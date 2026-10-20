@@ -34,9 +34,9 @@ namespace TAO
   namespace SSLIOP
   {
     class OwnCredentials;
-    typedef OwnCredentials* OwnCredentials_ptr;
-    typedef TAO_Pseudo_Var_T<OwnCredentials> OwnCredentials_var;
-    typedef TAO_Pseudo_Out_T<OwnCredentials> OwnCredentials_out;
+    using OwnCredentials_ptr = OwnCredentials*;
+    using OwnCredentials_var = TAO_Pseudo_Var_T<OwnCredentials>;
+    using OwnCredentials_out = TAO_Pseudo_Out_T<OwnCredentials>;
 
     /**
      * @class OwnCredentials
@@ -52,9 +52,9 @@ namespace TAO
         public virtual SSLIOP_Credentials
     {
     public:
-      typedef OwnCredentials_ptr _ptr_type;
-      typedef OwnCredentials_var _var_type;
-      typedef OwnCredentials_out _out_type;
+      using _ptr_type = OwnCredentials_ptr;
+      using _var_type = OwnCredentials_var;
+      using _out_type = OwnCredentials_out;
 
       /// Constructor
       OwnCredentials (::X509 *cert, ::EVP_PKEY *evp);

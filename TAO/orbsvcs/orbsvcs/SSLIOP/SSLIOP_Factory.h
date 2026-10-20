@@ -120,7 +120,7 @@ namespace TAO
 }  // End TAO namespace.
 
 // Work around preprocessor tokenization.
-typedef TAO::SSLIOP::Protocol_Factory TAO_SSLIOP_Protocol_Factory;
+using TAO_SSLIOP_Protocol_Factory = TAO::SSLIOP::Protocol_Factory;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
