@@ -51,7 +51,7 @@ namespace TAO
     /**
     * Destructor.
     */
-    virtual ~FT_FaultConsumer ();
+    ~FT_FaultConsumer () override;
 
     /**
     * Connect to the FT::FaultNotifier.
@@ -97,14 +97,14 @@ namespace TAO
     //@{
     ////////////////
     // CORBA methods
-    virtual void push_structured_event (
-      const CosNotification::StructuredEvent &notification);
+    void push_structured_event (
+      CosNotification::StructuredEvent const &notification) override;
 
-   virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+   void offer_change (
+        CosNotification::EventTypeSeq const & added,
+        CosNotification::EventTypeSeq const & removed) override;
 
-   virtual void disconnect_structured_push_consumer ();
+   void disconnect_structured_push_consumer () override;
 
     //@}
 
@@ -112,9 +112,11 @@ namespace TAO
     // Forbidden methods
   private:
     /// Copy constructor.
-    FT_FaultConsumer (const FT_FaultConsumer & rhs);
+    FT_FaultConsumer (FT_FaultConsumer const &) = delete;
     /// Assignment operator.
-    FT_FaultConsumer & operator = (const FT_FaultConsumer & rhs);
+    FT_FaultConsumer (FT_FaultConsumer &&) = delete;
+    FT_FaultConsumer & operator= (FT_FaultConsumer const &) = delete;
+    FT_FaultConsumer & operator= (FT_FaultConsumer &&) = delete;
 
     ///////////////
     // Data Members

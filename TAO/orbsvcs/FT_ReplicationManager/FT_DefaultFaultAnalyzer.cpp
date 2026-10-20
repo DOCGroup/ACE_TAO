@@ -22,20 +22,16 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Default constructor.
-TAO::FT_DefaultFaultAnalyzer::FT_DefaultFaultAnalyzer ()
-{
-}
+TAO::FT_DefaultFaultAnalyzer::FT_DefaultFaultAnalyzer () = default;
 
 /// Destructor.
-TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer ()
-{
-}
+TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer () = default;
 
 // Validate the event to make sure it is one we can handle.
 // If it is not an event we can handle, this function logs the error
 // and returns -1.
 int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
-  const CosNotification::StructuredEvent & event)
+  CosNotification::StructuredEvent const & event)
 {
   int result = 0;
 
@@ -146,7 +142,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
 
 /// Analyze a fault event.
 int TAO::FT_DefaultFaultAnalyzer::analyze_fault_event (
-  const CosNotification::StructuredEvent & event)
+  CosNotification::StructuredEvent const & event)
 {
   ACE_UNUSED_ARG (event);
   if (TAO_debug_level > 6)

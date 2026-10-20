@@ -46,7 +46,7 @@ namespace TAO
     /**
     * Destructor.
     */
-    virtual ~FT_DefaultFaultAnalyzer ();
+    ~FT_DefaultFaultAnalyzer () override;
 
   public:
     /**
@@ -54,24 +54,26 @@ namespace TAO
     * @param event The structured fault event, as from the Fault Notifier.
     * @return 0 if it is a valid event type, -1 otherwise.
     */
-    virtual int validate_event_type (
-      const CosNotification::StructuredEvent & event);
+    int validate_event_type (
+      CosNotification::StructuredEvent const & event) override;
 
     /**
     * Analyze a fault event.
     * @param event The structured fault event, as from the Fault Notifier.
     * @return 0 on success, -1 on failure.
     */
-    virtual int analyze_fault_event (
-      const CosNotification::StructuredEvent & event);
+    int analyze_fault_event (
+      CosNotification::StructuredEvent const & event) override;
 
     ////////////////////
     // Forbidden methods
   private:
     /// Copy constructor.
-    FT_DefaultFaultAnalyzer (const FT_DefaultFaultAnalyzer & rhs);
+    FT_DefaultFaultAnalyzer (FT_DefaultFaultAnalyzer const &) = delete;
     /// Assignment operator.
-    FT_DefaultFaultAnalyzer & operator = (const FT_DefaultFaultAnalyzer & rhs);
+    FT_DefaultFaultAnalyzer (FT_DefaultFaultAnalyzer &&) = delete;
+    FT_DefaultFaultAnalyzer & operator= (FT_DefaultFaultAnalyzer const &) = delete;
+    FT_DefaultFaultAnalyzer & operator= (FT_DefaultFaultAnalyzer &&) = delete;
   };
 } // namespace TAO
 
