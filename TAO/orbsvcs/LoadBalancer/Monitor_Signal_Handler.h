@@ -37,19 +37,24 @@ public:
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
     CosLoadBalancing::LoadManager_ptr load_manager,
-    const PortableGroup::Location & location);
+    PortableGroup::Location const & location);
 
 protected:
   /// Template method that initiates the cleanup process.
-  virtual int perform_cleanup (int signum);
+  int perform_cleanup (int signum) override;
 
 private:
+  TAO_LB_Monitor_Signal_Handler (TAO_LB_Monitor_Signal_Handler const &) = delete;
+  TAO_LB_Monitor_Signal_Handler (TAO_LB_Monitor_Signal_Handler &&) = delete;
+  TAO_LB_Monitor_Signal_Handler & operator= (TAO_LB_Monitor_Signal_Handler const &) = delete;
+  TAO_LB_Monitor_Signal_Handler & operator= (TAO_LB_Monitor_Signal_Handler &&) = delete;
+
   /// Reference to the LoadManager with which the LoadMonitor is
   /// registered.
   CosLoadBalancing::LoadManager_var load_manager_;
 
   /// Reference to the location the LoadMonitor resides at.
-  const PortableGroup::Location & location_;
+  PortableGroup::Location const & location_;
 };
 
 
