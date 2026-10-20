@@ -592,7 +592,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_role);
 
   // allocate stucture to be returned.
-  PortableGroup::FactoryInfos_var result = 0;
+  PortableGroup::FactoryInfos_var result = nullptr;
   ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(),
     CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO));
 
