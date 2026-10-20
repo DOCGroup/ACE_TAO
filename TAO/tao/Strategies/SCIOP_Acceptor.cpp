@@ -106,7 +106,7 @@ TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (pfile) == -1)
         {
           pfile->_decr_refcnt ();
-          pfile = 0;
+          pfile = nullptr;
           return -1;
         }
 
@@ -145,7 +145,7 @@ TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (sciop_profile) == -1)
         {
           sciop_profile->_decr_refcnt ();
-          sciop_profile = 0;
+          sciop_profile = nullptr;
           return -1;
         }
 
@@ -837,7 +837,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 
   // Iterate over the hostnames and stuff them into the array
   size_t index = 0;
-  last = 0;
+  last = nullptr;
   hostname = ACE_OS::strtok_r (hostnames_copy, "+", &last);
 
   while (index < num_hostnames) {

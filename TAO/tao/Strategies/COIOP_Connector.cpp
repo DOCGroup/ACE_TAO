@@ -69,7 +69,7 @@ TAO_COIOP_Connector::create_profile (TAO_InputCDR& cdr)
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;

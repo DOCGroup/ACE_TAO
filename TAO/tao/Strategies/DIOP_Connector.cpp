@@ -215,7 +215,7 @@ TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
   if (pfile->decode (cdr) == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;

@@ -217,7 +217,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
        else
          {
            // Transport is not usable
-           transport = 0;
+           transport = nullptr;
          }
     }
 
@@ -326,7 +326,7 @@ TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;

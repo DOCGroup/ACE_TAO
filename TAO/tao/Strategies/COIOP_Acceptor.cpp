@@ -67,7 +67,7 @@ TAO_COIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   if (mprofile.give_profile (pfile) == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
       return -1;
     }
 
@@ -121,7 +121,7 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (coiop_profile) == -1)
         {
           coiop_profile->_decr_refcnt ();
-          coiop_profile = 0;
+          coiop_profile = nullptr;
           return -1;
         }
 

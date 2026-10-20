@@ -168,7 +168,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
           if (cp_pos_a[1] == ':')    // Look for a port
             cp_pos = cp_pos_a + 1;
           else
-            cp_pos = 0;
+            cp_pos = nullptr;
           ipv6_in_host = true; // host string contains full IPv6 numeric address
         }
     }
