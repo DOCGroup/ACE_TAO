@@ -11,10 +11,6 @@ FT_ProxyAdmin_Base::FT_ProxyAdmin_Base(PortableServer::ServantBase* servant,
 {
 }
 
-FT_ProxyAdmin_Base::~FT_ProxyAdmin_Base()
-{
-}
-
 void
 FT_ProxyAdmin_Base::activate(const FtRtecEventComm::ObjectId& oid)
 {

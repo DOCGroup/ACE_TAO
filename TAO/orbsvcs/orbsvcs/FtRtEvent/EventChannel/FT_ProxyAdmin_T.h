@@ -34,10 +34,10 @@ public:
   ProxyInterface_ptr obtain_proxy ();
 
   /// this is used for updating the state
-  void obtain_proxy (const FtRtecEventChannelAdmin::Operation& op);
+  void obtain_proxy (FtRtecEventChannelAdmin::Operation const& op);
 
   void get_state(State& state);
-  void set_state(const State& state);
+  void set_state(State const& state);
 private:
   EC_PROXY_ADMIN* admin_;
 };

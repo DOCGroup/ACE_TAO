@@ -16,7 +16,7 @@ template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void
 FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface,State>::obtain_proxy (
-  const FtRtecEventChannelAdmin::Operation& op)
+  FtRtecEventChannelAdmin::Operation const& op)
 {
   Request_Context_Repository().set_object_id(op.object_id);
 
@@ -59,7 +59,7 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy ()
 
   try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-    ACE_READ_GUARD_RETURN (FTRTEC::Replication_Service, locker, *svc, 0);
+    ACE_READ_GUARD_RETURN (FTRTEC::Replication_Service, locker, *svc, nullptr);
     obj = IOGR_Maker::instance()->forge_iogr(result.in());
 
     result = ProxyInterface::_narrow(obj.in());
@@ -88,11 +88,11 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::get_state(
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
-  const State& state)
+  State const& state)
 {
-  for (size_t i =0; i < state.proxies.length(); ++i)
+  for (size_t i = 0; i < state.proxies.length(); ++i)
   {
-    const typename Proxy::State& proxy_state
+    typename Proxy::State const& proxy_state
       = state.proxies[i];
 
     Request_Context_Repository().set_object_id(proxy_state.object_id);
@@ -101,10 +101,10 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
       proxy_ior = admin_->obtain();
 
     using Skeleton = typename Proxy::Skeleton;
-    const void *temp = &proxy_state.object_id;
-    const PortableServer::ObjectId *oid =
-      reinterpret_cast<const PortableServer::ObjectId *> (temp);
-    const PortableServer::Servant servant =
+    void const* temp = &proxy_state.object_id;
+    PortableServer::ObjectId const* oid =
+      reinterpret_cast<PortableServer::ObjectId const*> (temp);
+    PortableServer::Servant const servant =
       poa_->id_to_servant (*oid);
 
     Skeleton skeleton = dynamic_cast<Skeleton> (servant);
