@@ -6,7 +6,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -139,7 +139,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception &excep)
+  catch (CORBA::Exception const &excep)
     {
       excep._tao_print_exception ("Caught exception:");
       return 1;
