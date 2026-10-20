@@ -490,7 +490,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
 {
   ACE_UINT32 i;
-  ENTRY *temp = 0;
+  ENTRY *temp = nullptr;
 
   // Allocate new memory.
   ACE_ALLOCATOR_RETURN (temp,

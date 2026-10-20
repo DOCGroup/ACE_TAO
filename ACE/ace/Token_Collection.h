@@ -63,7 +63,7 @@ public:
    * are sometimes useful for debugging.
    */
   ACE_Token_Collection (bool debug = false,
-                        const ACE_TCHAR *name = 0);
+                        const ACE_TCHAR *name = nullptr);
 
 // Collection Management operations
 

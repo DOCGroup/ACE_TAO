@@ -48,9 +48,9 @@ namespace ACE_OS
               int flags,
               ACE_HANDLE handle,
               ACE_OFF_T off = 0,
-              ACE_HANDLE *file_mapping = 0,
+              ACE_HANDLE *file_mapping = nullptr,
               LPSECURITY_ATTRIBUTES sa = 0,
-              const ACE_TCHAR *file_mapping_name = 0);
+              const ACE_TCHAR *file_mapping_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mprotect (void *addr,

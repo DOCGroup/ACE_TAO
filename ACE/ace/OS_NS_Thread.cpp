@@ -138,7 +138,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
         }
     }
 
-  void **old_ts_storage = 0;
+  void **old_ts_storage = nullptr;
 
   // Get the tss_storage from thread-OS specific storage.
   if (ACE_OS::thr_getspecific_native (native_tss_key_,
@@ -309,7 +309,7 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
       void **tss_base_p = tss_base ();
       for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
         {
-          *tss_base_p = 0;
+          *tss_base_p = nullptr;
         }
 
       return tss_base ();
@@ -676,7 +676,7 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance ()
 {
   // Variable to hold the mutex_ to delete outside the scope of the
   // guard.
-  ACE_Thread_Mutex *del_mutex = 0;
+  ACE_Thread_Mutex *del_mutex = nullptr;
 
   // scope the guard
   {
@@ -758,7 +758,7 @@ ACE_TSS_Cleanup::thread_exit ()
     ACE_TSS_CLEANUP_GUARD
 
     // if not initialized or already cleaned up
-    ACE_TSS_Keys *this_thread_keys = 0;
+    ACE_TSS_Keys *this_thread_keys = nullptr;
     if (! find_tss_keys (this_thread_keys) )
       {
         return;
@@ -901,7 +901,7 @@ ACE_TSS_Cleanup::thread_detach_key (ACE_thread_key_t key)
   // variables to hold the destructor and the object to be destructed
   // the actual call is deferred until the guard is released
   ACE_TSS_Info::Destructor destructor = 0;
-  void * tss_obj = 0;
+  void * tss_obj = nullptr;
 
   // scope the guard
   {
@@ -941,7 +941,7 @@ ACE_TSS_Cleanup::thread_release (
   // assume guard is held by caller
   // Find the TSS keys (if any) for this thread
   // do not create them if they don't exist
-  ACE_TSS_Keys * thread_keys = 0;
+  ACE_TSS_Keys * thread_keys = nullptr;
   if (find_tss_keys (thread_keys))
     {
         // if this key is in use by this thread
@@ -1022,7 +1022,7 @@ ACE_TSS_Cleanup::tss_keys ()
         }
     }
 
-  void *ts_keys = 0;
+  void *ts_keys = nullptr;
   if (ACE_OS::thr_getspecific (in_use_, &ts_keys) == -1)
     {
       ACE_ASSERT (false);
@@ -4203,7 +4203,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   // We can't get the status of the thread
   if (status != 0)
     {
-      *status = 0;
+      *status = nullptr;
     }
 
   // This method can not support joining all threads

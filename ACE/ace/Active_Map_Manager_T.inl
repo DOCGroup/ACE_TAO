@@ -34,7 +34,7 @@ template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::bind (const T &value,
                                  ACE_Active_Map_Manager_Key &key)
 {
-  T *internal_value = 0;
+  T *internal_value = nullptr;
   int result = this->bind (key,
                            internal_value);
 
@@ -83,7 +83,7 @@ ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
 template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key) const
 {
-  T *internal_value = 0;
+  T *internal_value = nullptr;
   return this->find (key,
                      internal_value);
 }
@@ -92,7 +92,7 @@ template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
                                  T &value) const
 {
-  T *internal_value = 0;
+  T *internal_value = nullptr;
   int result = this->find (key,
                            internal_value);
 

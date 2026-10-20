@@ -109,7 +109,7 @@ public:
   int open (const ACE_TCHAR *dll_name,
             int open_mode,
             ACE_SHLIB_HANDLE handle,
-            ERROR_STACK *errors = 0);
+            ERROR_STACK *errors = nullptr);
 
   /// Call to close the DLL object.  If unload = 0, it only decrements
   /// the refcount, but if unload = 1, then it will actually unload
@@ -248,7 +248,7 @@ public:
   ACE_DLL_Handle *open_dll (const ACE_TCHAR *dll_name,
                             int openmode,
                             ACE_SHLIB_HANDLE handle,
-                            ACE_DLL_Handle::ERROR_STACK *errors = 0);
+                            ACE_DLL_Handle::ERROR_STACK *errors = nullptr);
 
   /// Close the underlying dll.  Decrements the refcount.
   int close_dll (const ACE_TCHAR *dll_name);

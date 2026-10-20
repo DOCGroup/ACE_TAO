@@ -72,7 +72,7 @@ public:
                      const ACE_ATM_Addr &remote_sap,
                      ACE_ATM_Params params = ACE_ATM_Params(),
                      ACE_ATM_QoS options = ACE_ATM_QoS(),
-                     ACE_Time_Value *timeout = 0,
+                     ACE_Time_Value *timeout = nullptr,
                      const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "", 0 ),
                      int reuse_addr = 0,
 #if defined (ACE_WIN32)
@@ -102,7 +102,7 @@ public:
                const ACE_ATM_Addr &remote_sap,
                ACE_ATM_Params params = ACE_ATM_Params(),
                ACE_ATM_QoS options = ACE_ATM_QoS(),
-               ACE_Time_Value *timeout = 0,
+               ACE_Time_Value *timeout = nullptr,
                const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "",
                                                              0 ),
                int reuse_addr = 0,

@@ -190,7 +190,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
       this->table_allocator_->free (this->table_);
 
       // Should be done last...
-      this->table_ = 0;
+      this->table_ = nullptr;
     }
 
   return 0;
@@ -283,7 +283,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
                                                                                      INT_ID &int_id)
 {
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = 0;
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = nullptr;
 
   size_t loc = 0;
   if (this->shared_find (ext_id, temp, loc) == -1)

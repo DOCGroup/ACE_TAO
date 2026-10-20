@@ -41,7 +41,7 @@ namespace ACE
     {
     public:
       /// To be implemented by the concrete derived class.
-      virtual void execute (const char* command = 0) = 0;
+      virtual void execute (const char* command = nullptr) = 0;
 
       /// Refcounting methods.
       void add_ref ();

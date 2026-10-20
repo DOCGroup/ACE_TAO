@@ -291,7 +291,7 @@ public:
    */
   int open (const ACE_TCHAR *prog_name,
             u_long options_flags = ACE_DEFAULT_LOG_FLAGS,
-            const ACE_TCHAR *logger_key = 0);
+            const ACE_TCHAR *logger_key = nullptr);
 
   // = Set/get the options flags.
 
@@ -499,8 +499,8 @@ public:
             int op_status = -1,
             int errnum = 0,
             bool restart = true,
-            ACE_OSTREAM_TYPE *os = 0,
-            ACE_Log_Msg_Callback *c = 0);
+            ACE_OSTREAM_TYPE *os = nullptr,
+            ACE_Log_Msg_Callback *c = nullptr);
 
   /// These values are only actually set if the requested priority is
   /// enabled.
@@ -582,7 +582,7 @@ public:
   ssize_t log (const ACE_TCHAR *format,
                ACE_Log_Priority priority,
                va_list argp,
-               ACE_Log_Category_TSS* category=0);
+               ACE_Log_Category_TSS* category=nullptr);
 
   /// Log a custom built log record to the currently enabled logging
   /// sinks.
@@ -597,8 +597,8 @@ public:
   int log_hexdump (ACE_Log_Priority log_priority,
                    const char *buffer,
                    size_t size,
-                   const ACE_TCHAR *text = 0,
-                   ACE_Log_Category_TSS* category=0);
+                   const ACE_TCHAR *text = nullptr,
+                   ACE_Log_Category_TSS* category=nullptr);
 
   /**
    * Init hook, create a Log_Msg_Attribute object, initialize its

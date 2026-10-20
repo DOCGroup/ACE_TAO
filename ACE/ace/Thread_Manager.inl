@@ -286,7 +286,7 @@ ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
 #if defined (ACE_HAS_VXTHREADS)
   ACE_UNUSED_ARG (td);
 #else  /* ! ACE_HAS_VXTHREADS */
-  ACE_Thread_Descriptor_Base *tdb = 0;
+  ACE_Thread_Descriptor_Base *tdb = nullptr;
   ACE_NEW_RETURN (tdb, ACE_Thread_Descriptor_Base (*td), -1);
   this->terminated_thr_list_.insert_tail (tdb);
 #endif /* !ACE_HAS_VXTHREADS */

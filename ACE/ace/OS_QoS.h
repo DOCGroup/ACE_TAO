@@ -318,10 +318,10 @@ public:
    * the socket group, if applicable.  The_@a flags indicate if we're a
    * sender, receiver, or both.
    */
-  ACE_QoS_Params (iovec *caller_data = 0,
-                  iovec *callee_data = 0,
-                  ACE_QoS *socket_qos = 0,
-                  ACE_QoS *group_socket_qos = 0,
+  ACE_QoS_Params (iovec *caller_data = nullptr,
+                  iovec *callee_data = nullptr,
+                  ACE_QoS *socket_qos = nullptr,
+                  ACE_QoS *group_socket_qos = nullptr,
                   unsigned long flags = 0);
 
   /// Get caller data.

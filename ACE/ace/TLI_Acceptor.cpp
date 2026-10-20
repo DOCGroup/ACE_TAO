@@ -129,14 +129,14 @@ open_new_endpoint (ACE_HANDLE listen_handle,
                    const char dev[],
                    struct t_call *callp,
                    int rwf,
-                   ACE_Addr *remote_sap = 0)
+                   ACE_Addr *remote_sap = nullptr)
 {
   ACE_TRACE ("open_new_endpoint");
   ACE_HANDLE fd = ACE_OS::t_open ((char *) dev,
                                   O_RDWR,
                                   0);
 
-   struct t_bind req, *req_p = 0;
+   struct t_bind req, *req_p = nullptr;
    if (remote_sap != 0)
      {
        req.qlen = 0;
@@ -461,7 +461,7 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
   ACE_TRACE ("ACE_TLI_Acceptor::accept");
   ACE_UNUSED_ARG (reset_new_handle);
 
-  ACE_TLI_Request *req = 0;
+  ACE_TLI_Request *req = nullptr;
   int res = 0;
   if (timeout != 0
       && ACE::handle_timed_accept (this->get_handle (),

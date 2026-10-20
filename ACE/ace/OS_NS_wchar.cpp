@@ -101,8 +101,8 @@ ACE_OS::wcscpy_emulation (wchar_t *destination,
 size_t
 ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 {
-  const wchar_t *scan = 0;
-  const wchar_t *rej_scan = 0;
+  const wchar_t *scan = nullptr;
+  const wchar_t *rej_scan = nullptr;
   int count = 0;
 
   for (scan = s; *scan; scan++)
@@ -152,7 +152,7 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
 size_t
 ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
 {
-  const ACE_WCHAR_T *s = 0;
+  const ACE_WCHAR_T *s = nullptr;
 
   for (s = string; *s; ++s)
     continue;
@@ -183,7 +183,7 @@ ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
           ++d;
         } while (--count != 0);
 
-      *d = 0;
+      *d = nullptr;
     }
 
   return destination;
@@ -280,7 +280,7 @@ wchar_t *
 ACE_OS::wcspbrk_emulation (const wchar_t *string,
                            const wchar_t *charset)
 {
-  const wchar_t *scanp = 0;
+  const wchar_t *scanp = nullptr;
   int c, sc;
 
   while ((c = *string++) != 0)
@@ -330,7 +330,7 @@ ACE_OS::wcsspn_emulation (const wchar_t *string,
                           const wchar_t *charset)
 {
   const wchar_t *p = string;
-  const wchar_t *spanp = 0;
+  const wchar_t *spanp = nullptr;
   wchar_t c, sc;
 
   // Skip any characters in charset, excluding the terminating \0.

@@ -67,13 +67,13 @@ public:
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  const ACE_QoS_Params &qos_params,
                  int reuse_addr = 1,
-                 const ACE_TCHAR *net_if = 0,
+                 const ACE_TCHAR *net_if = nullptr,
                  int protocol_family = PF_INET,
                  int protocol = 0,
-                 ACE_Protocol_Info *protocolinfo = 0,
+                 ACE_Protocol_Info *protocolinfo = nullptr,
                  ACE_SOCK_GROUP g = 0,
                  u_long flags = 0,
-                 ACE_QoS_Session *qos_session = 0);
+                 ACE_QoS_Session *qos_session = nullptr);
 
   // = Data transfer routines.
 
@@ -105,7 +105,7 @@ public:
             const ACE_QoS_Params &qos_params,
             int protocol_family = PF_INET,
             int protocol = 0,
-            ACE_Protocol_Info *protocolinfo = 0,
+            ACE_Protocol_Info *protocolinfo = nullptr,
             ACE_SOCK_GROUP g = 0,
             u_long flags = 0,
             int reuse_addr = 0);

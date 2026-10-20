@@ -571,7 +571,7 @@ public:
   /// Create a {SVC_HANDLER}, accept the connection into the
   /// {SVC_HANDLER}, and activate the {SVC_HANDLER}.
   virtual int accept (SVC_HANDLER * = 0,
-                      typename PEER_ACCEPTOR::PEER_ADDR *remote_addr = 0,
+                      typename PEER_ACCEPTOR::PEER_ADDR *remote_addr = nullptr,
                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                       bool restart = true,
                       bool reset_new_handle = false);

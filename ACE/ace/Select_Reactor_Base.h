@@ -154,7 +154,7 @@ public:
    */
   int notify (ACE_Event_Handler * = 0,
                       ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value * timeout = 0) override;
+                      ACE_Time_Value * timeout = nullptr) override;
 
   /// Handles pending threads (if any) that are waiting to unblock the
   /// ACE_Select_Reactor.

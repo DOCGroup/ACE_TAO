@@ -62,13 +62,13 @@ public:
 
   /// Default constructor: plugs in the above event descriptions.
   ACE_Metrics_Timeprobe (u_int id = 0,
-                         const char *name = 0,
+                         const char *name = nullptr,
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
   /// Constructor with allocator: plugs in the above event descriptions.
   ACE_Metrics_Timeprobe (ALLOCATOR *allocatorPtr,
                          u_int id = 0,
-                         const char *name = 0,
+                         const char *name = nullptr,
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
   /// Destructor.

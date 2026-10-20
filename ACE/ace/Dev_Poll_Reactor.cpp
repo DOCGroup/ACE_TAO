@@ -841,9 +841,9 @@ ACE_Dev_Poll_Reactor::close ()
 #else
 
   delete [] this->dp_fds_;
-  this->dp_fds_ = 0;
-  this->start_pfds_ = 0;
-  this->end_pfds_ = 0;
+  this->dp_fds_ = nullptr;
+  this->start_pfds_ = nullptr;
+  this->end_pfds_ = nullptr;
 
 #endif  /* ACE_HAS_EVENT_POLL */
 

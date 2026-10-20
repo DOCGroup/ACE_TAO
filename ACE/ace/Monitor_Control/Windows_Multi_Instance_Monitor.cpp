@@ -62,7 +62,7 @@ namespace ACE
 
     Windows_Multi_Instance_Monitor::~Windows_Multi_Instance_Monitor ()
     {
-      Windows_Monitor *instance = 0;
+      Windows_Monitor *instance = nullptr;
 
       /// Destroy the single instance monitors created in the constructor.
       while (this->instances_.dequeue_head (instance) == 0)
@@ -74,7 +74,7 @@ namespace ACE
     void
     Windows_Multi_Instance_Monitor::update_i ()
     {
-      Windows_Monitor **current_instance = 0;
+      Windows_Monitor **current_instance = nullptr;
 
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())
@@ -90,7 +90,7 @@ namespace ACE
     void
     Windows_Multi_Instance_Monitor::clear_impl ()
     {
-      Windows_Monitor **current_instance = 0;
+      Windows_Monitor **current_instance = nullptr;
 
       /// Sum the values of each single instance monitor.
       for (INSTANCES_ITERATOR i (this->instances_); !i.done (); i.advance ())

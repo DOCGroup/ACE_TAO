@@ -105,7 +105,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
     // Remember the Svc_Handler.
     sh = this->svc_handler_;
     ACE_HANDLE const h = sh->get_handle ();
-    this->svc_handler_ = 0;
+    this->svc_handler_ = nullptr;
 
     // Remove this handle from the set of non-blocking handles
     // in the Connector.
@@ -136,7 +136,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
   // This method is called if a connection times out before completing.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout");
 
-  SVC_HANDLER *svc_handler = 0;
+  SVC_HANDLER *svc_handler = nullptr;
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Forward to the SVC_HANDLER the <arg> that was passed in as a
@@ -158,7 +158,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
   // establishment.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input");
 
-  SVC_HANDLER *svc_handler = 0;
+  SVC_HANDLER *svc_handler = nullptr;
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Close Svc_Handler.
@@ -192,7 +192,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
 
   // Grab the connector ref before smashing ourselves in close().
   ACE_Connector_Base<SVC_HANDLER> &connector = this->connector_;
-  SVC_HANDLER *svc_handler = 0;
+  SVC_HANDLER *svc_handler = nullptr;
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   if (svc_handler != 0)
@@ -525,7 +525,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::cancel (SVC_HANDLER *sh)
   if (nbch == 0)
     return -1;
 
-  SVC_HANDLER *tmp_sh = 0;
+  SVC_HANDLER *tmp_sh = nullptr;
 
   if (nbch->close (tmp_sh) == false)
     return -1;
@@ -550,7 +550,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
   ACE_HANDLE handle = sh->get_handle ();
   long timer_id = -1;
   ACE_Time_Value *tv = nullptr;
-  NBCH *nbch = 0;
+  NBCH *nbch = nullptr;
 
   ACE_NEW_RETURN (nbch,
                   NBCH (*this,
@@ -814,7 +814,7 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open
       cre_s != 0)
     {
       delete this->creation_strategy_;
-      this->creation_strategy_ = 0;
+      this->creation_strategy_ = nullptr;
       this->delete_creation_strategy_ = false;
     }
 
@@ -836,7 +836,7 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open
       conn_s != 0)
     {
       delete this->connect_strategy_;
-      this->connect_strategy_ = 0;
+      this->connect_strategy_ = nullptr;
       this->delete_connect_strategy_ = false;
     }
 
@@ -857,7 +857,7 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open
       con_s != 0)
     {
       delete this->concurrency_strategy_;
-      this->concurrency_strategy_ = 0;
+      this->concurrency_strategy_ = nullptr;
       this->delete_concurrency_strategy_ = false;
     }
 
@@ -910,17 +910,17 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;
   this->delete_creation_strategy_ = false;
-  this->creation_strategy_ = 0;
+  this->creation_strategy_ = nullptr;
 
   if (this->delete_connect_strategy_)
     delete this->connect_strategy_;
   this->delete_connect_strategy_ = false;
-  this->connect_strategy_ = 0;
+  this->connect_strategy_ = nullptr;
 
   if (this->delete_concurrency_strategy_)
     delete this->concurrency_strategy_;
   this->delete_concurrency_strategy_ = false;
-  this->concurrency_strategy_ = 0;
+  this->concurrency_strategy_ = nullptr;
 
   return SUPER::close ();
 }

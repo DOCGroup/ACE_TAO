@@ -141,7 +141,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
   void* env_buf = options.env_buf ();
   DWORD flags = options.creation_flags ();
 # if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  wchar_t* wenv_buf = 0;
+  wchar_t* wenv_buf = nullptr;
   if (options.use_unicode_environment ())
     {
       wenv_buf = this->convert_env_buffer (options.env_buf ());
@@ -233,7 +233,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
   for (i = 0; i < vcount; ++i)
     procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
 
-  char **procenv = 0;
+  char **procenv = nullptr;
   if (options.inherit_environment ())
     {
       wargv = options.env_argv ();
@@ -819,9 +819,9 @@ ACE_Process_Options::inherit_environment ()
   environment_inherited_ = 1;
 
   // Get the existing environment.
-  ACE_TCHAR *existing_environment = 0;
+  ACE_TCHAR *existing_environment = nullptr;
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  WCHAR *existing_wide_env = 0;
+  WCHAR *existing_wide_env = nullptr;
   ACE_Vector<char> temp_narrow_env;
   if (this->use_unicode_environment_)
     {

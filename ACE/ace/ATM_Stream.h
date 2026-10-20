@@ -71,7 +71,7 @@ public:
   /// Recv an n byte buffer from the connected transport mechanism.
   ssize_t recv (void *buf,
                 size_t n,
-                int *flags = 0) const;
+                int *flags = nullptr) const;
 
   /// Send exactly n bytes to the connected transport mechanism.
   ssize_t send_n (const void *buf,

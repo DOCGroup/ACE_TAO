@@ -45,14 +45,14 @@ public:
                         size_t length,
                         int create = ACE_Shared_Memory_SV::ACE_OPEN,
                         int perms = ACE_DEFAULT_FILE_PERMS,
-                        void *addr = 0,
+                        void *addr = nullptr,
                         int flags = 0);
 
   int open (key_t id,
             size_t length,
             int create = ACE_Shared_Memory_SV::ACE_OPEN,
             int perms = ACE_DEFAULT_FILE_PERMS,
-            void *addr = 0,
+            void *addr = nullptr,
             int flags = 0);
 
   /// Close down the shared memory segment.

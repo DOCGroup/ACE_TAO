@@ -82,8 +82,8 @@ public:
   /// block forever, a @a timeout of {0, 0} means poll. @a restart == 1
   /// means "restart if interrupted."
   int accept (ACE_ATM_Stream &new_sap,
-              ACE_Addr *remote_addr = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_Addr *remote_addr = nullptr,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false,
               ACE_ATM_Params params = ACE_ATM_Params(),

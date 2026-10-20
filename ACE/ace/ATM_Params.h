@@ -67,8 +67,8 @@ public:
    */
   ACE_ATM_Params (int rw_flag = 1,
                   const char device[] = ACE_XTI_ATM_DEVICE,
-                  Param_Info *info = 0,
-                  Param_Udata *udata = 0,
+                  Param_Info *info = nullptr,
+                  Param_Udata *udata = nullptr,
                   int oflag = O_RDWR,
                   int protocol_family = AF_ATM,
                   int protocol = ATM_PROTOCOL_DEFAULT,
@@ -78,7 +78,7 @@ public:
 #else
                   SOCK_RAW,
 #endif /* ACE_HAS_LINUX_ATM */
-                  ACE_Protocol_Info *protocol_info = 0,
+                  ACE_Protocol_Info *protocol_info = nullptr,
                   ACE_SOCK_GROUP g = 0,
                   u_long flags
                     = ACE_FLAG_MULTIPOINT_C_ROOT

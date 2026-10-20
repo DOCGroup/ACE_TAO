@@ -160,7 +160,7 @@ template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACH
 ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
                                        VALUE &value)
 {
-  CACHE_ENTRY *entry = 0;
+  CACHE_ENTRY *entry = nullptr;
 
   int result = this->find (key,
                            entry);
@@ -176,7 +176,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
 ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key)
 {
-  CACHE_ENTRY *entry = 0;
+  CACHE_ENTRY *entry = nullptr;
 
   return this->find (key,
                      entry);

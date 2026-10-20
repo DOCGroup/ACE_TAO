@@ -67,7 +67,7 @@ namespace ACE
           return;
         }
 
-      char *p = 0;
+      char *p = nullptr;
 
       for (ifa = ifap; ifa != 0; ifa = ifa->ifa_next)
         {

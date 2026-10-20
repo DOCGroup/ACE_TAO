@@ -205,7 +205,7 @@ public:
   int log_hexdump (ACE_Log_Priority log_priority,
                    const char *     buffer,
                    size_t           size,
-                   const ACE_TCHAR *text = 0);
+                   const ACE_TCHAR *text = nullptr);
 
   ACE_ALLOC_HOOK_DECLARE;
 

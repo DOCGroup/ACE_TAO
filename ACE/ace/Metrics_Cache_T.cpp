@@ -40,7 +40,7 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Metrics_Timeprobe (u_int id,
       name = "";
     }
 
-  char * name_tmp = 0;
+  char * name_tmp = nullptr;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
                         (char *) this->allocator ()->malloc (ACE_OS::strlen(name)+1),
                         char,
@@ -67,7 +67,7 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
       name = "";
     }
 
-  char * name_tmp = 0;
+  char * name_tmp = nullptr;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
                         (char *) alloc->malloc(ACE_OS::strlen(name)+1),
                         char,
@@ -114,7 +114,7 @@ template <class ACE_LOCK, class ALLOCATOR>
 void
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (char * name)
 {
-  char * name_tmp = 0;
+  char * name_tmp = nullptr;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
                         (char *) this->allocator ()->malloc (ACE_OS::strlen(name)+1),
                         char,

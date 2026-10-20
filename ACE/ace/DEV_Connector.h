@@ -52,7 +52,7 @@ public:
    */
   ACE_DEV_Connector (ACE_DEV_IO &new_io,
                      const ACE_DEV_Addr &remote_sap,
-                     ACE_Time_Value *timeout = 0,
+                     ACE_Time_Value *timeout = nullptr,
                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = O_RDWR,
@@ -77,7 +77,7 @@ public:
    */
   int connect (ACE_DEV_IO &new_io,
                const ACE_DEV_Addr &remote_sap,
-               ACE_Time_Value *timeout = 0,
+               ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,

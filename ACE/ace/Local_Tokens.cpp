@@ -396,7 +396,7 @@ ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
     }
 
   ACE_TPQ_Entry *temp = this->head_;
-  ACE_TPQ_Entry *previous = 0;
+  ACE_TPQ_Entry *previous = nullptr;
 
   // is it in the middle or tail?
   while (temp != 0)
@@ -638,7 +638,7 @@ ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
   // Step through each waiter looking for <id>.
   ACE_TPQ_Iterator iterator (waiters_);
   iterator.advance ();
-  for (ACE_TPQ_Entry *temp = 0;
+  for (ACE_TPQ_Entry *temp = nullptr;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -946,7 +946,7 @@ ACE_RW_Token::notify_new_owner (ACE_TPQ_Entry *old_owner)
       // writer, so notify all waiting readers up to the first writer.
       // call back all reader owners.
       ACE_TPQ_Iterator iterator (waiters_);
-      for (ACE_TPQ_Entry *temp = 0;
+      for (ACE_TPQ_Entry *temp = nullptr;
            iterator.next (temp) != 0;
            iterator.advance ())
         {
@@ -988,7 +988,7 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
   else
     {
       ACE_TPQ_Iterator iterator (waiters_);
-      for (ACE_TPQ_Entry *temp = 0;
+      for (ACE_TPQ_Entry *temp = nullptr;
            iterator.next (temp) != 0;
            iterator.advance ())
         {
@@ -1019,7 +1019,7 @@ ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
   // Step through each waiter looking for <id>.
   ACE_TPQ_Iterator iterator (waiters_);
   iterator.advance ();
-  for (ACE_TPQ_Entry *temp = 0;
+  for (ACE_TPQ_Entry *temp = nullptr;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -1045,7 +1045,7 @@ ACE_RW_Token::is_owner (const ACE_TCHAR *id)
   // Readers own us.
   // Step through each owning reader looking for <id>.
   ACE_TPQ_Iterator iterator (waiters_);
-  for (ACE_TPQ_Entry *temp = 0;
+  for (ACE_TPQ_Entry *temp = nullptr;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -1503,7 +1503,7 @@ ACE_Token_Name::dump () const
 ACE_Token_Proxy *
 ACE_Local_Mutex::clone () const
 {
-  ACE_Token_Proxy *temp = 0;
+  ACE_Token_Proxy *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Local_Mutex (token_->name (),
                                    ignore_deadlock_,
@@ -1515,7 +1515,7 @@ ACE_Local_Mutex::clone () const
 ACE_Tokens *
 ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
 {
-  ACE_Tokens *temp = 0;
+  ACE_Tokens *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Mutex_Token (name),
                   0);
@@ -1535,7 +1535,7 @@ ACE_Local_RLock::~ACE_Local_RLock ()
 ACE_Tokens *
 ACE_Local_RLock::create_token (const ACE_TCHAR *name)
 {
-  ACE_Tokens *temp = 0;
+  ACE_Tokens *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
                   0);
@@ -1551,7 +1551,7 @@ ACE_Local_RLock::type () const
 ACE_Token_Proxy *
 ACE_Local_RLock::clone () const
 {
-  ACE_Token_Proxy *temp = 0;
+  ACE_Token_Proxy *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Local_RLock (token_->name (),
                                    ignore_deadlock_,
@@ -1569,7 +1569,7 @@ ACE_Local_WLock::~ACE_Local_WLock ()
 ACE_Tokens *
 ACE_Local_WLock::create_token (const ACE_TCHAR *name)
 {
-  ACE_Tokens *temp = 0;
+  ACE_Tokens *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
                   0);
@@ -1585,7 +1585,7 @@ ACE_Local_WLock::type () const
 ACE_Token_Proxy *
 ACE_Local_WLock::clone () const
 {
-  ACE_Token_Proxy *temp = 0;
+  ACE_Token_Proxy *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Local_WLock (token_->name (),
                                    ignore_deadlock_,

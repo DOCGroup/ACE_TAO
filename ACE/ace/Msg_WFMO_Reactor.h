@@ -82,8 +82,8 @@ public:
    * passed to <MsgWaitForMultipleObjects> for the <bAlertable>
    * option.
    */
-  virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
-  virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
+  virtual int handle_events (ACE_Time_Value *max_wait_time = nullptr);
+  virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr);
 
   /**
    * This method is just like the one above, except the

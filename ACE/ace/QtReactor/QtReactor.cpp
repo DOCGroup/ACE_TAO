@@ -149,7 +149,7 @@ ACE_QtReactor::read_event (ACE_QT_HANDLE_TYPE p_handle)
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // disable socket notifier to clear pending events
-  QSocketNotifier *qsock_notifier = 0;
+  QSocketNotifier *qsock_notifier = nullptr;
   if ( ( this->read_notifier_.find( handle,
              qsock_notifier) != -1) )
     qsock_notifier->setEnabled( false );
@@ -184,7 +184,7 @@ ACE_QtReactor::write_event (ACE_QT_HANDLE_TYPE p_handle)
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // disable socket notifier to clear pending events
-  QSocketNotifier *qsock_notifier = 0;
+  QSocketNotifier *qsock_notifier = nullptr;
   if ( ( this->write_notifier_.find( handle, qsock_notifier) != -1) )
     qsock_notifier->setEnabled( false );
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
@@ -218,7 +218,7 @@ ACE_QtReactor::exception_event (ACE_QT_HANDLE_TYPE p_handle)
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // disable socket notifier to clear pending events
-  QSocketNotifier *qsock_notifier = 0;
+  QSocketNotifier *qsock_notifier = nullptr;
   if ( ( this->exception_notifier_.find( handle, qsock_notifier) != -1) )
     qsock_notifier->setEnabled( false );
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
@@ -336,7 +336,7 @@ ACE_QtReactor::bit_ops (ACE_HANDLE handle,
 void
 ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
 {
-    QSocketNotifier *qsock_notifier = 0;
+    QSocketNotifier *qsock_notifier = nullptr;
 
     // if there is already a read socket notifier for this handle, do nothing
     // otherwise create read notifier
@@ -419,7 +419,7 @@ ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
 void
 ACE_QtReactor::destroy_notifiers_for_handle (ACE_HANDLE handle)
 {
-  QSocketNotifier *qsock_notifier = 0;
+  QSocketNotifier *qsock_notifier = nullptr;
 
   // Looks for the handle in the maps and removes them.
 

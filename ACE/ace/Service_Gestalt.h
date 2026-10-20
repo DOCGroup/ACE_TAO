@@ -104,7 +104,7 @@ public:
    * ACE_Log_Msg::priority_mask appropriately.
    */
   int open (const ACE_TCHAR program_name[],
-            const ACE_TCHAR *logger_key = 0,
+            const ACE_TCHAR *logger_key = nullptr,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -177,7 +177,7 @@ public:
    */
   int open (int argc,
             ACE_TCHAR *argv[],
-            const ACE_TCHAR *logger_key = 0,
+            const ACE_TCHAR *logger_key = nullptr,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -221,7 +221,7 @@ public:
    * ignore suspended services a -2 is returned.
    */
   int find (const ACE_TCHAR name[],
-            const ACE_Service_Type **srp = 0,
+            const ACE_Service_Type **srp = nullptr,
             bool ignore_suspended = true) const;
 
   /**
@@ -312,7 +312,7 @@ public:
    * static service descriptor. Returns 0 for success and -1 for failure
    */
   int find_static_svc_descriptor (const ACE_TCHAR* name,
-                                  ACE_Static_Svc_Descriptor **ssd = 0) const;
+                                  ACE_Static_Svc_Descriptor **ssd = nullptr) const;
 
   struct Processed_Static_Svc
   {
@@ -341,7 +341,7 @@ protected:
    * errors that occurred on failure and 0 otherwise.
    */
   int open_i (const ACE_TCHAR program_name[],
-              const ACE_TCHAR *logger_key = 0,
+              const ACE_TCHAR *logger_key = nullptr,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
               bool ignore_debug_flag = false);

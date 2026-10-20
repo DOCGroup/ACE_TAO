@@ -120,7 +120,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
   // Call the factory function to obtain the new SVC_Handler (should
   // use RTTI here when it becomes available...)
-  SVC_HANDLER *svc_handler = 0;
+  SVC_HANDLER *svc_handler = nullptr;
 
   ACE_ALLOCATOR_RETURN (svc_handler, (*factory)(), -1);
 
@@ -518,7 +518,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
   this->recycling_strategy_ = 0;
 
   // Close down all cached service handlers.
-  CONNECTION_MAP_ENTRY *entry = 0;
+  CONNECTION_MAP_ENTRY *entry = nullptr;
   for (CONNECTION_MAP_ITERATOR iterator (connection_map_);
        iterator.next (entry);
        iterator.advance ())
@@ -734,7 +734,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
       // Note that making a new svc_handler, connecting remotely,
       // binding to the map, and assigning of the hint and recycler
       // should be atomic to the outside world.
-      SVC_HANDLER *potential_handler = 0;
+      SVC_HANDLER *potential_handler = nullptr;
 
       // Create a new svc_handler
       if (this->make_svc_handler (potential_handler) == -1)
@@ -965,7 +965,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
  int perms,
  int& found)
 {
-  CONNECTION_MAP_ENTRY *entry = 0;
+  CONNECTION_MAP_ENTRY *entry = nullptr;
 
   // Check if the user passed a hint svc_handler
   if (sh != 0)

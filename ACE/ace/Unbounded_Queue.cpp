@@ -92,7 +92,7 @@ ACE_Unbounded_Queue<T>::dump () const
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
-  T *item = 0;
+  T *item = nullptr;
 #if !defined (ACE_NLOGGING)
   size_t count = 1;
 #endif /* ! ACE_NLOGGING */
@@ -159,7 +159,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
 
-  ACE_Node<T> *temp = 0;
+  ACE_Node<T> *temp = nullptr;
 
   // Create a new node that points to the original head.
   ACE_NEW_MALLOC_RETURN (temp,
@@ -185,7 +185,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   // the "tail" of the queue...
   this->head_->item_ = new_item;
 
-  ACE_Node<T> *temp = 0;
+  ACE_Node<T> *temp = nullptr;
 
   // Create a new dummy node.
   ACE_NEW_MALLOC_RETURN (temp,

@@ -72,7 +72,7 @@ public:
             int mflags = 0);
 
   /// Access the underlying control operations.
-  int control (int option, void *arg = 0);
+  int control (int option, void *arg = nullptr);
 
   /// Get the underly internal id.
   int get_id () const;

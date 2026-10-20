@@ -54,7 +54,7 @@ ACE_TSS_Connection::make_TSS_TYPE () const
   ACE_TRACE ("ACE_TSS_Connection::make_TSS_TYPE");
 
   ACE_SOCK_Connector connector;
-  ACE_SOCK_Stream *stream = 0;
+  ACE_SOCK_Stream *stream = nullptr;
 
   ACE_NEW_RETURN (stream,
                   ACE_SOCK_Stream,
@@ -438,7 +438,7 @@ ACE_Remote_Mutex::dump () const
 ACE_Tokens *
 ACE_Remote_RLock::create_token (const ACE_TCHAR *name)
 {
-  ACE_Tokens *temp = 0;
+  ACE_Tokens *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
                   0);
@@ -454,7 +454,7 @@ ACE_Remote_RLock::type () const
 ACE_Token_Proxy *
 ACE_Remote_RLock::clone () const
 {
-  ACE_Token_Proxy *temp = 0;
+  ACE_Token_Proxy *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Remote_RLock (this->name (),
                                     ignore_deadlock_,
@@ -480,7 +480,7 @@ ACE_Remote_RLock::dump () const
 ACE_Tokens *
 ACE_Remote_WLock::create_token (const ACE_TCHAR *name)
 {
-  ACE_Tokens *temp = 0;
+  ACE_Tokens *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
                   0);
@@ -496,7 +496,7 @@ ACE_Remote_WLock::type () const
 ACE_Token_Proxy *
 ACE_Remote_WLock::clone () const
 {
-  ACE_Token_Proxy *temp = 0;
+  ACE_Token_Proxy *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Remote_WLock (this->name (),
                                     ignore_deadlock_,

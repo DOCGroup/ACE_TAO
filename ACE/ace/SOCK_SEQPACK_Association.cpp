@@ -85,8 +85,8 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
     it by calling sctp_freeladdrs().
   */
 
-  sockaddr_in *si = 0;
-  sockaddr *laddrs = 0;
+  sockaddr_in *si = nullptr;
+  sockaddr *laddrs = nullptr;
   int err = 0;
   size_t len = 0;
 
@@ -223,8 +223,8 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
     it by calling sctp_freepaddrs().
   */
 
-  sockaddr_in *si = 0;
-  sockaddr *paddrs = 0;
+  sockaddr_in *si = nullptr;
+  sockaddr *paddrs = nullptr;
   int err = 0;
   size_t len = 0;
 

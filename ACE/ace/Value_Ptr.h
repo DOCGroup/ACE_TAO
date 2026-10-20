@@ -66,7 +66,7 @@ namespace ACE
   {
   public:
     /// Constructor.
-    explicit Value_Ptr (T * p = 0) : p_ (p) {}
+    explicit Value_Ptr (T * p = nullptr) : p_ (p) {}
 
     /// Destructor.
     ~Value_Ptr () { delete this->p_; }

@@ -134,7 +134,7 @@ template <class ACE_LOCK>
 ACE_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Dynamic_Cached_Allocator ()
 {
   delete [] this->pool_;
-  this->pool_ = 0;
+  this->pool_ = nullptr;
   chunk_size_ = 0;
 }
 
@@ -572,7 +572,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T ()
   if (this->delete_lock_)
     {
       delete this->lock_;
-      this->lock_ = 0;
+      this->lock_ = nullptr;
     }
 }
 
@@ -622,8 +622,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
     (nbytes + sizeof (MALLOC_HEADER) - 1) / sizeof (MALLOC_HEADER)
     + 1; // Add one for the <MALLOC_HEADER> itself.
 
-  MALLOC_HEADER *prevp = 0;
-  MALLOC_HEADER *currp = 0;
+  MALLOC_HEADER *prevp = nullptr;
+  MALLOC_HEADER *currp = nullptr;
 
   ACE_SEH_TRY
     {
@@ -983,7 +983,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
   if (this->cb_ptr_ == 0)
     return -1;
 
-  NAME_NODE *prev = 0;
+  NAME_NODE *prev = nullptr;
 
   for (NAME_NODE *curr = this->cb_ptr_->name_head_;
        curr != 0;
@@ -1026,7 +1026,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name)
 template <class ACE_LOCK> ACE_LOCK *
 ACE_Malloc_Lock_Adapter_T<ACE_LOCK>::operator () (const ACE_TCHAR *name)
 {
-  ACE_LOCK *p = 0;
+  ACE_LOCK *p = nullptr;
   if (name == nullptr)
     ACE_NEW_RETURN (p, ACE_LOCK (name), 0);
   else
@@ -1230,7 +1230,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::start ()
 {
   this->curr_ = this->curr_->next_;
-  NAME_NODE *prev = 0;
+  NAME_NODE *prev = nullptr;
 
   // Locate the element that was inserted first.
   // @@ We could optimize this by making the list a circular list or

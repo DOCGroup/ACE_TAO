@@ -44,7 +44,7 @@ public:
                         size_t size,
                         int create,
                         int perms = ACE_DEFAULT_FILE_PERMS,
-                        void *virtual_addr = 0,
+                        void *virtual_addr = nullptr,
                         int flags = 0);
 
   ACE_SV_Shared_Memory (ACE_HANDLE internal_id,
@@ -59,11 +59,11 @@ public:
                        size_t size,
                        int create = ACE_SV_Shared_Memory::ACE_OPEN,
                        int perms = ACE_DEFAULT_FILE_PERMS,
-                       void *virtual_addr = 0,
+                       void *virtual_addr = nullptr,
                        int flags = 0);
 
   /// Attach this shared memory segment.
-  int attach (void *virtual_addr = 0, int flags = 0);
+  int attach (void *virtual_addr = nullptr, int flags = 0);
 
   /// Detach this shared memory segment.
   int detach ();

@@ -55,16 +55,16 @@ public:
    */
   ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream,
                      const ACE_Addr &remote_sap,
-                     ACE_Time_Value *timeout = 0,
+                     ACE_Time_Value *timeout = nullptr,
                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = O_RDWR,
                      int perms = 0,
                      const char device[] = ACE_XTI_ATM_DEVICE,
-                     struct t_info *info = 0,
+                     struct t_info *info = nullptr,
                      int rw_flag = 1,
-                     struct netbuf *udata = 0,
-                     struct netbuf *opt = 0);
+                     struct netbuf *udata = nullptr,
+                     struct netbuf *opt = nullptr);
 
   /**
    * Actively connect and produce a @a new_stream if things go well.
@@ -83,16 +83,16 @@ public:
    */
   int connect (ACE_TLI_Stream &new_stream,
                const ACE_Addr &remote_sap,
-               ACE_Time_Value *timeout = 0,
+               ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0,
                const char device[] = ACE_XTI_ATM_DEVICE,
-               struct t_info *info = 0,
+               struct t_info *info = nullptr,
                int rw_flag = 1,
-               struct netbuf *udata = 0,
-               struct netbuf *opt = 0);
+               struct netbuf *udata = nullptr,
+               struct netbuf *opt = nullptr);
 
   /**
    * Actively add a leaf to the currently connected stream (i.e.,
@@ -108,7 +108,7 @@ public:
   int add_leaf (ACE_TLI_Stream &current_stream,
                 const ACE_Addr &remote_sap,
                 ACE_INT32 leaf_id,
-                ACE_Time_Value *timeout = 0);
+                ACE_Time_Value *timeout = nullptr);
 
   // = Meta-type info
   using PEER_ADDR = ACE_ATM_Addr;

@@ -54,7 +54,7 @@ ACE_OS::uname (ACE_utsname *name)
       )
     {
       // Get information from the two structures
-      const char *os = 0;
+      const char *os = nullptr;
       if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
         os = "Windows NT %d.%d";
       else

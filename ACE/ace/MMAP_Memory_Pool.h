@@ -136,8 +136,8 @@ public:
   using OPTIONS = ACE_MMAP_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
-                        const OPTIONS *options = 0);
+  ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
+                        const OPTIONS *options = nullptr);
 
   /// Destructor.
   ~ACE_MMAP_Memory_Pool () override;
@@ -316,8 +316,8 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
 public:
   /// Initialize the pool.
-  ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
-                             const OPTIONS *options = 0);
+  ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
+                             const OPTIONS *options = nullptr);
 
   /// Destructor.
   ~ACE_Lite_MMAP_Memory_Pool () override;

@@ -97,8 +97,8 @@ public:
    * @param mode optional, the protection mode for either the backing store
    * file (for ACE_Mutex use) or the ACE_SV_Semaphore_Complex that's created.
    */
-  ACE_Process_Mutex (const char *name = 0,
-                     void *arg = 0,
+  ACE_Process_Mutex (const char *name = nullptr,
+                     void *arg = nullptr,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
 
 #if defined (ACE_HAS_WCHAR)
@@ -116,7 +116,7 @@ public:
    * file (for ACE_Mutex use) or the ACE_SV_Semaphore_Complex that's created.
    */
   ACE_Process_Mutex (const wchar_t *name,
-                     void *arg = 0,
+                     void *arg = nullptr,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
 #endif /* ACE_HAS_WCHAR */
 

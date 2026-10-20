@@ -126,7 +126,7 @@ public:
   };
 
   /// Create an empty message.
-  ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
+  ACE_Message_Block (ACE_Allocator *message_block_allocator = nullptr);
 
   /**
    * Create an ACE_Message_Block that owns the specified ACE_Data_Block
@@ -137,7 +137,7 @@ public:
    */
   ACE_Message_Block (ACE_Data_Block *data_block,
                      Message_Flags flags = 0,
-                     ACE_Allocator *message_block_allocator = 0);
+                     ACE_Allocator *message_block_allocator = nullptr);
 
   /**
    * Create an ACE_Message_Block that refers to @a data without
@@ -225,15 +225,15 @@ public:
    */
   int init (size_t size,
             ACE_Message_Type type = MB_DATA,
-            ACE_Message_Block *cont = 0,
-            const char *data = 0,
-            ACE_Allocator *allocator_strategy = 0,
-            ACE_Lock *locking_strategy = 0,
+            ACE_Message_Block *cont = nullptr,
+            const char *data = nullptr,
+            ACE_Allocator *allocator_strategy = nullptr,
+            ACE_Lock *locking_strategy = nullptr,
             unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
             const ACE_Time_Value &execution_time = ACE_Time_Value::zero,
             const ACE_Time_Value &deadline_time = ACE_Time_Value::max_time,
-            ACE_Allocator *data_block_allocator = 0,
-            ACE_Allocator *message_block_allocator = 0);
+            ACE_Allocator *data_block_allocator = nullptr,
+            ACE_Allocator *message_block_allocator = nullptr);
 
   /**
    * Delete all the resources held in the message.
@@ -428,9 +428,9 @@ public:
    * This method resets the allocators in all the message blocks in
    * the chain.
    */
-  void reset_allocators (ACE_Allocator *allocator_strategy = 0,
-                         ACE_Allocator *data_block_allocator = 0,
-                         ACE_Allocator *message_block_allocator = 0);
+  void reset_allocators (ACE_Allocator *allocator_strategy = nullptr,
+                         ACE_Allocator *data_block_allocator = nullptr,
+                         ACE_Allocator *message_block_allocator = nullptr);
 
   /// Get message data.
   char *base () const;
@@ -755,7 +755,7 @@ public:
    * @c this and @a mb and return 0.  Behavior is undefined if reference
    * count < 0.
    */
-  ACE_Data_Block *release (ACE_Lock *lock = 0);
+  ACE_Data_Block *release (ACE_Lock *lock = nullptr);
 
   // = Message flag accessors and mutators.
   /// Bitwise-or the @a more_flags into the existing message flags and

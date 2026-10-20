@@ -186,8 +186,8 @@ public:
    */
   ACE_TP_Reactor (size_t max_number_of_handles,
                   bool restart = false,
-                  ACE_Sig_Handler *sh = 0,
-                  ACE_Timer_Queue *tq = 0,
+                  ACE_Sig_Handler *sh = nullptr,
+                  ACE_Timer_Queue *tq = nullptr,
                   bool mask_signals = true,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
@@ -208,7 +208,7 @@ public:
    * @a max_wait_time elapsed without dispatching any handlers, or -1
    * if an error occurs (check @c errno for more information).
    */
-  int handle_events (ACE_Time_Value *max_wait_time = 0) override;
+  int handle_events (ACE_Time_Value *max_wait_time = nullptr) override;
 
   int handle_events (ACE_Time_Value &max_wait_time) override;
 
@@ -224,7 +224,7 @@ public:
   /// The ACE_TP_Reactor implementation does not have a single owner thread.
   /// Attempts to set the owner explicitly are ignored. The reported owner
   /// thread is the current Leader in the pattern.
-  int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0) override;
+  int owner (ACE_thread_t n_id, ACE_thread_t *o_id = nullptr) override;
 
   /// Return the thread ID of the current Leader.
   int owner (ACE_thread_t *t_id) override;

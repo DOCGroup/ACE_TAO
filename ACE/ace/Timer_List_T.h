@@ -100,7 +100,7 @@ public:
    * default FUNCTOR will be created.  @a freelist is the freelist of
    * timer nodes.  If 0, then a default freelist will be created.
    */
-  ACE_Timer_List_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = nullptr,
+  ACE_Timer_List_T (FUNCTOR* upcall_functor = nullptr, FreeList* freelist = nullptr,
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor

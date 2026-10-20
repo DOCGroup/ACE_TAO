@@ -111,7 +111,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   else if (ACE_OS::t_bind (new_stream.get_handle (), 0, 0) == -1)
     return -1;
 
-  struct t_call *callptr = 0;
+  struct t_call *callptr = nullptr;
 
   callptr = (struct t_call *)
     ACE_OS::t_alloc (new_stream.get_handle (), T_CALL, T_ADDR);

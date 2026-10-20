@@ -70,7 +70,7 @@ public:
    * null void pointer being passed, or otherwise ensure that this
    * will never occur.
    */
-  virtual int execute (void *arg = 0) = 0;
+  virtual int execute (void *arg = nullptr) = 0;
 };
 
 /**

@@ -46,9 +46,9 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int select (int width,
               fd_set *rfds,
-              fd_set *wfds = 0,
-              fd_set *efds = 0,
-              const ACE_Time_Value *tv = 0);
+              fd_set *wfds = nullptr,
+              fd_set *efds = nullptr,
+              const ACE_Time_Value *tv = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int select (int width,

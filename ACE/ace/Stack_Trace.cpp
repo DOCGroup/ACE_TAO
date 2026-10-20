@@ -130,7 +130,7 @@ struct ACE_Stack_Trace_stackstate
 
 //@TODO: Replace with a TSS-based pointer to avoid problems in multithreaded environs,
 //       or use a mutex to serialize access to this.
-static ACE_Stack_Trace_stackstate* ACE_Stack_Trace_stateptr = 0;
+static ACE_Stack_Trace_stackstate* ACE_Stack_Trace_stateptr = nullptr;
 
 static void
 ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
@@ -265,7 +265,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 
           static constexpr int N_ARGS = 12;
           ACE_VX_USR_ARG_T buf[N_ARGS];
-          ACE_VX_USR_ARG_T *pArgs = 0;
+          ACE_VX_USR_ARG_T *pArgs = nullptr;
           int numArgs =
             trcLibFuncs.lvlArgsGet (prevPc, prevFn, prevFp,
                                     buf, N_ARGS, &pArgs);

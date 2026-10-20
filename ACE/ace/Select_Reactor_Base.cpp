@@ -206,7 +206,7 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
 
-  map_type::ENTRY * entry = 0;
+  map_type::ENTRY * entry = nullptr;
 
   int const result =
     this->event_handlers_.bind (handle, event_handler, entry);
@@ -510,7 +510,7 @@ ACE_Select_Reactor_Handler_Repository::dump () const
               this->max_handlep1 ()));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
-  ACE_Event_Handler *event_handler = 0;
+  ACE_Event_Handler *event_handler = nullptr;
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (event_handler) != 0;

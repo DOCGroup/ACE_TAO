@@ -1133,7 +1133,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   int const result = OP (ptr, ARG); \
   ACE_Errno_Guard error (errno); \
   while (! this->thr_to_be_removed_.is_empty ()) { \
-    ACE_Thread_Descriptor * td = 0; \
+    ACE_Thread_Descriptor * td = nullptr; \
     this->thr_to_be_removed_.dequeue_head (td); \
     this->remove_thr (td, 1); \
   } \

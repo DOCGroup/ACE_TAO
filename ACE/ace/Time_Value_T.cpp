@@ -40,7 +40,7 @@ template <class TIME_POLICY>
 ACE_Time_Value *
 ACE_Time_Value_T<TIME_POLICY>::duplicate () const
 {
-  ACE_Time_Value_T<TIME_POLICY> * tmp = 0;
+  ACE_Time_Value_T<TIME_POLICY> * tmp = nullptr;
   ACE_NEW_RETURN (tmp, ACE_Time_Value_T<TIME_POLICY> (*this), nullptr);
   return tmp;
 }

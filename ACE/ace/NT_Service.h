@@ -105,7 +105,7 @@ public:
   /// Constructor primarily for use when inserting/removing/controlling
   /// the service.
   ACE_NT_Service (const ACE_TCHAR *name,
-                  const ACE_TCHAR *desc = 0,
+                  const ACE_TCHAR *desc = nullptr,
                   DWORD start_timeout = ACE_NT_SERVICE_START_TIMEOUT,
                   DWORD service_type = SERVICE_WIN32_OWN_PROCESS,
                   DWORD controls_mask = SERVICE_ACCEPT_STOP);
@@ -119,7 +119,7 @@ public:
    * status to SERVICE_START_PENDING, calls the @c svc() method,
    * interprets and sets the service status, and returns.
    */
-  virtual int open (void *args = 0);
+  virtual int open (void *args = nullptr);
 
   /**
    * Hook called when terminating the service. Inherited from
@@ -160,7 +160,7 @@ public:
 
   /// Sets the name and description for the service.
   /// If @a desc is 0, it takes the same value as name.
-  void name (const ACE_TCHAR *name, const ACE_TCHAR *desc = 0);
+  void name (const ACE_TCHAR *name, const ACE_TCHAR *desc = nullptr);
 
   /// Get the service name.
   const ACE_TCHAR *name () const;
@@ -183,12 +183,12 @@ public:
    */
   int insert (DWORD start_type = SERVICE_DEMAND_START,
               DWORD error_control = SERVICE_ERROR_IGNORE,
-              const ACE_TCHAR *exe_path = 0,
-              const ACE_TCHAR *group_name = 0,
+              const ACE_TCHAR *exe_path = nullptr,
+              const ACE_TCHAR *group_name = nullptr,
               LPDWORD tag_id = 0,
-              const ACE_TCHAR *dependencies = 0,
-              const ACE_TCHAR *account_name = 0,
-              const ACE_TCHAR *password = 0,
+              const ACE_TCHAR *dependencies = nullptr,
+              const ACE_TCHAR *account_name = nullptr,
+              const ACE_TCHAR *password = nullptr,
               DWORD desired_access = SERVICE_ALL_ACCESS);
 
   /**
@@ -267,9 +267,9 @@ public:
    * are passed to the service's ServiceMain function when it starts.
    * Returns 0 for success, -1 for error.
    */
-  int start_svc (ACE_Time_Value *wait_time = 0,
-                 DWORD *svc_state = 0,
-                 DWORD argc = 0, const ACE_TCHAR **argv = 0);
+  int start_svc (ACE_Time_Value *wait_time = nullptr,
+                 DWORD *svc_state = nullptr,
+                 DWORD argc = 0, const ACE_TCHAR **argv = nullptr);
 
   /**
    * Requests the service to stop.  Will wait up to @a wait_time for
@@ -279,13 +279,13 @@ public:
    * the last reported state of the service.  Returns 0 if the request
    * was made successfully, -1 if not.
    */
-  int stop_svc (ACE_Time_Value *wait_time = 0, DWORD *svc_state = 0);
+  int stop_svc (ACE_Time_Value *wait_time = nullptr, DWORD *svc_state = nullptr);
 
   /// Pause the service.
-  int pause_svc (ACE_Time_Value *wait_time = 0, DWORD *svc_state = 0);
+  int pause_svc (ACE_Time_Value *wait_time = nullptr, DWORD *svc_state = nullptr);
 
   /// Continue the service.
-  int continue_svc (ACE_Time_Value *wait_time = 0, DWORD *svc_state = 0);
+  int continue_svc (ACE_Time_Value *wait_time = nullptr, DWORD *svc_state = nullptr);
 
   /**
    * Get the current state for the service.  If @a wait_hint is not 0,
@@ -296,11 +296,11 @@ public:
    * does not have sufficient rights to access the service state.  The
    * set of valid service state values are all greater than 0.
    */
-  DWORD state (ACE_Time_Value *wait_hint = 0);
+  DWORD state (ACE_Time_Value *wait_hint = nullptr);
 
   /// A version of <state> that returns -1 for failure, 0 for success.
   /// The DWORD pointed to by @a pstate receives the state value.
-  int state (DWORD *pstate, ACE_Time_Value *wait_hint = 0);
+  int state (DWORD *pstate, ACE_Time_Value *wait_hint = nullptr);
 
   /**
    * Test access to the object's service in the SCM.  The service must

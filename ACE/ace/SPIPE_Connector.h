@@ -55,7 +55,7 @@ public:
    */
   ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
                        const ACE_SPIPE_Addr &remote_sap,
-                       ACE_Time_Value *timeout = 0,
+                       ACE_Time_Value *timeout = nullptr,
                        const ACE_Addr &local_sap = ACE_Addr::sap_any,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
@@ -83,7 +83,7 @@ public:
    */
   int connect (ACE_SPIPE_Stream &new_io,
                const ACE_SPIPE_Addr &remote_sap,
-               ACE_Time_Value *timeout = 0,
+               ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,

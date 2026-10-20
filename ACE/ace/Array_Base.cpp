@@ -37,7 +37,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
         new (&array_[i]) T;
     }
   else
-    this->array_ = 0;
+    this->array_ = nullptr;
 }
 
 template <class T>
@@ -59,7 +59,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
         new (&array_[i]) T (default_value);
     }
   else
-    this->array_ = 0;
+    this->array_ = nullptr;
 }
 
 // The copy constructor (performs initialization).
@@ -163,7 +163,7 @@ ACE_Array_Base<T>::max_size (typename ACE_Array_Base<T>::size_type new_size)
 {
   if (new_size > this->max_size_)
     {
-      T *tmp = 0;
+      T *tmp = nullptr;
 
       ACE_ALLOCATOR_RETURN (tmp,
                             (T *) this->allocator_->malloc (new_size * sizeof (T)),

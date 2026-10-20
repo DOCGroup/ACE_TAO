@@ -95,7 +95,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
   if (net_if == 0)
     {
-      ACE_INET_Addr *if_addrs = 0;
+      ACE_INET_Addr *if_addrs = nullptr;
       size_t if_cnt;
 
       if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)

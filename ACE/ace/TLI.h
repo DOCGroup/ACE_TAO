@@ -56,7 +56,7 @@ public:
   /// Initialize a TLI endpoint.
   ACE_HANDLE open (const char device[],
                    int oflag = O_RDWR,
-                   struct t_info *info = 0);
+                   struct t_info *info = nullptr);
 
   /// Close a TLI endpoint and release resources.
   int close ();
@@ -92,7 +92,7 @@ protected:
   ~ACE_TLI ();
 
   /// Initialize a TLI endpoint.
-  ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = 0);
+  ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = nullptr);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

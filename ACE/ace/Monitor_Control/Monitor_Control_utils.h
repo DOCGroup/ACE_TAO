@@ -44,10 +44,10 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 template<typename OS_MP_TYPE>
 Monitor_Base*
-create_os_monitor (const char* name = 0,
+create_os_monitor (const char* name = nullptr,
                    ACE_Time_Value period = ACE_Time_Value::zero)
 {
-  Monitor_Base* retval = 0;
+  Monitor_Base* retval = nullptr;
 
   ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr =
     ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service<

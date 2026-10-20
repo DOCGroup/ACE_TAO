@@ -54,7 +54,7 @@ public:
    * This opens asynch connector
    */
   virtual int open (bool pass_addresses = false,
-                    ACE_Proactor *proactor = 0,
+                    ACE_Proactor *proactor = nullptr,
                     bool validate_new_connection = true);
 
   /// This initiates a new asynchronous connect
@@ -62,7 +62,7 @@ public:
                        const ACE_INET_Addr &local_sap =
                          (const ACE_INET_Addr &)ACE_Addr::sap_any,
                        int reuse_addr = 1,
-                       const void *act = 0);
+                       const void *act = nullptr);
 
   /**
    * This cancels all pending accepts operations that were issued by
