@@ -19,10 +19,10 @@ static const ACE_TCHAR *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImR\\Parameters");
 #endif /* ACE_WIN32 */
 
-static const int DEFAULT_PING_INTERVAL = 10; // seconds
-static const int DEFAULT_PING_TIMEOUT = 1; // seconds
-static const int DEFAULT_START_TIMEOUT = 60; // seconds
-static const long DEFAULT_FT_UPDATE_DELAY = 0; //250000; // useconds
+static constexpr int DEFAULT_PING_INTERVAL = 10; // seconds
+static constexpr int DEFAULT_PING_TIMEOUT = 1; // seconds
+static constexpr int DEFAULT_START_TIMEOUT = 60; // seconds
+static constexpr long DEFAULT_FT_UPDATE_DELAY = 0; //250000; // useconds
 Options::Options ()
 : repo_mode_ (REPO_NONE)
 , erase_repo_ (false)
@@ -39,7 +39,7 @@ Options::Options ()
 , lockout_ (false)
 , imr_type_ (STANDALONE_IMR)
 , throw_shutdown_exceptions_ (false)
-, pinger_ (0)
+, pinger_ (nullptr)
 , ft_endpoint_ ()
 , ft_update_delay_ (0, DEFAULT_FT_UPDATE_DELAY)
 {
