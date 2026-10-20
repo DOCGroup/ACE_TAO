@@ -45,7 +45,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Scheduler_Factory::server ();
 
       // Some useful variables for retrieving values from the scheduler.
-      RtecScheduler::RT_Info *rt_info = 0;
+      RtecScheduler::RT_Info* rt_info = nullptr;
       RtecScheduler::OS_Priority priority;
       RtecScheduler::Preemption_Subpriority_t subpriority;
       RtecScheduler::Preemption_Priority_t p_priority;
@@ -65,7 +65,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           delete rt_info;
           rt_info = runtime_scheduler->get (infos [i].handle);
 
-          ACE_ASSERT (rt_info != 0);
+          ACE_ASSERT (rt_info != nullptr);
           ACE_ASSERT (ACE_OS::strcmp (rt_info->entry_point,
                                       infos [i].entry_point) == 0);
           ACE_ASSERT (rt_info->handle ==
