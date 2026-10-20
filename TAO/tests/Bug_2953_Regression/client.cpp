@@ -9,21 +9,21 @@
 
 #include "TestC.h"
 
-void shutdownORB(CORBA::ORB_ptr orb, const char * orbid)
+void shutdownORB (CORBA::ORB_ptr orb, char const *orbid)
 {
-  orb->shutdown(0);
+  orb->shutdown (false);
   ACE_DEBUG ((LM_DEBUG,
               "ORB <%C> is shutdown\n",
               orbid));
 
-  orb->destroy();
+  orb->destroy ();
   ACE_DEBUG ((LM_DEBUG,
               "ORB <%C> is destroyed\n",
               orbid));
 }
 
-static const ACE_TCHAR *orbidAfile = ACE_TEXT("file://iorA.ior");
-static const ACE_TCHAR *orbidBfile = ACE_TEXT("file://iorB.ior");
+ACE_TCHAR const *orbidAfile = ACE_TEXT ("file://iorA.ior");
+ACE_TCHAR const *orbidBfile = ACE_TEXT ("file://iorB.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -64,26 +64,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
       }
 
-    const char *orbidA = "orbidA";
-    CORBA::ORB_var orbA = CORBA::ORB_init(argc, argv, orbidA);
+    char const *orbidA = "orbidA";
+    CORBA::ORB_var orbA = CORBA::ORB_init (argc, argv, orbidA);
 
-    CORBA::Object_var objA = orbA->string_to_object(orbidAfile);
-    Test::Hello_var helloA(Test::Hello::_narrow(objA.in ()));
-    CORBA::String_var resA = helloA->get_string();
+    CORBA::Object_var objA = orbA->string_to_object (orbidAfile);
+    Test::Hello_var helloA (Test::Hello::_narrow (objA.in ()));
+    CORBA::String_var resA = helloA->get_string ();
 
-    CORBA::Object_var objB = orbA->string_to_object(orbidBfile);
-    Test::Hello_var helloB(Test::Hello::_narrow(objB.in ()));
-    CORBA::String_var resB = helloB->get_string();
+    CORBA::Object_var objB = orbA->string_to_object (orbidBfile);
+    Test::Hello_var helloB (Test::Hello::_narrow (objB.in ()));
+    CORBA::String_var resB = helloB->get_string ();
 
     ACE_DEBUG ((LM_DEBUG,
                 "got resA: <%C> and resB: <%C>",
-                resA.in(), resB.in ()));
+                resA.in (), resB.in ()));
 
     helloA->shutdown ();
     helloB->shutdown ();
-    shutdownORB(orbA.in (), orbidA);
+    shutdownORB (orbA.in (), orbidA);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Caught unexpected exception:");
 

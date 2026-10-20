@@ -17,21 +17,21 @@
 class Test_i : public virtual POA_Test::Hello
 {
 public:
-  Test_i(CORBA::ORB_ptr orb, Client_Task* t) : orb_(CORBA::ORB::_duplicate(orb)), task_ (t)
+  Test_i (CORBA::ORB_ptr orb, Client_Task *t)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+    , task_ (t)
   {
   }
 
-  virtual ~Test_i()
-  {
-  }
+  ~Test_i () override = default;
 
-  char * get_string()
+  char *get_string () override
   {
-    return CORBA::string_dup("hello");
+    return CORBA::string_dup ("hello");
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown()
+  void shutdown () override
   {
     task_->terminate_loop ();
     orb_ = CORBA::ORB::_nil ();
@@ -43,8 +43,8 @@ private:
   Client_Task* task_;
 };
 
-const ACE_TCHAR *ior_a_file = ACE_TEXT("iorA.ior");
-const ACE_TCHAR *ior_b_file = ACE_TEXT("iorB.ior");
+ACE_TCHAR const *ior_a_file = ACE_TEXT ("iorA.ior");
+ACE_TCHAR const *ior_b_file = ACE_TEXT ("iorB.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -200,23 +200,23 @@ removeServant(
               id));
 }
 
-void shutdownORB(CORBA::ORB_ptr orb, const char * orbid)
+void shutdownORB (CORBA::ORB_ptr orb, char const *orbid)
 {
-  orb->shutdown(true);
+  orb->shutdown (true);
   ACE_DEBUG ((LM_DEBUG,
               "ORB <%C> is shutdown\n",
               orbid));
 
-  orb->destroy();
+  orb->destroy ();
   ACE_DEBUG ((LM_DEBUG,
               "ORB <%C> is destroyed\n",
               orbid));
 }
 
-int write_iorfile (const ACE_TCHAR* ior_output_file, const char* ior)
+int write_iorfile (ACE_TCHAR const *ior_output_file, char const *ior)
 {
-  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-  if (output_file == 0)
+  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+  if (output_file == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                         "Cannot open output file for writing IOR: %s\n",
                         ior_output_file),
@@ -233,19 +233,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
-    const char *orbidA = "orbidA";
-    const char *orbidB = "orbidB";
+    char const *orbidA = "orbidA";
+    char const *orbidB = "orbidB";
 
-    PortableServer::ServantBase *implA = 0;
-    PortableServer::ServantBase *implB = 0;
+    PortableServer::ServantBase *implA = nullptr;
+    PortableServer::ServantBase *implB = nullptr;
     RTCORBA::ThreadpoolId tpidA = 0;
     RTCORBA::ThreadpoolId tpidB = 0;
 
     // server - write our iors to two files
-    CORBA::ORB_var orbA = CORBA::ORB_init(argc, argv, orbidA);
-    CORBA::ORB_var orbB = CORBA::ORB_init(argc, argv, orbidB);
-    RTCORBA::RTORB_var rtorbA = getRTORB(orbA.in (), orbidA);
-    RTCORBA::RTORB_var rtorbB = getRTORB(orbB.in (), orbidB);
+    CORBA::ORB_var orbA = CORBA::ORB_init (argc, argv, orbidA);
+    CORBA::ORB_var orbB = CORBA::ORB_init (argc, argv, orbidB);
+    RTCORBA::RTORB_var rtorbA = getRTORB (orbA.in (), orbidA);
+    RTCORBA::RTORB_var rtorbB = getRTORB (orbB.in (), orbidB);
 
     PortableServer::POA_var rootPoaA = getRootPoa(orbA.in (), orbidA);
     PortableServer::POA_var rootPoaB = getRootPoa(orbB.in (), orbidB);
@@ -297,19 +297,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     client_taskA.thr_mgr ()->wait ();
     client_taskB.thr_mgr ()->wait ();
 
-    if (implA != 0)
+    if (implA != nullptr)
       {
-        removeServant(rtorbA.in (), rootPoaA.in (), implA, tpidA);
+        removeServant (rtorbA.in (), rootPoaA.in (), implA, tpidA);
       }
 
-    shutdownORB(orbA.in (), orbidA);
+    shutdownORB (orbA.in (), orbidA);
 
-    if (implB != 0)
+    if (implB != nullptr)
       {
-        removeServant(rtorbB.in (), rootPoaB.in (), implB, tpidB);
+        removeServant (rtorbB.in (), rootPoaB.in (), implB, tpidB);
       }
 
-    shutdownORB(orbB.in (), orbidB);
+    shutdownORB (orbB.in (), orbidB);
 
     objB = CORBA::Object::_nil ();
     helloB = Test::Hello::_nil ();
@@ -322,7 +322,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     rtorbA = RTCORBA::RTORB::_nil ();
     rootPoaA = PortableServer::POA::_nil ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Caught unexpected exception:");
     ACE_ERROR ((LM_ERROR,  "Bug_2953_Regression failed.\n"));
