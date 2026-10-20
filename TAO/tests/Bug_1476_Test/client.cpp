@@ -12,7 +12,7 @@
 
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 bool level_obj = false;
 bool level_thread = false;
 bool level_orb = false;

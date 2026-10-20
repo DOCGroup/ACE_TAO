@@ -9,7 +9,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int number_of_oneways = 10;
 int number_of_client_tasks = 2;
 
@@ -133,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
            ++iter)
         {
           TAO_Transport* transport = (*iter).int_id_.transport ();
-          if (transport->queue_is_empty() == 0 && transport->is_connected() == false)
+          if (!transport->queue_is_empty () && !transport->is_connected ())
             {
               tranportwithqueue = true;
               break;

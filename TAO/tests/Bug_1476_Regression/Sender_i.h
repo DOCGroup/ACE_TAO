@@ -26,12 +26,16 @@ public:
   Sender_i (CORBA::ORB_ptr orb);
 
   ///Destructor
-  virtual ~Sender_i ();
+  ~Sender_i () override;
+  Sender_i (Sender_i const &) = delete;
+  Sender_i &operator= (Sender_i const &) = delete;
+  Sender_i (Sender_i &&) = delete;
+  Sender_i &operator= (Sender_i &&) = delete;
 
   // = The skeleton methods
-  virtual void active_objects (CORBA::ULong ao);
+  void active_objects (CORBA::ULong ao) override;
 
-  virtual void send_ready_message ();
+  void send_ready_message () override;
 
   CORBA::ULong get_number_received () const;
 
