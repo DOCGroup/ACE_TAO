@@ -25,20 +25,20 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin
-                             , CosNotifyChannelAdmin::ConsumerAdmin
-                             , CosNotifyChannelAdmin::ConsumerAdmin_ptr
-                             , CosNotifyChannelAdmin::AdminNotFound>
-TAO_Notify_ConsumerAdmin_Find_Worker;
+using TAO_Notify_ConsumerAdmin_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin,
+                           CosNotifyChannelAdmin::ConsumerAdmin,
+                           CosNotifyChannelAdmin::ConsumerAdmin_ptr,
+                           CosNotifyChannelAdmin::AdminNotFound>;
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_SupplierAdmin
-                             , CosNotifyChannelAdmin::SupplierAdmin
-                             , CosNotifyChannelAdmin::SupplierAdmin_ptr
-                             , CosNotifyChannelAdmin::AdminNotFound>
-TAO_Notify_SupplierAdmin_Find_Worker;
+using TAO_Notify_SupplierAdmin_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_SupplierAdmin,
+                           CosNotifyChannelAdmin::SupplierAdmin,
+                           CosNotifyChannelAdmin::SupplierAdmin_ptr,
+                           CosNotifyChannelAdmin::AdminNotFound>;
 
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Seq_Worker;
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Seq_Worker;
+using TAO_Notify_ConsumerAdmin_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_ConsumerAdmin>;
+using TAO_Notify_SupplierAdmin_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_SupplierAdmin>;
 
 TAO_Notify_EventChannel::TAO_Notify_EventChannel ()
   : ecf_ (nullptr)

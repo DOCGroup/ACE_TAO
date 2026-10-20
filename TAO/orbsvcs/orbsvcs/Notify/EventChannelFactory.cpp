@@ -37,13 +37,13 @@ namespace TAO_Notify
   }
 }
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel
-                             , CosNotifyChannelAdmin::EventChannel
-                             , CosNotifyChannelAdmin::EventChannel_ptr
-                             , CosNotifyChannelAdmin::ChannelNotFound>
-TAO_Notify_EventChannel_Find_Worker;
+using TAO_Notify_EventChannel_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel,
+                           CosNotifyChannelAdmin::EventChannel,
+                           CosNotifyChannelAdmin::EventChannel_ptr,
+                           CosNotifyChannelAdmin::ChannelNotFound>;
 
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Seq_Worker;
+using TAO_Notify_EventChannel_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel>;
 
 TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory ()
   : topology_save_seq_ (0)
