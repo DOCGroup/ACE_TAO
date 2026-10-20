@@ -997,11 +997,10 @@ protected:
   TAO_AV_FlowSpecSet flow_spec_set_;
   CORBA::String_var reverse_channel_;
 
-#if defined (ACE_WIN32_VC14)
-  // Workaround for connect issue 1577211
   TAO_FlowEndPoint (const TAO_FlowEndPoint &) = delete;
   TAO_FlowEndPoint &operator= (const TAO_FlowEndPoint &) = delete;
-#endif
+  TAO_FlowEndPoint (TAO_FlowEndPoint &&) = delete;
+  TAO_FlowEndPoint &operator= (TAO_FlowEndPoint &&) = delete;
 };
 
 class TAO_AV_Export TAO_FlowProducer:
