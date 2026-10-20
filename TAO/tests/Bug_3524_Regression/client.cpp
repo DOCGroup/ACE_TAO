@@ -3,10 +3,10 @@
 #include "ace/Synch.h"
 #include "testC.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c;
@@ -1346,7 +1346,7 @@ int test_exceptions (::Test::A_ptr server)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   int status = 0;
 
@@ -1355,7 +1355,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      ::Test::vtp_init *vtp_factory = 0;
+      ::Test::vtp_init *vtp_factory = nullptr;
       ACE_NEW_THROW_EX (vtp_factory,
                         ::Test::vtp_init,
                         CORBA::NO_MEMORY ());
@@ -1401,7 +1401,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in client:");
       return 1;
