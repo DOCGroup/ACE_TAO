@@ -36,6 +36,11 @@ public:
   void handle_exception(int id);
 
 private:
+  Update_Manager(Update_Manager const&) = delete;
+  Update_Manager(Update_Manager&&) = delete;
+  Update_Manager& operator=(Update_Manager const&) = delete;
+  Update_Manager& operator=(Update_Manager&&) = delete;
+
   ACE_Auto_Event& evt_;
   bit_vector replied_;
   bit_vector signal_condition_;

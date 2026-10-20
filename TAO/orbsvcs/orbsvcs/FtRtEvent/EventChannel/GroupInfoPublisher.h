@@ -63,6 +63,11 @@ public:
   GroupInfoPublisherBase();
 
 private:
+  GroupInfoPublisherBase(GroupInfoPublisherBase const&) = delete;
+  GroupInfoPublisherBase(GroupInfoPublisherBase&&) = delete;
+  GroupInfoPublisherBase& operator=(GroupInfoPublisherBase const&) = delete;
+  GroupInfoPublisherBase& operator=(GroupInfoPublisherBase&&) = delete;
+
   CosNaming::NamingContext_var naming_context_;
   using Subscribers = ACE_Vector<TAO_FTEC_Become_Primary_Listener*, 2>;
   Subscribers subscribers_;
