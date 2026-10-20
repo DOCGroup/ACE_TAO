@@ -3,19 +3,14 @@
 
 // Constructor
 Sink_i::Sink_i (CORBA::ORB_ptr orb)
-: orb_(CORBA::ORB::_duplicate(orb))
-, tickCount_(0)
-, tockCount_(0)
-{
-}
-
-// Destructor
-Sink_i::~Sink_i ()
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , tickCount_ (0)
+  , tockCount_ (0)
 {
 }
 
 bool
-Sink_i::parse_args(int &, ACE_TCHAR *[])
+Sink_i::parse_args (int &, ACE_TCHAR *[])
 {
   return true;
 }
@@ -25,30 +20,30 @@ Sink_i::parse_args(int &, ACE_TCHAR *[])
 void
 Sink_i::tick ()
 {
-  ACE_OS::sleep(1);
+  ACE_OS::sleep (1);
   tickCount_ += 1;
-  ACE_DEBUG((LM_DEBUG, "Sink (%P|%t) tick: %d\n", tickCount_));
+  ACE_DEBUG ((LM_DEBUG, "Sink (%P|%t) tick: %d\n", tickCount_));
 }
 
 void
 Sink_i::tock ()
 {
-  ACE_OS::sleep(1);
+  ACE_OS::sleep (1);
   tockCount_ += 1;
-  ACE_DEBUG((LM_DEBUG, "Sink (%P|%t) tock: %d\n", tockCount_));
+  ACE_DEBUG ((LM_DEBUG, "Sink (%P|%t) tock: %d\n", tockCount_));
 }
 
 ::CORBA::ULong
 Sink_i::tickCount ()
 {
-  ACE_DEBUG((LM_DEBUG, "Sink (%P|%t) tickCount: %d\n", tickCount_));
+  ACE_DEBUG ((LM_DEBUG, "Sink (%P|%t) tickCount: %d\n", tickCount_));
   return tickCount_;
 }
 
 ::CORBA::ULong
 Sink_i::tockCount ()
 {
-  ACE_DEBUG((LM_DEBUG, "Sink (%P|%t) tockCount: %d\n", tockCount_));
+  ACE_DEBUG ((LM_DEBUG, "Sink (%P|%t) tockCount: %d\n", tockCount_));
   return tockCount_;
 }
 

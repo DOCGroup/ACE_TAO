@@ -1,12 +1,12 @@
 #include "middle_i.h"
 
-const ACE_TCHAR * ior_output_file = 0;
+ACE_TCHAR const *ior_output_file = nullptr;
 
-const ACE_TCHAR * ior_input_file = 0;
+ACE_TCHAR const *ior_input_file = nullptr;
 char input_ior[5000];
 
 
-void eat_args (int & argc, ACE_TCHAR *argv[], int argp, int how_many)
+void eat_args (int &argc, ACE_TCHAR *argv[], int argp, int how_many)
 {
   for (int marg = argp; marg + how_many < argc; ++marg)
     {
@@ -15,15 +15,15 @@ void eat_args (int & argc, ACE_TCHAR *argv[], int argp, int how_many)
   argc -= how_many;
 }
 
-bool parse_args (int & argc, ACE_TCHAR *argv[])
+bool parse_args (int &argc, ACE_TCHAR *argv[])
 {
   int argp = 1;
   while (argp < argc)
     {
-      const ACE_TCHAR * arg = argv[argp];
-      if(arg[0] == '-' && arg[1] == 'o' && argp + 1 < argc)
+      ACE_TCHAR const *arg = argv[argp];
+      if (arg[0] == '-' && arg[1] == 'o' && argp + 1 < argc)
         {
-          if (ior_output_file != 0)
+          if (ior_output_file != nullptr)
             {
               ACE_ERROR ((LM_DEBUG,
                           "Middle (%P|%t) duplicate -o options\n"));
@@ -32,11 +32,11 @@ bool parse_args (int & argc, ACE_TCHAR *argv[])
           // capture output file name
           // then remove it from arguemnt list
           ior_output_file = argv[argp + 1];
-          eat_args(argc, argv, argp, 2);
+          eat_args (argc, argv, argp, 2);
         }
-      else if(arg[0] == '-' && arg[1] == 'f' && argp + 1 < argc)
+      else if (arg[0] == '-' && arg[1] == 'f' && argp + 1 < argc)
         {
-          if (ior_input_file != 0)
+          if (ior_input_file != nullptr)
             {
               ACE_ERROR ((LM_DEBUG,
                           "Middle (%P|%t) duplicate -f options\n"));
@@ -45,15 +45,15 @@ bool parse_args (int & argc, ACE_TCHAR *argv[])
           // capture input file name
           // then remove it from arguemnt list
           ior_input_file = argv[argp + 1];
-          eat_args(argc, argv, argp, 2);
+          eat_args (argc, argv, argp, 2);
         }
       else
         {
-           argp += 1;
-           // just ignore unknown arguments
+          ++argp;
+          // Just ignore unknown arguments.
         }
     }
-  if (ior_output_file == 0)
+  if (ior_output_file == nullptr)
     {
       ACE_ERROR ((LM_DEBUG,
                   "Middle (%P|%t) missing required -o option\n"));
@@ -63,7 +63,7 @@ bool parse_args (int & argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "Middle (%P|%t) started\n"));
@@ -93,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ///////////////////////////////
       // Prepare to be a CORBA client
       FILE *input_file = ACE_OS::fopen (ior_input_file, "r");
-      if (input_file == 0)
+      if (input_file == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open input IOR file: %s",
@@ -122,8 +122,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //target->tick();
       //target->tock();
 
-      Middle_i middle (orb.in(), target.in ());
-      if (middle.parse_args (argc, argv) )
+      Middle_i middle (orb.in (), target.in ());
+      if (middle.parse_args (argc, argv))
         {
           /////////////////////////////////
           // Activate server side mechanism
@@ -139,7 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             orb->object_to_string (server.in ());
 
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
@@ -151,12 +151,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb->run ();
         }
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("Middle: User Exception in main");
       return -1;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("Middle: System Exception in main");
       return -1;
