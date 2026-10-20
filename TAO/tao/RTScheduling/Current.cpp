@@ -355,7 +355,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
-      TAO_RTScheduler_Current_i* new_current = 0;
+      TAO_RTScheduler_Current_i *new_current = nullptr;
         ACE_NEW_THROW_EX (new_current,
                           TAO_RTScheduler_Current_i (this->orb_,
                                                      this->dt_hash_,

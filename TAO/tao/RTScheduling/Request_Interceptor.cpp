@@ -288,11 +288,11 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                 "Request from Distributable Thread\n"));
 
   RTScheduling::Current::IdType_var guid_var;
-  char* name = 0;
-  CORBA::Policy_var sched_param = 0;
-  CORBA::Policy_var implicit_sched_param = 0;
+  char *name = nullptr;
+  CORBA::Policy_var sched_param = nullptr;
+  CORBA::Policy_var implicit_sched_param = nullptr;
 
-  TAO_RTScheduler_Current_i* new_current = 0;
+  TAO_RTScheduler_Current_i *new_current = nullptr;
   ACE_NEW_THROW_EX (new_current,
                     TAO_RTScheduler_Current_i (this->current_->orb (),
                                                this->current_->dt_hash ()),

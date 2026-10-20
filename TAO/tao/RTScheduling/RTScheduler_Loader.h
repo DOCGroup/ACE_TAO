@@ -46,7 +46,7 @@ private:
   TAO_RTScheduler_Loader &operator= (TAO_RTScheduler_Loader &&) = delete;
 
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTScheduler, TAO_RTScheduler_Loader)
