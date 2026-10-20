@@ -36,22 +36,25 @@ class ctest_impl : public virtual POA_ctest
 {
 public:
   /// Constructor
-  ctest_impl (CORBA::ORB_ptr orb)  : orb_ (CORBA::ORB::_duplicate (orb)) {}
+  ctest_impl (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+  {
+  }
 
-  CORBA::Long ctestfn(CORBA::Long size, ctest::UCSeq_out data)
+  CORBA::Long ctestfn (CORBA::Long size, ctest::UCSeq_out data) override
   {
     data = new ctest::UCSeq;
 
-    data->length(size);
+    data->length (size);
 
-    for (CORBA::ULong i = 0; i < data->length(); ++i)
+    for (CORBA::ULong i = 0; i < data->length (); ++i)
       {
         data[i] = (rand() % 26) + 'A';
       }
 
     return 0;
   }
-  void shutdown ()
+  void shutdown () override
   {
     this->orb_->shutdown (false);
   }
@@ -84,11 +87,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      ctest_impl *hello_impl = 0;
+      ctest_impl *hello_impl = nullptr;
       ACE_NEW_RETURN (hello_impl,
                       ctest_impl (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
+      PortableServer::ServantBase_var owner_transfer (hello_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (hello_impl);
@@ -100,8 +103,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
@@ -111,14 +114,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      orb->run();
+      orb->run ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       root_poa->destroy (true, true);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
