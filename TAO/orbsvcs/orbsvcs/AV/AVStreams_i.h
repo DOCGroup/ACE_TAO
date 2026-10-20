@@ -928,65 +928,65 @@ public:
 
   int set_flowname (const char *flowname);
 
-  virtual void set_flow_handler (const char *flowname,
-                                 TAO_AV_Flow_Handler *handler);
+  void set_flow_handler (const char *flowname,
+                         TAO_AV_Flow_Handler *handler) override;
 
-  virtual int set_protocol_object (const char *flowname,
-                                   TAO_AV_Protocol_Object *object);
+  int set_protocol_object (const char *flowname,
+                           TAO_AV_Protocol_Object *object) override;
 
   /// lock the flow endpoint for a particular flow.
-  virtual CORBA::Boolean lock ();
+  CORBA::Boolean lock () override;
 
   /// unlock the flow endpoint for subsequent use.
-  virtual void unlock ();
+  void unlock () override;
 
 
   /// destroy this flow.
-  virtual void destroy ();
+  void destroy () override;
 
   /// get method for the related streamendpoint under which this
   /// flowendpoint is.
-  virtual AVStreams::StreamEndPoint_ptr related_sep();
+  AVStreams::StreamEndPoint_ptr related_sep () override;
 
   /// set method for the related streamendpoint under which this
   /// flowendpoint is.
-  virtual void related_sep (AVStreams::StreamEndPoint_ptr related_sep);
+  void related_sep (AVStreams::StreamEndPoint_ptr related_sep) override;
 
-  virtual AVStreams::FlowConnection_ptr related_flow_connection();
+  AVStreams::FlowConnection_ptr related_flow_connection () override;
 
   // accessor for the related flow connection attribute.
 
   /// set method for the related flow connection attribute.
-  virtual void related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection);
+  void related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection) override;
 
   /// returns the other flowendpoint to which this is connected.
-  virtual AVStreams::FlowEndPoint_ptr get_connected_fep ();
+  AVStreams::FlowEndPoint_ptr get_connected_fep () override;
 
   //// use the specified flow protocol.
-  virtual CORBA::Boolean use_flow_protocol (const char * fp_name,
-                                            const CORBA::Any & fp_settings);
+  CORBA::Boolean use_flow_protocol (const char *fp_name,
+                                    const CORBA::Any &fp_settings) override;
 
   /// sets the data format.
-  virtual void set_format (const char * format);
+  void set_format (const char *format) override;
 
   /// sets the device parameters.
-  virtual void set_dev_params (const CosPropertyService::Properties & new_settings);
+  void set_dev_params (const CosPropertyService::Properties &new_settings) override;
 
   /// sets the list of protocols to be used.
-  virtual void set_protocol_restriction (const AVStreams::protocolSpec & the_spec);
+  void set_protocol_restriction (const AVStreams::protocolSpec &the_spec) override;
 
   /// checks whether the passed flowendpoint is compatible with this.
-  virtual CORBA::Boolean is_fep_compatible (AVStreams::FlowEndPoint_ptr fep);
+  CORBA::Boolean is_fep_compatible (AVStreams::FlowEndPoint_ptr fep) override;
 
   /// sets the peer flowendpoint.
-  virtual CORBA::Boolean set_peer (AVStreams::FlowConnection_ptr the_fc,
-                                   AVStreams::FlowEndPoint_ptr the_peer_fep,
-                                   AVStreams::QoS & the_qos);
+  CORBA::Boolean set_peer (AVStreams::FlowConnection_ptr the_fc,
+                           AVStreams::FlowEndPoint_ptr the_peer_fep,
+                           AVStreams::QoS &the_qos) override;
 
   /// sets the multicast peer flowendpoint, not implemented.
-  virtual CORBA::Boolean set_Mcast_peer (AVStreams::FlowConnection_ptr the_fc,
-                                         AVStreams::MCastConfigIf_ptr a_mcastconfigif,
-                                         AVStreams::QoS & the_qos);
+  CORBA::Boolean set_Mcast_peer (AVStreams::FlowConnection_ptr the_fc,
+                                 AVStreams::MCastConfigIf_ptr a_mcastconfigif,
+                                 AVStreams::QoS &the_qos) override;
 
 
   /**
