@@ -7,10 +7,7 @@
 
 
 DllORB::DllORB ()
- : failPrePostInit_ (3),
-   mp_barrier_ (0),
-   mv_orb_ (),
-   mv_rootPOA_ ()
+  : failPrePostInit_ (3)
 {
 }
 
@@ -29,7 +26,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
   try
     {
       ACE_Arg_Shifter as (argc, argv);
-      const ACE_TCHAR *currentArg = 0;
+      ACE_TCHAR const *currentArg = nullptr;
       while (as.is_anything_left ())
         {
           if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
@@ -59,7 +56,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           // module and destroyed by this object when it is dynamically
           // unloaded.
           int register_with_object_manager = 0;
-          TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
+          TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
           int result = p_tsm->init (register_with_object_manager);
 
           if (result == -1)
@@ -153,14 +150,14 @@ DllORB::fini ()
   this->wait ();
 
   delete mp_barrier_;
-  mp_barrier_ = 0;
+  mp_barrier_ = nullptr;
 
   try
     {
       mv_orb_->destroy ();
       mv_orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -174,7 +171,7 @@ DllORB::fini ()
       // -----------------------------------------------------------------
       // Explicitly clean up singletons created by TAO before
       // unloading this module.
-      TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
+      TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
       int result = p_tsm->fini ();
       if (result == -1)
         {
