@@ -3,18 +3,18 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, const char* key)
+Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, char const * key)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , _key (CORBA::string_dup (key))
 {
 }
 
 Simple_Server_i::Simple_Server_i ()
-  : orb_ (0)
+  : orb_ (nullptr)
 {
 }
 
-char*
+char *
 Simple_Server_i::remote_call ()
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing remote_call()\n", _key.in()));
@@ -27,8 +27,8 @@ Simple_Server_i::remote_call ()
 }
 
 
-char*
-Simple_Server_i::shutdown (const char* key)
+char *
+Simple_Server_i::shutdown (char const * key)
 {
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing shutdown()\n", _key.in()));
@@ -48,8 +48,8 @@ Simple_Server_i::shutdown (const char* key)
   return CORBA::string_dup (buf);
 }
 
-char*
-Simple_Server_i::abort (const char* key)
+char *
+Simple_Server_i::abort (char const * key)
 {
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing abort()\n", _key.in()));

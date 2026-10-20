@@ -16,6 +16,11 @@ public:
   Manager ();
   // Ctor
 
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
+
   void init (int argc,
              ACE_TCHAR *argv[]);
 
