@@ -6,9 +6,9 @@
 
 #include <iostream>
 
-const int EVENT_DELAY_MS = 10;
+constexpr int EVENT_DELAY_MS = 10;
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
   {
@@ -44,7 +44,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     consumer->connect_push_supplier(CosEventComm::PushSupplier::_nil());
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup("Hello, world.");
+    CORBA::String_var const eventData = CORBA::string_dup("Hello, world.");
 
     // Send one event per second. (approx)
     while (1) {

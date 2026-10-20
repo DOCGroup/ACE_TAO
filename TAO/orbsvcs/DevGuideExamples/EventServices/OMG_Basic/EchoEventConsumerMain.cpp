@@ -10,9 +10,9 @@
 
 #include <iostream>
 
-const int EVENTS_TILL_SHUTDOWN = 10;
+constexpr int EVENTS_TILL_SHUTDOWN = 10;
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
   {
