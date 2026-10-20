@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior.out");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("ior.out");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -36,7 +36,12 @@ class ThreadPool : public ACE_Task_Base
 {
 public:
   ThreadPool (CORBA::ORB_ptr orb);
-  virtual int svc ();
+  ThreadPool (ThreadPool const &) = delete;
+  ThreadPool &operator= (ThreadPool const &) = delete;
+  ThreadPool (ThreadPool &&) = delete;
+  ThreadPool &operator= (ThreadPool &&) = delete;
+
+  int svc () override;
 private:
   CORBA::ORB_var orb_;
 };
@@ -51,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var poa_object = orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -62,19 +67,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
       root_poa->the_POAManager();
 
-      Publisher_impl publisher(orb.in ());
+      Publisher_impl publisher (orb.in ());
       PortableServer::ObjectId_var id = root_poa->activate_object (&publisher);
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
       Publisher_var publisher_var = Publisher::_narrow (object.in ());
 
-      CORBA::String_var ior = orb->object_to_string(publisher_var.in());
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in()));
+      CORBA::String_var ior = orb->object_to_string (publisher_var.in ());
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // output the ior
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
@@ -82,22 +87,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate();
+      poa_manager->activate ();
 
-      const CORBA::Object_var pmobj (orb->resolve_initial_references("ORBPolicyManager" ));
-      CORBA::PolicyManager_var policy_manager = CORBA::PolicyManager::_narrow(pmobj.in());
+      CORBA::Object_var const pmobj (
+        orb->resolve_initial_references ("ORBPolicyManager"));
+      CORBA::PolicyManager_var policy_manager = CORBA::PolicyManager::_narrow (pmobj.in ());
 
       CORBA::Any orb_level;
       orb_level <<= Messaging::SYNC_NONE;
       CORBA::PolicyList policy_list;
       policy_list.length(1);
-      policy_list[0] = orb->create_policy(Messaging::SYNC_SCOPE_POLICY_TYPE,
-                                          orb_level);
-      policy_manager->set_policy_overrides(policy_list,
-                                           CORBA::SET_OVERRIDE);
+      policy_list[0] = orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                                            orb_level);
+      policy_manager->set_policy_overrides (policy_list,
+                                            CORBA::SET_OVERRIDE);
 
       ThreadPool pool (orb.in ());
-      if (pool.activate(THR_NEW_LWP | THR_JOINABLE, 5) != 0)
+      if (pool.activate (THR_NEW_LWP | THR_JOINABLE, 5) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"),
                           1);
@@ -117,12 +123,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-ThreadPool::ThreadPool(CORBA::ORB_ptr orb)
-: orb_(CORBA::ORB::_duplicate (orb))
+ThreadPool::ThreadPool (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-int ThreadPool::svc ()
+int
+ThreadPool::svc ()
 {
   try
   {

@@ -6,14 +6,19 @@
 class Subscriber_impl : public POA_Subscriber
 {
 public:
-  Subscriber_impl(CORBA::ORB_ptr orb);
-  ~Subscriber_impl();
+  explicit Subscriber_impl (CORBA::ORB_ptr orb);
+  ~Subscriber_impl () override;
 
-  virtual void onData (::CORBA::Double value);
+  Subscriber_impl (Subscriber_impl const &) = delete;
+  Subscriber_impl &operator= (Subscriber_impl const &) = delete;
+  Subscriber_impl (Subscriber_impl &&) = delete;
+  Subscriber_impl &operator= (Subscriber_impl &&) = delete;
 
-  virtual ::CORBA::Boolean isAlive ();
+  void onData (::CORBA::Double value) override;
 
-  void shutdown();
+  ::CORBA::Boolean isAlive () override;
+
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

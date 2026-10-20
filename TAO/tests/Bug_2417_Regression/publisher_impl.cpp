@@ -5,8 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include <vector>
 
-using namespace std;
-
 struct _Subscriber
 {
   Subscriber_var subscriber;
@@ -17,34 +15,39 @@ struct _Subscriber
 class Publisher_impl::Worker : public ACE_Task_Base
 {
 public:
-  Worker(Publisher_impl * _owner);
-  ~Worker();
-  void addSubscriber(Subscriber_ptr subscriber);
-  virtual int svc ();
-  void terminate();
+  explicit Worker (Publisher_impl *owner);
+  ~Worker () override;
+  Worker (Worker const &) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker &&) = delete;
+
+  void addSubscriber (Subscriber_ptr subscriber);
+  int svc () override;
+  void terminate ();
 private:
   bool terminated;
-  vector<_Subscriber> subscribers;
+  std::vector<_Subscriber> subscribers;
   TAO_SYNCH_MUTEX mutex;
-  Publisher_impl * owner;
+  Publisher_impl *owner;
 };
 
-Publisher_impl::Worker::Worker(Publisher_impl * _owner)
-  : owner(_owner)
+Publisher_impl::Worker::Worker (Publisher_impl *owner)
+  : owner (owner)
 {
   terminated = false;
 }
 
-Publisher_impl::Worker::~Worker()
+Publisher_impl::Worker::~Worker ()
 {
   terminated = true;
 }
 
-void Publisher_impl::Worker::addSubscriber(Subscriber_ptr subscriber)
+void Publisher_impl::Worker::addSubscriber (Subscriber_ptr subscriber)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex);
-  subscribers.push_back(_Subscriber());
-  _Subscriber& s = subscribers.back();
+  subscribers.push_back (_Subscriber {});
+  _Subscriber &s = subscribers.back ();
   s.unsubscribed = false;
   s.subscriber = Subscriber::_duplicate(subscriber);
   s.count = 0;
@@ -64,8 +67,8 @@ int Publisher_impl::Worker::svc ()
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex, 0);
         doShutdown = subscribers.size() > 0;
-        for (vector<_Subscriber>::iterator iter = subscribers.begin();
-             iter != subscribers.end(); ++iter)
+        for (std::vector<_Subscriber>::iterator iter = subscribers.begin ();
+             iter != subscribers.end (); ++iter)
           {
             if (!iter->unsubscribed)
               {
@@ -73,7 +76,7 @@ int Publisher_impl::Worker::svc ()
                 try
                   {
                     if (!CORBA::is_nil(iter->subscriber.in ()))
-                      iter->subscriber->onData(data);
+                      iter->subscriber->onData (data);
                     else
                       iter->unsubscribed = true;
                     ++iter->count;
@@ -88,14 +91,14 @@ int Publisher_impl::Worker::svc ()
       if (iteration % 200 == 0)
         {
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex, 0);
-          for (vector<_Subscriber>::iterator iter = subscribers.begin();
-               iter != subscribers.end(); ++iter)
+          for (std::vector<_Subscriber>::iterator iter = subscribers.begin ();
+               iter != subscribers.end (); ++iter)
             {
               if (!iter->unsubscribed)
                 {
                   try
                     {
-                      iter->subscriber->isAlive();
+                      iter->subscriber->isAlive ();
                     }
                   catch (...)
                     {
@@ -105,46 +108,41 @@ int Publisher_impl::Worker::svc ()
             }
         }
       if (doShutdown)
-        owner->shutdown();
+        owner->shutdown ();
       else
         ACE_OS::sleep(tv);
     }
   return 0;
 }
 
-void Publisher_impl::Worker::terminate()
+void Publisher_impl::Worker::terminate ()
 {
   terminated = true;
 }
 
-Publisher_impl::Publisher_impl(CORBA::ORB_ptr orb)
+Publisher_impl::Publisher_impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
-  worker = new Worker(this);
-  worker->activate();
+  worker = new Worker (this);
+  worker->activate ();
 }
 
-Publisher_impl::~Publisher_impl()
+Publisher_impl::~Publisher_impl ()
 {
-  worker->terminate();
-  worker->thr_mgr()->wait();
+  worker->terminate ();
+  worker->thr_mgr ()->wait ();
   delete worker;
 }
 
-void subscribe (::Subscriber_ptr subscriber);
-
 void
-Publisher_impl::subscribe(
-                          ::Subscriber_ptr subscriber
-                          )
+Publisher_impl::subscribe (::Subscriber_ptr subscriber)
 {
-  worker->addSubscriber(subscriber);
+  worker->addSubscriber (subscriber);
 }
 
 void
-Publisher_impl::shutdown (
-                          )
+Publisher_impl::shutdown ()
 {
   this->orb_->shutdown (false);
-  worker->terminate();
+  worker->terminate ();
 }
