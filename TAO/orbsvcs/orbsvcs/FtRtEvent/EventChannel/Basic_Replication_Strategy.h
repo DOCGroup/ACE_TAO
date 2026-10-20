@@ -31,7 +31,7 @@ public:
    * @param mt Specifies whether multithreaded ORB is used.
    */
   Basic_Replication_Strategy(bool mt);
-  ~Basic_Replication_Strategy();
+  ~Basic_Replication_Strategy() override;
 
   void check_validity() override;
 
@@ -46,6 +46,11 @@ public:
   int release () override;
 
 private:
+  Basic_Replication_Strategy(Basic_Replication_Strategy const&) = delete;
+  Basic_Replication_Strategy(Basic_Replication_Strategy&&) = delete;
+  Basic_Replication_Strategy& operator=(Basic_Replication_Strategy const&) = delete;
+  Basic_Replication_Strategy& operator=(Basic_Replication_Strategy&&) = delete;
+
   FTRT::SequenceNumber sequence_num_;
   ACE_SYNCH_RECURSIVE_MUTEX* mutex_;
 };

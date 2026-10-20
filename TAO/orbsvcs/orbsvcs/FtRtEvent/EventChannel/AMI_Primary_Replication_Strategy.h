@@ -48,6 +48,11 @@ public:
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:
+  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy const&) = delete;
+  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy&&) = delete;
+  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy const&) = delete;
+  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy&&) = delete;
+
   int svc () override;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
