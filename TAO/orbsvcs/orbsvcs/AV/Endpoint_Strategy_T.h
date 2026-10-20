@@ -153,7 +153,7 @@ public:
   int init (int argc, ACE_TCHAR **argv, CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// runs the ORB event loop
-  int run (ACE_Time_Value *tv = 0);
+  int run (ACE_Time_Value *tv = nullptr);
 
 protected:
   /**
