@@ -27,7 +27,7 @@ struct ECM_Data
   // iterators.
   // But ACE (and TAO) must be ported to platforms whose C++ compilers
   // will crash and burn when faced with an STL construct.
-  typedef ACE_Map_Manager<CORBA::ULong,CORBA::Double,ACE_Null_Mutex> Inventory;
+  using Inventory = ACE_Map_Manager<CORBA::ULong, CORBA::Double, ACE_Null_Mutex>;
 
   CORBA::String_var description;
   Inventory inventory;
