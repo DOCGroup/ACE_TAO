@@ -67,7 +67,7 @@ namespace TAO
 
       /// Return the peer certificate associated with the current
       /// request.
-      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate ();
+      ::SSLIOP::ASN_1_Cert * get_peer_certificate () override;
 
       /**
        * Return the certificate chain associated with the current
@@ -77,7 +77,7 @@ namespace TAO
        * certficate.  However, the certificate chain on the server
        * side does NOT contain the peer (client) certificate.
        */
-      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain ();
+      ::SSLIOP::SSL_Cert * get_peer_certificate_chain () override;
 
       /**
        * This method is mostly useful as an inexpensive means of
@@ -86,7 +86,7 @@ namespace TAO
        * @return @c true if the current execution context is not
        *         within a SSL session.
        */
-      virtual CORBA::Boolean no_context ();
+      CORBA::Boolean no_context () override;
 
       /// Set the TSS slot ID assigned to this object.
       void tss_slot (size_t slot);
@@ -116,12 +116,12 @@ namespace TAO
         return (Current_ptr)0;
       }
 
-      virtual const char* _interface_repository_id () const;
+      const char* _interface_repository_id () const override;
       //@}
 
     protected:
       /// Destructor
-      ~Current ();
+      ~Current () override;
 
       /// Set the TSS SSLIOP::Current implementation.
       int implementation (Current_Impl *impl);
