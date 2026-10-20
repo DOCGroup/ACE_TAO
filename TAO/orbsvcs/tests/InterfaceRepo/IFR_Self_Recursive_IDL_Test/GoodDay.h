@@ -17,6 +17,11 @@ public:
   /// Constructor
   GoodDay (CORBA::ORB_ptr orb);
 
+  GoodDay (GoodDay const&) = delete;
+  GoodDay (GoodDay&&) = delete;
+  GoodDay& operator= (GoodDay const&) = delete;
+  GoodDay& operator= (GoodDay&&) = delete;
+
   // = The skeleton methods
   char* get_string () override;
 

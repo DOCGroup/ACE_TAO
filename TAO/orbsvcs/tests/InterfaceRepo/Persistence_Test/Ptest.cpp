@@ -9,9 +9,7 @@ Ptest::Ptest ()
 {
 }
 
-Ptest::~Ptest ()
-{
-}
+Ptest::~Ptest () = default;
 
 int
 Ptest::init (int argc, ACE_TCHAR *argv[])
