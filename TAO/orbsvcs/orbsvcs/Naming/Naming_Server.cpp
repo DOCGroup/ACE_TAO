@@ -481,7 +481,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // In lieu of a fully implemented service configurator version
           // of this Reader and Writer, let's just take something off the
           // command line for now.
-          TAO::Storable_Factory* pf = 0;
+          TAO::Storable_Factory* pf = nullptr;
           ACE_CString directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
           ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
           std::unique_ptr<TAO::Storable_Factory> persFactory(pf);
