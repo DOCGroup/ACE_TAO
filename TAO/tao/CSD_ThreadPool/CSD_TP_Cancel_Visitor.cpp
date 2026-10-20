@@ -8,9 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Cancel_Visitor::~TP_Cancel_Visitor()
-{
-}
+TAO::CSD::TP_Cancel_Visitor::~TP_Cancel_Visitor() = default;
 
 
 bool

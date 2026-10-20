@@ -13,9 +13,7 @@ TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()
 }
 
 
-TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory()
-{
-}
+TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory() = default;
 
 
 int
