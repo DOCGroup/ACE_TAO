@@ -2,7 +2,7 @@
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int num_calls = 10;
 
 int
@@ -58,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_DEBUG ((LM_DEBUG, "Sent call # %d\n", i));
         }
-      orb->destroy();
+      orb->destroy ();
       // The following sleep is a workaround for a defect in the Windows
       // implementation of sockets (Win XP)
       // When this client exits after writing to a localhost socket
@@ -69,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // handles the requests (a good thing).
       // I'm still trying to decide whether this should be a bugzilla entry.
       // wilsond@ociweb.com
-      ACE_OS::sleep(num_calls/2);
+      ACE_OS::sleep (num_calls / 2);
     }
   catch (const CORBA::Exception& ex)
     {
