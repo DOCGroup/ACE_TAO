@@ -147,7 +147,7 @@ TAO_EventPortDef_i::describe_i ()
                             holder);
   epd.event = holder.fast_rep ();
 
-  CORBA::Contained::Description *retval = 0;
+  CORBA::Contained::Description *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   CORBA::Contained::Description,
                   0);

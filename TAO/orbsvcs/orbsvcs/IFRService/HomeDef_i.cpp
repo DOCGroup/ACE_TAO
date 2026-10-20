@@ -881,7 +881,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
                                              "count",
                                              count);
   eads.length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
