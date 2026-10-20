@@ -54,7 +54,7 @@ TAO_LB_LoadAverage::name ()
 CosLoadBalancing::Properties *
 TAO_LB_LoadAverage::get_properties ()
 {
-  CosLoadBalancing::Properties * props = 0;
+  CosLoadBalancing::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
@@ -94,11 +94,11 @@ TAO_LB_LoadAverage::push_loads (
   // Only the first load is used by this load balancing strategy.
   CosLoadBalancing::Load const & new_load = loads[0];
 
-  if (this->load_map_ != 0)
+  if (this->load_map_ != nullptr)
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = 0;
+      TAO_LB_LoadMap::ENTRY * entry = nullptr;
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;

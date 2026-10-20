@@ -31,7 +31,7 @@ TAO_LB_RoundRobin::get_properties ()
   // There are no RoundRobin properties.  Return an empty property
   // list.
 
-  CosLoadBalancing::Properties * props = 0;
+  CosLoadBalancing::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties,
                     CORBA::NO_MEMORY (

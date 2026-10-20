@@ -31,7 +31,7 @@ TAO_LB_Random::name ()
 CosLoadBalancing::Properties *
 TAO_LB_Random::get_properties ()
 {
-  CosLoadBalancing::Properties * props = 0;
+  CosLoadBalancing::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties,
                     CORBA::NO_MEMORY (

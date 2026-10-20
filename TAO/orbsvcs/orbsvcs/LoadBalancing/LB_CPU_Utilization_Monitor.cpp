@@ -15,9 +15,9 @@ double calc_cpu_loading ()
   static unsigned long prev_idle = 0;
   static double prev_total = 0.0;
 
-  FILE *file_ptr = 0;
-  char *item = 0;
-  char *arg = 0;
+  FILE *file_ptr = nullptr;
+  char *item = nullptr;
+  char *arg = nullptr;
   unsigned long delta_idle = 0;
   unsigned long user = 0;
   unsigned long nice = 0;
@@ -26,15 +26,15 @@ double calc_cpu_loading ()
 
   double percent_cpu_load = 0.0;
 
-  if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == 0)
+  if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == nullptr)
           return percent_cpu_load;
 
-  while ((ACE_OS::fgets (buf, sizeof (buf), file_ptr)) != 0)
+  while ((ACE_OS::fgets (buf, sizeof (buf), file_ptr)) != nullptr)
   {
     item = ACE_OS::strtok (buf, " \t\n");
-    arg = ACE_OS::strtok (0, "\n");
+    arg = ACE_OS::strtok (nullptr, "\n");
 
-    if (item == 0 || arg == 0)
+    if (item == nullptr || arg == nullptr)
             continue;
     if (item[0] == 'c' && ACE_OS::strlen (item) == 3)
     {
