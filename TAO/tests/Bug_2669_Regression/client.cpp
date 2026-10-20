@@ -35,6 +35,10 @@ class ChildHandler : public POA_ChildModule::AMI_ChildInterfaceHandler
 public:
   ChildHandler () = default;
   ~ChildHandler () = default;
+  ChildHandler (ChildHandler const &) = delete;
+  ChildHandler &operator= (ChildHandler const &) = delete;
+  ChildHandler (ChildHandler &&) = delete;
+  ChildHandler &operator= (ChildHandler &&) = delete;
 };
 
 class NonRelatedChildHandler : public POA_AMI_ChildInterfaceHandler
@@ -42,6 +46,10 @@ class NonRelatedChildHandler : public POA_AMI_ChildInterfaceHandler
 public:
   NonRelatedChildHandler () = default;
   ~NonRelatedChildHandler () = default;
+  NonRelatedChildHandler (NonRelatedChildHandler const &) = delete;
+  NonRelatedChildHandler &operator= (NonRelatedChildHandler const &) = delete;
+  NonRelatedChildHandler (NonRelatedChildHandler &&) = delete;
+  NonRelatedChildHandler &operator= (NonRelatedChildHandler &&) = delete;
 };
 
 int
@@ -81,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ChildModule::AMI_ChildInterfaceHandler_var the_child_handler_var =
         ChildModule::AMI_ChildInterfaceHandler::_narrow (object.in ());
 
-      const char * expectedid = "IDL:child.pragma.prefix/ChildModule/AMI_ChildInterfaceHandler:1.0";
+      char const *expectedid = "IDL:child.pragma.prefix/ChildModule/AMI_ChildInterfaceHandler:1.0";
       if (ACE_OS::strcmp (the_child_handler_var->_interface_repository_id (), expectedid) != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error: REGRESSION - ChildModule::repository id is "
@@ -142,7 +150,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           result = 1;
         }
 
-      poa_var->destroy (1,0);
+      poa_var->destroy (true, false);
 
       orb->destroy ();
     }
