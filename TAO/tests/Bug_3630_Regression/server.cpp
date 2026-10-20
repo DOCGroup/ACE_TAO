@@ -6,7 +6,7 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
   constexpr size_t extra_argc = 2;
 
   try
@@ -21,20 +21,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 
       for (size_t i = 0; i < extra_argc; ++i)
-        largv[argc+i] = extra[i];
+        largv[argc + i] = extra[i];
 
       int largc = argc + extra_argc;
 
       CORBA::ORB_var orb = CORBA::ORB_init (largc, largv.data (), "FirstORB");
-       if (CORBA::is_nil (orb.in ()))
-       {
-          ACE_ERROR((LM_ERROR,ACE_TEXT ("Test failed. CORBA::ORB_init returned NIL ORB\n"),1));
+      if (CORBA::is_nil (orb.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Test failed. CORBA::ORB_init returned NIL ORB\n"),
+                      1));
 
           for (ACE_TCHAR *arg : extra)
             ACE::strdelete (arg);
 
           return -1;
-     }
+        }
 
       orb->destroy ();
       orb = CORBA::ORB::_nil ();
@@ -55,15 +57,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int second_largc = argc + extra_argc;
 
       CORBA::ORB_var second_orb = CORBA::ORB_init (second_largc, second_largv.data (), "SecondORB");
-       if (CORBA::is_nil (second_orb.in ()))
-       {
-          ACE_ERROR((LM_ERROR,ACE_TEXT ("Test failed. CORBA::ORB_init returned NIL ORB\n"),1));
+      if (CORBA::is_nil (second_orb.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Test failed. CORBA::ORB_init returned NIL ORB\n"),
+                      1));
 
           for (ACE_TCHAR *arg : second_extra)
             ACE::strdelete (arg);
 
           return -1;
-     }
+        }
 
       second_orb->destroy ();
       second_orb = CORBA::ORB::_nil ();
