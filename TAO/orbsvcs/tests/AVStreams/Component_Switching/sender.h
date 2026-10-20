@@ -49,7 +49,7 @@ public:
    * to close down the connection. Also called when the distributer
    * tears down the connection when it switches to a new sender.
    */
-  int handle_destroy ();
+  int handle_destroy () override;
 
   /// Accessor methods for the flowname of the callback
   ACE_CString &flowname ();
@@ -71,16 +71,16 @@ public:
   //// Create the application callback and return its handle to
   //// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   //// Set protocol object corresponding to the transport protocol
   //// chosen.
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 
   //// Perform application specific actions before accepting new
   //// connections.
-  CORBA::Boolean handle_preconnect (AVStreams::flowSpec &flowspec);
+  CORBA::Boolean handle_preconnect (AVStreams::flowSpec &flowspec) override;
 
 protected:
   //// Application callback.
@@ -108,6 +108,10 @@ public:
 
   //// Destructor
   ~Sender ();
+  Sender (Sender const &) = delete;
+  Sender &operator= (Sender const &) = delete;
+  Sender (Sender &&) = delete;
+  Sender &operator= (Sender &&) = delete;
 
   void shut_down ();
 

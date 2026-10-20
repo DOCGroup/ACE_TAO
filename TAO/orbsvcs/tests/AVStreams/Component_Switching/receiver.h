@@ -49,9 +49,9 @@ public:
   /// sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
-                     const ACE_Addr &peer_address);
+                     ACE_Addr const &peer_address) override;
 
-  int handle_destroy ();
+  int handle_destroy () override;
 
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname ();
@@ -77,10 +77,10 @@ class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   //// Called when a distributor tries to connect to the receiver
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec);
+  CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec) override;
 
 private:
   //// Receiver application callback.
@@ -103,6 +103,10 @@ public:
 
   //// Destructor.
   virtual ~Receiver ();
+  Receiver (Receiver const &) = delete;
+  Receiver &operator= (Receiver const &) = delete;
+  Receiver (Receiver &&) = delete;
+  Receiver &operator= (Receiver &&) = delete;
 
   //// Initialize data components.
   int init (int argc,
