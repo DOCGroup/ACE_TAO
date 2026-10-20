@@ -14,7 +14,7 @@
 #include "tao/debug.h"
 
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -29,7 +29,7 @@ AMI_Test_i::foo (CORBA::Long value)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Throwing Exception: A::DidTheRightThing\n"));
-      throw A::DidTheRightThing();
+      throw A::DidTheRightThing ();
     }
   else
     {
