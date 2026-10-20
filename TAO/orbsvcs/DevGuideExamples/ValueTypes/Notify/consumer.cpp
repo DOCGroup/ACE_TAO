@@ -15,9 +15,9 @@
 #include <stdexcept>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ec_ior_output_file = ACE_TEXT ("ec.ior");
-const ACE_TCHAR *hostname = ACE_TEXT ("localhost");
-const ACE_TCHAR *port = ACE_TEXT("8888");
+ACE_TCHAR const * ec_ior_output_file = ACE_TEXT ("ec.ior");
+ACE_TCHAR const * hostname = ACE_TEXT ("localhost");
+ACE_TCHAR const * port = ACE_TEXT("8888");
 //const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
 
 int
@@ -84,10 +84,10 @@ public:
     CORBA::String_var ior = orb_->object_to_string (ec.in());
 
     // If the ec_ior_output_file exists, output the ior to it
-    if (ec_ior_output_file != 0)
+    if (ec_ior_output_file != nullptr)
       {
-        FILE *output_file= ACE_OS::fopen (ec_ior_output_file, ACE_TEXT("w"));
-        if (output_file == 0)
+        FILE * output_file = ACE_OS::fopen (ec_ior_output_file, ACE_TEXT("w"));
+        if (output_file == nullptr)
           throw std::invalid_argument("Cannot open channel ior output file");
 
         ACE_OS::fprintf (output_file, "%s", ior.in ());
@@ -108,15 +108,20 @@ public:
     connected_ = true;
   }
 
-  virtual ~TestConsumer() {
+  ~TestConsumer () override {
   }
 
-  virtual void disconnect_push_consumer()
+  TestConsumer (TestConsumer const &) = delete;
+  TestConsumer (TestConsumer &&) = delete;
+  TestConsumer &operator= (TestConsumer const &) = delete;
+  TestConsumer &operator= (TestConsumer &&) = delete;
+
+  void disconnect_push_consumer () override
   {
     std::cout << "disconnect_push_consumer()." << std::endl;
   }
 
-  virtual void push(const CORBA::Any& a)
+  void push (CORBA::Any const & a) override
   {
     MyEvent* vt {};
     a >>= vt;
@@ -145,7 +150,7 @@ public:
         orb_->shutdown(0);
         std::cout << "Consumer disconnected." << std::endl;
       }
-    } catch(const CORBA::Exception& e) {
+    } catch (CORBA::Exception const & e) {
       std::cerr << "TestConsumer::disconnect() exception: " << e << std::endl;
     }
   }
@@ -199,9 +204,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     orb->destroy();
 
     return 0;
-  } catch(const CORBA::Exception& e) {
+  } catch (CORBA::Exception const & e) {
     std::cerr << "Consumer: main() exception: " << e << std::endl;
-  } catch(const std::invalid_argument& e) {
+  } catch (std::invalid_argument const & e) {
     std::cerr << "Consumer: main() exception: " << e.what () << std::endl;
   } catch(...) {
     std::cerr << "Consumer: main() unknown exception: " << std::endl;
