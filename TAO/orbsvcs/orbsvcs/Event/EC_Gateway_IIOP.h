@@ -64,7 +64,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
 {
 public:
   TAO_EC_Gateway_IIOP ();
-  virtual ~TAO_EC_Gateway_IIOP ();
+  virtual ~TAO_EC_Gateway_IIOP () override;
 
   /**
    * To do its job this class requires to know the local and remote ECs it will
@@ -88,9 +88,9 @@ public:
   int shutdown ();
 
   // The following methods are documented in the base class.
-  virtual void close ();
-  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
-  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub);
+  virtual void close () override;
+  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub) override;
+  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub) override;
 
   // Let the gateway reconnect itself to the consumer ec given exisiting QoS
   void reconnect_consumer_ec();
