@@ -53,7 +53,7 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
           this->list_store_->stale(true);
         }
 
-      PG_Object_Group * group = 0;
+      PG_Object_Group * group = nullptr;
       if (!find_group (group_id, group))
         {
           throw PortableGroup::ObjectNotFound ();
@@ -98,7 +98,7 @@ TAO::FT_PG_Group_Factory::create_persistent_group (
       const TAO::PG_Property_Set_var & type_properties,
       TAO::Storable_Factory & storable_factory)
 {
-  TAO::PG_Object_Group_Storable * objectGroup = 0;
+  TAO::PG_Object_Group_Storable * objectGroup = nullptr;
   ACE_NEW_THROW_EX (
   objectGroup,
   TAO::FT_PG_Object_Group_Storable (
@@ -125,7 +125,7 @@ TAO::FT_PG_Group_Factory::restore_persistent_group (
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory)
 {
-  TAO::PG_Object_Group_Storable * objectGroup = 0;
+  TAO::PG_Object_Group_Storable * objectGroup = nullptr;
   ACE_NEW_THROW_EX (
     objectGroup,
     TAO::FT_PG_Object_Group_Storable (

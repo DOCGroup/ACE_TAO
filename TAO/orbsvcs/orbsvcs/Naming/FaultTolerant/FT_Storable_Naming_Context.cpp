@@ -16,7 +16,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize the static naming manager
-TAO_FT_Naming_Manager *TAO_FT_Storable_Naming_Context::naming_manager_ = 0;
+TAO_FT_Naming_Manager *TAO_FT_Storable_Naming_Context::naming_manager_ = nullptr;
 
 TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
