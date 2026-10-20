@@ -95,7 +95,7 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
           && ACE_OS::strcmp (this->hosts_[i], this->hosts_[0]) == 0)
         continue;
 
-      TAO_DIOP_Profile *pfile = 0;
+      TAO_DIOP_Profile *pfile = nullptr;
       ACE_NEW_RETURN (pfile,
                       TAO_DIOP_Profile (this->hosts_[i],
                                         this->addrs_[i].get_port_number (),
@@ -136,7 +136,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           CORBA::Short priority)
 {
   CORBA::ULong index = 0;
-  TAO_DIOP_Profile *diop_profile = 0;
+  TAO_DIOP_Profile *diop_profile = nullptr;
 
   // First see if <mprofile> already contains a DIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -151,7 +151,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 
   // If <mprofile> doesn't contain a DIOP_Profile, we need to create
   // one.
-  if (diop_profile == 0)
+  if (diop_profile == nullptr)
     {
       ACE_NEW_RETURN (diop_profile,
                       TAO_DIOP_Profile (this->hosts_[0],
@@ -192,7 +192,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           ACE_OS::strcmp (this->hosts_[index], this->hosts_[0]) == 0)
         continue;
 
-      TAO_DIOP_Endpoint *endpoint = 0;
+      TAO_DIOP_Endpoint *endpoint = nullptr;
       ACE_NEW_RETURN (endpoint,
                       TAO_DIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
@@ -212,7 +212,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast<const TAO_DIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return 0;
 
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
@@ -247,7 +247,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -258,7 +258,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                         -1);
     }
 
-  if (address == 0)
+  if (address == nullptr)
     return -1;
 
   if (major >=0 && minor >= 0)
@@ -357,7 +357,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -500,7 +500,7 @@ TAO_DIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       // just return ours.
       return this->dotted_decimal_address (addr, host);
     }
-  else if (specified_hostname != 0)
+  else if (specified_hostname != nullptr)
     {
       // If the user specified a hostname, pass it back
       // blindly as it overrides our choice of hostname.
@@ -564,7 +564,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
       char const * const cp_pos = std::strchr (address, ']');
-      if (cp_pos == 0)
+      if (cp_pos == nullptr)
         {
           // No valid IPv6 address specified.
           TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -599,7 +599,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
 #endif /* ACE_HAS_IPV6 */
     if (!host_defaulted)
       {
-        if (port_separator_loc != 0)
+        if (port_separator_loc != nullptr)
           {
             // Extract out just the host part of the address.
             size_t const len = port_separator_loc - address;
@@ -628,7 +628,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
     {
       // First convert the port into a usable form.
       unsigned short portno = 0;
-      if (port_separator_loc != 0)
+      if (port_separator_loc != nullptr)
         {
           portno =
             static_cast<u_short> (ACE_OS::atoi (port_separator_loc +
@@ -640,7 +640,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
       if (addr.set (this->default_address_) != 0)
         return -1;
     }
-  else if (port_separator_loc == 0)
+  else if (port_separator_loc == nullptr)
     {
       // The address is a hostname.  No port was specified, so assume
       // port zero (port will be chosen for us).
@@ -676,7 +676,7 @@ TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                            char *&host)
 {
   int result = 0;
-  const char *tmp = 0;
+  char const *tmp = nullptr;
 
   // If the IP address in the INET_Addr is the IN(6)ADDR_ANY address,
   // then force the actual IP address to be used by initializing a new
@@ -700,7 +700,7 @@ TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   else
     tmp = addr.get_host_addr ();
 
-  if (tmp == 0 || result != 0)
+  if (tmp == nullptr || result != 0)
     {
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
@@ -722,7 +722,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // it.  The hostnames will then be used when creating a
   // TAO_DIOP_Profile for each endpoint setup on the probed
   // network interfaces.
-  ACE_INET_Addr *if_addrs = 0;
+  ACE_INET_Addr *if_addrs = nullptr;
   size_t if_cnt = 0;
 
   if (ACE::get_ip_interfaces (if_cnt,
@@ -735,7 +735,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       return -1;
     }
 
-  if (if_cnt == 0 || if_addrs == 0)
+  if (if_cnt == 0 || if_addrs == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -988,7 +988,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 int
 TAO_DIOP_Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in

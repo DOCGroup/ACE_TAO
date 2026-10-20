@@ -72,7 +72,7 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       && mprofile.grow (count + 1) == -1)
     return -1;
 
-  TAO_UIOP_Profile *pfile = 0;
+  TAO_UIOP_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (addr,
                                     object_key,
@@ -108,8 +108,8 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
-  TAO_Profile *pfile = 0;
-  TAO_UIOP_Profile *uiop_profile = 0;
+  TAO_Profile *pfile = nullptr;
+  TAO_UIOP_Profile *uiop_profile = nullptr;
 
   // First see if <mprofile> already contains a UIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -122,7 +122,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       }
     }
 
-  if (uiop_profile == 0)
+  if (uiop_profile == nullptr)
     {
       // If <mprofile> doesn't contain UIOP_Profile, we need to create
       // one.
@@ -138,7 +138,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
         return 0;
 
-      TAO_UIOP_Endpoint *endpoint = 0;
+      TAO_UIOP_Endpoint *endpoint = nullptr;
       ACE_NEW_RETURN (endpoint,
                       TAO_UIOP_Endpoint (addr),
                       -1);
@@ -156,7 +156,7 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast<const TAO_UIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return 0;
 
   // For UNIX Files this is relatively cheap.
@@ -193,7 +193,7 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (address == 0)
+  if (address == nullptr)
     return -1;
 
   if (major >= 0 && minor >= 0)
@@ -369,7 +369,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       return -1;
     }
 
-  char * rendezvous = 0;
+  char *rendezvous = nullptr;
 
   // Get rendezvous_point
   if (cdr.read_string (rendezvous) == 0)
@@ -392,7 +392,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 int
 TAO_UIOP_Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in
