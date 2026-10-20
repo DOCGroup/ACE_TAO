@@ -42,6 +42,10 @@ public:
 
   /// Destructor.
   ~TAO_AV_Default_Resource_Factory () override;
+  TAO_AV_Default_Resource_Factory (TAO_AV_Default_Resource_Factory const &) = delete;
+  TAO_AV_Default_Resource_Factory &operator= (TAO_AV_Default_Resource_Factory const &) = delete;
+  TAO_AV_Default_Resource_Factory (TAO_AV_Default_Resource_Factory &&) = delete;
+  TAO_AV_Default_Resource_Factory &operator= (TAO_AV_Default_Resource_Factory &&) = delete;
 
   /**
    * @name Service Configurator Hooks
