@@ -34,7 +34,7 @@ public:
   ClientRequest_Interceptor &operator= (ClientRequest_Interceptor const &) = delete;
   ClientRequest_Interceptor &operator= (ClientRequest_Interceptor &&) = delete;
 
-  ~ClientRequest_Interceptor () override;
+  ~ClientRequest_Interceptor () override = default;
 
   /// Canonical name of the interceptor.
   char *name () override;

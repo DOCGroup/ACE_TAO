@@ -6,13 +6,13 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int retval = 0;
+  int retval {};
   try
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
@@ -74,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Client about to make method call that is doomed to failure...\n"));
 
-      bool call_failed = false;
+      bool call_failed {};
       try
       {
         CORBA::String_var the_string =
