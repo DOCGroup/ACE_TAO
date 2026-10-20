@@ -2,7 +2,7 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-int status = 0;
+int status {};
 
 class ORB_Task : public ACE_Task_Base
 {
@@ -11,8 +11,12 @@ public:
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
+  ORB_Task (ORB_Task const &) = delete;
+  ORB_Task (ORB_Task &&) = delete;
+  ORB_Task &operator= (ORB_Task const &) = delete;
+  ORB_Task &operator= (ORB_Task &&) = delete;
 
-  virtual int svc ()
+  int svc () override
   {
     try
       {
@@ -20,7 +24,7 @@ public:
         this->orb_->run ();
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) Event loop finished\n"));
       }
-    catch (const CORBA::Exception& )
+    catch (CORBA::Exception const &)
       {
       }
     return 0;
@@ -37,15 +41,19 @@ public:
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
+  Worker_Task (Worker_Task const &) = delete;
+  Worker_Task (Worker_Task &&) = delete;
+  Worker_Task &operator= (Worker_Task const &) = delete;
+  Worker_Task &operator= (Worker_Task &&) = delete;
 
-  virtual int svc ()
+  int svc () override
   {
     try
       {
         Message_init *mi = new Message_init ();
         CORBA::ValueFactoryBase_var safe (mi);
 
-        while (1)
+        while (true)
           {
             CORBA::ValueFactoryBase_var tmp1 =
               this->orb_->register_value_factory (mi->tao_repository_id (), mi);
@@ -56,12 +64,12 @@ public:
             this->orb_->unregister_value_factory (mi->tao_repository_id ());
           }
       }
-    catch (const CORBA::BAD_INV_ORDER&)
+    catch (CORBA::BAD_INV_ORDER const &)
       {
         // It's ok to ignore BAD_INV_ORDER which can be thrown after orb
         // is shutdown from other thread.
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("ERROR: Unexpected exception.\n")));
@@ -110,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
