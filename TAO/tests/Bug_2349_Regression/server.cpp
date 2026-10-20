@@ -2,7 +2,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,15 +33,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class foo_i: public POA_foo
 {
 public:
-  foo_i (CORBA::ORB_ptr orb)
-   : orb_ (CORBA::ORB::_duplicate (orb)) {
-  }
+  explicit foo_i (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+  {}
+
+  foo_i (foo_i const &) = delete;
+  foo_i &operator= (foo_i const &) = delete;
+  foo_i (foo_i &&) = delete;
+  foo_i &operator= (foo_i &&) = delete;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  void destroy ();
+  void destroy () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -89,10 +94,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var poa_object =
-              orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-              PortableServer::POA::_narrow (poa_object.in ());
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (server_impl,
                       foo_i (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(server_impl);
+      PortableServer::ServantBase_var owner_transfer (server_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (server_impl);
@@ -119,8 +124,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
