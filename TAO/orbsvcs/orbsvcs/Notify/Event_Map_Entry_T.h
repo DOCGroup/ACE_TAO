@@ -35,7 +35,7 @@ template <class PROXY>
 class TAO_Notify_Event_Map_Entry_T
 {
 public:
-  typedef TAO_ESF_Proxy_Collection<PROXY> COLLECTION;
+  using COLLECTION = TAO_ESF_Proxy_Collection<PROXY>;
 
   /// Constructor
   TAO_Notify_Event_Map_Entry_T ();

@@ -30,8 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
 class TAO_Notify_Serv_Export TAO_Notify_Find_Worker_T : public TAO_ESF_Worker<TYPE>
 {
-  typedef TAO_Notify_Container_T<TYPE> CONTAINER;
-  typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
+  using CONTAINER = TAO_Notify_Container_T<TYPE>;
+  using COLLECTION = TAO_ESF_Proxy_Collection<TYPE>;
 
 public:
   /// Constructor
