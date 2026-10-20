@@ -11,14 +11,12 @@
 #include "Hello.h"
 
 TAO249_ServerRequest_Interceptor::TAO249_ServerRequest_Interceptor ()
-: orb_ (0),
+: orb_ (nullptr),
   client_id_ (0)
 {
 }
 
-TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor ()
-{
-}
+TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor () = default;
 
 
 char *
@@ -65,8 +63,8 @@ TAO249_ServerRequest_Interceptor::receive_request (
 
     cdr.reset_byte_order (static_cast <int> (byte_order));
 
-    Hello::normal_context_ok_ = 0;
-    Hello::extended_context_ok_ = 0;
+    Hello::normal_context_ok_ = false;
+    Hello::extended_context_ok_ = false;
 
     if (! ACE_OS::strcmp (op.in (), "check_normal_context"))
       {
@@ -79,7 +77,7 @@ TAO249_ServerRequest_Interceptor::receive_request (
         Hello::extended_context_ok_ = (cdr >> tftgtc) != 0;
       }
   }
-catch (const CORBA::Exception& ex)
+catch (CORBA::Exception const &ex)
   {
     ACE_DEBUG ((LM_ERROR, "Unexpected (non regression) error - test failed\n"));
     ex._tao_print_exception (

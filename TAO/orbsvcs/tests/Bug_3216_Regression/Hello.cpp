@@ -2,10 +2,10 @@
 
 
 CORBA::Boolean
-Hello::normal_context_ok_ = 0;
+Hello::normal_context_ok_ = false;
 
 CORBA::Boolean
-Hello::extended_context_ok_ = 0;
+Hello::extended_context_ok_ = false;
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -15,7 +15,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 void
 Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void
