@@ -70,10 +70,10 @@ TAO_DIOP_Profile::~TAO_DIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = 0;
+  TAO_Endpoint *tmp = nullptr;
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
-       next != 0;
+       next != nullptr;
        next = tmp)
     {
       tmp = next->next ();
@@ -120,7 +120,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   // Copy the string because we are going to modify it...
   const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
-  if (okd == 0 || okd == ior)
+  if (okd == nullptr || okd == ior)
     {
       // No object key delimiter or no hostname specified.
       throw ::CORBA::INV_OBJREF (
@@ -146,8 +146,8 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos_a = std::strchr (ior, ']');
-      if (cp_pos_a == 0)
+      char const *cp_pos_a = std::strchr (ior, ']');
+      if (cp_pos_a == nullptr)
         {
           // No valid IPv6 address specified.
           if (TAO_debug_level > 0)
@@ -189,7 +189,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
                      EINVAL),
                    CORBA::COMPLETED_NO);
     }
-  else if (cp_pos != 0)
+  else if (cp_pos != nullptr)
     {
       // A port number or port name was specified.
       CORBA::ULong length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
@@ -294,13 +294,13 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast<const TAO_DIOP_Profile *> (other_profile);
 
   // Make sure we have a TAO_DIOP_Profile.
-  if (op == 0)
+  if (op == nullptr)
     return 0;
 
   // Check endpoints equivalence.
   const TAO_DIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_DIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
@@ -318,7 +318,7 @@ TAO_DIOP_Profile::hash (CORBA::ULong max)
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
   for (TAO_DIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       hashval += endp->hash ();
@@ -380,8 +380,8 @@ TAO_DIOP_Profile::to_string () const
        ACE_OS::strlen (::the_prefix) /* "diop" */ +
        1 /* colon separator */);
 
- const TAO_DIOP_Endpoint *endp = 0;
- for (endp = &this->endpoint_; endp != 0; endp = endp->next_)
+ TAO_DIOP_Endpoint const *endp = nullptr;
+ for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
    {
       buflen += (
           pfx_len +
@@ -405,7 +405,7 @@ TAO_DIOP_Profile::to_string () const
 
   ACE_OS::strcpy (buf, "corbaloc:");
 
-  for (endp = &this->endpoint_; endp != 0; endp = endp->next_)
+  for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
     {
       if (&this->endpoint_ != endp)
       ACE_OS::strcat (buf, ",");
@@ -592,7 +592,7 @@ TAO_DIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_DIOP_Endpoint *endpoint = 0;
+          TAO_DIOP_Endpoint *endpoint = nullptr;
           ACE_NEW_RETURN (endpoint,
                           TAO_DIOP_Endpoint (endpoints[i].host,
                                              endpoints[i].port,
