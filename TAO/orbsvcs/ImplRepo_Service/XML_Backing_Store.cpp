@@ -53,7 +53,7 @@ int
 XML_Backing_Store::persist ()
 {
   FILE* fp = ACE_OS::fopen (this->filename_.c_str (), "w");
-  if (fp == 0)
+  if (fp == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
         this->filename_.c_str()));
@@ -63,7 +63,7 @@ XML_Backing_Store::persist ()
   ACE_OS::fprintf (fp,"<%s>\n", Locator_XMLHandler::ROOT_TAG);
 
   // Save servers
-  Locator_Repository::SIMap::ENTRY* sientry = 0;
+  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
   Locator_Repository::SIMap::ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
@@ -71,7 +71,7 @@ XML_Backing_Store::persist ()
     }
 
   // Save Activators
-  Locator_Repository::AIMap::ENTRY* aientry = 0;
+  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
   Locator_Repository::AIMap::ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
@@ -320,7 +320,7 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
                                    const ACE_CString& ior,
                                    const NameValues& )
 {
-  Activator_Info *ai = 0;
+  Activator_Info *ai = nullptr;
   ACE_NEW (ai,
            Activator_Info (activator_name, token, ior));
 
