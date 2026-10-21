@@ -2,12 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::Strategy_Proxy::Strategy_Proxy() = default;
-
-ACE_INLINE
-TAO::CSD::Strategy_Proxy::~Strategy_Proxy() = default;
-
-ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::dispatch_request
                                 (TAO_ServerRequest& server_request,

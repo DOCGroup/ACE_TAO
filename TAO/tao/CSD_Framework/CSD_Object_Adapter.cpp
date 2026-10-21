@@ -12,8 +12,6 @@ TAO_CSD_Object_Adapter::TAO_CSD_Object_Adapter (
 {
 }
 
-TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter () = default;
-
 void
 TAO_CSD_Object_Adapter::do_dispatch (
   TAO_ServerRequest& req,

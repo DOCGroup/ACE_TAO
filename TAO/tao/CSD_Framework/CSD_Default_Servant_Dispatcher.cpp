@@ -6,8 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Default_Servant_Dispatcher::~TAO_CSD_Default_Servant_Dispatcher () = default;
-
 
 TAO_Root_POA *
 TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
