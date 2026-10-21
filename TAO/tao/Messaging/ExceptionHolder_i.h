@@ -67,7 +67,7 @@ namespace TAO
     CORBA::ValueBase* _copy_value () override;
 
   protected:
-    ~ExceptionHolder () override;
+    ~ExceptionHolder () override = default;
 
   private:
     TAO::Exception_Data* data_ {};
