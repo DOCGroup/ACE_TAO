@@ -1,12 +1,6 @@
 // -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE
-TAO::True_RefCount_Policy::True_RefCount_Policy ()
-  : refcount_ (1)
-{
-}
-
 ACE_INLINE void
 TAO::True_RefCount_Policy::add_ref ()
 {

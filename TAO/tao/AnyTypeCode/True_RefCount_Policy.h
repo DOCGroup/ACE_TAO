@@ -86,7 +86,7 @@ namespace TAO
      * @note This constructor is protected since it not meant to be
      *       instantiated/used as a standalone object.
      */
-    True_RefCount_Policy ();
+    True_RefCount_Policy () = default;
 
     /// Destructor.
     /**
@@ -99,7 +99,7 @@ namespace TAO
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
   };
 }  // End namespace TAO
 
