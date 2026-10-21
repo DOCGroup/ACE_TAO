@@ -4,12 +4,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Strategy_Repository::TAO_CSD_Strategy_Repository() :
-  strategy_list_head_ (nullptr)
-{
-}
-
-
 TAO_CSD_Strategy_Repository::~TAO_CSD_Strategy_Repository()
 {
   delete this->strategy_list_head_;
@@ -18,19 +12,19 @@ TAO_CSD_Strategy_Repository::~TAO_CSD_Strategy_Repository()
 int
 TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
 {
-  static int initialized = 0;
+  static bool initialized {};
 
   // Only allow initialization once.
   if (initialized)
     return 0;
 
-  initialized = 1;
+  initialized = true;
   this->strategy_list_head_ = nullptr;
   return 0;
 }
 
 CSD_Framework::Strategy_ptr
-TAO_CSD_Strategy_Repository::find (const ACE_CString& name)
+TAO_CSD_Strategy_Repository::find (ACE_CString const &name)
 {
   if (this->strategy_list_head_ != nullptr)
     {
@@ -44,7 +38,7 @@ TAO_CSD_Strategy_Repository::find (const ACE_CString& name)
 
 
 int
-TAO_CSD_Strategy_Repository::add_strategy (const ACE_CString& name,
+TAO_CSD_Strategy_Repository::add_strategy (ACE_CString const &name,
                                            CSD_Framework::Strategy_ptr strat)
 {
   Strategy_Node *node = nullptr;
@@ -63,11 +57,11 @@ TAO_CSD_Strategy_Repository::add_strategy (const ACE_CString& name,
   return 0;
 }
 
-TAO_CSD_Strategy_Repository::Strategy_Node::Strategy_Node (const ACE_CString& name,
+TAO_CSD_Strategy_Repository::Strategy_Node::Strategy_Node (ACE_CString const &name,
                                            CSD_Framework::Strategy_ptr strat)
   : poa_name_(name),
     strategy_(CSD_Framework::Strategy::_duplicate(strat)),
-    next_(0)
+    next_(nullptr)
 {
 }
 
@@ -87,13 +81,13 @@ TAO_CSD_Strategy_Repository::Strategy_Node::add_node(Strategy_Node *node)
 }
 
 TAO_CSD_Strategy_Repository::Strategy_Node *
-TAO_CSD_Strategy_Repository::Strategy_Node::find(const ACE_CString &name)
+TAO_CSD_Strategy_Repository::Strategy_Node::find(ACE_CString const &name)
 {
   if (this->poa_name_ == name)
     return this;
   if (this->next_)
     return this->next_->find(name);
-  return 0;
+  return nullptr;
 }
 
 
