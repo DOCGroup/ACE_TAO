@@ -45,7 +45,7 @@ class TAO_DiffServPolicy_Export TAO_Client_Network_Priority_Policy
 {
 public:
   /// Constructor.
-  TAO_Client_Network_Priority_Policy ();
+  TAO_Client_Network_Priority_Policy () = default;
 
   /// Constructor.
   TAO_Client_Network_Priority_Policy (
@@ -88,9 +88,9 @@ public:
 
 private:
   /// The attribute
-  TAO::DiffservCodepoint request_diffserv_codepoint_;
-  TAO::DiffservCodepoint reply_diffserv_codepoint_;
-  TAO::NetworkPriorityModel network_priority_model_;
+  TAO::DiffservCodepoint request_diffserv_codepoint_ {};
+  TAO::DiffservCodepoint reply_diffserv_codepoint_ {};
+  TAO::NetworkPriorityModel network_priority_model_ {TAO::NO_NETWORK_PRIORITY};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

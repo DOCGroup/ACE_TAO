@@ -5,19 +5,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy ()
-  : ::CORBA::Object ()
-  , ::CORBA::Policy ()
-  , TAO::NetworkPriorityPolicy ()
-  , ::CORBA::LocalObject ()
-  , request_diffserv_codepoint_ (0)
-  , reply_diffserv_codepoint_ (0)
-  , network_priority_model_ (TAO::NO_NETWORK_PRIORITY)
-{
-}
-
-TAO_Server_Network_Priority_Policy::~TAO_Server_Network_Priority_Policy () = default;
-
 TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
   TAO::DiffservCodepoint const& request_diffserv_codepoint,
   TAO::DiffservCodepoint const& reply_diffserv_codepoint,

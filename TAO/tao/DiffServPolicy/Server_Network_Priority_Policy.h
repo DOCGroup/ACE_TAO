@@ -45,7 +45,7 @@ class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
 {
 public:
   /// default constructor.
-  TAO_Server_Network_Priority_Policy ();
+  TAO_Server_Network_Priority_Policy () = default;
 
   /// Constructor.
   TAO_Server_Network_Priority_Policy (
@@ -93,13 +93,13 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-  ~TAO_Server_Network_Priority_Policy () override;
+  ~TAO_Server_Network_Priority_Policy () override = default;
 
 private:
   /// The attributes
-  TAO::DiffservCodepoint request_diffserv_codepoint_;
-  TAO::DiffservCodepoint reply_diffserv_codepoint_;
-  TAO::NetworkPriorityModel network_priority_model_;
+  TAO::DiffservCodepoint request_diffserv_codepoint_ {};
+  TAO::DiffservCodepoint reply_diffserv_codepoint_ {};
+  TAO::NetworkPriorityModel network_priority_model_ {TAO::NO_NETWORK_PRIORITY};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
