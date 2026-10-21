@@ -43,7 +43,7 @@ class TAO_ZIOP_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  TAO_ZIOP_ORBInitializer (TAO_ZIOP_Loader* loader);
+  explicit TAO_ZIOP_ORBInitializer (TAO_ZIOP_Loader *loader);
 
   /**
    * @name PortableInterceptor::ORBInitializer Methods
@@ -61,7 +61,7 @@ private:
   /// Register policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 
-  TAO_ZIOP_Loader* loader_;
+  TAO_ZIOP_Loader *loader_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
