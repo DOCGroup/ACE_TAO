@@ -13,11 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_ORB_Loader::TAO_RT_ORB_Loader ()
-  : initialized_ (false)
-{
-}
-
 int
 TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 {

@@ -114,7 +114,7 @@ private:
 
   CORBA::Policy_var client_protocol_policy_;
 
-  bool are_policies_parsed_;
+  bool are_policies_parsed_ {false};
 
 private:
   TAO_RT_Stub (const TAO_RT_Stub &) = delete;
