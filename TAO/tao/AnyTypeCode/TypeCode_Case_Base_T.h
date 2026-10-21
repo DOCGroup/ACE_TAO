@@ -58,7 +58,7 @@ namespace TAO
       /**
        * Constructor used when creating dynamic @c union @c TypeCodes.
        */
-      Case ();
+      Case () = default;
 
       /// Destructor.
       virtual ~Case () = default;

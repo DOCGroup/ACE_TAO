@@ -139,7 +139,7 @@ namespace TAO
       class Reset
       {
       public:
-        Reset (CORBA::ULong & flag) : flag_ (flag) { }
+        explicit Reset (CORBA::ULong & flag) : flag_ (flag) { }
         ~Reset () { this->flag_ = 0; }
       private:
         CORBA::ULong & flag_;
