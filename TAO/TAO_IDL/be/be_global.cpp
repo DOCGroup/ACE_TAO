@@ -214,16 +214,16 @@ be_change_idl_file_extension (UTL_String* idl_file,
   // before giving up.
   const char *base = nullptr;
 
-  static const char* extensions[] = {
+  static constexpr char const *extensions[] = {
     ".idl",
     ".pidl",
     ".IDL",
     ".PIDL"
   };
 
-  static int nextensions = sizeof(extensions)/sizeof(extensions[0]);
+  constexpr size_t nextensions = sizeof (extensions) / sizeof (extensions[0]);
 
-  for (int k = 0; k < nextensions; ++k)
+  for (size_t k = 0; k < nextensions; ++k)
     {
       base = ACE_OS::strstr (string, extensions[k]);
 

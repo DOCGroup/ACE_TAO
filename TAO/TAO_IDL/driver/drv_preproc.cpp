@@ -1163,7 +1163,7 @@ DRV_pre_proc (const char *myfile)
     }
 
   const char* tmpdir = idl_global->temp_dir ();
-  static const char temp_file_extension[] = ".cpp";
+  static constexpr char temp_file_extension[] = ".cpp";
 
   static char const tao_idlf_template[] = "tao-idlf_XXXXXX";
   static char const tao_idli_template[] = "tao-idli_XXXXXX";

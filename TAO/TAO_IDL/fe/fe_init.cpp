@@ -267,7 +267,7 @@ fe_populate_global_scope ()
 void
 fe_populate_idl_keywords ()
 {
-  static const char *keywords[] =
+  static constexpr char const *keywords[] =
     {
       "ABSTRACT",
       "ALIAS",
