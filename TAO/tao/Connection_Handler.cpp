@@ -29,9 +29,7 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
                        this->orb_core_->leader_follower ());
 }
 
-TAO_Connection_Handler::~TAO_Connection_Handler ()
-{
-}
+TAO_Connection_Handler::~TAO_Connection_Handler () = default;
 
 int
 TAO_Connection_Handler::shared_open ()

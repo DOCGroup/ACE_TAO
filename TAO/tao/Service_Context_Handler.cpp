@@ -7,8 +7,6 @@ TAO_Service_Context_Handler::TAO_Service_Context_Handler ()
 {
 }
 
-TAO_Service_Context_Handler::~TAO_Service_Context_Handler ()
-{
-}
+TAO_Service_Context_Handler::~TAO_Service_Context_Handler () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

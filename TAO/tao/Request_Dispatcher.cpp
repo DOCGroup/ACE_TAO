@@ -4,9 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Request_Dispatcher::~TAO_Request_Dispatcher ()
-{
-}
+TAO_Request_Dispatcher::~TAO_Request_Dispatcher () = default;
 
 void
 TAO_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,

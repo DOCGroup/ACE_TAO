@@ -80,9 +80,7 @@ TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guar
 //---------------------------------------------------------------------------
 
 
-TAO_IIOP_Connector::~TAO_IIOP_Connector ()
-{
-}
+TAO_IIOP_Connector::~TAO_IIOP_Connector () = default;
 
 TAO_IIOP_Connector::TAO_IIOP_Connector ()
   : TAO_Connector (IOP::TAG_INTERNET_IOP)

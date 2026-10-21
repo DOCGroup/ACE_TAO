@@ -10,15 +10,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector ()
-{
-}
+TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector () = default;
 
 // ****************************************************************
 
-TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector ()
-{
-}
+TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector () = default;
 
 void
 TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver *r,

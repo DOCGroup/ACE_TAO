@@ -27,9 +27,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
 {
 }
 
-TAO_IIOP_Transport::~TAO_IIOP_Transport ()
-{
-}
+TAO_IIOP_Transport::~TAO_IIOP_Transport () = default;
 
 ACE_Event_Handler *
 TAO_IIOP_Transport::event_handler_i ()

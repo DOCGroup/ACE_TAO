@@ -16,8 +16,6 @@ TAO::Storable_Factory::Storable_Factory ()
 {
 }
 
-TAO::Storable_Factory::~Storable_Factory ()
-{
-}
+TAO::Storable_Factory::~Storable_Factory () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

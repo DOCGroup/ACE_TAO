@@ -8,8 +8,6 @@ TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (
 {
 }
 
-TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy ()
-{
-}
+TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
