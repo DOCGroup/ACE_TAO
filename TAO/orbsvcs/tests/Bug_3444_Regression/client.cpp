@@ -3,7 +3,7 @@
 #include "TestC.h"
 
 
-const ACE_TCHAR *ior_server = 0;
+ACE_TCHAR const *ior_server = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -52,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in client.cpp:\n");
       return -1;

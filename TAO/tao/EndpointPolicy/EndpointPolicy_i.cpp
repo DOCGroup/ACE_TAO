@@ -3,12 +3,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const EndpointPolicy::EndpointList &value)
+TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const& value)
 : value_ (value)
 {
 }
 
-TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs)
+TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::EndpointPolicy::Policy ()

@@ -94,7 +94,7 @@ public:
    */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
                       const ACE_Addr &remote_sap,
-                      const ACE_Time_Value *timeout = 0,
+                      const ACE_Time_Value *timeout = nullptr,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
@@ -193,7 +193,7 @@ public:
    */
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
                const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = 0,
+               const ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
@@ -267,8 +267,8 @@ public:
    *                    connect(). @see connect().
    */
   int complete (ACE_SOCK_SEQPACK_Association &new_association,
-                ACE_Addr *remote_sap = 0,
-                const ACE_Time_Value *timeout = 0);
+                ACE_Addr *remote_sap = nullptr,
+                const ACE_Time_Value *timeout = nullptr);
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);

@@ -55,6 +55,11 @@ public:
   CORBA::ULong get_ref_version() const;
 
 private:
+  IOGR_Maker(IOGR_Maker const&) = delete;
+  IOGR_Maker(IOGR_Maker&&) = delete;
+  IOGR_Maker& operator=(IOGR_Maker const&) = delete;
+  IOGR_Maker& operator=(IOGR_Maker&&) = delete;
+
   void set_tag_components(CORBA::Object_ptr merged,
                           CORBA::Object_ptr primary,
                           FT::TagFTGroupTaggedComponent& ft_tag_component);

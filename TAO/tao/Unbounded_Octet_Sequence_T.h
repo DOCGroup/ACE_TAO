@@ -31,17 +31,17 @@ template<>
 class TAO_Export unbounded_value_sequence<CORBA::Octet>
 {
 public:
-  typedef CORBA::Octet value_type;
-  typedef CORBA::Octet element_type;
-  typedef CORBA::Octet const const_value_type;
-  typedef value_type & subscript_type;
-  typedef value_type const & const_subscript_type;
-  typedef ::CORBA::ULong size_type;
+  using value_type = CORBA::Octet;
+  using element_type = CORBA::Octet;
+  using const_value_type = CORBA::Octet const;
+  using subscript_type = value_type &;
+  using const_subscript_type = value_type const &;
+  using size_type = ::CORBA::ULong;
 
-  typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;
-  typedef details::value_traits<value_type,true> element_traits;
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
-  typedef details::range_checking<value_type,true> range;
+  using allocation_traits = details::unbounded_value_allocation_traits<value_type, true>;
+  using element_traits = details::value_traits<value_type, true>;
+  using implementation_type = details::generic_sequence<value_type, allocation_traits, element_traits>;
+  using range = details::range_checking<value_type, true>;
 
   inline unbounded_value_sequence()
     : maximum_ (allocation_traits::default_maximum())

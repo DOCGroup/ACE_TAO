@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
+  using ValueFactory = ValueFactoryBase *;
 }
 
 class TAO_ValueFactory_Map
@@ -68,13 +68,17 @@ public:
   static TAO_ValueFactory_Map * instance ();
 
 private:
+  TAO_ValueFactory_Map (TAO_ValueFactory_Map const &) = delete;
+  TAO_ValueFactory_Map &operator= (TAO_ValueFactory_Map const &) = delete;
+  TAO_ValueFactory_Map (TAO_ValueFactory_Map &&) = delete;
+  TAO_ValueFactory_Map &operator= (TAO_ValueFactory_Map &&) = delete;
+
   /// The hash table data structure.
-  typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                  CORBA::ValueFactory,
-                                  ACE_Hash<const char *>,
-                                  ACE_Equal_To<const char *>,
-                                  ACE_SYNCH_NULL_MUTEX>
-          FACTORY_MAP_MANAGER;
+  using FACTORY_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
+                                                       CORBA::ValueFactory,
+                                                       ACE_Hash<const char *>,
+                                                       ACE_Equal_To<const char *>,
+                                                       ACE_SYNCH_NULL_MUTEX>;
   FACTORY_MAP_MANAGER map_;
 
   /// synchronization of the map

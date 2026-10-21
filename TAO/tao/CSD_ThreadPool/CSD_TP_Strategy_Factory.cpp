@@ -13,9 +13,7 @@ TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()
 }
 
 
-TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory()
-{
-}
+TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory() = default;
 
 
 int
@@ -35,14 +33,14 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
       (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
 
-  if (repo == 0)
+  if (repo == nullptr)
     {
       TAO_CSD_ThreadPool::init ();
       repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
         (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
     }
 
-  if (repo == 0)
+  if (repo == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -73,7 +71,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 
           // Parse the parameter
           ACE_TCHAR *sep = ACE_OS::strchr (argv[curarg],':');
-          if (sep == 0)
+          if (sep == nullptr)
             {
               poa_name = ACE_TEXT_ALWAYS_CHAR (argv[curarg]);
             }
@@ -97,7 +95,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             }
 
           // Create the ThreadPool strategy for each named poa.
-          TP_Strategy* strategy = 0;
+          TP_Strategy *strategy = nullptr;
           ACE_NEW_RETURN (strategy,
                           TP_Strategy (num_threads, serialize_servants),
                           -1);

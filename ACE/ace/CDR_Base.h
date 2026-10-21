@@ -251,9 +251,9 @@ public:
        // this macro.
 #      if defined (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE) && \
           (ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE == 1)
-         typedef double NativeImpl;
+         using NativeImpl = double;
 #      else
-         typedef long double NativeImpl;
+         using NativeImpl = long double;
 #      endif /* ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE==1 */
 
          char ld[16];

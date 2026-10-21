@@ -79,7 +79,7 @@ TAO::ORT_Adapter_Impl::activate (
   // when the POA creates and actives an ORT_Adapter it will lock
   // itself. Create an ObjectReferenceTemplate for this POA.
 
-  ObjectReferenceTemplate * t = 0;
+  ObjectReferenceTemplate * t = nullptr;
   ACE_NEW_THROW_EX (t,
                     ObjectReferenceTemplate (server_id,
                                              orb_id,

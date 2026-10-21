@@ -70,10 +70,10 @@ template<typename T,
 class generic_sequence
 {
 public:
-  typedef T value_type;
-  typedef ALLOCATION_TRAITS allocation_traits;
-  typedef ELEMENT_TRAITS element_traits;
-  typedef range_checking<value_type,true> range;
+  using value_type = T;
+  using allocation_traits = ALLOCATION_TRAITS;
+  using element_traits = ELEMENT_TRAITS;
+  using range = range_checking<value_type, true>;
 
   /// Default constructor.
   generic_sequence()

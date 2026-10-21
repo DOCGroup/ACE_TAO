@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <functional>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -112,7 +112,7 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Any_var my_any =
         hello->get_any (the_any);
 
-      const T * my_foo = 0;
+      T const *my_foo = nullptr;
       if (!(my_any.in () >>= my_foo))
         throw Test::Demarshaling_From_Any_Failed ();
 
@@ -455,8 +455,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      typedef void (*test_func) (CORBA::ORB_ptr,
-                                 Test::Hello_ptr);
+      using test_func = void (*) (CORBA::ORB_ptr,
+                                  Test::Hello_ptr);
 
       static test_func const tests[] =
         {

@@ -15,20 +15,17 @@ Messenger_i::Messenger_i ()
   }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-  {
-  }
+Messenger_i::~Messenger_i () = default;
 
-CORBA::Boolean Messenger_i::send_message (
-    const char * user_name,
-    const char * subject,
-    char *& message
-  )
-  {
-    //Add your implementation here
-    std::cerr << "Message from: " << user_name << std::endl;
-    std::cerr << "Subject:      " << subject << std::endl;
-    std::cerr << "Message:      " << message << std::endl;
-    return 1;
-  }
+CORBA::Boolean
+Messenger_i::send_message (char const * user_name,
+                           char const * subject,
+                           char *& message)
+{
+  //Add your implementation here
+  std::cerr << "Message from: " << user_name << std::endl;
+  std::cerr << "Subject:      " << subject << std::endl;
+  std::cerr << "Message:      " << message << std::endl;
+  return 1;
+}
 

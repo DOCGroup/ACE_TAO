@@ -20,7 +20,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = 0;
+TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = nullptr;
 
 TAO_IFR_Server::TAO_IFR_Server ()
   : ior_multicast_ (0),
@@ -231,7 +231,7 @@ TAO_IFR_Server::open_config ()
     }
   else
     {
-      ACE_Configuration_Heap *heap = 0;
+      ACE_Configuration_Heap *heap = nullptr;
       ACE_NEW_THROW_EX (heap,
                         ACE_Configuration_Heap,
                         CORBA::NO_MEMORY ());
@@ -268,7 +268,7 @@ TAO_IFR_Server::open_config ()
 int
 TAO_IFR_Server::create_repository ()
 {
-  TAO_ComponentRepository_i *impl = 0;
+  TAO_ComponentRepository_i *impl = nullptr;
   ACE_NEW_THROW_EX (
       impl,
       TAO_ComponentRepository_i (
@@ -282,7 +282,7 @@ TAO_IFR_Server::create_repository ()
   std::unique_ptr<TAO_ComponentRepository_i> safety (impl);
   TAO_IFR_Service_Utils::repo_ = impl;
 
-  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie = 0;
+  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie = nullptr;
 
   ACE_NEW_THROW_EX (
       impl_tie,
@@ -602,7 +602,7 @@ TAO_IFR_Service_Utils::name_exists (
   int status = 0;
   ACE_TString section_name;
   u_int count = 0;
-  char *stringified = 0;
+  char *stringified = nullptr;
 
   // Check the members defined elsewhere, if any.
   ACE_Configuration_Section_Key refs_key;
@@ -752,7 +752,7 @@ TAO_IFR_Service_Utils::check_subsection (
 
   ACE_Configuration_Section_Key entry_key;
   ACE_TString entry_name;
-  char *stringified = 0;
+  char *stringified = nullptr;
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
@@ -952,7 +952,7 @@ TAO_IFR_Service_Utils::set_exceptions (
                              "count",
                              length);
 
-  char *type_path = 0;
+  char *type_path = nullptr;
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -1072,7 +1072,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
                                       "count",
                                       count);
   vm_seq.length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_Configuration_Section_Key member_key, type_key;
   ACE_TString holder;
   CORBA::ULong access = 0;

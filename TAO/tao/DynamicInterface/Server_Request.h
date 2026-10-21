@@ -36,10 +36,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ServerRequest;
-  typedef ServerRequest *ServerRequest_ptr;
+  using ServerRequest_ptr = ServerRequest *;
 
-  typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
-  typedef TAO_Pseudo_Out_T<ServerRequest> ServerRequest_out;
+  using ServerRequest_var = TAO_Pseudo_Var_T<ServerRequest>;
+  using ServerRequest_out = TAO_Pseudo_Out_T<ServerRequest>;
 
   /**
    * @class ServerRequest
@@ -70,14 +70,14 @@ namespace CORBA
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_result (const CORBA::Any &value);
+    void set_result (CORBA::Any const& value);
 
     /// Implementation uses this to provide the exception value which is
     /// the only result of this particular invocation.
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_exception (const CORBA::Any &value);
+    void set_exception (CORBA::Any const& value);
 
     // = Get various universal call attributes.
 
@@ -98,7 +98,7 @@ namespace CORBA
     void ctx (CORBA::Context_ptr);
 
     /// Get the operation name.
-    const char *operation () const;
+    char const* operation () const;
 
     // Pseudo object methods.
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
@@ -125,9 +125,9 @@ namespace CORBA
     void gateway_exception_reply (ACE_CString &raw_exception);
 
     /// Useful for template programming.
-    typedef CORBA::ServerRequest_ptr _ptr_type;
-    typedef CORBA::ServerRequest_var _var_type;
-    typedef CORBA::ServerRequest_out _out_type;
+    using _ptr_type = CORBA::ServerRequest_ptr;
+    using _var_type = CORBA::ServerRequest_var;
+    using _out_type = CORBA::ServerRequest_out;
 
   private:
     /// If zero then the NVList is evaluated ASAP.

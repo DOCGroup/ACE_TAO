@@ -36,16 +36,20 @@ public:
   TAO_FDev (const char *flowname);
 
   /// Destructor..
-  ~TAO_FDev ();
+  ~TAO_FDev () override;
+  TAO_FDev (TAO_FDev const &) = delete;
+  TAO_FDev &operator= (TAO_FDev const &) = delete;
+  TAO_FDev (TAO_FDev &&) = delete;
+  TAO_FDev &operator= (TAO_FDev &&) = delete;
 
   /// set/get the flowname.
   /// create a flow producer object.
   const char *flowname ();
   void flowname (const char *flowname);
   AVStreams::FlowProducer_ptr create_producer (AVStreams::FlowConnection_ptr the_requester,
-                                                       AVStreams::QoS & the_qos,
-                                                       CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev);
+                                               AVStreams::QoS & the_qos,
+                                               CORBA::Boolean_out met_qos,
+                                               char *& named_fdev) override;
 
   /// bridge method for the application to override the producer object
   /// creation. Default implementation creates a TAO_FlowProducer.
@@ -55,10 +59,10 @@ public:
                                                        char *& named_fdev);
 
   /// create a flow consumer object.
-  virtual AVStreams::FlowConsumer_ptr create_consumer (AVStreams::FlowConnection_ptr the_requester,
-                                                       AVStreams::QoS & the_qos,
-                                                       CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev);
+  AVStreams::FlowConsumer_ptr create_consumer (AVStreams::FlowConnection_ptr the_requester,
+                                               AVStreams::QoS & the_qos,
+                                               CORBA::Boolean_out met_qos,
+                                               char *& named_fdev) override;
 
   /// bridge method for the application to override the consumer object
   /// creation. Default implementation creates a TAO_FlowConsumer.
@@ -68,24 +72,24 @@ public:
                                                        char *& named_fdev);
 
   /// bind this FDev with another FDev.
-  virtual AVStreams::FlowConnection_ptr bind (AVStreams::FDev_ptr peer_device,
-                                              AVStreams::QoS & the_qos,
-                                              CORBA::Boolean_out is_met);
+  AVStreams::FlowConnection_ptr bind (AVStreams::FDev_ptr peer_device,
+                                      AVStreams::QoS & the_qos,
+                                      CORBA::Boolean_out is_met) override;
 
   /// multicast bind is not implemented yet.
-  virtual AVStreams::FlowConnection_ptr bind_mcast (AVStreams::FDev_ptr first_peer,
-                                                    AVStreams::QoS & the_qos,
-                                                    CORBA::Boolean_out is_met);
+  AVStreams::FlowConnection_ptr bind_mcast (AVStreams::FDev_ptr first_peer,
+                                            AVStreams::QoS & the_qos,
+                                            CORBA::Boolean_out is_met) override;
 
   /// destroys this FDev.
-  virtual void destroy (AVStreams::FlowEndPoint_ptr the_ep,
-                        const char * fdev_name);
+  void destroy (AVStreams::FlowEndPoint_ptr the_ep,
+                const char * fdev_name) override;
 
 protected:
   ACE_DLList <TAO_FlowProducer> producer_list_;
-  typedef ACE_DLList_Iterator <TAO_FlowProducer> PRODUCER_LIST_ITERATOR;
+  using PRODUCER_LIST_ITERATOR = ACE_DLList_Iterator<TAO_FlowProducer>;
   ACE_DLList <TAO_FlowConsumer> consumer_list_;
-  typedef ACE_DLList_Iterator <TAO_FlowConsumer> CONSUMER_LIST_ITERATOR;
+  using CONSUMER_LIST_ITERATOR = ACE_DLList_Iterator<TAO_FlowConsumer>;
   CORBA::String_var flowname_;
 };
 

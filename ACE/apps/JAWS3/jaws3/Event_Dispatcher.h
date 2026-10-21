@@ -12,11 +12,9 @@
 // so if we are using the Select Reactor, get rid of the
 // big reactor lock.
 
-typedef ACE_Reactor_Token_T<ACE_Noop_Token>
-        ACE_Select_Reactor_Noop_Token;
+using ACE_Select_Reactor_Noop_Token = ACE_Reactor_Token_T<ACE_Noop_Token>;
 
-typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>
-        ACE_Select_NULL_LOCK_Reactor;
+using ACE_Select_NULL_LOCK_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>;
 
 #if !defined (ACE_WIN32) \
  || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) \

@@ -26,10 +26,15 @@ class ProxySupplierStateWorker
 {
 public:
   ProxySupplierStateWorker(FtRtecEventChannelAdmin::ProxySupplierStates& states);
-  ~ProxySupplierStateWorker();
+  ~ProxySupplierStateWorker() override = default;
 
-  virtual void set_size(size_t size);
-  virtual void work(TAO_EC_ProxyPushSupplier* object);
+  ProxySupplierStateWorker(ProxySupplierStateWorker const&) = delete;
+  ProxySupplierStateWorker(ProxySupplierStateWorker&&) = delete;
+  ProxySupplierStateWorker& operator=(ProxySupplierStateWorker const&) = delete;
+  ProxySupplierStateWorker& operator=(ProxySupplierStateWorker&&) = delete;
+
+  void set_size(size_t size) override;
+  void work(TAO_EC_ProxyPushSupplier* object) override;
 private:
   int index_;
   FtRtecEventChannelAdmin::ProxySupplierStates& supplierStates_;

@@ -3,10 +3,10 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
-static const ACE_TCHAR* server_strat =
+static ACE_TCHAR const *server_strat =
   ACE_STATIC_SERVICE_DIRECTIVE ("Server_Strategy_Factory",
                                 "-ORBConcurrency thread-per-connection");
-static const ACE_TCHAR* foo_strat =
+static ACE_TCHAR const *foo_strat =
   ACE_STATIC_SERVICE_DIRECTIVE ("Foo_Strategy_Factory", "");
 
 enum Factory_Strategy { SERVER_STRATEGY, FOO_STRATEGY };
@@ -51,8 +51,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
 
       int targc = 3;
-      const ACE_TCHAR *targv[] =
-        { ACE_TEXT ("server"), ACE_TEXT ("-ORBSvcConfDirective"), 0, 0 }; // null-terminated!
+      ACE_TCHAR const *targv[] =
+        { ACE_TEXT ("server"), ACE_TEXT ("-ORBSvcConfDirective"), nullptr, nullptr };
       switch (factory_strategy)
         {
         case FOO_STRATEGY:

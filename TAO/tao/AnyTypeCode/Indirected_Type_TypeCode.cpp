@@ -63,11 +63,11 @@ void
 TAO::TypeCode::Indirected_Type::set_recursive_tc (CORBA::TypeCode_ptr tc)
 {
   // link only once (should never happen that this is called twice but test anyway)
-  if (this->recursive_tc_ == 0)
+  if (this->recursive_tc_ == nullptr)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-    if (tc == 0)  // should never happen
+    if (tc == nullptr)  // should never happen
       return;
 
     // make sure we are the right kind
@@ -105,7 +105,7 @@ TAO::TypeCode::Indirected_Type::equivalent_i (
 CORBA::TypeCode_ptr
 TAO::TypeCode::Indirected_Type::get_compact_typecode_i () const
 {
-  return this->recursive_tc_ ? this->recursive_tc_->get_compact_typecode () : 0;
+  return this->recursive_tc_ ? this->recursive_tc_->get_compact_typecode () : nullptr;
 }
 
 char const *
@@ -117,7 +117,7 @@ TAO::TypeCode::Indirected_Type::id_i () const
 char const *
 TAO::TypeCode::Indirected_Type::name_i () const
 {
-  return this->recursive_tc_ ? this->recursive_tc_->name () : 0;
+  return this->recursive_tc_ ? this->recursive_tc_->name () : nullptr;
 }
 
 CORBA::ULong
@@ -130,14 +130,14 @@ char const *
 TAO::TypeCode::Indirected_Type::member_name_i (
   CORBA::ULong index) const
 {
-  return this->recursive_tc_ ? this->recursive_tc_->member_name (index) : 0;
+  return this->recursive_tc_ ? this->recursive_tc_->member_name (index) : nullptr;
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCode::Indirected_Type::member_type_i (
   CORBA::ULong index) const
 {
-  return this->recursive_tc_ ? this->recursive_tc_->member_type (index) : 0;
+  return this->recursive_tc_ ? this->recursive_tc_->member_type (index) : nullptr;
 }
 
 CORBA::Visibility
@@ -155,19 +155,19 @@ TAO::TypeCode::Indirected_Type::type_modifier_i () const
 CORBA::TypeCode_ptr
 TAO::TypeCode::Indirected_Type::concrete_base_type_i () const
 {
-  return this->recursive_tc_ ? this->recursive_tc_->concrete_base_type () : 0;
+  return this->recursive_tc_ ? this->recursive_tc_->concrete_base_type () : nullptr;
 }
 
 CORBA::Any *
 TAO::TypeCode::Indirected_Type::member_label_i (CORBA::ULong index) const
 {
-  return this->recursive_tc_ ? this->recursive_tc_->member_label (index) : 0;
+  return this->recursive_tc_ ? this->recursive_tc_->member_label (index) : nullptr;
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCode::Indirected_Type::discriminator_type_i () const
 {
-  return this->recursive_tc_ ? this->recursive_tc_->discriminator_type () : 0;
+  return this->recursive_tc_ ? this->recursive_tc_->discriminator_type () : nullptr;
 }
 
 CORBA::Long

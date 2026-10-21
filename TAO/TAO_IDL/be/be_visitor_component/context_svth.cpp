@@ -98,9 +98,9 @@ be_visitor_context_svth::visit_component (be_component *node)
 
   bool const de_facto = (is_connector || no_events);
 
-  os_ << "typedef ::CIAO::"
+  os_ << "using svnt_base_type = ::CIAO::"
       << (de_facto ? "Connector_" : "")
-      << "Servant_Impl_Base svnt_base_type;" << be_nl_2;
+      << "Servant_Impl_Base;" << be_nl_2;
 
   os_ << lname << "_Context_T (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
@@ -196,11 +196,9 @@ be_visitor_context_svth::visit_uses (be_uses *node)
   if (is_multiple)
     {
       os_ << "/// Multiplex " << port_name << " connection." << be_nl
-          << "typedef std::map<ptrdiff_t," << be_nl
+          << "using " << tao_cg->upcase (port_name) << "_TABLE = std::map<ptrdiff_t," << be_nl
           << "                 ::"
-          << obj_name << "_var>" << be_idt_nl
-          << tao_cg->upcase (port_name)
-          << "_TABLE;" << be_uidt_nl
+          << obj_name << "_var>;" << be_uidt_nl
           << tao_cg->upcase (port_name) << "_TABLE "
           << "ciao_uses_" << port_name << "_;" << be_nl
           << "TAO_SYNCH_MUTEX " << port_name << "_lock_;";
@@ -242,10 +240,9 @@ be_visitor_context_svth::visit_publishes (be_publishes *node)
   os_ << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl;
 
-  os_ << "typedef std::map<ptrdiff_t," << be_nl
+  os_ << "using " << tao_cg->upcase (port_name) << "_TABLE = std::map<ptrdiff_t," << be_nl
       << "                 ::" << obj_name
-      << "Consumer_var>" << be_idt_nl
-      << tao_cg->upcase (port_name) << "_TABLE;" << be_uidt_nl
+      << "Consumer_var>;" << be_uidt_nl
       << tao_cg->upcase (port_name) << "_TABLE ciao_publishes_"
       << port_name << "_;" << be_nl
       << "TAO_SYNCH_MUTEX " << port_name << "_lock_;"

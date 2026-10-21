@@ -118,7 +118,7 @@ public:
    * was passed in when <schedule_timer> was invoked.
    */
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+                              const void *act = nullptr);
 
   /// Called when a process exits.
   virtual int handle_exit (ACE_Process *);
@@ -338,7 +338,7 @@ public:
   ACE_Event_Handler *release ();
 
   /// Reset the handler.
-  void reset (ACE_Event_Handler *p = 0);
+  void reset (ACE_Event_Handler *p = nullptr);
 
   /// Bool operator to check if the ACE_Event_Handler_var has a value
   explicit operator bool() const;

@@ -100,8 +100,8 @@ TAO_SCIOP_Endpoint::set (const ACE_INET_Addr &addr,
   if (use_dotted_decimal_addresses
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
-      const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
+      char const *tmp = addr.get_host_addr ();
+      if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -157,7 +157,7 @@ TAO_SCIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_SCIOP_Endpoint::duplicate ()
 {
-  TAO_SCIOP_Endpoint *endpoint = 0;
+  TAO_SCIOP_Endpoint *endpoint = nullptr;
 
   // @@NOTE: Not at all exception safe
   ACE_NEW_RETURN (endpoint,
@@ -175,7 +175,7 @@ TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 
   TAO_SCIOP_Endpoint *endpoint =
     dynamic_cast<TAO_SCIOP_Endpoint *> (endpt);
-  if (endpoint == 0)
+  if (endpoint == nullptr)
     return 0;
 
   return (this->port_ == endpoint->port_
@@ -320,7 +320,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 
           latest->next_ = dynamic_cast<TAO_SCIOP_Endpoint *> (tmp_ep);
 
-          if (latest->next_ == 0) return count;
+          if (latest->next_ == nullptr) return count;
 
           latest = latest->next_;
           ++count;
@@ -335,7 +335,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       latest->next_ =
         dynamic_cast<TAO_SCIOP_Endpoint *> (tmp_ep);
 
-      if (latest->next_ == 0) return count;
+      if (latest->next_ == nullptr) return count;
 
       latest->next_->preferred_path_.host = (const char *) 0;
       ++count;

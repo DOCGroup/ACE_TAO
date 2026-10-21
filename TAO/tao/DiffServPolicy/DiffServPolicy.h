@@ -30,11 +30,19 @@ class TAO_DiffServPolicy_Export TAO_DiffServPolicy_Initializer
   : public ACE_Service_Object
 {
 public:
+  TAO_DiffServPolicy_Initializer () = default;
+
   /// Used to force the initialization of the ORB code.
   static int static_init ();
 
   /// Initialize the Diffserv loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
+
+private:
+  TAO_DiffServPolicy_Initializer (TAO_DiffServPolicy_Initializer const &) = delete;
+  TAO_DiffServPolicy_Initializer &operator= (TAO_DiffServPolicy_Initializer const &) = delete;
+  TAO_DiffServPolicy_Initializer (TAO_DiffServPolicy_Initializer &&) = delete;
+  TAO_DiffServPolicy_Initializer &operator= (TAO_DiffServPolicy_Initializer &&) = delete;
 };
 
 static int

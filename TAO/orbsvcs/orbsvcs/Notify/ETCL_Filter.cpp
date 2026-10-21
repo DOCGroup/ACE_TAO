@@ -45,7 +45,7 @@ TAO_Notify_Constraint_Expr::load_attrs(
   const TAO_Notify::NVPList& attrs)
 {
   TAO_Notify_Object::load_attrs (attrs);
-  const char* expr = 0;
+  const char* expr = nullptr;
   if (attrs.find ("Expression", expr))
   {
     this->constr_expr.constraint_expr = CORBA::string_dup (expr);
@@ -63,8 +63,8 @@ TAO_Notify_Constraint_Expr::load_child (
   TAO_Notify::Topology_Object* result = this;
   if (type == "EventType")
   {
-    const char* domain = 0;
-    const char* type = 0;
+    const char* domain = nullptr;
+    const char* type = nullptr;
     attrs.find ("Domain", domain);
     attrs.find ("Type", type);
 
@@ -141,7 +141,7 @@ TAO_Notify_ETCL_Filter::add_constraints_i (
 TAO_Notify_Constraint_Expr*
 TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id)
 {
-  TAO_Notify_Constraint_Expr* notify_constr_expr = 0;
+  TAO_Notify_Constraint_Expr* notify_constr_expr = nullptr;
 
   ACE_NEW_THROW_EX (notify_constr_expr,
     TAO_Notify_Constraint_Expr (),
@@ -166,7 +166,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i
         (const CosNotifyFilter::ConstraintInfo& constraint,
          CosNotifyFilter::ConstraintID cnstr_id)
 {
-  TAO_Notify_Constraint_Expr* notify_constr_expr = 0;
+  TAO_Notify_Constraint_Expr* notify_constr_expr = nullptr;
 
   ACE_NEW_THROW_EX (notify_constr_expr,
     TAO_Notify_Constraint_Expr (),
@@ -277,7 +277,7 @@ TAO_Notify_ETCL_Filter::modify_constraints (
 
   // Remove previous entries and save them in case we need to reinstate them.
   ACE_Array<TAO_Notify_Constraint_Expr*> constr_saved (modify_list.length ());
-  TAO_Notify_Constraint_Expr* constr_expr = 0;
+  TAO_Notify_Constraint_Expr* constr_expr = nullptr;
 
   for (index = 0; index < modify_list.length (); ++index)
     {
@@ -344,7 +344,7 @@ TAO_Notify_ETCL_Filter::get_constraints (
 
   CosNotifyFilter::ConstraintInfoSeq_var infoseq (infoseq_ptr);
 
-  TAO_Notify_Constraint_Expr *notify_constr_expr = 0;
+  TAO_Notify_Constraint_Expr *notify_constr_expr = nullptr;
 
   for (CORBA::ULong index = 0; index < id_list.length (); ++index)
     {
@@ -525,7 +525,7 @@ TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver& saver)
     int index = 0;
     CONSTRAINT_EXPR_LIST::ITERATOR iterator (this->constraint_expr_list_);
 
-    for (CONSTRAINT_EXPR_LIST::ENTRY *entry = 0;
+    for (CONSTRAINT_EXPR_LIST::ENTRY *entry = nullptr;
       iterator.next (entry) != 0;
       iterator.advance (), ++index)
     {
@@ -557,7 +557,7 @@ TAO_Notify_ETCL_Filter::release ()
 void
 TAO_Notify_ETCL_Filter::load_attrs(const TAO_Notify::NVPList& attrs)
 {
-  const char* value = 0;
+  const char* value = nullptr;
   TAO_Notify_Object::load_attrs (attrs);
   if (attrs.find ("FilterId", value))
   {
@@ -577,7 +577,7 @@ TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
   TAO_Notify::Topology_Object* result = this;
   if (type == "constraint")
   {
-    const char* value = 0;
+    const char* value = nullptr;
     if (attrs.find ("ConstraintId", value))
     {
       TAO_Notify_Object::ID id = ACE_OS::atoi (value);

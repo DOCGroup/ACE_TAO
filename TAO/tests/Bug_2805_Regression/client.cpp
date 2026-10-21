@@ -17,14 +17,14 @@
 #include "ace/OS_NS_Thread.h"
 #include "ami_test_i.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
-const char * in_str = "Let's talk AMI.";
+char const *in_str = "Let's talk AMI.";
 int parameter_corruption = 0;
 
 int
@@ -79,7 +79,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
   // private:
   /// Var for the AMI_Test object.
@@ -98,11 +98,11 @@ public:
   Handler () = default;
 
   void foo (CORBA::Long result,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       if (result == 0)
         {
-          ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
+          ACE_ERROR ((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
           parameter_corruption = 1;
         }
 
@@ -119,7 +119,7 @@ public:
       ACE_UNUSED_ARG (reply);
     };
 
-   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
@@ -127,45 +127,45 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Caught exception:");
         }
     };
 
-  void get_yadda (CORBA::Long result)
+  void get_yadda (CORBA::Long result) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *)
+  void get_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda ()
+  void set_yadda () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *)
+  void set_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
   ~Handler () = default;
 
-  void inout_arg_test (const char *)
+  void inout_arg_test (char const *) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Callback method <set_yadda_excep> called:\n"));
   }
 
-  void inout_arg_test_excep (::Messaging::ExceptionHolder *)
+  void inout_arg_test_excep (::Messaging::ExceptionHolder *) override
   {
   }
 };
@@ -174,7 +174,7 @@ public:
 Handler handler;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -187,10 +187,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       A::AMI_Test_var server;
 
       AMI_Test_i * servant =
-        new AMI_Test_i(orb.in(), in_number, in_str, true);
+        new AMI_Test_i (orb.in (), in_number, in_str, true);
       PortableServer::ServantBase_var safe (servant);
 
-      server = servant->_this();
+      server = servant->_this ();
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -203,7 +203,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Activate POA to handle the call back.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -242,23 +242,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       while (number_of_replies > 0)
         {
-          CORBA::Boolean pending = orb->work_pending();
+          CORBA::Boolean const pending = orb->work_pending ();
 
           if (pending)
             {
-              orb->perform_work();
+              orb->perform_work ();
             }
 
           // On some systems this loop must yield or else the other threads
           // will not get a chance to run.
-          ACE_OS::thr_yield();
+          ACE_OS::thr_yield ();
         }
 
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies.value ()));
+                      (nthreads * niterations) - number_of_replies.value ()));
         }
 
       client.thr_mgr ()->wait ();
@@ -270,7 +270,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -283,10 +283,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 Client::Client (A::AMI_Test_ptr server,
                 int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (niterations)
+  : ami_test_var_ (A::AMI_Test::_duplicate (server))
+  , niterations_ (niterations)
 {
-  the_handler_var_ = handler._this (/* */);
+  the_handler_var_ = handler._this ();
 }
 
 int
@@ -305,7 +305,7 @@ Client::svc ()
                       niterations));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

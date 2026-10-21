@@ -28,10 +28,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
+  using NamedValue_ptr = NamedValue *;
 }
 
 /**
@@ -40,7 +40,7 @@ namespace CORBA
 class TAO_Export TAO_NVList_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_NVList_Adapter ();
+  ~TAO_NVList_Adapter () override;
 
   virtual void create_list (CORBA::Long count, CORBA::NVList_ptr &new_list) = 0;
 

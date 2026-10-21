@@ -20,7 +20,7 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "ace/OS_NS_strings.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   bool use_thread_per_consumer = false;
   for(int i = 0; i < argc; i++)
@@ -43,8 +43,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 // ****************************************************************
 
 Event_Service::Event_Service ()
-  : sched_impl_ (0),
-    ec_impl_ (0),
+  : sched_impl_ (nullptr),
+    ec_impl_ (nullptr),
     scheduler_type_ (ES_SCHED_NONE),
     use_bidir_giop_ (false),
     bind_to_naming_service_ (true)
@@ -54,13 +54,13 @@ Event_Service::Event_Service ()
 Event_Service::~Event_Service ()
 {
   delete this->ec_impl_;
-  this->ec_impl_ = 0;
+  this->ec_impl_ = nullptr;
   delete this->sched_impl_;
-  this->sched_impl_ = 0;
+  this->sched_impl_ = nullptr;
 }
 
 int
-Event_Service::run (int argc, ACE_TCHAR* argv[])
+Event_Service::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -159,7 +159,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           attr.scheduler = scheduler.in ();
         }
 
-      TAO_EC_Event_Channel* ec_impl = 0;
+      TAO_EC_Event_Channel *ec_impl = nullptr;
       ACE_NEW_RETURN (ec_impl,
                       TAO_EC_Event_Channel (attr),
                       1);
@@ -247,7 +247,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           FILE *output_file=
             ACE_OS::fopen (this->ior_file_name_.c_str(),
                            ACE_TEXT("w"));
-          if (output_file == 0)
+          if (output_file == nullptr)
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                this->ior_file_name_.c_str()),
@@ -261,7 +261,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           FILE *pidf =
             ACE_OS::fopen (this->pid_file_name_.c_str(),
                            ACE_TEXT("w"));
-          if (pidf != 0)
+          if (pidf != nullptr)
             {
               ACE_OS::fprintf (pidf,
                                "%ld\n",
@@ -313,7 +313,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 }
 
 int
-Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
+Event_Service::parse_args (int argc, ACE_TCHAR *argv [])
 {
   // default values...
   this->service_name_ = "EventService";

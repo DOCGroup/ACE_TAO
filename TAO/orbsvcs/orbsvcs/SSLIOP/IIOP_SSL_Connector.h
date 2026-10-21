@@ -45,25 +45,19 @@ namespace TAO
     IIOP_SSL_Connector ();
 
     /// Destructor.
-    ~IIOP_SSL_Connector ();
+    ~IIOP_SSL_Connector () override;
 
-    int open (TAO_ORB_Core *orb_core);
-    int close ();
+    int open (TAO_ORB_Core *orb_core) override;
+    int close () override;
 
   public:
-    typedef TAO_Connect_Concurrency_Strategy<IIOP_SSL_Connection_Handler>
-            CONNECT_CONCURRENCY_STRATEGY;
+    using CONNECT_CONCURRENCY_STRATEGY = TAO_Connect_Concurrency_Strategy<IIOP_SSL_Connection_Handler>;
 
-    typedef TAO_Connect_Creation_Strategy<IIOP_SSL_Connection_Handler>
-            CONNECT_CREATION_STRATEGY;
+    using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<IIOP_SSL_Connection_Handler>;
 
-    typedef ACE_Connect_Strategy<IIOP_SSL_Connection_Handler,
-                                 ACE_SOCK_CONNECTOR>
-            CONNECT_STRATEGY;
+    using CONNECT_STRATEGY = ACE_Connect_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
 
-    typedef ACE_Strategy_Connector<IIOP_SSL_Connection_Handler,
-                                   ACE_SOCK_CONNECTOR>
-            BASE_CONNECTOR;
+    using BASE_CONNECTOR = ACE_Strategy_Connector<IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
 
   protected:
     /**
@@ -72,13 +66,13 @@ namespace TAO
      * Check the documentation in tao/Transport_Connector.h for details.
      */
     //@{
-    int set_validate_endpoint (TAO_Endpoint *ep);
+    int set_validate_endpoint (TAO_Endpoint *ep) override;
 
     TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                     TAO_Transport_Descriptor_Interface &desc,
-                                    ACE_Time_Value *timeout = 0);
+                                    ACE_Time_Value *timeout = nullptr) override;
 
-  virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+    int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
     //@}
 
   private:

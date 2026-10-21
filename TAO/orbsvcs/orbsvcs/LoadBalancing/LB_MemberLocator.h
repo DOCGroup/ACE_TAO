@@ -53,19 +53,24 @@ public:
   //@{
   /// Clients requests are forwarded via the
   /// PortableServer::ForwardRequest exception thrown in this method.
-  virtual PortableServer::Servant preinvoke (
-      const PortableServer::ObjectId & oid,
+  PortableServer::Servant preinvoke (
+      PortableServer::ObjectId const & oid,
       PortableServer::POA_ptr adapter,
-      const char * operation,
-      PortableServer::ServantLocator::Cookie & the_cookie);
+      char const * operation,
+      PortableServer::ServantLocator::Cookie & the_cookie) override;
 
   /// This method is no-op in this ServantLocator implementation.
-  virtual void postinvoke (
-      const PortableServer::ObjectId &oid,
+  void postinvoke (
+      PortableServer::ObjectId const & oid,
       PortableServer::POA_ptr adapter,
-      const char * operation,
+      char const * operation,
       PortableServer::ServantLocator::Cookie the_cookie,
-      PortableServer::Servant the_servant);
+      PortableServer::Servant the_servant) override;
+
+  TAO_LB_MemberLocator (TAO_LB_MemberLocator const &) = delete;
+  TAO_LB_MemberLocator (TAO_LB_MemberLocator &&) = delete;
+  TAO_LB_MemberLocator & operator= (TAO_LB_MemberLocator const &) = delete;
+  TAO_LB_MemberLocator & operator= (TAO_LB_MemberLocator &&) = delete;
 
   //@}
 

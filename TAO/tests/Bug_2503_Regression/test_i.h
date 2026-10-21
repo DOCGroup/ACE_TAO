@@ -7,13 +7,18 @@ class test_i
   : public POA_Test
 {
 public:
-  test_i(CORBA::ORB_ptr);
+  explicit test_i (CORBA::ORB_ptr orb);
 
-  virtual void the_operation(CORBA::Long & x);
+  test_i (test_i const &) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  virtual void shutdown ();
+  void the_operation (CORBA::Long &x) override;
 
-  char * create_and_activate_server();
+  void shutdown () override;
+
+  char *create_and_activate_server ();
 private:
   CORBA::ORB_var orb_;
 };

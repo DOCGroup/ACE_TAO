@@ -35,9 +35,9 @@ TAO_Messaging_Loader::init (int, ACE_TCHAR* [])
       "Messaging_Loader",
       true);
 
-  if (messaging_loader != 0 && messaging_loader != this)
+  if (messaging_loader != nullptr && messaging_loader != this)
     {
-      return messaging_loader->init (0, 0);
+      return messaging_loader->init (0, nullptr);
     }
 
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =

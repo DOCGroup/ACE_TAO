@@ -47,7 +47,7 @@ namespace ACE
    */
   extern ACE_Export int get_bcast_addr (
     ACE_UINT32 &bcast_addr,
-    const ACE_TCHAR *hostname = 0,
+    const ACE_TCHAR *hostname = nullptr,
     ACE_UINT32 host_addr = 0,
     ACE_HANDLE handle = ACE_INVALID_HANDLE);
 

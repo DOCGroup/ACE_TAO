@@ -734,7 +734,7 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge ()
   {
-    typedef ACE_Unbounded_Set<transport_type*> transport_set_type;
+    using transport_set_type = ACE_Unbounded_Set<transport_type *>;
     transport_set_type transports_to_be_closed;
 
     {

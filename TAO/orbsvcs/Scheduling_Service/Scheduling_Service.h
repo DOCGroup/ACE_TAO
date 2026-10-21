@@ -40,10 +40,15 @@ public:
   TAO_Scheduling_Service ();
 
   /// Constructor taking the command-line arguments.
-  TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[]);
+  TAO_Scheduling_Service (int argc, ACE_TCHAR * argv[]);
+
+  TAO_Scheduling_Service (TAO_Scheduling_Service const &) = delete;
+  TAO_Scheduling_Service (TAO_Scheduling_Service &&) = delete;
+  TAO_Scheduling_Service &operator= (TAO_Scheduling_Service const &) = delete;
+  TAO_Scheduling_Service &operator= (TAO_Scheduling_Service &&) = delete;
 
   /// Initialize the Scheduling Service with the arguments.
-  int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR * argv[]);
 
   /// Run the TAO_Scheduling_Service.
   int run ();
@@ -52,21 +57,21 @@ public:
   ~TAO_Scheduling_Service ();
 
 private:
-  typedef ACE_Config_Scheduler CONFIG_SCHED_TYPE;
+  using CONFIG_SCHED_TYPE = ACE_Config_Scheduler;
 
-  typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy,
-                                 TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
+  using RECONFIG_SCHED_TYPE = TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy,
+                                                     TAO_SYNCH_MUTEX>;
 
   enum Scheduler_Type {CONFIG, RECONFIG};
 
   /// parses the arguments.
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /// The ORB manager.  This must be the first thing in the
   TAO_ORB_Manager orb_manager_;
 
   /// Scheduler instance.
-  POA_RtecScheduler::Scheduler *scheduler_impl_;
+  POA_RtecScheduler::Scheduler * scheduler_impl_;
 
   /// Name of the IOR output file.
   ACE_CString ior_file_name_;

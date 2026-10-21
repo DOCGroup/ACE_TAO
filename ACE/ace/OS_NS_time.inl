@@ -26,7 +26,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_OS_TRACE ("ACE_OS::asctime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 # if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
-  char *result = 0;
+  char *result = nullptr;
   ace_asctime_r_helper (t, buf);
   ACE_OS::strsncpy (buf, result, static_cast<size_t> (buflen));
   return buf;
@@ -48,7 +48,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
 #else
-  char *result = 0;
+  char *result = nullptr;
   ACE_OSCALL (std::asctime (t), char *, result);
   ACE_OS::strsncpy (buf, result, buflen);
   return buf;

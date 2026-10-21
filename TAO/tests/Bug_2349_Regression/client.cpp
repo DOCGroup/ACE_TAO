@@ -2,7 +2,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -40,9 +40,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
-      foo_var server = foo::_narrow(tmp.in ());
+      foo_var server = foo::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {

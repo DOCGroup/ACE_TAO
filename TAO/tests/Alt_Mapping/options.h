@@ -89,6 +89,6 @@ private:
   CORBA::Boolean shutdown_;
 };
 
-typedef ACE_Singleton<Options, TAO_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, TAO_SYNCH_RECURSIVE_MUTEX>;
 
 #endif /* OPTIONS_H */

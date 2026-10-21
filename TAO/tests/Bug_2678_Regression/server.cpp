@@ -1,43 +1,49 @@
 #include "testS.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 
 class Test_impl : public virtual POA_Test
 {
 public:
-  Test_impl (CORBA::ORB_ptr orb);
-  virtual AnySeq *RunTest(const AnySeq &params);
+  explicit Test_impl (CORBA::ORB_ptr orb);
+  Test_impl (Test_impl const &) = delete;
+  Test_impl &operator= (Test_impl const &) = delete;
+  Test_impl (Test_impl &&) = delete;
+  Test_impl &operator= (Test_impl &&) = delete;
+
+  AnySeq *RunTest (AnySeq const &params) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 private:
   CORBA::ORB_var orb_;
 };
 
-Test_impl::Test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
+Test_impl::Test_impl (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+{}
 
 void
-Test_impl::shutdown()
+Test_impl::shutdown ()
 {
   this->orb_->shutdown (false);
 }
 
-AnySeq *Test_impl::RunTest(const AnySeq &params)
+AnySeq *
+Test_impl::RunTest (AnySeq const &params)
 {
-  ACE_DEBUG ((LM_DEBUG, "RunTest: params.length == %d\n", params.length()));
-  for (CORBA::ULong count = 0; count < params.length(); ++count)
+  ACE_DEBUG ((LM_DEBUG, "RunTest: params.length == %d\n", params.length ()));
+  for (CORBA::ULong count = 0; count < params.length (); ++count)
   {
-    const Container* container = 0;
+    Container const *container = nullptr;
     if (!(params[count] >>= container))
     {
       ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
     }
     else
     {
-      const Inner* inner = 0;
+      Inner const *inner = nullptr;
       if (!(container->contents >>= inner))
       {
         ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
@@ -47,7 +53,7 @@ AnySeq *Test_impl::RunTest(const AnySeq &params)
     }
   }
 
-  AnySeq *result = new AnySeq(params);
+  AnySeq *result = new AnySeq (params);
   return result;
 }
 
@@ -74,11 +80,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               policy_list);
       lifespan->destroy ();
 
-      Test_impl *test_servant = 0;
+      Test_impl *test_servant = nullptr;
       ACE_NEW_RETURN (test_servant,
                       Test_impl (orb.in ()),
                       1);
-      PortableServer::ServantBase_var receiver_owner_transfer(test_servant);
+      PortableServer::ServantBase_var receiver_owner_transfer (test_servant);
 
       PortableServer::ObjectId_var id =
         persistent_poa->activate_object (test_servant);
@@ -89,8 +95,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (obj.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),

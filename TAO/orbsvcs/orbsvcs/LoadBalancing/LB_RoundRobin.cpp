@@ -31,7 +31,7 @@ TAO_LB_RoundRobin::get_properties ()
   // There are no RoundRobin properties.  Return an empty property
   // list.
 
-  CosLoadBalancing::Properties * props = 0;
+  CosLoadBalancing::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties,
                     CORBA::NO_MEMORY (
@@ -45,15 +45,15 @@ TAO_LB_RoundRobin::get_properties ()
 
 void
 TAO_LB_RoundRobin::push_loads (
-    const PortableGroup::Location & /* the_location */,
-    const CosLoadBalancing::LoadList & /* loads */)
+    PortableGroup::Location const & /* the_location */,
+    CosLoadBalancing::LoadList const & /* loads */)
 {
   throw CosLoadBalancing::StrategyNotAdaptive ();
 }
 
 CosLoadBalancing::LoadList *
 TAO_LB_RoundRobin::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                              const PortableGroup::Location & the_location)
+                              PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -69,7 +69,7 @@ TAO_LB_RoundRobin::next_member (
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
 
-  const PortableGroup::ObjectGroupId id =
+  PortableGroup::ObjectGroupId const id =
     load_manager->get_object_group_id (object_group);
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -85,7 +85,7 @@ TAO_LB_RoundRobin::next_member (
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
 
-  const CORBA::ULong len = locations->length ();
+  CORBA::ULong const len = locations->length ();
 
   if (len == 0)
     throw CORBA::TRANSIENT ();
@@ -154,7 +154,7 @@ TAO_LB_RoundRobin::next_member (
   // length of the sequence is 1 since the above code handles the
   // boundary case correctly by wrapping around.
 
-  const CORBA::ULong index = 0;
+  CORBA::ULong const index = 0;
   if (this->location_index_map_.bind (id, index + 1) != 0)
     throw CORBA::INTERNAL ();
 
@@ -165,7 +165,7 @@ TAO_LB_RoundRobin::next_member (
 
 
 void
-TAO_LB_RoundRobin::copy_locations (PortableGroup::Locations_var& locations)
+TAO_LB_RoundRobin::copy_locations (PortableGroup::Locations_var & locations)
 {
   this->last_locations_.clear ();
   CORBA::ULong len = locations->length ();

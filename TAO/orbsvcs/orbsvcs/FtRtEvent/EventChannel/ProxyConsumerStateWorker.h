@@ -26,10 +26,15 @@ class ProxyConsumerStateWorker
 {
 public:
   ProxyConsumerStateWorker(FtRtecEventChannelAdmin::ProxyConsumerStates& states);
-  ~ProxyConsumerStateWorker();
+  ~ProxyConsumerStateWorker() override = default;
 
-  virtual void set_size(size_t size);
-  virtual void work(TAO_EC_ProxyPushConsumer* object);
+  ProxyConsumerStateWorker(ProxyConsumerStateWorker const&) = delete;
+  ProxyConsumerStateWorker(ProxyConsumerStateWorker&&) = delete;
+  ProxyConsumerStateWorker& operator=(ProxyConsumerStateWorker const&) = delete;
+  ProxyConsumerStateWorker& operator=(ProxyConsumerStateWorker&&) = delete;
+
+  void set_size(size_t size) override;
+  void work(TAO_EC_ProxyPushConsumer* object) override;
 private:
   int index_;
   FtRtecEventChannelAdmin::ProxyConsumerStates& consumerStates_;

@@ -187,7 +187,7 @@ ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
                                        const ACE_CDR::Char* x,
                                        ACE_CDR::ULong len)
 {
-  char *buf = 0;
+  char *buf = nullptr;
   if (this->adjust (out, len, 1, buf) == 0)
     {
       ACE_OS::memcpy (buf, x, len);
@@ -329,7 +329,7 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
                                        const ACE_CDR::Char *x,
                                        ACE_CDR::ULong len)
 {
-  char *buf = 0;
+  char *buf = nullptr;
 
   if (this->adjust (out, len, 1, buf) == 0)
     {

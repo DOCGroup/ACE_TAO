@@ -7,14 +7,14 @@ ACE_Time_Value
 TAO_Iterator_i::timeout_(60 * 60);
 
 TAO_Iterator_i::TAO_Iterator_i (PortableServer::POA_ptr poa,
-                                ACE_Reactor* reactor)
+                                ACE_Reactor * reactor)
   : poa_ (PortableServer::POA::_duplicate (poa)),
     reactor_ (reactor)
 {
    if (this->timeout_ != ACE_Time_Value::zero)
      {
        this->timer_id_ =
-         this->reactor_->schedule_timer (this, 0, this->timeout_);
+         this->reactor_->schedule_timer (this, nullptr, this->timeout_);
      }
 }
 
@@ -43,7 +43,7 @@ TAO_Iterator_i::destroy ()
 
 
 int
-TAO_Iterator_i::handle_timeout(const ACE_Time_Value&, const void*)
+TAO_Iterator_i::handle_timeout (ACE_Time_Value const &, void const *)
 {
   try
     {

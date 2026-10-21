@@ -28,7 +28,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
-      TYPE *obj_p = 0;\
+      TYPE *obj_p = nullptr;\
       ACE_ALLOCATOR_RETURN (obj_p, static_cast<TYPE *>(ACE_Allocator::instance()->malloc(sizeof(TYPE))), -1); \
       preallocated_object[ID] = (void *) obj_p;\
     }
@@ -38,7 +38,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 #else
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
-      TYPE *obj_p = 0;\
+      TYPE *obj_p = nullptr;\
       ACE_NEW_RETURN (obj_p, TYPE, -1);\
       preallocated_object[ID] = (void *) obj_p;\
     }

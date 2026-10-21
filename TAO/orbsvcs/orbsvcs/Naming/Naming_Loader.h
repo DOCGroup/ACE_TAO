@@ -33,33 +33,35 @@ public:
   /// By default will use the standard Naming_Server.  If a server is provided
   /// it will use that one instead. This object takes ownership of the provided
   /// Naming Server.
-  TAO_Naming_Loader (TAO_Naming_Server *server = 0);
+  TAO_Naming_Loader (TAO_Naming_Server *server = nullptr);
 
   /// Destructor
-  ~TAO_Naming_Loader ();
+  ~TAO_Naming_Loader () override;
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini ();
+  int fini () override;
 
   /// This function call initializes the Naming Service given a reference to the
   /// ORB and the command line parameters.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv[]);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv[]) override;
 
 protected:
   /// TODO: Need to set up service configurator to initialize the naming server
   /// Instance of the TAO_Naming_Server
-  TAO_Naming_Server* naming_server_;
+  TAO_Naming_Server *naming_server_;
 
 private:
-  TAO_Naming_Loader (const TAO_Naming_Loader &) = delete;
-  TAO_Naming_Loader &operator = (const TAO_Naming_Loader &) = delete;
+  TAO_Naming_Loader (TAO_Naming_Loader const &) = delete;
+  TAO_Naming_Loader (TAO_Naming_Loader &&) = delete;
+  TAO_Naming_Loader &operator= (TAO_Naming_Loader const &) = delete;
+  TAO_Naming_Loader &operator= (TAO_Naming_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,7 +31,7 @@ TAO::SL3::ContextEstablishmentPolicy::creds_directive ()
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::ContextEstablishmentPolicy::creds_list ()
 {
-  SecurityLevel3::OwnCredentialsList * creds = 0;
+  SecurityLevel3::OwnCredentialsList * creds = nullptr;
 
   ACE_NEW_THROW_EX (creds,
                     SecurityLevel3::OwnCredentialsList (this->creds_list_),

@@ -67,7 +67,7 @@ public:
   unsigned int debug () const;
 
   /// Returns the file where the IOR should be stored.
-  const ACE_TString& ior_filename () const;
+  ACE_TString const& ior_filename () const;
 
   /// The nt service command to run (install/remove)
   SERVICE_COMMAND service_command() const;
@@ -75,9 +75,9 @@ public:
   /// Save the command line arguments as registry settings. (Windows only)
   int save_registry_options ();
 
-  const char* cmdline() const;
+  char const* cmdline() const;
 
-  const ACE_CString& name() const;
+  ACE_CString const& name() const;
 
   int env_buf_len () const;
 

@@ -12,7 +12,12 @@ class EchoEventSupplier_i : public virtual POA_RtecEventComm::PushSupplier
     // Constructor
     EchoEventSupplier_i(CORBA::ORB_ptr orb);
 
-    virtual void disconnect_push_supplier();
+    EchoEventSupplier_i (EchoEventSupplier_i const &) = delete;
+    EchoEventSupplier_i (EchoEventSupplier_i &&) = delete;
+    EchoEventSupplier_i &operator= (EchoEventSupplier_i const &) = delete;
+    EchoEventSupplier_i &operator= (EchoEventSupplier_i &&) = delete;
+
+    void disconnect_push_supplier () override;
 
   private:
     CORBA::ORB_var orb_;

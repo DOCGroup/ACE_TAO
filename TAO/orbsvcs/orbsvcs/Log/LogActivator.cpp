@@ -11,16 +11,15 @@ TAO_LogActivator::TAO_LogActivator (TAO_LogMgr_i &logmgr_i)
 }
 
 TAO_LogActivator::~TAO_LogActivator ()
-{
-}
+= default;
 
 PortableServer::Servant
-TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
+TAO_LogActivator::incarnate (PortableServer::ObjectId const & oid,
                              PortableServer::POA_ptr)
 {
   CORBA::String_var poa_id = PortableServer::ObjectId_to_string (oid);
 
-  DsLogAdmin::LogId id = ACE_OS::strtoul(poa_id.in (), 0, 0);
+  DsLogAdmin::LogId const id = ACE_OS::strtoul (poa_id.in (), nullptr, 0);
 
   if (!logmgr_i_.exists(id))
     throw CORBA::OBJECT_NOT_EXIST ();
@@ -30,7 +29,7 @@ TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
 
 
 void
-TAO_LogActivator::etherealize (const PortableServer::ObjectId&,
+TAO_LogActivator::etherealize (PortableServer::ObjectId const &,
                                PortableServer::POA_ptr,
                                PortableServer::Servant servant,
                                CORBA::Boolean,

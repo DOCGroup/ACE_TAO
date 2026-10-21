@@ -32,7 +32,7 @@ class TAO_Notify_Refcountable_Guard_T
 {
 public:
   /// Constructor
-  explicit TAO_Notify_Refcountable_Guard_T (T* t = 0);
+  explicit TAO_Notify_Refcountable_Guard_T (T* t = nullptr);
 
   /// Copy constructor
   TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
@@ -53,7 +53,7 @@ public:
   T& operator * () const;
 
   /// Reassignment
-  void reset (T* t = 0);
+  void reset (T* t = nullptr);
 
   // There is no logical release. Release could return an invalid object.
 

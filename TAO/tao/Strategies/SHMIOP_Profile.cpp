@@ -69,10 +69,10 @@ TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = 0;
+  TAO_Endpoint *tmp = nullptr;
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
-       next != 0;
+       next != nullptr;
        next = tmp)
     {
       tmp = next->next ();
@@ -133,7 +133,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
   char *start = copy.inout ();
   char *cp = std::strchr (start, ':');  // Look for a port
 
-  if (cp == 0)
+  if (cp == nullptr)
     {
       // No host/port delimiter!
       throw ::CORBA::INV_OBJREF (
@@ -145,7 +145,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   char *okd = std::strchr (start, this->object_key_delimiter_);
 
-  if (okd == 0)
+  if (okd == nullptr)
     {
       // No object key delimiter!
       throw ::CORBA::INV_OBJREF (
@@ -207,8 +207,8 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
       if (host_addr.get_host_name (tmp_host,
                                    sizeof (tmp_host)) != 0)
       {
-        const char *host_addr_str = host_addr.get_host_addr ();
-        if (host_addr_str == 0)
+        char const *host_addr_str = host_addr.get_host_addr ();
+        if (host_addr_str == nullptr)
           {
             if (TAO_debug_level > 0)
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -265,13 +265,13 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   const TAO_SHMIOP_Profile *op =
     dynamic_cast <const TAO_SHMIOP_Profile *> (other_profile);
 
-  if (op == 0)
+  if (op == nullptr)
     return 0;
 
   // Check endpoints equivalence.
   const TAO_SHMIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
@@ -289,7 +289,7 @@ TAO_SHMIOP_Profile::hash (CORBA::ULong max)
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
   for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       hashval += endp->hash ();
@@ -432,7 +432,7 @@ TAO_SHMIOP_Profile::encode_endpoints ()
     tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
-       iterator != 0;
+       iterator != nullptr;
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
@@ -489,7 +489,7 @@ TAO_SHMIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_SHMIOP_Endpoint *endpoint = 0;
+          TAO_SHMIOP_Endpoint *endpoint = nullptr;
           ACE_NEW_RETURN (endpoint,
                           TAO_SHMIOP_Endpoint (endpoints[i].host,
                                                endpoints[i].port,

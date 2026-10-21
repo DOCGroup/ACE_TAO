@@ -36,8 +36,16 @@ class TAO_BiDir_PolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
+  TAO_BiDir_PolicyFactory () = default;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any & value) override;
+                                   CORBA::Any const& value) override;
+
+ private:
+  TAO_BiDir_PolicyFactory (TAO_BiDir_PolicyFactory const &) = delete;
+  TAO_BiDir_PolicyFactory &operator= (TAO_BiDir_PolicyFactory const &) = delete;
+  TAO_BiDir_PolicyFactory (TAO_BiDir_PolicyFactory &&) = delete;
+  TAO_BiDir_PolicyFactory &operator= (TAO_BiDir_PolicyFactory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

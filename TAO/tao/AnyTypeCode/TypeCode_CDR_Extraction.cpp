@@ -54,7 +54,7 @@ namespace TAO
       CORBA::TypeCode_ptr type;
     };
 
-    typedef ACE_Array_Base<TC_Info> TC_Info_List;
+    using TC_Info_List = ACE_Array_Base<TC_Info>;
   }
 }
 
@@ -127,9 +127,9 @@ namespace
 
   // Use an ACE::Value_Ptr to provide exception safety and proper
   // copying semantics.
-  typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
-                                             CORBA::TypeCode_var> > union_elem_type;
-  typedef ACE_Array_Base<union_elem_type> union_case_array_type;
+  using union_elem_type = ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
+                                                              CORBA::TypeCode_var> >;
+  using union_case_array_type = ACE_Array_Base<union_elem_type>;
 
   // ------------------------------------------------------------
 
@@ -431,8 +431,8 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
       if (!(cdr >> TAO_InputCDR::to_string (name.out (), 0)))
         return false;
 
-      typedef TAO::TypeCode::Objref<CORBA::String_var,
-                                    TAO::True_RefCount_Policy> typecode_type;
+      using typecode_type = TAO::TypeCode::Objref<CORBA::String_var,
+                                                   TAO::True_RefCount_Policy>;
 
       ACE_NEW_RETURN (tc,
                       typecode_type (kind,
@@ -468,9 +468,8 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
         && cdr >> nfields))
     return false;
 
-  typedef ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                     CORBA::TypeCode_var> >
-    member_array_type;
+  using member_array_type = ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                                                        CORBA::TypeCode_var> >;
 
   member_array_type fields (nfields);
 
@@ -484,11 +483,11 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
         return false;
     }
 
-  typedef TAO::TypeCode::Struct<
+  using typecode_type = TAO::TypeCode::Struct<
     CORBA::String_var,
     CORBA::TypeCode_var,
     member_array_type,
-    TAO::True_RefCount_Policy> typecode_type;
+    TAO::True_RefCount_Policy>;
 
   // Check if struct TypeCode is recursive.
   TAO::TypeCodeFactory::TC_Info_List recursive_tc;
@@ -497,10 +496,9 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
                                                      indirect_infos))
     {
       // create a recursive master typecode
-      typedef TAO::TypeCode::Recursive_Type<typecode_type,
-                                            CORBA::TypeCode_var,
-                                            member_array_type>
-        recursive_typecode_type;
+      using recursive_typecode_type = TAO::TypeCode::Recursive_Type<typecode_type,
+                                                                     CORBA::TypeCode_var,
+                                                                     member_array_type>;
 
       recursive_typecode_type * master_tc;
       CORBA::TypeCode_var safe_master_tc;
@@ -597,8 +595,8 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
         && cdr >> ncases))
     return false;
 
-  typedef union_elem_type       elem_type;
-  typedef union_case_array_type case_array_type;
+  using elem_type = union_elem_type;
+  using case_array_type = union_case_array_type;
 
   case_array_type cases (ncases);
 
@@ -607,7 +605,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
       elem_type & member = cases[i];
 
       TAO::TypeCode::Case<CORBA::String_var, CORBA::TypeCode_var> *
-        the_case = 0;
+        the_case = nullptr;
 
       // Ugly.  *sigh*
       switch (discriminant_kind)
@@ -618,8 +616,8 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> label))
               return false;
 
-            typedef TypeCode::Case_Enum_T<CORBA::String_var,
-                                          CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_Enum_T<CORBA::String_var,
+                                                     CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (discriminant_type.in(), label),
@@ -632,9 +630,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> label))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::ULong,
-                                     CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::ULong,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -647,9 +645,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> label))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::Long,
-                                     CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::Long,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -662,9 +660,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> label))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::UShort,
-                                     CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::UShort,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -677,9 +675,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> label))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::Short,
-                                     CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::Short,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -692,9 +690,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> CORBA::Any::to_char (label)))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::Char,
-                                     CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::Char,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -707,9 +705,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
              if (!(cdr >> CORBA::Any::to_boolean (label)))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::Boolean,
-                                     CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::Boolean,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -722,9 +720,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> label))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::LongLong,
-                                     CORBA::String_var,
-                                     CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::LongLong,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -737,9 +735,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             if (!(cdr >> label))
               return false;
 
-            typedef TypeCode::Case_T<CORBA::ULongLong,
-                                     CORBA::String_var,
-                                      CORBA::TypeCode_var> case_type;
+            using case_type = TypeCode::Case_T<CORBA::ULongLong,
+                                                CORBA::String_var,
+                                                CORBA::TypeCode_var>;
 
             ACE_NEW_RETURN (the_case,
                             case_type (label),
@@ -766,10 +764,10 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
       member->type (the_type.in ());
     }
 
-  typedef TAO::TypeCode::Union<CORBA::String_var,
-                               CORBA::TypeCode_var,
-                               case_array_type,
-                               TAO::True_RefCount_Policy> typecode_type;
+  using typecode_type = TAO::TypeCode::Union<CORBA::String_var,
+                                              CORBA::TypeCode_var,
+                                              case_array_type,
+                                              TAO::True_RefCount_Policy>;
 
   // Check if we have recursive members.  There could be multiple.
   TAO::TypeCodeFactory::TC_Info_List recursive_tc;
@@ -777,10 +775,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
     {
       // Set remaining parameters.
 
-      typedef TAO::TypeCode::Recursive_Type<typecode_type,
-                                            CORBA::TypeCode_var,
-                                            case_array_type>
-        recursive_typecode_type;
+      using recursive_typecode_type = TAO::TypeCode::Recursive_Type<typecode_type,
+                                                                     CORBA::TypeCode_var,
+                                                                     case_array_type>;
 
       recursive_typecode_type * master_tc;
       CORBA::TypeCode_var safe_master_tc;
@@ -863,10 +860,10 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
         return false;
     }
 
-  typedef TAO::TypeCode::Enum<
+  using typecode_type = TAO::TypeCode::Enum<
     CORBA::String_var,
     ACE_Array_Base<CORBA::String_var>,
-    TAO::True_RefCount_Policy> typecode_type;
+    TAO::True_RefCount_Policy>;
 
   ACE_NEW_RETURN (tc,
                   typecode_type (id.in (),
@@ -905,7 +902,7 @@ TAO::TypeCodeFactory::tc_string_factory (CORBA::TCKind kind,
       return true;
     }
 
-  typedef TAO::TypeCode::String<TAO::True_RefCount_Policy> typecode_type;
+  using typecode_type = TAO::TypeCode::String<TAO::True_RefCount_Policy>;
 
   ACE_NEW_RETURN (tc,
                   typecode_type (kind, bound),
@@ -937,9 +934,9 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
         && cdr >> length))
     return false;
 
-  typedef TAO::TypeCode::Sequence<
+  using typecode_type = TAO::TypeCode::Sequence<
     CORBA::TypeCode_var,
-    TAO::True_RefCount_Policy> typecode_type;
+    TAO::True_RefCount_Policy>;
 
   ACE_NEW_RETURN (tc,
                   typecode_type (kind, content_type, length),
@@ -988,10 +985,10 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
       return false;
     }
 
-  typedef TAO::TypeCode::Alias<
+  using typecode_type = TAO::TypeCode::Alias<
     CORBA::String_var,
     CORBA::TypeCode_var,
-    TAO::True_RefCount_Policy> typecode_type;
+    TAO::True_RefCount_Policy>;
 
   ACE_NEW_RETURN (tc,
                   typecode_type (kind,
@@ -1085,7 +1082,7 @@ TAO::TypeCodeFactory::tc_fixed_factory (CORBA::TCKind,
   if (!(cdr >> digits && cdr >> scale))
     return false;
 
-  typedef TAO::TypeCode::Fixed<TAO::True_RefCount_Policy> typecode_type;
+  using typecode_type = TAO::TypeCode::Fixed<TAO::True_RefCount_Policy>;
 
   ACE_NEW_RETURN (tc,
                   typecode_type (digits, scale),
@@ -1123,9 +1120,8 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
         && cdr >> nfields))
     return false;
 
-  typedef ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                    CORBA::TypeCode_var> >
-    member_array_type;
+  using member_array_type = ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                                                       CORBA::TypeCode_var> >;
 
   member_array_type fields (nfields);
 
@@ -1140,11 +1136,11 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
         return false;
     }
 
-  typedef TAO::TypeCode::Value<
+  using typecode_type = TAO::TypeCode::Value<
     CORBA::String_var,
     CORBA::TypeCode_var,
     member_array_type,
-    TAO::True_RefCount_Policy> typecode_type;
+    TAO::True_RefCount_Policy>;
 
   // Check if valuetype/eventtype TypeCode is recursive.
   TAO::TypeCodeFactory::TC_Info_List recursive_tc;
@@ -1152,10 +1148,9 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
     {
       // Set remaining parameters.
 
-      typedef TAO::TypeCode::Recursive_Type<typecode_type,
-                                            CORBA::TypeCode_var,
-                                            member_array_type>
-        recursive_typecode_type;
+      using recursive_typecode_type = TAO::TypeCode::Recursive_Type<typecode_type,
+                                                                     CORBA::TypeCode_var,
+                                                                     member_array_type>;
 
       recursive_typecode_type * master_tc;
       CORBA::TypeCode_var safe_master_tc;
@@ -1435,10 +1430,9 @@ namespace
           return false;
         }
 
-      typedef TAO::TypeCode::Alias<
-                      CORBA::String_var,
-                      CORBA::TypeCode_var,
-                      TAO::True_RefCount_Policy> typecode_type;
+      using typecode_type = TAO::TypeCode::Alias<CORBA::String_var,
+                                                  CORBA::TypeCode_var,
+                                                  TAO::True_RefCount_Policy>;
 
       // NOTE: Although Alias may be indirect, they are NOT recursive!
       ACE_NEW_RETURN (tc,
@@ -1529,15 +1523,14 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
       case CORBA::tk_struct:
         {
           // Set remaining parameters.
-          typedef ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                             CORBA::TypeCode_var> >
-            member_array_type;
+          using member_array_type = ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                                                                CORBA::TypeCode_var> >;
 
-          typedef TAO::TypeCode::Struct<
+          using typecode_type = TAO::TypeCode::Struct<
             CORBA::String_var,
             CORBA::TypeCode_var,
             member_array_type,
-            TAO::True_RefCount_Policy> typecode_type;
+            TAO::True_RefCount_Policy>;
 
           typecode_type * const tc_struct = dynamic_cast<typecode_type *>(tc_direct);
           for (size_t j = 0; j < len; ++j)
@@ -1557,13 +1550,12 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
       case CORBA::tk_union:
         {
           // Set remaining parameters.
-          typedef union_case_array_type case_array_type;
+          using case_array_type = union_case_array_type;
 
-          typedef TAO::TypeCode::Union<CORBA::String_var,
-                                       CORBA::TypeCode_var,
-                                       case_array_type,
-                                       TAO::True_RefCount_Policy>
-            typecode_type;
+          using typecode_type = TAO::TypeCode::Union<CORBA::String_var,
+                                                      CORBA::TypeCode_var,
+                                                      case_array_type,
+                                                      TAO::True_RefCount_Policy>;
 
           typecode_type * const tc_union = dynamic_cast<typecode_type *>(tc_direct);
           for (size_t j = 0; j < len; ++j)
@@ -1584,15 +1576,13 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
       case CORBA::tk_event:
         {
           // Set remaining parameters.
-          typedef ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                            CORBA::TypeCode_var> >
-            member_array_type;
+          using member_array_type = ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                                                               CORBA::TypeCode_var> >;
 
-          typedef TAO::TypeCode::Value<CORBA::String_var,
-                                       CORBA::TypeCode_var,
-                                       member_array_type,
-                                       TAO::True_RefCount_Policy>
-            typecode_type;
+          using typecode_type = TAO::TypeCode::Value<CORBA::String_var,
+                                                      CORBA::TypeCode_var,
+                                                      member_array_type,
+                                                      TAO::True_RefCount_Policy>;
 
           typecode_type * const tc_value = dynamic_cast<typecode_type *>(tc_direct);
           for (size_t j = 0; j < len; ++j)

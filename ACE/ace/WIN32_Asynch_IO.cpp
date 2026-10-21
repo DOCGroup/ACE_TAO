@@ -397,7 +397,7 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
     }
 
   // Create the Asynch_Result.
-  ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
+  ACE_WIN32_Asynch_Read_Stream_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_Stream_Result (this->handler_proxy_,
                                                        this->handle_,
@@ -490,7 +490,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                         -1);
 
   // Create the Asynch_Result.
-  ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
+  ACE_WIN32_Asynch_Read_Stream_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_Stream_Result (this->handler_proxy_,
                                                        this->handle_,
@@ -833,7 +833,7 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
       return -1;
     }
 
-  ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
+  ACE_WIN32_Asynch_Write_Stream_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_Stream_Result (this->handler_proxy_,
                                                         this->handle_,
@@ -970,7 +970,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                         -1);
 
 
-  ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
+  ACE_WIN32_Asynch_Write_Stream_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_Stream_Result (this->handler_proxy_,
                                                         this->handle_,
@@ -1273,7 +1273,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
        -1);
 
 
-  ACE_WIN32_Asynch_Read_File_Result *result = 0;
+  ACE_WIN32_Asynch_Read_File_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_File_Result (this->handler_proxy_,
                                                      this->handle_,
@@ -1351,7 +1351,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   // last one should be completely 0
   buffer_pointers[buffer_pointers_count].Buffer = 0;
 
-  ACE_WIN32_Asynch_Read_File_Result *result = 0;
+  ACE_WIN32_Asynch_Read_File_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_File_Result (this->handler_proxy_,
                                                      this->handle_,
@@ -1679,7 +1679,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
       return -1;
     }
 
-  ACE_WIN32_Asynch_Write_File_Result *result = 0;
+  ACE_WIN32_Asynch_Write_File_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_File_Result (this->handler_proxy_,
                                                       this->handle_,
@@ -1794,7 +1794,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   // last one should be completely 0
   buffer_pointers[buffer_pointers_count].Buffer = 0;
 
-  ACE_WIN32_Asynch_Write_File_Result *result = 0;
+  ACE_WIN32_Asynch_Write_File_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_File_Result (this->handler_proxy_,
                                                       this->handle_,
@@ -2136,7 +2136,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
     }
 
   // Common code for both WIN and POSIX.
-  ACE_WIN32_Asynch_Accept_Result *result = 0;
+  ACE_WIN32_Asynch_Accept_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Accept_Result (this->handler_proxy_,
                                                   this->handle_,
@@ -2445,7 +2445,7 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
   // Common code for both WIN and WIN32.
   // Create future Asynch_Connect_Result
-  ACE_WIN32_Asynch_Connect_Result *result = 0;
+  ACE_WIN32_Asynch_Connect_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Connect_Result (this->handler_proxy_,
                                                    connect_handle,
@@ -2654,7 +2654,7 @@ ACE_WIN32_Asynch_Connect::cancel_uncompleted (bool flg_notify,
   int retval = 0;
 
   MAP_MANAGER::ITERATOR iter (result_map_);
-  MAP_MANAGER::ENTRY *   me = 0;
+  MAP_MANAGER::ENTRY *   me = nullptr;
 
   set.reset ();
 
@@ -2748,7 +2748,7 @@ ACE_WIN32_Asynch_Connect::handle_output (ACE_HANDLE fd)
 {
   ACE_TRACE ("ACE_WIN32_Asynch_Connect::handle_output");
 
-  ACE_WIN32_Asynch_Connect_Result* result = 0;
+  ACE_WIN32_Asynch_Connect_Result* result = nullptr;
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
@@ -2788,7 +2788,7 @@ ACE_WIN32_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
          this->win32_proactor_->get_asynch_pseudo_task ();
   task.remove_io_handler (fd);
 
-  ACE_WIN32_Asynch_Connect_Result* result = 0;
+  ACE_WIN32_Asynch_Connect_Result* result = nullptr;
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
@@ -3013,7 +3013,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   DWORD dword_bytes_to_write = static_cast<DWORD> (bytes_to_write);
   DWORD dword_bytes_per_send = static_cast<DWORD> (bytes_per_send);
 
-  ACE_WIN32_Asynch_Transmit_File_Result *result = 0;
+  ACE_WIN32_Asynch_Transmit_File_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Transmit_File_Result (this->handler_proxy_,
                                                          this->handle_,
@@ -3375,7 +3375,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                         -1);
 
   // Create the Asynch_Result.
-  ACE_WIN32_Asynch_Read_Dgram_Result *result = 0;
+  ACE_WIN32_Asynch_Read_Dgram_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_Dgram_Result (this->handler_proxy_,
                                                       this->handle_,
@@ -3702,7 +3702,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   }
 
   // Create the Asynch_Result.
-  ACE_WIN32_Asynch_Write_Dgram_Result *result = 0;
+  ACE_WIN32_Asynch_Write_Dgram_Result *result = nullptr;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_Dgram_Result (this->handler_proxy_,
                                                        this->handle_,

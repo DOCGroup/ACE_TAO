@@ -1,7 +1,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,9 +39,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
-      Test_var hello = Test::_narrow(tmp.in ());
+      Test_var hello = Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -63,18 +63,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       mycontainer.contents <<= myinner;
       myseq[0] <<= mycontainer;
       myseq[1] <<= mycontainer;
-      AnySeq_var params =  hello->RunTest (myseq);
+      AnySeq_var params = hello->RunTest (myseq);
 
-      for (CORBA::ULong count = 0; count < params->length(); ++count)
+      for (CORBA::ULong count = 0; count < params->length (); ++count)
       {
-        const Container* container = 0;
+        Container const *container = nullptr;
         if (!(params[count] >>= container))
         {
           ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
         }
         else
         {
-          const Inner* inner = 0;
+          Inner const *inner = nullptr;
           if (!(container->contents >>= inner))
           {
             ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));

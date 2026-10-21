@@ -29,9 +29,9 @@ class Source_i
 public:
   Source_i (ThreeTier_ptr target);
 
-  ~Source_i ();
+  ~Source_i () = default;
 
-  bool parse_args(int argc, ACE_TCHAR *argv[]);
+  bool parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Execute the methods
   int run ();

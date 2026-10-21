@@ -132,7 +132,7 @@ namespace TAO
       // for later use.
       servant_upcall.state (TAO::Portable_Server::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
 
-      PortableServer::ServantLocator::Cookie cookie = 0;
+      PortableServer::ServantLocator::Cookie cookie = nullptr;
       servant =
         this->servant_locator_->preinvoke (poa_current_impl.object_id (),
                                            this->poa_,

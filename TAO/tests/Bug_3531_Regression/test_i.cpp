@@ -54,8 +54,8 @@ Simple_Server_i::client_done ()
 }
 
 int
-Simple_Server_i::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+Simple_Server_i::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   // We are the (client) leader.  Signal the leader-follower pattern to
@@ -64,7 +64,7 @@ Simple_Server_i::handle_timeout (const ACE_Time_Value &,
   oc->lf_strategy ().set_upcall_thread (oc->leader_follower ());
   // Block until another thread is elected leader and handles a *new* event.
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) handle_timeout () called - waiting...\n"));
-  this->cond_.wait();
+  this->cond_.wait ();
   return 0;
 }
 

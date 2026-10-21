@@ -13,7 +13,12 @@ public:
   /// Constructor
   NsShutdown (CORBA::ORB_ptr orb);
 
-  virtual void shutdown ();
+  NsShutdown (NsShutdown const &) = delete;
+  NsShutdown (NsShutdown &&) = delete;
+  NsShutdown &operator= (NsShutdown const &) = delete;
+  NsShutdown &operator= (NsShutdown &&) = delete;
+
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

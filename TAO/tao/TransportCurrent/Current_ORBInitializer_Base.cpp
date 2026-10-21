@@ -14,10 +14,7 @@ namespace TAO
       // do nothing
     }
 
-    Current_ORBInitializer_Base::~Current_ORBInitializer_Base()
-    {
-      // do nothing
-    }
+    Current_ORBInitializer_Base::~Current_ORBInitializer_Base () = default;
 
 
     void

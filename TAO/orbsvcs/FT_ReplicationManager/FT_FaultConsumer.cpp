@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::FT_FaultConsumer::FT_FaultConsumer ()
   : poa_ (PortableServer::POA::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
-  , fault_analyzer_ (0)
+  , fault_analyzer_ (nullptr)
   , consumer_id_ (0)
   , consumer_ref_ (CosNotifyComm::StructuredPushConsumer::_nil ())
   , notifications_ (0)
@@ -34,9 +34,7 @@ TAO::FT_FaultConsumer::FT_FaultConsumer ()
 }
 
 /// Destructor.
-TAO::FT_FaultConsumer::~FT_FaultConsumer ()
-{
-}
+TAO::FT_FaultConsumer::~FT_FaultConsumer () = default;
 
 /**
 * Connect to the FT::FaultNotifier.
@@ -64,7 +62,7 @@ int TAO::FT_FaultConsumer::init (
 
   ACE_ASSERT (!CORBA::is_nil (poa));
   ACE_ASSERT (!CORBA::is_nil (fault_notifier));
-  ACE_ASSERT (fault_analyzer != 0);
+  ACE_ASSERT (fault_analyzer != nullptr);
 
   // Duplicate the object references passed in.
   this->poa_ =
@@ -201,7 +199,7 @@ size_t TAO::FT_FaultConsumer::notifications () const
 // handle.  Then, we analyze it.  If it is not an event we can handle,
 // we simply log the error and drop the event.
 void TAO::FT_FaultConsumer::push_structured_event (
-  const CosNotification::StructuredEvent &event
+  CosNotification::StructuredEvent const &event
   )
 {
   // Debugging support.
@@ -247,8 +245,8 @@ void TAO::FT_FaultConsumer::push_structured_event (
 }
 
 void TAO::FT_FaultConsumer::offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
+    CosNotification::EventTypeSeq const & added,
+    CosNotification::EventTypeSeq const & removed
   )
 {
   ACE_UNUSED_ARG (added);

@@ -65,9 +65,11 @@ namespace TAO
     // Forbidden methods
   private:
     /// Copy constructor.
-    FT_FaultAnalyzer (const FT_FaultAnalyzer & rhs);
+    FT_FaultAnalyzer (FT_FaultAnalyzer const &) = delete;
     /// Assignment operator.
-    FT_FaultAnalyzer & operator = (const FT_FaultAnalyzer & rhs);
+    FT_FaultAnalyzer (FT_FaultAnalyzer &&) = delete;
+    FT_FaultAnalyzer & operator= (FT_FaultAnalyzer const &) = delete;
+    FT_FaultAnalyzer & operator= (FT_FaultAnalyzer &&) = delete;
 
     ///////////////
     // Data Members

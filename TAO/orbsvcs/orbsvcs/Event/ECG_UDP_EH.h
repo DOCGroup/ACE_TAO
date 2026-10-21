@@ -54,7 +54,7 @@ public:
   TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_UDP_EH ();
+  virtual ~TAO_ECG_UDP_EH () override;
 
   /// Open the datagram and register itself with this->reactor().
   /// To insure proper resource clean up, if open () is successful,
@@ -65,12 +65,12 @@ public:
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown ();
+  virtual int shutdown () override;
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that
   /// <dgram_> is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_input (ACE_HANDLE fd) override;
 
   /**
    * Obtain the dgram, this is one of those "controlled violations of

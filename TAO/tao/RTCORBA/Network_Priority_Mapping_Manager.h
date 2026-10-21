@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Network_Priority_Mapping_Manager;
 class TAO_Network_Priority_Mapping_Manager_var;
-typedef TAO_Network_Priority_Mapping_Manager *TAO_Network_Priority_Mapping_Manager_ptr;
+using TAO_Network_Priority_Mapping_Manager_ptr = TAO_Network_Priority_Mapping_Manager *;
 
 
 namespace RTCORBA
@@ -56,8 +56,8 @@ public:
   RTCORBA::NetworkPriorityMapping *mapping ();
 
 public:
-  typedef TAO_Network_Priority_Mapping_Manager_ptr _ptr_type;
-  typedef TAO_Network_Priority_Mapping_Manager_var _var_type;
+  using _ptr_type = TAO_Network_Priority_Mapping_Manager_ptr;
+  using _var_type = TAO_Network_Priority_Mapping_Manager_var;
 
   // the static operations
   static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (
@@ -70,16 +70,20 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Network_Priority_Mapping_Manager ();
+  ~TAO_Network_Priority_Mapping_Manager () override;
 
 private:
-  TAO_Network_Priority_Mapping_Manager (const TAO_Network_Priority_Mapping_Manager &);
-  void operator= (const TAO_Network_Priority_Mapping_Manager &);
+  TAO_Network_Priority_Mapping_Manager (TAO_Network_Priority_Mapping_Manager const &) = delete;
+  TAO_Network_Priority_Mapping_Manager &operator= (
+    TAO_Network_Priority_Mapping_Manager const &) = delete;
+  TAO_Network_Priority_Mapping_Manager (TAO_Network_Priority_Mapping_Manager &&) = delete;
+  TAO_Network_Priority_Mapping_Manager &operator= (
+    TAO_Network_Priority_Mapping_Manager &&) = delete;
 
 private:
   TAO_Network_Priority_Mapping *mapping_;

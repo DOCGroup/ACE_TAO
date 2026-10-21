@@ -54,9 +54,9 @@ class TAO_LB_ORBInitializer
 {
 public:
   /// Constructor.
-  TAO_LB_ORBInitializer (const CORBA::StringSeq & object_groups,
-                         const CORBA::StringSeq & repository_ids,
-                         const char * location);
+  TAO_LB_ORBInitializer (CORBA::StringSeq const & object_groups,
+                         CORBA::StringSeq const & repository_ids,
+                         char const * location);
 
   /**
    * @name PortableInterceptor::ORBInitializer Methods
@@ -65,18 +65,23 @@ public:
    * interface.
    */
   //@{
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
   //@}
 
 private:
   /// List of stringified object group references.
-  const CORBA::StringSeq object_groups_;
+  CORBA::StringSeq const object_groups_;
 
   /// List of RepositoryIds for object that will be load
   /// managed/balanced.
-  const CORBA::StringSeq repository_ids_;
+  CORBA::StringSeq const repository_ids_;
+
+  TAO_LB_ORBInitializer (TAO_LB_ORBInitializer const &) = delete;
+  TAO_LB_ORBInitializer (TAO_LB_ORBInitializer &&) = delete;
+  TAO_LB_ORBInitializer & operator= (TAO_LB_ORBInitializer const &) = delete;
+  TAO_LB_ORBInitializer & operator= (TAO_LB_ORBInitializer &&) = delete;
 
   /// Location at which the LoadBalancing component resides.
   CORBA::String_var location_;

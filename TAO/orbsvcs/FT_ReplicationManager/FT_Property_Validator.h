@@ -39,21 +39,24 @@ namespace TAO
     FT_Property_Validator ();
 
     /// Destructor.
-    virtual ~FT_Property_Validator ();
+    ~FT_Property_Validator () override;
 
     /// Validate the given properties.  Throw an exception when the
     /// first invalid property is encountered.  The remaining properties
     /// will not be validated.
-    virtual
-    void validate_property (const PortableGroup::Properties & props);
+    void validate_property (PortableGroup::Properties const & props) override;
 
     /// Validate the given properties/criteria.  All criteria
     /// will be validated regardless of whether or not an invalid
     /// property was encountered.
-    virtual
-    void validate_criteria (const PortableGroup::Properties & criteria);
+    void validate_criteria (PortableGroup::Properties const & criteria) override;
 
   private:
+    FT_Property_Validator (FT_Property_Validator const &) = delete;
+    FT_Property_Validator (FT_Property_Validator &&) = delete;
+    FT_Property_Validator & operator= (FT_Property_Validator const &) = delete;
+    FT_Property_Validator & operator= (FT_Property_Validator &&) = delete;
+
     /**
     * @name Pre-initialize property Names.
     *

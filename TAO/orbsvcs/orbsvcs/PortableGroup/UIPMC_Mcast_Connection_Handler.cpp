@@ -48,7 +48,7 @@ TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
     listen_on_all_ (false),
     listener_interfaces_ ()
 {
-  TAO_UIPMC_Mcast_Transport *specific_transport = 0;
+  TAO_UIPMC_Mcast_Transport *specific_transport = nullptr;
   ACE_NEW (specific_transport,
            TAO_UIPMC_Mcast_Transport (this, orb_core));
 

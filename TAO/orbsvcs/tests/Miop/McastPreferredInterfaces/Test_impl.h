@@ -8,7 +8,7 @@ class Server_impl : public virtual POA_Test::Server
 public:
   Server_impl (CORBA::ORB_ptr orb);
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

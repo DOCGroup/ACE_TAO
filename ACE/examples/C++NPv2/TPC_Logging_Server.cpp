@@ -96,8 +96,7 @@ int TPC_Logging_Acceptor::accept_svc_handler
   return 0;
 }
 
-typedef Reactor_Logging_Server_Adapter<TPC_Logging_Acceptor>
-        TPC_Logging_Server;
+using TPC_Logging_Server = Reactor_Logging_Server_Adapter<TPC_Logging_Acceptor>;
 
 ACE_FACTORY_DEFINE (TPCLS, TPC_Logging_Server)
 

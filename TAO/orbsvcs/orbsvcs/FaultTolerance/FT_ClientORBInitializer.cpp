@@ -75,7 +75,7 @@ void
 TAO_FT_ClientORBInitializer::register_client_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  TAO::FT_ClientRequest_Interceptor* ftcri = 0;
+  TAO::FT_ClientRequest_Interceptor* ftcri = nullptr;
 
   ACE_NEW_THROW_EX (ftcri,
                     TAO::FT_ClientRequest_Interceptor,

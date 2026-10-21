@@ -74,22 +74,19 @@ public:
                        TAO_StreamEndPoint *endpoint);
 
   // Map of receivers.
-  typedef ACE_Hash_Map_Manager<ACE_CString,
+  using Receivers = ACE_Hash_Map_Manager<ACE_CString,
                                AVStreams::MMDevice_var,
-                               ACE_Null_Mutex>
-          Receivers;
+                               ACE_Null_Mutex>;
 
   // Map of protocol objects.
-  typedef ACE_Hash_Map_Manager<ACE_CString,
+  using Protocol_Objects = ACE_Hash_Map_Manager<ACE_CString,
                                TAO_AV_Protocol_Object *,
-                               ACE_Null_Mutex>
-          Protocol_Objects;
+                               ACE_Null_Mutex>;
 
   // Map of streamctrl.
-  typedef ACE_Hash_Map_Manager<ACE_CString,
+  using StreamCtrls = ACE_Hash_Map_Manager<ACE_CString,
                                AVStreams::StreamCtrl_var,
-                               ACE_Null_Mutex>
-          StreamCtrls;
+                               ACE_Null_Mutex>;
 
   // Map accessors.
   Receivers &receivers ();

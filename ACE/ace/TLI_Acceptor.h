@@ -52,7 +52,7 @@ public:
   ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
                     int reuse_addr = 0,
                     int oflag = O_RDWR,
-                    struct t_info *info = 0,
+                    struct t_info *info = nullptr,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     const char device[] = ACE_TLI_TCP_DEVICE);
 
@@ -60,7 +60,7 @@ public:
   ACE_HANDLE open (const ACE_Addr &remote_sap,
                    int reuse_addr = 0,
                    int oflag = O_RDWR,
-                   struct t_info *info = 0,
+                   struct t_info *info = nullptr,
                    int backlog = ACE_DEFAULT_BACKLOG,
                    const char device[] = ACE_TLI_TCP_DEVICE);
 
@@ -75,17 +75,17 @@ public:
    * means "restart if interrupted."
    */
   int accept (ACE_TLI_Stream &new_tli_sap,
-              ACE_Addr *remote_addr = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_Addr *remote_addr = nullptr,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false,
               int rwflag = 1,
-              netbuf *udata = 0,
-              netbuf *opt = 0);
+              netbuf *udata = nullptr,
+              netbuf *opt = nullptr);
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
-  typedef ACE_TLI_Stream PEER_STREAM;
+  using PEER_ADDR = ACE_INET_Addr;
+  using PEER_STREAM = ACE_TLI_Stream;
 
   /// Dump the state of an object.
   void dump () const;

@@ -12,7 +12,7 @@
 # include "ace/Signal.h"
 #endif /* ACE_LINUX && ACE_HAS_THREADS */
 
-static const ACE_TCHAR *lm_ior_file = ACE_TEXT("lm.ior");
+static ACE_TCHAR const *lm_ior_file = ACE_TEXT("lm.ior");
 static int ping_timeout_milliseconds = 2000;
 static int ping_interval_seconds = 0;
 
@@ -109,7 +109,7 @@ TAO_LB_run_load_manager (void * orb_arg)
       return reinterpret_cast<void *> (-1);
     }
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif  /* linux && ACE_HAS_THREADS */
 
@@ -144,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     argv,
                     default_strategy);
 
-      TAO_LB_LoadManager * lm = 0;
+      TAO_LB_LoadManager * lm = nullptr;
       ACE_NEW_THROW_EX (lm,
         TAO_LB_LoadManager(::ping_timeout_milliseconds,
                            ::ping_interval_seconds),

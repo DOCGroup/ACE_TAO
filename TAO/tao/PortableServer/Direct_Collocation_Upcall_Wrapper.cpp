@@ -19,7 +19,7 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   bool & is_forwarded,
   TAO::Argument ** args,
   int,
-  const char * op,
+  char const * op,
   size_t op_len,
   TAO::Collocation_Strategy strategy)
 {
@@ -39,7 +39,7 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
       collocated_skel (servant, args);
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     }
-  catch (const ::PortableServer::ForwardRequest& forward_request)
+  catch (::PortableServer::ForwardRequest const &forward_request)
     {
       forward_obj =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());

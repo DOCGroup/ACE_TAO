@@ -92,7 +92,7 @@ public:
    * on the queue.
    */
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *timeout = 0) = 0;
+                                 ACE_Time_Value *timeout = nullptr) = 0;
 
   /**
    * Enqueue a <ACE_Message_Block *> into the tail of the queue.
@@ -104,9 +104,9 @@ public:
    * @c EWOULDBLOCK).
    */
   virtual int enqueue_tail (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = 0) = 0;
+                            ACE_Time_Value *timeout = nullptr) = 0;
   virtual int enqueue (ACE_Message_Block *new_item,
-                       ACE_Time_Value *timeout = 0) = 0;
+                       ACE_Time_Value *timeout = nullptr) = 0;
 
   /**
    * Dequeue and return the <ACE_Message_Block *> at the head of the
@@ -118,9 +118,9 @@ public:
    * @c EWOULDBLOCK).
    */
   virtual int dequeue_head (ACE_Message_Block *&first_item,
-                            ACE_Time_Value *timeout = 0) = 0;
+                            ACE_Time_Value *timeout = nullptr) = 0;
   virtual int dequeue (ACE_Message_Block *&first_item,
-                       ACE_Time_Value *timeout = 0) = 0;
+                       ACE_Time_Value *timeout = nullptr) = 0;
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.

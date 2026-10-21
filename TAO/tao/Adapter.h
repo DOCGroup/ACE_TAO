@@ -26,10 +26,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object * Object_ptr;
+  using Object_ptr = Object *;
 
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
+  using Object_out = TAO_Pseudo_Out_T<Object>;
 }
 
 namespace TAO
@@ -94,7 +94,7 @@ public:
 
   /// Return the name, i.e. the object id used to resolve it in the
   /// ORB.
-  virtual const char *name () const = 0;
+  virtual char const *name () const = 0;
 
   /**
    * Return the root of the Object Adapter.
@@ -105,7 +105,7 @@ public:
 
   /// Create a collocated object using the given profile and stub.
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                                      const TAO_MProfile &) = 0;
+                                                      TAO_MProfile const &) = 0;
 
   /// Initialize a collocated object using the given stub
   /// pointer for lazily evaluated object references.

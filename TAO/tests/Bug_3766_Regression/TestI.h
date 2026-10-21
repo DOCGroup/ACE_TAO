@@ -44,17 +44,17 @@ public:
   Test_i (CORBA::ORB_ptr o);
 
   // Destructor
-  virtual ~Test_i ();
+  ~Test_i () override = default;
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i &operator= (Test_i &&) = delete;
 
-  virtual
-  void do_something_FixedLength (
-    ::FixedLengthInfo_out my_info);
+  void do_something_FixedLength (::FixedLengthInfo_out my_info) override;
 
-  virtual
-  void do_something_VariableLength (
-    ::VariableLengthInfo_out my_info);
+  void do_something_VariableLength (::VariableLengthInfo_out my_info) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

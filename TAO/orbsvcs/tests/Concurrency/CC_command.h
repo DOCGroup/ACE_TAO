@@ -79,11 +79,11 @@ class CC_Start_Cmd : public CC_Command
   CC_Start_Cmd (const char *config_file_name);
 
   /// Destructor
-  virtual ~CC_Start_Cmd();
+  ~CC_Start_Cmd() override;
 
   /// Start the child process. The current version does not wait for the
   /// process to terminate.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name of the script file
@@ -106,11 +106,11 @@ class CC_CreateLockSet_Cmd : public CC_Command
   CC_CreateLockSet_Cmd (const char *lock_set_name);
 
   /// Destructor
-  virtual ~CC_CreateLockSet_Cmd ();
+  ~CC_CreateLockSet_Cmd () override;
 
   /// Executes the command, i.e. creates the lock set and binds the name
   /// in the naming service.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name used to bind in the naming service.
@@ -133,11 +133,11 @@ class CC_Lock_Cmd:public CC_Command
               CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
-  virtual ~CC_Lock_Cmd();
+  ~CC_Lock_Cmd() override;
 
   /// Executes the command, i.e. looks up the lock set with the requested
   /// name in the naming server and executes the lock command on that lock set.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name to look up in the naming service.
@@ -163,14 +163,14 @@ class CC_UnLock_Cmd:public CC_Command
                 CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
-  virtual ~CC_UnLock_Cmd();
+  ~CC_UnLock_Cmd() override;
 
   /**
    * Executes the command, i.e. looks up the lock set with the requested
    * name in the naming server and executes the unlock command on that
    * lock set.
    */
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name to look up in the naming service.
@@ -196,14 +196,14 @@ class CC_TryLock_Cmd:public CC_Command
                  CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
-  virtual ~CC_TryLock_Cmd();
+  ~CC_TryLock_Cmd() override;
 
   /**
    * Executes the command, i.e. looks up the lock set with the requested
    * name in the naming server and executes the try_lock command on that
    * lock set.
    */
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name to look up in the naming service.
@@ -230,14 +230,14 @@ class CC_ChangeMode_Cmd:public CC_Command
                      CosConcurrencyControl::lock_mode new_mode);
 
   /// Destructor
-  virtual ~CC_ChangeMode_Cmd();
+  ~CC_ChangeMode_Cmd() override;
 
   /**
    * Executes the command, i.e. looks up the lock set with the requested
    * name in the naming server and executes the change_mode command on that
    * lock set.
    */
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name to look up in the naming service.
@@ -266,10 +266,10 @@ class CC_Sleep_Cmd:public CC_Command
   CC_Sleep_Cmd(int seconds);
 
   /// Destructor.
-  virtual ~CC_Sleep_Cmd();
+  ~CC_Sleep_Cmd() override;
 
   /// Executes the command.
-  virtual int execute();
+  int execute() override;
 
  private:
   /// The number of seconds to sleep
@@ -292,10 +292,10 @@ class CC_Repeat_Cmd:public CC_Command
   CC_Repeat_Cmd(int times);
 
   /// Destructor.
-  virtual ~CC_Repeat_Cmd();
+  ~CC_Repeat_Cmd() override;
 
   /// Executes the command.
-  virtual int execute();
+  int execute() override;
  private:
   /// The number of times the commands should be repeated
   int times_;
@@ -317,10 +317,10 @@ class CC_Wait_Cmd:public CC_Command
   CC_Wait_Cmd (const char *prompt);
 
   /// Destructor.
-  virtual ~CC_Wait_Cmd();
+  ~CC_Wait_Cmd() override;
 
   /// Executes the command.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The prompt to print on the screen
@@ -343,14 +343,14 @@ class CC_Excep_Cmd : public CC_Command
   CC_Excep_Cmd (const char *excep);
 
   /// Destructor.
-  virtual ~CC_Excep_Cmd();
+  ~CC_Excep_Cmd() override;
 
   /**
    * Executes the command. Checks to see if the excep_ class variable is set,
    * and if that's the case check that it is of the expected type. If not the
    * test fails.
    */
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The string representation of the expected exception
@@ -372,10 +372,10 @@ class CC_Dummy_Cmd: public CC_Command
   CC_Dummy_Cmd();
 
   /// Destructor.
-  virtual ~CC_Dummy_Cmd();
+  ~CC_Dummy_Cmd() override;
 
   /// Executes the command, i.e. does nothing.
-  virtual int execute();
+  int execute() override;
 
  private:
 };
@@ -395,10 +395,10 @@ public:
   CC_Print_Cmd (const char *message);
 
   /// Destructor.
-  virtual ~CC_Print_Cmd();
+  ~CC_Print_Cmd() override;
 
   /// Executes the command.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// Holds the message to print
@@ -421,11 +421,11 @@ public:
   CC_Lookup_Cmd (const char *lock_set_name);
 
   /// Destructor
-  virtual ~CC_Lookup_Cmd();
+  ~CC_Lookup_Cmd() override;
 
   /// Executes the command, i.e. looks up the lock set with the requested
   /// name in the naming server and sets the cc_lockset_ variable.
-  virtual int execute();
+  int execute() override;
 
 private:
   /// The name to look up in the naming service.

@@ -52,7 +52,7 @@ public:
   TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
-  TAO_Queued_Data (const TAO_Queued_Data &qd);
+  TAO_Queued_Data (TAO_Queued_Data const &qd);
 
   /// Creation of a node in the queue.
   static TAO_Queued_Data* make_queued_data (
@@ -108,6 +108,10 @@ public:
   const TAO_GIOP_Message_State& state () const;
 
 private:
+  TAO_Queued_Data &operator= (TAO_Queued_Data const &) = delete;
+  TAO_Queued_Data (TAO_Queued_Data &&) = delete;
+  TAO_Queued_Data &operator= (TAO_Queued_Data &&) = delete;
+
   /// The message block that contains the message.
   ACE_Message_Block *msg_block_ {};
 

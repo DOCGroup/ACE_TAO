@@ -18,7 +18,7 @@
 
 // ****************************************************************
 
-typedef ACE_CDR::UShort ACE_UTF16_T;
+using ACE_UTF16_T = ACE_CDR::UShort;
 static constexpr size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
 static constexpr ACE_CDR::ULong ACE_UL_UTF16_CODEPOINT_SIZE = static_cast<ACE_CDR::ULong>(ACE_UTF16_CODEPOINT_SIZE);
 static constexpr unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
@@ -156,7 +156,7 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
       x[0] = '\x00';
       return 1;
     }
-  x = 0;
+  x = nullptr;
   return 0;
 }
 
@@ -381,7 +381,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
                                          const ACE_CDR::WChar *x)
 {
   // we'll accept a null pointer but only for an empty string
-  ACE_ASSERT ((x != 0 || len == 0) &&
+  ACE_ASSERT ((x != nullptr || len == 0) &&
               len < (ACE_UINT32_MAX - 1) / ACE_UL_UTF16_CODEPOINT_SIZE);
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
@@ -395,7 +395,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
           ACE_CDR::ULong l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_SWAPPED) &&
-              x != 0)
+              x != nullptr)
             return this->write_swapped_wchar_array_i (cdr, x, len);
         }
       else
@@ -403,7 +403,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
           ACE_CDR::ULong l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_CORRECT) &&
-              x != 0)
+              x != nullptr)
             return this->write_wchar_array_i (cdr, x, len);
         }
     }
@@ -414,7 +414,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
 
       if (this->write_4 (cdr, &l))
         {
-          if (x != 0)
+          if (x != nullptr)
             {
               return this->write_wchar_array_i (cdr, x, len + 1);
             }

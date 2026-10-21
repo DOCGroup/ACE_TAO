@@ -74,8 +74,8 @@ public:
   /// Close all open acceptors.
   int close_all ();
 
-  typedef ACE_Unbounded_Queue<Entry> Acceptor_Registry;
-  typedef ACE_Unbounded_Queue_Iterator<Entry> Acceptor_Registry_Iterator;
+  using Acceptor_Registry = ACE_Unbounded_Queue<Entry>;
+  using Acceptor_Registry_Iterator = ACE_Unbounded_Queue_Iterator<Entry>;
 
 protected:
   /// Helper function to open a group acceptor.

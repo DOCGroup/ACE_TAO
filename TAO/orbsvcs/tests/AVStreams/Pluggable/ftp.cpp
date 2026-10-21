@@ -39,11 +39,12 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *,
 Client::Client ()
   :client_mmdevice_ (&endpoint_strategy_),
    count_ (0),
-   address_ (0),
-   peer_addr_str_ (0),
-   fp_ (0),
+   address_ (nullptr),
+   peer_addr_str_ (nullptr),
+   fp_ (nullptr),
    protocol_ (ACE_OS::strdup ("UDP")),
-   frame_rate_ (30)
+   frame_rate_ (30),
+   protocol_object_ (nullptr)
 {
   this->mb.size (BUFSIZ);
 }

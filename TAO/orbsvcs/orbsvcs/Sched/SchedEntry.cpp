@@ -21,7 +21,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Task_Entry::Task_Entry ()
-  : rt_info_ (0),
+  : rt_info_ (nullptr),
     effective_period_(0),
     dfs_status_ (NOT_VISITED),
     discovered_ (-1),
@@ -40,15 +40,15 @@ Task_Entry::~Task_Entry ()
   rt_info_->volatile_token = 0;
 
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter(calls_);
-  Task_Entry_Link **link = 0;
+  Task_Entry_Link **link = nullptr;
 
   // Iterate through the "calls" set of Task Entry Links and free each one
 
   for (iter.first ();
        ! iter.done ();
-       iter.advance (), link = 0)
+       iter.advance (), link = nullptr)
     {
-      if (iter.next (link) != 0 && link != 0 && *link != 0)
+      if (iter.next (link) != 0 && link != nullptr && *link != nullptr)
         {
           // remove the link object pointer from the calling entry's
           // "callers" set and destroy the link object
@@ -152,8 +152,8 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
       Task_Entry_Link **link;
 
       if (iter.next (link) == 0
-          || link == 0
-          || *link == 0
+          || link == nullptr
+          || *link == nullptr
           || (*link)->dependency_type () == dt)
         return -1;
     }
@@ -182,8 +182,8 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
       Task_Entry_Link **link;
 
       if (iter.next (link) == 0
-          || link == 0
-          || *link == 0)
+          || link == nullptr
+          || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given
@@ -279,8 +279,8 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
       Task_Entry_Link **link;
 
       if (dep_iter.next (link) == 0
-          || link == 0
-          || *link == 0)
+          || link == nullptr
+          || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
@@ -359,8 +359,8 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
     {
       Task_Entry_Link **link;
       if (dep_iter.next (link) == 0
-          || link == 0
-          || *link == 0)
+          || link == nullptr
+          || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
@@ -420,8 +420,8 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           // Obtain a pointer to the current dispatch proxy iterator.
           Dispatch_Proxy_Iterator **proxy_iter;
           if (conj_set_iter.next (proxy_iter) == 0
-              || proxy_iter == 0
-              || *proxy_iter == 0)
+              || proxy_iter == nullptr
+              || *proxy_iter == nullptr)
             return -1;
 
           // Use latest arrival, latest deadline, lowest priority (0 is highest).
@@ -854,7 +854,7 @@ Dispatch_Proxy_Iterator::arrival () const
   Dispatch_Entry_Link *link;
   if (iter_.done ()
       || iter_.next(link) == 0
-      || link == 0)
+      || link == nullptr)
     return 0;
 
   // Just use low 32 bits of arrival.  This will have to change when
@@ -871,7 +871,7 @@ Dispatch_Proxy_Iterator::deadline () const
   Dispatch_Entry_Link *link;
   if (iter_.done ()
       || iter_.next(link) == 0
-      || link == 0)
+      || link == nullptr)
     return 0;
 
   // Just use low 32 bits of deadline.  This will have to change when
@@ -889,7 +889,7 @@ Dispatch_Proxy_Iterator::priority () const
 
   if (iter_.done ()
       || iter_.next(link) == 0
-      || link == 0)
+      || link == nullptr)
     return 0;
 
   return link->dispatch_entry ().priority ();
@@ -903,7 +903,7 @@ Dispatch_Proxy_Iterator::OS_priority () const
   Dispatch_Entry_Link *link;
   if (iter_.done ()
       || iter_.next(link) == 0
-      || link == 0)
+      || link == nullptr)
     return 0;
 
   return link->dispatch_entry ().OS_priority ();

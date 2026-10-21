@@ -50,14 +50,14 @@ namespace TAO
 
   class TAO_PortableGroup_Export PG_Properties_Support
   {
-    typedef ACE_Hash_Map_Manager<
+    using Properties_Map = ACE_Hash_Map_Manager<
       ACE_CString,
       ::TAO::PG_Property_Set_var,
-      TAO_SYNCH_MUTEX> Properties_Map;
-    typedef ACE_Hash_Map_Iterator<
+      TAO_SYNCH_MUTEX>;
+    using Properties_Map_Iterator = ACE_Hash_Map_Iterator<
       ACE_CString,
       ::TAO::PG_Property_Set_var,
-      TAO_SYNCH_MUTEX> Properties_Map_Iterator;
+      TAO_SYNCH_MUTEX>;
 
   public:
     PG_Properties_Support ();

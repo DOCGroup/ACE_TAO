@@ -228,7 +228,7 @@ ACE_UTF32_Encoding_Converter::encoded (const ACE_Byte* source,
   constexpr size_t converted = begin * 4;
 
   ACE_Byte target[converted];
-  ACE_UTF32_Encoding_Converter* converter = 0;
+  ACE_UTF32_Encoding_Converter* converter = nullptr;
   ACE_NEW_RETURN (converter,
                   ACE_UTF32_Encoding_Converter (false),
                   0);

@@ -10,7 +10,7 @@ public:
     : service_ (service)
   {
   }
-  virtual int svc ()
+  int svc () override
   {
     // Block until service_.fini () calls orb->destroy ()
     this->service_.run ();
@@ -38,7 +38,7 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
         return -1;
 
       // Create a thread in which to run the service
-      ACE_ASSERT(this->runner_.get () == 0);
+      ACE_ASSERT (this->runner_.get () == nullptr);
       this->runner_.reset(new ImR_Locator_ORB_Runner (*this));
       this->runner_->activate ();
     }
@@ -52,13 +52,13 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
 int
 ImR_Locator_Loader::fini ()
 {
-  ACE_ASSERT(this->runner_.get () != 0);
+  ACE_ASSERT (this->runner_.get () != nullptr);
   try
     {
       int ret = this->service_.fini ();
 
       this->runner_->wait ();
-      this->runner_.reset (0);
+      this->runner_.reset (nullptr);
       return ret;
     }
   catch (const CORBA::Exception&)

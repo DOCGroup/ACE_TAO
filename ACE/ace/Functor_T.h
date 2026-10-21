@@ -67,7 +67,7 @@ public:
   ~ACE_Command_Callback () override = default;
 
   /// Invokes the method @c action_ from the object @c receiver_.
-  int execute (void *arg = 0) override;
+  int execute (void *arg = nullptr) override;
 
   ACE_ALLOC_HOOK_DECLARE;
 

@@ -18,9 +18,9 @@ public:
   Test_interfaceOne_i ();
 
   // Destructor
-  virtual ~Test_interfaceOne_i ();
+  ~Test_interfaceOne_i () override;
 
-  virtual void getstruct (::Test::structOne_out tester);
+  void getstruct (::Test::structOne_out tester) override;
 };
 
 

@@ -1,10 +1,21 @@
 #include "testC.h"
-class  MyTestValuetypeFactory : public TestValuetype_init {
+
+class MyTestValuetypeFactory : public TestValuetype_init
+{
 public:
-  virtual TestValuetype* create (::CORBA::Boolean, ::CORBA::Short) {return 0;};
-  virtual TAO_OBV_CREATE_RETURN_TYPE (TestValuetype) create_for_unmarshal () {return 0;};
+  MyTestValuetypeFactory () = default;
+  MyTestValuetypeFactory (MyTestValuetypeFactory const &) = delete;
+  MyTestValuetypeFactory &operator= (MyTestValuetypeFactory const &) = delete;
+  MyTestValuetypeFactory (MyTestValuetypeFactory &&) = delete;
+  MyTestValuetypeFactory &operator= (MyTestValuetypeFactory &&) = delete;
+
+  TestValuetype *create (::CORBA::Boolean, ::CORBA::Short) override { return nullptr; }
+  TAO_OBV_CREATE_RETURN_TYPE (TestValuetype) create_for_unmarshal () override { return nullptr; }
 };
-int ACE_TMAIN (int, ACE_TCHAR *[]) {
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
   MyTestValuetypeFactory myFactory;
   return 0;
 }

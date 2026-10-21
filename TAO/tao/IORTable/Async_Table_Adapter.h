@@ -32,20 +32,26 @@ public:
   TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_Async_Table_Adapter ();
+  ~TAO_Async_Table_Adapter () override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open ();
+  void open () override;
 
-  virtual int dispatch (TAO::ObjectKey &key,
-                        TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to);
+  int dispatch (TAO::ObjectKey &key,
+                TAO_ServerRequest &request,
+                CORBA::Object_out foward_to) override;
 
 protected:
   /// Helper method to find an object bound in the table.
   void find_object (::IORTable::Locate_ResponseHandler rh,
                     TAO::ObjectKey &key);
+
+private:
+  TAO_Async_Table_Adapter (TAO_Async_Table_Adapter const &) = delete;
+  TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter const &) = delete;
+  TAO_Async_Table_Adapter (TAO_Async_Table_Adapter &&) = delete;
+  TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter &&) = delete;
 };
 
 // ****************************************************************
@@ -59,7 +65,13 @@ public:
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
+  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
+
+private:
+  TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory const &) = delete;
+  TAO_Async_Table_Adapter_Factory &operator= (TAO_Async_Table_Adapter_Factory const &) = delete;
+  TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory &&) = delete;
+  TAO_Async_Table_Adapter_Factory &operator= (TAO_Async_Table_Adapter_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,9 +6,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_NotifyLogNotification::TAO_NotifyLogNotification (
-  CosNotifyChannelAdmin::EventChannel_ptr ec)
+  CosNotifyChannelAdmin::EventChannel_ptr event_channel)
   : TAO_LogNotification (),
-    event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
+    event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (event_channel))
 {
   CosNotifyComm::PushSupplier_var objref =
     this->_this ();
@@ -40,15 +40,15 @@ TAO_NotifyLogNotification::~TAO_NotifyLogNotification ()
 }
 
 void
-TAO_NotifyLogNotification::send_notification (const CORBA::Any& any)
+TAO_NotifyLogNotification::send_notification (CORBA::Any const & any)
 {
   this->proxy_consumer_->push (any);
 }
 
 void
 TAO_NotifyLogNotification::subscription_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */)
+   (CosNotification::EventTypeSeq const & /*added*/,
+    CosNotification::EventTypeSeq const & /*removed */)
 {
   //No-Op.
 }

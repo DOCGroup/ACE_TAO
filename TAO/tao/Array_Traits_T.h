@@ -21,10 +21,10 @@ namespace details
 template <typename T_forany>
 struct array_traits
 {
-  typedef T_forany forany_type;
-  typedef typename T_forany::_array_type value_type;
-  typedef typename T_forany::_array_type const const_value_type;
-  typedef typename T_forany::_slice_type slice_type;
+  using forany_type = T_forany;
+  using value_type = typename T_forany::_array_type;
+  using const_value_type = typename T_forany::_array_type const;
+  using slice_type = typename T_forany::_slice_type;
 
   inline static void copy (slice_type * _tao_to, const slice_type * _tao_from)
   {

@@ -32,20 +32,18 @@ TAO::FT_Property_Validator::FT_Property_Validator ()
 }
 
 
-TAO::FT_Property_Validator::~FT_Property_Validator ()
-{
-}
+TAO::FT_Property_Validator::~FT_Property_Validator () = default;
 
 
 void
 TAO::FT_Property_Validator::validate_property (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   const CORBA::ULong len = props.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      const PortableGroup::Property & property = props[i];
+      PortableGroup::Property const & property = props[i];
 
       if (property.nam == this->replication_style_)
         {
@@ -95,7 +93,7 @@ TAO::FT_Property_Validator::validate_property (
         }
       else if (property.nam == this->factories_)
         {
-          const PortableGroup::FactoriesValue * factories;
+          PortableGroup::FactoriesValue const * factories = nullptr;
           if (!(property.val >>= factories))
             throw PortableGroup::InvalidProperty (property.nam, property.val);
           else
@@ -109,7 +107,7 @@ TAO::FT_Property_Validator::validate_property (
 
               for (CORBA::ULong j = 0; j < flen; ++j)
                 {
-                  const PortableGroup::FactoryInfo & factory_info =
+                  PortableGroup::FactoryInfo const & factory_info =
                     (*factories)[j];
 
                   if (CORBA::is_nil (factory_info.the_factory.in ())
@@ -125,7 +123,7 @@ TAO::FT_Property_Validator::validate_property (
 
 void
 TAO::FT_Property_Validator::validate_criteria (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   const CORBA::ULong len = props.length ();
   PortableGroup::Criteria invalid_criteria;
@@ -139,7 +137,7 @@ TAO::FT_Property_Validator::validate_criteria (
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      const PortableGroup::Property & property = props[i];
+      PortableGroup::Property const & property = props[i];
       CORBA::Long value;
 
       if (!(property.val >>= value))
@@ -184,7 +182,7 @@ TAO::FT_Property_Validator::validate_criteria (
         }
         else if (property.nam == this->factories_)
         {
-          const PortableGroup::FactoriesValue * factories = 0;
+          PortableGroup::FactoriesValue const * factories = nullptr;
           if (!(property.val >>= factories))
             invalid_criteria[p++] = property;
           else
@@ -197,7 +195,7 @@ TAO::FT_Property_Validator::validate_criteria (
                 {
                   for (CORBA::ULong j = 0; j < flen; ++j)
                     {
-                      const PortableGroup::FactoryInfo & factory_info =
+                      PortableGroup::FactoryInfo const & factory_info =
                         (*factories)[j];
 
                       if (CORBA::is_nil (factory_info.the_factory.in ())

@@ -37,10 +37,15 @@ class Notify_Logging_Service
   Notify_Logging_Service ();
   // Constructor.
 
-  virtual ~Notify_Logging_Service ();
+  ~Notify_Logging_Service () override;
   // Destructor.
 
-  int init (int argc, ACE_TCHAR *argv[]);
+  Notify_Logging_Service (Notify_Logging_Service const &) = delete;
+  Notify_Logging_Service (Notify_Logging_Service &&) = delete;
+  Notify_Logging_Service &operator= (Notify_Logging_Service const &) = delete;
+  Notify_Logging_Service &operator= (Notify_Logging_Service &&) = delete;
+
+  int init (int argc, ACE_TCHAR * argv[]);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -53,26 +58,26 @@ class Notify_Logging_Service
   // Returns 0 on success, -1 on error.
 
 protected:
-  int init_ORB (int& argc, ACE_TCHAR *argv []);
+  int init_ORB (int & argc, ACE_TCHAR * argv []);
   // initialize the ORB.
 
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
   // Parses the command line arguments.
 
   void resolve_naming_service ();
   // Resolve the naming service.
 
-  int svc ();
+  int svc () override;
   // Run worker threads.
 
   // = Data members
 
-  TAO_Notify_Service* notify_service_;
+  TAO_Notify_Service * notify_service_;
 
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
   // The Factory.
 
-  TAO_NotifyLogFactory_i *notify_log_factory_;
+  TAO_NotifyLogFactory_i * notify_log_factory_;
   // The Notify Log Factory.
 
   CORBA::ORB_var orb_;
@@ -87,10 +92,10 @@ protected:
   ACE_CString service_name_;
   // The name we use to bind with the NameService
 
-  const ACE_TCHAR* ior_file_name_;
+  ACE_TCHAR const * ior_file_name_;
   // The name of the file where we output the factory IOR.
 
-  const ACE_TCHAR* pid_file_name_;
+  ACE_TCHAR const * pid_file_name_;
   // The name of the file where we output the process id.
 
   bool bind_to_naming_service_;

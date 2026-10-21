@@ -32,13 +32,13 @@ namespace TAO
   namespace TypeCodeFactory
   {
     struct TC_Info;
-    typedef ACE_Array_Base<TC_Info> TC_Info_List;
+    using TC_Info_List = ACE_Array_Base<TC_Info>;
 
-    typedef bool (*factory) (CORBA::TCKind,
-                             TAO_InputCDR &,
-                             CORBA::TypeCode_ptr &,
-                             TC_Info_List &,
-                             TC_Info_List &);
+    using factory = bool (*) (CORBA::TCKind,
+                              TAO_InputCDR &,
+                              CORBA::TypeCode_ptr &,
+                              TC_Info_List &,
+                              TC_Info_List &);
 
     bool tc_null_factory       (CORBA::TCKind kind,
                                 TAO_InputCDR & cdr,

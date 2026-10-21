@@ -30,6 +30,12 @@ namespace TAO
     class ThreadStrategyORBControl : public ThreadStrategy
     {
     public:
+      ThreadStrategyORBControl () = default;
+      ThreadStrategyORBControl (ThreadStrategyORBControl const &) = delete;
+      ThreadStrategyORBControl &operator= (ThreadStrategyORBControl const &) = delete;
+      ThreadStrategyORBControl (ThreadStrategyORBControl &&) = delete;
+      ThreadStrategyORBControl &operator= (ThreadStrategyORBControl &&) = delete;
+
       int enter () override;
 
       int exit () override;

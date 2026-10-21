@@ -25,8 +25,8 @@
 
 Concurrency_Service::Concurrency_Service ()
   : use_naming_service_ (1),
-    ior_file_name_ (0),
-    pid_file_name_ (0)
+    ior_file_name_ (nullptr),
+    pid_file_name_ (nullptr)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
              ACE_TEXT("Concurrency_Service::Concurrency_Service ()\n")));
@@ -35,7 +35,7 @@ Concurrency_Service::Concurrency_Service ()
 // Constructor taking command-line arguments.
 
 Concurrency_Service::Concurrency_Service (int argc,
-                                          ACE_TCHAR** argv)
+                                          ACE_TCHAR **argv)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Concurrency_Service::Concurrency_Service (...)\n")));
@@ -43,7 +43,7 @@ Concurrency_Service::Concurrency_Service (int argc,
 }
 
 int
-Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
+Concurrency_Service::parse_args (int argc, ACE_TCHAR **argv)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Concurrency_Service::parse_args\n")));
@@ -113,10 +113,10 @@ Concurrency_Service::init (int argc,
               "The IOR is: <%C>\n",
               str.in ()));
 
-  if (this->ior_file_name_ != 0)
+  if (this->ior_file_name_ != nullptr)
     {
       FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
-      if (iorf == 0)
+      if (iorf == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
@@ -128,10 +128,10 @@ Concurrency_Service::init (int argc,
       ACE_OS::fclose (iorf);
     }
 
-  if (this->pid_file_name_ != 0)
+  if (this->pid_file_name_ != nullptr)
     {
       FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
-      if (pidf != 0)
+      if (pidf != nullptr)
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",

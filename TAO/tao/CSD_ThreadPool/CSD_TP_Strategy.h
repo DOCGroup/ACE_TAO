@@ -33,7 +33,7 @@ namespace TAO
   namespace CSD
   {
     class TP_Strategy;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Strategy> TP_Strategy_Handle;
+    using TP_Strategy_Handle = TAO_Intrusive_Ref_Count_Handle<TP_Strategy>;
 
     class TP_Custom_Request_Operation;
 
@@ -60,7 +60,7 @@ namespace TAO
                   bool     serialize_servants = true);
 
       /// Virtual Destructor.
-      virtual ~TP_Strategy();
+      ~TP_Strategy() override;
 
       /// Set the number of threads in the pool (must be > 0).
       void set_num_threads(Thread_Counter num_threads);
@@ -105,46 +105,51 @@ namespace TAO
       /// This will cause a new "request" object to be created and pushed
       /// on to a "request queue".  The worker threads are responsible for
       /// servicing the queue, and performing the actual dispatch logic.
-      virtual Strategy_Base::DispatchResult dispatch_remote_request_i
+      Strategy_Base::DispatchResult dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
-                              PortableServer::Servant         servant);
+                              PortableServer::Servant         servant) override;
 
       /// Handle the dispatching of a collocated request.
       ///
       /// This will cause a new "request" object to be created and pushed
       /// on to a "request queue".  The worker threads are responsible for
       /// servicing the queue, and performing the actual dispatch logic.
-      virtual Strategy_Base::DispatchResult dispatch_collocated_request_i
+      Strategy_Base::DispatchResult dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
-                              PortableServer::Servant         servant);
+                              PortableServer::Servant         servant) override;
 
       /// Event - The POA has been activated.
       /// This will activate the worker thread(s).
       /// Returns true if the worker threads were activated successfully.
       /// Otherwise, returns false.
-      virtual bool poa_activated_event_i(TAO_ORB_Core& orb_core);
+      bool poa_activated_event_i(TAO_ORB_Core& orb_core) override;
 
       /// Event - The POA has been deactivated.
       /// This will shutdown the worker thread(s).
-      virtual void poa_deactivated_event_i();
+      void poa_deactivated_event_i() override;
 
       /// Event - A servant has been activated
-      virtual void servant_activated_event_i
+      void servant_activated_event_i
                                      (PortableServer::Servant servant,
-                                      const PortableServer::ObjectId& oid);
+                                      const PortableServer::ObjectId& oid) override;
 
       /// Event - A servant has been deactivated
-      virtual void servant_deactivated_event_i
+      void servant_deactivated_event_i
                                     (PortableServer::Servant servant,
-                                     const PortableServer::ObjectId& oid);
+                                     const PortableServer::ObjectId& oid) override;
 
     private:
+      TP_Strategy (TP_Strategy const &) = delete;
+      TP_Strategy &operator= (TP_Strategy const &) = delete;
+      TP_Strategy (TP_Strategy &&) = delete;
+      TP_Strategy &operator= (TP_Strategy &&) = delete;
+
       /**
       * Helper method that is responsible for looking up the servant
       * state object in the servant state map *if* the "serialize

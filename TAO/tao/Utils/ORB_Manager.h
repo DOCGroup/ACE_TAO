@@ -66,7 +66,7 @@ public:
    */
   int init (int &argc,
             ACE_TCHAR *argv[],
-            const char *orb_name = 0);
+            const char *orb_name = nullptr);
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -80,7 +80,7 @@ public:
   int init_child_poa (int &argc,
                       ACE_TCHAR *argv[],
                       const char *poa_name,
-                      const char *orb_name = 0);
+                      const char *orb_name = nullptr);
 #endif /* CORBA_E_MICRO */
 
   /**
@@ -220,6 +220,12 @@ protected:
 
   /// The POA manager of poa_.
   PortableServer::POAManager_var poa_manager_;
+
+ private:
+  TAO_ORB_Manager (TAO_ORB_Manager const &) = delete;
+  TAO_ORB_Manager &operator= (TAO_ORB_Manager const &) = delete;
+  TAO_ORB_Manager (TAO_ORB_Manager &&) = delete;
+  TAO_ORB_Manager &operator= (TAO_ORB_Manager &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

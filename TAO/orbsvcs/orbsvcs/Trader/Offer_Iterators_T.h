@@ -41,16 +41,16 @@ class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
 public:
   /// Takes service type and trader reference in order to
   /// later locate offers using their ids.
-  TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
-                               const TAO_Property_Filter& pfilter);
+  TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE>& db,
+                               TAO_Property_Filter const& pfilter);
 
   /// Destructor.
-  virtual ~TAO_Register_Offer_Iterator ();
+  ~TAO_Register_Offer_Iterator () override;
 
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
-  virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers);
+  CORBA::Boolean next_n (CORBA::ULong n,
+                         CosTrading::OfferSeq_out offers) override;
 
   /**
    * Throws CosTrading::UnknownMaxLeft since with the presence of
@@ -58,13 +58,18 @@ public:
    * the trader will have all the offers it has now when the time
    * to return them comes.
    */
-  virtual CORBA::ULong max_left ();
+  CORBA::ULong max_left () override;
 
   /// Add an offer the iterator should iterate over.
   void add_offer (CosTrading::OfferId id,
-                  const CosTrading::Offer *);
+                  CosTrading::Offer const*) override;
 
 private:
+  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator const&) = delete;
+  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator const&) = delete;
+  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator&&) = delete;
+  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator&&) = delete;
+
   /// A reference to the trader is needed for access to the map of offers.
   TAO_Offer_Database<MAP_LOCK_TYPE> &db_;
 

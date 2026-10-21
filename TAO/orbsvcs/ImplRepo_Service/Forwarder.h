@@ -43,7 +43,7 @@ class ImR_Locator_i;
 // forward declare the types used to manage AMH/DSI coupling
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_AMH_DSI_Response_Handler;
-typedef TAO_AMH_DSI_Response_Handler * TAO_AMH_DSI_Response_Handler_ptr;
+using TAO_AMH_DSI_Response_Handler_ptr = TAO_AMH_DSI_Response_Handler*;
 class TAO_AMH_DSI_Response_Handler_var;
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -55,10 +55,10 @@ public:
                         CORBA::ORB_ptr orb,
                         TAO_AMH_DSI_Response_Handler_ptr resp);
 
-  virtual ~ImR_DSI_ResponseHandler ();
+  ~ImR_DSI_ResponseHandler () override;
 
-  void send_ior (const char *pior);
-  void send_exception (CORBA::Exception *ex);
+  void send_ior (char const* pior) override;
+  void send_exception (CORBA::Exception *ex) override;
 
 private:
   void invoke_excep_i (CORBA::Exception *ex);
@@ -85,15 +85,15 @@ class Locator_Export ImR_DSI_Forwarder : public virtual TAO_DynamicImplementatio
 {
 public:
   ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
-  virtual ~ImR_DSI_Forwarder ();
+  ~ImR_DSI_Forwarder () override;
 
-  virtual void _dispatch (TAO_ServerRequest& request,
-                          TAO::Portable_Server::Servant_Upcall *context);
+  void _dispatch (TAO_ServerRequest& request,
+                  TAO::Portable_Server::Servant_Upcall *context) override;
 
-  void invoke (CORBA::ServerRequest_ptr request);
+  void invoke (CORBA::ServerRequest_ptr request) override;
 
-  char * _primary_interface(const PortableServer::ObjectId&,
-                            PortableServer::POA_ptr);
+  char* _primary_interface (PortableServer::ObjectId const&,
+                            PortableServer::POA_ptr) override;
 
   void invoke (CORBA::ServerRequest_ptr request,
                TAO_AMH_DSI_Response_Handler_ptr rh);

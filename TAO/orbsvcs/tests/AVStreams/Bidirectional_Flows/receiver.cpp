@@ -2,13 +2,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-static FILE *output_file = 0;
+static FILE *output_file = nullptr;
 // File handle of the file into which received data is written.
 
-static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
+static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
-typedef ACE_Unmanaged_Singleton<Receiver,ACE_Null_Mutex> RECEIVER;
+using RECEIVER = ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>;
 //Create a singleton instance of the receiver.
 
 int
@@ -52,7 +52,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               "Receiver_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
       size_t result =
@@ -131,18 +131,17 @@ Receiver_Callback::handle_destroy ()
 }
 
 Receiver::Receiver ()
-  : mmdevice_ (0),
+  : mmdevice_ (nullptr),
     frame_rate_ (30),
-    input_file_ (0),
+    protocol_object_ (nullptr),
+    input_file_ (nullptr),
     frame_count_ (0),
     filename_ ("input"),
     mb_ (BUFSIZ)
 {
 }
 
-Receiver::~Receiver ()
-{
-}
+Receiver::~Receiver () = default;
 
 void
 Receiver::protocol_object (TAO_AV_Protocol_Object *object)
@@ -203,7 +202,7 @@ Receiver::init (int argc,
   this->input_file_ =
     ACE_OS::fopen (this->filename_.c_str (), "r");
 
-  if (this->input_file_ == 0)
+  if (this->input_file_ == nullptr)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
                        this->filename_.c_str ()),
@@ -284,7 +283,7 @@ ACE_TMAIN (int argc,
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
                                    "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),

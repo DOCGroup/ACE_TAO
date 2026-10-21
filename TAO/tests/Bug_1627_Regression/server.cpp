@@ -4,8 +4,8 @@
 
 #include "tao/IORTable/IORTable.h"
 
-const ACE_TCHAR *object_key = 0;
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
+ACE_TCHAR const *object_key = nullptr;
+ACE_TCHAR const *ior_output_file = ACE_TEXT("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -77,11 +77,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in ());
 
-      adapter->bind("Name-with-hyphens", ior.in());
+      adapter->bind ("Name-with-hyphens", ior.in ());
 
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
          ACE_ERROR_RETURN ((LM_ERROR,
                                "SERVER (%P): Cannot open output file "
                                "for writing IOR: %s",
@@ -94,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "SERVER (%P): Activated as file://%s\n",
                       ior_output_file));
 
-      poa_manager->activate();
+      poa_manager->activate ();
 
       orb->run ();
 

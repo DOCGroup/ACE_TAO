@@ -20,8 +20,8 @@ namespace TAO
 {
   FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor ()
     : name_ ("TAO_FT_ClientRequest_Interceptor")
-      , uuid_ (0)
-      , lock_ (0)
+      , uuid_ (nullptr)
+      , lock_ (nullptr)
       , retention_id_ (0)
       , ft_send_extended_sc_ (false)
   {
@@ -258,8 +258,8 @@ namespace TAO
           sc.context_data.length (length);
           CORBA::Octet *buf = sc.context_data.get_buffer ();
 
-          for (const ACE_Message_Block *i = ocdr.begin ();
-            i != 0;
+          for (ACE_Message_Block const* i = ocdr.begin ();
+            i != nullptr;
             i = i->cont ())
           {
             ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
@@ -267,7 +267,7 @@ namespace TAO
           }
         }
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0);
+      ri->add_request_service_context (sc, false);
     }
     catch (const CORBA::Exception&)
     {
@@ -332,8 +332,8 @@ namespace TAO
       sc.context_data.length (length);
       CORBA::Octet *buf = sc.context_data.get_buffer ();
 
-      for (const ACE_Message_Block *i = ocdr.begin ();
-        i != 0;
+      for (ACE_Message_Block const* i = ocdr.begin ();
+        i != nullptr;
         i = i->cont ())
       {
         ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
@@ -341,7 +341,7 @@ namespace TAO
       }
 
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0);
+      ri->add_request_service_context (sc, false);
     }
     catch (const CORBA::Exception&)
     {
@@ -354,7 +354,7 @@ namespace TAO
   {
     FT::RequestDurationPolicy_var p;
 
-    if (policy != 0)
+    if (policy != nullptr)
       {
         p =  FT::RequestDurationPolicy::_narrow (policy);
       }

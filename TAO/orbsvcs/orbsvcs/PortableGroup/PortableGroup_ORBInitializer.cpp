@@ -34,7 +34,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
     }
 
   // Set a new request dispatcher in the ORB.
-  PortableGroup_Request_Dispatcher *rd = 0;
+  PortableGroup_Request_Dispatcher *rd = nullptr;
   ACE_NEW_THROW_EX (rd,
                     PortableGroup_Request_Dispatcher (),
                     CORBA::NO_MEMORY (

@@ -60,48 +60,52 @@ public:
                     PortableServer::POA_ptr log_poa,
                     TAO_LogMgr_i &logmgr_i,
                     DsLogAdmin::LogMgr_ptr factory,
-                    TAO_LogNotification *log_notifier,
+                    TAO_LogNotification * log_notifier,
                     DsLogAdmin::LogId id);
 
   /// Destructor.
-  ~TAO_RTEventLog_i ();
+  ~TAO_RTEventLog_i () override;
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
+  DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId & id) override;
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void destroy ();
+  void destroy () override;
 
   /// Activate the RTEventLog.
   void activate ();
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
-  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
+  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
+  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
-  virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr);
-  virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle);
+  RtecEventChannelAdmin::Observer_Handle append_observer (
+    RtecEventChannelAdmin::Observer_ptr) override;
+  void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
  private:
   /// The EventChannel used.
-  TAO_EC_Event_Channel *event_channel_;
+  TAO_EC_Event_Channel * event_channel_;
 
   /// The LogConsumer which logs the events the EventChannel above
   /// receives.
-  TAO_Rtec_LogConsumer *my_log_consumer_;
+  TAO_Rtec_LogConsumer * my_log_consumer_;
 
   /// The observer strategy
-  TAO_EC_ObserverStrategy *observer_strategy_;
+  TAO_EC_ObserverStrategy * observer_strategy_;
 
   PortableServer::POA_var poa_;
 
   PortableServer::POA_var log_poa_;
+
+  TAO_RTEventLog_i (TAO_RTEventLog_i const &) = delete;
+  TAO_RTEventLog_i (TAO_RTEventLog_i &&) = delete;
+  TAO_RTEventLog_i & operator= (TAO_RTEventLog_i const &) = delete;
+  TAO_RTEventLog_i & operator= (TAO_RTEventLog_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

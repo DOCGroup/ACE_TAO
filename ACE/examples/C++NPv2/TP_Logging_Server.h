@@ -29,8 +29,7 @@ public:
   virtual int svc ();
 };
 
-typedef ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex>
-        TP_LOGGING_TASK;
+using TP_LOGGING_TASK = ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex>;
 
 /*******************************************************/
 
@@ -91,8 +90,7 @@ public:
 class TP_Logging_Server : public ACE_Service_Object {
 protected:
   // Contains the reactor, acceptor, and handlers.
-  typedef Reactor_Logging_Server<TP_Logging_Acceptor>
-          LOGGING_DISPATCHER;
+  using LOGGING_DISPATCHER = Reactor_Logging_Server<TP_Logging_Acceptor>;
   LOGGING_DISPATCHER *logging_dispatcher_;
 
 public:

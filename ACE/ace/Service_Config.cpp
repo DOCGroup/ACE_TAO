@@ -455,7 +455,7 @@ ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                                           ACE_DLL &dll,
                                           int active)
 {
-  ACE_Service_Type *sp = 0;
+  ACE_Service_Type *sp = nullptr;
   ACE_NEW_RETURN (sp,
                   ACE_Service_Type (n, o, dll, active),
                   0);

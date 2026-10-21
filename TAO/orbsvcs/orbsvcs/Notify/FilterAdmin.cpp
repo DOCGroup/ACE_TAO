@@ -79,7 +79,7 @@ TAO_Notify_FilterAdmin::get_all_filters ()
   // Figure out the length of the list.
   size_t len = this->filter_list_.current_size ();
 
-  CosNotifyFilter::FilterIDSeq* list_ptr = 0;
+  CosNotifyFilter::FilterIDSeq* list_ptr = nullptr;
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list_ptr,

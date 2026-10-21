@@ -59,7 +59,7 @@ class TAO_Export TAO_Endpoint_Selector_Factory
 {
 public:
   /// Destructor.
-  virtual ~TAO_Endpoint_Selector_Factory ();
+  ~TAO_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.

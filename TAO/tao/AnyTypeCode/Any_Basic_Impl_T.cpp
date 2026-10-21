@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename T>
 TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
                                             const T & val)
-  : Any_Impl (0,
+  : Any_Impl (nullptr,
               tc),
     value_ (val)
 {
@@ -37,7 +37,7 @@ TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
                                   const T & value)
 {
-  Any_Basic_Impl_T<T> *new_impl = 0;
+  Any_Basic_Impl_T<T> *new_impl = nullptr;
   ACE_NEW (new_impl,
            Any_Basic_Impl_T (tc,
                              value));
@@ -66,7 +66,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
           TAO::Any_Basic_Impl_T<T> * const narrow_impl =
             dynamic_cast<TAO::Any_Basic_Impl_T<T> *> (impl);
 
-          if (narrow_impl == 0)
+          if (narrow_impl == nullptr)
             {
               return false;
             }
@@ -130,7 +130,7 @@ template<typename T>
 TAO::Any_Basic_Impl_T<T> *
 TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
 {
-  TAO::Any_Basic_Impl_T<T> * retval = 0;
+  TAO::Any_Basic_Impl_T<T> * retval = nullptr;
   ACE_NEW_RETURN (retval,
                   TAO::Any_Basic_Impl_T<T> (tc,
                                             static_cast<T> (0)),

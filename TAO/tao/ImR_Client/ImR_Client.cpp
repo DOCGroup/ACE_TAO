@@ -132,6 +132,11 @@ namespace
         }
     }
   private:
+    ImRifyProfiles (ImRifyProfiles const &) = delete;
+    ImRifyProfiles &operator= (ImRifyProfiles const &) = delete;
+    ImRifyProfiles (ImRifyProfiles &&) = delete;
+    ImRifyProfiles &operator= (ImRifyProfiles &&) = delete;
+
     bool combine_profile(const CORBA::ULong i)
     {
       try
@@ -209,7 +214,7 @@ namespace TAO
   namespace ImR_Client
   {
     ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl ()
-     : server_object_ (0)
+     : server_object_ (nullptr)
     {
     }
 
@@ -442,7 +447,7 @@ namespace TAO
 
           root_poa->deactivate_object_i (id.in ());
 
-          this->server_object_ = 0;
+          this->server_object_ = nullptr;
         }
     }
 

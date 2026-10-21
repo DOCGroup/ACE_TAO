@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::SSLIOP::Current_Impl::Current_Impl ()
-  : ssl_ (0)
+  : ssl_ (nullptr)
 {
 }
 

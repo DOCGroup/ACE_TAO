@@ -9,10 +9,16 @@ class UIPMC_Object_Impl : public virtual POA_Test::UIPMC_Object
 {
 public:
   UIPMC_Object_Impl (CORBA::ORB_ptr orb, CORBA::ULong num_threads);
-  ~UIPMC_Object_Impl ();
+
+  UIPMC_Object_Impl (UIPMC_Object_Impl const &) = delete;
+  UIPMC_Object_Impl (UIPMC_Object_Impl &&) = delete;
+  UIPMC_Object_Impl &operator= (UIPMC_Object_Impl const &) = delete;
+  UIPMC_Object_Impl &operator= (UIPMC_Object_Impl &&) = delete;
+
+  ~UIPMC_Object_Impl () override;
 
   // The skeleton methods
-  virtual void process ();
+  void process () override;
 
 private:
   CORBA::ORB_var orb_;

@@ -31,7 +31,7 @@ class TAO_PortableServer_Export TAO_POA_Policy_Set
 public:
   TAO_POA_Policy_Set ();
 
-  TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs);
+  TAO_POA_Policy_Set (TAO_POA_Policy_Set const &rhs);
 
   ~TAO_POA_Policy_Set () = default;
 
@@ -45,9 +45,9 @@ public:
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
-  void merge_policies (const CORBA::PolicyList &policies);
+  void merge_policies (CORBA::PolicyList const &policies);
 
-  void merge_policy (const CORBA::Policy_ptr policy);
+  void merge_policy (CORBA::Policy_ptr const policy);
 
   void validate_policies (TAO_Policy_Validator &validator,
                           TAO_ORB_Core &orb_core);

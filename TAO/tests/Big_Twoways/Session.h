@@ -24,20 +24,24 @@ public:
            CORBA::ULong thread_count,
            CORBA::ULong message_count,
            CORBA::ULong peer_count);
+  Session (Session const &) = delete;
+  Session (Session &&) = delete;
+  Session &operator= (Session const &) = delete;
+  Session &operator= (Session &&) = delete;
 
   /// Run one of the experiment threads
   int svc ();
 
   // = The skeleton methods
-  virtual void start (const Test::Session_List &other_sessions);
+  void start (Test::Session_List const &other_sessions) override;
 
-  virtual Test::Payload* echo_payload (const Test::Payload &the_payload);
+  Test::Payload *echo_payload (Test::Payload const &the_payload) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
-  virtual ~Session ();
+  ~Session () override;
 
 private:
   /// Helper function used to report any problems and destroy local
@@ -85,9 +89,9 @@ private:
 
   /// Barrier to start all threads simultaenously
 #if defined(ACE_HAS_THREADS)
-  typedef ACE_Thread_Barrier Barrier;
+  using Barrier = ACE_Thread_Barrier;
 #else
-  typedef ACE_Null_Barrier Barrier;
+  using Barrier = ACE_Null_Barrier;
 #endif /* ACE_HAS_THREADS */
   Barrier barrier_;
 };

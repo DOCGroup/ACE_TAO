@@ -46,7 +46,7 @@ struct TAO_PG_Factory_Node
   PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 };
 
-typedef ACE_Array_Base<TAO_PG_Factory_Node> TAO_PG_Factory_Set;
+using TAO_PG_Factory_Set = ACE_Array_Base<TAO_PG_Factory_Node>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

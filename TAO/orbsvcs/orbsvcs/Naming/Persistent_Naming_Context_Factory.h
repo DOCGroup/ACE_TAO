@@ -32,8 +32,8 @@ class TAO_Persistent_Naming_Context;
 class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context_Factory
 {
 public:
-  /// Data structure used by TAO_Persistent_Context_Index - typedef for ease of use.
-  typedef TAO_Persistent_Naming_Context::HASH_MAP HASH_MAP;
+  /// Data structure used by TAO_Persistent_Context_Index.
+  using HASH_MAP = TAO_Persistent_Naming_Context::HASH_MAP;
 
   /// Constructor.
   TAO_Persistent_Naming_Context_Factory ();

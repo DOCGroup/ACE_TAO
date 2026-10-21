@@ -26,7 +26,8 @@ class TAO_Transport;
 
 namespace TAO
 {
-  typedef Transport_Cache_Manager_T<TAO_Transport, TAO_Transport_Descriptor_Interface, TAO_Connection_Purging_Strategy> Transport_Cache_Manager;
+  using Transport_Cache_Manager =
+    Transport_Cache_Manager_T<TAO_Transport, TAO_Transport_Descriptor_Interface, TAO_Connection_Purging_Strategy>;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

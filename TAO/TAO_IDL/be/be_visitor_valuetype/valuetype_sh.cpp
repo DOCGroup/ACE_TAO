@@ -64,8 +64,8 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   *os << "class " << class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
-      << "_ptr;" << be_nl;
+  *os << "using " << class_name.c_str () << "_ptr = "
+      << class_name.c_str () << " *;" << be_nl;
 
   // Forward class declaration.
   *os << "// Forward Classes Declaration" << be_nl;

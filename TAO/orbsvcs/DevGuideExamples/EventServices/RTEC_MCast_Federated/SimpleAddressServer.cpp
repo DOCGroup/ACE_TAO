@@ -4,7 +4,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_string.h"
 
-SimpleAddressServer::SimpleAddressServer (const ACE_INET_Addr& address) {
+SimpleAddressServer::SimpleAddressServer (ACE_INET_Addr const & address) {
 #if defined (ACE_HAS_IPV6)
   if (address.get_type() == PF_INET6)
     {
@@ -24,8 +24,8 @@ SimpleAddressServer::SimpleAddressServer (const ACE_INET_Addr& address) {
 }
 
 void
-SimpleAddressServer::get_addr (const RtecEventComm::EventHeader&,
-                               RtecUDPAdmin::UDP_Addr& address)
+SimpleAddressServer::get_addr (RtecEventComm::EventHeader const &,
+                               RtecUDPAdmin::UDP_Addr & address)
 {
   if (this->address_._d() == RtecUDPAdmin::Rtec_inet6)
     throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
@@ -33,8 +33,8 @@ SimpleAddressServer::get_addr (const RtecEventComm::EventHeader&,
 }
 
 void
-SimpleAddressServer::get_address(const RtecEventComm::EventHeader&,
-                                 RtecUDPAdmin::UDP_Address& address)
+SimpleAddressServer::get_address (RtecEventComm::EventHeader const &,
+                                  RtecUDPAdmin::UDP_Address & address)
 {
   address = this->address_;
 }

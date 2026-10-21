@@ -55,8 +55,8 @@ public:
   /// Constructor.
   ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
                             const ACE_Unbounded_Set<INT_ID> &int_id_set,
-                            ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next = 0,
-                            ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev = 0);
+                            ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next = nullptr,
+                            ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev = nullptr);
 
   /// Constructor.
   ACE_Hash_Multi_Map_Entry (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next,

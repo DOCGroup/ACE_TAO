@@ -36,8 +36,8 @@ class TAO_Stub;
 namespace  CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  using Object_ptr = Object *;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
 }
 
 namespace TAO
@@ -245,7 +245,9 @@ namespace TAO
   private:
     Invocation_Adapter () = delete;
     Invocation_Adapter (Invocation_Adapter const &) = delete;
-    Invocation_Adapter & operator= (const Invocation_Adapter &) = delete;
+    Invocation_Adapter &operator= (Invocation_Adapter const &) = delete;
+    Invocation_Adapter (Invocation_Adapter &&) = delete;
+    Invocation_Adapter &operator= (Invocation_Adapter &&) = delete;
 
     /**
     * This method returns the right collocation strategy, if any,

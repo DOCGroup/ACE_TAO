@@ -35,7 +35,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <
                        POA_CosNotifyChannelAdmin::ProxyPushConsumer>
 {
- typedef TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer> SuperClass;
+  using SuperClass = TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer>;
  friend class TAO_Notify_Builder;
 public:
   /// Constructor

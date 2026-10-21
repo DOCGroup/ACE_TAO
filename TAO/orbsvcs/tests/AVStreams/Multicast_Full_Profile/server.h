@@ -12,11 +12,11 @@ class FTP_Server_Callback
   :public TAO_AV_Callback
 {
 public:
-  virtual int handle_stop ();
-  virtual int receive_frame (ACE_Message_Block *frame,
-                             TAO_AV_frame_info *frame_info,
-                             const ACE_Addr &);
-  virtual int handle_end_stream ();
+  int handle_stop () override;
+  int receive_frame (ACE_Message_Block *frame,
+                     TAO_AV_frame_info *frame_info,
+                     ACE_Addr const &) override;
+  int handle_end_stream ();
 };
 
 class FTP_Server_FlowEndPoint
@@ -25,7 +25,7 @@ class FTP_Server_FlowEndPoint
 public:
   FTP_Server_FlowEndPoint ();
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 };
 
 // class FTP_Server_FDev
@@ -43,18 +43,22 @@ public:
 
 // };
 
-typedef TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint> FTP_Server_FDev;
+using FTP_Server_FDev = TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 
 class Server
 {
 public:
   Server ();
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
   int init (int argc,
             ACE_TCHAR *argv[]);
   int run ();
   FILE *file ();
   AVStreams::protocolSpec protocols ();
-  const char *format ();
+  char const *format ();
 protected:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;
@@ -65,4 +69,4 @@ protected:
   char *protocol_;
 };
 
-typedef ACE_Unmanaged_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;
+using FTP_SERVER = ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex>;

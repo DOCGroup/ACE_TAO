@@ -27,7 +27,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_
     {
       delete this->implementation_;
       this->delete_implementation_ = false;
-      this->implementation_ = 0;
+      this->implementation_ = nullptr;
     }
 }
 

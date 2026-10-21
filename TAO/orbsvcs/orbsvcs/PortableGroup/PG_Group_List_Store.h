@@ -58,16 +58,13 @@ namespace TAO
 
     int remove (PortableGroup::ObjectGroupId id);
 
-    typedef std::set<PortableGroup::ObjectGroupId> Group_Ids;
+    using Group_Ids = std::set<PortableGroup::ObjectGroupId>;
 
-    typedef std::set<PortableGroup::ObjectGroupId>::iterator
-      Group_Id_Iterator;
+    using Group_Id_Iterator = std::set<PortableGroup::ObjectGroupId>::iterator;
 
-    typedef std::set<PortableGroup::ObjectGroupId>::reverse_iterator
-      Group_Id_Revers_Iterator;
+    using Group_Id_Revers_Iterator = std::set<PortableGroup::ObjectGroupId>::reverse_iterator;
 
-    typedef std::set<PortableGroup::ObjectGroupId>::const_iterator
-      Group_Id_Const_Iterator;
+    using Group_Id_Const_Iterator = std::set<PortableGroup::ObjectGroupId>::const_iterator;
 
     Group_Ids & get_group_ids ();
 

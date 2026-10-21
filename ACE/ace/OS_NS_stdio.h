@@ -254,7 +254,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int flock_init (ace_flock_t *lock,
                   int flags = 0,
-                  const ACE_TCHAR *name = 0,
+                  const ACE_TCHAR *name = nullptr,
                   mode_t perms = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -489,13 +489,13 @@ namespace ACE_OS {
 
 # if !defined (ACE_DISABLE_TEMPNAM)
   ACE_NAMESPACE_INLINE_FUNCTION
-  char *tempnam (const char *dir = 0,
-                 const char *pfx = 0);
+  char *tempnam (const char *dir = nullptr,
+                 const char *pfx = nullptr);
 
 #   if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *tempnam (const wchar_t *dir,
-                    const wchar_t *pfx = 0);
+                    const wchar_t *pfx = nullptr);
 #   endif /* ACE_HAS_WCHAR */
 # endif /* !ACE_DISABLE_TEMPNAM */
 

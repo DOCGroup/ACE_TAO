@@ -46,6 +46,10 @@ public:
   /// Creator method, the Transport name can only be set when the
   /// object is created.
   TAO_AV_Transport_Item (const ACE_CString &name);
+  TAO_AV_Transport_Item (TAO_AV_Transport_Item const &) = delete;
+  TAO_AV_Transport_Item &operator= (TAO_AV_Transport_Item const &) = delete;
+  TAO_AV_Transport_Item (TAO_AV_Transport_Item &&) = delete;
+  TAO_AV_Transport_Item &operator= (TAO_AV_Transport_Item &&) = delete;
 
   /// Return a reference to the character representation of the Transport
   /// factories name.
@@ -77,6 +81,10 @@ public:
   /// creator method, the Flow_Protocol name can only be set when the
   /// object is created.
   TAO_AV_Flow_Protocol_Item (const ACE_CString &name);
+  TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item const &) = delete;
+  TAO_AV_Flow_Protocol_Item &operator= (TAO_AV_Flow_Protocol_Item const &) = delete;
+  TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item &&) = delete;
+  TAO_AV_Flow_Protocol_Item &operator= (TAO_AV_Flow_Protocol_Item &&) = delete;
 
   /// return a reference to the character representation of the Flow_Protocol
   /// factories name.
@@ -107,6 +115,10 @@ public:
   TAO_AV_Flow_Handler ();
 
   virtual ~TAO_AV_Flow_Handler ();
+  TAO_AV_Flow_Handler (TAO_AV_Flow_Handler const &) = delete;
+  TAO_AV_Flow_Handler &operator= (TAO_AV_Flow_Handler const &) = delete;
+  TAO_AV_Flow_Handler (TAO_AV_Flow_Handler &&) = delete;
+  TAO_AV_Flow_Handler &operator= (TAO_AV_Flow_Handler &&) = delete;
   /// Start/stop the flow handler.
   virtual int start (TAO_FlowSpec_Entry::Role role);
   virtual int stop  (TAO_FlowSpec_Entry::Role role);
@@ -126,13 +138,13 @@ public:
   void callback (TAO_AV_Callback *callback);
 
   /// Handle timeout. called from reactor.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  virtual int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr);
 
   /// set the remote address.
   virtual int set_remote_address (ACE_Addr *address);
 
   /// get the underlying event handler. To be overridden by the derived clases.
-  virtual ACE_Event_Handler* event_handler () = 0;
+  virtual ACE_Event_Handler *event_handler () = 0;
 
   virtual int change_qos (AVStreams::QoS);
 
@@ -158,6 +170,10 @@ public:
   TAO_AV_Transport ();
 
   virtual ~TAO_AV_Transport ();
+  TAO_AV_Transport (TAO_AV_Transport const &) = delete;
+  TAO_AV_Transport &operator= (TAO_AV_Transport const &) = delete;
+  TAO_AV_Transport (TAO_AV_Transport &&) = delete;
+  TAO_AV_Transport &operator= (TAO_AV_Transport &&) = delete;
 
   virtual int open (ACE_Addr *address) = 0;
 
@@ -167,34 +183,34 @@ public:
   virtual int mtu () = 0;
   virtual ACE_Addr *get_peer_addr () = 0;
   virtual ACE_Addr *get_local_addr ();
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        ACE_Time_Value *s = 0) = 0;
+  virtual ssize_t send (ACE_Message_Block const *mblk,
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Write the contents of the buffer of length len to the connection.
-  virtual ssize_t send (const char *buf,
+  virtual ssize_t send (char const *buf,
                         size_t len,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Write the contents of iovcnt iovec's to the connection.
-  virtual ssize_t send (const iovec *iov,
+  virtual ssize_t send (iovec const *iov,
                         int iovcnt,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   /// Read len bytes from into buf using flags.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         int flags,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 
   ///  Read received data into the iovec buffers.
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
-                        ACE_Time_Value *s = 0) = 0;
+                        ACE_Time_Value *s = nullptr) = 0;
 };
 
 class TAO_Base_StreamEndPoint;
@@ -210,6 +226,10 @@ class TAO_AV_Export TAO_AV_Acceptor
 public:
   TAO_AV_Acceptor ();
   virtual ~TAO_AV_Acceptor ();
+  TAO_AV_Acceptor (TAO_AV_Acceptor const &) = delete;
+  TAO_AV_Acceptor &operator= (TAO_AV_Acceptor const &) = delete;
+  TAO_AV_Acceptor (TAO_AV_Acceptor &&) = delete;
+  TAO_AV_Acceptor &operator= (TAO_AV_Acceptor &&) = delete;
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
@@ -239,6 +259,10 @@ class TAO_AV_Export TAO_AV_Connector
 public:
   TAO_AV_Connector ();
   virtual ~TAO_AV_Connector ();
+  TAO_AV_Connector (TAO_AV_Connector const &) = delete;
+  TAO_AV_Connector &operator= (TAO_AV_Connector const &) = delete;
+  TAO_AV_Connector (TAO_AV_Connector &&) = delete;
+  TAO_AV_Connector &operator= (TAO_AV_Connector &&) = delete;
   const char *flowname ();
 
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
@@ -254,8 +278,8 @@ protected:
   ACE_CString flowname_;
 };
 
-typedef ACE_Unbounded_Set<TAO_AV_Connector*> TAO_AV_ConnectorSet;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Connector*> TAO_AV_ConnectorSetItor;
+using TAO_AV_ConnectorSet = ACE_Unbounded_Set<TAO_AV_Connector*>;
+using TAO_AV_ConnectorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
 
 /**
  * @class TAO_AV_Connector_Registry
@@ -272,6 +296,10 @@ public:
    */
   TAO_AV_Connector_Registry ();
   ~TAO_AV_Connector_Registry ();
+  TAO_AV_Connector_Registry (TAO_AV_Connector_Registry const &) = delete;
+  TAO_AV_Connector_Registry &operator= (TAO_AV_Connector_Registry const &) = delete;
+  TAO_AV_Connector_Registry (TAO_AV_Connector_Registry &&) = delete;
+  TAO_AV_Connector_Registry &operator= (TAO_AV_Connector_Registry &&) = delete;
   int open (TAO_Base_StreamEndPoint *endpoint,
             TAO_AV_Core *av_core,
             TAO_AV_FlowSpecSet &flow_spec_set);
@@ -283,8 +311,8 @@ protected:
   TAO_AV_ConnectorSet connectors_;
 };
 
-typedef ACE_Unbounded_Set<TAO_AV_Acceptor*> TAO_AV_AcceptorSet;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*> TAO_AV_AcceptorSetItor;
+using TAO_AV_AcceptorSet = ACE_Unbounded_Set<TAO_AV_Acceptor*>;
+using TAO_AV_AcceptorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
 
 /**
  * @class TAO_AV_Acceptor_Registry
@@ -295,6 +323,10 @@ class TAO_AV_Export TAO_AV_Acceptor_Registry
 public:
   TAO_AV_Acceptor_Registry ();
   ~TAO_AV_Acceptor_Registry ();
+  TAO_AV_Acceptor_Registry (TAO_AV_Acceptor_Registry const &) = delete;
+  TAO_AV_Acceptor_Registry &operator= (TAO_AV_Acceptor_Registry const &) = delete;
+  TAO_AV_Acceptor_Registry (TAO_AV_Acceptor_Registry &&) = delete;
+  TAO_AV_Acceptor_Registry &operator= (TAO_AV_Acceptor_Registry &&) = delete;
   int open (TAO_Base_StreamEndPoint *endpoint,
             TAO_AV_Core *av_core,
             TAO_AV_FlowSpecSet &flow_spec_set);
@@ -318,7 +350,11 @@ class TAO_AV_Export TAO_AV_Transport_Factory : public ACE_Service_Object
 public:
   /// Initialization hook.
   TAO_AV_Transport_Factory ();
-  virtual ~TAO_AV_Transport_Factory ();
+  ~TAO_AV_Transport_Factory () override;
+  TAO_AV_Transport_Factory (TAO_AV_Transport_Factory const &) = delete;
+  TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory const &) = delete;
+  TAO_AV_Transport_Factory (TAO_AV_Transport_Factory &&) = delete;
+  TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory &&) = delete;
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();

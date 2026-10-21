@@ -36,14 +36,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Transient_Bindings_Map : public TAO_Bindings_Map
 {
 public:
-  /// Underlying data structure - typedef for ease of use.
-  typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex> HASH_MAP;
+  /// Underlying data structure.
+  using HASH_MAP = ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
 
   /// Constructor.
   TAO_Transient_Bindings_Map (size_t hash_table_size);
 
   /// Destructor.
-  virtual ~TAO_Transient_Bindings_Map ();
+  ~TAO_Transient_Bindings_Map () override;
 
   // = Accessors.
 
@@ -55,7 +55,7 @@ public:
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size ();
+  size_t current_size () override;
 
   // = Name bindings manipulation methods.
 
@@ -64,10 +64,10 @@ public:
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with <id> and <kind>.
    */
-  virtual int bind (const char *id,
+  int bind (const char *id,
                     const char *kind,
                     CORBA::Object_ptr obj,
-                    CosNaming::BindingType type);
+                    CosNaming::BindingType type) override;
 
   /**
    * Overwrite a binding containing <id> and <kind> (or create a new
@@ -75,17 +75,17 @@ public:
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
    */
-  virtual int rebind (const char *id,
+  int rebind (const char *id,
                       const char *kind,
                       CORBA::Object_ptr obj,
-                      CosNaming::BindingType type);
+                      CosNaming::BindingType type) override;
 
   /**
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  virtual int unbind (const char * id,
-                      const char * kind);
+  int unbind (const char * id,
+              const char * kind) override;
 
   /**
    * Find the binding containing <id> and <kind> in the table, and
@@ -94,10 +94,10 @@ public:
    * reference is assigned to <obj>, so the caller is responsible for
    * its deallocation.
    */
-  virtual int find (const char * id,
+  int find (const char * id,
                     const char * kind,
                     CORBA::Object_ptr & obj,
-                    CosNaming::BindingType &type);
+                    CosNaming::BindingType &type) override;
 
 private:
   /// Helper: factors common code from <bind> and <rebind>.
@@ -127,8 +127,8 @@ private:
 class TAO_Naming_Serv_Export TAO_Transient_Naming_Context : public TAO_Hash_Naming_Context
 {
 public:
-  /// Underlying data structure - typedef for ease of use.
-  typedef TAO_Transient_Bindings_Map::HASH_MAP HASH_MAP;
+  /// Underlying data structure.
+  using HASH_MAP = TAO_Transient_Bindings_Map::HASH_MAP;
 
   /// Constructor.
   TAO_Transient_Naming_Context (PortableServer::POA_ptr poa,
@@ -137,7 +137,7 @@ public:
                                 = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  virtual ~TAO_Transient_Naming_Context ();
+  ~TAO_Transient_Naming_Context () override;
 
   // = Utility methods.
   /**
@@ -158,7 +158,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context ();
+  CosNaming::NamingContext_ptr new_context () override;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -166,9 +166,9 @@ public:
    * are returned with a BindingIterator.  In the naming context does
    * not contain any additional bindings <bi> returned as null.
    */
-  virtual void list (CORBA::ULong how_many,
-                     CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi);
+  void list (CORBA::ULong how_many,
+             CosNaming::BindingList_out &bl,
+             CosNaming::BindingIterator_out &bi) override;
 
 protected:
   /// Counter used for generation of POA ids for children Naming

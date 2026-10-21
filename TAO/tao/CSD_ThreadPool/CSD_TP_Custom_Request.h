@@ -30,8 +30,7 @@ namespace TAO
   namespace CSD
   {
     class TP_Custom_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request>
-                                             TP_Custom_Request_Handle;
+    using TP_Custom_Request_Handle = TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request>;
 
     /**
      * @class TP_Custom_Request
@@ -45,7 +44,7 @@ namespace TAO
     {
     public:
       /// Virtual Destructor.
-      virtual ~TP_Custom_Request();
+      ~TP_Custom_Request() override;
 
     protected:
       /// Constructor.

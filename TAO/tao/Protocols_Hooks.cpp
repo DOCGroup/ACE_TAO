@@ -52,8 +52,6 @@ TAO_SCIOP_Protocol_Properties::TAO_SCIOP_Protocol_Properties ()
 {
 }
 
-TAO_Protocols_Hooks::~TAO_Protocols_Hooks ()
-{
-}
+TAO_Protocols_Hooks::~TAO_Protocols_Hooks () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

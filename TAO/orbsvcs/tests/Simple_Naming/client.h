@@ -56,7 +56,7 @@ public:
   Simple_Test (PortableServer::POA_ptr poa);
 
   /// Execute the simple test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 };
 
 /**
@@ -77,10 +77,10 @@ public:
            int size = 10);
 
   /// Execute the MT test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
   /// This code is executed by each thread.
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Number of threads to spawn.  By default is set to 10.
@@ -133,7 +133,7 @@ class Tree_Test : public Naming_Test
 public:
   /// Execute the tree test code.
   Tree_Test (PortableServer::POA_ptr poa);
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 };
 
 /**
@@ -153,7 +153,7 @@ class Iterator_Test : public Naming_Test
 public:
   /// Execute the iterator test code.
   Iterator_Test (PortableServer::POA_ptr poa);
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 };
 
 /**
@@ -180,7 +180,7 @@ class Exceptions_Test : public Naming_Test
 public:
   /// Execute the exceptions test code.
   Exceptions_Test (PortableServer::POA_ptr poa);
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   // the following functions isolate specific tests due to the
@@ -211,7 +211,7 @@ class Destroy_Test : public Naming_Test
 public:
   /// Execute the destroy test code.
   Destroy_Test (PortableServer::POA_ptr poa);
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   // = The following functions isolate specific tests.
@@ -235,20 +235,20 @@ public:
   /// Constructor.  Takes in an orb pointer.
   Persistent_Test_Begin (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa,
-                         FILE * ior_output_file);
+                         FILE* ior_output_file);
 
   /// Destructor.
-  virtual ~Persistent_Test_Begin ();
+  ~Persistent_Test_Begin () override;
 
   /// Execute the persistent test (part 1) code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   /// A pointer to our ORB (needed for object/string conversion).
   CORBA::ORB_var orb_;
 
   /// File where we output the ior for use by part 2 of persistent test.
-  FILE *file_;
+  FILE* file_;
 };
 
 /**
@@ -270,13 +270,13 @@ public:
   /// <Persistent_Test_Begin>.
   Persistent_Test_End (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr poa,
-                       const ACE_TCHAR * ior);
+                       ACE_TCHAR const* ior);
 
   /// Destructor.
-  virtual ~Persistent_Test_End ();
+  ~Persistent_Test_End () override;
 
   /// Execute the persistent test (part 2).
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   /// A pointer to our ORB (used for string/object conversion).
@@ -284,7 +284,7 @@ private:
 
   /// IOR of <level1_context> recorded during the run of part 1 of
   /// persistent test.
-  const ACE_TCHAR* ior_;
+  ACE_TCHAR const* ior_;
 };
 
 /**
@@ -304,10 +304,10 @@ public:
                         PortableServer::POA_ptr poa);
 
   /// Destructor.
-  virtual ~Persistent_List_Test ();
+  ~Persistent_List_Test () override;
 
   /// Execute the persistent test (part 3).
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   /// A pointer to our ORB (used for string/object conversion).
@@ -339,7 +339,7 @@ public:
   int run ();
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, ACE_TCHAR **argv);
+  int init (int argc, ACE_TCHAR** argv);
 
   // = Symbolic ids.
   enum OBJ_ID
@@ -356,11 +356,11 @@ private:
   int argc_;
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR** argv_;
 
   /// A pointer to the specific Naming Service test a client will
   /// execute.
-  Naming_Test *test_;
+  Naming_Test* test_;
 
   /// Our ORB manager helper class.
   TAO_ORB_Manager orbmgr_;

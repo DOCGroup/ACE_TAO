@@ -1,10 +1,6 @@
 #include "Message_i.h"
 
-MessageImpl::MessageImpl ()
-{
-}
-
-MessageImpl::MessageImpl (const char *user, const char *subject, const char *text)
+MessageImpl::MessageImpl (char const *user, char const *subject, char const *text)
 {
   user_ (user);
   subject_ (subject);
@@ -14,7 +10,7 @@ MessageImpl::MessageImpl (const char *user, const char *subject, const char *tex
 ::CORBA::ValueBase *
 MessageImpl::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
+  ::CORBA::ValueBase *ret_val = nullptr;
   ACE_NEW_THROW_EX (
     ret_val,
     MessageImpl (
@@ -33,7 +29,7 @@ MessageImpl::user ()
 }
 
 void
-MessageImpl::user (const char *s)
+MessageImpl::user (char const *s)
 {
   user_ (s);
 }
@@ -45,7 +41,7 @@ MessageImpl::subject ()
 }
 
 void
-MessageImpl::subject (const char *s)
+MessageImpl::subject (char const *s)
 {
   subject_ (s);
 }
@@ -57,7 +53,7 @@ MessageImpl::text ()
 }
 
 void
-MessageImpl::text (const char *s)
+MessageImpl::text (char const *s)
 {
   text_ (s);
 }

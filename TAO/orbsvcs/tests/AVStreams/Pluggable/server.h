@@ -30,11 +30,11 @@ public:
   // Method that is called when there is data to be received from the ftp client.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
-                     const ACE_Addr &peer_address);
+                     ACE_Addr const &peer_address) override;
 
   // Called when the ftp client has finished reading the file and wants
   // to close4 down the connection.
-  int handle_destroy ();
+  int handle_destroy () override;
 };
 
 /**
@@ -50,7 +50,7 @@ class FTP_Server_StreamEndPoint : public TAO_Server_StreamEndPoint
 public:
   // Create the server application callback.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
 private:
   /// reference to the server application callback.
@@ -73,6 +73,10 @@ public:
 
   /// Destructor.
   ~Server ();
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
 
   /// Initialize data components.
   int init (int argc,

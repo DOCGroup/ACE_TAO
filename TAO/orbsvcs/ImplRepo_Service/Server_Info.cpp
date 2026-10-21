@@ -5,13 +5,13 @@ Server_Info::Server_Info ()
   this->clear ();
 }
 
-Server_Info::Server_Info (const Server_Info &other)
+Server_Info::Server_Info (Server_Info const &other)
 {
   *this = other;
 }
 
 Server_Info&
-Server_Info::operator= (const Server_Info &other)
+Server_Info::operator= (Server_Info const &other)
 {
   if (this != &other)
   {
@@ -38,15 +38,15 @@ Server_Info::operator= (const Server_Info &other)
   return *this;
 }
 
-Server_Info::Server_Info (const ACE_CString& fqname,
-                          const ACE_CString& aname,
-                          const ACE_CString& cmdline,
-                          const ImplementationRepository::EnvironmentList& env,
-                          const ACE_CString& working_dir,
+Server_Info::Server_Info (ACE_CString const& fqname,
+                          ACE_CString const& aname,
+                          ACE_CString const& cmdline,
+                          ImplementationRepository::EnvironmentList const& env,
+                          ACE_CString const& working_dir,
                           ImplementationRepository::ActivationMode amode,
                           int limit,
-                          const ACE_CString& partial_ior,
-                          const ACE_CString& server_ior,
+                          ACE_CString const& partial_ior,
+                          ACE_CString const& server_ior,
                           ImplementationRepository::ServerObject_ptr svrobj)
   : server_id ()
   , poa_name ()
@@ -72,8 +72,8 @@ Server_Info::Server_Info (const ACE_CString& fqname,
   this->start_limit (limit);
 }
 
-Server_Info::Server_Info (const ACE_CString& serverId,
-                          const ACE_CString& pname,
+Server_Info::Server_Info (ACE_CString const& serverId,
+                          ACE_CString const& pname,
                           bool jacorb,
                           Server_Info_Ptr alt)
   : server_id (serverId)
@@ -104,7 +104,7 @@ Server_Info::active_info ()
   return this->alt_info_.null() ? this : this->alt_info_.get();
 }
 
-const Server_Info *
+Server_Info const *
 Server_Info::active_info () const
 {
   return this->alt_info_.null() ? this : this->alt_info_.get();
@@ -129,13 +129,13 @@ Server_Info::mode () const
 }
 
 bool
-Server_Info::has_peer (const char *name) const
+Server_Info::has_peer (char const *name) const
 {
   return (this->key_name_ == name || this->poa_name == name);
 }
 
 bool
-Server_Info::is_server (const char *name) const
+Server_Info::is_server (char const *name) const
 {
   for (CORBA::ULong i = 0; i < peers.length(); i++)
     {
@@ -174,7 +174,7 @@ Server_Info::started (bool success)
 }
 
 bool
-Server_Info::parse_id (const char* id,
+Server_Info::parse_id (char const *id,
                        ACE_CString& server_id,
                        ACE_CString& pname)
 {
@@ -205,7 +205,7 @@ Server_Info::parse_id (const char* id,
 }
 
 void
-Server_Info::gen_id (const Server_Info * si, ACE_CString &id)
+Server_Info::gen_id (Server_Info const *si, ACE_CString &id)
 {
   char sep = ':';
   id = "";
@@ -222,8 +222,8 @@ Server_Info::gen_id (const Server_Info * si, ACE_CString &id)
 }
 
 void
-Server_Info::gen_key (const ACE_CString& serverId,
-                      const ACE_CString& poa_name,
+Server_Info::gen_key (ACE_CString const& serverId,
+                      ACE_CString const& poa_name,
                       ACE_CString &key)
 {
   if (serverId.length () > 0)
@@ -237,7 +237,7 @@ Server_Info::gen_key (const ACE_CString& serverId,
 }
 
 void
-Server_Info::fqname_to_key (const char * fqname, ACE_CString& key)
+Server_Info::fqname_to_key (char const *fqname, ACE_CString& key)
 {
   ACE_CString serverId;
   ACE_CString poa_name;
@@ -252,7 +252,7 @@ Server_Info::setImRInfo (ImplementationRepository::ServerInformation* info) cons
   ACE_CString id;
   Server_Info::gen_id (this, id);
   info->server = id.c_str();
-  const Server_Info *startup = this->active_info ();
+  Server_Info const *startup = this->active_info ();
   info->startup.command_line = startup->cmdline.c_str ();
   info->startup.environment = startup->env_vars;
   info->startup.working_directory = startup->dir.c_str ();
@@ -312,7 +312,7 @@ Server_Info::reset_runtime ()
 }
 
 void
-Server_Info::update_options (const ImplementationRepository::StartupOptions &options)
+Server_Info::update_options (ImplementationRepository::StartupOptions const &options)
 {
   Server_Info *startup = this->active_info ();
   startup->activator = options.activator.in ();
@@ -324,15 +324,15 @@ Server_Info::update_options (const ImplementationRepository::StartupOptions &opt
   startup->start_count_ = 0;
 }
 
-const char *
+char const *
 Server_Info::ping_id () const
 {
   return this->active_info ()->key_name_.c_str();
 }
 
 void
-Server_Info::set_contact (const char *pior,
-                          const char *srv_ior,
+Server_Info::set_contact (char const *pior,
+                          char const *srv_ior,
                           ImplementationRepository::ServerObject_ptr svrobj)
 {
   this->partial_ior = pior;

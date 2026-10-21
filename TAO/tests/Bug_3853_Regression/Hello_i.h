@@ -14,13 +14,17 @@ class  Demo_HelloWorld_i
 public:
   // Constructor
   Demo_HelloWorld_i (CORBA::ORB_ptr orb);
+  Demo_HelloWorld_i (Demo_HelloWorld_i const &) = delete;
+  Demo_HelloWorld_i (Demo_HelloWorld_i &&) = delete;
+  Demo_HelloWorld_i &operator= (Demo_HelloWorld_i const &) = delete;
+  Demo_HelloWorld_i &operator= (Demo_HelloWorld_i &&) = delete;
 
   // Destructor
-  virtual ~Demo_HelloWorld_i () = default;
+  ~Demo_HelloWorld_i () override = default;
 
-  virtual void sayHello (const char * msg);
+  void sayHello (char const *msg) override;
 
-  virtual void shutdown();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

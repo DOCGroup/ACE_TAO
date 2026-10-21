@@ -34,7 +34,12 @@ class TAO_FTEC_Event_Channel_Impl : public TAO_EC_Event_Channel_Base
 public:
   TAO_FTEC_Event_Channel_Impl(const TAO_EC_Event_Channel_Attributes& attributes);
 
-  ~TAO_FTEC_Event_Channel_Impl();
+  ~TAO_FTEC_Event_Channel_Impl() override;
+
+  TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl const&) = delete;
+  TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl&&) = delete;
+  TAO_FTEC_Event_Channel_Impl& operator=(TAO_FTEC_Event_Channel_Impl const&) = delete;
+  TAO_FTEC_Event_Channel_Impl& operator=(TAO_FTEC_Event_Channel_Impl&&) = delete;
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
@@ -46,11 +51,11 @@ public:
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers ();
+      for_consumers () override;
 
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers ();
+      for_suppliers () override;
 
   void get_state (FtRtecEventChannelAdmin::EventChannelState & s);
 

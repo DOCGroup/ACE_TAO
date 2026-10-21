@@ -184,7 +184,7 @@ public:
   // Implement the callbacks for our consumer personality.
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   ECM_Local_Federation* federation_;
@@ -231,8 +231,8 @@ public:
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &events) override;
+  void disconnect_push_consumer () override;
 
 private:
   ECM_Local_Federation* federation_;

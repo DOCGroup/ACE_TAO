@@ -38,7 +38,7 @@ public:
   virtual ~TAO_Notify_Subscription_Change_Worker ();
 
   ///= TAO_ESF_Worker method
-  void work (TAO_Notify_Proxy* proxy);
+  void work (TAO_Notify_Proxy* proxy) override;
 
 protected:
   const CosNotification::EventTypeSeq & added_;

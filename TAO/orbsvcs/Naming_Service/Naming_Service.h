@@ -36,10 +36,15 @@ public:
   TAO_Naming_Service ();
 
   /// Constructor taking the command-line arguments.
-  TAO_Naming_Service (int argc, ACE_TCHAR* argv[]);
+  TAO_Naming_Service (int argc, ACE_TCHAR * argv[]);
+
+  TAO_Naming_Service (TAO_Naming_Service const &) = delete;
+  TAO_Naming_Service (TAO_Naming_Service &&) = delete;
+  TAO_Naming_Service &operator= (TAO_Naming_Service const &) = delete;
+  TAO_Naming_Service &operator= (TAO_Naming_Service &&) = delete;
 
   /// Initialize the Naming Service with the arguments.
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  virtual int init (int argc, ACE_TCHAR * argv[]);
 
   /// The opposite of init().
   virtual int fini ();
@@ -56,7 +61,7 @@ public:
 protected:
   /// Parse the command line arguments to find
   /// the timeout period.
-  int parse_args (int &argc, ACE_TCHAR* argv[]);
+  int parse_args (int & argc, ACE_TCHAR * argv[]);
 
   /// The ORB.
   CORBA::ORB_var orb_;

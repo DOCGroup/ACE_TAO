@@ -23,10 +23,10 @@
 #include <iostream>
 #include <fstream>
 
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-const int EVENT_DELAY_MS = 10;
+constexpr int EVENT_DELAY_MS = 10;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -38,49 +38,49 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    const ACE_TCHAR* ecname = ACE_TEXT ("EventService");
-    const ACE_TCHAR* address = ACE_TEXT ("localhost");
-    const ACE_TCHAR* iorfile = 0;
+    ACE_TCHAR const * ecname = ACE_TEXT ("EventService");
+    ACE_TCHAR const * address = ACE_TEXT ("localhost");
+    ACE_TCHAR const * iorfile = nullptr;
     u_short port = 12345;
     u_short listenport = 12345;
-    int mcast = 1;
+    bool mcast = true;
 
-    for (int i = 0; argv[i] != 0; i++) {
+    for (int i = 0; argv[i] != nullptr; ++i) {
       if (ACE_OS::strcmp(argv[i], ACE_TEXT("-ecname")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           ecname = argv[i];
         } else {
           std::cerr << "Missing Event channel name" << std::endl;
         }
       } else if (ACE_OS::strcmp(argv[i], ACE_TEXT("-address")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           address = argv[i];
         } else {
           std::cerr << "Missing address" << std::endl;
         }
       } else if (ACE_OS::strcmp(argv[i], ACE_TEXT("-port")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           port = ACE_OS::atoi(argv[i]);
         } else {
           std::cerr << "Missing port" << std::endl;
         }
       } else if (ACE_OS::strcmp(argv[i], ACE_TEXT("-listenport")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           listenport = ACE_OS::atoi(argv[i]);
         } else {
           std::cerr << "Missing port" << std::endl;
         }
       } else if (ACE_OS::strcmp(argv[i], ACE_TEXT("-iorfile")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           iorfile = argv[i];
         }
       } else if (ACE_OS::strcmp(argv[i], ACE_TEXT("-udp")) == 0) {
-        mcast = 0;
+        mcast = false;
       }
     }
 
@@ -197,7 +197,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
+    CORBA::String_var const eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Create an event set for one event
     RtecEventComm::EventSet event (1);
@@ -211,7 +211,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize data fields in event.
     event[0].data.any_value <<= eventData;
 
-    if (iorfile != 0) {
+    if (iorfile != nullptr) {
       CORBA::String_var str = orb->object_to_string( ec.in() );
       std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile) );
       iorFile << str.in() << std::endl;
@@ -219,9 +219,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
     std::cout << "Starting main loop" << std::endl;
 
-    const int EVENT_DELAY_MS = 10;
-
-    while (1) {
+    while (true) {
       consumer->push (event);
 
       ACE_Time_Value tv(0, 1000 * EVENT_DELAY_MS);
@@ -231,7 +229,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
     return 0;
   }
-  catch(const CORBA::Exception& exc)
+  catch (CORBA::Exception const & exc)
   {
     std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
   }

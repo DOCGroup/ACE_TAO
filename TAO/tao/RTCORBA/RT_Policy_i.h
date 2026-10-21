@@ -62,27 +62,27 @@ public:
    */
   RTCORBA::PriorityModel get_priority_model ();
 
-  RTCORBA::PriorityModel priority_model ();
+  RTCORBA::PriorityModel priority_model () override;
 
-  RTCORBA::Priority server_priority ();
+  RTCORBA::Priority server_priority () override;
 
-  CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  void destroy ();
+  void destroy () override;
 
   /// This method writes a CDR representation of the object state.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -91,7 +91,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_PriorityModelPolicy ();
+  ~TAO_PriorityModelPolicy () override;
 
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
@@ -124,19 +124,19 @@ public:
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
 
-  RTCORBA::ThreadpoolId threadpool ();
+  RTCORBA::ThreadpoolId threadpool () override;
 
-  CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  void destroy ();
+  void destroy () override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -145,7 +145,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_ThreadpoolPolicy ();
+  ~TAO_ThreadpoolPolicy () override;
 
 private:
   /// Attribute.
@@ -174,17 +174,17 @@ public:
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
 
-  CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  void destroy ();
+  void destroy () override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -193,7 +193,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_PrivateConnectionPolicy ();
+  ~TAO_PrivateConnectionPolicy () override;
 };
 
 //*************************************************************************
@@ -227,25 +227,25 @@ public:
    */
   RTCORBA::PriorityBands &priority_bands_rep ();
 
-  RTCORBA::PriorityBands *priority_bands ();
+  RTCORBA::PriorityBands *priority_bands () override;
 
-  CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  void destroy ();
+  void destroy () override;
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -254,7 +254,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_PriorityBandedConnectionPolicy ();
+  ~TAO_PriorityBandedConnectionPolicy () override;
 
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
@@ -294,19 +294,19 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep ();
 
-  RTCORBA::ProtocolList *protocols ();
+  RTCORBA::ProtocolList *protocols () override;
 
-  CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  void destroy ();
+  void destroy () override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -315,7 +315,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_ServerProtocolPolicy ();
+  ~TAO_ServerProtocolPolicy () override;
 
 private:
   /// Attribute.
@@ -350,27 +350,27 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep ();
 
-  RTCORBA::ProtocolList *protocols ();
+  RTCORBA::ProtocolList *protocols () override;
 
-  CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  void destroy ();
+  void destroy () override;
 
   // = CDR Encoder/Decoder.
 
   /// This method writes a CDR representation of the current object.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope () const;
+  TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -379,7 +379,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_ClientProtocolPolicy ();
+  ~TAO_ClientProtocolPolicy () override;
 
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
@@ -413,40 +413,40 @@ public:
                                CORBA::Boolean no_delay,
                                CORBA::Boolean enable_network_priority);
 
-  CORBA::Long send_buffer_size ();
+  CORBA::Long send_buffer_size () override;
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size) override;
 
-  CORBA::Long recv_buffer_size ();
+  CORBA::Long recv_buffer_size () override;
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size) override;
 
-  CORBA::Boolean keep_alive ();
+  CORBA::Boolean keep_alive () override;
 
-  void keep_alive (CORBA::Boolean keep_alive);
+  void keep_alive (CORBA::Boolean keep_alive) override;
 
-  CORBA::Boolean dont_route ();
+  CORBA::Boolean dont_route () override;
 
-  void dont_route (CORBA::Boolean dont_route);
+  void dont_route (CORBA::Boolean dont_route) override;
 
-  CORBA::Boolean no_delay ();
+  CORBA::Boolean no_delay () override;
 
-  void no_delay (CORBA::Boolean no_delay);
+  void no_delay (CORBA::Boolean no_delay) override;
 
-  CORBA::Boolean enable_network_priority ();
+  CORBA::Boolean enable_network_priority () override;
 
-  void enable_network_priority (CORBA::Boolean enable);
+  void enable_network_priority (CORBA::Boolean enable) override;
 
   /// This method writes a CDR representation of TCPProtocolProperties.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_TCP_Protocol_Properties ();
+  ~TAO_TCP_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -478,13 +478,13 @@ public:
   TAO_UnixDomain_Protocol_Properties (CORBA::Long send_buffer_size,
                                       CORBA::Long recv_buffer_size);
 
-  CORBA::Long send_buffer_size ();
+  CORBA::Long send_buffer_size () override;
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size) override;
 
-  CORBA::Long recv_buffer_size ();
+  CORBA::Long recv_buffer_size () override;
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size) override;
 
   /**
    * This method writes the CDR encapsulation of an instance of
@@ -494,7 +494,7 @@ public:
    * according to the order of declaration (i.e. first is encoded
    * send_buffer_size and then recv_buffer_size).
    */
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /**
    * This method reads an instance of UnixDomainProperties from
@@ -503,12 +503,12 @@ public:
    * RT CORBA Spec. The current implementation expect the field
    * according to the order of declaration.
    */
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_UnixDomain_Protocol_Properties ();
+  ~TAO_UnixDomain_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -543,39 +543,39 @@ public:
 
   // = IDL interface methods.
 
-  CORBA::Long send_buffer_size ();
+  CORBA::Long send_buffer_size () override;
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size) override;
 
-  CORBA::Long recv_buffer_size ();
+  CORBA::Long recv_buffer_size () override;
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size) override;
 
-  CORBA::Boolean keep_alive ();
+  CORBA::Boolean keep_alive () override;
 
-  void keep_alive (CORBA::Boolean keep_alive);
+  void keep_alive (CORBA::Boolean keep_alive) override;
 
-  CORBA::Boolean dont_route ();
+  CORBA::Boolean dont_route () override;
 
-  void dont_route (CORBA::Boolean dont_route);
+  void dont_route (CORBA::Boolean dont_route) override;
 
-  CORBA::Boolean no_delay ();
+  CORBA::Boolean no_delay () override;
 
-  void no_delay (CORBA::Boolean no_delay);
+  void no_delay (CORBA::Boolean no_delay) override;
 
   CORBA::Boolean enable_network_priority ();
 
-  CORBA::Long preallocate_buffer_size ();
+  CORBA::Long preallocate_buffer_size () override;
 
-  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size);
+  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size) override;
 
-  char *mmap_filename ();
+  char *mmap_filename () override;
 
-  void mmap_filename (const char *mmap_filename);
+  void mmap_filename (const char *mmap_filename) override;
 
-  char *mmap_lockname ();
+  char *mmap_lockname () override;
 
-  void mmap_lockname (const char *mmap_lockname);
+  void mmap_lockname (const char *mmap_lockname) override;
 
   /**
    * This method writes the CDR encapsulation of an instance of
@@ -584,7 +584,7 @@ public:
    * RT CORBA Spec. The current implementation encodes the field
    * according to the order of declaration.
    */
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /**
    * This method reads an instance of SharedMemoryProperties from
@@ -593,12 +593,12 @@ public:
    * RT CORBA Spec. The current implementation expect the field
    * according to the order of declaration.
    */
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_SharedMemory_Protocol_Properties ();
+  ~TAO_SharedMemory_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -631,28 +631,28 @@ public:
                                         CORBA::Long recv_buffer_size,
                                         CORBA::Boolean enable_network_priority);
 
-  CORBA::Boolean enable_network_priority ();
+  CORBA::Boolean enable_network_priority () override;
 
-  void enable_network_priority (CORBA::Boolean enable);
+  void enable_network_priority (CORBA::Boolean enable) override;
 
-  CORBA::Long send_buffer_size ();
+  CORBA::Long send_buffer_size () override;
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size) override;
 
-  CORBA::Long recv_buffer_size ();
+  CORBA::Long recv_buffer_size () override;
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size) override;
 
   /// This method writes a CDR representation of UserDatagramProtocolProperties.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_UserDatagram_Protocol_Properties ();
+  ~TAO_UserDatagram_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -684,40 +684,40 @@ public:
                                          CORBA::Boolean no_delay,
                                          CORBA::Boolean enable_network_priority);
 
-  CORBA::Long send_buffer_size ();
+  CORBA::Long send_buffer_size () override;
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size) override;
 
-  CORBA::Long recv_buffer_size ();
+  CORBA::Long recv_buffer_size () override;
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size) override;
 
-  CORBA::Boolean keep_alive ();
+  CORBA::Boolean keep_alive () override;
 
-  void keep_alive (CORBA::Boolean keep_alive);
+  void keep_alive (CORBA::Boolean keep_alive) override;
 
-  CORBA::Boolean dont_route ();
+  CORBA::Boolean dont_route () override;
 
-  void dont_route (CORBA::Boolean dont_route);
+  void dont_route (CORBA::Boolean dont_route) override;
 
-  CORBA::Boolean no_delay ();
+  CORBA::Boolean no_delay () override;
 
-  void no_delay (CORBA::Boolean no_delay);
+  void no_delay (CORBA::Boolean no_delay) override;
 
-  CORBA::Boolean enable_network_priority ();
+  CORBA::Boolean enable_network_priority () override;
 
-  void enable_network_priority (CORBA::Boolean enable);
+  void enable_network_priority (CORBA::Boolean enable) override;
 
   /// This method writes a CDR representation of StreamControlProtocolProperties.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_StreamControl_Protocol_Properties ();
+  ~TAO_StreamControl_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -738,13 +738,13 @@ class TAO_RTCORBA_Export TAO_GIOP_Protocol_Properties
 {
 public:
   // = CDR encoding methods
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_GIOP_Protocol_Properties ();
+  ~TAO_GIOP_Protocol_Properties () override;
 
   friend class TAO_Protocol_Properties_Factory;
   TAO_GIOP_Protocol_Properties ();

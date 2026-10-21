@@ -6,7 +6,8 @@
 #include "ace/Thread.h"
 
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
-  : myname_ ("Echo_Server_Interceptor")
+  : myname_ ("Echo_Server_Interceptor"),
+    forward_location_done_ (false)
 {
 }
 
@@ -14,10 +15,6 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (CORBA::Object_
   : myname_ ("Echo_Server_Interceptor"),
     forward_location_ (CORBA::Object::_duplicate (forward_location)),
     forward_location_done_ (false)
-{
-}
-
-Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
 {
 }
 
@@ -64,7 +61,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
       ACE_OS::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
-  forward_location_done_ = true;
+  this->forward_location_done_ = true;
 
   ACE_DEBUG ((LM_DEBUG, "Sending LOCATION_FORWARD, current thread %i\n", ACE_Thread::self ()));
 
@@ -83,16 +80,16 @@ void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-    // No op
-     ACE_UNUSED_ARG (ri);
+  // No op
+  ACE_UNUSED_ARG (ri);
 }
 
 void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-    // No Op
-     ACE_UNUSED_ARG (ri);
+  // No Op
+  ACE_UNUSED_ARG (ri);
 }
 
 void
@@ -109,7 +106,7 @@ Echo_Server_Request_Interceptor::send_other (
 }
 
 bool
-Echo_Server_Request_Interceptor::forward_location_done() const
+Echo_Server_Request_Interceptor::forward_location_done () const
 {
-  return forward_location_done_;
+  return this->forward_location_done_;
 }

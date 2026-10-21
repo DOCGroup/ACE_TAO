@@ -39,7 +39,7 @@ namespace TAO
   class FT_ReplicationManager;
   struct FT_FaultEventDescriptor;
 
-  typedef ACE_Unbounded_Set<PortableGroup::Location> FT_Location_Set;
+  using FT_Location_Set = ACE_Unbounded_Set<PortableGroup::Location>;
 
   /**
   * Replication Manager's fault analyzer.
@@ -54,12 +54,12 @@ namespace TAO
     * @param replication_manager Pointer to TAO::FT_ReplicationManager.
     */
     FT_ReplicationManagerFaultAnalyzer (
-      const TAO::FT_ReplicationManager * replication_manager);
+      TAO::FT_ReplicationManager const * replication_manager);
 
     /**
     * Destructor.
     */
-    virtual ~FT_ReplicationManagerFaultAnalyzer ();
+    ~FT_ReplicationManagerFaultAnalyzer () override;
 
   public:
     /**
@@ -67,30 +67,33 @@ namespace TAO
     * @param event The structured fault event, as from the Fault Notifier.
     * @return 0 if it is a valid event type, -1 otherwise.
     */
-    virtual int validate_event_type (
-      const CosNotification::StructuredEvent & event);
+    int validate_event_type (
+      CosNotification::StructuredEvent const & event) override;
 
     /**
     * Analyze a fault event.
     * @param event The structured fault event, as from the Fault Notifier.
     * @return 0 on success, -1 on failure.
     */
-    virtual int analyze_fault_event (
-      const CosNotification::StructuredEvent & event);
+    int analyze_fault_event (
+      CosNotification::StructuredEvent const & event) override;
 
     ////////////////////
     // Forbidden methods
   private:
     /// Default constructor.
-    FT_ReplicationManagerFaultAnalyzer ();
+    FT_ReplicationManagerFaultAnalyzer () = delete;
 
     /// Copy constructor.
     FT_ReplicationManagerFaultAnalyzer (
-      const FT_ReplicationManagerFaultAnalyzer & rhs);
+      FT_ReplicationManagerFaultAnalyzer const &) = delete;
 
     /// Assignment operator.
-    FT_ReplicationManagerFaultAnalyzer & operator = (
-      const FT_ReplicationManagerFaultAnalyzer & rhs);
+    FT_ReplicationManagerFaultAnalyzer (FT_ReplicationManagerFaultAnalyzer &&) = delete;
+    FT_ReplicationManagerFaultAnalyzer & operator= (
+      FT_ReplicationManagerFaultAnalyzer const &) = delete;
+    FT_ReplicationManagerFaultAnalyzer & operator= (
+      FT_ReplicationManagerFaultAnalyzer &&) = delete;
 
     /////////////////////////
     // Implementation methods

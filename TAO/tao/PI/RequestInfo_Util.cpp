@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 Dynamic::ParameterList *
 TAO_RequestInfo_Util::make_parameter_list ()
 {
-  Dynamic::ParameterList *parameter_list = 0;
+  Dynamic::ParameterList *parameter_list = nullptr;
   ACE_NEW_THROW_EX (parameter_list,
                     Dynamic::ParameterList,
                     CORBA::NO_MEMORY (
@@ -32,7 +32,7 @@ TAO_RequestInfo_Util::make_parameter_list ()
 Dynamic::ExceptionList *
 TAO_RequestInfo_Util::make_exception_list ()
 {
-  Dynamic::ExceptionList *exception_list = 0;
+  Dynamic::ExceptionList *exception_list = nullptr;
   ACE_NEW_THROW_EX (exception_list,
                     Dynamic::ExceptionList,
                     CORBA::NO_MEMORY (
@@ -49,7 +49,7 @@ TAO_RequestInfo_Util::make_exception_list ()
 Dynamic::ContextList *
 TAO_RequestInfo_Util::make_context_list ()
 {
-  Dynamic::ContextList *context_list = 0;
+  Dynamic::ContextList *context_list = nullptr;
   ACE_NEW_THROW_EX (context_list,
                     Dynamic::ContextList,
                     CORBA::NO_MEMORY (
@@ -66,7 +66,7 @@ TAO_RequestInfo_Util::make_context_list ()
 Dynamic::RequestContext *
 TAO_RequestInfo_Util::make_request_context ()
 {
-  Dynamic::RequestContext *request_context = 0;
+  Dynamic::RequestContext *request_context = nullptr;
   ACE_NEW_THROW_EX (request_context,
                     Dynamic::RequestContext,
                     CORBA::NO_MEMORY (
@@ -83,7 +83,7 @@ TAO_RequestInfo_Util::make_request_context ()
 CORBA::Any *
 TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any)
 {
-  CORBA::Any *any = 0;
+  CORBA::Any *any = nullptr;
   ACE_NEW_THROW_EX (any,
                     CORBA::Any,
                     CORBA::NO_MEMORY (

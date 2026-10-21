@@ -33,7 +33,7 @@ class TAO_ESF_Peer_Connected : public TAO_ESF_Worker<PROXY>
 public:
   TAO_ESF_Peer_Connected (PEER *peer);
 
-  void work (PROXY *proxy);
+  void work (PROXY *proxy) override;
 
 private:
   PEER* peer_;
@@ -55,7 +55,7 @@ class TAO_ESF_Peer_Reconnected : public TAO_ESF_Worker<PROXY>
 public:
   TAO_ESF_Peer_Reconnected (PEER *peer);
 
-  void work (PROXY *proxy);
+  void work (PROXY *proxy) override;
 
 private:
   PEER* peer_;
@@ -77,7 +77,7 @@ class TAO_ESF_Peer_Disconnected : public TAO_ESF_Worker<PROXY>
 public:
   TAO_ESF_Peer_Disconnected (PEER *peer);
 
-  void work (PROXY *proxy);
+  void work (PROXY *proxy) override;
 
 private:
   PEER* peer_;

@@ -14,23 +14,29 @@ class bug3486_Export DllORB: public ACE_Task_Base
 {
 public:
   DllORB ();
-  virtual ~DllORB ();
+
+  DllORB (DllORB const &) = delete;
+  DllORB (DllORB &&) = delete;
+  DllORB &operator= (DllORB const &) = delete;
+  DllORB &operator= (DllORB &&) = delete;
+
+  ~DllORB () override;
 
   inline CORBA::ORB_ptr orb () const
   {
     return CORBA::ORB::_duplicate (mv_orb_.in ());
   }
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int fini ();
+  int fini () override;
 
 protected:
-  virtual int svc ();
+  int svc () override;
 
 private:
   unsigned int                   failPrePostInit_;
-  ACE_Thread_Barrier*            mp_barrier_;
+  ACE_Thread_Barrier *           mp_barrier_;
   CORBA::ORB_var                 mv_orb_;
   PortableServer::POA_var        mv_rootPOA_;
   PortableServer::POAManager_var mv_poaManager_;

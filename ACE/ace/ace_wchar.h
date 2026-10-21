@@ -78,8 +78,8 @@ using std::size_t;
 # endif /* ACE_TEXT_WIDE */
 
 #if defined (ACE_USES_WCHAR)
-typedef wchar_t ACE_TCHAR;
-typedef char ACE_ANTI_TCHAR;
+using ACE_TCHAR = wchar_t;
+using ACE_ANTI_TCHAR = char;
 # define ACE_TEXT(STRING) ACE_TEXT_WIDE (STRING)
 # define ACE_TEXT_ALWAYS_CHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_ALWAYS_WCHAR(STRING) STRING

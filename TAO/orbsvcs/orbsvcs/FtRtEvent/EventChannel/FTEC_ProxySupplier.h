@@ -23,11 +23,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_ProxyPushSupplier : public TAO_EC_Default_ProxyPushSupplier
 {
-  typedef TAO_EC_Default_ProxyPushSupplier Inherited;
+  using Inherited = TAO_EC_Default_ProxyPushSupplier;
 public:
-  typedef RtecEventChannelAdmin::ProxyPushSupplier Interface;
-  typedef FtRtecEventChannelAdmin::ProxyPushSupplierStat State;
-  typedef POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr Skeleton;
+  using Interface = RtecEventChannelAdmin::ProxyPushSupplier;
+  using State = FtRtecEventChannelAdmin::ProxyPushSupplierStat;
+  using Skeleton = POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr;
 
   TAO_FTEC_ProxyPushSupplier(TAO_EC_Event_Channel_Base* event_channel,
                            int validate_connection);
@@ -35,20 +35,20 @@ public:
  virtual void activate (
        RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
     // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
+  void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier ();
-  virtual void suspend_connection ();
-  virtual void resume_connection ();
+                RtecEventChannelAdmin::ConsumerQOS const& qos) override;
+  void disconnect_push_supplier () override;
+  void suspend_connection () override;
+  void resume_connection () override;
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 
   void get_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat& state);
   void set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state);
 
-  typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-    (const FtRtecEventChannelAdmin::ObjectId&);
+  using RollbackOperation = void (FtRtecEventChannelAdmin::EventChannelFacade::*)
+    (FtRtecEventChannelAdmin::ObjectId const&);
 
   static const RollbackOperation rollback_obtain;
 private:

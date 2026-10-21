@@ -30,7 +30,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
     case EVP_PKEY_RSA:
       {
         RSA * rsa = ::EVP_PKEY_get1_RSA (pkey);
-        if (rsa != 0)
+        if (rsa != nullptr)
           {
             // Not exception safe!
             ::EVP_PKEY_set1_RSA (p.in (), RSAPrivateKey_dup (rsa));
@@ -42,7 +42,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
     case EVP_PKEY_DSA:
       {
         DSA * dsa = ::EVP_PKEY_get1_DSA (pkey);
-        if (dsa != 0)
+        if (dsa != nullptr)
           {
             // Not exception safe!
             ::EVP_PKEY_set1_DSA (p.in (), DSAPARAMS_DUP_WRAPPER_NAME (dsa));
@@ -54,7 +54,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
     case EVP_PKEY_DH:
       {
         DH * dh = ::EVP_PKEY_get1_DH (pkey);
-        if (dh != 0)
+        if (dh != nullptr)
           {
             // Not exception safe!
             ::EVP_PKEY_set1_DH (p.in (), DHPARAMS_DUP_WRAPPER_NAME (dh));
@@ -65,7 +65,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
 
     default:
       // We should never get here!
-      return 0;
+      return nullptr;
     }
 
   return p._retn ();

@@ -39,8 +39,7 @@ public:
     : output_handler_ (handler), input_handler_ (handler) {}
 
 protected:
-  typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR>
-          PARENT;
+  using PARENT = ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR>;
 
   // <ACE_Acceptor> factory method.
   virtual int make_svc_handler (AC_Input_Handler *&sh);
@@ -59,8 +58,7 @@ protected:
 class AC_CLD_Connector
   : public ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR> {
 public:
-  typedef ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR>
-          PARENT;
+  using PARENT = ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR>;
 
   // Constructor.
   AC_CLD_Connector (AC_Output_Handler *handler = nullptr)

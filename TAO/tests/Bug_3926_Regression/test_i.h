@@ -29,15 +29,19 @@ public:
   /// Constructor.
   test_i (CORBA::Short num,
           CORBA::ORB_ptr orb);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// Destructor.
-  ~test_i ();
+  ~test_i () override = default;
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short number ();
+  CORBA::Short number () override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// The number assigned to this object.

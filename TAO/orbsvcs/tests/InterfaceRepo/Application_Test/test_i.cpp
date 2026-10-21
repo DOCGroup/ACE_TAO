@@ -4,11 +4,11 @@
 #include "ace/SString.h"
 
 CORBA::Boolean
-inventory_i::getCDinfo (const char * artist,
-                        char *& title,
+inventory_i::getCDinfo (char const* artist,
+                        char*& title,
                         CORBA::Float_out price)
 {
-  CORBA::Boolean in_stock = 0;
+  CORBA::Boolean in_stock = false;
   price = 0.0f;
   ACE_CString name_key ("Beatles");
   ACE_CString name (artist);
@@ -27,7 +27,7 @@ inventory_i::getCDinfo (const char * artist,
 
           price = 13.49f;
 
-          in_stock = 1;
+          in_stock = true;
         }
       else
         {

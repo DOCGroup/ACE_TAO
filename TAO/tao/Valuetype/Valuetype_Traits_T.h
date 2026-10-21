@@ -22,15 +22,15 @@ namespace details
 template<class object_t, class object_t_var, class derived>
 struct valuetype_traits_decorator
 {
-  typedef object_t object_type;
-  typedef object_type * value_type;
-  typedef object_type const * const_value_type;
-  typedef object_t_var object_type_var;
+  using object_type = object_t;
+  using value_type = object_type *;
+  using const_value_type = object_type const *;
+  using object_type_var = object_t_var;
 
   inline static void zero_range(
       object_type ** begin, object_type ** end)
   {
-    ACE_OS::memset (begin, 0, (end - begin) * sizeof (object_type*));
+    std::fill (begin, end, nullptr);
   }
 
   inline static void initialize_range(
@@ -63,7 +63,7 @@ struct valuetype_traits_decorator
 
   inline static object_type const * initialize_if_zero(object_type * & element)
   {
-    if (element == 0)
+    if (element == nullptr)
     {
       element = derived::nil();
     }
@@ -76,10 +76,10 @@ struct valuetype_traits
   : public valuetype_traits_base<object_t, object_t_var>
   , public valuetype_traits_decorator<object_t, object_t_var, valuetype_traits<object_t,object_t_var,dummy> >
 {
-  typedef object_t object_type;
-  typedef object_type * value_type;
-  typedef object_type const * const_value_type;
-  typedef object_t_var object_type_var;
+  using object_type = object_t;
+  using value_type = object_type *;
+  using const_value_type = object_type const *;
+  using object_type_var = object_t_var;
 };
 } // namespace details
 } // namespace CORBA

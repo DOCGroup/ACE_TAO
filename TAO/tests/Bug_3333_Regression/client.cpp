@@ -2,13 +2,13 @@
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-const ACE_TCHAR *loop_forever_ior = ACE_TEXT ("file://forward_forever.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *loop_forever_ior = ACE_TEXT ("file://forward_forever.ior");
 bool shutdown_only = false;
 
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:s"));
   int c;
@@ -39,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -66,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - create timeout policy\n"));
           // Three second relative roundtrip timeout.
-          TimeBase::TimeT timeout_period = 30000000u;
+          TimeBase::TimeT const timeout_period = 30000000u;
 
           CORBA::Any timeout_as_any;
           timeout_as_any <<= timeout_period;
@@ -108,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                   "ERROR - We have managed to invoke a server method. \n"),
                                 1);
             }
-          catch (const CORBA::TIMEOUT &)
+          catch (CORBA::TIMEOUT const &)
             {
               // Hooray - all OK
               ACE_DEBUG ((LM_DEBUG, "Test OK - RELATIVE_RT_TIMEOUT ends location forward loop.\n"));
@@ -133,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - End\n"));
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR: Exception caught:");
       return 1;

@@ -3,16 +3,16 @@
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
-  int result = 0;
+  int result {};
   try
     {
       throw CORBA::BAD_PARAM ();
     }
-  catch (const CORBA::BAD_PARAM&)
+  catch (CORBA::BAD_PARAM const &)
     {
       // Correct exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Incorrect exception caught:");
       ++result;

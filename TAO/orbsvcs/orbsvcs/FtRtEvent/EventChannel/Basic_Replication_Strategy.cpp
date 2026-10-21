@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// a deadlock.
 Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
   : sequence_num_(0)
-  , mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : 0)
+  , mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : nullptr)
 {
 }
 

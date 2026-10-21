@@ -113,7 +113,7 @@ namespace CORBA
 {
   class ORB_ObjectIdList;  // CORBA::ORB::ObjectIdList
   class ORB;
-  typedef ORB *ORB_ptr;
+  using ORB_ptr = ORB *;
 
   class PolicyList;
 }
@@ -126,15 +126,15 @@ namespace IOP
 namespace PortableInterceptor
 {
   class IORInterceptor;
-  typedef IORInterceptor *IORInterceptor_ptr;
+  using IORInterceptor_ptr = IORInterceptor *;
 
 #if TAO_HAS_INTERCEPTORS == 1
 
   class ClientRequestInterceptor;
-  typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
+  using ClientRequestInterceptor_ptr = ClientRequestInterceptor *;
 
   class ServerRequestInterceptor;
-  typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
+  using ServerRequestInterceptor_ptr = ServerRequestInterceptor *;
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 }
@@ -462,10 +462,10 @@ public:
                           ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
-  typedef void (*Timeout_Hook) (TAO_ORB_Core *,
-                                TAO_Stub *,
-                                bool&,
-                                ACE_Time_Value&);
+  using Timeout_Hook = void (*) (TAO_ORB_Core *,
+                                 TAO_Stub *,
+                                 bool&,
+                                 ACE_Time_Value&);
 
   void set_timeout_hook (Timeout_Hook hook);
 
@@ -521,10 +521,10 @@ public:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-  typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
-                                   TAO_Stub *,
-                                   bool &,
-                                   Messaging::SyncScope &);
+  using Sync_Scope_Hook = void (*) (TAO_ORB_Core *,
+                                    TAO_Stub *,
+                                    bool &,
+                                    Messaging::SyncScope &);
 
   void set_sync_scope_hook (Sync_Scope_Hook hook);
 
@@ -876,7 +876,7 @@ public:
   /// Get Code Set Manager
   TAO_Codeset_Manager *codeset_manager ();
 
-  typedef ACE_Array_Map<ACE_CString, ACE_CString> InitRefMap;
+  using InitRefMap = ACE_Array_Map<ACE_CString, ACE_CString>;
 
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map ();

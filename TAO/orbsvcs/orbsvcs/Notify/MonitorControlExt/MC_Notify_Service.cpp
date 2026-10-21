@@ -20,7 +20,7 @@ TAO_MC_Notify_Service::~TAO_MC_Notify_Service ()
 TAO_Notify_Factory*
 TAO_MC_Notify_Service::create_factory ()
 {
-  TAO_MC_Default_Factory* factory = 0;
+  TAO_MC_Default_Factory* factory = nullptr;
   ACE_NEW_THROW_EX (factory,
                     TAO_MC_Default_Factory (),
                     CORBA::NO_MEMORY ());

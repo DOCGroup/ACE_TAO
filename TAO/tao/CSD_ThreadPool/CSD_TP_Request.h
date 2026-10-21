@@ -31,7 +31,7 @@ namespace TAO
   namespace CSD
   {
     class TP_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Request> TP_Request_Handle;
+    using TP_Request_Handle = TAO_Intrusive_Ref_Count_Handle<TP_Request>;
 
     class TP_Queue;
 
@@ -98,6 +98,11 @@ namespace TAO
       virtual void cancel_i() = 0;
 
     private:
+      TP_Request (TP_Request const &) = delete;
+      TP_Request &operator= (TP_Request const &) = delete;
+      TP_Request (TP_Request &&) = delete;
+      TP_Request &operator= (TP_Request &&) = delete;
+
       /// The TP_Queue class is our friend since it needs access to
       /// the prev_ and next_ (private) data members.
       friend class TP_Queue;

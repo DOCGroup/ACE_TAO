@@ -18,8 +18,8 @@ CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::String_var orb_id = ri->orb_id();
 
-  int argc =0;
-  ACE_TCHAR** argv =0;
+  int argc = 0;
+  ACE_TCHAR **argv = nullptr;
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, orb_id.in());
 
   PortableServer::POA_var poa =
@@ -60,10 +60,6 @@ CORBA::Object_ptr get_forward(PortableInterceptor::ServerRequestInfo_ptr ri)
 
 
 ForwardCtrlServerInterceptor::ForwardCtrlServerInterceptor()
-{
-}
-
-ForwardCtrlServerInterceptor::~ForwardCtrlServerInterceptor()
 {
 }
 

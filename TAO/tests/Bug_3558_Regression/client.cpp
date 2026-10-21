@@ -8,6 +8,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
+#include <cstdint>
+#include <vector>
 
 const ACE_TCHAR *ior1 = ACE_TEXT ("file://server1.ior");
 const ACE_TCHAR *ior2 = ACE_TEXT ("file://server2.ior");
@@ -52,10 +54,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 
-static void *
+ACE_THR_FUNC_RETURN
 test_server (void *arg)
 {
-  intptr_t server_nr = reinterpret_cast<intptr_t> (arg);
+  std::intptr_t const server_nr = reinterpret_cast<std::intptr_t> (arg);
 
   ACE_TCHAR ior[256];
 
@@ -86,7 +88,7 @@ test_server (void *arg)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%D (%t) Nil Test::Hello reference <%s> for server %d\n"),
                       ior, server_nr));
-          return 0;
+          return ACE_THR_FUNC_RETURN_NULL;
         }
 
       ACE_DEBUG((LM_DEBUG,
@@ -155,11 +157,11 @@ test_server (void *arg)
               ACE_TEXT ("%D Thread ended for server %d\n"),
               server_nr));
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int extra_argc = 4;
 
@@ -171,8 +173,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (debug_level > 0)
         extra_argc = 6;
 
-      ACE_TCHAR **extra = 0;
-      ACE_NEW_RETURN (extra, ACE_TCHAR *[extra_argc], -1);
+      std::vector<ACE_TCHAR *> extra (extra_argc);
       extra[0] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
       extra[1] = ACE::strnew (ACE_TEXT ("static Resource_Factory \"-ORBConnectionCacheMax 1 -ORBConnectionCachePurgePercentage 100\""));
       extra[2] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
@@ -183,8 +184,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           extra[5] = ACE::strnew (ACE_TEXT ("10"));
         }
 
-      ACE_TCHAR **largv = new ACE_TCHAR *[argc+extra_argc];
-      for (int i = 0; i < argc; i++)
+      std::vector<ACE_TCHAR *> largv (argc + extra_argc);
+      for (int i = 0; i < argc; ++i)
         largv[i] = argv[i];
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D client adding args:\n")));
@@ -196,11 +197,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       argc += extra_argc;
 
-      orb = CORBA::ORB_init (argc, largv);
+      orb = CORBA::ORB_init (argc, largv.data ());
 
       if (ACE_Thread_Manager::instance ()->spawn
-          ((ACE_THR_FUNC) test_server,
-           (void *) 1,
+          (test_server,
+           reinterpret_cast<void *> (1),
            THR_NEW_LWP | THR_JOINABLE,
            0) == -1)
         {
@@ -212,8 +213,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep(2);
 
       if (ACE_Thread_Manager::instance ()->spawn
-          ((ACE_THR_FUNC) test_server,
-           (void *) 2,
+          (test_server,
+           reinterpret_cast<void *> (2),
            THR_NEW_LWP | THR_JOINABLE,
            0) == -1)
         {
@@ -222,19 +223,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      ACE_Thread_Manager::instance()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 
       ACE_DEBUG((LM_DEBUG,
                  ACE_TEXT ("%D Transport data when done: current size: %d\n"),
                  orb->orb_core ()->lane_resources ().transport_cache ().current_size ()));
 
       orb->destroy ();
-      for (int i = 0; i < extra_argc; i++)
+      for (int i = 0; i < extra_argc; ++i)
         ACE::strdelete (extra[i]);
-      delete [] extra;
-      delete [] largv;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

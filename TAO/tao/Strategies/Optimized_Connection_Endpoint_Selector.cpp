@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Time_Value TAO_Optimized_Connection_Endpoint_Selector::timeout_;
 
 TAO_Optimized_Connection_Endpoint_Selector::
-TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value &tv)
+TAO_Optimized_Connection_Endpoint_Selector (ACE_Time_Value const &tv)
 {
   TAO_Optimized_Connection_Endpoint_Selector::timeout_ = tv;
   if (TAO_debug_level)
@@ -36,9 +36,7 @@ TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value &tv)
 }
 
 TAO_Optimized_Connection_Endpoint_Selector::
-~TAO_Optimized_Connection_Endpoint_Selector ()
-{
-}
+~TAO_Optimized_Connection_Endpoint_Selector () = default;
 
 
 void
@@ -58,7 +56,7 @@ int
 TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
                                                            TAO::Profile_Transport_Resolver *r)
 {
-  TAO_Endpoint *effective_endpoint = 0;
+  TAO_Endpoint *effective_endpoint = nullptr;
 
   r->profile(p);
   effective_endpoint = p->endpoint ();
@@ -93,8 +91,8 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
   // necessary to avoid re-using a corbaloc or other previously forwarded
   // profile.
 
-  const TAO_MProfile *profiles = stub->forward_profiles();
-  if (profiles != 0)
+  TAO_MProfile const *profiles = stub->forward_profiles();
+  if (profiles != nullptr)
     {
       for (CORBA::ULong count = 0; count <  profiles->profile_count(); count++)
         {

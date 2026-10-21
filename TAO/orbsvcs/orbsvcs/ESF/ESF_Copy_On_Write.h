@@ -57,7 +57,7 @@ class TAO_ESF_Copy_On_Write_Read_Guard
 {
 public:
   /// Constructor
-  typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
   TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &mutex,
                                     Collection *&collection);
 
@@ -86,7 +86,7 @@ class TAO_ESF_Copy_On_Write_Write_Guard
 {
 public:
   /// Constructor
-  typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
   TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &mutex,
                                      ACE_SYNCH_CONDITION_T &cond,
                                      int &pending_writes,
@@ -122,22 +122,22 @@ class TAO_ESF_Copy_On_Write : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   /// Constructor
-  typedef TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_SYNCH_MUTEX_T> Read_Guard;
-  typedef TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE> Write_Guard;
+  using Read_Guard = TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION, ITERATOR, ACE_SYNCH_MUTEX_T>;
+  using Write_Guard = TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION, ITERATOR, ACE_SYNCH_USE>;
   TAO_ESF_Copy_On_Write ();
 
   /// Destructor
-  ~TAO_ESF_Copy_On_Write ();
+  ~TAO_ESF_Copy_On_Write () override;
 
   // = The TAO_ESF_Proxy methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
-  virtual void connected (PROXY *proxy);
-  virtual void reconnected (PROXY *proxy);
-  virtual void disconnected (PROXY *proxy);
-  virtual void shutdown ();
+  void for_each (TAO_ESF_Worker<PROXY> *worker) override;
+  void connected (PROXY *proxy) override;
+  void reconnected (PROXY *proxy) override;
+  void disconnected (PROXY *proxy) override;
+  void shutdown () override;
 
 private:
-  typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
+  using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
 
   /// A mutex to serialize access to the collection pointer.
   ACE_SYNCH_MUTEX_T mutex_;

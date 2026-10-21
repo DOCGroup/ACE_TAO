@@ -11,10 +11,6 @@ ProxySupplierStateWorker::ProxySupplierStateWorker (
 {
 }
 
-ProxySupplierStateWorker::~ProxySupplierStateWorker()
-{
-}
-
 void ProxySupplierStateWorker::set_size(size_t size)
 {
   supplierStates_.length(size);

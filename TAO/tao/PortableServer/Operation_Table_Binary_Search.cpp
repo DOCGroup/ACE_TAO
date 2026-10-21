@@ -5,7 +5,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Operation_Table_Timeprobe_Description[] =
+static char const *TAO_Operation_Table_Timeprobe_Description[] =
   {
     "TAO_Binary_Search_OpTable::find - start",
     "TAO_Binary_Search_OpTable::find - end"
@@ -27,9 +27,9 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Binary_Search_OpTable::find (const char *opname,
+TAO_Binary_Search_OpTable::find (char const *opname,
                                  TAO_Skeleton &skelfunc,
-                                 const unsigned int /* length */)
+                                 unsigned int const /* length */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
@@ -46,10 +46,10 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 }
 
 int
-TAO_Binary_Search_OpTable::find (const char *opname,
+TAO_Binary_Search_OpTable::find (char const *opname,
                                  TAO_Collocated_Skeleton &skelfunc,
                                  TAO::Collocation_Strategy st,
-                                 const unsigned int /* length */)
+                                 unsigned int const /* length */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
@@ -73,8 +73,8 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 }
 
 int
-TAO_Binary_Search_OpTable::bind (const char *,
-                                 const TAO::Operation_Skeletons)
+TAO_Binary_Search_OpTable::bind (char const *,
+                                 TAO::Operation_Skeletons const)
 {
   return 0;
 }

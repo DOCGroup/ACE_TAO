@@ -65,7 +65,7 @@ CORBA::Any::operator= (const CORBA::Any &rhs)
 void
 CORBA::Any::replace (TAO::Any_Impl *new_impl)
 {
-  ACE_ASSERT (new_impl != 0);
+  ACE_ASSERT (new_impl != nullptr);
 
   if (this->impl_)
     {
@@ -320,7 +320,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_wchar wc)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_string s)
 {
-  if (s.bound_ > 0 && s.val_ != 0 && std::strlen (s.val_) > s.bound_)
+  if (s.bound_ > 0 && s.val_ != nullptr && std::strlen (s.val_) > s.bound_)
     {
       return;
     }
@@ -339,7 +339,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_string s)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 {
-  if (ws.bound_ > 0 && ws.val_ != 0 && ACE_OS::wslen (ws.val_) > ws.bound_)
+  if (ws.bound_ > 0 && ws.val_ != nullptr && ACE_OS::wslen (ws.val_) > ws.bound_)
     {
       return;
     }

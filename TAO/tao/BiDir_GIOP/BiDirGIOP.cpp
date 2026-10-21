@@ -25,9 +25,9 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
       "BiDirGIOP_Loader",
       true);
 
-  if (bidir_loader != 0 && bidir_loader != this)
+  if (bidir_loader != nullptr && bidir_loader != this)
     {
-      return bidir_loader->init (0, 0);
+      return bidir_loader->init (0, nullptr);
     }
 
   if (TAO_DEF_GIOP_MINOR >= 2)

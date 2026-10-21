@@ -30,13 +30,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE> class TAO_Notify_Property_T;
 template <class TYPE> class TAO_Notify_StructProperty_T;
 
-typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX,CORBA::Long> TAO_Notify_Atomic_Property_Long;
-typedef TAO_Notify_Property_T<CORBA::Long> TAO_Notify_Property_Long;
-typedef TAO_Notify_Property_T<CORBA::ULong> TAO_Notify_Property_ULong;
-typedef TAO_Notify_Property_T<CORBA::Short> TAO_Notify_Property_Short;
-typedef TAO_Notify_Property_T<TimeBase::TimeT> TAO_Notify_Property_Time;
-typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams> TAO_Notify_Property_ThreadPool;
-typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams> TAO_Notify_Property_ThreadPoolLanes;
+using TAO_Notify_Atomic_Property_Long = ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long>;
+using TAO_Notify_Property_Long = TAO_Notify_Property_T<CORBA::Long>;
+using TAO_Notify_Property_ULong = TAO_Notify_Property_T<CORBA::ULong>;
+using TAO_Notify_Property_Short = TAO_Notify_Property_T<CORBA::Short>;
+using TAO_Notify_Property_Time = TAO_Notify_Property_T<TimeBase::TimeT>;
+using TAO_Notify_Property_ThreadPool = TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams>;
+using TAO_Notify_Property_ThreadPoolLanes = TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

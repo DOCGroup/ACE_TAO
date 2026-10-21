@@ -10,10 +10,14 @@
 class Echo_Callback : public POA_Test::AMI_EchoHandler
 {
 public:
-  Echo_Callback();
+  Echo_Callback ();
+  Echo_Callback (Echo_Callback const &) = delete;
+  Echo_Callback &operator= (Echo_Callback const &) = delete;
+  Echo_Callback (Echo_Callback &&) = delete;
+  Echo_Callback &operator= (Echo_Callback &&) = delete;
 
-  virtual void echo_payload (Test::Payload const & ami_return_val);
-  virtual void echo_payload_excep (Test::AMI_EchoExceptionHolder * excep_holder);
+  void echo_payload (Test::Payload const &ami_return_val) override;
+  void echo_payload_excep (Test::AMI_EchoExceptionHolder *excep_holder) override;
 };
 
 #endif /* Echo__h_ */

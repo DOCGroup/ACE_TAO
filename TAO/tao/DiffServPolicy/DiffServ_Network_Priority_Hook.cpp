@@ -67,7 +67,7 @@ TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   if (npm == TAO::Portable_Server::Cached_Policies::
              CLIENT_PROPAGATED_NETWORK_PRIORITY)
     {
-      if (nph != 0)
+      if (nph != nullptr)
         {
           dscp_codepoint = nph->get_dscp_codepoint (request_service_context);
         }

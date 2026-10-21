@@ -49,7 +49,7 @@ public:
 
     TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-    PROXY_IMPL* proxy = 0;
+    PROXY_IMPL* proxy = nullptr;
     factory->create (proxy);
 
     PortableServer::ServantBase_var servant (proxy);
@@ -76,7 +76,7 @@ public:
   {
     TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-    PROXY_IMPL* proxy = 0;
+    PROXY_IMPL* proxy = nullptr;
     factory->create (proxy);
 
     PortableServer::ServantBase_var servant (proxy);
@@ -93,62 +93,62 @@ public:
 };
 
 // define the ProxyConsumer Builders.
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_ProxyPushConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
-                             , CosNotifyChannelAdmin::ProxyConsumer_var
-                             , TAO_Notify_SupplierAdmin>
-TAO_Notify_ProxyPushConsumer_Builder;
+using TAO_Notify_ProxyPushConsumer_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_ProxyPushConsumer,
+                             CosNotifyChannelAdmin::ProxyConsumer,
+                             CosNotifyChannelAdmin::ProxyConsumer_ptr,
+                             CosNotifyChannelAdmin::ProxyConsumer_var,
+                             TAO_Notify_SupplierAdmin>;
 
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_StructuredProxyPushConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
-                             , CosNotifyChannelAdmin::ProxyConsumer_var
-                             , TAO_Notify_SupplierAdmin>
-TAO_Notify_StructuredProxyPushConsumer_Builder;
+using TAO_Notify_StructuredProxyPushConsumer_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_StructuredProxyPushConsumer,
+                             CosNotifyChannelAdmin::ProxyConsumer,
+                             CosNotifyChannelAdmin::ProxyConsumer_ptr,
+                             CosNotifyChannelAdmin::ProxyConsumer_var,
+                             TAO_Notify_SupplierAdmin>;
 
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_SequenceProxyPushConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
-                             , CosNotifyChannelAdmin::ProxyConsumer_var
-                             , TAO_Notify_SupplierAdmin>
-TAO_Notify_SequenceProxyPushConsumer_Builder;
+using TAO_Notify_SequenceProxyPushConsumer_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_SequenceProxyPushConsumer,
+                             CosNotifyChannelAdmin::ProxyConsumer,
+                             CosNotifyChannelAdmin::ProxyConsumer_ptr,
+                             CosNotifyChannelAdmin::ProxyConsumer_var,
+                             TAO_Notify_SupplierAdmin>;
 
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_CosEC_ProxyPushConsumer
-                             , CosEventChannelAdmin::ProxyPushConsumer
-                             , CosEventChannelAdmin::ProxyPushConsumer_ptr
-                             , CosEventChannelAdmin::ProxyPushConsumer_var
-                             , TAO_Notify_SupplierAdmin>
-TAO_Notify_CosEC_ProxyPushConsumer_Builder;
+using TAO_Notify_CosEC_ProxyPushConsumer_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_CosEC_ProxyPushConsumer,
+                             CosEventChannelAdmin::ProxyPushConsumer,
+                             CosEventChannelAdmin::ProxyPushConsumer_ptr,
+                             CosEventChannelAdmin::ProxyPushConsumer_var,
+                             TAO_Notify_SupplierAdmin>;
 
 // define the ProxySupplier Builders.
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_ProxyPushSupplier
-                             , CosNotifyChannelAdmin::ProxySupplier
-                             , CosNotifyChannelAdmin::ProxySupplier_ptr
-                             , CosNotifyChannelAdmin::ProxySupplier_var
-                             , TAO_Notify_ConsumerAdmin>
-TAO_Notify_ProxyPushSupplier_Builder;
+using TAO_Notify_ProxyPushSupplier_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_ProxyPushSupplier,
+                             CosNotifyChannelAdmin::ProxySupplier,
+                             CosNotifyChannelAdmin::ProxySupplier_ptr,
+                             CosNotifyChannelAdmin::ProxySupplier_var,
+                             TAO_Notify_ConsumerAdmin>;
 
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_StructuredProxyPushSupplier
-                             , CosNotifyChannelAdmin::ProxySupplier
-                             , CosNotifyChannelAdmin::ProxySupplier_ptr
-                             , CosNotifyChannelAdmin::ProxySupplier_var
-                             , TAO_Notify_ConsumerAdmin>
-TAO_Notify_StructuredProxyPushSupplier_Builder;
+using TAO_Notify_StructuredProxyPushSupplier_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_StructuredProxyPushSupplier,
+                             CosNotifyChannelAdmin::ProxySupplier,
+                             CosNotifyChannelAdmin::ProxySupplier_ptr,
+                             CosNotifyChannelAdmin::ProxySupplier_var,
+                             TAO_Notify_ConsumerAdmin>;
 
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_SequenceProxyPushSupplier
-                             , CosNotifyChannelAdmin::ProxySupplier
-                             , CosNotifyChannelAdmin::ProxySupplier_ptr
-                             , CosNotifyChannelAdmin::ProxySupplier_var
-                             , TAO_Notify_ConsumerAdmin>
-TAO_Notify_SequenceProxyPushSupplier_Builder;
+using TAO_Notify_SequenceProxyPushSupplier_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_SequenceProxyPushSupplier,
+                             CosNotifyChannelAdmin::ProxySupplier,
+                             CosNotifyChannelAdmin::ProxySupplier_ptr,
+                             CosNotifyChannelAdmin::ProxySupplier_var,
+                             TAO_Notify_ConsumerAdmin>;
 
-typedef TAO_Notify_Proxy_Builder_T<TAO_Notify_CosEC_ProxyPushSupplier
-                             , CosEventChannelAdmin::ProxyPushSupplier
-                             , CosEventChannelAdmin::ProxyPushSupplier_ptr
-                             , CosEventChannelAdmin::ProxyPushSupplier_var
-                             , TAO_Notify_ConsumerAdmin>
-TAO_Notify_CosEC_ProxyPushSupplier_Builder;
+using TAO_Notify_CosEC_ProxyPushSupplier_Builder =
+  TAO_Notify_Proxy_Builder_T<TAO_Notify_CosEC_ProxyPushSupplier,
+                             CosEventChannelAdmin::ProxyPushSupplier,
+                             CosEventChannelAdmin::ProxyPushSupplier_ptr,
+                             CosEventChannelAdmin::ProxyPushSupplier_var,
+                             TAO_Notify_ConsumerAdmin>;
 
 TAO_Notify_Builder::TAO_Notify_Builder ()
 {
@@ -165,7 +165,7 @@ TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa, TAO_Notif
 {
   ff = ACE_Dynamic_Service<TAO_Notify_FilterFactory>::instance ("TAO_Notify_FilterFactory");
 
-  if (ff == 0)
+  if (ff == nullptr)
     {
       ACE_NEW_THROW_EX (ff,
                         TAO_Notify_ETCL_FilterFactory (),
@@ -182,7 +182,7 @@ TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa,
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
   // Create ECF
-  TAO_Notify_EventChannelFactory* ecf = 0;
+  TAO_Notify_EventChannelFactory* ecf = nullptr;
   factory->create (ecf, name);
 
   ecf->init (poa);
@@ -199,7 +199,7 @@ TAO_Notify_Builder::build_event_channel (
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_EventChannel* ec = 0;
+  TAO_Notify_EventChannel* ec = nullptr;
   factory->create (ec, ec_name);
 
   ec->init (ecf, initial_qos, initial_admin);
@@ -223,7 +223,7 @@ TAO_Notify_Builder::build_event_channel (
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_EventChannel* ec = 0;
+  TAO_Notify_EventChannel* ec = nullptr;
   factory->create (ec, ec_name);
 
   ec->init (ecf); //, initial_qos, initial_admin
@@ -246,7 +246,7 @@ TAO_Notify_Builder::build_consumer_admin (
 
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_ConsumerAdmin* ca = 0;
+  TAO_Notify_ConsumerAdmin* ca = nullptr;
   factory->create (ca);
 
   ca->init (ec);
@@ -271,7 +271,7 @@ TAO_Notify_Builder::build_consumer_admin (
   const CosNotifyChannelAdmin::ChannelID id)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
-  TAO_Notify_ConsumerAdmin * ca = 0;
+  TAO_Notify_ConsumerAdmin * ca = nullptr;
   factory->create (ca);
 
   ca->init (ec);
@@ -292,7 +292,7 @@ TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec,
 
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_SupplierAdmin* sa = 0;
+  TAO_Notify_SupplierAdmin* sa = nullptr;
   factory->create (sa);
 
   sa->init (ec);
@@ -317,7 +317,7 @@ TAO_Notify_Builder::build_supplier_admin (
   const CosNotifyChannelAdmin::ChannelID id)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
-  TAO_Notify_SupplierAdmin * sa = 0;
+  TAO_Notify_SupplierAdmin * sa = nullptr;
   factory->create (sa);
 
   sa->init (ec);
@@ -505,7 +505,7 @@ TAO_Notify_Builder::apply_reactive_concurrency (TAO_Notify_Object& object)
 void
 TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params)
 {
-  TAO_Notify_ThreadPool_Task* worker_task = 0;
+  TAO_Notify_ThreadPool_Task* worker_task = nullptr;
 
   ACE_NEW_THROW_EX (worker_task,
                     TAO_Notify_ThreadPool_Task (),

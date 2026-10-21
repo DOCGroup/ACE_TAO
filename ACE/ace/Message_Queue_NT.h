@@ -71,9 +71,9 @@ public:
    * queue.
    */
   virtual int enqueue_tail (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = 0);
+                            ACE_Time_Value *timeout = nullptr);
   virtual int enqueue (ACE_Message_Block *new_item,
-                       ACE_Time_Value *timeout = 0);
+                       ACE_Time_Value *timeout = nullptr);
 
   /**
    * Dequeue and return the ACE_Message_Block * at the head of the
@@ -81,9 +81,9 @@ public:
    * the queue.
    */
   virtual int dequeue_head (ACE_Message_Block *&first_item,
-                            ACE_Time_Value *timeout = 0);
+                            ACE_Time_Value *timeout = nullptr);
   virtual int dequeue (ACE_Message_Block *&first_item,
-                       ACE_Time_Value *timeout = 0);
+                       ACE_Time_Value *timeout = nullptr);
 
   // = Check if queue is full/empty.
   /**
@@ -166,7 +166,7 @@ public:
 
   // = Not currently implemented...
   int peek_dequeue_head (ACE_Message_Block *&first_item,
-                         ACE_Time_Value *timeout = 0);
+                         ACE_Time_Value *timeout = nullptr);
   ACE_Notification_Strategy *notification_strategy ();
   void notification_strategy (ACE_Notification_Strategy *s);
 

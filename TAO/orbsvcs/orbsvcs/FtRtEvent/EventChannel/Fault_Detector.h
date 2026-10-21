@@ -27,6 +27,7 @@ class TAO_FTEC_Fault_Listener;
 class Fault_Detector
 {
 public:
+  Fault_Detector() = default;
   virtual ~Fault_Detector();
 
   static Fault_Detector* instance();
@@ -35,9 +36,14 @@ public:
   void stop();
   void set_listener(TAO_FTEC_Fault_Listener*);
   const FTRT::Location& my_location() const;
-  virtual int connect(const FTRT::Location& location)=0;
+  virtual int connect(FTRT::Location const& location) = 0;
 
 private:
+  Fault_Detector(Fault_Detector const&) = delete;
+  Fault_Detector(Fault_Detector&&) = delete;
+  Fault_Detector& operator=(Fault_Detector const&) = delete;
+  Fault_Detector& operator=(Fault_Detector&&) = delete;
+
   virtual int init_acceptor()=0;
   virtual int parse_conf(int argc, ACE_TCHAR** argv);
 
@@ -47,7 +53,7 @@ protected:
   public:
     // ctor
     ReactorTask();
-    virtual int svc ();
+    int svc () override;
     ACE_Reactor reactor_;
   };
 

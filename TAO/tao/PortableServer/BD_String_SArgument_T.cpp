@@ -17,7 +17,7 @@ TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr)
 {
   CORBA::Boolean const demarshalled = cdr >> this->x_.out ();
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -33,7 +33,7 @@ void
 TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_.in (), BOUND));
@@ -50,7 +50,7 @@ CORBA::Boolean
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr)
 {
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -65,7 +65,7 @@ TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr)
 {
   CORBA::Boolean const demarshalled = cdr >> this->x_.out ();
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -81,7 +81,7 @@ void
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_.in (), BOUND));
@@ -98,7 +98,7 @@ CORBA::Boolean
 TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR &cdr)
 {
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -114,7 +114,7 @@ void
 TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_.in (), BOUND));
@@ -147,7 +147,7 @@ void
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  typedef typename S_var::s_traits::from_type from_type;
+  using from_type = typename S_var::s_traits::from_type;
   Insert_Policy<from_type>::any_insert (
       any,
       from_type (this->x_.in (), BOUND));

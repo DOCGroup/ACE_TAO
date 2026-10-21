@@ -2,10 +2,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -37,7 +37,7 @@ class IF_Test_client
 {
 public:
   int
-  foo (int argc, ACE_TCHAR *argv[], bool shutdown)
+  foo (int argc, ACE_TCHAR * argv[], bool shutdown)
   {
     IF_EXE_M_R::IF_ExeCtrlData_var client;
     IF_EXE_M_R::Test_Struct ts;
@@ -104,7 +104,7 @@ public:
             client->shutdown ();
           }
       }
-    catch (const CORBA::Exception &ex)
+    catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Exception caught:");
       }
@@ -113,7 +113,7 @@ public:
 };
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   int retval = 0;
   try
@@ -126,9 +126,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           retval += testclient.foo (argc, argv, i == 9);
         }
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
-      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ex._tao_print_exception ("ERROR : unexpected CORBA exception caugth :");
       ++retval;
     }
   return retval;

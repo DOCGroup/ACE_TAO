@@ -196,7 +196,7 @@ private:
   void operator= (ACE_Message_Queue_Vx &&) = delete;
 
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *tv = 0);
+                                 ACE_Time_Value *tv = nullptr);
 
 private:
   /// Maximum number of messages that can be queued.

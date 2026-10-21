@@ -8,8 +8,7 @@
 #include "Logging_Acceptor_Ex.h"
 #include "SLDEX_export.h"
 
-typedef Reactor_Logging_Server_Adapter<Logging_Acceptor_Ex>
-        Server_Logging_Daemon_Ex;
+using Server_Logging_Daemon_Ex = Reactor_Logging_Server_Adapter<Logging_Acceptor_Ex>;
 
 ACE_FACTORY_DEFINE (SLDEX, Server_Logging_Daemon_Ex)
 

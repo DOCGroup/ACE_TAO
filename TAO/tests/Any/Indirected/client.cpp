@@ -11,6 +11,7 @@
 bool
 recursive_union_test ()
 {
+  constexpr size_t dump_limit = 512;
   bool rc = true;
 
   ACE_DEBUG ((LM_INFO,
@@ -36,10 +37,11 @@ recursive_union_test ()
 
     if (TAO_debug_level >= 2)
     {
-      if (out.length () > 512)
+      if (out.length () > dump_limit)
       {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, ACE_TEXT ("Encoded union (1):")));
-        ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, ACE_TEXT ("Encoded union (2):")));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer (), dump_limit, ACE_TEXT ("Encoded union (1):")));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer () + dump_limit, out.length () - dump_limit,
+                       ACE_TEXT ("Encoded union (2):")));
       }
       else
       {
@@ -86,10 +88,11 @@ recursive_union_test ()
 
       if (TAO_debug_level >= 2)
       {
-        if (out.length () > 512)
+        if (out.length () > dump_limit)
         {
-          ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, ACE_TEXT ("Encoded union (1):")));
-          ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, ACE_TEXT ("Encoded union (2):")));
+          ACE_HEX_DUMP ((LM_INFO, out.buffer (), dump_limit, ACE_TEXT ("Encoded union (1):")));
+          ACE_HEX_DUMP ((LM_INFO, out.buffer () + dump_limit, out.length () - dump_limit,
+                         ACE_TEXT ("Encoded union (2):")));
         }
         else
         {
@@ -148,10 +151,11 @@ recursive_union_test ()
 
     if (TAO_debug_level >= 2)
     {
-      if (out.length () > 512)
+      if (out.length () > dump_limit)
       {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, ACE_TEXT ("Encoded union (1):")));
-        ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, ACE_TEXT ("Encoded union (2):")));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer (), dump_limit, ACE_TEXT ("Encoded union (1):")));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer () + dump_limit, out.length () - dump_limit,
+                       ACE_TEXT ("Encoded union (2):")));
       }
       else
       {
@@ -179,10 +183,11 @@ recursive_union_test ()
 
     if (TAO_debug_level >= 2)
     {
-      if (out2.length () > 512)
+      if (out2.length () > dump_limit)
       {
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), 512, ACE_TEXT ("Re-encoded union (1):")));
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer ()+512, out2.length ()-512, ACE_TEXT ("Re-encoded union (2):")));
+        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), dump_limit, ACE_TEXT ("Re-encoded union (1):")));
+        ACE_HEX_DUMP ((LM_INFO, out2.buffer () + dump_limit, out2.length () - dump_limit,
+                       ACE_TEXT ("Re-encoded union (2):")));
       }
       else
       {

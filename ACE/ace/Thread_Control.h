@@ -42,7 +42,7 @@ class ACE_Export ACE_Thread_Control
 public:
   /// Initialize the thread control object.  If @a insert != 0, then
   /// register the thread with the Thread_Manager.
-  ACE_Thread_Control (ACE_Thread_Manager *tm = 0,
+  ACE_Thread_Control (ACE_Thread_Manager *tm = nullptr,
                       int insert = 0);
 
   /// Remove the thread from its associated Thread_Manager and exit

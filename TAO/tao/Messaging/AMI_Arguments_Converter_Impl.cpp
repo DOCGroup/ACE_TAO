@@ -101,7 +101,7 @@ TAO_AMI_Arguments_Converter_Impl::handle_corba_exception (
   TAO_OutputCDR output;
   TAO_Pluggable_Reply_Params params (0);
   exception->_tao_encode (output);
-  if (CORBA::SystemException::_downcast (exception) != 0)
+  if (CORBA::SystemException::_downcast (exception) != nullptr)
     {
       params.reply_status (GIOP::SYSTEM_EXCEPTION);
     }

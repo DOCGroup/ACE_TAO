@@ -6,237 +6,237 @@
 
 // All the magic quantities are here at the top.
 
-const char *COMPONENT_ID = "IDL:mod/test_component:1.0";
-const char *COMPONENT_SCOPED_NAME = "::mod::test_component";
-const char *COMP_BASE_ID = "IDL:help/c_base:1.0";
+char const* COMPONENT_ID = "IDL:mod/test_component:1.0";
+char const* COMPONENT_SCOPED_NAME = "::mod::test_component";
+char const* COMP_BASE_ID = "IDL:help/c_base:1.0";
 
-const char *VALUETYPE_ID = "IDL:mod/test_valuetype:1.0";
-const char *VALUETYPE_SCOPED_NAME = "::mod::test_valuetype";
-const char *VT_BASE_ID = "IDL:help/v_base:1.0";
+char const* VALUETYPE_ID = "IDL:mod/test_valuetype:1.0";
+char const* VALUETYPE_SCOPED_NAME = "::mod::test_valuetype";
+char const* VT_BASE_ID = "IDL:help/v_base:1.0";
 
-const char *HOME_ID = "IDL:mod/test_home:1.0";
-const char *HOME_SCOPED_NAME = "::mod::test_home";
-const char *HOME_BASE_ID = "IDL:help/h_base:1.0";
-const char *HOME_KEY_ID = "IDL:help/h_key:1.0";
+char const* HOME_ID = "IDL:mod/test_home:1.0";
+char const* HOME_SCOPED_NAME = "::mod::test_home";
+char const* HOME_BASE_ID = "IDL:help/h_base:1.0";
+char const* HOME_KEY_ID = "IDL:help/h_key:1.0";
 
-const char *EVENTTYPE_ID = "IDL:mod/test_eventtype:1.0";
+char const* EVENTTYPE_ID = "IDL:mod/test_eventtype:1.0";
 
-const CORBA::ULong ATTRS_LEN = 1;
-const CORBA::ULong OPS_LEN = 1;
-const CORBA::ULong FACTORY_LEN = 2;
+constexpr CORBA::ULong ATTRS_LEN = 1;
+constexpr CORBA::ULong OPS_LEN = 1;
+constexpr CORBA::ULong FACTORY_LEN = 2;
 
-const char *ATTR_LOCAL_NAMES[] =
+char const* ATTR_LOCAL_NAMES[] =
   {
     "c_attr1"
   };
 
-const CORBA::TCKind ATTR_TC_KINDS[] =
+constexpr CORBA::TCKind ATTR_TC_KINDS[] =
   {
     CORBA::tk_long
   };
 
-const CORBA::ULong GET_EXCEP_LEN[] =
+constexpr CORBA::ULong GET_EXCEP_LEN[] =
   {
     1
   };
 
-const CORBA::ULong PUT_EXCEP_LEN[] =
+constexpr CORBA::ULong PUT_EXCEP_LEN[] =
   {
     2
   };
 
-const char *OP_NAMES[] =
+char const* OP_NAMES[] =
   {
     "v_op"
   };
 
-const CORBA::TCKind OP_RET_KINDS[] =
+constexpr CORBA::TCKind OP_RET_KINDS[] =
   {
     CORBA::tk_string
   };
 
-const CORBA::ULong PARAMS_LEN[] =
+constexpr CORBA::ULong PARAMS_LEN[] =
   {
     3
   };
 
-const char *PARAM_NAMES[] =
+char const* PARAM_NAMES[] =
   {
     "inoutarg",
     "inarg",
     "outarg"
   };
 
-const CORBA::ULong OP_EXCEP_LEN[] =
+constexpr CORBA::ULong OP_EXCEP_LEN[] =
   {
     2
   };
 
-const CORBA::ULong COMP_SUPPORTED_LEN = 2;
+constexpr CORBA::ULong COMP_SUPPORTED_LEN = 2;
 
-const char *COMP_SUPPORTED_IDS[] =
+char const* COMP_SUPPORTED_IDS[] =
   {
     "IDL:help/c_supp1:1.0",
     "IDL:help/c_supp2:1.0"
   };
 
-const CORBA::ULong PROVIDES_LEN = 1;
-const CORBA::ULong USES_LEN = 2;
-const CORBA::ULong EMITS_LEN = 1;
-const CORBA::ULong PUBLISHES_LEN = 1;
-const CORBA::ULong CONSUMES_LEN = 1;
+constexpr CORBA::ULong PROVIDES_LEN = 1;
+constexpr CORBA::ULong USES_LEN = 2;
+constexpr CORBA::ULong EMITS_LEN = 1;
+constexpr CORBA::ULong PUBLISHES_LEN = 1;
+constexpr CORBA::ULong CONSUMES_LEN = 1;
 
-const char *PROVIDES_NAMES[] =
+char const* PROVIDES_NAMES[] =
   {
     "test_provides1"
   };
 
-const char *PROVIDES_TYPE_IDS[] =
+char const* PROVIDES_TYPE_IDS[] =
   {
     "IDL:help/c_provides1:1.0"
   };
 
-const char *USES_NAMES[] =
+char const* USES_NAMES[] =
   {
     "test_uses1",
     "test_uses2"
   };
 
-const char *USES_TYPE_IDS[] =
+char const* USES_TYPE_IDS[] =
   {
     "IDL:help/c_uses1:1.0",
     "IDL:help/c_uses2:1.0"
   };
 
-const CORBA::Boolean USES_MULTIPLE_FLAGS[] =
+constexpr CORBA::Boolean USES_MULTIPLE_FLAGS[] =
   {
-    0,
-    1
+    false,
+    true
   };
 
-const char *EMITS_NAMES[] =
+char const* EMITS_NAMES[] =
   {
     "test_emits1"
   };
 
-const char *PUBLISHES_NAMES[] =
+char const* PUBLISHES_NAMES[] =
   {
     "test_publishes1"
   };
 
-const char *CONSUMES_NAMES[] =
+char const* CONSUMES_NAMES[] =
   {
     "test_consumes1"
   };
 
-const char *EMITS_IDS[] =
+char const* EMITS_IDS[] =
   {
     "IDL:help/c_emits1:1.0"
   };
 
-const char *PUBLISHES_IDS[] =
+char const* PUBLISHES_IDS[] =
   {
     "IDL:help/c_publishes1:1.0"
   };
 
-const char *CONSUMES_IDS[] =
+char const* CONSUMES_IDS[] =
   {
     "IDL:help/c_consumes1:1.0"
   };
 
-const CORBA::ULong VT_SUPPORTED_LEN = 2;
+constexpr CORBA::ULong VT_SUPPORTED_LEN = 2;
 
-const char *VT_SUPPORTED_IDS[] =
+char const* VT_SUPPORTED_IDS[] =
   {
     "IDL:help/v_supp1:1.0",
     "IDL:help/v_supp2:1.0"
   };
 
-const CORBA::ULong MEM_LEN = 2;
+constexpr CORBA::ULong MEM_LEN = 2;
 
-const CORBA::Visibility MEM_VIS[] =
+constexpr CORBA::Visibility MEM_VIS[] =
   {
     CORBA::PUBLIC_MEMBER,
     CORBA::PRIVATE_MEMBER
   };
 
-const char *MEM_NAMES[] =
+char const* MEM_NAMES[] =
   {
     "test_mem1",
     "test_mem2",
   };
 
-const CORBA::ULong VT_FACTORY_PARAM_LENS[] =
+constexpr CORBA::ULong VT_FACTORY_PARAM_LENS[] =
   {
     1,
     2
   };
 
-const CORBA::ULong VT_FACTORY_EXCEP_LENS[] =
+constexpr CORBA::ULong VT_FACTORY_EXCEP_LENS[] =
   {
     0,
     2
   };
 
-const char *VT_FACTORY_PARAM_NAMES[][2] =
+char const* VT_FACTORY_PARAM_NAMES[][2] =
   {
-    {"set_tm1", 0},
+    {"set_tm1", nullptr},
     {"set_tm1a", "set_tm2"}
   };
 
-const char *VT_FACTORY_EXCEP_NAMES[][2] =
+char const* VT_FACTORY_EXCEP_NAMES[][2] =
   {
-    {0, 0},
+    {nullptr, nullptr},
     {"whups", "doh"}
   };
 
-const CORBA::ULong HOME_SUPPORTED_LEN = 2;
+constexpr CORBA::ULong HOME_SUPPORTED_LEN = 2;
 
-const char *HOME_SUPPORTED_IDS[] =
+char const* HOME_SUPPORTED_IDS[] =
   {
     "IDL:help/h_supp1:1.0",
     "IDL:help/h_supp2:1.0"
   };
 
-const CORBA::ULong HOME_FACTORY_LEN = 1;
-const CORBA::ULong HOME_FINDER_LEN = 1;
+constexpr CORBA::ULong HOME_FACTORY_LEN = 1;
+constexpr CORBA::ULong HOME_FINDER_LEN = 1;
 
-const CORBA::ULong HOME_FACTORY_PARAM_LENS[] =
+constexpr CORBA::ULong HOME_FACTORY_PARAM_LENS[] =
   {
     1
   };
 
-const char *HOME_FACTORY_PARAM_NAMES[][1] =
+char const* HOME_FACTORY_PARAM_NAMES[][1] =
   {
     {"set_uid"}
   };
 
-const CORBA::ULong HOME_FACTORY_EXCEP_LENS[] =
+constexpr CORBA::ULong HOME_FACTORY_EXCEP_LENS[] =
   {
     1
   };
 
-const char *HOME_FACTORY_EXCEP_NAMES[][1] =
+char const* HOME_FACTORY_EXCEP_NAMES[][1] =
   {
     {"doh"}
   };
 
-const CORBA::ULong HOME_FINDER_PARAM_LENS[] =
+constexpr CORBA::ULong HOME_FINDER_PARAM_LENS[] =
   {
     3
   };
 
-const char *HOME_FINDER_PARAM_NAMES[][3] =
+char const* HOME_FINDER_PARAM_NAMES[][3] =
   {
     {"id_number", "id_string", "pkey"}
   };
 
-const CORBA::ULong HOME_FINDER_EXCEP_LENS[] =
+constexpr CORBA::ULong HOME_FINDER_EXCEP_LENS[] =
   {
     1
   };
 
-const char *HOME_FINDER_EXCEP_NAMES[][1] =
+char const* HOME_FINDER_EXCEP_NAMES[][1] =
   {
     {"whups"}
   };
@@ -586,8 +586,8 @@ IDL3_Client::home_test ()
 }
 
 int
-IDL3_Client::valuetype_test (const char *repo_id,
-                             const char *prefix)
+IDL3_Client::valuetype_test (char const* repo_id,
+                             char const* prefix)
 {
   CORBA::Contained_var result =
     this->repo_->lookup_id (repo_id);
@@ -666,7 +666,7 @@ IDL3_Client::valuetype_test (const char *repo_id,
 
 int
 IDL3_Client::component_attribute_test (
-    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &desc)
+    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var& desc)
 {
   if (desc->attributes.length () != ATTRS_LEN)
     {
@@ -748,7 +748,7 @@ IDL3_Client::component_attribute_test (
 
 int
 IDL3_Client::component_inheritance_test (
-    CORBA::ComponentIR::ComponentDef_var &comp_def)
+    CORBA::ComponentIR::ComponentDef_var& comp_def)
 {
   CORBA::ComponentIR::ComponentDef_var comp_base =
     comp_def->base_component ();
@@ -820,7 +820,7 @@ IDL3_Client::component_inheritance_test (
 
 int
 IDL3_Client::component_port_test (
-    CORBA::ComponentIR::ComponentDef_var &comp_def)
+    CORBA::ComponentIR::ComponentDef_var& comp_def)
 {
   CORBA::Contained::Description_var desc =
     comp_def->describe ();
@@ -890,7 +890,7 @@ IDL3_Client::component_port_test (
 }
 
 int
-IDL3_Client::provides_test (const CORBA::ComponentIR::ProvidesDescriptionSeq &pds)
+IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq const& pds)
 {
   if (pds.length () != PROVIDES_LEN)
     {
@@ -943,7 +943,7 @@ IDL3_Client::provides_test (const CORBA::ComponentIR::ProvidesDescriptionSeq &pd
 }
 
 int
-IDL3_Client::uses_test (const CORBA::ComponentIR::UsesDescriptionSeq &uds)
+IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq const& uds)
 {
   if (uds.length () != USES_LEN)
     {
@@ -1012,11 +1012,11 @@ IDL3_Client::uses_test (const CORBA::ComponentIR::UsesDescriptionSeq &uds)
 }
 
 int
-IDL3_Client::event_port_test (const CORBA::ComponentIR::EventPortDescriptionSeq &eds,
+IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq const& eds,
                               CORBA::ULong seq_length,
-                              const char *port_type,
-                              const char **names,
-                              const char **ids)
+                              char const* port_type,
+                              char const* const* names,
+                              char const* const* ids)
 {
   if (eds.length () != seq_length)
     {
@@ -1072,8 +1072,8 @@ IDL3_Client::event_port_test (const CORBA::ComponentIR::EventPortDescriptionSeq 
 }
 
 int
-IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
-                                         const char *prefix)
+IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var& vd,
+                                         char const* prefix)
 {
   CORBA::ValueDef_var bvd = vd->base_value ();
 
@@ -1148,8 +1148,8 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
 
 int
 IDL3_Client::valuetype_attribute_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix)
+    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    char const* prefix)
 {
   if (desc->attributes.length () != ATTRS_LEN)
     {
@@ -1236,8 +1236,8 @@ IDL3_Client::valuetype_attribute_test (
 
 int
 IDL3_Client::valuetype_operation_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix
+    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    char const* prefix
   )
 {
   CORBA::ULong ops_length = desc->operations.length ();
@@ -1352,8 +1352,8 @@ IDL3_Client::valuetype_operation_test (
 
 int
 IDL3_Client::valuetype_member_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix)
+    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    char const* prefix)
 {
   CORBA::ULong length = desc->members.length ();
 
@@ -1410,8 +1410,8 @@ IDL3_Client::valuetype_member_test (
 
 int
 IDL3_Client::valuetype_factory_test (
-    CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix)
+    CORBA::ExtValueDef::ExtFullValueDescription_var& desc,
+    char const* prefix)
 {
   CORBA::ULong length = desc->initializers.length ();
 
@@ -1514,7 +1514,7 @@ IDL3_Client::valuetype_factory_test (
 }
 
 int
-IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd)
+IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var& hd)
 {
   CORBA::ComponentIR::HomeDef_var bhd =
     hd->base_home ();
@@ -1585,7 +1585,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd)
 }
 
 int
-IDL3_Client::home_factory_test (const CORBA::ComponentIR::HomeDescription *hd)
+IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription const* hd)
 {
   CORBA::ULong length = hd->factories.length ();
 
@@ -1682,7 +1682,7 @@ IDL3_Client::home_factory_test (const CORBA::ComponentIR::HomeDescription *hd)
 }
 
 int
-IDL3_Client::home_finder_test (const CORBA::ComponentIR::HomeDescription *hd)
+IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription const* hd)
 {
   CORBA::ULong length = hd->finders.length ();
 

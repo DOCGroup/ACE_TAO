@@ -61,7 +61,7 @@ void
 TAO_Notify_SequenceProxyPushSupplier::validate ()
 {
   TAO_Notify_Consumer* con = this->consumer ();
-  if (con != 0 && ! con->is_alive (true))
+  if (con != nullptr && ! con->is_alive (true))
   {
     if (TAO_debug_level > 0)
     {

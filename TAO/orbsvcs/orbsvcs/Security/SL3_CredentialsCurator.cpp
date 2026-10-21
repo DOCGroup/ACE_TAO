@@ -7,7 +7,7 @@ namespace TAO
 {
   namespace SL3
   {
-    static const size_t CREDENTIALS_TABLE_SIZE = 128;
+    static constexpr size_t CREDENTIALS_TABLE_SIZE = 128;
   }
 }
 
@@ -64,7 +64,7 @@ TAO::SL3::CredentialsCurator::_narrow (CORBA::Object_ptr obj)
 TAO::SL3::CredentialsCurator_ptr
 TAO::SL3::CredentialsCurator::_nil ()
 {
-  return (CredentialsCurator *) 0;
+  return nullptr;
 }
 
 SecurityLevel3::AcquisitionMethodList *
@@ -98,8 +98,8 @@ TAO::SL3::CredentialsCurator::supported_methods ()
 
 SecurityLevel3::CredentialsAcquirer_ptr
 TAO::SL3::CredentialsCurator::acquire_credentials (
-    const char * acquisition_method,
-    const CORBA::Any & acquisition_arguments)
+    char const * acquisition_method,
+    CORBA::Any const & acquisition_arguments)
 {
   TAO::SL3::CredentialsAcquirerFactory * factory;
 
@@ -175,9 +175,9 @@ TAO::SL3::CredentialsCurator::default_creds_ids ()
 
 SecurityLevel3::OwnCredentials_ptr
 TAO::SL3::CredentialsCurator::get_own_credentials (
-    const char * credentials_id)
+    char const * credentials_id)
 {
-  Credentials_Table::ENTRY * entry = 0;
+  Credentials_Table::ENTRY * entry = nullptr;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -195,9 +195,9 @@ TAO::SL3::CredentialsCurator::get_own_credentials (
 
 void
 TAO::SL3::CredentialsCurator::release_own_credentials (
-    const char * credentials_id)
+    char const * credentials_id)
 {
-  Credentials_Table::ENTRY * entry = 0;
+  Credentials_Table::ENTRY * entry = nullptr;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
@@ -212,10 +212,10 @@ TAO::SL3::CredentialsCurator::release_own_credentials (
 
 void
 TAO::SL3::CredentialsCurator:: register_acquirer_factory (
-  const char * acquisition_method,
+  char const * acquisition_method,
   TAO::SL3::CredentialsAcquirerFactory * factory)
 {
-  if (acquisition_method == 0 || factory == 0)
+  if (acquisition_method == nullptr || factory == nullptr)
     throw CORBA::BAD_PARAM ();
 
   CORBA::String_var method = CORBA::string_dup (acquisition_method);

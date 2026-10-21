@@ -6,14 +6,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-const ACE_TCHAR *testIOR = ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY");
-const ACE_TCHAR *anotherIOR = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *testIOR = ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY");
+ACE_TCHAR const *anotherIOR = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:a:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -47,24 +47,28 @@ class Task
 {
 public:
   Task (CORBA::ORB_ptr orb);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  char * locate (const char *);
+  char *locate (char const *) override;
 
 private:
   CORBA::ORB_var orb_;
 };
 
 char *
-Task::locate (const char *)
+Task::locate (char const *)
 {
-  CORBA::Object_var fwdObj = orb_->string_to_object(anotherIOR);
-  CORBA::String_var fwdString = orb_->object_to_string(fwdObj.in ());
+  CORBA::Object_var fwdObj = orb_->string_to_object (anotherIOR);
+  CORBA::String_var fwdString = orb_->object_to_string (fwdObj.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "IN LOCATOR!  Forwarding client to: %C\n",
               fwdString.in ()));
 
-  return fwdString._retn();
+  return fwdString._retn ();
 }
 
 Task::Task (CORBA::ORB_ptr orb)
@@ -84,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
@@ -98,13 +102,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager();
+        root_poa->the_POAManager ();
 
       // Run ORB Event loop.
       poa_manager->activate ();
 
       // Create task.
-      Task *task = 0;
+      Task *task = nullptr;
       ACE_NEW_RETURN (task,
                       Task (orb.in ()),
                       1);
@@ -112,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Resolve the IORTable and set the locator
       CORBA::Object_var iorTableObj =
-        orb->resolve_initial_references("IORTable");
+        orb->resolve_initial_references ("IORTable");
 
       IORTable::Table_var local_ior_table =
         IORTable::Table::_narrow (iorTableObj.in ());
@@ -142,11 +146,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           simpleTestClient->shutdown ();
         }
-      catch(const CORBA::OBJ_ADAPTER &objAdapter)
+      catch (CORBA::OBJ_ADAPTER const &objAdapter)
         {
           objAdapter._tao_print_exception ("CAUGHT OBJ_ADAPTER!!!");
         }
-      catch(const CORBA::OBJECT_NOT_EXIST &objNE)
+      catch (CORBA::OBJECT_NOT_EXIST const &objNE)
         {
           objNE._tao_print_exception ("CAUGHT OBJECT NOT EXIST!!!");
         }
@@ -154,7 +158,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Leaving!\n"));
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CAUGHT EXCEPTION: ");
       return -1;

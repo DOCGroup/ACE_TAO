@@ -32,8 +32,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename charT> class String_Manager_T;  // Forward declaration.
-  typedef String_Manager_T<CORBA::Char> String_Manager;
-  typedef String_Manager_T<CORBA::WChar> WString_Manager;
+  using String_Manager = String_Manager_T<CORBA::Char>;
+  using WString_Manager = String_Manager_T<CORBA::WChar>;
 }
 
 namespace TAO
@@ -48,8 +48,8 @@ namespace TAO
   class String_var
   {
   public:
-    typedef charT character_type;
-    typedef TAO::details::string_traits_base <character_type> s_traits;
+    using character_type = charT;
+    using s_traits = TAO::details::string_traits_base<character_type>;
 
     /// Default constructor.
     inline String_var () : ptr_ (0)
@@ -172,9 +172,9 @@ namespace TAO
   class String_out
   {
   public:
-    typedef charT character_type;
-    typedef TAO::details::string_traits_base <character_type> s_traits;
-    typedef typename s_traits::string_mgr string_mgr;
+    using character_type = charT;
+    using s_traits = TAO::details::string_traits_base<character_type>;
+    using string_mgr = typename s_traits::string_mgr;
 
     /// Construction from a reference to a string.
     inline String_out (character_type *&p) : ptr_ (p)
@@ -256,10 +256,10 @@ namespace TAO
 
 namespace CORBA
 {
-  typedef TAO::String_var <char> String_var;
-  typedef TAO::String_out <char> String_out;
-  typedef TAO::String_var <CORBA::WChar> WString_var;
-  typedef TAO::String_out <CORBA::WChar> WString_out;
+  using String_var = TAO::String_var<char>;
+  using String_out = TAO::String_out<char>;
+  using WString_var = TAO::String_var<CORBA::WChar>;
+  using WString_out = TAO::String_out<CORBA::WChar>;
 }
 
 

@@ -52,16 +52,16 @@ public:
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address () const;
+  ACE_INET_Addr const &address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints ();
+  ACE_INET_Addr const *endpoints ();
 
   /// Returns address for default endpoint
-  const ACE_INET_Addr& default_address () const;
+  ACE_INET_Addr const &default_address () const;
 
   /// Set address for default endpoint
-  void set_default_address (const ACE_INET_Addr& addr);
+  void set_default_address (ACE_INET_Addr const &addr);
 
   /**
    * @name The TAO_Acceptor Methods
@@ -69,27 +69,27 @@ public:
    * Please check the documentation in Transport_Acceptor.h for details.
    */
   //@{
-  virtual int open (TAO_ORB_Core *orb_core,
+  int open (TAO_ORB_Core *orb_core,
+            ACE_Reactor *reactor,
+            int version_major,
+            int version_minor,
+            char const *address,
+            char const *options = nullptr) override;
+  int open_default (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
-                    const char *address,
-                    const char *options = 0);
-  virtual int open_default (TAO_ORB_Core *orb_core,
-                            ACE_Reactor *reactor,
-                            int version_major,
-                            int version_minor,
-                            const char *options = 0);
-  virtual int close ();
-  virtual int create_profile (const TAO::ObjectKey &object_key,
-                              TAO_MProfile &mprofile,
-                              CORBA::Short priority);
+                    char const *options = nullptr) override;
+  int close () override;
+  int create_profile (TAO::ObjectKey const &object_key,
+                      TAO_MProfile &mprofile,
+                      CORBA::Short priority) override;
 
-  virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count ();
+  int is_collocated (TAO_Endpoint const *endpoint) override;
+  CORBA::ULong endpoint_count () override;
 
-  virtual int object_key (IOP::TaggedProfile &profile,
-                          TAO::ObjectKey &key);
+  int object_key (IOP::TaggedProfile &profile,
+                  TAO::ObjectKey &key) override;
   //@}
 
   /**
@@ -99,10 +99,10 @@ public:
    * hostname and the desired one cannot be determined in any
    * other way.
    */
-  virtual int hostname (TAO_ORB_Core *orb_core,
-                        ACE_INET_Addr &addr,
-                        char *&host,
-                        const char *specified_hostname = 0);
+  int hostname (TAO_ORB_Core *orb_core,
+                ACE_INET_Addr &addr,
+                char *&host,
+                char const *specified_hostname = nullptr);
 
   /**
    * Set the host name for the given address using the dotted decimal
@@ -121,17 +121,17 @@ protected:
    * if the hostname is 0.0.0.0, otherwise it is set to
    * AF_UNSPEC. This value is then passed to probe_interfaces by open.
    */
-  int parse_address (const char *address,
+  int parse_address (char const *address,
                      ACE_INET_Addr &addr,
                      ACE_CString &specified_hostname,
-                     int *def_type = 0);
+                     int *def_type = nullptr);
 
   /**
    * Implement the common part of the open*() methods.  This method is
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr,
+  virtual int open_i (ACE_INET_Addr const &addr,
                       ACE_Reactor *reactor);
 
   /**
@@ -158,7 +158,7 @@ protected:
    *                port but can't because you're behind a firewall and don't
    *                want to permit passage on all ephemeral ports)
    */
-  virtual int parse_options (const char *options);
+  virtual int parse_options (char const *options);
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
@@ -210,6 +210,11 @@ protected:
   ACE_INET_Addr default_address_;
 
 private:
+  TAO_DIOP_Acceptor (TAO_DIOP_Acceptor const &) = delete;
+  TAO_DIOP_Acceptor &operator= (TAO_DIOP_Acceptor const &) = delete;
+  TAO_DIOP_Acceptor (TAO_DIOP_Acceptor &&) = delete;
+  TAO_DIOP_Acceptor &operator= (TAO_DIOP_Acceptor &&) = delete;
+
   // @@ Frank: From DIOP_Acceptor.h
   TAO_DIOP_Connection_Handler *connection_handler_;
 };

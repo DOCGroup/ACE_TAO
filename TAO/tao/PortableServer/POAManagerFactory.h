@@ -43,15 +43,19 @@ class TAO_PortableServer_Export TAO_POAManager_Factory :
 public:
   TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter);
 
-  virtual ~TAO_POAManager_Factory ();
+  ~TAO_POAManager_Factory () override;
+  TAO_POAManager_Factory (TAO_POAManager_Factory const &) = delete;
+  TAO_POAManager_Factory &operator= (TAO_POAManager_Factory const &) = delete;
+  TAO_POAManager_Factory (TAO_POAManager_Factory &&) = delete;
+  TAO_POAManager_Factory &operator= (TAO_POAManager_Factory &&) = delete;
 
-  virtual ::PortableServer::POAManager_ptr create_POAManager (
-      const char * id,
-      const ::CORBA::PolicyList & policies);
+  ::PortableServer::POAManager_ptr create_POAManager (
+    char const *id,
+    ::CORBA::PolicyList const &policies) override;
 
-  virtual ::PortableServer::POAManagerFactory::POAManagerSeq * list ();
+  ::PortableServer::POAManagerFactory::POAManagerSeq *list () override;
 
-  virtual ::PortableServer::POAManager_ptr find (const char * id);
+  ::PortableServer::POAManager_ptr find (char const *id) override;
 
   void remove_all_poamanagers ();
 
@@ -62,7 +66,7 @@ public:
 private:
   TAO_Object_Adapter &object_adapter_;
 
-  typedef ACE_Unbounded_Set < ::PortableServer::POAManager_ptr> POAMANAGERSET;
+  using POAMANAGERSET = ACE_Unbounded_Set < ::PortableServer::POAManager_ptr>;
 
   POAMANAGERSET poamanager_set_;
 };

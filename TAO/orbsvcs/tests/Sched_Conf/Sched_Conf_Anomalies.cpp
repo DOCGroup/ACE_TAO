@@ -10,9 +10,9 @@
 #include "orbsvcs/Naming/Naming_Server.h"
 
 
-const char* service_name = "ScheduleService";
+char const* service_name = "ScheduleService";
 
-const char* format_string = "{%-12s, %d, %d, %d, %d, %8d, "
+char const* format_string = "{%-12s, %d, %d, %d, %d, %8d, "
                             "static_cast<RtecScheduler::Criticality_t> (%d), "
                             "static_cast<RtecScheduler::Importance_t> (%d), "
                             "%d, %d, %3d, %d, %d, "

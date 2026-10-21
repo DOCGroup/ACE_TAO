@@ -10,7 +10,7 @@ namespace
     ACE_DEBUG ((LM_DEBUG, "testing: %C\n", current_test));
   }
 
-  template<typename T>
+  template <typename T>
   int
   marshal (TAO_OutputCDR &out, T const &t)
   {
@@ -23,7 +23,7 @@ namespace
     return 0;
   }
 
-  template<typename T>
+  template <typename T>
   int
   demarshal (TAO_InputCDR &in, T &t,
              test::Enumeration wrong_disc,
@@ -45,7 +45,7 @@ namespace
     return 0;
   }
 
-  template<typename T>
+  template <typename T>
   int
   demarshal (TAO_InputCDR &in, T &t,
              CORBA::Boolean wrong_disc,
@@ -67,7 +67,7 @@ namespace
     return 0;
   }
 
-  template<typename T>
+  template <typename T>
   int
   demarshal (TAO_InputCDR &in, T &t,
              CORBA::Char wrong_disc,
@@ -89,7 +89,7 @@ namespace
     return 0;
   }
 
-  template<typename T>
+  template <typename T>
   int
   demarshal (TAO_InputCDR &in, T &t,
              CORBA::Long wrong_disc,
@@ -115,7 +115,7 @@ namespace
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int error= 0;
+  int error {};
   char const *current_test = "initialization";
 
   try
@@ -425,13 +425,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
           error = 1;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: CORBA exception while testing %C\n",
                   current_test));
       ex._tao_print_exception ("Exception caught:");
-      error= 1;
+      error = 1;
     }
 
   return error;

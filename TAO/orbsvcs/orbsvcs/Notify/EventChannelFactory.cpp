@@ -37,13 +37,13 @@ namespace TAO_Notify
   }
 }
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel
-                             , CosNotifyChannelAdmin::EventChannel
-                             , CosNotifyChannelAdmin::EventChannel_ptr
-                             , CosNotifyChannelAdmin::ChannelNotFound>
-TAO_Notify_EventChannel_Find_Worker;
+using TAO_Notify_EventChannel_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel,
+                           CosNotifyChannelAdmin::EventChannel,
+                           CosNotifyChannelAdmin::EventChannel_ptr,
+                           CosNotifyChannelAdmin::ChannelNotFound>;
 
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Seq_Worker;
+using TAO_Notify_EventChannel_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel>;
 
 TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory ()
   : topology_save_seq_ (0)
@@ -77,10 +77,10 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 {
   this->poa_ = PortableServer::POA::_duplicate (poa);
 
-  ACE_ASSERT (this->ec_container_.get() == 0);
+  ACE_ASSERT (this->ec_container_.get() == nullptr);
 
   // Init ec_container_
-  TAO_Notify_EventChannel_Container* ecc = 0;
+  TAO_Notify_EventChannel_Container* ecc = nullptr;
   ACE_NEW_THROW_EX (ecc,
                     TAO_Notify_EventChannel_Container (),
                     CORBA::INTERNAL ());
@@ -88,7 +88,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 
   this->ec_container().init ();
 
-  TAO_Notify_POA_Helper* object_poa = 0;
+  TAO_Notify_POA_Helper* object_poa = nullptr;
 
   // Bootstrap initial Object POA
   ACE_NEW_THROW_EX (object_poa,
@@ -117,7 +117,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 
   if (TAO_Notify_PROPERTIES::instance()->validate_client() == true)
   {
-    TAO_Notify_validate_client_Task* validate_client_task = 0;
+    TAO_Notify_validate_client_Task* validate_client_task = nullptr;
     ACE_NEW_THROW_EX (validate_client_task,
       TAO_Notify_validate_client_Task (TAO_Notify_PROPERTIES::instance()->validate_client_delay (),
                                  TAO_Notify_PROPERTIES::instance()->validate_client_interval (),
@@ -225,11 +225,11 @@ void
 TAO_Notify_EventChannelFactory::load_topology ()
 {
   this->loading_topology_ = true;
-  if (this->topology_factory_ != 0)
+  if (this->topology_factory_ != nullptr)
   {
     // create_loader will open and load the persistence file for validation
     std::unique_ptr<TAO_Notify::Topology_Loader> tl(this->topology_factory_->create_loader());
-    if (tl.get () != 0)
+    if (tl.get () != nullptr)
     {
       tl->load (this);
     }
@@ -253,7 +253,7 @@ TAO_Notify_EventChannelFactory::validate ()
 void
 TAO_Notify_EventChannelFactory::stop_validator ()
 {
-  if (this->validate_client_task_.get () != 0)
+  if (this->validate_client_task_.get () != nullptr)
     {
       this->validate_client_task_->shutdown ();
     }
@@ -296,16 +296,16 @@ TAO_Notify_EventChannelFactory::load_event_persistence ()
 {
   TAO_Notify::Event_Persistence_Strategy * strategy =
     ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>::instance ("Event_Persistence");
-  if (strategy != 0)
+  if (strategy != nullptr)
   {
-    if (this->topology_factory_ != 0)
+    if (this->topology_factory_ != nullptr)
     {
       TAO_Notify::Event_Persistence_Factory * factory = strategy->get_factory ();
-      if (factory != 0)
+      if (factory != nullptr)
       {
         for (
           TAO_Notify::Routing_Slip_Persistence_Manager * rspm = factory->first_reload_manager();
-          rspm != 0;
+          rspm != nullptr;
           rspm = rspm->load_next ())
         {
           TAO_Notify::Routing_Slip_Ptr routing_slip = TAO_Notify::Routing_Slip::create (*this, rspm);
@@ -340,7 +340,7 @@ TAO_Notify_EventChannelFactory::change_to_parent ()
   if (! this->loading_topology_)
   {
     // A null pointer means that saving of topology is disabled.
-    if (this->topology_factory_ != 0)
+    if (this->topology_factory_ != nullptr)
     {
       saving = true;
       // seq is used to check save-in-progress
@@ -352,7 +352,7 @@ TAO_Notify_EventChannelFactory::change_to_parent ()
       if (seq == this->topology_save_seq_)
       {
         std::unique_ptr<TAO_Notify::Topology_Saver> saver(this->topology_factory_->create_saver());
-        if (saver.get() != 0)
+        if (saver.get() != nullptr)
         {
           this->save_persistent(*saver);
           saver->close ();
@@ -448,7 +448,7 @@ TAO_Notify_EventChannelFactory::save_topology ()
 TAO_Notify_ProxyConsumer *
 TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position)
 {
-  TAO_Notify_ProxyConsumer * result = 0;
+  TAO_Notify_ProxyConsumer * result = nullptr;
   size_t path_size = id_path.size ();
 
   // EventChannelFactory only:  The first id is proably for the ECF itself
@@ -463,7 +463,7 @@ TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path
 
     TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container());
     ++position;
-    if (ec != 0)
+    if (ec != nullptr)
     {
       result = ec->find_proxy_consumer (id_path, position);
     }
@@ -474,7 +474,7 @@ TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path
 TAO_Notify_ProxySupplier *
 TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position)
 {
-  TAO_Notify_ProxySupplier * result = 0;
+  TAO_Notify_ProxySupplier * result = nullptr;
   size_t path_size = id_path.size ();
 
   // EventChannelFactory only:  The first id is proably for the ECF itself
@@ -488,7 +488,7 @@ TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path
     TAO_Notify_EventChannel_Find_Worker find_worker;
     TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container());
     ++position;
-    if (ec != 0)
+    if (ec != nullptr)
     {
       result = ec->find_proxy_supplier (id_path, position);
     }
@@ -528,7 +528,7 @@ TAO_Notify_EventChannelFactory::get_id () const
 TAO_Notify_EventChannelFactory::TAO_Notify_EventChannel_Container&
 TAO_Notify_EventChannelFactory::ec_container()
 {
-  ACE_ASSERT( this->ec_container_.get() != 0 );
+  ACE_ASSERT( this->ec_container_.get() != nullptr );
   return *ec_container_;
 }
 

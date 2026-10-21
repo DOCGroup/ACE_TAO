@@ -42,7 +42,7 @@ class TAO_Condition
 {
 public:
   /// Useful typedef
-  typedef MUTEX LOCK;
+  using LOCK = MUTEX;
 
   // = Initialiation and termination methods.
   /// Initialize the condition variable.

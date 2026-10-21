@@ -51,7 +51,7 @@ TAO_UsesDef_i::describe_i ()
   ud.interface_type = base_type_id.fast_rep ();
   ud.is_multiple = this->is_multiple_i ();
 
-  CORBA::Contained::Description *retval = 0;
+  CORBA::Contained::Description *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   CORBA::Contained::Description,
                   0);

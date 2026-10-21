@@ -31,7 +31,7 @@ namespace TAO
   {
     void
     Active_Policy_Strategies::update (Cached_Policies &policies,
-                                      ::TAO_Root_POA *poa)
+                                      TAO_Root_POA *poa)
     {
       this->create (policies.thread());
       this->create (policies.id_assignment());
@@ -70,25 +70,25 @@ namespace TAO
         {
           this->lifespan_strategy_->strategy_cleanup ();
         }
-      this->lifespan_strategy_.reset (nullptr);
+      this->lifespan_strategy_.reset ();
       if (this->request_processing_strategy_)
         {
           this->request_processing_strategy_->strategy_cleanup ();
         }
-      this->request_processing_strategy_.reset (nullptr);
+      this->request_processing_strategy_.reset ();
       if (this->id_uniqueness_strategy_)
         {
           this->id_uniqueness_strategy_->strategy_cleanup ();
         }
-      this->id_uniqueness_strategy_.reset (nullptr);
-      this->implicit_activation_strategy_.reset (nullptr);
-      this->thread_strategy_.reset (nullptr);
+      this->id_uniqueness_strategy_.reset ();
+      this->implicit_activation_strategy_.reset ();
+      this->thread_strategy_.reset ();
       if (this->servant_retention_strategy_)
         {
           this->servant_retention_strategy_->strategy_cleanup ();
         }
-      this->servant_retention_strategy_.reset (nullptr);
-      this->id_assignment_strategy_.reset (nullptr);
+      this->servant_retention_strategy_.reset ();
+      this->id_assignment_strategy_.reset ();
     }
 
     void
@@ -199,7 +199,7 @@ namespace TAO
         case ::PortableServer::IMPLICIT_ACTIVATION :
         {
 #if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
-          this->implicit_activation_strategy_= std::make_unique<ImplicitActivationStrategyImplicit> ();
+          this->implicit_activation_strategy_ = std::make_unique<ImplicitActivationStrategyImplicit> ();
 #endif /* CORBA_E_MICRO */
           break;
         }
@@ -213,8 +213,8 @@ namespace TAO
 
     void
     Active_Policy_Strategies::create (
-        ::PortableServer::RequestProcessingPolicyValue value,
-        ::PortableServer::ServantRetentionPolicyValue srvalue)
+      ::PortableServer::RequestProcessingPolicyValue value,
+      ::PortableServer::ServantRetentionPolicyValue srvalue)
     {
       switch (value)
       {

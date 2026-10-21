@@ -2,7 +2,7 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 test_var global_client;
 int iterations = 100;
@@ -48,14 +48,14 @@ public:
   // ctor
   Client (test_ptr server);
 
-  virtual int svc ();
+  int svc () override;
 
   // The server.
   test_var server_;
 };
 
 Client::Client (test_ptr server)
-  :  server_ (test::_duplicate (server))
+  : server_ (test::_duplicate (server))
 {
 }
 
@@ -64,9 +64,9 @@ Client::svc ()
 {
   try
     {
-      this->server_->test_method();
+      this->server_->test_method ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception raised");
     }
@@ -74,7 +74,7 @@ Client::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -83,8 +83,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var obj = orb->string_to_object(ior);
-      test_var server = test::_narrow(obj.in ());
+      CORBA::Object_var obj = orb->string_to_object (ior);
+      test_var server = test::_narrow (obj.in ());
       if (CORBA::is_nil(server.in ()))
           {
             ACE_ERROR_RETURN ((LM_DEBUG,
@@ -109,7 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

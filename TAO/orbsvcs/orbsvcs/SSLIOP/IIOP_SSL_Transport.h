@@ -60,15 +60,15 @@ namespace TAO
                         TAO_ORB_Core *orb_core);
 
     /// Default destructor.
-    ~IIOP_SSL_Transport ();
+    ~IIOP_SSL_Transport () override;
 
     /** @name Overridden Template Methods
      *
      * Please check the documentation in "tao/Transport.h" for more
      * details.
      */
-    virtual int handle_input (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_wait_time = 0);
+    int handle_input (TAO_Resume_Handle &rh,
+                      ACE_Time_Value *max_wait_time = nullptr) override;
 
   protected:
     /// Reference to the TAO::SSLIOP::Current object.

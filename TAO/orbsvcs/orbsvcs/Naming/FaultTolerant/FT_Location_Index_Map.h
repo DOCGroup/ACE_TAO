@@ -26,12 +26,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Location index map.
-typedef ACE_Hash_Map_Manager_Ex<
+using TAO_FT_Location_Index_Map = ACE_Hash_Map_Manager_Ex<
   PortableGroup::ObjectGroupId,
   CORBA::ULong,
   ACE_Hash<ACE_UINT64>,
   ACE_Equal_To<ACE_UINT64>,
-  ACE_Null_Mutex> TAO_FT_Location_Index_Map;
+  ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

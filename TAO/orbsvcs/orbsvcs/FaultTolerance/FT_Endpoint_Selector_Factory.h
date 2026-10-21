@@ -45,11 +45,11 @@ public:
   TAO_FT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~TAO_FT_Endpoint_Selector_Factory ();
+  ~TAO_FT_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
+  TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
   /// The possible endpoint selector strategies that can be
@@ -58,6 +58,11 @@ private:
 
   /// Mutex to prevent multiple initializations
   TAO_SYNCH_MUTEX mutex_;
+
+  TAO_FT_Endpoint_Selector_Factory (TAO_FT_Endpoint_Selector_Factory const&) = delete;
+  TAO_FT_Endpoint_Selector_Factory& operator= (TAO_FT_Endpoint_Selector_Factory const&) = delete;
+  TAO_FT_Endpoint_Selector_Factory (TAO_FT_Endpoint_Selector_Factory&&) = delete;
+  TAO_FT_Endpoint_Selector_Factory& operator= (TAO_FT_Endpoint_Selector_Factory&&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

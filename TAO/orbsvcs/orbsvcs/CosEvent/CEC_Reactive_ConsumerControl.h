@@ -56,9 +56,14 @@ public:
   /// Constructor
   TAO_CEC_ConsumerControl_Adapter (TAO_CEC_Reactive_ConsumerControl *adaptee);
 
+  TAO_CEC_ConsumerControl_Adapter (TAO_CEC_ConsumerControl_Adapter const &) = delete;
+  TAO_CEC_ConsumerControl_Adapter (TAO_CEC_ConsumerControl_Adapter &&) = delete;
+  TAO_CEC_ConsumerControl_Adapter &operator= (TAO_CEC_ConsumerControl_Adapter const &) = delete;
+  TAO_CEC_ConsumerControl_Adapter &operator= (TAO_CEC_ConsumerControl_Adapter &&) = delete;
+
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
 private:
   /// The adapted object
@@ -99,28 +104,33 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_Reactive_ConsumerControl () = default;
+  ~TAO_CEC_Reactive_ConsumerControl () override = default;
+
+  TAO_CEC_Reactive_ConsumerControl (TAO_CEC_Reactive_ConsumerControl const &) = delete;
+  TAO_CEC_Reactive_ConsumerControl (TAO_CEC_Reactive_ConsumerControl &&) = delete;
+  TAO_CEC_Reactive_ConsumerControl &operator= (TAO_CEC_Reactive_ConsumerControl const &) = delete;
+  TAO_CEC_Reactive_ConsumerControl &operator= (TAO_CEC_Reactive_ConsumerControl &&) = delete;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_CEC_ConsumerControl
-  virtual int activate ();
-  virtual int shutdown ();
-  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy);
-  virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &);
+  int activate () override;
+  int shutdown () override;
+  void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy) override;
+  void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy) override;
+  void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
+                         CORBA::SystemException &) override;
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this
   /// method will be used for TAO_CEC_ProxyPushSupplier's and
   /// TAO_CEC_ProxyPullSupplier's.
-  virtual bool need_to_disconnect (PortableServer::ServantBase* proxy);
+  bool need_to_disconnect (PortableServer::ServantBase *proxy) override;
 
   /// Allow others to inform us when a send or receive was successful.
-  virtual void successful_transmission (PortableServer::ServantBase* proxy);
+  void successful_transmission (PortableServer::ServantBase *proxy) override;
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
@@ -174,7 +184,12 @@ class TAO_CEC_Ping_Push_Consumer
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushSupplier *supplier);
+  TAO_CEC_Ping_Push_Consumer (TAO_CEC_Ping_Push_Consumer const &) = delete;
+  TAO_CEC_Ping_Push_Consumer (TAO_CEC_Ping_Push_Consumer &&) = delete;
+  TAO_CEC_Ping_Push_Consumer &operator= (TAO_CEC_Ping_Push_Consumer const &) = delete;
+  TAO_CEC_Ping_Push_Consumer &operator= (TAO_CEC_Ping_Push_Consumer &&) = delete;
+
+  void work (TAO_CEC_ProxyPushSupplier *supplier) override;
 
 private:
   TAO_CEC_ConsumerControl *control_;
@@ -188,7 +203,12 @@ class TAO_CEC_Ping_Pull_Consumer
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullSupplier *supplier);
+  TAO_CEC_Ping_Pull_Consumer (TAO_CEC_Ping_Pull_Consumer const &) = delete;
+  TAO_CEC_Ping_Pull_Consumer (TAO_CEC_Ping_Pull_Consumer &&) = delete;
+  TAO_CEC_Ping_Pull_Consumer &operator= (TAO_CEC_Ping_Pull_Consumer const &) = delete;
+  TAO_CEC_Ping_Pull_Consumer &operator= (TAO_CEC_Ping_Pull_Consumer &&) = delete;
+
+  void work (TAO_CEC_ProxyPullSupplier *supplier) override;
 
 private:
   TAO_CEC_ConsumerControl *control_;

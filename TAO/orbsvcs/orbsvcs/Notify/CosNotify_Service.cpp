@@ -26,7 +26,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  const ACE_TCHAR *current_arg = nullptr;
 
   // Default to an all reactive system.
   int ec_threads = 0;
@@ -322,7 +322,7 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
           ORBSVCS_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
 
           int argc = 0;
-          ACE_TCHAR *argv0 = 0;
+          ACE_TCHAR *argv0 = nullptr;
           ACE_TCHAR **argv = &argv0;  // ansi requires argv be null terminated.
           CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
                                                        "default_dispatcher");
@@ -463,7 +463,7 @@ TAO_CosNotify_Service::create_factory ()
 TAO_Notify_Builder*
 TAO_CosNotify_Service::create_builder ()
 {
-  TAO_Notify_Builder* builder = 0;
+  TAO_Notify_Builder* builder = nullptr;
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());

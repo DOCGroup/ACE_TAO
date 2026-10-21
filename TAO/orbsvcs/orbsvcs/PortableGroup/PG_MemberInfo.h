@@ -55,7 +55,7 @@ struct TAO_PG_MemberInfo
   bool operator== (const TAO_PG_MemberInfo & rhs) const;
 };
 
-typedef ACE_Unbounded_Set<TAO_PG_MemberInfo> TAO_PG_MemberInfo_Set;
+using TAO_PG_MemberInfo_Set = ACE_Unbounded_Set<TAO_PG_MemberInfo>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

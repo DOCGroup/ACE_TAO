@@ -6,13 +6,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LogNotification::TAO_LogNotification ()
-{
-}
+TAO_LogNotification::TAO_LogNotification () = default;
 
-TAO_LogNotification::~TAO_LogNotification ()
-{
-}
+TAO_LogNotification::~TAO_LogNotification () = default;
 
 void
 TAO_LogNotification::object_creation (DsLogAdmin::LogId id)
@@ -50,7 +46,7 @@ TAO_LogNotification::object_deletion (DsLogAdmin::LogId id)
 
 void
 TAO_LogNotification::processing_error_alarm (CORBA::ULong error_num,
-                                             const char* error_string)
+                                             char const * error_string)
 {
   CORBA::Any any;
   DsLogNotification::ProcessingErrorAlarm event;
@@ -91,8 +87,8 @@ void
 TAO_LogNotification::capacity_alarm_threshold_value_change (
     DsLogAdmin::Log_ptr log,
     DsLogAdmin::LogId id,
-    const DsLogAdmin::CapacityAlarmThresholdList& oldValue,
-    const DsLogAdmin::CapacityAlarmThresholdList& newValue)
+    DsLogAdmin::CapacityAlarmThresholdList const & oldValue,
+    DsLogAdmin::CapacityAlarmThresholdList const & newValue)
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -176,8 +172,8 @@ TAO_LogNotification::stop_time_value_change (DsLogAdmin::Log_ptr log,
 void
 TAO_LogNotification::week_mask_value_change (DsLogAdmin::Log_ptr log,
                                              DsLogAdmin::LogId id,
-                                             const DsLogAdmin::WeekMask& oldValue,
-                                             const DsLogAdmin::WeekMask& newValue)
+    DsLogAdmin::WeekMask const & oldValue,
+    DsLogAdmin::WeekMask const & newValue)
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -211,8 +207,8 @@ void
 TAO_LogNotification::quality_of_service_value_change (
     DsLogAdmin::Log_ptr log,
     DsLogAdmin::LogId id,
-    const DsLogAdmin::QoSList& oldValue,
-    const DsLogAdmin::QoSList& newValue)
+    DsLogAdmin::QoSList const & oldValue,
+    DsLogAdmin::QoSList const & newValue)
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -317,7 +313,7 @@ TAO_LogNotification::threshold_alarm (
 }
 
 void
-TAO_LogNotification::send_notification (const CORBA::Any & /* any */)
+TAO_LogNotification::send_notification (CORBA::Any const & /* any */)
 {
 }
 

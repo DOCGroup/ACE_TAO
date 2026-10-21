@@ -25,7 +25,7 @@ class ECT_Throughput : public ECT_Driver
 public:
   ECT_Throughput ();
 
-  virtual ~ECT_Throughput ();
+  ~ECT_Throughput () override;
 
   enum {
     MAX_CONSUMERS = 16,
@@ -37,7 +37,7 @@ public:
   int run (int argc, ACE_TCHAR* argv[]);
   // Execute the test.
 
-  virtual void shutdown_consumer (void* consumer_cookie);
+  void shutdown_consumer (void* consumer_cookie) override;
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.

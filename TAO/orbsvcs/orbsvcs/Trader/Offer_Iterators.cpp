@@ -62,7 +62,7 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
-      CosTrading::Offer *source = 0;
+      CosTrading::Offer* source = nullptr;
       this->offers_.dequeue_head (source);
       this->pfilter_.filter_offer (source, offers[i]);
     }
@@ -78,7 +78,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
 {
   while (! this->iters_.is_empty ())
     {
-      CosTrading::OfferIterator* offer_iter = 0;
+      CosTrading::OfferIterator* offer_iter = nullptr;
       this->iters_.dequeue_head (offer_iter);
 
       try
@@ -108,7 +108,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
                                        CosTrading::OfferSeq_out offers)
 {
   CORBA::ULong offers_left = n;
-  CORBA::Boolean return_value = 1;
+  CORBA::Boolean return_value = true;
   CosTrading::OfferSeq_var out_offers;
 
   ACE_NEW_THROW_EX (offers,
@@ -118,8 +118,8 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
   while (offers_left > 0 && ! this->iters_.is_empty ())
     {
       CORBA::ULong offset = 0;
-      CORBA::Boolean any_left = 0;
-      CosTrading::OfferIterator* iter =  0;
+      CORBA::Boolean any_left = false;
+      CosTrading::OfferIterator* iter = nullptr;
       this->iters_.dequeue_head (iter);
 
       // Determine how many offers we should retrieve from this
@@ -131,7 +131,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
                       CosTrading::OfferSeq_out (out_offers.out ()));
 
       // If we've exhausted this iterator, destroy it.
-      if (any_left == 0)
+      if (!any_left)
         {
           iter->destroy ();
           CORBA::release (iter);
@@ -150,7 +150,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
   // Determine if we have anything left to offer.
   if (this->iters_.is_empty ())
-    return_value = 0;
+    return_value = false;
 
   return return_value;
 }
@@ -163,7 +163,7 @@ TAO_Offer_Iterator_Collection::destroy ()
        ! iters_iter.done ();
        iters_iter.advance ())
     {
-      CosTrading::OfferIterator** iter = 0;
+      CosTrading::OfferIterator** iter = nullptr;
 
       iters_iter.next (iter);
       (*iter)->destroy ();

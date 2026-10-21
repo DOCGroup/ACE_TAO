@@ -13,7 +13,7 @@ Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
   PortableServer::POA_var poa1 = servant1->_default_POA ();
   CORBA::String_var str = servant1->symbol ();
   PortableServer::ObjectId_var oid1 = PortableServer::string_to_ObjectId (str.in ());
-  poa1->activate_object_with_id (oid1.in(), servant1.in ());
+  poa1->activate_object_with_id (oid1.in (), servant1.in ());
   CORBA::Object_var obj = poa1->id_to_reference (oid1.in ());
   ref1_ = Quoter::Stock::_narrow (obj.in ());
 
@@ -26,13 +26,13 @@ Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
 }
 
 Quoter::Stock_ptr
-Quoter_Stock_Factory_i::get_stock (const char *symbol)
+Quoter_Stock_Factory_i::get_stock (char const *symbol)
 {
   try {
     if (ACE_OS::strcmp (symbol, "RHAT") == 0) {
-      return Quoter::Stock::_duplicate(ref1_.in ());
+      return Quoter::Stock::_duplicate (ref1_.in ());
     } else if (ACE_OS::strcmp (symbol, "MSFT") == 0) {
-      return Quoter::Stock::_duplicate(ref2_.in ());
+      return Quoter::Stock::_duplicate (ref2_.in ());
     }
   } catch (const CORBA::Exception & e) {
     std::cerr << "CORBA exception raised: " << e << std::endl;

@@ -24,18 +24,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Structure for storing the RT_Info information for each task, per mode.
 struct Mode_Entry
 {
-  RtecScheduler::RT_Info *rt_info_;
-  u_long start_time_; // microseconds
-  u_long stop_time_;  // microseconds
+  RtecScheduler::RT_Info *rt_info_ = nullptr;
+  u_long start_time_ {}; // microseconds
+  u_long stop_time_ {};  // microseconds
 
-  Mode_Entry() :
-    rt_info_ (0),
-    start_time_ (0),
-    stop_time_ (0)
-  {
-  }
+  Mode_Entry () = default;
 
-  Mode_Entry(RtecScheduler::RT_Info *const rt_info,
+  Mode_Entry (RtecScheduler::RT_Info * const rt_info,
              const u_long start_time = 0,
              const u_long stop_time = 0) :
     rt_info_ (rt_info),
@@ -44,19 +39,9 @@ struct Mode_Entry
   {
   }
 
-  ~Mode_Entry () {}
+  ~Mode_Entry () = default;
 
-  Mode_Entry &operator= (const Mode_Entry &entry)
-  {
-    if (this != &entry)
-      {
-        rt_info_ = entry.rt_info_;
-        start_time_ = entry.start_time_;
-        stop_time_ = entry.stop_time_;
-      }
-
-    return *this;
-  }
+  Mode_Entry &operator= (const Mode_Entry &) = default;
 };
 
 
@@ -152,7 +137,7 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
           // assigned the same handle to the RT_Info for each of its modes
           for (u_int i = 1; i < number_of_modes; ++i)
             {
-              if (rt_info [i] != 0)
+              if (rt_info [i] != nullptr)
                 rt_info [i]->handle = handle;
             }
 

@@ -39,9 +39,9 @@ namespace TAO
   namespace SSLIOP
   {
     class Current;
-    typedef Current * Current_ptr;
-    typedef TAO_Pseudo_Var_T<Current> Current_var;
-    typedef TAO_Pseudo_Out_T<Current> Current_out;
+    using Current_ptr = Current *;
+    using Current_var = TAO_Pseudo_Var_T<Current>;
+    using Current_out = TAO_Pseudo_Out_T<Current>;
 
     /**
      * @class Current
@@ -58,16 +58,16 @@ namespace TAO
         public ::CORBA::LocalObject
     {
     public:
-      typedef Current_ptr _ptr_type;
-      typedef Current_var _var_type;
-      typedef Current_out _out_type;
+      using _ptr_type = Current_ptr;
+      using _var_type = Current_var;
+      using _out_type = Current_out;
 
       /// Constructor.
       Current (TAO_ORB_Core *orb_core);
 
       /// Return the peer certificate associated with the current
       /// request.
-      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate ();
+      ::SSLIOP::ASN_1_Cert * get_peer_certificate () override;
 
       /**
        * Return the certificate chain associated with the current
@@ -77,7 +77,7 @@ namespace TAO
        * certficate.  However, the certificate chain on the server
        * side does NOT contain the peer (client) certificate.
        */
-      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain ();
+      ::SSLIOP::SSL_Cert * get_peer_certificate_chain () override;
 
       /**
        * This method is mostly useful as an inexpensive means of
@@ -86,7 +86,7 @@ namespace TAO
        * @return @c true if the current execution context is not
        *         within a SSL session.
        */
-      virtual CORBA::Boolean no_context ();
+      CORBA::Boolean no_context () override;
 
       /// Set the TSS slot ID assigned to this object.
       void tss_slot (size_t slot);
@@ -113,15 +113,15 @@ namespace TAO
 
       static Current_ptr _nil ()
       {
-        return (Current_ptr)0;
+        return nullptr;
       }
 
-      virtual const char* _interface_repository_id () const;
+      const char* _interface_repository_id () const override;
       //@}
 
     protected:
       /// Destructor
-      ~Current ();
+      ~Current () override;
 
       /// Set the TSS SSLIOP::Current implementation.
       int implementation (Current_Impl *impl);

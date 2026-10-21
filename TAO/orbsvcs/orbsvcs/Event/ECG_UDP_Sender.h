@@ -107,7 +107,7 @@ public:
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
 
-  ~TAO_ECG_UDP_Sender ();
+  ~TAO_ECG_UDP_Sender () override;
 
   /**
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
@@ -167,8 +167,8 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer ();
-  virtual void push (const RtecEventComm::EventSet &events);
+  virtual void disconnect_push_consumer () override;
+  virtual void push (const RtecEventComm::EventSet &events) override;
   //@}
 
 protected:
@@ -198,8 +198,8 @@ private:
   /// Helper for fragmenting and sending cdr-encoded events using udp.
   TAO_ECG_CDR_Message_Sender cdr_sender_;
 
-  typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command>
-  ECG_Sender_Auto_Proxy_Disconnect;
+  using ECG_Sender_Auto_Proxy_Disconnect =
+    TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command>;
   /// Manages our connection to Supplier Proxy.
   ECG_Sender_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };

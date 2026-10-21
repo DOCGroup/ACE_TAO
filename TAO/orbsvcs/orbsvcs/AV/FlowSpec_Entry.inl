@@ -24,7 +24,7 @@ ACE_INLINE
 int
 TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
 {
-  if (flow_string == 0)
+  if (flow_string == nullptr)
     return 0;
 
   if (ACE_OS::strcmp (flow_string,"") == 0)
@@ -143,7 +143,7 @@ TAO_FlowSpec_Entry::set_peer_addr (ACE_Addr *peer_addr)
   this->delete_peer_addr_ = false;
   this->peer_addr_ = peer_addr;
 
-  if (this->handler_ != 0)
+  if (this->handler_ != nullptr)
     this->handler_->set_remote_address (peer_addr);
   return 0;
 }

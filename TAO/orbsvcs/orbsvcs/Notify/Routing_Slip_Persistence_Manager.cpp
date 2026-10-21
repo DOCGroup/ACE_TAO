@@ -55,7 +55,7 @@ Routing_Slip_Persistence_Manager::store_root()
     this->routing_slip_header_.next_routing_slip_block);
 
   // we should already have a psb, but JIC
-  ACE_ASSERT(this->first_routing_slip_block_ != 0);
+  ACE_ASSERT(this->first_routing_slip_block_ != nullptr);
   ACE_ASSERT(this->first_routing_slip_block_->block_number() ==
     ROUTING_SLIP_ROOT_BLOCK_NUMBER);
 
@@ -89,7 +89,7 @@ Routing_Slip_Persistence_Manager::reload(
   ACE_Message_Block*& routing_slip)
 {
   bool result = false;
-  if (this->event_mb_ != 0 && this->routing_slip_mb_ != 0)
+  if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
     event = this->event_mb_;
     this->event_mb_ = 0;
@@ -126,7 +126,7 @@ Routing_Slip_Persistence_Manager::load(
 
   ACE_NEW_NORETURN(this->routing_slip_mb_, ACE_Message_Block(block_size));
   ACE_NEW_NORETURN(this->event_mb_, ACE_Message_Block(block_size));
-  if (this->event_mb_ != 0 && this->routing_slip_mb_ != 0)
+  if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
     if (this->reload_chain(
           this->first_routing_slip_block_,
@@ -241,13 +241,13 @@ Routing_Slip_Persistence_Manager::remove()
   result = prev->update_next_manager(this);
   this->factory_->lock.release();
   size_t block_number = 0;
-  if (this->first_routing_slip_block_ != 0)
+  if (this->first_routing_slip_block_ != nullptr)
   {
     this->allocator_->free(this->first_routing_slip_block_->block_number());
     delete this->first_routing_slip_block_;
     this->first_routing_slip_block_ = 0;
   }
-  if (this->first_event_block_ != 0)
+  if (this->first_event_block_ != nullptr)
   {
     this->allocator_->free(this->first_event_block_->block_number());
     delete this->first_event_block_;
@@ -442,7 +442,7 @@ Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
     // No need for a callback here since we do our own below
     result &= this->store_event(event);
     // If we have an event block allocated, update our header
-    if (this->first_event_block_ != 0)
+    if (this->first_event_block_ != nullptr)
     {
       this->routing_slip_header_.event_block =
         ACE_Utils::truncate_cast<Block_Number> (this->first_event_block_->block_number());
@@ -501,7 +501,7 @@ Routing_Slip_Persistence_Manager::store_event(
   size_t event_size = event.total_length();
   if (event_size != 0)
   {
-    if (this->first_event_block_ == 0)
+    if (this->first_event_block_ == nullptr)
     {
       this->first_event_block_ = this->allocator_->allocate();
       this->first_event_block_->set_allocator_owns(false);
@@ -572,7 +572,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     *first_block);
   const ACE_Message_Block* mblk = &data;
   remainder = this->fill_block(*first_block, pos, mblk, 0);
-  while ((remainder == 0) && (mblk->cont() != 0))
+  while ((remainder == 0) && (mblk->cont() != nullptr))
   {
     pos += mblk->length();
     mblk = mblk->cont();
@@ -587,7 +587,7 @@ Routing_Slip_Persistence_Manager::build_chain(
 
   while (remainder > 0)
   {
-    Overflow_Header* hdr = 0;
+    Overflow_Header* hdr = nullptr;
     ACE_NEW_RETURN(hdr, Overflow_Header, result);
 
     Persistent_Storage_Block* curblk = this->allocator_->allocate();
@@ -601,7 +601,7 @@ Routing_Slip_Persistence_Manager::build_chain(
 
     size_t offset_into_msg = mblk->length() - remainder;
     remainder = this->fill_block(*curblk, pos, mblk, offset_into_msg);
-    while ((remainder == 0) && (mblk->cont() != 0))
+    while ((remainder == 0) && (mblk->cont() != nullptr))
     {
       pos += mblk->length();
       mblk = mblk->cont();
@@ -656,7 +656,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
     size_t pos = 0;
     size_t nextptr = 0;
     ACE_Message_Block* mbptr = amb;
-    ACE_Message_Block* mbnew = 0;
+    ACE_Message_Block* mbnew = nullptr;
 
     pos = first_header.extract_header(*first_block);
     if (first_header.serial_number == expected_serial_number)
@@ -705,7 +705,7 @@ Routing_Slip_Persistence_Manager::update_next_manager(
   if (!this->removed_)
   {
     bool updated = false;
-    if (this->next_manager_ != 0)
+    if (this->next_manager_ != nullptr)
     {
       if (this->routing_slip_header_.next_serial_number !=
         next->routing_slip_header_.next_serial_number)

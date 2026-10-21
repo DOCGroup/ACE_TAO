@@ -5,13 +5,16 @@ BoundSequences::BoundSequences (CORBA::ORB_ptr orb)
 {
 }
 
-::CORBA::ULong BoundSequences::SendSequenceOf10Long (const ::CORBA::ULong LengthSent, const ::Test::BoundSequences::SequenceOf10Long &inSeq)
+::CORBA::ULong
+BoundSequences::SendSequenceOf10Long (
+  ::CORBA::ULong const LengthSent,
+  ::Test::BoundSequences::SequenceOf10Long const &inSeq)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Server - BoundSequences::SendSequenceOf10Long (%u, length(%u)) is %C\n",
-              LengthSent, inSeq.length(),
-              ((LengthSent == inSeq.length())? "Correct" : "**** Incorrect ****")));
-  return inSeq.length();
+              LengthSent, inSeq.length (),
+              ((LengthSent == inSeq.length ()) ? "Correct" : "**** Incorrect ****")));
+  return inSeq.length ();
 }
 
 void

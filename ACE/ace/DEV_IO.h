@@ -94,8 +94,8 @@ public:
    */
   ssize_t recv_n (void *buf,
                   size_t n,
-                  const ACE_Time_Value *timeout = 0,
-                  size_t *bytes_transferred = 0) const;
+                  const ACE_Time_Value *timeout = nullptr,
+                  size_t *bytes_transferred = nullptr) const;
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Recv bytes via STREAM pipes using "band" mode.

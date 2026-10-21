@@ -59,6 +59,11 @@ namespace TAO
     Invocation_Status invoke (ACE_Time_Value *max_wait_time);
 
   private:
+    LocateRequest_Invocation (LocateRequest_Invocation const &) = delete;
+    LocateRequest_Invocation &operator= (LocateRequest_Invocation const &) = delete;
+    LocateRequest_Invocation (LocateRequest_Invocation &&) = delete;
+    LocateRequest_Invocation &operator= (LocateRequest_Invocation &&) = delete;
+
     /// Helper to check the reply status
     Invocation_Status check_reply (TAO_Synch_Reply_Dispatcher &rd);
   };

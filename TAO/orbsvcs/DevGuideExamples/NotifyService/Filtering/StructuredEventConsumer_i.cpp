@@ -9,7 +9,7 @@ StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
 
 void
 StructuredEventConsumer_i::push_structured_event(
-       const CosNotification::StructuredEvent &event
+       CosNotification::StructuredEvent const &event
       )
 {
    const char *value;
@@ -36,8 +36,8 @@ StructuredEventConsumer_i::disconnect_structured_push_consumer(
 
 void
 StructuredEventConsumer_i::offer_change(
-        const CosNotification::EventTypeSeq &,
-        const CosNotification::EventTypeSeq &
+        CosNotification::EventTypeSeq const &,
+        CosNotification::EventTypeSeq const &
       )
 {
   //Noop

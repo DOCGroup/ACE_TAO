@@ -52,7 +52,7 @@ public:
                size_t length = static_cast<size_t> (-1),
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
-               void *addr = 0,
+               void *addr = nullptr,
                ACE_OFF_T offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -63,7 +63,7 @@ public:
                mode_t mode = ACE_DEFAULT_FILE_PERMS,
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
-               void *addr = 0,
+               void *addr = nullptr,
                ACE_OFF_T offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -73,7 +73,7 @@ public:
            size_t length = static_cast<size_t> (-1),
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
-           void *addr = 0,
+           void *addr = nullptr,
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -81,7 +81,7 @@ public:
   int map (size_t length = static_cast<size_t> (-1),
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
-           void *addr = 0,
+           void *addr = nullptr,
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -92,7 +92,7 @@ public:
            mode_t mode = ACE_DEFAULT_FILE_PERMS,
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
-           void *addr = 0,
+           void *addr = nullptr,
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -193,7 +193,7 @@ private:
               size_t len = static_cast<size_t> (-1),
               int prot = PROT_RDWR,
               int share = MAP_SHARED,
-              void *addr = 0,
+              void *addr = nullptr,
               ACE_OFF_T offset = 0,
               LPSECURITY_ATTRIBUTES sa = 0);
 

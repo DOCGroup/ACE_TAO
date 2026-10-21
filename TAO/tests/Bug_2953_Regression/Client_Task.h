@@ -21,7 +21,7 @@ public:
   void terminate_loop ();
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Reference to the ORB
@@ -30,9 +30,9 @@ private:
   /// A mutex, synchronize access to the termination flag
   TAO_SYNCH_MUTEX mutex_;
 
-  /// Termination flag, set to 1 when the client wants this task to
+  /// Termination flag, set when the client wants this task to
   /// exit
-  int terminate_loop_;
+  bool terminate_loop_ {};
 };
 
 #include /**/ "ace/post.h"

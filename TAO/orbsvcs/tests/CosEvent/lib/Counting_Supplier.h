@@ -41,10 +41,10 @@ public:
   void disconnect ();
 
   /// Push an event.
-  void push (const CORBA::Any& events);
+  void push (CORBA::Any const &events);
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// Count the number of events sent
   CORBA::ULong event_count;
@@ -65,7 +65,7 @@ public:
                               int milliseconds = 0);
 
   // = Check the ACE_Task_Base documentation.
-  int svc ();
+  int svc () override;
 
   void stop ();
   CORBA::ULong push_count ();
@@ -114,7 +114,7 @@ public:
   // The PullSupplier methods.
   CORBA::Any* pull ();
   CORBA::Any* try_pull (CORBA::Boolean_out has_event);
-  virtual void disconnect_pull_supplier ();
+  void disconnect_pull_supplier () override;
 
   /// Count the number of events sent
   CORBA::ULong event_count;

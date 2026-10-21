@@ -5,25 +5,28 @@
 #include "UDPTestC.h"
 #include "ace/streams.h"
 #include "ace/Task.h"
+#include <algorithm>
 
 class OrbTask : public ACE_Task_Base
 {
 public:
-  OrbTask(const CORBA::ORB_ptr orb)
-      : orb_(CORBA::ORB::_duplicate(orb))
-  {
-  }
+  OrbTask (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb)) {}
+  OrbTask (OrbTask const &) = delete;
+  OrbTask (OrbTask &&) = delete;
+  OrbTask &operator= (OrbTask const &) = delete;
+  OrbTask &operator= (OrbTask &&) = delete;
 
-  virtual int svc()
+  int svc () override
   {
-      try
-        {
-          this->orb_->run ();
-        }
-      catch (const CORBA::Exception&)
-        {
-        }
-      return 0;
+    try
+      {
+        this->orb_->run ();
+      }
+    catch (CORBA::Exception const &)
+      {
+      }
+    return 0;
   }
 
 private:
@@ -50,7 +53,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::Object_var stock_quoter_obj =
       orb->resolve_initial_references ("MyStockQuoter");
 
-    OrbTask task(orb.in());
+    OrbTask task (orb.in ());
 
     if (task.activate (THR_NEW_LWP | THR_JOINABLE,
                           n_threads) != 0)
@@ -60,19 +63,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     UDPTestI_var server = UDPTestI::_narrow (udp_obj.in ());
 
-    Stock_Quoter_var quoter = Stock_Quoter::_narrow (stock_quoter_obj.in());
+    Stock_Quoter_var quoter = Stock_Quoter::_narrow (stock_quoter_obj.in ());
 
-    memset(Msg, 1, 1000);
+    std::fill_n (Msg, 1000, static_cast<unsigned char> (1));
     //UDP->send( 10 );
 
-    server->send(Msg);
+    server->send (Msg);
 
     try
       {
         CORBA::Float current_stock_price = quoter->get_quote ("BA");
         cout << "Stock Id: BA, Price = " << current_stock_price << endl;
       }
-    catch (Bad_Ticker_Symbol& e)
+      catch (Bad_Ticker_Symbol const &e)
       {
         cerr << "Caught a bad ticker symbol exception: "
              << e.symbol << endl;
@@ -80,11 +83,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     quoter->shutdown ();
 
-    task.wait();
+    task.wait ();
 
     orb->destroy ();
   }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
   {
     e._tao_print_exception ("Exception caught:");
     return 1;

@@ -17,28 +17,28 @@ public:
   Server_i ();
   ~Server_i ();
 
-  int init (int &argc, ACE_TCHAR **argv);
+  int init (int& argc, ACE_TCHAR** argv);
   // Initialize the server multicast.
 
 private:
   /// Sets the IOR_Multicast class to listen for multicast requests
   // for this server.
-  int enable_multicast (const char *ior);
+  int enable_multicast (char const* ior);
 
   /// Parse the command line arguments.
-  int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
 
 private:
   int argc_;
   // # of arguments on the command line.
 
-  ACE_TCHAR **argv_;
+  ACE_TCHAR** argv_;
   // arguments from command line.
 
   CORBA::ORB_var orb_;
   // ORB
 
-  TAO_IOR_Multicast *ior_multicast_;
+  TAO_IOR_Multicast* ior_multicast_;
   // The ior_multicast event handler.
 
   CORBA::String_var service_ior_;

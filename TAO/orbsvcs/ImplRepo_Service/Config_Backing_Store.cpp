@@ -87,7 +87,7 @@ void Config_Backing_Store::loadActivators ()
 
           const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
 
-          Activator_Info* ai = 0;
+          Activator_Info* ai = nullptr;
           ACE_NEW (ai, Activator_Info (name_cstr, token, ior));
 
           Activator_Info_Ptr info (ai);
@@ -107,7 +107,7 @@ Config_Backing_Store::loadServers ()
     {
       int index = 0;
       ACE_TString name;
-      Server_Info *si = 0;
+      Server_Info *si = nullptr;
       u_int tmp_int = 0;
       ACE_CString tmp;
 
@@ -154,7 +154,7 @@ Config_Backing_Store::loadServers ()
               if (tmp.length () > 0 &&
                   this->servers ().find (tmp, si->alt_info_) != 0)
                 {
-                  Server_Info *base_si = 0;
+                  Server_Info *base_si = nullptr;
                   ACE_NEW (base_si, Server_Info);
                   base_si->key_name_ = tmp;
                   si->alt_info_.reset (base_si);
@@ -164,7 +164,7 @@ Config_Backing_Store::loadServers ()
           get_cstring_value (this->config_, key, PEERS, tmp);
           ImR_Utils::stringToPeerList (tmp, si->peers);
           this->servers ().bind (name_cstr, info);
-          si = 0;
+          si = nullptr;
           ++index;
         }
     }

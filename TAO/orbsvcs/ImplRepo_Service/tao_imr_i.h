@@ -86,7 +86,7 @@ public:
   };
 
   /// Factory.
-  static TAO_IMR_Op *make_op (const ACE_TCHAR *op_name);
+  static TAO_IMR_Op *make_op (ACE_TCHAR const *op_name);
 
   /// Destructor.
   virtual ~TAO_IMR_Op ();
@@ -101,7 +101,7 @@ public:
   void set_imr (ImplementationRepository::Administration_ptr imr);
 
 protected:
-  TAO_IMR_Op () : imr_ (0), quiet_ (false) {}
+  TAO_IMR_Op () : imr_ (nullptr), quiet_ (false) {}
 
   // = Helper methods
 
@@ -124,8 +124,8 @@ protected:
 class TAO_IMR_Op_Activate : public TAO_IMR_Op
 {
 public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -146,8 +146,8 @@ protected:
 class TAO_IMR_Op_Autostart : public TAO_IMR_Op
 {
 public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -166,8 +166,8 @@ protected:
 class TAO_IMR_Op_IOR : public TAO_IMR_Op
 {
 public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -191,8 +191,8 @@ protected:
 class TAO_IMR_Op_Kill : public TAO_IMR_Op
 {
 public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -213,8 +213,8 @@ protected:
 class TAO_IMR_Op_Link : public TAO_IMR_Op
 {
 public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -239,8 +239,8 @@ class TAO_IMR_Op_List : public TAO_IMR_Op
 public:
   TAO_IMR_Op_List ();
 
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -277,8 +277,8 @@ protected:
 class TAO_IMR_Op_Remove : public TAO_IMR_Op
 {
 public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -300,8 +300,8 @@ protected:
 class TAO_IMR_Op_Shutdown : public TAO_IMR_Op
 {
 public:
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Prints a message about the usage
@@ -317,8 +317,8 @@ class TAO_IMR_Op_ShutdownRepo : public TAO_IMR_Op
 {
 public:
   TAO_IMR_Op_ShutdownRepo();
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   void print_usage ();
@@ -339,8 +339,8 @@ class TAO_IMR_Op_Register : public TAO_IMR_Op
 public:
   TAO_IMR_Op_Register(bool is_add);
 
-  virtual int parse (int argc, ACE_TCHAR **argv);
-  virtual int run ();
+  int parse (int argc, ACE_TCHAR **argv) override;
+  int run () override;
 
 protected:
   /// Enables pre-registration checks

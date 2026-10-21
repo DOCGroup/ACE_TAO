@@ -44,21 +44,20 @@ class TAO_FTEC_ConsumerAdmin
 public:
   static const FtRtecEventChannelAdmin::OperationType OBTAIN_ID ;
 
-  typedef FT_ProxyAdmin<TAO_FTEC_ConsumerAdmin,
+  using FT_Aspect = FT_ProxyAdmin<TAO_FTEC_ConsumerAdmin,
                          TAO_FTEC_ProxyPushSupplier,
              RtecEventChannelAdmin::ProxyPushSupplier,
-             FtRtecEventChannelAdmin::ConsumerAdminState>
-          FT_Aspect;
+             FtRtecEventChannelAdmin::ConsumerAdminState>;
 
-  typedef ProxySupplierStateWorker  StateWorker;
+  using StateWorker = ProxySupplierStateWorker;
   TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  virtual ~TAO_FTEC_ConsumerAdmin ();
+  ~TAO_FTEC_ConsumerAdmin () override;
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
-  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier ();
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr
+      obtain_push_supplier () override;
 
   void disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr obj);
 };

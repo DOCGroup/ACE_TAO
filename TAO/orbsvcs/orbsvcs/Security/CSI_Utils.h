@@ -37,14 +37,14 @@ namespace TAO
   namespace CSI_Utils
   {
     /// Populate given IOP::ServiceContext with given CSI::SASContextBody.
-    void create_sas_service_context (const CSI::SASContextBody & sas_context,
+    void create_sas_service_context (CSI::SASContextBody const & sas_context,
                                      IOP::ServiceContext & sc);
 
     /// Extract CSI::SASContextBody from given IOP::ServiceContext.
     /**
      * @return Success == true, Failure == false.
      */
-    bool extract_sas_service_context (const IOP::ServiceContext & sc,
+    bool extract_sas_service_context (IOP::ServiceContext const & sc,
                                       CSI::SASContextBody & sas_context);
   }
 }

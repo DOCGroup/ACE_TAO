@@ -6,7 +6,7 @@
 
 namespace
 {
-  const ACE_TCHAR *ifr_ior_file = 0;
+  ACE_TCHAR const* ifr_ior_file = nullptr;
 }
 
 int
@@ -66,7 +66,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG (( LM_DEBUG, "Get IFR\n" ));
       CORBA::Object_var objref =
         the_orb->string_to_object (ifr_ior_file);
-      if (objref.in () == 0)
+      if (objref.in () == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                               "The received objref is nil\n"),

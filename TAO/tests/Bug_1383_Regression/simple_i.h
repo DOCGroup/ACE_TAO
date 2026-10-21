@@ -10,9 +10,14 @@
 class Simple_i : public POA_Simple, public ACE_Event_Handler
 {
 public:
-  Simple_i(CORBA::ORB_ptr orb);
-  void registerCallee(Callee_ptr value);
-  int handle_timeout(const ACE_Time_Value & currentTime, const void * data);
+  Simple_i (CORBA::ORB_ptr orb);
+  Simple_i (Simple_i const &) = delete;
+  Simple_i &operator= (Simple_i const &) = delete;
+  Simple_i (Simple_i &&) = delete;
+  Simple_i &operator= (Simple_i &&) = delete;
+
+  void registerCallee (Callee_ptr value) override;
+  int handle_timeout (ACE_Time_Value const &current_time, void const *data) override;
 
 private:
   CORBA::ORB_ptr m_orb;

@@ -8,13 +8,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      test::event0_init *ev0_fac = 0;
+      test::event0_init *ev0_fac = nullptr;
       ACE_NEW_RETURN (ev0_fac,
                       test::event0_init,
                       -1);
       CORBA::ValueFactoryBase_var ev0_fac_owner (ev0_fac);
 
-      test::event1_init *ev1_fac = 0;
+      test::event1_init *ev1_fac = nullptr;
       ACE_NEW_RETURN (ev1_fac,
                       test::event1_init,
                       -1);
@@ -30,11 +30,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ev0->message ("one");
 
       // write ev0 to CDR
-      TAO_OutputCDR cdr ((size_t) 0,            // size
-                         (int) ACE_CDR_BYTE_ORDER,
-                         (ACE_Allocator *) 0,   // buffer_allocator
-                         (ACE_Allocator *) 0,   // data_block_allocator
-                         (ACE_Allocator *) 0,   // message_block_allocator
+      TAO_OutputCDR cdr (static_cast<size_t> (0), // size
+                         static_cast<int> (ACE_CDR_BYTE_ORDER),
+                         nullptr,                 // buffer_allocator
+                         nullptr,                 // data_block_allocator
+                         nullptr,                 // message_block_allocator
                          0,                     // memcpy_tradeoff
                          1,
                          1);
@@ -53,18 +53,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Octet *buffer = safe_octet_seq.get_buffer ();
       for (ACE_Message_Block const *i = cdr.begin ();
-           i != 0;
+           i != nullptr;
            i = i->cont ())
         {
           CORBA::ULong len = i->length ();
-          ACE_OS::memcpy (buffer, i->rd_ptr (), (size_t) len);
+          ACE_OS::memcpy (buffer, i->rd_ptr (), static_cast<size_t> (len));
           buffer += len;
         }
 
       // Use TAO_InputCDR for unmarshalling
       buffer = safe_octet_seq.get_buffer ();
       size_t char_len = safe_octet_seq.length () * sizeof (CORBA::Octet);
-      TAO_InputCDR input ((char const*) buffer,
+      TAO_InputCDR input (reinterpret_cast<char const *> (buffer),
                           char_len,
                           ACE_CDR_BYTE_ORDER,
                           TAO_DEF_GIOP_MAJOR,
@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
                            "Caught exception in server:");

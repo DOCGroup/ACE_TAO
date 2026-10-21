@@ -5,7 +5,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_UB_String_Argument_T<S_var,Insert_Policy>::In_UB_String_Argument_T (
-  const typename S_var::s_traits::char_type * x)
+  typename S_var::s_traits::char_type const * x)
   : x_ (x)
 {
 }
@@ -13,7 +13,7 @@ TAO::In_UB_String_Argument_T<S_var,Insert_Policy>::In_UB_String_Argument_T (
 template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
-const typename S_var::s_traits::char_type *
+typename S_var::s_traits::char_type const *
 TAO::In_UB_String_Argument_T<S_var,Insert_Policy>::arg () const
 {
   return this->x_;
@@ -23,9 +23,8 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::In_UB_String_Clonable_Argument_T (
-  const typename S_var::s_traits::char_type * x)
-  : In_UB_String_Argument_T<S_var,Insert_Policy> (x),
-    is_clone_ (false)
+  typename S_var::s_traits::char_type const * x)
+  : In_UB_String_Argument_T<S_var,Insert_Policy> (x)
 {
 }
 
@@ -72,9 +71,7 @@ TAO::Out_UB_String_Argument_T<S_var,Insert_Policy>::arg ()
 template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_UB_String_Argument_T<S_var,Insert_Policy>::Ret_UB_String_Argument_T ()
-{
-}
+TAO::Ret_UB_String_Argument_T<S_var,Insert_Policy>::Ret_UB_String_Argument_T () = default;
 
 template<typename S_var,
          template <typename> class Insert_Policy>

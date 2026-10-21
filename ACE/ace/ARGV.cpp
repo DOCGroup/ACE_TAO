@@ -169,8 +169,8 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
   int first_argc = 0;
   int second_argc = 0;
 
-  CHAR_TYPE *first_buf = 0;
-  CHAR_TYPE *second_buf = 0;
+  CHAR_TYPE *first_buf = nullptr;
+  CHAR_TYPE *second_buf = nullptr;
   size_t buf_len = 1;
 
   // convert the first argv to a string
@@ -276,7 +276,7 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
 #else
       delete [] this->argv_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      this->argv_ = 0;
+      this->argv_ = nullptr;
     }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -284,7 +284,7 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
 #else
   delete [] this->buf_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  this->buf_ = 0;
+  this->buf_ = nullptr;
 
   return 0;
 }
@@ -356,7 +356,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
   // Get an iterator over the queue
   ACE_Unbounded_Queue_Iterator<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > iter (this->queue_);
 
-  ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg = 0;
+  ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg = nullptr;
   CHAR_TYPE *ptr = this->buf_;
   size_t len;
 

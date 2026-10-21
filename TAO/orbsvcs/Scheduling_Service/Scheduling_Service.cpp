@@ -10,28 +10,26 @@
 #include "ace/OS_NS_unistd.h"
 
 TAO_Scheduling_Service::TAO_Scheduling_Service ()
-  : scheduler_impl_ (0),
+  : scheduler_impl_ (nullptr),
     service_name_ ("ScheduleService"),
     scheduler_type_ (CONFIG)
 {
 }
 
 // Constructor taking the command-line arguments.
-TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[])
-  : scheduler_impl_ (0),
+TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR * argv[])
+  : scheduler_impl_ (nullptr),
     service_name_ ("ScheduleService"),
     scheduler_type_ (CONFIG)
 {
   this->init (argc, argv);
 }
 
-TAO_Scheduling_Service::~TAO_Scheduling_Service ()
-{
-}
+TAO_Scheduling_Service::~TAO_Scheduling_Service () = default;
 
 // Initialize the Scheduling Service with the arguments.
 int
-TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
+TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
 {
   int result;
   CORBA::ORB_var orb;
@@ -106,10 +104,10 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       schedule_name[0].id = CORBA::string_dup (this->service_name_.rep());
       naming_context->rebind (schedule_name, scheduler.in ());
 
-      if (this->ior_file_name_.rep() != 0)
+      if (this->ior_file_name_.rep() != nullptr)
         {
-          FILE *iorf = ACE_OS::fopen (this->ior_file_name_.rep(), "w");
-          if (iorf != 0)
+          FILE * iorf = ACE_OS::fopen (this->ior_file_name_.rep(), "w");
+          if (iorf != nullptr)
             {
               ACE_OS::fprintf (iorf,
                                "%s\n",
@@ -118,10 +116,10 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      if (this->pid_file_name_.rep() != 0)
+      if (this->pid_file_name_.rep() != nullptr)
         {
-          FILE *pidf = ACE_OS::fopen (this->pid_file_name_.rep(), "w");
-          if (pidf != 0)
+          FILE * pidf = ACE_OS::fopen (this->pid_file_name_.rep(), "w");
+          if (pidf != nullptr)
             {
               ACE_OS::fprintf (pidf,
                                ACE_TEXT("%ld\n"),
@@ -153,7 +151,7 @@ TAO_Scheduling_Service::run ()
 // Parses the command line arguments.
 
 int
-TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
+TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:p:o:s:"));
   int opt;
@@ -217,7 +215,7 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {

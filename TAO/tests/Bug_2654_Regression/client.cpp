@@ -18,14 +18,20 @@
 
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 class Callback_i : public POA_Test::CallBack
 {
 public:
-  void method2()
+  Callback_i () = default;
+  Callback_i (Callback_i const &) = delete;
+  Callback_i &operator= (Callback_i const &) = delete;
+  Callback_i (Callback_i &&) = delete;
+  Callback_i &operator= (Callback_i &&) = delete;
+
+  void method2 () override
   {
-    ACE_DEBUG ((LM_DEBUG,"(%t) Callback_i::method2 called\n"));
+    ACE_DEBUG ((LM_DEBUG, "(%t) Callback_i::method2 called\n"));
   }
 };
 
@@ -45,35 +51,39 @@ private:
 
   int run_test ();
 public:
-  Worker( int ot);
-  ~Worker();
+  explicit Worker (int ot);
+  ~Worker () override;
+  Worker (Worker const &) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker &&) = delete;
 
-  int svc ();
+  int svc () override;
 };
 
-Worker::Worker(int ot)
-  :orb_threads_ (ot),
-   busy_threads_ (0),
-   message_counter_ (0)
+Worker::Worker (int ot)
+  : orb_threads_ (ot)
+  , busy_threads_ (0)
+  , message_counter_ (0)
 {
 }
 
-Worker::~Worker()
+Worker::~Worker ()
 {
-  this->orb_->destroy();
+  this->orb_->destroy ();
 }
 
 int
-Worker::svc()
+Worker::svc ()
 {
   {
     ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->lock_, 0);
     if (this->orb_threads_ > 0)
       {
         --this->orb_threads_;
-        hello_->set_callback(this->callback_.in());
+        hello_->set_callback (this->callback_.in ());
         ace_mon.release();
-        this->orb_->run();
+        this->orb_->run ();
         return 0;
       }
     else
@@ -92,7 +102,7 @@ Worker::svc()
           }
           this->asynch_hello_->method (n);
 
-          ACE_Time_Value udelay(0,400);
+          ACE_Time_Value udelay (0, 400);
           struct timespec ts = udelay;
           ACE_OS::nanosleep (&ts);
         }
@@ -117,7 +127,7 @@ Worker::svc()
 
   try
     {
-      this->orb_->shutdown();
+      this->orb_->shutdown ();
     }
   catch (const CORBA::Exception &)
     {
@@ -166,8 +176,8 @@ init_callback (Worker &w)
   PortableServer::ServantBase_var owner = servant;
 
   PortableServer::ObjectId_var id = child_poa->activate_object (servant);
-  obj = child_poa->id_to_reference (id.in());
-  w.callback_ = Test::CallBack::_narrow(obj.in());
+  obj = child_poa->id_to_reference (id.in ());
+  w.callback_ = Test::CallBack::_narrow (obj.in ());
 
   // Creation of childPOA is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
@@ -212,8 +222,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  static const int orb_threads = 5;
-  static const int total_threads = 15;
+  static int const orb_threads = 5;
+  static int const total_threads = 15;
 
   // It must be ensured that there are more total threads that there are
   // that are dedicated to running the ORB.
@@ -228,16 +238,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      ACE_DEBUG ((LM_DEBUG,"using ior = %s\n",ior));
+      ACE_DEBUG ((LM_DEBUG, "using ior = %s\n", ior));
 
-      CORBA::Object_var tmp = worker.orb_->string_to_object(ior);
+      CORBA::Object_var tmp = worker.orb_->string_to_object (ior);
 
       if (CORBA::is_nil (tmp.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Invalid IOR.\n")
                             ,1);
         }
-      worker.hello_ = Test::Hello::_narrow(tmp.in ());
+      worker.hello_ = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (worker.hello_.in ()))
         {
@@ -278,7 +288,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
       }
 
-      init_callback(worker);
+      init_callback (worker);
     }
   catch (const CORBA::Exception &ex)
     {
@@ -288,7 +298,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   worker.activate (THR_NEW_LWP | THR_JOINABLE, total_threads);
-  worker.wait();
+  worker.wait ();
 
   return 0;
 }

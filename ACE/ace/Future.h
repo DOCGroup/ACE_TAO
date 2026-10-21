@@ -294,7 +294,7 @@ public:
    * @retval  0   Success; @a value contains the value of the ACE_Future.
    * @retval -1   Error; check ACE_OS::last_error() for an error code.
    */
-  int get (T &value, ACE_Time_Value *tv = 0) const;
+  int get (T &value, ACE_Time_Value *tv = nullptr) const;
 
   /**
    * @deprecated  Note that this method is going away in a subsequent

@@ -668,39 +668,29 @@ TAO_CEC_Default_Factory::destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer 
   delete x;
 }
 
-// These typedefs workaround a SunCC 4.2 bug
-typedef
-    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>::Iterator
-    TAO_CEC_PushConsumer_List_Iterator;
-typedef
-    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>::Iterator
-    TAO_CEC_PushConsumer_RB_Tree_Iterator;
+// These aliases work around a SunCC 4.2 bug.
+using TAO_CEC_PushConsumer_List_Iterator =
+  TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>::Iterator;
+using TAO_CEC_PushConsumer_RB_Tree_Iterator =
+  TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>::Iterator;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-typedef
-    TAO_ESF_Proxy_List<TAO_CEC_TypedProxyPushConsumer>::Iterator
-    TAO_CEC_TypedPushConsumer_List_Iterator;
-typedef
-    TAO_ESF_Proxy_RB_Tree<TAO_CEC_TypedProxyPushConsumer>::Iterator
-    TAO_CEC_TypedPushConsumer_RB_Tree_Iterator;
+using TAO_CEC_TypedPushConsumer_List_Iterator =
+  TAO_ESF_Proxy_List<TAO_CEC_TypedProxyPushConsumer>::Iterator;
+using TAO_CEC_TypedPushConsumer_RB_Tree_Iterator =
+  TAO_ESF_Proxy_RB_Tree<TAO_CEC_TypedProxyPushConsumer>::Iterator;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-typedef
-    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>::Iterator
-    TAO_CEC_PullConsumer_List_Iterator;
-typedef
-    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>::Iterator
-    TAO_CEC_PullConsumer_RB_Tree_Iterator;
-typedef
-    TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>::Iterator
-    TAO_CEC_PushSupplier_List_Iterator;
-typedef
-    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>::Iterator
-    TAO_CEC_PushSupplier_RB_Tree_Iterator;
-typedef
-    TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>::Iterator
-    TAO_CEC_PullSupplier_List_Iterator;
-typedef
-    TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>::Iterator
-    TAO_CEC_PullSupplier_RB_Tree_Iterator;
+using TAO_CEC_PullConsumer_List_Iterator =
+  TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>::Iterator;
+using TAO_CEC_PullConsumer_RB_Tree_Iterator =
+  TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>::Iterator;
+using TAO_CEC_PushSupplier_List_Iterator =
+  TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>::Iterator;
+using TAO_CEC_PushSupplier_RB_Tree_Iterator =
+  TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>::Iterator;
+using TAO_CEC_PullSupplier_List_Iterator =
+  TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>::Iterator;
+using TAO_CEC_PullSupplier_RB_Tree_Iterator =
+  TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>::Iterator;
 
 TAO_CEC_ProxyPushConsumer_Collection*
 TAO_CEC_Default_Factory::create_proxy_push_consumer_collection (TAO_CEC_EventChannel *)

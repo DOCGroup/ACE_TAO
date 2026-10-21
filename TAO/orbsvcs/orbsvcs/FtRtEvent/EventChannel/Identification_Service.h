@@ -29,7 +29,7 @@ namespace FTRTEC
   {
   public:
     Identification_Service();
-    ~Identification_Service();
+    ~Identification_Service() override = default;
 
     /**
     * This function returns 0 when init is not called yet.

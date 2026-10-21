@@ -6,13 +6,13 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://middle.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://middle.ior");
 bool verbose = true;
 long timeout = 2;
 
 void
-usage(ACE_TCHAR const *cmd,
-      ACE_TCHAR const *msg)
+usage (ACE_TCHAR const *cmd,
+       ACE_TCHAR const *msg)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT("usage:  %s ")
@@ -27,9 +27,9 @@ usage(ACE_TCHAR const *cmd,
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vk:t:"));
-  int c;
-  ACE_TCHAR const *stimeout = 0;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("vk:t:"));
+  int c {};
+  ACE_TCHAR const *stimeout {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -43,26 +43,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 't':
-        stimeout = get_opts.opt_arg();
+        stimeout = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
-        usage(argv[0], ACE_TEXT("unknown argument"));
+        usage (argv[0], ACE_TEXT ("unknown argument"));
         return -1;
       }
 
-  if (stimeout != 0)
-  {
-    ACE_TCHAR *end;
-    long tmp = ACE_OS::strtol(stimeout, &end, 10);
-    if (end == 0 || *end != '\0')
+  if (stimeout != nullptr)
     {
-      usage(argv[0], ACE_TEXT("Invalid timeout value"));
-      return -1;
+      ACE_TCHAR *end {};
+      long const tmp = ACE_OS::strtol (stimeout, &end, 10);
+      if (end == nullptr || *end != '\0')
+        {
+          usage (argv[0], ACE_TEXT ("Invalid timeout value"));
+          return -1;
+        }
+      timeout = tmp;
     }
-    timeout = tmp;
-  }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -78,19 +78,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
       // one second in TimeT units
-      TimeBase::TimeT const second = 10 * TimeBase::TimeT(1000000);
+      TimeBase::TimeT const second = 10 * TimeBase::TimeT (1000000);
 
       CORBA::Any timeout_as_any;
       timeout_as_any <<= TimeBase::TimeT(timeout * second);
 
-      TAO::Utils::PolicyList_Destroyer plist(1);
-      plist.length(1);
+      TAO::Utils::PolicyList_Destroyer plist (1);
+      plist.length (1);
       plist[0] =
-          orb->create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-              timeout_as_any);
+          orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                              timeout_as_any);
 
       tmp = tmp->_set_policy_overrides(plist, CORBA::SET_OVERRIDE);
 
@@ -107,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Startup the tests ...
-      middle->startup_test();
+      middle->startup_test ();
 
       ACE_DEBUG ((LM_DEBUG, "client(%P|%t) - test started up\n"));
 
@@ -116,10 +116,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "client(%P|%t) - running pings"));
       for (int i = 0; i != iterations; ++i)
       {
-        middle->ping();
+        middle->ping ();
         if (i % interval == 0 && i > 0)
         {
-          ACE_DEBUG((LM_DEBUG, "."));
+          ACE_DEBUG ((LM_DEBUG, "."));
         }
       }
       ACE_DEBUG ((LM_DEBUG, "done\n"));
@@ -130,7 +130,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG,
               "client"));

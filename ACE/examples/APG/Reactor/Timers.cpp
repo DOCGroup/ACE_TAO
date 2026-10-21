@@ -8,7 +8,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_signal.h"
 
-typedef void (*timerTask_t)();
+using timerTask_t = void (*) ();
 
 // Listing 1 code/ch07
 pid_t timerTask (int initialDelay,

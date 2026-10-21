@@ -62,29 +62,26 @@ public:
                   PortableServer::POA_ptr log_poa,
                   TAO_LogMgr_i &logmgr_i,
                   DsLogAdmin::LogMgr_ptr factory,
-                  TAO_LogNotification *log_notifier,
+                  TAO_LogNotification * log_notifier,
                   DsLogAdmin::LogId id);
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
+  DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId & id) override;
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void
-  destroy ();
+  void destroy () override;
 
   /// Activate the EventLog.
   void
   activate ();
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
-  CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers ();
+  CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-  CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers ();
+  CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
 protected:
   /// Destructor
@@ -92,19 +89,24 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_EventLog_i ();
+  ~TAO_EventLog_i () override;
 
 private:
   /// The Event Channel that the log uses.
-  TAO_CEC_EventChannel *event_channel_;
+  TAO_CEC_EventChannel * event_channel_;
 
   /// The PushConsumer that consumes the events and stores them
   /// in the log.
-  TAO_Event_LogConsumer *my_log_consumer_;
+  TAO_Event_LogConsumer * my_log_consumer_;
 
   PortableServer::POA_var poa_;
 
   PortableServer::POA_var log_poa_;
+
+  TAO_EventLog_i (TAO_EventLog_i const &) = delete;
+  TAO_EventLog_i (TAO_EventLog_i &&) = delete;
+  TAO_EventLog_i & operator= (TAO_EventLog_i const &) = delete;
+  TAO_EventLog_i & operator= (TAO_EventLog_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -47,7 +47,7 @@ namespace TAO
     /**
      * Virtual destructor.
      */
-    virtual ~FT_FaultNotifier_i ();
+    ~FT_FaultNotifier_i () override;
 
 
     /**
@@ -88,39 +88,44 @@ namespace TAO
     // CORBA interface
     // See IDL for documentation
 
-    virtual void push_structured_fault (
-        const CosNotification::StructuredEvent & event);
+    void push_structured_fault (
+        CosNotification::StructuredEvent const & event) override;
 
-    virtual void push_sequence_fault (
-      const CosNotification::EventBatch & events);
+    void push_sequence_fault (
+      CosNotification::EventBatch const & events) override;
 
-    virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
-      const char * constraint_grammar);
+    ::CosNotifyFilter::Filter_ptr create_subscription_filter (
+      char const * constraint_grammar) override;
 
-    virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
+    FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
       CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-      CosNotifyFilter::Filter_ptr filter);
+      CosNotifyFilter::Filter_ptr filter) override;
 
-    virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
+    FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
       CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-      CosNotifyFilter::Filter_ptr filter);
+      CosNotifyFilter::Filter_ptr filter) override;
 
-    virtual void disconnect_consumer (
-      FT::FaultNotifier::ConsumerId connection);
+    void disconnect_consumer (
+      FT::FaultNotifier::ConsumerId connection) override;
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
-    virtual CORBA::Boolean is_alive ();
+    CORBA::Boolean is_alive () override;
 
     /////////////////////////////////////////
     // Override CORBA servant virtual methods
-    virtual PortableServer::POA_ptr _default_POA ();
+    PortableServer::POA_ptr _default_POA () override;
 
-    virtual void _remove_ref ();
+    void _remove_ref () override;
 
     /////////////////////////
     // Implementation methods
   private:
+    FT_FaultNotifier_i (FT_FaultNotifier_i const &) = delete;
+    FT_FaultNotifier_i (FT_FaultNotifier_i &&) = delete;
+    FT_FaultNotifier_i & operator= (FT_FaultNotifier_i const &) = delete;
+    FT_FaultNotifier_i & operator= (FT_FaultNotifier_i &&) = delete;
+
     /**
      * Write this notifier's IOR to a file
      */
@@ -153,12 +158,12 @@ namespace TAO
     /**
      * A file to which the notifier's IOR should be written.
      */
-    const ACE_TCHAR * ior_output_file_;
+    ACE_TCHAR const * ior_output_file_;
 
     /**
      * A name to be used to register the notifier with the name service.
      */
-    const char * ns_name_;
+    char const * ns_name_;
 
     CosNaming::NamingContext_var naming_context_;
 
@@ -193,10 +198,11 @@ namespace TAO
       ::CosNotifyChannelAdmin::ProxySupplier_var proxyVar_;
 
       ProxyInfo ();
-      ProxyInfo (const ProxyInfo & rhs);
+      ProxyInfo (ProxyInfo const & rhs);
+      ProxyInfo & operator= (ProxyInfo const &) = default;
     };
 
-    typedef ACE_Vector <ProxyInfo> ProxyInfoVec;
+    using ProxyInfoVec = ACE_Vector<ProxyInfo>;
 
     ProxyInfoVec proxy_infos_;
 

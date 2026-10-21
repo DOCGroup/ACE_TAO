@@ -2,10 +2,10 @@
 #include "Stock_i.h"
 #include "ace/OS_NS_unistd.h"
 
-PortableServer::POA_var Quoter_Stock_i::_poa ;
+PortableServer::POA_var Quoter_Stock_i::_poa;
 
-Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
-                                const char *full_name,
+Quoter_Stock_i::Quoter_Stock_i (char const *symbol,
+                                char const *full_name,
                                 CORBA::Double price)
   : symbol_ (symbol)
   , full_name_ (full_name)
@@ -31,21 +31,21 @@ Quoter_Stock_i::price ()
   return this->price_;
 }
 
-Quoter::Stock::StockHistory*
+Quoter::Stock::StockHistory *
 Quoter_Stock_i::history ()
 {
-  Quoter::Stock::StockHistory_var hist = new Quoter::Stock::StockHistory ;
+  Quoter::Stock::StockHistory_var hist = new Quoter::Stock::StockHistory;
 
   // delay a little bit so we have chance to kill client
   // before this method returns
-  ACE_OS::sleep(5);
+  ACE_OS::sleep (5);
 
-  const unsigned hsize = 200000 ;
-  hist->length(hsize);
-  for (unsigned int i = 0 ; i < hsize ; ++ i) {
-    hist[i] = double(i+1);
+  unsigned const hsize = 200000;
+  hist->length (hsize);
+  for (unsigned int i = 0; i < hsize; ++i) {
+    hist[i] = double (i + 1);
   }
 
   ACE_DEBUG ((LM_DEBUG, "Returning method in server\n"));
-  return hist._retn();
+  return hist._retn ();
 }

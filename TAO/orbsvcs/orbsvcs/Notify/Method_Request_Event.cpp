@@ -31,7 +31,7 @@ TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event()
 void
 TAO_Notify_Method_Request_Event::complete ()
 {
-  if (this->delivery_request_.get () != 0)
+  if (this->delivery_request_.get () != nullptr)
   {
     this->delivery_request_->complete ();
   }
@@ -41,7 +41,7 @@ TAO_Notify_Method_Request_Event::complete ()
 unsigned long
 TAO_Notify_Method_Request_Event::sequence ()
 {
-  if (this->delivery_request_.get () != 0)
+  if (this->delivery_request_.get () != nullptr)
   {
     return this->delivery_request_->sequence ();
   }
@@ -51,7 +51,7 @@ TAO_Notify_Method_Request_Event::sequence ()
 bool
 TAO_Notify_Method_Request_Event::should_retry ()
 {
-  if (this->delivery_request_.get () != 0)
+  if (this->delivery_request_.get () != nullptr)
   {
     return this->delivery_request_->should_retry ();
   }

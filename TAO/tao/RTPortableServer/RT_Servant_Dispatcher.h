@@ -39,6 +39,7 @@ class TAO_RTPortableServer_Export TAO_RT_Servant_Dispatcher
   : public TAO_Servant_Dispatcher
 {
 public:
+  TAO_RT_Servant_Dispatcher () = default;
   ~TAO_RT_Servant_Dispatcher () override = default;
 
   /// Pre_invoke remote request.
@@ -64,6 +65,12 @@ public:
                                  TAO_SYNCH_MUTEX &thread_lock,
                                  TAO_ORB_Core &orb_core,
                                  TAO_Object_Adapter *object_adapter) override;
+
+private:
+  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher const &) = delete;
+  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher const &) = delete;
+  TAO_RT_Servant_Dispatcher (TAO_RT_Servant_Dispatcher &&) = delete;
+  TAO_RT_Servant_Dispatcher &operator= (TAO_RT_Servant_Dispatcher &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

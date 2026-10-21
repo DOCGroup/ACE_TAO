@@ -38,7 +38,7 @@ namespace CORBA
   class PolicyList;
 
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 namespace TAO

@@ -41,7 +41,7 @@ public:
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
-  int init (const char *servant_name,
+  int init (char const *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
 
@@ -50,14 +50,14 @@ public:
 
   /// Ignore this method if you are not testing the InterOperable
   /// Naming Service.
-  int test_for_ins (const char *ior);
+  int test_for_ins (char const *ior);
 
 private:
   /// Parses the commandline arguments.
   int parse_args ();
 
   /// A holder of the servant that does ref counting for him.
-  typedef TAO_Intrusive_Ref_Count_Handle<Servant> Servant_var;
+  using Servant_var = TAO_Intrusive_Ref_Count_Handle<Servant>;
   Servant_var servant_;
 
   /// The ORB manager - a helper class for accessing the POA and
@@ -65,19 +65,23 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// File where the IOR of the server object is stored.
-  ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR *ior_output_file_ {};
 
   /// Flag to indicate whether naming service could be used
-  int naming_;
+  int naming_ {};
 
   /// Used test the INS.
-  ACE_TCHAR *ins_;
+  ACE_TCHAR *ins_ {};
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
+  Server (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server const &) = delete;
+  Server &operator= (Server &&) = delete;
 };
 
 /**
@@ -100,7 +104,7 @@ public:
   ~Client ();
 
   /// Initialize the client communication endpoint with server.
-  int init (const char *name, int argc, ACE_TCHAR *argv[]);
+  int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
   ServerInterface *operator-> () { return server_.in (); }
@@ -112,7 +116,7 @@ public:
   void do_shutdown (int);
 
   /// Initialize naming service
-  int obtain_initial_references (const char *name);
+  int obtain_initial_references (char const *name);
 
   CORBA::ORB_ptr orb ()
     {
@@ -130,23 +134,27 @@ private:
   CORBA::ORB_var orb_;
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
   ACE_CString ior_;
 
   /// Server object
-  typedef TAO_Intrusive_Ref_Count_Handle<ServerInterface> ServerInterface_var;
+  using ServerInterface_var = TAO_Intrusive_Ref_Count_Handle<ServerInterface>;
   ServerInterface_var server_;
 
   /// Flag to use the naming service
-  int naming_;
+  int naming_ {};
 
   /// Flag for shutting down the server
-  int do_shutdown_;
+  int do_shutdown_ {};
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
 };
 
 #include "Simple_util.cpp"

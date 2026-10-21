@@ -18,12 +18,17 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
+
   // = The skeleton methods
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void ping ();
+  void ping () override;
 
-  virtual void throw_location_forward ();
+  void throw_location_forward () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

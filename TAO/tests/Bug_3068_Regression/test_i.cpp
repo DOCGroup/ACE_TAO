@@ -18,11 +18,11 @@ Callback_i::shutdown ()
 }
 
 void
-Callback_i::callback_method (const CORBA::OctetSeq &)
+Callback_i::callback_method (CORBA::OctetSeq const &)
 {
   static int count = 0;
   if (count++ > 0)
-    ACE_OS::exit(0);
+    ACE_OS::exit (0);
 }
 
 
@@ -31,7 +31,7 @@ Callback_i::callback_method (const CORBA::OctetSeq &)
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Boolean do_callback)
 {
-  if (do_callback && this->caller_ != 0)
+  if (do_callback && this->caller_ != nullptr)
     {
       this->caller_->go ();
     }
@@ -59,7 +59,7 @@ Caller::Caller (Callback_ptr callback, CORBA::ORB_ptr orb)
   , cond_ (this->lock_)
   , going_ (false)
 {
-  this->payload_.length (0); //10000);
+  this->payload_.length (0);  // 10000
   this->activate (THR_JOINABLE | THR_NEW_LWP, 4);
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "%t returning\n"));
@@ -79,11 +79,12 @@ Caller::svc ()
 {
   this->lock_.acquire ();
   ACE_DEBUG ((LM_DEBUG, "%t Getting ready to call\n"));
-  while (!this->going_) this->cond_.wait ();
+  while (!this->going_)
+    this->cond_.wait ();
   this->lock_.release ();
   try
     {
-      while (1)
+      while (true)
         {
           ACE_DEBUG ((LM_DEBUG, "%t calling, payload len = %d\n",
                       payload_.length ()));
@@ -93,7 +94,7 @@ Caller::svc ()
           ACE_OS::sleep (tv);
         }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "%t caught: %C\n", ex._name ()));
     }
@@ -102,7 +103,7 @@ Caller::svc ()
       ACE_OS::sleep (1);
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "%t orb shutdown raised %C\n", ex._name ()));
     }

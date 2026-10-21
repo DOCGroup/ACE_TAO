@@ -35,7 +35,7 @@ TAO_Notify_Method_Request_Updates_No_Copy::~TAO_Notify_Method_Request_Updates_No
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Updates_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request = 0;
+  TAO_Notify_Method_Request_Queueable* request = nullptr;
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Updates (this->added_, this->removed_, this->proxy_),

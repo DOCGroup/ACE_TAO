@@ -15,9 +15,9 @@ double calc_cpu_loading ()
   static unsigned long prev_idle = 0;
   static double prev_total = 0.0;
 
-  FILE *file_ptr = 0;
-  char *item = 0;
-  char *arg = 0;
+  FILE *file_ptr = nullptr;
+  char *item = nullptr;
+  char *arg = nullptr;
   unsigned long delta_idle = 0;
   unsigned long user = 0;
   unsigned long nice = 0;
@@ -26,15 +26,15 @@ double calc_cpu_loading ()
 
   double percent_cpu_load = 0.0;
 
-  if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == 0)
+  if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == nullptr)
           return percent_cpu_load;
 
-  while ((ACE_OS::fgets (buf, sizeof (buf), file_ptr)) != 0)
+  while ((ACE_OS::fgets (buf, sizeof (buf), file_ptr)) != nullptr)
   {
     item = ACE_OS::strtok (buf, " \t\n");
-    arg = ACE_OS::strtok (0, "\n");
+    arg = ACE_OS::strtok (nullptr, "\n");
 
-    if (item == 0 || arg == 0)
+    if (item == nullptr || arg == nullptr)
             continue;
     if (item[0] == 'c' && ACE_OS::strlen (item) == 3)
     {
@@ -61,13 +61,13 @@ double calc_cpu_loading ()
   return percent_cpu_load;
 }
 
-TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * location_id,
-                                                                const char * location_kind)
+TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (char const * location_id,
+                                                                char const * location_kind)
   : location_ (1)
 {
   this->location_.length (1);
 
-  if (location_id == 0)
+  if (location_id == nullptr)
     {
       char host[MAXHOSTNAMELEN + 1];
       if (ACE_OS::hostname (host, sizeof (host)) != 0)
@@ -94,14 +94,12 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * loc
     {
       this->location_[0].id = CORBA::string_dup (location_id);
 
-      if (location_kind != 0)
+      if (location_kind != nullptr)
         this->location_[0].kind = CORBA::string_dup (location_kind);
     }
 }
 
-TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor ()
-{
-}
+TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor () = default;
 
 CosLoadBalancing::Location *
 TAO_LB_CPU_Utilization_Monitor::the_location ()
@@ -127,7 +125,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
   double load_double = calc_cpu_loading ();
   load = load_double;
 
-  CosLoadBalancing::LoadList * tmp = 0;
+  CosLoadBalancing::LoadList * tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (

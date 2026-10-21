@@ -53,6 +53,12 @@ namespace TAO
   public:
     QtResource_Loader (QApplication *qapp);
     virtual ~QtResource_Loader ();
+
+  private:
+    QtResource_Loader (QtResource_Loader const &) = delete;
+    QtResource_Loader &operator= (QtResource_Loader const &) = delete;
+    QtResource_Loader (QtResource_Loader &&) = delete;
+    QtResource_Loader &operator= (QtResource_Loader &&) = delete;
   };
 }
 

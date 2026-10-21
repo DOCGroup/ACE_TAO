@@ -51,29 +51,29 @@ public:
   TAO_Muxed_TMS (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Muxed_TMS ();
+  ~TAO_Muxed_TMS () override;
 
   /// Generate and return an unique request id for the current
   /// invocation.
-  virtual CORBA::ULong request_id ();
+  CORBA::ULong request_id () override;
 
   // = Please read the documentation in the TAO_Transport_Mux_Strategy
   //   class.
-  virtual int bind_dispatcher (CORBA::ULong request_id,
-                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
-  virtual int unbind_dispatcher (CORBA::ULong request_id);
+  int bind_dispatcher (CORBA::ULong request_id,
+                       ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
+  int unbind_dispatcher (CORBA::ULong request_id) override;
 
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
-  virtual int reply_timed_out (CORBA::ULong request_id);
+  int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
+  int reply_timed_out (CORBA::ULong request_id) override;
 
-  virtual bool idle_after_send ();
-  virtual bool idle_after_reply ();
-  virtual void connection_closed ();
-  virtual bool has_request ();
+  bool idle_after_send () override;
+  bool idle_after_reply () override;
+  void connection_closed () override;
+  bool has_request () override;
 
 private:
-  void operator= (const TAO_Muxed_TMS &);
-  TAO_Muxed_TMS (const TAO_Muxed_TMS &);
+  TAO_Muxed_TMS (TAO_Muxed_TMS const &) = delete;
+  TAO_Muxed_TMS &operator= (TAO_Muxed_TMS const &) = delete;
 
 private:
   /// Lock to protect the state of the object
@@ -87,12 +87,12 @@ private:
   /// Reply Dispatchers.
   TAO_ORB_Core * const orb_core_;
 
-  typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
-                                   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>,
-                                   ACE_Hash <CORBA::ULong>,
-                                   ACE_Equal_To <CORBA::ULong>,
-                                   ACE_Null_Mutex>
-    REQUEST_DISPATCHER_TABLE;
+  using REQUEST_DISPATCHER_TABLE =
+    ACE_Hash_Map_Manager_Ex<CORBA::ULong,
+                            ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>,
+                            ACE_Hash<CORBA::ULong>,
+                            ACE_Equal_To<CORBA::ULong>,
+                            ACE_Null_Mutex>;
 
   /// Table of <Request ID, Reply Dispatcher> pairs.
   REQUEST_DISPATCHER_TABLE dispatcher_table_;

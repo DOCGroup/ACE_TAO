@@ -63,6 +63,11 @@ public:
   int support_multicast_discovery () const;
 
 private:
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
+
   /// File where the IOR of the server object is stored.
   char *ior_output_file_;
 
@@ -82,8 +87,8 @@ private:
   int support_multicast_;
 };
 
-// Typedef an Options Singleton.
-typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
+// Options Singleton.
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

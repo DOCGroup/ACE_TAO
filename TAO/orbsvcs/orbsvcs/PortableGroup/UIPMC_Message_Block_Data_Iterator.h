@@ -51,7 +51,7 @@ private:
   size_t iov_len_left_;
 
   // Current message iterator state.
-  enum State
+  enum class State
   {
     INTER_BLOCK,
     INTRA_BLOCK

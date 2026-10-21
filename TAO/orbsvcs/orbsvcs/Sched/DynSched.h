@@ -45,29 +45,27 @@ public:
   // public type declarations //
   //////////////////////////////
 
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Config_Info Config_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
-  typedef RtecScheduler::Dispatching_Type_t Dispatching_Type;
-  typedef RtecScheduler::Scheduling_Anomaly Scheduling_Anomaly;
-  typedef RtecScheduler::Anomaly_Severity Anomaly_Severity;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Config_Info = RtecScheduler::Config_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
+  using Dispatching_Type = RtecScheduler::Dispatching_Type_t;
+  using Scheduling_Anomaly = RtecScheduler::Scheduling_Anomaly;
+  using Anomaly_Severity = RtecScheduler::Anomaly_Severity;
 
-  typedef ACE_Map_Entry <ACE_CString, RT_Info *> Thread_Map_Entry;
-  typedef ACE_Map_Manager <ACE_CString, RT_Info *, ACE_Null_Mutex>
-      Thread_Map;
-  typedef ACE_Map_Iterator <ACE_CString, RT_Info *, ACE_Null_Mutex>
-      Thread_Map_Iterator;
+  using Thread_Map_Entry = ACE_Map_Entry<ACE_CString, RT_Info *>;
+  using Thread_Map = ACE_Map_Manager<ACE_CString, RT_Info *, ACE_Null_Mutex>;
+  using Thread_Map_Iterator = ACE_Map_Iterator<ACE_CString, RT_Info *, ACE_Null_Mutex>;
 
   /// Objects are named by unique strings.
-  typedef const char *Object_Name;
+  using Object_Name = const char *;
 
   enum status_t {
     // The following are used both by the runtime Scheduler and during
@@ -149,9 +147,9 @@ public:
    */
   void init (const OS_Priority minimum_priority,
              const OS_Priority maximum_priority,
-             const char *runtime_filename = 0,
-             const char *rt_info_filename = 0,
-             const char *timeline_filename = 0);
+             const char *runtime_filename = nullptr,
+             const char *rt_info_filename = nullptr,
+             const char *timeline_filename = nullptr);
 
   /**
    * Prepare for another schedule computation: once a reasonable schedule
@@ -381,20 +379,20 @@ private:
   // private type declarations //
   ///////////////////////////////
 
-  typedef ACE_CString EXT;
-  typedef RT_Info *INT;
+  using EXT = ACE_CString;
+  using INT = RT_Info *;
 
 #if defined (ACE_HAS_THREADS)
-  typedef TAO_SYNCH_MUTEX SYNCH;
-  typedef TAO_SYNCH_RECURSIVE_MUTEX LOCK;
+  using SYNCH = TAO_SYNCH_MUTEX;
+  using LOCK = TAO_SYNCH_RECURSIVE_MUTEX;
 #else
-  typedef ACE_Null_Mutex SYNCH;
-  typedef ACE_Null_Mutex LOCK;
+  using SYNCH = ACE_Null_Mutex;
+  using LOCK = ACE_Null_Mutex;
 #endif /* ACE_HAS_THREADS */
 
-  typedef ACE_Map_Manager<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection;
-  typedef ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection_Iterator;
-  typedef ACE_Map_Entry<EXT, INT> Info_Collection_Entry;
+  using Info_Collection = ACE_Map_Manager<EXT, INT, TAO_SYNCH_MUTEX>;
+  using Info_Collection_Iterator = ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX>;
+  using Info_Collection_Entry = ACE_Map_Entry<EXT, INT>;
 
   //////////////////////////////
   // private member functions //
@@ -465,8 +463,10 @@ private:
   status_t calculate_utilization_params ();
 
   // the following functions are not implememented
-  ACE_DynScheduler (const ACE_DynScheduler &);
-  ACE_DynScheduler &operator= (const ACE_DynScheduler &);
+  ACE_DynScheduler (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler (ACE_DynScheduler &&) = delete;
+  ACE_DynScheduler &operator= (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler &operator= (ACE_DynScheduler &&) = delete;
 
   //////////////////////////
   // private data members //

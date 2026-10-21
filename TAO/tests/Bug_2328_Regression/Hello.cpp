@@ -6,7 +6,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (const char * A, const char * B, const char * C)
+Hello::get_string (char const *A, char const *B, char const *C)
 {
   ACE_DEBUG ((LM_DEBUG, "Received: <%C>, <%C>, <%C>\n", A, B, C));
   return CORBA::string_dup ("Hello there!");

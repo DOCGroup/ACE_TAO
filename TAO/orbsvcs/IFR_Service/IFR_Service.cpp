@@ -9,17 +9,13 @@
 #include "tao/ORB_Core.h"
 #include <memory>
 
-IFR_Service::IFR_Service ()
-{
-}
+IFR_Service::IFR_Service () = default;
 
-IFR_Service::~IFR_Service ()
-{
-}
+IFR_Service::~IFR_Service () = default;
 
 int
 IFR_Service::init (int argc,
-                   ACE_TCHAR *argv[])
+                   ACE_TCHAR * argv[])
 {
   int result;
   try
@@ -47,7 +43,7 @@ IFR_Service::init (int argc,
 int
 IFR_Service::run ()
 {
-  this->orb_->run (0);
+  this->orb_->run (nullptr);
 
   return 0;
 }

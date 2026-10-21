@@ -820,10 +820,10 @@ public:
   using SELF = ACE_Cached_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR, MUTEX>;
 
   /// Constructor
-  ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
-                               ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
-                               ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
-                               MUTEX *mutex = 0,
+  ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
+                               ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = nullptr,
+                               ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = nullptr,
+                               MUTEX *mutex = nullptr,
                                bool delete_lock = false);
 
   /// Destructor

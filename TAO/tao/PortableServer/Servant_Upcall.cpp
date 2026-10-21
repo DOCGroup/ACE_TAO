@@ -331,7 +331,7 @@ namespace TAO
     Servant_Upcall::increment_servant_refcount ()
     {
       // Cleanup servant related stuff.
-      if (this->active_object_map_entry_ != 0)
+      if (this->active_object_map_entry_ != nullptr)
         ++this->active_object_map_entry_->reference_count_;
     }
 
@@ -339,7 +339,7 @@ namespace TAO
     Servant_Upcall::servant_cleanup ()
     {
       // Cleanup servant related stuff.
-      if (this->active_object_map_entry_ != 0)
+      if (this->active_object_map_entry_ != nullptr)
         {
           // Decrement the reference count.
           CORBA::UShort const new_count =

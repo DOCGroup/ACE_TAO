@@ -42,8 +42,8 @@ hexbyte_to_byte (const char  *hexbyte)
   return (hi << 4) | low;
 }
 
-static const int  counts[] = { 4, 2, 2, 2, 6 };
-static const char *seperators = "----";
+constexpr int counts[] = { 4, 2, 2, 2, 6 };
+static char const *seperators = "----";
 
 /**
  * construct an UUID from the string representation
@@ -82,7 +82,7 @@ UUID::from_string (const char *string_rep)
   return true;
 }
 
-static const char *table = "0123456789abcdef";
+static char const *table = "0123456789abcdef";
 
 inline char *
 bytes_to_hex (const unsigned char *bytes,
@@ -132,7 +132,7 @@ UUID::create (unsigned char *buffer)
   }
 
   // Days in years
-  static ACE_UINT64 SecondsToJan1970 =
+  static constexpr ACE_UINT64 SecondsToJan1970 =
     (static_cast<ACE_UINT64> (365)*(1970-1583) // Days in years
     + (1970-1583)/4 // Leap days
     - 3  // Allow for 1700, 1800, 1900 not leap years

@@ -93,7 +93,8 @@ private:
  * in the Event Channel gateways, the endpoints are reference counted
  * to manage their lifetime automatically.
  */
-typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex> TAO_ECG_Refcounted_Endpoint;
+using TAO_ECG_Refcounted_Endpoint =
+  ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint, ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -22,7 +22,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   if (type == ::PortableServer::THREAD_POLICY_ID)
     {
-      TAO::Portable_Server::ThreadPolicy *thread_policy = 0;
+      TAO::Portable_Server::ThreadPolicy *thread_policy = nullptr;
       PortableServer::ThreadPolicyValue thr_value;
 
       TAO::Portable_Server::create_policy (thread_policy, thr_value, value);
@@ -33,7 +33,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
   if (type == PortableServer::LIFESPAN_POLICY_ID)
     {
-      TAO::Portable_Server::LifespanPolicy *lifespan_policy = 0;
+      TAO::Portable_Server::LifespanPolicy *lifespan_policy = nullptr;
       PortableServer::LifespanPolicyValue lifespan_value;
 
       TAO::Portable_Server::create_policy (lifespan_policy, lifespan_value, value);
@@ -43,7 +43,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   if (type == PortableServer::ID_UNIQUENESS_POLICY_ID)
     {
-      TAO::Portable_Server::IdUniquenessPolicy *id_uniqueness_policy = 0;
+      TAO::Portable_Server::IdUniquenessPolicy *id_uniqueness_policy = nullptr;
       PortableServer::IdUniquenessPolicyValue id_uniqueness_value;
 
       TAO::Portable_Server::create_policy (id_uniqueness_policy, id_uniqueness_value, value);
@@ -53,7 +53,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   if (type == PortableServer::ID_ASSIGNMENT_POLICY_ID)
     {
-      TAO::Portable_Server::IdAssignmentPolicy *id_assignment_policy = 0;
+      TAO::Portable_Server::IdAssignmentPolicy *id_assignment_policy = nullptr;
       PortableServer::IdAssignmentPolicyValue id_assignment_value;
 
       TAO::Portable_Server::create_policy (id_assignment_policy, id_assignment_value, value);
@@ -65,7 +65,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   if (type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID)
     {
-      TAO::Portable_Server::ImplicitActivationPolicy *implicit_activatation_policy = 0;
+      TAO::Portable_Server::ImplicitActivationPolicy *implicit_activatation_policy = nullptr;
       PortableServer::ImplicitActivationPolicyValue implicit_activation_value;
 
       TAO::Portable_Server::create_policy (implicit_activatation_policy, implicit_activation_value, value);
@@ -75,7 +75,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   if (type == PortableServer::SERVANT_RETENTION_POLICY_ID)
     {
-      TAO::Portable_Server::ServantRetentionPolicy *servant_retention_policy = 0;
+      TAO::Portable_Server::ServantRetentionPolicy *servant_retention_policy = nullptr;
       PortableServer::ServantRetentionPolicyValue servant_retention_value;
 
       TAO::Portable_Server::create_policy (servant_retention_policy, servant_retention_value, value);
@@ -85,7 +85,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   if (type == PortableServer::REQUEST_PROCESSING_POLICY_ID)
     {
-      TAO::Portable_Server::RequestProcessingPolicy *request_processing_policy = 0;
+      TAO::Portable_Server::RequestProcessingPolicy *request_processing_policy = nullptr;
       PortableServer::RequestProcessingPolicyValue request_processing_value;
 
       TAO::Portable_Server::create_policy (request_processing_policy, request_processing_value, value);

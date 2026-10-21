@@ -4,8 +4,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_LogConsumer::TAO_Notify_LogConsumer (TAO_NotifyLog_i *log)
-: log_ (log)
+TAO_Notify_LogConsumer::TAO_Notify_LogConsumer (TAO_NotifyLog_i * log)
+  : log_ (log)
 {
 }
 
@@ -45,15 +45,15 @@ TAO_Notify_LogConsumer::disconnect ()
 
 void
 TAO_Notify_LogConsumer::offer_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/)
+   (CosNotification::EventTypeSeq const & /*added*/,
+    CosNotification::EventTypeSeq const & /*removed*/)
 {
   // No-Op.
 }
 
 void
 TAO_Notify_LogConsumer::push
-   (const CORBA::Any& event)
+   (CORBA::Any const & event)
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);

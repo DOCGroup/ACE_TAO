@@ -105,13 +105,13 @@ public:
                                     CORBA::Object_out forward_to);
 
   /// Id hash map.
-  typedef ACE_Hash_Map_Manager_Ex<
+  using GroupId_Table = ACE_Hash_Map_Manager_Ex<
     PortableGroup::TagGroupTaggedComponent *,
     Map_Entry *,
     TAO_GroupId_Hash,
     TAO_GroupId_Equal_To,
-    ACE_Null_Mutex> GroupId_Table;
-  typedef GroupId_Table::iterator Iterator;
+    ACE_Null_Mutex>;
+  using Iterator = GroupId_Table::iterator;
 
 protected:
   /// Lock used to synchronize access to map_.

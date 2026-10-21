@@ -89,11 +89,9 @@ private:
 
 // typedefs for containers containing the list of loaded protocol
 // factories.
-typedef ACE_Unbounded_Set<TAO_Protocol_Item*>
-        TAO_ProtocolFactorySet;
+using TAO_ProtocolFactorySet = ACE_Unbounded_Set<TAO_Protocol_Item*>;
 
-typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
-        TAO_ProtocolFactorySetItor;
+using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
 
 // ****************************************************************
 
@@ -133,7 +131,7 @@ public:
     };
 
   TAO_Resource_Factory ();
-  virtual ~TAO_Resource_Factory ();
+  ~TAO_Resource_Factory () override;
 
   // = Resource Retrieval
 

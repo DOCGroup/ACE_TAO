@@ -66,7 +66,7 @@ public:
   TAO_DTP_Task();
 
   /// Virtual Destructor.
-  virtual ~TAO_DTP_Task();
+  ~TAO_DTP_Task() override;
 
   struct Open_Args {
     TAO_DTP_Definition task_thread_config;
@@ -78,12 +78,12 @@ public:
   bool add_request(TAO::CSD::TP_Request* request);
 
   /// Activate the worker threads
-  virtual int open(void* args = 0);
+  int open (void *args = nullptr) override;
 
   /// The "mainline" executed by each worker thread.
-  virtual int svc();
+  int svc() override;
 
-  virtual int close (u_long flag = 0);
+  int close (u_long flag = 0) override;
 
   /// Set the thread and queue config.
 
@@ -117,6 +117,11 @@ public:
   void cancel_servant (PortableServer::Servant servant);
 
 private:
+  TAO_DTP_Task (TAO_DTP_Task const &) = delete;
+  TAO_DTP_Task &operator= (TAO_DTP_Task const &) = delete;
+  TAO_DTP_Task (TAO_DTP_Task &&) = delete;
+  TAO_DTP_Task &operator= (TAO_DTP_Task &&) = delete;
+
   /// get the next available request. Return true if one available, nonblocking
   bool request_ready (TAO::CSD::TP_Dispatchable_Visitor &v,
                       TAO::CSD::TP_Request_Handle &r);
@@ -131,8 +136,8 @@ private:
   bool need_active ();
   bool above_minimum ();
 
-  typedef TAO_SYNCH_MUTEX         LockType;
-  typedef TAO_Condition<LockType> ConditionType;
+  using LockType = TAO_SYNCH_MUTEX;
+  using ConditionType = TAO_Condition<LockType>;
 
   /// Lock used to synchronize the "active_workers_" condition
   LockType aw_lock_;

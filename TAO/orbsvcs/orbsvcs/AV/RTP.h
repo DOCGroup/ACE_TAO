@@ -357,24 +357,24 @@ public:
   TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport);
 
-  virtual ~TAO_AV_RTP_Object ();
+  ~TAO_AV_RTP_Object () override;
 
-  virtual int start ();
-  virtual int stop ();
-  virtual int handle_input ();
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
+  int start () override;
+  int stop () override;
+  int handle_input () override;
+  int send_frame (ACE_Message_Block *frame,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const iovec *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
+  int send_frame (const iovec *iov,
+                  int iovcnt,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const char*buf,
-                          size_t len);
+  int send_frame (const char *buf,
+                  size_t len) override;
 
-  virtual int destroy ();
-  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
-  virtual void control_object (TAO_AV_Protocol_Object *object);
+  int destroy () override;
+  int set_policies (const TAO_AV_PolicyList &policy_list) override;
+  void control_object (TAO_AV_Protocol_Object *object) override;
 
 protected:
   ACE_UINT16 sequence_num_;
@@ -399,14 +399,14 @@ class TAO_AV_Export TAO_AV_RTP_Flow_Factory : public TAO_AV_Flow_Protocol_Factor
 public:
   /// Initialization hook.
   TAO_AV_RTP_Flow_Factory ();
-  virtual ~TAO_AV_RTP_Flow_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *flow_string);
-  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                        TAO_Base_StreamEndPoint *endpoint,
-                                                        TAO_AV_Flow_Handler *handler,
-                                                        TAO_AV_Transport *transport);
-  virtual const char*control_flow_factory ();
+  ~TAO_AV_RTP_Flow_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int match_protocol (const char *flow_string) override;
+  TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                TAO_Base_StreamEndPoint *endpoint,
+                                                TAO_AV_Flow_Handler *handler,
+                                                TAO_AV_Transport *transport) override;
+  char const *control_flow_factory () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

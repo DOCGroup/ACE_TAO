@@ -29,13 +29,13 @@ public:
   // The AMI_Test methods.
   CORBA::Long foo (CORBA::Long_out out_l,
                    CORBA::Long in_l,
-                   const char* in_str);
+                   char const* in_str) override;
 
-  void shutdown ();
+  void shutdown () override;
 
-  CORBA::Long yadda ();
+  CORBA::Long yadda () override;
 
-  void yadda (CORBA::Long yadda);
+  void yadda (CORBA::Long yadda) override;
 
 private:
   CORBA::ORB_var orb_;

@@ -55,7 +55,7 @@ public:
   TAO_RTEventLogFactory_i ();
 
   /// Destructor.
-  ~TAO_RTEventLogFactory_i ();
+  ~TAO_RTEventLogFactory_i () override;
 
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
@@ -71,43 +71,45 @@ public:
   RTEventLogAdmin::EventLog_ptr create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id
-      );
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
+        DsLogAdmin::LogId_out id) override;
 
   /// Same as create (), but allows clients to specify the id.
   RTEventLogAdmin::EventLog_ptr create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-      );
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
    // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
       );
 
 protected:
-  virtual CORBA::RepositoryId
-    create_repositoryid ();
+  CORBA::RepositoryId create_repositoryid () override;
 
-  virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id);
+  PortableServer::ServantBase * create_log_servant (DsLogAdmin::LogId id) override;
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.
-  TAO_EC_Event_Channel *impl;
+  TAO_EC_Event_Channel * impl;
 
   /// The object used for log generated events.
-  TAO_RTEventLogNotification* notifier_;
+  TAO_RTEventLogNotification * notifier_;
 
   /// EventChannel used to obtain the ConsumerAdmin.
   RtecEventChannelAdmin::EventChannel_var event_channel_;
 
   /// The ConsumerAdmin that the EventLogFactory supports.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
+
+private:
+  TAO_RTEventLogFactory_i (TAO_RTEventLogFactory_i const &) = delete;
+  TAO_RTEventLogFactory_i (TAO_RTEventLogFactory_i &&) = delete;
+  TAO_RTEventLogFactory_i & operator= (TAO_RTEventLogFactory_i const &) = delete;
+  TAO_RTEventLogFactory_i & operator= (TAO_RTEventLogFactory_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

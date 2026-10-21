@@ -56,7 +56,7 @@ public:
   virtual ~ACE_Stream_Head ();
 
   // = ACE_Task hooks
-  virtual int open (void *a = 0);
+  virtual int open (void *a = nullptr);
   virtual int close (u_long flags = 0);
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
   virtual int svc ();

@@ -17,9 +17,7 @@ TAO_UIOP_Protocol_Factory::TAO_UIOP_Protocol_Factory ()
 {
 }
 
-TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory ()
-{
-}
+TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory () = default;
 
 int
 TAO_UIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
@@ -43,7 +41,7 @@ TAO_UIOP_Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO_UIOP_Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = 0;
+  TAO_Acceptor *acceptor = nullptr;
 
   ACE_NEW_RETURN (acceptor,
                   TAO_UIOP_Acceptor,
@@ -61,7 +59,7 @@ TAO_UIOP_Protocol_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 TAO_Connector *
 TAO_UIOP_Protocol_Factory::make_connector ()
 {
-  TAO_Connector *connector = 0;
+  TAO_Connector *connector = nullptr;
 
   ACE_NEW_RETURN (connector,
                   TAO_UIOP_Connector,

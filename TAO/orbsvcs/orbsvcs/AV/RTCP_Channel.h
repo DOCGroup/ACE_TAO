@@ -65,7 +65,10 @@ private:
   RTCP_Channel_In();
 
   /// Don't want copy constructor.
-  RTCP_Channel_In(const RTCP_Channel_In &ch);
+  RTCP_Channel_In (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In (RTCP_Channel_In &&) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In &&) = delete;
 
   /// The synchronization source id of the source this channel represents.
   ACE_UINT32 remote_ssrc_;
@@ -75,28 +78,28 @@ private:
 
   // Used to declare a source valid
   /// The highest sequence number seen.
-  ACE_UINT16 max_seq_;
+  ACE_UINT16 max_seq_ {};
 
   /// The shifted count of sequence number cycles (ie when sequence number wraps)
-  ACE_UINT32 cycles_;
+  ACE_UINT32 cycles_ {};
 
   /// The first sequence number received.
-  ACE_UINT32 base_seq_;
+  ACE_UINT32 base_seq_ {};
 
   /// last 'bad' sequence number + 1
-  ACE_UINT32 bad_seq_;
+  ACE_UINT32 bad_seq_ {};
 
   /// The number of in sequence packets until a source is declared valid.
-  ACE_UINT32 probation_;
+  ACE_UINT32 probation_ {};
 
   /// The number of packets received.
-  ACE_UINT32 received_;
+  ACE_UINT32 received_ {};
 
   /// The packet expected at last interval.
-  ACE_UINT32 expected_prior_;
+  ACE_UINT32 expected_prior_ {};
 
   /// The packet received at last interval.
-  ACE_UINT32 received_prior_;
+  ACE_UINT32 received_prior_ {};
 
   /// The last transit time.
   ACE_UINT32 transit_;
@@ -109,13 +112,13 @@ private:
   char first_data_packet_;
 
   /// The first timestamp received.
-  ACE_UINT32 init_time_stamp_;
+  ACE_UINT32 init_time_stamp_ {};
 
   /// The local time that the initial packet was received.
-  ACE_Time_Value init_local_time_;
+  ACE_Time_Value init_local_time_ {};
 
   /// The address that the first RTP packet was received from.
-  ACE_Addr *peer_address_;
+  ACE_Addr *peer_address_ {};
 
   /// The most significant word of the last sender report NTP timestamp.
   ACE_UINT32 ntp_ts_msw_;
@@ -124,7 +127,7 @@ private:
   ACE_UINT32 ntp_ts_lsw_;
 
   /// The last sender report RTP timestamp.
-  ACE_UINT32 rtp_ts_;
+  ACE_UINT32 rtp_ts_ {};
 
   /// The last time a sender report was received in 1/65536 seconds.
   /// Used to calculate DLSR.
@@ -142,7 +145,7 @@ private:
   char data_since_last_report_;
 
   /// The RTP payload type.
-  int payload_type_;
+  int payload_type_ {};
 
   /// This operation is used update statistics for the incoming RTP packet.
   void updateStatistics(RTP_Packet *pkt);

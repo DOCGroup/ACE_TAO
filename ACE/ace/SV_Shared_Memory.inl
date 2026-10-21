@@ -26,7 +26,7 @@ ACE_SV_Shared_Memory::open (key_t external_id, size_t sz, int create, int perms)
   ACE_UNUSED_ARG(external_id);
   ACE_NOTSUP_RETURN (-1);
 #else
-  this->segment_ptr_ = 0;
+  this->segment_ptr_ = nullptr;
   this->size_ = sz;
 
   this->internal_id_ = ACE_OS::shmget (external_id, sz, create | perms);

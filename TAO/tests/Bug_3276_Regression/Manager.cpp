@@ -5,11 +5,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *control_ior = 0;
-const ACE_TCHAR *proxy_ior = 0;
+ACE_TCHAR const *control_ior = nullptr;
+ACE_TCHAR const *proxy_ior = nullptr;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:p:"));
   int c;
@@ -29,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -49,15 +49,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (server_ref.in ());
 
-      FILE *output_file = 0;
+      FILE *output_file = nullptr;
 
-      if (proxy_ior != 0)
+      if (proxy_ior != nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Writing the servant locator object ref out to file %s\n",
                       proxy_ior));
           output_file = ACE_OS::fopen (proxy_ior, "w");
-          if (output_file == 0)
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                proxy_ior),
@@ -77,13 +77,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the proxy_ior exists, output the ior to it
-      if (control_ior != 0)
+      if (control_ior != nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Writing the root poa servant server IOR out to file %s\n",
                       control_ior));
           output_file = ACE_OS::fopen (control_ior, "w");
-          if (output_file == 0)
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                control_ior),
@@ -94,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       manager.run ();
     }
-  catch (const CORBA::Exception & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in manager:");
       return -1;
@@ -104,8 +104,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 Manager::Manager ()
-  : orb_ (0),
-    new_poa_var_ (0)
+  : orb_ (nullptr),
+    new_poa_var_ (nullptr)
 {
   //no-op
 }
@@ -128,7 +128,7 @@ Manager::server ()
 }
 
 int
-Manager::init (int argc, ACE_TCHAR *argv[])
+Manager::init (int argc, ACE_TCHAR * argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
@@ -189,7 +189,7 @@ Manager::init (int argc, ACE_TCHAR *argv[])
 int
 Manager::activate_servant ()
 {
-  Servant_Locator *tmp = 0;
+  Servant_Locator *tmp = nullptr;
 
   ACE_NEW_THROW_EX (tmp,
                     Servant_Locator,

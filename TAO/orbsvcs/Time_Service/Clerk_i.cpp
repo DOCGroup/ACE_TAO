@@ -12,7 +12,8 @@
 
 // Constructor.
 Clerk_i::Clerk_i ()
-  : ior_output_file_ (0),
+  : ior_output_file_ (nullptr),
+    time_service_clerk_impl_ (nullptr),
     timer_value_ (3),
     timer_value_usecs_ (0),
     server_ (Clerk_i::DEFAULT_SERVER_COUNT),
@@ -21,14 +22,12 @@ Clerk_i::Clerk_i ()
 }
 
 // Destructor.
-Clerk_i::~Clerk_i ()
-{
-}
+Clerk_i::~Clerk_i () = default;
 
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
 int
-Clerk_i::read_ior (const ACE_TCHAR* filename)
+Clerk_i::read_ior (ACE_TCHAR const * filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -43,8 +42,8 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
 
   ACE_Read_Buffer ior_buffer (f_handle);
 
-  char *data = ior_buffer.read (EOF,'\n','\n');
-  if (data == 0)
+  char * data = ior_buffer.read (EOF,'\n','\n');
+  if (data == nullptr)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
                       -1);
@@ -53,9 +52,9 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
 
   try
     {
-      for (char *str = ACE_OS::strtok (data, "\n");
-           str != 0 ;
-           str = ACE_OS::strtok (0, "\n"))
+      for (char * str = ACE_OS::strtok (data, "\n");
+           str != nullptr;
+           str = ACE_OS::strtok (nullptr, "\n"))
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("iors -> |%C|\n"),
@@ -94,7 +93,7 @@ Clerk_i::read_ior (const ACE_TCHAR* filename)
 
 int
 Clerk_i::parse_args (int argc,
-                     ACE_TCHAR* argv[])
+                     ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dt:u:f:o:"));
 
@@ -131,7 +130,7 @@ Clerk_i::parse_args (int argc,
        this->ior_output_file_ =
          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
 
-       if (this->ior_output_file_ == 0)
+       if (this->ior_output_file_ == nullptr)
          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n"),
                             get_opts.opt_arg ()), -1);
@@ -390,7 +389,7 @@ Clerk_i::register_clerk ()
 
 int
 Clerk_i::init (int argc,
-               ACE_TCHAR *argv[])
+               ACE_TCHAR * argv[])
 {
   try
     {

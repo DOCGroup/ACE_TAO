@@ -49,18 +49,18 @@ public:
   TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter methods.
-  virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
-  virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier);
-  virtual void shutdown ();
+  virtual void bind (TAO_EC_ProxyPushConsumer* consumer) override;
+  virtual void unbind (TAO_EC_ProxyPushConsumer* consumer) override;
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier) override;
+  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier) override;
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier) override;
+  virtual void shutdown () override;
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_ProxyPushConsumer *consumer);
+                     TAO_EC_ProxyPushConsumer *consumer) override;
   virtual void push_scheduled_event (RtecEventComm::EventSet &event,
-                                     const TAO_EC_QOS_Info &event_info);
-  virtual CORBA::ULong _decr_refcnt ();
-  virtual CORBA::ULong _incr_refcnt ();
+                                     const TAO_EC_QOS_Info &event_info) override;
+  virtual CORBA::ULong _decr_refcnt () override;
+  virtual CORBA::ULong _incr_refcnt () override;
 
 private:
   /// The event channel, used to locate the set of consumers.
@@ -86,9 +86,9 @@ public:
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
   virtual TAO_EC_Supplier_Filter*
-      create (RtecEventChannelAdmin::SupplierQOS& qos);
+      create (RtecEventChannelAdmin::SupplierQOS& qos) override;
   virtual void
-      destroy (TAO_EC_Supplier_Filter *filter);
+      destroy (TAO_EC_Supplier_Filter *filter) override;
 
 private:
   /// The filter....

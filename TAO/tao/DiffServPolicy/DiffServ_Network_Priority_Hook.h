@@ -29,6 +29,8 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_Network_Priority_Hook
   : public TAO_Network_Priority_Hook
 {
 public:
+  TAO_DiffServ_Network_Priority_Hook () = default;
+
   ~TAO_DiffServ_Network_Priority_Hook() override = default;
 
   /// This function is a hook, that is called from the Root_POA's
@@ -44,6 +46,13 @@ public:
   ///
   void set_dscp_codepoint (TAO_ServerRequest &req,
                            TAO_Root_POA &poa) override;
+
+private:
+  TAO_DiffServ_Network_Priority_Hook (TAO_DiffServ_Network_Priority_Hook const &) = delete;
+  TAO_DiffServ_Network_Priority_Hook &operator= (
+    TAO_DiffServ_Network_Priority_Hook const &) = delete;
+  TAO_DiffServ_Network_Priority_Hook (TAO_DiffServ_Network_Priority_Hook &&) = delete;
+  TAO_DiffServ_Network_Priority_Hook &operator= (TAO_DiffServ_Network_Priority_Hook &&) = delete;
 };
 
 

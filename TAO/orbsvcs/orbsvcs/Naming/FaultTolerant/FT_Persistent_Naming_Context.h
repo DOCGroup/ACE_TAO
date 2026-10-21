@@ -30,8 +30,8 @@ class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context :
       public TAO_Persistent_Naming_Context
 {
 public:
-  /// Underlying data structure - typedef for ease of use.
-  typedef TAO_Persistent_Naming_Context::HASH_MAP HASH_MAP;
+  /// Underlying data structure alias for ease of use.
+  using HASH_MAP = TAO_Persistent_Naming_Context::HASH_MAP;
 
   /**
    * Constructor that takes in preallocated data structure and takes
@@ -42,17 +42,17 @@ public:
   TAO_FT_Persistent_Naming_Context (PortableServer::POA_ptr poa,
                                     const char *poa_id,
                                     TAO_Persistent_Context_Index *context_index,
-                                    HASH_MAP * map = 0,
-                                    ACE_UINT32 *counter = 0);
+                                    HASH_MAP *map = nullptr,
+                                    ACE_UINT32 *counter = nullptr);
 
   /// Destructor.
-  virtual ~TAO_FT_Persistent_Naming_Context () = default;
+  ~TAO_FT_Persistent_Naming_Context () override = default;
 
   /**
    * Override the resolve operation to support load balancing using
    * the object group manager and associated strategy.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
+  CORBA::Object_ptr resolve (CosNaming::Name const &n) override;
 
   static void set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl);
 
@@ -60,6 +60,12 @@ public:
 
 protected:
   static TAO_FT_Naming_Manager *naming_manager_impl_;
+
+private:
+  TAO_FT_Persistent_Naming_Context (TAO_FT_Persistent_Naming_Context const &) = delete;
+  TAO_FT_Persistent_Naming_Context (TAO_FT_Persistent_Naming_Context &&) = delete;
+  TAO_FT_Persistent_Naming_Context &operator= (TAO_FT_Persistent_Naming_Context const &) = delete;
+  TAO_FT_Persistent_Naming_Context &operator= (TAO_FT_Persistent_Naming_Context &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

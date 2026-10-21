@@ -40,8 +40,8 @@ public:
   void disconnect ();
   // Disconnect from the EC.
 
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &events) override;
+  void disconnect_push_consumer () override;
   // The skeleton methods.
 
 private:

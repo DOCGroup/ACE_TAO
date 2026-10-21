@@ -356,7 +356,7 @@ TAO::ServerRequestInfo::adapter_name ()
 PortableInterceptor::ObjectId *
 TAO::ServerRequestInfo::object_id ()
 {
-  if (this->servant_upcall_ != 0)
+  if (this->servant_upcall_ != nullptr)
     {
       const PortableServer::ObjectId &id =
         this->servant_upcall_->user_id ();
@@ -406,14 +406,14 @@ TAO::ServerRequestInfo::adapter_id ()
 char *
 TAO::ServerRequestInfo::target_most_derived_interface ()
 {
-  if (this->servant_upcall_ == 0)
+  if (this->servant_upcall_ == nullptr)
   {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
   }
 
   PortableServer::Servant const servant = this->servant_upcall_->servant ();
 
-  if (servant == 0)
+  if (servant == nullptr)
     {
       throw ::CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
@@ -424,7 +424,7 @@ TAO::ServerRequestInfo::target_most_derived_interface ()
 CORBA::Policy_ptr
 TAO::ServerRequestInfo::get_server_policy (CORBA::PolicyType type)
 {
-  if (this->servant_upcall_ != 0)
+  if (this->servant_upcall_ != nullptr)
     {
       CORBA::Policy_var policy =
         this->servant_upcall_->poa ().get_policy (type);
@@ -472,7 +472,7 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
 CORBA::Boolean
 TAO::ServerRequestInfo::target_is_a (const char * id)
 {
-  if (this->servant_upcall_ == 0)
+  if (this->servant_upcall_ == nullptr)
   {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
   }
@@ -480,7 +480,7 @@ TAO::ServerRequestInfo::target_is_a (const char * id)
   // Implemented in the generated skeleton.
   PortableServer::Servant const servant = this->servant_upcall_->servant ();
 
-  if (servant == 0)
+  if (servant == nullptr)
     {
       throw ::CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }

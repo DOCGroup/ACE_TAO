@@ -31,13 +31,19 @@ namespace TAO
     public:
         RLECompressor(::Compression::CompressorFactory_ptr);
 
-        virtual void compress (
-            const ::Compression::Buffer &source,
-            ::Compression::Buffer &target);
+        void compress (
+            ::Compression::Buffer const &source,
+            ::Compression::Buffer &target) override;
 
-        virtual void decompress (
-            const ::Compression::Buffer &source,
-            ::Compression::Buffer &target);
+        void decompress (
+            ::Compression::Buffer const &source,
+            ::Compression::Buffer &target) override;
+
+    private:
+        RLECompressor (RLECompressor const &) = delete;
+        RLECompressor &operator= (RLECompressor const &) = delete;
+        RLECompressor (RLECompressor &&) = delete;
+        RLECompressor &operator= (RLECompressor &&) = delete;
     };
 }
 

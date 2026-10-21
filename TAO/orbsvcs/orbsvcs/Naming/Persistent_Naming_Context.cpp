@@ -105,7 +105,7 @@ TAO_Persistent_Bindings_Map::open (size_t hash_table_size, ACE_Allocator *alloc)
   allocator_ = alloc;
 
   // Use allocator to allocate space for the hash map.
-  void *hash_map = 0;
+  void *hash_map = nullptr;
   size_t map_size = sizeof (HASH_MAP);
   hash_map = this->allocator_->malloc (map_size);
 
@@ -320,7 +320,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (2);
 
-  TAO_Naming_Context *context = 0;
+  TAO_Naming_Context *context = nullptr;
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
@@ -390,7 +390,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Dynamically allocate hash map iterator.
-  HASH_MAP::ITERATOR *hash_iter = 0;
+  HASH_MAP::ITERATOR *hash_iter = nullptr;
   ACE_NEW_THROW_EX (hash_iter,
                     HASH_MAP::ITERATOR
                     (*persistent_context_->map ()),
@@ -402,14 +402,16 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::ITERATOR ITER_DEF;
-  typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>::ENTRY ENTRY_DEF;
+  using ITER_DEF = ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
+                                                TAO_Persistent_IntId>::ITERATOR;
+  using ENTRY_DEF = ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
+                                                 TAO_Persistent_IntId>::ENTRY;
 
   // Typedef to the type of BindingIterator servant for ease of use.
-  typedef TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF> ITER_SERVANT;
+  using ITER_SERVANT = TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>;
 
   // A pointer to BindingIterator servant.
-  ITER_SERVANT *bind_iter = 0;
+  ITER_SERVANT *bind_iter = nullptr;
 
   // Number of bindings that will go into the BindingList.
   CORBA::ULong n;
@@ -423,7 +425,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);
 
-  ENTRY_DEF *hash_entry = 0;
+  ENTRY_DEF *hash_entry = nullptr;
   {
     // Obtain a lock before we proceed with the operation.
     ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,

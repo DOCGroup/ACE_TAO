@@ -43,13 +43,13 @@ public:
   void init ();
 
   /// Shutdown task
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Exec the request.
-  virtual void execute (TAO_Notify_Method_Request& method_request);
+  void execute (TAO_Notify_Method_Request& method_request) override;
 
   /// The object used by clients to register timers. This method returns a Reactor based Timer.
-  virtual TAO_Notify_Timer* timer ();
+  TAO_Notify_Timer* timer () override;
 
   /// Returns NULL.
   virtual TAO_Notify_Buffering_Strategy* buffering_strategy ();

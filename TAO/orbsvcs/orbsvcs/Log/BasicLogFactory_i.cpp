@@ -40,7 +40,7 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
 {
   this->create_i (full_action,
                   max_size,
-                  0,
+                  nullptr,
                   id_out);
   DsLogAdmin::LogId id = id_out;
 
@@ -67,7 +67,7 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   this->create_with_id_i (id,
                           full_action,
                           max_size,
-                          0);
+                          nullptr);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
@@ -90,10 +90,10 @@ TAO_BasicLogFactory_i::create_repositoryid ()
   return CORBA::string_dup (DsLogAdmin::_tc_BasicLog->id ());
 }
 
-PortableServer::ServantBase*
+PortableServer::ServantBase *
 TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 {
-  TAO_BasicLog_i* basic_log_i = 0;
+  TAO_BasicLog_i *basic_log_i = nullptr;
 
   ACE_NEW_THROW_EX (basic_log_i,
                     TAO_BasicLog_i (this->orb_.in (),

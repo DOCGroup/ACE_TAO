@@ -10,14 +10,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The number of different object groups to support.
 #ifndef TAO_LB_ORF_GROUP_TABLE_SIZE
-const size_t TAO_LB_ORF_GROUP_TABLE_SIZE = 16;
+constexpr size_t TAO_LB_ORF_GROUP_TABLE_SIZE = 16;
 #endif  /* TAO_LB_ORF_GROUP_TABLE_SIZE */
 
 TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
   PortableInterceptor::ObjectReferenceFactory * old_orf,
-  const CORBA::StringSeq & object_groups,
-  const CORBA::StringSeq & repository_ids,
-  const char * location,
+  CORBA::StringSeq const & object_groups,
+  CORBA::StringSeq const & repository_ids,
+  char const * location,
   CORBA::ORB_ptr orb,
   CosLoadBalancing::LoadManager_ptr lm)
   : old_orf_ (old_orf),
@@ -28,7 +28,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
     fcids_ (),
     orb_ (CORBA::ORB::_duplicate (orb)),
     lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
-    registered_members_ (0)
+    registered_members_ (nullptr)
 {
   // Claim ownership of the old ObjectReferenceFactory.
   CORBA::add_ref (old_orf);
@@ -40,7 +40,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
   ACE_NEW (this->registered_members_,
            CORBA::Boolean[len]);
 
-  ACE_ASSERT (this->registered_members_ != 0);
+  ACE_ASSERT (this->registered_members_ != nullptr);
   ACE_OS::memset (this->registered_members_,
                   0,
                   len * sizeof (CORBA::Boolean));
@@ -49,7 +49,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
 ::CORBA::ValueBase *
 TAO_LB_ObjectReferenceFactory::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
+  ::CORBA::ValueBase * ret_val = nullptr;
   // Not implemented
   return ret_val;
 }
@@ -68,7 +68,7 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
               // Clean up all object groups we created.
               this->lm_->delete_object (this->fcids_[i].in ());
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // Ignore all exceptions.
             }
@@ -83,10 +83,10 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
 
 CORBA::Object_ptr
 TAO_LB_ObjectReferenceFactory::make_object (
-    const char * repository_id,
-    const PortableInterceptor::ObjectId & id)
+    char const * repository_id,
+    PortableInterceptor::ObjectId const & id)
 {
-  if (repository_id == 0)
+  if (repository_id == nullptr)
     throw CORBA::BAD_PARAM ();
 
   CORBA::Object_var obj =
@@ -115,7 +115,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
                                        this->location_,
                                        obj.in ());
             }
-          catch (const PortableGroup::ObjectGroupNotFound& ex)
+          catch (PortableGroup::ObjectGroupNotFound const & ex)
             {
               if (TAO_debug_level > 0)
                 ex._tao_print_exception (
@@ -123,7 +123,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
 
               throw CORBA::BAD_PARAM ();
             }
-          catch (const PortableGroup::MemberAlreadyPresent& ex)
+          catch (PortableGroup::MemberAlreadyPresent const & ex)
             {
               if (TAO_debug_level > 0)
                 ex._tao_print_exception (
@@ -131,7 +131,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
 
               throw CORBA::BAD_INV_ORDER ();
             }
-          catch (const PortableGroup::ObjectNotAdded& ex)
+          catch (PortableGroup::ObjectNotAdded const & ex)
             {
               if (TAO_debug_level > 0)
                 ex._tao_print_exception (
@@ -154,7 +154,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
 
 CORBA::Boolean
 TAO_LB_ObjectReferenceFactory::find_object_group (
-  const char * repository_id,
+  char const * repository_id,
   CORBA::ULong & index,
   PortableGroup::ObjectGroup_out object_group)
 {
@@ -216,7 +216,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
 }
 
 CORBA::Boolean
-TAO_LB_ObjectReferenceFactory::load_managed_object (const char * repository_id,
+TAO_LB_ObjectReferenceFactory::load_managed_object (char const * repository_id,
                                                     CORBA::ULong & i)
 {
   // @todo Make this more efficient.

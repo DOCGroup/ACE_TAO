@@ -1,7 +1,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -29,8 +29,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void get_stringList2(Test::Hello_var hello);
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -43,10 +41,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -60,10 +58,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Vls_var vstruct;
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - op test 1\n"));
-      hello->op(fstruct.out(), vstruct.out());
+      hello->op (fstruct.out (), vstruct.out ());
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - op test 2\n"));
-      hello->op(fstruct, vstruct.out());
+      hello->op (fstruct, vstruct.out ());
 
       hello->shutdown ();
 

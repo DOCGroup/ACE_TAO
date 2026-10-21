@@ -84,7 +84,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
     {
       TAO_Notify_Consumer* consumer = this->proxy_supplier_->consumer ();
 
-      if (consumer != 0)
+      if (consumer != nullptr)
         {
           consumer->deliver (this);
         }
@@ -108,7 +108,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
     TAO_InputCDR & cdr)
 {
   bool ok = true;
-  TAO_Notify_Method_Request_Dispatch_Queueable * result = 0;
+  TAO_Notify_Method_Request_Dispatch_Queueable * result = nullptr;
   ACE_CString textpath;
   CORBA::ULong count;
   if (cdr.read_ulong (count))
@@ -134,7 +134,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
     {
       TAO_Notify_ProxySupplier* proxy_supplier = ecf.find_proxy_supplier (id_path,
         0);
-      if (proxy_supplier != 0)
+      if (proxy_supplier != nullptr)
       {
         if (DEBUG_LEVEL > 6)
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -147,7 +147,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       else
       {
         TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (id_path, 0); //@@todo
-        if (proxy_consumer == 0)
+        if (proxy_consumer == nullptr)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
@@ -239,7 +239,7 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::execute ()
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Dispatch_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request = 0;
+  TAO_Notify_Method_Request_Queueable* request = nullptr;
 
   TAO_Notify_Event::Ptr event_var (
     this->event_->queueable_copy () );

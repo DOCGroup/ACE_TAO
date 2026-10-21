@@ -73,9 +73,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
       // = Please see Profile.h for the documentation of these methods.
-      virtual int decode (TAO_InputCDR& cdr);
-      virtual int encode_endpoints ();
-      virtual TAO_Endpoint *endpoint ();
+      int decode (TAO_InputCDR& cdr) override;
+      int encode_endpoints () override;
+      TAO_Endpoint *endpoint () override;
 
       /**
        * Override parse_string() from the base class to update the SSL
@@ -85,7 +85,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * Initialize this object using the given input string.
        * URL-style string contain only one endpoint.
        */
-      virtual void parse_string (const char * string);
+      void parse_string (const char * string) override;
 
       /**
        * Add @a endp to this profile's list of endpoints (it is
@@ -109,14 +109,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~TAO_SSLIOP_Profile ();
+      ~TAO_SSLIOP_Profile () override;
 
       /// Profile equivalence template method.
       /**
        * @see TAO_Profile::do_is_equivalent()
        */
-      virtual CORBA::Boolean do_is_equivalent (
-        const TAO_Profile * other_profile);
+      CORBA::Boolean do_is_equivalent (
+        const TAO_Profile * other_profile) override;
 
     private:
       /**

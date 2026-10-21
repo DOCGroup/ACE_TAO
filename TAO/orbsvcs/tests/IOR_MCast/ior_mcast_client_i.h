@@ -17,12 +17,12 @@ class ior_mcast_Client_i
  public:
   // = COnstructor and destructor.
   ior_mcast_Client_i ();
-  ~ior_mcast_Client_i ();
+  ~ior_mcast_Client_i () = default;
 
   int run ();
   // Execute the client example code.
 
-  int init (int& argc, ACE_TCHAR *argv[]);
+  int init (int& argc, ACE_TCHAR* argv[]);
   // Initialize the client communication endpoint with the server.
 
  private:

@@ -13,10 +13,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {
-  typedef Fault_Detector_T<
+  using TCP_Fault_Detector = Fault_Detector_T<
     ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_STREAM> , ACE_SOCK_ACCEPTOR>,
-    ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >
-    TCP_Fault_Detector;
+    ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >;
 
   Fault_Detector_Loader::Fault_Detector_Loader ()
   {
@@ -37,7 +36,7 @@ namespace FTRTEC {
 
     initialized = 1;
 
-    Fault_Detector* detector = 0;
+    Fault_Detector* detector = nullptr;
 
     // Parse any service configurator parameters.
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)

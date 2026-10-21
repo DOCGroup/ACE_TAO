@@ -55,7 +55,7 @@ TAO_COIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   if (mprofile.grow (1) == -1)
     return -1;
 
-  TAO_COIOP_Profile *pfile = 0;
+  TAO_COIOP_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_COIOP_Profile (uuid_,
                                       object_key,
@@ -67,7 +67,7 @@ TAO_COIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   if (mprofile.give_profile (pfile) == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
       return -1;
     }
 
@@ -92,8 +92,8 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
-  TAO_Profile *pfile = 0;
-  TAO_COIOP_Profile *coiop_profile = 0;
+  TAO_Profile *pfile = nullptr;
+  TAO_COIOP_Profile *coiop_profile = nullptr;
 
   // First see if <mprofile> already contains a COIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -108,7 +108,7 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 
   // If <mprofile> doesn't contain a COIOP_Profile, we need to create
   // one.
-  if (coiop_profile == 0)
+  if (coiop_profile == nullptr)
     {
       ACE_NEW_RETURN (coiop_profile,
                       TAO_COIOP_Profile (uuid_,
@@ -121,7 +121,7 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (coiop_profile) == -1)
         {
           coiop_profile->_decr_refcnt ();
-          coiop_profile = 0;
+          coiop_profile = nullptr;
           return -1;
         }
 
@@ -135,7 +135,7 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
         }
     }
 
-  TAO_COIOP_Endpoint *endpoint = 0;
+  TAO_COIOP_Endpoint *endpoint = nullptr;
   ACE_NEW_RETURN (endpoint,
                   TAO_COIOP_Endpoint (uuid_),
                   -1);
@@ -152,7 +152,7 @@ TAO_COIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast<const TAO_COIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return false;
 
   return (endp->uuid() == uuid_);
@@ -267,7 +267,7 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 int
 TAO_COIOP_Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in

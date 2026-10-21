@@ -30,12 +30,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Factory hash map.
-typedef ACE_Hash_Map_Manager_Ex<
+using TAO_PG_Factory_Map = ACE_Hash_Map_Manager_Ex<
   ACE_UINT32,
   TAO_PG_Factory_Set,
   ACE_Hash<ACE_UINT32>,
   ACE_Equal_To<ACE_UINT32>,
-  ACE_Null_Mutex> TAO_PG_Factory_Map;
+  ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -38,23 +38,23 @@
 class TAO_RTSched_Export ACE_Scheduler
 {
 public:
-  typedef u_int mode_t;
+  using mode_t = u_int;
 
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Thread_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Config_Info Config_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Dispatching_Type_t Dispatching_Type;
-  typedef RtecScheduler::Scheduling_Anomaly Scheduling_Anomaly;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Thread_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Config_Info = RtecScheduler::Config_Info;
+  using Time = RtecScheduler::Time;
+  using Dispatching_Type = RtecScheduler::Dispatching_Type_t;
+  using Scheduling_Anomaly = RtecScheduler::Scheduling_Anomaly;
 
   // Map some types to simplify re-use.
 
   /// Objects are named by unique strings.
-  typedef const char *Object_Name;
+  using Object_Name = const char *;
 
   static const mode_t CURRENT_MODE;
 
@@ -118,9 +118,9 @@ public:
    */
   virtual void init (const int minimum_priority,
                      const int maximum_priority,
-                     const char *runtime_filename = 0,
-                     const char *rt_info_filename = 0,
-                     const char *timeline_filename = 0) = 0;
+                     const char *runtime_filename = nullptr,
+                     const char *rt_info_filename = nullptr,
+                     const char *timeline_filename = nullptr) = 0;
 
   // = Registers a task.
   /**
@@ -259,12 +259,12 @@ protected:
   void status (const status_t new_status) { status_ = new_status; }
 
 private:
-  typedef ACE_CString EXT;
-  typedef RT_Info **INT;
+  using EXT = ACE_CString;
+  using INT = RT_Info **;
 
-  typedef ACE_Map_Manager<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection;
-  typedef ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection_Iterator;
-  typedef ACE_Map_Entry<EXT, INT> Info_Collection_Entry;
+  using Info_Collection = ACE_Map_Manager<EXT, INT, TAO_SYNCH_MUTEX>;
+  using Info_Collection_Iterator = ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX>;
+  using Info_Collection_Entry = ACE_Map_Entry<EXT, INT>;
 
   /// A binding of name to rt_info.  This is the mapping for every
   /// rt_info in the process.
@@ -288,11 +288,13 @@ private:
   u_int output_level_;
 
   // the following functions are not implememented
-  ACE_Scheduler (const ACE_Scheduler &);
-  ACE_Scheduler &operator= (const ACE_Scheduler &);
+  ACE_Scheduler (const ACE_Scheduler &) = delete;
+  ACE_Scheduler (ACE_Scheduler &&) = delete;
+  ACE_Scheduler &operator= (const ACE_Scheduler &) = delete;
+  ACE_Scheduler &operator= (ACE_Scheduler &&) = delete;
 };
 
-typedef ACE_Scheduler Scheduler;
+using Scheduler = ACE_Scheduler;
 
 #include /**/ "ace/post.h"
 #endif /* SCHEDULER_H */

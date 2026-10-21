@@ -228,7 +228,7 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
 void
 TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 {
-  typedef ACE_Unbounded_Set_Iterator<ACE_INET_Addr> Address_Iterator;
+  using Address_Iterator = ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
   for (Address_Iterator k = multicast_addresses.begin ();
        k != multicast_addresses.end ();
        ++k)

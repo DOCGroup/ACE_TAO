@@ -19,8 +19,8 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Manual_Event.h"
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT("test.ior");
-const ACE_TCHAR *ior_output_file = ACE_TEXT("thr_server.ior");
+ACE_TCHAR const *ior_input_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("thr_server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -64,9 +64,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          "Server_ORB");
     // Parse command line
       if (parse_args (argc, argv) == -1)
-      {
+        {
           return -1;
-      }
+        }
 
       ACE_Manual_Event me;
 

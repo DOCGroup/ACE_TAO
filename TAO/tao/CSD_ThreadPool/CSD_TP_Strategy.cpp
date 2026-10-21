@@ -14,9 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy::~TP_Strategy()
-{
-}
+TAO::CSD::TP_Strategy::~TP_Strategy() = default;
 
 
 TAO::CSD::TP_Strategy::CustomRequestOutcome

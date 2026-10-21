@@ -9,7 +9,7 @@ TAO_POA_Current_Factory::create_object (CORBA::ORB_ptr,
                                         int,
                                         ACE_TCHAR * [])
 {
-  TAO::Portable_Server::POA_Current* adapter = nullptr;
+  TAO::Portable_Server::POA_Current *adapter = nullptr;
   ACE_NEW_RETURN (adapter,
                   TAO::Portable_Server::POA_Current (),
                   nullptr);

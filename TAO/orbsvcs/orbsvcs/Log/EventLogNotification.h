@@ -46,13 +46,13 @@ class TAO_EventLog_Serv_Export TAO_EventLogNotification :
 {
 public:
   /// Constructor.
-  TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr);
+  TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr event_channel);
 
   /// Destructor.
-  ~TAO_EventLogNotification ();
+  ~TAO_EventLogNotification () override;
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 protected:
   /// Used to connect this PushSupplier to the EventChannel
@@ -60,10 +60,15 @@ protected:
   void obtain_proxy_consumer ();
 
   /// Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any);
+  void send_notification (CORBA::Any const & any) override;
 
 
 private:
+  TAO_EventLogNotification (TAO_EventLogNotification const &) = delete;
+  TAO_EventLogNotification (TAO_EventLogNotification &&) = delete;
+  TAO_EventLogNotification & operator= (TAO_EventLogNotification const &) = delete;
+  TAO_EventLogNotification & operator= (TAO_EventLogNotification &&) = delete;
+
   /// The ORB reference.
   CORBA::ORB_var orb_;
 

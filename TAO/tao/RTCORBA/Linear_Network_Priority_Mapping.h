@@ -43,10 +43,10 @@ public:
   TAO_Linear_Network_Priority_Mapping (long);
 
   CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
-                             RTCORBA::NetworkPriority &network_priority);
+                             RTCORBA::NetworkPriority &network_priority) override;
 
   CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority network_priority,
-                           RTCORBA::Priority &corba_priority);
+                           RTCORBA::Priority &corba_priority) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

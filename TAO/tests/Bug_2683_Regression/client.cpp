@@ -6,28 +6,33 @@
 class Pinger : public ACE_Task_Base
 {
 private:
-  const char * ior_;
+  char const *ior_;
   CORBA::ORB_var orb_;
   bool do_shutdown_;
   bool stop_;
 
 public:
-  Pinger (CORBA::ORB_var &orb, const char *ior)
-    : ior_ (ior),
-      orb_(orb),
-      do_shutdown_ (false),
-      stop_ (false)
+  Pinger (CORBA::ORB_var &orb, char const *ior)
+    : ior_ (ior)
+    , orb_ (orb)
+    , do_shutdown_ (false)
+    , stop_ (false)
   {
   }
 
-  int svc ()
+  Pinger (Pinger const &) = delete;
+  Pinger &operator= (Pinger const &) = delete;
+  Pinger (Pinger &&) = delete;
+  Pinger &operator= (Pinger &&) = delete;
+
+  int svc () override
   {
     bool keep_going = true;
     while (keep_going && !this->stop_)
       {
         try
           {
-            CORBA::Object_var tmp = this->orb_->string_to_object(this->ior_);
+            CORBA::Object_var tmp = this->orb_->string_to_object (this->ior_);
 
             Test::IORTable_Shutdown_Race_var target =
               Test::IORTable_Shutdown_Race::_narrow(tmp.in ());
@@ -36,10 +41,10 @@ public:
                                    "(%P|%t) Nil target reference <%s>\n",
                                    this->ior_),
                                   1);
-            target->ping();
+            target->ping ();
             if (this->do_shutdown_)
               {
-                ACE_DEBUG ((LM_DEBUG,"(%P|%t) Calling shutdown\n"));
+                ACE_DEBUG ((LM_DEBUG, "(%P|%t) Calling shutdown\n"));
                 this->do_shutdown_ = false;
                 target->shutdown ();
               }
@@ -54,7 +59,7 @@ public:
     return 0;
   }
 
-  void killit()
+  void killit ()
   {
     do_shutdown_ = true;
   }
@@ -66,7 +71,7 @@ public:
 };
 
 int port = 0;
-ACE_TCHAR const * target_host = ACE_TEXT("localhost");
+ACE_TCHAR const *target_host = ACE_TEXT ("localhost");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -111,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf (ior, "corbaloc::%s:%d/Racer",
                        ACE_TEXT_ALWAYS_CHAR (target_host), port);
 
-      Pinger pinger(orb, ior);
+      Pinger pinger (orb, ior);
 
       ACE_OS::sleep (1);
 
@@ -122,14 +127,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (1);
 
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) client - All running, time to shutdown server\n"));
-      pinger.killit();
+      pinger.killit ();
 
       ACE_OS::sleep (2);
 
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) client - Stopping client threads\n"));
       pinger.stop ();
 
-      pinger.wait();
+      pinger.wait ();
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) client done\n"));
     }
   catch (const CORBA::Exception &ex)

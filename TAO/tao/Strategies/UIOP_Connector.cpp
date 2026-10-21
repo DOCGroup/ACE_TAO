@@ -40,7 +40,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   // Our connect creation strategy
-  TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+  TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_UIOP_CONNECT_CREATION_STRATEGY
@@ -49,7 +49,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   /// Our activation strategy
-  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
@@ -78,7 +78,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
     return 0;
 
   const char *separator = std::strchr (str,'|');
-  if (separator == 0)
+  if (separator == nullptr)
     {
       if (TAO_debug_level)
         TAOLIB_DEBUG ((LM_DEBUG,
@@ -97,7 +97,7 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   TAO_UIOP_Endpoint *uiop_endpoint = this->remote_endpoint (endpoint);
 
-  if (uiop_endpoint == 0)
+  if (uiop_endpoint == nullptr)
     return -1;
 
    const ACE_UNIX_Addr &remote_address = uiop_endpoint->object_addr ();
@@ -136,7 +136,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_UIOP_Endpoint *uiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
 
-  if (uiop_endpoint == 0)
+  if (uiop_endpoint == nullptr)
     return 0;
 
   const ACE_UNIX_Addr &remote_address =
@@ -157,7 +157,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // polling the reactor for connection completion. However, the side-effect
   // was to cause the connection to timeout immediately.
 
-  TAO_UIOP_Connection_Handler *svc_handler = 0;
+  TAO_UIOP_Connection_Handler *svc_handler = nullptr;
 
   // Connect.
   int result =
@@ -193,12 +193,12 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       else
         {
           // Transport is not usable
-          transport = 0;
+          transport = nullptr;
         }
     }
 
   // In case of errors transport is zero
-  if (transport == 0)
+  if (transport == nullptr)
     {
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
@@ -299,7 +299,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;
@@ -308,7 +308,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 TAO_Profile *
 TAO_UIOP_Connector::make_profile ()
 {
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_UIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -367,7 +367,7 @@ TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
   TAO_UIOP_Endpoint *uiop_endpoint =
     dynamic_cast<TAO_UIOP_Endpoint *> (endpoint);
 
-  if (uiop_endpoint == 0)
+  if (uiop_endpoint == nullptr)
     return 0;
 
   return uiop_endpoint;

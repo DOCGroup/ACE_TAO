@@ -49,7 +49,7 @@ public:
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
-  TAO_COIOP_Endpoint (const ACE_Utils::UUID& uuid);
+  TAO_COIOP_Endpoint (ACE_Utils::UUID const &uuid);
 
   /// Destructor.
   ~TAO_COIOP_Endpoint () = default;
@@ -60,25 +60,30 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next ();
-  virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate ();
+  TAO_Endpoint *next () override;
+  int addr_to_string (char *buffer, size_t length) override;
+  TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
-  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
   /// Return a hash value for this object.
-  CORBA::ULong hash ();
+  CORBA::ULong hash () override;
   //@}
 
   // = COIOP_Endpoint-specific methods.
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const ACE_Utils::UUID& uuid () const;
+  ACE_Utils::UUID const &uuid () const;
 
 private:
+  TAO_COIOP_Endpoint (TAO_COIOP_Endpoint const &) = delete;
+  TAO_COIOP_Endpoint &operator= (TAO_COIOP_Endpoint const &) = delete;
+  TAO_COIOP_Endpoint (TAO_COIOP_Endpoint &&) = delete;
+  TAO_COIOP_Endpoint &operator= (TAO_COIOP_Endpoint &&) = delete;
+
   /// UUID uniquely identifying this COIOP endpoint
   mutable ACE_Utils::UUID uuid_;
 

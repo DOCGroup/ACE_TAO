@@ -4,15 +4,20 @@ class Server : public POA_Test::Server
 {
 public:
   Server (CORBA::ORB_ptr orb)
-    : POA_Test::Server(),
+    : POA_Test::Server (),
       orb_ (CORBA::ORB::_duplicate (orb)) {}
-  virtual ~Server () = default;
+  ~Server () override = default;
 
-  virtual void setup (::Test::Client_ptr cli);
+  Server (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server const &) = delete;
+  Server &operator= (Server &&) = delete;
 
-  virtual void request (::CORBA::Long sel);
+  void setup (::Test::Client_ptr cli) override;
 
-  virtual void shutdown ();
+  void request (::CORBA::Long sel) override;
+
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

@@ -165,7 +165,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   static AST_Decl::NodeType const NT;
-  typedef AST_InterfaceFwd FWD_TYPE;
+  using FWD_TYPE = AST_InterfaceFwd;
 
   virtual bool annotatable () const;
 

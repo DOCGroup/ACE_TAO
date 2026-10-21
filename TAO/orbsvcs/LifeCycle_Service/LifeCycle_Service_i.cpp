@@ -19,32 +19,30 @@
 
 // Constructor
 Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)
-  : factory_trader_ptr_ (0),
+  : factory_trader_ptr_ (nullptr),
     debug_level_ (debug_level)
 {
 }
 
 // Destructor.
-Life_Cycle_Service_i::~Life_Cycle_Service_i ()
-{
-}
+Life_Cycle_Service_i::~Life_Cycle_Service_i () = default;
 
 
 CORBA::Boolean
-Life_Cycle_Service_i::supports (const CosLifeCycle::Key &)
+Life_Cycle_Service_i::supports (CosLifeCycle::Key const &)
 {
   return 0;
 }
 
 CORBA::Object_ptr
-Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
-                                     const CosLifeCycle::Criteria &the_criteria)
+Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
+                                     CosLifeCycle::Criteria const & the_criteria)
 {
   if (this->debug_level_ >= 2)
     ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
     // Exceptions are forwarded, not handled !!
 
-  if (factory_trader_ptr_ != 0)
+  if (factory_trader_ptr_ != nullptr)
     {
       Criteria_Evaluator criteria_Evaluator(the_criteria);
 
@@ -54,7 +52,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
       if (this->debug_level_ >= 2)
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
 
-      char* filter = criteria_Evaluator.getFilter ();
+      char * filter = criteria_Evaluator.getFilter ();
 
       if (this->debug_level_ >= 2)
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: query(%s) will be called.\n",filter));
@@ -134,7 +132,7 @@ Life_Cycle_Service_i::register_factory (const char * name,
                                         const char * description,
                                         CORBA::Object_ptr object)
 {
-  if (factory_trader_ptr_ == 0)
+  if (factory_trader_ptr_ == nullptr)
     ACE_NEW (factory_trader_ptr_, Factory_Trader(this->debug_level_));
   // we have an proper reference to the Factory Trader
 

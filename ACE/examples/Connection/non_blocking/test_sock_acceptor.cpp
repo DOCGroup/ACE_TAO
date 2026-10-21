@@ -4,8 +4,8 @@
 
 #include "CPP-acceptor.h"
 
-typedef Svc_Handler<ACE_SOCK_STREAM> SVC_HANDLER;
-typedef IPC_Server<SVC_HANDLER, ACE_SOCK_ACCEPTOR> IPC_SERVER;
+using SVC_HANDLER = Svc_Handler<ACE_SOCK_STREAM>;
+using IPC_SERVER = IPC_Server<SVC_HANDLER, ACE_SOCK_ACCEPTOR>;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

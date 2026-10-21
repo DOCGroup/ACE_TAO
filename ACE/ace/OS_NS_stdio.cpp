@@ -1037,7 +1037,7 @@ namespace { // helpers for vsnprintf_emulation
 
   int snprintf_read_int (const char *&fmt)
   {
-    char *end = 0;
+    char *end = nullptr;
     const unsigned long i = ACE_OS::strtoul (fmt, &end, 10);
     fmt = end;
     if (i > INT_MAX)

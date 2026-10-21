@@ -24,7 +24,7 @@ TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks ()
 }
 
 CORBA::Boolean
-TAO_FT_Service_Callbacks::select_profile (const TAO_MProfile &mprofile,
+TAO_FT_Service_Callbacks::select_profile (TAO_MProfile const& mprofile,
     TAO_Profile *&pfile)
 {
   CORBA::ULong const sz = mprofile.size ();
@@ -35,13 +35,13 @@ TAO_FT_Service_Callbacks::select_profile (const TAO_MProfile &mprofile,
        i != sz;
        ++i)
     {
-      const TAO_Profile *curr_pfile = mprofile.get_profile (i);
+      TAO_Profile const* curr_pfile = mprofile.get_profile (i);
 
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = IOP::TAG_FT_PRIMARY;
 
       // Get the tagged component from the  profile
-      const TAO_Tagged_Components &pfile_tagged =
+      TAO_Tagged_Components const& pfile_tagged =
         curr_pfile->tagged_components ();
 
       // Search for the TaggedComponent that we want
@@ -75,7 +75,7 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
           TAO_Profile *pfile =
             obj->_stubobj ()->base_profiles ().get_profile (cnt);
 
-          if (pfile != 0)
+          if (pfile != nullptr)
             return false;
         }
     }
@@ -85,13 +85,13 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 }
 
 TAO_Service_Callbacks::Profile_Equivalence
-TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
-                                                 const TAO_Profile *that_p)
+TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* this_p,
+                                                 TAO_Profile const* that_p)
 {
-  const TAO_Tagged_Components &this_comp =
+  TAO_Tagged_Components const& this_comp =
     this_p->tagged_components ();
 
-  const TAO_Tagged_Components &that_comp =
+  TAO_Tagged_Components const& that_comp =
     that_p->tagged_components ();
 
   IOP::TaggedComponent this_tc, that_tc;
@@ -185,8 +185,8 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p, CORBA::ULong max)
 }
 
 CORBA::Boolean
-TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr obj,
-                                                          const TAO_Service_Context &service_context) const
+TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr const obj,
+                                                          TAO_Service_Context const& service_context) const
 {
   // do as much as possible outside of lock
   IOP::ServiceContext sc;
@@ -198,7 +198,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
 
-  const TAO_Stub * stub = obj->_stubobj ();
+  TAO_Stub const* stub = obj->_stubobj ();
   // check for forward_profiles, branching to speed up operation on base_profiles
   if (stub->forward_profiles ())
     {
@@ -209,7 +209,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
                                 0));
 
       // even now, the forward profiles might have been deleted in the meanwhile
-      const TAO_MProfile &mprofile = stub->forward_profiles()
+      TAO_MProfile const& mprofile = stub->forward_profiles()
           ? *(stub->forward_profiles())
           : stub->base_profiles();
 
@@ -219,7 +219,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
 
       // assuming group-attributes are set for all profiles, check
       // only the first profile
-      const TAO_Tagged_Components &tagged_components =
+      TAO_Tagged_Components const& tagged_components =
               mprofile.get_profile (0)->tagged_components ();
 
       if (tagged_components.get_component (tc) == 0)
@@ -232,13 +232,13 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
     }
   else /* operate on constant basic_profiles */
     {
-      const TAO_MProfile &mprofile = stub->base_profiles();
+      TAO_MProfile const& mprofile = stub->base_profiles();
 
       if (mprofile.profile_count() == 0)
         return false;
 
       // assuming group-attributes are set for all profiles, check only the first profile
-      const TAO_Tagged_Components &tagged_components =
+      TAO_Tagged_Components const& tagged_components =
               mprofile.get_profile (0)->tagged_components ();
 
       if (tagged_components.get_component (tc) == 0)
@@ -251,7 +251,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
 
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_comm_failure (
-    IOP::ServiceContextList &context_list,
+    IOP::ServiceContextList& context_list,
     TAO_Profile *profile)
 {
   if (this->restart_policy_check (context_list,
@@ -269,7 +269,7 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_transient_failure (
-    IOP::ServiceContextList &service,
+    IOP::ServiceContextList& service,
     TAO_Profile *profile)
 {
   if (this->restart_policy_check (service,
@@ -283,8 +283,8 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
 
 CORBA::Boolean
 TAO_FT_Service_Callbacks::restart_policy_check (
-    IOP::ServiceContextList &service_list,
-    const TAO_Profile *profile)
+    IOP::ServiceContextList& service_list,
+    TAO_Profile const* profile)
 {
   // Check whether the IOP::FT_REQUEST exists within the service
   // context list and FT::FT_GROUP exists within the profile that we

@@ -45,10 +45,10 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification :
 {
 public:
   /// Constructor.
-  TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr);
+  TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr event_channel);
 
   /// Destructor.
-  ~TAO_NotifyLogNotification ();
+  ~TAO_NotifyLogNotification () override;
 
 protected:
   // = Helper methods
@@ -61,17 +61,22 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
 
   // = NotifySubscribe
-  virtual void subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void subscription_change (
+    CosNotification::EventTypeSeq const & added,
+    CosNotification::EventTypeSeq const & removed) override;
 
   // = StructuredPushSupplier method
-    virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any);
+  void send_notification (CORBA::Any const & any) override;
 
 private:
+  TAO_NotifyLogNotification (TAO_NotifyLogNotification const &) = delete;
+  TAO_NotifyLogNotification (TAO_NotifyLogNotification &&) = delete;
+  TAO_NotifyLogNotification & operator= (TAO_NotifyLogNotification const &) = delete;
+  TAO_NotifyLogNotification & operator= (TAO_NotifyLogNotification &&) = delete;
+
   /// A reference to the ORB.
   CORBA::ORB_var orb_;
 

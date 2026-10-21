@@ -55,7 +55,7 @@ namespace XML
     XERCES_CPP_NAMESPACE::DOMDocument *
     create_dom (const ACE_TCHAR *root,
                 const ACE_TCHAR *ns,
-                XERCES_CPP_NAMESPACE::DOMDocumentType * doctype = 0) const;
+                XERCES_CPP_NAMESPACE::DOMDocumentType * doctype = nullptr) const;
 
     XERCES_CPP_NAMESPACE::DOMDocumentType *
     create_doctype (const ACE_TCHAR *qn,

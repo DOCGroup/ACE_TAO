@@ -37,8 +37,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists
 //    in ACE so we do not have to worry about increasing TAO's
 //    footprint by using this container.
-typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
-typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
+using TAO_EndpointSet = ACE_Unbounded_Queue<ACE_CString>;
+using TAO_EndpointSetIterator = ACE_Unbounded_Queue_Const_Iterator<ACE_CString>;
 
 // -------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 class TAO_Export TAO_ORB_Parameters
 {
 public:
-  typedef ACE_Array_Map<ACE_CString, ACE_CString> endpoints_map_type;
+  using endpoints_map_type = ACE_Array_Map<ACE_CString, ACE_CString>;
 
   /// Constructor.
   TAO_ORB_Parameters ();

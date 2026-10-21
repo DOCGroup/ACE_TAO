@@ -105,7 +105,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
     }
 
   this->control_name_ = base;
-  ConsumerAdminControl* control = 0;
+  ConsumerAdminControl* control = nullptr;
   ACE_NEW_THROW_EX (control,
                     ConsumerAdminControl (mec,
                                           this->control_name_.c_str (),

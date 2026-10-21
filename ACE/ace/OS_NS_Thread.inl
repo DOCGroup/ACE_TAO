@@ -94,7 +94,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
         void **tss_base_p = reinterpret_cast<void **> (ace_tss_keys);
         for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
           {
-            *tss_base_p = 0;
+            *tss_base_p = nullptr;
           }
       }
 #    endif /* ACE_HAS_VXTHREADS */
@@ -460,7 +460,7 @@ ACE_OS::event_init (ACE_event_t *event,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = 0;
+  ACE_condattr_t *pattr = nullptr;
   return ACE_OS::event_init (event, type, pattr, manual_reset, initial_state, name, arg, sa);
 }
 
@@ -1465,7 +1465,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = 0;
+  ACE_condattr_t *pattr = nullptr;
   return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
 }
 
@@ -1778,7 +1778,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = 0;
+  ACE_condattr_t *pattr = nullptr;
   return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
 }
 
@@ -2336,7 +2336,7 @@ ACE_OS::sigtimedwait (const sigset_t *sset,
   ACE_OS_TRACE ("ACE_OS::sigtimedwait");
 #if defined (ACE_HAS_SIGTIMEDWAIT)
   timespec_t ts;
-  timespec_t *tsp = 0;
+  timespec_t *tsp = nullptr;
 
   if (timeout != 0)
     {

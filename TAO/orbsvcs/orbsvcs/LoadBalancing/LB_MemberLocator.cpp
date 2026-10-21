@@ -9,14 +9,14 @@ TAO_LB_MemberLocator::TAO_LB_MemberLocator (
   TAO_LB_LoadManager * lm)
   : load_manager_ (lm)
 {
-  ACE_ASSERT (lm != 0);
+  ACE_ASSERT (lm != nullptr);
 }
 
 PortableServer::Servant
 TAO_LB_MemberLocator::preinvoke (
-    const PortableServer::ObjectId & oid,
+    PortableServer::ObjectId const & oid,
     PortableServer::POA_ptr /* adapter */,
-    const char * /* operation */,
+    char const * /* operation */,
     PortableServer::ServantLocator::Cookie & /* the_cookie */)
 {
   try
@@ -33,12 +33,12 @@ TAO_LB_MemberLocator::preinvoke (
       // requests to the member chosen by the LoadBalancer.
       throw PortableServer::ForwardRequest (member.in ());
     }
-  catch (const PortableGroup::ObjectGroupNotFound& ex)
+  catch (PortableGroup::ObjectGroupNotFound const & ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception ("LoadManager::next_member()");
     }
-  catch (const PortableGroup::MemberNotFound& ex)
+  catch (PortableGroup::MemberNotFound const & ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception ("LoadManager::next_member()");
@@ -49,9 +49,9 @@ TAO_LB_MemberLocator::preinvoke (
 
 void
 TAO_LB_MemberLocator::postinvoke (
-    const PortableServer::ObjectId & /* oid */,
+    PortableServer::ObjectId const & /* oid */,
     PortableServer::POA_ptr /* adapter */,
-    const char * /* operation */,
+    char const * /* operation */,
     PortableServer::ServantLocator::Cookie /* the_cookie */,
     PortableServer::Servant /* the_servant */)
 {

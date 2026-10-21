@@ -44,16 +44,14 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   // Generate the _var and _out template class declarations.
   *os << be_nl_2
-      << "typedef" << be_idt_nl
+      << "using " << node->local_name () << "_var =" << be_idt_nl
       << "TAO_Value_Var_T<" << be_idt << be_idt_nl
       << node->local_name () << be_uidt_nl
-      << ">" << be_uidt_nl
-      << node->local_name () << "_var;" << be_uidt_nl << be_nl
-      << "typedef" << be_idt_nl
+      << ">;" << be_uidt_nl << be_nl
+      << "using " << node->local_name () << "_out =" << be_idt_nl
       << "TAO_Value_Out_T<" << be_idt << be_idt_nl
       << node->local_name () << be_uidt_nl
-      << ">" << be_uidt_nl
-      << node->local_name () << "_out;" << be_uidt;
+      << ">;" << be_uidt;
 
   *os << be_nl_2 << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ();

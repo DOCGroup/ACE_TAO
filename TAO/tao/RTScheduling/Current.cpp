@@ -20,9 +20,7 @@ TAO_DTId_Hash::operator () (const IdType &id) const
                         id.length ());
 }
 
-TAO_RTScheduler_Current::~TAO_RTScheduler_Current ()
-{
-}
+TAO_RTScheduler_Current::~TAO_RTScheduler_Current () = default;
 
 void
 TAO_RTScheduler_Current::init (TAO_ORB_Core* orb)
@@ -290,9 +288,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ());
 }
 
-TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i ()
-{
-}
+TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i () = default;
 
 void
 TAO_RTScheduler_Current_i::begin_scheduling_segment(
@@ -359,7 +355,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
-      TAO_RTScheduler_Current_i* new_current = 0;
+      TAO_RTScheduler_Current_i *new_current = nullptr;
         ACE_NEW_THROW_EX (new_current,
                           TAO_RTScheduler_Current_i (this->orb_,
                                                      this->dt_hash_,

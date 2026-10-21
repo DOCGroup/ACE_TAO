@@ -11,11 +11,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      TAO_IFR_Client_Adapter *ifr_client =
+      TAO_IFR_Client_Adapter* ifr_client =
         ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
           TAO_ORB_Core::ifr_client_adapter_name ());
 
-      if (ifr_client == 0)
+      if (ifr_client == nullptr)
         {
           throw ::CORBA::INTF_REPOS ();
         }
@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "foo attr typecode = %s\n", tc->id ()));
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const& ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
       return 1;

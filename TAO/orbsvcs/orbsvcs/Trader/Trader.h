@@ -51,7 +51,7 @@ class TAO_Trader_Base;
 class TAO_Trading_Serv_Export TAO_Trader_Factory
 {
 public:
-  typedef TAO_Trader_Base TAO_TRADER;
+  using TAO_TRADER = TAO_Trader_Base;
 
   /**
    * Creates an instance of the trader according to parameters whose
@@ -88,8 +88,10 @@ private:
 
   void parse_args (int& argc, ACE_TCHAR** argv);
 
-  TAO_Trader_Factory& operator= (const TAO_Trader_Factory&);
-  TAO_Trader_Factory (const TAO_Trader_Factory&);
+  TAO_Trader_Factory (TAO_Trader_Factory const&) = delete;
+  TAO_Trader_Factory& operator= (TAO_Trader_Factory const&) = delete;
+  TAO_Trader_Factory (TAO_Trader_Factory&&) = delete;
+  TAO_Trader_Factory& operator= (TAO_Trader_Factory&&) = delete;
 
   // = Command line configurable parameters.
 
@@ -125,6 +127,14 @@ public:
   virtual ~TAO_Lockable ();
 
   virtual ACE_Lock& lock () = 0;
+
+  TAO_Lockable (TAO_Lockable const&) = delete;
+  TAO_Lockable& operator= (TAO_Lockable const&) = delete;
+  TAO_Lockable (TAO_Lockable&&) = delete;
+  TAO_Lockable& operator= (TAO_Lockable&&) = delete;
+
+protected:
+  TAO_Lockable () = default;
 };
 
 
@@ -176,6 +186,11 @@ private:
 
   /// Already narrowed reference to the ServiceTypeRepository.
   CosTradingRepos::ServiceTypeRepository_var service_type_repos_;
+
+  TAO_Support_Attributes_i (TAO_Support_Attributes_i const&) = delete;
+  TAO_Support_Attributes_i& operator= (TAO_Support_Attributes_i const&) = delete;
+  TAO_Support_Attributes_i (TAO_Support_Attributes_i&&) = delete;
+  TAO_Support_Attributes_i& operator= (TAO_Support_Attributes_i&&) = delete;
 };
 
 /**
@@ -204,6 +219,11 @@ private:
 
   ///
   CosTrading::FollowOption max_link_follow_policy_;
+
+  TAO_Link_Attributes_i (TAO_Link_Attributes_i const&) = delete;
+  TAO_Link_Attributes_i& operator= (TAO_Link_Attributes_i const&) = delete;
+  TAO_Link_Attributes_i (TAO_Link_Attributes_i&&) = delete;
+  TAO_Link_Attributes_i& operator= (TAO_Link_Attributes_i&&) = delete;
 };
 
 /**
@@ -296,6 +316,11 @@ private:
   /// Limiting link follow policy for all links of the trader -
   /// overrides both link and importer policies.
   CosTrading::FollowOption max_follow_policy_;
+
+  TAO_Import_Attributes_i (TAO_Import_Attributes_i const&) = delete;
+  TAO_Import_Attributes_i& operator= (TAO_Import_Attributes_i const&) = delete;
+  TAO_Import_Attributes_i (TAO_Import_Attributes_i&&) = delete;
+  TAO_Import_Attributes_i& operator= (TAO_Import_Attributes_i&&) = delete;
 };
 
 /**
@@ -358,6 +383,11 @@ private:
   CosTrading::Link_var link_;
   CosTrading::Proxy_var proxy_;
   CosTrading::Admin_var admin_;
+
+  TAO_Trading_Components_i (TAO_Trading_Components_i const&) = delete;
+  TAO_Trading_Components_i& operator= (TAO_Trading_Components_i const&) = delete;
+  TAO_Trading_Components_i (TAO_Trading_Components_i&&) = delete;
+  TAO_Trading_Components_i& operator= (TAO_Trading_Components_i&&) = delete;
 };
 
   // *************************************************************
@@ -390,7 +420,7 @@ public:
     ADMIN = 0x010
   };
 
-  virtual ~TAO_Trader_Base ();
+  ~TAO_Trader_Base () override;
 
   // = Accessors for objects that manage trader's configuration.
 
@@ -457,18 +487,23 @@ protected:
   TAO_Trader_Base ();
 
  private:
-  TAO_Trader_Base (const TAO_Trader_Base& TAO_Trader_Base) = delete;
-  TAO_Trader_Base& operator= (const TAO_Trader_Base&) = delete;
+  TAO_Trader_Base (TAO_Trader_Base const&) = delete;
+  TAO_Trader_Base& operator= (TAO_Trader_Base const&) = delete;
+  TAO_Trader_Base (TAO_Trader_Base&&) = delete;
+  TAO_Trader_Base& operator= (TAO_Trader_Base&&) = delete;
 };
 
 
 // Helpful typedefs
 // Should probably be private to TAO_Offer_Database, but g++ has a
 // hard time with it like that when compiling TAO_Service_Offer_Iterator.
-typedef ACE_Hash_Map_Manager_Ex<CORBA::ULong, CosTrading::Offer*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex> TAO_Offer_Map;
-
-typedef ACE_Unbounded_Set<CORBA::String_var> TAO_String_Set;
-typedef ACE_Unbounded_Queue<char*> TAO_String_Queue;
+using TAO_Offer_Map = ACE_Hash_Map_Manager_Ex<CORBA::ULong,
+                                               CosTrading::Offer*,
+                                               ACE_Hash<CORBA::ULong>,
+                                               ACE_Equal_To<CORBA::ULong>,
+                                               ACE_Null_Mutex>;
+using TAO_String_Set = ACE_Unbounded_Set<CORBA::String_var>;
+using TAO_String_Queue = ACE_Unbounded_Queue<char*>;
 
 // = Helpful operators.
 

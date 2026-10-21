@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char *TAO_ComponentContainer_i::tmp_name_holder_ = 0;
+const char *TAO_ComponentContainer_i::tmp_name_holder_ = nullptr;
 
 TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -110,8 +110,8 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      const char *supported_path = 0;
-      char *stringified = 0;
+      const char *supported_path = nullptr;
+      char *stringified = nullptr;
 
       for (i = 0; i < count; ++i)
         {
@@ -186,7 +186,7 @@ TAO_ComponentContainer_i::create_home_i (
         "defns"
       );
 
-  char *base_path = 0;
+  char *base_path = nullptr;
 
   if (! CORBA::is_nil (base_home))
     {
@@ -219,8 +219,8 @@ TAO_ComponentContainer_i::create_home_i (
                                                  "count",
                                                  length);
 
-      char *supported_path = 0;
-      char *stringified = 0;
+      char *supported_path = nullptr;
+      char *stringified = nullptr;
 
       for (i = 0; i < length; ++i)
         {
@@ -360,7 +360,7 @@ TAO_ComponentContainer_i::create_event_i (
                                             1,
                                             bases_key);
 
-      char *base_path = 0;
+      char *base_path = nullptr;
 
       for (i = 0; i < length; ++i)
         {
@@ -388,7 +388,7 @@ TAO_ComponentContainer_i::create_event_i (
       this->repo_->config ()->set_integer_value (supported_key,
                                                  "count",
                                                  length);
-      char *supported_path = 0;
+      char *supported_path = nullptr;
 
       for (i = 0; i < length; ++i)
         {
@@ -414,8 +414,8 @@ TAO_ComponentContainer_i::create_event_i (
                                             initializers_key);
 
       CORBA::ULong count = 0;
-      char *path = 0;
-      char *stringified = 0;
+      char *path = nullptr;
+      char *stringified = nullptr;
       ACE_Configuration_Section_Key initializer_key;
       ACE_Configuration_Section_Key outer_key;
       ACE_Configuration_Section_Key inner_key;

@@ -125,10 +125,10 @@ TAO::PG_Group_List_Store_File_Guard::create_stream (const char * mode)
   return list_store_.create_stream (mode);
 }
 
-typedef TAO::PG_Group_List_Store_File_Guard File_Guard;
+using File_Guard = TAO::PG_Group_List_Store_File_Guard;
 
 // Make shortcut to get to Method_Type enums
-typedef TAO::Storable_File_Guard SFG;
+using SFG = TAO::Storable_File_Guard;
 
 TAO::PG_Group_List_Store::PG_Group_List_Store (
   Storable_Factory & storable_factory)

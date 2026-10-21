@@ -45,8 +45,8 @@ public:
   // = The CosEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const CORBA::Any& events);
-  virtual void disconnect_push_consumer ();
+  void push (CORBA::Any const &events) override;
+  void disconnect_push_consumer () override;
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;
@@ -59,7 +59,7 @@ protected:
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
   /// The name
-  const char* name_;
+  char const *name_;
 };
 
 // ****************************************************************
@@ -90,7 +90,7 @@ public:
 
   // = The CosEventComm::PullConsumer methods
   /// The skeleton methods.
-  virtual void disconnect_pull_consumer ();
+  void disconnect_pull_consumer () override;
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;
@@ -103,7 +103,7 @@ protected:
   CosEventChannelAdmin::ProxyPullSupplier_var supplier_proxy_;
 
   /// The name
-  const char* name_;
+  char const *name_;
 };
 
 // ****************************************************************
@@ -116,7 +116,7 @@ public:
                               int milliseconds = 0);
 
   // = Check the ACE_Task_Base documentation.
-  int svc ();
+  int svc () override;
 
   void stop ();
   CORBA::ULong pull_count ();

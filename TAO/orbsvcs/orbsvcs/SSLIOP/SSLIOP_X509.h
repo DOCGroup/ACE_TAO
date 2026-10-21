@@ -43,7 +43,7 @@ namespace TAO
        */
       static ::X509 * _duplicate (::X509 * st)
       {
-        if (st != 0)
+        if (st != nullptr)
         {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
           ::X509_up_ref(st);
@@ -71,7 +71,7 @@ namespace TAO
       }
     };
 
-    typedef OpenSSL_st_var< ::X509 > X509_var;
+    using X509_var = OpenSSL_st_var< ::X509 >;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

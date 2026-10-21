@@ -43,16 +43,16 @@ class Dispatch_Proxy_Iterator;
 class TAO_RTSched_Export Dispatch_Entry_Link
 {
 public:
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
     /// Constructor.
   Dispatch_Entry_Link (Dispatch_Entry &d);
@@ -85,16 +85,16 @@ private:
 class TAO_RTSched_Export Task_Entry
 {
 public:
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
   // Info for DFS traversal, topological sort of call graph.
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
@@ -282,16 +282,16 @@ private:
 class TAO_RTSched_Export Task_Entry_Link
 {
 public:
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
   // ctor
   Task_Entry_Link (Task_Entry &caller,
@@ -336,18 +336,18 @@ private:
 class TAO_RTSched_Export Dispatch_Entry
 {
 public:
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
-  typedef u_long Dispatch_Id;
+  using Dispatch_Id = u_long;
 
   // ctor
   Dispatch_Entry (Time arrival,
@@ -448,16 +448,16 @@ private:
 class TAO_RTSched_Export Dispatch_Proxy_Iterator
 {
 public:
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
     /// ctor
   Dispatch_Proxy_Iterator (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
@@ -542,16 +542,16 @@ private:
 class TAO_RTSched_Export TimeLine_Entry
 {
 public:
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
   // time slice constructor
   TimeLine_Entry (Dispatch_Entry &dispatch_entry,
@@ -597,16 +597,16 @@ private:
 class TAO_RTSched_Export TimeLine_Entry_Link
 {
 public:
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period_t Period;
-  typedef RtecScheduler::Info_Type_t Info_Type;
-  typedef RtecScheduler::Dependency_Type_t Dependency_Type;
+  using handle_t = RtecScheduler::handle_t;
+  using Dependency_Info = RtecScheduler::Dependency_Info;
+  using Preemption_Priority = RtecScheduler::Preemption_Priority_t;
+  using OS_Priority = RtecScheduler::OS_Priority;
+  using Sub_Priority = RtecScheduler::Preemption_Subpriority_t;
+  using RT_Info = RtecScheduler::RT_Info;
+  using Time = RtecScheduler::Time;
+  using Period = RtecScheduler::Period_t;
+  using Info_Type = RtecScheduler::Info_Type_t;
+  using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
   /// ctor
   TimeLine_Entry_Link  (TimeLine_Entry &t);

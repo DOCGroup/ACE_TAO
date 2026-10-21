@@ -13,16 +13,20 @@ namespace Bug_3647_Regression
 class Middle_Impl : public POA_Bug_3647_Regression::Middle
 {
 public:
-  Middle_Impl(
+  Middle_Impl (
       Backend_ptr backend,
       CORBA::ORB_ptr orb,
       bool verbose);
-  virtual ~Middle_Impl() = default;
+  Middle_Impl (Middle_Impl const &) = delete;
+  Middle_Impl (Middle_Impl &&) = delete;
+  Middle_Impl &operator= (Middle_Impl const &) = delete;
+  Middle_Impl &operator= (Middle_Impl &&) = delete;
+  ~Middle_Impl () override = default;
 
-  virtual void startup_test();
-  virtual void ping();
+  void startup_test () override;
+  void ping () override;
 
-  virtual void shutdown();
+  void shutdown () override;
 
 private:
   /// Keep a reference to the backend so we can call it, shutdown, etc.

@@ -47,13 +47,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class Context;
-  typedef Context *Context_ptr;
+  using Context_ptr = Context *;
 
   class ContextList;
-  typedef ContextList *ContextList_ptr;
+  using ContextList_ptr = ContextList *;
 
   /**
    * @class Request
@@ -70,7 +70,7 @@ namespace CORBA
     CORBA::Object_ptr target () const;
 
     /// Return the operation name for the request.
-    const CORBA::Char *operation () const;
+    CORBA::Char const* operation () const;
 
     /// Return the arguments for the request.
     CORBA::NVList_ptr arguments ();
@@ -100,11 +100,11 @@ namespace CORBA
      */
     //@{
     CORBA::Any &add_in_arg ();
-    CORBA::Any &add_in_arg (const char* name);
+    CORBA::Any &add_in_arg (char const* name);
     CORBA::Any &add_inout_arg ();
-    CORBA::Any &add_inout_arg (const char* name);
+    CORBA::Any &add_inout_arg (char const* name);
     CORBA::Any &add_out_arg ();
-    CORBA::Any &add_out_arg (const char* name);
+    CORBA::Any &add_out_arg (char const* name);
     //@}
 
     /// Initialize the return type.
@@ -189,9 +189,9 @@ namespace CORBA
     CORBA::Boolean response_received ();
 
     // Useful for template programming.
-    typedef CORBA::Request_ptr _ptr_type;
-    typedef CORBA::Request_var _var_type;
-    typedef CORBA::Request_out _out_type;
+    using _ptr_type = CORBA::Request_ptr;
+    using _var_type = CORBA::Request_var;
+    using _out_type = CORBA::Request_out;
 
   private:
     friend class ::TAO_Dynamic_Adapter_Impl;
@@ -200,7 +200,7 @@ namespace CORBA
     // friend class.
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op,
+             CORBA::Char const* op,
              CORBA::NVList_ptr args,
              CORBA::NamedValue_ptr result,
              CORBA::Flags flags,
@@ -208,7 +208,7 @@ namespace CORBA
 
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op);
+             CORBA::Char const* op);
 
     ~Request ();
 
@@ -220,7 +220,7 @@ namespace CORBA
     CORBA::ORB_var orb_;
 
     /// Operation name.
-    const char * opname_;
+    char const* opname_;
 
     /// Parameter list.
     CORBA::NVList_ptr args_;

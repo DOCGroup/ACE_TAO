@@ -4,11 +4,11 @@
 #include "testC.h"
 #include "tao/ORB_Constants.h"
 
-const ACE_TCHAR *proxy_ior = 0;
-const ACE_TCHAR *control_ior = 0;
+ACE_TCHAR const *proxy_ior = nullptr;
+ACE_TCHAR const *control_ior = nullptr;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:c:"));
   int c;
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -50,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (proxy_ior);
 
-      if (obj.in () == 0)
+      if (CORBA::is_nil (obj.in ()))
         {
           ACE_ERROR_RETURN  ((LM_ERROR,
                               "The received object is nil\n"),
@@ -76,7 +76,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::sleep (2);
           }
         }
-      catch (const CORBA::TRANSIENT& ex)
+      catch (CORBA::TRANSIENT const &ex)
         {
           CORBA::ULong m = ex.minor () & 0x00000F80u;
           if (m == TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE &&
@@ -109,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
       return 1;

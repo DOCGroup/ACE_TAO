@@ -112,6 +112,11 @@ namespace TAO
     Invocation_Retry_State *retry_state_;
 
   private:
+    Synch_Twoway_Invocation (Synch_Twoway_Invocation const &) = delete;
+    Synch_Twoway_Invocation &operator= (Synch_Twoway_Invocation const &) = delete;
+    Synch_Twoway_Invocation (Synch_Twoway_Invocation &&) = delete;
+    Synch_Twoway_Invocation &operator= (Synch_Twoway_Invocation &&) = delete;
+
     /// Helper method that checks the reply status of the
     /// replies and takes appropriate action.
     /**
@@ -157,6 +162,12 @@ namespace TAO
     /// Method used by the adapter to kickstart an oneway invocation
     /// to the remote object.
     Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time);
+
+  private:
+    Synch_Oneway_Invocation (Synch_Oneway_Invocation const &) = delete;
+    Synch_Oneway_Invocation &operator= (Synch_Oneway_Invocation const &) = delete;
+    Synch_Oneway_Invocation (Synch_Oneway_Invocation &&) = delete;
+    Synch_Oneway_Invocation &operator= (Synch_Oneway_Invocation &&) = delete;
   };
 
   /**
@@ -178,8 +189,10 @@ namespace TAO
     void set_status (Invocation_Status s);
 
   private:
-    Reply_Guard (Reply_Guard const &);
-    Reply_Guard & operator= (Reply_Guard const &);
+    Reply_Guard (Reply_Guard const &) = delete;
+    Reply_Guard &operator= (Reply_Guard const &) = delete;
+    Reply_Guard (Reply_Guard &&) = delete;
+    Reply_Guard &operator= (Reply_Guard &&) = delete;
 
   private:
     Invocation_Base * const invocation_;

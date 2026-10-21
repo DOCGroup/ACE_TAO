@@ -54,8 +54,8 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
   *os << "};" << be_nl_2;
 
   // As per the ORBOS spec, we need the following typedef
-  *os << "typedef " << node->local_name () << " &" << node->local_name ()
-      << "_out;";
+  *os << "using " << node->local_name () << "_out = "
+      << node->local_name () << " &;";
 
   if (be_global->tc_support ())
     {

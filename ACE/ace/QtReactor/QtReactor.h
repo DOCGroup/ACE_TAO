@@ -99,11 +99,11 @@ public:
     /** \brief Constructor follows  @ACE_Select_Reactor
         \param QApplication *qapp, qapplication which runs events loop
     */
-    explicit ACE_QtReactor (QApplication *qapp = 0,
+    explicit ACE_QtReactor (QApplication *qapp = nullptr,
         ACE_Sig_Handler * = 0,
         ACE_Timer_Queue * = 0,
         int disable_notify_pipe = 0,
-        ACE_Reactor_Notify *notify = 0,
+        ACE_Reactor_Notify *notify = nullptr,
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
@@ -111,12 +111,12 @@ public:
         \param QApplication *qapp, qapplication which runs events loop
     */
     explicit ACE_QtReactor (size_t size,
-        QApplication *qapp = 0,
+        QApplication *qapp = nullptr,
         bool restart = false,
         ACE_Sig_Handler * = 0,
         ACE_Timer_Queue * = 0,
         int disable_notify_pipe = 0,
-        ACE_Reactor_Notify *notify = 0,
+        ACE_Reactor_Notify *notify = nullptr,
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
@@ -134,7 +134,7 @@ public:
         int dont_call_handle_close = 1);
 
     virtual int  cancel_timer (long timer_id,
-        const void **arg = 0,
+        const void **arg = nullptr,
         int dont_call_handle_close = 1);
 
 protected:

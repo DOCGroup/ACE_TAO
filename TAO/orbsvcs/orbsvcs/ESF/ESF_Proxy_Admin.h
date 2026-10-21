@@ -115,7 +115,7 @@ protected:
 
 private:
   /// Shorthand for the Proxy collection
-  typedef TAO_ESF_Proxy_Collection<PROXY> Collection;
+  using Collection = TAO_ESF_Proxy_Collection<PROXY>;
 
   /// The proxy collection object
   Collection *collection_;
@@ -129,8 +129,10 @@ public:
   TAO_ESF_RefCountedRef (COUNTED *counted);
   ~TAO_ESF_RefCountedRef ();
 private:
-  TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef<COUNTED> const & );
-  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef<COUNTED> const & );
+  TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef const &) = delete;
+  TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef &&) = delete;
+  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef const &) = delete;
+  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef &&) = delete;
 
   COUNTED *counted_;
 };

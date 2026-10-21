@@ -26,15 +26,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Visitor;
-typedef unsigned short TAO_Expression_Type;
+using TAO_Expression_Type = unsigned short;
 
 namespace CORBA
 {
   class Any;
-  typedef Any *Any_ptr;
+  using Any_ptr = Any *;
 
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 }
 
 /**
@@ -62,7 +62,7 @@ public:
   /// Return the expression type represented by this node.
   virtual TAO_Expression_Type expr_type () const = 0;
 
-  virtual ~TAO_Constraint () {}
+  virtual ~TAO_Constraint () = default;
 };
 
 /**
@@ -76,9 +76,9 @@ public:
   TAO_Noop_Constraint (TAO_Expression_Type type)
     : type_ (type) {}
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return this->type_; }
 
 private:
@@ -98,11 +98,11 @@ public:
                          TAO_Constraint* left,
                          TAO_Constraint* right);
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual ~TAO_Binary_Constraint ();
+  ~TAO_Binary_Constraint () override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return this->op_; }
 
   /// Return the left operand of the binary expression
@@ -131,8 +131,10 @@ public:
   static int visit_in (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
 
 private:
-  TAO_Binary_Constraint (const TAO_Binary_Constraint&);
-  TAO_Binary_Constraint& operator= (const TAO_Binary_Constraint&);
+  TAO_Binary_Constraint (TAO_Binary_Constraint const&) = delete;
+  TAO_Binary_Constraint& operator= (TAO_Binary_Constraint const&) = delete;
+  TAO_Binary_Constraint (TAO_Binary_Constraint&&) = delete;
+  TAO_Binary_Constraint& operator= (TAO_Binary_Constraint&&) = delete;
 
   /// The operator type
   TAO_Expression_Type op_;
@@ -154,18 +156,20 @@ public:
   TAO_Unary_Constraint (TAO_Expression_Type op_type,
                         TAO_Constraint* operand);
 
-  virtual ~TAO_Unary_Constraint ();
+  ~TAO_Unary_Constraint () override;
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return this->op_; }
 
   TAO_Constraint* operand ();
 
 private:
-  TAO_Unary_Constraint (const TAO_Unary_Constraint&);
-  TAO_Unary_Constraint& operator= (const TAO_Unary_Constraint&);
+  TAO_Unary_Constraint (TAO_Unary_Constraint const&) = delete;
+  TAO_Unary_Constraint& operator= (TAO_Unary_Constraint const&) = delete;
+  TAO_Unary_Constraint (TAO_Unary_Constraint&&) = delete;
+  TAO_Unary_Constraint& operator= (TAO_Unary_Constraint&&) = delete;
 
   /// The operator type
   TAO_Expression_Type op_;
@@ -185,18 +189,20 @@ class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 public:
   TAO_Property_Constraint (const char* name);
 
-  virtual ~TAO_Property_Constraint ();
+  ~TAO_Property_Constraint () override;
 
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const;
+  TAO_Expression_Type expr_type () const override;
 
   /// Returns the name of the property.
   const char* name () const;
 
 private:
-  TAO_Property_Constraint (const TAO_Property_Constraint&);
-  TAO_Property_Constraint& operator= (const TAO_Property_Constraint&);
+  TAO_Property_Constraint (TAO_Property_Constraint const&) = delete;
+  TAO_Property_Constraint& operator= (TAO_Property_Constraint const&) = delete;
+  TAO_Property_Constraint (TAO_Property_Constraint&&) = delete;
+  TAO_Property_Constraint& operator= (TAO_Property_Constraint&&) = delete;
 
   /// The name of the property.
   char* name_;
@@ -226,12 +232,12 @@ public:
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
 
   /// Destructor.
-  ~TAO_Literal_Constraint();
+  ~TAO_Literal_Constraint () override;
 
   /// Visitor accept methods.
-  virtual int accept (TAO_Constraint_Visitor* visitor);
+  int accept (TAO_Constraint_Visitor* visitor) override;
 
-  virtual TAO_Expression_Type expr_type () const
+  TAO_Expression_Type expr_type () const override
     { return type_; }
 
   /// Assignment operator.

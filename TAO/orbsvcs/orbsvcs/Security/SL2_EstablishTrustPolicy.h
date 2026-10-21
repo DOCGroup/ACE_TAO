@@ -60,16 +60,16 @@ namespace TAO
        * @name CORBA::Policy Methods
        */
       //@{
-      virtual CORBA::PolicyType policy_type ();
+      CORBA::PolicyType policy_type () override;
 
-      virtual CORBA::Policy_ptr copy ();
+      CORBA::Policy_ptr copy () override;
 
-      virtual void destroy ();
+      void destroy () override;
       //@}
 
       /// Return the "establish trust" value associated with this
       /// policy.
-      virtual ::Security::EstablishTrust trust ();
+      ::Security::EstablishTrust trust () override;
 
     protected:
       /// Destructor
@@ -77,7 +77,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~EstablishTrustPolicy ();
+      ~EstablishTrustPolicy () override;
 
     private:
       /// Quality of protection which can be specified for an object

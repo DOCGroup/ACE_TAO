@@ -26,12 +26,12 @@ AMI_Test_i::foo (CORBA::Long value)
       ACE_DEBUG ((LM_DEBUG,
                  "Throwing Exception: A::DidTheRightThing\n"));
 #if defined(ACE_HAS_WCHAR) || defined(ACE_HAS_XPG4_MULTIBYTE_CHAR)
-      CORBA::WChar const* wstring = L"Hello world";
+      CORBA::WChar const *wstring = L"Hello world";
 #else
       CORBA::WChar const empty[] = { 0 };
-      CORBA::WChar const* wstring = empty;
+      CORBA::WChar const *wstring = empty;
 #endif
-      throw A::DidTheRightThing(42, wstring);
+      throw A::DidTheRightThing (42, wstring);
     }
 }
 

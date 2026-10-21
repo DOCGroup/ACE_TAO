@@ -31,8 +31,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_Core::TAO_AV_Core ()
-  :connector_registry_ (0),
-   acceptor_registry_ (0)
+  : connector_registry_ (nullptr)
+  , acceptor_registry_ (nullptr)
+  , reactor_ (nullptr)
+  , stop_run_ (false)
 {
   ACE_NEW (this->connector_registry_,
            TAO_AV_Connector_Registry
@@ -126,14 +128,14 @@ TAO_AV_Core::flow_protocol_factories ()
 int
 TAO_AV_Core::stop_run ()
 {
-  this->stop_run_ = 1;
+  this->stop_run_ = true;
   return 0;
 }
 
 int
 TAO_AV_Core::run ()
 {
-  this->stop_run_ = 0;
+  this->stop_run_ = false;
   while (!this->stop_run_ && this->orb_->work_pending ())
     this->orb_->perform_work ();
   return 0;
@@ -218,7 +220,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
           break;
         }
       ACE_Addr *address = entry->address ();
-      if (address != 0)
+      if (address != nullptr)
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
@@ -254,14 +256,14 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                 {
                 case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
                   {
-                    if (entry->handler () != 0)
+                    if (entry->handler () != nullptr)
                       {
                         //Yamuna:PLEASE CHECK THIS LATER
 #if defined ACE_HAS_RAPI || defined (ACE_HAS_WINSOCK2_GQOS)
                         // For IN flows on the A side we should remove the handlers from the reactor.
                         ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
 
-                        if (event_handler->reactor () != 0)
+                        if (event_handler->reactor () != nullptr)
                           {
                             result = event_handler->reactor ()->remove_handler (event_handler,
                                                                                 ACE_Event_Handler::READ_MASK);
@@ -311,7 +313,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   {
                   case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
                     {
-                      if (entry->handler () != 0)
+                      if (entry->handler () != nullptr)
                         {
                           // @@Naga: This wont be called in the case of Full Profile.
                           // For IN flows on the A side we should remove the handlers from the reactor.
@@ -347,7 +349,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             for (; start != end; ++start)
               {
                 TAO_FlowSpec_Entry *entry = *start;
-                if (entry->get_peer_addr () != 0)
+                if (entry->get_peer_addr () != nullptr)
                   {
                     entry->address (entry->get_peer_addr (), false);
                   }
@@ -367,7 +369,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   {
                   case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
                     {
-                      if (entry->handler () != 0)
+                      if (entry->handler () != nullptr)
                         {
                           // For IN flows on the A side we should remove the handlers from the reactor.
                           ACE_Event_Handler *event_handler = entry->handler ()->event_handler ();
@@ -402,7 +404,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             ACE_Addr *local_control_addr;
             local_addr = (*connect)->get_local_addr ();
             local_control_addr = (*connect)->get_local_control_addr ();
-            if (local_addr != 0)
+            if (local_addr != nullptr)
               {
                 TAO_Reverse_FlowSpec_Entry entry ((*connect)->flowname (),
                                                   (*connect)->direction_str (),
@@ -434,7 +436,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             ACE_Addr *local_control_addr;
             local_addr = (*connect)->get_local_addr ();
             local_control_addr = (*connect)->get_local_control_addr ();
-            if (local_addr != 0)
+            if (local_addr != nullptr)
               {
                 TAO_Reverse_FlowSpec_Entry entry ((*connect)->flowname (),
                                                   (*connect)->direction_str (),
@@ -512,15 +514,15 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
         default: break;
         }
 
-      if (address != 0)
+      if (address != nullptr)
         {
-          if (this->get_acceptor (entry->flowname ())!= 0)
+          if (this->get_acceptor (entry->flowname ()) != nullptr)
             {
               ACE_Addr *address = entry->address ();
               TAO_FlowSpec_Entry *forward_entry =
                 this->get_flow_spec_entry (forward_flow_spec_set,
                                            entry->flowname ());
-              if (forward_entry != 0)
+              if (forward_entry != nullptr)
                 forward_entry->set_peer_addr (address);
             }
           else
@@ -648,8 +650,8 @@ TAO_AV_Core::remove_connector (const char *flowname)
 TAO_AV_Flow_Protocol_Factory *
 TAO_AV_Core::get_flow_protocol_factory(const char *flow_protocol)
 {
-  if (flow_protocol == 0)
-    return 0;
+  if (flow_protocol == nullptr)
+    return nullptr;
 
   for (TAO_AV_Flow_ProtocolFactorySetItor control_flow_factory =
          this->flow_protocol_factories_.begin ();
@@ -664,14 +666,14 @@ TAO_AV_Core::get_flow_protocol_factory(const char *flow_protocol)
     }
 
   // Not found.
-  return 0;
+  return nullptr;
 }
 
 TAO_AV_Transport_Factory *
 TAO_AV_Core::get_transport_factory(const char *transport_protocol)
 {
-  if (transport_protocol == 0)
-    return 0;
+  if (transport_protocol == nullptr)
+    return nullptr;
 
   for (TAO_AV_TransportFactorySetItor transport_factory =
          this->transport_factories_.begin ();
@@ -685,7 +687,7 @@ TAO_AV_Core::get_transport_factory(const char *transport_protocol)
     }
 
   // Not found.
-  return 0;
+  return nullptr;
 }
 
 int
@@ -694,12 +696,12 @@ TAO_AV_Core::load_default_transport_factories ()
   const char *udp_factory_str = "UDP_Factory";
   const char *tcp_factory_str = "TCP_Factory";
 
-  TAO_AV_Transport_Factory *udp_factory = 0;
-  TAO_AV_Transport_Item *udp_item = 0;
+  TAO_AV_Transport_Factory *udp_factory = nullptr;
+  TAO_AV_Transport_Item *udp_item = nullptr;
 
   udp_factory =
     ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_factory_str);
-  if (udp_factory == 0)
+  if (udp_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -718,12 +720,12 @@ TAO_AV_Core::load_default_transport_factories ()
 
   this->transport_factories_.insert (udp_item);
 
-  TAO_AV_Transport_Factory *tcp_factory = 0;
-  TAO_AV_Transport_Item *tcp_item = 0;
+  TAO_AV_Transport_Factory *tcp_factory = nullptr;
+  TAO_AV_Transport_Item *tcp_item = nullptr;
 
   tcp_factory =
     ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (tcp_factory_str);
-  if (tcp_factory == 0)
+  if (tcp_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -745,12 +747,12 @@ TAO_AV_Core::load_default_transport_factories ()
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
   const char *udp_qos_factory_str = "UDP_QoS_Factory";
 
-  TAO_AV_Transport_Factory *udp_qos_factory = 0;
-  TAO_AV_Transport_Item *udp_qos_item = 0;
+  TAO_AV_Transport_Factory *udp_qos_factory = nullptr;
+  TAO_AV_Transport_Item *udp_qos_item = nullptr;
 
   udp_qos_factory =
         ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_qos_factory_str);
-  if (udp_qos_factory == 0)
+  if (udp_qos_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -776,12 +778,12 @@ TAO_AV_Core::load_default_transport_factories ()
 #if defined ACE_HAS_SCTP
   const char *sctp_seq_factory_str = "SCTP_SEQ_Factory";
 
-  TAO_AV_Transport_Factory *sctp_seq_factory = 0;
-  TAO_AV_Transport_Item *sctp_seq_item = 0;
+  TAO_AV_Transport_Factory *sctp_seq_factory = nullptr;
+  TAO_AV_Transport_Item *sctp_seq_item = nullptr;
 
   sctp_seq_factory =
         ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (sctp_seq_factory_str);
-  if (sctp_seq_factory == 0)
+  if (sctp_seq_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -833,7 +835,7 @@ TAO_AV_Core::init_transport_factories ()
 
           (*factory)->factory (
                                ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (name.c_str ()));
-          if ((*factory)->factory () == 0)
+          if ((*factory)->factory () == nullptr)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Unable to load ")
@@ -864,12 +866,12 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   const char *rtcp_flow = "RTCP_Flow_Factory";
   const char *sfp_flow = "SFP_Flow_Factory";
 
-  TAO_AV_Flow_Protocol_Factory *udp_flow_factory = 0;
-  TAO_AV_Flow_Protocol_Item *udp_item = 0;
+  TAO_AV_Flow_Protocol_Factory *udp_flow_factory = nullptr;
+  TAO_AV_Flow_Protocol_Item *udp_item = nullptr;
 
   udp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_flow);
-  if (udp_flow_factory == 0)
+  if (udp_flow_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -891,12 +893,12 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
   const char *udp_qos_flow = "UDP_QoS_Flow_Factory";
-  TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = 0;
-  TAO_AV_Flow_Protocol_Item *udp_qos_flow_item = 0;
+  TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = nullptr;
+  TAO_AV_Flow_Protocol_Item *udp_qos_flow_item = nullptr;
 
   udp_qos_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_qos_flow);
-  if (udp_qos_flow_factory == 0)
+  if (udp_qos_flow_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -920,12 +922,12 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 #if defined ACE_HAS_SCTP
 
   const char *sctp_seq_flow = "SCTP_SEQ_Flow_Factory";
-  TAO_AV_Flow_Protocol_Factory *sctp_seq_flow_factory = 0;
-  TAO_AV_Flow_Protocol_Item *sctp_seq_flow_item = 0;
+  TAO_AV_Flow_Protocol_Factory *sctp_seq_flow_factory = nullptr;
+  TAO_AV_Flow_Protocol_Item *sctp_seq_flow_item = nullptr;
 
   sctp_seq_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sctp_seq_flow);
-  if (sctp_seq_flow_factory == 0)
+  if (sctp_seq_flow_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -946,12 +948,12 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
 #endif /* ACE_HAS_SCTP */
 
-  TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = 0;
-  TAO_AV_Flow_Protocol_Item *tcp_item = 0;
+  TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = nullptr;
+  TAO_AV_Flow_Protocol_Item *tcp_item = nullptr;
 
   tcp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (tcp_flow);
-  if (tcp_flow_factory == 0)
+  if (tcp_flow_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -970,12 +972,12 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
   this->flow_protocol_factories_.insert (tcp_item);
 
-  TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = 0;
-  TAO_AV_Flow_Protocol_Item *rtp_item = 0;
+  TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = nullptr;
+  TAO_AV_Flow_Protocol_Item *rtp_item = nullptr;
 
   rtp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtp_flow);
-  if (rtp_flow_factory == 0)
+  if (rtp_flow_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -994,12 +996,12 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
   this->flow_protocol_factories_.insert (rtp_item);
 
-  TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = 0;
-  TAO_AV_Flow_Protocol_Item *rtcp_item = 0;
+  TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = nullptr;
+  TAO_AV_Flow_Protocol_Item *rtcp_item = nullptr;
 
   rtcp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtcp_flow);
-  if (rtcp_flow_factory == 0)
+  if (rtcp_flow_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,
@@ -1018,12 +1020,12 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
   this->flow_protocol_factories_.insert (rtcp_item);
 
-  TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = 0;
-  TAO_AV_Flow_Protocol_Item *sfp_item = 0;
+  TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = nullptr;
+  TAO_AV_Flow_Protocol_Item *sfp_item = nullptr;
 
   sfp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sfp_flow);
-  if (sfp_flow_factory == 0)
+  if (sfp_flow_factory == nullptr)
     {
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_WARNING,

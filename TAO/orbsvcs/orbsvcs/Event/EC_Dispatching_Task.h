@@ -62,13 +62,13 @@ public:
   static int init_svcs ();
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  virtual int init (int argc, ACE_TCHAR* argv[]) override;
+  virtual int fini () override;
 
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
                                  RtecEventComm::PushConsumer_ptr consumer,
-                                 RtecEventComm::EventSet& event);
+                                 RtecEventComm::EventSet& event) override;
 
 protected:
   int queue_full_action_return_value_;
@@ -79,12 +79,12 @@ class TAO_RTEvent_Serv_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 public:
   TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
                 size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
-                ACE_Notification_Strategy * = 0);
+                ACE_Notification_Strategy * = nullptr);
 
 protected:
   // = Override the default definition in the Message_Queue, to count
   // the number of messages (and not their size).
-  virtual bool is_full_i ();
+  virtual bool is_full_i () override;
 };
 
 /**
@@ -98,14 +98,14 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNC
 public:
 #ifdef ACE_WIN32_VC14
   // Work around for Connect #2869042 Bugzilla #4215
-  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = 0);
+  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = nullptr);
   TAO_EC_Dispatching_Task ();
 #else
-  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager = 0, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = 0);
+  TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager = nullptr, TAO_EC_Queue_Full_Service_Object *queue_full_service_object = nullptr);
 #endif
 
   /// Process the events in the queue.
-  virtual int svc ();
+  virtual int svc () override;
 
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
@@ -130,11 +130,11 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   /// Constructor, it will allocate its own data block
-  TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
+  TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator = nullptr);
 
   /// Constructor, it assumes ownership of the data block
   TAO_EC_Dispatch_Command (ACE_Data_Block*,
-                           ACE_Allocator *mb_allocator = 0);
+                           ACE_Allocator *mb_allocator = nullptr);
 
   /// Destructor
   virtual ~TAO_EC_Dispatch_Command ();
@@ -149,10 +149,10 @@ class TAO_RTEvent_Serv_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispa
 {
 public:
   /// Constructor
-  TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
+  TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
 
   /// Command callback
-  virtual int execute ();
+  virtual int execute () override;
 };
 
 // ****************************************************************
@@ -168,10 +168,10 @@ public:
                        ACE_Allocator *mb_allocator);
 
   /// Destructor
-  virtual ~TAO_EC_Push_Command ();
+  virtual ~TAO_EC_Push_Command () override;
 
   /// Command callback
-  virtual int execute ();
+  virtual int execute () override;
 
 private:
   /// The proxy

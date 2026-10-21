@@ -56,7 +56,7 @@ TAO_LB_LeastLoaded::name ()
 CosLoadBalancing::Properties *
 TAO_LB_LeastLoaded::get_properties ()
 {
-  CosLoadBalancing::Properties * props = 0;
+  CosLoadBalancing::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
@@ -70,8 +70,8 @@ TAO_LB_LeastLoaded::get_properties ()
 
 void
 TAO_LB_LeastLoaded::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads)
+    PortableGroup::Location const & the_location,
+    CosLoadBalancing::LoadList const & loads)
 {
   // Only the first load is used by this load balancing strategy.
   if (loads.length () == 0)
@@ -86,21 +86,21 @@ TAO_LB_LeastLoaded::push_loads (
 
 void
 TAO_LB_LeastLoaded::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads,
+    PortableGroup::Location const & the_location,
+    CosLoadBalancing::LoadList const & loads,
     CosLoadBalancing::Load & load)
 {
   if (loads.length () == 0)
     throw CORBA::BAD_PARAM ();
 
   // Only the first load is used by this load balancing strategy.
-  const CosLoadBalancing::Load & new_load = loads[0];
+  CosLoadBalancing::Load const & new_load = loads[0];
 
-  if (this->load_map_ != 0)
+  if (this->load_map_ != nullptr)
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = 0;
+      TAO_LB_LoadMap::ENTRY * entry = nullptr;
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
@@ -144,7 +144,7 @@ TAO_LB_LeastLoaded::push_loads (
 
 CosLoadBalancing::LoadList *
 TAO_LB_LeastLoaded::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                               const PortableGroup::Location & the_location)
+                               PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -301,7 +301,7 @@ TAO_LB_LeastLoaded::_default_POA ()
 CORBA::Boolean
 TAO_LB_LeastLoaded::get_location (
   CosLoadBalancing::LoadManager_ptr load_manager,
-  const PortableGroup::Locations & locations,
+  PortableGroup::Locations const & locations,
   PortableGroup::Location & location)
 {
   CORBA::Float min_load = FLT_MAX;  // Start out with the largest
@@ -311,7 +311,7 @@ TAO_LB_LeastLoaded::get_location (
   CORBA::Boolean found_location = 0;
   CORBA::Boolean found_load = 0;
 
-  const CORBA::ULong len = locations.length ();
+  CORBA::ULong const len = locations.length ();
 
   // Iterate through the entire location list to find the least loaded
   // of them.
@@ -476,7 +476,7 @@ TAO_LB_LeastLoaded::get_location (
 }
 
 void
-TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props)
+TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
 {
   CORBA::Float critical_threshold =
     TAO_LB::LL_DEFAULT_CRITICAL_THRESHOLD;
@@ -485,12 +485,12 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props)
   CORBA::Float dampening = TAO_LB::LL_DEFAULT_DAMPENING;
   CORBA::Float per_balance_load = TAO_LB::LL_DEFAULT_PER_BALANCE_LOAD;
 
-  const PortableGroup::Property * ct = 0;  // critical threshold property
+  PortableGroup::Property const * ct = nullptr;  // critical threshold property
 
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      const PortableGroup::Property & property = props[i];
+      PortableGroup::Property const & property = props[i];
       if (ACE_OS::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LeastLoaded.CriticalThreshold") == 0)
         {
@@ -568,7 +568,7 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props)
 
 void
 TAO_LB_LeastLoaded::extract_float_property (
-  const PortableGroup::Property & property,
+  PortableGroup::Property const & property,
   CORBA::Float & value)
 {
   if (!(property.val >>= value))

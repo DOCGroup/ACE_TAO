@@ -7,8 +7,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventLogFactory_i::TAO_EventLogFactory_i () :
-  impl (0),
-  notifier_ (0)
+  impl (nullptr),
+  notifier_ (nullptr)
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
@@ -97,7 +97,7 @@ DsEventLogAdmin::EventLog_ptr
 TAO_EventLogFactory_i::create (
     DsLogAdmin::LogFullActionType full_action,
     CORBA::ULongLong max_size,
-    const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
+    DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
     DsLogAdmin::LogId_out id_out)
 {
   this->create_i (full_action,
@@ -129,7 +129,7 @@ TAO_EventLogFactory_i::create_with_id (
     DsLogAdmin::LogId id,
     DsLogAdmin::LogFullActionType full_action,
     CORBA::ULongLong max_size,
-    const DsLogAdmin::CapacityAlarmThresholdList & thresholds)
+    DsLogAdmin::CapacityAlarmThresholdList const & thresholds)
 {
   this->create_with_id_i (id,
                           full_action,
@@ -163,7 +163,7 @@ TAO_EventLogFactory_i::create_repositoryid ()
 PortableServer::ServantBase*
 TAO_EventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 {
-  TAO_EventLog_i* event_log_i;
+  TAO_EventLog_i * event_log_i;
 
   ACE_NEW_THROW_EX (event_log_i,
                     TAO_EventLog_i (this->orb_.in (),

@@ -24,7 +24,7 @@
 
 const ACE_Scheduler::mode_t ACE_Scheduler::CURRENT_MODE = 0xFFFFFFFF;
 
-ACE_Scheduler *ACE_Scheduler::instance_ = 0;
+ACE_Scheduler *ACE_Scheduler::instance_ = nullptr;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -132,7 +132,7 @@ ACE_Scheduler::get_rt_info (Object_Name name,
   // class.
   ACE_CString lookup (name);
   // Search the map for the <name>.  If found, return the RT_Info.
-  RT_Info **info_array = 0;
+  RT_Info **info_array = nullptr;
   if (info_collection_.find (lookup, info_array) >= 0)
     {
       rtinfo = info_array[0];
@@ -152,7 +152,7 @@ ACE_Scheduler::get_rt_info (Object_Name name,
         {
           delete rtinfo;
           delete [] info_array;
-          rtinfo = 0;
+          rtinfo = nullptr;
           return FAILED; // Error!
         }
       else

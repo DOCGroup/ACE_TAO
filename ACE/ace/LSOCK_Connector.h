@@ -46,7 +46,7 @@ public:
    */
   ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream,
                        const ACE_UNIX_Addr &remote_sap,
-                       ACE_Time_Value *timeout = 0,
+                       ACE_Time_Value *timeout = nullptr,
                        const ACE_Addr &local_sap = ACE_Addr::sap_any,
                        int reuse_addr = 0,
                        int flags = 0,
@@ -60,7 +60,7 @@ public:
    */
   int connect (ACE_LSOCK_Stream &new_stream,
                const ACE_UNIX_Addr &remote_sap,
-               ACE_Time_Value *timeout = 0,
+               ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,

@@ -61,13 +61,13 @@ public:
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Send @a data and @a cntl message via Stream pipes.
   ssize_t send (const ACE_Str_Buf *data,
-                const ACE_Str_Buf *cntl = 0,
+                const ACE_Str_Buf *cntl = nullptr,
                 int flags = 0);
 
   /// Send @a data and @a cntl message via Stream pipes in "band" mode.
   ssize_t send (int band,
                 const ACE_Str_Buf *data,
-                const ACE_Str_Buf *cntl = 0,
+                const ACE_Str_Buf *cntl = nullptr,
                 int flags = MSG_BAND);
 #endif /* ACE_HAS_STREAM_PIPES */
 

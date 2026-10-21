@@ -35,8 +35,8 @@ namespace TAO
   class TAO_Buffer_Allocator : public TAO_Allocator<handler_type>
   {
     public:
-      typedef handler_type HANDLER_TYPE;
-      typedef alloc_type ALLOC_TYPE;
+      using HANDLER_TYPE = handler_type;
+      using ALLOC_TYPE = alloc_type;
       TAO_Buffer_Allocator (alloc_type *allocator);
 
       virtual handler_type *allocate ();

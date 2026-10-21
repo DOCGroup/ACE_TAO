@@ -34,7 +34,7 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
 
   int pwlen = -1;
 
-  if (password != 0)
+  if (password != nullptr)
     {
       pwlen = static_cast<int> (ACE_OS::strlen (password));
 
@@ -133,12 +133,12 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 
   TAO::SSLIOP::X509_var x509 = this->make_X509 (data->certificate);
 
-  if (x509.in () == 0)
+  if (x509.in () == nullptr)
     throw CORBA::BAD_PARAM ();
 
   TAO::SSLIOP::EVP_PKEY_var evp = this->make_EVP_PKEY (data->key);
 
-  if (evp.in () == 0)
+  if (evp.in () == nullptr)
     throw CORBA::BAD_PARAM ();
 
   // Verify that the private key is consistent with the certificate.
@@ -152,7 +152,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
       throw CORBA::BAD_PARAM ();
     }
 
-  TAO::SSLIOP::OwnCredentials * creds = 0;
+  TAO::SSLIOP::OwnCredentials * creds = nullptr;
   ACE_NEW_THROW_EX (creds,
                     TAO::SSLIOP::OwnCredentials (x509.in (), evp.in ()),
                     CORBA::NO_MEMORY ());
@@ -206,11 +206,11 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
 
   const char *filename = certificate.filename.in ();
 
-  if (filename == 0)
-    return 0;
+  if (filename == nullptr)
+    return nullptr;
 
-  FILE *fp = 0;
-  ::X509 *x = 0;
+  FILE *fp = nullptr;
+  ::X509 *x = nullptr;
 
   if (certificate.type == ::SSLIOP::ASN1)
     {
@@ -221,19 +221,19 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
 
       fp = ACE_OS::fopen (filename, "rb");
 
-      if (fp == 0)
+      if (fp == nullptr)
         {
           if (TAO_debug_level > 0)
             ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
                         ACE_TEXT ("fopen")));
 
-          return 0;
+          return nullptr;
         }
 
       // Read ASN.1 / DER encoded X.509 certificate from a file, and
       // convert it to OpenSSL's internal X.509 format.
-      x = ::d2i_X509_fp (fp, 0);
+      x = ::d2i_X509_fp (fp, nullptr);
     }
   else
     {
@@ -241,14 +241,14 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
 
       fp = ACE_OS::fopen (filename, "r");
 
-      if (fp == 0)
+      if (fp == nullptr)
         {
           if (TAO_debug_level > 0)
             ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
                         ACE_TEXT ("fopen")));
 
-          return 0;
+          return nullptr;
         }
 
       const char *password = certificate.password.in ();
@@ -256,14 +256,14 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       // Read PEM encoded X.509 certificate from a file, and convert
       // it to OpenSSL's internal X.509 format.
       x = PEM_read_X509 (fp,
-                         0,
+                         nullptr,
                          TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                          const_cast<char *> (password));
     }
 
   (void) ACE_OS::fclose (fp);
 
-  if (x == 0 && TAO_debug_level > 0)
+  if (x == nullptr && TAO_debug_level > 0)
     ACE_SSL_Context::report_error ();
 
   return x;
@@ -277,11 +277,11 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
 
   const char *filename = key.filename.in ();
 
-  if (filename == 0)
-    return 0;
+  if (filename == nullptr)
+    return nullptr;
 
-  FILE *fp = 0;
-  ::EVP_PKEY *evp = 0;
+  FILE *fp = nullptr;
+  ::EVP_PKEY *evp = nullptr;
 
   if (key.type == ::SSLIOP::ASN1)
     {
@@ -292,7 +292,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
 
       fp = ACE_OS::fopen (filename, "rb");
 
-      if (fp == 0)
+      if (fp == nullptr)
         {
           if (TAO_debug_level > 0)
             ORBSVCS_ERROR ((LM_ERROR,
@@ -300,12 +300,12 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
                         ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("fopen")));
 
-          return 0;
+          return nullptr;
         }
 
       // Read ASN.1 / DER encoded private key from a file, and convert
       // it to OpenSSL's internal private key format.
-      evp = ::d2i_PrivateKey_fp (fp, 0);
+      evp = ::d2i_PrivateKey_fp (fp, nullptr);
     }
   else
     {
@@ -313,7 +313,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
 
       fp = ACE_OS::fopen (filename, "r");
 
-      if (fp == 0)
+      if (fp == nullptr)
         {
           if (TAO_debug_level > 0)
             ORBSVCS_ERROR ((LM_ERROR,
@@ -321,7 +321,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
                         ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("fopen")));
 
-          return 0;
+          return nullptr;
         }
 
       const char *password = key.password.in ();
@@ -329,14 +329,14 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
       // Read PEM encoded private key from a file, and convert it to
       // OpenSSL's internal private key format.
       evp = PEM_read_PrivateKey (fp,
-                                 0,
+                                 nullptr,
                                  TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                                  const_cast<char *> (password));
     }
 
   (void) ACE_OS::fclose (fp);
 
-  if (evp == 0 && TAO_debug_level > 0)
+  if (evp == nullptr && TAO_debug_level > 0)
     ACE_SSL_Context::report_error ();
 
   return evp;

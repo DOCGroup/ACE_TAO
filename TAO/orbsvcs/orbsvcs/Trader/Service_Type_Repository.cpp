@@ -11,7 +11,7 @@ TAO_Service_Type_Repository::TAO_Service_Type_Repository (ACE_Lock* lock)
 
   // If a lock wasn't provided, let's assume the user doesn't want any
   // kind of lock at all.
-  if (this->lock_ == 0)
+  if (this->lock_ == nullptr)
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<ACE_Null_Mutex>);
 }
@@ -26,7 +26,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository ()
          service_map_iterator.done () == 0;
          service_map_iterator++)
       {
-        Type_Info *type_info = (*service_map_iterator).int_id_;
+        Type_Info* type_info = (*service_map_iterator).int_id_;
         delete type_info;
       }
   }
@@ -92,7 +92,7 @@ add_type (const char *name,
   //
   // Instead, we do this:
   //
-  if (if_name == 0)
+  if (if_name == nullptr)
     throw CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch ();
 
   // Collect and make sure that properties of all supertypes and this
@@ -132,7 +132,7 @@ TAO_Service_Type_Repository::remove_type (const char *name)
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
 
   // Check if the type exists.
-  Service_Type_Map::ENTRY* type_entry = 0; ;
+  Service_Type_Map::ENTRY* type_entry = nullptr;
   if (this->type_map_.find (name,
                             type_entry) == -1)
     throw CosTrading::UnknownServiceType (name);
@@ -205,13 +205,13 @@ describe_type (const char * name)
 
   // Make sure the type exists.
   CORBA::String_var type_name (name);
-  Service_Type_Map::ENTRY *type_entry = 0;
+  Service_Type_Map::ENTRY* type_entry = nullptr;
   if (this->type_map_.find (type_name,
                             type_entry) == -1)
     throw CosTrading::UnknownServiceType (name);
 
   // Return appropriate information about the type.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct *descr = 0;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr = nullptr;
   ACE_NEW_RETURN (descr,
                   CosTradingRepos::ServiceTypeRepository::TypeStruct,
                   0);
@@ -243,13 +243,13 @@ fully_describe_type (const char *name)
 
   // Make sure the type exists.
   CORBA::String_var type_name (name);
-  Service_Type_Map::ENTRY *type_entry = 0;
+  Service_Type_Map::ENTRY* type_entry = nullptr;
   if (this->type_map_.find (type_name,
                             type_entry) == -1)
     throw CosTrading::UnknownServiceType (name);
 
   // Return appropriate information about the type.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct *descr = 0;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr = nullptr;
   ACE_NEW_RETURN (descr,
                   CosTradingRepos::ServiceTypeRepository::TypeStruct,
                   0);
@@ -282,7 +282,7 @@ mask_type (const char *name)
 
   // Make sure the type exists.
   CORBA::String_var type_name (name);
-  Service_Type_Map::ENTRY *type_entry = 0;
+  Service_Type_Map::ENTRY* type_entry = nullptr;
   if (this->type_map_.find (type_name,
                             type_entry) != -1)
     throw CosTrading::UnknownServiceType (name);
@@ -307,7 +307,7 @@ TAO_Service_Type_Repository::unmask_type (const char *name)
 
   // Make sure the type exists.
   CORBA::String_var type_name (name);
-  Service_Type_Map::ENTRY *type_entry = 0;
+  Service_Type_Map::ENTRY* type_entry = nullptr;
   if (this->type_map_.find (type_name,
                             type_entry) != -1)
     throw CosTrading::UnknownServiceType (name);
@@ -341,8 +341,8 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
        iterator.done () == 0;
        iterator.advance ())
     {
-      char **next_type_name = 0;
-      Service_Type_Map::ENTRY *type_entry = 0;
+      char** next_type_name = nullptr;
+      Service_Type_Map::ENTRY* type_entry = nullptr;
 
       iterator.next (next_type_name);
       CORBA::String_var hash_key (const_cast<const char *> (*next_type_name));
@@ -372,8 +372,8 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
        iterator.done () == 0;
        iterator.advance ())
     {
-      char **next_type_name = 0;
-      Service_Type_Map::ENTRY *type_entry = 0;
+      char** next_type_name = nullptr;
+      Service_Type_Map::ENTRY* type_entry = nullptr;
 
       iterator.next (next_type_name);
       CORBA::String_var hash_key (const_cast<const char *> (*next_type_name));
@@ -381,7 +381,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
                             type_entry);
 
       // Should never be zero.
-      if (type_entry != 0)
+      if (type_entry != nullptr)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
             type_entry->int_id_->type_struct_;
@@ -406,7 +406,7 @@ collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::Typ
        i >= 0;
        i--)
     {
-      Service_Type_Map::ENTRY *next_type_entry = 0;
+      Service_Type_Map::ENTRY* next_type_entry = nullptr;
       CORBA::String_var next_type_name (type_struct.super_types[i]);
 
       if (this->type_map_.find (next_type_name, next_type_entry) != -1)
@@ -466,7 +466,7 @@ validate_supertypes (Service_Type_Map &super_map,
       else
         {
           CORBA::String_var hash_type (type);
-          Service_Type_Map::ENTRY *type_entry = 0;
+          Service_Type_Map::ENTRY* type_entry = nullptr;
 
           if (this->type_map_.find (hash_type,
                                     type_entry) == -1)
@@ -493,7 +493,7 @@ validate_inheritance (Prop_Map &prop_map,
        i < num_super_types;
        i++)
     {
-      Service_Type_Map::ENTRY *super_type_entry = 0;
+      Service_Type_Map::ENTRY* super_type_entry = nullptr;
       CORBA::String_var super_type (super_types[i]);
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq place_holder;
       CosTradingRepos::ServiceTypeRepository::PropStructSeq super_props;
@@ -501,7 +501,7 @@ validate_inheritance (Prop_Map &prop_map,
       this->type_map_.find (super_type, super_type_entry);
 
       // Super_type_entry should never be zero.
-      if (super_type_entry != 0)
+      if (super_type_entry != nullptr)
         this->fully_describe_type_i (super_type_entry->int_id_->type_struct_,
                                      super_props,
                                      place_holder);
@@ -514,7 +514,7 @@ validate_inheritance (Prop_Map &prop_map,
            j < num_props;
            j++)
         {
-          Prop_Map::ENTRY *existing_prop = 0;
+          Prop_Map::ENTRY* existing_prop = nullptr;
           CORBA::String_var prop_name (super_props[j].name);
 
           if (prop_map.bind (prop_name,
@@ -578,7 +578,7 @@ update_type_map (const char *name,
 
   // All parameters are valid, create an entry for this service type
   // in the this->type_map_.
-  Type_Info *type = 0;
+  Type_Info* type = nullptr;
   ACE_NEW (type,
            Type_Info);
 

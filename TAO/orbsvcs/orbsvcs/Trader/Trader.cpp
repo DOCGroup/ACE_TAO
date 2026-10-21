@@ -76,7 +76,7 @@ TAO_Trader_Base::is_valid_property_name (const char* ident)
 {
   bool return_value = false;
 
-  if (ident == 0)
+  if (ident == nullptr)
     return return_value;
 
   size_t length = ACE_OS::strlen (ident);
@@ -101,13 +101,13 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
 {
   static char const * const double_colon = "::";
 
-  if (ident == 0)
-    return 0;
+  if (ident == nullptr)
+    return false;
 
   int return_value = 1;
 
   // Allow scoped identifiers
-  CORBA::Boolean done = 0;
+  CORBA::Boolean done = false;
   char const * pos =
     ACE_OS::strstr (ident,
                     double_colon);
@@ -132,13 +132,13 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
                    || ident[i] == '_'))
               {
                 // Subsequent characters is not alpha, numeric, or '_'
-                return_value = 0;
+                return_value = false;
                 break;
               }
           }
       }
     else
-      return_value = 0;
+      return_value = false;
 
     if (pos)
       {
@@ -164,9 +164,9 @@ TAO_Lockable::~TAO_Lockable ()
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
-    supports_modifiable_properties_ (1),
-    supports_dynamic_properties_ (1),
-    supports_proxy_offers_ (0),
+    supports_modifiable_properties_ (true),
+    supports_dynamic_properties_ (true),
+    supports_proxy_offers_ (false),
     type_repos_ (CosTrading::TypeRepository::_nil ()),
     service_type_repos_ (CosTradingRepos::ServiceTypeRepository::_nil ())
 {
@@ -643,9 +643,9 @@ TAO_Trader_Factory::create_trader (int& argc, ACE_TCHAR** argv)
 
 TAO_Trader_Factory::TAO_Trader_Factory (int& argc, ACE_TCHAR** argv)
   : conformance_ (TAO_TRADER_LINKED),
-    threadsafe_ (0),
-    supports_dynamic_properties_ (1),
-    supports_modifiable_properties_ (1),
+    threadsafe_ (false),
+    supports_dynamic_properties_ (true),
+    supports_modifiable_properties_ (true),
     def_search_card_ (20),
     max_search_card_ (50),
     def_match_card_ (20),
@@ -663,15 +663,15 @@ TAO_Trader_Factory::TAO_Trader_Factory (int& argc, ACE_TCHAR** argv)
 TAO_Trader_Factory::TAO_TRADER *
 TAO_Trader_Factory::manufacture_trader ()
 {
-  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TRADER;
+  using TRADER = TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
 
 #if defined ACE_HAS_THREADS
-  typedef TAO_Trader<TAO_SYNCH_MUTEX, TAO_SYNCH_RW_MUTEX>  MT_TRADER;
+  using MT_TRADER = TAO_Trader<TAO_SYNCH_MUTEX, TAO_SYNCH_RW_MUTEX>;
 #else
-  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  MT_TRADER;
+  using MT_TRADER = TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
 #endif /* ACE_HAS_THREADS */
 
-  TAO_TRADER* return_value = 0;
+  TAO_TRADER* return_value = nullptr;
   int components = static_cast<int> (TAO_Trader_Base::LOOKUP);
 
   if (this->conformance_ >= TAO_TRADER_SIMPLE)
@@ -725,7 +725,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
       if (ACE_OS::strcmp (current_arg, ACE_TEXT("-TSthreadsafe")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->threadsafe_ = 1;
+          this->threadsafe_ = true;
         }
       else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-TSconformance")) == 0)
         {
@@ -754,9 +754,9 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
               const ACE_TCHAR* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("true")) == 0)
-                this->supports_dynamic_properties_ = 1;
+                this->supports_dynamic_properties_ = true;
               else if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("false")) == 0)
-                this->supports_dynamic_properties_ = 0;
+                this->supports_dynamic_properties_ = false;
 
               arg_shifter.consume_arg ();
             }
@@ -770,9 +770,9 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
               const ACE_TCHAR* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("true")) == 0)
-                this->supports_modifiable_properties_ = 1;
+                this->supports_modifiable_properties_ = true;
               else if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("false")) == 0)
-                this->supports_modifiable_properties_ = 0;
+                this->supports_modifiable_properties_ = false;
 
               arg_shifter.consume_arg ();
             }

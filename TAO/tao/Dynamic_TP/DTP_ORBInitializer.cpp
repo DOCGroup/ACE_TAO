@@ -17,9 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/)
-{
-}
+TAO_DTP_ORBInitializer::TAO_DTP_ORBInitializer (/*const ACE_CString &tplist*/) = default;
 
 void
 TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
@@ -46,14 +44,14 @@ TAO_DTP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
       gestalt,
       "DTP_Config",
       true);
-  if (config_obj == 0)
+  if (config_obj == nullptr)
     {
       // no config manager object loaded
       return;
     }
 
   TAO_DTP_Config *config_mgr = dynamic_cast<TAO_DTP_Config *>(config_obj);
-  if (config_mgr == 0)
+  if (config_mgr == nullptr)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
@@ -83,10 +81,10 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   ACE_Service_Gestalt *gestalt = tao_info->orb_core ()->configuration();
 
-  const char *dtp_name =
+  char const *dtp_name =
     tao_info->orb_core ()->orb_params ()->dynamic_thread_pool_config_name ();
 
-  if (dtp_name != 0 && dtp_name[0] != 0)
+  if (dtp_name != nullptr && dtp_name[0] != 0)
     {
       if (TAO_debug_level > 0)
         {
@@ -102,7 +100,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
       TAO_DTP_Definition def;
 
-      if (config_registry == 0 || !config_registry->find(dtp_name, def))
+      if (config_registry == nullptr || !config_registry->find(dtp_name, def))
         {
           if (TAO_debug_level > 0)
             TAOLIB_ERROR ((LM_ERROR,

@@ -37,21 +37,21 @@ namespace TAO
     BaseCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                     ::Compression::CompressionLevel compression_level);
 
-    virtual void compress (const ::Compression::Buffer &source,
-                           ::Compression::Buffer &target) = 0;
+    void compress (::Compression::Buffer const& source,
+                   ::Compression::Buffer &target) override = 0;
 
-    virtual void decompress (const ::Compression::Buffer &source,
-                             ::Compression::Buffer &target) = 0;
+    void decompress (::Compression::Buffer const& source,
+                     ::Compression::Buffer &target) override = 0;
 
-    virtual ::Compression::CompressorFactory_ptr compressor_factory ();
+    ::Compression::CompressorFactory_ptr compressor_factory () override;
 
-    virtual ::Compression::CompressionLevel compression_level ();
+    ::Compression::CompressionLevel compression_level () override;
 
-    virtual ::CORBA::ULongLong compressed_bytes ();
+    ::CORBA::ULongLong compressed_bytes () override;
 
-    virtual ::CORBA::ULongLong uncompressed_bytes ();
+    ::CORBA::ULongLong uncompressed_bytes () override;
 
-    virtual ::Compression::CompressionRatio compression_ratio ();
+    ::Compression::CompressionRatio compression_ratio () override;
 
   protected:
     void update_stats (::CORBA::ULongLong uncompressed_bytes,
@@ -62,6 +62,12 @@ namespace TAO
     ::Compression::CompressorFactory *compressor_factory_;
     ::CORBA::ULongLong compressed_bytes_;
     ::CORBA::ULongLong uncompressed_bytes_;
+
+  private:
+    BaseCompressor (BaseCompressor const &) = delete;
+    BaseCompressor &operator= (BaseCompressor const &) = delete;
+    BaseCompressor (BaseCompressor &&) = delete;
+    BaseCompressor &operator= (BaseCompressor &&) = delete;
   };
 }
 

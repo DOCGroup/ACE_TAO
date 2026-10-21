@@ -55,21 +55,23 @@ public:
   TAO_IOR_Parser *match_parser (const char *ior_string);
 
   // = Iterator.
-  typedef TAO_IOR_Parser** Parser_Iterator;
+  using Parser_Iterator = TAO_IOR_Parser**;
   Parser_Iterator begin () const;
   Parser_Iterator end () const;
 
 private:
   // The parser registry should not be copied.
-  TAO_Parser_Registry (const TAO_Parser_Registry&);
-  void operator= (const TAO_Parser_Registry&);
+  TAO_Parser_Registry (TAO_Parser_Registry const &) = delete;
+  TAO_Parser_Registry &operator= (TAO_Parser_Registry const &) = delete;
+  TAO_Parser_Registry (TAO_Parser_Registry &&) = delete;
+  TAO_Parser_Registry &operator= (TAO_Parser_Registry &&) = delete;
 
 private:
   /// List of parsers
-  TAO_IOR_Parser **parsers_;
+  TAO_IOR_Parser **parsers_ {};
 
   /// Number of parsers
-  size_t size_;
+  size_t size_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

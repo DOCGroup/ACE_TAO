@@ -15,7 +15,7 @@ namespace
     int size;
     stream >> size;
 
-    char *tmp = 0;
+    char *tmp = nullptr;
     ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
     std::unique_ptr<char[]> buf (tmp);
     stream.read (size, buf.get ());
@@ -214,7 +214,7 @@ TAO::Object_Group_File_Guard::create_stream (const  char * mode)
 }
 
 // Make shortcut to get to Method_Type enums
-typedef TAO::Storable_File_Guard SFG;
+using SFG = TAO::Storable_File_Guard;
 
 TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   CORBA::ORB_ptr orb,
@@ -541,7 +541,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       int is_primary;
       stream >> is_primary;
 
-      MemberInfo * info = 0;
+      MemberInfo * info = nullptr;
       ACE_NEW_THROW_EX (info, MemberInfo(member.in (),
                                          the_location,
                                          factory.in (),

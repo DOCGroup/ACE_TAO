@@ -4,7 +4,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const* ior_output_file = ACE_TEXT("test.ior");
 int object_to_output = 1;
 
 int
@@ -73,8 +73,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (goodday.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE* output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("Cannot open output file for writing IOR: %s\n"),
                            ior_output_file),

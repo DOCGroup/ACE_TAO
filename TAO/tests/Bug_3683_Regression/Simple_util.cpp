@@ -12,11 +12,8 @@
 // Constructor.
 template <class Servant>
 Server<Servant>::Server ()
-  : servant_ (0)
-  , ior_output_file_ (0)
-  , ins_ (0)
 {
-  Servant *tmp = 0;
+  Servant *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     Servant (),
                     CORBA::NO_MEMORY ());
@@ -36,7 +33,7 @@ Server<Servant>::parse_args ()
   ACE_Get_Opt get_opts (this->argc_, this->argv_,
                         ACE_TEXT ("do:i:"), 1, 0,
                         ACE_Get_Opt::REQUIRE_ORDER);
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -60,7 +57,7 @@ Server<Servant>::parse_args ()
 // the ORB. Ignore this method if you are not testing for
 // the InterOperable Naming Service.
 template <class Servant> int
-Server<Servant>::test_for_ins (const char *ior)
+Server<Servant>::test_for_ins (char const *ior)
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -97,7 +94,7 @@ Server<Servant>::test_for_ins (const char *ior)
 
 // Initialize the server.
 template <class Servant> int
-Server<Servant>::init (const char *servant_name,
+Server<Servant>::init (char const *servant_name,
                        int argc,
                        ACE_TCHAR *argv[])
 {
@@ -145,7 +142,7 @@ Server<Servant>::init (const char *servant_name,
       if (this->ior_output_file_)
         {
           FILE *fh = ACE_OS::fopen (this->ior_output_file_, "w");
-          if (fh == 0)
+          if (fh == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Unable to open %s for writing (%p)\n"),
                                this->ior_output_file_,
@@ -164,7 +161,7 @@ Server<Servant>::init (const char *servant_name,
   return 0;
 }
 
-template <class Servant>int
+template <class Servant> int
 Server<Servant>::run ()
 {
   // Run the main event loop for the ORB.
@@ -180,7 +177,6 @@ Server<Servant>::run ()
 template <class ServerInterface>
 Client<ServerInterface>::Client ()
   : ior_ ("")
-  , do_shutdown_ (0)
 {
   //no-op
 }
@@ -190,7 +186,7 @@ template <class ServerInterface> int
 Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
 {
   // Open the file for reading.
-  ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
+  ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -202,7 +198,7 @@ Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();
 
-  if (data == 0)
+  if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to read ior (%p)\n"),
                        ACE_TEXT ("read")),
@@ -223,8 +219,8 @@ Client<ServerInterface>::parse_args ()
   ACE_Get_Opt get_opts (argc_, argv_,
                         ACE_TEXT ("df:nk:x"), 1, 0,
                         ACE_Get_Opt::REQUIRE_ORDER);
-  int c = 0;
-  int result = 0;
+  int c {};
+  int result {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -271,7 +267,7 @@ Client<ServerInterface>::~Client ()
 }
 
 template <class ServerInterface> int
-Client<ServerInterface>::init (const char *,
+Client<ServerInterface>::init (char const *,
                                int argc,
                                ACE_TCHAR **argv)
 {

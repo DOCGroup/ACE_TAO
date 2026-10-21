@@ -4,14 +4,12 @@
 #include "ace/OS_NS_string.h"
 
 Ptest::Ptest ()
-  : debug_ (0),
-    query_ (0)
+  : debug_ (false),
+    query_ (false)
 {
 }
 
-Ptest::~Ptest ()
-{
-}
+Ptest::~Ptest () = default;
 
 int
 Ptest::init (int argc, ACE_TCHAR *argv[])
@@ -79,7 +77,7 @@ Ptest::run ()
 {
   try
     {
-      if (this->query_ == 1)
+      if (this->query_)
         {
           this->query ();
         }
@@ -108,10 +106,10 @@ Ptest::parse_args (int argc,
     switch (c)
       {
       case 'd':   // debug flag
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
       case 'q':   // query toggle
-        this->query_ = 1;
+        this->query_ = true;
         break;
       case '?':
       default:

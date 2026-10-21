@@ -26,7 +26,12 @@ class TAO_FTEC_Group_Manager : private TAO_FTEC_Fault_Listener
 {
 public:
   TAO_FTEC_Group_Manager();
-  virtual ~TAO_FTEC_Group_Manager();
+  ~TAO_FTEC_Group_Manager() override;
+
+  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager const&) = delete;
+  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager&&) = delete;
+  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager const&) = delete;
+  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager&&) = delete;
 
   bool init(CORBA::ORB_ptr orb);
 
@@ -53,7 +58,7 @@ public:
 private:
   virtual void get_state (FtRtecEventChannelAdmin::EventChannelState & s)=0;
 
-  virtual void connection_closed();
+  void connection_closed() override;
 
 protected:
   FTRT::FaultListener_var listener_;

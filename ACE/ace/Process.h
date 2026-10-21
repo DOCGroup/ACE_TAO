@@ -213,7 +213,7 @@ public:
   /// same as the single string in the prior case and can be obtained by
   /// providing max_len. @arg max_len, if non-zero, provides a location
   /// into which the total length of the command line buffer is returned.
-  ACE_TCHAR *command_line_buf (size_t *max_len = 0);
+  ACE_TCHAR *command_line_buf (size_t *max_len = nullptr);
 
   /**
    * argv-style command-line options.  Parses and modifies the string
@@ -564,7 +564,7 @@ public:
    * @retval -1 the wait operation failed; consult @c errno for details.
    * @retval other the child process id is returned on success.
    */
-  pid_t wait (ACE_exitcode *status = 0,
+  pid_t wait (ACE_exitcode *status = nullptr,
               int wait_options = 0);
 
   /**
@@ -585,7 +585,7 @@ public:
    * @c SIGCHLD to kick off process reaping.
    */
   pid_t wait (const ACE_Time_Value &tv,
-              ACE_exitcode *status = 0);
+              ACE_exitcode *status = nullptr);
 
   /// Send the process a signal.  This only has an effect on operating
   /// systems that support signals, such as UNIX/POSIX.

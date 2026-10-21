@@ -33,9 +33,9 @@ namespace TAO
 
   namespace SSLIOP
   {
-    typedef SSLIOP_Credentials* Credentials_ptr;
-    typedef TAO_Pseudo_Var_T<SSLIOP_Credentials> Credentials_var;
-    typedef TAO_Pseudo_Out_T<SSLIOP_Credentials> Credentials_out;
+    using Credentials_ptr = SSLIOP_Credentials*;
+    using Credentials_var = TAO_Pseudo_Var_T<SSLIOP_Credentials>;
+    using Credentials_out = TAO_Pseudo_Out_T<SSLIOP_Credentials>;
   }
 
     /**
@@ -58,9 +58,9 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      typedef SSLIOP::Credentials_ptr _ptr_type;
-      typedef SSLIOP::Credentials_var _var_type;
-      typedef SSLIOP::Credentials_out _out_type;
+      using _ptr_type = SSLIOP::Credentials_ptr;
+      using _var_type = SSLIOP::Credentials_var;
+      using _out_type = SSLIOP::Credentials_out;
 
       /// Constructor
       SSLIOP_Credentials (::X509 * cert, ::EVP_PKEY * evp);
@@ -72,20 +72,20 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * creds_id ();
+      char * creds_id () override;
 
-      virtual SecurityLevel3::CredentialsType creds_type () = 0;
+      SecurityLevel3::CredentialsType creds_type () override = 0;
 
-      virtual SecurityLevel3::CredentialsUsage creds_usage ();
+      SecurityLevel3::CredentialsUsage creds_usage () override;
 
-      virtual TimeBase::UtcT expiry_time ();
+      TimeBase::UtcT expiry_time () override;
 
-      virtual SecurityLevel3::CredentialsState creds_state ();
+      SecurityLevel3::CredentialsState creds_state () override;
 
-      virtual char * add_relinquished_listener (
-          SecurityLevel3::RelinquishedCredentialsListener_ptr listener);
+      char * add_relinquished_listener (
+          SecurityLevel3::RelinquishedCredentialsListener_ptr listener) override;
 
-      virtual void remove_relinquished_listener (const char * id);
+      void remove_relinquished_listener (const char * id) override;
       //@}
 
 

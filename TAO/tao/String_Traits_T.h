@@ -23,8 +23,8 @@ namespace details
 template<typename char_type, class derived>
 struct string_traits_decorator
 {
-  typedef char_type * value_type;
-  typedef char_type const * const_value_type;
+  using value_type = char_type *;
+  using const_value_type = char_type const *;
 
   inline static void zero_range(
       char_type ** begin, char_type ** end)

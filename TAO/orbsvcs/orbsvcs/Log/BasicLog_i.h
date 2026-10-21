@@ -58,13 +58,13 @@ public:
                   DsLogAdmin::LogId id);
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
+  DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId_out id) override;
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void destroy ();
+  void destroy () override;
 
 protected:
   /// Destructor.
@@ -72,9 +72,14 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_BasicLog_i ();
+  ~TAO_BasicLog_i () override;
 
 private:
+  TAO_BasicLog_i (TAO_BasicLog_i const &) = delete;
+  TAO_BasicLog_i (TAO_BasicLog_i &&) = delete;
+  TAO_BasicLog_i &operator= (TAO_BasicLog_i const &) = delete;
+  TAO_BasicLog_i &operator= (TAO_BasicLog_i &&) = delete;
+
   /// POA.
   PortableServer::POA_var poa_;
 };

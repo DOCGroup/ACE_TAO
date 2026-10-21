@@ -41,7 +41,7 @@ TAO_Notify_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_Notify_EventType* event_type = 0;
+  TAO_Notify_EventType* event_type = nullptr;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
@@ -63,7 +63,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_Notify_EventType* event_type = 0;
+  TAO_Notify_EventType* event_type = nullptr;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)

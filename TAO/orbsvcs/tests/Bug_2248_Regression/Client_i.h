@@ -25,6 +25,11 @@ public:
   /// Our constructor
   Client_i (CORBA::ORB_ptr orb);
 
+  Client_i (Client_i const &) = delete;
+  Client_i (Client_i &&) = delete;
+  Client_i &operator= (Client_i const &) = delete;
+  Client_i &operator= (Client_i &&) = delete;
+
   /// Initialize the ORB etc.
   int init ();
 

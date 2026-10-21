@@ -31,12 +31,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
   class Any;
 
   class Policy;
-  typedef Policy *Policy_ptr;
+  using Policy_ptr = Policy *;
 
   class BooleanSeq;
   class OctetSeq;
@@ -62,7 +62,7 @@ class TAO_Export TAO_AnyTypeCode_Adapter
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_AnyTypeCode_Adapter ();
+  ~TAO_AnyTypeCode_Adapter () override;
 
 #define ANYTYPECODE__EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \

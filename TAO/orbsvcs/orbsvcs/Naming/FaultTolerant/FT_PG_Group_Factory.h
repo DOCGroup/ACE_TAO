@@ -73,6 +73,12 @@ namespace TAO
       TAO::Storable_Factory & storable_factory) override;
 
     TAO_FT_Naming_Replication_Manager *replicator_ {};
+
+  private:
+    FT_PG_Group_Factory (FT_PG_Group_Factory const &) = delete;
+    FT_PG_Group_Factory (FT_PG_Group_Factory &&) = delete;
+    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory const &) = delete;
+    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory &&) = delete;
   };
 } // namespace TAO
 

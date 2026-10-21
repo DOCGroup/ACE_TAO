@@ -35,8 +35,8 @@ namespace TAO
 
     // ----
     // @@ Work around limitations in MSVC++ 6.
-    typedef char const * STATIC_TYPECODE;
-    typedef CORBA::String_var DYNAMIC_TYPECODE;
+    using STATIC_TYPECODE = char const *;
+    using DYNAMIC_TYPECODE = CORBA::String_var;
 
     template<typename S> struct Traits;
     // ----
@@ -44,7 +44,7 @@ namespace TAO
     template<>
     struct Traits<STATIC_TYPECODE>
     {
-      typedef char const * string_type;
+      using string_type = char const *;
 
       /**
        * A pointer to the @c CORBA::TypeCode_ptr rather than the
@@ -53,9 +53,9 @@ namespace TAO
        * @c CORBA::TypeCode_ptr when creating a static object that
        * refers to it, hence the indirection.
        */
-      typedef CORBA::TypeCode_ptr const * typecode_type;
+      using typecode_type = CORBA::TypeCode_ptr const *;
 
-      typedef TAO::Null_RefCount_Policy refcount_policy_type;
+      using refcount_policy_type = TAO::Null_RefCount_Policy;
 
       static char const * get_string (string_type const & str)
       {
@@ -64,16 +64,16 @@ namespace TAO
 
       static CORBA::TypeCode_ptr get_typecode (typecode_type const & tc)
       {
-        return (tc == 0 ? CORBA::TypeCode::_nil () : *tc);
+        return (tc == nullptr ? CORBA::TypeCode::_nil () : *tc);
       }
     };
 
     template<>
     struct Traits<DYNAMIC_TYPECODE>
     {
-      typedef CORBA::String_var string_type;
-      typedef CORBA::TypeCode_var typecode_type;
-      typedef TAO::True_RefCount_Policy refcount_policy_type;
+      using string_type = CORBA::String_var;
+      using typecode_type = CORBA::TypeCode_var;
+      using refcount_policy_type = TAO::True_RefCount_Policy;
 
       static char const * get_string (string_type const & str)
       {
@@ -93,18 +93,18 @@ namespace TAO
     template<>
     struct Traits<Traits<STATIC_TYPECODE>::typecode_type>
     {
-      typedef Traits<STATIC_TYPECODE>::typecode_type typecode_type;
+      using typecode_type = Traits<STATIC_TYPECODE>::typecode_type;
 
       static CORBA::TypeCode_ptr get_typecode (typecode_type const & tc)
       {
-        return (tc == 0 ? CORBA::TypeCode::_nil () : *tc);
+        return (tc == nullptr ? CORBA::TypeCode::_nil () : *tc);
       }
     };
 
     template<>
     struct Traits<Traits<DYNAMIC_TYPECODE>::typecode_type>
     {
-      typedef Traits<DYNAMIC_TYPECODE>::typecode_type typecode_type;
+      using typecode_type = Traits<DYNAMIC_TYPECODE>::typecode_type;
 
       static CORBA::TypeCode_ptr get_typecode (typecode_type const & tc)
       {

@@ -42,7 +42,7 @@ TAO_COIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_COIOP_Endpoint *COIOP_endpoint =
     this->remote_endpoint (endpoint);
 
-  if (COIOP_endpoint == 0)
+  if (COIOP_endpoint == nullptr)
     return -1;
 
   return 0;
@@ -60,7 +60,7 @@ TAO_COIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_COIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_COIOP_Profile (this->orb_core ()),
                   0);
@@ -69,7 +69,7 @@ TAO_COIOP_Connector::create_profile (TAO_InputCDR& cdr)
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;
@@ -83,7 +83,7 @@ TAO_COIOP_Connector::make_profile ()
   // or:
   //    uuid/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_COIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (

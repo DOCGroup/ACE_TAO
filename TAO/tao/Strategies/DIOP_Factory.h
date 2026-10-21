@@ -39,21 +39,21 @@ public:
   TAO_DIOP_Protocol_Factory ();
 
   /// Destructor.
-  virtual ~TAO_DIOP_Protocol_Factory () = default;
+  ~TAO_DIOP_Protocol_Factory () override = default;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Verify prefix is a match
-  virtual int match_prefix (const ACE_CString &prefix);
+  int match_prefix (ACE_CString const &prefix) override;
 
   /// Returns the prefix used by the protocol.
-  virtual const char *prefix () const;
+  char const *prefix () const override;
 
   /// Return the character used to mark where an endpoint ends and
   /// where its options begin.
-  virtual char options_delimiter () const;
+  char options_delimiter () const override;
 
   /**
    * @name Protocol factory methods
@@ -61,10 +61,16 @@ public:
    * Check Protocol_Factory.h for a description of these methods.
    */
   //@{
-  virtual TAO_Acceptor  *make_acceptor ();
-  virtual TAO_Connector *make_connector  ();
-  virtual int requires_explicit_endpoint () const;
+  TAO_Acceptor  *make_acceptor () override;
+  TAO_Connector *make_connector () override;
+  int requires_explicit_endpoint () const override;
   //@}
+
+private:
+  TAO_DIOP_Protocol_Factory (TAO_DIOP_Protocol_Factory const &) = delete;
+  TAO_DIOP_Protocol_Factory &operator= (TAO_DIOP_Protocol_Factory const &) = delete;
+  TAO_DIOP_Protocol_Factory (TAO_DIOP_Protocol_Factory &&) = delete;
+  TAO_DIOP_Protocol_Factory &operator= (TAO_DIOP_Protocol_Factory &&) = delete;
 };
 
 

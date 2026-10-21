@@ -348,7 +348,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::dispatch_commands ()
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->command_mutex_, -1);
 
   // loop through the enqueued commands
-  ACE_Command_Base *cmd = 0;
+  ACE_Command_Base *cmd = nullptr;
   while (command_queue_.dequeue_head (cmd) == 0)
     if (cmd)
       {

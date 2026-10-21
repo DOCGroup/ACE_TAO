@@ -17,8 +17,8 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
-typedef ACE_Unbounded_Set<TAO_AV_Protocol_Object*> ProtocolObject_Set;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Object*> ProtocolObject_SetItor;
+using ProtocolObject_Set = ACE_Unbounded_Set<TAO_AV_Protocol_Object*>;
+using ProtocolObject_SetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Object*>;
 
 /**
  * @class Sender_StreamEndPoint
@@ -31,23 +31,22 @@ public:
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 
 protected:
   /// Application callback.
   TAO_AV_Callback callback_;
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A
+using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
           <Sender_StreamEndPoint,
            TAO_VDev,
-           AV_Null_MediaCtrl>
-        SENDER_ENDPOINT_STRATEGY;
+           AV_Null_MediaCtrl>;
 
 /**
  * @class Sender
@@ -62,6 +61,10 @@ class Sender
 public:
   /// Constructor
   Sender ();
+  Sender (Sender const &) = delete;
+  Sender &operator= (Sender const &) = delete;
+  Sender (Sender &&) = delete;
+  Sender &operator= (Sender &&) = delete;
 
   /// Method to initialize the various data components.
   int init (int argc,

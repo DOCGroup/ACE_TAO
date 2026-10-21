@@ -12,8 +12,8 @@
 #include "Invocation.h"
 #include "PeerProcess.h"
 
-typedef ACE_Unbounded_Stack<PeerProcess *> PeerProcessStack;
-typedef ACE_Unbounded_Stack<Invocation *> InvocationStack;
+using PeerProcessStack = ACE_Unbounded_Stack<PeerProcess *>;
+using InvocationStack = ACE_Unbounded_Stack<Invocation *>;
 
 class Thread
 {

@@ -7,11 +7,13 @@
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 #include "ace/OS_NS_sys_time.h"
 
-const int WAIT_FOR_REGISTRATION_TIME = 10; //sec
+constexpr int WAIT_FOR_REGISTRATION_TIME = 10; //sec
 // const int MAX_ID_STRING = 10;
 
-EventChannelFactory_i::EventChannelFactory_i(const char* conf_filename, CORBA::ORB_ptr orb_ptr)
-: conf_file(conf_filename), id(0), orb(orb_ptr)
+EventChannelFactory_i::EventChannelFactory_i (char const *conf_filename, CORBA::ORB_ptr orb_ptr)
+  : conf_file (conf_filename)
+  , id (0)
+  , orb (orb_ptr)
 {
 }
 
@@ -22,18 +24,19 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   )
 {
   ORBSVCS_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
-  FILE* file = 0;
-  char *id_str=0, *prog=0;
+  FILE *file = nullptr;
+  char *id_str = nullptr;
+  char *prog = nullptr;
 
   try{
     file = ACE_OS::fopen(conf_file, "r");
-    if (file == 0)
+    if (file == nullptr)
       throw PortableGroup::NoFactory();
 
     ACE_Read_Buffer read_buf(file);
 
-    while ((id_str = read_buf.read(' ')) != 0 &&
-      (prog = read_buf.read('\n')) != 0) {
+    while ((id_str = read_buf.read (' ')) != nullptr &&
+      (prog = read_buf.read ('\n')) != nullptr) {
         id_str[strlen(id_str)-1] = '\0';
         if (ACE_OS::strcmp(id_str, type_id) == 0) {
           return create_process(prog, the_criteria, factory_creation_id);
@@ -41,9 +44,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     }
   }
   catch (...){
-    if (file) ACE_OS::fclose(file);
-    if (id_str) ACE_Allocator::instance()->free(id_str);
-    if (prog) ACE_Allocator::instance()->free(prog);
+    if (file != nullptr) ACE_OS::fclose (file);
+    if (id_str != nullptr) ACE_Allocator::instance()->free (id_str);
+    if (prog != nullptr) ACE_Allocator::instance()->free (prog);
     throw;
   }
 
@@ -91,14 +94,14 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_TString str;
 
   char* pos = ACE_OS::strrchr(process_str, '/');
-  if (pos !=0) { //
+  if (pos != nullptr) { //
     *pos = '\0';
     options.working_directory(process_str);
     *pos = '/';
   }
   str = ACE_TEXT_CHAR_TO_TCHAR(process_str);
 
-  const int ENV_BUF_LEN = 512;
+  constexpr int ENV_BUF_LEN = 512;
   ACE_TCHAR buf[ENV_BUF_LEN];
   server_addr.addr_to_string(buf,ENV_BUF_LEN,0);
   options.setenv(ACE_TEXT("EventChannelFactoryAddr"),

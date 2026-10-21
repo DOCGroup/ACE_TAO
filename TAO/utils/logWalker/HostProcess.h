@@ -30,10 +30,10 @@ struct PeerNode
   PeerProcess *peer_;
 };
 
-typedef ACE_DLList<Thread> ThreadList;
-typedef ACE_DLList<PeerNode> PeerArray;
-typedef ACE_DLList<Endpoint> AddrList;
-typedef ACE_RB_Tree<Endpoint, PeerProcess *, ACE_Less_Than<Endpoint>, ACE_Null_Mutex> PeerProcs;
+using ThreadList = ACE_DLList<Thread>;
+using PeerArray = ACE_DLList<PeerNode>;
+using AddrList = ACE_DLList<Endpoint>;
+using PeerProcs = ACE_RB_Tree<Endpoint, PeerProcess *, ACE_Less_Than<Endpoint>, ACE_Null_Mutex>;
 
 /*
  * HostProcess encapsulates the state related a specific process instance

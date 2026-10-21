@@ -58,7 +58,7 @@ namespace TAO
       /// the given attribute type list associated with the current
       /// request.
       virtual ::Security::AttributeList * get_attributes (
-          const ::Security::AttributeTypeList & attributes) = 0;
+          ::Security::AttributeTypeList const & attributes) = 0;
       //@}
 
       /**

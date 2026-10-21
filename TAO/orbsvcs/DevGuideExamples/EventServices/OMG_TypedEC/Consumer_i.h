@@ -15,11 +15,16 @@ class Consumer_i
                CORBA::Object_ptr obj);
 
     // Override operations from TypedPushConsumer interface.
-    virtual CORBA::Object_ptr get_typed_consumer ();
+    Consumer_i (Consumer_i const &) = delete;
+    Consumer_i (Consumer_i &&) = delete;
+    Consumer_i &operator= (Consumer_i const &) = delete;
+    Consumer_i &operator= (Consumer_i &&) = delete;
 
-    virtual void push(const CORBA::Any & data) ;
+    CORBA::Object_ptr get_typed_consumer () override;
 
-    virtual void disconnect_push_consumer();
+    void push (CORBA::Any const & data) override;
+
+    void disconnect_push_consumer () override;
 
   private:
     CORBA::ORB_var orb_;

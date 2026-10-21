@@ -187,7 +187,7 @@ public:
    */
   int init (const ACE_TCHAR *name,
             ACE_MEM_IO::Signal_Strategy type = ACE_MEM_IO::Reactive,
-            ACE_MEM_SAP::MALLOC_OPTIONS *options = 0);
+            ACE_MEM_SAP::MALLOC_OPTIONS *options = nullptr);
 
   /**
    * Finalizing the MEM_IO object.  This method doesn't invoke

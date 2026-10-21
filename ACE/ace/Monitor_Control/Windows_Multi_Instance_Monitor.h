@@ -52,10 +52,8 @@ namespace ACE
       double value_;
 
     private:
-      typedef ACE_Unbounded_Queue<Windows_Monitor *>
-        INSTANCES;
-      typedef ACE_Unbounded_Queue_Const_Iterator<Windows_Monitor *>
-        INSTANCES_ITERATOR;
+      using INSTANCES = ACE_Unbounded_Queue<Windows_Monitor *>;
+      using INSTANCES_ITERATOR = ACE_Unbounded_Queue_Const_Iterator<Windows_Monitor *>;
 
       INSTANCES instances_;
       DWORD n_instances_;

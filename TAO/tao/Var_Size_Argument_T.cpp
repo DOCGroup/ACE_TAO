@@ -124,10 +124,10 @@ TAO::Ret_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  S * tmp = 0;
+  S * tmp = nullptr;
   ACE_NEW_RETURN (tmp,
                   S (),
-                  0);
+                  false);
   this->x_ = tmp;
   return cdr >> this->x_.inout ();
 }

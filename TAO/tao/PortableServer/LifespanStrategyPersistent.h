@@ -33,8 +33,12 @@ namespace TAO
     {
     public:
       LifespanStrategyPersistent ();
+      LifespanStrategyPersistent (LifespanStrategyPersistent const &) = delete;
+      LifespanStrategyPersistent &operator= (LifespanStrategyPersistent const &) = delete;
+      LifespanStrategyPersistent (LifespanStrategyPersistent &&) = delete;
+      LifespanStrategyPersistent &operator= (LifespanStrategyPersistent &&) = delete;
 
-      void strategy_init(TAO_Root_POA *poa) override;
+      void strategy_init (TAO_Root_POA *poa) override;
 
       void notify_startup () override;
 
@@ -46,21 +50,23 @@ namespace TAO
 
       CORBA::ULong key_length () const override;
 
-      void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) override;
+      void create_key (CORBA::Octet *buffer, CORBA::ULong &starting_at) override;
 
-      bool
-      validate (CORBA::Boolean is_persistent,
-                const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const override;
+      bool validate (
+        CORBA::Boolean is_persistent,
+        TAO::Portable_Server::Temporary_Creation_Time const &creation_time) const override;
 
       /// Check the state of the POA.
       void check_state () override;
 
       bool use_imr () const override;
 
-      CORBA::Object_ptr imr_key_to_object(const TAO::ObjectKey &key, const char *type_id) const override;
+      CORBA::Object_ptr imr_key_to_object (
+        TAO::ObjectKey const &key,
+        char const *type_id) const override;
 
     private:
-      bool use_imr_;
+      bool use_imr_ {};
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

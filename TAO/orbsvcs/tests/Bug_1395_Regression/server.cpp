@@ -3,7 +3,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Shutdown_Utilities.h"
 
-const ACE_TCHAR *ior_output_file = 0;
+ACE_TCHAR const * ior_output_file = nullptr;
 
 class Service_Shutdown_Functor : public Shutdown_Functor
 {
@@ -89,10 +89,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "SERVER (%P): Cannot open output file "
                                "for writing IOR: %s",

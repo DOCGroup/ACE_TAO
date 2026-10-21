@@ -111,7 +111,7 @@ class Locator_Export AsyncAccessManager
   ACE_CString partial_ior_;
 };
 
-typedef TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager> AsyncAccessManager_ptr;
+using AsyncAccessManager_ptr = TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager>;
 
 //----------------------------------------------------------------------------
 /*

@@ -12,10 +12,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_BiDIR_Service_Context_Handler::process_service_context (
   TAO_Transport& transport,
-  const IOP::ServiceContext& context,
+  IOP::ServiceContext const& context,
   TAO_ServerRequest * /*request*/)
 {
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (
+  TAO_InputCDR cdr (reinterpret_cast<char const*> (
                       context.context_data.get_buffer ()),
                     context.context_data.length ());
   return transport.tear_listen_point_list (cdr);

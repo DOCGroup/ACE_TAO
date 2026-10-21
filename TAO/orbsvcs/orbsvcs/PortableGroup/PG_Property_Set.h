@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class PG_Property_Set;
-  typedef ACE_Refcounted_Auto_Ptr<PG_Property_Set, TAO_SYNCH_MUTEX> PG_Property_Set_var;
+  using PG_Property_Set_var = ACE_Refcounted_Auto_Ptr<PG_Property_Set, TAO_SYNCH_MUTEX>;
 
   /**
    * The PG_Property_Set captures the set of properties from a
@@ -51,14 +51,14 @@ namespace TAO
 
   class TAO_PortableGroup_Export PG_Property_Set
   {
-    typedef ACE_Hash_Map_Manager<
+    using ValueMap = ACE_Hash_Map_Manager<
       ACE_CString,
       const PortableGroup::Value *,
-      ACE_SYNCH_NULL_MUTEX> ValueMap;
-    typedef ACE_Hash_Map_Iterator<
+      ACE_SYNCH_NULL_MUTEX>;
+    using ValueMapIterator = ACE_Hash_Map_Iterator<
       ACE_CString,
       const PortableGroup::Value *,
-      ACE_SYNCH_NULL_MUTEX> ValueMapIterator;
+      ACE_SYNCH_NULL_MUTEX>;
 
   public:
     /**

@@ -1,17 +1,5 @@
 #include "Echo_i.h"
 
-// Constructor.
-
-Echo_i::Echo_i ()
-{
-}
-
-// Destructor.
-
-Echo_i::~Echo_i ()
-{
-}
-
 // Set the ORB pointer.
 
 void
@@ -23,12 +11,12 @@ Echo_i::orb (CORBA::ORB_ptr o)
 // Return a list of object references.
 
 Echo::List *
-Echo_i::echo_list (const char *)
+Echo_i::echo_list (char const *)
 {
   Echo::List_var list;
 
   {
-    Echo::List *tmp = 0;
+    Echo::List *tmp = nullptr;
     ACE_NEW_RETURN (tmp,
                     Echo::List (3),
                     0);
@@ -55,18 +43,18 @@ Echo_i::echo_list (const char *)
 // Return the mesg string from the server
 
 char *
-Echo_i::echo_string (const char *mesg)
+Echo_i::echo_string (char const *mesg)
 {
   // The pointer mesg was NULL, return.
-  if (mesg == 0)
-    return 0;
+  if (mesg == nullptr)
+    return nullptr;
 
   CORBA::String_var str = CORBA::string_dup (mesg);
 
   // if <CORBA::string_dup> returns a 0 pointer, an exception is
   // raised.
 
-  if (str.in () == 0)
+  if (str.in () == nullptr)
     throw CORBA::NO_MEMORY ();
 
   // Got thru! now, make a deep copy of the mesg string and send it

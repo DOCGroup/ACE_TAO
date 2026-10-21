@@ -222,8 +222,8 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
 
   // So the template will work with the macro.
-  *os << "typedef "
-      << bt->name () << "_var OBJECT_FIELD;" << be_nl;
+  *os << "using OBJECT_FIELD = "
+      << bt->name () << "_var;" << be_nl;
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {
@@ -319,8 +319,8 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
       << "{" << be_idt_nl;
 
   // So the template will work with the macro.
-  *os << "typedef "
-      << bt->name () << "_var OBJECT_FIELD;" << be_nl;
+  *os << "using OBJECT_FIELD = "
+      << bt->name () << "_var;" << be_nl;
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {
@@ -432,8 +432,8 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
       << "{" << be_idt_nl;
 
   // So the template will work with the macro.
-  *os << "typedef "
-      << bt->name () << "_var OBJECT_FIELD;" << be_nl;
+  *os << "using OBJECT_FIELD = "
+      << bt->name () << "_var;" << be_nl;
   *os << "::CORBA::add_ref (u.u_." << ub->local_name ()
       << "_->ptr ());" << be_nl;
 
@@ -499,7 +499,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     {
     case AST_PredefinedType::PT_object:
       // So the template will work with the macro.
-      *os << "typedef ::CORBA::Object_var OBJECT_FIELD;" << be_nl;
+      *os << "using OBJECT_FIELD = ::CORBA::Object_var;" << be_nl;
 
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
         {

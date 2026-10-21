@@ -33,7 +33,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              )
 {
   if (server_request.collocated ()
-    && server_request.operation_details ()->cac () != 0)
+    && server_request.operation_details ()->cac () != nullptr)
     {
       server_request.operation_details ()->cac ()->convert_request (
         server_request, args, nargs);
@@ -80,7 +80,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
     {
       {
 #if TAO_HAS_INTERCEPTORS == 1
-        if (interceptor_adapter != 0)
+        if (interceptor_adapter != nullptr)
           {
             // Invoke intermediate server side interception points.
             interceptor_adapter->receive_request (server_request,
@@ -96,7 +96,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
         CORBA::Object_var forward_to = server_request.forward_location ();
         if (!server_request.is_forwarded ())
           {
-            if (interceptor_adapter != 0)
+            if (interceptor_adapter != nullptr)
               {
                 interceptor_adapter->execute_command (server_request, command);
               }
@@ -111,7 +111,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #endif /* TAO_HAS_INTERCEPTORS */
       }
 #if TAO_HAS_INTERCEPTORS == 1
-      if (interceptor_adapter == 0)
+      if (interceptor_adapter == nullptr)
         {
           server_request.pi_reply_status (PortableInterceptor::SUCCESSFUL);
         }
@@ -154,7 +154,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #if TAO_HAS_INTERCEPTORS == 1
       server_request.caught_exception (&ex);
 
-      if (interceptor_adapter != 0)
+      if (interceptor_adapter != nullptr)
         {
           interceptor_adapter->send_exception (server_request,
                                                the_args,
@@ -171,7 +171,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           || status == PortableInterceptor::USER_EXCEPTION)
         {
           if (server_request.collocated ()
-               && server_request.operation_details ()->cac () != 0)
+               && server_request.operation_details ()->cac () != nullptr)
             {
               // If we have a cac it will handle the exception and no
               // need to do any further processing
@@ -205,7 +205,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
     }
 
   if (server_request.collocated ()
-    && server_request.operation_details ()->cac () != 0)
+    && server_request.operation_details ()->cac () != nullptr)
     {
       server_request.operation_details ()->cac ()->convert_reply (
         server_request, args, nargs);

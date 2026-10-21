@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
 ACE_Bound_Ptr_Counter<ACE_LOCK>::internal_create (long init_obj_ref_count)
 {
-  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = 0;
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Bound_Ptr_Counter<ACE_LOCK> (init_obj_ref_count),
                   0);
@@ -41,7 +41,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
 template <class ACE_LOCK> inline long
 ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>* counter)
 {
-  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del = 0;
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del = nullptr;
   long new_obj_ref_count;
 
   {
@@ -89,7 +89,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK>* c
 template <class ACE_LOCK> inline void
 ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK>* counter)
 {
-  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del = 0;
+  ACE_Bound_Ptr_Counter<ACE_LOCK> *counter_del = nullptr;
 
   {
     ACE_GUARD (ACE_LOCK, guard, counter->lock_);
@@ -148,7 +148,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (const ACE_Weak_Bound_Pt
     {
       // Underlying object has already been deleted, so set this pointer to null.
       this->counter_ = COUNTER::create_strong ();
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
     }
 }
 
@@ -446,7 +446,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::remove_ref ()
   if (new_obj_ref_count == 0)
     {
       delete this->ptr_;
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
     }
   return new_obj_ref_count;
 }

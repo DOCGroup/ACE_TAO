@@ -27,7 +27,7 @@ namespace TAO
                                                          size_t tss_slot_id)
       {
         // Create the Current
-        Current_ptr tmp = 0;
+        Current_ptr tmp = nullptr;
         ACE_NEW_THROW_EX (tmp,
                           Impl (core, tss_slot_id),
                           CORBA::NO_MEMORY

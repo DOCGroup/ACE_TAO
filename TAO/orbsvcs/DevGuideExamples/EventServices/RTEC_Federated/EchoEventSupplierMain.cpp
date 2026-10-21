@@ -16,16 +16,16 @@
 #include <iostream>
 #include <fstream>
 
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-const int EVENT_DELAY_MS = 10;
+constexpr int EVENT_DELAY_MS = 10;
 
 ACE_THR_FUNC_RETURN orb_thread(void *orb_ptr)
 {
   CORBA::ORB_var orb = CORBA::ORB::_duplicate((CORBA::ORB_ptr) orb_ptr);
   orb->run();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -38,12 +38,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    const ACE_TCHAR* ecname = ACE_TEXT ("EventService");
-    const ACE_TCHAR* remote_ecname = 0;
-    const ACE_TCHAR* iorfile = 0;
-    for (int i = 0; argv[i] != 0; i++) {
+    ACE_TCHAR const * ecname = ACE_TEXT ("EventService");
+    ACE_TCHAR const * remote_ecname = nullptr;
+    ACE_TCHAR const * iorfile = nullptr;
+    for (int i = 0; argv[i] != nullptr; ++i) {
       if (ACE_OS::strcmp(argv[i], ACE_TEXT("-ecname")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           ecname = argv[i];
         } else {
@@ -51,7 +51,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       }
       if (ACE_OS::strcmp(argv[i], ACE_TEXT("-gateway")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           remote_ecname = argv[i];
         } else {
@@ -59,7 +59,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       }
       if (ACE_OS::strcmp(argv[i], ACE_TEXT("-iorfile")) == 0) {
-        if (argv[i+1] != 0) {
+        if (argv[i + 1] != nullptr) {
           i++;
           iorfile = argv[i];
         }
@@ -121,7 +121,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                      qos.get_SupplierQOS ());
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
+    CORBA::String_var const eventData = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
 
     // Create an event set for one event
     RtecEventComm::EventSet event (1);
@@ -135,30 +135,30 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::Servant_var<TAO_EC_Gateway_IIOP> gateway =
       new TAO_EC_Gateway_IIOP;
-    int gateway_initialized = 0;
+    bool gateway_initialized = false;
 
     std::cout << "Supplier starting sending of events.\n";
 
-    while (1) {
+    while (true) {
       consumer->push (event);
       ACE_Time_Value tv(0, 1000 * EVENT_DELAY_MS);
       orb->run(tv);
 
-      if ((remote_ecname != 0)  && (!gateway_initialized)) {
+      if (remote_ecname != nullptr && !gateway_initialized) {
         try {
           // Get the remote event channel object
           CORBA::Object_var obj = root_context->resolve_str (ACE_TEXT_ALWAYS_CHAR (remote_ecname));
           RtecEventChannelAdmin::EventChannel_var remote_ec =
             RtecEventChannelAdmin::EventChannel::_narrow(obj.in());
 
-          int ok = 0;
+          bool ok = false;
           if (!CORBA::is_nil(remote_ec.in())) {
             // Now check if we can talk to it...
             try {
               RtecEventChannelAdmin::SupplierAdmin_var adm =
                 remote_ec->for_suppliers();
-              ok = 1;
-            } catch(const CORBA::UserException&) {
+              ok = true;
+            } catch (CORBA::UserException const &) {
               // What is the correct exception(s) to catch here?
             }
           }
@@ -177,16 +177,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             RtecEventChannelAdmin::Observer_Handle local_ec_obs_handle =
               ec->append_observer (obs.in ());
             ACE_UNUSED_ARG (local_ec_obs_handle);
-            gateway_initialized = 1;
+            gateway_initialized = true;
             std::cout << "Gateway initialized\n";
-            if (iorfile != 0) {
+            if (iorfile != nullptr) {
               CORBA::String_var str = orb->object_to_string( ec.in() );
               std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile) );
               iorFile << str.in() << std::endl;
               iorFile.close();
             }
           }
-        } catch(const CosNaming::NamingContext::NotFound&) {
+        } catch (CosNaming::NamingContext::NotFound const &) {
           // Try again later...
         }
       }
@@ -196,7 +196,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& exc)
+  catch (CORBA::Exception const & exc)
   {
     std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
   }

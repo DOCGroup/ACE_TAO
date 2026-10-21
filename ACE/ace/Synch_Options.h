@@ -85,13 +85,13 @@ public:
    */
   ACE_Synch_Options (unsigned long options = 0,
                      const ACE_Time_Value &timeout = ACE_Time_Value(),
-                     const void *arg = 0);
+                     const void *arg = nullptr);
 
   /// Initialize the object; arguments are the same as for the
   /// constructor.
   void set (unsigned long options = 0,
             const ACE_Time_Value &timeout = ACE_Time_Value::zero,
-            const void *arg = 0);
+            const void *arg = nullptr);
 
   /// Returns true if the specified option(s) are enabled, false otherwise.
   bool operator[] (unsigned long option) const;

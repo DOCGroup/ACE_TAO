@@ -37,7 +37,7 @@ TAO_ConstantDef_i::describe ()
 CORBA::Contained::Description *
 TAO_ConstantDef_i::describe_i ()
 {
-  CORBA::Contained::Description *desc_ptr = 0;
+  CORBA::Contained::Description *desc_ptr = nullptr;
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -154,7 +154,7 @@ TAO_ConstantDef_i::value_i ()
 {
   CORBA::TypeCode_var tc = this->type_i ();
 
-  void *ref = 0;
+  void *ref = nullptr;
   size_t length = 0;
 
   this->repo_->config ()->get_binary_value (
@@ -172,12 +172,12 @@ TAO_ConstantDef_i::value_i ()
   mb.length (length);
   TAO_InputCDR in_cdr (&mb);
 
-  CORBA::Any *retval = 0;
+  CORBA::Any *retval = nullptr;
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *impl = 0;
+  TAO::Unknown_IDL_Type *impl = nullptr;
   ACE_NEW_THROW_EX (impl,
                     TAO::Unknown_IDL_Type (tc.in (),
                                            in_cdr),
@@ -213,7 +213,7 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value)
       return;
     }
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   TAO::Any_Impl *impl = value.impl ();
 
   if (impl->encoded ())

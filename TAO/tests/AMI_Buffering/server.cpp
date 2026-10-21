@@ -2,8 +2,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
-const ACE_TCHAR *ior = ACE_TEXT("file://admin.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("server.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://admin.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -62,10 +62,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::AMI_Buffering_Admin_var admin =
-        Test::AMI_Buffering_Admin::_narrow(tmp.in ());
+        Test::AMI_Buffering_Admin::_narrow (tmp.in ());
 
       if (CORBA::is_nil (admin.in ()))
         {
@@ -94,8 +94,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (AMI_buffering.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),

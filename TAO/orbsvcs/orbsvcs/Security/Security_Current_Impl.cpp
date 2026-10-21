@@ -3,8 +3,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Security::Current_Impl::~Current_Impl ()
-{
-}
+TAO::Security::Current_Impl::~Current_Impl () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

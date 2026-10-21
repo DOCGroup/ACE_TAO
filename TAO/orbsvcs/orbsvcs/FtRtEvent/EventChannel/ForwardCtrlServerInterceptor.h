@@ -23,23 +23,29 @@ class ForwardCtrlServerInterceptor
   : public PortableInterceptor::ServerRequestInterceptor
 {
 public:
-  ForwardCtrlServerInterceptor();
-  ~ForwardCtrlServerInterceptor();
+  ForwardCtrlServerInterceptor ();
+  ~ForwardCtrlServerInterceptor () override = default;
 
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (
+        PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
+
+private:
+  ForwardCtrlServerInterceptor (ForwardCtrlServerInterceptor const &) = delete;
+  ForwardCtrlServerInterceptor &operator= (ForwardCtrlServerInterceptor const &) = delete;
+  ForwardCtrlServerInterceptor (ForwardCtrlServerInterceptor &&) = delete;
+  ForwardCtrlServerInterceptor &operator= (ForwardCtrlServerInterceptor &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

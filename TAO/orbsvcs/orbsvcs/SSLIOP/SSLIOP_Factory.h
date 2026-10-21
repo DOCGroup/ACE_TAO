@@ -56,26 +56,26 @@ namespace TAO
       Protocol_Factory ();
 
       /// Destructor.
-      virtual ~Protocol_Factory ();
+      ~Protocol_Factory () override;
 
       // = Service Configurator hooks.
       /// Dynamic linking hook
-      virtual int init (int argc, ACE_TCHAR* argv[]);
+      int init (int argc, ACE_TCHAR* argv[]) override;
 
       /// Verify prefix is a match
-      virtual int match_prefix (const ACE_CString & prefix);
+      int match_prefix (const ACE_CString & prefix) override;
 
       /// Returns the prefix used by the protocol.
-      virtual const char * prefix () const;
+      const char * prefix () const override;
 
       /// Return the character used to mark where an endpoint ends and
       /// where its options begin.
-      virtual char options_delimiter () const;
+      char options_delimiter () const override;
 
       // = Check Protocol_Factory.h for a description of these methods.
-      virtual TAO_Acceptor  * make_acceptor ();
-      virtual TAO_Connector * make_connector  ();
-      virtual int requires_explicit_endpoint () const;
+      TAO_Acceptor  * make_acceptor () override;
+      TAO_Connector * make_connector  () override;
+      int requires_explicit_endpoint () const override;
 
     private:
       /// Parse an X509 file path, which is expected to looks like:
@@ -120,7 +120,7 @@ namespace TAO
 }  // End TAO namespace.
 
 // Work around preprocessor tokenization.
-typedef TAO::SSLIOP::Protocol_Factory TAO_SSLIOP_Protocol_Factory;
+using TAO_SSLIOP_Protocol_Factory = TAO::SSLIOP::Protocol_Factory;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

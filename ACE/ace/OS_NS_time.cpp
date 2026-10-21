@@ -24,7 +24,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   ACE_OS_GUARD
 
   ACE_UNUSED_ARG (res);
-  struct tm * res_ptr = 0;
+  struct tm * res_ptr = nullptr;
   ACE_OSCALL (::localtime (t), struct tm *, res_ptr);
   if (res_ptr == 0)
     return 0;

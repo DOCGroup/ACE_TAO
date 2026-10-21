@@ -43,7 +43,7 @@ TAO_Notify_StructuredEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 TAO_Notify_StructuredEvent *
 TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 {
-  TAO_Notify_StructuredEvent * event = 0;
+  TAO_Notify_StructuredEvent * event = nullptr;
   CosNotification::StructuredEvent body;
   if (cdr >> body)
   {

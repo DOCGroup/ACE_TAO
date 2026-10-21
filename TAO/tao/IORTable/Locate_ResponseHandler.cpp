@@ -35,21 +35,19 @@ TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
   : TAO_AMH_Response_Handler (),
     orb_ (CORBA::ORB::_duplicate (sr.orb()))
 {
-  this->init (sr,0);
+  this->init (sr, nullptr);
 }
 
-TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler ()
-{
-}
+TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler () = default;
 
 void
-TAO_AMH_Locate_ResponseHandler::raise_excep (const CORBA::Exception &ex)
+TAO_AMH_Locate_ResponseHandler::raise_excep (CORBA::Exception const &ex)
 {
   this->_tao_rh_send_exception (ex);
 }
 
 void
-TAO_AMH_Locate_ResponseHandler::forward_ior (const char *ior,
+TAO_AMH_Locate_ResponseHandler::forward_ior (char const *ior,
                                              CORBA::Boolean is_perm)
 {
   CORBA::Object_var fwd = this->orb_->string_to_object (ior);
@@ -58,7 +56,7 @@ TAO_AMH_Locate_ResponseHandler::forward_ior (const char *ior,
 
 
 void *
-TAO_AMH_Locate_ResponseHandler::_downcast (const char *)
+TAO_AMH_Locate_ResponseHandler::_downcast (char const *)
 {
   return this;
 }
@@ -78,10 +76,10 @@ TAO_AMH_Locate_ResponseHandler::_unchecked_narrow (CORBA::Object_ptr obj)
   return dynamic_cast < TAO_AMH_Locate_ResponseHandler_ptr > (obj);
 }
 
-const char*
+char const *
 TAO_AMH_Locate_ResponseHandler::_interface_repository_id () const
 {
-  return 0;
+  return nullptr;
 }
 
 

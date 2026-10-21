@@ -34,14 +34,19 @@ public:
   TAO_RTScheduler_Loader ();
 
   /// Destructor.
-  virtual ~TAO_RTScheduler_Loader ();
+  ~TAO_RTScheduler_Loader () override;
 
   /// Initialize the RTScheduler loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
 private:
+  TAO_RTScheduler_Loader (TAO_RTScheduler_Loader const &) = delete;
+  TAO_RTScheduler_Loader &operator= (TAO_RTScheduler_Loader const &) = delete;
+  TAO_RTScheduler_Loader (TAO_RTScheduler_Loader &&) = delete;
+  TAO_RTScheduler_Loader &operator= (TAO_RTScheduler_Loader &&) = delete;
+
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTScheduler, TAO_RTScheduler_Loader)

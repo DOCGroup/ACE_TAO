@@ -30,8 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
+  using Object_out = TAO_Pseudo_Out_T<Object>;
 }
 
 namespace TAO
@@ -91,8 +91,10 @@ public:
   TAO_Adapter *find_adapter (const char *name) const;
 
 private:
-  TAO_Adapter_Registry (const TAO_Adapter_Registry &) = delete;
-  TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &) = delete;
+  TAO_Adapter_Registry (TAO_Adapter_Registry const &) = delete;
+  TAO_Adapter_Registry &operator= (TAO_Adapter_Registry const &) = delete;
+  TAO_Adapter_Registry (TAO_Adapter_Registry &&) = delete;
+  TAO_Adapter_Registry &operator= (TAO_Adapter_Registry &&) = delete;
 
   /**
    * @name A simple array of adapters.

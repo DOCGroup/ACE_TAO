@@ -7,13 +7,13 @@
 #endif /* __ACE_INLINE__ */
 
 char *
-Simple_Server_i::test_method (const char *x)
+Simple_Server_i::test_method (char const *x)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Request in thread %t\n"));
   ACE_Time_Value tv (2);
   ACE_OS::sleep (tv);
-  return CORBA::string_dup(x);
+  return CORBA::string_dup (x);
 }
 
 void

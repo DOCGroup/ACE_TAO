@@ -44,7 +44,7 @@ public:
   void disconnect ();
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier ();
   // The methods in the skeleton.
 
   RtecEventComm::EventSourceID supplier_id () const;

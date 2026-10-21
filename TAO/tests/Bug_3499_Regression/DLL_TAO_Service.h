@@ -10,11 +10,16 @@ class ACE_DLL_TAO_Service : public ACE_DLL_Service
 public:
   ACE_DLL_TAO_Service ();
 
-  virtual ~ACE_DLL_TAO_Service ();
+  ~ACE_DLL_TAO_Service () override;
 
-  virtual int init (int argc, ACE_TCHAR * argv []);
+  ACE_DLL_TAO_Service (ACE_DLL_TAO_Service const &) = delete;
+  ACE_DLL_TAO_Service (ACE_DLL_TAO_Service &&) = delete;
+  ACE_DLL_TAO_Service &operator= (ACE_DLL_TAO_Service const &) = delete;
+  ACE_DLL_TAO_Service &operator= (ACE_DLL_TAO_Service &&) = delete;
 
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR * argv []) override;
+
+  int fini () override;
 
 private:
   CORBA::ORB_var orb_;

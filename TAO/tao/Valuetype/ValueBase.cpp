@@ -69,7 +69,7 @@ CORBA::ValueBase::_copy_value ()
     __FILE__,
     __LINE__,
     ACE_TEXT_CHAR_TO_TCHAR ("Valuetype's _copy_value() should be implemented in user's most derived class"));
-  return 0;
+  return nullptr;
 }
 
 CORBA::ValueBase::ValueBase ()

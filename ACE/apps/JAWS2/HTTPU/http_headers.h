@@ -57,8 +57,7 @@ private:
   int num_header_strings_;
 };
 
-typedef ACE_Singleton<HTTP_Header_Nodes, ACE_SYNCH_MUTEX>
-        HTTP_Header_Nodes_Singleton;
+using HTTP_Header_Nodes_Singleton = ACE_Singleton<HTTP_Header_Nodes, ACE_SYNCH_MUTEX>;
 
 class HTTPU_Export HTTP_HCodes
 {

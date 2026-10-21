@@ -32,7 +32,7 @@ class TAO_Profile;
  * The standard TAG_ALTERNATE_IIOP_ADDRESSES tagged component is the
  * portable alternative.
  */
-static const CORBA::ULong TAO_TAG_ENDPOINTS =  0x54414f02U;
+constexpr CORBA::ULong TAO_TAG_ENDPOINTS = 0x54414f02U;
 
 /**
  * @class TAO_Tagged_Components
@@ -144,7 +144,7 @@ private:
 
 private:
   /// The ORB_TYPE component value
-  CORBA::ULong orb_type_;
+  CORBA::ULong orb_type_ {};
 
   /// The ORB_TYPE component value
   CONV_FRAME::CodeSetComponentInfo code_sets_;
@@ -154,8 +154,8 @@ private:
   IOP::MultipleComponentProfile components_;
 
   /// A flag for each component...
-  CORBA::Octet orb_type_set_;
-  CORBA::Octet code_sets_set_;
+  CORBA::Octet orb_type_set_ {};
+  CORBA::Octet code_sets_set_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

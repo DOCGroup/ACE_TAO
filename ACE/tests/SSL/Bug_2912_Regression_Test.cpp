@@ -89,8 +89,7 @@ disable_signal (int sigmin, int sigmax)
  * dependent on threads.
  */
 class Client_Proactor : public ACE_Proactor {};
-typedef ACE_Singleton<Client_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>
-    Client_Proactor_Singleton;
+using Client_Proactor_Singleton = ACE_Singleton<Client_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>;
 #define CLIENT_PROACTOR Client_Proactor_Singleton::instance()
 
 class Client_Proactor_Task : public ACE_Task_Base
@@ -99,8 +98,7 @@ public:
   virtual int svc ();
 };
 
-typedef ACE_Singleton<Client_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>
-    Client_Proactor_Task_Singleton;
+using Client_Proactor_Task_Singleton = ACE_Singleton<Client_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>;
 #define CLIENT_PROACTOR_TASK Client_Proactor_Task_Singleton::instance()
 
 int
@@ -118,8 +116,7 @@ Client_Proactor_Task::svc ()
  * Server's proactor
  */
 class Server_Proactor : public ACE_Proactor {};
-typedef ACE_Singleton<Server_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>
-    Server_Proactor_Singleton;
+using Server_Proactor_Singleton = ACE_Singleton<Server_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>;
 #define SERVER_PROACTOR Server_Proactor_Singleton::instance ()
 
 class Server_Proactor_Task : public ACE_Task_Base
@@ -128,8 +125,7 @@ public:
   virtual int svc ();
 };
 
-typedef ACE_Singleton<Server_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>
-    Server_Proactor_Task_Singleton;
+using Server_Proactor_Task_Singleton = ACE_Singleton<Server_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>;
 #define SERVER_PROACTOR_TASK Server_Proactor_Task_Singleton::instance ()
 
 int

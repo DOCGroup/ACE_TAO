@@ -3,22 +3,23 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
+#include <vector>
 
-const ACE_TCHAR* log_file_;
+ACE_TCHAR const *log_file_;
 
 int
-parse_args (int argc, ACE_TCHAR* argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:"));
 
-  int c;
+  int c {};
 
-  while ((c = get_opts()) != -1)
+  while ((c = get_opts ()) != -1)
     {
       switch (c)
       {
         case 'l':
-          log_file_ = get_opts.opt_arg();
+          log_file_ = get_opts.opt_arg ();
           return 0;
       }
     }
@@ -27,13 +28,13 @@ parse_args (int argc, ACE_TCHAR* argv[])
 
 
 int
-check_logging()
+check_logging ()
 {
   ACE_TCHAR buf[1024];
-  FILE* fp = ACE_OS::fopen (log_file_,
+  FILE *fp = ACE_OS::fopen (log_file_,
                             ACE_TEXT ("r"));
 
-  if (fp == 0)
+  if (fp == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("error opening log file %s\n"),
@@ -42,12 +43,12 @@ check_logging()
     }
 
 
-  while (ACE_OS::fgets (buf, sizeof (buf), fp) != 0)
+  while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
     {
       ///When verbose is on, a line contains a timestamp and a @ character
-      if  (ACE_OS::strchr (buf, ACE_TEXT('@')) != 0)
+      if (ACE_OS::strchr (buf, ACE_TEXT('@')) != nullptr)
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("Test OK, a timestamp was found\n")));
           (void) ACE_OS::fclose (fp);
           return 0;
@@ -60,9 +61,9 @@ check_logging()
 }
 
 int
-check_flags (const u_long& flags, const int& verbose)
+check_flags (u_long flags, int verbose)
 {
-  int result = 0;
+  int result {};
   switch (verbose)
     {
       case 0:
@@ -98,16 +99,16 @@ check_flags (const u_long& flags, const int& verbose)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-  int extra_argc = 25;
+  int result {};
+  int const extra_argc = 25;
 
   try
     {
-      if (parse_args(argc, argv) != 0)
+      if (parse_args (argc, argv) != 0)
       {
-        ACE_ERROR((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                    ACE_TEXT ("Usage:\n\n")
                    ACE_TEXT ("OPTIONS:\n\n")
                    ACE_TEXT ("\t[-l Log file]\n\n")));
@@ -120,8 +121,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("Start ORB_init with ORBVerboseLogging=%d\n"),
                       verbose));
 
-          ACE_TCHAR **extra = 0;
-          ACE_NEW_RETURN (extra, ACE_TCHAR *[extra_argc], -1);
+          std::vector<ACE_TCHAR *> extra (extra_argc);
           extra[0] = ACE::strnew (ACE_TEXT ("-ORBCDRTradeoff"));
           extra[1] = ACE::strnew (ACE_TEXT ("2048"));
           extra[2] = ACE::strnew (ACE_TEXT ("-ORBCollocation"));
@@ -154,26 +154,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           -1);
           ACE_OS::sprintf (extra[24], ACE_TEXT ("%d"), verbose);
 
-          ACE_TCHAR **largv = new ACE_TCHAR *[argc+extra_argc];
-          for (int i = 0; i < argc; i++)
+          std::vector<ACE_TCHAR *> largv (argc + extra_argc);
+          for (int i = 0; i < argc; ++i)
             largv[i] = argv[i];
 
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server adding args: ")));
-          for (int i = 0; i < extra_argc; i++)
+          for (int i = 0; i < extra_argc; ++i)
             {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), extra[i]));
               largv[argc+i] = extra[i];
             }
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
-          argc += extra_argc;
+          int orb_argc = argc + extra_argc;
 
           ACE_TCHAR orb_name[25];
           ACE_OS::sprintf (orb_name, ACE_TEXT ("VERBOSE_LOGGING_TEST_%d"), verbose);
 
-          CORBA::ORB_var orb = CORBA::ORB_init (argc, largv, orb_name);
+          CORBA::ORB_var orb = CORBA::ORB_init (orb_argc, largv.data (), orb_name);
 
-          u_long log_flags = ACE_LOG_MSG->flags();
+          u_long const log_flags = ACE_LOG_MSG->flags ();
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("log flags %d verbose: %d\n"),
@@ -185,13 +185,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb = CORBA::ORB::_nil ();
           ACE_LOG_MSG->restart ();
 
-          for (int i = 0; i < extra_argc; i++)
+          for (int i = 0; i < extra_argc; ++i)
             ACE::strdelete (extra[i]);
-          delete [] extra;
-          delete [] largv;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

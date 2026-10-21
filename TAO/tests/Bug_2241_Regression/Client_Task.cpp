@@ -2,7 +2,7 @@
 #include "Client_Task.h"
 #include "TestC.h"
 
-Client_Task::Client_Task (const ACE_TCHAR *ior,
+Client_Task::Client_Task (ACE_TCHAR const *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)

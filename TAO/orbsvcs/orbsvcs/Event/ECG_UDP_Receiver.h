@@ -110,7 +110,7 @@ public:
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Receiver> create (CORBA::Boolean perform_crc = 0);
 
-  ~TAO_ECG_UDP_Receiver ();
+  ~TAO_ECG_UDP_Receiver () override;
 
   /**
    * @param lcl_ec Event Channel to which we will act as a supplier of events.
@@ -171,7 +171,7 @@ public:
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier ();
+  virtual void disconnect_push_supplier () override;
 
   /// TAO_ECG_Dgram_Handler method.
   /**
@@ -180,7 +180,7 @@ public:
    * Data is read from the socket, and, if complete message is
    * received, the event is pushed to the local Event Channel.
    */
-  virtual int handle_input (ACE_SOCK_Dgram& dgram);
+  virtual int handle_input (ACE_SOCK_Dgram& dgram) override;
 
 protected:
   /// Constructor (protected).  Clients can create new
@@ -215,8 +215,8 @@ private:
   /// opportunity to clean up resources.
   TAO_ECG_Refcounted_Handler handler_rptr_;
 
-  typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Receiver_Disconnect_Command>
-  ECG_Receiver_Auto_Proxy_Disconnect;
+  using ECG_Receiver_Auto_Proxy_Disconnect =
+    TAO_EC_Auto_Command<TAO_ECG_UDP_Receiver_Disconnect_Command>;
   /// Manages our connection to Consumer Proxy.
   ECG_Receiver_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };

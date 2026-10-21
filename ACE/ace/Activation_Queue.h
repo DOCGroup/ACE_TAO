@@ -71,9 +71,9 @@ public:
    *                  wrap the method requests queued to this activation queue.
    *                  Defaults to ACE_Allocator::instance().
    */
-  ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0,
+  ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = nullptr,
                         ACE_Allocator *alloc = nullptr,
-                        ACE_Allocator *db_alloc = 0);
+                        ACE_Allocator *db_alloc = nullptr);
 
   /// Destructor.
   virtual ~ACE_Activation_Queue ();
@@ -92,7 +92,7 @@ public:
    * @retval    0 an error occurs; errno contains further information. If
    *            the specified timeout elapses, errno will be @c EWOULDBLOCK.
    */
-  ACE_Method_Request *dequeue (ACE_Time_Value *tv = 0);
+  ACE_Method_Request *dequeue (ACE_Time_Value *tv = nullptr);
 
   /// Enqueue the ACE_Method_Request in priority order.
   /**
@@ -114,7 +114,7 @@ public:
    * @retval    -1 if an error occurs; errno contains further information. If
    *            the specified timeout elapses, errno will be @c EWOULDBLOCK.
    */
-  int enqueue (ACE_Method_Request *new_method_request, ACE_Time_Value *tv = 0);
+  int enqueue (ACE_Method_Request *new_method_request, ACE_Time_Value *tv = nullptr);
 
   /// Get the current number of method objects in the queue.
   size_t method_count () const;

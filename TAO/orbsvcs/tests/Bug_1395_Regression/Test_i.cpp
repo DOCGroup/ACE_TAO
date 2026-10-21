@@ -4,9 +4,9 @@
 // the ImR_Client to be linked.
 #include "tao/ImR_Client/ImR_Client.h"
 
-Test_i::Test_i (CORBA::ORB_ptr orb) :
-  orb_ (CORBA::ORB::_duplicate(orb)),
-   policies_ (1)
+Test_i::Test_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , policies_ (1)
 {
   try
     {
@@ -14,13 +14,13 @@ Test_i::Test_i (CORBA::ORB_ptr orb) :
         orb_->resolve_initial_references ("RootPOA");
       this->root_poa_ =
         PortableServer::POA::_narrow (obj.in ());
-      policies_.length(1);
+      policies_.length (1);
       policies_[0] =
         root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
       this->poa_mgr_ =
         this->root_poa_->the_POAManager ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception");
 
@@ -43,7 +43,7 @@ Test_i::try_and_create_POA ()
                                poa_mgr_.in (),
                                this->policies_);
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
     {
       // A transient exception exception may be expected,
       // so we won't print out the word exception but we
@@ -52,7 +52,7 @@ Test_i::try_and_create_POA ()
                   "CORBA::TRANSIENT in Test_i::try_and_create_POA\n"));
       return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("try_and_create_POA Exception ...");
       return 1;

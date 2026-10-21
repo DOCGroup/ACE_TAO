@@ -31,7 +31,7 @@ class TAO_MProfile;
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 class TAO_IORManip_Export TAO_IORManip_Filter
@@ -46,15 +46,20 @@ public:
   /// Perform filtering using the profile passed in as a guide.
   /// If no profile is provided, filter using the profile_matches() method.
   CORBA::Object_ptr sanitize_profiles (CORBA::Object_ptr object,
-                                       TAO_Profile* profile = 0);
+                                       TAO_Profile* profile = nullptr);
 
 protected:
   /// This will be the bulk of the filtering code.
   virtual void filter_and_add (TAO_Profile* profile,
                                TAO_MProfile& profiles,
-                               TAO_Profile* guideline = 0) = 0;
+                               TAO_Profile* guideline = nullptr) = 0;
 
 private:
+  TAO_IORManip_Filter (TAO_IORManip_Filter const &) = delete;
+  TAO_IORManip_Filter &operator= (TAO_IORManip_Filter const &) = delete;
+  TAO_IORManip_Filter (TAO_IORManip_Filter &&) = delete;
+  TAO_IORManip_Filter &operator= (TAO_IORManip_Filter &&) = delete;
+
   /// The sanitize_profiles() methods call this to do the work.
   CORBA::Object_ptr sanitize (CORBA::Object_ptr object,
                               TAO_Profile* profile);

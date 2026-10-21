@@ -18,12 +18,17 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
+
   // = The skeleton methods
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void check_normal_context ();
+  void check_normal_context () override;
 
-  virtual void check_extended_context ();
+  void check_extended_context () override;
 
   static CORBA::Boolean normal_context_ok_;
 

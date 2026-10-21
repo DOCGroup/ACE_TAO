@@ -31,10 +31,15 @@ public:
   RTEvent_Logging_Service ();
   // Constructor.
 
-  virtual ~RTEvent_Logging_Service ();
+  ~RTEvent_Logging_Service () override;
   // Destructor.
 
-  int init (int argc, ACE_TCHAR* argv[]);
+  RTEvent_Logging_Service (RTEvent_Logging_Service const &) = delete;
+  RTEvent_Logging_Service (RTEvent_Logging_Service &&) = delete;
+  RTEvent_Logging_Service &operator= (RTEvent_Logging_Service const &) = delete;
+  RTEvent_Logging_Service &operator= (RTEvent_Logging_Service &&) = delete;
+
+  int init (int argc, ACE_TCHAR * argv[]);
   // Initializes the Telecom Log Service.
 
   int run ();
@@ -46,21 +51,21 @@ public:
   // Returns 0 on success, -1 on error.
 
 protected:
-  void init_ORB (int& argc, ACE_TCHAR *argv []);
+  void init_ORB (int & argc, ACE_TCHAR * argv []);
   // initializes the ORB.
 
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
   // parse the command line args
 
   void resolve_naming_service ();
   // Resolve the naming service.
 
-  int svc ();
+  int svc () override;
   // Run worker threads.
 
 private:
   // = Data members
-  TAO_RTEventLogFactory_i *rtevent_log_factory_;
+  TAO_RTEventLogFactory_i * rtevent_log_factory_;
   // The RTEvent Log Factory.
 
   CORBA::ORB_var orb_;
@@ -75,10 +80,10 @@ private:
   ACE_CString service_name_;
   // The name we use to bind with the NameService
 
-  const ACE_TCHAR* ior_file_name_;
+  ACE_TCHAR const * ior_file_name_;
   // The name of the file were we output the factory IOR.
 
-  const ACE_TCHAR* pid_file_name_;
+  ACE_TCHAR const * pid_file_name_;
   // The name of a file where the process stores its pid
 
   bool bind_to_naming_service_;

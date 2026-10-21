@@ -127,8 +127,8 @@ public:
    * and vice versa.
    */
   int accept (ACE_SOCK_SEQPACK_Association &new_association,
-              ACE_Addr *remote_addr = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_Addr *remote_addr = nullptr,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
 

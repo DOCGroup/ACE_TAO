@@ -59,10 +59,10 @@ namespace TAO
 
       RoleInfo(size_t estimated_number_entries = 5);
     };
-    typedef ACE_Null_Mutex MapMutex;
-    typedef ACE_Hash_Map_Manager <ACE_CString, RoleInfo *, MapMutex>  RegistryType;
-    typedef ACE_Hash_Map_Entry <ACE_CString, RoleInfo *> RegistryType_Entry;
-    typedef ACE_Hash_Map_Iterator <ACE_CString, RoleInfo *, MapMutex> RegistryType_Iterator;
+    using MapMutex = ACE_Null_Mutex;
+    using RegistryType = ACE_Hash_Map_Manager<ACE_CString, RoleInfo *, MapMutex>;
+    using RegistryType_Entry = ACE_Hash_Map_Entry<ACE_CString, RoleInfo *>;
+    using RegistryType_Iterator = ACE_Hash_Map_Iterator<ACE_CString, RoleInfo *, MapMutex>;
 
     //////////////////////
     // non-CORBA interface
@@ -71,7 +71,7 @@ namespace TAO
     PG_FactoryRegistry (const char * name = "FactoryRegistry");
 
     /// virtual Destructor
-    virtual ~PG_FactoryRegistry ();
+    ~PG_FactoryRegistry () override;
 
     /**
      * Parse command line arguments.
@@ -120,33 +120,33 @@ namespace TAO
 
     ////////////////////////////////
     // override servant base methods
-    virtual void _remove_ref ();
+    void _remove_ref () override;
 
     //////////////////
     // CORBA interface
     // See IDL for documentation
 
-    virtual void register_factory (
+    void register_factory (
         const char * role,
         const char * type_id,
-        const PortableGroup::FactoryInfo & factory_info);
+        const PortableGroup::FactoryInfo & factory_info) override;
 
-    virtual void unregister_factory (
+    void unregister_factory (
         const char * role,
-        const PortableGroup::Location & location);
+        const PortableGroup::Location & location) override;
 
-    virtual void unregister_factory_by_role (const char * role);
+    void unregister_factory_by_role (const char * role) override;
 
 
-    virtual void unregister_factory_by_location (
-      const PortableGroup::Location & location);
+    void unregister_factory_by_location (
+      const PortableGroup::Location & location) override;
 
-    virtual ::PortableGroup::FactoryInfos * list_factories_by_role (
+    ::PortableGroup::FactoryInfos * list_factories_by_role (
         const char * role,
-        CORBA::String_out type_id);
+        CORBA::String_out type_id) override;
 
-    virtual ::PortableGroup::FactoryInfos * list_factories_by_location (
-      const PortableGroup::Location & location);
+    ::PortableGroup::FactoryInfos * list_factories_by_location (
+      const PortableGroup::Location & location) override;
 
     /////////////////////////
     // Implementation methods

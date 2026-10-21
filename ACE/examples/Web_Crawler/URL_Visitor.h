@@ -243,44 +243,34 @@ protected:
 };
 
 using ATTRIBUTES = int;
-typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        Client_Svc_Handler;
-typedef std::pair<Client_Svc_Handler *, ATTRIBUTES>
-        CACHED_HANDLER;
-typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-        ACE_ADDR;
+using Client_Svc_Handler = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+using CACHED_HANDLER = std::pair<Client_Svc_Handler *, ATTRIBUTES>;
+using ACE_ADDR = ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
 using H_KEY = ACE_Hash<ACE_ADDR>;
 using C_KEYS = ACE_Equal_To<ACE_ADDR>;
 
-typedef ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-        HASH_MAP;
-typedef ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-        HASH_MAP_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-        HASH_MAP_REVERSE_ITERATOR;
+using HASH_MAP = ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+using HASH_MAP_ITERATOR = ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+using HASH_MAP_REVERSE_ITERATOR =
+  ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 
-typedef ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
-        CLEANUP_STRATEGY;
-typedef ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
-        CACHING_UTILITY;
+using CLEANUP_STRATEGY = ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>;
+using CACHING_UTILITY =
+  ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
 
-typedef ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-        LRU_CACHING_STRATEGY;
+using LRU_CACHING_STRATEGY = ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
 
-typedef LRU_CACHING_STRATEGY
-        CACHING_STRATEGY;
+using CACHING_STRATEGY = LRU_CACHING_STRATEGY;
 
-typedef ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
-        STRATEGY_CONNECTOR;
+using STRATEGY_CONNECTOR = ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
 
-typedef ACE_NOOP_Creation_Strategy<Client_Svc_Handler>
-        NULL_CREATION_STRATEGY;
+using NULL_CREATION_STRATEGY = ACE_NOOP_Creation_Strategy<Client_Svc_Handler>;
 
-typedef ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
-        NULL_ACTIVATION_STRATEGY;
+using NULL_ACTIVATION_STRATEGY = ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>;
 
-typedef ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
-        CACHED_CONNECT_STRATEGY;
+using CACHED_CONNECT_STRATEGY =
+  ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES,
+                                 ACE_SYNCH_NULL_MUTEX>;
 
 /**
  * @class URL_Validation_Visitor
@@ -295,8 +285,7 @@ typedef ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, C
 class URL_Validation_Visitor : public URL_Visitor
 {
 public:
-  typedef ACE_Hash_Map_Manager <ACE_URL_Addr, URL_Status, ACE_Null_Mutex>
-          URL_CACHE;
+  using URL_CACHE = ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>;
 
   /**
    * Visit an <HTTP_URL> to make sure that it's valid.  If the content

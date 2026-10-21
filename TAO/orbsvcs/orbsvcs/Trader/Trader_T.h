@@ -59,7 +59,7 @@ public:
   // TAO_Trader constructor.
 
   /// Offer Database Trait.
-  typedef TAO_Offer_Database<MAP_LOCK_TYPE> Offer_Database;
+  using Offer_Database = TAO_Offer_Database<MAP_LOCK_TYPE>;
 
   /**
    * Constructor which based on its arguments will create
@@ -70,16 +70,16 @@ public:
   TAO_Trader (Trader_Components components = LOOKUP);
 
   /// Destructor.
-  virtual ~TAO_Trader ();
+  ~TAO_Trader () override;
 
   /// Accessor for the structure with all the service offers.
   Offer_Database& offer_database ();
 
   /// Returns the trader
-  ACE_Lock &lock ();
+  ACE_Lock &lock () override;
 
 protected:
-  typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
+  using TRADER_SELF = TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>;
 
   Offer_Database offer_database_;
 
@@ -92,7 +92,10 @@ protected:
 
 private:
   // = Disallow these operations.
-  void operator= (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &) = delete;
+  TAO_Trader (TAO_Trader const&) = delete;
+  TAO_Trader& operator= (TAO_Trader const&) = delete;
+  TAO_Trader (TAO_Trader&&) = delete;
+  TAO_Trader& operator= (TAO_Trader&&) = delete;
 };
 
   // *************************************************************
@@ -109,26 +112,31 @@ public:
   // = CosTrading::TraderComponents methods.
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.
-  virtual CosTrading::Lookup_ptr lookup_if ();
+  CosTrading::Lookup_ptr lookup_if () override;
 
   /// Returns object reference for the Register interface of the trader.
   /// Returns nil if the trader does not support Register interface.
-  virtual CosTrading::Register_ptr register_if ();
+  CosTrading::Register_ptr register_if () override;
 
   /// Returns object reference for the Link interface of the trader.
   /// Returns nil if the trader does not support Link interface.
-  virtual CosTrading::Link_ptr link_if ();
+  CosTrading::Link_ptr link_if () override;
 
   /// Returns object reference to the Proxy interface of the trader.
   /// Returns nil if the trader does not support Proxy interface.
-  virtual CosTrading::Proxy_ptr proxy_if ();
+  CosTrading::Proxy_ptr proxy_if () override;
 
   /// Returns object reference for the Admin interface of the trader.
   /// Returns nil if the trader does not support Admin interface.
-  virtual CosTrading::Admin_ptr admin_if ();
+  CosTrading::Admin_ptr admin_if () override;
 
 private:
   const TAO_Trading_Components_i& comps_;
+
+  TAO_Trader_Components (TAO_Trader_Components const&) = delete;
+  TAO_Trader_Components& operator= (TAO_Trader_Components const&) = delete;
+  TAO_Trader_Components (TAO_Trader_Components&&) = delete;
+  TAO_Trader_Components& operator= (TAO_Trader_Components&&) = delete;
 };
 
 template <class IF>
@@ -139,16 +147,21 @@ public:
 
   // = CosTrading::SupportAttributes methods.
 
-  virtual CORBA::Boolean supports_modifiable_properties ();
+  CORBA::Boolean supports_modifiable_properties () override;
 
-  virtual CORBA::Boolean supports_dynamic_properties ();
+  CORBA::Boolean supports_dynamic_properties () override;
 
-  virtual CORBA::Boolean supports_proxy_offers ();
+  CORBA::Boolean supports_proxy_offers () override;
 
-  virtual CosTrading::TypeRepository_ptr type_repos ();
+  CosTrading::TypeRepository_ptr type_repos () override;
 
 private:
   const TAO_Support_Attributes_i& attrs_;
+
+  TAO_Support_Attributes (TAO_Support_Attributes const&) = delete;
+  TAO_Support_Attributes& operator= (TAO_Support_Attributes const&) = delete;
+  TAO_Support_Attributes (TAO_Support_Attributes&&) = delete;
+  TAO_Support_Attributes& operator= (TAO_Support_Attributes&&) = delete;
 };
 
 template <class IF>
@@ -159,40 +172,45 @@ public:
 
   // = CosTrading::ImportAttributes methods.
 
-  virtual CORBA::ULong def_search_card ();
+  CORBA::ULong def_search_card () override;
 
-  virtual CORBA::ULong max_search_card ();
+  CORBA::ULong max_search_card () override;
 
   // Search cardinality determines the maximum number of offers searched
   // before not considering other offers.
 
-  virtual CORBA::ULong def_match_card ();
+  CORBA::ULong def_match_card () override;
 
-  virtual CORBA::ULong max_match_card ();
+  CORBA::ULong max_match_card () override;
 
   // Match cardinality determines the maximum number of offers
   // matched to the constraints before not considering other offers..
 
-  virtual CORBA::ULong def_return_card ();
+  CORBA::ULong def_return_card () override;
 
-  virtual CORBA::ULong max_return_card ();
+  CORBA::ULong max_return_card () override;
 
   // Return cardinality determines the maximum number of offers marked
   // to return before not considering other offers.
 
 
-  virtual CORBA::ULong max_list ();
+  CORBA::ULong max_list () override;
 
-  virtual CORBA::ULong def_hop_count ();
+  CORBA::ULong def_hop_count () override;
 
-  virtual CORBA::ULong max_hop_count ();
+  CORBA::ULong max_hop_count () override;
 
-  virtual CosTrading::FollowOption def_follow_policy ();
+  CosTrading::FollowOption def_follow_policy () override;
 
-  virtual CosTrading::FollowOption max_follow_policy ();
+  CosTrading::FollowOption max_follow_policy () override;
 
 private:
   const TAO_Import_Attributes_i& attrs_;
+
+  TAO_Import_Attributes (TAO_Import_Attributes const&) = delete;
+  TAO_Import_Attributes& operator= (TAO_Import_Attributes const&) = delete;
+  TAO_Import_Attributes (TAO_Import_Attributes&&) = delete;
+  TAO_Import_Attributes& operator= (TAO_Import_Attributes&&) = delete;
 };
 
 template <class IF>
@@ -202,10 +220,15 @@ public:
   TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
 
   // = CosTrading::LinkAttributes methods
-  virtual CosTrading::FollowOption max_link_follow_policy ();
+  CosTrading::FollowOption max_link_follow_policy () override;
 
 private:
   const TAO_Link_Attributes_i& attrs_;
+
+  TAO_Link_Attributes (TAO_Link_Attributes const&) = delete;
+  TAO_Link_Attributes& operator= (TAO_Link_Attributes const&) = delete;
+  TAO_Link_Attributes (TAO_Link_Attributes&&) = delete;
+  TAO_Link_Attributes& operator= (TAO_Link_Attributes&&) = delete;
 };
 
   // *************************************************************

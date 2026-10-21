@@ -79,7 +79,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
                                  poa_manager.in (), \
                                  policies); \
 \
-  TAO_ ## name ## _i * name ## _impl = 0; \
+  TAO_ ## name ## _i * name ## _impl = nullptr; \
   ACE_NEW_RETURN (name ## _impl, \
                   TAO_ ## name ## _i (this), \
                   -1); \

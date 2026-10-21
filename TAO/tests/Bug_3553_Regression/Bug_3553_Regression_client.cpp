@@ -3,6 +3,7 @@
 #include "tao/Policy_Current.h"
 #include "tao/Policy_Current.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
 int cache_size = 512;
 int port_nr = 27530;
@@ -38,18 +39,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args(argc, argv) != 0)
+      if (parse_args (argc, argv) != 0)
           return 1;
 
       // Get the RTORB.
       CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
-      RTCORBA::RTORB_var rtorb = RTCORBA::RTORB::_narrow (obj.in());
+      RTCORBA::RTORB_var rtorb = RTCORBA::RTORB::_narrow (obj.in ());
       //create the private connections policy. This means that every connection
       // to the server uses his own socket.
       CORBA::PolicyList policies (1);
@@ -68,8 +69,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
-      Test::Hello_var *hello_array = 0;
-      ACE_NEW_RETURN (hello_array, Test::Hello_var [cache_size], -1);
+      std::unique_ptr<Test::Hello_var[]> hello_array =
+        std::make_unique<Test::Hello_var[]> (cache_size);
 
       int iter = 1;
       for (iter = 1; iter <= cache_size; ++iter)
@@ -83,10 +84,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           CORBA::Object_var hello_obj = orb->string_to_object (object_string);
           orb->register_initial_reference (reference_string, hello_obj.in ());
 
-          CORBA::String_var ior_string = orb->object_to_string (hello_obj.in());
-          ACE_DEBUG((LM_DEBUG, ACE_TEXT("IOR string for reference %d : %C\n"),
+          CORBA::String_var ior_string = orb->object_to_string (hello_obj.in ());
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("IOR string for reference %d : %C\n"),
             iter, ior_string.in ()));
-          hello_array[iter-1] = Test::Hello::_narrow(hello_obj.in ());
+          hello_array[iter - 1] = Test::Hello::_narrow (hello_obj.in ());
         }
       //now we've got the references -> call each and everyone of them
       for (iter = 0; iter < cache_size; ++iter)
@@ -110,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

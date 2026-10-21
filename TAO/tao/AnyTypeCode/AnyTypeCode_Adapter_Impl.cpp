@@ -293,7 +293,7 @@ TAO_AnyTypeCode_Adapter_Impl::Initializer ()
   // which we need to initialise before Unknown_IDL_Types are used in a
   // threaded environment. This singleton is called for every constructed
   // Unknown_IDL_Type, so just create a throw-a-way from a null typecode.
-  TAO::Unknown_IDL_Type singleton_initaliser (0);
+  TAO::Unknown_IDL_Type singleton_initaliser (nullptr);
   ACE_UNUSED_ARG (singleton_initaliser);
 
   return ACE_Service_Config::process_directive (

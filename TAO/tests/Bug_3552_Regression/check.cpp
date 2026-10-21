@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Obtain the codec from the factory.
       // Set up a structure that contains information necessary to
       // create a GIOP 1.2 CDR encapsulation Codec.
-      IOP::Encoding encoding;
+      IOP::Encoding encoding {};
       encoding.format = IOP::ENCODING_CDR_ENCAPS;
       encoding.major_version = 1;
       encoding.minor_version = 2;
@@ -27,7 +27,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         codec = codec_factory->create_codec (encoding);
 
       // Create the CDR we want to check
-      CORBA::Octet mixedEndianCDR[]= {
+      CORBA::Octet mixed_endian_cdr[] = {
         // Starts off BigEndian
         0x00,                                           // BigEndian mark
               0x1a, 0x87, 0x00,                         // 3 bytes padding
@@ -56,21 +56,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         0x00, 0x00, 0x00, 0x06,                         // (Length of value)
         0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x00              // "Hello" + Null
       };
-      const unsigned int
-        mixedEndianCDRLength= sizeof (mixedEndianCDR) / sizeof (mixedEndianCDR[0]);
+      CORBA::ULong const mixed_endian_cdr_length =
+        sizeof (mixed_endian_cdr) / sizeof (mixed_endian_cdr[0]);
 
       // We actually need this to be a sequence of octets (Don't delete them on destruction)
-      CORBA::OctetSeq
-        OctSeq (mixedEndianCDRLength, mixedEndianCDRLength, mixedEndianCDR, 0);
+      CORBA::OctetSeq oct_seq (mixed_endian_cdr_length,
+                               mixed_endian_cdr_length,
+                               mixed_endian_cdr,
+                               false);
 
       // Now try and decode this message
       CORBA::Any_var
-        decodedData = codec->decode (OctSeq);
+        decodedData = codec->decode (oct_seq);
       // And extract the actual struct (still owned by the any)
-      const Test::theStruct *myStruct = 0;
-      if (decodedData.in () >>= myStruct)
+      Test::theStruct const *my_struct = nullptr;
+      if (decodedData.in () >>= my_struct)
         {
-          if (!strcmp (myStruct->theString, "Hello"))
+          if (!ACE_OS::strcmp (my_struct->theString, "Hello"))
             {
               result = 0; // Success!
             }
@@ -78,7 +80,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               ACE_DEBUG ((LM_DEBUG,
                 "ERROR: Unexpected string=\"%C\" (should be \"Hello\")\n",
-                myStruct->theString.in ()));
+                my_struct->theString.in ()));
             }
         }
       else
@@ -86,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "ERROR: Didn't decode the Struct\n"));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught:");
     }

@@ -146,9 +146,9 @@ namespace TAO
     TAO_OutputCDR &strm,
     const std::vector<typename T_forany::_slice_type *> &source)
   {
-    typedef TAO_FixedArray_Var_T <typename T_forany::_array_type,
-                                  typename T_forany::_slice_type,
-                                  typename T_forany::_tag_type> var_type;
+    using var_type = TAO_FixedArray_Var_T<typename T_forany::_array_type,
+                                          typename T_forany::_slice_type,
+                                          typename T_forany::_tag_type>;
     ::CORBA::ULong const length = source.size ();
 
     if (! (strm << length))
@@ -180,7 +180,7 @@ namespace TAO
     TAO_InputCDR &strm,
     const std::vector<typename T_forany::_slice_type *> &source)
   {
-    typedef TAO::Array_Traits<T_forany> array_traits;
+    using array_traits = TAO::Array_Traits<T_forany>;
     ::CORBA::ULong new_length = 0;
 
     if (! (strm >> new_length))

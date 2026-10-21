@@ -42,9 +42,9 @@ namespace TAO
     class CredentialsAcquirerFactory;
 
     class CredentialsCurator;
-    typedef CredentialsCurator* CredentialsCurator_ptr;
-    typedef TAO_Pseudo_Var_T<CredentialsCurator> CredentialsCurator_var;
-    typedef TAO_Pseudo_Out_T<CredentialsCurator> CredentialsCurator_out;
+    using CredentialsCurator_ptr = CredentialsCurator *;
+    using CredentialsCurator_var = TAO_Pseudo_Var_T<CredentialsCurator>;
+    using CredentialsCurator_out = TAO_Pseudo_Out_T<CredentialsCurator>;
 
     /**
      * @class CredentialsCurator
@@ -60,25 +60,25 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      typedef CredentialsCurator_ptr _ptr_type;
-      typedef CredentialsCurator_var _var_type;
-      typedef CredentialsCurator_out _out_type;
+      using _ptr_type = CredentialsCurator_ptr;
+      using _var_type = CredentialsCurator_var;
+      using _out_type = CredentialsCurator_out;
 
       /**
        * The type of table that maps acquisition method to acquirer
        * factory.
        */
-      typedef ACE_Map_Manager<const char *,
-                              TAO::SL3::CredentialsAcquirerFactory *,
-                              ACE_Null_Mutex> Acquirer_Factory_Table;
-      typedef Acquirer_Factory_Table::iterator Factory_Iterator;
+      using Acquirer_Factory_Table = ACE_Map_Manager<const char *,
+                                                      TAO::SL3::CredentialsAcquirerFactory *,
+                                                      ACE_Null_Mutex>;
+      using Factory_Iterator = Acquirer_Factory_Table::iterator;
 
-      typedef ACE_Hash_Map_Manager_Ex <const char *,
-                                       SecurityLevel3::OwnCredentials_var,
-                                       ACE_Hash<const char *>,
-                                       ACE_Equal_To<const char *>,
-                                       ACE_Null_Mutex> Credentials_Table;
-      typedef Credentials_Table::iterator Credentials_Iterator;
+      using Credentials_Table = ACE_Hash_Map_Manager_Ex<const char *,
+                                                         SecurityLevel3::OwnCredentials_var,
+                                                         ACE_Hash<const char *>,
+                                                         ACE_Equal_To<const char *>,
+                                                         ACE_Null_Mutex>;
+      using Credentials_Iterator = Credentials_Table::iterator;
 
       /// Constructor
       CredentialsCurator ();
@@ -94,20 +94,20 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::AcquisitionMethodList * supported_methods ();
+      SecurityLevel3::AcquisitionMethodList * supported_methods () override;
 
-      virtual SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
-          const char * acquisition_method,
-          const CORBA::Any & acquisition_arguments);
+      SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
+          char const * acquisition_method,
+          CORBA::Any const & acquisition_arguments) override;
 
-      virtual SecurityLevel3::OwnCredentialsList * default_creds_list ();
+      SecurityLevel3::OwnCredentialsList * default_creds_list () override;
 
-      virtual SecurityLevel3::CredentialsIdList * default_creds_ids ();
+      SecurityLevel3::CredentialsIdList * default_creds_ids () override;
 
-      virtual SecurityLevel3::OwnCredentials_ptr get_own_credentials (
-          const char * credentials_id);
+      SecurityLevel3::OwnCredentials_ptr get_own_credentials (
+          char const * credentials_id) override;
 
-      virtual void release_own_credentials (const char * credentials_id);
+      void release_own_credentials (char const * credentials_id) override;
       //@}
 
       /// Register CredentialsAcquirer factory.
@@ -116,7 +116,7 @@ namespace TAO
        *       factory.
        */
       void register_acquirer_factory (
-        const char * acquisition_method,
+        char const * acquisition_method,
         TAO::SL3::CredentialsAcquirerFactory * factory);
 
       /// TAO-specific means of adding credentials to this
@@ -130,9 +130,14 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsCurator ();
+      ~CredentialsCurator () override;
 
     private:
+      CredentialsCurator (CredentialsCurator const &) = delete;
+      CredentialsCurator (CredentialsCurator &&) = delete;
+      CredentialsCurator &operator= (CredentialsCurator const &) = delete;
+      CredentialsCurator &operator= (CredentialsCurator &&) = delete;
+
       /// Lock used to synchronize access to underlying tables.
       TAO_SYNCH_MUTEX lock_;
 

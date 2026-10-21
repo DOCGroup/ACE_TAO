@@ -45,9 +45,9 @@ extern "C" {
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>
-                      SCTP_ConnectionAcceptHandler;
-typedef ConnectionDetectHandler<ACE_SOCK_SEQPACK_ASSOCIATION> SCTP_ConnectionDetectHandler;
+using SCTP_ConnectionAcceptHandler =
+  ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>;
+using SCTP_ConnectionDetectHandler = ConnectionDetectHandler<ACE_SOCK_SEQPACK_ASSOCIATION>;
 
 class SCTP_Connector : public ACE_SOCK_SEQPACK_Connector
 {
@@ -55,7 +55,7 @@ public:
   SCTP_Connector();
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
                const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = 0,
+               ACE_Time_Value const *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
@@ -72,9 +72,9 @@ class SCTP_Fault_Detector : public Fault_Detector_T<
           SCTP_ConnectionDetectHandler >
 {
 public:
-    virtual ~SCTP_Fault_Detector();
+    ~SCTP_Fault_Detector() override;
 private:
-    virtual int parse_conf(int argc, ACE_TCHAR** argv);
+    int parse_conf(int argc, ACE_TCHAR** argv) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

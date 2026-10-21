@@ -48,13 +48,13 @@ class TAO_Notify_Serv_Export Routing_Slip_Persistence_Manager
 {
 public:
   /// A unique identifier for logical blocks in persistent storage.
-  typedef ACE_UINT64 Block_Serial_Number;
+  using Block_Serial_Number = ACE_UINT64;
   /// The physical address of a block in persistent storage.
-  typedef ACE_UINT32 Block_Number;
+  using Block_Number = ACE_UINT32;
   /// The size of a block in persistent storage.
-  typedef ACE_UINT16 Block_Size;
+  using Block_Size = ACE_UINT16;
   /// A code to indicate the type of block in persistent storage.
-  typedef ACE_UINT16 Block_Type;
+  using Block_Type = ACE_UINT16;
 
   /// The constructor.
   Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);

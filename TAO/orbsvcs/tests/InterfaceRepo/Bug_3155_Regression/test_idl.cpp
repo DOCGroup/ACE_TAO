@@ -4,8 +4,8 @@
 
 namespace
 {
-  const ACE_TCHAR *ifr_ior_file = 0;
-  const ACE_TCHAR *idl_value = 0;
+  ACE_TCHAR const* ifr_ior_file = nullptr;
+  ACE_TCHAR const* idl_value = nullptr;
 }
 
 int
@@ -69,7 +69,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // get IFR
       CORBA::Object_var objref =
         the_orb->string_to_object (ifr_ior_file);
-      if (objref.in () == 0)
+      if (objref.in () == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                               "The received objref is nil\n"),
@@ -81,7 +81,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           the_repo_ref = CORBA::ComponentIR::Repository::_narrow (objref.in ());
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("Can't narrow the IFR:");
           return 1;
@@ -115,14 +115,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         value_descr->members;
       for (CORBA::ULong ct = 0; ct < the_value_members.length (); ++ct)
       {
-        const CORBA::ValueMember& current_member =
+        CORBA::ValueMember const& current_member =
           the_value_members [ct];
         ACE_DEBUG ((LM_DEBUG,
                     "value type member '%C'\n",
                     current_member.name.in ()));
       }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("MAIN: Unexpected CORBA exception caught:");
       return 1;

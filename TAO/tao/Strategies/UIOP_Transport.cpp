@@ -103,7 +103,7 @@ TAO_UIOP_Transport::send_request (TAO_Stub *stub,
       return -1;
     }
 
-  if (this->send_message (stream, stub, 0, message_semantics, max_wait_time) == -1)
+  if (this->send_message (stream, stub, nullptr, message_semantics, max_wait_time) == -1)
     {
       return -1;
     }

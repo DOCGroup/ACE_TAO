@@ -9,11 +9,11 @@
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("pong.ior");
-const char *protocol = "RTP/UDP";
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("pong.ior");
+char const *protocol = "RTP/UDP";
 int milliseconds = 100;
 size_t message_size = 64;
-int respond = 1;
+bool respond = true;
 AVStreams::protocolSpec pong_protocols;
 AVStreams::protocolSpec ping_protocols;
 
@@ -67,7 +67,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'x':
-        respond = 0;
+        respond = false;
         break;
       case 'd':
         TAO_debug_level++;
@@ -126,12 +126,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ());
 
-      Reactive_Strategy *reactive_strategy;
+      Reactive_Strategy *reactive_strategy = nullptr;
       ACE_NEW_RETURN (reactive_strategy,
                       Reactive_Strategy,
                       1);
       reactive_strategy->init (orb.in (), poa.in ());
-      TAO_MMDevice *mmdevice_impl;
+      TAO_MMDevice *mmdevice_impl = nullptr;
       ACE_NEW_RETURN (mmdevice_impl,
                       TAO_MMDevice (reactive_strategy),
                       1);
@@ -145,10 +145,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in () ));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file %s for writing IOR: %C",
                                ior_output_file,
@@ -158,11 +158,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      Pong_Recv_FDev* pong_fdev_impl;
+      Pong_Recv_FDev *pong_fdev_impl = nullptr;
       ACE_NEW_RETURN (pong_fdev_impl,
                       Pong_Recv_FDev ("Pong"),
                       1);
-      Ping_Send_FDev* ping_fdev_impl;
+      Ping_Send_FDev *ping_fdev_impl = nullptr;
       ACE_NEW_RETURN (ping_fdev_impl,
                       Ping_Send_FDev ("Ping"),
                       1);
@@ -173,7 +173,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         pong_fdev_impl->_this ();
 
       mmdevice->add_fdev (ping_fdev.in ());
-      if (respond == 1)
+      if (respond)
         {
           mmdevice->add_fdev (pong_fdev.in ());
         }
@@ -229,13 +229,13 @@ Pong_Recv_Callback::handle_stop ()
 int
 Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    TAO_AV_frame_info *,
-                                   const ACE_Addr &)
+                                   ACE_Addr const &)
 {
   // ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::receive_frame\n"));
 
   ACE_hrtime_t now = ACE_OS::gethrtime ();
-  for (const ACE_Message_Block *i = frame;
-       i != 0;
+  for (ACE_Message_Block const *i = frame;
+       i != nullptr;
        i = frame->cont ())
     {
       ACE_hrtime_t buf[2];

@@ -10,8 +10,8 @@ TAO_Security_Current::tss_slot () const
 ACE_INLINE TAO::Security::Current_Impl *
 TAO_Security_Current::implementation ()
 {
-  if (this->orb_core_ == 0 && this->init () != 0)
-    return 0;
+  if (this->orb_core_ == nullptr && this->init () != 0)
+    return nullptr;
 
   TAO::Security::Current_Impl *impl =
     static_cast<TAO::Security::Current_Impl *> (

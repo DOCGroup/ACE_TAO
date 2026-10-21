@@ -11,9 +11,13 @@
 class ORB_Task : public ACE_Task_Base
 {
 public:
-  ORB_Task(CORBA::ORB_ptr orb);
+  ORB_Task (CORBA::ORB_ptr orb);
+  ORB_Task (ORB_Task const &) = delete;
+  ORB_Task &operator= (ORB_Task const &) = delete;
+  ORB_Task (ORB_Task &&) = delete;
+  ORB_Task &operator= (ORB_Task &&) = delete;
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;

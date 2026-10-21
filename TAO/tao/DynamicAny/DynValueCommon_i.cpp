@@ -39,7 +39,7 @@ TAO_DynValueCommon_i *
 TAO_DynValueCommon_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   return (CORBA::is_nil (_tao_objref)) ?
-         0 :
+         nullptr :
          dynamic_cast<TAO_DynValueCommon_i *> (_tao_objref);
 }
 

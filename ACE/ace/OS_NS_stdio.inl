@@ -376,7 +376,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       return 0;
     }
 
-  struct passwd *pw = 0;
+  struct passwd *pw = nullptr;
 
   // Make sure the file pointer is at the beginning of the password file
   ACE_OS::setpwent ();
@@ -396,7 +396,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
     }
 
   size_t max_length = 0;
-  char *userid = 0;
+  char *userid = nullptr;
 
   if (user == 0)
     {
@@ -449,7 +449,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
     return user;
 # else /* ACE_WIN32 */
   char *char_user;
-  wchar_t *result = 0;
+  wchar_t *result = nullptr;
 
   ACE_NEW_RETURN (char_user, char[maxlen + 1], 0);
 
@@ -934,7 +934,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   char *name = ACE_OS::tempnam (ndir, npfx);
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
-  wchar_t *wname = 0;
+  wchar_t *wname = nullptr;
   if (name != 0)
     {
       size_t namelen = ACE_OS::strlen (name) + 1;

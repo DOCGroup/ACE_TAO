@@ -79,7 +79,7 @@ void
 TAO_Notify_StructuredProxyPushConsumer::validate ()
 {
   TAO_Notify_Supplier* sup = this->supplier ();
-  if (sup != 0 && ! sup->is_alive (true))
+  if (sup != nullptr && ! sup->is_alive (true))
   {
     if (TAO_debug_level > 0)
     {

@@ -69,7 +69,7 @@ My_Test_Object::id (CORBA::Short id)
 CosNaming_Client::CosNaming_Client ()
   : argc_ (0),
     argv_ (0),
-    test_ (0)
+    test_ (nullptr)
 {
 }
 
@@ -88,13 +88,13 @@ CosNaming_Client::parse_args ()
         TAO_debug_level++;
         break;
       case 's':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           ACE_NEW_RETURN (this->test_,
                           Simple_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'm':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           {
             int size = ACE_OS::atoi (get_opts.opt_arg ());
             if (size <= 0)
@@ -109,36 +109,36 @@ CosNaming_Client::parse_args ()
 
         break;
       case 't':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           ACE_NEW_RETURN (this->test_,
                           Tree_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'i':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           ACE_NEW_RETURN (this->test_,
                           Iterator_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'e':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           ACE_NEW_RETURN (this->test_,
                           Exceptions_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'y':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           ACE_NEW_RETURN (this->test_,
                           Destroy_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'p':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           {
             FILE * ior_output_file =
               ACE_OS::fopen (get_opts.opt_arg (), "w");
 
-            if (ior_output_file == 0)
+            if (ior_output_file == nullptr)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Unable to open %s for writing: %p\n",
                                  get_opts.opt_arg ()), -1);
@@ -151,7 +151,7 @@ CosNaming_Client::parse_args ()
           }
         break;
       case 'c':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           ACE_NEW_RETURN (this->test_,
                           Persistent_Test_End (this->orbmgr_.orb (),
                                                this->orbmgr_.root_poa (),
@@ -159,7 +159,7 @@ CosNaming_Client::parse_args ()
                           -1);
         break;
       case 'l':
-        if (this->test_ == 0)
+        if (this->test_ == nullptr)
           ACE_NEW_RETURN (this->test_,
                           Persistent_List_Test (this->orbmgr_.orb (),
                                                 this->orbmgr_.root_poa ()),
@@ -176,7 +176,7 @@ CosNaming_Client::parse_args ()
                           -1);
       }
 
-  if (this->test_ == 0)
+  if (this->test_ == nullptr)
     ACE_NEW_RETURN (this->test_,
                     Simple_Test (this->orbmgr_.root_poa ()),
                     -1);
@@ -269,7 +269,7 @@ MT_Test::svc ()
       return -1;
     }
 
-  if (name_service.in () == 0)
+  if (name_service.in () == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Unable to narrow naming IOR to a NamingContext.\n"));

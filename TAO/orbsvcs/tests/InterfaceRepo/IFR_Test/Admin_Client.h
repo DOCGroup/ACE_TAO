@@ -19,7 +19,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 
-const CORBA::ULong NUMBER_OF_TESTS = 11;
+constexpr CORBA::ULong NUMBER_OF_TESTS = 11;
 
 /**
  * @class Admin_Client
@@ -37,6 +37,11 @@ public:
 
   /// Destructor
   ~Admin_Client ();
+
+  Admin_Client (Admin_Client const&) = delete;
+  Admin_Client (Admin_Client&&) = delete;
+  Admin_Client& operator= (Admin_Client const&) = delete;
+  Admin_Client& operator= (Admin_Client&&) = delete;
 
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
@@ -67,7 +72,7 @@ private:
   void (Admin_Client::*test_array_[NUMBER_OF_TESTS])();
 
   /// Array of test names used in selection of one test.
-  static const char *test_names_[];
+  static char const* test_names_[];
 
   /// Flag to output results of IFR queries.
   CORBA::Boolean debug_;

@@ -31,10 +31,10 @@ template <class TYPE>
 class TAO_Notify_Serv_Export TAO_Notify_Seq_Worker_T
   : public TAO_ESF_Worker<TYPE>
 {
-  typedef TAO_Notify_Container_T<TYPE> CONTAINER;
-  typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
-  typedef typename TYPE::SEQ SEQ;
-  typedef typename TYPE::SEQ_VAR SEQ_VAR;
+  using CONTAINER = TAO_Notify_Container_T<TYPE>;
+  using COLLECTION = TAO_ESF_Proxy_Collection<TYPE>;
+  using SEQ = typename TYPE::SEQ;
+  using SEQ_VAR = typename TYPE::SEQ_VAR;
 
 public:
   /// Constructor

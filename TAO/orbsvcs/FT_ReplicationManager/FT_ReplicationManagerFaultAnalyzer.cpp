@@ -25,7 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.
 TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
-  const TAO::FT_ReplicationManager * replication_manager)
+  TAO::FT_ReplicationManager const * replication_manager)
   : replication_manager_ (
       const_cast<TAO::FT_ReplicationManager *> (replication_manager))
 {
@@ -33,14 +33,13 @@ TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
 
 /// Destructor.
 TAO::FT_ReplicationManagerFaultAnalyzer::~FT_ReplicationManagerFaultAnalyzer ()
-{
-}
+  = default;
 
 // Validate the event to make sure it is one we can handle.
 // If it is not an event we can handle, this function logs the error
 // and returns -1.
 int TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type (
-  const CosNotification::StructuredEvent & event)
+  CosNotification::StructuredEvent const & event)
 {
   // Delegate to base class.
   //@@ Visual C++ 6.0 won't compile this if I include the namespace name
@@ -51,7 +50,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type (
 
 /// Analyze a fault event.
 int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
-  const CosNotification::StructuredEvent & event)
+  CosNotification::StructuredEvent const & event)
 {
   int result = 0;
 

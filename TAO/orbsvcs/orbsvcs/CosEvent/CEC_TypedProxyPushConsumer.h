@@ -34,8 +34,8 @@ class TAO_Event_Serv_Export TAO_CEC_TypedProxyPushConsumer
   : public virtual POA_CosTypedEventChannelAdmin::TypedProxyPushConsumer
 {
 public:
-  typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr _ptr_type;
-  typedef CosTypedEventChannelAdmin::TypedProxyPushConsumer_var _var_type;
+  using _ptr_type = CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr;
+  using _var_type = CosTypedEventChannelAdmin::TypedProxyPushConsumer_var;
 
   /// Constructor
   TAO_CEC_TypedProxyPushConsumer (
@@ -43,7 +43,7 @@ public:
       const ACE_Time_Value &timeout);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedProxyPushConsumer ();
+  ~TAO_CEC_TypedProxyPushConsumer () override;
 
   /// Activate in the POA
   virtual void activate (
@@ -67,22 +67,21 @@ public:
   CORBA::ULong _decr_refcnt ();
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods (abstract overloads)...
-  virtual void connect_push_supplier (
-                CosEventComm::PushSupplier_ptr push_supplier);
+  void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
-  virtual void push (const CORBA::Any& event);
+  void push (CORBA::Any const &event) override;
 
   virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
 
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
   // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
-  virtual CORBA::Object_ptr get_typed_consumer ();
+  CORBA::Object_ptr get_typed_consumer () override;
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA ();
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 protected:
   /// The guard needs access to the following protected methods.
@@ -100,6 +99,12 @@ protected:
   (CosEventComm::PushSupplier_ptr pre);
 
 private:
+  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer &&) = delete;
+  TAO_CEC_TypedProxyPushConsumer &operator= (
+      TAO_CEC_TypedProxyPushConsumer const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer &operator= (TAO_CEC_TypedProxyPushConsumer &&) = delete;
+
   /// The typed supplier admin, used for activation and memory management.
   TAO_CEC_TypedEventChannel* typed_event_channel_;
 
@@ -157,6 +162,13 @@ public:
 
   /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer_Guard ();
+
+  TAO_CEC_TypedProxyPushConsumer_Guard (TAO_CEC_TypedProxyPushConsumer_Guard const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer_Guard (TAO_CEC_TypedProxyPushConsumer_Guard &&) = delete;
+  TAO_CEC_TypedProxyPushConsumer_Guard &operator= (
+      TAO_CEC_TypedProxyPushConsumer_Guard const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer_Guard &operator= (
+      TAO_CEC_TypedProxyPushConsumer_Guard &&) = delete;
 
   /// Returns 1 if the reference count successfully acquired
   int locked () const;

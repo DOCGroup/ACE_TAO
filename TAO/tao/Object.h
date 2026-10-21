@@ -47,33 +47,33 @@ namespace TAO
 namespace CORBA
 {
   class InterfaceDef;
-  typedef InterfaceDef *InterfaceDef_ptr;
+  using InterfaceDef_ptr = InterfaceDef *;
 
   class Context;
-  typedef Context *Context_ptr;
+  using Context_ptr = Context *;
 
   class Request;
-  typedef Request *Request_ptr;
+  using Request_ptr = Request *;
 
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class NamedValue;
-  typedef NamedValue * NamedValue_ptr;
+  using NamedValue_ptr = NamedValue *;
 
-  typedef ULong Flags;
+  using Flags = ULong;
 
   class ExceptionList;
-  typedef ExceptionList *ExceptionList_ptr;
+  using ExceptionList_ptr = ExceptionList *;
 
   class ContextList;
-  typedef ContextList *ContextList_ptr;
+  using ContextList_ptr = ContextList *;
 
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
+  using Object_out = TAO_Pseudo_Out_T<Object>;
 
   template<>
   TAO_Export Boolean
@@ -227,9 +227,9 @@ namespace CORBA
     //@}
 
     // Useful for template programming.
-    typedef Object_ptr _ptr_type;
-    typedef Object_var _var_type;
-    typedef Object_out _out_type;
+    using _ptr_type = Object_ptr;
+    using _var_type = Object_var;
+    using _out_type = Object_out;
 
     //@} End of CORBA specific methods
 

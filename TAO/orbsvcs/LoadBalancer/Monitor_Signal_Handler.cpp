@@ -5,7 +5,7 @@ TAO_LB_Monitor_Signal_Handler::TAO_LB_Monitor_Signal_Handler (
   CORBA::ORB_ptr orb,
   PortableServer::POA_ptr poa,
   CosLoadBalancing::LoadManager_ptr load_manager,
-  const PortableGroup::Location & location)
+  PortableGroup::Location const & location)
   : TAO_LB_Signal_Handler (orb, poa),
     load_manager_ (CosLoadBalancing::LoadManager::_duplicate (load_manager)),
     location_ (location)

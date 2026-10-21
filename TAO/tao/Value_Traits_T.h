@@ -22,8 +22,8 @@ namespace details
 template<typename T, bool dummy>
 struct value_traits
 {
-  typedef T value_type;
-  typedef T const const_value_type;
+  using value_type = T;
+  using const_value_type = T const;
 
   inline static void zero_range(
       value_type * begin , value_type * end)

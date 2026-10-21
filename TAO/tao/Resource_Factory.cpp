@@ -42,13 +42,9 @@ TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
 
 // ********************************************************************
 
-TAO_Resource_Factory::TAO_Resource_Factory ()
-{
-}
+TAO_Resource_Factory::TAO_Resource_Factory () = default;
 
-TAO_Resource_Factory::~TAO_Resource_Factory ()
-{
-}
+TAO_Resource_Factory::~TAO_Resource_Factory () = default;
 
 int
 TAO_Resource_Factory::use_locked_data_blocks () const

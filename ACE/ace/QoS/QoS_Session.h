@@ -26,7 +26,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK;
 class ACE_QoS_Manager;
 
-typedef int ACE_Protocol_ID;
+using ACE_Protocol_ID = int;
 // IPPROTO_UDP or IPPROTO_TCP.
 
 /**

@@ -44,37 +44,41 @@ public:
   TAO_DTP_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_DTP_Thread_Lane_Resources_Manager ();
+  ~TAO_DTP_Thread_Lane_Resources_Manager () override;
 
   /// Finalize resources.
-  void finalize ();
+  void finalize () override;
 
   /// Open default resources.
-  int open_default_resources ();
+  int open_default_resources () override;
 
   /// Shutdown reactor.
-  void shutdown_reactor ();
+  void shutdown_reactor () override;
 
   /// Certain ORB policies such as dropping replies on shutdown
   /// would need cleanup of transports to wake threads up.
-  void close_all_transports ();
+  void close_all_transports () override;
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  int is_collocated (const TAO_MProfile &mprofile) override;
 
   /// @name Accessors
   // @{
-  TAO_Thread_Lane_Resources &lane_resources ();
+  TAO_Thread_Lane_Resources &lane_resources () override;
 
-  TAO_Thread_Lane_Resources &default_lane_resources ();
+  TAO_Thread_Lane_Resources &default_lane_resources () override;
 
   TAO_DTP_Thread_Pool_Manager &tp_manager ();
 
   // @}
 
 private:
-  void operator= (const TAO_DTP_Thread_Lane_Resources_Manager &);
-  TAO_DTP_Thread_Lane_Resources_Manager (const TAO_DTP_Thread_Lane_Resources_Manager &);
+  TAO_DTP_Thread_Lane_Resources_Manager (TAO_DTP_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_DTP_Thread_Lane_Resources_Manager &operator= (
+    TAO_DTP_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_DTP_Thread_Lane_Resources_Manager (TAO_DTP_Thread_Lane_Resources_Manager &&) = delete;
+  TAO_DTP_Thread_Lane_Resources_Manager &operator= (
+    TAO_DTP_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
   /// Default lane resources.
@@ -96,9 +100,21 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
+  TAO_DTP_Thread_Lane_Resources_Manager_Factory () = default;
+
   /// Factory method.
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (
-    TAO_ORB_Core &core);
+    TAO_ORB_Core &core) override;
+
+ private:
+  TAO_DTP_Thread_Lane_Resources_Manager_Factory (
+    TAO_DTP_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_DTP_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_DTP_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_DTP_Thread_Lane_Resources_Manager_Factory (
+    TAO_DTP_Thread_Lane_Resources_Manager_Factory &&) = delete;
+  TAO_DTP_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_DTP_Thread_Lane_Resources_Manager_Factory &&) = delete;
 };
 
 

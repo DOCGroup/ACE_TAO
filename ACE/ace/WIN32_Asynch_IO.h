@@ -1238,7 +1238,7 @@ public:
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
-            ACE_Proactor *proactor = 0);
+            ACE_Proactor *proactor = nullptr);
 
   /**
    * Start an asynchronous connect.

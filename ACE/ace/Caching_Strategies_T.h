@@ -109,7 +109,7 @@ class ACE_Caching_Strategy_Adapter
 {
 public:
   /// Constructor.
-  ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = 0,
+  ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = nullptr,
                                 bool delete_implementation = false);
 
   /// Destructor.

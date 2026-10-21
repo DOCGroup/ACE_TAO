@@ -48,7 +48,7 @@ namespace TAO_Notify
   class Topology_Parent;
 
   /// A vector of IDS.  Used as a path from the EventChannelFactory to a proxy.
-  typedef ACE_Vector <TAO_Notify_Object::ID> IdVec;
+  using IdVec = ACE_Vector <TAO_Notify_Object::ID>;
 
   /// \brief Interface to be implemented by savable topology objects.
   class TAO_Notify_Serv_Export Topology_Savable

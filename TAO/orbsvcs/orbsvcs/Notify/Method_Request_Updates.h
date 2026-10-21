@@ -23,11 +23,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
-                                        , TAO_Notify_Proxy::Ptr
-                                        , const TAO_Notify_EventTypeSeq&
-                                        , TAO_Notify_Proxy*
-                                        > TAO_Notify_Method_Request_Updates_Base;
+using TAO_Notify_Method_Request_Updates_Base =
+  TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq,
+                                      TAO_Notify_Proxy::Ptr,
+                                      const TAO_Notify_EventTypeSeq&,
+                                      TAO_Notify_Proxy *>;
 
 /**
  * @class TAO_Notify_Method_Request_Updates
@@ -46,16 +46,16 @@ public:
   virtual ~TAO_Notify_Method_Request_Updates ();
 
   /// Execute the Request
-  virtual int execute ();
+  int execute () override;
 };
 
 /*****************************************************************************/
 
-typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
-                                        , TAO_Notify_Proxy*
-                                        , const TAO_Notify_EventTypeSeq&
-                                        , TAO_Notify_Proxy*
-                                        > TAO_Notify_Method_Request_Updates_No_Copy_Base;
+using TAO_Notify_Method_Request_Updates_No_Copy_Base =
+  TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&,
+                                      TAO_Notify_Proxy *,
+                                      const TAO_Notify_EventTypeSeq&,
+                                      TAO_Notify_Proxy *>;
 
 /**
  * @class TAO_Notify_Method_Request_Updates_No_Copy
@@ -74,10 +74,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Updates_No_Copy ();
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request_Queueable* copy ();
+  TAO_Notify_Method_Request_Queueable* copy () override;
 
   /// Execute the Request
-  virtual int execute ();
+  int execute () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

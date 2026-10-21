@@ -101,7 +101,7 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
       type == PortableServer::SERVANT_RETENTION_POLICY_ID ||
       type == PortableServer::REQUEST_PROCESSING_POLICY_ID ||
 #   endif
-      (this->orb_core_.policy_factory_registry () != 0 &&
+      (this->orb_core_.policy_factory_registry () != nullptr &&
          this->orb_core_.policy_factory_registry ()->factory_exists (type)));
 }
 

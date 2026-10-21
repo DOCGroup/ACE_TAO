@@ -16,7 +16,7 @@
 #include <iostream>
 
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
-: orb_ (CORBA::ORB::_duplicate(orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 
 {
   try
@@ -104,7 +104,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 
     consumer_proxy_->connect_structured_push_supplier(supplier.in());
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const & ex) {
     std::cerr << ex << std::endl;
   }
 
@@ -116,8 +116,8 @@ Messenger_i::~Messenger_i ()
 {
 }
 
-CORBA::Boolean Messenger_i::send_message (const char * user_name,
-                                          const char * subject,
+CORBA::Boolean Messenger_i::send_message (char const * user_name,
+                                          char const * subject,
                                           char *& message)
 {
   std::cout << "Message from: " << user_name << std::endl;
@@ -130,34 +130,34 @@ CORBA::Boolean Messenger_i::send_message (const char * user_name,
     CosNotification::StructuredEvent event;
 
     event.header.fixed_header.event_type.domain_name =
-      CORBA::string_dup("OCI_TAO");
+      CORBA::string_dup ("OCI_TAO");
     // string
     event.header.fixed_header.event_type.type_name =
-      CORBA::string_dup("examples");
+      CORBA::string_dup ("examples");
     // string
     event.header.fixed_header.event_name =
-      CORBA::string_dup("myevent");
+      CORBA::string_dup ("myevent");
 
     // sequence<Property>: string name, any value
     event.filterable_data.length (1);
-    event.filterable_data[0].name = CORBA::string_dup("From");
-    event.filterable_data[0].value <<= (const char *)user_name;
+    event.filterable_data[0].name = CORBA::string_dup ("From");
+    event.filterable_data[0].value <<= user_name;
     event.filterable_data.length (2);
-    event.filterable_data[1].name = CORBA::string_dup("Subject");
-    event.filterable_data[1].value <<= (const char *)subject;
+    event.filterable_data[1].name = CORBA::string_dup ("Subject");
+    event.filterable_data[1].value <<= subject;
     event.filterable_data.length (3);
-    event.filterable_data[2].name = CORBA::string_dup("Message");
-    event.filterable_data[2].value <<= (const char *)message;
+    event.filterable_data[2].name = CORBA::string_dup ("Message");
+    event.filterable_data[2].value <<= message;
 
-    consumer_proxy_->push_structured_event(event);
+    consumer_proxy_->push_structured_event (event);
   }
 
-  catch(const CosNotifyComm::InvalidEventType&) {
+  catch (CosNotifyComm::InvalidEventType const &) {
     std::cerr << "Invalid Event Type Exception " << std::endl;
     return 1;
   }
 
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const & ex) {
     std::cerr << ex << std::endl;
     return 1;
   }

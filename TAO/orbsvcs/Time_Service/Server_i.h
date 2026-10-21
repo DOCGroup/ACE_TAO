@@ -36,9 +36,14 @@ public:
   /// Destructor.
   ~Server_i ();
 
+  Server_i (Server_i const &) = delete;
+  Server_i (Server_i &&) = delete;
+  Server_i &operator= (Server_i const &) = delete;
+  Server_i &operator= (Server_i &&) = delete;
+
   /// Initialize the Server state.
   int init (int argc,
-            ACE_TCHAR *argv[]);
+            ACE_TCHAR * argv[]);
 
   /// Run the orb.
   int run ();
@@ -54,7 +59,7 @@ public:
 
   /// Parse the commandline arguments.
   int parse_args (int argc,
-                  ACE_TCHAR* argv[]);
+                  ACE_TCHAR * argv[]);
 
 private:
   /// My orb.
@@ -64,14 +69,14 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// File where the IOR of the Clerk object is stored.
-  FILE *ior_output_file_;
+  FILE * ior_output_file_;
 
   /// An instance of the name server used for registering the
   /// <TimeService Server> object.
   TAO_Naming_Client naming_client_;
 
   /// Implementation of the <TimeService> Server object.
-  TAO_Time_Service_Server *time_service_server_impl_;
+  TAO_Time_Service_Server * time_service_server_impl_;
 
   /// Reference of the time server.
   CosTime::TimeService_var time_service_server_;

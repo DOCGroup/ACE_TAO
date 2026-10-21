@@ -74,7 +74,7 @@ public:
   ACE_Multihomed_INET_Addr(u_short port_number,
                            ACE_UINT32 primary_ip_addr = INADDR_ANY,
                            int encode = 1,
-                           const ACE_UINT32 *secondary_ip_addrs = 0,
+                           const ACE_UINT32 *secondary_ip_addrs = nullptr,
                            size_t size = 0);
 
 #if defined (ACE_HAS_WCHAR)
@@ -137,7 +137,7 @@ public:
   int set (u_short port_number,
            ACE_UINT32 primary_ip_addr = INADDR_ANY,
            int encode = 1,
-           const ACE_UINT32 *secondary_ip_addrs = 0,
+           const ACE_UINT32 *secondary_ip_addrs = nullptr,
            size_t size = 0);
 
   /**

@@ -115,13 +115,13 @@ class TAO_AV_Export TAO_AV_RTCP_Flow_Factory
 {
 public:
   TAO_AV_RTCP_Flow_Factory ();
-  virtual ~TAO_AV_RTCP_Flow_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *flow_string);
-  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                        TAO_Base_StreamEndPoint *endpoint,
-                                                        TAO_AV_Flow_Handler *handler,
-                                                        TAO_AV_Transport *transport);
+  ~TAO_AV_RTCP_Flow_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int match_protocol (const char *flow_string) override;
+  TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                TAO_Base_StreamEndPoint *endpoint,
+                                                TAO_AV_Flow_Handler *handler,
+                                                TAO_AV_Transport *transport) override;
 };
 
 class TAO_AV_Callback;
@@ -137,34 +137,34 @@ public:
   TAO_AV_RTCP_Callback ();
 
   /// virtual destructor.
-  virtual ~TAO_AV_RTCP_Callback ();
+  ~TAO_AV_RTCP_Callback () override;
 
   /// Called during Streamctrl->start.
-  virtual int handle_start ();
+  int handle_start () override;
 
   /// Called during Streamctrl->stop.
-  virtual int handle_stop ();
+  int handle_stop () override;
 
   /// Called during timeout for Flow Producers.
-  virtual int handle_timeout (void *arg);
+  int handle_timeout (void *arg) override;
 
   /// Called when a frame arrives for a FlowConsumer.
-  virtual int receive_frame (ACE_Message_Block *frame,
-                             TAO_AV_frame_info *frame_info = 0,
-                             const ACE_Addr &peer_address = ACE_Addr::sap_any);
+  int receive_frame (ACE_Message_Block *frame,
+                     TAO_AV_frame_info *frame_info = nullptr,
+                     const ACE_Addr &peer_address = ACE_Addr::sap_any) override;
   int send_frame (ACE_Message_Block *frame);
 
-  virtual int receive_control_frame (ACE_Message_Block *frame,
-                                     const ACE_Addr &peer_address = ACE_Addr::sap_any);
+  int receive_control_frame (ACE_Message_Block *frame,
+                             const ACE_Addr &peer_address = ACE_Addr::sap_any) override;
 
   /// Called during Streamctrl->destroy i.e tear_down  of the stream
   /// @@coryan:Call it handle_destroy or handle_close.
-  virtual int handle_destroy ();
+  int handle_destroy () override;
 
   /// Called to get the timeout. If tv is 0 then the framework stop
   /// calling this.
-  virtual void get_timeout (ACE_Time_Value *&tv,
-                            void *&arg);
+  void get_timeout (ACE_Time_Value *&tv,
+                    void *&arg) override;
 
   int send_report(int bye);
   void schedule (int ms);
@@ -196,37 +196,37 @@ public:
   /// constructor.
   TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
                       TAO_AV_RTCP_Callback *&rtcp_cb,
-                      TAO_AV_Transport *transport = 0);
+                      TAO_AV_Transport *transport = nullptr);
 
   /// Destructor
-  virtual ~TAO_AV_RTCP_Object ();
+  ~TAO_AV_RTCP_Object () override;
 
-  virtual int handle_input ();
-  virtual int handle_control_input (ACE_Message_Block *frame,
-                                    const ACE_Addr &peer_address);
+  int handle_input () override;
+  int handle_control_input (ACE_Message_Block *frame,
+                            const ACE_Addr &peer_address) override;
   virtual int handle_control_output (ACE_Message_Block *frame);
 
   /// set/get policies.
-  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
+  int set_policies (const TAO_AV_PolicyList &policy_list) override;
 
   /// start/stop the flow.
-  virtual int start ();
-  virtual int stop ();
+  int start () override;
+  int stop () override;
 
   /// send a data frame.
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
+  int send_frame (ACE_Message_Block *frame,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
   /// send a frame in iovecs.
-  virtual int send_frame (const iovec *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
+  int send_frame (const iovec *iov,
+                  int iovcnt,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const char*buf,
-                          size_t len);
+  int send_frame (const char *buf,
+                  size_t len) override;
 
   /// end the stream.
-  virtual int destroy ();
+  int destroy () override;
 
   void ssrc (ACE_UINT32 ssrc) {this->ssrc_ = ssrc; }
   ACE_UINT32 ssrc () { return this->ssrc_; }

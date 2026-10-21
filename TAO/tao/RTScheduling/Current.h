@@ -36,7 +36,7 @@ class TAO_TSS_Resources;
  * Define the hash() method for Object Ids.
  */
 
-typedef TAO::unbounded_value_sequence<CORBA::Octet> IdType;
+using IdType = TAO::unbounded_value_sequence<CORBA::Octet>;
 
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {
@@ -45,28 +45,24 @@ public:
   u_long operator () (const IdType &id) const;
 };
 
-typedef ACE_Hash_Map_Manager_Ex<IdType,
-                                RTScheduling::DistributableThread_var,
-                                TAO_DTId_Hash,
-                                ACE_Equal_To<IdType>,
-                                TAO_SYNCH_MUTEX>
-  DT_Hash_Map;
+using DT_Hash_Map = ACE_Hash_Map_Manager_Ex<IdType,
+                                            RTScheduling::DistributableThread_var,
+                                            TAO_DTId_Hash,
+                                            ACE_Equal_To<IdType>,
+                                            TAO_SYNCH_MUTEX>;
 
-typedef ACE_Hash_Map_Iterator_Ex<IdType,
-                                 RTScheduling::DistributableThread_var,
-                                 TAO_DTId_Hash,
-                                 ACE_Equal_To<IdType>,
-                                 TAO_SYNCH_MUTEX>
-  DT_Hash_Map_Iterator;
+using DT_Hash_Map_Iterator = ACE_Hash_Map_Iterator_Ex<IdType,
+                                                       RTScheduling::DistributableThread_var,
+                                                       TAO_DTId_Hash,
+                                                       ACE_Equal_To<IdType>,
+                                                       TAO_SYNCH_MUTEX>;
 
-typedef ACE_Hash_Map_Entry<IdType,
-                           RTScheduling::DistributableThread_var>
-  DT_Hash_Map_Entry;
+using DT_Hash_Map_Entry = ACE_Hash_Map_Entry<IdType, RTScheduling::DistributableThread_var>;
 
 class TAO_RTScheduler_Current;
 class TAO_RTScheduler_Current_var;
 
-typedef TAO_RTScheduler_Current* TAO_RTScheduler_Current_ptr;
+using TAO_RTScheduler_Current_ptr = TAO_RTScheduler_Current *;
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current
   : public RTScheduling::Current,
@@ -76,7 +72,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   static std::atomic<long> guid_counter;
 
   TAO_RTScheduler_Current () = default;
-  virtual ~TAO_RTScheduler_Current ();
+  ~TAO_RTScheduler_Current () override;
 
   void init (TAO_ORB_Core* orb);
 
@@ -134,8 +130,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
    * @name Reference Related Methods
    */
   //@{
-  typedef TAO_RTScheduler_Current_ptr _ptr_type;
-  typedef TAO_RTScheduler_Current_var _var_type;
+  using _ptr_type = TAO_RTScheduler_Current_ptr;
+  using _var_type = TAO_RTScheduler_Current_var;
 
   static TAO_RTScheduler_Current_ptr _duplicate (TAO_RTScheduler_Current_ptr obj);
 
@@ -150,6 +146,11 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   //@}
 
 private:
+  TAO_RTScheduler_Current (TAO_RTScheduler_Current const &) = delete;
+  TAO_RTScheduler_Current &operator= (TAO_RTScheduler_Current const &) = delete;
+  TAO_RTScheduler_Current (TAO_RTScheduler_Current &&) = delete;
+  TAO_RTScheduler_Current &operator= (TAO_RTScheduler_Current &&) = delete;
+
   RTCORBA::Current_var rt_current_;
   TAO_ORB_Core* orb_ {};
   DT_Hash_Map dt_hash_;
@@ -269,6 +270,11 @@ public:
   void DT (RTScheduling::DistributableThread_ptr);
 
 private:
+  TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i const &) = delete;
+  TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i const &) = delete;
+  TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i &&) = delete;
+  TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i &&) = delete;
+
   RTScheduling::Scheduler_var scheduler_;
   TAO_ORB_Core* orb_;
   RTScheduling::Current::IdType guid_;
@@ -293,7 +299,7 @@ public:
           CORBA::Policy_ptr sched_param,
           CORBA::Policy_ptr implicit_sched_param);
 
-  virtual ~DTTask ();
+  ~DTTask () override;
 
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size);
@@ -301,6 +307,11 @@ public:
   int svc () override;
 
 private:
+  DTTask (DTTask const &) = delete;
+  DTTask &operator= (DTTask const &) = delete;
+  DTTask (DTTask &&) = delete;
+  DTTask &operator= (DTTask &&) = delete;
+
   TAO_ORB_Core* orb_;
   TAO_RTScheduler_Current_i* current_;
   RTScheduling::ThreadAction_var start_;

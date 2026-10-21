@@ -49,7 +49,7 @@ public:
   TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_Simple_Mcast_EH ();
+  virtual ~TAO_ECG_Simple_Mcast_EH () override;
 
   /// Join the specified multicast group and register itself with the
   /// reactor.
@@ -57,16 +57,16 @@ public:
   /// the user MUST call shutdown () when handler is no longer needed
   /// (and its reactor still exists).
   int open (const char * mcast_addr,
-            const ACE_TCHAR *net_if = 0);
+            ACE_TCHAR const *net_if = nullptr);
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown ();
+  virtual int shutdown () override;
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that
   /// <dgram_> is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_input (ACE_HANDLE fd) override;
 
 private:
   // Socket on which we listen for messages.

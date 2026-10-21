@@ -243,7 +243,7 @@ protected:
    * the Factory, if not found it uses TAO_EC_Default_Resource_Factory
    */
   TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attributes,
-                             TAO_EC_Factory* factory = 0,
+                             TAO_EC_Factory* factory = nullptr,
                              int own_factory = 0);
 
   /**

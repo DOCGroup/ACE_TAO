@@ -43,24 +43,29 @@ class TAO_Log_Serv_Export TAO_Hash_Iterator_i
 public:
   /// Constructor.
   TAO_Hash_Iterator_i (PortableServer::POA_ptr poa,
-                       ACE_Reactor* reactor,
-                       TAO_Hash_LogRecordStore* recordstore,
+                       ACE_Reactor * reactor,
+                       TAO_Hash_LogRecordStore * recordstore,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
                        TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
                        CORBA::ULong start,
-                       const char *constraint,
+                       char const * constraint,
                        CORBA::ULong max_rec_list_len);
 
   /// Destructor.
-  virtual ~TAO_Hash_Iterator_i ();
+  ~TAO_Hash_Iterator_i () override;
 
   /// Gets a list of LogRecords.
-  virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
-                                       CORBA::ULong how_many);
+  DsLogAdmin::RecordList *get (CORBA::ULong position,
+                               CORBA::ULong how_many) override;
 
 private:
+  TAO_Hash_Iterator_i (TAO_Hash_Iterator_i const &) = delete;
+  TAO_Hash_Iterator_i (TAO_Hash_Iterator_i &&) = delete;
+  TAO_Hash_Iterator_i &operator= (TAO_Hash_Iterator_i const &) = delete;
+  TAO_Hash_Iterator_i &operator= (TAO_Hash_Iterator_i &&) = delete;
+
   /// Pointer to record store
-  TAO_Hash_LogRecordStore* recordstore_;
+  TAO_Hash_LogRecordStore * recordstore_;
 
   /// Current Iterator.
   TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_;

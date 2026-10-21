@@ -66,7 +66,7 @@ private:
   /// The name of the file from which data is read.
   ACE_TString file_name_;
 
-  typedef ACE_Unbounded_Stack<Topology_Object*> TopoStack;
+  using TopoStack = ACE_Unbounded_Stack<Topology_Object *>;
   TopoStack object_stack_;
   /// If false, then we're just checking syntax of topology file.
   bool live_;

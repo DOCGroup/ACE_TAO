@@ -115,7 +115,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
 
   /// Execute the Request
-  virtual int execute ();
+  int execute () override;
 
 private:
   TAO_Notify_Event::Ptr event_var_;
@@ -144,10 +144,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
 
   /// Execute the Request
-  virtual int execute ();
+  int execute () override;
 
   /// Create a copy of this method request
-  virtual TAO_Notify_Method_Request_Queueable* copy ();
+  TAO_Notify_Method_Request_Queueable* copy () override;
 };
 
 /*****************************************************************************/

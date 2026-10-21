@@ -27,9 +27,9 @@ public:
   AMI_Test_i (CORBA::ORB_ptr orb);
 
   // The AMI_Test methods.
-  void foo (CORBA::Long value);
+  void foo (CORBA::Long value) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

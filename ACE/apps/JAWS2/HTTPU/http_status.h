@@ -92,8 +92,7 @@ private:
 };
 
 
-typedef ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>
-        HTTP_SCode_Singleton;
+using HTTP_SCode_Singleton = ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>;
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

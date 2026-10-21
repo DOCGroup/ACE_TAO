@@ -15,21 +15,21 @@
 #include "ami_test_i.h"
 #include "tao/ORB_Core.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads = 1;
 int niterations = 1;
 int debug = 1;
-int number_of_replies = 0;
+int number_of_replies {};
 
 CORBA::Long in_number = 931232;
-const char * in_str = "Let's talk AMI.";
-int parameter_corruption = 0;
+char const *in_str = "Let's talk AMI.";
+int parameter_corruption {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:n:i:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dk:n:i:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -75,9 +75,13 @@ class Client : public ACE_Task_Base
 public:
   /// ctor
   Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr handler);
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
   /// Set all members to nil
   void clear ();
@@ -96,16 +100,18 @@ private:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler ()
-  {
-  };
+  Handler () = default;
+  Handler (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   void foo (CORBA::Long result,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       if (result == 0)
         {
-          ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
+          ACE_ERROR ((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
           parameter_corruption = 1;
         }
 
@@ -120,7 +126,7 @@ public:
       --number_of_replies;
     };
 
-   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
@@ -128,15 +134,13 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Caught exception:");
         }
     };
 
-  ~Handler ()
-  {
-  };
+  ~Handler () override = default;
 };
 
 int
@@ -165,7 +169,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Activate POA to handle the call back.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -181,11 +185,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
-      Handler* handler = 0;
+      Handler *handler {};
       ACE_NEW_RETURN (handler,
                       Handler,
                       1);
-      PortableServer::ServantBase_var owner_transfer(handler);
+      PortableServer::ServantBase_var owner_transfer (handler);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (handler);
@@ -216,7 +220,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // ORB loop.
-      ACE_Time_Value tv (1,0);
+      ACE_Time_Value tv (1, 0);
       orb->run (tv);
 
       if (debug)
@@ -230,7 +234,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       client.wait ();
 
-      tv = ACE_Time_Value (1,0);
+      tv = ACE_Time_Value (1, 0);
       orb->run (tv);
 
       root_poa->deactivate_object (id.in ());
@@ -248,7 +252,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->shutdown ();
       orb->destroy ();
 
-      CORBA::ULong ref_count  = orb->_refcount();
+      CORBA::ULong const ref_count = orb->_refcount ();
 
       if (ref_count > 1)
         {
@@ -257,8 +261,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          TAO_ORB_Core* core = orb->orb_core ();
-          if (core != 0)
+          TAO_ORB_Core *core = orb->orb_core ();
+          if (core != nullptr)
             {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Core <> null\n")));
               ++parameter_corruption;
@@ -266,7 +270,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       orb = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -277,7 +281,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-void  Client::clear ()
+void
+Client::clear ()
 {
   ami_test_var_ = A::AMI_Test::_nil ();
   the_handler_var_ = A::AMI_AMI_TestHandler::_nil ();
@@ -286,9 +291,9 @@ void  Client::clear ()
 Client::Client (A::AMI_Test_ptr server,
                 int niterations,
                 A::AMI_AMI_TestHandler_ptr handler)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (niterations),
-     the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (handler))
+  : ami_test_var_ (A::AMI_Test::_duplicate (server))
+  , niterations_ (niterations)
+  , the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (handler))
 {
 }
 
@@ -308,7 +313,7 @@ Client::svc ()
                       niterations));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

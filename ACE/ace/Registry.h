@@ -130,7 +130,7 @@ public:
   {
   public:
     /// Default constructor
-    Object (void *data = 0,
+    Object (void *data = nullptr,
             u_long size = 0,
             u_long type = REG_NONE);
 
@@ -541,7 +541,7 @@ public:
    */
   static int connect (ACE_Registry::Naming_Context &naming_context,
                       HKEY predefined = HKEY_LOCAL_MACHINE,
-                      const ACE_TCHAR *machine_name = 0);
+                      const ACE_TCHAR *machine_name = nullptr);
 
 private:
   /// Check if @a machine_name is the local host

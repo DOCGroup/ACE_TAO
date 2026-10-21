@@ -58,7 +58,7 @@ namespace TAO
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
-      PortableServer::ObjectId *id = 0;
+      PortableServer::ObjectId *id = nullptr;
       ACE_NEW_THROW_EX (id,
                         PortableServer::ObjectId (system_id),
                         CORBA::NO_MEMORY ());
@@ -103,7 +103,7 @@ namespace TAO
 
       servant_upcall.user_id (&system_id);
 
-      return 0;
+      return nullptr;
     }
 
     int
@@ -191,7 +191,7 @@ namespace TAO
       // and a timestamp isn't sufficient since multiple IDs may be
       // requested within the same time unit.
 
-      PortableServer::ObjectId *sys_id = 0;
+      PortableServer::ObjectId *sys_id = nullptr;
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (8),
                         CORBA::NO_MEMORY ());
@@ -237,12 +237,12 @@ namespace TAO
       // activated if necessary, or the default servant used, depending on
       // the applicable policies.
 
-      PortableServer::Servant servant = 0;
+      PortableServer::Servant servant = nullptr;
       PortableServer::ObjectId_var system_id;
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
-      PortableServer::ObjectId *sys_id = 0;
+      PortableServer::ObjectId *sys_id = nullptr;
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (oid),
                         CORBA::NO_MEMORY ());
@@ -294,7 +294,7 @@ namespace TAO
     TAO_Active_Object_Map *
     ServantRetentionStrategyNonRetain::get_active_object_map() const
     {
-      return 0;
+      return nullptr;
     }
   }
 }

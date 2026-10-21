@@ -18,7 +18,7 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
     object_addr_ (),
-    next_ (0),
+    next_ (nullptr),
     iiop_endpoint_ (iiop_endp),
     destroy_iiop_endpoint_ (false),
     qop_ (::Security::SecQOPIntegrityAndConfidentiality),
@@ -29,7 +29,7 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
     credentials_ (),
     credentials_set_ (0)
 {
-  if (ssl_component != 0)
+  if (ssl_component != nullptr)
     {
       // Copy the security association options in the IOR's SSL tagged
       // component.
@@ -90,7 +90,7 @@ TAO_SSLIOP_Endpoint::operator= (const TAO_SSLIOP_Endpoint &other)
   this->trust_ = other.trust_;
   this->ssl_component_ = other.ssl_component_;
 
-  this->next_ = 0; // do not copy list membership, since we are only cloning the values
+  this->next_ = nullptr; // do not copy list membership, since we are only cloning the values
 
   this->iiop_endpoint(other.iiop_endpoint_,
                       other.destroy_iiop_endpoint_);
@@ -173,7 +173,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 TAO_Endpoint *
 TAO_SSLIOP_Endpoint::duplicate ()
 {
-  TAO_SSLIOP_Endpoint *endpoint = 0;
+  TAO_SSLIOP_Endpoint *endpoint = nullptr;
 
   // @@ We need to set the priority of the newly formed endpoint. It
   // shouldnt be a problem as long as SSL is not used with RTCORBA.
@@ -299,7 +299,7 @@ TAO_SSLIOP_Synthetic_Endpoint::~TAO_SSLIOP_Synthetic_Endpoint ()
 }
 
 TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl)
-  : TAO_SSLIOP_Endpoint (ssl, 0)
+  : TAO_SSLIOP_Endpoint (ssl, nullptr)
 {
 }
 
@@ -319,7 +319,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
   TAO_SSLIOP_Endpoint *endpoint =
     dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
 
-  if (endpoint == 0)
+  if (endpoint == nullptr)
     return 0;
 
   if ((this->ssl_component ().port != 0
@@ -334,7 +334,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
   // numbers often may not make sense, or are not being used anyway.
   // Therefore, directly comparing the hosts at this point. See also the
   // comments in the hash() method
-  if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
+  if (this->iiop_endpoint() == nullptr || endpoint->iiop_endpoint() == nullptr)
     return 0;
 
   if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
@@ -347,7 +347,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
 TAO_Endpoint *
 TAO_SSLIOP_Synthetic_Endpoint::duplicate ()
 {
-  TAO_SSLIOP_Synthetic_Endpoint *endpoint = 0;
+  TAO_SSLIOP_Synthetic_Endpoint *endpoint = nullptr;
 
   // @@ We need to set the priority of the newly formed endpoint. It
   // shouldnt be a problem as long as SSL is not used with RTCORBA.

@@ -7,14 +7,9 @@
 #include "ace/Null_Mutex.h"
 #include "ace/PI_Malloc.h"
 
-typedef ACE_Malloc_T <ACE_MMAP_MEMORY_POOL,
-                      ACE_Null_Mutex,
-                      ACE_PI_Control_Block>
-  ALLOCATOR;
-typedef ACE_Malloc_LIFO_Iterator_T<ACE_MMAP_MEMORY_POOL,
-                                   ACE_Null_Mutex,
-                                   ACE_PI_Control_Block>
-  MALLOC_LIFO_ITERATOR;
+using ALLOCATOR = ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block>;
+using MALLOC_LIFO_ITERATOR =
+  ACE_Malloc_LIFO_Iterator_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block>;
 
 ALLOCATOR  *g_allocator;
 // Listing 1

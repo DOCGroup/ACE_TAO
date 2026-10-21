@@ -68,14 +68,14 @@ namespace TAO
      */
     ORB_Table ();
 
-    typedef ACE_Array_Map<CORBA::String_var,
-                          ORB_Core_Ref_Counter,
-                          TAO::String_Var_Equal_To> Table;
-    typedef Table::key_type   key_type;
-    typedef Table::data_type  data_type;
-    typedef Table::value_type value_type;
-    typedef Table::size_type  size_type;
-    typedef Table::iterator   iterator;
+    using Table = ACE_Array_Map<CORBA::String_var,
+                                ORB_Core_Ref_Counter,
+                                TAO::String_Var_Equal_To>;
+    using key_type = Table::key_type;
+    using data_type = Table::data_type;
+    using value_type = Table::value_type;
+    using size_type = Table::size_type;
+    using iterator = Table::iterator;
 
     /**
      * @name The canonical ACE_Map methods.
@@ -119,8 +119,10 @@ namespace TAO
 
   private:
     // Prevent copying
-    ORB_Table (const ORB_Table &);
-    void operator= (const ORB_Table &);
+    ORB_Table (ORB_Table const &) = delete;
+    ORB_Table &operator= (ORB_Table const &) = delete;
+    ORB_Table (ORB_Table &&) = delete;
+    ORB_Table &operator= (ORB_Table &&) = delete;
 
     /// Return @c TAO_ORB_Core corresponding to ORB with given @a
     /// orb_id.  (underlying unlocked implementation).
@@ -132,13 +134,13 @@ namespace TAO
 
     /// Variable to check if the first ORB decides not to be the
     /// default.
-    bool first_orb_not_default_;
+    bool first_orb_not_default_ {};
 
     /// The underlying table.
     Table table_;
 
     /// The first ORB created by the user
-    ::TAO_ORB_Core * first_orb_;
+    ::TAO_ORB_Core * first_orb_ {};
   };
 
   // -----------------------------------------------

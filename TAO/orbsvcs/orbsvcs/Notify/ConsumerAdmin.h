@@ -39,7 +39,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin :
                              public virtual TAO_Notify_Admin
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_ConsumerAdmin > Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_ConsumerAdmin >;
   /// Constructor
   TAO_Notify_ConsumerAdmin ();
 

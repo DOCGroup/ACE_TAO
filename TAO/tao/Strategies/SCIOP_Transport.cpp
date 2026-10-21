@@ -115,7 +115,7 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
-                          0,
+                          nullptr,
                           message_semantics,
                           max_wait_time) == -1)
     return -1;
@@ -230,7 +230,7 @@ TAO_SCIOP_Transport::get_listen_point (
     dynamic_cast<TAO_SCIOP_Acceptor *> (acceptor );
 
   // Get the array of endpoints serviced by TAO_SCIOP_Acceptor
-  const ACE_INET_Addr *endpoint_addr =
+  ACE_INET_Addr const *endpoint_addr =
     sciop_acceptor->endpoints ();
 
   // Get the endpoint count

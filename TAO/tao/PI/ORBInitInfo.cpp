@@ -73,7 +73,7 @@ TAO_ORBInitInfo::arguments ()
   // In accordance with the C++ mapping for sequences, it is up to the
   // caller to deallocate storage for returned sequences.
 
-  CORBA::StringSeq *args = 0;
+  CORBA::StringSeq *args = nullptr;
   ACE_NEW_THROW_EX (args,
                     CORBA::StringSeq,
                     CORBA::NO_MEMORY (
@@ -111,7 +111,7 @@ TAO_ORBInitInfo::codec_factory ()
       TAO_Object_Loader *loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
 
-      if (loader == 0)
+      if (loader == nullptr)
         {
           ACE_Service_Config::process_directive (
             ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("CodecFactory",
@@ -123,10 +123,10 @@ TAO_ORBInitInfo::codec_factory ()
             ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
         }
 
-      if (loader != 0)
+      if (loader != nullptr)
         {
           CORBA::Object_var cf =
-            loader->create_object (this->orb_core_->orb (), 0, 0);
+            loader->create_object (this->orb_core_->orb (), 0, nullptr);
 
           this->codec_factory_ = IOP::CodecFactory::_narrow (cf.in ());
         }
@@ -142,7 +142,7 @@ TAO_ORBInitInfo::register_initial_reference (
 {
   this->check_validity ();
 
-  if (id == 0 || std::strlen (id) == 0)
+  if (id == nullptr || std::strlen (id) == 0)
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   if (CORBA::is_nil (obj))
@@ -159,7 +159,7 @@ TAO_ORBInitInfo::resolve_initial_references (const char * id)
 {
   this->check_validity ();
 
-  if (id == 0 || std::strlen (id) == 0)
+  if (id == nullptr || std::strlen (id) == 0)
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   // The ORB is practically fully initialized by the time this point
@@ -303,7 +303,7 @@ TAO_ORBInitInfo::register_policy_factory (
   TAO::PolicyFactory_Registry_Adapter *registry =
     this->orb_core_->policy_factory_registry ();
 
-  if (registry == 0)
+  if (registry == nullptr)
     {
       throw ::CORBA::INTERNAL ();
     }
@@ -333,7 +333,7 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
 void
 TAO_ORBInitInfo::check_validity ()
 {
-  if (this->orb_core_ == 0)
+  if (this->orb_core_ == nullptr)
     {
       // As defined by the Portable Interceptor specification, throw a
       // CORBA::OBJECT_NOT_EXIST exception after CORBA::ORB_init() has

@@ -33,16 +33,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableInterceptor
 {
   class IORInterceptor;
-  typedef IORInterceptor *IORInterceptor_ptr;
+  using IORInterceptor_ptr = IORInterceptor *;
   class IORInfo;
-  typedef IORInfo *IORInfo_ptr;
+  using IORInfo_ptr = IORInfo *;
   class ObjectReferenceTemplate;
 }
 
 namespace TAO
 {
-  typedef ACE_Array_Base< ::PortableInterceptor::ObjectReferenceTemplate*>
-    ObjectReferenceTemplate_Array;
+  using ObjectReferenceTemplate_Array =
+    ACE_Array_Base< ::PortableInterceptor::ObjectReferenceTemplate*>;
 }
 
 class TAO_Root_POA;

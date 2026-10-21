@@ -113,7 +113,7 @@ namespace TAO
 
     protected:
       /// Helper method to update a particular policy.
-      void update_policy (const CORBA::Policy_ptr policy);
+      void update_policy (CORBA::Policy_ptr const policy);
 
       ::PortableServer::ThreadPolicyValue thread_;
 

@@ -38,6 +38,8 @@ class TAO_EndpointPolicy_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_EndpointPolicy_ORBInitializer () = default;
+
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *
@@ -45,12 +47,17 @@ public:
    * PortableInterceptor::ORBInitializer interface.
    */
   //@{
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
   //@}
 
 private:
+  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer const &) = delete;
+  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer const &) = delete;
+  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer &&) = delete;
+  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer &&) = delete;
+
   /// Register Endpoint policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };

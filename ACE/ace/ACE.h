@@ -156,7 +156,7 @@ namespace ACE
                                    void *buf,
                                    size_t len,
                                    int *flags,
-                                   const ACE_Time_Value *timeout = 0);
+                                   const ACE_Time_Value *timeout = nullptr);
 
 #endif /* ACE_HAS_TLI */
 
@@ -193,8 +193,8 @@ namespace ACE
                    void *buf,
                    size_t len,
                    int *flags,
-                   const ACE_Time_Value *timeout = 0,
-                   size_t *bytes_transferred = 0);
+                   const ACE_Time_Value *timeout = nullptr,
+                   size_t *bytes_transferred = nullptr);
 
 #endif /* ACE_HAS_TLI */
 
@@ -248,7 +248,7 @@ namespace ACE
                                    const void *buf,
                                    size_t len,
                                    int flags,
-                                   const ACE_Time_Value *timeout = 0);
+                                   const ACE_Time_Value *timeout = nullptr);
 
 #endif /* ACE_HAS_TLI */
 
@@ -285,8 +285,8 @@ namespace ACE
                    const void *buf,
                    size_t len,
                    int flags,
-                   const ACE_Time_Value *timeout = 0,
-                   size_t *bytes_transferred = 0);
+                   const ACE_Time_Value *timeout = nullptr,
+                   size_t *bytes_transferred = nullptr);
 
 #endif /* ACE_HAS_TLI */
 

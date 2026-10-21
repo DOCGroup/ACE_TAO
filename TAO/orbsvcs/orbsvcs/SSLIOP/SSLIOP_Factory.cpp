@@ -126,7 +126,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
 {
   const char *passwd_str = reinterpret_cast<const char *>(the_passwd);
   int len = 0;
-  if (the_passwd != 0)
+  if (the_passwd != nullptr)
     {
       len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (passwd_str));
     }
@@ -157,7 +157,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
           // do file
           FILE* file = ACE_OS::fopen (fname,ACE_TEXT("r"));
 
-          if (file == 0)
+          if (file == nullptr)
             {
               if (TAO_debug_level > 0)
                 ORBSVCS_DEBUG ((LM_DEBUG,
@@ -170,7 +170,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
             {
               ACE_Read_Buffer reader (file, true);
               char* string = reader.read ();
-              if (string != 0)
+              if (string != nullptr)
                 {
                   pem_passwd_ = string;
                   reader.alloc ()->free (string);
@@ -194,7 +194,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
           const char *env = pem_passwd_.length() == ofs ?
             "TAO_PEM_PASSWORD" : pem_passwd_.c_str() + ofs;
           char *pwd = ACE_OS::getenv (env);
-          if (pwd != 0)
+          if (pwd != nullptr)
             {
               pem_passwd_ = pwd;
             }
@@ -269,13 +269,13 @@ TAO::SSLIOP::Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = 0;
+  TAO_Acceptor *acceptor = nullptr;
 
   ACE_NEW_RETURN (acceptor,
                   TAO::SSLIOP::Acceptor (this->qop_,
                                          this->timeout_,
                                          this->check_host_),
-                  0);
+                  nullptr);
 
   return acceptor;
 }
@@ -286,9 +286,9 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 int
 TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char *&path)
 {
-  char *lst = 0;
+  char *lst = nullptr;
   const char *type_name = ACE_OS::strtok_r (arg, ":", &lst);
-  path = CORBA::string_dup (ACE_OS::strtok_r (0, "", &lst));
+  path = CORBA::string_dup (ACE_OS::strtok_r (nullptr, "", &lst));
 
   if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
       return SSL_FILETYPE_ASN1;
@@ -308,7 +308,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   CORBA::String_var ec_name;
   CORBA::String_var ca_file;
   CORBA::String_var ca_dir;
-  ACE_TCHAR *rand_path = 0;
+  ACE_TCHAR *rand_path = nullptr;
 
   int certificate_type = -1;
   int private_key_type = -1;
@@ -566,14 +566,14 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
   // Load some (more) entropy from the user specified sources
   // in addition to what's pointed to by ACE_SSL_RAND_FILE_ENV
-  if (rand_path != 0)
+  if (rand_path != nullptr)
   {
     short errors = 0;
-    ACE_TCHAR *file_name = 0;
+    ACE_TCHAR *file_name = nullptr;
     const ACE_TCHAR *path = ACE_OS::strtok_r (rand_path,
                                               TAO_PATH_SEPARATOR_STRING,
                                               &file_name);
-    while ( path != 0)
+    while (path != nullptr)
     {
       if( -1 == ssl_ctx->seed_file (ACE_TEXT_ALWAYS_CHAR(path), -1))
       {
@@ -590,7 +590,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                       ACE_TEXT ("more entropy from <%s>\n"), path));
       }
 
-      path = ACE_OS::strtok_r (0, TAO_PATH_SEPARATOR_STRING, &file_name);
+      path = ACE_OS::strtok_r (nullptr, TAO_PATH_SEPARATOR_STRING, &file_name);
     }
 
     if (errors > 0)
@@ -599,18 +599,18 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
   // Load any trusted certificates explicitely rather than relying on
   // previously set SSL_CERT_FILE and/or SSL_CERT_PATH environment variable
-  if (ca_file.in () != 0 || ca_dir.in () != 0)
+  if (ca_file.in () != nullptr || ca_dir.in () != nullptr)
     {
       if (ssl_ctx->load_trusted_ca (ca_file.in (), ca_dir.in ()) != 0)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Unable to load ")
                           ACE_TEXT ("CA certs from %C%C%C\n"),
-                          ((ca_file.in () != 0) ? ca_file.in () : "a file pointed to by "
+                          ((ca_file.in () != nullptr) ? ca_file.in () : "a file pointed to by "
                            ACE_SSL_CERT_FILE_ENV
                            " env var (if any)"),
                           ACE_TEXT (" and "),
-                          ((ca_dir.in () != 0) ?
+                          ((ca_dir.in () != nullptr) ?
                            ca_dir.in () : "a directory pointed to by "
                            ACE_SSL_CERT_DIR_ENV
                            " env var (if any)")));
@@ -623,11 +623,11 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             ORBSVCS_DEBUG ((LM_INFO,
                             ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
                             ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
-                            ((ca_file.in () != 0) ? ca_file.in () : "a file pointed to by "
+                            ((ca_file.in () != nullptr) ? ca_file.in () : "a file pointed to by "
                              ACE_SSL_CERT_FILE_ENV
                              " env var (if any)"),
                             ACE_TEXT (" and "),
-                            ((ca_dir.in () != 0) ?
+                            ((ca_dir.in () != nullptr) ?
                              ca_dir.in () : "a directory pointed to by "
                              ACE_SSL_CERT_DIR_ENV
                              " env var (if any)")));
@@ -638,7 +638,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // then we do that here, otherwise we load them in from the cert file.
   // Note that we only do this on the server side, I think so we might
   // need to defer this 'til later in the acceptor or something...
-  if (dhparams_path.in() == 0)
+  if (dhparams_path.in() == nullptr)
     {
       // If the user didn't explicitly specify a DH parameters file, we
       // also might find it concatenated in the certificate file.
@@ -647,7 +647,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       dhparams_type = certificate_type;
     }
 
-  if (dhparams_path.in() != 0)
+  if (dhparams_path.in() != nullptr)
     {
       if (ssl_ctx->dh_params (dhparams_path.in(),
                               dhparams_type) != 0)
@@ -691,7 +691,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // ACE_SSL_Context attempts to check the private key for
   // consistency.  That check requires the certificate to be available
   // in the underlying SSL_CTX.
-  if (certificate_path.in() != 0)
+  if (certificate_path.in() != nullptr)
     {
       if (ssl_ctx->certificate (certificate_path.in(), certificate_type) != 0)
         {
@@ -714,7 +714,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
     }
 
-  if (private_key_path.in() != 0)
+  if (private_key_path.in() != nullptr)
     {
       if (ssl_ctx->private_key (private_key_path.in(), private_key_type) != 0)
         {
@@ -853,11 +853,11 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
 TAO_Connector *
 TAO::SSLIOP::Protocol_Factory::make_connector ()
 {
-  TAO::SSLIOP::Connector *connector = 0;
+  TAO::SSLIOP::Connector *connector = nullptr;
 
   ACE_NEW_RETURN (connector,
                   TAO::SSLIOP::Connector (this->qop_, this->check_host_),
-                  0);
+                  nullptr);
   return connector;
 }
 

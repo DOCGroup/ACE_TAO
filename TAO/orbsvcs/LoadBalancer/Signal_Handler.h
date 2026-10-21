@@ -47,34 +47,39 @@ public:
                          PortableServer::POA_ptr poa);
 
   /// Run by a daemon thread to handle signals synchronously.
-  virtual int svc ();
+  int svc () override;
 
   /// Active object activation method.
   /**
    * This override blocks all signals in the calling thread before
    * spawning the synchronous signal handler.
    */
-  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
+  int activate (long flags = THR_NEW_LWP | THR_JOINABLE,
                         int n_threads = 1,
                         int force_active = 0,
                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
                         int grp_id = -1,
-                        ACE_Task_Base *task = 0,
-                        ACE_hthread_t thread_handles[] = 0,
-                        void *stack[] = 0,
-                        size_t stack_size[] = 0,
-                        ACE_thread_t thread_ids[] = 0,
-                        const char* thr_name[] = 0);
+                        ACE_Task_Base *task = nullptr,
+                        ACE_hthread_t thread_handles[] = nullptr,
+                        void *stack[] = nullptr,
+                        size_t stack_size[] = nullptr,
+                        ACE_thread_t thread_ids[] = nullptr,
+                        char const *thr_name[] = nullptr) override;
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
 protected:
   /// Template method that initiates the cleanup process.
   virtual int perform_cleanup (int signum);
 
 private:
+  TAO_LB_Signal_Handler (TAO_LB_Signal_Handler const &) = delete;
+  TAO_LB_Signal_Handler (TAO_LB_Signal_Handler &&) = delete;
+  TAO_LB_Signal_Handler & operator= (TAO_LB_Signal_Handler const &) = delete;
+  TAO_LB_Signal_Handler & operator= (TAO_LB_Signal_Handler &&) = delete;
+
 #ifdef ACE_HAS_THREADS
   /// Block all signals before spawning the threads.  Then, unblock
   /// these signals when this handler is destroyed.

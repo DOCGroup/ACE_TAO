@@ -11,22 +11,21 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Timer_Helper::Timer_Helper ()
-  : clerk_ (0)
+  : clerk_ (nullptr)
 {
 }
 
-Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk *clerk)
+Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk * clerk)
   : clerk_ (clerk)
 {
 }
 
 Timer_Helper::~Timer_Helper ()
-{
-}
+= default;
 
 int
-Timer_Helper::handle_timeout (const ACE_Time_Value &,
-                              const void *)
+Timer_Helper::handle_timeout (ACE_Time_Value const &,
+                              void const *)
 {
   int no_of_servers = 0;
   CORBA::ULongLong sum = 0;

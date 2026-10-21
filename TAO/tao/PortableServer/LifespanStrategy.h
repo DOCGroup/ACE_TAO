@@ -40,7 +40,7 @@ namespace TAO
 
       virtual void strategy_cleanup ();
 
-      void create (const char *name, const TAO::ObjectKey &key);
+      void create (char const *name, TAO::ObjectKey const &key);
 
       virtual void notify_startup () = 0;
 
@@ -49,7 +49,7 @@ namespace TAO
       /**
        * Validate the passed object key if it belongs to this POA.
        */
-      bool validate (TAO::ObjectKey_var& key);
+      bool validate (TAO::ObjectKey_var &key);
 
       /**
        * Returns the length of the key type
@@ -61,12 +61,12 @@ namespace TAO
       /// Do we have set persistent or not,
       virtual CORBA::Boolean is_persistent () const = 0;
 
-      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) = 0;
+      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong &starting_at) = 0;
 
       /// Validate whether this matches the set lifespan strategy
       virtual bool validate (
         CORBA::Boolean is_persistent,
-        const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const = 0;
+        TAO::Portable_Server::Temporary_Creation_Time const &creation_time) const = 0;
 
       /// Check the state of the POA.
       virtual void check_state () = 0;
@@ -74,8 +74,8 @@ namespace TAO
       virtual bool use_imr () const = 0;
 
       virtual CORBA::Object_ptr imr_key_to_object (
-        const TAO::ObjectKey &key,
-        const char *type_id) const = 0;
+        TAO::ObjectKey const &key,
+        char const *type_id) const = 0;
 
     protected:
       TAO_Root_POA *poa_ {};

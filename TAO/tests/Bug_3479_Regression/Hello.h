@@ -13,10 +13,15 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual void get_string (CORBA::String_out string_out);
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
-  virtual void shutdown ();
+  // = The skeleton methods
+  void get_string (CORBA::String_out string_out) override;
+
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

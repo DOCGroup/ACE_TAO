@@ -4,7 +4,7 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -42,7 +42,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
 
     CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in());
+    PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in ());
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
     poa_manager->activate ();
 
@@ -61,10 +61,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     // use this poa for making system objects
-    Quoter_Stock_i::set_default_POA (poa.in());
+    Quoter_Stock_i::set_default_POA (poa.in ());
 
     // Create the servant
-    Quoter_Stock_Factory_i *stock_factory_i = 0;
+    Quoter_Stock_Factory_i *stock_factory_i = nullptr;
     ACE_NEW_RETURN (stock_factory_i,
                     Quoter_Stock_Factory_i,
                     -1);
@@ -83,8 +83,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
 
     // Output the IOR to the <ior_output_file>
-    FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-    if (output_file == 0)
+    FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+    if (output_file == nullptr)
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing IOR: %s\n",
                           ior_output_file),

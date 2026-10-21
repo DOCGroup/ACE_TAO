@@ -45,20 +45,20 @@ namespace TAO
 class TAO_ZIOP_Export TAO_ZIOP_Stub : public TAO_Stub
 {
 public:
-  TAO_ZIOP_Stub (const char *repository_id,
-                 const TAO_MProfile &profiles,
+  TAO_ZIOP_Stub (char const *repository_id,
+                 TAO_MProfile const &profiles,
                  TAO_ORB_Core *orb_core);
 
-  virtual ~TAO_ZIOP_Stub ();
+  ~TAO_ZIOP_Stub () override;
 
   /**
    * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type) override;
 
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type) override;
 
 private:
   /// Helper method used to parse the policies.
@@ -87,10 +87,10 @@ private:
   CORBA::Boolean are_policies_parsed_;
 
 private:
-  TAO_ZIOP_Stub (const TAO_ZIOP_Stub &) = delete;
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;
   TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
-  TAO_ZIOP_Stub &operator = (const TAO_ZIOP_Stub &) = delete;
-  TAO_ZIOP_Stub &operator = (TAO_ZIOP_Stub &&) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub const &) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

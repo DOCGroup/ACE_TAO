@@ -15,9 +15,9 @@ class Log;
 class HostProcess;
 class Endpoint;
 
-typedef ACE_RB_Tree<long, HostProcess *, ACE_Less_Than<long>, ACE_Null_Mutex> Processes;
-typedef ACE_RB_Tree<ACE_CString, HostProcess *, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> Procs_By_Name;
-typedef ACE_Hash_Map_Manager<const ACE_CString, ACE_CString, ACE_Null_Mutex> AltAddresses;
+using Processes = ACE_RB_Tree<long, HostProcess *, ACE_Less_Than<long>, ACE_Null_Mutex>;
+using Procs_By_Name = ACE_RB_Tree<ACE_CString, HostProcess *, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
+using AltAddresses = ACE_Hash_Map_Manager<const ACE_CString, ACE_CString, ACE_Null_Mutex>;
 
 class Session
 {

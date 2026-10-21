@@ -417,7 +417,7 @@ public:
    */
   int handler (ACE_HANDLE handle,
                ACE_Reactor_Mask mask,
-               ACE_Event_Handler **event_handler = 0);
+               ACE_Event_Handler **event_handler = nullptr);
 
   /**
    * Check to see if @a handle is associated with a valid
@@ -984,7 +984,7 @@ public:
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,
-                            const void **arg = 0,
+                            const void **arg = nullptr,
                             int dont_call_handle_close = 1);
 
   // = High-level Event_Handler scheduling operations
@@ -1110,7 +1110,7 @@ public:
    * transfer will not complete until all threads are ready (just like
    * the handle set).
    */
-  virtual int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = 0);
+  virtual int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = nullptr);
 
   /// Return the ID of the "owner" thread.
   virtual int owner (ACE_thread_t *owner);

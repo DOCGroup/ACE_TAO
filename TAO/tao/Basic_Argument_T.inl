@@ -66,9 +66,7 @@ TAO::Out_Basic_Argument_T<S, Insert_Policy>::arg ()
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Basic_Argument_T<S, Insert_Policy>::Ret_Basic_Argument_T ()
-{
-}
+TAO::Ret_Basic_Argument_T<S, Insert_Policy>::Ret_Basic_Argument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>

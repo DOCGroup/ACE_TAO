@@ -42,7 +42,7 @@ public:
   void print_stats ();
 
   /// print the exception
-  void print_exception (const char *call_name);
+  void print_exception (char const *call_name);
 
   /// start timing
   void start_timer ();

@@ -12,11 +12,11 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 
-static const ACE_TCHAR * location_id = 0;
-static const ACE_TCHAR * location_kind = 0;
-static const ACE_TCHAR * mtype = ACE_TEXT("CPU");
-static const ACE_TCHAR * mstyle = ACE_TEXT("PUSH");
-static const ACE_TCHAR * custom_monitor_ior = 0;
+static ACE_TCHAR const * location_id = nullptr;
+static ACE_TCHAR const * location_kind = nullptr;
+static ACE_TCHAR const * mtype = ACE_TEXT("CPU");
+static ACE_TCHAR const * mstyle = ACE_TEXT("PUSH");
+static ACE_TCHAR const * custom_monitor_ior = nullptr;
 
 // For the sake of consistency, make default push monitoring interval
 // the same as the pull monitoring interval.
@@ -47,7 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
 
   int c = 0;
-  const ACE_TCHAR * s = 0;
+  ACE_TCHAR const * s = nullptr;
 
   while ((c = get_opts ()) != -1)
     {
@@ -124,7 +124,7 @@ TAO_LB_run_load_monitor (void * orb_arg)
       return reinterpret_cast<void *> (-1);
     }
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif  /* linux && ACE_HAS_THREADS */
 
@@ -133,7 +133,7 @@ CosLoadBalancing::LoadMonitor_ptr
 get_load_monitor (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr root_poa)
 {
-  if (::custom_monitor_ior != 0)
+  if (::custom_monitor_ior != nullptr)
     {
       CORBA::Object_var obj =
         orb->string_to_object (::custom_monitor_ior);
@@ -151,7 +151,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
       if (ACE_OS::strcasecmp (::mtype, ACE_TEXT("CPU")) == 0)
         {
-          TAO_LB_CPU_Load_Average_Monitor * monitor = 0;
+          TAO_LB_CPU_Load_Average_Monitor * monitor = nullptr;
           ACE_NEW_THROW_EX (monitor,
                             TAO_LB_CPU_Load_Average_Monitor (::location_id,
                                                              ::location_kind),
@@ -205,7 +205,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
       ACE_Time_Value interval (::push_interval, 0);
       ACE_Time_Value restart (::push_interval, 0);
       timer_id = reactor->schedule_timer (handler,
-                                          0,
+                                          nullptr,
                                           interval,
                                           restart);
 

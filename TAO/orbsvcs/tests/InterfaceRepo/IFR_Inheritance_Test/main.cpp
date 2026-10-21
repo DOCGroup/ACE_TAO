@@ -4,7 +4,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 
-void printContents (const CORBA::ContainedSeq& cont)
+void printContents (CORBA::ContainedSeq const& cont)
 {
   try
     {

@@ -7,9 +7,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor ()
   : TAO_IIOP_Acceptor (),
     base_acceptor_ (),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0)
+    creation_strategy_ (nullptr),
+    concurrency_strategy_ (nullptr),
+    accept_strategy_ (nullptr)
 {
 }
 

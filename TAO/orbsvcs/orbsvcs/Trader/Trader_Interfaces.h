@@ -61,16 +61,16 @@ public:
 
   ~TAO_Lookup ();
 
-  virtual void
-    query (const char *type,
-           const char *constr,
-           const char *pref,
-           const CosTrading::PolicySeq& policies,
-           const CosTrading::Lookup::SpecifiedProps& desired_props,
+  void
+    query (char const* type,
+           char const* constr,
+           char const* pref,
+           CosTrading::PolicySeq const& policies,
+           CosTrading::Lookup::SpecifiedProps const& desired_props,
            CORBA::ULong how_many,
            CosTrading::OfferSeq_out offers,
            CosTrading::OfferIterator_out offer_itr,
-           CosTrading::PolicyNameSeq_out limits_applied);
+           CosTrading::PolicyNameSeq_out limits_applied) override;
 
   // BEGIN SPEC
   // The query operation is the means by which an object can obtain
@@ -237,15 +237,17 @@ private:
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
                                   const CosTrading::Admin::OctetSeq*& seq);
 
-  void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Lookup (TAO_Lookup const&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup const&) = delete;
+  TAO_Lookup (TAO_Lookup&&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup&&) = delete;
 
   const unsigned int IDS_SAVED;
 
   /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
-  typedef ACE_Unbounded_Queue<const CosTrading::Admin::OctetSeq*> Request_Ids;
+  using Request_Ids = ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq const*>;
 
   /// A list of recent request_id_stems
   Request_Ids request_ids_;
@@ -267,11 +269,11 @@ class TAO_Register :
 public:
   TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  virtual ~TAO_Register ();
+  ~TAO_Register () override;
 
-  virtual CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
-                                           const char *type,
-                                           const CosTrading::PropertySeq& properties);
+  CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
+                                   char const* type,
+                                   CosTrading::PropertySeq const& properties) override;
 
   // BEGIN SPEC
   // The export operation is the means by which a service is
@@ -327,7 +329,7 @@ public:
   // parameter, the DuplicatePropertyName exception is raised.
   // END SPEC
 
-  virtual void withdraw (const char *id);
+  void withdraw (char const* id) override;
 
   // BEGIN SPEC
   // The withdraw operation removes the service offer from the trader
@@ -342,8 +344,8 @@ public:
   // ProxyOfferId exception is raised.
   // END SPEC
 
-  virtual CosTrading::Register::OfferInfo*
-    describe (const char * id);
+  CosTrading::Register::OfferInfo*
+    describe (char const* id) override;
 
   // BEGIN SPEC
   // The describe operation returns the information about an offered
@@ -359,9 +361,9 @@ public:
   // ordinary offer, then a ProxyOfferId exception is raised.
   // END SPEC
 
-  virtual void modify (const char * id,
-                       const CosTrading::PropertyNameSeq& del_list,
-                       const CosTrading::PropertySeq& modify_list);
+  void modify (char const* id,
+               CosTrading::PropertyNameSeq const& del_list,
+               CosTrading::PropertySeq const& modify_list) override;
 
   // BEGIN SPEC
   // The modify operation is used to change the description of a
@@ -416,8 +418,8 @@ public:
   // supports_modifiable_properties attribute yields FALSE.
   // END SPEC
 
-  virtual void withdraw_using_constraint (const char *type,
-                                          const char *constr);
+  void withdraw_using_constraint (char const* type,
+                                  char const* constr) override;
 
   // BEGIN SPEC
   // The withdraw_using_constraint operation withdraws a set of offers
@@ -442,8 +444,8 @@ public:
   // service type, then a NoMatchingOffers exception is raised.
   // END SPEC
 
-  virtual CosTrading::Register_ptr
-    resolve (const CosTrading::TraderName &name);
+  CosTrading::Register_ptr
+    resolve (CosTrading::TraderName const& name) override;
 
   // BEGIN SPEC
   // This operation is used to resolve a context relative name for
@@ -473,8 +475,10 @@ public:
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                             const CosTrading::PropertySeq& properties);
 
-  void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Register (TAO_Register const&) = delete;
+  TAO_Register& operator= (TAO_Register const&) = delete;
+  TAO_Register (TAO_Register&&) = delete;
+  TAO_Register& operator= (TAO_Register&&) = delete;
 
  private:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
@@ -517,56 +521,48 @@ public:
 
   /// Search card is the cardinality of the offers searched for
   /// constraint compliance.
-  virtual CORBA::ULong set_def_search_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_search_card (CORBA::ULong value);
+  CORBA::ULong set_def_search_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_search_card (CORBA::ULong value) override;
 
 
   /// Match card is the cardinality of offers found compliant with the
   /// constraints.
-  virtual CORBA::ULong set_def_match_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_match_card (CORBA::ULong value);
+  CORBA::ULong set_def_match_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_match_card (CORBA::ULong value) override;
 
   /// Return card is the cardinality of the offers returned from
   /// Lookup.
-  virtual CORBA::ULong set_def_return_card (CORBA::ULong value);
-  virtual CORBA::ULong set_max_return_card (CORBA::ULong value);
+  CORBA::ULong set_def_return_card (CORBA::ULong value) override;
+  CORBA::ULong set_max_return_card (CORBA::ULong value) override;
 
   /// Types of offers available for consideration. Ween out those
   /// offers with modifiable properties
-  virtual CORBA::ULong set_max_list (CORBA::ULong value);
-  virtual CORBA::Boolean
-    set_supports_modifiable_properties (CORBA::Boolean value);
-  virtual CORBA::Boolean
-    set_supports_dynamic_properties (CORBA::Boolean value);
-  virtual CORBA::Boolean
-    set_supports_proxy_offers (CORBA::Boolean value);
+  CORBA::ULong set_max_list (CORBA::ULong value) override;
+  CORBA::Boolean set_supports_modifiable_properties (CORBA::Boolean value) override;
+  CORBA::Boolean set_supports_dynamic_properties (CORBA::Boolean value) override;
+  CORBA::Boolean set_supports_proxy_offers (CORBA::Boolean value) override;
 
   // = Link Interface parameters
 
-  virtual CORBA::ULong set_def_hop_count (CORBA::ULong value);
-  virtual CORBA::ULong set_max_hop_count (CORBA::ULong value);
+  CORBA::ULong set_def_hop_count (CORBA::ULong value) override;
+  CORBA::ULong set_max_hop_count (CORBA::ULong value) override;
 
-  virtual CosTrading::FollowOption
-    set_def_follow_policy (CosTrading::FollowOption policy);
-  virtual CosTrading::FollowOption
-    set_max_follow_policy (CosTrading::FollowOption policy);
-  virtual CosTrading::FollowOption
-    set_max_link_follow_policy (CosTrading::FollowOption policy);
+  CosTrading::FollowOption set_def_follow_policy (CosTrading::FollowOption policy) override;
+  CosTrading::FollowOption set_max_follow_policy (CosTrading::FollowOption policy) override;
+  CosTrading::FollowOption set_max_link_follow_policy (CosTrading::FollowOption policy) override;
 
   // = Set Type Repository
 
-  virtual CosTrading::TypeRepository_ptr
-    set_type_repos (CosTrading::TypeRepository_ptr repository);
+  CosTrading::TypeRepository_ptr set_type_repos (CosTrading::TypeRepository_ptr repository) override;
 
-  virtual CosTrading::Admin::OctetSeq*
-    request_id_stem ();
+  CosTrading::Admin::OctetSeq* request_id_stem () override;
 
-  virtual CosTrading::Admin::OctetSeq*
-    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem);
+  CosTrading::Admin::OctetSeq*
+    set_request_id_stem (CosTrading::Admin::OctetSeq const& stem) override;
 
-  virtual void list_offers (CORBA::ULong how_many,
-                            CosTrading::OfferIdSeq_out ids,
-                            CosTrading::OfferIdIterator_out id_itr);
+  void list_offers (CORBA::ULong how_many,
+                    CosTrading::OfferIdSeq_out ids,
+                    CosTrading::OfferIdIterator_out id_itr) override;
 
 
   // BEGIN SPEC
@@ -587,13 +583,15 @@ public:
   // the "id_itr" is nil.
   // END SPEC
 
-  virtual void list_proxies (CORBA::ULong,
-                             CosTrading::OfferIdSeq_out,
-                             CosTrading::OfferIdIterator_out);
+  void list_proxies (CORBA::ULong,
+                     CosTrading::OfferIdSeq_out,
+                     CosTrading::OfferIdIterator_out) override;
 
 private:
-  void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Admin (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Admin (TAO_Admin const&) = delete;
+  TAO_Admin& operator= (TAO_Admin const&) = delete;
+  TAO_Admin (TAO_Admin&&) = delete;
+  TAO_Admin& operator= (TAO_Admin&&) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
@@ -627,10 +625,10 @@ public:
    * service of another trader in the performance of its own trading
    * service operations.
    */
-  virtual void add_link (const char *name,
-                         CosTrading::Lookup_ptr target,
-                         CosTrading::FollowOption def_pass_on_follow_rule,
-                         CosTrading::FollowOption limiting_follow_rule);
+  void add_link (char const* name,
+                 CosTrading::Lookup_ptr target,
+                 CosTrading::FollowOption def_pass_on_follow_rule,
+                 CosTrading::FollowOption limiting_follow_rule) override;
 
   // The "name" parameter is used in subsequent link management
   // operations to identify the intended link. If the parameter is not
@@ -668,7 +666,7 @@ public:
   // creation of the link.
   // END SPEC
 
-  virtual void remove_link (const char *name);
+  void remove_link (char const* name) override;
 
   // BEGIN SPEC
   // The remove_link operation removes all knowledge of the target
@@ -681,7 +679,7 @@ public:
   // not in the trader.
   // END SPEC
 
-  virtual CosTrading::Link::LinkInfo* describe_link (const char *name);
+  CosTrading::Link::LinkInfo* describe_link (char const* name) override;
 
   // BEGIN SPEC
   // The describe_link operation returns information on a link held in
@@ -706,7 +704,7 @@ public:
   // state.
   // END SPEC
 
-  virtual CosTrading::LinkNameSeq* list_links ();
+  CosTrading::LinkNameSeq* list_links () override;
 
   // BEGIN SPEC
   // The list_links operation returns a list of the names of all
@@ -715,9 +713,9 @@ public:
   // describe_link or remove_link.
   // END SPEC
 
-  virtual void modify_link (const char *name,
-                            CosTrading::FollowOption def_pass_on_follow_rule,
-                            CosTrading::FollowOption limiting_follow_rule);
+  void modify_link (char const* name,
+                    CosTrading::FollowOption def_pass_on_follow_rule,
+                    CosTrading::FollowOption limiting_follow_rule) override;
 
   // BEGIN SPEC
   // The modify_link operation is used to change the existing link
@@ -743,18 +741,16 @@ public:
   // END SPEC
 
 private:
-  void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Link (TAO_Link const&) = delete;
+  TAO_Link& operator= (TAO_Link const&) = delete;
+  TAO_Link (TAO_Link&&) = delete;
+  TAO_Link& operator= (TAO_Link&&) = delete;
 
-  typedef ACE_Hash_Map_Manager_Ex
-  <
-  CORBA::String_var,
-  CosTrading::Link::LinkInfo,
-  ACE_Hash<CORBA::String_var>,
-  ACE_Equal_To<CORBA::String_var>,
-  MAP_LOCK_TYPE
-  >
-  Links;
+  using Links = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                        CosTrading::Link::LinkInfo,
+                                        ACE_Hash<CORBA::String_var>,
+                                        ACE_Equal_To<CORBA::String_var>,
+                                        MAP_LOCK_TYPE>;
 
   /// The collection of link connecting this trader to others in the
   /// federation.
@@ -776,28 +772,30 @@ public:
 
   ~TAO_Proxy ();
 
-  virtual CosTrading::OfferId
+  CosTrading::OfferId
     export_proxy (CosTrading::Lookup_ptr,
-                  const char *,
-                  const CosTrading::PropertySeq &,
+                  char const*,
+                  CosTrading::PropertySeq const&,
                   CORBA::Boolean if_match_all,
-                  const char *,
-                  const CosTrading::PolicySeq &);
+                  char const*,
+                  CosTrading::PolicySeq const&) override;
 
-  virtual void withdraw_proxy (const char *);
+  void withdraw_proxy (char const*) override;
 
-  virtual CosTrading::Proxy::ProxyInfo *
-  describe_proxy (const char *);
+  CosTrading::Proxy::ProxyInfo*
+  describe_proxy (char const*) override;
 
    // = CosTrading::TraderComponents methods.
 
-  virtual void list_proxies (CORBA::ULong,
-                             CosTrading::OfferIdSeq *&,
-                             CosTrading::OfferIdIterator_ptr &);
+  void list_proxies (CORBA::ULong,
+                     CosTrading::OfferIdSeq*&,
+                     CosTrading::OfferIdIterator_ptr&);
 
 private:
-  void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
-  TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Proxy (TAO_Proxy const&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy const&) = delete;
+  TAO_Proxy (TAO_Proxy&&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy&&) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };

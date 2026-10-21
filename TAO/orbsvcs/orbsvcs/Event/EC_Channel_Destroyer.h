@@ -21,7 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 struct TAO_RTEvent_Serv_Export TAO_EC_Channel_Destroyer_Functor
 {
-  typedef  TAO_EC_Event_Channel_Base * argument;
+  using argument = TAO_EC_Event_Channel_Base *;
 
   /// Destroy @c event_channel
   void operator() (TAO_EC_Event_Channel_Base * event_channel) noexcept;
@@ -32,10 +32,9 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Channel_Destroyer_Functor
  *
  * @brief Helper class to destroy event channel.
  */
-typedef ACE_Utils::Auto_Functor<
-            TAO_EC_Event_Channel_Base,
-            TAO_EC_Channel_Destroyer_Functor>
-        TAO_EC_Channel_Destroyer;
+using TAO_EC_Channel_Destroyer =
+  ACE_Utils::Auto_Functor<TAO_EC_Event_Channel_Base,
+                          TAO_EC_Channel_Destroyer_Functor>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

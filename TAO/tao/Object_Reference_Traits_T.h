@@ -23,10 +23,10 @@ namespace details
 template<class object_t, class object_t_var, class derived>
 struct object_reference_traits_decorator
 {
-  typedef object_t object_type;
-  typedef object_type * value_type;
-  typedef object_type const * const_value_type;
-  typedef object_t_var object_type_var;
+  using object_type = object_t;
+  using value_type = object_type *;
+  using const_value_type = object_type const *;
+  using object_type_var = object_t_var;
 
   inline static void zero_range(
       object_type ** begin, object_type ** end)
@@ -77,10 +77,10 @@ struct object_reference_traits
   : public object_reference_traits_base<object_t, object_t_var>
   , public object_reference_traits_decorator<object_t, object_t_var, object_reference_traits<object_t,object_t_var,dummy> >
 {
-  typedef object_t object_type;
-  typedef object_type * value_type;
-  typedef object_type const * const_value_type;
-  typedef object_t_var object_type_var;
+  using object_type = object_t;
+  using value_type = object_type *;
+  using const_value_type = object_type const *;
+  using object_type_var = object_t_var;
 };
 } // namespace details
 } // namespace CORBA

@@ -198,7 +198,7 @@ namespace TAO
     RequestProcessingStrategyServantActivator::incarnate_servant (
       const PortableServer::ObjectId& object_id)
     {
-      PortableServer::Servant servant = 0;
+      PortableServer::Servant servant = nullptr;
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -210,7 +210,7 @@ namespace TAO
       // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
       servant = this->servant_activator_->incarnate (object_id, this->poa_);
 
-      if (servant == 0)
+      if (servant == nullptr)
         {
           throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
         }

@@ -53,7 +53,7 @@ TAO_PG_PropertyManager::get_default_properties ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  PortableGroup::Properties * props = 0;
+  PortableGroup::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
                     PortableGroup::Properties (this->default_properties_),
                     CORBA::NO_MEMORY (
@@ -94,7 +94,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  Type_Prop_Table::ENTRY * entry = 0;
+  Type_Prop_Table::ENTRY * entry = nullptr;
   if (this->type_properties_.find (type_id, entry) != 0)
     throw CORBA::BAD_PARAM ();
 
@@ -110,19 +110,19 @@ TAO_PG_PropertyManager::get_type_properties (
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
 
-  Type_Prop_Table::ENTRY * entry = 0;
-  PortableGroup::Properties * type_properties = 0;
+  Type_Prop_Table::ENTRY * entry = nullptr;
+  PortableGroup::Properties * type_properties = nullptr;
 
   if (this->type_properties_.find (type_id, entry) == 0)
     type_properties = &entry->int_id_;
 
   const CORBA::ULong def_props_len = this->default_properties_.length ();
   const CORBA::ULong type_props_len =
-    (type_properties == 0 ? 0 : type_properties->length ());
+    (type_properties == nullptr ? 0 : type_properties->length ());
   const CORBA::ULong props_len =
     (def_props_len > type_props_len ? def_props_len : type_props_len);
 
-  PortableGroup::Properties * tmp_properties = 0;
+  PortableGroup::Properties * tmp_properties = nullptr;
   ACE_NEW_THROW_EX (tmp_properties,
                     PortableGroup::Properties (props_len),
                     CORBA::NO_MEMORY (
@@ -141,7 +141,7 @@ TAO_PG_PropertyManager::get_type_properties (
 
   *tmp_properties = this->default_properties_;
 
-  if (type_properties != 0 && type_props_len > 0)
+  if (type_properties != nullptr && type_props_len > 0)
     TAO_PG::override_properties (*type_properties, *tmp_properties);
 
   return properties._retn ();
@@ -158,7 +158,7 @@ TAO_PG_PropertyManager::remove_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  Type_Prop_Table::ENTRY * entry = 0;
+  Type_Prop_Table::ENTRY * entry = nullptr;
   if (this->type_properties_.find (type_id, entry) != 0)
     throw CORBA::BAD_PARAM ();
 
@@ -221,8 +221,8 @@ TAO_PG_PropertyManager::get_properties (
     this->object_group_manager_.type_id (object_group);
 
   CORBA::ULong type_props_len = 0;
-  PortableGroup::Properties * type_properties = 0;
-  Type_Prop_Table::ENTRY * type_entry = 0;
+  PortableGroup::Properties * type_properties = nullptr;
+  Type_Prop_Table::ENTRY * type_entry = nullptr;
   if (this->type_properties_.find (type_id.in (), type_entry) == 0)
     {
       type_properties = &type_entry->int_id_;
@@ -236,7 +236,7 @@ TAO_PG_PropertyManager::get_properties (
   if (def_props_len > properties_len)
     properties_len = def_props_len;
 
-  PortableGroup::Properties * tmp_properties = 0;
+  PortableGroup::Properties * tmp_properties = nullptr;
   ACE_NEW_THROW_EX (tmp_properties,
                     PortableGroup::Properties (properties_len),
                     CORBA::NO_MEMORY (
@@ -257,7 +257,7 @@ TAO_PG_PropertyManager::get_properties (
   *tmp_properties = this->default_properties_;
 
   // Override default properties with type-specific properties.
-  if (type_properties != 0)
+  if (type_properties != nullptr)
     TAO_PG::override_properties (*type_properties, *tmp_properties);
 
   // Now override with the dynamic (object group) properties.

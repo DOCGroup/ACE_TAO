@@ -45,7 +45,7 @@ public:
   TAO_IORManip_IIOP_Filter ();
 
   /// Destructor.
-  virtual ~TAO_IORManip_IIOP_Filter ();
+  ~TAO_IORManip_IIOP_Filter () override;
 
   /// Compares the profile to the profile info.
   virtual CORBA::Boolean compare_profile_info (
@@ -60,9 +60,9 @@ public:
 
 protected:
   /// This is the bulk of the filtering code.
-  virtual void filter_and_add (TAO_Profile* profile,
-                               TAO_MProfile& profiles,
-                               TAO_Profile* guideline = 0);
+  void filter_and_add (TAO_Profile* profile,
+                       TAO_MProfile& profiles,
+                       TAO_Profile* guideline = nullptr) override;
 
 private:
   /// Fill in the Profile_Info with information from the profile.

@@ -1,7 +1,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -41,10 +41,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -56,8 +56,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       hello->shutdown ();
 
-      ACE_Time_Value duration(20, 0);
-      orb->run(duration);
+      ACE_Time_Value duration (20, 0);
+      orb->run (duration);
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

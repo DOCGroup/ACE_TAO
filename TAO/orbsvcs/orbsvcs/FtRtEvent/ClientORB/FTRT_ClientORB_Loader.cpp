@@ -10,13 +10,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRT {
-  FTRT_ClientORB_Loader::FTRT_ClientORB_Loader ()
-  {
-  }
+  FTRT_ClientORB_Loader::FTRT_ClientORB_Loader () = default;
 
-  FTRT_ClientORB_Loader::~FTRT_ClientORB_Loader ()
-  {
-  }
+  FTRT_ClientORB_Loader::~FTRT_ClientORB_Loader () = default;
 
   int FTRT_ClientORB_Loader::init (int argc,
     ACE_TCHAR* argv[])

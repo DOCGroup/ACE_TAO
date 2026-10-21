@@ -139,8 +139,10 @@ protected:
 
 private:
   /// Endpoints should not be copied.
-  TAO_Endpoint (const TAO_Endpoint&) = delete;
-  void operator= (const TAO_Endpoint&) = delete;
+  TAO_Endpoint (TAO_Endpoint const &) = delete;
+  TAO_Endpoint &operator= (TAO_Endpoint const &) = delete;
+  TAO_Endpoint (TAO_Endpoint &&) = delete;
+  TAO_Endpoint &operator= (TAO_Endpoint &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

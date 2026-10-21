@@ -520,7 +520,7 @@ private:
   LOOKUP_STRATEGY strategy_;
 };
 
-typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;
+using TAO_CODEGEN = ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX>;
 // Singleton instance of the BE code generator.
 
 extern TAO_IDL_BE_Export TAO_CodeGen *tao_cg;

@@ -20,12 +20,16 @@ class Simple_C
 {
 public:
   Simple_C (CORBA::ORB_ptr orb);
+  Simple_C (Simple_C const &) = delete;
+  Simple_C &operator= (Simple_C const &) = delete;
+  Simple_C (Simple_C &&) = delete;
+  Simple_C &operator= (Simple_C &&) = delete;
 
-  void op1 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
-  void op2 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
-  void op3 (Foo::Bar::AMH_BResponseHandler_ptr _tao_rh);
-  void op4 (Baz::AMH_CResponseHandler_ptr _tao_rh);
-  void shutdown (Baz::AMH_CResponseHandler_ptr);
+  void op1 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh) override;
+  void op2 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh) override;
+  void op3 (Foo::Bar::AMH_BResponseHandler_ptr _tao_rh) override;
+  void op4 (Baz::AMH_CResponseHandler_ptr _tao_rh) override;
+  void shutdown (Baz::AMH_CResponseHandler_ptr) override;
 
 protected:
   CORBA::ORB_var orb_;
@@ -41,27 +45,27 @@ Simple_C::Simple_C (CORBA::ORB_ptr orb)
 }
 
 void
-Simple_C::op1(Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
+Simple_C::op1 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
 {
-  _tao_rh->op1(1);
+  _tao_rh->op1 (1);
 }
 
 void
-Simple_C::op2(Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
+Simple_C::op2 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
 {
-  _tao_rh->op2(2);
+  _tao_rh->op2 (2);
 }
 
 void
-Simple_C::op3(Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
+Simple_C::op3 (Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
 {
-  _tao_rh->op3(3);
+  _tao_rh->op3 (3);
 }
 
 void
-Simple_C::op4(Baz::AMH_CResponseHandler_ptr _tao_rh)
+Simple_C::op4 (Baz::AMH_CResponseHandler_ptr _tao_rh)
 {
-  _tao_rh->op4(4);
+  _tao_rh->op4 (4);
 }
 
 void
@@ -72,7 +76,7 @@ Simple_C::shutdown (Baz::AMH_CResponseHandler_ptr)
 
 // ****************************************************************
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -109,7 +113,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -125,8 +129,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PortableServer::Servant_var<Simple_C> simple_c_impl(
-          new Simple_C(orb.in()));
+      PortableServer::Servant_var<Simple_C> simple_c_impl (
+        new Simple_C (orb.in ()));
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (simple_c_impl.in ());
@@ -140,8 +144,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (simple_c.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),

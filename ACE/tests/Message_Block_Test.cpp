@@ -335,7 +335,7 @@ produce (Worker_Task &worker_task,
   return 0;
 }
 
-typedef ACE_TCHAR MEMORY_CHUNK[ACE_MALLOC_ALIGN * ACE_ALLOC_SIZE];
+using MEMORY_CHUNK = ACE_TCHAR[ACE_MALLOC_ALIGN * ACE_ALLOC_SIZE];
 
 ACE_Cached_Allocator<MEMORY_CHUNK,
                      ACE_SYNCH_MUTEX>

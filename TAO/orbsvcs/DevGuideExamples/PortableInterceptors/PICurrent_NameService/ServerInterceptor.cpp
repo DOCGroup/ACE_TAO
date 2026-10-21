@@ -3,11 +3,11 @@
 #include "ace/OS_NS_string.h"
 #include <iostream>
 
-const IOP::ServiceId service_id = 0xdeed;
-const unsigned int num_allowed_users = 4;
-static const char* allowed_users[num_allowed_users+1] =
-  {"Ron Klein", "Scott Case", "Mark Hodge", "Greg Black", 0};
-const char* restricted_interfaces[1] = {"IDL:Messenger:1.0"};
+constexpr IOP::ServiceId service_id = 0xdeed;
+constexpr unsigned int num_allowed_users = 4;
+char const * const allowed_users[num_allowed_users + 1] =
+  {"Ron Klein", "Scott Case", "Mark Hodge", "Greg Black", nullptr};
+char const * const restricted_interfaces[1] = {"IDL:Messenger:1.0"};
 
 ServerInterceptor::ServerInterceptor ()
   : myname_ ("Server_Authentication_Interceptor")
@@ -55,8 +55,8 @@ ServerInterceptor::receive_request (
 
     CORBA::OctetSeq ocSeq = sc->context_data;
 
-    const char * buf =
-      reinterpret_cast<const char *> (ocSeq.get_buffer ());
+    char const * buf =
+      reinterpret_cast<char const *> (ocSeq.get_buffer ());
 
     for (unsigned int i=0; i<num_allowed_users; ++i) {
       if (ACE_OS::strcmp (buf, allowed_users[i]) == 0)

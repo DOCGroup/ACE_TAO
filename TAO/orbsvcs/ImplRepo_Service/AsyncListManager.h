@@ -39,7 +39,7 @@ class Locator_Repository;
 class AsyncListManager
 {
  public:
-  AsyncListManager (const Locator_Repository *repo,
+  AsyncListManager (Locator_Repository const *repo,
                     PortableServer::POA_ptr poa,
                     LiveCheck *pinger);
 
@@ -65,7 +65,7 @@ class AsyncListManager
                       CORBA::ULong start);
   void final_state ();
 
-  const Locator_Repository *repo_;
+  Locator_Repository const *repo_;
   PortableServer::POA_var poa_;
   ImplementationRepository::AMH_AdministrationResponseHandler_var primary_;
   ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_var secondary_;
@@ -77,24 +77,24 @@ class AsyncListManager
   std::atomic<int> refcount_;
 };
 
-typedef TAO_Intrusive_Ref_Count_Handle<AsyncListManager> AsyncListManager_ptr;
+using AsyncListManager_ptr = TAO_Intrusive_Ref_Count_Handle<AsyncListManager>;
 
 //----------------------------------------------------------------------------
 
 class ListLiveListener : public LiveListener
 {
  public:
-  ListLiveListener (const char * server,
+  ListLiveListener (char const *server,
                     int pid,
                     CORBA::ULong index,
                     AsyncListManager *owner,
                     LiveCheck &pinger);
 
-  virtual ~ListLiveListener ();
+  ~ListLiveListener () override;
   bool start ();
   void cancel ();
   LiveStatus status ();
-  bool status_changed (LiveStatus status);
+  bool status_changed (LiveStatus status) override;
 
  private:
   AsyncListManager_ptr owner_;

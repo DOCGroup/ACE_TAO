@@ -44,7 +44,7 @@ template <class TYPE> ACE_INLINE ACE_TSS_Adapter *
 ACE_TSS<TYPE>::ts_value () const
 {
   // Get the tss adapter from thread-specific storage
-  void *temp = 0;
+  void *temp = nullptr;
   if (ACE_Thread::getspecific (this->key_, &temp) == -1)
     {
       return 0; // This should not happen!
@@ -55,7 +55,7 @@ ACE_TSS<TYPE>::ts_value () const
 template <class TYPE> ACE_INLINE TYPE *
 ACE_TSS<TYPE>::ts_value () const
 {
-  void *temp = 0;
+  void *temp = nullptr;
   if (ACE_Thread::getspecific (this->key_, &temp) == -1)
     {
       return 0; // This should not happen!

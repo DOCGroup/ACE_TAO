@@ -82,12 +82,12 @@ TAO::SSLIOP::ClientCredentials::parent_credentials ()
 CORBA::Boolean
 TAO::SSLIOP::ClientCredentials::client_authentication ()
 {
-  // If the client presented no certificate (i.e. cert_.ptr() == 0),
+  // If the client presented no certificate (i.e. cert_.ptr() == nullptr),
   // the client was not authenticated.  Otherwise, verify the peer's
   // certificate.
 
   return
-    this->x509_.in () != 0
+    this->x509_.in () != nullptr
     && SSL_get_verify_result (this->ssl_.in ()) == X509_V_OK;
 }
 

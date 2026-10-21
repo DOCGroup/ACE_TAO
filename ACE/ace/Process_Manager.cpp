@@ -789,7 +789,7 @@ ACE_Process_Manager::wait (pid_t pid,
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
       // Wait for any Process spawned by this Process_Manager.
 #if defined (ACE_WIN32)
-      HANDLE *handles = 0;
+      HANDLE *handles = nullptr;
 
       ACE_NEW_RETURN (handles,
                       HANDLE[this->current_count_],

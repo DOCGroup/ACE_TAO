@@ -20,10 +20,10 @@ class FTP_Client_Producer
 {
 public:
   FTP_Client_Producer ();
-  virtual int get_callback (const char *flowname,
-                            TAO_AV_Callback *&callback);
+  int get_callback (const char *flowname,
+                    TAO_AV_Callback *&callback) override;
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 protected:
   FTP_Client_Callback *callback_;
 };
@@ -33,10 +33,10 @@ class FTP_Client_Callback
 {
 public:
   FTP_Client_Callback ();
-  virtual int handle_timeout (void *arg);
-  virtual int handle_end_stream ();
-  virtual void get_timeout (ACE_Time_Value *&tv,
-                            void *&arg);
+  int handle_timeout (void *arg) override;
+  int handle_end_stream ();
+  void get_timeout (ACE_Time_Value *&tv,
+                    void *&arg) override;
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object) {this->protocol_object_ = protocol_object;}
 
 protected:
@@ -44,20 +44,24 @@ protected:
   TAO_AV_Protocol_Object *protocol_object_;
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> ENDPOINT_STRATEGY;
+using ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
 
 class Client
 {
 public:
   Client ();
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]);
   int run ();
   FILE *file ();
-  const char *flowname ();
-  TAO_StreamCtrl* streamctrl ();
+  char const *flowname ();
+  TAO_StreamCtrl *streamctrl ();
   AVStreams::protocolSpec protocols ();
-  const char *format ();
-  const char *address ();
+  char const *format ();
+  char const *address ();
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   ENDPOINT_STRATEGY endpoint_strategy_;
@@ -82,6 +86,6 @@ private:
   AVStreams::FlowProducer_var fep_a_obj_;
 };
 
-typedef ACE_Unmanaged_Singleton<Client,ACE_Null_Mutex> CLIENT;
+using CLIENT = ACE_Unmanaged_Singleton<Client, ACE_Null_Mutex>;
 
 #endif /* TAO_AV_FTP_H */

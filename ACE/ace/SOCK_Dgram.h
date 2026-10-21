@@ -112,7 +112,7 @@ public:
   ssize_t recv (iovec *io_vec,
                 ACE_Addr &addr,
                 int flags = 0,
-                const ACE_Time_Value *timeout = 0) const;
+                const ACE_Time_Value *timeout = nullptr) const;
 
   /// Send an <iovec> of size @a n to the datagram socket (uses
   /// <sendmsg(3)>).
@@ -131,7 +131,7 @@ public:
                 int n,
                 ACE_Addr &addr,
                 int flags = 0,
-                ACE_INET_Addr *to_addr = 0) const;
+                ACE_INET_Addr *to_addr = nullptr) const;
 
   /**
    * Wait up to @a timeout amount of time to receive a datagram into

@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <typename T>
 ACE_INLINE
 TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle ()
-  : ptr_(0)
+  : ptr_(nullptr)
 {
 }
 
@@ -84,7 +84,7 @@ ACE_INLINE
 bool
 TAO_Intrusive_Ref_Count_Handle<T>::is_nil() const
 {
-  return this->ptr_ == 0;
+  return this->ptr_ == nullptr;
 }
 
 
@@ -122,7 +122,7 @@ T*
 TAO_Intrusive_Ref_Count_Handle<T>::_retn()
 {
   T* retval = this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return retval;
 }
 
@@ -141,7 +141,7 @@ ACE_INLINE
 void
 TAO_Intrusive_Ref_Count_Handle<T>::claim()
 {
-  if (this->ptr_ != 0)
+  if (this->ptr_ != nullptr)
     {
       this->ptr_->_add_ref();
     }
@@ -153,10 +153,10 @@ ACE_INLINE
 void
 TAO_Intrusive_Ref_Count_Handle<T>::drop()
 {
-  if (this->ptr_ != 0)
+  if (this->ptr_ != nullptr)
     {
       this->ptr_->_remove_ref();
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
     }
 }
 

@@ -23,7 +23,7 @@ TAO_Stub::profile_lock () const
 ACE_INLINE void
 TAO_Stub::reset_forward ()
 {
-  while (this->forward_profiles_ != 0
+  while (this->forward_profiles_ != nullptr
          && this->forward_profiles_ != this->forward_profiles_perm_) // Disturbingly the permanent
                                                                      // forwarded profile lives at the  bottom
                                                                      // of this stack if it exists. Avoid deleting it.
@@ -74,7 +74,7 @@ TAO_Stub::profile_in_use ()
 ACE_INLINE TAO_MProfile *
 TAO_Stub::make_profiles ()
 {
-  TAO_MProfile *mp = 0;
+  TAO_MProfile * mp = nullptr;
 
   ACE_NEW_RETURN (mp,
                   TAO_MProfile (base_profiles_),
@@ -86,10 +86,10 @@ TAO_Stub::make_profiles ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_forward_profile ()
 {
-  TAO_Profile *pfile_next = 0;
+  TAO_Profile * pfile_next = nullptr;
 
   while (this->forward_profiles_
-         && (pfile_next = this->forward_profiles_->get_next ()) == 0
+         && (pfile_next = this->forward_profiles_->get_next ()) == nullptr
          && this->forward_profiles_ != this->forward_profiles_perm_)  // do not remove permanent forward from bottom of stack
     // that was the last profile.  Now we clean up our forward profiles.
     // since we own the forward MProfiles, we must delete them when done.
@@ -101,7 +101,7 @@ TAO_Stub::next_forward_profile ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile_i ()
 {
-  TAO_Profile *pfile_next = 0;
+  TAO_Profile * pfile_next = nullptr;
 
   // First handle the case that a permanent forward occurred
   if (this->forward_profiles_perm_) // the permanent forward defined
@@ -112,7 +112,7 @@ TAO_Stub::next_profile_i ()
 
       pfile_next = this->next_forward_profile ();
 
-      if (pfile_next == 0)
+      if (pfile_next == nullptr)
         {
           // COND: this->forward_profiles_ == this->forward_profiles_perm_
 
@@ -137,14 +137,14 @@ TAO_Stub::next_profile_i ()
       if (this->forward_profiles_) // Now do the common operation
         {
           pfile_next = this->next_forward_profile ();
-          if (pfile_next == 0)
+          if (pfile_next == nullptr)
             {
               // Fall back to base profiles
               pfile_next = this->base_profiles_.get_next ();
             }
 
           {
-            typedef ACE_Reverse_Lock<TAO_SYNCH_MUTEX> TAO_REVERSE_LOCK;
+            using TAO_REVERSE_LOCK = ACE_Reverse_Lock<TAO_SYNCH_MUTEX>;
             TAO_REVERSE_LOCK reverse (this->profile_lock_);
             ACE_MT (ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, 0));
             if (TAO_debug_level > 5)
@@ -171,7 +171,7 @@ TAO_Stub::next_profile_i ()
       else
         pfile_next = this->base_profiles_.get_next ();
 
-      if (pfile_next == 0)
+      if (pfile_next == nullptr)
         this->reset_base ();
       else
         this->set_profile_in_use_i (pfile_next);

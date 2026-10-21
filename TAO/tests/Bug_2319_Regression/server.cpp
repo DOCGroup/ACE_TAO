@@ -12,8 +12,8 @@ int num_calls = 10; // total calls client is going to make
 // This should equal num_calls within 'sleep * num_calls' seconds
 int calls_received = 0;
 
-const ACE_TCHAR *ior      = ACE_TEXT("file://test.ior");
-const ACE_TCHAR *ior_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior      = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior_file = ACE_TEXT("test.ior");
 
 /***************************/
 /*** Servant Declaration ***/
@@ -23,9 +23,13 @@ class ST_AMH_Servant : public virtual POA_Test::AMH_Roundtrip
 {
 public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);
+  ST_AMH_Servant (ST_AMH_Servant const &) = delete;
+  ST_AMH_Servant &operator= (ST_AMH_Servant const &) = delete;
+  ST_AMH_Servant (ST_AMH_Servant &&) = delete;
+  ST_AMH_Servant &operator= (ST_AMH_Servant &&) = delete;
 
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                    Test::Timestamp send_time);
+                    Test::Timestamp send_time) override;
 
 protected:
   CORBA::ORB_ptr orb_;
@@ -44,6 +48,10 @@ class ST_AMH_Server
 public:
   ST_AMH_Server () = default;
   virtual ~ST_AMH_Server ();
+  ST_AMH_Server (ST_AMH_Server const &) = delete;
+  ST_AMH_Server &operator= (ST_AMH_Server const &) = delete;
+  ST_AMH_Server (ST_AMH_Server &&) = delete;
+  ST_AMH_Server &operator= (ST_AMH_Server &&) = delete;
 
   /// ORB inititalisation stuff
   int start_orb_and_poa (const CORBA::ORB_var &_orb);
@@ -136,7 +144,7 @@ ST_AMH_Server::~ST_AMH_Server ()
 
 // ------------------------------------------------------------------------
 //
-int ST_AMH_Server::start_orb_and_poa (const CORBA::ORB_var &_orb)
+int ST_AMH_Server::start_orb_and_poa (CORBA::ORB_var const &_orb)
 {
   try
     {
@@ -223,7 +231,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var iorstr)
 {
   // If the ior_output_file exists, output the ior to it
   FILE *output_file= ACE_OS::fopen (ior_file, "w");
-  if (output_file == 0)
+  if (output_file == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",

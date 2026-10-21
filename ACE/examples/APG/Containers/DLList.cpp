@@ -6,7 +6,7 @@
 #include "DataElement.h"
 
 // Create a new type of list that can store only DataElements.
-typedef ACE_DLList<DataElement> MyList;
+using MyList = ACE_DLList<DataElement>;
 // Listing 1
 
 // Listing 2 code/ch05

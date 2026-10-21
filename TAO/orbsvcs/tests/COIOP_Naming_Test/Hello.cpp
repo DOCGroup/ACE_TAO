@@ -33,12 +33,12 @@ Hello::get_string ()
           ACE_OS::abort ();
         }
       else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
-               this->orb_->orb_core ()->use_global_collocation () == 0)
+          !this->orb_->orb_core ()->use_global_collocation ())
         {
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
-          if (orb_table->find ("server_orb") == 0)
+          if (orb_table->find ("server_orb") == nullptr)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,

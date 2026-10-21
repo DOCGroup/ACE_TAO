@@ -4,13 +4,13 @@
 
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,7 +37,7 @@ CORBA::Boolean
 first_request_flag (CORBA::Object_ptr obj)
 {
   TAO_Stub *const stub = obj->_stubobj ();
-  if (0 == stub)
+  if (stub == nullptr)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "CORBA::Object has stub = 0\n"),
@@ -49,7 +49,7 @@ first_request_flag (CORBA::Object_ptr obj)
   resolver.resolve (0);
 
   TAO_Transport *transport = resolver.transport ();
-  if (0 == transport)
+  if (transport == nullptr)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "Transport is 0\n"),

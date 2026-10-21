@@ -29,11 +29,11 @@ class TAO_AV_Export TAO_AV_UDP_Factory : public TAO_AV_Transport_Factory
 public:
   /// Initialization hook.
   TAO_AV_UDP_Factory ();
-  virtual ~TAO_AV_UDP_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *protocol_string);
-  virtual TAO_AV_Acceptor *make_acceptor ();
-  virtual TAO_AV_Connector *make_connector ();
+  ~TAO_AV_UDP_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int match_protocol (const char *protocol_string) override;
+  TAO_AV_Acceptor *make_acceptor () override;
+  TAO_AV_Connector *make_connector () override;
 };
 
 class TAO_AV_UDP_Flow_Handler;
@@ -51,46 +51,46 @@ public:
 
   TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler);
 
-  virtual  ~TAO_AV_UDP_Transport ();
-  virtual int open (ACE_Addr *addr);
+  ~TAO_AV_UDP_Transport () override;
+  int open (ACE_Addr *addr) override;
 
-  virtual int close ();
+  int close () override;
 
-  virtual int mtu ();
+  int mtu () override;
 
-  virtual ACE_Addr *get_peer_addr ();
+  ACE_Addr *get_peer_addr () override;
 
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (ACE_Message_Block const *mblk,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Write the contents of the buffer of length len to the connection.
-  virtual ssize_t send (const char *buf,
-                        size_t len,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (char const *buf,
+                size_t len,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Write the contents of iovcnt iovec's to the connection.
-  virtual ssize_t send (const iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (iovec const *iov,
+                int iovcnt,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Read len bytes from into buf.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (char *buf,
+                size_t len,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Read len bytes from into buf using flags.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        int flags,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (char *buf,
+                size_t len,
+                int flags,
+                ACE_Time_Value *s = nullptr) override;
 
   ///  Read received data into the iovec buffers.
-  virtual ssize_t recv (iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (iovec *iov,
+                int iovcnt,
+                ACE_Time_Value *s = nullptr) override;
 
   TAO_AV_UDP_Flow_Handler *handler () { return this->handler_; }
 
@@ -112,18 +112,18 @@ public:
   ///Ctor
   /// Dtor
   TAO_AV_UDP_Flow_Handler ();
-  virtual ~TAO_AV_UDP_Flow_Handler ();
+  ~TAO_AV_UDP_Flow_Handler () override;
   int open (ACE_Addr &address);
   int close ();
-  virtual TAO_AV_Transport *transport ();
-  virtual int set_remote_address (ACE_Addr *address);
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  const ACE_SOCK_Dgram *get_socket () const;
-  virtual ACE_Event_Handler* event_handler () { return this; }
+  TAO_AV_Transport *transport ();
+  int set_remote_address (ACE_Addr *address) override;
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
+  ACE_SOCK_Dgram const *get_socket () const;
+  ACE_Event_Handler *event_handler () override { return this; }
   /// Change the QoS
-  virtual int change_qos (AVStreams::QoS);
+  int change_qos (AVStreams::QoS) override;
 
 protected:
   TAO_AV_Core *av_core_;
@@ -140,24 +140,24 @@ class TAO_AV_Export TAO_AV_UDP_Acceptor
 {
 public:
   TAO_AV_UDP_Acceptor ();
-  virtual ~TAO_AV_UDP_Acceptor ();
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
+  ~TAO_AV_UDP_Acceptor () override;
+  int open (TAO_Base_StreamEndPoint *endpoint,
+            TAO_AV_Core *av_core,
+            TAO_FlowSpec_Entry *entry,
+            TAO_AV_Flow_Protocol_Factory *factory,
+            TAO_AV_Core::Flow_Component flow_comp =
+              TAO_AV_Core::TAO_AV_DATA) override;
+
+  int open_default (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
                     TAO_AV_Flow_Protocol_Factory *factory,
                     TAO_AV_Core::Flow_Component flow_comp =
-                        TAO_AV_Core::TAO_AV_DATA);
-
-  virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core,
-                            TAO_FlowSpec_Entry *entry,
-                            TAO_AV_Flow_Protocol_Factory *factory,
-                            TAO_AV_Core::Flow_Component flow_comp =
-                                TAO_AV_Core::TAO_AV_DATA);
+                      TAO_AV_Core::TAO_AV_DATA) override;
 
   virtual int open_i (ACE_INET_Addr *address, int is_default_open);
 
-  virtual int close ();
+  int close () override;
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
 
 protected:
@@ -178,17 +178,17 @@ class TAO_AV_Export TAO_AV_UDP_Connector
 {
 public:
   TAO_AV_UDP_Connector ();
-  ~TAO_AV_UDP_Connector ();
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core,
-                    TAO_AV_Flow_Protocol_Factory *factory);
+  ~TAO_AV_UDP_Connector () override;
+  int open (TAO_Base_StreamEndPoint *endpoint,
+            TAO_AV_Core *av_core,
+            TAO_AV_Flow_Protocol_Factory *factory) override;
 
-  virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport,
-                       TAO_AV_Core::Flow_Component flow_comp =
-                           TAO_AV_Core::TAO_AV_DATA);
+  int connect (TAO_FlowSpec_Entry *entry,
+               TAO_AV_Transport *&transport,
+               TAO_AV_Core::Flow_Component flow_comp =
+                 TAO_AV_Core::TAO_AV_DATA) override;
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
-  virtual int close ();
+  int close () override;
 protected:
   ACE_INET_Addr *control_inet_address_;
   bool delete_control_inet_address_;
@@ -228,26 +228,26 @@ class TAO_AV_Export TAO_AV_UDP_Object  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_UDP_Object (TAO_AV_Callback *callback,
-                     TAO_AV_Transport *transport = 0);
+                     TAO_AV_Transport *transport = nullptr);
 
   /// Dtor
-  virtual ~TAO_AV_UDP_Object ();
+  ~TAO_AV_UDP_Object () override;
 
-  virtual int handle_input ();
+  int handle_input () override;
 
   /// send a data frame.
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
+  int send_frame (ACE_Message_Block *frame,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const iovec *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
+  int send_frame (iovec const *iov,
+                  int iovcnt,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const char*buf,
-                          size_t len);
+  int send_frame (char const *buf,
+                  size_t len) override;
 
   /// end the stream.
-  virtual int destroy ();
+  int destroy () override;
 
 private:
   /// Pre-allocated memory to receive the data...
@@ -263,13 +263,13 @@ class TAO_AV_Export TAO_AV_UDP_Flow_Factory : public TAO_AV_Flow_Protocol_Factor
 public:
   /// Initialization hook.
   TAO_AV_UDP_Flow_Factory ();
-  virtual ~TAO_AV_UDP_Flow_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *flow_string);
-  TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                TAO_Base_StreamEndPoint *endpoint,
-                                                TAO_AV_Flow_Handler *handler,
-                                                TAO_AV_Transport *transport);
+  ~TAO_AV_UDP_Flow_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int match_protocol (char const *flow_string) override;
+  TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                 TAO_Base_StreamEndPoint *endpoint,
+                                                 TAO_AV_Flow_Handler *handler,
+                                                 TAO_AV_Transport *transport) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

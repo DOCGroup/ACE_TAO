@@ -15,15 +15,15 @@ namespace
 {
   //------------------------------------------------------------------
   // For simplicity most of the main variables are available GLOBALLY.
-  int Result= 0;
+  int Result {};
   CORBA::ORB_var orb;
   PortableInterceptor::Current_var PICurrent;
-  PortableInterceptor::SlotId slot_id= 2093843221;
+  PortableInterceptor::SlotId slot_id = 2093843221;
   testInterface_var server;
 
-  void isCorrect (const CORBA::Any &data, const CORBA::Long correct, const ACE_TCHAR *const ID)
+  void isCorrect (CORBA::Any const &data, CORBA::Long const correct, ACE_TCHAR const * const ID)
     {
-      CORBA::Long actual= 0;
+      CORBA::Long actual {};
       if (data >>= actual)
         if (correct == actual)
           ACE_DEBUG ((LM_DEBUG,
@@ -34,14 +34,14 @@ namespace
             ACE_DEBUG ((LM_DEBUG,
                         ". %s retrieved **INCORRECT** long (%d should be %d) from TSC.\n",
                         ID, actual, correct));
-            Result= 1;
+            Result = 1;
           }
       else
         {
            ACE_DEBUG ((LM_DEBUG,
                        ". %s can't retrieved long from the TSC.\n",
                        ID));
-            Result= 1;
+            Result = 1;
         }
     }
 
@@ -53,46 +53,45 @@ namespace
       public virtual CORBA::LocalObject
   {
     /// Constructor.
-    ClientRequestInterceptor () {}
+    ClientRequestInterceptor () = default;
+    ClientRequestInterceptor (ClientRequestInterceptor const &) = delete;
+    ClientRequestInterceptor (ClientRequestInterceptor &&) = delete;
+    ClientRequestInterceptor &operator= (ClientRequestInterceptor const &) = delete;
+    ClientRequestInterceptor &operator= (ClientRequestInterceptor &&) = delete;
 
     /// Return the name of this ClientRequestInterceptor.
-    virtual char * name ()
+    char *name () override
       {
         return CORBA::string_dup ("ClientRequestInterceptor");
       }
 
-    virtual void destroy () {}
+    void destroy () override {}
 
-    virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr)
+    void send_request (PortableInterceptor::ClientRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, send_request\n"));
       }
 
-    virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr)
+    void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, send_poll\n"));
       }
 
-    virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr)
+    void receive_reply (PortableInterceptor::ClientRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, receive_reply\n"));
       }
 
-    virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr)
+    void receive_exception (PortableInterceptor::ClientRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, receive_exception\n"));
       }
 
-    virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr)
+    void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". CLIENT Interception, receive_other\n"));
@@ -108,56 +107,56 @@ namespace
       public virtual CORBA::LocalObject
     {
       /// Constructor.
-      ServerRequestInterceptor () {}
+      ServerRequestInterceptor () = default;
+      ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
+      ServerRequestInterceptor (ServerRequestInterceptor &&) = delete;
+      ServerRequestInterceptor &operator= (ServerRequestInterceptor const &) = delete;
+      ServerRequestInterceptor &operator= (ServerRequestInterceptor &&) = delete;
 
       /// Return the name of this ServerRequestinterceptor.
-      virtual char * name ()
+      char *name () override
       {
         return CORBA::string_dup ("ServerRequestInterceptor");
       }
 
-      virtual void destroy () {}
+      void destroy () override {}
 
     #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-      virtual void tao_ft_interception_point (
+      void tao_ft_interception_point (
           PortableInterceptor::ServerRequestInfo_ptr,
-          CORBA::OctetSeq_out)
+          CORBA::OctetSeq_out) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, tao_ft_interception_point\n"));
       }
     #endif // TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 
-      virtual void receive_request_service_contexts (
-          PortableInterceptor::ServerRequestInfo_ptr)
+      void receive_request_service_contexts (
+          PortableInterceptor::ServerRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, receive_request_service_contexts\n"));
       }
 
-      virtual void receive_request (
-          PortableInterceptor::ServerRequestInfo_ptr)
+      void receive_request (PortableInterceptor::ServerRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, receive_request\n"));
       }
 
-      virtual void send_reply (
-          PortableInterceptor::ServerRequestInfo_ptr)
+      void send_reply (PortableInterceptor::ServerRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, send_reply\n"));
       }
 
-      virtual void send_exception (
-          PortableInterceptor::ServerRequestInfo_ptr)
+      void send_exception (PortableInterceptor::ServerRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, send_exception\n"));
       }
 
-      virtual void send_other (
-          PortableInterceptor::ServerRequestInfo_ptr)
+      void send_other (PortableInterceptor::ServerRequestInfo_ptr) override
       {
         ACE_DEBUG ((LM_DEBUG,
                    ". SERVER Interception, send_other\n"));
@@ -172,15 +171,18 @@ namespace
     public virtual CORBA::LocalObject
     {
     public:
-      ~MyORBInitializer() {slot_id= 2093843221;} // Invalidate slot
+      MyORBInitializer () = default;
+      MyORBInitializer (MyORBInitializer const &) = delete;
+      MyORBInitializer (MyORBInitializer &&) = delete;
+      MyORBInitializer &operator= (MyORBInitializer const &) = delete;
+      MyORBInitializer &operator= (MyORBInitializer &&) = delete;
+      ~MyORBInitializer () override { slot_id = 2093843221; } // Invalidate slot
       /// The pre-initialization hook.
-      virtual void pre_init (
-        PortableInterceptor::ORBInitInfo_ptr)
+      void pre_init (PortableInterceptor::ORBInitInfo_ptr) override
       {}
 
       /// The post-initialization hook.
-      virtual void post_init (
-        PortableInterceptor::ORBInitInfo_ptr info)
+      void post_init (PortableInterceptor::ORBInitInfo_ptr info) override
       {
         CORBA::Object_var
           obj= info->resolve_initial_references ("PICurrent");
@@ -235,10 +237,14 @@ namespace
     {
     public:
       /// Constructor & Destructor.
-      testInterface_i () {}
-      ~testInterface_i () {}
+      testInterface_i () = default;
+      testInterface_i (testInterface_i const &) = delete;
+      testInterface_i (testInterface_i &&) = delete;
+      testInterface_i &operator= (testInterface_i const &) = delete;
+      testInterface_i &operator= (testInterface_i &&) = delete;
+      ~testInterface_i () override = default;
       /// Main servant test methods.
-      virtual void firstCalling ()
+      void firstCalling () override
         {
           // Insert some data into the allocated PICurrent slot BEFORE we start.
           CORBA::Any data;
@@ -254,7 +260,7 @@ namespace
           CORBA::Any_var data2= PICurrent.in()->get_slot (slot_id);
           isCorrect (data2.in (), 2, ACE_TEXT ("SERVER firstCalling()"));
         }
-      virtual void secondCalling ()
+      void secondCalling () override
         {
           // Insert some data into the allocated PICurrent slot.
           CORBA::Any data;

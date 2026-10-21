@@ -5,7 +5,7 @@
 // to dynamically load this necessary library.
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -51,7 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if ( ! CORBA::is_nil (ifd.in()))
       {
         CORBA::InterfaceDef::FullInterfaceDescription *id = ifd->describe_interface();
-        if ( id == 0 )
+        if (id == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                              ACE_TEXT("Null interface description returned\n")));

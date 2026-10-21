@@ -8,8 +8,8 @@ StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
 }
 
 void
-StructuredEventConsumer_i::push_structured_event(
-       const CosNotification::StructuredEvent &event
+StructuredEventConsumer_i::push_structured_event (
+       CosNotification::StructuredEvent const &event
       )
 {
     const char *value;
@@ -22,7 +22,7 @@ StructuredEventConsumer_i::push_structured_event(
 }
 
 void
-StructuredEventConsumer_i::disconnect_structured_push_consumer(
+StructuredEventConsumer_i::disconnect_structured_push_consumer (
       )
 {
    CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
@@ -34,9 +34,9 @@ StructuredEventConsumer_i::disconnect_structured_push_consumer(
 }
 
 void
-StructuredEventConsumer_i::offer_change(
-        const CosNotification::EventTypeSeq &,
-        const CosNotification::EventTypeSeq &
+StructuredEventConsumer_i::offer_change (
+        CosNotification::EventTypeSeq const &,
+        CosNotification::EventTypeSeq const &
       )
 {
 }

@@ -70,21 +70,21 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * acquisition_method ();
+      char * acquisition_method () override;
 
-      virtual SecurityLevel3::AcquisitionStatus current_status ();
+      SecurityLevel3::AcquisitionStatus current_status () override;
 
-      virtual CORBA::ULong nth_iteration ();
+      CORBA::ULong nth_iteration () override;
 
-      virtual CORBA::Any * get_continuation_data ();
+      CORBA::Any * get_continuation_data () override;
 
-      virtual SecurityLevel3::AcquisitionStatus continue_acquisition (
-          const CORBA::Any & acquisition_arguments);
+      SecurityLevel3::AcquisitionStatus continue_acquisition (
+          const CORBA::Any & acquisition_arguments) override;
 
-      virtual SecurityLevel3::OwnCredentials_ptr get_credentials (
-          CORBA::Boolean on_list);
+      SecurityLevel3::OwnCredentials_ptr get_credentials (
+          CORBA::Boolean on_list) override;
 
-      virtual void destroy ();
+      void destroy () override;
       //@}
 
     protected:

@@ -47,7 +47,7 @@ public:
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.
-  virtual int execute (void *arg);
+  int execute (void *arg) override;
 
 private:
   /// The target
@@ -85,7 +85,7 @@ public:
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.
-  virtual int execute (void *arg);
+  int execute (void *arg) override;
 
 private:
   /// The target
@@ -124,7 +124,7 @@ public:
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.
-  virtual int execute (void *arg);
+  int execute (void *arg) override;
 
 private:
   /// The target
@@ -161,7 +161,7 @@ public:
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.
-  virtual int execute (void *arg);
+  int execute (void *arg) override;
 
 private:
   /// The target

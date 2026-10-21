@@ -47,7 +47,7 @@ class TAO_POAManager_Factory;
 namespace PortableServer
 {
   class POAManagerFactory;
-  typedef POAManagerFactory *POAManagerFactory_ptr;
+  using POAManagerFactory_ptr = POAManagerFactory *;
 }
 #endif
 
@@ -59,22 +59,22 @@ class TAO_PortableServer_Export TAO_POA_Manager :
   friend class TAO_Object_Adapter;
 
 public:
-  void activate ();
+  void activate () override;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-  void hold_requests (CORBA::Boolean wait_for_completion);
+  void hold_requests (CORBA::Boolean wait_for_completion) override;
 
-  void discard_requests (CORBA::Boolean wait_for_completion);
+  void discard_requests (CORBA::Boolean wait_for_completion) override;
 
   void deactivate (CORBA::Boolean etherealize_objects,
-                   CORBA::Boolean wait_for_completion);
+                   CORBA::Boolean wait_for_completion) override;
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  PortableServer::POAManager::State get_state ();
+  PortableServer::POAManager::State get_state () override;
 
-  char *get_id ();
+  char *get_id () override;
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -92,7 +92,7 @@ public:
 
   PortableServer::POAManager::State get_state_i ();
 
-  virtual CORBA::ORB_ptr _get_orb ();
+  CORBA::ORB_ptr _get_orb () override;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::PolicyList& get_policies ();
@@ -108,13 +108,13 @@ protected:
   /// of POAManager changed.
   void adapter_manager_state_changed (PortableServer::POAManager::State state);
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
   void hold_requests_i (CORBA::Boolean wait_for_completion);
 
   void discard_requests_i (CORBA::Boolean wait_for_completion);
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   ACE_Lock &lock ();
 
@@ -127,7 +127,7 @@ protected:
 
   ACE_Lock &lock_;
 
-  typedef ACE_Unbounded_Set<TAO_Root_POA *> POA_COLLECTION;
+  using POA_COLLECTION = ACE_Unbounded_Set<TAO_Root_POA *>;
 
   POA_COLLECTION poa_collection_;
 

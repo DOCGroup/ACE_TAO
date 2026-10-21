@@ -58,16 +58,16 @@ public:
                          PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~TAO_Bindings_Iterator ();
+  ~TAO_Bindings_Iterator () override;
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   // = Idl methods.
 
   /// This operation passes back the next unseen binding.  True is
   /// returned if a binding is passed back, and false is returned otherwise.
-  CORBA::Boolean next_one (CosNaming::Binding_out b);
+  CORBA::Boolean next_one (CosNaming::Binding_out b) override;
 
   /**
    * This operation passes back at most <how_many> unseen bindings.
@@ -75,10 +75,10 @@ public:
    * returned if no bindings were passed back.
    */
   CORBA::Boolean next_n (CORBA::ULong how_many,
-                         CosNaming::BindingList_out bl);
+                         CosNaming::BindingList_out bl) override;
 
   /// This operation destroys the iterator.
-  void destroy ();
+  void destroy () override;
 
   // = Helper method.
 
@@ -91,6 +91,11 @@ public:
   static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
 
 private:
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator &&) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator &&) = delete;
+
   /**
    * Flag indicating whether this iterator is still valid.  (The
    * iterator becomes invalid when <destroy> method has been invoked

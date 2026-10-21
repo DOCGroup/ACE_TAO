@@ -58,7 +58,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Refcountable
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Refcountable> Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Refcountable>;
 
   /// Constructor
   TAO_Notify_Refcountable ();
@@ -73,7 +73,7 @@ public:
   CORBA::ULong _decr_refcnt ();
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
-  static void diagnostic_dump( const char* title = 0 );
+  static void diagnostic_dump( const char* title = nullptr );
 #endif
 
 private:

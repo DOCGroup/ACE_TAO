@@ -8,28 +8,25 @@
 #include "bug2936_export.h"
 
 
-class bug2936_Export PersistentPoa
-:
-  public ACE_Service_Object
+class bug2936_Export PersistentPoa : public ACE_Service_Object
 {
-  // public types and methods
-  public:
-    /// Default constructor.
-    PersistentPoa ();
+public:
+  /// Default constructor.
+  PersistentPoa () = default;
 
-    /// Destructor.
-    ~PersistentPoa () noexcept;
+  /// Destructor.
+  ~PersistentPoa () noexcept override = default;
 
-  protected:
-    virtual int init (int argc, ACE_TCHAR *argv[]);
+protected:
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-    virtual int fini ();
+  int fini () override;
 
-  private:
-    CORBA::ORB_var                 mv_orb;
-    PortableServer::POA_var        mv_rootPOA;
-    PortableServer::POA_var        mv_thisPOA;
-    PortableServer::POAManager_var mv_poaManager;
+private:
+  CORBA::ORB_var                 mv_orb;
+  PortableServer::POA_var        mv_rootPOA;
+  PortableServer::POA_var        mv_thisPOA;
+  PortableServer::POAManager_var mv_poaManager;
 }; /* end of class PersistentPoa */
 
 

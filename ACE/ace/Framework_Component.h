@@ -62,8 +62,8 @@ public:
 
   /// Constructor.
   ACE_Framework_Component (void *_this,
-                           const ACE_TCHAR *dll_name = 0,
-                           const ACE_TCHAR *name = 0);
+                           const ACE_TCHAR *dll_name = nullptr,
+                           const ACE_TCHAR *name = nullptr);
 
   ACE_Framework_Component (const ACE_Framework_Component &) = delete;
   ACE_Framework_Component (ACE_Framework_Component &&) = delete;

@@ -18,9 +18,9 @@ TAO_IOR_Multicast::TAO_IOR_Multicast ()
 {
 }
 
-TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
+TAO_IOR_Multicast::TAO_IOR_Multicast (char const* ior,
                                       u_short port,
-                                      const char *mcast_addr,
+                                      char const* mcast_addr,
                                       TAO_Service_ID service_id)
 {
   if (this->init (ior,
@@ -41,9 +41,9 @@ TAO_IOR_Multicast::~TAO_IOR_Multicast ()
 }
 
 int
-TAO_IOR_Multicast::init (const char *ior,
+TAO_IOR_Multicast::init (char const* ior,
                          u_short port,
-                         const char *mcast_addr,
+                         char const* mcast_addr,
                          TAO_Service_ID service_id)
 {
   if (this->mcast_addr_.set (port, mcast_addr) == -1)
@@ -52,17 +52,17 @@ TAO_IOR_Multicast::init (const char *ior,
 }
 
 int
-TAO_IOR_Multicast::init (const char *ior,
-                         const char *mcast_addr,
+TAO_IOR_Multicast::init (char const* ior,
+                         char const* mcast_addr,
                          TAO_Service_ID service_id)
 {
   // Look for a '@' incase a nic is specified.
-  const char* tmpnic = ACE_OS::strchr (mcast_addr, '@');
+  char const* tmpnic = ACE_OS::strchr (mcast_addr, '@');
 
   CORBA::String_var actual_mcast_addr;
   CORBA::ULong length_addr;
 
-  if (tmpnic != 0)
+  if (tmpnic != nullptr)
     {
       // i.e. a nic name has been specified
       length_addr = static_cast<CORBA::ULong> (tmpnic - mcast_addr + 1);
@@ -95,7 +95,7 @@ TAO_IOR_Multicast::init (const char *ior,
 }
 
 int
-TAO_IOR_Multicast::common_init (const char *ior,
+TAO_IOR_Multicast::common_init (char const* ior,
                                 TAO_Service_ID service_id)
 {
   this->service_id_ = service_id;
@@ -241,7 +241,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       // connection using the IPv6 loopback address instead.
       ACE_INET_Addr  peer_tmp(peer_addr);
       peer_tmp.set_port_number (static_cast<u_short> (0));
-      ACE_INET_Addr* tmp = 0;
+      ACE_INET_Addr* tmp = nullptr;
       size_t cnt = 0;
       int err = ACE::get_ip_interfaces (cnt, tmp);
       if (err == 0)

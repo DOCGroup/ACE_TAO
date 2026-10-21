@@ -356,7 +356,7 @@ TAO_Connection_Handler *
 TAO::HTIOP::Transport::invalidate_event_handler_i ()
 {
   TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
+  this->connection_handler_ = nullptr;
   return eh;
 }
 

@@ -60,11 +60,11 @@ public:
   operator T * const & () const;
   operator T *& ();
 
-  typedef T     _obj_type;
-  typedef T *   _in_type;
-  typedef T *&  _inout_type;
-  typedef T *&  _out_type;
-  typedef T *   _retn_type;
+  using _obj_type = T;
+  using _in_type = T *;
+  using _inout_type = T *&;
+  using _out_type = T *&;
+  using _retn_type = T *;
 
   _in_type      in () const;
   _inout_type   inout ();

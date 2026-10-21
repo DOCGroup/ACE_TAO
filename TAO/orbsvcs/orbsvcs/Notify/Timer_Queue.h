@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Timer_Queue : public TAO_Notify_Timer
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Queue > Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Queue >;
 
   /// Constructor
   TAO_Notify_Timer_Queue ();

@@ -4,8 +4,8 @@
 #include "orbsvcs/PortableGroup/GOA.h"
 
 
-const ACE_TCHAR *uipmc_url = 0;
-const ACE_TCHAR *ior_output_file = 0;
+ACE_TCHAR const *uipmc_url = nullptr;
+ACE_TCHAR const *ior_output_file = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -49,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
-      Server_impl* server_obj = 0;
+      Server_impl *server_obj = nullptr;
       ACE_NEW_RETURN (server_obj,
                       Server_impl(orb.in()),
                       -1);
@@ -108,7 +108,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           poa_manager->activate ();
         }
 
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
           ACE_OS::fprintf (output_file, "%s", ior.in ());
@@ -119,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in server.cpp:\n");
       return -1;

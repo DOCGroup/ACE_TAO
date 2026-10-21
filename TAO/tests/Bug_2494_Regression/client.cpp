@@ -3,7 +3,7 @@
 #include "ace/OS_NS_string.h"
 #include "testC.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads = 5;
 int do_shutdown = 0;
 
@@ -44,7 +44,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 namespace
 {
-  const char *twohundredbytes =
+  char const *twohundredbytes =
   "12345678901234567890123456789012345678901234567890"
   "12345678901234567890123456789012345678901234567890"
   "12345678901234567890123456789012345678901234567890"
@@ -55,28 +55,35 @@ namespace
 struct Worker : ACE_Task_Base
 {
   Worker (Simple_Server_ptr srv)
-    : srv_(Simple_Server::_duplicate(srv))
+    : srv_ (Simple_Server::_duplicate (srv))
   {
   }
 
+  Worker (Worker const &) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker &&) = delete;
+
   Simple_Server_var srv_;
 
-  int svc ()
+  int svc () override
   {
-    CORBA::String_var str = CORBA::string_alloc (200*2000 + 1);
-    if (str.in () == 0) return 1;
+    CORBA::String_var str = CORBA::string_alloc (200 * 2000 + 1);
+    if (str.in () == nullptr)
+      return 1;
     str.inout ()[0] = CORBA::Char ('\0');
-    for (int i=0; i < 2000; ++i)
+    for (int i = 0; i < 2000; ++i)
       {
         ACE_OS::strcat (str.inout (), twohundredbytes);
       }
 
-    while (1)
+    while (true)
       {
         try
           {
             CORBA::String_var ret = srv_->test_method (str.in ());
-            if (0 != ACE_OS::strcmp (str.in (), ret.in ())) return 1;
+            if (ACE_OS::strcmp (str.in (), ret.in ()) != 0)
+              return 1;
           }
         catch (const CORBA::Exception& ex)
           {
@@ -118,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       else
         {
           Worker wrk (server.in ());
-          wrk.activate (THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED, nthreads);
+          wrk.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, nthreads);
           wrk.thr_mgr ()->wait ();
         }
     }

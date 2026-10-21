@@ -95,7 +95,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Lookup_Queueable ();
 
   /// Execute the Request
-  virtual int execute ();
+  int execute () override;
 
 private:
   TAO_Notify_Event::Ptr event_var_;
@@ -123,10 +123,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Lookup_No_Copy ();
 
   /// Execute the Request
-  virtual int execute ();
+  int execute () override;
 
   /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request_Queueable* copy ();
+  TAO_Notify_Method_Request_Queueable* copy () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

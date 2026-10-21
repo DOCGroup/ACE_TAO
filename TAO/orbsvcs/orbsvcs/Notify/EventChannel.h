@@ -49,9 +49,9 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannel
   friend class TAO_Notify_Builder;
 
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannel > Ptr;
-  typedef CosNotifyChannelAdmin::ChannelIDSeq SEQ;
-  typedef CosNotifyChannelAdmin::ChannelIDSeq_var SEQ_VAR;
+  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannel >;
+  using SEQ = CosNotifyChannelAdmin::ChannelIDSeq;
+  using SEQ_VAR = CosNotifyChannelAdmin::ChannelIDSeq_var;
 
   /// Constructor
   TAO_Notify_EventChannel ();
@@ -114,8 +114,8 @@ public:
   TAO_Notify_FilterFactory* default_filter_factory_servant () const;
 
 private:
-  typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
-  typedef TAO_Notify_Container_T <TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Container;
+  using TAO_Notify_ConsumerAdmin_Container = TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin>;
+  using TAO_Notify_SupplierAdmin_Container = TAO_Notify_Container_T <TAO_Notify_SupplierAdmin>;
 
   virtual void save_attrs(TAO_Notify::NVPList& attrs);
 

@@ -299,7 +299,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
 
       // @@ This can be optimized! Pre-allocating on the destination
       //    and then copying directly into that.
-      CORBA::Octet* body = 0;
+      CORBA::Octet *body = nullptr;
       ACE_NEW_RETURN (body,
                       CORBA::Octet[length],
                       TAO::TRAVERSE_STOP);
@@ -1141,7 +1141,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
         }
 
       TAO_ORB_Core *orb_core = src->orb_core ();
-      if (orb_core == 0)
+      if (orb_core == nullptr)
         {
           orb_core = TAO_ORB_Core_instance ();
 

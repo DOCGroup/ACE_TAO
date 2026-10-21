@@ -6,20 +6,17 @@ class Reply_Handler
  : public POA_AMI_ChildHandler
 {
  public:
-   Reply_Handler()
-   : parentMethod_count (0),
-     parentMethod_excep_count (0)
+   Reply_Handler () = default;
+   Reply_Handler (Reply_Handler const &) = delete;
+   Reply_Handler &operator= (Reply_Handler const &) = delete;
+   Reply_Handler (Reply_Handler &&) = delete;
+   Reply_Handler &operator= (Reply_Handler &&) = delete;
+
+   void childMethod () override
     {
     }
 
-   virtual void
-   childMethod ()
-    {
-    }
-
-   virtual void
-   childMethod_excep (Messaging::ExceptionHolder *
-                         excep_holder)
+   void childMethod_excep (Messaging::ExceptionHolder * excep_holder) override
     {
       try
         {
@@ -31,16 +28,14 @@ class Reply_Handler
         }
     }
 
-   virtual void
-   parentMethod ()
+   void parentMethod () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",
                   ++parentMethod_count));
     }
 
-   virtual void
-   parentMethod_excep (Messaging::ExceptionHolder * excep_holder)
+   void parentMethod_excep (Messaging::ExceptionHolder * excep_holder) override
    {
       try
         {
@@ -57,30 +52,30 @@ class Reply_Handler
         }
    }
 
-   CORBA::ULong reply_count () { return parentMethod_count + parentMethod_excep_count; };
+   CORBA::ULong reply_count () const { return parentMethod_count + parentMethod_excep_count; }
 
  private:
    // Count of replies and excep
-   CORBA::ULong parentMethod_count;
-   CORBA::ULong parentMethod_excep_count;
+   CORBA::ULong parentMethod_count {};
+   CORBA::ULong parentMethod_excep_count {};
 };
 
 // Server ior.
-static const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
+static ACE_TCHAR const *server_ior = ACE_TEXT ("file://server.ior");
 
 static int
-client_parse_args(int argc, ACE_TCHAR *argv[])
+client_parse_args (int argc, ACE_TCHAR *argv[])
 {
    ACE_Get_Opt
-   get_opts(argc, argv, "f:");
+   get_opts (argc, argv, "f:");
    int c;
 
-   while ((c = get_opts()) != -1)
+   while ((c = get_opts ()) != -1)
    {
       switch (c)
       {
       case 'f':
-         server_ior = get_opts.opt_arg();
+         server_ior = get_opts.opt_arg ();
          break;
       case '?':
       default:
@@ -103,10 +98,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB.
-      orb = CORBA::ORB_init(argc, argv);
+      orb = CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = client_parse_args(argc, argv);
+      int parse_args_result = client_parse_args (argc, argv);
       if (parse_args_result != 0)
         {
           return 1;
@@ -123,11 +118,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       PortableServer::POAManager_var poa_manager =
-         root_poa->the_POAManager();
+         root_poa->the_POAManager ();
 
-      poa_manager->activate();
+      poa_manager->activate ();
 
-      Child_var child = Child::_narrow (object.in());
+      Child_var child = Child::_narrow (object.in ());
 
       Reply_Handler reply_handler_servant;
 
@@ -159,5 +154,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-   return 0;
+  return 0;
 }

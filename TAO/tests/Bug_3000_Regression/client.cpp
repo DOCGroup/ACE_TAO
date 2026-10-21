@@ -4,7 +4,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 bool shutdown_server = false;
 
 int
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -45,7 +45,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -61,9 +61,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Make all oneways "reliable."
       {
         CORBA::Object_var manager_object =
-          orb->resolve_initial_references("ORBPolicyManager");
+          orb->resolve_initial_references ("ORBPolicyManager");
         CORBA::PolicyManager_var policy_manager =
-          CORBA::PolicyManager::_narrow(manager_object.in());
+          CORBA::PolicyManager::_narrow (manager_object.in ());
 
         if (CORBA::is_nil (policy_manager.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,7 +71,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         CORBA::Any policy_value;
         policy_value <<= Messaging::SYNC_WITH_SERVER;
-        CORBA::PolicyList policies(1); policies.length(1);
+        CORBA::PolicyList policies (1);
+        policies.length (1);
         policies[0] =
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                               policy_value);
@@ -86,10 +87,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Service_var service =
-        Test::Service::_narrow(tmp.in ());
+        Test::Service::_narrow (tmp.in ());
 
       if (CORBA::is_nil (service.in ()))
         {
@@ -99,11 +100,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Callback *callback_impl;
+      Callback *callback_impl = nullptr;
       ACE_NEW_RETURN (callback_impl,
                       Callback (),
                       1);
-      PortableServer::ServantBase_var owner_transfer(callback_impl);
+      PortableServer::ServantBase_var owner_transfer (callback_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (callback_impl);
@@ -127,15 +128,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           orb->perform_work ();
         }
-      if (shutdown_server) {
+      if (shutdown_server)
         service->shutdown ();
-      }
 
       root_poa->destroy (true, true);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

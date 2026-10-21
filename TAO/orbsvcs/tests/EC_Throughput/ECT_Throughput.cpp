@@ -44,7 +44,7 @@ ECT_Throughput::ECT_Throughput ()
     supplier_type_start_ (ACE_ES_EVENT_UNDEFINED),
     supplier_type_count_ (1),
     supplier_type_shift_ (0),
-    pid_file_name_ (0),
+    pid_file_name_ (nullptr),
     active_count_ (0),
     ec_concurrency_hwm_ (1),
     thr_create_flags_ (THR_NEW_LWP|THR_BOUND|THR_SCHED_FIFO)
@@ -122,10 +122,10 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
                       this->ec_concurrency_hwm_));
         }
 
-      if (this->pid_file_name_ != 0)
+      if (this->pid_file_name_ != nullptr)
         {
           FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
-          if (pid != 0)
+          if (pid != nullptr)
             {
               ACE_OS::fprintf (pid, "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
@@ -467,9 +467,9 @@ ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
                 char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->consumer_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
+                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->consumer_type_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
+                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->consumer_type_shift_ = ACE_OS::atoi (arg);
           }
           break;
@@ -480,9 +480,9 @@ ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
                 char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->supplier_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
+                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->supplier_type_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
+                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->supplier_type_shift_ = ACE_OS::atoi (arg);
           }
           break;

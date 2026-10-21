@@ -64,7 +64,7 @@ public:
                         int protocol_family = PF_INET,
                         int protocol = 0,
                         int reuse_addr = 0,
-                        const ACE_TCHAR *host_name = 0);
+                        const ACE_TCHAR *host_name = nullptr);
 
   /// Default dtor.
   ~ACE_SOCK_Dgram_Bcast ();
@@ -76,7 +76,7 @@ public:
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0,
-            const ACE_TCHAR *host_name = 0);
+            const ACE_TCHAR *host_name = nullptr);
 
   /// Close up and release dynamically allocated resources.
   int close ();

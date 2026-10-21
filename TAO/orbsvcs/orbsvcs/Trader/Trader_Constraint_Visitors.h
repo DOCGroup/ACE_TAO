@@ -36,7 +36,7 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Validator
                                    type_struct);
 
   /// Desctructor.
-  virtual ~TAO_Trader_Constraint_Validator ();
+  ~TAO_Trader_Constraint_Validator () override;
 };
 
 class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
@@ -44,9 +44,9 @@ class TAO_Trading_Serv_Export TAO_Trader_Constraint_Evaluator : public TAO_Const
  public:
   /// Constructor.
   TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
-                                   CORBA::Boolean supports_dynamic_properties = 1);
+                                   CORBA::Boolean supports_dynamic_properties = true);
 
-  virtual int visit_property (TAO_Property_Constraint* literal);
+  int visit_property (TAO_Property_Constraint* literal) override;
 
  private:
   /// Utility with which to evaluate the properties of an offer, be

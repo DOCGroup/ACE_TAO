@@ -14,7 +14,7 @@ class PeerObject;
 class Thread;
 class GIOP_Buffer;
 
-typedef ACE_Unbounded_Queue<ACE_CString> NotifyIncidents;
+using NotifyIncidents = ACE_Unbounded_Queue<ACE_CString>;
 
 // Invocation holds the buffer contents for a request/response pair.
 // This could be originating in this process, or in the peer process.

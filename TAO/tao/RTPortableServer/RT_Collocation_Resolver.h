@@ -40,8 +40,16 @@ class TAO_RTPortableServer_Export TAO_RT_Collocation_Resolver :
   public TAO_Collocation_Resolver
 {
 public:
+  TAO_RT_Collocation_Resolver () = default;
+
   /// Is @a object collocated?
   CORBA::Boolean is_collocated (CORBA::Object_ptr object) const override;
+
+private:
+  TAO_RT_Collocation_Resolver (TAO_RT_Collocation_Resolver const &) = delete;
+  TAO_RT_Collocation_Resolver &operator= (TAO_RT_Collocation_Resolver const &) = delete;
+  TAO_RT_Collocation_Resolver (TAO_RT_Collocation_Resolver &&) = delete;
+  TAO_RT_Collocation_Resolver &operator= (TAO_RT_Collocation_Resolver &&) = delete;
 };
 
 

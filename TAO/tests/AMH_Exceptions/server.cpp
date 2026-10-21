@@ -13,12 +13,16 @@ class ST_AMH_Servant
 {
 public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);
+  ST_AMH_Servant (ST_AMH_Servant const &) = delete;
+  ST_AMH_Servant &operator= (ST_AMH_Servant const &) = delete;
+  ST_AMH_Servant (ST_AMH_Servant &&) = delete;
+  ST_AMH_Servant &operator= (ST_AMH_Servant &&) = delete;
 
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                    Test::Timestamp send_time);
+                    Test::Timestamp send_time) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh) override;
   //FUZZ: disable check_for_lack_ACE_OS
 
 protected:
@@ -69,16 +73,20 @@ class ST_AMH_Server
 {
 public:
   ST_AMH_Server (int argc, ACE_TCHAR **argv);
-  virtual ~ST_AMH_Server ();
+  ~ST_AMH_Server ();
+  ST_AMH_Server (ST_AMH_Server const &) = delete;
+  ST_AMH_Server &operator= (ST_AMH_Server const &) = delete;
+  ST_AMH_Server (ST_AMH_Server &&) = delete;
+  ST_AMH_Server &operator= (ST_AMH_Server &&) = delete;
 
   /// ORB initialisation stuff
   int start_orb_and_poa ();
 
   /// register the servant with the poa
-  virtual void register_servant (ST_AMH_Servant *servant);
+  void register_servant (ST_AMH_Servant *servant);
 
   /// orb-perform_work () abstraction
-  virtual void run_event_loop ();
+  void run_event_loop ();
 
 public:
   /// Accesor method (for servants) to the initialized ORB
@@ -87,7 +95,7 @@ public:
 protected:
   int argc_;
   ACE_TCHAR **argv_;
-  const ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR const *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
@@ -119,7 +127,7 @@ ST_AMH_Server::~ST_AMH_Server ()
 {
   try
     {
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }
@@ -210,9 +218,9 @@ int
 ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file= ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
-                                    "w");
-  if (output_file == 0)
+  FILE *output_file = ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
+                                     "w");
+  if (output_file == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",

@@ -62,15 +62,15 @@ namespace TAO
        * Please check the documentation in Transport_Connector.h
        */
       //@{
-      virtual int open (TAO_ORB_Core *orb_core);
-      virtual int close ();
-      virtual TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
-                                      TAO_Transport_Descriptor_Interface *desc,
-                                      ACE_Time_Value *timeout);
+      int open (TAO_ORB_Core *orb_core) override;
+      int close () override;
+      TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
+                              TAO_Transport_Descriptor_Interface *desc,
+                              ACE_Time_Value *timeout) override;
 
-      virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
-      virtual int check_prefix (const char *endpoint);
-      virtual TAO_Profile * corbaloc_scan (const char *ior, size_t &len);
+      TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
+      int check_prefix (const char *endpoint) override;
+      TAO_Profile * corbaloc_scan (const char *ior, size_t &len) override;
       //@}
 
     protected:
@@ -82,8 +82,8 @@ namespace TAO
        * @see @c TAO_Connector
        */
       //@{
-      virtual TAO_Profile * make_profile ();
-      virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+      TAO_Profile * make_profile () override;
+      int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
       //@}
 
       /// SSL-specific profile
@@ -112,19 +112,13 @@ namespace TAO
                                                           SSL *ssl);
 
     public:
-      typedef TAO_Connect_Concurrency_Strategy<Connection_Handler>
-          CONNECT_CONCURRENCY_STRATEGY;
+      using CONNECT_CONCURRENCY_STRATEGY = TAO_Connect_Concurrency_Strategy<Connection_Handler>;
 
-      typedef TAO_Connect_Creation_Strategy<Connection_Handler>
-          CONNECT_CREATION_STRATEGY;
+      using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<Connection_Handler>;
 
-      typedef ACE_Connect_Strategy<Connection_Handler,
-                                   ACE_SSL_SOCK_Connector>
-          CONNECT_STRATEGY;
+      using CONNECT_STRATEGY = ACE_Connect_Strategy<Connection_Handler, ACE_SSL_SOCK_Connector>;
 
-      typedef ACE_Strategy_Connector<Connection_Handler,
-                                     ACE_SSL_SOCK_Connector>
-          BASE_CONNECTOR;
+      using BASE_CONNECTOR = ACE_Strategy_Connector<Connection_Handler, ACE_SSL_SOCK_Connector>;
 
     private:
       /// If zero, connect to IIOP over SSL port by default.

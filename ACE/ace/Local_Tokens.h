@@ -106,7 +106,7 @@ class ACE_Export ACE_TPQ_Entry
 {
   friend class ACE_Token_Manager;
 public:
-  typedef void (*PTVF) (void *);
+  using PTVF = void (*) (void *);
 
   /// Null constructor.
   ACE_TPQ_Entry ();
@@ -689,7 +689,7 @@ class ACE_Export ACE_Token_Name
 {
 public:
   /// Construction.
-  ACE_Token_Name (const ACE_TCHAR *token_name = 0);
+  ACE_Token_Name (const ACE_TCHAR *token_name = nullptr);
 
   /// Copy construction.
   ACE_Token_Name (const ACE_Token_Name &rhs);
@@ -970,7 +970,7 @@ public:
    * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
    * @param debug Prints a bunch of messages.
    */
-  ACE_Local_Mutex (const ACE_TCHAR *token_name = 0,
+  ACE_Local_Mutex (const ACE_TCHAR *token_name = nullptr,
                    int ignore_deadlock = 0,
                    int debug = 0);
 
@@ -1022,7 +1022,7 @@ public:
    * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
    * @param debug Prints a bunch of messages.
    */
-  ACE_Local_RLock (const ACE_TCHAR *token_name = 0,
+  ACE_Local_RLock (const ACE_TCHAR *token_name = nullptr,
                    int ignore_deadlock = 0,
                    int debug = 0);
 
@@ -1077,7 +1077,7 @@ public:
    * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
    * @param debug Prints a bunch of messages.
    */
-  ACE_Local_WLock (const ACE_TCHAR *token_name = 0,
+  ACE_Local_WLock (const ACE_TCHAR *token_name = nullptr,
                    int ignore_deadlock = 0,
                    int debug = 0);
 

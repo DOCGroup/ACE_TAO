@@ -75,6 +75,11 @@ namespace TAO
       void accept_visitor(TP_Queue_Visitor& visitor);
 
     private:
+      TP_Queue (TP_Queue const &) = delete;
+      TP_Queue &operator= (TP_Queue const &) = delete;
+      TP_Queue (TP_Queue &&) = delete;
+      TP_Queue &operator= (TP_Queue &&) = delete;
+
       /// The request at the front of the queue.
       TP_Request* head_;
 

@@ -14,9 +14,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionStrategy::ServantRetentionStrategy ()
-    {
-    }
+    ServantRetentionStrategy::ServantRetentionStrategy () = default;
   } /* namespace Portable_Server */
 } /* namespace TAO */
 

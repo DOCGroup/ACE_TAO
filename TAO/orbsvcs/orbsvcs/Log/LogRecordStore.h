@@ -218,6 +218,10 @@ protected:
 
 
 private:
+  TAO_LogRecordStore (TAO_LogRecordStore const &) = delete;
+  TAO_LogRecordStore (TAO_LogRecordStore &&) = delete;
+  TAO_LogRecordStore &operator= (TAO_LogRecordStore const &) = delete;
+  TAO_LogRecordStore &operator= (TAO_LogRecordStore &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

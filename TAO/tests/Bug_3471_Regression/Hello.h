@@ -13,10 +13,15 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual Test::ObjectSeq* get_objects ();
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
-  virtual void shutdown ();
+  // = The skeleton methods
+  Test::ObjectSeq *get_objects () override;
+
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

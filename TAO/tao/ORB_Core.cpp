@@ -860,7 +860,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
 
-          typedef void (ACE_Log_Msg::*PTMF)(u_long);
+          using PTMF = void (ACE_Log_Msg::*) (u_long);
           PTMF flagop = &ACE_Log_Msg::set_flags;
           u_long value;
 

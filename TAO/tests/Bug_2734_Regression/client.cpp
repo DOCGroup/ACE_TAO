@@ -4,7 +4,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int min_timeout = 0;
 int max_timeout = 20;
 
@@ -45,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 enum TO_TYPE {none = 0, orb1 = 1, thread1 = 2, object1 = 3};
-const char *to_type_names[4] ={"none", "orb", "thread", "object"};
+char const *to_type_names[4] = {"none", "orb", "thread", "object"};
 
 static int timeout_count[4] = {0, 0, 0, 0};
 static int in_time_count[4] = {0, 0, 0, 0};
@@ -59,11 +59,11 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
     {
       server->echo (0, t);
 
-      in_time_count[ctype]++;
+      ++in_time_count[ctype];
     }
   catch (const CORBA::TIMEOUT& )
     {
-      timeout_count[ctype]++;
+      ++timeout_count[ctype];
 
       // Trap this exception and continue...
       ACE_DEBUG ((LM_DEBUG,
@@ -213,7 +213,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int timeout_count_total = 0;
       int in_time_count_total = 0;
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < 4; ++i) {
         timeout_count_total += timeout_count[i];
         in_time_count_total += in_time_count[i];
         ACE_DEBUG ((LM_DEBUG, "in_time_count[%C]= %d timeout_count[%C]= %d\n",

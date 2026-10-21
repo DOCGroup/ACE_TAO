@@ -47,8 +47,8 @@ class TAO_EC_Scheduling_Strategy;
 class TAO_EC_ConsumerControl;
 class TAO_EC_SupplierControl;
 
-typedef TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushConsumer> TAO_EC_ProxyPushConsumer_Collection;
-typedef TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushSupplier> TAO_EC_ProxyPushSupplier_Collection;
+using TAO_EC_ProxyPushConsumer_Collection = TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushConsumer>;
+using TAO_EC_ProxyPushSupplier_Collection = TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushSupplier>;
 
 /**
  * @class TAO_EC_Factory

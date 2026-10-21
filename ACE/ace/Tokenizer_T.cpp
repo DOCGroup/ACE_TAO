@@ -130,7 +130,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next ()
 
   ACE_CHAR_T replacement = 0;
   int replace;
-  ACE_CHAR_T *next_token = 0;
+  ACE_CHAR_T *next_token = nullptr;
 
   // Skip all leading delimiters.
   for (;;)

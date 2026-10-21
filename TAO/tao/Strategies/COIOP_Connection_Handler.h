@@ -45,7 +45,7 @@ class TAO_Strategies_Export TAO_COIOP_Connection_Handler
     public TAO_Connection_Handler
 {
 public:
-  TAO_COIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_COIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
   /// Constructor.
   TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core);
@@ -55,29 +55,29 @@ public:
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
-  virtual int open (void *);
+  int open (void *) override;
 
   //@{
   /**
    * Connection_Handler overloads
    */
-  virtual int open_handler (void *);
+  int open_handler (void *) override;
   //@}
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
-  int close (u_long = 0);
+  int close (u_long = 0) override;
 
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler ();
-  virtual int close_connection ();
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_output (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+  int resume_handler () override;
+  int close_connection () override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
   //@}
 
   /// Add ourselves to Cache.

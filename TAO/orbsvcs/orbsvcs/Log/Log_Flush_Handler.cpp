@@ -3,13 +3,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Log_Flush_Handler::TAO_Log_Flush_Handler (ACE_Reactor* reactor,
-                                              TAO_Log_i* log,
-                                              const ACE_Time_Value& interval)
-  : timer_id_(-1),
-    reactor_(reactor),
-    log_(log),
-    interval_(interval)
+TAO_Log_Flush_Handler::TAO_Log_Flush_Handler (ACE_Reactor * reactor,
+                                              TAO_Log_i * log,
+                                              ACE_Time_Value const & interval)
+  : timer_id_ (-1),
+    reactor_ (reactor),
+    log_ (log),
+    interval_ (interval)
 {
 }
 
@@ -23,7 +23,7 @@ TAO_Log_Flush_Handler::schedule ()
 {
   this->cancel ();
   this->timer_id_ =
-    this->reactor_->schedule_timer (this, 0, this->interval_, this->interval_);
+    this->reactor_->schedule_timer (this, nullptr, this->interval_, this->interval_);
 }
 
 void
@@ -37,13 +37,13 @@ TAO_Log_Flush_Handler::cancel ()
 }
 
 int
-TAO_Log_Flush_Handler::handle_timeout (const ACE_Time_Value&, const void *)
+TAO_Log_Flush_Handler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   try
     {
       log_->flush ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 

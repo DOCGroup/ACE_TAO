@@ -30,18 +30,11 @@
 #include "Driver.h"
 #include "Custom_Handler.h"
 
-// These typedefs ensure that we use the minimal amount of locking
+// These aliases ensure that we use the minimal amount of locking
 // necessary.
-typedef ACE_Timer_Heap_T<Custom_Handler*,
-                         Custom_Handler_Upcall,
-                         ACE_Null_Mutex>
-        Timer_Heap;
-typedef ACE_Timer_Heap_Iterator_T<Custom_Handler*,
-                                  Custom_Handler_Upcall,
-                                  ACE_Null_Mutex>
-        Timer_Heap_Iterator;
-typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap, Custom_Handler*>
-        Thread_Timer_Queue;
+using Timer_Heap = ACE_Timer_Heap_T<Custom_Handler *, Custom_Handler_Upcall, ACE_Null_Mutex>;
+using Timer_Heap_Iterator = ACE_Timer_Heap_Iterator_T<Custom_Handler *, Custom_Handler_Upcall, ACE_Null_Mutex>;
+using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<Timer_Heap, Custom_Handler *>;
 
 // Forward declaration.
 class Thread_Timer_Queue_Custom_Handler_Test;
@@ -58,7 +51,7 @@ class Thread_Timer_Queue_Custom_Handler_Test;
 class Custom_Handler_Input_Task : public ACE_Task_Base
 {
 public:
-  typedef int (Custom_Handler_Input_Task::*ACTION) (void *);
+  using ACTION = int (Custom_Handler_Input_Task::*) (void *);
 
   Custom_Handler_Input_Task (Thread_Timer_Queue *queue,
               Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver);

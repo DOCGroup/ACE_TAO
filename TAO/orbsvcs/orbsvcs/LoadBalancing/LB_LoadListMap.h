@@ -30,12 +30,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// LoadList hash map.
-typedef ACE_Hash_Map_Manager_Ex<
+using TAO_LB_LoadListMap = ACE_Hash_Map_Manager_Ex<
   PortableGroup::Location,
   CosLoadBalancing::LoadList,
   TAO_PG_Location_Hash,
   TAO_PG_Location_Equal_To,
-  ACE_Null_Mutex> TAO_LB_LoadListMap;
+  ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

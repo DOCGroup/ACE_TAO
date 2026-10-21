@@ -24,12 +24,12 @@ namespace CORBA
      * standard in CORBA.
      */
     //@{
-    typedef ACE_CDR::Int8 Int8;
-    typedef Int8 &Int8_out;
+    using Int8 = ACE_CDR::Int8;
+    using Int8_out = Int8 &;
     struct Int8_tag {};
 
-    typedef ACE_CDR::UInt8 UInt8;
-    typedef UInt8 &UInt8_out;
+    using UInt8 = ACE_CDR::UInt8;
+    using UInt8_out = UInt8 &;
     struct UInt8_tag {};
     //@}
   }

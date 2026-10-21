@@ -109,8 +109,8 @@ Routing_Slip::create (
   Routing_Slip_Persistence_Manager * rspm)
 {
   Routing_Slip_Ptr result;
-  ACE_Message_Block * event_mb = 0;
-  ACE_Message_Block * rs_mb = 0;
+  ACE_Message_Block * event_mb = nullptr;
+  ACE_Message_Block * rs_mb = nullptr;
   try
     {
       if (rspm->reload (event_mb, rs_mb))
@@ -158,7 +158,7 @@ Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 {
   delete this->rspm_;
   this->rspm_ = rspm;
-  if (rspm_ != 0)
+  if (rspm_ != nullptr)
   {
     rspm->set_callback (this);
   }
@@ -194,20 +194,20 @@ Routing_Slip::~Routing_Slip ()
 bool
 Routing_Slip::create_persistence_manager()
 {
-  if (this->rspm_ == 0)
+  if (this->rspm_ == nullptr)
   {
     Event_Persistence_Strategy * strategy =
       ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>::instance ("Event_Persistence");
-    if (strategy != 0)
+    if (strategy != nullptr)
     {
       Event_Persistence_Factory * factory = strategy->get_factory ();
-      if (factory != 0)
+      if (factory != nullptr)
       {
         set_rspm (factory->create_routing_slip_persistence_manager(this));
       }
     }
   }
-  return this->rspm_ != 0;
+  return this->rspm_ != nullptr;
 }
 
 const TAO_Notify_Event::Ptr &
@@ -229,7 +229,7 @@ Routing_Slip::wait_persist ()
 void
 Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
 {
-  ACE_ASSERT(pc != 0);
+  ACE_ASSERT(pc != nullptr);
 
   TAO_Notify_ProxyConsumer::Ptr pcgrd(pc);
 
@@ -734,7 +734,7 @@ Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
   const ACE_Message_Block *rs_mb = rs_cdr.begin ();
   guard.release ();
 
-  ACE_ASSERT (this->rspm_ != 0);
+  ACE_ASSERT (this->rspm_ != nullptr);
   this->rspm_->update (*rs_mb);
 }
 
@@ -838,7 +838,7 @@ Routing_Slip::marshal (TAO_OutputCDR & cdr)
   for (size_t nreq = 0; nreq < request_count; ++nreq)
   {
     Delivery_Request * request = this->delivery_requests_[nreq].get ();
-    if (request != 0)
+    if (request != nullptr)
     {
       request->marshal (cdr);
     }
@@ -870,7 +870,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
               request,
               ecf,
               cdr);
-          if (method != 0)
+          if (method != nullptr)
           {
             this->delivery_requests_.push_back (request);
             this->delivery_methods_.push_back (method);
@@ -884,7 +884,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
                 request,
                 ecf,
                 cdr);
-          if (method != 0)
+          if (method != nullptr)
           {
             this->delivery_requests_.push_back (request);
             this->delivery_methods_.push_back (method);

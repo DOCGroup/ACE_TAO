@@ -45,51 +45,51 @@ public:
   TAO_FT_Service_Callbacks (TAO_ORB_Core *);
 
   /// Dtor
-  virtual ~TAO_FT_Service_Callbacks ();
+  ~TAO_FT_Service_Callbacks () override;
 
   /// Select the profile from MProfile as the needs of the services
   /// may be. Return the profile in @a pfile
-  virtual CORBA::Boolean select_profile (const TAO_MProfile &mprofile,
-                                         TAO_Profile *&pfile);
+  CORBA::Boolean select_profile (TAO_MProfile const& mprofile,
+                                 TAO_Profile *&pfile) override;
 
   /// Check whether <obj> is nil or not. FT spec suggests some
   /// extensions for a CORBA::is_nil () operation.
-  virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
+  CORBA::Boolean object_is_nil (CORBA::Object_ptr obj) override;
 
   /// Check for equivalency of the two profiles
-  virtual TAO_Service_Callbacks::Profile_Equivalence is_profile_equivalent (
-                                                const TAO_Profile *,
-                                                const TAO_Profile *);
+  TAO_Service_Callbacks::Profile_Equivalence is_profile_equivalent (
+    TAO_Profile const*,
+    TAO_Profile const*) override;
   /// Calculate the hash
-  virtual CORBA::ULong hash_ft (TAO_Profile *p,
-                                CORBA::ULong m);
+  CORBA::ULong hash_ft (TAO_Profile *p,
+                        CORBA::ULong m) override;
 
 
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
-  virtual CORBA::Boolean is_permanent_forward_condition
-  (const CORBA::Object_ptr obj,
-   const TAO_Service_Context &service_context) const;
+  CORBA::Boolean is_permanent_forward_condition (
+    CORBA::Object_ptr const obj,
+    TAO_Service_Context const& service_context) const override;
 
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
-  virtual TAO::Invocation_Status raise_comm_failure (
-      IOP::ServiceContextList &clist,
-      TAO_Profile *profile);
+  TAO::Invocation_Status raise_comm_failure (
+      IOP::ServiceContextList& clist,
+      TAO_Profile *profile) override;
 
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
-  virtual TAO::Invocation_Status raise_transient_failure (
-      IOP::ServiceContextList &clist,
-      TAO_Profile *profile);
+  TAO::Invocation_Status raise_transient_failure (
+      IOP::ServiceContextList& clist,
+      TAO_Profile *profile) override;
 
   static TimeBase::TimeT now ();
 
 private:
   /// Check whether the right flags are available so that we can issue a
   /// restart.
-  CORBA::Boolean restart_policy_check (IOP::ServiceContextList &service_list,
-                                       const TAO_Profile *profile);
+  CORBA::Boolean restart_policy_check (IOP::ServiceContextList& service_list,
+                                       TAO_Profile const* profile);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

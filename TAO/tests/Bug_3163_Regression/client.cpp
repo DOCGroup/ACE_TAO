@@ -1,7 +1,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int message_size = 0;
 
 int
@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -42,9 +42,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
-      ctest_var hello = ctest::_narrow(tmp.in ());
+      ctest_var hello = ctest::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ctest::UCSeq_var data;
 
-      hello->ctestfn(message_size, data.out ());
+      hello->ctestfn (message_size, data.out ());
 
       ACE_DEBUG ((LM_DEBUG, "Received %d bytes\n", data->length()));
 
@@ -64,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

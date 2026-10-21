@@ -5,9 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORManip_Loader::TAO_IORManip_Loader ()
-{
-}
+TAO_IORManip_Loader::TAO_IORManip_Loader () = default;
 
 CORBA::Object_ptr
 TAO_IORManip_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])

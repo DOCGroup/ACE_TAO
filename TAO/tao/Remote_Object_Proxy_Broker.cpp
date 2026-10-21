@@ -63,6 +63,7 @@ namespace TAO
     return _tao_retval.retn ();
   }
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::Object_ptr
   Remote_Object_Proxy_Broker::_get_component (CORBA::Object_ptr target)
   {
@@ -99,6 +100,7 @@ namespace TAO
 
   return adapter->get_interface_remote (target);
   }
+#endif /* !CORBA_E_COMPACT && !CORBA_E_MICRO */
 
   char *
   Remote_Object_Proxy_Broker::_repository_id (CORBA::Object_ptr target)

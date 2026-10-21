@@ -9,7 +9,7 @@
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
 
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 
 int
@@ -190,7 +190,7 @@ Sender::init (int argc,
     ACE_OS::fopen (this->filename_.c_str (),
                    "rb");
 
-  if (this->input_file_ == 0)
+  if (this->input_file_ == nullptr)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %s\n",
                        this->filename_.c_str () ),
@@ -215,7 +215,7 @@ Sender::init (int argc,
   ACE_INET_Addr addr;
   char buf [BUFSIZ];
 
-  if (address_ != 0)
+  if (address_ != nullptr)
     addr.set (address_);
   else
     {
@@ -234,7 +234,7 @@ Sender::init (int argc,
                                     &addr);
 
   ACE_INET_Addr peer_addr;
-  if (peer_address_ != 0)
+  if (peer_address_ != nullptr)
     peer_addr.set (peer_address_);
   else
     {
@@ -280,7 +280,7 @@ Sender::init (int argc,
                                   the_qos.inout (),
                                   flow_spec);
 
-  if (bind_result == 0)
+  if (!bind_result)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "streamctrl::bind_devs failed\n"),
                       -1);

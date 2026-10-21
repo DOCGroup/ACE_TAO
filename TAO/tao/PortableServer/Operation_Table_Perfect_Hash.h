@@ -43,24 +43,24 @@ public:
   ~TAO_Perfect_Hash_OpTable () override = default;
 
   /// See the documentation in the base class for details.
-  int find (const char *opname,
+  int find (char const *opname,
             TAO_Skeleton &skelfunc,
-            const unsigned int length = 0) override;
+            unsigned int const length = 0) override;
 
-  int find (const char *opname,
+  int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            const unsigned int length = 0) override;
+            unsigned int const length = 0) override;
 
-  int bind (const char *opname,
-            const TAO::Operation_Skeletons skel_ptr) override;
+  int bind (char const *opname,
+            TAO::Operation_Skeletons const skel_ptr) override;
 
 private:
   // = Methods that should defined by the subclasses. GPERF program
   //   will generate these routines.
-  virtual unsigned int hash (const char *str, unsigned int len) = 0;
+  virtual unsigned int hash (char const *str, unsigned int len) = 0;
 
-  virtual const TAO_operation_db_entry* lookup (const char *str, unsigned int len) = 0;
+  virtual TAO_operation_db_entry const *lookup (char const *str, unsigned int len) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

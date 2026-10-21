@@ -26,7 +26,7 @@ NotificationServiceMonitor_i::get_statistic_names ()
     Monitor_Point_Registry::instance ()->names ();
   CORBA::ULong the_length = static_cast <CORBA::ULong> (name_list.size ());
 
-  Monitor::NameList* the_names = 0;
+  Monitor::NameList* the_names = nullptr;
   ACE_NEW_RETURN (the_names,
                   Monitor::NameList (the_length),
                   0);
@@ -38,7 +38,7 @@ NotificationServiceMonitor_i::get_statistic_names ()
        !iter.done ();
        iter.advance (), ++i)
     {
-      ACE_CString* tmp = 0;
+      ACE_CString* tmp = nullptr;
       iter.next (tmp);
       safe_names[i] = tmp->c_str ();
     }
@@ -62,7 +62,7 @@ NotificationServiceMonitor_i::get_statistic (const char* name)
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
 
-  Monitor::Data* data = 0;
+  Monitor::Data* data = nullptr;
   ACE_NEW_THROW_EX (data,
                     Monitor::Data,
                     CORBA::NO_MEMORY ());
@@ -84,7 +84,7 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
     }
 
   CORBA::ULong const length = names.length ();
-  Monitor::DataList* data = 0;
+  Monitor::DataList* data = nullptr;
   ACE_NEW_RETURN (data,
                   Monitor::DataList (
                     length),

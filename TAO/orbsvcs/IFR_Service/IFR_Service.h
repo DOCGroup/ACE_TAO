@@ -31,12 +31,17 @@ public:
   /// Default constructor.
   IFR_Service ();
 
+  IFR_Service (IFR_Service const &) = delete;
+  IFR_Service (IFR_Service &&) = delete;
+  IFR_Service &operator= (IFR_Service const &) = delete;
+  IFR_Service &operator= (IFR_Service &&) = delete;
+
   /// Destructor
   ~IFR_Service ();
 
   /// Initialize the IFR service.
   int init (int argc,
-            ACE_TCHAR *argv[]);
+            ACE_TCHAR * argv[]);
 
   /// Shut down the IFR Service.
   int fini ();

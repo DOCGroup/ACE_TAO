@@ -115,8 +115,8 @@ public:
    * @retval -1 for failure.
    */
   int accept (ACE_SPIPE_Stream &ipc_sap_spipe,
-              ACE_SPIPE_Addr *remote_addr = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_SPIPE_Addr *remote_addr = nullptr,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false);
 

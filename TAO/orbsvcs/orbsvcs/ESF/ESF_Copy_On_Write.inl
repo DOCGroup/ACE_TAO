@@ -14,7 +14,7 @@ template<class COLLECTION, class ITERATOR, class ACE_LOCK> ACE_INLINE
 TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
     TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &m,
                                       Collection*& collection_ref)
-      :  collection (0),
+      :  collection (nullptr),
          mutex (m)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->mutex);
@@ -26,7 +26,7 @@ template<class COLLECTION, class ITERATOR, class ACE_LOCK> ACE_INLINE
 TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
     ~TAO_ESF_Copy_On_Write_Read_Guard ()
 {
-  if (this->collection != 0)
+  if (this->collection != nullptr)
     {
       ACE_GUARD (ACE_LOCK, ace_mon, this->mutex);
       this->collection->_decr_refcnt ();

@@ -53,7 +53,7 @@ private:
   char *type_;
 };
 
-typedef std::unique_ptr<Name_Binding> Name_Binding_Ptr;
+using Name_Binding_Ptr = std::unique_ptr<Name_Binding>;
 // Listing 1
 
 #endif /* NAME_BINDING_H */

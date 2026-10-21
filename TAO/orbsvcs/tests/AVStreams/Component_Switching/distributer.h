@@ -50,11 +50,11 @@ public:
   /// sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
-                     const ACE_Addr &peer_address);
+                     ACE_Addr const &peer_address) override;
 
   /// Called when the sender is done sending data and wants to close
   /// down the connection.
-  int handle_destroy ();
+  int handle_destroy () override;
 
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname ();
@@ -82,7 +82,7 @@ class Distributer_Sender_Callback : public TAO_AV_Callback
 public:
   //// Called when the sender has finished reading the file and wants
   //// to close down the connection.
-  int handle_destroy ();
+  int handle_destroy () override;
 
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname ();
@@ -104,15 +104,15 @@ class Distributer_Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   //// Store the reference to the protocol object corresponding
   //// to the transport
   int set_protocol_object (const char *,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 
   //// Called when a sender makes a connection request.
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec);
+  CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec) override;
 
 private:
   //// Receiver application callback.
@@ -130,29 +130,27 @@ public:
   //// Create the application callback and return its handle to
   //// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   //// Set protocol object corresponding to the transport protocol
   //// chosen.
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 
 protected:
   //// Application callback.
   Distributer_Sender_Callback callback_;
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A
+using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
           <Distributer_Sender_StreamEndPoint,
            TAO_VDev,
-           AV_Null_MediaCtrl>
-        SENDER_ENDPOINT_STRATEGY;
+           AV_Null_MediaCtrl>;
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_B
+using RECEIVER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_B
           <Distributer_Receiver_StreamEndPoint,
            TAO_VDev,
-           AV_Null_MediaCtrl>
-        RECEIVER_ENDPOINT_STRATEGY;
+           AV_Null_MediaCtrl>;
 
 /**
  * @class Distributer
@@ -170,6 +168,10 @@ public:
 
   //// Destructor.
   ~Distributer ();
+  Distributer (Distributer const &) = delete;
+  Distributer &operator= (Distributer const &) = delete;
+  Distributer (Distributer &&) = delete;
+  Distributer &operator= (Distributer &&) = delete;
 
   //// Initialize data components.
   int init (int argc,
@@ -206,10 +208,10 @@ protected:
   RECEIVER_ENDPOINT_STRATEGY receiver_endpoint_strategy_;
 
   //// The distributer receiver multimedia device
-  TAO_MMDevice* distributer_receiver_mmdevice_;
+  TAO_MMDevice *distributer_receiver_mmdevice_;
 
   //// The distributer receiver multimedia device
-  TAO_MMDevice* distributer_sender_mmdevice_;
+  TAO_MMDevice *distributer_sender_mmdevice_;
 
   //// The name of the sender to connect to.
   ACE_CString sender_name_;

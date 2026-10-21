@@ -43,19 +43,16 @@ public:
   TAO_LogMgr_i ();
 
   /// Destructor.
-  virtual ~TAO_LogMgr_i ();
+  ~TAO_LogMgr_i () override;
 
   /// Lists all log object references.
-  DsLogAdmin::LogList *
-    list_logs ();
+  DsLogAdmin::LogList *list_logs () override;
 
   /// Lists all log ids.
-  DsLogAdmin::LogIdList *
-    list_logs_by_id ();
+  DsLogAdmin::LogIdList *list_logs_by_id () override;
 
   /// Returns a reference to the log with the supplied id.
-  DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr find_log (DsLogAdmin::LogId id) override;
 
   /// Returns true if log exists, otherwise false
   bool exists (DsLogAdmin::LogId id);
@@ -71,7 +68,7 @@ public:
   ///
   /// @return object id
   ///
-  virtual PortableServer::ObjectId*
+  virtual PortableServer::ObjectId *
     create_objectid (DsLogAdmin::LogId id);
 
   /// @brief Create log reference
@@ -112,7 +109,7 @@ public:
   /// @param id log id
   ///
   /// @return pointer to servant
-  virtual PortableServer::ServantBase*
+  virtual PortableServer::ServantBase *
     create_log_servant (DsLogAdmin::LogId id) = 0;
 
   /// @brief Get log record store
@@ -121,7 +118,7 @@ public:
   ///
   /// @param id log id
   ///
-  TAO_LogRecordStore*
+  TAO_LogRecordStore *
     get_log_record_store (DsLogAdmin::LogId id);
 
   CORBA::ORB_ptr orb();
@@ -147,14 +144,14 @@ protected:
   /// @brief Create log
   void create_i (DsLogAdmin::LogFullActionType full_action,
                  CORBA::ULongLong max_size,
-                 const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+                 DsLogAdmin::CapacityAlarmThresholdList const * thresholds,
                  DsLogAdmin::LogId_out id_out);
 
   /// @brief Create log
   void create_with_id_i (DsLogAdmin::LogId id,
                          DsLogAdmin::LogFullActionType full_action,
                          CORBA::ULongLong max_size,
-                         const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
+                         DsLogAdmin::CapacityAlarmThresholdList const * thresholds);
 
   /// ORB.
   CORBA::ORB_var orb_;
@@ -169,7 +166,12 @@ protected:
   PortableServer::POA_var log_poa_;
 
 private:
-  TAO_LogStore* logstore_;
+  TAO_LogMgr_i (TAO_LogMgr_i const &) = delete;
+  TAO_LogMgr_i (TAO_LogMgr_i &&) = delete;
+  TAO_LogMgr_i &operator= (TAO_LogMgr_i const &) = delete;
+  TAO_LogMgr_i &operator= (TAO_LogMgr_i &&) = delete;
+
+  TAO_LogStore * logstore_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

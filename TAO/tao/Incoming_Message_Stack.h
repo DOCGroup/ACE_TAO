@@ -64,10 +64,10 @@ private:
 
 private:
   /// Default Copy-Constructor -  not for public usage.
-  Incoming_Message_Stack (const Incoming_Message_Stack&);
+  Incoming_Message_Stack (Incoming_Message_Stack const &) = delete;
 
   /// Assignment operator - not for public usage
-  Incoming_Message_Stack& operator= (Incoming_Message_Stack& other);
+  Incoming_Message_Stack &operator= (Incoming_Message_Stack const &) = delete;
 };
 }
 

@@ -43,14 +43,20 @@ public:
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  TAO_Log_Constraint_Interpreter (const char* constraints);
+  TAO_Log_Constraint_Interpreter (char const * constraints);
 
   /// Destructor.
-  ~TAO_Log_Constraint_Interpreter ();
+  ~TAO_Log_Constraint_Interpreter () override;
 
   /// Returns true if the constraint is evaluated successfully by
   /// the evaluator.
   CORBA::Boolean evaluate (TAO_Log_Constraint_Visitor &evaluator);
+
+private:
+  TAO_Log_Constraint_Interpreter (TAO_Log_Constraint_Interpreter const &) = delete;
+  TAO_Log_Constraint_Interpreter (TAO_Log_Constraint_Interpreter &&) = delete;
+  TAO_Log_Constraint_Interpreter &operator= (TAO_Log_Constraint_Interpreter const &) = delete;
+  TAO_Log_Constraint_Interpreter &operator= (TAO_Log_Constraint_Interpreter &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

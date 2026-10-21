@@ -5,10 +5,10 @@
 #endif /* ACE_HAS_QUANTIFY */
 
 // period times, in 100 nanoseconds
-#define ONE_HZ    10000000
-#define FIVE_HZ    2000000
-#define TEN_HZ     1000000
-#define TWENTY_HZ   500000
+constexpr u_long one_hz = 10000000;
+constexpr u_long five_hz = 2000000;
+constexpr u_long ten_hz = 1000000;
+constexpr u_long twenty_hz = 500000;
 
 class DynSched_Test
   // = TITLE
@@ -168,28 +168,28 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 
   ACE_Strategy_Scheduler scheduler (strategy);
 
-  DynSched_Test::setup_rt_info (low_1,   "low_1", ONE_HZ,    180000,
+  DynSched_Test::setup_rt_info (low_1,   "low_1", one_hz,    180000,
                                 RtecScheduler::LOW_CRITICALITY,
                                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  DynSched_Test::setup_rt_info (low_5,   "low_5",   FIVE_HZ,   180000,
+  DynSched_Test::setup_rt_info (low_5,   "low_5",   five_hz,   180000,
                                 RtecScheduler::LOW_CRITICALITY,
                                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  DynSched_Test::setup_rt_info (low_10,  "low_10",  TEN_HZ,    180000,
+  DynSched_Test::setup_rt_info (low_10,  "low_10",  ten_hz,    180000,
                                 RtecScheduler::LOW_CRITICALITY,
                                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  DynSched_Test::setup_rt_info (low_20,  "low_20",  TWENTY_HZ, 180000,
+  DynSched_Test::setup_rt_info (low_20,  "low_20",  twenty_hz, 180000,
                                 RtecScheduler::LOW_CRITICALITY,
                                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  DynSched_Test::setup_rt_info (high_1,  "high_1",  ONE_HZ,    180000,
+  DynSched_Test::setup_rt_info (high_1,  "high_1",  one_hz,    180000,
                                 RtecScheduler::HIGH_CRITICALITY,
                                 RtecScheduler::LOW_IMPORTANCE,  1);
-  DynSched_Test::setup_rt_info (high_5,  "high_5",  FIVE_HZ,   180000,
+  DynSched_Test::setup_rt_info (high_5,  "high_5",  five_hz,   180000,
                                 RtecScheduler::HIGH_CRITICALITY,
                                 RtecScheduler::LOW_IMPORTANCE,  1);
-  DynSched_Test::setup_rt_info (high_10, "high_10", TEN_HZ,    180000,
+  DynSched_Test::setup_rt_info (high_10, "high_10", ten_hz,    180000,
                                 RtecScheduler::HIGH_CRITICALITY,
                                 RtecScheduler::LOW_IMPORTANCE,  1);
-  DynSched_Test::setup_rt_info (high_20, "high_20", TWENTY_HZ, 180000,
+  DynSched_Test::setup_rt_info (high_20, "high_20", twenty_hz, 180000,
                                 RtecScheduler::HIGH_CRITICALITY,
                                 RtecScheduler::LOW_IMPORTANCE,  1);
 

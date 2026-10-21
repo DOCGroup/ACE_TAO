@@ -28,6 +28,10 @@ namespace TAO
     {
     public:
       IdUniquenessStrategyUnique () = default;
+      IdUniquenessStrategyUnique (IdUniquenessStrategyUnique const &) = delete;
+      IdUniquenessStrategyUnique &operator= (IdUniquenessStrategyUnique const &) = delete;
+      IdUniquenessStrategyUnique (IdUniquenessStrategyUnique &&) = delete;
+      IdUniquenessStrategyUnique &operator= (IdUniquenessStrategyUnique &&) = delete;
 
       void strategy_init (TAO_Root_POA *poa) override;
 
@@ -38,7 +42,7 @@ namespace TAO
       bool allow_multiple_activations () const override;
 
     private:
-      TAO_Root_POA* poa_ {};
+      TAO_Root_POA *poa_ {};
     };
   }
 }

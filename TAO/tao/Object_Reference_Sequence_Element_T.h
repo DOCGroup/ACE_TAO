@@ -22,10 +22,10 @@ template<typename obj_ref_traits>
 class object_reference_sequence_element
 {
 public:
-  typedef typename obj_ref_traits::object_type object_reference_type;
-  typedef object_reference_type * value_type;
-  typedef object_reference_type const * const_value_type;
-  typedef typename obj_ref_traits::object_type_var object_reference_var;
+  using object_reference_type = typename obj_ref_traits::object_type;
+  using value_type = object_reference_type *;
+  using const_value_type = object_reference_type const *;
+  using object_reference_var = typename obj_ref_traits::object_type_var;
 
 private:
   inline object_reference_sequence_element<obj_ref_traits> & pseudo_copy_swap(
@@ -119,7 +119,7 @@ public:
 
 private:
   // This function is not implemented
-  object_reference_sequence_element();
+  object_reference_sequence_element() = delete;
 
 private:
   value_type * element_;

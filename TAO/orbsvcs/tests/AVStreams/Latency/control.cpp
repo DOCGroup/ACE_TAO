@@ -6,11 +6,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
-const ACE_TCHAR *ping_ior = ACE_TEXT ("file://ping.ior");
-const ACE_TCHAR *pong_ior = ACE_TEXT ("file://pong.ior");
-const ACE_TCHAR *ping_address = ACE_TEXT ("localhost:12345");
-const ACE_TCHAR *pong_address = ACE_TEXT ("localhost:23456");
-const ACE_TCHAR *protocol = ACE_TEXT ("UDP");
+ACE_TCHAR const *ping_ior = ACE_TEXT ("file://ping.ior");
+ACE_TCHAR const *pong_ior = ACE_TEXT ("file://pong.ior");
+ACE_TCHAR const *ping_address = ACE_TEXT ("localhost:12345");
+ACE_TCHAR const *pong_address = ACE_TEXT ("localhost:23456");
+ACE_TCHAR const *protocol = ACE_TEXT ("UDP");
 
 int milliseconds = 30000;
 

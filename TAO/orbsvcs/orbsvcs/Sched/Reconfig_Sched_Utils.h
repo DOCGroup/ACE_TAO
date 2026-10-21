@@ -426,7 +426,7 @@ public:
 
   /// Resets the fields in the entry to pre-DFS traversal states.
   /// Returns 0 on success and -1 on error.
-  virtual int visit (TAO_Reconfig_Scheduler_Entry &rse);
+  int visit (TAO_Reconfig_Scheduler_Entry &rse) override;
 };
 
 /**

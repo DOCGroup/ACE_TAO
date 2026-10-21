@@ -23,8 +23,8 @@ activate_object_with_id (T * &result,
                          PortableServer::ServantBase *servant,
                          const FtRtecEventComm::ObjectId &oid)
 {
-  const PortableServer::ObjectId& id =
-    reinterpret_cast<const PortableServer::ObjectId&> (oid);
+  PortableServer::ObjectId const &id =
+    reinterpret_cast<PortableServer::ObjectId const &> (oid);
   poa->activate_object_with_id(id,
                                servant);
 

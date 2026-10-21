@@ -36,22 +36,22 @@ class TAO_Network_Priority_Mapping;
 
 namespace RTCORBA
 {
-  // TAO-specific typedefs
-  typedef TAO_Priority_Mapping_Manager PriorityMappingManager;
-  typedef TAO_Priority_Mapping_Manager *PriorityMappingManager_ptr;
-  typedef TAO_Priority_Mapping_Manager_var PriorityMappingManager_var;
-  typedef TAO_Priority_Mapping_Manager_out PriorityMappingManager_out;
+  // TAO-specific aliases
+  using PriorityMappingManager = TAO_Priority_Mapping_Manager;
+  using PriorityMappingManager_ptr = TAO_Priority_Mapping_Manager *;
+  using PriorityMappingManager_var = TAO_Priority_Mapping_Manager_var;
+  using PriorityMappingManager_out = TAO_Priority_Mapping_Manager_out;
 
-  typedef TAO_Network_Priority_Mapping_Manager NetworkPriorityMappingManager;
-  typedef TAO_Network_Priority_Mapping_Manager *NetworkPriorityMappingManager_ptr;
-  typedef TAO_Network_Priority_Mapping_Manager_var NetworkPriorityMappingManager_var;
-  typedef TAO_Network_Priority_Mapping_Manager_out NetworkPriorityMappingManager_out;
+  using NetworkPriorityMappingManager = TAO_Network_Priority_Mapping_Manager;
+  using NetworkPriorityMappingManager_ptr = TAO_Network_Priority_Mapping_Manager *;
+  using NetworkPriorityMappingManager_var = TAO_Network_Priority_Mapping_Manager_var;
+  using NetworkPriorityMappingManager_out = TAO_Network_Priority_Mapping_Manager_out;
 
-  typedef CORBA::Long NetworkPriority;
+  using NetworkPriority = CORBA::Long;
 
-  typedef TAO_Priority_Mapping PriorityMapping;
-  typedef TAO_Network_Priority_Mapping NetworkPriorityMapping;
-  // End TAO-specific typedef
+  using PriorityMapping = TAO_Priority_Mapping;
+  using NetworkPriorityMapping = TAO_Network_Priority_Mapping;
+  // End TAO-specific aliases
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

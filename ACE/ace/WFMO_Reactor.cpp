@@ -2347,7 +2347,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext
 
   for (int i = 1; ; ++i)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       // Copy ACE_Time_Value::zero since dequeue_head will modify it.
       ACE_Time_Value zero_timeout (ACE_Time_Value::zero);
       if (this->message_queue_.dequeue_head (mb, &zero_timeout) == -1)

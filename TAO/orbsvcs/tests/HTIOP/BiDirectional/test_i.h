@@ -28,10 +28,10 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
 
   /// Safe way to shutdown
-  void shutdown ();
+  void shutdown () override;
 
   /// The callback method
-  void callback_method ();
+  void callback_method () override;
 
 private:
   /// The orb
@@ -52,11 +52,11 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
 
   // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Boolean do_callback);
+  CORBA::Long test_method (CORBA::Boolean do_callback) override;
 
-  void callback_object (Callback_ptr callback);
+  void callback_object (Callback_ptr callback) override;
 
-  void shutdown ();
+  void shutdown () override;
 
   int call_client ();
 

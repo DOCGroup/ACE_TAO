@@ -53,7 +53,7 @@ public:
 class Async_Timer_Queue
 {
 public:
-  typedef int (Async_Timer_Queue::*ACTION) (void *);
+  using ACTION = int (Async_Timer_Queue::*) (void *);
 
    /// Singleton access point.
   static Async_Timer_Queue *instance ();

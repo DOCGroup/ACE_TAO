@@ -13,7 +13,7 @@ public:
   /// Constructor
   Callback ();
 
-  virtual void test_oneway ();
+  void test_oneway () override;
 
   bool received_callback ();
 

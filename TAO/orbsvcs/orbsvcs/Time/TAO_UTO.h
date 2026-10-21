@@ -46,20 +46,20 @@ public:
            TimeBase::TdfT tdf);
 
   /// Destructor.
-  ~TAO_UTO ();
+  ~TAO_UTO () override;
 
   /// For the readonly attribute <time>.
-  virtual TimeBase::TimeT time ();
+  TimeBase::TimeT time () override;
 
   /// For the readonly attribute <inaccuracy>.
-  virtual TimeBase::InaccuracyT  inaccuracy ();
+  TimeBase::InaccuracyT inaccuracy () override;
 
   /// For the readonly attribute <tdf>, which is the "time displacement
   /// factor".
-  virtual TimeBase::TdfT tdf ();
+  TimeBase::TdfT tdf () override;
 
   /// For the readonly attribute <utc_time>.
-  virtual TimeBase::UtcT utc_time ();
+  TimeBase::UtcT utc_time () override;
 
   /**
    * Absolute time = Relative time + Base time.
@@ -87,6 +87,11 @@ public:
   CosTime::TIO_ptr interval ();
 
 private:
+  TAO_UTO (TAO_UTO const &) = delete;
+  TAO_UTO (TAO_UTO &&) = delete;
+  TAO_UTO &operator= (TAO_UTO const &) = delete;
+  TAO_UTO &operator= (TAO_UTO &&) = delete;
+
   /**
    * The readonly attribute structure having the time, inaccuracy and
    * displacement.  The get methods for other readonly attributes

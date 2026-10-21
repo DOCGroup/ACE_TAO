@@ -70,8 +70,9 @@ public:
   // @}
 
 private:
-  void operator= (const TAO_Thread_Lane_Resources_Manager &);
-  TAO_Thread_Lane_Resources_Manager (const TAO_Thread_Lane_Resources_Manager &);
+  TAO_Thread_Lane_Resources_Manager (TAO_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_Thread_Lane_Resources_Manager &operator= (
+    TAO_Thread_Lane_Resources_Manager const &) = delete;
 
 protected:
   /// The ORB Core.
@@ -94,7 +95,7 @@ class TAO_Export TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
   /// Virtual destructor.
-  virtual ~TAO_Thread_Lane_Resources_Manager_Factory ();
+  ~TAO_Thread_Lane_Resources_Manager_Factory () override;
 
   /// Factory method.
   virtual TAO_Thread_Lane_Resources_Manager *

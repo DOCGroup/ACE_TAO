@@ -32,7 +32,7 @@ template <typename T>
 class TAO_Seq_Var_Base_T
 {
 public:
-  typedef typename T::subscript_type T_elem;
+  using T_elem = typename T::subscript_type;
 
   TAO_Seq_Var_Base_T ();
   TAO_Seq_Var_Base_T (T *);
@@ -47,10 +47,10 @@ public:
   operator T & ();
   operator T & () const;
 
-  typedef const T &   _in_type;
-  typedef       T &   _inout_type;
-  typedef       T *&  _out_type;
-  typedef       T *   _retn_type;
+  using _in_type = T const &;
+  using _inout_type = T &;
+  using _out_type = T *&;
+  using _retn_type = T *;
 
   // in, inout, out, _retn
   _in_type      in () const;
@@ -75,8 +75,8 @@ template <typename T>
 class TAO_FixedSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
-  typedef typename T::subscript_type T_elem;
-  typedef typename T::const_subscript_type T_const_elem;
+  using T_elem = typename T::subscript_type;
+  using T_const_elem = typename T::const_subscript_type;
 
   TAO_FixedSeq_Var_T ();
   TAO_FixedSeq_Var_T (T *);
@@ -105,8 +105,8 @@ template <typename T>
 class TAO_VarSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
-  typedef typename T::subscript_type T_elem;
-  typedef typename T::const_subscript_type T_const_elem;
+  using T_elem = typename T::subscript_type;
+  using T_const_elem = typename T::const_subscript_type;
 
   TAO_VarSeq_Var_T ();
   TAO_VarSeq_Var_T (T *);

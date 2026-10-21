@@ -18,7 +18,7 @@
 
 #include "ThreeTierS.h"
 
-class Sink_i: public POA_ThreeTier
+class Sink_i : public POA_ThreeTier
 {
 public:
   /// Construct
@@ -26,16 +26,16 @@ public:
   Sink_i (CORBA::ORB_ptr orb);
 
   /// Destructor
-  ~Sink_i ();
+  ~Sink_i () override = default;
 
-  bool parse_args (int & argc, ACE_TCHAR * argv[]);
+  bool parse_args (int &argc, ACE_TCHAR *argv[]);
 
   ///Implement ThreeTier methods
-  virtual void tick ();
-  virtual void tock ();
-  virtual ::CORBA::ULong tickCount ();
-  virtual ::CORBA::ULong tockCount ();
-  virtual void shutdown ();
+  void tick () override;
+  void tock () override;
+  ::CORBA::ULong tickCount () override;
+  ::CORBA::ULong tockCount () override;
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

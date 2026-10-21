@@ -37,7 +37,7 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   // Our connect creation strategy
-  TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+  TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SHMIOP_CONNECT_CREATION_STRATEGY
@@ -46,7 +46,7 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   /// Our activation strategy
-  TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+  TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
@@ -84,7 +84,7 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
-  if (shmiop_endpoint == 0)
+  if (shmiop_endpoint == nullptr)
     return -1;
 
    const ACE_INET_Addr &remote_address =
@@ -129,7 +129,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
 
-  if (shmiop_endpoint == 0)
+  if (shmiop_endpoint == nullptr)
     return 0;
 
   const ACE_INET_Addr &remote_address =
@@ -148,7 +148,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  TAO_SHMIOP_Connection_Handler *svc_handler = 0;
+  TAO_SHMIOP_Connection_Handler *svc_handler = nullptr;
 
   // Connect.
   int result = this->base_connector_.connect (svc_handler,
@@ -256,7 +256,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->orb_core ()),
                   0);
@@ -265,7 +265,7 @@ TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;
@@ -279,7 +279,7 @@ TAO_SHMIOP_Connector::make_profile ()
   // or:
   //    port/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_SHMIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -333,7 +333,7 @@ TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
-  if (shmiop_endpoint == 0)
+  if (shmiop_endpoint == nullptr)
     return 0;
 
   return shmiop_endpoint;

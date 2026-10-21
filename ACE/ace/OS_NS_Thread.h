@@ -914,7 +914,7 @@ private:
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// Location of current thread's TSS array.
-  static void **tss_base (void* ts_storage[] = 0, u_int *ts_created = 0);
+  static void **tss_base (void* ts_storage[] = 0, u_int *ts_created = nullptr);
 #   else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
   /// Location of current thread's TSS array.
   static void **&tss_base ();
@@ -1168,8 +1168,8 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_COND_T */
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
-                 const char *name = 0,
-                 void *arg = 0);
+                 const char *name = nullptr,
+                 void *arg = nullptr);
 
 # if defined (ACE_HAS_WCHAR)
 #   if defined (ACE_LACKS_COND_T)
@@ -1180,7 +1180,7 @@ namespace ACE_OS {
   int cond_init (ACE_cond_t *cv,
                  short type,
                  const wchar_t *name,
-                 void *arg = 0);
+                 void *arg = nullptr);
 
 #   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
@@ -1190,7 +1190,7 @@ namespace ACE_OS {
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
                  const wchar_t *name,
-                 void *arg = 0);
+                 void *arg = nullptr);
 # endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_COND_T)
@@ -1238,8 +1238,8 @@ namespace ACE_OS {
                   int manual_reset = 0,
                   int initial_state = 0,
                   int type = ACE_DEFAULT_SYNCH_TYPE,
-                  const char *name = 0,
-                  void *arg = 0,
+                  const char *name = nullptr,
+                  void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 
   extern ACE_Export
@@ -1259,7 +1259,7 @@ namespace ACE_OS {
                   int initial_state,
                   int type,
                   const wchar_t *name,
-                  void *arg = 0,
+                  void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -1269,7 +1269,7 @@ namespace ACE_OS {
                   int manual_reset,
                   int initial_state,
                   const wchar_t *name,
-                  void *arg = 0,
+                  void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
 
@@ -1317,7 +1317,7 @@ namespace ACE_OS {
   int mutex_init (ACE_mutex_t *m,
                   int lock_scope,
                   const wchar_t *name,
-                  ACE_mutexattr_t *arg = 0,
+                  ACE_mutexattr_t *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0,
                   int lock_type = 0);
 #endif /* ACE_HAS_WCHAR */
@@ -1406,8 +1406,8 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
-                            const ACE_TCHAR *name = 0,
-                            ACE_mutexattr_t *arg = 0,
+                            const ACE_TCHAR *name = nullptr,
+                            ACE_mutexattr_t *arg = nullptr,
                             LPSECURITY_ATTRIBUTES sa = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -1481,8 +1481,8 @@ namespace ACE_OS {
   int sema_init (ACE_sema_t *s,
                  u_int count,
                  int type = ACE_DEFAULT_SYNCH_TYPE,
-                 const char *name = 0,
-                 void *arg = 0,
+                 const char *name = nullptr,
+                 void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -1491,8 +1491,8 @@ namespace ACE_OS {
                  u_int count,
                  int type,
                  ACE_condattr_t *attributes,
-                 const char *name = 0,
-                 void *arg = 0,
+                 const char *name = nullptr,
+                 void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -1502,7 +1502,7 @@ namespace ACE_OS {
                  u_int count,
                  int type,
                  const wchar_t *name,
-                 void *arg = 0,
+                 void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -1512,7 +1512,7 @@ namespace ACE_OS {
                  int type,
                  ACE_condattr_t *attributes,
                  const wchar_t *name,
-                 void *arg = 0,
+                 void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
@@ -1575,7 +1575,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sigwait (sigset_t *set,
-               int *sig = 0);
+               int *sig = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sigwaitinfo (const sigset_t *set,
@@ -1840,15 +1840,15 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
                          int lock_type = 0,
-                         const char *name = 0,
-                         ACE_mutexattr_t *arg = 0);
+                         const char *name = nullptr,
+                         ACE_mutexattr_t *arg = nullptr);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
                          int lock_type,
                          const wchar_t *name,
-                         ACE_mutexattr_t *arg = 0);
+                         ACE_mutexattr_t *arg = nullptr);
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION

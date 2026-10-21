@@ -28,8 +28,7 @@ TAO::Security::SecurityManager::SecurityManager (/* unknown */)
 }
 
 TAO::Security::SecurityManager::~SecurityManager ()
-{
-}
+= default;
 
 Security::MechandOptionsList*
 TAO::Security::SecurityManager::supported_mechanisms ()
@@ -94,7 +93,7 @@ TAO::Security::SecurityManager::get_security_policy
 
 bool
 TAO::Security::AccessDecision::ReferenceKeyType::operator==
-  (const ReferenceKeyType& other) const
+  (ReferenceKeyType const & other) const
 {
   ::CORBA::ULong const olen = this->oid_->length();
   ::CORBA::ULong const alen = this->adapter_id_->length();
@@ -115,7 +114,7 @@ TAO::Security::AccessDecision::ReferenceKeyType::hash () const
   return 0;
 }
 
-TAO::Security::AccessDecision::ReferenceKeyType::operator const char* () const
+TAO::Security::AccessDecision::ReferenceKeyType::operator char const * () const
 {
   return "<hardcoded refkey>";
 }
@@ -127,8 +126,7 @@ TAO::Security::AccessDecision::AccessDecision ()
 }
 
 TAO::Security::AccessDecision::~AccessDecision ()
-{
-}
+= default;
 
 TAO::Security::AccessDecision::OBJECT_KEY
 TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
@@ -140,7 +138,7 @@ TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
 
 CORBA::Boolean
 TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
-                                                 const char *operation_name,
+                                                 char const * operation_name,
                                                  CORBA::Boolean collocated)
 {
   // LOCK THE MAP!
@@ -181,11 +179,11 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
 
 CORBA::Boolean
 TAO::Security::AccessDecision::access_allowed_ex (
-          const char * orb_id,
-          const ::CORBA::OctetSeq & adapter_id,
-          const ::CORBA::OctetSeq & object_id,
-          const ::SecurityLevel2::CredentialsList & /*cred_list */,
-          const char * operation_name,
+          char const * orb_id,
+          ::CORBA::OctetSeq const & adapter_id,
+          ::CORBA::OctetSeq const & object_id,
+          ::SecurityLevel2::CredentialsList const & /*cred_list */,
+          char const * operation_name,
           ::CORBA::Boolean collocated_invocation)
 {
   OBJECT_KEY key;
@@ -198,10 +196,10 @@ TAO::Security::AccessDecision::access_allowed_ex (
 
 CORBA::Boolean
 TAO::Security::AccessDecision::access_allowed
-  (const ::SecurityLevel2::CredentialsList & /*cred_list */,
+  (::SecurityLevel2::CredentialsList const & /*cred_list */,
    ::CORBA::Object_ptr target,
-   const char * operation_name,
-   const char * /*target_interface_name */)
+   char const * operation_name,
+   char const * /*target_interface_name */)
 {
   // @@ I still don't know what we do with the cred_list in here...
   // Do we inspect it?
@@ -213,9 +211,9 @@ TAO::Security::AccessDecision::access_allowed
 
 void
 TAO::Security::AccessDecision::add_object
-  (const char * orb_id,
-   const ::CORBA::OctetSeq & adapter_id,
-   const ::CORBA::OctetSeq & object_id,
+  (char const * orb_id,
+   ::CORBA::OctetSeq const & adapter_id,
+   ::CORBA::OctetSeq const & object_id,
    CORBA::Boolean allow_insecure_access)
 {
   // make a key from 'obj'
@@ -264,9 +262,9 @@ TAO::Security::AccessDecision::add_object
 
 void
 TAO::Security::AccessDecision::remove_object
-  (const char * orb_id,
-   const ::CORBA::OctetSeq & adapter_id,
-   const ::CORBA::OctetSeq & object_id)
+  (char const * orb_id,
+   ::CORBA::OctetSeq const & adapter_id,
+   ::CORBA::OctetSeq const & object_id)
 {
   OBJECT_KEY key;
   key.orbid_ = orb_id;

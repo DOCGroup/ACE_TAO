@@ -29,7 +29,7 @@ TAO_ECG_CDR_Message_Sender::dgram ()
 ACE_INLINE int
 TAO_ECG_CDR_Message_Sender::get_local_addr (ACE_INET_Addr& addr)
 {
-  if (this->endpoint_rptr_.get () == 0)
+  if (this->endpoint_rptr_.get () == nullptr)
     return -1;
   return this->dgram ().get_local_addr (addr);
 }

@@ -54,7 +54,7 @@ int ImR_Locator_i::debug_ = 0;
 
 ImR_Locator_i::ImR_Locator_i ()
   : dsi_forwarder_ (*this)
-  , ins_locator_ (0)
+  , ins_locator_ (nullptr)
   , aam_active_ ()
   , aam_terminating_ ()
   , opts_ (0)
@@ -162,7 +162,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
       return result;
     }
 
-  Locator_Repository::SIMap::ENTRY* entry = 0;
+  Locator_Repository::SIMap::ENTRY* entry = nullptr;
   Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
 
   for (;it.next (entry) != 0; it.advance ())
@@ -290,7 +290,7 @@ ImR_Locator_i::shutdown
   if (activators != 0 && this->repository_->activators ().current_size () > 0)
     {
       ACE_Vector<ImplementationRepository::Activator_var> acts;
-      Locator_Repository::AIMap::ENTRY* entry = 0;
+      Locator_Repository::AIMap::ENTRY* entry = nullptr;
       Locator_Repository::AIMap::ITERATOR it (this->repository_->activators ());
       for (;it.next (entry) != 0; it.advance ())
         {
@@ -603,7 +603,7 @@ ImR_Locator_i::activate_server
                       server));
     }
 
-  ImR_ResponseHandler *rh = 0;
+  ImR_ResponseHandler *rh = nullptr;
   ACE_NEW (rh,
            ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_ACTIVATE_SERVER,
                                     _tao_rh));
@@ -883,7 +883,7 @@ ImR_Locator_i::kill_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
  const char * name, CORBA::Short signum)
 {
-  CORBA::Exception *ex = 0;
+  CORBA::Exception *ex = nullptr;
   Server_Info_Ptr si;
   if (!this->get_info_for_name (name, si))
     {
@@ -897,13 +897,13 @@ ImR_Locator_i::kill_server
         }
       if (!this->kill_server_i (si, signum, ex))
         {
-          if (ex == 0)
+          if (ex == nullptr)
             {
               ex = new ImplementationRepository::CannotComplete ("server not running");
             }
         }
     }
-  if (ex != 0)
+  if (ex != nullptr)
     {
       ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
       _tao_rh->kill_server_excep (&h);
@@ -1006,7 +1006,7 @@ ImR_Locator_i::force_remove_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
  const char *name, CORBA::Short signum)
 {
-  CORBA::Exception *ex = 0;
+  CORBA::Exception *ex = nullptr;
   Server_Info_Ptr si;
   AsyncAccessManager_ptr aam;
   if (this->opts_->readonly ())
@@ -1058,11 +1058,11 @@ ImR_Locator_i::force_remove_server
     this->kill_server_i (si, signum, ex) :
     this->shutdown_server_i (si, ex, true);
 
-  if (ex != 0)
+  if (ex != nullptr)
     {
       ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
       _tao_rh->force_remove_server_excep (&h);
-      aam->force_remove_rh (0);
+      aam->force_remove_rh (nullptr);
       return;
     }
   if (active)
@@ -1071,7 +1071,7 @@ ImR_Locator_i::force_remove_server
     }
   else
     {
-      aam->force_remove_rh (0);
+      aam->force_remove_rh (nullptr);
       remove_server_i (si);
       _tao_rh->force_remove_server ();
     }
@@ -1229,7 +1229,7 @@ ImR_Locator_i::shutdown_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  const char* name)
 {
-  CORBA::Exception *ex = 0;
+  CORBA::Exception *ex = nullptr;
   Server_Info_Ptr si;
 
   if (!this->get_info_for_name (name, si))
@@ -1248,7 +1248,7 @@ ImR_Locator_i::shutdown_server
           aam->shutdown_initiated ();
         }
     }
-  if (ex != 0)
+  if (ex != nullptr)
     {
       ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
       _tao_rh->shutdown_server_excep (&h);
@@ -1466,13 +1466,13 @@ ImR_Locator_i::list
  CORBA::ULong how_many,
  CORBA::Boolean active)
 {
-  AsyncListManager *l = 0;
+  AsyncListManager *l = nullptr;
   try
     {
       ACE_NEW_THROW_EX (l,
                         AsyncListManager (this->repository_.get(),
                                           this->root_poa_.in(),
-                                          active ? &this->pinger_ : 0),
+                                          active ? &this->pinger_ : nullptr),
                         CORBA::NO_MEMORY ());
       AsyncListManager_ptr lister (l);
       l->list (_tao_rh, how_many);
@@ -1640,7 +1640,7 @@ bool
 ImR_Locator_i::server_is_alive (UpdateableServerInfo& info)
 {
   this->connect_server (info);
-  SyncListener *listener = 0;
+  SyncListener *listener = nullptr;
   ACE_NEW_RETURN (listener,
                   SyncListener (info->ping_id(),
                                 this->orb_.in(),
@@ -1801,7 +1801,7 @@ SyncListener::status_changed (LiveStatus status)
 //---------------------------------------------------------------------------
 
 ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB_ptr orb)
-  :excep_ (0),
+  :excep_ (nullptr),
    key_ (objkey),
    orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -1828,11 +1828,11 @@ ImR_SyncResponseHandler::send_exception (CORBA::Exception *ex)
 char *
 ImR_SyncResponseHandler::wait_for_result ()
 {
-  while (this->result_.in() == 0 && this->excep_ == 0)
+  while (this->result_.in() == nullptr && this->excep_ == nullptr)
     {
       this->orb_->perform_work ();
     }
-  if (this->excep_ != 0)
+  if (this->excep_ != nullptr)
     {
       TAO_AMH_DSI_Exception_Holder h(this->excep_);
       h.raise_invoke ();

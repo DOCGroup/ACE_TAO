@@ -60,8 +60,7 @@ class ACE_Timeprobe_Ex
 {
 public:
   /// Self
-  typedef ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
-          SELF;
+  using SELF = ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>;
 
   /**
    * ACE_Timeprobe
@@ -70,8 +69,7 @@ public:
 
 
   /// We can hold multiple event description tables.
-  typedef ACE_Unbounded_Set<ACE_Event_Descriptions>
-          EVENT_DESCRIPTIONS;
+  using EVENT_DESCRIPTIONS = ACE_Unbounded_Set<ACE_Event_Descriptions>;
 
   /// Create Timeprobes with @a size slots
   ACE_Timeprobe_Ex (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);

@@ -127,8 +127,8 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_Gateway
 public:
   /// The Service_Object entry points.
   //@{
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  virtual int init (int argc, ACE_TCHAR* argv[]) override;
+  virtual int fini () override;
   //@}
 
   /// Helper function to register the Gateway into the service

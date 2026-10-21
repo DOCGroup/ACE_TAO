@@ -71,7 +71,9 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   void event_channel (TAO_Notify_EventChannel* ec);
 
  private:
-  typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
+  using FILTER_LIST = ACE_Hash_Map_Manager <CosNotifyFilter::FilterID,
+                                            CosNotifyFilter::Filter_var,
+                                            ACE_SYNCH_NULL_MUTEX>;
 
   virtual void release ();
 
