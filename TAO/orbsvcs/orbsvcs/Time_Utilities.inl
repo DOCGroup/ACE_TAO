@@ -11,14 +11,14 @@ ORBSVCS_Time::zero ()
 
 ACE_INLINE void
 ORBSVCS_Time::TimeT_to_hrtime (ACE_hrtime_t &lhs,
-                               const TimeBase::TimeT& rhs)
+                               TimeBase::TimeT const &rhs)
 {
   lhs = rhs;
   lhs *= 100;
 }
 
 ACE_INLINE void
-ORBSVCS_Time::hrtime_to_TimeT (TimeBase::TimeT& lhs,
+ORBSVCS_Time::hrtime_to_TimeT (TimeBase::TimeT &lhs,
                                ACE_hrtime_t rhs)
 {
   ACE_UINT64 t = rhs / 100; // convert to 100ns
@@ -26,7 +26,7 @@ ORBSVCS_Time::hrtime_to_TimeT (TimeBase::TimeT& lhs,
 }
 
 ACE_INLINE ACE_hrtime_t
-ORBSVCS_Time::to_hrtime (const TimeBase::TimeT& t)
+ORBSVCS_Time::to_hrtime (TimeBase::TimeT const &t)
 {
   ACE_hrtime_t r;
   ORBSVCS_Time::TimeT_to_hrtime (r, t);
@@ -34,8 +34,8 @@ ORBSVCS_Time::to_hrtime (const TimeBase::TimeT& t)
 }
 
 ACE_INLINE void
-ORBSVCS_Time::Time_Value_to_TimeT (TimeBase::TimeT& lhs,
-                                   const ACE_Time_Value& rhs)
+ORBSVCS_Time::Time_Value_to_TimeT (TimeBase::TimeT &lhs,
+                                   ACE_Time_Value const &rhs)
 {
   ACE_hrtime_t t =
     static_cast<ACE_hrtime_t> (rhs.sec ()) * ACE_U_ONE_SECOND_IN_NSECS +
@@ -45,8 +45,8 @@ ORBSVCS_Time::Time_Value_to_TimeT (TimeBase::TimeT& lhs,
 }
 
 ACE_INLINE void
-ORBSVCS_Time::TimeT_to_Time_Value (ACE_Time_Value& lhs,
-                                   const TimeBase::TimeT& rhs)
+ORBSVCS_Time::TimeT_to_Time_Value (ACE_Time_Value &lhs,
+                                   TimeBase::TimeT const &rhs)
 {
   ACE_hrtime_t t;
 
@@ -57,7 +57,7 @@ ORBSVCS_Time::TimeT_to_Time_Value (ACE_Time_Value& lhs,
 }
 
 ACE_INLINE ACE_Time_Value
-ORBSVCS_Time::to_Time_Value (const TimeBase::TimeT& t)
+ORBSVCS_Time::to_Time_Value (TimeBase::TimeT const &t)
 {
   ACE_Time_Value r;
   ORBSVCS_Time::TimeT_to_Time_Value (r, t);
@@ -65,7 +65,7 @@ ORBSVCS_Time::to_Time_Value (const TimeBase::TimeT& t)
 }
 
 ACE_INLINE TimeBase::TimeT
-ORBSVCS_Time::to_TimeT (const ACE_Time_Value& t)
+ORBSVCS_Time::to_TimeT (ACE_Time_Value const &t)
 {
    TimeBase::TimeT r;
    ORBSVCS_Time::Time_Value_to_TimeT (r, t);
@@ -73,8 +73,8 @@ ORBSVCS_Time::to_TimeT (const ACE_Time_Value& t)
 }
 
 ACE_INLINE void
-ORBSVCS_Time::Absolute_Time_Value_to_TimeT (TimeBase::TimeT& lhs,
-                                            const ACE_Time_Value& rhs)
+ORBSVCS_Time::Absolute_Time_Value_to_TimeT (TimeBase::TimeT &lhs,
+                                            ACE_Time_Value const &rhs)
 {
   ACE_hrtime_t t =
     static_cast<ACE_hrtime_t> (rhs.sec ()) * ACE_U_ONE_SECOND_IN_NSECS +
@@ -85,8 +85,8 @@ ORBSVCS_Time::Absolute_Time_Value_to_TimeT (TimeBase::TimeT& lhs,
 }
 
 ACE_INLINE void
-ORBSVCS_Time::Absolute_TimeT_to_Time_Value (ACE_Time_Value& lhs,
-                                            const TimeBase::TimeT& rhs)
+ORBSVCS_Time::Absolute_TimeT_to_Time_Value (ACE_Time_Value &lhs,
+                                            TimeBase::TimeT const &rhs)
 {
   ACE_hrtime_t t;
 
@@ -106,7 +106,7 @@ ORBSVCS_Time::to_Absolute_Time_Value (const TimeBase::TimeT& t)
 }
 
 ACE_INLINE TimeBase::TimeT
-ORBSVCS_Time::to_Absolute_TimeT (const ACE_Time_Value& t)
+ORBSVCS_Time::to_Absolute_TimeT (ACE_Time_Value const &t)
 {
   TimeBase::TimeT r;
   ORBSVCS_Time::Absolute_Time_Value_to_TimeT (r, t);

@@ -45,24 +45,24 @@ class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  TAO_IOR_Multicast ();
+  TAO_IOR_Multicast () = default;
 
   /// Constructor taking the ior of the service.
-  TAO_IOR_Multicast (char const* ior,
+  TAO_IOR_Multicast (char const *ior,
                      u_short port,
-                     char const* mcast_addr,
+                     char const *mcast_addr,
                      TAO_Service_ID service_id);
 
   /// Initialization method.
-  int init (char const* ior,
+  int init (char const *ior,
             u_short port,
-            char const* mcast_addr,
+            char const *mcast_addr,
             TAO_Service_ID service_id);
 
   /// Initialization method. Takes in "address:port" string as a
   /// parameter.
-  int init (char const* ior,
-            char const* mcast_addr,
+  int init (char const *ior,
+            char const *mcast_addr,
             TAO_Service_ID service_id);
 
   /// Destructor.
@@ -85,11 +85,11 @@ public:
 
 private:
   /// Factor common functionality from the two init functions.
-  int common_init (char const* ior,
+  int common_init (char const *ior,
                    TAO_Service_ID service_id);
 
   /// Service id that we're waiting for.
-  TAO_Service_ID service_id_;
+  TAO_Service_ID service_id_ {};
 
   /// multicast endpoint of communication
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
