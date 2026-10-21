@@ -11,20 +11,20 @@ public:
             AST_Type *uses_type,
             bool is_multiple);
 
-  virtual ~AST_Uses ();
+  ~AST_Uses () override;
 
   // Data Accessors.
   AST_Type *uses_type () const;
   bool is_multiple () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 
