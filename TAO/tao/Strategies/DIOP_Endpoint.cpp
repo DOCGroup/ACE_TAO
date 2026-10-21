@@ -23,13 +23,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
 
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE)
     , host_ ()
-    , port_ (0)
-#if defined (ACE_HAS_IPV6)
-    , is_ipv6_decimal_ (false)
-#endif /* ACE_HAS_IPV6 */
     , object_addr_ (addr)
-    , object_addr_set_ (false)
-    , next_ (nullptr)
 {
   this->set (addr, use_dotted_decimal_addresses);
 }
@@ -42,12 +36,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
                   priority)
     , host_ ()
     , port_ (port)
-#if defined (ACE_HAS_IPV6)
-    , is_ipv6_decimal_ (false)
-#endif /* ACE_HAS_IPV6 */
     , object_addr_ (addr)
-    , object_addr_set_ (false)
-    , next_ (nullptr)
 {
   this->host (host); // With IPv6 performs check for decimal address
 }
@@ -55,13 +44,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE),
     host_ (),
-    port_ (0),
-#if defined (ACE_HAS_IPV6)
-    is_ipv6_decimal_ (false),
-#endif /* ACE_HAS_IPV6 */
-    object_addr_ (),
-    object_addr_set_ (false),
-    next_ (nullptr)
+    object_addr_ ()
 {
 }
 
@@ -71,12 +54,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE, priority),
     host_ (),
     port_ (port),
-#if defined (ACE_HAS_IPV6)
-    is_ipv6_decimal_ (false),
-#endif /* ACE_HAS_IPV6 */
-    object_addr_ (),
-    object_addr_set_ (false),
-    next_ (nullptr)
+    object_addr_ ()
 {
   this->host (host); // With IPv6 performs check for decimal address
 }

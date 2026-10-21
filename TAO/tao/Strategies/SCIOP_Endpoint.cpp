@@ -25,12 +25,8 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const ACE_INET_Addr &addr,
                                         int use_dotted_decimal_addresses)
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
   , host_ ()
-  , port_ (683)  // default port (IANA assigned)
   , object_addr_ (addr)
-  , object_addr_set_ (0)
   , preferred_path_ ()
-  , is_encodable_ (true)
-  , next_ (nullptr)
 {
   this->set (addr, use_dotted_decimal_addresses);
 }
@@ -44,22 +40,15 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
   , host_ (host)
   , port_ (port)
   , object_addr_ (addr)
-  , object_addr_set_ (0)
   , preferred_path_ ()
-  , is_encodable_ (true)
-  , next_ (nullptr)
 {
 }
 
 TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
   , host_ ()
-  , port_ (683)  // default port (IANA assigned)
   , object_addr_ ()
-  , object_addr_set_ (0)
   , preferred_path_ ()
-  , is_encodable_ (true)
-  , next_ (nullptr)
 {
 }
 
@@ -70,10 +59,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
   , host_ (host)
   , port_ (port)
   , object_addr_ ()
-  , object_addr_set_ (0)
   , preferred_path_ ()
-  , is_encodable_ (true)
-  , next_ (nullptr)
 {
   this->priority (priority);
 }
@@ -87,7 +73,6 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
   , object_addr_set_ (rhs.object_addr_set_)
   , preferred_path_  (rhs.preferred_path_)
   , is_encodable_ (rhs.is_encodable_)
-  , next_ (nullptr)
 {
 }
 

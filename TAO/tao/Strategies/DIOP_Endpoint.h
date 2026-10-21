@@ -123,11 +123,11 @@ private:
   CORBA::String_var host_;
 
   /// TCP port number.
-  CORBA::UShort port_;
+  CORBA::UShort port_ {};
 
 #if defined (ACE_HAS_IPV6)
   /// Does the host string represent an IPv6 decimal address.
-  bool is_ipv6_decimal_;
+  bool is_ipv6_decimal_ {};
 #endif /* ACE_HAS_IPV6 */
 
   /// Cached instance of <ACE_INET_Addr> for use in making
@@ -135,11 +135,11 @@ private:
   mutable ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  mutable bool object_addr_set_;
+  mutable bool object_addr_set_ {};
 
   /// DIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_DIOP_Endpoint *next_;
+  TAO_DIOP_Endpoint *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

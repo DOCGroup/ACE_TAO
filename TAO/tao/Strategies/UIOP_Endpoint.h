@@ -89,7 +89,7 @@ private:
 
   /// UIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_UIOP_Endpoint *next_;
+  TAO_UIOP_Endpoint *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
