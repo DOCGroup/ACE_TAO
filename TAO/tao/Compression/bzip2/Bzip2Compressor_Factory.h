@@ -35,6 +35,11 @@ namespace TAO
         ::Compression::Compressor_ptr get_compressor (
             ::Compression::CompressionLevel compression_level) override;
        private:
+         Bzip2_CompressorFactory (Bzip2_CompressorFactory const &) = delete;
+         Bzip2_CompressorFactory &operator= (Bzip2_CompressorFactory const &) = delete;
+         Bzip2_CompressorFactory (Bzip2_CompressorFactory &&) = delete;
+         Bzip2_CompressorFactory &operator= (Bzip2_CompressorFactory &&) = delete;
+
          ::Compression::Compressor_var compressor_;
     };
 }

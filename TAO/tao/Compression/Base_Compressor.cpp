@@ -30,7 +30,7 @@ namespace TAO
   ::CORBA::ULongLong
   BaseCompressor::compressed_bytes ()
   {
-    ::CORBA::ULongLong return_value = 0;
+    ::CORBA::ULongLong return_value {};
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return_value = compressed_bytes_;
@@ -41,7 +41,7 @@ namespace TAO
   ::CORBA::ULongLong
   BaseCompressor::uncompressed_bytes ()
   {
-    ::CORBA::ULongLong return_value = 0;
+    ::CORBA::ULongLong return_value {};
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return_value = uncompressed_bytes_;
@@ -52,7 +52,7 @@ namespace TAO
   ::Compression::CompressionRatio
   BaseCompressor::compression_ratio ()
   {
-    ::Compression::CompressionRatio return_value = 0;
+    ::Compression::CompressionRatio return_value {};
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       if (this->uncompressed_bytes_ > 0)
