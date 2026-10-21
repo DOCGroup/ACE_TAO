@@ -324,7 +324,7 @@ ACE_INLINE
 CORBA::Any_out::Any_out (CORBA::Any *&s)
   : ptr_ (s)
 {
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 ACE_INLINE

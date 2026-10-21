@@ -75,7 +75,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
                                    const CORBA::SystemException *& _tao_elem,
                                    TAO::excp_factory f)
 {
-  _tao_elem = 0;
+  _tao_elem = nullptr;
 
   try
     {
@@ -149,11 +149,11 @@ TAO::Any_SystemException::free_value ()
   if (this->value_destructor_ != nullptr)
     {
       (*this->value_destructor_) (this->value_);
-      this->value_destructor_ = 0;
+      this->value_destructor_ = nullptr;
     }
 
   ::CORBA::release (this->type_);
-  this->value_ = 0;
+  this->value_ = nullptr;
 }
 
 const void *

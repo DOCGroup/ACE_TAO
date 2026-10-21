@@ -5,7 +5,7 @@ ACE_INLINE
 CORBA::NamedValue::NamedValue ()
   : refcount_ (1),
     flags_ (0),
-    name_ (0)
+    name_ (nullptr)
 {
 }
 
@@ -55,7 +55,7 @@ ACE_INLINE
 CORBA::NVList::NVList ()
   : max_ (0),
     refcount_ (1),
-    incoming_ (0),
+    incoming_ (nullptr),
     incoming_flag_ (0)
 {
 }
