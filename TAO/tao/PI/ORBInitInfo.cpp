@@ -61,9 +61,7 @@ TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
 {
 }
 
-TAO_ORBInitInfo::~TAO_ORBInitInfo ()
-{
-}
+TAO_ORBInitInfo::~TAO_ORBInitInfo () = default;
 
 CORBA::StringSeq *
 TAO_ORBInitInfo::arguments ()

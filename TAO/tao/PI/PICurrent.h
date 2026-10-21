@@ -113,11 +113,11 @@ namespace TAO
     /// TSS slot assigned to PICurrent_Impl objects in the OrbCore.
     /// Allocated by the orb_core_.add_tss_cleanup_func() when our
     /// initialize() method is called.
-    size_t tss_slot_;
+    size_t tss_slot_ {};
 
     /// The number of allocated PICurrent slots end user wants. (0 is
     /// uninitialized or PICurrent is not used as no data is to be stored).
-    PortableInterceptor::SlotId slot_count_;
+    PortableInterceptor::SlotId slot_count_ {};
   };
 }
 
