@@ -28,8 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Reconfig_Scheduler_Entry;
 struct TAO_RT_Info_Tuple;
-typedef ACE_Ordered_MultiSet<TAO_RT_Info_Tuple *> TUPLE_SET;
-typedef ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *> TUPLE_SET_ITERATOR;
+using TUPLE_SET = ACE_Ordered_MultiSet<TAO_RT_Info_Tuple *>;
+using TUPLE_SET_ITERATOR = ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *>;
 
 /**
  * @class ACE_Scheduler_Factory

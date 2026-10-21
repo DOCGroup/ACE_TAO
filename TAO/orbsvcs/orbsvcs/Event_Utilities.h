@@ -22,7 +22,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-typedef void (*TAO_EC_Event_Initializer) (RtecEventComm::Event&);
+using TAO_EC_Event_Initializer = void (*) (RtecEventComm::Event&);
 
 /**
  * @class ACE_ConsumerQOS_Factory
