@@ -63,20 +63,20 @@ public:
 
 private:
   /// My orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
   /// File where the IOR of the Clerk object is stored.
-  FILE * ior_output_file_;
+  FILE *ior_output_file_ {};
 
   /// An instance of the name server used for registering the
   /// <TimeService Server> object.
   TAO_Naming_Client naming_client_;
 
   /// Implementation of the <TimeService> Server object.
-  TAO_Time_Service_Server * time_service_server_impl_;
+  TAO_Time_Service_Server *time_service_server_impl_ {};
 
   /// Reference of the time server.
   CosTime::TimeService_var time_service_server_;
