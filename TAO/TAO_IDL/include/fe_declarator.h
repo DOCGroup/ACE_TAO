@@ -86,7 +86,7 @@ public:
   FE_Declarator (UTL_ScopedName *n,
                  DeclaratorType dt,
                  AST_Decl *cp);
-  virtual ~FE_Declarator () {}
+  virtual ~FE_Declarator () = default;
 
   // Data Accessors.
   AST_Decl *complex_part ();
