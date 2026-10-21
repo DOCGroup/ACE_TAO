@@ -30,7 +30,7 @@ public:
   TAO_PI_Server_Loader () = default;
 
   /// Destructor.
-  ~TAO_PI_Server_Loader () override = default;
+  ~TAO_PI_Server_Loader () override;
 
   /// Initialize the PI_Server loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
