@@ -42,11 +42,11 @@ class TAO_Export TAO_Time_Policy_Manager
 {
 public:
   TAO_Time_Policy_Manager ();
-  virtual ~TAO_Time_Policy_Manager ();
+  ~TAO_Time_Policy_Manager () override;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Parse svc.conf arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
