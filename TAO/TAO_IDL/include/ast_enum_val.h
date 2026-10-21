@@ -77,17 +77,17 @@ public:
   AST_EnumVal (ACE_CDR::ULong v,
                UTL_ScopedName *n);
 
-  virtual ~AST_EnumVal ();
+  ~AST_EnumVal () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool annotatable () const { return true; }
+  bool annotatable () const override { return true; }
 
   /// Parent Enum of this value
   ///{
