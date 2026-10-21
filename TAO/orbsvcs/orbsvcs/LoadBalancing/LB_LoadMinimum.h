@@ -148,11 +148,11 @@ private:
   PortableServer::POA_var poa_;
 
   /// Table that maps location to load list.
-  TAO_LB_LoadMap * load_map_;
+  TAO_LB_LoadMap * load_map_ {};
 
   /// Lock used to ensure atomic access to state retained by this
   /// class.
-  TAO_SYNCH_MUTEX * lock_;
+  TAO_SYNCH_MUTEX * lock_ {};
 
   /// Cached set of properties used when initializing this strategy.
   CosLoadBalancing::Properties properties_;
