@@ -69,7 +69,7 @@ namespace TAO
         * counted, and should not be destroyed using delete() by anything
         * other than the reference counting mechanism.
         */
-      ~IIOP_Current_Impl () override;
+      ~IIOP_Current_Impl () override = default;
 
     private:
       /// Returns the IIOP connection handler associated with the

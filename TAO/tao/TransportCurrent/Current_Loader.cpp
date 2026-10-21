@@ -25,9 +25,6 @@ namespace TAO
 {
   namespace Transport
   {
-    /// Destructor
-    Current_Loader::~Current_Loader () = default;
-
     /// Initializes object when dynamic linking occurs.
     int
     Current_Loader::init (int, ACE_TCHAR *[])

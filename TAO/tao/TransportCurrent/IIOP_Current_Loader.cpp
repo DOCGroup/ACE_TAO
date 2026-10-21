@@ -46,9 +46,6 @@ namespace TAO
         return 0;
       }
 
-      Current_Loader::Current_Loader () = default;
-
-      Current_Loader::~Current_Loader () = default;
     }
   }
 }

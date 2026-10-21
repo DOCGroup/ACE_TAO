@@ -55,10 +55,6 @@ namespace TAO
     }
 
 
-    /// Dtor
-
-    IIOP_Current_Impl::~IIOP_Current_Impl () = default;
-
     CORBA::Long
     IIOP_Current_Impl::id ()
     {

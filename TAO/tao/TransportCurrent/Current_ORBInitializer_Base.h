@@ -38,7 +38,7 @@ namespace TAO
     {
     public:
       Current_ORBInitializer_Base (const ACE_TCHAR* id);
-      ~Current_ORBInitializer_Base () override;
+      ~Current_ORBInitializer_Base () override = default;
 
       void pre_init (PortableInterceptor::ORBInitInfo_ptr) override;
 
