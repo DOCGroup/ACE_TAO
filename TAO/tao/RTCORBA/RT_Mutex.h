@@ -68,7 +68,7 @@ public:
   virtual char const *name () const;
 
   /// Destructor.
-  ~TAO_RT_Mutex () override = default;
+  ~TAO_RT_Mutex () override;
 
 protected:
   /// Synchronization lock.

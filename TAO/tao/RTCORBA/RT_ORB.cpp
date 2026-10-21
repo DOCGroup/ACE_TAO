@@ -14,6 +14,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_RT_ORB::~TAO_RT_ORB () = default;
+TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager () = default;
+
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
                         TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                         ACE_Time_Value const &dynamic_thread_time)

@@ -13,6 +13,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy () = default;
+TAO_ThreadpoolPolicy::~TAO_ThreadpoolPolicy () = default;
+TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy () = default;
+TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy () = default;
+TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy () = default;
+TAO_ClientProtocolPolicy::~TAO_ClientProtocolPolicy () = default;
+TAO_TCP_Protocol_Properties::~TAO_TCP_Protocol_Properties () = default;
+TAO_UnixDomain_Protocol_Properties::~TAO_UnixDomain_Protocol_Properties () = default;
+TAO_SharedMemory_Protocol_Properties::~TAO_SharedMemory_Protocol_Properties () = default;
+TAO_UserDatagram_Protocol_Properties::~TAO_UserDatagram_Protocol_Properties () = default;
+TAO_StreamControl_Protocol_Properties::~TAO_StreamControl_Protocol_Properties () = default;
+TAO_GIOP_Protocol_Properties::~TAO_GIOP_Protocol_Properties () = default;
+
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
   RTCORBA::PriorityModel priority_model,
   RTCORBA::Priority server_priority)

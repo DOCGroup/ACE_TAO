@@ -9,6 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping () = default;
+
 TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)
   : policy_ (policy)
   , min_ (ACE_Sched_Params::priority_min (this->policy_))

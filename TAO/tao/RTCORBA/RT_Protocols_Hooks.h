@@ -38,7 +38,7 @@ public:
   TAO_RT_Protocols_Hooks () = default;
 
   /// Destructor
-  ~TAO_RT_Protocols_Hooks () override = default;
+  ~TAO_RT_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.
   void init_hooks (TAO_ORB_Core *orb_core) override;

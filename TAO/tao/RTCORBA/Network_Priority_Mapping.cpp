@@ -6,6 +6,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Network_Priority_Mapping::~TAO_Network_Priority_Mapping () = default;
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

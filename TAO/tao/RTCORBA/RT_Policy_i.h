@@ -91,7 +91,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_PriorityModelPolicy () override = default;
+  ~TAO_PriorityModelPolicy () override;
 
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
@@ -145,7 +145,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_ThreadpoolPolicy () override = default;
+  ~TAO_ThreadpoolPolicy () override;
 
 private:
   /// Attribute.
@@ -193,7 +193,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_PrivateConnectionPolicy () override = default;
+  ~TAO_PrivateConnectionPolicy () override;
 };
 
 //*************************************************************************
@@ -254,7 +254,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_PriorityBandedConnectionPolicy () override = default;
+  ~TAO_PriorityBandedConnectionPolicy () override;
 
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
@@ -315,7 +315,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_ServerProtocolPolicy () override = default;
+  ~TAO_ServerProtocolPolicy () override;
 
 private:
   /// Attribute.
@@ -379,7 +379,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_ClientProtocolPolicy () override = default;
+  ~TAO_ClientProtocolPolicy () override;
 
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
@@ -446,7 +446,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_TCP_Protocol_Properties () override = default;
+  ~TAO_TCP_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -508,7 +508,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_UnixDomain_Protocol_Properties () override = default;
+  ~TAO_UnixDomain_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -598,7 +598,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_SharedMemory_Protocol_Properties () override = default;
+  ~TAO_SharedMemory_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -652,7 +652,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_UserDatagram_Protocol_Properties () override = default;
+  ~TAO_UserDatagram_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -717,7 +717,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_StreamControl_Protocol_Properties () override = default;
+  ~TAO_StreamControl_Protocol_Properties () override;
 
 private:
   // = Attributes.
@@ -744,7 +744,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_GIOP_Protocol_Properties () override = default;
+  ~TAO_GIOP_Protocol_Properties () override;
 
   friend class TAO_Protocol_Properties_Factory;
   TAO_GIOP_Protocol_Properties () = default;

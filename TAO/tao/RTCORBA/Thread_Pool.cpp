@@ -20,6 +20,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Thread_Lane::~TAO_Thread_Lane () = default;
+
 TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
   TAO_Thread_Lane &lane)
   : lane_ (lane)

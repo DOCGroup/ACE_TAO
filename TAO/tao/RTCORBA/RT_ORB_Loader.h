@@ -37,7 +37,7 @@ public:
   TAO_RT_ORB_Loader () = default;
 
   /// Destructor.
-  ~TAO_RT_ORB_Loader () override = default;
+  ~TAO_RT_ORB_Loader () override;
 
   /// Initialize the RT ORB loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
