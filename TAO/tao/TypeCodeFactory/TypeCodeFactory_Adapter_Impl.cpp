@@ -5,6 +5,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl () = default;
+
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_struct_tc (
     const char * id,

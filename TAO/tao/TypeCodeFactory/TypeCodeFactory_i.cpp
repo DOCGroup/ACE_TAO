@@ -34,6 +34,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i () = default;
+
 namespace TCF
 {
   namespace Struct
