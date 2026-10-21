@@ -70,7 +70,7 @@ namespace TAO
       };
 
       /// Virtual Destructor.
-      virtual ~Strategy_Base() = default;
+      virtual ~Strategy_Base ();
 
       /// This method is invoked to "attach" this strategy object to
       /// the supplied POA.  Returns true for success, and false for failure.

@@ -5,6 +5,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter () = default;
+
 TAO_CSD_Object_Adapter::TAO_CSD_Object_Adapter (
   const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
   TAO_ORB_Core &orb_core)
