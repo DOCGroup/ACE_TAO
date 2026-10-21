@@ -50,7 +50,7 @@ namespace CORBA
   {
   public:
     ValueFactoryBase () = default;
-    virtual ~ValueFactoryBase () = default;
+    virtual ~ValueFactoryBase ();
 
     // non-virtual is non-standard
     void _add_ref ();
