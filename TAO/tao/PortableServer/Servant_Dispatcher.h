@@ -48,7 +48,7 @@ namespace PortableServer
 class TAO_PortableServer_Export TAO_Servant_Dispatcher
 {
 public:
-  virtual ~TAO_Servant_Dispatcher ();
+  virtual ~TAO_Servant_Dispatcher () = default;
 
   /// Pre_invoke remote request.
   virtual void pre_invoke_remote_request (

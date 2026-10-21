@@ -79,14 +79,14 @@ namespace TAO
    */
   struct TAO_PortableServer_Export Operation_Skeletons
   {
-    Operation_Skeletons ();
+    Operation_Skeletons () = default;
 
     /// Remote skeleton pointer
-    TAO_Skeleton skel_ptr;
+    TAO_Skeleton skel_ptr {};
 
     /// Collocated skeleton pointers.
-    TAO_Skeleton thruPOA_skel_ptr;
-    TAO_Collocated_Skeleton direct_skel_ptr;
+    TAO_Skeleton thruPOA_skel_ptr {};
+    TAO_Collocated_Skeleton direct_skel_ptr {};
   };
 }
 
@@ -123,7 +123,7 @@ public:
   virtual int bind (char const *opname,
                     TAO::Operation_Skeletons const skel_ptr) = 0;
 
-  virtual ~TAO_Operation_Table ();
+  virtual ~TAO_Operation_Table () = default;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
