@@ -219,22 +219,22 @@ public:
 
 protected:
   /// Were we created by current_component()?
-  CORBA::Boolean ref_to_component_;
+  CORBA::Boolean ref_to_component_ {};
 
   /// Flag to let destroy() call by container override the flag above.
-  CORBA::Boolean container_is_destroying_;
+  CORBA::Boolean container_is_destroying_ {};
 
   /// Do we contain other Dynamic Anys?
-  CORBA::Boolean has_components_;
+  CORBA::Boolean has_components_ {};
 
   /// Has destroy() been called on us yet?
-  CORBA::Boolean destroyed_;
+  CORBA::Boolean destroyed_ {};
 
   /// Slot of the current component (if any).
-  CORBA::Long current_position_;
+  CORBA::Long current_position_ {-1};
 
   /// Number of components, as defined by CORBA 2.4.2.
-  CORBA::ULong component_count_;
+  CORBA::ULong component_count_ {};
 
   /// Holder for our type code.
   CORBA::TypeCode_var type_;

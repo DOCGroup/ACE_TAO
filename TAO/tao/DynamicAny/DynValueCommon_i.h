@@ -65,7 +65,7 @@ private:
   virtual void check_typecode (CORBA::TypeCode_ptr tc)=0;
 
 protected:
-  CORBA::Boolean is_null_;
+  CORBA::Boolean is_null_ {true};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

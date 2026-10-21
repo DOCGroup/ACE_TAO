@@ -110,7 +110,7 @@ private:
   DynamicAny::DynAny_var discriminator_;
 
   /// The active member's slot in the union type code.
-  CORBA::ULong member_slot_;
+  CORBA::ULong member_slot_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

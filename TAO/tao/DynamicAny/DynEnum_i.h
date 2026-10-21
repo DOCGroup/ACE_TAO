@@ -90,7 +90,7 @@ private:
 
 private:
   /// Current numeric value of the enum.
-  CORBA::ULong value_;
+  CORBA::ULong value_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
