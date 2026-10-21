@@ -31,10 +31,10 @@ public:
   be_visitor_module_any_op (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_module_any_op ();
+  ~be_visitor_module_any_op () override;
 
   /// visit module
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 };
 
 #endif /* _BE_VISITOR_MODULE_ANY_OP_H_ */
