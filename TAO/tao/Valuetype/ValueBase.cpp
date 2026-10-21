@@ -72,11 +72,7 @@ CORBA::ValueBase::_copy_value ()
   return nullptr;
 }
 
-CORBA::ValueBase::ValueBase ()
-  : is_truncatable_(0),
-    chunking_(0)
-{
-}
+CORBA::ValueBase::ValueBase () = default;
 
 CORBA::ValueBase::ValueBase (const ValueBase& val)
   : is_truncatable_ (val.is_truncatable_),

@@ -101,16 +101,16 @@ public:
 
   /// A flag to indicate that this instance is actually involved in a chunked
   /// or truncatable valuetype.
-  CORBA::Boolean chunking_;
+  CORBA::Boolean chunking_ {};
 
   /// The level of nesting valuetypes.
-  CORBA::Long value_nesting_level_;
+  CORBA::Long value_nesting_level_ {};
   /// The starting position of the size of current chunk.
   char* chunk_size_pos_;
   /// The length of CDR stream from the beginning to the current
   /// chunk data starting position.  Used to calculate the chunk size
   /// across multiple chained ACE_Message_Blocks.
-  size_t length_to_chunk_octets_pos_;
+  size_t length_to_chunk_octets_pos_ {};
   /// The end position of current chunk.
   char* chunk_octets_end_pos_;
 };
@@ -240,13 +240,13 @@ namespace CORBA
 
     /// This flag is set to be true when the valuetype defined
     /// in the idl has the truncatable parent.
-    CORBA::Boolean         is_truncatable_;
+    CORBA::Boolean         is_truncatable_ {};
 
     /// This flag is set to be true when marshalling uses chunking.
     /// According to spec, the truncatable valuetype should use chunking
     /// and it can be used for marshalling large valuetype. In current
     /// implementation, we just use chunking for the truncatable valuetype.
-    CORBA::Boolean chunking_;
+    CORBA::Boolean chunking_ {};
 
     /// Compare the supplied formal type identifier with our actual type.
     /// This is used during marshaling of valuetypes to detect when it is

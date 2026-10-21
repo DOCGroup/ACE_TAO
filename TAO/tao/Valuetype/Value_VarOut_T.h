@@ -79,7 +79,7 @@ private:
   void operator= (TAO_Base_var const &) = delete;
 
 private:
-  T * ptr_;
+  T * ptr_ {};
 };
 
 /**

@@ -9,9 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
-TAO_Value_Var_T<T>::TAO_Value_Var_T ()
-  : ptr_ (nullptr)
-{}
+TAO_Value_Var_T<T>::TAO_Value_Var_T () = default;
 
 template <typename T>
 TAO_Value_Var_T<T>::TAO_Value_Var_T (T * p)
