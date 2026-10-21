@@ -67,7 +67,7 @@ public:
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, default.
-  TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
+  explicit TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_UIOP_Profile ();

@@ -38,7 +38,7 @@ class TAO_Strategies_Export TAO_FIFO_Connection_Purging_Strategy:
 {
 public:
   /// The constructor
-  TAO_FIFO_Connection_Purging_Strategy (int cache_maximum);
+  explicit TAO_FIFO_Connection_Purging_Strategy (int cache_maximum);
 
   /// Called when accessing an item from the cache
   void update_item (TAO_Transport& transport) override;

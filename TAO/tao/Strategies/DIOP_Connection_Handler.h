@@ -46,10 +46,10 @@ class TAO_Strategies_Export TAO_DIOP_Connection_Handler
   , public TAO_Connection_Handler
 {
 public:
-  TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
+  explicit TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
   /// Constructor.
-  TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core);
+  explicit TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
   ~TAO_DIOP_Connection_Handler ();
