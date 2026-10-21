@@ -16,15 +16,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::AbstractBase::AbstractBase ()
-  : is_objref_ (false)
-  , refcount_ (1)
-  , is_collocated_ (false)
-  , servant_ (nullptr)
-  , equivalent_obj_ (CORBA::Object::_nil ())
-{
-}
-
 CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
   : is_objref_ (rhs.is_objref_)
   , refcount_ (1)

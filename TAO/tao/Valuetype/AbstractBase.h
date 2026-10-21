@@ -122,13 +122,13 @@ namespace CORBA
     void _decr_refcount ();
 
   protected:
-    AbstractBase ();
+    AbstractBase () = default;
     AbstractBase (const AbstractBase &);
 
     virtual ~AbstractBase () = default;
 
   protected:
-    CORBA::Boolean is_objref_;
+    CORBA::Boolean is_objref_ {};
 
   private:
     AbstractBase & operator= (AbstractBase const &) = delete;
@@ -139,10 +139,10 @@ namespace CORBA
 
   private:
     /// Number of outstanding references to this object.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
 
-    CORBA::Boolean is_collocated_;
-    TAO_Abstract_ServantBase *servant_;
+    CORBA::Boolean is_collocated_ {};
+    TAO_Abstract_ServantBase *servant_ {};
 
     /// Our equivalent CORBA::Object version
     /// @todo We may at some point of time should probably cache a
