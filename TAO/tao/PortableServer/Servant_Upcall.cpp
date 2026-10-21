@@ -24,18 +24,7 @@ namespace TAO
   namespace Portable_Server
   {
     Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)
-      : object_adapter_ (0),
-        poa_ (0),
-        servant_ (0),
-        state_ (INITIAL_STAGE),
-        system_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, system_id_buf_),
-        user_id_ (0),
-        current_context_ (),
-#if (TAO_HAS_MINIMUM_POA == 0)
-        cookie_ (0),
-        operation_ (0),
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-        active_object_map_entry_ (0)
+      : system_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, system_id_buf_)
     {
       TAO_Object_Adapter *object_adapter =
         dynamic_cast<TAO_Object_Adapter *>(oc->poa_adapter ());
@@ -195,12 +184,7 @@ namespace TAO
         this->pre_invoke_state_);
     }
 
-    Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State ()
-      : state_ (NO_ACTION_REQUIRED),
-        original_native_priority_ (0),
-        original_CORBA_priority_ (0)
-    {
-    }
+    Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State () = default;
 
     ::TAO_Root_POA *
     Servant_Upcall::lookup_POA (const TAO::ObjectKey &key)
