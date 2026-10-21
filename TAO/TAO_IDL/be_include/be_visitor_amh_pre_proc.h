@@ -27,25 +27,25 @@
 class be_visitor_amh_pre_proc : public be_visitor_scope
 {
 private:
-  typedef enum
+  enum class Operation_Kind
   {
     NORMAL,
     GET_OPERATION,
     SET_OPERATION
-  } Operation_Kind;
+  };
 
 public:
   be_visitor_amh_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_amh_pre_proc ();
+  ~be_visitor_amh_pre_proc () override;
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
 private:
   /// Create the reponse handler interface

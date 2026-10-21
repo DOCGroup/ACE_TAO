@@ -619,20 +619,20 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 
           this->create_raise_operation (op,
                                         excep_holder,
-                                        GET_OPERATION);
+                                        Operation_Kind::GET_OPERATION);
 
           if (!attribute->readonly ())
             {
               this->create_raise_operation (op,
                                             excep_holder,
-                                            SET_OPERATION);
+                                            Operation_Kind::SET_OPERATION);
             }
         }
       else if (nt == AST_Decl::NT_op)
         {
           this->create_raise_operation (op,
                                         excep_holder,
-                                        NORMAL);
+                                        Operation_Kind::NORMAL);
         }
       else
         {
@@ -654,7 +654,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
   UTL_ScopedName *sn = nullptr;
   be_operation *orig_op = nullptr;
 
-  if (operation_kind == NORMAL)
+  if (operation_kind == Operation_Kind::NORMAL)
     {
       orig_op = dynamic_cast<be_operation*> (node);
     }
@@ -665,11 +665,11 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   ACE_CString new_local_name ("raise_");
 
-  if (operation_kind == SET_OPERATION)
+  if (operation_kind == Operation_Kind::SET_OPERATION)
     {
       new_local_name += "set_";
     }
-  else if (operation_kind == GET_OPERATION)
+  else if (operation_kind == Operation_Kind::GET_OPERATION)
     {
       new_local_name += "get_";
     }
@@ -699,7 +699,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
 
-  if (operation_kind == NORMAL)
+  if (operation_kind == Operation_Kind::NORMAL)
     {
       if (orig_op)
         {
