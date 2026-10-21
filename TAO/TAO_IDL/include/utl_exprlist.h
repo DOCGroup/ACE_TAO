@@ -87,7 +87,7 @@ public:
   AST_Expression *head ();
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   // Data.

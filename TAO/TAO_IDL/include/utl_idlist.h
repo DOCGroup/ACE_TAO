@@ -89,16 +89,16 @@ public:
   UTL_IdList (Identifier *car, UTL_IdList *cdr = nullptr);
   // Constructor(s)
 
-  virtual ~UTL_IdList () {}
+  ~UTL_IdList () override = default;
   // destructor
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to ostream.
 
-  virtual void destroy ();
+  void destroy () override;
   // Cleanup function.
 
-  virtual UTL_IdList *copy ();
+  UTL_IdList *copy () override;
   // Copy the list.
 
   Identifier *head ();
