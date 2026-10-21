@@ -29,37 +29,37 @@ public:
   be_visitor_valuebox_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_ci ();
+  ~be_visitor_valuebox_ci () override;
 
   /// visit valuebox.
-  virtual int visit_valuebox (be_valuebox *node);
+  int visit_valuebox (be_valuebox *node) override;
 
   /// visit array.
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit enum.
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   /// visit interface.
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// visit predefined type.
-  virtual int visit_predefined_type (be_predefined_type *node);
+  int visit_predefined_type (be_predefined_type *node) override;
 
   /// visit sequence.
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 
   /// visit string.
-  virtual int visit_string (be_string *node);
+  int visit_string (be_string *node) override;
 
   /// visit structure.
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit typedef.
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   /// visit union.
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
 private:
   int emit_for_predef_enum (be_type *node,
