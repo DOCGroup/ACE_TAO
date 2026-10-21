@@ -7,10 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  FlResource_Factory::FlResource_Factory ()
-    : reactor_impl_ (nullptr)
-  {
-  }
+  FlResource_Factory::FlResource_Factory () = default;
 
   ACE_Reactor_Impl *
   FlResource_Factory::reactor_impl ()

@@ -52,7 +52,7 @@ namespace TAO
     FlResource_Factory &operator= (FlResource_Factory &&) = delete;
 
     /// Reactor created by this factory.
-    ACE_FlReactor *reactor_impl_;
+    ACE_FlReactor *reactor_impl_ {};
   };
 }
 
