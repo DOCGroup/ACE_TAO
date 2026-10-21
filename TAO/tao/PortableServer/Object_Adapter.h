@@ -293,7 +293,7 @@ public:
   friend class No_Hint_Strategy;
 
 protected:
-  Hint_Strategy *hint_strategy_;
+  Hint_Strategy *hint_strategy_ {};
 
   /// Base class of the id map.
   using transient_poa_map = ACE_Map<

@@ -91,7 +91,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     int persistent_id_policy,
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
       creation_parameters)
-  : using_active_maps_ (false)
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 

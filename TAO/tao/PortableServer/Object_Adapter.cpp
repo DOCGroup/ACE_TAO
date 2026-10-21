@@ -136,8 +136,7 @@ TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Facto
 
 TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
                                         TAO_ORB_Core &orb_core)
-  : hint_strategy_ (0),
-    orb_core_ (orb_core),
+  : orb_core_ (orb_core),
     thread_lock_ (),
     lock_ (TAO_Object_Adapter::create_lock (thread_lock_)),
     reverse_lock_ (*lock_),
