@@ -50,7 +50,7 @@ namespace TAO
     XtResource_Factory &operator= (XtResource_Factory &&) = delete;
 
     /// Reactor created by this factory.
-    ACE_XtReactor *reactor_impl_;
+    ACE_XtReactor *reactor_impl_ {};
 
     /// Xt context for XtReactor
     XtAppContext  context_;
