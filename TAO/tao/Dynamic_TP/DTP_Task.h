@@ -162,46 +162,46 @@ private:
   /// The number of threads that are currently active. This may be
   /// different than the total number of threads since the latter
   /// may include threads that are shutting down but not reaped.
-  size_t active_count_;
+  size_t active_count_ {};
 
   /// Flag used to indicate when this task will (or will not) accept
   /// requests via the the add_request() method.
-  bool accepting_requests_;
+  bool accepting_requests_ {};
 
   /// Flag used to initiate a shutdown request to all worker threads.
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// Flag to indicate something is on the queue. works in conjunction with
   /// the work_available condition
-  bool check_queue_;
+  bool check_queue_ {};
 
   /// Flag used to avoid multiple open() calls.
-  bool opened_;
+  bool opened_ {};
 
   /// The number of requests in the local queue.
-  size_t num_queue_requests_;
+  size_t num_queue_requests_ {};
 
   /// The number of currently active worker threads.
-  std::atomic<unsigned long> busy_threads_;
+  std::atomic<unsigned long> busy_threads_ {};
 
   /// The queue of pending servant requests (a.k.a. the "request queue").
   TAO::CSD::TP_Queue queue_;
 
   /// The low water mark for dynamic threads to settle to.
-  size_t init_pool_threads_;
+  size_t init_pool_threads_ {};
 
   /// The low water mark for dynamic threads to settle to.
-  size_t min_pool_threads_;
+  size_t min_pool_threads_ {};
 
   /// The high water mark for dynamic threads to be limited to.
-  size_t max_pool_threads_;
+  size_t max_pool_threads_ {};
 
   /// If the max_pool_threads_ value has been met, then ORB requests coming in can be queued.
   /// This is the maximum number that will be allowed.
-  size_t max_request_queue_depth_;
+  size_t max_request_queue_depth_ {};
 
   /// This is the memory stack size allowable for each thread.
-  size_t thread_stack_size_;
+  size_t thread_stack_size_ {};
 
   /// This is the maximum amount of time in seconds that an idle thread can
   /// stay alive before being taken out of the pool.

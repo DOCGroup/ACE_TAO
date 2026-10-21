@@ -205,13 +205,13 @@ private:
 
   /// This boolean is set when we are shutting down, then we will not create
   /// any new dynamic threads
-  bool shutdown_;
+  bool shutdown_ {};
 
   TAO_DTP_Definition definition_;
   TAO_DTP_Thread_Pool_Threads threads_;
   TAO_DTP_Termination_Waiter waiter_;
 
-  CORBA::ULong active_count_;
+  CORBA::ULong active_count_ {};
 
   TAO_DTP_New_Leader_Generator new_thread_generator_;
 
@@ -282,7 +282,7 @@ private:
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;
-  CORBA::ULong thread_pool_id_counter_;
+  CORBA::ULong thread_pool_id_counter_ {1};
   TAO_SYNCH_MUTEX lock_;
 };
 

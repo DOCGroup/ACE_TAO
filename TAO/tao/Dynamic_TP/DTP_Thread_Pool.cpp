@@ -376,11 +376,9 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
                                           TAO_DTP_Definition &def)
   : manager_ (manager),
     id_ (id),
-    shutdown_ (false),
     definition_ (def),
     threads_ (*this),
     waiter_ (*this),
-    active_count_ (0),
     new_thread_generator_ (*this),
     lock_ (),
     activation_lock_ (),
@@ -431,10 +429,7 @@ TAO_DTP_Thread_Pool::wait ()
       CORBA::COMPLETED_NO));
 
 TAO_DTP_Thread_Pool_Manager::TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core)
-  : orb_core_ (orb_core),
-    thread_pools_ (),
-    thread_pool_id_counter_ (1),
-    lock_ ()
+  : orb_core_ (orb_core)
 {
 }
 

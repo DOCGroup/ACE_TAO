@@ -17,18 +17,7 @@ TAO_DTP_Task::TAO_DTP_Task ()
     queue_lock_ (),
     work_lock_ (),
     work_available_ (this->work_lock_),
-    active_workers_ (this->aw_lock_),
-    active_count_ (0),
-    accepting_requests_ (false),
-    shutdown_ (false),
-    check_queue_ (false),
-    opened_ (false),
-    num_queue_requests_ (0),
-    init_pool_threads_ (0),
-    min_pool_threads_ (0),
-    max_pool_threads_ (0),
-    max_request_queue_depth_ (0),
-    thread_stack_size_ (0)
+    active_workers_ (this->aw_lock_)
 {
 }
 
