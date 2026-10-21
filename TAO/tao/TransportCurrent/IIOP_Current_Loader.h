@@ -33,7 +33,7 @@ namespace TAO
       public:
         /// Initializes object when dynamic linking occurs.
         int init (int argc, ACE_TCHAR *argv[]) override;
-        ~Current_Loader () override = default;
+        ~Current_Loader () override;
         Current_Loader () = default;
       };
     }

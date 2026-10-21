@@ -14,6 +14,8 @@ namespace TAO
       // do nothing
     }
 
+    Current_ORBInitializer_Base::~Current_ORBInitializer_Base () = default;
+
     void
     Current_ORBInitializer_Base::pre_init (
       PortableInterceptor::ORBInitInfo_ptr info)

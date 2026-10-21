@@ -76,7 +76,7 @@ namespace TAO
         /// reference counted, and should not be destroyed using
         /// delete() by anything other than the reference counting
         /// mechanism.
-        ~Current_Impl () override = default;
+        ~Current_Impl () override;
 
       private:
         Current_Impl (Current_Impl const &) = delete;
