@@ -66,7 +66,7 @@ private:
   void operator= (RT_Endpoint_Selector_Factory &&) = delete;
 
 private:
-  TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_;
+  TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_ {};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, RT_Endpoint_Selector_Factory)

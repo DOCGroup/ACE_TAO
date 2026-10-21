@@ -26,13 +26,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks ()
-  : orb_core_ (nullptr)
-  , current_ ()
-{
-}
-
-
 void
 TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)
 {

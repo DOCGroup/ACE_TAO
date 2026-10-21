@@ -46,7 +46,7 @@ class TAO_RTCORBA_Export TAO_RT_New_Leader_Generator
 {
 public:
   /// Constructor.
-  TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane);
+  explicit TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane);
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
@@ -69,7 +69,7 @@ class TAO_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
   /// Constructor.
-  TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
+  explicit TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
   /// Method executed when a thread is spawned.
   int svc () override;
@@ -107,7 +107,7 @@ class TAO_Dynamic_Thread_Pool_Threads : public TAO_Thread_Pool_Threads
 {
 public:
   /// Constructor.
-  TAO_Dynamic_Thread_Pool_Threads (TAO_Thread_Lane &lane);
+  explicit TAO_Dynamic_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
 protected:
   /// Do the real work
@@ -363,7 +363,7 @@ class TAO_RTCORBA_Export TAO_Thread_Pool_Manager
 {
 public:
   /// Constructor.
-  TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_Thread_Pool_Manager ();

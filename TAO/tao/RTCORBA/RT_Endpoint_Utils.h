@@ -46,7 +46,7 @@ public:
 
 private:
   /// ctor.
-  TAO_RT_Endpoint_Utils ();
+  TAO_RT_Endpoint_Utils () = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
