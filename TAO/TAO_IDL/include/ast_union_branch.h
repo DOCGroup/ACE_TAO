@@ -83,7 +83,7 @@ public:
                    AST_Type *ft,
                    UTL_ScopedName *n);
 
-  virtual ~AST_UnionBranch ();
+  ~AST_UnionBranch () override;
 
   UTL_LabelList *labels () const;
 
@@ -103,17 +103,17 @@ public:
   void coerce_labels (AST_Union *u);
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool auto_dump_annotations () const { return false; }
+  bool auto_dump_annotations () const override { return false; }
 
 private:
   // list of labels.
