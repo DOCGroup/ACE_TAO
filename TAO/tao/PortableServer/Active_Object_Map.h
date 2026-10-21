@@ -629,7 +629,7 @@ public:
 class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
 public:
-  TAO_Active_Hint_Strategy (CORBA::ULong map_size);
+  explicit TAO_Active_Hint_Strategy (CORBA::ULong map_size);
 
   /// Virtual destructor.
   ~TAO_Active_Hint_Strategy () override = default;
