@@ -23,8 +23,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
     orb_ (orb),
     root_poa_ (poa),
     config_ (config),
-    extension_ (CORBA::string_dup ("TAO_IFR_name_extension")),
-    lock_ (0)
+    extension_ (CORBA::string_dup ("TAO_IFR_name_extension"))
 {
 }
 
