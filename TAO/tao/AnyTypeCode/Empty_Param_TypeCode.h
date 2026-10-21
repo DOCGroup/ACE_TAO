@@ -46,7 +46,7 @@ namespace TAO
     {
     public:
       /// Constructor.
-      Empty_Param (CORBA::TCKind k);
+      explicit Empty_Param (CORBA::TCKind k);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods

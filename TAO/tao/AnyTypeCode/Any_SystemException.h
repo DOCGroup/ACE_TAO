@@ -48,7 +48,7 @@ namespace TAO
                          CORBA::TypeCode_ptr,
                          const CORBA::SystemException &);
 
-    Any_SystemException (CORBA::TypeCode_ptr);
+    explicit Any_SystemException (CORBA::TypeCode_ptr);
 
     ~Any_SystemException () override = default;
 

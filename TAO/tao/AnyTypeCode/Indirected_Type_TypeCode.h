@@ -49,7 +49,7 @@ namespace TAO
                        char const * id);
 
       /// Constructor for TypeCode factory.
-      Indirected_Type (char const * id);
+      explicit Indirected_Type (char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
