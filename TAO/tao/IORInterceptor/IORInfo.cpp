@@ -13,8 +13,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
-  : poa_ (poa),
-    components_established_ (false)
+  : poa_ (poa)
 {
 }
 
