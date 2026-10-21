@@ -104,7 +104,7 @@ TAO::CSD::Strategy_Base::poa_deactivated_event()
       // Reset the poa to nil to decrement the reference count.
       // This will break the circular dependency of the deletion
       // of the CSD POA.
-      this->poa_ = 0;
+      this->poa_ = nullptr;
     }
 }
 

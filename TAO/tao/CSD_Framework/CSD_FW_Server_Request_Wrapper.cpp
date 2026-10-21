@@ -157,7 +157,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   TAO_ServerRequest *clone_obj = nullptr;
   ACE_NEW_RETURN (clone_obj,
                   TAO_ServerRequest (),
-                  0);
+                  nullptr);
 
   // TYPE: TAO_GIOP_Message_Base*
   // ACTION: Assuming that a shallow-copy is ok here.
@@ -461,7 +461,7 @@ TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
   char *repbuf = nullptr;
   ACE_NEW_RETURN (repbuf,
                  char[ACE_CDR::DEFAULT_BUFSIZE],
-                 0);
+                 nullptr);
 
   TAO_GIOP_Message_Version giop_version;
   this->request_->outgoing_->get_version (giop_version);
@@ -486,7 +486,7 @@ TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
                                  this->request_->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                                  giop_version.major,
                                  giop_version.minor),
-                  0);
+                  nullptr);
 
   return cdr;
 }
