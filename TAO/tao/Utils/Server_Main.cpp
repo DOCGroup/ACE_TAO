@@ -31,9 +31,6 @@ TAO::Utils::Server_Main<SERVANT>::Server_Main (const char * name)
 }
 
 template <typename SERVANT>
-TAO::Utils::Server_Main<SERVANT>::~Server_Main () = default;
-
-template <typename SERVANT>
 int
 TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 {
