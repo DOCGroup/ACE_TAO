@@ -190,7 +190,7 @@ public:
   static CORBA::Object * upcast (void *);
 
 private:
-  TAO_RTScheduler_Current_ptr ptr_;
+  TAO_RTScheduler_Current_ptr ptr_ {};
   TAO_RTScheduler_Current_var (const TAO_Base_var &rhs) = delete;
   TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs) = delete;
 };
@@ -276,14 +276,14 @@ private:
   TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i &&) = delete;
 
   RTScheduling::Scheduler_var scheduler_;
-  TAO_ORB_Core* orb_;
-  RTScheduling::Current::IdType guid_;
+  TAO_ORB_Core* orb_ {};
+  RTScheduling::Current::IdType guid_ {};
   CORBA::String_var name_;
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
   RTScheduling::DistributableThread_var dt_;
-  TAO_RTScheduler_Current_i* previous_current_;
-  DT_Hash_Map* dt_hash_;
+  TAO_RTScheduler_Current_i* previous_current_ {};
+  DT_Hash_Map* dt_hash_ {};
 };
 
 // This class provides an entry point for the// new DT.
@@ -312,11 +312,11 @@ private:
   DTTask (DTTask &&) = delete;
   DTTask &operator= (DTTask &&) = delete;
 
-  TAO_ORB_Core* orb_;
-  TAO_RTScheduler_Current_i* current_;
+  TAO_ORB_Core* orb_ {};
+  TAO_RTScheduler_Current_i* current_ {};
   RTScheduling::ThreadAction_var start_;
-  CORBA::VoidData data_;
-  RTScheduling::Current::IdType guid_;
+  CORBA::VoidData data_ {};
+  RTScheduling::Current::IdType guid_ {};
   CORBA::String_var name_;
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
