@@ -23,6 +23,8 @@ TAO_Async_Table_Adapter::TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core)
 {
 }
 
+TAO_Async_Table_Adapter::~TAO_Async_Table_Adapter () = default;
+
 void
 TAO_Async_Table_Adapter::open ()
 {

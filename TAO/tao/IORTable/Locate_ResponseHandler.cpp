@@ -38,6 +38,8 @@ TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
   this->init (sr, nullptr);
 }
 
+TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler () = default;
+
 void
 TAO_AMH_Locate_ResponseHandler::raise_excep (CORBA::Exception const &ex)
 {

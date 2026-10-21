@@ -32,7 +32,7 @@ public:
   TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  ~TAO_Async_Table_Adapter () override = default;
+  ~TAO_Async_Table_Adapter () override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
