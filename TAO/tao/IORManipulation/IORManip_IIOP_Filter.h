@@ -37,8 +37,8 @@ public:
   struct Profile_Info
   {
     ACE_CString host_name_;
-    TAO_GIOP_Message_Version version_;
-    CORBA::UShort port_;
+    TAO_GIOP_Message_Version version_ {};
+    CORBA::UShort port_ {};
   };
 
   /// Constructor.
