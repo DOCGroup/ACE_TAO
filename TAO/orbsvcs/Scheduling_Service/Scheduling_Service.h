@@ -8,7 +8,8 @@
  *  @author   Chris Gill (cdgill@cs.wustl.edu) Based on the original
  *  Scheduling Service program by David Levine (levine@cs.wustl.edu) and
  *  Carlos O'Ryan (coryan@cs.wustl.edu)
- *  @author  and on the Naming Service program implementation by Marina   Spivak (marina@cs.wustl.edu) and Nagarajan Surendran   (naga@cs.wustl.edu)
+ *  @author  and on the Naming Service program implementation by Marina Spivak
+ *  (marina@cs.wustl.edu) and Nagarajan Surendran (naga@cs.wustl.edu)
  */
 //=============================================================================
 
