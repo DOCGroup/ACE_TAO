@@ -107,7 +107,7 @@ protected:
   TAO_COIOP_Endpoint endpoint_;
 
   /// Number of endpoints in the list headed by <endpoint_>.
-  CORBA::ULong count_;
+  CORBA::ULong count_ {1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

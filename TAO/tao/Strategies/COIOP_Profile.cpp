@@ -32,8 +32,7 @@ TAO_COIOP_Profile::TAO_COIOP_Profile (const ACE_Utils::UUID& uuid,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (uuid),
-    count_ (1)
+    endpoint_ (uuid)
 {
 }
 
@@ -41,8 +40,7 @@ TAO_COIOP_Profile::TAO_COIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_COIOP_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    count_ (1)
+    endpoint_ ()
 {
 }
 
