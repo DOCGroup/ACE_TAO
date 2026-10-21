@@ -75,7 +75,7 @@ class TAO_AnyTypeCode_Export TAO_Marshal_Object
 {
 public:
   /// constructor
-  TAO_Marshal_Object ();
+  TAO_Marshal_Object () = default;
 
   /// destructor
   virtual ~TAO_Marshal_Object () = default;
@@ -111,7 +111,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Primitive: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Primitive ();
+  TAO_Marshal_Primitive () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -133,7 +133,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Any: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Any ();
+  TAO_Marshal_Any () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -155,7 +155,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_TypeCode: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_TypeCode ();
+  TAO_Marshal_TypeCode () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -177,7 +177,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Principal: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Principal ();
+  TAO_Marshal_Principal () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -199,7 +199,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_ObjRef: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_ObjRef ();
+  TAO_Marshal_ObjRef () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -221,7 +221,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Struct : public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Struct ();
+  TAO_Marshal_Struct () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -243,7 +243,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Union: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Union ();
+  TAO_Marshal_Union () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -265,7 +265,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_String: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_String ();
+  TAO_Marshal_String () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -287,7 +287,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Sequence: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Sequence ();
+  TAO_Marshal_Sequence () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -309,7 +309,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Array: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Array ();
+  TAO_Marshal_Array () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -331,7 +331,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Alias: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Alias ();
+  TAO_Marshal_Alias () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -353,7 +353,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Except: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Except ();
+  TAO_Marshal_Except () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -375,7 +375,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_WString : public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_WString ();
+  TAO_Marshal_WString () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -397,7 +397,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Value: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Value ();
+  TAO_Marshal_Value () = default;
 
   /// skip operation
   TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -409,7 +409,7 @@ public:
                                TAO_OutputCDR *dest) override;
 
 private:
-  CORBA::Boolean nested_processing_;
+  CORBA::Boolean nested_processing_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
