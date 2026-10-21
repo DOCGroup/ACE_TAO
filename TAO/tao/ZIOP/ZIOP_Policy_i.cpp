@@ -112,15 +112,6 @@ CompressionEnablingPolicy::CompressionEnablingPolicy (
 {
 }
 
-CompressionEnablingPolicy::CompressionEnablingPolicy ()
-  : ::CORBA::Object ()
-  , ::CORBA::Policy ()
-  , ::ZIOP::CompressionEnablingPolicy ()
-  , ::CORBA::LocalObject ()
-  , value_ (false)
-{
-}
-
 CompressionEnablingPolicy::CompressionEnablingPolicy (CompressionEnablingPolicy const& rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()

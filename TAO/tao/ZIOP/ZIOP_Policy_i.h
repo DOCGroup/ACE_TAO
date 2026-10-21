@@ -84,7 +84,7 @@ class CompressionEnablingPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  CompressionEnablingPolicy ();
+  CompressionEnablingPolicy () = default;
 
   /// Constructor.
   explicit CompressionEnablingPolicy (::CORBA::Boolean val);

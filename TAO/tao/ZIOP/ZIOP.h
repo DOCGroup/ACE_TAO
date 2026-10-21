@@ -40,7 +40,7 @@ class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
 {
 public:
   /// Constructor
-  TAO_ZIOP_Loader ();
+  TAO_ZIOP_Loader () = default;
 
   /// Destructor
   ~TAO_ZIOP_Loader () override = default;
@@ -69,7 +69,7 @@ private:
   TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader &&) = delete;
 
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {false};
 
   /// dump a ZIOP datablock after (de)compression
   void dump_msg (const char *type,  const u_char *ptr,

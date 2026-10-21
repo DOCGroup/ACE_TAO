@@ -11,11 +11,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ZIOP_Loader::TAO_ZIOP_Loader ()
-  : initialized_ (false)
-{
-}
-
 int
 TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 {
