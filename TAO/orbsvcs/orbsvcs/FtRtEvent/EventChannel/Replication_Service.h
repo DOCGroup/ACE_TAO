@@ -33,7 +33,7 @@ namespace FTRTEC
     static Replication_Service* instance();
 
     Replication_Service();
-    ~Replication_Service() override = default;
+    ~Replication_Service () override;
 
     int init (int argc,
       ACE_TCHAR* []) override;

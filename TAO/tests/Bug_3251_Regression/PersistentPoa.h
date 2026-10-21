@@ -15,7 +15,7 @@ class bug_3251_Export PersistentPoa : public ACE_Service_Object
 public:
   PersistentPoa () = default;
 
-  ~PersistentPoa () noexcept override = default;
+  ~PersistentPoa () noexcept override;
 
 protected:
   int init (int argc, ACE_TCHAR *argv[]) override;
