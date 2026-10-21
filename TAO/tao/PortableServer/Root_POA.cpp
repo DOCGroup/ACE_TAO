@@ -194,10 +194,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     tagged_component_id_ (),
     profile_id_array_ (0),
     policies_ (policies),
-    ort_adapter_ (0),
-    ort_adapter_factory_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
-    network_priority_hook_ (0),
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     adapter_activator_ (),
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -205,17 +202,8 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     lock_ (lock),
     orb_core_ (orb_core),
     object_adapter_ (object_adapter),
-    cleanup_in_progress_ (false),
-    outstanding_requests_ (0),
     outstanding_requests_condition_ (thread_lock),
-    wait_for_completion_pending_ (0),
-    waiting_destruction_ (false),
-    servant_deactivation_condition_ (thread_lock),
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-    filter_factory_ (0),
-#endif
-    caller_key_to_object_ (0),
-    servant_for_key_to_object_ (0)
+    servant_deactivation_condition_ (thread_lock)
 {
   // Since we are keeping a reference to a POAManager, we need to
   // increment the reference count but we do this safely.
