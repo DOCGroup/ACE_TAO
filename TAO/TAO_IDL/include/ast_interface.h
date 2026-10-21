@@ -84,7 +84,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Interface ();
+  ~AST_Interface () override;
 
   // This serves for interfaces, value types, components, and eventtypes.
   static void fwd_redefinition_helper (AST_Interface *&i,
@@ -143,11 +143,11 @@ public:
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key () const;
+  bool legal_for_primary_key () const override;
 
-  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
+  AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+                                    AST_Decl *&final_parent_decl) override;
 
   /// Accessors for the members.
   AST_Interface *ami_handler () const;
@@ -156,18 +156,18 @@ public:
   void ami4ccm_uses (AST_Interface *implied);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
   using FWD_TYPE = AST_InterfaceFwd;
 
-  virtual bool annotatable () const;
+  bool annotatable () const override;
 
 protected:
   // Data.

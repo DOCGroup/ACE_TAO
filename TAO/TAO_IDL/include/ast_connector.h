@@ -14,18 +14,18 @@ public:
   AST_Connector (UTL_ScopedName *n,
                  AST_Connector *base_connector);
 
-  virtual ~AST_Connector ();
+  ~AST_Connector () override;
 
   AST_Connector *base_connector () const;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 };
