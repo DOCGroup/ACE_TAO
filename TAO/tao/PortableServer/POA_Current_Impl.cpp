@@ -16,8 +16,7 @@ namespace TAO
   namespace Portable_Server
   {
     POA_Current_Impl::POA_Current_Impl ()
-      : object_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, object_id_buf_),
-        priority_ (TAO_INVALID_PRIORITY)
+      : object_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, object_id_buf_)
     {
     }
 

@@ -56,8 +56,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
-  : ref_count_ (1)
-  , optable_ (optable)
+  : optable_ (optable)
 {
 }
 
@@ -70,8 +69,7 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
   // warning: base class class TAO_Abstract_ServantBase should be explicitly initialized in the copy constructor [-Wextra]
   TAO_Abstract_ServantBase (),
 #endif
-  ref_count_ (1)
-  , optable_ (rhs.optable_)
+  optable_ (rhs.optable_)
 {
 }
 
