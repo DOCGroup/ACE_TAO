@@ -10,6 +10,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_IORManip_IIOP_Filter::~TAO_IORManip_IIOP_Filter () = default;
+
 TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter () = default;
 
 
