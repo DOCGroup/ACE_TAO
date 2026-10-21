@@ -122,9 +122,9 @@ namespace TAO
        *
        * Strategies used when accepting an incoming connection.
        */
-      CREATION_STRATEGY *creation_strategy_;
-      CONCURRENCY_STRATEGY *concurrency_strategy_;
-      ACCEPT_STRATEGY *accept_strategy_;
+      CREATION_STRATEGY *creation_strategy_ {};
+      CONCURRENCY_STRATEGY *concurrency_strategy_ {};
+      ACCEPT_STRATEGY *accept_strategy_ {};
 
       /// The CSIv1 SSL component.
       /**
