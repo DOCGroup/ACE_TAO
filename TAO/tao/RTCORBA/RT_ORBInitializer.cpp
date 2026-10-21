@@ -32,8 +32,8 @@
 #include "ace/Svc_Conf.h"
 #include "ace/Sched_Params.h"
 
-static const char rt_poa_factory_name[] = "TAO_RT_Object_Adapter_Factory";
-static const ACE_TCHAR rt_poa_factory_directive[] =
+constexpr char rt_poa_factory_name[] = "TAO_RT_Object_Adapter_Factory";
+constexpr ACE_TCHAR rt_poa_factory_directive[] =
   ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
     "TAO_RT_Object_Adapter_Factory",
     "TAO_RTPortableServer",
@@ -238,7 +238,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all RTCORBA related policy
   // types since a single policy factory is used to create each of
   // the different types of RTCORBA policies.
-  static CORBA::PolicyType const type[] = {
+  static constexpr CORBA::PolicyType type[] = {
     RTCORBA::PRIORITY_MODEL_POLICY_TYPE,
     RTCORBA::THREADPOOL_POLICY_TYPE,
     RTCORBA::SERVER_PROTOCOL_POLICY_TYPE,
