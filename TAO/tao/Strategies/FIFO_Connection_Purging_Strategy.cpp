@@ -5,10 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FIFO_Connection_Purging_Strategy::TAO_FIFO_Connection_Purging_Strategy (
                                                             int cache_maximum)
- : TAO_Connection_Purging_Strategy (cache_maximum),
-   // Initialized to 1 to insure that the transports purging_order
-   // is only 0 upon initialization.
-   order_ (1)
+ : TAO_Connection_Purging_Strategy (cache_maximum)
 {
 }
 

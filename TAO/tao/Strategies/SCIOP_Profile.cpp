@@ -13,8 +13,6 @@
 
 static const char prefix_[] = "sciop";
 
-const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char

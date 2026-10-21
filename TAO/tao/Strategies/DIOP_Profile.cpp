@@ -19,8 +19,6 @@ static const char the_prefix[] = "diop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO_DIOP_Profile::object_key_delimiter_ = '/';
-
 char
 TAO_DIOP_Profile::object_key_delimiter () const
 {

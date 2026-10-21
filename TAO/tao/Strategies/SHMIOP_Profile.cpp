@@ -19,8 +19,6 @@ static const char prefix_[] = "shmiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO_SHMIOP_Profile::object_key_delimiter_ = '/';
-
 char
 TAO_SHMIOP_Profile::object_key_delimiter () const
 {

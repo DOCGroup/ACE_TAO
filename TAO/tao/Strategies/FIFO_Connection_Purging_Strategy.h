@@ -51,8 +51,9 @@ private:
   TAO_FIFO_Connection_Purging_Strategy &operator= (
     TAO_FIFO_Connection_Purging_Strategy &&) = delete;
 
-  /// The ordering information for each transport in the cache
-  unsigned long order_;
+  /// The ordering information for each transport in the cache.  Initialized
+  /// to 1 to ensure that a transport's purging order is only 0 initially.
+  unsigned long order_ {1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

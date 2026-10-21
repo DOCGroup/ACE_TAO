@@ -42,7 +42,7 @@ class TAO_Strategies_Export TAO_SCIOP_Profile : public TAO_Profile
 {
 public:
   /// The object key delimiter that SCIOP uses or expects.
-  static char const object_key_delimiter_;
+  static constexpr char object_key_delimiter_ {'/'};
   char object_key_delimiter () const override;
 
   /// Return the char string prefix.

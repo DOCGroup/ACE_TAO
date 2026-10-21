@@ -16,8 +16,6 @@ static const char the_prefix[] = "niop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO_COIOP_Profile::object_key_delimiter_ = '/';
-
 char
 TAO_COIOP_Profile::object_key_delimiter () const
 {
