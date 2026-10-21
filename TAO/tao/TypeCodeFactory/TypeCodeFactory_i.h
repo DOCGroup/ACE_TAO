@@ -51,7 +51,7 @@ public:
   TAO_TypeCodeFactory_i ();
 
   /// dtor
-  ~TAO_TypeCodeFactory_i () override;
+  ~TAO_TypeCodeFactory_i () override = default;
 
   /// = LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);

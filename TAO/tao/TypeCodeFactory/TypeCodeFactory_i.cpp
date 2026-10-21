@@ -89,8 +89,6 @@ namespace TCF
 
 TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i () = default;
 
-TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i () = default;
-
 TAO_TypeCodeFactory_i *
 TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
