@@ -29,10 +29,10 @@ public:
   be_visitor_union_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_ci ();
+  ~be_visitor_union_ci () override;
 
   /// visit union. We provide code for this method in the derived class
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 };
 
 #endif /* _BE_VISITOR_UNION_UNION_CI_H_ */
