@@ -260,7 +260,7 @@ protected:
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
 
   /// Thread Pool Manager
-  TAO_Thread_Pool_Manager *tp_manager_;
+  TAO_Thread_Pool_Manager *tp_manager_ {};
 
   /// Dynamic thread lifespan policy
   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan_;
