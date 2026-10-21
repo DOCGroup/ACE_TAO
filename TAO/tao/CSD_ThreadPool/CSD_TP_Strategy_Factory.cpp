@@ -13,8 +13,6 @@ TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()
 }
 
 
-TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory() = default;
-
 
 int
 TAO::CSD::TP_Strategy_Factory::init (int argc,

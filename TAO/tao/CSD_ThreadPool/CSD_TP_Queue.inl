@@ -7,8 +7,6 @@ TAO::CSD::TP_Queue::TP_Queue() = default;
 
 
 ACE_INLINE
-TAO::CSD::TP_Queue::~TP_Queue() = default;
-
 
 ACE_INLINE
 bool

@@ -50,7 +50,7 @@ namespace TAO
     {
     public:
       /// Virtual Destructor.
-      virtual ~TP_Request();
+      virtual ~TP_Request() = default;
 
       /// Prepare the request to be placed into the request queue.
       void prepare_for_queue();

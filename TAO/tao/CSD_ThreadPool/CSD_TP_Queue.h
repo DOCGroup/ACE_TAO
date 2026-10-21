@@ -61,7 +61,7 @@ namespace TAO
       TP_Queue();
 
       /// Destructor.
-      ~TP_Queue();
+      ~TP_Queue() = default;
 
       /// Place a request at the end of the queue.
       void put(TP_Request* request);

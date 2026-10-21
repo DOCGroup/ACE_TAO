@@ -58,7 +58,7 @@ namespace TAO
                             TP_Servant_State*               servant_state);
 
       /// Virtual Destructor.
-      ~TP_Collocated_Synch_With_Server_Request() override;
+      ~TP_Collocated_Synch_With_Server_Request() override = default;
 
       /// Wait until the request has been dispatched (but not completed), or
       /// until it has been cancelled.  Note that this will wait until just

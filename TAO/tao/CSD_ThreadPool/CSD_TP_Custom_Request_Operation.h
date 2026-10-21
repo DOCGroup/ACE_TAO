@@ -52,7 +52,7 @@ namespace TAO
     {
     public:
       /// Virtual Destructor.
-      virtual ~TP_Custom_Request_Operation();
+      virtual ~TP_Custom_Request_Operation() = default;
 
       /// Invoked by a worker thread to perform the operation.
       void execute();

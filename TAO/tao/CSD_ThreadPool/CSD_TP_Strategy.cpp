@@ -14,8 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy::~TP_Strategy() = default;
-
 
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)

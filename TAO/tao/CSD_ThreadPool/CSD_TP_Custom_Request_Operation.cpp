@@ -6,6 +6,4 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Custom_Request_Operation::~TP_Custom_Request_Operation() = default;
-
 TAO_END_VERSIONED_NAMESPACE_DECL

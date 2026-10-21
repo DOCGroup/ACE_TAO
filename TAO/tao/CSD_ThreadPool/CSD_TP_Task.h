@@ -79,7 +79,7 @@ namespace TAO
       TP_Task();
 
       /// Virtual Destructor.
-      ~TP_Task() override;
+      ~TP_Task() override = default;
 
       /// Put a request object on to the request queue.
       /// Returns true if successful, false otherwise (it has been "rejected").

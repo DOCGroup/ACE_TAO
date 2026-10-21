@@ -55,7 +55,7 @@ namespace TAO
                             TP_Servant_State*               servant_state);
 
       /// Virtual Destructor.
-      ~TP_Collocated_Asynch_Request() override;
+      ~TP_Collocated_Asynch_Request() override = default;
 
 
     protected:

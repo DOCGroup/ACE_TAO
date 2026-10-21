@@ -6,8 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Request::~TP_Request() = default;
-
 
 void
 TAO::CSD::TP_Request::prepare_for_queue_i()

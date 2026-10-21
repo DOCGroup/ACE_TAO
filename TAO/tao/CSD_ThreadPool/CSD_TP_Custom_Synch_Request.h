@@ -49,7 +49,7 @@ namespace TAO
                               TP_Servant_State*            servant_state);
 
       /// Virtual Destructor.
-      ~TP_Custom_Synch_Request() override;
+      ~TP_Custom_Synch_Request() override = default;
 
       /// Wait until the request has been executed (and completes), or
       /// until it has been cancelled.  Returns true if the request has

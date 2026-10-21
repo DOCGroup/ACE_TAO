@@ -44,7 +44,7 @@ namespace TAO
       TP_Synch_Helper();
 
       /// Destructor.
-      ~TP_Synch_Helper();
+      ~TP_Synch_Helper() = default;
 
       /// Returns true if the helper state is DISPATCHED, and false if
       /// the helper state is CANCELLED.  However, if the helper state

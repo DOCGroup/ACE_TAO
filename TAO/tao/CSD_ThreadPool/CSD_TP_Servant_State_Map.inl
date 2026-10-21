@@ -6,8 +6,6 @@ TAO::CSD::TP_Servant_State_Map::TP_Servant_State_Map() = default;
 
 
 ACE_INLINE
-TAO::CSD::TP_Servant_State_Map::~TP_Servant_State_Map() = default;
-
 
 ACE_INLINE
 TAO::CSD::TP_Servant_State*

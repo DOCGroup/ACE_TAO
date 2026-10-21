@@ -66,7 +66,7 @@ namespace TAO
                         TP_Servant_State*               servant_state);
 
       /// Virtual Destructor.
-      ~TP_Remote_Request() override;
+      ~TP_Remote_Request() override = default;
 
 
     protected:

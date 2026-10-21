@@ -9,8 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Task::~TP_Task() = default;
-
 
 bool
 TAO::CSD::TP_Task::add_request(TP_Request* request)

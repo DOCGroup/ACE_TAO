@@ -55,7 +55,7 @@ namespace TAO
       TP_Cancel_Visitor(PortableServer::Servant servant);
 
       /// Virtual Destructor.
-      ~TP_Cancel_Visitor() override;
+      ~TP_Cancel_Visitor() override = default;
 
       /// Returns true to continue visitation.  Returns false to stop
       /// visitation.  Sets the remove_flag to true if the request should

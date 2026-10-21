@@ -44,7 +44,7 @@ namespace TAO
     {
     public:
       /// Virtual Destructor.
-      ~TP_Custom_Request() override;
+      ~TP_Custom_Request() override = default;
 
     protected:
       /// Constructor.

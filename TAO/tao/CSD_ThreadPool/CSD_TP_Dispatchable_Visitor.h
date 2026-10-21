@@ -52,7 +52,7 @@ namespace TAO
       TP_Dispatchable_Visitor();
 
       /// Virtual Destructor.
-      ~TP_Dispatchable_Visitor() override;
+      ~TP_Dispatchable_Visitor() override = default;
 
       /// Reset this visitor object in order to re-use it for another
       /// visitation of the request queue.  This sets the visitor's "result"

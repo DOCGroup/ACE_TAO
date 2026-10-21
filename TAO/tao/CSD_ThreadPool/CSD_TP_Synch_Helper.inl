@@ -10,8 +10,6 @@ TAO::CSD::TP_Synch_Helper::TP_Synch_Helper()
 }
 
 ACE_INLINE
-TAO::CSD::TP_Synch_Helper::~TP_Synch_Helper() = default;
-
 ACE_INLINE
 bool
 TAO::CSD::TP_Synch_Helper::wait_while_pending()
