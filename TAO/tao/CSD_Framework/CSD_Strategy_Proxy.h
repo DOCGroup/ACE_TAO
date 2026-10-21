@@ -96,7 +96,7 @@ namespace TAO
       /// This smart pointer will be in the "nil" state when the "default"
       /// strategy is to be applied.
       CSD_Framework::Strategy_var  strategy_;
-      TAO::CSD::Strategy_Base *strategy_impl_;
+      TAO::CSD::Strategy_Base *strategy_impl_ {};
     };
   }
 }
