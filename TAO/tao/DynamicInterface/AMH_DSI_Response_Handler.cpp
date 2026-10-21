@@ -315,6 +315,8 @@ TAO_AMH_DSI_Response_Handler::TAO_AMH_DSI_Response_Handler (
 {
 }
 
+TAO_AMH_DSI_Response_Handler::~TAO_AMH_DSI_Response_Handler () = default;
+
 void
 TAO_AMH_DSI_Response_Handler::invoke_reply (CORBA::NVList_ptr args,
                                             CORBA::NamedValue_ptr result)

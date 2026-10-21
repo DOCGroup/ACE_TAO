@@ -208,7 +208,7 @@ public:
   using _var_type = TAO_AMH_DSI_Response_Handler_var;
 
   TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
-  ~TAO_AMH_DSI_Response_Handler () override = default;
+  ~TAO_AMH_DSI_Response_Handler () override;
 
   virtual void invoke_reply (CORBA::NVList_ptr args,
                              CORBA::NamedValue_ptr result);
