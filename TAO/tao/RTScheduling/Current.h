@@ -72,7 +72,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   static std::atomic<long> guid_counter;
 
   TAO_RTScheduler_Current () = default;
-  ~TAO_RTScheduler_Current () override;
+  ~TAO_RTScheduler_Current () override = default;
 
   void init (TAO_ORB_Core* orb);
 
@@ -210,7 +210,7 @@ public:
                              RTScheduling::DistributableThread_ptr dt,
                              TAO_RTScheduler_Current_i* prev_current);
 
-  virtual ~TAO_RTScheduler_Current_i ();
+  virtual ~TAO_RTScheduler_Current_i () = default;
 
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,

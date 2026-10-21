@@ -20,8 +20,6 @@ TAO_DTId_Hash::operator () (const IdType &id) const
                         id.length ());
 }
 
-TAO_RTScheduler_Current::~TAO_RTScheduler_Current () = default;
-
 void
 TAO_RTScheduler_Current::init (TAO_ORB_Core* orb)
 {
@@ -287,8 +285,6 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
 
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ());
 }
-
-TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i () = default;
 
 void
 TAO_RTScheduler_Current_i::begin_scheduling_segment(

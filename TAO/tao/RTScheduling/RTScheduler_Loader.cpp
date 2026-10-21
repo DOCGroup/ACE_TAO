@@ -12,8 +12,6 @@ TAO_RTScheduler_Loader::TAO_RTScheduler_Loader ()
 {
 }
 
-TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader () = default;
-
 int
 TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
 {
