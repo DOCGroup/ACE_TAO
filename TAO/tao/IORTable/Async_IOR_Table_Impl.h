@@ -38,8 +38,8 @@ class TAO_Async_IOR_Table_Impl : public virtual TAO_IOR_Table_Impl
 {
 public:
   /// Constructor
-  TAO_Async_IOR_Table_Impl ();
-  ~TAO_Async_IOR_Table_Impl () override;
+  TAO_Async_IOR_Table_Impl () = default;
+  ~TAO_Async_IOR_Table_Impl () override = default;
 
   bool async_available () override { return true; }
 

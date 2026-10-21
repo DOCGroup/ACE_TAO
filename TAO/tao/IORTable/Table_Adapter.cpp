@@ -185,8 +185,6 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
 
 // ****************************************************************
 
-TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory () = default;
-
 TAO_Adapter*
 TAO_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {

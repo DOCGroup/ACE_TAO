@@ -23,8 +23,6 @@ TAO_Async_Table_Adapter::TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO_Async_Table_Adapter::~TAO_Async_Table_Adapter () = default;
-
 void
 TAO_Async_Table_Adapter::open ()
 {
@@ -96,8 +94,6 @@ TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
 }
 
 // ****************************************************************
-
-TAO_Async_Table_Adapter_Factory::TAO_Async_Table_Adapter_Factory () = default;
 
 TAO_Adapter*
 TAO_Async_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
