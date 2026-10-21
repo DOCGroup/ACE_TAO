@@ -56,7 +56,7 @@ namespace TAO
 
     protected:
       /// Default Constructor.
-      TP_Queue_Visitor();
+      TP_Queue_Visitor() = default;
     };
   }
 }

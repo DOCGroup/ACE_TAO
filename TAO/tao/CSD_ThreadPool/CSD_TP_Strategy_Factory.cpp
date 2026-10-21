@@ -8,12 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()
-{
-}
-
-
-
 int
 TAO::CSD::TP_Strategy_Factory::init (int argc,
                                      ACE_TCHAR* argv[])

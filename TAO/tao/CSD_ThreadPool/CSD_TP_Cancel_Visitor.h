@@ -48,11 +48,11 @@ namespace TAO
     {
     public:
       /// Default Constructor - cancel *all* requests.
-      TP_Cancel_Visitor();
+      TP_Cancel_Visitor() = default;
 
       /// Constructor with provided servant - cancel requests that
       /// target the supplied servant.
-      TP_Cancel_Visitor(PortableServer::Servant servant);
+      explicit TP_Cancel_Visitor(PortableServer::Servant servant);
 
       /// Virtual Destructor.
       ~TP_Cancel_Visitor() override = default;

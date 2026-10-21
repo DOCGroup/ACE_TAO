@@ -58,7 +58,7 @@ namespace TAO
     {
     public:
       /// Default Constructor.
-      TP_Queue();
+      TP_Queue() = default;
 
       /// Destructor.
       ~TP_Queue() = default;

@@ -2,12 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::TP_Servant_State_Map::TP_Servant_State_Map() = default;
-
-
-ACE_INLINE
-
-ACE_INLINE
 TAO::CSD::TP_Servant_State*
 TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant)
 {

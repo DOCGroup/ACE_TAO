@@ -2,10 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::TP_Cancel_Visitor::TP_Cancel_Visitor() = default;
-
-
-ACE_INLINE
 TAO::CSD::TP_Cancel_Visitor::TP_Cancel_Visitor(PortableServer::Servant servant)
   : servant_(servant)
 {
