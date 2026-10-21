@@ -8,8 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Mutex::~TAO_RT_Mutex () = default;
-
 void
 TAO_RT_Mutex::lock ()
 {

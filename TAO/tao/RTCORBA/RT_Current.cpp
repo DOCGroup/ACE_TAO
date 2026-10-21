@@ -18,8 +18,6 @@ TAO_RT_Current::TAO_RT_Current (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_RT_Current::~TAO_RT_Current () = default;
-
 RTCORBA::Priority
 TAO_RT_Current::the_priority ()
 {

@@ -38,7 +38,7 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping
 {
 public:
   /// The destructor
-  virtual ~TAO_Priority_Mapping ();
+  virtual ~TAO_Priority_Mapping () = default;
 
   virtual CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,

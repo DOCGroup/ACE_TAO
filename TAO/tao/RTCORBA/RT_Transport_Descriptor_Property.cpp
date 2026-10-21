@@ -8,12 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property () = default;
-
 /*************************************************************************************************/
-
-TAO_RT_Transport_Descriptor_Private_Connection_Property::
-  ~TAO_RT_Transport_Descriptor_Private_Connection_Property () = default;
 
 TAO_RT_Transport_Descriptor_Property*
 TAO_RT_Transport_Descriptor_Private_Connection_Property::duplicate ()
@@ -39,9 +34,6 @@ TAO_RT_Transport_Descriptor_Private_Connection_Property::is_equivalent
 }
 
 /*************************************************************************************************/
-
-TAO_RT_Transport_Descriptor_Banded_Connection_Property::
-  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property () = default;
 
 TAO_RT_Transport_Descriptor_Property*
 TAO_RT_Transport_Descriptor_Banded_Connection_Property::duplicate ()

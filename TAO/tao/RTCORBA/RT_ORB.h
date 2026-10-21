@@ -51,7 +51,7 @@ public:
   TAO_Named_RT_Mutex_Manager ();
 
   /// Destructor.
-  ~TAO_Named_RT_Mutex_Manager ();
+  ~TAO_Named_RT_Mutex_Manager () = default;
 
   RTCORBA::Mutex_ptr create_mutex ();
 
@@ -250,7 +250,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_RT_ORB () override;
+  ~TAO_RT_ORB () override = default;
 
 protected:
   /// Reference to our creating ORB Core.

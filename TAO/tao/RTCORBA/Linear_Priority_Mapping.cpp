@@ -16,8 +16,6 @@ TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)
 {
 }
 
-TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping () = default;
-
 CORBA::Boolean
 TAO_Linear_Priority_Mapping::to_native (
   RTCORBA::Priority corba_priority,

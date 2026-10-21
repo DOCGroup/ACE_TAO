@@ -53,7 +53,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_RT_Current () override;
+  ~TAO_RT_Current () override = default;
 
 private:
   /// ORB Core that owns us.

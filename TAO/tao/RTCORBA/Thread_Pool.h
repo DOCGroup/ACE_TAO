@@ -145,7 +145,7 @@ public:
                    ACE_Time_Value const &dynamic_thread_time);
 
   /// Destructor.
-  ~TAO_Thread_Lane ();
+  ~TAO_Thread_Lane () = default;
 
   /// Open the lane.
   void open ();
