@@ -23,14 +23,14 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
                 "Client_Interceptor::send_request\n"));
 
   // Temporary current.
-  TAO_RTScheduler_Current_i *new_current = 0;
-  TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *new_current = nullptr;
+  TAO_RTScheduler_Current_i *current = nullptr;
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
 
-  if (current != 0)
+  if (current != nullptr)
     {
       // If this is a one way request
       if (!ri->response_expected ())
@@ -80,9 +80,9 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
                    TAO_RTScheduler_Current_i (current->orb (),
                                               current->dt_hash (),
                                               guid,
-                                              0,
+                                              nullptr,
                                               implicit_sched_param.in (),
-                                              0,
+                                              nullptr,
                                               dt.in (),
                                               current));
 
@@ -117,12 +117,12 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
                   "Client_Interceptor::send_poll\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *current = nullptr;
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-  if (current != 0)
+  if (current != nullptr)
     {
       RTScheduling::Scheduler_var scheduler = current->scheduler ();
       scheduler->send_poll (ri);
@@ -138,12 +138,12 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *current = nullptr;
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-  if (current != 0)
+  if (current != nullptr)
     {
       RTScheduling::Scheduler_var scheduler = current->scheduler ();
       scheduler->receive_reply (ri);
@@ -164,9 +164,9 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
   TAO_RTScheduler_Current_i *current =
     static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
 
-  if (current != 0)
+  if (current != nullptr)
     {
-      if (ri == 0)
+      if (ri == nullptr)
         {
           TAOLIB_ERROR ((LM_ERROR,
                       "Client_Interceptor::receive_exception ri = 0\n"));
@@ -192,7 +192,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
+      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == nullptr)
         {
           // Perform the necessary cleanup as the
           // thread was cancelled.
@@ -217,12 +217,12 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *current = nullptr;
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-  if (current != 0)
+  if (current != nullptr)
     {
       RTScheduling::Scheduler_var scheduler = current->scheduler ();
       scheduler->receive_other (ri);
@@ -371,13 +371,13 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = 0;
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *prev_current = nullptr;
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-  if (current != 0)
+  if (current != nullptr)
     {
       RTScheduling::DistributableThread_var dt = current->DT ();
       if (dt->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -404,7 +404,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       tss->rtscheduler_current_impl_ = prev_current;
 
       // Reset the previous current pointer.
-      tss->rtscheduler_previous_current_impl_ = 0;
+      tss->rtscheduler_previous_current_impl_ = nullptr;
     }
   else TAOLIB_DEBUG ((LM_DEBUG,
                    "Send Reply Current is 0\n"));
@@ -419,12 +419,12 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
                   "Server_Interceptor::send_exception\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *current = nullptr;
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-  if (current != 0)
+  if (current != nullptr)
     {
       // Inform scheduler that upcall is complete.
       RTScheduling::Scheduler_var scheduler = current->scheduler ();
@@ -444,12 +444,12 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *current = nullptr;
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-  if (current != 0)
+  if (current != nullptr)
     {
       // Inform scheduler that upcall is complete.
       RTScheduling::Scheduler_var scheduler = current->scheduler ();
