@@ -207,7 +207,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
               if (TAO_debug_level > 0)
                 {
-                  CORBA::Short native_priority = 0;
+                  CORBA::Short native_priority {};
                   tph->get_thread_native_priority (native_priority);
 
                   TAOLIB_DEBUG ((LM_DEBUG,
