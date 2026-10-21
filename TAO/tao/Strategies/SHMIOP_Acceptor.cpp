@@ -18,13 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SHMEM_PROFILE),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (nullptr),
-    base_acceptor_ (this),
-    creation_strategy_ (nullptr),
-    concurrency_strategy_ (nullptr),
-    accept_strategy_ (nullptr),
-    mmap_file_prefix_ (nullptr),
-    mmap_size_ (1024 * 1024)
+    base_acceptor_ (this)
 {
 }
 

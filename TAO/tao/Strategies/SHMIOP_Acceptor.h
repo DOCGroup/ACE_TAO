@@ -119,7 +119,7 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
 private:
   TAO_SHMIOP_Acceptor (TAO_SHMIOP_Acceptor const &) = delete;
@@ -131,16 +131,16 @@ private:
   TAO_SHMIOP_BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_SHMIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_;
+  TAO_SHMIOP_CREATION_STRATEGY *creation_strategy_ {};
+  TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
+  TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_ {};
 
   /// Determine the prefix (include path name) of the mmap file.
-  ACE_TCHAR const *mmap_file_prefix_;
+  ACE_TCHAR const *mmap_file_prefix_ {};
 
   /// Determine the minimum size of mmap file.  This dictate the
   /// maximum size of a CORBA method invocation.
-  ACE_OFF_T mmap_size_;
+  ACE_OFF_T mmap_size_ {1024 * 1024};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

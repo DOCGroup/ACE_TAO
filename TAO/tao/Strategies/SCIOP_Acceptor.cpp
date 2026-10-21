@@ -21,17 +21,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
-    addrs_ (nullptr),
-    port_span_ (1),
-    hosts_ (nullptr),
-    endpoint_count_ (0),
-    hostname_in_ior_ (nullptr),
     version_ (TAO_DEF_SCIOP_MAJOR, TAO_DEF_SCIOP_MINOR),
-    orb_core_ (nullptr),
-    base_acceptor_ (this),
-    creation_strategy_ (nullptr),
-    concurrency_strategy_ (nullptr),
-    accept_strategy_ (nullptr)
+    base_acceptor_ (this)
 {
 }
 

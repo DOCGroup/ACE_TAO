@@ -163,14 +163,14 @@ protected:
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_;
+  ACE_INET_Addr *addrs_ {};
 
   /**
    * The number of ports over which the acceptor should search (starting
    * at the port specified in each element of addrs_) for an available
    * port.  This is specified via the "portspan=" option to the endpoint.
    */
-  u_short port_span_;
+  u_short port_span_ {1};
 
   /**
    * Cache the information about the endpoints serviced by this
@@ -179,16 +179,16 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_;
+  char **hosts_ {};
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).
-  CORBA::ULong endpoint_count_;
+  CORBA::ULong endpoint_count_ {};
 
   /**
    * Override the hostname used in the ORBEndPoint.
    */
-  char *hostname_in_ior_;
+  char *hostname_in_ior_ {};
 
   /**
    * The GIOP version for this endpoint
@@ -198,7 +198,7 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
 private:
   TAO_SCIOP_Acceptor (TAO_SCIOP_Acceptor const &) = delete;
@@ -210,9 +210,9 @@ private:
   TAO_SCIOP_BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_SCIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_;
+  TAO_SCIOP_CREATION_STRATEGY *creation_strategy_ {};
+  TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
+  TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
