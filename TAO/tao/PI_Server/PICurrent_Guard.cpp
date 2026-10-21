@@ -12,8 +12,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
                                        bool tsc_to_rsc)
-  : src_ (nullptr),
-    dest_ (nullptr)
 {
   // This constructor is used on the server side.
 

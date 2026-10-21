@@ -15,10 +15,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl ()
-{
-}
-
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (

@@ -68,7 +68,7 @@ namespace TAO
   {
   public:
     /// Constructor.
-    ServerRequestInterceptor_Adapter_Impl ();
+    ServerRequestInterceptor_Adapter_Impl () = default;
 
     /**
      * @name PortableInterceptor Server Side Interception Points

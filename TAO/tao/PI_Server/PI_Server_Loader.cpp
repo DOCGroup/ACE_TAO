@@ -8,15 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PI_Server_Loader::TAO_PI_Server_Loader ()
-  : initialized_ (false)
-{
-}
-
-TAO_PI_Server_Loader::~TAO_PI_Server_Loader ()
-{
-}
-
 int
 TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 {
