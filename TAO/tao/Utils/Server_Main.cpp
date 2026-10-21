@@ -31,15 +31,13 @@ TAO::Utils::Server_Main<SERVANT>::Server_Main (const char * name)
 }
 
 template <typename SERVANT>
-TAO::Utils::Server_Main<SERVANT>::~Server_Main ()
-{
-}
+TAO::Utils::Server_Main<SERVANT>::~Server_Main () = default;
 
 template <typename SERVANT>
 int
 TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
 
   try
   {
@@ -72,7 +70,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
           orb->run (tv);
 
           // now run event loop
-          int quit = 0;
+          int quit {};
           while (result == 0 && ! quit )
           {
             ACE_Time_Value work_tv (1,0);
