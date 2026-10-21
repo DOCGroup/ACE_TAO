@@ -128,20 +128,20 @@ namespace TAO
 
       /// Flag used to indicate when this task will (or will not) accept
       /// requests via the the add_request() method.
-      bool accepting_requests_;
+      bool accepting_requests_ {};
 
       /// Flag used to initiate a shutdown request to all worker threads.
-      bool shutdown_initiated_;
+      bool shutdown_initiated_ {};
 
       /// Complete shutdown needed to be deferred because the thread calling
       /// close(1) was also one of the ThreadPool threads
-      bool deferred_shutdown_initiated_;
+      bool deferred_shutdown_initiated_ {};
 
       /// Flag used to avoid multiple open() calls.
-      bool opened_;
+      bool opened_ {};
 
       /// The number of currently active worker threads.
-      Thread_Counter num_threads_;
+      Thread_Counter num_threads_ {};
 
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TP_Queue queue_;

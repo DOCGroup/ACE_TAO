@@ -82,9 +82,9 @@ namespace TAO
       /// wait() method.
       TP_Synch_Helper synch_helper_;
 
-      /// Set to NULL initially, and will only be set thereafter if an
+      /// Set to null initially, and will only be set thereafter if an
       /// exception is raised from the dispatch() call on the server_request_.
-      CORBA::Exception* exception_;
+      CORBA::Exception* exception_ {};
     };
   }
 }

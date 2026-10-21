@@ -76,7 +76,7 @@ namespace TAO
       TP_Servant_State &operator= (TP_Servant_State &&) = delete;
 
       /// The servant's current "busy" state (true == busy, false == not busy)
-      bool busy_flag_;
+      bool busy_flag_ {};
     };
   }
 }

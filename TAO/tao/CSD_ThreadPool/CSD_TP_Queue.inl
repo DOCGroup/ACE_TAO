@@ -3,17 +3,11 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::TP_Queue::TP_Queue()
-  : head_(nullptr),
-    tail_(nullptr)
-{
-}
+TAO::CSD::TP_Queue::TP_Queue() = default;
 
 
 ACE_INLINE
-TAO::CSD::TP_Queue::~TP_Queue()
-{
-}
+TAO::CSD::TP_Queue::~TP_Queue() = default;
 
 
 ACE_INLINE

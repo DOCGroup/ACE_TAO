@@ -4,9 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 TAO::CSD::TP_Request::TP_Request(PortableServer::Servant servant,
                                  TP_Servant_State*       servant_state)
-  : prev_(0),
-    next_(0),
-    servant_ (servant),
+  : servant_ (servant),
     servant_state_(servant_state, false)
 {
   this->servant_->_add_ref ();
