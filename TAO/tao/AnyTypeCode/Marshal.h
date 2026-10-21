@@ -78,7 +78,7 @@ public:
   TAO_Marshal_Object () = default;
 
   /// destructor
-  virtual ~TAO_Marshal_Object () = default;
+  virtual ~TAO_Marshal_Object ();
 
   /// skip entry point, it allocates the right kind of Marshal_Object
   /// and invokes skip on it.

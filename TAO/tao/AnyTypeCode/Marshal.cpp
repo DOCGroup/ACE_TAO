@@ -21,6 +21,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Marshal_Object::~TAO_Marshal_Object () = default;
+
 TAO::traverse_status
 TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {

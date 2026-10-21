@@ -40,7 +40,7 @@ namespace TAO
     Any_Basic_Impl (CORBA::TypeCode_ptr,
                     void *value);
 
-    ~Any_Basic_Impl () override = default;
+    ~Any_Basic_Impl () override;
 
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,

@@ -13,6 +13,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::Unknown_IDL_Type::~Unknown_IDL_Type () = default;
+
 TAO::Unknown_IDL_Type::LOCK const
 TAO::Unknown_IDL_Type::lock_i ()
 {
