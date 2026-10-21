@@ -29,10 +29,6 @@ TAO_SCIOP_Connector::TAO_SCIOP_Connector ()
 {
 }
 
-TAO_SCIOP_Connector::~TAO_SCIOP_Connector ()
-{
-}
-
 int
 TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
 {

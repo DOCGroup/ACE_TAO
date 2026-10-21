@@ -24,10 +24,6 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
 {
 }
 
-TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport ()
-{
-}
-
 ACE_Event_Handler *
 TAO_SHMIOP_Transport::event_handler_i ()
 {

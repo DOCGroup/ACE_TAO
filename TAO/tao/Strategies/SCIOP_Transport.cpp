@@ -29,10 +29,6 @@ TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
 {
 }
 
-TAO_SCIOP_Transport::~TAO_SCIOP_Transport ()
-{
-}
-
 ACE_Event_Handler *
 TAO_SCIOP_Transport::event_handler_i ()
 {

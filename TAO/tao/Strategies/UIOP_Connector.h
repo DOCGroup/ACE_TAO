@@ -53,7 +53,7 @@ public:
   TAO_UIOP_Connector ();
 
   /// Destructor
-  ~TAO_UIOP_Connector ();
+  ~TAO_UIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods

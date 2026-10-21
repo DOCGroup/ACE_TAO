@@ -15,14 +15,14 @@ TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
                                       CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_UIOP_PROFILE, priority)
     , object_addr_ (addr)
-    , next_ (0)
+    , next_ (nullptr)
 {
 }
 
 TAO_UIOP_Endpoint::TAO_UIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_UIOP_PROFILE)
     , object_addr_ ()
-    , next_ (0)
+    , next_ (nullptr)
 {
 }
 

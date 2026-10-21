@@ -25,18 +25,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
-    addrs_ (0),
+    addrs_ (nullptr),
     port_span_ (1),
-    hosts_ (0),
+    hosts_ (nullptr),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
+    orb_core_ (nullptr),
 #if defined (ACE_HAS_IPV6)
     default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
 #else
     default_address_ (static_cast<unsigned short> (0), static_cast<ACE_UINT32> (INADDR_ANY)),
 #endif /* ACE_HAS_IPV6 */
-    connection_handler_ (0)
+    connection_handler_ (nullptr)
 {
 }
 

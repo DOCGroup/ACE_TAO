@@ -23,10 +23,6 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
 {
 }
 
-TAO_UIOP_Transport::~TAO_UIOP_Transport ()
-{
-}
-
 ACE_Event_Handler *
 TAO_UIOP_Transport::event_handler_i ()
 {

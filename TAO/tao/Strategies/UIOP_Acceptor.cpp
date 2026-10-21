@@ -20,11 +20,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (this),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0),
+    creation_strategy_ (nullptr),
+    concurrency_strategy_ (nullptr),
+    accept_strategy_ (nullptr),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
+    orb_core_ (nullptr),
     unlink_on_close_ (true)
 {
 }

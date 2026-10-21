@@ -52,7 +52,7 @@ public:
                       TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_UIOP_Transport () override;
+  ~TAO_UIOP_Transport () override = default;
 
 protected:
   /** @name Overridden Template Methods

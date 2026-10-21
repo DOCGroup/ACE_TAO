@@ -29,7 +29,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
 #endif /* ACE_HAS_IPV6 */
     , object_addr_ (addr)
     , object_addr_set_ (false)
-    , next_ (0)
+    , next_ (nullptr)
 {
   this->set (addr, use_dotted_decimal_addresses);
 }
@@ -47,7 +47,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
 #endif /* ACE_HAS_IPV6 */
     , object_addr_ (addr)
     , object_addr_set_ (false)
-    , next_ (0)
+    , next_ (nullptr)
 {
   this->host (host); // With IPv6 performs check for decimal address
 }
@@ -61,7 +61,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint ()
 #endif /* ACE_HAS_IPV6 */
     object_addr_ (),
     object_addr_set_ (false),
-    next_ (0)
+    next_ (nullptr)
 {
 }
 
@@ -76,7 +76,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
 #endif /* ACE_HAS_IPV6 */
     object_addr_ (),
     object_addr_set_ (false),
-    next_ (0)
+    next_ (nullptr)
 {
   this->host (host); // With IPv6 performs check for decimal address
 }
