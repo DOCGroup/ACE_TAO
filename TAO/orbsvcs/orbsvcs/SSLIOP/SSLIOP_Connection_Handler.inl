@@ -6,7 +6,6 @@ TAO::SSLIOP::State_Guard::State_Guard (
   TAO::SSLIOP::Connection_Handler *handler,
   int &result)
   : handler_ (handler),
-    previous_current_impl_ (0),
     current_impl_ (),
     setup_done_ (false)
 {

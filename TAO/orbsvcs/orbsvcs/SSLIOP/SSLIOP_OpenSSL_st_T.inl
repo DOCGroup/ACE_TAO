@@ -39,7 +39,6 @@ TAO::SSLIOP::release (T * st)
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var ()
-  : st_ (nullptr)
 {
 }
 
