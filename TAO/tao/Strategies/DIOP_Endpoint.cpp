@@ -164,7 +164,7 @@ TAO_DIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
-  if (std::strchr (h, ':') != 0)
+  if (std::strchr (h, ':') != nullptr)
     this->is_ipv6_decimal_ = true;
 #endif /* ACE_HAS_IPV6 */
 

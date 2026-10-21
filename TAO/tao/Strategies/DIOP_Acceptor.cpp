@@ -999,7 +999,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 
   const size_t len = options.length ();
 
-  static const char option_delimiter = '&';
+  static constexpr char option_delimiter = '&';
 
   // Count the number of options.
   CORBA::ULong option_count = 1;

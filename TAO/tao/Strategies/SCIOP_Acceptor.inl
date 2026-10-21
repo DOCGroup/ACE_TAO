@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE const ACE_INET_Addr&
 TAO_SCIOP_Acceptor::address () const
 {
-  ACE_ASSERT (this->addrs_ != 0);
+  ACE_ASSERT (this->addrs_ != nullptr);
 
   // @@ This is busted.
   //    The Implementation Repository will have to start supporting
@@ -17,7 +17,7 @@ TAO_SCIOP_Acceptor::address () const
 ACE_INLINE const ACE_INET_Addr *
 TAO_SCIOP_Acceptor::endpoints ()
 {
-  ACE_ASSERT (this->addrs_ != 0);
+  ACE_ASSERT (this->addrs_ != nullptr);
 
   return this->addrs_;
 }

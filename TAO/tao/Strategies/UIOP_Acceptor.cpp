@@ -226,7 +226,7 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   ACE_Auto_String_Free tempname (ACE_OS::tempnam (0, "TAO"));
 
-  if (tempname.get () == 0)
+  if (tempname.get () == nullptr)
     return -1;
 
   return this->open_i (tempname.get (),
@@ -403,7 +403,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
   const size_t len = options.length ();
 
-  static const char option_delimiter = '&';
+  static constexpr char option_delimiter = '&';
 
   // Count the number of options.
 

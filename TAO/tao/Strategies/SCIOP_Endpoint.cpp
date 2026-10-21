@@ -347,7 +347,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 bool
 TAO_SCIOP_Endpoint::is_preferred_network () const
 {
-  return (this->preferred_path_.host.in () != 0);
+  return (this->preferred_path_.host.in () != nullptr);
 }
 
 const char *
