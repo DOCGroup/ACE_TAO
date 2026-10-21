@@ -48,7 +48,7 @@ class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex_Manager ();
+  TAO_Named_RT_Mutex_Manager () = default;
 
   /// Destructor.
   ~TAO_Named_RT_Mutex_Manager () = default;

@@ -64,10 +64,6 @@ TAO_RT_ORB::open_named_mutex (const char *name)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager ()
-{
-}
-
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_mutex ()
 {
