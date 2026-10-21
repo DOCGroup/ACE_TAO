@@ -32,7 +32,7 @@ public:
   TAO_Messaging_Loader () = default;
 
   /// Destructor.
-  ~TAO_Messaging_Loader () override = default;
+  ~TAO_Messaging_Loader () override;
 
   /// Initialize the Messaging loader hooks.
   int init (int argc, ACE_TCHAR* []) override;

@@ -27,6 +27,8 @@ namespace TAO
   {
   }
 
+  ExceptionHolder::~ExceptionHolder () = default;
+
   void
   ExceptionHolder::set_exception_data (::TAO::Exception_Data* data,
                                        ::CORBA::ULong exceptions_count)
