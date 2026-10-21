@@ -40,11 +40,18 @@ class TAO_RTScheduler_ORB_Initializer
   , public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_RTScheduler_ORB_Initializer () = default;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
+  TAO_RTScheduler_ORB_Initializer (TAO_RTScheduler_ORB_Initializer const &) = delete;
+  TAO_RTScheduler_ORB_Initializer &operator= (TAO_RTScheduler_ORB_Initializer const &) = delete;
+  TAO_RTScheduler_ORB_Initializer (TAO_RTScheduler_ORB_Initializer &&) = delete;
+  TAO_RTScheduler_ORB_Initializer &operator= (TAO_RTScheduler_ORB_Initializer &&) = delete;
+
   TAO_RTScheduler_Current_var current_;
 };
 

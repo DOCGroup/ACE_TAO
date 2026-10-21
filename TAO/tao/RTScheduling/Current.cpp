@@ -613,7 +613,7 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names ()
   RTScheduling::Current::NameList* name_list;
   ACE_NEW_RETURN (name_list,
                   RTScheduling::Current::NameList,
-                  0);
+                  nullptr);
 
   TAO_RTScheduler_Current_i* current = this;
 
