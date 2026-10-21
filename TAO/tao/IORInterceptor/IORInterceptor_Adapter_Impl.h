@@ -50,7 +50,7 @@ class TAO_IORInterceptor_Adapter_Impl
 public:
   TAO_IORInterceptor_Adapter_Impl () = default;
 
-  ~TAO_IORInterceptor_Adapter_Impl () override;
+  ~TAO_IORInterceptor_Adapter_Impl () override = default;
 
   void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor) override;

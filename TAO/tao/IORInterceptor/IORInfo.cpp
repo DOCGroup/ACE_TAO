@@ -17,8 +17,6 @@ TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
 {
 }
 
-TAO_IORInfo::~TAO_IORInfo () = default;
-
 CORBA::Policy_ptr
 TAO_IORInfo::get_effective_policy (CORBA::PolicyType type)
 {
