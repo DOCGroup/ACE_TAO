@@ -25,11 +25,11 @@ class be_visitor_exception : public be_visitor_scope
 {
 public:
   be_visitor_exception (be_visitor_context *ctx);
-  ~be_visitor_exception ();
+  ~be_visitor_exception () override;
 
-  virtual int visit_exception (be_exception *node);
+  int visit_exception (be_exception *node) override;
 
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_EXCEPTION_H_ */
