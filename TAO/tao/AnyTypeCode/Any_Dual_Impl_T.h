@@ -70,7 +70,7 @@ namespace TAO
   protected:
     void value (const T &);
 
-    T * value_;
+    T *value_ {};
 
   private:
     static CORBA::Boolean replace (TAO_InputCDR &,

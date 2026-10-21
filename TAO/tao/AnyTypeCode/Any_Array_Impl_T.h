@@ -57,7 +57,7 @@ namespace TAO
     void free_value () override;
 
   private:
-    T_slice * value_;
+    T_slice *value_ {};
   };
 }
 

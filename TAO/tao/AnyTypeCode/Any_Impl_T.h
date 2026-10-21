@@ -62,7 +62,7 @@ namespace TAO
     void free_value () override;
 
   private:
-    T * value_;
+    T *value_ {};
   };
 }
 

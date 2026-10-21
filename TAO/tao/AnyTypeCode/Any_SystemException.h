@@ -75,7 +75,7 @@ namespace TAO
     void free_value () override;
 
   protected:
-    CORBA::SystemException *value_;
+    CORBA::SystemException *value_ {};
   };
 }
 
