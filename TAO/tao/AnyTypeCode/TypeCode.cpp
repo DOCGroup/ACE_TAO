@@ -14,10 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::TypeCode::~TypeCode ()
-{
-}
-
 bool
 CORBA::TypeCode::tao_marshal_kind (TAO_OutputCDR & cdr) const
 {

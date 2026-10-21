@@ -40,10 +40,6 @@ TAO::Any_SystemException::Any_SystemException (CORBA::TypeCode_ptr tc)
 {
 }
 
-TAO::Any_SystemException::~Any_SystemException ()
-{
-}
-
 void
 TAO::Any_SystemException::insert (CORBA::Any & any,
                                   _tao_destructor destructor,

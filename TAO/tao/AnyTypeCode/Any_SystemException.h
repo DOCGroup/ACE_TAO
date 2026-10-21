@@ -50,7 +50,7 @@ namespace TAO
 
     Any_SystemException (CORBA::TypeCode_ptr);
 
-    ~Any_SystemException () override;
+    ~Any_SystemException () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor,

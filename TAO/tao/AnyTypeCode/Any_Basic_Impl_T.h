@@ -37,7 +37,7 @@ namespace TAO
   public:
     Any_Basic_Impl_T (CORBA::TypeCode_ptr,
                       const T & val);
-    ~Any_Basic_Impl_T () override;
+    ~Any_Basic_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,

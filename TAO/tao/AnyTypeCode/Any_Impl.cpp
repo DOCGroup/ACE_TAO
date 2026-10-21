@@ -22,10 +22,6 @@ TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
 {
 }
 
-TAO::Any_Impl::~Any_Impl ()
-{
-}
-
 CORBA::Boolean
 TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {

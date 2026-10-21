@@ -54,11 +54,6 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (CORBA::TypeCode_ptr tc)
 }
 
 template<typename T>
-TAO::Any_Dual_Impl_T<T>::~Any_Dual_Impl_T ()
-{
-}
-
-template<typename T>
 void
 TAO::Any_Dual_Impl_T<T>::insert (CORBA::Any & any,
                                  _tao_destructor destructor,

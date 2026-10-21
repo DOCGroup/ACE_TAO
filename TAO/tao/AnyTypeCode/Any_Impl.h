@@ -88,7 +88,7 @@ namespace TAO
     Any_Impl (_tao_destructor,
               CORBA::TypeCode_ptr,
               bool encoded = false);
-    virtual ~Any_Impl ();
+    virtual ~Any_Impl () = default;
 
     TAO::Any_Impl::_tao_destructor value_destructor_;
     CORBA::TypeCode_ptr type_;

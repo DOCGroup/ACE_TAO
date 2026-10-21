@@ -49,10 +49,6 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc)
 {
 }
 
-TAO::Unknown_IDL_Type::~Unknown_IDL_Type ()
-{
-}
-
 CORBA::Boolean
 TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR & cdr)
 {

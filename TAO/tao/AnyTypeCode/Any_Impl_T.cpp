@@ -30,11 +30,6 @@ TAO::Any_Impl_T<T>::Any_Impl_T (_tao_destructor destructor,
 }
 
 template<typename T>
-TAO::Any_Impl_T<T>::~Any_Impl_T ()
-{
-}
-
-template<typename T>
 void
 TAO::Any_Impl_T<T>::insert (CORBA::Any & any,
                             _tao_destructor destructor,

@@ -61,7 +61,7 @@ namespace TAO
       Case ();
 
       /// Destructor.
-      virtual ~Case ();
+      virtual ~Case () = default;
 
       /// Cloning/copying operation.
       virtual Case * clone () const = 0;

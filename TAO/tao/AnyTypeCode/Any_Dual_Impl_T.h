@@ -45,7 +45,7 @@ namespace TAO
                      CORBA::TypeCode_ptr,
                      const T &);
     Any_Dual_Impl_T (CORBA::TypeCode_ptr);
-    ~Any_Dual_Impl_T () override;
+    ~Any_Dual_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor,

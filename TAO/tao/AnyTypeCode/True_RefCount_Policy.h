@@ -95,7 +95,7 @@ namespace TAO
      *       zero, i.e. when @c remove_ref() calls @c operator
      *       @c delete @c this.
      */
-    virtual ~True_RefCount_Policy ();
+    virtual ~True_RefCount_Policy () = default;
 
   private:
     /// Reference counter.

@@ -40,7 +40,7 @@ namespace TAO
     Any_Impl_T (_tao_destructor destructor,
                 CORBA::TypeCode_ptr,
                 T * const);
-    ~Any_Impl_T () override;
+    ~Any_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,
