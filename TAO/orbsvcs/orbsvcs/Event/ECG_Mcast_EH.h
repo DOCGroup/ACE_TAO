@@ -217,10 +217,11 @@ private:
   /// The NIC used to subscribe for multicast traffic.
   ACE_TCHAR *net_if_;
 
-  typedef struct {
+  struct Subscription
+  {
     ACE_INET_Addr mcast_addr;
     ACE_SOCK_Dgram_Mcast* dgram;
-  } Subscription;
+  };
   using Subscriptions = ACE_Array_Base<Subscription>;
 
   /// List of multicast addresses we subscribe to and dgrams we use.
