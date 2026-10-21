@@ -51,7 +51,7 @@ public:
   TAO_TypeCodeFactory_i ();
 
   /// dtor
-  ~TAO_TypeCodeFactory_i ();
+  ~TAO_TypeCodeFactory_i () override;
 
   /// = LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);
@@ -222,6 +222,8 @@ private:
   /// Prohibited
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src) = delete;
   TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src) = delete;
+  TAO_TypeCodeFactory_i (TAO_TypeCodeFactory_i &&) = delete;
+  TAO_TypeCodeFactory_i &operator= (TAO_TypeCodeFactory_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
