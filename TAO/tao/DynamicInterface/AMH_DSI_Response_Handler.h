@@ -61,7 +61,7 @@ public:
   TAO_AMH_DSI_Response_Handler_ptr ptr () const;
 
 private:
-  TAO_AMH_DSI_Response_Handler_ptr ptr_;
+  TAO_AMH_DSI_Response_Handler_ptr ptr_ {};
 };
 
 class TAO_AMH_DSI_Exception_Holder;
@@ -103,7 +103,7 @@ public:
   static void tao_remove_ref (TAO_AMH_DSI_Exception_Holder *);
 
 private:
-  TAO_AMH_DSI_Exception_Holder* ptr_;
+  TAO_AMH_DSI_Exception_Holder* ptr_ {};
 };
 
 /**
@@ -171,7 +171,7 @@ protected:
 private:
   TAO_AMH_DSI_Exception_Holder (const TAO_AMH_DSI_Exception_Holder &);
   void operator= (const TAO_AMH_DSI_Exception_Holder &);
-  CORBA::Exception *exception_;
+  CORBA::Exception *exception_ {};
 
 protected:
   virtual CORBA::Boolean _tao_marshal__Test_TAO_AMH_DSI_Exception_Holder (
@@ -256,7 +256,7 @@ protected:
   virtual void *_downcast (const char *repository_id);
 
 private:
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

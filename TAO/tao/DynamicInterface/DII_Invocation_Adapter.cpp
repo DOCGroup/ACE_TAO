@@ -39,7 +39,6 @@ namespace TAO
                           mode)
       , exception_list_ (excp)
       , request_ (r)
-      , ex_data_ (nullptr)
   {
   }
 
