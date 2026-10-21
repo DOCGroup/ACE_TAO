@@ -84,10 +84,10 @@ private:
 
 protected:
   /// Default lane resources.
-  TAO_Thread_Lane_Resources *default_lane_resources_;
+  TAO_Thread_Lane_Resources *default_lane_resources_ {};
 
   /// Thread Pool Manager.
-  TAO_Thread_Pool_Manager *tp_manager_;
+  TAO_Thread_Pool_Manager *tp_manager_ {};
 };
 
 /**

@@ -224,7 +224,7 @@ private:
 
   /// This boolean is set when we are shutting down, then we will not create
   /// any new dynamic threads
-  bool shutdown_;
+  bool shutdown_ {false};
 
   /// Number of static threads
   CORBA::ULong const static_threads_number_;
@@ -242,7 +242,7 @@ private:
 
   TAO_Thread_Lane_Resources resources_;
 
-  CORBA::Short native_priority_;
+  CORBA::Short native_priority_ {TAO_INVALID_PRIORITY};
 
   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan const lifespan_;
 
