@@ -47,9 +47,7 @@ TAO_ChunkInfo::TAO_ChunkInfo (CORBA::Boolean do_chunking,
                               CORBA::Long init_level)
   : chunking_(do_chunking),
     value_nesting_level_(init_level),
-    chunk_size_pos_ (0),
-    length_to_chunk_octets_pos_ (0),
-    chunk_octets_end_pos_ (0)
+    length_to_chunk_octets_pos_ (0)
 {
 }
 

@@ -106,13 +106,13 @@ public:
   /// The level of nesting valuetypes.
   CORBA::Long value_nesting_level_ {};
   /// The starting position of the size of current chunk.
-  char* chunk_size_pos_;
+  char *chunk_size_pos_ {};
   /// The length of CDR stream from the beginning to the current
   /// chunk data starting position.  Used to calculate the chunk size
   /// across multiple chained ACE_Message_Blocks.
   size_t length_to_chunk_octets_pos_ {};
   /// The end position of current chunk.
-  char* chunk_octets_end_pos_;
+  char *chunk_octets_end_pos_ {};
 };
 
 namespace CORBA

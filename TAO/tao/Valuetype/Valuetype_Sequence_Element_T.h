@@ -108,8 +108,7 @@ public:
   }
 
 private:
-  // This function is not implemented
-  valuetype_sequence_element();
+  valuetype_sequence_element () = delete;
 
 private:
   value_type * element_;
