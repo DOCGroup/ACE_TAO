@@ -11,13 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ExceptionHolder::ExceptionHolder () :
-    data_ (nullptr),
-    count_ (0),
-    char_translator_ (nullptr),
-    wchar_translator_ (nullptr)
-  {
-  }
+  ExceptionHolder::ExceptionHolder () = default;
 
   ExceptionHolder::ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
@@ -35,9 +29,7 @@ namespace TAO
   {
   }
 
-  ExceptionHolder::~ExceptionHolder ()
-  {
-  }
+  ExceptionHolder::~ExceptionHolder () = default;
 
   void
   ExceptionHolder::set_exception_data (::TAO::Exception_Data* data,

@@ -39,7 +39,7 @@ public:
 
 private:
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {};
 };
 
 

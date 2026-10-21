@@ -14,18 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
-  : reply_status_ (GIOP::NO_EXCEPTION)
-  , mesg_base_ (nullptr)
-  , request_id_ (0)
-  , response_expected_ (false)
-  , transport_ (nullptr)
-  , orb_core_ (nullptr)
-  , argument_flag_ (1)
-  , rh_reply_status_ (TAO_RS_UNINITIALIZED)
-  , allocator_ (nullptr)
-{
-}
+TAO_AMH_Response_Handler::TAO_AMH_Response_Handler () = default;
 
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
 {

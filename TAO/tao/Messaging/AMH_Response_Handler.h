@@ -113,7 +113,7 @@ protected:
   TAO_OutputCDR _tao_out;
 
   /// Reply status (will be NO_EXCEPTION in the majority of the
-  GIOP::ReplyStatusType reply_status_;
+  GIOP::ReplyStatusType reply_status_ {GIOP::NO_EXCEPTION};
 
 private:
   TAO_AMH_Response_Handler (TAO_AMH_Response_Handler const &) = delete;
@@ -122,20 +122,20 @@ private:
   TAO_AMH_Response_Handler &operator= (TAO_AMH_Response_Handler &&) = delete;
 
   /// Pointer to the original message-base
-  TAO_GIOP_Message_Base *mesg_base_;
+  TAO_GIOP_Message_Base *mesg_base_ {};
 
   /// Copy of the request-id of the original Server-Request
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
-  CORBA::Boolean response_expected_;
+  CORBA::Boolean response_expected_ {};
 
   /// Handle to transport through which the reply will be sent
   /// Copy of transport in original Server_Request
-  TAO_Transport *transport_;
+  TAO_Transport *transport_ {};
 
   /// A pointer to the ORB Core for the context where the request was
   /// created.
-  TAO_ORB_Core * orb_core_;
+  TAO_ORB_Core * orb_core_ {};
 
   /// The reply service context
   TAO_Service_Context reply_service_context_;
@@ -147,7 +147,7 @@ private:
   //    boundary.  But some replys have no payload (only header), in
   //    those cases you cannot insert the padding.  We need the
   //    ResponseHandler to set this field correctly!
-  CORBA::Boolean argument_flag_;
+  CORBA::Boolean argument_flag_ {true};
 
   /**
    * Various states the ResponseHandler can be in.
@@ -163,7 +163,7 @@ private:
       TAO_RS_SENDING,
       TAO_RS_SENT
     };
-  RH_Reply_Status rh_reply_status_;
+  RH_Reply_Status rh_reply_status_ {TAO_RS_UNINITIALIZED};
 
   // I would use the "state pattern"..
   // Carlos, Isn't that an overkill?
@@ -177,7 +177,7 @@ private:
 
   /// Allocator used to allocate this object. If zero then we are allocated
   /// from the heap
-  TAO_AMH_BUFFER_ALLOCATOR* allocator_;
+  TAO_AMH_BUFFER_ALLOCATOR* allocator_ {};
 };
 
 namespace TAO

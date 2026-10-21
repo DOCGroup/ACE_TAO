@@ -9,9 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
   ACE_Reactor *reactor)
-  : tms_ (nullptr),
-    request_id_ (0),
-    reactor_ (reactor)
+  : reactor_ (reactor)
 {
   // Enable reference counting on the event handler.
   this->reference_counting_policy ().value (

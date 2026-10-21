@@ -70,10 +70,10 @@ namespace TAO
     ~ExceptionHolder () override;
 
   private:
-    TAO::Exception_Data* data_;
-    CORBA::ULong count_;
-    ACE_Char_Codeset_Translator *char_translator_;
-    ACE_WChar_Codeset_Translator *wchar_translator_;
+    TAO::Exception_Data* data_ {};
+    CORBA::ULong count_ {};
+    ACE_Char_Codeset_Translator *char_translator_ {};
+    ACE_WChar_Codeset_Translator *wchar_translator_ {};
   };
 
   /**

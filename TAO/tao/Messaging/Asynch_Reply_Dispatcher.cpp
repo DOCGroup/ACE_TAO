@@ -18,7 +18,6 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
   :TAO_Asynch_Reply_Dispatcher_Base (orb_core, allocator)
   , reply_handler_stub_ (reply_handler_stub)
   , reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
-  , timeout_handler_ (nullptr)
 {
 }
 

@@ -58,10 +58,10 @@ public:
 
 public:
   /// The transport mux strategy dispatching the reply
-  TAO_Transport_Mux_Strategy *tms_;
+  TAO_Transport_Mux_Strategy *tms_ {};
 
   /// Remember the ID of the request.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Our reactor
   ACE_Reactor *reactor_;
