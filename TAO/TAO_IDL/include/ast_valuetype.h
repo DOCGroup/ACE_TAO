@@ -20,13 +20,13 @@ public:
                  bool truncatable,
                  bool custom);
 
-  virtual ~AST_ValueType ();
+  ~AST_ValueType () override;
 
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
   // This also calls the base class version.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   AST_Type **supports () const;
 
@@ -43,27 +43,27 @@ public:
   // Called from y.tab.cpp to set the factory decl seen bit.
 
   // Look up a scoped name in the supported interface list.
-  virtual AST_Decl *look_in_supported (UTL_ScopedName *,
-                                       bool full_def_only);
+  AST_Decl *look_in_supported (UTL_ScopedName *,
+                               bool full_def_only) override;
 
   // Overridden for valuetype from UTL_Scope method.
-  virtual AST_Decl *special_lookup (UTL_ScopedName *,
-                                    bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+  AST_Decl *special_lookup (UTL_ScopedName *,
+                            bool full_def_only,
+                            AST_Decl *&final_parent_decl) override;
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key () const;
+  bool legal_for_primary_key () const override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
   using FWD_TYPE = AST_ValueTypeFwd;
