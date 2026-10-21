@@ -68,7 +68,7 @@ protected:
   /// The table implementation
   TAO_IOR_Table_Impl_var root_;
 
-  bool closed_;
+  bool closed_ {true};
   TAO_SYNCH_MUTEX thread_lock_;
   ACE_Lock *lock_;
 
