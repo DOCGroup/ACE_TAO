@@ -46,7 +46,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Object : public TAO_Notify_Refcountable
 
 public:
   /// Id for Objects.
-  typedef CORBA::Long ID;
+  using ID = CORBA::Long;
 
   /// Destructor
   virtual ~TAO_Notify_Object ();

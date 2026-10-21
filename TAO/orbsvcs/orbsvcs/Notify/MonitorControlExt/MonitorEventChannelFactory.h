@@ -54,9 +54,9 @@ public:
 
   // This is public to allow the Unbinder class access
   // for SunCC 5.5 and above
-  typedef ACE_Hash_Map_Manager<ACE_CString,
-                               CosNotifyChannelAdmin::ChannelID,
-                               ACE_SYNCH_NULL_MUTEX> Map;
+  using Map = ACE_Hash_Map_Manager<ACE_CString,
+                                   CosNotifyChannelAdmin::ChannelID,
+                                   ACE_SYNCH_NULL_MUTEX>;
 
 private:
   size_t get_consumers (CosNotifyChannelAdmin::ChannelID id);

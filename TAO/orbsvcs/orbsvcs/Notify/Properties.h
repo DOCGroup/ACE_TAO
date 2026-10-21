@@ -175,9 +175,9 @@ protected:
 };
 
 /**
- * @todo Remove this legacy TAO_Notify_Properties typedef.
+ * @todo Remove this legacy TAO_Notify_Properties alias.
  */
-typedef TAO_Notify_Properties TAO_Notify_PROPERTIES;
+using TAO_Notify_PROPERTIES = TAO_Notify_Properties;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

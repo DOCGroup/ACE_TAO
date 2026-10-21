@@ -15,7 +15,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_MonitorProxySupplier_T<TAO_Notify_StructuredProxyPushSupplier> TAO_MonitorStructuredProxyPushSupplier;
+using TAO_MonitorStructuredProxyPushSupplier =
+  TAO_MonitorProxySupplier_T<TAO_Notify_StructuredProxyPushSupplier>;
 #if 0
 class TAO_Notify_MC_Ext_Export TAO_MonitorStructuredProxyPushSupplier
   : public TAO_MonitorProxySupplier_T<TAO_Notify_StructuredProxyPushSupplier>
