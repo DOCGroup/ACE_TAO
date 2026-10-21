@@ -210,7 +210,7 @@ public:
 protected:
   /// Destructor is protected to enforce proper memory management
   /// through the reference counting mechanism.
-  ~TAO_ORBInitInfo () override;
+  ~TAO_ORBInitInfo () override = default;
 
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
   /// has been called on each of the ORBInitializers, this ORBInitInfo

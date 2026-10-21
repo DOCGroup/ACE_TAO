@@ -20,8 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RequestInterceptor_Adapter_Impl::~TAO_RequestInterceptor_Adapter_Impl () = default;
-
 void
 TAO_RequestInterceptor_Adapter_Impl::popTSC (
   TAO_ORB_Core *orb_core)
