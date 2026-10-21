@@ -6,6 +6,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_IORInterceptor_Adapter_Factory_Impl::~TAO_IORInterceptor_Adapter_Factory_Impl () = default;
+
 TAO_IORInterceptor_Adapter *
 TAO_IORInterceptor_Adapter_Factory_Impl::create ()
 {

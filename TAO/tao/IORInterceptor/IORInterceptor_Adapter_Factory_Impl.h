@@ -41,7 +41,7 @@ class TAO_IORInterceptor_Export TAO_IORInterceptor_Adapter_Factory_Impl
 public:
   TAO_IORInterceptor_Adapter_Factory_Impl () = default;
 
-  ~TAO_IORInterceptor_Adapter_Factory_Impl () override = default;
+  ~TAO_IORInterceptor_Adapter_Factory_Impl () override;
 
   TAO_IORInterceptor_Adapter *create () override;
 
