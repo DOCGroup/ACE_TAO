@@ -21,7 +21,7 @@ CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Service_Context &sc)
 {
-  CORBA::Long dscp_codepoint = 0;
+  CORBA::Long dscp_codepoint {};
   IOP::ServiceContext const* context = nullptr;
 
   if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
@@ -31,7 +31,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
                         (context->context_data.get_buffer ()),
                         context->context_data.length ());
 
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         {
           throw CORBA::MARSHAL ();
@@ -51,7 +51,7 @@ CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Stub * stub, CORBA::Object * object)
 {
-  CORBA::Long dscp = 0;
+  CORBA::Long dscp {};
   TAO::DiffservCodepoint diffserv_codepoint;
   CORBA::Policy_var server_nw_priority_policy;
 

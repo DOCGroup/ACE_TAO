@@ -54,7 +54,7 @@ void
 TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   TAO_ServerRequest &req, TAO_Root_POA &poa)
 {
-  CORBA::Long dscp_codepoint = 0;
+  CORBA::Long dscp_codepoint {};
   TAO_Service_Context &request_service_context =
     req.request_service_context ();
 
