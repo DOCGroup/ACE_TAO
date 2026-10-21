@@ -48,7 +48,7 @@ namespace TAO
       Strategy_Proxy() = default;
 
       /// Destructor.
-      ~Strategy_Proxy() = default;
+      ~Strategy_Proxy();
 
       /// Mutator to provide the proxy with a CSD Strategy object.
       /// A return value of true indicates success, and false indicates
