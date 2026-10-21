@@ -16,7 +16,6 @@ TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager ()
   : poa_ (),
     object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     location_map_ (TAO_PG_MAX_LOCATIONS),
-    generic_factory_ (0),
     lock_ ()
 {
 }
@@ -235,7 +234,7 @@ TAO_PG_ObjectGroupManager::remove_member (
         {
           // Give the GenericFactory a chance to delete a member if
           // its membership is under infrastructure control.
-          if (this->generic_factory_)
+          if (this->generic_factory_ != nullptr)
             {
               CORBA::ULong group_id = group_entry->group_id;
               // Release the lock during the factory delete_member()
@@ -254,7 +253,7 @@ TAO_PG_ObjectGroupManager::remove_member (
 
           if (member_infos.remove (info) == 0)
             {
-              if (this->generic_factory_)
+              if (this->generic_factory_ != nullptr)
                 {
                   this->generic_factory_->check_minimum_number_members (
                     object_group,

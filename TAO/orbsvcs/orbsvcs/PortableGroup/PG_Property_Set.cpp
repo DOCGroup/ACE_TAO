@@ -195,7 +195,7 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
 void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-  if (0 != this->defaults_)
+  if (this->defaults_ != nullptr)
   {
     this->defaults_->merge_properties (merged_values);
   }
@@ -218,7 +218,7 @@ int TAO::PG_Property_Set::find (
   int found = (0 == this->values_.find (key, pValue));
   if (! found)
   {
-    if (0 != this->defaults_)
+    if (this->defaults_ != nullptr)
     {
       found = this->defaults_->find (key, pValue);
     }

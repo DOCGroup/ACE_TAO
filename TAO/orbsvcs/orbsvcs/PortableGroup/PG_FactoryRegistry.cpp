@@ -45,7 +45,6 @@ TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
   , poa_ (0)
   , object_id_ (0)
   , this_obj_ (0)
-  , ior_output_file_(0)
   , ns_name_("")
   , naming_context_(0)
   , this_name_(1)
@@ -139,7 +138,7 @@ int TAO::PG_FactoryRegistry::fini ()
   if (this->ior_output_file_ != nullptr)
   {
     ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = 0;
+    this->ior_output_file_ = nullptr;
   }
   if (this->ns_name_.length () != 0)
   {
@@ -326,7 +325,7 @@ void TAO::PG_FactoryRegistry::register_factory (
   infos.length(length + 1);
   infos[length] = factory_info;
 
-  if (safe_entry.get() != 0)
+  if (safe_entry.get() != nullptr)
   {
     this->registry_.bind(role, safe_entry.release());
   }
