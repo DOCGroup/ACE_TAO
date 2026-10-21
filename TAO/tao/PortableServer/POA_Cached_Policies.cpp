@@ -18,22 +18,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Cached_Policies::Cached_Policies () :
-        thread_ (::PortableServer::ORB_CTRL_MODEL),
-        lifespan_ (::PortableServer::TRANSIENT),
-        id_uniqueness_ (::PortableServer::UNIQUE_ID),
-        id_assignment_ (::PortableServer::SYSTEM_ID),
-        implicit_activation_ (::PortableServer::NO_IMPLICIT_ACTIVATION),
-        servant_retention_ (::PortableServer::RETAIN),
-        request_processing_ (::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
-        priority_model_ (Cached_Policies::NOT_SPECIFIED),
-        server_priority_ (TAO_INVALID_PRIORITY),
-        network_priority_model_ (Cached_Policies::NO_NETWORK_PRIORITY),
-        request_diffserv_codepoint_ (0),
-        reply_diffserv_codepoint_ (0)
-    {
-    }
-
     void
     Cached_Policies::update (TAO_POA_Policy_Set &policy_set)
     {
