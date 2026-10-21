@@ -69,7 +69,7 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Private_Connection_Property
 public:
   /// Constructor
   TAO_RT_Transport_Descriptor_Private_Connection_Property () = default;
-  TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
+  explicit TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
 
   /// Destructor
   ~TAO_RT_Transport_Descriptor_Private_Connection_Property () override = default;

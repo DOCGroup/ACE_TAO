@@ -119,7 +119,7 @@ class TAO_RTCORBA_Export TAO_ThreadpoolPolicy
 {
 public:
   /// Constructor.
-  TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
+  explicit TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
 
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
@@ -215,7 +215,7 @@ class TAO_RTCORBA_Export TAO_PriorityBandedConnectionPolicy
 {
 public:
   /// Constructor.
-  TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands);
+  explicit TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands);
 
   /// Copy constructor.
   TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs);
@@ -282,7 +282,7 @@ class TAO_RTCORBA_Export TAO_ServerProtocolPolicy
 {
 public:
   /// Constructor.
-  TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList &protocols);
+  explicit TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
   /// Copy constructor.
   TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs);
@@ -338,7 +338,7 @@ class TAO_RTCORBA_Export TAO_ClientProtocolPolicy
 {
 public:
   /// Constructor.
-  TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols);
+  explicit TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
   /// Copy constructor.
   TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs);

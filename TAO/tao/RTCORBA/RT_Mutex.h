@@ -85,7 +85,7 @@ class TAO_RTCORBA_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex (const char *name);
+  explicit TAO_Named_RT_Mutex (char const *name);
 
   /// Returns the name of the mutex.
   char const *name () const override;
