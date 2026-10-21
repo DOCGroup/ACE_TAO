@@ -20,12 +20,12 @@ TAO_CodecFactory::create_codec_with_codesets (IOP::Encoding_1_2 const& enc)
 {
   TAO_Codeset_Translator_Base *char_trans = nullptr;
   TAO_Codeset_Translator_Base *wchar_trans = nullptr;
-  CONV_FRAME::CodeSetId ncsc;
-  CONV_FRAME::CodeSetId ncsw;
+  CONV_FRAME::CodeSetId ncsc {};
+  CONV_FRAME::CodeSetId ncsw {};
 
   TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager ();
 
-  if (csm)
+  if (csm != nullptr)
     {
       char_trans = csm->get_char_trans (enc.char_codeset);
       wchar_trans = csm->get_wchar_trans (enc.wchar_codeset);
