@@ -10,16 +10,16 @@ class TAO_IDL_FE_Export AST_Finder : public virtual AST_Factory
 public:
   AST_Finder (UTL_ScopedName *n);
 
-  virtual ~AST_Finder ();
+  ~AST_Finder () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 };
