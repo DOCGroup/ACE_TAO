@@ -16,8 +16,6 @@ TAO_DynArray_i::TAO_DynArray_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynArray_i::~TAO_DynArray_i () = default;
-
 void
 TAO_DynArray_i::init_common ()
 {

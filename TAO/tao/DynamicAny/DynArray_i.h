@@ -45,7 +45,7 @@ public:
   TAO_DynArray_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynArray_i ();
+  ~TAO_DynArray_i () = default;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
