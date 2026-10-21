@@ -78,7 +78,7 @@ namespace TAO
 
     protected:
       /// Default Constructor.
-      Strategy_Base();
+      Strategy_Base() = default;
 
       /// Subclass provides implementation to dispatch a remote request.
       virtual DispatchResult dispatch_remote_request_i
@@ -146,7 +146,7 @@ namespace TAO
 
       /// This flag indicates that the POA is currently active (true) or
       /// currently inactive (false).
-      bool poa_activated_;
+      bool poa_activated_ {};
     };
   }
 }

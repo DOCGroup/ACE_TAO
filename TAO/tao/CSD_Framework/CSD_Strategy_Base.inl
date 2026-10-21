@@ -4,12 +4,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::Strategy_Base::Strategy_Base()
-  : poa_activated_(false)
-{
-}
-
-ACE_INLINE
 void
 TAO::CSD::Strategy_Base::dispatch_request
                          (TAO_ServerRequest& server_request,

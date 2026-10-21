@@ -81,7 +81,7 @@ public:
     servant_dispatching_strategy_proxy () const;
 
 private:
-  TAO::CSD::Strategy_Proxy* sds_proxy_;
+  TAO::CSD::Strategy_Proxy* sds_proxy_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

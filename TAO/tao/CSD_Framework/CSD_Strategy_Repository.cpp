@@ -60,8 +60,7 @@ TAO_CSD_Strategy_Repository::add_strategy (ACE_CString const &name,
 TAO_CSD_Strategy_Repository::Strategy_Node::Strategy_Node (ACE_CString const &name,
                                            CSD_Framework::Strategy_ptr strat)
   : poa_name_(name),
-    strategy_(CSD_Framework::Strategy::_duplicate(strat)),
-    next_(nullptr)
+    strategy_(CSD_Framework::Strategy::_duplicate(strat))
 {
 }
 
