@@ -39,7 +39,7 @@ namespace CORBA
 #if defined (ACE_USES_WCHAR)
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       wchar_t * argv[],
-                                      const char * orb_name = 0);
+                                      char const * orb_name = nullptr);
 
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       wchar_t * argv[],
