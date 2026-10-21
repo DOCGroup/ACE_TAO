@@ -93,7 +93,7 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
 protected:
-  ~TAO_Server_Network_Priority_Policy () override = default;
+  ~TAO_Server_Network_Priority_Policy () override;
 
 private:
   /// The attributes
