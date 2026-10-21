@@ -110,7 +110,7 @@ private:
   CORBA::ULongLong replica_seq_num_;
   TAO_FT_Naming_Server &server_;
   CORBA::ORB_var orb_;
-  ACE_Reactor *reactor_;
+  ACE_Reactor *reactor_ {};
   TAO_SYNCH_MUTEX lock_;
   bool notified_;
   FT_Naming::UpdateInfoSeq to_send_;
