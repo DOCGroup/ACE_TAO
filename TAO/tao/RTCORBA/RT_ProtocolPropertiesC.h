@@ -60,19 +60,11 @@ namespace RTCORBA
 #define _RTCORBA_PROTOCOLPROPERTIES__VAR_OUT_CH_
 
   class ProtocolProperties;
-  typedef ProtocolProperties *ProtocolProperties_ptr;
+  using ProtocolProperties_ptr = ProtocolProperties *;
 
-  typedef
-    TAO_Objref_Var_T<
-        ProtocolProperties
-      >
-    ProtocolProperties_var;
+  using ProtocolProperties_var = TAO_Objref_Var_T<ProtocolProperties>;
 
-  typedef
-    TAO_Objref_Out_T<
-        ProtocolProperties
-      >
-    ProtocolProperties_out;
+  using ProtocolProperties_out = TAO_Objref_Out_T<ProtocolProperties>;
 
 #endif /* end #if !defined */
 
@@ -86,9 +78,9 @@ namespace RTCORBA
     : public virtual ::CORBA::Object
   {
   public:
-    typedef ProtocolProperties_ptr _ptr_type;
-    typedef ProtocolProperties_var _var_type;
-    typedef ProtocolProperties_out _out_type;
+    using _ptr_type = ProtocolProperties_ptr;
+    using _var_type = ProtocolProperties_var;
+    using _out_type = ProtocolProperties_out;
 
     // The static operations.
     static ProtocolProperties_ptr _duplicate (ProtocolProperties_ptr obj);

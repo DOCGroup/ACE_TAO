@@ -55,20 +55,20 @@ class TAO_DynamicImplementation;
 
 namespace PortableServer
 {
-    typedef TAO_ServantBase ServantBase;
+    using ServantBase = TAO_ServantBase;
     struct RefCountServantBase {};
     template <class T> class Servant_var;
-    typedef Servant_var<TAO_ServantBase> ServantBase_var;
-    typedef ServantBase *Servant;
+    using ServantBase_var = Servant_var<TAO_ServantBase>;
+    using Servant = ServantBase *;
 
-    typedef TAO_DynamicImplementation DynamicImplementation;
+    using DynamicImplementation = TAO_DynamicImplementation;
 
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:472
 
-  typedef CORBA::OctetSeq ObjectId;
-  typedef CORBA::OctetSeq_var ObjectId_var;
-  typedef CORBA::OctetSeq_out ObjectId_out;
+  using ObjectId = CORBA::OctetSeq;
+  using ObjectId_var = CORBA::OctetSeq_var;
+  using ObjectId_out = CORBA::OctetSeq_out;
 
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -77,19 +77,11 @@ namespace PortableServer
 #define _PORTABLESERVER_POA__VAR_OUT_CH_
 
   class POA;
-  typedef POA *POA_ptr;
+  using POA_ptr = POA *;
 
-  typedef
-    TAO_Objref_Var_T<
-        POA
-      >
-    POA_var;
+  using POA_var = TAO_Objref_Var_T<POA>;
 
-  typedef
-    TAO_Objref_Out_T<
-        POA
-      >
-    POA_out;
+  using POA_out = TAO_Objref_Out_T<POA>;
 
 #endif /* end #if !defined */
 
