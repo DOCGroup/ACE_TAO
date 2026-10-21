@@ -6,9 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Strategy_Complete::~TAO_LF_Strategy_Complete ()
-{
-}
+TAO_LF_Strategy_Complete::~TAO_LF_Strategy_Complete () = default;
 
 void
 TAO_LF_Strategy_Complete::set_upcall_thread (TAO_Leader_Follower &lf)

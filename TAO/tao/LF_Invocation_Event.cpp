@@ -3,14 +3,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Invocation_Event::TAO_LF_Invocation_Event ()
-  : TAO_LF_Event ()
-{
-}
+TAO_LF_Invocation_Event::TAO_LF_Invocation_Event () = default;
 
-TAO_LF_Invocation_Event::~TAO_LF_Invocation_Event ()
-{
-}
+TAO_LF_Invocation_Event::~TAO_LF_Invocation_Event () = default;
 
 void
 TAO_LF_Invocation_Event::state_changed_i (LFS_STATE new_state)
