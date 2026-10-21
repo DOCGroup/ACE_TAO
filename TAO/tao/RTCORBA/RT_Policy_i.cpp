@@ -35,12 +35,6 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy 
 {
 }
 
-TAO_PriorityModelPolicy::TAO_PriorityModelPolicy ()
-  : priority_model_ (RTCORBA::SERVER_DECLARED),
-    server_priority_ (0)
-{
-}
-
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::create (const CORBA::Any &)
 {
@@ -207,14 +201,6 @@ TAO_ThreadpoolPolicy::_tao_scope () const
 
 // ****************************************************************
 
-TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy ()
-  : ::CORBA::Object ()
-  , ::CORBA::Policy ()
-  , RTCORBA::PrivateConnectionPolicy ()
-  , ::CORBA::LocalObject ()
-{
-}
-
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
@@ -289,10 +275,6 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TA
   , RTCORBA::PriorityBandedConnectionPolicy ()
   , ::CORBA::LocalObject ()
   , priority_bands_ (rhs.priority_bands_)
-{
-}
-
-TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy ()
 {
 }
 
@@ -469,11 +451,6 @@ TAO_ServerProtocolPolicy::protocols_rep ()
 }
 
 // ****************************************************************
-
-TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy ()
-{
-}
-
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols)
   : ::CORBA::Object ()
@@ -1116,10 +1093,6 @@ TAO_StreamControl_Protocol_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 }
 
 // ****************************************************************
-
-TAO_GIOP_Protocol_Properties::TAO_GIOP_Protocol_Properties ()
-{
-}
 
 CORBA::Boolean
 TAO_GIOP_Protocol_Properties::_tao_encode (TAO_OutputCDR &)
