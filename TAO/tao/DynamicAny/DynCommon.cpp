@@ -345,10 +345,10 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
           throw DynamicAny::DynAny::TypeMismatch ();
         }
 
-      // If the arg is 0 we can't do this kind of type checking,
+      // If the arg is nullptr we can't do this kind of type checking,
       // and the call to _tao_marshal() below will handle the
       // null value correctly.
-      if (value != 0)
+      if (value != nullptr)
         {
           const char *value_id = value->_tao_obv_repository_id ();
           const char *my_id =
@@ -697,7 +697,7 @@ TAO_DynCommon::get_val ()
       CORBA::ValueBase_var retval;
       TAO::Any_Impl *any_impl = this->any_.impl ();
 
-      if (any_impl == 0)
+      if (any_impl == nullptr)
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }
@@ -917,7 +917,7 @@ TAO_DynCommon::get_abstract ()
       CORBA::AbstractBase_var retval;
       TAO::Any_Impl *any_impl = this->any_.impl ();
 
-      if (any_impl == 0)
+      if (any_impl == nullptr)
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }

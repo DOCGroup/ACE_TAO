@@ -258,7 +258,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
   TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
 
-  if (rhs_n == 0)
+  if (rhs_n == nullptr)
     {
       return false;
     }

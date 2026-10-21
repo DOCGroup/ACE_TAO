@@ -42,7 +42,7 @@ class TAO_DynamicAny_Export TAO_DynEnum_i
 {
 public:
   /// Constructor.
-  TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynEnum_i () = default;

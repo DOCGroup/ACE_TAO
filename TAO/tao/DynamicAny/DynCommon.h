@@ -32,7 +32,7 @@ class TAO_DynamicAny_Export TAO_DynCommon
 {
 public:
   /// Constructor.
-  TAO_DynCommon (CORBA::Boolean allow_truncation);
+  explicit TAO_DynCommon (CORBA::Boolean allow_truncation);
 
   /// Destructor.
   ~TAO_DynCommon () override = default;

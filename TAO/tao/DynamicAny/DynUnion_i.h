@@ -40,7 +40,7 @@ class TAO_DynamicAny_Export TAO_DynUnion_i
 {
 public:
   /// Constructor.
-  TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynUnion_i () = default;

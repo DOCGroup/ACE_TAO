@@ -41,7 +41,7 @@ class TAO_DynamicAny_Export TAO_DynSequence_i
 {
 public:
   /// Constructor.
-  TAO_DynSequence_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynSequence_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynSequence_i () = default;
