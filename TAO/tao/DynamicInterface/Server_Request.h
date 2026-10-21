@@ -131,28 +131,28 @@ namespace CORBA
 
   private:
     /// If zero then the NVList is evaluated ASAP.
-    bool lazy_evaluation_;
+    bool lazy_evaluation_ {};
 
     /// Context associated with this request.
-    CORBA::Context_ptr ctx_;
+    CORBA::Context_ptr ctx_ {};
 
     /// Incoming parameters.
-    CORBA::NVList_ptr params_;
+    CORBA::NVList_ptr params_ {};
 
     /// Return value.
-    CORBA::Any_ptr retval_;
+    CORBA::Any_ptr retval_ {};
 
     /// Any exception which might be raised.
-    CORBA::Any_ptr exception_;
+    CORBA::Any_ptr exception_ {};
 
     /// Reference counting.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
 
     /// Request from the ORB.
     TAO_ServerRequest &orb_server_request_;
 
     /// Have we sent a user exception obtained from a gateway?
-    bool sent_gateway_exception_;
+    bool sent_gateway_exception_ {};
   };
 } // End CORBA namespace
 

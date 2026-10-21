@@ -58,13 +58,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     result_ (CORBA::NamedValue::_duplicate (result)),
     flags_ (flags),
     // env_ (env),
-    exceptions_ (CORBA::ExceptionList::_duplicate (exceptions)),
-    contexts_ (0),
-    ctx_ (CORBA::Context::_nil ()),
-    refcount_ (1),
-    lazy_evaluation_ (false),
-    response_received_ (false),
-    byte_order_ (TAO_ENCAP_BYTE_ORDER)
+    exceptions_ (CORBA::ExceptionList::_duplicate (exceptions))
 {
   if (this->exceptions_.in () == nullptr)
     {
@@ -82,14 +76,8 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
   : target_ (CORBA::Object::_duplicate (obj)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     opname_ (CORBA::string_dup (op)),
-    flags_ (0),
-    // env_ (env),
-    contexts_ (0),
-    ctx_ (CORBA::Context::_nil ()),
-    refcount_ (1),
-    lazy_evaluation_ (false),
-    response_received_ (false),
-    byte_order_ (TAO_ENCAP_BYTE_ORDER)
+    flags_ (0)
+    // env_ (env)
 {
   CORBA::ExceptionList *tmp = nullptr;
   ACE_NEW (tmp,

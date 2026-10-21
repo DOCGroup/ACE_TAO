@@ -37,14 +37,7 @@ CORBA::ServerRequest::_decr_refcount ()
 }
 
 CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
-  : lazy_evaluation_ (false),
-    ctx_ (CORBA::Context::_nil ()),
-    params_ (CORBA::NVList::_nil ()),
-    retval_ (nullptr),
-    exception_ (nullptr),
-    refcount_ (1),
-    orb_server_request_ (orb_server_request),
-    sent_gateway_exception_ (false)
+  : orb_server_request_ (orb_server_request)
 {
   this->orb_server_request_.is_dsi ();
 }

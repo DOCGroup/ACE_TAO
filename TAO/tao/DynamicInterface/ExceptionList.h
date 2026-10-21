@@ -53,7 +53,7 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ExceptionList ();
+    ExceptionList () = default;
 
     /// Constructor - initialize given a length and an array of
     /// TypeCodes.
@@ -104,7 +104,7 @@ namespace CORBA
     ExceptionList &operator= (ExceptionList &&) = delete;
 
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
 
     /// Internal list of typecodes.
     ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
