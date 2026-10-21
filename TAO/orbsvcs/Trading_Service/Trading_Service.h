@@ -34,7 +34,7 @@ class Trading_Shutdown : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Trading_Shutdown (Trading_Service & trader);
+  explicit Trading_Shutdown (Trading_Service &trader);
 
   Trading_Shutdown (Trading_Shutdown const &) = delete;
   Trading_Shutdown (Trading_Shutdown &&) = delete;

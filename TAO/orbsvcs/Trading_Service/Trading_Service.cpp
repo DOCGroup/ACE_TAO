@@ -2,7 +2,7 @@
 #include "ace/Arg_Shifter.h"
 #include "Trading_Service.h"
 
-Trading_Shutdown::Trading_Shutdown (Trading_Service & trader)
+Trading_Shutdown::Trading_Shutdown (Trading_Service &trader)
   : trader_ (trader)
 {
   if (this->shutdown_.register_handler (SIGINT,
