@@ -429,7 +429,7 @@ namespace CORBA
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    virtual ~TypeCode () = default;
+    virtual ~TypeCode ();
 
     /**
      * @name @c TypeCode Template Methods

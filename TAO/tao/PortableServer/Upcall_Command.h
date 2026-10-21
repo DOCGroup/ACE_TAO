@@ -41,7 +41,7 @@ namespace TAO
   {
   public:
     /// Destructor.
-    virtual ~Upcall_Command () = default;
+    virtual ~Upcall_Command ();
 
     /// Execute the upcall.
     virtual void execute () = 0;

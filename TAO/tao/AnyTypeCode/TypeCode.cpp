@@ -14,6 +14,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+CORBA::TypeCode::~TypeCode () = default;
+
 bool
 CORBA::TypeCode::tao_marshal_kind (TAO_OutputCDR & cdr) const
 {

@@ -123,7 +123,7 @@ public:
   virtual int bind (char const *opname,
                     TAO::Operation_Skeletons const skel_ptr) = 0;
 
-  virtual ~TAO_Operation_Table () = default;
+  virtual ~TAO_Operation_Table ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
