@@ -408,7 +408,7 @@ public:
   public:
     using iterator = poa_name_iterator;
 
-    iteratable_poa_name (const poa_name &folded_name);
+    explicit iteratable_poa_name (const poa_name &folded_name);
 
     iterator begin () const;
     iterator end () const;

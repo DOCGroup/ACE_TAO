@@ -2561,7 +2561,7 @@ TAO_Root_POA::_get_orb ()
   return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }
 
-// Initialize instance_ to 0, since this is what we test for in the call
+// Initialize instance_ to null, since this is what we test for in the call
 // to instance ().  Note that this does not require a constructor call, so
 // it is always initialized by the time that instance () can be called.
 TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = nullptr;
