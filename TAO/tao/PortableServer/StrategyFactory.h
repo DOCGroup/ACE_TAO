@@ -31,7 +31,7 @@ namespace TAO
       : public ACE_Service_Object
     {
     public:
-      virtual ~StrategyFactory ();
+      virtual ~StrategyFactory () = default;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */
