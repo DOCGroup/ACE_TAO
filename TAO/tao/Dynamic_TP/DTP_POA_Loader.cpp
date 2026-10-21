@@ -15,6 +15,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_POA_Loader::~TAO_DTP_POA_Loader () = default;
+
 TAO_DTP_POA_Loader::TAO_DTP_POA_Loader () = default;
 
 int

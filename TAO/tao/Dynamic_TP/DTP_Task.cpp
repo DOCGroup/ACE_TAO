@@ -12,6 +12,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_Task::~TAO_DTP_Task () = default;
+
 TAO_DTP_Task::TAO_DTP_Task ()
   : aw_lock_ (),
     queue_lock_ (),

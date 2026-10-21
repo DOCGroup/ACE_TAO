@@ -15,6 +15,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_POA_Strategy::~TAO_DTP_POA_Strategy () = default;
+
 
 TAO_DTP_POA_Strategy::CustomRequestOutcome
 TAO_DTP_POA_Strategy::custom_synch_request(

@@ -14,6 +14,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_ORB_Loader::~TAO_DTP_ORB_Loader () = default;
+
 TAO_DTP_ORB_Loader::TAO_DTP_ORB_Loader () = default;
 
 int

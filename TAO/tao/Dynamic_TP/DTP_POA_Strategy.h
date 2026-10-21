@@ -71,7 +71,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
                               bool     serialize_servants = true);
 
   /// Virtual Destructor.
-  ~TAO_DTP_POA_Strategy() override = default;
+  ~TAO_DTP_POA_Strategy () override;
 
   /// Turn on/off serialization of servants.
   void set_servant_serialization(bool serialize_servants);

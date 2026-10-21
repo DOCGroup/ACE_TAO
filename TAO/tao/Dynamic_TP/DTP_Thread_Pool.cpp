@@ -19,6 +19,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool () = default;
+
 TAO_DTP_New_Leader_Generator::TAO_DTP_New_Leader_Generator (
   TAO_DTP_Thread_Pool &p)
   : pool_ (p)

@@ -149,7 +149,7 @@ public:
                        TAO_DTP_Definition &definition);
 
   /// Destructor.
-  ~TAO_DTP_Thread_Pool () = default;
+  ~TAO_DTP_Thread_Pool ();
 
   /// Open the pool.
   void open ();
