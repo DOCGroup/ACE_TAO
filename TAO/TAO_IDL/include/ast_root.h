@@ -74,18 +74,18 @@ class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 public:
   AST_Root (UTL_ScopedName *n);
 
-  virtual ~AST_Root ();
+  ~AST_Root () override;
 
-  virtual unsigned long nmembers ();
+  unsigned long nmembers () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   // Final cleanup.
   void fini ();
