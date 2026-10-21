@@ -54,7 +54,7 @@ public:
                         TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_SHMIOP_Transport () override = default;
+  ~TAO_SHMIOP_Transport () override;
 
 protected:
   /**

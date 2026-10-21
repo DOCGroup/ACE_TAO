@@ -21,6 +21,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_SCIOP_Transport::~TAO_SCIOP_Transport () = default;
+
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SCIOP_PROFILE,

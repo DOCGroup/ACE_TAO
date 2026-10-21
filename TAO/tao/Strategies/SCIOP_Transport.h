@@ -56,7 +56,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~TAO_SCIOP_Transport () override = default;
+  ~TAO_SCIOP_Transport () override;
 
   /** @name Overridden Template Methods
    *

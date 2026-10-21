@@ -68,7 +68,7 @@ public:
                        CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_SHMIOP_Endpoint () override = default;
+  ~TAO_SHMIOP_Endpoint () override;
 
   /**
    * @name TAO_Endpoint Methods
