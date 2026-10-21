@@ -13,6 +13,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 std::atomic<long> TAO_RTScheduler_Current::guid_counter;
 
+TAO_RTScheduler_Current::~TAO_RTScheduler_Current () = default;
+
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const
 {
@@ -285,6 +287,8 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
 
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ());
 }
+
+TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i () = default;
 
 void
 TAO_RTScheduler_Current_i::begin_scheduling_segment(
