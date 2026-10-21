@@ -396,8 +396,6 @@ TAO_DTP_Thread_Pool::open ()
   // Nothing to do for now
 }
 
-TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool () = default;
-
 void
 TAO_DTP_Thread_Pool::shutting_down ()
 {

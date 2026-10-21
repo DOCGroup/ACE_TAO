@@ -66,7 +66,7 @@ public:
   TAO_DTP_Task();
 
   /// Virtual Destructor.
-  ~TAO_DTP_Task() override;
+  ~TAO_DTP_Task() override = default;
 
   struct Open_Args {
     TAO_DTP_Definition task_thread_config;

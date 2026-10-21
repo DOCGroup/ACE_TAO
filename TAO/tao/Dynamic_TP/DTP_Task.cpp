@@ -21,8 +21,6 @@ TAO_DTP_Task::TAO_DTP_Task ()
 {
 }
 
-TAO_DTP_Task::~TAO_DTP_Task () = default;
-
 bool
 TAO_DTP_Task::add_request (TAO::CSD::TP_Request* request)
 {

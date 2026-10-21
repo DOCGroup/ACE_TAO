@@ -18,8 +18,6 @@ TAO_DTP_Config_Registry_Installer::TAO_DTP_Config_Registry_Installer ()
 
 TAO_DTP_Config_Registry::TAO_DTP_Config_Registry () = default;
 
-TAO_DTP_Config_Registry::~TAO_DTP_Config_Registry () = default;
-
 int
 TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
 {
@@ -50,8 +48,6 @@ TAO_DTP_Config_Registry::rebind (const ACE_CString& name,
 //-------------------------------------------------------------------------
 
 TAO_DTP_Config::TAO_DTP_Config () = default;
-
-TAO_DTP_Config::~TAO_DTP_Config () = default;
 
 int
 TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
