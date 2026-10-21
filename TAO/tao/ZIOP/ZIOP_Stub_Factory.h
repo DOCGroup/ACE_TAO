@@ -46,7 +46,7 @@ class TAO_ZIOP_Export TAO_ZIOP_Stub_Factory : public TAO_Stub_Factory
 public:
   // -- Ctor/Dtor --
   TAO_ZIOP_Stub_Factory () = default;
-  ~TAO_ZIOP_Stub_Factory () override;
+  ~TAO_ZIOP_Stub_Factory () override = default;
 
   /// Creates a Stub Object.
   TAO_Stub *create_stub (const char *repository_id,

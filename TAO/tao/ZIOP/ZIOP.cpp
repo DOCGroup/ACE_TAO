@@ -16,8 +16,6 @@ TAO_ZIOP_Loader::TAO_ZIOP_Loader ()
 {
 }
 
-TAO_ZIOP_Loader::~TAO_ZIOP_Loader () = default;
-
 int
 TAO_ZIOP_Loader::init (int, ACE_TCHAR* [])
 {
