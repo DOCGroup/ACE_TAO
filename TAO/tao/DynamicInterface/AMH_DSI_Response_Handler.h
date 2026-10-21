@@ -144,7 +144,7 @@ public:
   using _var_type = TAO_AMH_DSI_Exception_Holder_var;
   TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
-  ~TAO_AMH_DSI_Exception_Holder () override = default;
+  ~TAO_AMH_DSI_Exception_Holder () override;
   ::CORBA::ValueBase *_copy_value () override;
 
   static TAO_AMH_DSI_Exception_Holder* _downcast (CORBA::ValueBase*);
