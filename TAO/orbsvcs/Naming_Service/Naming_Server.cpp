@@ -10,14 +10,14 @@
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {
 public:
-  Naming_Svc_Shutdown (TAO_Naming_Service & ns);
+  explicit Naming_Svc_Shutdown (TAO_Naming_Service &ns);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
-  TAO_Naming_Service& ns_;
+  TAO_Naming_Service &ns_;
 };
 
-Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_Naming_Service & ns)
+Naming_Svc_Shutdown::Naming_Svc_Shutdown (TAO_Naming_Service &ns)
   : ns_(ns)
 {
 }
@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
   // Stuff to insure that we're gracefully shut down...
   Naming_Svc_Shutdown killer (naming_service);
-  Service_Shutdown kill_contractor(killer);
+  Service_Shutdown kill_contractor (killer);
 
   if (naming_service.init (argc, argv) == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -52,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     {
       naming_service.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("NamingService");
       return 1;
