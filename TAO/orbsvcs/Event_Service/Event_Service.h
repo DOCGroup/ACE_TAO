@@ -58,10 +58,10 @@ private:
 
 private:
   /// The Scheduler implementation.
-  POA_RtecScheduler::Scheduler *sched_impl_;
+  POA_RtecScheduler::Scheduler *sched_impl_ {};
 
   /// The Event Channel implementation.
-  POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
+  POA_RtecEventChannelAdmin::EventChannel *ec_impl_ {};
 
   /// The name we use to bind with the NameService
   ACE_CString service_name_;
@@ -76,16 +76,16 @@ private:
   ACE_CString object_id_;
 
   /// Should we use a global scheduler or a local one or none?
-  Sched_type_t scheduler_type_;
+  Sched_type_t scheduler_type_ {ES_SCHED_NONE};
 
   /// A reference to the ORB, to shut it down properly.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Use BiDirectional GIOP
-  bool use_bidir_giop_;
+  bool use_bidir_giop_ {};
 
   /// Should we bind to the naming service
-  bool bind_to_naming_service_;
+  bool bind_to_naming_service_ {true};
 };
 
 #include /**/ "ace/post.h"
