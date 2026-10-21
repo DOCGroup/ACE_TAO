@@ -50,7 +50,7 @@ class TAO_RTCORBA_Export TAO_Continuous_Priority_Mapping
 {
 public:
   /// Constructor.
-  TAO_Continuous_Priority_Mapping (int policy = ACE_SCHED_OTHER);
+  explicit TAO_Continuous_Priority_Mapping (int policy = ACE_SCHED_OTHER);
 
   /// Destructor.
   ~TAO_Continuous_Priority_Mapping () override = default;

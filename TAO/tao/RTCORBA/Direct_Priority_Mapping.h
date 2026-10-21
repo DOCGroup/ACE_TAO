@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_Direct_Priority_Mapping : public TAO_Priority_Mapping
 {
 public:
-  TAO_Direct_Priority_Mapping (long);
+  explicit TAO_Direct_Priority_Mapping (long);
 
   /// The destructor
   ~TAO_Direct_Priority_Mapping () override = default;
