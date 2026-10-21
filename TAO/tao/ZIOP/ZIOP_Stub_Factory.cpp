@@ -11,6 +11,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_ZIOP_Stub_Factory::~TAO_ZIOP_Stub_Factory () = default;
+
 TAO_Stub *
 TAO_ZIOP_Stub_Factory::create_stub (const char *repository_id,
                                   const TAO_MProfile &profiles,

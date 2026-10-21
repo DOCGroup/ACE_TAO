@@ -43,7 +43,7 @@ public:
   TAO_ZIOP_Loader () = default;
 
   /// Destructor
-  ~TAO_ZIOP_Loader () override = default;
+  ~TAO_ZIOP_Loader () override;
 
   bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core) override;
 
