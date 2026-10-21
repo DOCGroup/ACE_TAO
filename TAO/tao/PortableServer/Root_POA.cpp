@@ -394,7 +394,7 @@ TAO_Root_POA::complete_destruction_i ()
               this->ort_adapter_factory_->destroy (ort_adapter);
             }
 
-          this->ort_adapter_ = 0;
+          this->ort_adapter_ = nullptr;
         }
     }
 }
