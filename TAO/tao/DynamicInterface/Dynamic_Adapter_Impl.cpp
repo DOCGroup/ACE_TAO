@@ -8,8 +8,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl () = default;
 
-TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl () = default;
-
 void
 TAO_Dynamic_Adapter_Impl::create_request (
     CORBA::Object_ptr obj,

@@ -144,7 +144,7 @@ public:
   using _var_type = TAO_AMH_DSI_Exception_Holder_var;
   TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
-  ~TAO_AMH_DSI_Exception_Holder () override;
+  ~TAO_AMH_DSI_Exception_Holder () override = default;
   ::CORBA::ValueBase *_copy_value () override;
 
   static TAO_AMH_DSI_Exception_Holder* _downcast (CORBA::ValueBase*);
@@ -208,7 +208,7 @@ public:
   using _var_type = TAO_AMH_DSI_Response_Handler_var;
 
   TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
-  ~TAO_AMH_DSI_Response_Handler () override;
+  ~TAO_AMH_DSI_Response_Handler () override = default;
 
   virtual void invoke_reply (CORBA::NVList_ptr args,
                              CORBA::NamedValue_ptr result);
