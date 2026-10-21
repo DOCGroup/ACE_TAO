@@ -41,7 +41,7 @@ public:
   TAO_IORManip_Filter ();
 
   /// Destructor.
-  virtual ~TAO_IORManip_Filter ();
+  virtual ~TAO_IORManip_Filter () = default;
 
   /// Perform filtering using the profile passed in as a guide.
   /// If no profile is provided, filter using the profile_matches() method.

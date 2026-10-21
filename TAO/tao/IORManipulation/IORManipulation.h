@@ -77,7 +77,7 @@ public:
 
 protected:
   /// Destructor
-  ~TAO_IOR_Manipulation_impl () override;
+  ~TAO_IOR_Manipulation_impl () override = default;
 
 private:
   TAO_IOR_Manipulation_impl (TAO_IOR_Manipulation_impl const &) = delete;

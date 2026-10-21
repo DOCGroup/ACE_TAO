@@ -9,8 +9,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_IORManip_Filter::TAO_IORManip_Filter () = default;
 
 
-TAO_IORManip_Filter::~TAO_IORManip_Filter () = default;
-
 
 CORBA::Object_ptr
 TAO_IORManip_Filter::sanitize_profiles (CORBA::Object_ptr object,

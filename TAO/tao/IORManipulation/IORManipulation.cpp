@@ -13,8 +13,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IOR_Manipulation_impl::TAO_IOR_Manipulation_impl () = default;
 
-TAO_IOR_Manipulation_impl::~TAO_IOR_Manipulation_impl () = default;
-
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors)
