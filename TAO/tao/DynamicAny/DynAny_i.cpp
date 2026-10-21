@@ -15,6 +15,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DynAny_i::~TAO_DynAny_i () = default;
+
 TAO_DynAny_i::TAO_DynAny_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
 {

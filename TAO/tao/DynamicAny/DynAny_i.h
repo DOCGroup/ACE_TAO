@@ -43,7 +43,7 @@ public:
   explicit TAO_DynAny_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynAny_i () = default;
+  ~TAO_DynAny_i ();
 
   /// Initialize using just a TypeCode
   void init (CORBA::TypeCode_ptr tc);
