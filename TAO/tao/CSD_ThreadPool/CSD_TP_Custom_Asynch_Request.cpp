@@ -6,6 +6,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::CSD::TP_Custom_Asynch_Request::~TP_Custom_Asynch_Request () = default;
+
 
 void
 TAO::CSD::TP_Custom_Asynch_Request::dispatch_i()

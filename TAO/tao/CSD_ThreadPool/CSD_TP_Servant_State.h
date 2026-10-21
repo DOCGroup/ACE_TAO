@@ -61,7 +61,7 @@ namespace TAO
       TP_Servant_State() = default;
 
       /// Virtual Destructor.
-      virtual ~TP_Servant_State() = default;
+      virtual ~TP_Servant_State();
 
       /// Accessor for the servant busy flag.
       bool busy_flag() const;

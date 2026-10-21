@@ -60,7 +60,7 @@ namespace TAO
                            bool serialize_servants = true);
 
       /// Virtual Destructor.
-      ~TP_Strategy() override = default;
+      ~TP_Strategy() override;
 
       /// Set the number of threads in the pool (must be > 0).
       void set_num_threads(Thread_Counter num_threads);

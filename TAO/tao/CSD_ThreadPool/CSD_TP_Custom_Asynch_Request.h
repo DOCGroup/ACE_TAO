@@ -49,7 +49,7 @@ namespace TAO
                                TP_Servant_State*            servant_state);
 
       /// Virtual Destructor.
-      ~TP_Custom_Asynch_Request() override = default;
+      ~TP_Custom_Asynch_Request() override;
 
     protected:
       /// Dispatch the request to the servant.
