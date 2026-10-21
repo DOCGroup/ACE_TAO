@@ -20,14 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Descriptor::TAO_Codeset_Descriptor ()
-  :ncs_ (0),
-   max_bytes_ (1),
-   num_translators_ (0),
-   trans_base_(nullptr)
-{
-}
-
 TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
 {
   Translator_Node *temp = trans_base_;
