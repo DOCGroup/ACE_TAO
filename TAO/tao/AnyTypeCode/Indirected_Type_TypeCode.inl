@@ -7,8 +7,6 @@ TAO::TypeCode::Indirected_Type::Indirected_Type (
   char const * id)
   : ::CORBA::TypeCode (kind)
   , id_ (id)
-  , recursive_tc_ (nullptr)
-  , refcount_ (1)
 {
   // CORBA::tk_except is not allowed in the recursive TypeCode case.
   // ACE_ASSERT (kind != CORBA::tk_except);
@@ -19,8 +17,6 @@ TAO::TypeCode::Indirected_Type::Indirected_Type (
   char const * id)
   : ::CORBA::TypeCode (CORBA::TAO_TC_KIND_COUNT)
   , id_ (id)
-  , recursive_tc_ (nullptr)
-  , refcount_ (1)
 {
   // CORBA::tk_except is not allowed in the recursive TypeCode case.
   // ACE_ASSERT (kind != CORBA::tk_except);

@@ -123,13 +123,13 @@ namespace TAO
       CORBA::String_var id_;
 
       /// Reference of recursive typecode instance.
-      CORBA::TypeCode_ptr recursive_tc_;
+      CORBA::TypeCode_ptr recursive_tc_ {};
 
       /// Lock
       TAO_SYNCH_MUTEX mutex_;
 
       /// Reference counter
-      unsigned long refcount_;
+      unsigned long refcount_ {1};
 
       //@}
     };

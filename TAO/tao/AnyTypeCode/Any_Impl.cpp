@@ -18,7 +18,6 @@ TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
   : value_destructor_ (destructor)
   , type_ (CORBA::TypeCode::_duplicate (tc))
   , encoded_ (encoded)
-  , refcount_ (1)
 {
 }
 
