@@ -20,6 +20,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_ORBInitInfo::~TAO_ORBInitInfo () = default;
+
 // Traits specializations for TAO_ORBInitInfo.
 
 TAO_ORBInitInfo_ptr
