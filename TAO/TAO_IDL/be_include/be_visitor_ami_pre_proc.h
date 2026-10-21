@@ -34,8 +34,8 @@ private:
   enum class Operation_Kind
   {
     NORMAL,
-    GET_OPERATION,
-    SET_OPERATION
+    GET,
+    SET
   };
 
 public:

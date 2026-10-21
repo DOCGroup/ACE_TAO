@@ -619,13 +619,13 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 
           this->create_raise_operation (op,
                                         excep_holder,
-                                        Operation_Kind::GET_OPERATION);
+                                        Operation_Kind::GET);
 
           if (!attribute->readonly ())
             {
               this->create_raise_operation (op,
                                             excep_holder,
-                                            Operation_Kind::SET_OPERATION);
+                                            Operation_Kind::SET);
             }
         }
       else if (nt == AST_Decl::NT_op)
@@ -665,11 +665,11 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   ACE_CString new_local_name ("raise_");
 
-  if (operation_kind == Operation_Kind::SET_OPERATION)
+  if (operation_kind == Operation_Kind::SET)
     {
       new_local_name += "set_";
     }
-  else if (operation_kind == Operation_Kind::GET_OPERATION)
+  else if (operation_kind == Operation_Kind::GET)
     {
       new_local_name += "get_";
     }
