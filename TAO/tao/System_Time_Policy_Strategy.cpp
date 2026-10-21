@@ -7,6 +7,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Time_Policy_Strategy::~TAO_Time_Policy_Strategy () = default;
+
 ACE_Time_Policy_T<ACE_System_Time_Policy>  TAO_System_Time_Policy_Strategy::time_policy_;
 
 TAO_System_Time_Policy_Strategy::~TAO_System_Time_Policy_Strategy () = default;

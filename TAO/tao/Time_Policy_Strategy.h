@@ -40,7 +40,7 @@ class TAO_Export TAO_Time_Policy_Strategy
   : public ACE_Service_Object
 {
 public:
-  ~TAO_Time_Policy_Strategy () override = default;
+  ~TAO_Time_Policy_Strategy () override;
 
   virtual ACE_Timer_Queue * create_timer_queue () = 0;
 
