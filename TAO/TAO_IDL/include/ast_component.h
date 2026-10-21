@@ -56,7 +56,7 @@ public:
   // The port i is inserted after port ix, if
   // ix is not null.
   int be_add_uses (AST_Uses *i,
-                   AST_Uses *ix = 0);
+                   AST_Uses *ix = nullptr);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);

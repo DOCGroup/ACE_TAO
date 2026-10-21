@@ -83,7 +83,7 @@ public:
   static AST_Decl::NodeType const NT;
 
   // Constructor.
-  AST_Module (UTL_ScopedName *n, AST_Module *prev = 0);
+  AST_Module (UTL_ScopedName *n, AST_Module *prev = nullptr);
 
   // Destructor.
   virtual ~AST_Module ();
@@ -102,7 +102,7 @@ public:
   // The interface i is inserted after interface ix, if
   // ix is not null.
   int be_add_interface (AST_Interface *i,
-                        AST_Interface *ix = 0);
+                        AST_Interface *ix = nullptr);
 
   // Allows adding a valuetype at a later point.
   int be_add_valuetype (AST_ValueType *v);
@@ -110,7 +110,7 @@ public:
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.
   virtual bool referenced (AST_Decl *e,
-                           Identifier *id = 0);
+                           Identifier *id = nullptr);
 
   // Accessor to this module's previous opening.
   AST_Module *previous_opening ();

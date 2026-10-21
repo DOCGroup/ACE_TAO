@@ -438,14 +438,14 @@ public:
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_error (const char *reason, AST_Decl *node = 0);
+  void misc_error (const char *reason, AST_Decl *node = nullptr);
 
   /**
    * Report a warning for a specific situation
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_warning (const char *reason, AST_Decl *node = 0);
+  void misc_warning (const char *reason, AST_Decl *node = nullptr);
 
   /**
    * Report that an invalid annotation parameter was passed
