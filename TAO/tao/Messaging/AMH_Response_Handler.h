@@ -66,7 +66,7 @@ class TAO_Messaging_Export TAO_AMH_Response_Handler
 {
 public:
   /// Constructor
-  TAO_AMH_Response_Handler ();
+  TAO_AMH_Response_Handler () = default;
 
   /// Destructor
   /**

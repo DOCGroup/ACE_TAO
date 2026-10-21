@@ -14,8 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_AMH_Response_Handler::TAO_AMH_Response_Handler () = default;
-
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
 {
   this->transport_->remove_reference ();

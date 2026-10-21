@@ -29,7 +29,7 @@ class TAO_Messaging_Export TAO_Messaging_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_Messaging_Loader ();
+  TAO_Messaging_Loader () = default;
 
   /// Destructor.
   ~TAO_Messaging_Loader () override = default;

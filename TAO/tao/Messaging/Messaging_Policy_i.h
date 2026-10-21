@@ -39,7 +39,7 @@ class TAO_RelativeRoundtripTimeoutPolicy
 {
 public:
   /// Constructor.
-  TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
+  explicit TAO_RelativeRoundtripTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
   /// Copy constructor.
   TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
@@ -98,7 +98,7 @@ class TAO_Messaging_Export TAO_Sync_Scope_Policy
 {
 public:
   /// Constructor.
-  TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
+  explicit TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
 
   /// Copy constructor.
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);

@@ -44,7 +44,7 @@ class TAO_Buffering_Constraint_Policy
 {
 public:
   /// Constructor.
-  TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint);
+  explicit TAO_Buffering_Constraint_Policy (TAO::BufferingConstraint const &buffering_constraint);
 
   /// Copy constructor.
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);

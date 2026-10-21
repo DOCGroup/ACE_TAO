@@ -8,8 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Messaging_Loader::TAO_Messaging_Loader () = default;
-
 int
 TAO_Messaging_Loader::init (int, ACE_TCHAR* [])
 {

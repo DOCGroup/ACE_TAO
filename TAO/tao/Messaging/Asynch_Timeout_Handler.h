@@ -40,7 +40,7 @@ class TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
 public:
-  TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
+  explicit TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
 
   ~TAO_Asynch_Timeout_Handler () override = default;
 

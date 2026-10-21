@@ -45,7 +45,7 @@ namespace TAO
       public virtual ::CORBA::DefaultValueRefCountBase
   {
   public:
-    ExceptionHolder ();
+    ExceptionHolder () = default;
 
     ExceptionHolder (
       ::CORBA::Boolean is_system_exception,

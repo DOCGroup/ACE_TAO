@@ -11,8 +11,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ExceptionHolder::ExceptionHolder () = default;
-
   ExceptionHolder::ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
       ::CORBA::Boolean byte_order,
