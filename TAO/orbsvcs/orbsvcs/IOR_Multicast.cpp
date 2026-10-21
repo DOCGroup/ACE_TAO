@@ -13,6 +13,8 @@ TAO_IOR_Multicast::get_handle () const
   return this->mcast_dgram_.get_handle ();
 }
 
+TAO_IOR_Multicast::TAO_IOR_Multicast () = default;
+
 TAO_IOR_Multicast::TAO_IOR_Multicast (char const *ior,
                                       u_short port,
                                       char const *mcast_addr,
