@@ -5,13 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Framework_Loader::TAO_CSD_Framework_Loader ()
-  : initialized_ (false)
-{
-}
-
 TAO_CSD_Framework_Loader::~TAO_CSD_Framework_Loader () = default;
-
 
 int
 TAO_CSD_Framework_Loader::static_init ()

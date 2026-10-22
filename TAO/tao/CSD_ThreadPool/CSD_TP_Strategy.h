@@ -56,8 +56,8 @@ namespace TAO
     {
     public:
       /// Constructor.
-      TP_Strategy(Thread_Counter  num_threads = 1,
-                  bool     serialize_servants = true);
+      explicit TP_Strategy(Thread_Counter num_threads = 1,
+                           bool serialize_servants = true);
 
       /// Virtual Destructor.
       ~TP_Strategy() override;

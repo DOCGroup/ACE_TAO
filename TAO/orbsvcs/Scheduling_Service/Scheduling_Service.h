@@ -8,7 +8,8 @@
  *  @author   Chris Gill (cdgill@cs.wustl.edu) Based on the original
  *  Scheduling Service program by David Levine (levine@cs.wustl.edu) and
  *  Carlos O'Ryan (coryan@cs.wustl.edu)
- *  @author  and on the Naming Service program implementation by Marina   Spivak (marina@cs.wustl.edu) and Nagarajan Surendran   (naga@cs.wustl.edu)
+ *  @author  and on the Naming Service program implementation by Marina Spivak
+ *  (marina@cs.wustl.edu) and Nagarajan Surendran (naga@cs.wustl.edu)
  */
 //=============================================================================
 
@@ -71,7 +72,7 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// Scheduler instance.
-  POA_RtecScheduler::Scheduler * scheduler_impl_;
+  POA_RtecScheduler::Scheduler *scheduler_impl_ {};
 
   /// Name of the IOR output file.
   ACE_CString ior_file_name_;
@@ -80,13 +81,13 @@ private:
   ACE_CString pid_file_name_;
 
   /// Name used to register the service.
-  ACE_CString service_name_;
+  ACE_CString service_name_ {"ScheduleService"};
 
   /// Type of scheduler with which to instantiate the service.
-  Scheduler_Type scheduler_type_;
+  Scheduler_Type scheduler_type_ {CONFIG};
 
   /// A reference to the ORB, to shut it down properly.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* TAO_SCHEDULING_SERVICE_H */

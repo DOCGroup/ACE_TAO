@@ -422,7 +422,7 @@ namespace CORBA
 
   protected:
     /// Constructor.
-    TypeCode (CORBA::TCKind kind);
+    explicit TypeCode (CORBA::TCKind kind);
 
     /// Destructor.
     /**

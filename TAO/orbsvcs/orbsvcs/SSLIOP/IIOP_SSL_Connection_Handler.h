@@ -94,7 +94,7 @@ namespace TAO
      * It is stored here until the invocation completes, after which
      * it placed back into TSS.
      */
-    TAO::SSLIOP::Current_Impl *previous_current_impl_;
+    TAO::SSLIOP::Current_Impl *previous_current_impl_ {};
 
     /// Reference to the SSLIOP::Current object.
     TAO::SSLIOP::Current_ptr current_;

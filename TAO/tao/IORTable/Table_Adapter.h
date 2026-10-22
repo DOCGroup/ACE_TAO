@@ -68,7 +68,7 @@ protected:
   /// The table implementation
   TAO_IOR_Table_Impl_var root_;
 
-  bool closed_;
+  bool closed_ {true};
   TAO_SYNCH_MUTEX thread_lock_;
   ACE_Lock *lock_;
 
@@ -85,7 +85,7 @@ class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
   /// Constructor
-  TAO_Table_Adapter_Factory ();
+  TAO_Table_Adapter_Factory () = default;
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.

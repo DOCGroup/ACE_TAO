@@ -40,7 +40,7 @@ class TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
 public:
-  TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
+  explicit TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
 
   ~TAO_Asynch_Timeout_Handler () override = default;
 
@@ -58,10 +58,10 @@ public:
 
 public:
   /// The transport mux strategy dispatching the reply
-  TAO_Transport_Mux_Strategy *tms_;
+  TAO_Transport_Mux_Strategy *tms_ {};
 
   /// Remember the ID of the request.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Our reactor
   ACE_Reactor *reactor_;

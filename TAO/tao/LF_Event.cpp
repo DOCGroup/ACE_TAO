@@ -16,9 +16,7 @@ TAO_LF_Event::TAO_LF_Event ()
 {
 }
 
-TAO_LF_Event::~TAO_LF_Event ()
-{
-}
+TAO_LF_Event::~TAO_LF_Event () = default;
 
 void
 TAO_LF_Event::state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf)

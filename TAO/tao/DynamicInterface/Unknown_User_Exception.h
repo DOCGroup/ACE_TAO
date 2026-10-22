@@ -80,7 +80,7 @@ namespace CORBA
 
   private:
     /// Holder for the actual exception.
-    CORBA::Any *exception_;
+    CORBA::Any *exception_ {};
   };
 
   // The CORBA::UnknownUserException TypeCode.

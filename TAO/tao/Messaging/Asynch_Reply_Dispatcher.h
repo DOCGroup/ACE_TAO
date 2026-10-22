@@ -68,7 +68,7 @@ private:
   Messaging::ReplyHandler_var reply_handler_;
 
   /// Timeout Handler in case of AMI timeouts
-  TAO_Asynch_Timeout_Handler *timeout_handler_;
+  TAO_Asynch_Timeout_Handler *timeout_handler_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

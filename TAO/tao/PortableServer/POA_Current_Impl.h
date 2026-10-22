@@ -166,7 +166,7 @@ namespace TAO
       PortableServer::Servant servant_ {};
 
       /// The priority for the current upcall.
-      CORBA::Short priority_;
+      CORBA::Short priority_ {TAO_INVALID_PRIORITY};
 
       /// Current previous from <this>.
       POA_Current_Impl *previous_current_impl_ {};

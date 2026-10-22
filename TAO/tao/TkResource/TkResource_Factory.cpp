@@ -6,10 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  TkResource_Factory::TkResource_Factory ()
-    : reactor_impl_ (nullptr)
-  {
-  }
+  TkResource_Factory::TkResource_Factory () = default;
 
   ACE_Reactor_Impl *
   TkResource_Factory::reactor_impl ()

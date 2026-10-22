@@ -15,9 +15,7 @@ TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)
 {
 }
 
-TAO_Acceptor::~TAO_Acceptor ()
-{
-}
+TAO_Acceptor::~TAO_Acceptor () = default;
 
 int
 TAO_Acceptor::handle_accept_error (ACE_Event_Handler* base_acceptor)

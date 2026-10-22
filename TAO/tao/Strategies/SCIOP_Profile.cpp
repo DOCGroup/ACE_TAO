@@ -13,8 +13,6 @@
 
 static const char prefix_[] = "sciop";
 
-const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char
@@ -32,8 +30,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (const ACE_INET_Addr &addr,
                  object_key,
                  version),
     endpoint_ (addr,
-               orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    count_ (1)
+               orb_core->orb_params ()->use_dotted_decimal_addresses ())
 {
 }
 
@@ -47,8 +44,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (const char* host,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (host, port, addr),
-    count_ (1)
+    endpoint_ (host, port, addr)
 {
 }
 
@@ -56,8 +52,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SCIOP_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_SCIOP_MAJOR, TAO_DEF_SCIOP_MINOR)),
-    endpoint_ (),
-    count_ (1)
+    endpoint_ ()
 {
 }
 

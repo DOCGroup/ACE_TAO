@@ -8,13 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()
-{
-}
-
-
-TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory() = default;
-
+TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory () = default;
 
 int
 TAO::CSD::TP_Strategy_Factory::init (int argc,
@@ -22,7 +16,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 {
   ACE_TRACE ("TAO::CSD::TP_Strategy_Factory::init");
 
-  static int initialized = 0;
+  static int initialized {};
 
   // Only allow initialization once.
   if (initialized)
@@ -77,7 +71,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             }
           else
             {
-              *sep = 0;
+              *sep = '\0';
               poa_name = ACE_TEXT_ALWAYS_CHAR (argv[curarg]);
               num_threads = ACE_OS::strtol (sep + 1, &sep, 10);
               if (*sep != 0 && *sep != ':')

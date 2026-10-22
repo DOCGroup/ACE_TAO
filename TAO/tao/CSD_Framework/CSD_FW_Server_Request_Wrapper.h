@@ -58,7 +58,7 @@ namespace TAO
     {
     public:
       /// Constructor.
-      FW_Server_Request_Wrapper(TAO_ServerRequest& server_request);
+      explicit FW_Server_Request_Wrapper(TAO_ServerRequest& server_request);
 
       /// Destructor.
       ~FW_Server_Request_Wrapper();
@@ -109,10 +109,10 @@ namespace TAO
 
       /// A flag that indicates that the TAO_ServerRequest object
       /// is already cloned.
-      bool is_clone_;
+      bool is_clone_ {};
 
       /// Pointer to the underlying TAO_ServerRequest object.
-      TAO_ServerRequest* request_;
+      TAO_ServerRequest* request_ {};
     };
   }
 }

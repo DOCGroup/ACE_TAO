@@ -6,14 +6,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping () = default;
+
 TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
   :  policy_ (policy)
    , min_ (ACE_Sched_Params::priority_min (this->policy_))
    , max_ (ACE_Sched_Params::priority_max (this->policy_))
 {
 }
-
-TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping () = default;
 
 CORBA::Boolean
 TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,

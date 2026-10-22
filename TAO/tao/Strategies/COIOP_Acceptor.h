@@ -108,7 +108,7 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

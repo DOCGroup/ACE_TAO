@@ -12,17 +12,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::Any_Impl::~Any_Impl () = default;
+
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc,
                          bool encoded)
   : value_destructor_ (destructor)
   , type_ (CORBA::TypeCode::_duplicate (tc))
   , encoded_ (encoded)
-  , refcount_ (1)
-{
-}
-
-TAO::Any_Impl::~Any_Impl ()
 {
 }
 

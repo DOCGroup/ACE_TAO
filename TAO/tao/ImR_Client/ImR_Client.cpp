@@ -213,10 +213,7 @@ namespace TAO
 {
   namespace ImR_Client
   {
-    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl ()
-     : server_object_ (nullptr)
-    {
-    }
+    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl () = default;
 
     void
     ImR_Client_Adapter_Impl::imr_notify_startup (TAO_Root_POA* poa )

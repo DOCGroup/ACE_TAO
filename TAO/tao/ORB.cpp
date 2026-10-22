@@ -53,9 +53,7 @@ CORBA::ORB::InvalidName::InvalidName ()
 }
 
 // Destructor - all members are of self managing types.
-CORBA::ORB::InvalidName::~InvalidName ()
-{
-}
+CORBA::ORB::InvalidName::~InvalidName () = default;
 
 // Copy constructor.
 CORBA::ORB::InvalidName::InvalidName (const CORBA::ORB::InvalidName &exc)

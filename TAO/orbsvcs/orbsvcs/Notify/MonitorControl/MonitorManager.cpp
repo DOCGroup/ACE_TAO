@@ -328,7 +328,7 @@ TAO_MonitorManager::ORBTask::svc ()
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_MonitorManager TAO_MonitorAndControl;
+using TAO_MonitorAndControl = TAO_MonitorManager;
 ACE_STATIC_SVC_DEFINE (TAO_MonitorAndControl,
                        ACE_TEXT (TAO_NOTIFY_MONITOR_CONTROL_MANAGER),
                        ACE_Service_Type::SERVICE_OBJECT,

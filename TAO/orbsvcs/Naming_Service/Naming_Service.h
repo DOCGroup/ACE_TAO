@@ -64,17 +64,17 @@ protected:
   int parse_args (int & argc, ACE_TCHAR * argv[]);
 
   /// The ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Naming Server instance.
   TAO_Naming_Server my_naming_server_;
 
   /// After how long the server should stop listening to requests (in
   /// seconds).
-  long time_;
+  long time_ {};
 
   /// Number of threads for running the ORB. Default is 1
-  int num_threads_;
+  int num_threads_ {1};
 };
 
 #include /**/ "ace/post.h"

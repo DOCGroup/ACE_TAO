@@ -1,19 +1,8 @@
 // -*- C++ -*-
 #include "tao/PortableServer/Operation_Table.h"
-#include "tao/ORB.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Operation_Table::~TAO_Operation_Table ()
-{
-}
-
-/**************************************************************/
-TAO::Operation_Skeletons::Operation_Skeletons ()
-  : skel_ptr (nullptr)
-  , thruPOA_skel_ptr (nullptr)
-  , direct_skel_ptr (nullptr)
-{
-}
+TAO_Operation_Table::~TAO_Operation_Table () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

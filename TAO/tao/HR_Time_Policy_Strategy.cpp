@@ -9,9 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Time_Policy_T<ACE_HR_Time_Policy>  TAO_HR_Time_Policy_Strategy::time_policy_;
 
-TAO_HR_Time_Policy_Strategy::~TAO_HR_Time_Policy_Strategy ()
-{
-}
+TAO_HR_Time_Policy_Strategy::~TAO_HR_Time_Policy_Strategy () = default;
 
 ACE_Timer_Queue * TAO_HR_Time_Policy_Strategy::create_timer_queue ()
 {

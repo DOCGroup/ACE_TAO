@@ -39,13 +39,13 @@ class TAO_Export TAO_System_Time_Policy_Strategy
   : public TAO_Time_Policy_Strategy
 {
 public:
-  virtual ~TAO_System_Time_Policy_Strategy ();
+  ~TAO_System_Time_Policy_Strategy () override;
 
-  virtual ACE_Timer_Queue * create_timer_queue ();
+  ACE_Timer_Queue * create_timer_queue () override;
 
-  virtual void destroy_timer_queue (ACE_Timer_Queue *tmq);
+  void destroy_timer_queue (ACE_Timer_Queue *tmq) override;
 
-  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy ();
+  ACE_Dynamic_Time_Policy_Base * get_time_policy () override;
 
 private:
   static ACE_Time_Policy_T<ACE_System_Time_Policy>  time_policy_;

@@ -6,8 +6,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_Pull_Handler::TAO_LB_Pull_Handler ()
-  : monitor_map_ (nullptr),
-    load_manager_ (nullptr)
 {
 }
 

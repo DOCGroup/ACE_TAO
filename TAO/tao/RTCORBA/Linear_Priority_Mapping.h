@@ -44,7 +44,7 @@ class TAO_RTCORBA_Export TAO_Linear_Priority_Mapping : public TAO_Priority_Mappi
 {
 public:
   /// Default constructor
-  TAO_Linear_Priority_Mapping (long policy);
+  explicit TAO_Linear_Priority_Mapping (long policy);
 
   /// The destructor
   ~TAO_Linear_Priority_Mapping () override;

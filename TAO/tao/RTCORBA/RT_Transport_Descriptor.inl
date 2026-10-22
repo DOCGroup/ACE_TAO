@@ -5,7 +5,6 @@ ACE_INLINE
 TAO_RT_Transport_Descriptor::TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
                                                           CORBA::Boolean flag)
   : TAO_Transport_Descriptor_Interface (endpoint, flag)
-  , property_list_ (nullptr)
   , delete_properties_ (flag)
 {
 }

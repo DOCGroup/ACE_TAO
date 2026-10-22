@@ -13,6 +13,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::Unknown_IDL_Type::~Unknown_IDL_Type () = default;
+
 TAO::Unknown_IDL_Type::LOCK const
 TAO::Unknown_IDL_Type::lock_i ()
 {
@@ -22,9 +24,9 @@ TAO::Unknown_IDL_Type::lock_i ()
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
                                          TAO_InputCDR &cdr)
-  : TAO::Any_Impl (0, tc, true)
+  : TAO::Any_Impl (nullptr, tc, true)
   , lock_ (lock_i ())
-  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get ())
+  , cdr_ (nullptr, lock_.get ())
 {
   try
     {
@@ -43,13 +45,9 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
 }
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc)
-  : TAO::Any_Impl (0, tc, true)
+  : TAO::Any_Impl (nullptr, tc, true)
   , lock_ (lock_i ())
-  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get ())
-{
-}
-
-TAO::Unknown_IDL_Type::~Unknown_IDL_Type ()
+  , cdr_ (nullptr, lock_.get ())
 {
 }
 

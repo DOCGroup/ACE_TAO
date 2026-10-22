@@ -35,7 +35,7 @@ class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
   /// Constructor
-  TAO_RT_Protocols_Hooks ();
+  TAO_RT_Protocols_Hooks () = default;
 
   /// Destructor
   ~TAO_RT_Protocols_Hooks () override;
@@ -136,7 +136,7 @@ protected:
                                        RTCORBA::ProtocolProperties_ptr protocol_properties);
 
 protected:
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
   // Save a reference to the priority mapping manager.
   TAO_Priority_Mapping_Manager_var mapping_manager_;

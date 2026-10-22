@@ -74,7 +74,7 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// File where the IOR of the Clerk object is stored.
-  FILE * ior_output_file_;
+  FILE *ior_output_file_ {};
 
   /// Initialises the name client and registers the <TimeService> Clerk
   /// object with it.
@@ -108,7 +108,7 @@ private:
   TAO_Naming_Client naming_client_;
 
   /// Implementation of the <TimeService> Clerk object.
-  TAO_Time_Service_Clerk * time_service_clerk_impl_;
+  TAO_Time_Service_Clerk *time_service_clerk_impl_ {};
 
   /// Reference of the time service clerk.
   CosTime::TimeService_var time_service_clerk_;
@@ -121,19 +121,19 @@ private:
 
   /// Clerk seeks time periodically after this interval in secs. from the
   /// servers in the network.
-  int timer_value_ ;
+  int timer_value_ {3};
 
   /// Continues the precision of timer_value_ in microseconds.
-  int timer_value_usecs_;
+  int timer_value_usecs_ {};
 
   //  IR_Helper *ir_helper_;
   // Helper class for using the IR.
 
   /// The unbounded set of server IORS.
-  IORS server_;
+  IORS server_ {Clerk_i::DEFAULT_SERVER_COUNT};
 
   /// Read IORs from a file.
-  int ior_fp_;
+  bool ior_file_provided_ {};
 };
 
 #endif /* CLERK_I_H */

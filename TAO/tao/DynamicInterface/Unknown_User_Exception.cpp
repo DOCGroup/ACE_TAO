@@ -14,8 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::UnknownUserException::UnknownUserException ()
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
-                          "UnknownUserException"),
-    exception_ (nullptr)
+                          "UnknownUserException")
 {
 }
 

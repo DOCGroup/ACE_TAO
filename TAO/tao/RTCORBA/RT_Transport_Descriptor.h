@@ -60,7 +60,7 @@ public:
 
 private:
   /// Stack of properties.
-  TAO_RT_Transport_Descriptor_Property *property_list_;
+  TAO_RT_Transport_Descriptor_Property *property_list_ {};
 
   /// Flag to delete properties.
   int delete_properties_;

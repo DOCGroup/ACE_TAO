@@ -19,8 +19,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadAverage::TAO_LB_LoadAverage (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
-    load_map_ (0),
-    lock_ (0),
     properties_ (),
     tolerance_ (TAO_LB::LA_DEFAULT_TOLERANCE),
     dampening_ (TAO_LB::LA_DEFAULT_DAMPENING),

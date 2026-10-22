@@ -252,7 +252,7 @@ protected:
   CORBA::String_var extension_;
 
   /// Lock.
-  ACE_Lock *lock_;
+  ACE_Lock *lock_ {};
 
   // Define a POA for each IR Object type, and a corresponding
   // default servant.

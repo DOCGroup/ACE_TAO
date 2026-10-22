@@ -16,8 +16,7 @@ TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
                      operation,
                      servant,
                      servant_state,
-                     server_request),
-    exception_(0)
+                     server_request)
 {
 }
 

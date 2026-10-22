@@ -5,7 +5,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory ()
-  : ft_endpoint_selector_ (nullptr)
 {
 }
 

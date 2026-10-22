@@ -1,8 +1,6 @@
 #include "tao/Null_Fragmentation_Strategy.h"
 
-TAO_Null_Fragmentation_Strategy::~TAO_Null_Fragmentation_Strategy ()
-{
-}
+TAO_Null_Fragmentation_Strategy::~TAO_Null_Fragmentation_Strategy () = default;
 
 int
 TAO_Null_Fragmentation_Strategy::fragment (TAO_OutputCDR &,

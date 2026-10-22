@@ -9,10 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Object_Adapter_Factory::TAO_CSD_Object_Adapter_Factory ()
-{
-}
-
 TAO_Adapter*
 TAO_CSD_Object_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
@@ -41,7 +37,7 @@ TAO_CSD_Object_Adapter_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
   if (repo != nullptr)
-    repo->init(0,0);
+    repo->init(0, nullptr);
 
   return 0;
 }

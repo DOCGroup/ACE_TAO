@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Task::~TP_Task() = default;
+TAO::CSD::TP_Task::~TP_Task () = default;
 
 
 bool

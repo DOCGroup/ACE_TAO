@@ -192,7 +192,7 @@ namespace TAO
     /**
      * A file to which the factory's IOR should be written.
      */
-    const ACE_TCHAR * ior_output_file_;
+    ACE_TCHAR const * ior_output_file_ {};
 
     /**
      * A name to be used to register the factory with the name service.

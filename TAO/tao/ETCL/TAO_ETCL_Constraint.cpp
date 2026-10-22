@@ -18,14 +18,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   TAO_ETCL_Literal_Constraint const& lit)
-  : ETCL_Literal_Constraint (),
-    any_ (nullptr)
+  : ETCL_Literal_Constraint ()
 {
   this->copy (lit);
 }
 
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
-  : any_ (nullptr)
 {
   CORBA::Any& any_ref = *any;
   CORBA::TypeCode_var type = any_ref.type ();

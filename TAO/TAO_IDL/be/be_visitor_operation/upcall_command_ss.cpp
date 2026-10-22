@@ -218,8 +218,8 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
 
   unsigned int index = 1;
   const char *op_name = node->flat_name ();
-  static const char *excep_suffix = "_excep";
-  static const size_t excep_suffix_len = ACE_OS::strlen (excep_suffix);
+  static constexpr char const *excep_suffix = "_excep";
+  static size_t const excep_suffix_len = ACE_OS::strlen (excep_suffix);
   const char *substr = ACE_OS::strstr (op_name, excep_suffix);
   bool excep_method = substr && substr + excep_suffix_len == op_name + ACE_OS::strlen (op_name);
 
@@ -239,8 +239,8 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
 
           if (value_type != nullptr)
             {
-              static const char *excepholder = "ExceptionHolder";
-              static const size_t excepholder_len =
+              static constexpr char const *excepholder = "ExceptionHolder";
+              static size_t const excepholder_len =
                                          ACE_OS::strlen (excepholder);
               const char *param_name = value_type->full_name ();
               excep_method =

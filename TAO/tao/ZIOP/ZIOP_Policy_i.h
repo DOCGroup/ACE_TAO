@@ -42,7 +42,7 @@ public:
   CompressorIdLevelListPolicy ();
 
   /// Constructor.
-  CompressorIdLevelListPolicy (::Compression::CompressorIdLevelList const& val);
+  explicit CompressorIdLevelListPolicy (::Compression::CompressorIdLevelList const &val);
 
   /// Copy constructor.
   CompressorIdLevelListPolicy (CompressorIdLevelListPolicy const& rhs);
@@ -84,10 +84,10 @@ class CompressionEnablingPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  CompressionEnablingPolicy ();
+  CompressionEnablingPolicy () = default;
 
   /// Constructor.
-  CompressionEnablingPolicy (::CORBA::Boolean val);
+  explicit CompressionEnablingPolicy (::CORBA::Boolean val);
 
   /// Copy constructor.
   CompressionEnablingPolicy (CompressionEnablingPolicy const& rhs);
@@ -117,7 +117,7 @@ public:
 
 private:
   /// The attribute
-  ::CORBA::Boolean value_;
+  ::CORBA::Boolean value_ {};
 };
 
 /**
@@ -131,7 +131,7 @@ class CompressionLowValuePolicy
 {
 public:
   /// Constructor.
-  CompressionLowValuePolicy (::CORBA::ULong val);
+  explicit CompressionLowValuePolicy (::CORBA::ULong val);
 
   /// Copy constructor.
   CompressionLowValuePolicy (CompressionLowValuePolicy const& rhs);
@@ -166,7 +166,7 @@ class CompressionMinRatioPolicy
 {
 public:
   /// Constructor.
-  CompressionMinRatioPolicy (::Compression::CompressionRatio val);
+  explicit CompressionMinRatioPolicy (::Compression::CompressionRatio val);
 
   /// Copy constructor.
   CompressionMinRatioPolicy (CompressionMinRatioPolicy const& rhs);

@@ -12,8 +12,6 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   MemberArrayType const & fields,
   CORBA::ULong nfields)
   : TypeCodeBase (kind, id, name, fields, nfields)
-  , lock_ ()
-  , recursion_start_offset_ (0)
   , data_initialized_(true)
 {
   // ACE_ASSERT (kind != CORBA::tk_except);
@@ -36,8 +34,6 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                   cases,
                   ncases,
                   default_index)
-  , lock_ ()
-  , recursion_start_offset_ (0)
   , data_initialized_(true)
 {
 }
@@ -61,8 +57,6 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
                   concrete_base,
                   fields,
                   nfields)
-  , lock_ ()
-  , recursion_start_offset_ (0)
   , data_initialized_(true)
 {
 }
@@ -75,8 +69,6 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   CORBA::TCKind kind,
   char const * id)
   : TypeCodeBase (kind, id)
-  , lock_ ()
-  , recursion_start_offset_ (0)
   , data_initialized_(false)
 {
 //   ACE_ASSERT (kind == CORBA::tk_struct

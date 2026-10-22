@@ -83,16 +83,16 @@ public:
   static AST_Decl::NodeType const NT;
 
   // Constructor.
-  AST_Module (UTL_ScopedName *n, AST_Module *prev = 0);
+  AST_Module (UTL_ScopedName *n, AST_Module *prev = nullptr);
 
   // Destructor.
-  virtual ~AST_Module ();
+  ~AST_Module () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Involved in OBV_ namespace generation.
   void set_has_nested_valuetype ();
@@ -102,15 +102,15 @@ public:
   // The interface i is inserted after interface ix, if
   // ix is not null.
   int be_add_interface (AST_Interface *i,
-                        AST_Interface *ix = 0);
+                        AST_Interface *ix = nullptr);
 
   // Allows adding a valuetype at a later point.
   int be_add_valuetype (AST_ValueType *v);
 
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.
-  virtual bool referenced (AST_Decl *e,
-                           Identifier *id = 0);
+  bool referenced (AST_Decl *e,
+                   Identifier *id = nullptr) override;
 
   // Accessor to this module's previous opening.
   AST_Module *previous_opening ();
@@ -127,7 +127,7 @@ public:
                                AST_Decl *&final_parent_decl);
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Accessors for the member.
   AST_Template_Module_Inst *from_inst () const;
@@ -138,14 +138,14 @@ public:
   void from_ref (AST_Template_Module_Ref *node);
 
   // Override that looks in previous openings.
-  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
+  AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+                                    AST_Decl *&final_parent_decl) override;
 
   // We actually want to match the LAST module found in
   // the scope being searched not the FIRST one in the
   // list.
-  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
+  AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only) override;
 
   // Scope Management Protocol
 
@@ -235,7 +235,7 @@ public:
   // multiple IDL files.
   void reset_last_in_same_parent_scope ();
 
-  virtual bool annotatable () const { return true; }
+  bool annotatable () const override { return true; }
 
 private: // Data
   bool pd_has_nested_valuetype_;

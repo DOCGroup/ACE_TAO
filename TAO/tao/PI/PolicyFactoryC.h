@@ -61,19 +61,11 @@ namespace PortableInterceptor
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY__VAR_OUT_CH_
 
   class PolicyFactory;
-  typedef PolicyFactory *PolicyFactory_ptr;
+  using PolicyFactory_ptr = PolicyFactory *;
 
-  typedef
-    TAO_Objref_Var_T<
-        PolicyFactory
-      >
-    PolicyFactory_var;
+  using PolicyFactory_var = TAO_Objref_Var_T<PolicyFactory>;
 
-  typedef
-    TAO_Objref_Out_T<
-        PolicyFactory
-      >
-    PolicyFactory_out;
+  using PolicyFactory_out = TAO_Objref_Out_T<PolicyFactory>;
 
 #endif /* end #if !defined */
 
@@ -87,8 +79,8 @@ namespace PortableInterceptor
     : public virtual ::CORBA::Object
   {
   public:
-    typedef PolicyFactory_ptr _ptr_type;
-    typedef PolicyFactory_var _var_type;
+    using _ptr_type = PolicyFactory_ptr;
+    using _var_type = PolicyFactory_var;
 
     // The static operations.
     static PolicyFactory_ptr _duplicate (PolicyFactory_ptr obj);

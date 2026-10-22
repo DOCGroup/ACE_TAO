@@ -217,7 +217,7 @@ public:
   // module necessitates a call to this from
   // be_generator::create_module().
   void add_to_scope (AST_Decl *e,
-                     AST_Decl *ex = 0);
+                     AST_Decl *ex = nullptr);
 
   // Add to name_referenced identifier list. It's public because
   // a union needs to add its enum discriminator label names.
@@ -254,14 +254,14 @@ protected:
   void add_to_referenced (AST_Decl *e,
                           bool recursive,
                           Identifier *id,
-                          AST_Decl *ex = 0);
+                          AST_Decl *ex = nullptr);
 
   // Add to local types. Node represents a local manifest type.
   void add_to_local_types (AST_Decl *e);
 
   // Has this node been referenced here already?
   virtual bool referenced (AST_Decl *e,
-                               Identifier *id = 0);
+                               Identifier *id = nullptr);
 
   // Look up a scoped name in the inherited list.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *,

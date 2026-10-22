@@ -50,7 +50,7 @@ namespace TAO
     TkResource_Factory &operator= (TkResource_Factory &&) = delete;
 
     /// Reactor created by this factory.
-    ACE_TkReactor *reactor_impl_;
+    ACE_TkReactor *reactor_impl_ {};
   };
 }
 

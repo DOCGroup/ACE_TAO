@@ -79,7 +79,7 @@ namespace TAO
     TAO_Root_POA *const tao_poa =
       dynamic_cast<TAO_Root_POA*> (this->poa_.in());
 
-    if (!tao_poa)
+    if (tao_poa == nullptr)
       throw ::CORBA::INTERNAL ();
 
     return tao_poa->invoke_key_to_object ();

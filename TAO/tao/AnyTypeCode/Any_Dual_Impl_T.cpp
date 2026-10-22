@@ -48,13 +48,8 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
 
 template<typename T>
 TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (CORBA::TypeCode_ptr tc)
-  : Any_Impl (0,
+  : Any_Impl (nullptr,
               tc)
-{
-}
-
-template<typename T>
-TAO::Any_Dual_Impl_T<T>::~Any_Dual_Impl_T ()
 {
 }
 
@@ -95,7 +90,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
                                   const T *& _tao_elem)
 {
-  _tao_elem = 0;
+  _tao_elem = nullptr;
 
   try
     {
@@ -209,7 +204,7 @@ TAO::Any_Dual_Impl_T<T>::free_value ()
     }
 
   ::CORBA::release (this->type_);
-  this->value_ = 0;
+  this->value_ = nullptr;
 }
 
 template<typename T>

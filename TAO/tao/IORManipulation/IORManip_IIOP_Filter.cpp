@@ -10,12 +10,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter ()
-{
-}
-
-
 TAO_IORManip_IIOP_Filter::~TAO_IORManip_IIOP_Filter () = default;
+
+TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter () = default;
+
 
 
 CORBA::Boolean
@@ -202,7 +200,7 @@ TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
                           tagged_component.component_data.length ());
 
       // Extract the Byte Order.
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
         return 0;
 

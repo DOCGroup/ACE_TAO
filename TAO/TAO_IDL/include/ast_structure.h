@@ -93,7 +93,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Structure ();
+  ~AST_Structure () override;
 
   // This serves for both structs and unions.
   static void fwd_redefinition_helper (AST_Structure *&i,
@@ -112,44 +112,44 @@ public:
                      ACE_CDR::ULong slot) const;
   // Get an individual field node.
 
-  virtual bool is_local ();
+  bool is_local () override;
   // Overwrite the is_local method.
 
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
-  virtual int contains_wstring ();
+  int contains_wstring () override;
   // Do we contain a wstring at some nesting level?
 
   // Is this struct or union defined? This predicate returns FALSE when a
   // forward declaration is not defined yet, and TRUE in
   // all other cases.
-  virtual bool is_defined ();
+  bool is_defined () override;
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key () const;
+  bool legal_for_primary_key () const override;
 
   // Accessors for the member.
   AST_StructureFwd *fwd_decl () const;
   void fwd_decl (AST_StructureFwd *node);
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Accessor for the member.
   ACE_Unbounded_Queue<AST_Field *> &fields ();
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool annotatable () const;
+  bool annotatable () const override;
 
   virtual AST_Field *fe_add_field (AST_Field *f);
 
@@ -171,7 +171,7 @@ protected:
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
-  virtual int compute_size_type ();
+  int compute_size_type () override;
   // Compute the size type if it is unknown.
 
   ACE_Unbounded_Queue<AST_Field *> fields_;

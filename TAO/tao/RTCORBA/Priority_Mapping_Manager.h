@@ -44,7 +44,7 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager :
 {
 public:
   /// Constructor.
-  TAO_Priority_Mapping_Manager (RTCORBA::PriorityMapping * mapping);
+  explicit TAO_Priority_Mapping_Manager (RTCORBA::PriorityMapping * mapping);
 
   ///
   void mapping (RTCORBA::PriorityMapping * mapping);

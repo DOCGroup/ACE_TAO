@@ -108,10 +108,10 @@ namespace TAO
       friend class TP_Queue;
 
       /// The previous TP_Request object (in the queue).
-      TP_Request* prev_;
+      TP_Request* prev_ {};
 
       /// The next TP_Request object (in the queue).
-      TP_Request* next_;
+      TP_Request* next_ {};
 
       /// Reference to the servant object.
       PortableServer::ServantBase_var servant_;

@@ -165,7 +165,7 @@ namespace TAO
 
       /// IIOP Endpoints can be strung into a list.  Return the next
       /// endpoint in the list, if any.
-      TAO_SSLIOP_Endpoint *next_;
+      TAO_SSLIOP_Endpoint *next_ {};
 
       /// IIOP counterpart.
       /**

@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Collocated_Asynch_Request::~TP_Collocated_Asynch_Request() = default;
+TAO::CSD::TP_Collocated_Asynch_Request::~TP_Collocated_Asynch_Request () = default;
 
 
 void

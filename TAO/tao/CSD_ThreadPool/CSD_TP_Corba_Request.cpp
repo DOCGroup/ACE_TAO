@@ -6,6 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Corba_Request::~TP_Corba_Request() = default;
+TAO::CSD::TP_Corba_Request::~TP_Corba_Request () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

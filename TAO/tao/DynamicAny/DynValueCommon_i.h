@@ -36,7 +36,7 @@ class TAO_DynamicAny_Export TAO_DynValueCommon_i
 {
 public:
   /// Constructor.
-  TAO_DynValueCommon_i (CORBA::Boolean allow_truncation = true);
+  explicit TAO_DynValueCommon_i (CORBA::Boolean allow_truncation = true);
 
   /// Destructor.
   ~TAO_DynValueCommon_i () = default;
@@ -65,7 +65,7 @@ private:
   virtual void check_typecode (CORBA::TypeCode_ptr tc)=0;
 
 protected:
-  CORBA::Boolean is_null_;
+  CORBA::Boolean is_null_ {true};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -46,7 +46,7 @@ class TAO_Strategies_Export TAO_UIOP_Profile : public TAO_Profile
 {
 public:
   /// The object key delimiter that UIOP uses or expects.
-  static char const object_key_delimiter_;
+  static constexpr char object_key_delimiter_ {'|'};
   char object_key_delimiter () const override;
 
   /// Return the char string prefix.
@@ -67,7 +67,7 @@ public:
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, default.
-  TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
+  explicit TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_UIOP_Profile ();
@@ -118,7 +118,7 @@ private:
   TAO_UIOP_Endpoint endpoint_;
 
   /// Number of endpoints in the list headed by <endpoint_>.
-  CORBA::ULong count_;
+  CORBA::ULong count_ {1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

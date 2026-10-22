@@ -96,12 +96,12 @@ protected:
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
-  TAO_PriorityModelPolicy ();
+  TAO_PriorityModelPolicy () = default;
 
 private:
   /// Attributes.
-  RTCORBA::PriorityModel priority_model_;
-  RTCORBA::Priority server_priority_;
+  RTCORBA::PriorityModel priority_model_ {RTCORBA::SERVER_DECLARED};
+  RTCORBA::Priority server_priority_ {};
 };
 
 //*************************************************************************
@@ -119,7 +119,7 @@ class TAO_RTCORBA_Export TAO_ThreadpoolPolicy
 {
 public:
   /// Constructor.
-  TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
+  explicit TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
 
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
@@ -169,7 +169,7 @@ class TAO_RTCORBA_Export TAO_PrivateConnectionPolicy
 {
 public:
   /// Constructor.
-  TAO_PrivateConnectionPolicy ();
+  TAO_PrivateConnectionPolicy () = default;
 
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
@@ -215,7 +215,7 @@ class TAO_RTCORBA_Export TAO_PriorityBandedConnectionPolicy
 {
 public:
   /// Constructor.
-  TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands);
+  explicit TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands);
 
   /// Copy constructor.
   TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs);
@@ -259,7 +259,7 @@ protected:
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
-  TAO_PriorityBandedConnectionPolicy ();
+  TAO_PriorityBandedConnectionPolicy () = default;
 
 private:
   /// Attribute.
@@ -282,7 +282,7 @@ class TAO_RTCORBA_Export TAO_ServerProtocolPolicy
 {
 public:
   /// Constructor.
-  TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList &protocols);
+  explicit TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
   /// Copy constructor.
   TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs);
@@ -338,7 +338,7 @@ class TAO_RTCORBA_Export TAO_ClientProtocolPolicy
 {
 public:
   /// Constructor.
-  TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols);
+  explicit TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols);
 
   /// Copy constructor.
   TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs);
@@ -384,7 +384,7 @@ protected:
   /// This constructor is used by TAO_RT_PolicyFactory when decoding
   /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
-  TAO_ClientProtocolPolicy ();
+  TAO_ClientProtocolPolicy () = default;
 
 private:
   /// Attribute.
@@ -747,7 +747,7 @@ protected:
   ~TAO_GIOP_Protocol_Properties () override;
 
   friend class TAO_Protocol_Properties_Factory;
-  TAO_GIOP_Protocol_Properties ();
+  TAO_GIOP_Protocol_Properties () = default;
 };
 
 //*************************************************************************
@@ -776,7 +776,7 @@ public:
   static RTCORBA::ProtocolProperties *create_orb_protocol_property (IOP::ProfileId id);
 
 private:
-  TAO_Protocol_Properties_Factory ();
+  TAO_Protocol_Properties_Factory () = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

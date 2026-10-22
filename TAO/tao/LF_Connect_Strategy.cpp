@@ -17,9 +17,7 @@ TAO_LF_Connect_Strategy::TAO_LF_Connect_Strategy (TAO_ORB_Core *orb_core,
 {
 }
 
-TAO_LF_Connect_Strategy::~TAO_LF_Connect_Strategy ()
-{
-}
+TAO_LF_Connect_Strategy::~TAO_LF_Connect_Strategy () = default;
 
 void
 TAO_LF_Connect_Strategy::synch_options (ACE_Time_Value *timeout,

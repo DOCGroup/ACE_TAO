@@ -54,7 +54,7 @@ public:
 private:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
-  TAO_FT_Invocation_Endpoint_Selector *ft_endpoint_selector_;
+  TAO_FT_Invocation_Endpoint_Selector *ft_endpoint_selector_ {};
 
   /// Mutex to prevent multiple initializations
   TAO_SYNCH_MUTEX mutex_;

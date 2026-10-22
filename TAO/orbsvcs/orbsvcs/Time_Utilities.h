@@ -55,10 +55,10 @@ public:
 
   /// @brief Convert relative TimeBase::TimeT to a high-resolution time.
   static void TimeT_to_hrtime (ACE_hrtime_t &lhs,
-                               const TimeBase::TimeT &rhs);
+                               TimeBase::TimeT const &rhs);
 
   /// @brief Convert relative TimeBase::TimeT to a high-resolution time.
-  static ACE_hrtime_t to_hrtime (const TimeBase::TimeT &t);
+  static ACE_hrtime_t to_hrtime (TimeBase::TimeT const &t);
   //@}
 
 
@@ -69,30 +69,30 @@ public:
   // Recall that ACE_Time_Values are <seconds, useconds> pairs.
 
   /// @brief Convert relative ACE_Time_Value to a TimeBase::TimeT.
-  static void Time_Value_to_TimeT (TimeBase::TimeT& lhs,
-                                   const ACE_Time_Value& rhs);
+  static void Time_Value_to_TimeT (TimeBase::TimeT &lhs,
+                                   ACE_Time_Value const &rhs);
 
   /// @brief Convert relative TimeBase::TimeT to a ACE_Time_Value.
-  static void TimeT_to_Time_Value (ACE_Time_Value& lrs,
-                                   const TimeBase::TimeT& rhs);
+  static void TimeT_to_Time_Value (ACE_Time_Value &lrs,
+                                   TimeBase::TimeT const &rhs);
 
   /// @brief Convert relative ACE_Time_Value to a TimeBase::TimeT
-  static TimeBase::TimeT to_TimeT (const ACE_Time_Value& rhs);
+  static TimeBase::TimeT to_TimeT (ACE_Time_Value const &rhs);
 
   /// @brief Convert relative TimeBase::TimeT to a ACE_Time_Value.
   static ACE_Time_Value to_Time_Value (const TimeBase::TimeT &rhs);
 
 
   /// @brief Convert absolute ACE_Time_Value to a TimeBase::TimeT
-  static void Absolute_Time_Value_to_TimeT (TimeBase::TimeT& lhs,
-                                            const ACE_Time_Value& rhs);
+  static void Absolute_Time_Value_to_TimeT (TimeBase::TimeT &lhs,
+                                            ACE_Time_Value const &rhs);
 
   /// @brief Convert absolute TimeBase::TimeT to a ACE_Time_Value
-  static void Absolute_TimeT_to_Time_Value (ACE_Time_Value& lrs,
-                                            const TimeBase::TimeT& rhs);
+  static void Absolute_TimeT_to_Time_Value (ACE_Time_Value &lrs,
+                                            TimeBase::TimeT const &rhs);
 
   /// @brief Convert absolute ACE_Time_Value to a TimeBase::TimeT
-  static TimeBase::TimeT to_Absolute_TimeT (const ACE_Time_Value& rhs);
+  static TimeBase::TimeT to_Absolute_TimeT (ACE_Time_Value const &rhs);
 
   /// @brief Convert absolute TimeBase::TimeT to a ACE_Time_Value.
   static ACE_Time_Value to_Absolute_Time_Value (const TimeBase::TimeT &rhs);

@@ -168,7 +168,7 @@ private:
 protected:
   /// The object that implements the FT_Naming::Replication_Manager
   /// interface.
-  TAO_FT_Naming_Replication_Manager* replicator_;
+  TAO_FT_Naming_Replication_Manager *replicator_ {};
 
   /// The Object Group Manager POA.
   PortableServer::POA_var naming_manager_poa_;

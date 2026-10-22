@@ -49,7 +49,7 @@ namespace TAO
     {
     public:
       /// Default Constructor.
-      TP_Dispatchable_Visitor();
+      TP_Dispatchable_Visitor() = default;
 
       /// Virtual Destructor.
       ~TP_Dispatchable_Visitor() override;

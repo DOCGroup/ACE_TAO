@@ -20,6 +20,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Thread_Lane::~TAO_Thread_Lane () = default;
+
 TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
   TAO_Thread_Lane &lane)
   : lane_ (lane)
@@ -161,7 +163,6 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
   : pool_ (pool),
     id_ (id),
     lane_priority_ (lane_priority),
-    shutdown_ (false),
     static_threads_number_ (static_threads),
     dynamic_threads_number_ (dynamic_threads),
     static_threads_ (*this),
@@ -169,7 +170,6 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
     new_thread_generator_ (*this),
     resources_ (pool.manager ().orb_core (),
                 &new_thread_generator_),
-    native_priority_ (TAO_INVALID_PRIORITY),
     lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time)
 {
@@ -352,8 +352,6 @@ TAO_Thread_Lane::open ()
                    0),
                  CORBA::COMPLETED_NO);
 }
-
-TAO_Thread_Lane::~TAO_Thread_Lane () = default;
 
 void
 TAO_Thread_Lane::finalize ()

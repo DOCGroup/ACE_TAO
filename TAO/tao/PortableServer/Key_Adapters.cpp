@@ -7,11 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator ()
-  : counter_ (0)
-{
-}
-
 int
 TAO_Incremental_Key_Generator::operator() (PortableServer::ObjectId &id)
 {

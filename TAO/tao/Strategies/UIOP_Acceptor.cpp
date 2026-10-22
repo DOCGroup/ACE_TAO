@@ -20,12 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (this),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
-    unlink_on_close_ (true)
+    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)
 {
 }
 
@@ -226,7 +221,7 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   ACE_Auto_String_Free tempname (ACE_OS::tempnam (0, "TAO"));
 
-  if (tempname.get () == 0)
+  if (tempname.get () == nullptr)
     return -1;
 
   return this->open_i (tempname.get (),
@@ -403,7 +398,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
   const size_t len = options.length ();
 
-  static const char option_delimiter = '&';
+  static constexpr char option_delimiter = '&';
 
   // Count the number of options.
 

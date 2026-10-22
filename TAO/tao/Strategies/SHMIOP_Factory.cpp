@@ -16,9 +16,7 @@ static const char prefix_[] = "shmiop";
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory ()
-  : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE),
-    mmap_prefix_ (0),
-    min_bytes_ (10*1024)        // @@ Nanbor, remove this magic number!!
+  : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE)
 {
 }
 

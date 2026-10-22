@@ -41,7 +41,7 @@ class TAO_DynamicAny_Export TAO_DynStruct_i
 {
 public:
   /// Constructor.
-  TAO_DynStruct_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynStruct_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynStruct_i () = default;

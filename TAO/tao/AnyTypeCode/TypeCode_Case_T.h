@@ -95,7 +95,7 @@ namespace TAO
        * Constructor only used in the dynamically constructed @c union
        * @c TypeCode case.
        */
-      Case_T (DiscriminatorType member_label);
+      explicit Case_T (DiscriminatorType member_label);
 
       /**
        * @name @c TAO::TypeCode::Case Methods

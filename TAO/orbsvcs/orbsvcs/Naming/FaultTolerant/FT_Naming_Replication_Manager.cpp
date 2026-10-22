@@ -75,7 +75,6 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Nam
     replica_seq_num_ (0),
     server_ (owner),
     orb_ (),
-    reactor_ (0),
     lock_ (),
     notified_ (false),
     to_send_ (10),
@@ -146,7 +145,7 @@ TAO_FT_Naming_Replication_Manager::peer_available ()
 void
 TAO_FT_Naming_Replication_Manager::stop ()
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return;
     }
@@ -157,7 +156,7 @@ TAO_FT_Naming_Replication_Manager::stop ()
 int
 TAO_FT_Naming_Replication_Manager::svc ()
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return 0;
     }
@@ -247,7 +246,7 @@ void
 TAO_FT_Naming_Replication_Manager::send_objgrp_update (PortableGroup::ObjectGroupId id,
                                    FT_Naming::ChangeType change)
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return;
     }
@@ -296,7 +295,7 @@ void
 TAO_FT_Naming_Replication_Manager::send_context_update (const ACE_CString & name,
                                     FT_Naming::ChangeType change)
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return;
     }
@@ -353,7 +352,7 @@ TAO_FT_Naming_Replication_Manager::send_registration (bool use_combo_refs)
       ORBSVCS_DEBUG((LM_INFO,
         ACE_TEXT("(%P|%t) Registering with peer naming server \n")));
     }
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return;
     }

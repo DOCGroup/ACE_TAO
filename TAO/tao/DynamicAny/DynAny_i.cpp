@@ -15,12 +15,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DynAny_i::~TAO_DynAny_i () = default;
+
 TAO_DynAny_i::TAO_DynAny_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
 {
 }
-
-TAO_DynAny_i::~TAO_DynAny_i () = default;
 
 void
 TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
@@ -260,7 +260,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
   TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
 
-  if (rhs_n == 0)
+  if (rhs_n == nullptr)
     {
       return false;
     }

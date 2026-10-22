@@ -65,9 +65,9 @@ namespace TAO
      * Server side creation, concurrency and accept strategies.
      */
     //@{
-    TAO_IIOP_SSL_CREATION_STRATEGY *creation_strategy_;
-    TAO_IIOP_SSL_CONCURRENCY_STRATEGY *concurrency_strategy_;
-    TAO_IIOP_SSL_ACCEPT_STRATEGY *accept_strategy_;
+    TAO_IIOP_SSL_CREATION_STRATEGY *creation_strategy_ {};
+    TAO_IIOP_SSL_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
+    TAO_IIOP_SSL_ACCEPT_STRATEGY *accept_strategy_ {};
     //@}
   };
 } // End TAO namespace.

@@ -26,11 +26,6 @@ CORBA::remove_ref (CORBA::ValueFactoryBase *val)
 
 // ===========================================================
 
-CORBA::ValueFactoryBase::ValueFactoryBase ()
-  : refcount_ (1)
-{
-}
-
 CORBA::ValueFactoryBase::~ValueFactoryBase () = default;
 
 void

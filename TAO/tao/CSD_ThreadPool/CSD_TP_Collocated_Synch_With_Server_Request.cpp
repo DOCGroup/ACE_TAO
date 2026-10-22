@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Collocated_Synch_With_Server_Request::~TP_Collocated_Synch_With_Server_Request() = default;
+TAO::CSD::TP_Collocated_Synch_With_Server_Request::~TP_Collocated_Synch_With_Server_Request () = default;
 
 
 void

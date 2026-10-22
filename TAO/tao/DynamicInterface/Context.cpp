@@ -75,7 +75,6 @@ CORBA::Context::get_values (char const* /* start_scope */,
 }
 
 CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
-  : refcount_ (1)
 {
   for (CORBA::ULong i=0; i < len; i++)
     {

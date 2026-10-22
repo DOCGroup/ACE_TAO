@@ -16,8 +16,6 @@ static const char the_prefix[] = "niop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO_COIOP_Profile::object_key_delimiter_ = '/';
-
 char
 TAO_COIOP_Profile::object_key_delimiter () const
 {
@@ -32,8 +30,7 @@ TAO_COIOP_Profile::TAO_COIOP_Profile (const ACE_Utils::UUID& uuid,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (uuid),
-    count_ (1)
+    endpoint_ (uuid)
 {
 }
 
@@ -41,8 +38,7 @@ TAO_COIOP_Profile::TAO_COIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_COIOP_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    count_ (1)
+    endpoint_ ()
 {
 }
 

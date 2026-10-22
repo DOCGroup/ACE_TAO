@@ -45,7 +45,7 @@ namespace TAO
     {
     public:
       /// Default Constructor.
-      TP_Servant_State_Map();
+      TP_Servant_State_Map() = default;
 
       /// Destructor.
       ~TP_Servant_State_Map();

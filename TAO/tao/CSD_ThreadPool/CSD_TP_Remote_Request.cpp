@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Remote_Request::~TP_Remote_Request() = default;
+TAO::CSD::TP_Remote_Request::~TP_Remote_Request () = default;
 
 void
 TAO::CSD::TP_Remote_Request::prepare_for_queue_i()

@@ -116,9 +116,7 @@ monotonic_milliseconds ()
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-TAO::Transport::Stats::~Stats ()
-{
-}
+TAO::Transport::Stats::~Stats () = default;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 TAO_Transport::TAO_Transport (CORBA::ULong tag,

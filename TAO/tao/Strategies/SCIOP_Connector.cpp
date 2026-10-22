@@ -22,14 +22,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_SCIOP_Connector::~TAO_SCIOP_Connector () = default;
+
 TAO_SCIOP_Connector::TAO_SCIOP_Connector ()
   : TAO_Connector (TAO_TAG_SCIOP_PROFILE),
     connect_strategy_ (),
     base_connector_ (0)
-{
-}
-
-TAO_SCIOP_Connector::~TAO_SCIOP_Connector ()
 {
 }
 

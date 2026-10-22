@@ -121,20 +121,20 @@ private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
 
   // Acceptor strategies.
-  TAO_UIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_;
+  TAO_UIOP_CREATION_STRATEGY *creation_strategy_ {};
+  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
+  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_ {};
 
   /// The GIOP version for this endpoint
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
   /// Flag that determines whether or not the rendezvous point should
   /// be unlinked on close.  This is really only used when an error
   /// occurs.
-  bool unlink_on_close_;
+  bool unlink_on_close_ {true};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

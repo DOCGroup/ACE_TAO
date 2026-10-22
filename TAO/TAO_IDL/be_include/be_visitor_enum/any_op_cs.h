@@ -29,10 +29,10 @@ public:
   be_visitor_enum_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_enum_any_op_cs ();
+  ~be_visitor_enum_any_op_cs () override;
 
   /// visit enum
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 };
 
 #endif /* _BE_VISITOR_ENUM_ANY_OP_CS_H_ */

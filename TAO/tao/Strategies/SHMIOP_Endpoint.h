@@ -68,7 +68,7 @@ public:
                        CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_SHMIOP_Endpoint ();
+  ~TAO_SHMIOP_Endpoint () override;
 
   /**
    * @name TAO_Endpoint Methods
@@ -122,18 +122,18 @@ private:
   CORBA::String_var host_;
 
   /// TCP port number.
-  CORBA::UShort port_;
+  CORBA::UShort port_ {};
 
   /// Cached instance of <ACE_INET_Addr> for use in making
   /// invocations, etc.
   ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  int object_addr_set_;
+  int object_addr_set_ {};
 
   /// SHMIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_SHMIOP_Endpoint *next_;
+  TAO_SHMIOP_Endpoint *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

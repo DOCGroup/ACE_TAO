@@ -45,7 +45,7 @@ namespace TAO
   class NamedValue_Argument : public RetArgument
   {
   public:
-    NamedValue_Argument (CORBA::NamedValue_ptr);
+    explicit NamedValue_Argument (CORBA::NamedValue_ptr);
 
     CORBA::Boolean demarshal (TAO_InputCDR &) override;
 
@@ -58,7 +58,7 @@ namespace TAO
     int byte_order () const;
 
   private:
-    CORBA::NamedValue_ptr x_;
+    CORBA::NamedValue_ptr x_ {};
 
     /// Byte order that the Request class will use
     int byte_order_ {};
@@ -86,9 +86,9 @@ namespace TAO
     CORBA::NVList_ptr arg () const;
 
   private:
-    CORBA::NVList_ptr x_;
+    CORBA::NVList_ptr x_ {};
 
-    bool lazy_evaluation_;
+    bool lazy_evaluation_ {};
   };
 }
 

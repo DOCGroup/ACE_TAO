@@ -19,14 +19,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_UIOP_Connector::~TAO_UIOP_Connector () = default;
+
 TAO_UIOP_Connector::TAO_UIOP_Connector ()
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
     base_connector_ (0)
-{
-}
-
-TAO_UIOP_Connector::~TAO_UIOP_Connector ()
 {
 }
 

@@ -2,12 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::TP_Dispatchable_Visitor::TP_Dispatchable_Visitor()
-{
-}
-
-
-ACE_INLINE
 void
 TAO::CSD::TP_Dispatchable_Visitor::reset()
 {

@@ -18,7 +18,6 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
     object_addr_ (),
-    next_ (nullptr),
     iiop_endpoint_ (iiop_endp),
     destroy_iiop_endpoint_ (false),
     qop_ (::Security::SecQOPIntegrityAndConfidentiality),

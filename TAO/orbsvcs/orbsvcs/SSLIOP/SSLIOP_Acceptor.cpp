@@ -22,9 +22,6 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                                  bool check_host)
   : TAO::IIOP_SSL_Acceptor (),
     ssl_acceptor_ (this),
-    creation_strategy_ (nullptr),
-    concurrency_strategy_ (nullptr),
-    accept_strategy_ (nullptr),
     timeout_ (timeout),
     check_host_ (check_host)
 {

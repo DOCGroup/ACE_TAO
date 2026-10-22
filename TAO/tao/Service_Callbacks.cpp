@@ -5,9 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Service_Callbacks::~TAO_Service_Callbacks ()
-{
-}
+TAO_Service_Callbacks::~TAO_Service_Callbacks () = default;
 
 CORBA::Boolean
 TAO_Service_Callbacks::select_profile (const TAO_MProfile & /*mprofile*/,

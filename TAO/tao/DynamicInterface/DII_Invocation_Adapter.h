@@ -110,11 +110,11 @@ namespace TAO
         Collocation_Strategy strat) override;
 
   private:
-    CORBA::ExceptionList *exception_list_;
+    CORBA::ExceptionList *exception_list_ {};
 
-    CORBA::Request *request_;
+    CORBA::Request *request_ {};
 
-    TAO::Exception_Data *ex_data_;
+    TAO::Exception_Data *ex_data_ {};
   private:
     DII_Invocation_Adapter () = delete;
     DII_Invocation_Adapter (DII_Invocation_Adapter const &) = delete;
@@ -166,7 +166,7 @@ namespace TAO
     DII_Deferred_Invocation_Adapter (DII_Deferred_Invocation_Adapter &&) = delete;
     DII_Deferred_Invocation_Adapter &operator= (DII_Deferred_Invocation_Adapter &&) = delete;
 
-    CORBA::Request *request_;
+    CORBA::Request *request_ {};
 
     /// Reply dispatcher for the current Invocation.
     /// Use special autopointer like holder to prevent leaking memory from

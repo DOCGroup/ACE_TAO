@@ -44,8 +44,8 @@ namespace TAO
     Any_Dual_Impl_T (_tao_destructor destructor,
                      CORBA::TypeCode_ptr,
                      const T &);
-    Any_Dual_Impl_T (CORBA::TypeCode_ptr);
-    ~Any_Dual_Impl_T () override;
+    explicit Any_Dual_Impl_T (CORBA::TypeCode_ptr);
+    ~Any_Dual_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor,
@@ -70,7 +70,7 @@ namespace TAO
   protected:
     void value (const T &);
 
-    T * value_;
+    T *value_ {};
 
   private:
     static CORBA::Boolean replace (TAO_InputCDR &,

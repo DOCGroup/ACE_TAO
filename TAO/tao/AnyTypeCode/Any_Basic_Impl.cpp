@@ -13,9 +13,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  Any_Basic_Impl::~Any_Basic_Impl () = default;
+
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
                                   void *value)
-    : Any_Impl (0, tc),
+    : Any_Impl (nullptr, tc),
       kind_ (CORBA::tk_null)
   {
     this->kind_ = TAO::unaliased_kind (tc);
@@ -64,10 +66,6 @@ namespace TAO
       default:
         break;
     }
-  }
-
-  Any_Basic_Impl::~Any_Basic_Impl ()
-  {
   }
 
   void

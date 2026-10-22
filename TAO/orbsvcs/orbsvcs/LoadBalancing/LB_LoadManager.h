@@ -315,7 +315,7 @@ private:
   CORBA::ORB_var orb_;
 
   /// Reactor used when pulling loads from registered load monitors.
-  ACE_Reactor * reactor_;
+  ACE_Reactor * reactor_ {};
 
   /// The POA that dispatches requests to the MemberLocator.
   PortableServer::POA_var poa_;

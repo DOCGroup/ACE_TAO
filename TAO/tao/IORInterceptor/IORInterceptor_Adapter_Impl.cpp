@@ -9,8 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORInterceptor_Adapter_Impl::~TAO_IORInterceptor_Adapter_Impl () = default;
-
 void
 TAO_IORInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::IORInterceptor_ptr i)

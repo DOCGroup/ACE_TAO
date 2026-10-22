@@ -11,11 +11,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ZIOP_Loader::TAO_ZIOP_Loader ()
-  : initialized_ (false)
-{
-}
-
 TAO_ZIOP_Loader::~TAO_ZIOP_Loader () = default;
 
 int

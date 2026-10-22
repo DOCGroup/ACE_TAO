@@ -39,7 +39,7 @@ class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   : public TAO_Dynamic_Adapter
 {
 public:
-  TAO_Dynamic_Adapter_Impl ();
+  TAO_Dynamic_Adapter_Impl () = default;
   ~TAO_Dynamic_Adapter_Impl () override;
 
   // CORBA::Object::_create_request and CORBA::Object::_request.

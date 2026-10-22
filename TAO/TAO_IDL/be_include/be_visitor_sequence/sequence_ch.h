@@ -31,10 +31,10 @@ public:
   be_visitor_sequence_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_ch ();
+  ~be_visitor_sequence_ch () override;
 
   /// visit sequence node.
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 
   /// Generate the typedefs for our _var and _out template classes.
   void gen_varout_typedefs (be_sequence *node,

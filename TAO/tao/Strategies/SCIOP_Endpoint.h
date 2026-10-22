@@ -137,24 +137,24 @@ private:
   CORBA::String_var host_;
 
   /// TCP port number.
-  CORBA::UShort port_;
+  CORBA::UShort port_ {683};
 
   /// Cached instance of <ACE_INET_Addr> for use in making
   /// invocations, etc.
   mutable ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  mutable int object_addr_set_;
+  mutable int object_addr_set_ {};
 
   /// Preferred path for this endpoint.
   TAO::IIOP_Endpoint_Info preferred_path_;
 
   /// Is this endpoint created encodable as part of the IOR?
-  bool is_encodable_;
+  bool is_encodable_ {true};
 
   /// SCIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_SCIOP_Endpoint *next_;
+  TAO_SCIOP_Endpoint *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

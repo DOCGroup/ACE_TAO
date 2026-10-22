@@ -82,7 +82,7 @@ namespace TAO
 
     private:
       /// The SSL session state corresponding to the current upcall.
-      SSL *ssl_;
+      SSL *ssl_ {};
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

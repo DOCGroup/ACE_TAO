@@ -48,9 +48,9 @@ namespace TAO
                          CORBA::TypeCode_ptr,
                          const CORBA::SystemException &);
 
-    Any_SystemException (CORBA::TypeCode_ptr);
+    explicit Any_SystemException (CORBA::TypeCode_ptr);
 
-    ~Any_SystemException () override;
+    ~Any_SystemException () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor,
@@ -75,7 +75,7 @@ namespace TAO
     void free_value () override;
 
   protected:
-    CORBA::SystemException *value_;
+    CORBA::SystemException *value_ {};
   };
 }
 

@@ -38,7 +38,7 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
 {
  public:
   /// Constructor.
-  TAO_CSD_Framework_Loader ();
+  TAO_CSD_Framework_Loader () = default;
 
   /// Destructor.
   ~TAO_CSD_Framework_Loader () override;
@@ -56,7 +56,7 @@ private:
   TAO_CSD_Framework_Loader &operator= (TAO_CSD_Framework_Loader &&) = delete;
 
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {};
 };
 
 

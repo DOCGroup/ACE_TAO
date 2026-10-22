@@ -48,7 +48,7 @@ class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {
 public:
   /// Constructor.
-  TAO_Named_RT_Mutex_Manager ();
+  TAO_Named_RT_Mutex_Manager () = default;
 
   /// Destructor.
   ~TAO_Named_RT_Mutex_Manager ();
@@ -260,7 +260,7 @@ protected:
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
 
   /// Thread Pool Manager
-  TAO_Thread_Pool_Manager *tp_manager_;
+  TAO_Thread_Pool_Manager *tp_manager_ {};
 
   /// Dynamic thread lifespan policy
   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan_;

@@ -53,7 +53,7 @@ namespace TAO
     QtResource_Factory &operator= (QtResource_Factory &&) = delete;
 
     /// Reactor created by this factory.
-    ACE_QtReactor *reactor_impl_;
+    ACE_QtReactor *reactor_impl_ {};
 
     /// QApplication running reactor
     QApplication *qapp_;

@@ -77,7 +77,6 @@ TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
 TAO_FT_Naming_Server::TAO_FT_Naming_Server ()
   : TAO_Naming_Server (IOR_ARRAY_SIZE),
     naming_manager_ (),
-    replicator_ (0),
     use_object_group_persistence_ (0),
     server_role_ (STANDALONE),
     ft_endpoint_ (""),
@@ -621,7 +620,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 int
 TAO_FT_Naming_Server::fini ()
 {
-  if (this->replicator_ != 0)
+  if (this->replicator_ != nullptr)
     {
       try
         {
@@ -632,7 +631,7 @@ TAO_FT_Naming_Server::fini ()
           // Ignore
         }
       delete replicator_;
-      replicator_ = 0;
+      replicator_ = nullptr;
     }
   try
     {

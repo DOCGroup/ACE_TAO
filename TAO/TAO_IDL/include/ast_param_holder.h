@@ -12,18 +12,18 @@ public:
   AST_Param_Holder (UTL_ScopedName *parameter_name,
                     FE_Utils::T_Param_Info *info);
 
-  virtual ~AST_Param_Holder ();
+  ~AST_Param_Holder () override;
 
   FE_Utils::T_Param_Info const *info () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 

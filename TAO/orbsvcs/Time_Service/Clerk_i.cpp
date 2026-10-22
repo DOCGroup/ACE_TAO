@@ -11,15 +11,7 @@
 #include "ace/os_include/os_netdb.h"
 
 // Constructor.
-Clerk_i::Clerk_i ()
-  : ior_output_file_ (nullptr),
-    time_service_clerk_impl_ (nullptr),
-    timer_value_ (3),
-    timer_value_usecs_ (0),
-    server_ (Clerk_i::DEFAULT_SERVER_COUNT),
-    ior_fp_ (0)
-{
-}
+Clerk_i::Clerk_i () = default;
 
 // Destructor.
 Clerk_i::~Clerk_i () = default;
@@ -38,7 +30,7 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
                        filename),
                       -1);
   else
-    this->ior_fp_ = 1;
+    this->ior_file_provided_ = true;
 
   ACE_Read_Buffer ior_buffer (f_handle);
 
@@ -48,7 +40,7 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
                       -1);
 
-  int result = 0;
+  int result {};
 
   try
     {
@@ -78,7 +70,7 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
           this->insert_server (server);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT("Exception"));
     }
@@ -97,7 +89,8 @@ Clerk_i::parse_args (int argc,
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dt:u:f:o:"));
 
-  int c, result;
+  int c {};
+  int result {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -216,13 +209,13 @@ Clerk_i::get_first_IOR ()
       this->insert_server (obj.in ());
 
       // Iterate over the server context to get the next N IORs.
-      if (next_n_IORs (iter,
-                       server_context) != 0)
+      if (this->next_n_IORs (iter,
+                              server_context) != 0)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs ")),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT("Exception"));
       return -1;
@@ -267,7 +260,7 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Unexpected exception in next_n_IORs\n"));
@@ -326,7 +319,7 @@ Clerk_i::create_clerk ()
       // Register the clerk implementation with the Interface
       // Repository.  init_IR();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT("Exception"));
       return -1;
@@ -354,7 +347,7 @@ Clerk_i::register_clerk ()
           CosNaming::NamingContext_var clerk_context =
             this->naming_client_->bind_new_context(clerk_context_name);
         }
-      catch (const CosNaming::NamingContext::AlreadyBound& )
+      catch (CosNaming::NamingContext::AlreadyBound const &)
         {
           // OK, naming context already exists.
         }
@@ -376,7 +369,7 @@ Clerk_i::register_clerk ()
       this->naming_client_->rebind (clerk_name,
                                      this->time_service_clerk_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("(%P|%t) Exception from init_naming_service ()\n"));
@@ -394,7 +387,7 @@ Clerk_i::init (int argc,
   try
     {
       // Make a copy of command line parameter.
-      ACE_Argv_Type_Converter command(argc, argv);
+      ACE_Argv_Type_Converter command (argc, argv);
 
       // Set the size of the Server IOR Array.
       this->server_.max_size (10);
@@ -417,19 +410,19 @@ Clerk_i::init (int argc,
       this->orb_ = this->orb_manager_.orb ();
 
       // Parse commandline arguments.
-      if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) !=0 )
+      if (this->parse_args (command.get_argc (), command.get_TCHAR_argv ()) != 0)
         return -1;
 
       // If IOR file has not been specified then try the Naming
       // Service.
 
-      if (!this->ior_fp_)
+      if (!this->ior_file_provided_)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("IOR file not specified. Using the Naming Service instead\n")));
 
           // Initialize the Naming Service.
-          if (this->init_naming_service () !=0 )
+          if (this->init_naming_service () != 0)
             return -1;
 
           // Get a reference to the Server Naming context and the
@@ -444,16 +437,14 @@ Clerk_i::init (int argc,
 
 
       // Register the clerk with the Naming Service.
-      if (this->ior_fp_ == 0)
+      if (!this->ior_file_provided_)
         {
           if (this->register_clerk () != 0)
             return -1;
         }
 
-      // Close the open file handler.
-      // ACE_OS::fclose (this->ior_fp_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("(%P|%t) Exception in Clerk_i::init ()\n"));
@@ -469,14 +460,14 @@ Clerk_i::run ()
   try
     {
       // Run the main event loop for the ORB.
-      int r = this->orb_manager_.run ();
+      int const r = this->orb_manager_.run ();
 
       if (r == -1)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run")),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("(%P|%t) Exception in Clerk_i::run ()\n"));

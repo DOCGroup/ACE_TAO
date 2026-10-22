@@ -8,9 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_GIOP_Message_Generator_Parser::~TAO_GIOP_Message_Generator_Parser ()
-{
-}
+TAO_GIOP_Message_Generator_Parser::~TAO_GIOP_Message_Generator_Parser () = default;
 
 int
 TAO_GIOP_Message_Generator_Parser::parse_reply (

@@ -5,13 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Synch_Helper::TP_Synch_Helper()
-  : state_(PENDING),
-    condition_(this->lock_)
-{
-}
-
-ACE_INLINE
-TAO::CSD::TP_Synch_Helper::~TP_Synch_Helper()
+  : condition_(this->lock_)
 {
 }
 

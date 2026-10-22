@@ -101,7 +101,7 @@ private:
 
 private:
   /// Hold the reference to the FT group tagged component
-  FT::TagFTGroupTaggedComponent *ft_group_tagged_component_;
+  FT::TagFTGroupTaggedComponent *ft_group_tagged_component_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

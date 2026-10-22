@@ -37,7 +37,7 @@ namespace TAO
                         CORBA::TypeCode_ptr,
                         T * const,
                         CORBA::ULong bound);
-    ~Any_Special_Impl_T () override;
+    ~Any_Special_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,
@@ -58,7 +58,7 @@ namespace TAO
     void free_value () override;
 
   private:
-    T * value_;
+    T *value_ {};
     CORBA::ULong bound_;
   };
 }

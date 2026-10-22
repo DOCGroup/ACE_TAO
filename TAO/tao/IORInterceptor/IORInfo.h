@@ -101,7 +101,7 @@ public:
 protected:
   /// Protected destructor to enforce proper memory management through
   /// the reference counting mechanism.
-  ~TAO_IORInfo () override;
+  ~TAO_IORInfo () override = default;
 
   /// Check if this IORInfo instance is valid.
   /**
@@ -119,7 +119,7 @@ private:
 
 private:
   /// Pointer to POA
-  TAO_Root_POA * poa_;
+  TAO_Root_POA * poa_ {};
 
   /// True if the IORInterceptor::components_established()
   /// interception point was called.  False otherwise.
@@ -129,7 +129,7 @@ private:
    * called after the IORInterceptor::establish_components()
    * interception point has been called.
    */
-  CORBA::Boolean components_established_;
+  CORBA::Boolean components_established_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

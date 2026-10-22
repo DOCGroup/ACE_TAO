@@ -64,10 +64,10 @@ namespace TAO
     DII_Invocation (DII_Invocation &&) = delete;
     DII_Invocation &operator= (DII_Invocation &&) = delete;
 
-    CORBA::ExceptionList *excp_list_;
+    CORBA::ExceptionList *excp_list_ {};
 
     /// Back pointer to the DII request that created us.
-    CORBA::Request_ptr host_;
+    CORBA::Request_ptr host_ {};
   };
 
   class TAO_DynamicInterface_Export DII_Deferred_Invocation

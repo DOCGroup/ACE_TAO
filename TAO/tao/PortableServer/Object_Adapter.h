@@ -293,7 +293,7 @@ public:
   friend class No_Hint_Strategy;
 
 protected:
-  Hint_Strategy *hint_strategy_;
+  Hint_Strategy *hint_strategy_ {};
 
   /// Base class of the id map.
   using transient_poa_map = ACE_Map<
@@ -346,13 +346,13 @@ protected:
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Strategy for dispatching a request to a servant.
-  TAO_Servant_Dispatcher *servant_dispatcher_;
+  TAO_Servant_Dispatcher *servant_dispatcher_ {};
 
   /// Persistent POA map
-  persistent_poa_name_map *persistent_poa_name_map_;
+  persistent_poa_name_map *persistent_poa_name_map_ {};
 
   /// Transient POA map
-  transient_poa_map *transient_poa_map_;
+  transient_poa_map *transient_poa_map_ {};
 
 protected:
   static CORBA::ULong transient_poa_name_size_;
@@ -408,7 +408,7 @@ public:
   public:
     using iterator = poa_name_iterator;
 
-    iteratable_poa_name (const poa_name &folded_name);
+    explicit iteratable_poa_name (const poa_name &folded_name);
 
     iterator begin () const;
     iterator end () const;
@@ -439,20 +439,20 @@ private:
 
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress_;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress_ {};
 
   /// Current nesting level of non_servant_upcalls.
-  unsigned int non_servant_upcall_nesting_level_;
+  unsigned int non_servant_upcall_nesting_level_ {};
 
   /// Id of thread making the non-servant upcall.
   ACE_thread_t non_servant_upcall_thread_;
 
   /// The Root POA
-  TAO_Root_POA *root_;
+  TAO_Root_POA *root_ {};
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// The POAManager factory.
-  TAO_POAManager_Factory *poa_manager_factory_;
+  TAO_POAManager_Factory *poa_manager_factory_ {};
 #else
   /// The POAManager object reference.
   PortableServer::POAManager_var the_poa_manager_;

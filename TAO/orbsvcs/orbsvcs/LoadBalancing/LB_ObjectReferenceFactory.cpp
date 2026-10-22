@@ -27,8 +27,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
     table_ (TAO_LB_ORF_GROUP_TABLE_SIZE),
     fcids_ (),
     orb_ (CORBA::ORB::_duplicate (orb)),
-    lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
-    registered_members_ (nullptr)
+    lm_ (CosLoadBalancing::LoadManager::_duplicate (lm))
 {
   // Claim ownership of the old ObjectReferenceFactory.
   CORBA::add_ref (old_orf);

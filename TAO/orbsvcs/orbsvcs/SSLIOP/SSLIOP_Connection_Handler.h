@@ -164,7 +164,7 @@ namespace TAO
        * It is stored here until the invocation completes, after which it
        * placed back into TSS.
        */
-      Current_Impl *previous_current_impl_;
+      Current_Impl *previous_current_impl_ {};
 
       /// The SSLIOP::Current implementation to be associated with the
       /// current invocation.

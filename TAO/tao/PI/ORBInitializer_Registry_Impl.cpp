@@ -16,11 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ORBInitializer_Registry::ORBInitializer_Registry ()
-  : lock_ (),
-    initializers_ ()
-{
-}
+TAO::ORBInitializer_Registry::ORBInitializer_Registry () = default;
 
 int
 TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])

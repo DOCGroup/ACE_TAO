@@ -59,7 +59,7 @@ TAO_Async_Table_Adapter::dispatch (TAO::ObjectKey &key,
   if (this->root_->async_available ())
     {
       // construct a callback handler
-      TAO_AMH_Locate_ResponseHandler_ptr rhp;
+      TAO_AMH_Locate_ResponseHandler_ptr rhp = nullptr;
       ACE_NEW_RETURN (rhp,
                       TAO_AMH_Locate_ResponseHandler (request),
                       DS_MISMATCHED_KEY);
@@ -96,8 +96,6 @@ TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
 }
 
 // ****************************************************************
-
-TAO_Async_Table_Adapter_Factory::TAO_Async_Table_Adapter_Factory () = default;
 
 TAO_Adapter*
 TAO_Async_Table_Adapter_Factory::create (TAO_ORB_Core *oc)

@@ -40,7 +40,7 @@ class TAO_DynamicAny_Export TAO_DynUnion_i
 {
 public:
   /// Constructor.
-  TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynUnion_i () = default;
@@ -110,7 +110,7 @@ private:
   DynamicAny::DynAny_var discriminator_;
 
   /// The active member's slot in the union type code.
-  CORBA::ULong member_slot_;
+  CORBA::ULong member_slot_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

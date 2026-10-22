@@ -255,7 +255,7 @@ public:
 
   /// Flag to see if we are using active maps in this active object
   /// map.
-  bool using_active_maps_;
+  bool using_active_maps_ {false};
 
   /// Size of the system id produced by the map.
   static size_t system_id_size_;
@@ -629,7 +629,7 @@ public:
 class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
 public:
-  TAO_Active_Hint_Strategy (CORBA::ULong map_size);
+  explicit TAO_Active_Hint_Strategy (CORBA::ULong map_size);
 
   /// Virtual destructor.
   ~TAO_Active_Hint_Strategy () override = default;

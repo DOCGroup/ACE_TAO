@@ -82,19 +82,19 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Exception ();
+  ~AST_Exception () override;
 
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Check if we or the parameter node is in recursion.
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 };

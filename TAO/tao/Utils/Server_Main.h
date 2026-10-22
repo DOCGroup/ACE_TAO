@@ -72,7 +72,7 @@ namespace TAO
       Server_Main (Server_Main &&) = delete;
       Server_Main &operator= (Server_Main const &) = delete;
       Server_Main &operator= (Server_Main &&) = delete;
-      ~Server_Main();
+      ~Server_Main() = default;
 
       int run (int argc, ACE_TCHAR *argv[]);
 

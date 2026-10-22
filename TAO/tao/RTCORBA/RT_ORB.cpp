@@ -14,12 +14,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_RT_ORB::~TAO_RT_ORB () = default;
+TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager () = default;
+
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
                         TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                         ACE_Time_Value const &dynamic_thread_time)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (nullptr),
     lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time)
 {
@@ -35,8 +37,6 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
   this->tp_manager_ =
     &rt_thread_lane_resources_manager->tp_manager ();
 }
-
-TAO_RT_ORB::~TAO_RT_ORB () = default;
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_mutex ()
@@ -65,12 +65,6 @@ TAO_RT_ORB::open_named_mutex (const char *name)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager ()
-{
-}
-
-TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager () = default;
 
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_mutex ()

@@ -23,8 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = nullptr;
 
 TAO_IFR_Server::TAO_IFR_Server ()
-  : ior_multicast_ (0),
-    config_ (0)
 {
 }
 
@@ -33,7 +31,7 @@ TAO_IFR_Server::~TAO_IFR_Server ()
   // Get reactor instance from TAO.
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
 
-  if ( this->ior_multicast_ )
+  if (this->ior_multicast_ != nullptr)
   {
     // Remove event handler for the ior multicast.
     if (reactor->remove_handler (this->ior_multicast_,

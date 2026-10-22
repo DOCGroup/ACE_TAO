@@ -174,7 +174,7 @@ namespace CORBA
     ContextList &operator= (ContextList &&) = delete;
 
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
 
     /// Internal list of typecodes.
     ACE_Unbounded_Queue<char *> ctx_list_;

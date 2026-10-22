@@ -80,11 +80,11 @@ namespace TAO
     PICurrent_Guard &operator= (PICurrent_Guard &&) = delete;
 
     /// The PICurrent implementation whose slot table will be copied.
-    PICurrent_Impl *src_;
+    PICurrent_Impl *src_ {};
 
     /// The PICurrent implementation whose slot table will be filled
     /// with the contents of another PICurrent's slot table.
-    PICurrent_Impl *dest_;
+    PICurrent_Impl *dest_ {};
   };
 }
 

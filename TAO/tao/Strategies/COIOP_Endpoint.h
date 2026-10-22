@@ -49,7 +49,7 @@ public:
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
-  TAO_COIOP_Endpoint (ACE_Utils::UUID const &uuid);
+  explicit TAO_COIOP_Endpoint (ACE_Utils::UUID const &uuid);
 
   /// Destructor.
   ~TAO_COIOP_Endpoint () = default;
@@ -89,7 +89,7 @@ private:
 
   /// COIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_COIOP_Endpoint *next_;
+  TAO_COIOP_Endpoint *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

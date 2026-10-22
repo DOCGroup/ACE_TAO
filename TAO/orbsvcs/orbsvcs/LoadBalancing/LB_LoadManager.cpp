@@ -27,8 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
                                         int ping_interval)
-  : reactor_ (0),
-    poa_ (),
+  : poa_ (),
     root_poa_ (),
     monitor_lock_ (),
     load_lock_ (),

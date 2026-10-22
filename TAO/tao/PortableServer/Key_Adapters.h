@@ -39,7 +39,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Incremental_Key_Generator
 {
 public:
-  TAO_Incremental_Key_Generator ();
+  TAO_Incremental_Key_Generator () = default;
 
   TAO_Incremental_Key_Generator (TAO_Incremental_Key_Generator const &) = delete;
   TAO_Incremental_Key_Generator &operator= (TAO_Incremental_Key_Generator const &) = delete;
@@ -49,7 +49,7 @@ public:
   int operator() (PortableServer::ObjectId &id);
 
 protected:
-  CORBA::ULong counter_;
+  CORBA::ULong counter_ {};
 };
 
 ////////////////////////////////////////////////////////////////////////////////

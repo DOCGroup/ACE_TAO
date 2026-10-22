@@ -41,7 +41,7 @@ namespace TAO
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
                       TAO_InputCDR &cdr);
 
-    Unknown_IDL_Type (CORBA::TypeCode_ptr);
+    explicit Unknown_IDL_Type (CORBA::TypeCode_ptr);
 
     ~Unknown_IDL_Type () override;
 

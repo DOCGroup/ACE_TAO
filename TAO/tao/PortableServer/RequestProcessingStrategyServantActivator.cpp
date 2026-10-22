@@ -156,7 +156,7 @@ namespace TAO
         }
       else
         {
-          CORBA::Boolean cleanup_in_progress = 0;
+          CORBA::Boolean cleanup_in_progress = false;
           this->etherealize_servant (poa_current_impl.object_id (),
                                      servant,
                                      cleanup_in_progress);

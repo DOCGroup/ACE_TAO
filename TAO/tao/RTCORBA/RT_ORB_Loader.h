@@ -34,7 +34,7 @@ class TAO_RTCORBA_Export TAO_RT_ORB_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_RT_ORB_Loader ();
+  TAO_RT_ORB_Loader () = default;
 
   /// Destructor.
   ~TAO_RT_ORB_Loader () override;
@@ -44,7 +44,7 @@ public:
 
 private:
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {false};
 };
 
 

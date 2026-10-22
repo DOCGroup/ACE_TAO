@@ -84,7 +84,7 @@ private:
 
   CORBA::Policy_var compression_id_list_policy_;
 
-  CORBA::Boolean are_policies_parsed_;
+  CORBA::Boolean are_policies_parsed_ {};
 
 private:
   TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;

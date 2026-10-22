@@ -38,7 +38,7 @@ namespace TAO
     Any_Array_Impl_T (_tao_destructor destructor,
                       CORBA::TypeCode_ptr,
                       T_slice * const);
-    ~Any_Array_Impl_T () override;
+    ~Any_Array_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor destructor,
@@ -57,7 +57,7 @@ namespace TAO
     void free_value () override;
 
   private:
-    T_slice * value_;
+    T_slice *value_ {};
   };
 }
 

@@ -159,7 +159,7 @@ private:
    * The values are cached here to avoid querying the LoadManager,
    * which can be costly.
    */
-  CORBA::Boolean * registered_members_;
+  CORBA::Boolean * registered_members_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

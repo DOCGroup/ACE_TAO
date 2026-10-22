@@ -57,9 +57,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory ()
 #endif
 }
 
-TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory ()
-{
-}
+TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory () = default;
 
 int
 TAO_Default_Client_Strategy_Factory::init (int argc, ACE_TCHAR* argv[])

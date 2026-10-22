@@ -194,10 +194,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     tagged_component_id_ (),
     profile_id_array_ (0),
     policies_ (policies),
-    ort_adapter_ (0),
-    ort_adapter_factory_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
-    network_priority_hook_ (0),
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     adapter_activator_ (),
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -205,17 +202,8 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     lock_ (lock),
     orb_core_ (orb_core),
     object_adapter_ (object_adapter),
-    cleanup_in_progress_ (false),
-    outstanding_requests_ (0),
     outstanding_requests_condition_ (thread_lock),
-    wait_for_completion_pending_ (0),
-    waiting_destruction_ (false),
-    servant_deactivation_condition_ (thread_lock),
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-    filter_factory_ (0),
-#endif
-    caller_key_to_object_ (0),
-    servant_for_key_to_object_ (0)
+    servant_deactivation_condition_ (thread_lock)
 {
   // Since we are keeping a reference to a POAManager, we need to
   // increment the reference count but we do this safely.
@@ -406,7 +394,7 @@ TAO_Root_POA::complete_destruction_i ()
               this->ort_adapter_factory_->destroy (ort_adapter);
             }
 
-          this->ort_adapter_ = 0;
+          this->ort_adapter_ = nullptr;
         }
     }
 }
@@ -2573,10 +2561,10 @@ TAO_Root_POA::_get_orb ()
   return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }
 
-// Initialize instance_ to 0, since this is what we test for in the call
+// Initialize instance_ to null, since this is what we test for in the call
 // to instance ().  Note that this does not require a constructor call, so
 // it is always initialized by the time that instance () can be called.
-TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = 0;
+TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = nullptr;
 
 // Force an instance to be created at module initialization time,
 // since we do not want to worry about double checked locking and

@@ -28,10 +28,10 @@ public:
   be_visitor_constant_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_constant_cs ();
+  ~be_visitor_constant_cs () override;
 
   /// visit constant
-  virtual int visit_constant (be_constant *node);
+  int visit_constant (be_constant *node) override;
 };
 
 #endif /* _BE_VISITOR_CONSTANT_CONSTANT_CS_H_ */

@@ -27,7 +27,6 @@ namespace TAO
     {
     }
 
-    /// dtor
     Current_Impl::~Current_Impl () = default;
 
     /// Obtains the current transport. Throws a NoContext exception
@@ -87,7 +86,7 @@ namespace TAO
 
     TimeBase::TimeT Current_Impl::open_since ()
     {
-      TimeBase::TimeT msecs = 0;
+      TimeBase::TimeT msecs {};
       transport_stats ()->opened_since ().msec (msecs);
       return msecs;
     }

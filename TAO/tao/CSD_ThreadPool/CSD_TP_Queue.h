@@ -58,7 +58,7 @@ namespace TAO
     {
     public:
       /// Default Constructor.
-      TP_Queue();
+      TP_Queue() = default;
 
       /// Destructor.
       ~TP_Queue();
@@ -81,10 +81,10 @@ namespace TAO
       TP_Queue &operator= (TP_Queue &&) = delete;
 
       /// The request at the front of the queue.
-      TP_Request* head_;
+      TP_Request* head_ {};
 
       /// The request at the end of the queue.
-      TP_Request* tail_;
+      TP_Request* tail_ {};
     };
   }
 }

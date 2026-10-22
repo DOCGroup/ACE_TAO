@@ -58,7 +58,7 @@ namespace TAO
       using HandleType = TAO_Intrusive_Ref_Count_Handle<TP_Servant_State>;
 
       /// Default Constructor.
-      TP_Servant_State();
+      TP_Servant_State() = default;
 
       /// Virtual Destructor.
       virtual ~TP_Servant_State();
@@ -76,7 +76,7 @@ namespace TAO
       TP_Servant_State &operator= (TP_Servant_State &&) = delete;
 
       /// The servant's current "busy" state (true == busy, false == not busy)
-      bool busy_flag_;
+      bool busy_flag_ {};
     };
   }
 }

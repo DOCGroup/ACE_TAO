@@ -17,8 +17,7 @@ TAO_ZIOP_Stub::TAO_ZIOP_Stub (const char *repository_id,
                               TAO_ORB_Core *orb_core)
   : TAO_Stub (repository_id,
               profiles,
-              orb_core),
-    are_policies_parsed_ (false)
+              orb_core)
 {
 }
 

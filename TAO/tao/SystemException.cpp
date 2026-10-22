@@ -971,8 +971,8 @@ STANDARD_EXCEPTION_LIST
 CORBA::Exception * \
 CORBA::name ::_tao_duplicate () const \
 { \
-  CORBA::Exception * result = 0; \
-  ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
+  CORBA::Exception * result = nullptr; \
+  ACE_NEW_RETURN (result, CORBA::name (*this), nullptr); \
   return result; \
 }
 
@@ -983,8 +983,8 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException * \
 CORBA::name ::_tao_create () \
 { \
-  CORBA::name *result = 0; \
-  ACE_NEW_RETURN (result, CORBA::name (), 0); \
+  CORBA::name *result = nullptr; \
+  ACE_NEW_RETURN (result, CORBA::name (), nullptr); \
   return result; \
 }
 

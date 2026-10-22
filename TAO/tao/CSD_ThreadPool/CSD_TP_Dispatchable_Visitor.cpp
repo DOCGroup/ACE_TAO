@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Dispatchable_Visitor::~TP_Dispatchable_Visitor() = default;
+TAO::CSD::TP_Dispatchable_Visitor::~TP_Dispatchable_Visitor () = default;
 
 
 bool

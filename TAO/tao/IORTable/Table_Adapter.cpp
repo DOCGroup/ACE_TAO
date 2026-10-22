@@ -20,7 +20,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core &orb_core)
   :  orb_core_ (orb_core),
      root_ (),
-     closed_ (true),
      thread_lock_ (),
      lock_ (TAO_Table_Adapter::create_lock (thread_lock_))
 {
@@ -185,8 +184,6 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
 }
 
 // ****************************************************************
-
-TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory () = default;
 
 TAO_Adapter*
 TAO_Table_Adapter_Factory::create (TAO_ORB_Core *oc)

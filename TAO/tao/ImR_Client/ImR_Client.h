@@ -69,7 +69,7 @@ namespace TAO
       ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl &&) = delete;
 
       /// Implementation Repository Server Object
-      ServerObject_i *server_object_;
+      ServerObject_i *server_object_ {};
     };
 
     static int

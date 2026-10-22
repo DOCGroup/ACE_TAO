@@ -26,7 +26,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief The Event Map for Suppliers.
  */
-typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_Notify_Supplier_Map;
+using TAO_Notify_Supplier_Map =
+  TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Flushing_Strategy::~TAO_Flushing_Strategy ()
-{
-}
+TAO_Flushing_Strategy::~TAO_Flushing_Strategy () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

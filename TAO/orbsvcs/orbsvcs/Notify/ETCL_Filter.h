@@ -138,10 +138,9 @@ private:
   CORBA::Long constraint_expr_ids_;
 
   /// A list of the constraints stored in this filter.
-  typedef ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
-                                TAO_Notify_Constraint_Expr*,
-                                ACE_SYNCH_NULL_MUTEX>
-  CONSTRAINT_EXPR_LIST;
+  using CONSTRAINT_EXPR_LIST = ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
+                                                      TAO_Notify_Constraint_Expr*,
+                                                      ACE_SYNCH_NULL_MUTEX>;
 
   CONSTRAINT_EXPR_LIST constraint_expr_list_;
 

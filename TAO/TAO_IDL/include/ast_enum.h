@@ -79,10 +79,10 @@ public:
             bool local,
             bool abstract);
 
-  virtual ~AST_Enum ();
+  ~AST_Enum () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Look up an AST_EnumVal by value
   AST_EnumVal *lookup_by_value (const AST_Expression *v);
@@ -97,14 +97,14 @@ public:
   UTL_ScopedName *value_to_name (const unsigned long v);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool annotatable () const { return true; }
+  bool annotatable () const override { return true; }
 
 private:
   friend int tao_yyparse ();
@@ -118,7 +118,7 @@ private:
   int compute_member_count ();
   // Count the number of members.
 
-  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
   // Scope Management.
 };
 

@@ -41,7 +41,7 @@ class TAO_DynamicAny_Export TAO_DynFixed_i
 {
 public:
   /// Constructor.
-  TAO_DynFixed_i (CORBA::Boolean allow_truncation = true);
+  explicit TAO_DynFixed_i (CORBA::Boolean allow_truncation = true);
 
   /// Initialize from an Any or a TypeCode.
   void init (CORBA::Any const& any);

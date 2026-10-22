@@ -41,7 +41,7 @@ namespace TAO
     {
       public:
         /// Constructor.
-        TP_Strategy_Factory();
+        TP_Strategy_Factory() = default;
 
         /// Virtual Destructor.
         ~TP_Strategy_Factory() override;

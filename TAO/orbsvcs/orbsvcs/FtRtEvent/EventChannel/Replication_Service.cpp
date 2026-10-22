@@ -14,6 +14,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
 {
+  Replication_Service::~Replication_Service () = default;
+
   namespace {
     std::unique_ptr<Replication_Strategy> replication_strategy;
     int threads = 1;

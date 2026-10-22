@@ -30,14 +30,14 @@ class TAO_Codeset_Export TAO_Codeset_Descriptor
   : public TAO_Codeset_Descriptor_Base
 {
 public:
-  TAO_Codeset_Descriptor ();
+  TAO_Codeset_Descriptor () = default;
   ~TAO_Codeset_Descriptor () override;
 
   struct Translator_Node
   {
-    ACE_TCHAR *name_;
-    TAO_Codeset_Translator_Factory *translator_factory_;
-    Translator_Node *next_;
+    ACE_TCHAR *name_ {};
+    TAO_Codeset_Translator_Factory *translator_factory_ {};
+    Translator_Node *next_ {};
   };
 
   void ncs (ACE_CDR::ULong ncs);
@@ -55,10 +55,10 @@ private:
   TAO_Codeset_Descriptor (TAO_Codeset_Descriptor &&) = delete;
   TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor &&) = delete;
 
-  ACE_CDR::ULong ncs_;
-  int max_bytes_;
-  int num_translators_;
-  Translator_Node *trans_base_;
+  ACE_CDR::ULong ncs_ {};
+  int max_bytes_ {1};
+  int num_translators_ {};
+  Translator_Node *trans_base_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

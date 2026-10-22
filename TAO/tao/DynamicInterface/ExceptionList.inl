@@ -2,12 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-CORBA::ExceptionList::ExceptionList ()
-  : refcount_ (1)
-{
-}
-
-ACE_INLINE
 CORBA::ULong
 CORBA::ExceptionList::count ()
 {

@@ -13,9 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::Strategy_Base::~Strategy_Base()
-{
-}
+TAO::CSD::Strategy_Base::~Strategy_Base () = default;
 
 CORBA::Boolean
 TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)

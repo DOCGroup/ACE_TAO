@@ -17,7 +17,7 @@ class TAO_Notify_MC_Export TAO_Control_Registry
 {
 public:
   /// Reusing NameList that comes from the TAO Monitor library.
-  typedef Monitor::NameList NameList;
+  using NameList = Monitor::NameList;
 
   /// Exception thrown in the event that something goes wrong
   /// when adding to the registry
@@ -65,10 +65,9 @@ public:
   TAO_NS_Control* get (const ACE_CString& name) const;
 
 private:
-  typedef ACE_Hash_Map_Manager<ACE_CString,
-                               TAO_NS_Control*,
-                               ACE_SYNCH_NULL_MUTEX>
-    Map;
+  using Map = ACE_Hash_Map_Manager<ACE_CString,
+                                   TAO_NS_Control*,
+                                   ACE_SYNCH_NULL_MUTEX>;
 
   mutable TAO_SYNCH_RW_MUTEX mutex_;
   Map map_;

@@ -15,7 +15,7 @@ public:
   PersistentPoa () = default;
 
   /// Destructor.
-  ~PersistentPoa () noexcept override = default;
+  ~PersistentPoa () noexcept override;
 
 protected:
   int init (int argc, ACE_TCHAR *argv[]) override;

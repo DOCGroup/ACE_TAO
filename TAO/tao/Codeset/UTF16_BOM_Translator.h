@@ -38,7 +38,7 @@ class TAO_Codeset_Export TAO_UTF16_BOM_Translator
 public:
   /// Constructor
   /// @param forceBE: true forces all wchar, warray, and wstrings to big-endian byte order
-  TAO_UTF16_BOM_Translator (bool forceBE);
+  explicit TAO_UTF16_BOM_Translator (bool forceBE);
 
   /// Virtual destruction
   ~TAO_UTF16_BOM_Translator () override = default;

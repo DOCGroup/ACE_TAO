@@ -67,7 +67,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per TAO_Singleton
           // instantiation.
-          static ACE_LOCK *lock = 0;
+          static ACE_LOCK *lock = nullptr;
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;
@@ -162,7 +162,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per TAO_Singleton
           // instantiation.
-          static ACE_LOCK *lock = 0;
+          static ACE_LOCK *lock = nullptr;
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;

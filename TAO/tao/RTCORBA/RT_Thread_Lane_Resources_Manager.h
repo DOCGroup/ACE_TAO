@@ -41,7 +41,7 @@ class TAO_RTCORBA_Export TAO_RT_Thread_Lane_Resources_Manager :
 {
 public:
   /// Constructor.
-  TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_RT_Thread_Lane_Resources_Manager () override;
@@ -84,10 +84,10 @@ private:
 
 protected:
   /// Default lane resources.
-  TAO_Thread_Lane_Resources *default_lane_resources_;
+  TAO_Thread_Lane_Resources *default_lane_resources_ {};
 
   /// Thread Pool Manager.
-  TAO_Thread_Pool_Manager *tp_manager_;
+  TAO_Thread_Pool_Manager *tp_manager_ {};
 };
 
 /**

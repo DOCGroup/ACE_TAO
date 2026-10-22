@@ -85,7 +85,7 @@ namespace TAO
       LockType lock_;
 
       /// Used to denote the state of the request dispatching.
-      HelperState state_;
+      HelperState state_ {PENDING};
 
       /// The condition used to block the calling thread until the
       /// state is something other than the PENDING state.

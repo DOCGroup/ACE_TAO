@@ -37,7 +37,7 @@ class TAO_ORB_Core;
 class TAO_ZIOP_Export TAO_ZIOPPolicy_Validator : public TAO_Policy_Validator
 {
 public:
-  TAO_ZIOPPolicy_Validator (TAO_ORB_Core &orb_core);
+  explicit TAO_ZIOPPolicy_Validator (TAO_ORB_Core &orb_core);
 
   void validate_impl (TAO_Policy_Set &policies) override;
 

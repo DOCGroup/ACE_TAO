@@ -101,7 +101,7 @@ private:
   void copy (TAO_ETCL_Literal_Constraint const& co);
 
   /// Possible literal type not covered by the base class.
-  TAO::Any_Impl* any_;
+  TAO::Any_Impl* any_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

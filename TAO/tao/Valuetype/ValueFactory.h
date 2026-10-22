@@ -49,7 +49,7 @@ namespace CORBA
   class TAO_Valuetype_Export ValueFactoryBase
   {
   public:
-    ValueFactoryBase ();
+    ValueFactoryBase () = default;
     virtual ~ValueFactoryBase ();
 
     // non-virtual is non-standard
@@ -72,7 +72,7 @@ namespace CORBA
     ValueFactoryBase &operator= (ValueFactoryBase &&) = delete;
 
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
   };
 }  // End CORBA namespace
 

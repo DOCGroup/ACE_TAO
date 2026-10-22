@@ -75,12 +75,12 @@ public:
   AST_ConcreteType (AST_Decl::NodeType nt,
                     UTL_ScopedName *n);
 
-  virtual ~AST_ConcreteType ();
+  ~AST_ConcreteType () override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual bool annotatable () const { return true; }
+  bool annotatable () const override { return true; }
 };
 
 #endif           // _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH

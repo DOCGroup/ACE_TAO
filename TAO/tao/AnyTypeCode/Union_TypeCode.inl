@@ -40,7 +40,7 @@ TAO::TypeCode::Union<StringType,
   : ::CORBA::TypeCode (CORBA::tk_union)
   , RefCountPolicy ()
   , base_attributes_ (id)
-  , discriminant_type_ (0)
+  , discriminant_type_ (nullptr)
   , default_index_ (-1)
   , ncases_ (0)
   , cases_ ()

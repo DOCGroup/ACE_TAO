@@ -20,14 +20,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_COIOP_Endpoint::TAO_COIOP_Endpoint (const ACE_Utils::UUID& uuid)
   : TAO_Endpoint (TAO_TAG_COIOP_PROFILE)
     , uuid_ (uuid)
-    , next_ (0)
 {
 }
 
 TAO_COIOP_Endpoint::TAO_COIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_COIOP_PROFILE),
-    uuid_ (),
-    next_ (0)
+    uuid_ ()
 {
 }
 

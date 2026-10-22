@@ -51,7 +51,7 @@ public:
   TAO_SCIOP_Connector ();
 
   /// Destructor.
-  ~TAO_SCIOP_Connector ();
+  ~TAO_SCIOP_Connector () override;
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h

@@ -41,7 +41,7 @@ class TAO_PortableServer_Export TAO_POAManager_Factory :
   public ::CORBA::LocalObject
 {
 public:
-  TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter);
+  explicit TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter);
 
   ~TAO_POAManager_Factory () override;
   TAO_POAManager_Factory (TAO_POAManager_Factory const &) = delete;

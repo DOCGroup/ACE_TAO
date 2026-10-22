@@ -103,7 +103,7 @@ namespace CORBA
     , TAO_TC_KIND_COUNT
   };
 
-  typedef TCKind &TCKind_out;
+  using TCKind_out = TCKind &;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66

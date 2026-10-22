@@ -9,14 +9,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping () = default;
+
 TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)
   : policy_ (policy)
   , min_ (ACE_Sched_Params::priority_min (this->policy_))
   , max_ (ACE_Sched_Params::priority_max (this->policy_))
 {
 }
-
-TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping () = default;
 
 CORBA::Boolean
 TAO_Linear_Priority_Mapping::to_native (

@@ -16,9 +16,7 @@ TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (
 {
 }
 
-TAO_Reactive_Connect_Strategy::~TAO_Reactive_Connect_Strategy ()
-{
-}
+TAO_Reactive_Connect_Strategy::~TAO_Reactive_Connect_Strategy () = default;
 
 void
 TAO_Reactive_Connect_Strategy::synch_options (ACE_Time_Value *timeout,

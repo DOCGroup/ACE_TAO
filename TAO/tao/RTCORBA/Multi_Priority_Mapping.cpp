@@ -9,6 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Multi_Priority_Mapping::~TAO_Multi_Priority_Mapping () = default;
+
 TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
   int base_native_priority,
   int base_corba_priority,
@@ -61,8 +63,6 @@ TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
          }
     }
 }
-
-TAO_Multi_Priority_Mapping::~TAO_Multi_Priority_Mapping () = default;
 
 CORBA::Boolean
 TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,

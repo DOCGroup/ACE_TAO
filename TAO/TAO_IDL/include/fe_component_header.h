@@ -19,7 +19,7 @@ public:
                       UTL_ScopedName *base_component,
                       UTL_NameList *supports,
                       bool compile_now);
-  virtual ~FE_ComponentHeader ();
+  ~FE_ComponentHeader () override;
 
   // Data Accessors.
   AST_Component *base_component () const;

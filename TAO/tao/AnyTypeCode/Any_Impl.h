@@ -96,7 +96,7 @@ namespace TAO
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
   };
 }
 

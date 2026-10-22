@@ -27,19 +27,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableServer
 {
   class POA;
-  typedef POA *POA_ptr;
+  using POA_ptr = POA *;
 }
 
 namespace CosNotifyChannelAdmin
 {
   class EventChannelFactory;
-  typedef EventChannelFactory *EventChannelFactory_ptr;
+  using EventChannelFactory_ptr = EventChannelFactory *;
 }
 
 namespace CORBA
 {
   class ORB;
-  typedef ORB *ORB_ptr;
+  using ORB_ptr = ORB *;
 }
 
 /**

@@ -46,7 +46,7 @@ class TAO_ConnectionTimeoutPolicy
 {
 public:
   /// Constructor.
-  TAO_ConnectionTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
+  explicit TAO_ConnectionTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
   /// Copy constructor.
   TAO_ConnectionTimeoutPolicy (const TAO_ConnectionTimeoutPolicy &rhs);

@@ -36,7 +36,7 @@ class TAO_DynamicAny_Export TAO_DynValueBox_i
 {
 public:
   /// Constructor.
-  TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynValueBox_i () = default;

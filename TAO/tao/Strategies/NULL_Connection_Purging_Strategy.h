@@ -35,7 +35,7 @@ class TAO_Strategies_Export TAO_NULL_Connection_Purging_Strategy: public TAO_Con
 {
 public:
   /// The constructor
-  TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
+  explicit TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
   /// Does nothing.
   void update_item (TAO_Transport& transport) override;

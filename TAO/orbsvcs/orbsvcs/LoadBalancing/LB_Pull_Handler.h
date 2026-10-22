@@ -60,10 +60,10 @@ public:
 private:
   /// The table that contains all load monitors registered with the
   /// load balancer.
-  TAO_LB_MonitorMap * monitor_map_;
+  TAO_LB_MonitorMap * monitor_map_ {};
 
   /// Pointer to the LoadManager servant.
-  TAO_LB_LoadManager * load_manager_;
+  TAO_LB_LoadManager * load_manager_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

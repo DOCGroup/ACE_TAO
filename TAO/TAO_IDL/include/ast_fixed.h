@@ -14,13 +14,13 @@ public:
              AST_Expression *digits,
              AST_Expression *scale);
 
-  virtual ~AST_Fixed ();
+  ~AST_Fixed () override;
 
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   AST_Expression *digits ();
   AST_Expression *scale ();

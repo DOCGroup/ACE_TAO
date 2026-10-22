@@ -214,22 +214,22 @@ namespace CORBA
 
   private:
     /// Target object.
-    CORBA::Object_ptr target_;
+    CORBA::Object_ptr target_ {};
 
     /// Pointer to our ORB.
     CORBA::ORB_var orb_;
 
     /// Operation name.
-    char const* opname_;
+    char const* opname_ {};
 
     /// Parameter list.
-    CORBA::NVList_ptr args_;
+    CORBA::NVList_ptr args_ {};
 
     /// Result of the operation.
-    CORBA::NamedValue_ptr result_;
+    CORBA::NamedValue_ptr result_ {};
 
     /// Invocation flags.
-    CORBA::Flags flags_;
+    CORBA::Flags flags_ {};
 
     /// @deprecated  Holds exceptions.
     // CORBA::Environment env_;
@@ -238,25 +238,25 @@ namespace CORBA
     CORBA::ExceptionList_var exceptions_;
 
     /// List of the request's result's contexts.
-    CORBA::ContextList_ptr contexts_;
+    CORBA::ContextList_ptr contexts_ {};
 
     /// Context associated with this request.
-    CORBA::Context_ptr ctx_;
+    CORBA::Context_ptr ctx_ {};
 
     /// Reference counting.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
 
     /// Protect the response_received_.
     TAO_SYNCH_MUTEX lock_;
 
     /// If not zero then the NVList is not evaluated by default.
-    bool lazy_evaluation_;
+    bool lazy_evaluation_ {};
 
     /// Set to true upon completion of invoke() or handle_response().
-    CORBA::Boolean response_received_;
+    CORBA::Boolean response_received_ {};
 
     /// Can be reset by a gateway when passing along a request.
-    int byte_order_;
+    int byte_order_ {TAO_ENCAP_BYTE_ORDER};
 
     /// Stores user exception as a CDR stream when this request is
     /// used in a TAO gateway.

@@ -13,8 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::RequestInterceptor_Adapter::~RequestInterceptor_Adapter ()
-{
-}
+TAO::RequestInterceptor_Adapter::~RequestInterceptor_Adapter () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -36,7 +36,7 @@ class TAO_DynamicAny_Export TAO_DynValue_i
 {
 public:
   /// Constructor.
-  TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
+  explicit TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
 
   /// Destructor.
   ~TAO_DynValue_i () = default;
@@ -97,7 +97,7 @@ private:
   static void get_base_types (
     CORBA::TypeCode_ptr,
     BaseTypesList_t &,
-    CORBA::ULong *total_member_count = 0);
+    CORBA::ULong *total_member_count = nullptr);
 
   /// Return the unaliased valuetype typecode that corresponds to
   /// index (0..total_members-1) from the given hierarchical list of

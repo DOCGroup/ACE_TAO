@@ -62,7 +62,8 @@ namespace TAO
   private:
     /// The ProcessingMode setting that can be adjusted via the
     /// PortableInterceptor::ProcessingModePolicy.
-    PortableInterceptor::ProcessingMode processing_mode_;
+    PortableInterceptor::ProcessingMode processing_mode_ {
+      PortableInterceptor::LOCAL_AND_REMOTE};
   };
 }
 

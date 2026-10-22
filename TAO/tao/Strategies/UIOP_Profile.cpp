@@ -19,8 +19,6 @@ static const char prefix_[] = "uiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
-
 char
 TAO_UIOP_Profile::object_key_delimiter () const
 {
@@ -35,8 +33,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (addr),
-    count_ (1)
+    endpoint_ (addr)
 {
 }
 
@@ -49,8 +46,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (addr),
-    count_ (1)
+    endpoint_ (addr)
 {
 }
 
@@ -59,8 +55,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
                                            TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    count_ (1)
+    endpoint_ ()
 {
 }
 

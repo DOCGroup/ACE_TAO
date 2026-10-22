@@ -4,6 +4,8 @@
 
 #include "PersistentPoa.h"
 
+PersistentPoa::~PersistentPoa () noexcept = default;
+
 int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter as (argc, argv);

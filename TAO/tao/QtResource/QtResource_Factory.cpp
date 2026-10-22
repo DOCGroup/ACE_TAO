@@ -7,8 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   QtResource_Factory::QtResource_Factory (QApplication *qapp)
-    : reactor_impl_ (nullptr)
-    , qapp_ (qapp)
+    : qapp_ (qapp)
   {
   }
 

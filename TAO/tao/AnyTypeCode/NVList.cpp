@@ -44,7 +44,7 @@ CORBA::NamedValue::~NamedValue ()
   if (this->name_)
     {
       CORBA::string_free (this->name_);
-      this->name_ = 0;
+      this->name_ = nullptr;
     }
   // the any will be destroyed by itself
 }
@@ -334,7 +334,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
         }
 
       delete this->incoming_;
-      this->incoming_ = 0;
+      this->incoming_ = nullptr;
       return;
     }
 

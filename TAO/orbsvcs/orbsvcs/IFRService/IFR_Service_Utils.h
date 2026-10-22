@@ -85,10 +85,10 @@ protected:
   PortableServer::POA_ptr repo_poa_;
 
   /// Event handler that responds to multicast requests.
-  TAO_IOR_Multicast *ior_multicast_;
+  TAO_IOR_Multicast *ior_multicast_ {};
 
   /// Database for the IFR.
-  ACE_Configuration *config_;
+  ACE_Configuration *config_ {};
 
   /// Interface Repository's IOR.
   CORBA::String_var ifr_ior_;

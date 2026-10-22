@@ -91,7 +91,7 @@ public:
                 AST_Expression *ev,
                 UTL_ScopedName *n);
 
-  virtual ~AST_Constant ();
+  ~AST_Constant () override;
 
   // Data Accessors.
   AST_Expression *constant_value ();
@@ -105,17 +105,17 @@ public:
   // If our type is enum, we have to generate the scoped name.
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool annotatable () const { return true; }
+  bool annotatable () const override { return true; }
 
 protected:
   AST_Expression *pd_constant_value;

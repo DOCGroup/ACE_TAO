@@ -79,10 +79,10 @@ private:
   TAO_SHMIOP_Protocol_Factory &operator= (TAO_SHMIOP_Protocol_Factory &&) = delete;
 
   /// Specify the prefix (full path) for mmap files
-  ACE_TCHAR *mmap_prefix_;
+  ACE_TCHAR *mmap_prefix_ {};
 
   /// Minimum bytes of the mmap files.
-  ACE_OFF_T min_bytes_;
+  ACE_OFF_T min_bytes_ {10 * 1024}; // @@ Nanbor, remove this magic number!!
 };
 
 

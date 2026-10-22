@@ -300,9 +300,9 @@ be_interface::compute_coll_names (int type,
       this->local_coll_name_ = nullptr;
     }
 
-  static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
-                                           "_tao_direct_collocated_"};
-  static const char *poa = "POA_";
+  static constexpr char const *collocated_names[] = {"_tao_thru_poa_collocated_",
+                                                      "_tao_direct_collocated_"};
+  static constexpr char const *poa = "POA_";
 
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"

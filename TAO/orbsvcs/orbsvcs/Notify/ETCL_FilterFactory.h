@@ -99,9 +99,9 @@ protected:
   /// Id generator for proxy suppliers
   TAO_Notify_ID_Factory filter_ids_;
 
-  typedef ACE_Hash_Map_Manager <TAO_Notify_Object::ID,
-                                TAO_Notify_ETCL_Filter*,
-                                TAO_SYNCH_MUTEX>  FILTERMAP;
+  using FILTERMAP = ACE_Hash_Map_Manager <TAO_Notify_Object::ID,
+                                          TAO_Notify_ETCL_Filter*,
+                                          TAO_SYNCH_MUTEX>;
 
   FILTERMAP filters_;
   TAO_SYNCH_MUTEX mtx_;

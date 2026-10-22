@@ -29,10 +29,10 @@ public:
   be_visitor_array_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_array_cdr_op_ch ();
+  ~be_visitor_array_cdr_op_ch () override;
 
   /// visit array
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 };
 
 #endif /* _BE_VISITOR_ARRAY_CDR_OP_CH_H_ */

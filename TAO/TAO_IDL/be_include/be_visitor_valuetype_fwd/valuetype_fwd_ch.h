@@ -28,10 +28,10 @@ public:
   be_visitor_valuetype_fwd_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_fwd_ch ();
+  ~be_visitor_valuetype_fwd_ch () override;
 
-  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  int visit_valuetype_fwd (be_valuetype_fwd *node) override;
+  int visit_eventtype_fwd (be_eventtype_fwd *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FWD_CH_H_ */

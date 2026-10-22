@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Upcall_Command::~Upcall_Command ()
-{
-}
+TAO::Upcall_Command::~Upcall_Command () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

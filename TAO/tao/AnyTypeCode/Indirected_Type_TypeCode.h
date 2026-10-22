@@ -49,7 +49,7 @@ namespace TAO
                        char const * id);
 
       /// Constructor for TypeCode factory.
-      Indirected_Type (char const * id);
+      explicit Indirected_Type (char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -123,13 +123,13 @@ namespace TAO
       CORBA::String_var id_;
 
       /// Reference of recursive typecode instance.
-      CORBA::TypeCode_ptr recursive_tc_;
+      CORBA::TypeCode_ptr recursive_tc_ {};
 
       /// Lock
       TAO_SYNCH_MUTEX mutex_;
 
       /// Reference counter
-      unsigned long refcount_;
+      unsigned long refcount_ {1};
 
       //@}
     };

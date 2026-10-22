@@ -267,7 +267,7 @@ private:
 
   /// Pointer to the TAO_PG_GenericFactory class responsible for
   /// object group creation/destruction.
-  TAO_PG_GenericFactory * generic_factory_;
+  TAO_PG_GenericFactory * generic_factory_ {};
 
   /// Lock used to synchronize access to the underlying tables.
   TAO_SYNCH_MUTEX lock_;
