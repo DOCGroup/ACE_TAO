@@ -172,9 +172,9 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   int const iovcnt = 3;
   iovec iov[iovcnt];
 
-  iov[0].iov_base = static_cast<void *> (&header);
+  iov[0].iov_base = reinterpret_cast<char *> (&header);
   iov[0].iov_len  = sizeof (header);
-  iov[1].iov_base = static_cast<void *> (&remote_port);
+  iov[1].iov_base = reinterpret_cast<char *> (&remote_port);
   iov[1].iov_len  = sizeof (ACE_UINT16);
   iov[2].iov_base = (char *) service_name;
   iov[2].iov_len  = ACE_NTOHS (header);
@@ -282,7 +282,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   iovec iovp[cnt];
 
   // The length of ior to be sent.
-  iovp[0].iov_base = static_cast<void *> (&data_len);
+  iovp[0].iov_base = reinterpret_cast<char *> (&data_len);
   iovp[0].iov_len  = sizeof (CORBA::Short);
 
   // The ior.
