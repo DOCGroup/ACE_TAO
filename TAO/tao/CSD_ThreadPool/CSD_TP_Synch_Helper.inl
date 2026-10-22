@@ -10,7 +10,6 @@ TAO::CSD::TP_Synch_Helper::TP_Synch_Helper()
 }
 
 ACE_INLINE
-ACE_INLINE
 bool
 TAO::CSD::TP_Synch_Helper::wait_while_pending()
 {
