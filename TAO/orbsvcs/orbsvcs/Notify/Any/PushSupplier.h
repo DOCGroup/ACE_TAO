@@ -34,7 +34,7 @@ public:
   TAO_Notify_PushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_PushSupplier ();
+  ~TAO_Notify_PushSupplier () override = default;
 
   /// Init
   void init (CosEventComm::PushSupplier_ptr push_supplier);

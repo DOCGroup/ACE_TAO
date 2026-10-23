@@ -48,7 +48,7 @@ public:
   TAO_Notify_ProxyPushSupplier ();
 
   /// Destructor
-  virtual ~TAO_Notify_ProxyPushSupplier ();
+  ~TAO_Notify_ProxyPushSupplier () override = default;
 
   virtual const char * get_proxy_type_name () const;
 

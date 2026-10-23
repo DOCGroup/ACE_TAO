@@ -41,7 +41,7 @@ public:
   TAO_Notify_CosEC_ProxyPushConsumer ();
 
   /// Destructor
-  virtual ~TAO_Notify_CosEC_ProxyPushConsumer ();
+  ~TAO_Notify_CosEC_ProxyPushConsumer () override = default;
 
 
   virtual const char * get_proxy_type_name () const;

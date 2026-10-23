@@ -13,10 +13,6 @@ TAO_Notify_CosEC_ProxyPushConsumer::TAO_Notify_CosEC_ProxyPushConsumer ()
 {
 }
 
-TAO_Notify_CosEC_ProxyPushConsumer::~TAO_Notify_CosEC_ProxyPushConsumer ()
-{
-}
-
 void
 TAO_Notify_CosEC_ProxyPushConsumer::release ()
 {

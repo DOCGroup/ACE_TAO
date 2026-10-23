@@ -18,10 +18,6 @@ TAO_Notify_AnyEvent_No_Copy::TAO_Notify_AnyEvent_No_Copy (const CORBA::Any &even
 {
 }
 
-TAO_Notify_AnyEvent_No_Copy::~TAO_Notify_AnyEvent_No_Copy ()
-{
-}
-
 const TAO_Notify_EventType&
 TAO_Notify_AnyEvent_No_Copy::type () const
 {
@@ -125,10 +121,6 @@ TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
     , any_copy_ (event)
 {
   this->event_ = &any_copy_;
-}
-
-TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
-{
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
