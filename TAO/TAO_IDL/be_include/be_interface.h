@@ -157,13 +157,13 @@ public:
   bool has_rw_attributes () const;
 
   /// Pass along BE-specific member values when redefining a fwd decl.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Helper method passed to the template method that generates code for the
   /// is_a method.
@@ -216,8 +216,8 @@ public:
   int convert_parent_ops (be_visitor *visitor);
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
 
   /// Overridden from class be_type.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
