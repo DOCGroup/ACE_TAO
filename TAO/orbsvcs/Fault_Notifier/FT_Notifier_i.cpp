@@ -683,19 +683,4 @@ CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive ()
   METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) true;
 }
 
-//////////////
-// ProxyInfo
-
-TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo ()
-  : proxyId_ (0)
-  , proxyVar_ (::CosNotifyChannelAdmin::ProxySupplier::_nil())
-{
-}
-
-TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (ProxyInfo const & rhs)
-  : proxyId_ (rhs.proxyId_)
-  , proxyVar_ (rhs.proxyVar_)
-{
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL

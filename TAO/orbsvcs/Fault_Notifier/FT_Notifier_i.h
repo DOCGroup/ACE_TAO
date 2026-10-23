@@ -194,11 +194,11 @@ namespace TAO
     //
     struct ProxyInfo
     {
-      ::CosNotifyChannelAdmin::ProxyID proxyId_;
+      ::CosNotifyChannelAdmin::ProxyID proxyId_ {};
       ::CosNotifyChannelAdmin::ProxySupplier_var proxyVar_;
 
-      ProxyInfo ();
-      ProxyInfo (ProxyInfo const & rhs);
+      ProxyInfo () = default;
+      ProxyInfo (ProxyInfo const &) = default;
       ProxyInfo & operator= (ProxyInfo const &) = default;
     };
 
