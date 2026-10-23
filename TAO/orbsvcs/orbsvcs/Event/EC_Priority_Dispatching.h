@@ -54,6 +54,11 @@ public:
   /// info.
   TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
+  TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching const &) = delete;
+  TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching &&) = delete;
+  TAO_EC_Priority_Dispatching &operator= (TAO_EC_Priority_Dispatching const &) = delete;
+  TAO_EC_Priority_Dispatching &operator= (TAO_EC_Priority_Dispatching &&) = delete;
+
   // = The EC_Dispatching methods.
   virtual void activate () override;
   virtual void shutdown () override;

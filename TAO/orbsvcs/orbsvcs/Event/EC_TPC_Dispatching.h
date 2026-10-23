@@ -41,19 +41,24 @@ public:
                           int thread_priority,
                           int force_activate,
                           TAO_EC_Queue_Full_Service_Object* so);
-  ~TAO_EC_TPC_Dispatching ();
+  ~TAO_EC_TPC_Dispatching () override;
+
+  TAO_EC_TPC_Dispatching (TAO_EC_TPC_Dispatching const &) = delete;
+  TAO_EC_TPC_Dispatching (TAO_EC_TPC_Dispatching &&) = delete;
+  TAO_EC_TPC_Dispatching &operator= (TAO_EC_TPC_Dispatching const &) = delete;
+  TAO_EC_TPC_Dispatching &operator= (TAO_EC_TPC_Dispatching &&) = delete;
 
   // = The EC_Dispatching methods.
-  virtual void activate ();
-  virtual void shutdown ();
+  virtual void activate () override;
+  virtual void shutdown () override;
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
+                     TAO_EC_QOS_Info& qos_info) override;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
+                            TAO_EC_QOS_Info& qos_info) override;
 
   int add_consumer (RtecEventComm::PushConsumer_ptr consumer);
   int remove_consumer (RtecEventComm::PushConsumer_ptr consumer);

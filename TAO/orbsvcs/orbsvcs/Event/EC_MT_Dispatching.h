@@ -45,6 +45,11 @@ public:
                          int force_activate,
                          TAO_EC_Queue_Full_Service_Object* queue_full_service_object_name);
 
+  TAO_EC_MT_Dispatching (TAO_EC_MT_Dispatching const &) = delete;
+  TAO_EC_MT_Dispatching (TAO_EC_MT_Dispatching &&) = delete;
+  TAO_EC_MT_Dispatching &operator= (TAO_EC_MT_Dispatching const &) = delete;
+  TAO_EC_MT_Dispatching &operator= (TAO_EC_MT_Dispatching &&) = delete;
+
   // = The EC_Dispatching methods.
   virtual void activate () override;
   virtual void shutdown () override;

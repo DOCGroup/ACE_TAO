@@ -59,6 +59,11 @@ public:
                             int sched_policy,
                             int sched_scope);
 
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching &&) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching &&) = delete;
+
   // = The EC_Dispatching methods.
   virtual void activate () override;
   virtual void shutdown () override;
