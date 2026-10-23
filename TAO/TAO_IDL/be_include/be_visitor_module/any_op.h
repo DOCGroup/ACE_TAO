@@ -28,10 +28,15 @@ class be_visitor_module_any_op : public be_visitor_module
 {
 public:
   /// constructor
-  be_visitor_module_any_op (be_visitor_context *ctx);
+  explicit be_visitor_module_any_op (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_module_any_op () override;
+
+  be_visitor_module_any_op (const be_visitor_module_any_op &) = delete;
+  be_visitor_module_any_op (be_visitor_module_any_op &&) = delete;
+  be_visitor_module_any_op &operator= (const be_visitor_module_any_op &) = delete;
+  be_visitor_module_any_op &operator= (be_visitor_module_any_op &&) = delete;
 
   /// visit module
   int visit_module (be_module *node) override;
