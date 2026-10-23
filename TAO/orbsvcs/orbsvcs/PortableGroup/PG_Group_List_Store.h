@@ -45,7 +45,7 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Group_List_Store
   {
   public:
-    PG_Group_List_Store (Storable_Factory & storable_factory);
+    explicit PG_Group_List_Store (Storable_Factory & storable_factory);
 
     ~PG_Group_List_Store ();
 

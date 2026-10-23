@@ -43,7 +43,7 @@ public:
   TAO_UIPMC_Endpoint ();
 
   /// Constructor.
-  TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr);
+  explicit TAO_UIPMC_Endpoint (ACE_INET_Addr const &addr);
 
   /// Destructor.
   ~TAO_UIPMC_Endpoint () override;

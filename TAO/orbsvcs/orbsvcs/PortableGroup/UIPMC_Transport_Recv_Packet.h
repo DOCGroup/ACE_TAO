@@ -34,7 +34,7 @@ namespace TAO_PG
   class UIPMC_Recv_Packet_Cleanup_Guard
   {
   public:
-    UIPMC_Recv_Packet_Cleanup_Guard (TAO_UIPMC_Mcast_Transport *transport);
+    explicit UIPMC_Recv_Packet_Cleanup_Guard (TAO_UIPMC_Mcast_Transport *transport);
 
     ~UIPMC_Recv_Packet_Cleanup_Guard ();
 

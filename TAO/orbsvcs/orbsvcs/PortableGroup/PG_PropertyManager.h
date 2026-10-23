@@ -50,7 +50,7 @@ class TAO_PortableGroup_Export TAO_PG_PropertyManager
 {
 public:
   /// Constructor.
-  TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
+  explicit TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
 
   /**
    * @name PortableGroup::PropertyManager methods

@@ -57,7 +57,7 @@ namespace TAO
       ACE_CString type_id_;
       PortableGroup::FactoryInfos infos_;
 
-      RoleInfo(size_t estimated_number_entries = 5);
+      explicit RoleInfo (size_t estimated_number_entries = 5);
     };
     using MapMutex = ACE_Null_Mutex;
     using RegistryType = ACE_Hash_Map_Manager<ACE_CString, RoleInfo *, MapMutex>;
@@ -68,7 +68,7 @@ namespace TAO
     // non-CORBA interface
   public:
     /// Constructor
-    PG_FactoryRegistry (const char * name = "FactoryRegistry");
+    explicit PG_FactoryRegistry (char const * name = "FactoryRegistry");
 
     /// virtual Destructor
     ~PG_FactoryRegistry () override;
