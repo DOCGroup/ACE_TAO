@@ -25,7 +25,7 @@ TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry ()
 {
   if (this->own_received_fragments_)
     {
-      this->own_received_fragments_ = 0;
+      this->own_received_fragments_ = false;
       delete[] this->received_fragments_;
     }
 }
@@ -44,7 +44,7 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
   this->payload_.wr_ptr (request_size_);
 
   this->received_fragments_ = this->default_received_fragments_;
-  this->own_received_fragments_ = 0;
+  this->own_received_fragments_ = false;
   const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   this->received_fragments_size_ =
     this->fragment_count_ / bits_per_ulong + 1;
@@ -52,7 +52,7 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
     {
       ACE_NEW (this->received_fragments_,
                CORBA::ULong[this->received_fragments_size_]);
-      this->own_received_fragments_ = 1;
+      this->own_received_fragments_ = true;
     }
 
   for (CORBA::ULong i = 0; i < this->received_fragments_size_; ++i)
