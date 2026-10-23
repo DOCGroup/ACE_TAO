@@ -21,10 +21,7 @@ be_visitor_sequence_base::be_visitor_sequence_base (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_base::~be_visitor_sequence_base ()
-{
-}
-
+be_visitor_sequence_base::~be_visitor_sequence_base () = default;
 
 int
 be_visitor_sequence_base::visit_predefined_type (be_predefined_type *node)
@@ -185,10 +182,7 @@ be_visitor_sequence_base_template_args (be_visitor_context *ctx,
 }
 
 
-be_visitor_sequence_base_template_args::
-~be_visitor_sequence_base_template_args ()
-{
-}
+be_visitor_sequence_base_template_args::~be_visitor_sequence_base_template_args () = default;
 
 int
 be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
