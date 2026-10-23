@@ -23,7 +23,7 @@ static ACE_TCHAR const * custom_monitor_ior = nullptr;
 static long push_interval = TAO_LB_PULL_HANDLER_INTERVAL;
 
 void
-usage (const ACE_TCHAR * cmd)
+usage (ACE_TCHAR const * cmd)
 {
   ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
@@ -117,7 +117,7 @@ TAO_LB_run_load_monitor (void * orb_arg)
     {
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Monitor");
 
@@ -354,7 +354,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Monitor");
 

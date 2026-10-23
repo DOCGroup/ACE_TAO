@@ -31,7 +31,7 @@ TAO_LB_Push_Handler::handle_timeout (
       this->manager_->push_loads (this->location_,
                                   loads.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       // Catch the exception and ignore it.
       //  @@ Yah?

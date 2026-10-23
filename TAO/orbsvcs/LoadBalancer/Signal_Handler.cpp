@@ -123,7 +123,7 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
       // Now shutdown the ORB.
       this->orb_->shutdown (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception");
 

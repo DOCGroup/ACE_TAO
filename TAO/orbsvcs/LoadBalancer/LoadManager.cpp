@@ -17,7 +17,7 @@ static int ping_timeout_milliseconds = 2000;
 static int ping_interval_seconds = 0;
 
 void
-usage (const ACE_TCHAR * cmd)
+usage (ACE_TCHAR const * cmd)
 {
   ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
@@ -102,7 +102,7 @@ TAO_LB_run_load_manager (void * orb_arg)
     {
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Manager");
 
@@ -266,7 +266,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //     {
 //       ORBSVCS_DEBUG ((LM_DEBUG, "Property ----> %s\n", ex.nam[0].id.in ()));
 //     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Manager");
 
