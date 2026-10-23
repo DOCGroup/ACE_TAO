@@ -28,10 +28,15 @@ class be_visitor_union_discriminant_cs : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_union_discriminant_cs (be_visitor_context *ctx);
+  explicit be_visitor_union_discriminant_cs (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_union_discriminant_cs () override;
+
+  be_visitor_union_discriminant_cs (be_visitor_union_discriminant_cs const &) = delete;
+  be_visitor_union_discriminant_cs (be_visitor_union_discriminant_cs &&) = delete;
+  be_visitor_union_discriminant_cs &operator= (be_visitor_union_discriminant_cs const &) = delete;
+  be_visitor_union_discriminant_cs &operator= (be_visitor_union_discriminant_cs &&) = delete;
 
   /// visit an enum. Required to generate the typecode for an enum definition
   /// appearing side the union

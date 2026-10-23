@@ -16,9 +16,7 @@ be_visitor_union_cs::be_visitor_union_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_cs::~be_visitor_union_cs ()
-{
-}
+be_visitor_union_cs::~be_visitor_union_cs () = default;
 
 // Visit the Union_cs node and its scope.
 int be_visitor_union_cs::visit_union (be_union *node)
@@ -169,7 +167,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR);
 
   *os << node->name () << "::" << node->local_name ()
-      << " (const ::" << node->name () << " &u)"
+      << " (::" << node->name () << " const &u)"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "this->disc_ = u.disc_;" << be_nl;
@@ -220,8 +218,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   // Assignment operator.
   *os << node->name () << " &" << be_nl;
-  *os << node->name () << "::operator= (const ::"
-      << node->name () << " &u)" << be_nl;
+  *os << node->name () << "::operator= (::"
+      << node->name () << " const &u)" << be_nl;
   *os << "{" << be_idt_nl;
   // Check for self-assignment.
   *os << "if (std::addressof(u) != this)" << be_idt_nl
