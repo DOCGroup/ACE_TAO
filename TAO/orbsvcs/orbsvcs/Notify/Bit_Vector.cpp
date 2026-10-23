@@ -11,10 +11,6 @@ Bit_Vector::Bit_Vector()
 {
 }
 
-Bit_Vector::~Bit_Vector()
-{
-}
-
 bool
 Bit_Vector::is_set(const size_t location) const
 {

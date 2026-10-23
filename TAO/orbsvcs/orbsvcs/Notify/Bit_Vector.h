@@ -45,7 +45,7 @@ public:
   /// The constructor.
   Bit_Vector();
   /// The destructor.
-  ~Bit_Vector();
+  ~Bit_Vector() = default;
 
   /// \brief Determine if a bit at location is set.
   bool is_set(const size_t location) const;
