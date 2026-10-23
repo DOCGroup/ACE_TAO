@@ -93,13 +93,13 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   if ((result == 0) && (item_count == 2))
   {
     // All objects at location failed.
-    fault_event_desc.all_at_location_failed = 1;
+    fault_event_desc.all_at_location_failed = true;
   }
 
   if ((result == 0) && (item_count == 3))
   {
     // All objects of type at location failed.
-    fault_event_desc.all_of_type_at_location_failed = 1;
+    fault_event_desc.all_of_type_at_location_failed = true;
     result = this->get_type_id (
       filterable[2].value, fault_event_desc.type_id.out());
   }
@@ -107,7 +107,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   if ((result == 0) && (item_count == 4))
   {
     // An object (replica) at a location failed.
-    fault_event_desc.object_at_location_failed = 1;
+    fault_event_desc.object_at_location_failed = true;
     result = this->get_type_id (
       filterable[2].value, fault_event_desc.type_id.out());
     if (result == 0)
@@ -118,19 +118,19 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   }
 
   // A specific object at a location failed.
-  if ((result == 0) && (fault_event_desc.object_at_location_failed == 1))
+  if ((result == 0) && fault_event_desc.object_at_location_failed)
   {
     result = this->single_replica_failure (fault_event_desc);
   }
 
   // All objects at location failed.
-  if ((result == 0) && (fault_event_desc.all_at_location_failed == 1))
+  if ((result == 0) && fault_event_desc.all_at_location_failed)
   {
     result = this->location_failure (fault_event_desc);
   }
 
   // All objects of type at location failed.
-  if ((result == 0) && (fault_event_desc.all_of_type_at_location_failed == 1))
+  if ((result == 0) && fault_event_desc.all_of_type_at_location_failed)
   {
     result = this->type_failure (fault_event_desc);
   }
@@ -330,7 +330,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
   prop_name[0].id = CORBA::string_dup (FT::FT_FACTORIES);
   int result = 0;
 
-  const PortableGroup::FactoryInfos* temp_factories = 0;
+  const PortableGroup::FactoryInfos* temp_factories = nullptr;
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value) == 1)
   {
@@ -363,7 +363,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
 int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
   const PortableGroup::ObjectGroup_ptr iogr,
   const PortableGroup::Location & location,
-  int & object_is_primary)
+  bool & object_is_primary)
 {
   // To determine if this was a primary that faulted:
   // Get the TagFTGroupTaggedComponent from the IOGR and search
@@ -372,7 +372,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
   // those of the primary.  If they match, it was a primary fault.
 
   int result = 0;
-  object_is_primary = 0;
+  object_is_primary = false;
 
   try
   {
@@ -422,7 +422,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
           failed_obj.in());
         if (equiv)
         {
-          object_is_primary = 1;
+          object_is_primary = true;
           result = 0;
         }
       }
@@ -677,7 +677,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       the_object_group = new_object_group;
     }
 
-    if (fault_event_desc.object_is_primary == 1)
+    if (fault_event_desc.object_is_primary)
     {
       if (TAO_debug_level > 6)
       {

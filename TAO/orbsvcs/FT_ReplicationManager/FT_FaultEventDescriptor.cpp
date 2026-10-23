@@ -22,11 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor.
 TAO::FT_FaultEventDescriptor::FT_FaultEventDescriptor ()
-  : all_at_location_failed (0)
-  , all_of_type_at_location_failed (0)
-  , object_at_location_failed (0)
-  , object_is_primary (0)
-  , type_id (CORBA::string_dup (""))
+  : type_id (CORBA::string_dup (""))
   , object_group_id (PortableGroup::ObjectGroupId (0))
 {
 }
@@ -43,7 +39,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
     loc_as_string += CORBA::string_dup (this->location[li].id);
   }
 
-  if (this->all_at_location_failed == 1)
+  if (this->all_at_location_failed)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")
@@ -52,7 +48,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
     ));
   }
 
-  if (this->all_of_type_at_location_failed == 1)
+  if (this->all_of_type_at_location_failed)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")
@@ -62,7 +58,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
     ));
   }
 
-  if (this->object_at_location_failed == 1)
+  if (this->object_at_location_failed)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")
@@ -74,7 +70,7 @@ void TAO::FT_FaultEventDescriptor::dump ()
     ));
   }
 
-  if (this->object_is_primary == 1)
+  if (this->object_is_primary)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("TAO::FT_FaultEventDescriptor::dump: ")

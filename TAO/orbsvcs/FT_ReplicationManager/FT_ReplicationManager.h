@@ -396,7 +396,7 @@ namespace TAO
     TAO::PG_FactoryRegistry factory_registry_;
 
     /// Quit flag.
-    int quit_;
+    bool quit_ {};
   };
 } // namespace TAO
 

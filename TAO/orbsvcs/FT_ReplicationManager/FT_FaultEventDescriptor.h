@@ -42,10 +42,10 @@ namespace TAO
     /// Data members.
 
     /// Flags indicating the "extent" of the fault.
-    int all_at_location_failed;
-    int all_of_type_at_location_failed;
-    int object_at_location_failed;
-    int object_is_primary;
+    bool all_at_location_failed {};
+    bool all_of_type_at_location_failed {};
+    bool object_at_location_failed {};
+    bool object_is_primary {};
 
     /// The location of the fault.
     PortableGroup::Location_var location;

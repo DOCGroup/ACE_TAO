@@ -76,7 +76,6 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   , fault_notifier_ior_string_ (nullptr)
   , fault_consumer_ ()
   , factory_registry_ ("ReplicationManager::FactoryRegistry")
-  , quit_ (0)
 {
   // init must be called before using this object.
 }
@@ -455,7 +454,7 @@ TAO::FT_ReplicationManager::get_factory_registry (
 //public
 void TAO::FT_ReplicationManager::shutdown ()
 {
-  this->quit_ = 1;
+  this->quit_ = true;
 }
 
 // Get the type_id associated with an object group.

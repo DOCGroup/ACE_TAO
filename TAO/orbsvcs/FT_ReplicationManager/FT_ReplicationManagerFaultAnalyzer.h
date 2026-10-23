@@ -152,7 +152,7 @@ namespace TAO
     int is_primary_member (
       const PortableGroup::ObjectGroup_ptr iogr,
       const PortableGroup::Location & location,
-      int & object_is_primary);
+      bool & object_is_primary);
 
     /// remove a failed member from a group
     int remove_failed_member (
