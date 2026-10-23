@@ -13,8 +13,6 @@
 
 be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ())
 {
@@ -28,9 +26,7 @@ be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svh::~be_visitor_home_svh ()
-{
-}
+be_visitor_home_svh::~be_visitor_home_svh () = default;
 
 int
 be_visitor_home_svh::visit_home (be_home *node)
@@ -123,14 +119,14 @@ be_visitor_home_svh::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  char const *sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
-  const char *lname =
+  char const *lname =
     node_->original_local_name ()->get_string ();
 
-  const char *clname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  char const *clname = comp_->local_name ()->get_string ();
+  char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl
       << "class " << export_macro_.c_str () << " " << lname
@@ -148,7 +144,7 @@ be_visitor_home_svh::gen_servant_class ()
 
   os_ << lname << "_Servant (" << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
-      << "const char * ins_name," << be_nl
+      << "char const * ins_name," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c);" << be_uidt;
 
@@ -254,7 +250,7 @@ be_visitor_home_svh::gen_entrypoint ()
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c," << be_nl
-      << "const char * ins_name);" << be_uidt;
+      << "char const * ins_name);" << be_uidt;
 }
 
 int

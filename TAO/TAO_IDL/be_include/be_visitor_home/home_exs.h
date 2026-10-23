@@ -25,14 +25,19 @@
 class be_visitor_home_exs : public be_visitor_scope
 {
 public:
-  be_visitor_home_exs (be_visitor_context *ctx);
+  explicit be_visitor_home_exs (be_visitor_context *ctx);
 
-  ~be_visitor_home_exs ();
+  ~be_visitor_home_exs () override;
 
-  virtual int visit_home (be_home *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_factory (be_factory *node);
+  be_visitor_home_exs (const be_visitor_home_exs &) = delete;
+  be_visitor_home_exs (be_visitor_home_exs &&) = delete;
+  be_visitor_home_exs &operator= (const be_visitor_home_exs &) = delete;
+  be_visitor_home_exs &operator= (be_visitor_home_exs &&) = delete;
+
+  int visit_home (be_home *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_factory (be_factory *node) override;
 
 private:
   int gen_exec_class ();
@@ -40,12 +45,12 @@ private:
   void gen_entrypoint ();
 
 private:
-  be_home *node_;
-  AST_Component *comp_;
+  be_home *node_ {};
+  AST_Component *comp_ {};
   TAO_OutStream &os_;
-  const char *comment_start_border_;
-  const char *comment_end_border_;
-  const char *your_code_here_;
+  char const *const comment_start_border_ {"/**"};
+  char const *const comment_end_border_ {" */"};
+  char const *const your_code_here_ {"/* Your code here. */"};
   ACE_CString export_macro_;
 };
 
@@ -55,14 +60,19 @@ class Home_Exec_Op_Attr_Generator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  Home_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
+  explicit Home_Exec_Op_Attr_Generator (be_visitor_scope *visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  Home_Exec_Op_Attr_Generator (const Home_Exec_Op_Attr_Generator &) = delete;
+  Home_Exec_Op_Attr_Generator (Home_Exec_Op_Attr_Generator &&) = delete;
+  Home_Exec_Op_Attr_Generator &operator= (const Home_Exec_Op_Attr_Generator &) = delete;
+  Home_Exec_Op_Attr_Generator &operator= (Home_Exec_Op_Attr_Generator &&) = delete;
+
+  int emit (be_interface *derived_interface,
+            TAO_OutStream *os,
+            be_interface *base_interface) override;
 
 private:
-  be_visitor_scope * visitor_;
+  be_visitor_scope *visitor_;
 };
 
 #endif /* _BE_HOME_HOME_EXS_H_ */
