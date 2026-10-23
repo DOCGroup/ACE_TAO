@@ -24,7 +24,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
   : member_ (CORBA::Object::_duplicate (member))
   , factory_(PortableGroup::GenericFactory::_nil ())
   , location_ (location)
-  , is_primary_ (0)
+  , is_primary_ (false)
 {
 }
 
@@ -37,7 +37,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
   , factory_ (PortableGroup::GenericFactory::_duplicate (factory))
   , factory_id_ (factory_id)
   , location_ (location)
-  , is_primary_ (0)
+  , is_primary_ (false)
 {
 }
 
@@ -63,13 +63,13 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , distribute_ (1)
-  , empty_ (1)
+  , distribute_ (true)
+  , empty_ (true)
   , role_ (type_id)
   , type_id_ (type_id)
   , tagged_component_ (tagged_component)
   , reference_ (CORBA::Object::_duplicate(empty_group))
-  , group_name_ (0)
+  , group_name_ (nullptr)
   , members_ ()
   , primary_location_(0)
   , properties_ (the_criteria, type_properties)
@@ -87,13 +87,13 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , distribute_ (1)
-  , empty_ (1)
+  , distribute_ (true)
+  , empty_ (true)
   , role_ ("")
   , type_id_ ()
   , tagged_component_ ()
   , reference_ (CORBA::Object::_nil ())
-  , group_name_ (0)
+  , group_name_ (nullptr)
   , members_ ()
   , primary_location_(0)
   , properties_ ()
