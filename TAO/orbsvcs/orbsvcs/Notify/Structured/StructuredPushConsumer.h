@@ -37,7 +37,7 @@ public:
   void init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer);
 
   /// Destructor
-  virtual ~TAO_Notify_StructuredPushConsumer ();
+  ~TAO_Notify_StructuredPushConsumer () override = default;
 
   /// Push <event> to this consumer.
 //  virtual void push_i (const TAO_Notify_Event* event);

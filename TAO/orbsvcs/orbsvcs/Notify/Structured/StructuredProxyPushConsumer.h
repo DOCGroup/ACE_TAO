@@ -43,7 +43,7 @@ public:
   TAO_Notify_StructuredProxyPushConsumer ();
 
   /// Destructor
-  virtual ~TAO_Notify_StructuredProxyPushConsumer ();
+  ~TAO_Notify_StructuredProxyPushConsumer () override = default;
 
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);

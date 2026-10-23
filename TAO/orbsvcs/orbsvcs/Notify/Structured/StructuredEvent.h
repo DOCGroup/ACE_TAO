@@ -35,7 +35,7 @@ public:
   explicit TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
-  virtual ~TAO_Notify_StructuredEvent_No_Copy ();
+  ~TAO_Notify_StructuredEvent_No_Copy () override = default;
 
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR & cdr) const;
@@ -92,7 +92,7 @@ public:
   explicit TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
-  virtual ~TAO_Notify_StructuredEvent ();
+  ~TAO_Notify_StructuredEvent () override = default;
 
 
 protected:

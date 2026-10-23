@@ -8,10 +8,6 @@ TAO_Notify_StructuredPushSupplier::TAO_Notify_StructuredPushSupplier (TAO_Notify
 {
 }
 
-TAO_Notify_StructuredPushSupplier::~TAO_Notify_StructuredPushSupplier ()
-{
-}
-
 void
 TAO_Notify_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier)
 {
