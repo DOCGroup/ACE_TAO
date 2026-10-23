@@ -22,19 +22,19 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::TAO_MonitorProxySupplier_T ()
   , overflow_stat_name_ ()
   , queue_item_count_ (0)
   , overflows_ (0)
-  , event_channel_ (0)
-  , admin_ (0)
+  , event_channel_ (nullptr)
+  , admin_ (nullptr)
 {
 }
 
 template <typename ProxyPushSupplier>
 TAO_MonitorProxySupplier_T<ProxyPushSupplier>::~TAO_MonitorProxySupplier_T ()
 {
-  if (this->admin_ != 0)
+  if (this->admin_ != nullptr)
     {
       this->admin_->unregister_child (this);
     }
-  if (this->event_channel_ != 0)
+  if (this->event_channel_ != nullptr)
     {
       this->event_channel_->unregister_statistic (this->queue_item_stat_name_);
     }
@@ -44,17 +44,17 @@ template <typename ProxyPushSupplier>
 void
 TAO_MonitorProxySupplier_T<ProxyPushSupplier>::update_queue_count (size_t count)
 {
-  if (this->queue_item_count_ != 0)
+  if (this->queue_item_count_ != nullptr)
     {
       // get a count of events that are being held at the consumer level.
       size_t pending = 0;
-      if (TAO_Notify_ProxySupplier::consumer() != 0)
+      if (TAO_Notify_ProxySupplier::consumer() != nullptr)
         {
           pending = this->TAO_Notify_ProxySupplier::consumer()->pending_count();
         }
       this->queue_item_count_->receive (count + pending);
     }
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     {
       this->child_->update_queue_count (count);
     }
@@ -68,11 +68,11 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::count_queue_overflow (
 {
   // note that someday we may wish to distinguish between
   // local and global overflows
-  if (this->overflows_ != 0)
+  if (this->overflows_ != nullptr)
     {
       this->overflows_->receive ((size_t)1);
     }
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     {
       this->child_->count_queue_overflow (local_overflow, global_overflow);
     }
@@ -85,7 +85,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
   CosNotifyChannelAdmin::ProxyID_out proxy_id)
 {
   admin_ = dynamic_cast<TAO_MonitorConsumerAdmin *> (& admin);
-  if (admin_ == 0)
+  if (admin_ == nullptr)
     {
       throw CORBA::INTERNAL();
     }
@@ -95,11 +95,11 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
   TAO_Notify_Worker_Task * worker_task =  this->TAO_Notify_Object::get_worker_task ();
   TAO_Notify_ThreadPool_Task* tpt =
     dynamic_cast<TAO_Notify_ThreadPool_Task*> (worker_task);
-  if (tpt != 0)
+  if (tpt != nullptr)
     {
       bs = tpt->buffering_strategy ();
     }
-  if (bs != 0)
+  if (bs != nullptr)
     {
       bs->set_tracker (admin_);
     }
@@ -123,7 +123,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
   if (!event_channel_->register_statistic (this->queue_item_stat_name_, this->queue_item_count_))
     {
       delete this->queue_item_count_;
-      this->queue_item_count_ = 0;
+      this->queue_item_count_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
 
@@ -136,7 +136,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
   if (!event_channel_->register_statistic (this->overflow_stat_name_, this->overflows_))
     {
       delete this->overflows_;
-      this->overflows_ = 0;
+      this->overflows_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
 

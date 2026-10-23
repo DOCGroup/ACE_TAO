@@ -87,7 +87,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
       // The constructor sets the refcount to 1 so this call will
       // delete the pointer.
       this->queue_size_->remove_ref ();
-      this->queue_size_ = 0;
+      this->queue_size_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
 
@@ -100,7 +100,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
   if (!mec->register_statistic (this->overflow_stat_name_, this->overflows_))
     {
       delete this->overflows_;
-      this->overflows_ = 0;
+      this->overflows_ = nullptr;
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
 
@@ -132,7 +132,7 @@ TAO_MonitorConsumerAdmin::obtain_named_notification_push_supplier (
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
 
-  if (ec == 0)
+  if (ec == nullptr)
     {
       throw CORBA::INTERNAL ();
     }
@@ -157,7 +157,7 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
 
-  if (ec == 0)
+  if (ec == nullptr)
     {
       throw CORBA::INTERNAL ();
     }
@@ -182,7 +182,7 @@ TAO_MonitorConsumerAdmin::update_queue_count (size_t count)
   // constant, and only updated the statistic when the count was non-zero.
   this->queue_size_->receive (count);
 
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     {
       this->child_->update_queue_count (count);
     }
@@ -198,7 +198,7 @@ TAO_MonitorConsumerAdmin::count_queue_overflow (
   // local and global overflows
   this->overflows_->receive ((size_t)1);
 
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     {
       this->child_->count_queue_overflow (local_overflow, global_overflow);
     }
@@ -208,7 +208,7 @@ TAO_MonitorEventChannel *
 TAO_MonitorConsumerAdmin::get_ec () const
 {
   TAO_MonitorEventChannel* ec = dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec == 0)
+  if (ec == nullptr)
     throw CORBA::INTERNAL ();
   return ec;
 }
@@ -233,7 +233,7 @@ TAO_MonitorConsumerAdmin::remove ()
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec != 0)
+  if (ec != nullptr)
     {
       ec->unregister_statistic (this->queue_size_stat_name_);
       ec->unregister_statistic (this->overflow_stat_name_);
