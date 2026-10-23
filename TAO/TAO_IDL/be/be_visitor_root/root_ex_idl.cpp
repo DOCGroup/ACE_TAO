@@ -17,9 +17,7 @@ be_visitor_root_ex_idl::be_visitor_root_ex_idl (
 {
 }
 
-be_visitor_root_ex_idl::~be_visitor_root_ex_idl ()
-{
-}
+be_visitor_root_ex_idl::~be_visitor_root_ex_idl () = default;
 
 int
 be_visitor_root_ex_idl::visit_root (be_root *node)
