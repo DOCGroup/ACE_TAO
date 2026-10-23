@@ -13,7 +13,7 @@ public:
   be_connector (UTL_ScopedName *n,
                 AST_Connector *base_connector);
 
-  virtual ~be_connector ();
+  ~be_connector () override;
 
   /// Cleanup function.
   virtual void destroy ();
@@ -28,8 +28,8 @@ private:
   void check_ancestors ();
 
 private:
-  bool dds_connector_;
-  bool ami_connector_;
+  bool dds_connector_ {};
+  bool ami_connector_ {};
 };
 
 #endif // BE_CONNECTOR_H

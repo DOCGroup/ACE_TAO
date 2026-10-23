@@ -35,7 +35,7 @@ public:
                 bool local,
                 bool abstract);
 
-  ~be_operation ();
+  ~be_operation () override;
 
   /// Cleanup method.
   virtual void destroy ();
@@ -59,9 +59,9 @@ public:
   void is_attr_op (bool val);
 
 protected:
-  bool is_sendc_ami_;
-  bool is_excep_ami_;
-  bool is_attr_op_;
+  bool is_sendc_ami_ {};
+  bool is_excep_ami_ {};
+  bool is_attr_op_ {};
 };
 
 #endif

@@ -47,9 +47,7 @@ be_connector::be_connector (
                   nullptr,
                   0,
                   nullptr,
-                  0),
-    dds_connector_ (false),
-    ami_connector_ (false)
+                  0)
 {
   if (! this->imported ())
     {
@@ -57,9 +55,7 @@ be_connector::be_connector (
     }
 }
 
-be_connector::~be_connector ()
-{
-}
+be_connector::~be_connector () = default;
 
 void
 be_connector::destroy ()

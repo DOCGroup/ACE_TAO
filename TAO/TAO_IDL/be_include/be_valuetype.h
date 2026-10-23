@@ -41,7 +41,7 @@ public:
                 bool truncatable,
                 bool custom);
 
-  ~be_valuetype ();
+  ~be_valuetype () override;
 
   virtual void redefine (AST_Interface *from);
 
@@ -163,16 +163,16 @@ public:
 
 private:
   /// Do we support at least one abstract interface?
-  bool supports_abstract_;
+  bool supports_abstract_ {};
 
   /// Have these been done already?
-  bool var_out_seq_decls_gen_;
+  bool var_out_seq_decls_gen_ {};
 
   /// To differentiate from the interface skeleton name.
-  char *full_obv_skel_name_;
+  char *full_obv_skel_name_ {};
 
   /// Flag used by default constructor generator.
-  bool is_amh_excep_holder_;
+  bool is_amh_excep_holder_ {};
 };
 
 #endif  // if !defined

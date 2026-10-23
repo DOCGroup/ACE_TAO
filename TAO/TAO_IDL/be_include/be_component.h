@@ -33,7 +33,7 @@ public:
                 AST_Interface **supports_flat,
                 long n_supports_flat);
 
-  ~be_component ();
+  ~be_component () override;
 
   /// Override of the AST method to eliminate narrowing of
   /// the return value. Non-virtual.
@@ -80,14 +80,14 @@ private:
 
 private:
   /// Used by visitors to reduce footprint.
-  ACE_CDR::ULong n_provides_;
-  ACE_CDR::ULong n_remote_provides_;
-  ACE_CDR::ULong n_uses_;
-  ACE_CDR::ULong n_remote_uses_;
-  bool has_uses_multiple_;
-  ACE_CDR::ULong n_publishes_;
-  ACE_CDR::ULong n_consumes_;
-  ACE_CDR::ULong n_emits_;
+  ACE_CDR::ULong n_provides_ {};
+  ACE_CDR::ULong n_remote_provides_ {};
+  ACE_CDR::ULong n_uses_ {};
+  ACE_CDR::ULong n_remote_uses_ {};
+  bool has_uses_multiple_ {};
+  ACE_CDR::ULong n_publishes_ {};
+  ACE_CDR::ULong n_consumes_ {};
+  ACE_CDR::ULong n_emits_ {};
 };
 
 #endif  // if !defined

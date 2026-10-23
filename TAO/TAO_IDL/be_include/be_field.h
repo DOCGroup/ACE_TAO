@@ -51,7 +51,7 @@ private:
   // If the name of a provides or uses node has already been
   // prefixed with the (mirror)port name(s), we don't want
   // to prefix it again.
-  bool port_name_prefixed_;
+  bool port_name_prefixed_ {};
 };
 
 #endif
