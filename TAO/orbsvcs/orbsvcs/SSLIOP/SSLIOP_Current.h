@@ -63,7 +63,7 @@ namespace TAO
       using _out_type = Current_out;
 
       /// Constructor.
-      Current (TAO_ORB_Core *orb_core);
+      explicit Current (TAO_ORB_Core *orb_core);
 
       /// Return the peer certificate associated with the current
       /// request.
@@ -130,8 +130,10 @@ namespace TAO
       Current_Impl *implementation ();
 
     private:
-      Current (const Current &) = delete;
-      void operator= (const Current &) = delete;
+      Current (Current const &) = delete;
+      Current (Current &&) = delete;
+      void operator= (Current const &) = delete;
+      void operator= (Current &&) = delete;
 
     private:
       /// TSS slot assigned to this object.

@@ -216,7 +216,7 @@ namespace TAO
     {
     public:
       /// Constructor
-      TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
+      explicit TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
       ~TAO_SSLIOP_Synthetic_Endpoint () override;
@@ -234,7 +234,7 @@ namespace TAO
       TAO_Endpoint *duplicate () override;
 
     private:
-      TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
+      explicit TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
     };
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.
