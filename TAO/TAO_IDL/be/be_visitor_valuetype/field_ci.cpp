@@ -16,15 +16,12 @@
 be_visitor_valuetype_field_ci::be_visitor_valuetype_field_ci (
     be_visitor_context *ctx
   )
-  : be_visitor_decl (ctx),
-    in_obv_space_ (false)
+  : be_visitor_decl (ctx)
 {
   setenclosings ("");
 }
 
-be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci ()
-{
-}
+be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci () = default;
 
 int
 be_visitor_valuetype_field_ci::visit_field (be_field *node)

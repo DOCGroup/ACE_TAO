@@ -31,7 +31,7 @@ public:
   be_visitor_valuetype_field_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_field_ci ();
+  ~be_visitor_valuetype_field_ci () override;
 
   /// visit the field node
   virtual int visit_field (be_field *node);
@@ -54,7 +54,7 @@ public:
   /// if (in_obv_space_) print OBV_name else print name
   void op_name (be_valuetype *node, TAO_OutStream *os);
 
-  bool in_obv_space_;
+  bool in_obv_space_ {};
 
 private:
   const char *pre_op_;
