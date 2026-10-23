@@ -24,10 +24,15 @@ class be_visitor_native_ch : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_native_ch (be_visitor_context *ctx);
+  explicit be_visitor_native_ch (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_native_ch () override = default;
+
+  be_visitor_native_ch (const be_visitor_native_ch &) = delete;
+  be_visitor_native_ch (be_visitor_native_ch &&) = delete;
+  be_visitor_native_ch &operator= (const be_visitor_native_ch &) = delete;
+  be_visitor_native_ch &operator= (be_visitor_native_ch &&) = delete;
 
   /// visit native.
   int visit_native (be_native *node) override;
