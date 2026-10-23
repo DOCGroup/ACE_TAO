@@ -26,9 +26,6 @@ Task_Entry::Task_Entry ()
     dfs_status_ (NOT_VISITED),
     discovered_ (-1),
     finished_ (-1),
-    is_thread_delineator_ (0),
-    has_unresolved_remote_dependencies_ (0),
-    has_unresolved_local_dependencies_ (0),
     calls_ (),
     callers_ ()
 {
@@ -197,7 +194,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
@@ -220,7 +217,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
@@ -294,7 +291,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
@@ -317,7 +314,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",

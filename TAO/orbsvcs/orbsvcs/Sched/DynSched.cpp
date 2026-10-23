@@ -1490,7 +1490,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
       if (task_entries_ [i].rt_info ()->period > 0)
       {
         task_entries_ [i].effective_period (task_entries_ [i].rt_info ()->period);
-        task_entries_ [i].is_thread_delineator (1);
+        task_entries_ [i].is_thread_delineator (true);
 
         // create a Dispatch_Entry for each thread of the delimiting Task_Entry
         u_int thread_count = (task_entries_ [i].rt_info ()->threads > 0)
@@ -1530,7 +1530,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
                    ? ST_UNRESOLVED_REMOTE_DEPENDENCIES
                    : result;
 
-          task_entries_ [i].has_unresolved_remote_dependencies (1);
+          task_entries_ [i].has_unresolved_remote_dependencies (true);
 
           ORBSVCS_DEBUG (
              (LM_DEBUG,
@@ -1557,7 +1557,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
 
           result = ST_UNRESOLVED_LOCAL_DEPENDENCIES;
 
-          task_entries_ [i].has_unresolved_local_dependencies (1);
+          task_entries_ [i].has_unresolved_local_dependencies (true);
 
           // Record entry point in list of unresolved local dependencies
           ACE_OS::sprintf (string_buffer, "// %s\n",

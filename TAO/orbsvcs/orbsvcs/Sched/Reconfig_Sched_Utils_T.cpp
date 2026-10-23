@@ -292,7 +292,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
       && successor.actual_rt_info ()->period == 0
       && successor.actual_rt_info ()->threads == 0)
     {
-      successor.is_thread_delineator (0);
+      successor.is_thread_delineator (false);
     }
 
   return 0;

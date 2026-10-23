@@ -84,14 +84,14 @@ Task_Entry::dfs_status (Task_Entry::DFS_Status ds)
 // Sets a flag indicating whether node is a thread delineator.
 
 ACE_INLINE void
-Task_Entry::is_thread_delineator (int i)
+Task_Entry::is_thread_delineator (bool value)
 {
-  is_thread_delineator_ = i;
+  is_thread_delineator_ = value;
 }
 
 // Gets the flag indicating whether node is a thread delineator.
 
-ACE_INLINE int
+ACE_INLINE bool
 Task_Entry::is_thread_delineator () const
 {
   return is_thread_delineator_;
@@ -100,14 +100,14 @@ Task_Entry::is_thread_delineator () const
 // Sets a flag indicating whether node has unresolved remote dependencies.
 
 ACE_INLINE void
-Task_Entry::has_unresolved_remote_dependencies (int i)
+Task_Entry::has_unresolved_remote_dependencies (bool value)
 {
-  has_unresolved_remote_dependencies_ = i;
+  has_unresolved_remote_dependencies_ = value;
 }
 
 // Gets the flag indicating whether node has unresolved remote dependencies.
 
-ACE_INLINE int
+ACE_INLINE bool
 Task_Entry::has_unresolved_remote_dependencies () const
 {
   return has_unresolved_remote_dependencies_;
@@ -117,14 +117,14 @@ Task_Entry::has_unresolved_remote_dependencies () const
 // Sets a flag indicating whether node has unresolved local dependencies.
 
 ACE_INLINE void
-Task_Entry::has_unresolved_local_dependencies (int i)
+Task_Entry::has_unresolved_local_dependencies (bool value)
 {
-  has_unresolved_local_dependencies_ = i;
+  has_unresolved_local_dependencies_ = value;
 }
 
 // Gets the flag indicating whether node has unresolved local dependencies.
 
-ACE_INLINE int
+ACE_INLINE bool
 Task_Entry::has_unresolved_local_dependencies () const
 {
   return has_unresolved_local_dependencies_;
