@@ -36,6 +36,11 @@ public:
   TAO_NT_Naming_Service ();
   ~TAO_NT_Naming_Service () override;
 
+  TAO_NT_Naming_Service (TAO_NT_Naming_Service const &) = delete;
+  TAO_NT_Naming_Service (TAO_NT_Naming_Service &&) = delete;
+  TAO_NT_Naming_Service &operator= (TAO_NT_Naming_Service const &) = delete;
+  TAO_NT_Naming_Service &operator= (TAO_NT_Naming_Service &&) = delete;
+
   /// We override <handle_control> because it handles stop requests
   /// privately.
   void handle_control (DWORD control_code) override;

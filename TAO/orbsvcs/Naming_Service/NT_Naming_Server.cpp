@@ -46,6 +46,11 @@ public:
   Options ();
   ~Options ();
 
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
+
   int run (int argc, ACE_TCHAR *argv[]);
 
 private:
