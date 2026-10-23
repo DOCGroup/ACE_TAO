@@ -220,10 +220,10 @@ public:
                              bool use_underscore) override;
 
   /// Overridden from class be_type.
-  virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
-                                            bool use_underscore,
-                                            bool accessor = false);
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                   const char *instance_name,
+                                   bool use_underscore,
+                                   bool accessor = false) override;
 
   /// Sets the original interface from which this one was created,
   /// applies only to implied IDL.
