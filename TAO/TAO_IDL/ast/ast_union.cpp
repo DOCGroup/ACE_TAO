@@ -106,8 +106,6 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
                    local,
                    abstract)
 {
-  this->default_value_.computed_ = -2;
-
   AST_PredefinedType *pdt = nullptr;
 
   if (dt == nullptr)

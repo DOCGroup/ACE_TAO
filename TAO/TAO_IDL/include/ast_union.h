@@ -111,8 +111,8 @@ public:
       ACE_CDR::ULong enum_val;
       ACE_CDR::LongLong longlong_val;
       ACE_CDR::ULongLong ulonglong_val;
-    } u;
-    long computed_;
+    } u {};
+    long computed_ {-2};
     // computed == -1 => error condition
     //          == 0 => does not exist because all cases have been covered
     //          == 1 => already computed

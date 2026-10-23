@@ -1053,43 +1053,43 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
       switch (ev->et)
         {
         case AST_Expression::EV_short:
-          tmp.bval = (ev->u.sval == 0) ? false : true;
+          tmp.bval = ev->u.sval != 0;
           break;
         case AST_Expression::EV_ushort:
-          tmp.bval = (ev->u.usval == 0) ? false : true;
+          tmp.bval = ev->u.usval != 0;
           break;
         case AST_Expression::EV_long:
-          tmp.bval = (ev->u.lval == 0) ? false : true;
+          tmp.bval = ev->u.lval != 0;
           break;
         case AST_Expression::EV_ulong:
-          tmp.bval = (ev->u.ulval == 0) ? false : true;
+          tmp.bval = ev->u.ulval != 0;
           break;
         case AST_Expression::EV_longlong:
-          tmp.bval = (ev->u.llval == 0) ? false : true;
+          tmp.bval = ev->u.llval != 0;
           break;
         case AST_Expression::EV_ulonglong:
-          tmp.bval = (ev->u.ullval == 0) ? false : true;
+          tmp.bval = ev->u.ullval != 0;
           break;
         case AST_Expression::EV_float:
-          tmp.bval = ACE::is_equal (ev->u.fval, 0.0f) ? false : true;
+          tmp.bval = !ACE::is_equal (ev->u.fval, 0.0f);
           break;
         case AST_Expression::EV_double:
-          tmp.bval = ACE::is_equal (ev->u.dval, 0.0) ? false : true;
+          tmp.bval = !ACE::is_equal (ev->u.dval, 0.0);
           break;
         case AST_Expression::EV_char:
-          tmp.bval = (ev->u.cval == 0) ? false : true;
+          tmp.bval = ev->u.cval != 0;
           break;
         case AST_Expression::EV_wchar:
-          tmp.bval = (ev->u.wcval == 0) ? false : true;
+          tmp.bval = ev->u.wcval != 0;
           break;
         case AST_Expression::EV_octet:
-          tmp.bval = (ev->u.oval == 0) ? false : true;
+          tmp.bval = ev->u.oval != 0;
           break;
         case AST_Expression::EV_int8:
-          tmp.bval = ev->u.int8val ? true : false;
+          tmp.bval = ev->u.int8val != 0;
           break;
         case AST_Expression::EV_uint8:
-          tmp.bval = ev->u.uint8val ? true : false;
+          tmp.bval = ev->u.uint8val != 0;
           break;
         default:
          return nullptr;

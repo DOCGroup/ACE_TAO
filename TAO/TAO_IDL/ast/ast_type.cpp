@@ -172,7 +172,7 @@ AST_Type::has_constructor (bool value)
   // Similarly to be_decl::size_type_, once this
   // gets set to true, we don't want it to
   // change back.
-  if (this->has_constructor_ == 0)
+  if (!this->has_constructor_)
     {
       this->has_constructor_ = value;
     }
