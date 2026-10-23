@@ -56,18 +56,13 @@ TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   , ns_name_ (nullptr)
   , naming_context_ (nullptr)
   , this_name_ (1)
-  , quit_on_idle_ (0)
   , domain_ (CORBA::string_dup("default_domain"))
   , location_ (1)
   , notifier_ (nullptr)
-  , rm_register_ (1)
   , replication_manager_ (nullptr)
-  , registered_ (0)
   , factory_registry_ (nullptr)
   , identity_ ("")
   , empty_slots_ (0)
-  , quit_requested_ (0)
-
 {
   this->location_.length(1);
   this->location_[0].id = CORBA::string_dup("default_location");
@@ -157,7 +152,7 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'q':
       {
-        this->quit_on_idle_ = 1;
+        this->quit_on_idle_ = true;
         break;
       }
 
@@ -189,8 +184,8 @@ const char * TAO::FT_FaultDetectorFactory_i::identity () const
 int TAO::FT_FaultDetectorFactory_i::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
-  int quit = this->quit_requested_;
-  if (quit == 0 && this->detectors_.size() == this->empty_slots_)
+  bool quit = this->quit_requested_;
+  if (!quit && this->detectors_.size() == this->empty_slots_)
   {
     // don't quitOnIdle until something has happened
     if (this->quit_on_idle_ && this->empty_slots_ != 0)
@@ -198,7 +193,7 @@ int TAO::FT_FaultDetectorFactory_i::idle (int & result)
       ORBSVCS_ERROR (( LM_INFO,
         "FaultDetectorFactory exits due to quit on idle option.\n"
         ));
-      quit = 1;
+      quit = true;
     }
   }
 
@@ -288,7 +283,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
           ORBSVCS_DEBUG ((LM_DEBUG,
             "FaultDetector Registration complete.\n"
             ));
-          this->registered_ = 1;
+          this->registered_ = true;
         }
         else
         {
@@ -364,7 +359,7 @@ int TAO::FT_FaultDetectorFactory_i::fini ()
     this->factory_registry_->unregister_factory(
       FT::FAULT_DETECTOR_ROLE_NAME,
       this->location_);
-    this->registered_ = 0;
+    this->registered_ = false;
   }
   return 0;
 }
@@ -470,7 +465,7 @@ void TAO::FT_FaultDetectorFactory_i::shutdown ()
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::shutdown);
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
   shutdown_i ();
-  this->quit_requested_ = 1;
+  this->quit_requested_ = true;
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::shutdown);
 }
 

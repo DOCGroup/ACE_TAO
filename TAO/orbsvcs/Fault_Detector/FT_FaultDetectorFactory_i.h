@@ -245,7 +245,7 @@ namespace TAO
     /**
      * Quit on idle flag.
      */
-    int quit_on_idle_;
+    bool quit_on_idle_ {};
 
     /**
      * the FT::Domain where we're operating
@@ -267,7 +267,7 @@ namespace TAO
      * bool: if true, register with ReplicationManager.
      * default is true.  -x turns it off.
      */
-    int rm_register_;
+    bool rm_register_ {true};
 
     /**
      * the replication manager
@@ -277,7 +277,7 @@ namespace TAO
     /**
      * bool: if true the registration with ReplicationManager was successful.
      */
-    int registered_;
+    bool registered_ {};
 
     /**
      * The factory registry with which to register.
@@ -310,7 +310,7 @@ namespace TAO
     /**
      * boolean: starts false.  Set to true when it's time to quit.
      */
-    int quit_requested_;
+    bool quit_requested_ {};
   };
 }   // namespace TAO
 
