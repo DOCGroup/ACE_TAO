@@ -25,7 +25,7 @@ class be_module : public virtual AST_Module,
                   public virtual be_decl
 {
 public:
-  be_module (UTL_ScopedName *n, AST_Module *previous = 0);
+  be_module (UTL_ScopedName *n, AST_Module *previous = nullptr);
 
   /// Cleanup method.
   virtual void destroy ();

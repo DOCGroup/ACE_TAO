@@ -73,7 +73,7 @@ extern const TAO_UNINDENT be_uidt_nl;
 // conditionally output a newline and some form of "ACE_CHECK".
 struct TAO_ACE_CHECK
 {
-  TAO_ACE_CHECK (const char *retval = 0,
+  TAO_ACE_CHECK (const char *retval = nullptr,
                  bool do_return = false);
 
   const char *retval_;
@@ -162,7 +162,7 @@ public:
 
   /// Generate a #if !defined, #defined macro
   int gen_ifdef_macro (const char *flat_name,
-                       const char *suffix = 0,
+                       const char *suffix = nullptr,
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
