@@ -13,9 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   FT_ServerRequest_Interceptor::FT_ServerRequest_Interceptor ()
-    : object_group_ref_version_ (0)
-    , is_primary_ (false)
-    , iogr_ (nullptr)
+    : iogr_ (nullptr)
     , orb_ (nullptr)
   {
   }

@@ -54,12 +54,12 @@ class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
 {
 public:
   /// Our Constructor
-  TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
+  explicit TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
   TAO_FT_IOGR_Property ();
 
   /// Destructor
-  ~TAO_FT_IOGR_Property ();
+  ~TAO_FT_IOGR_Property () override;
 
   /// Set the property for the IOGR
   CORBA::Boolean set_property (

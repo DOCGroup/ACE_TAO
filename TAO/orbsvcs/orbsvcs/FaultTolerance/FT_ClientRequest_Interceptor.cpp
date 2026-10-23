@@ -19,11 +19,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor ()
-    : name_ ("TAO_FT_ClientRequest_Interceptor")
-      , uuid_ (nullptr)
-      , lock_ (nullptr)
-      , retention_id_ (0)
-      , ft_send_extended_sc_ (false)
   {
     ACE_Utils::UUID_GENERATOR::instance ()->init ();
 
