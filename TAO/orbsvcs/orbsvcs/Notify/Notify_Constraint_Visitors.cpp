@@ -156,7 +156,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
 
   if (this->filterable_data_.find (key, any) == 0)
     {
-      if (any.impl () != 0)
+      if (any.impl () != nullptr)
         {
           this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (&any));
           return_value = 0;
@@ -430,13 +430,13 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
   switch (this->implicit_id_)
   {
   case FILTERABLE_DATA:
-    if (this->filterable_data_.find (name, any) != 0 || any.impl () == 0)
+    if (this->filterable_data_.find (name, any) != 0 || any.impl () == nullptr)
       {
         return -1;
       }
     break;
   case VARIABLE_HEADER:
-    if (this->variable_header_.find (name, any) != 0|| any.impl () == 0)
+    if (this->variable_header_.find (name, any) != 0|| any.impl () == nullptr)
       {
         return -1;
       }

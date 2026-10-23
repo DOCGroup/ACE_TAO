@@ -526,7 +526,7 @@ TAO_MonitorEventChannel::remove_supplieradmin (
 void
 TAO_MonitorEventChannel::add_stats (const char* name)
 {
-  if (name != 0 && this->name_.length () == 0)
+  if (name != nullptr && this->name_.length () == 0)
     {
       this->name_ = name;
     }
@@ -575,7 +575,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerNames;
-      consumers = 0;
+      consumers = nullptr;
       ACE_NEW_THROW_EX (consumers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -636,7 +636,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierNames;
-      suppliers = 0;
+      suppliers = nullptr;
       ACE_NEW_THROW_EX (suppliers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -677,7 +677,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerAdminNames;
-      conadmins = 0;
+      conadmins = nullptr;
       ACE_NEW_THROW_EX (conadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -718,7 +718,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierAdminNames;
-      supadmins = 0;
+      supadmins = nullptr;
       ACE_NEW_THROW_EX (supadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -758,7 +758,7 @@ TAO_MonitorEventChannel::add_stats (const char* name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelQueueElementCount;
-      events = 0;
+      events = nullptr;
       ACE_NEW_THROW_EX (events,
                         QueuedEvents (this,
                                       stat_name.c_str (),
@@ -847,7 +847,7 @@ TAO_MonitorEventChannel::new_for_consumers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id)
 {
-  return this->named_new_for_consumers (op, id, 0);
+  return this->named_new_for_consumers (op, id, nullptr);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -856,7 +856,7 @@ TAO_MonitorEventChannel::named_new_for_consumers (
   CosNotifyChannelAdmin::AdminID_out id,
   const char* name)
 {
-  if (name != 0 && name[0] == 0)
+  if (name != nullptr && name[0] == 0)
     {
       throw NotifyMonitoringExt::NameMapError ();
     }
@@ -868,7 +868,7 @@ TAO_MonitorEventChannel::named_new_for_consumers (
   TAO_MonitorConsumerAdmin* low_admin =
     dynamic_cast<TAO_MonitorConsumerAdmin*> (admin->_servant ());
 
-  if (low_admin == 0)
+  if (low_admin == nullptr)
     {
       // This shouldn't happen.
       throw CORBA::INTERNAL ();
@@ -878,7 +878,7 @@ TAO_MonitorEventChannel::named_new_for_consumers (
       // Build up the full name.
       ACE_CString full = this->name_ + "/";
 
-      if (name == 0)
+      if (name == nullptr)
         {
           char idname[64];
           ACE_OS::sprintf (idname, "%d", id);
@@ -914,7 +914,7 @@ TAO_MonitorEventChannel::new_for_suppliers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id)
 {
-  return this->named_new_for_suppliers (op, id, 0);
+  return this->named_new_for_suppliers (op, id, nullptr);
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -923,7 +923,7 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
   CosNotifyChannelAdmin::AdminID_out id,
   const char* name)
 {
-  if (name != 0 && name[0] == 0)
+  if (name != nullptr && name[0] == 0)
     {
       throw NotifyMonitoringExt::NameMapError ();
     }
@@ -935,7 +935,7 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
   TAO_MonitorSupplierAdmin* low_admin =
     dynamic_cast<TAO_MonitorSupplierAdmin*> (admin->_servant ());
 
-  if (low_admin == 0)
+  if (low_admin == nullptr)
     {
       // This shouldn't happen
       throw CORBA::INTERNAL ();
@@ -945,7 +945,7 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
       // Build up the full name
       ACE_CString full = this->name_ + "/";
 
-      if (name == 0)
+      if (name == nullptr)
         {
           char idname[64];
           ACE_OS::sprintf (idname, "%d", id);
@@ -1005,7 +1005,7 @@ TAO_MonitorEventChannel::get_consumers (
 
               for (CORBA::ULong i = 0; i < plen; ++i)
                 {
-                  if (names == 0)
+                  if (names == nullptr)
                     {
                       if (this->supplier_map_.find (proxys[i]) == 0)
                         {
@@ -1074,7 +1074,7 @@ TAO_MonitorEventChannel::get_suppliers (
 
               for (CORBA::ULong i = 0; i < plen; ++i)
                 {
-                  if (names == 0)
+                  if (names == nullptr)
                     {
                       if (this->consumer_map_.find (proxys[i]) == 0)
                         {
@@ -1144,7 +1144,7 @@ TAO_MonitorEventChannel::get_admins (
 
   for (CORBA::ULong j = 0; j < length; ++j)
     {
-      if (names == 0)
+      if (names == nullptr)
         {
           if (map.find (admin_ids[j]) == 0)
             {
@@ -1180,7 +1180,7 @@ TAO_MonitorEventChannel::get_threadpool_task (
       TAO_Notify_ConsumerAdmin* low_admin =
         dynamic_cast<TAO_Notify_ConsumerAdmin*> (admin->_servant ());
 
-      if (low_admin != 0)
+      if (low_admin != nullptr)
         {
           return
             dynamic_cast<TAO_Notify_ThreadPool_Task*> (
@@ -1188,7 +1188,7 @@ TAO_MonitorEventChannel::get_threadpool_task (
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 size_t
@@ -1204,7 +1204,7 @@ TAO_MonitorEventChannel::calculate_queue_size (bool count)
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
 
-      if (task != 0)
+      if (task != nullptr)
         {
           TAO_Notify_Message_Queue* queue = task->msg_queue ();
 
@@ -1243,7 +1243,7 @@ TAO_MonitorEventChannel::determine_slowest_consumer (
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
 
-      if (task != 0)
+      if (task != nullptr)
         {
           TAO_Notify_Message_Queue* queue = task->msg_queue ();
           size_t count = queue->message_count ();
@@ -1309,7 +1309,7 @@ TAO_MonitorEventChannel::get_oldest_event ()
       TAO_Notify_ThreadPool_Task* task =
         this->get_threadpool_task (conadmin_ids[j]);
 
-      if (task != 0)
+      if (task != nullptr)
         {
           ACE_Time_Value old =
             task->buffering_strategy ()->oldest_event ();
