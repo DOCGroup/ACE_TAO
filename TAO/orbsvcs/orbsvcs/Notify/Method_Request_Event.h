@@ -47,7 +47,7 @@ public:
 
 public:
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Event () = default;
+  virtual ~TAO_Notify_Method_Request_Event ();
 
   const TAO_Notify_Event * event() const;
   void complete ();

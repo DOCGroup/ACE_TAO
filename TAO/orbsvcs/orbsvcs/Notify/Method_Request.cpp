@@ -5,6 +5,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_Notify_Method_Request::~TAO_Notify_Method_Request () = default;
+
 TAO_Notify_Method_Request_Queueable *
 TAO_Notify_Method_Request_Queueable::copy ()
 {

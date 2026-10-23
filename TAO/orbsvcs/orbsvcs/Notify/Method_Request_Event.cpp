@@ -9,6 +9,8 @@ TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
 {
 }
 
+TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event () = default;
+
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
       const TAO_Notify::Delivery_Request_Ptr & request)
   : event_ (request->event ().get ())

@@ -36,7 +36,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
 public:
   /// Destructor.
-  virtual ~TAO_Notify_Method_Request () = default;
+  virtual ~TAO_Notify_Method_Request ();
 
   /// Execute the Request
   virtual int execute () = 0;

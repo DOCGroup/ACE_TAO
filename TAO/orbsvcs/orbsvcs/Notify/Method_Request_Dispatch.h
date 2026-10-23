@@ -63,7 +63,7 @@ public:
 
 public:
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch () = default;
+  virtual ~TAO_Notify_Method_Request_Dispatch ();
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (

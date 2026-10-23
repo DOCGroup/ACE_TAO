@@ -53,6 +53,8 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 {
 }
 
+TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch () = default;
+
 int TAO_Notify_Method_Request_Dispatch::execute_i ()
 {
   if (this->proxy_supplier_->has_shutdown ())
