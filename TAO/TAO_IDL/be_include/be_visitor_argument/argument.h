@@ -36,7 +36,11 @@ public:
   explicit be_visitor_args (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args ();
+  ~be_visitor_args () override;
+  be_visitor_args (be_visitor_args const &) = delete;
+  be_visitor_args (be_visitor_args &&) = delete;
+  be_visitor_args &operator= (be_visitor_args const &) = delete;
+  be_visitor_args &operator= (be_visitor_args &&) = delete;
 
   //= helper
   /// helper that produces either a nested name for
@@ -48,7 +52,7 @@ public:
   virtual AST_Argument::Direction direction ();
 
   /// must be overridden by derived classes
-  virtual int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node) override;
 
   void set_fixed_direction (AST_Argument::Direction direction);
 
