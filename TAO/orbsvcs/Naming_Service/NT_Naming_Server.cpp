@@ -56,30 +56,21 @@ private:
 private:
   ACE_TCHAR progname[128];
 
-  int opt_setargs;
-  const ACE_TCHAR *opt_args;
-  int opt_install;
-  int opt_remove;
-  int opt_start;
-  int opt_kill;
-  int opt_type;
-  int opt_debug;
+  bool opt_setargs {};
+  const ACE_TCHAR *opt_args {};
+  bool opt_install {};
+  bool opt_remove {};
+  bool opt_start {};
+  bool opt_kill {};
+  bool opt_type {};
+  bool opt_debug {};
 
-  int opt_startup;
+  int opt_startup {};
 };
 
-typedef ACE_Singleton<Options, ACE_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Mutex>;
 
 Options::Options ()
-  : opt_setargs (0),
-    opt_args (0),
-    opt_install (0),
-    opt_remove (0),
-    opt_start (0),
-    opt_kill (0),
-    opt_type (0),
-    opt_debug (0),
-    opt_startup (0)
 {
   ACE_OS::strcpy (progname,
                   ACE_TEXT("service"));
@@ -119,26 +110,26 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'c':
-        opt_setargs = 1;
+        opt_setargs = true;
         opt_args = get_opt.opt_arg ();
         break;
       case 'i':
-        opt_install = 1;
+        opt_install = true;
         opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
         if (opt_startup <= 0)
           print_usage_and_die ();
         break;
       case 'r':
-        opt_remove = 1;
+        opt_remove = true;
         break;
       case 's':
-        opt_start = 1;
+        opt_start = true;
         break;
       case 'k':
-        opt_kill = 1;
+        opt_kill = true;
         break;
       case 't':
-        opt_type = 1;
+        opt_type = true;
         opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
         if (opt_startup <= 0)
           print_usage_and_die ();
@@ -152,13 +143,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         const ACE_TCHAR *lastarg = get_opt.argv ()[get_opt.opt_ind () - 1];
         if (ACE_OS::strcmp (lastarg, ACE_TEXT ("-i")) == 0)
           {
-            opt_install = 1;
+            opt_install = true;
             opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
           }
         else if (ACE_OS::strcmp (lastarg, ACE_TEXT ("-c")) == 0)
           {
-            opt_setargs = 1;
-            opt_args = 0;
+            opt_setargs = true;
+            opt_args = nullptr;
           }
         else
           this->print_usage_and_die ();

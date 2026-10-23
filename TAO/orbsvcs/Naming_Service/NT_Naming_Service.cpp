@@ -26,13 +26,7 @@ AutoFinalizer::~AutoFinalizer ()
 }
 
 
-TAO_NT_Naming_Service::TAO_NT_Naming_Service ()
-  : argc_ (0),
-    argc_save_ (0),
-    argv_ (0),
-    argv_save_ (0)
-{
-}
+TAO_NT_Naming_Service::TAO_NT_Naming_Service () = default;
 
 TAO_NT_Naming_Service::~TAO_NT_Naming_Service ()
 {
@@ -93,7 +87,7 @@ TAO_NT_Naming_Service::report_error (const ACE_TCHAR *format,
 {
   ACE_TCHAR msg[100];
   ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
-                          0,
+                          nullptr,
                           result,
                           LANG_SYSTEM_DEFAULT,
                           msg,
@@ -104,7 +98,7 @@ TAO_NT_Naming_Service::report_error (const ACE_TCHAR *format,
 void
 TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
 {
-  HKEY hkey = 0;
+  HKEY hkey {};
 
   // It looks in the NT Registry under
   // \\HKEY_LOCAL_MACHINE\SOFTWARE\ACE\TAO for the value of
@@ -128,7 +122,7 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
         {
           result = ACE_TEXT_RegQueryValueEx (hkey,
                                              TAO_NAMING_SERVICE_OPTS_NAME,
-                                             0,
+                                             nullptr,
                                              &type,
                                              (BYTE *)args,
                                              &arglen);
@@ -151,12 +145,12 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
           result = ACE_TEXT_RegCreateKeyEx (REGISTRY_KEY_ROOT,
                                             TAO_REGISTRY_SUBKEY,
                                             0,
-                                            0,
+                                            nullptr,
                                             0,
                                             KEY_WRITE,
-                                            0,
+                                            nullptr,
                                             &hkey,
-                                            0);
+                                            nullptr);
         }
       DWORD bufSize = static_cast<DWORD>(ACE_OS::strlen (args) + 1);
       if (result == ERROR_SUCCESS)
@@ -187,7 +181,7 @@ int
 TAO_NT_Naming_Service::set_args (const ACE_TCHAR *args)
 {
   char argbuf[ACE_DEFAULT_ARGV_BUFSIZ];
-  if (args == 0)
+  if (args == nullptr)
     {
       this->arg_manip (argbuf, ACE_DEFAULT_ARGV_BUFSIZ, true);
       ACE_OS::printf ("%s\n", argbuf);
