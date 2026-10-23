@@ -90,7 +90,7 @@ public:
   TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &mutex,
                                      ACE_SYNCH_CONDITION_T &cond,
                                      int &pending_writes,
-                                     int &writing_flag,
+                                     bool &writing_flag,
                                      Collection*& collection);
 
   /// Destructor
@@ -102,7 +102,7 @@ private:
   ACE_SYNCH_MUTEX_T &mutex;
   ACE_SYNCH_CONDITION_T &cond;
   int &pending_writes;
-  int &writing_flag;
+  bool &writing_flag;
   Collection *&collection;
 };
 
@@ -143,20 +143,20 @@ private:
   ACE_SYNCH_MUTEX_T mutex_;
 
   /// Number of pending writes
-  int pending_writes_;
+  int pending_writes_ {};
 
   /**
-   * If non-zero then a thread is changing the collection.  Many
+   * If true then a thread is changing the collection.  Many
    * threads can use the collection simulatenously, but only one
    * change it.
    */
-  int writing_;
+  bool writing_ {};
 
   /// A condition variable to wait to synchronize multiple writers.
   ACE_SYNCH_CONDITION_T cond_;
 
   /// The collection, with reference counting added
-  Collection *collection_;
+  Collection *collection_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
