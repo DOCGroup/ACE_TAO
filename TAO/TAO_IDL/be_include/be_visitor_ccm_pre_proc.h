@@ -104,29 +104,29 @@ protected:
 protected:
   /// These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
-  be_valuetype *cookie_;
+  be_valuetype *cookie_ {};
 
   /// Exceptions thrown by implied CCM operations.
-  be_exception *already_connected_;
-  be_exception *invalid_connection_;
-  be_exception *no_connection_;
-  be_exception *exceeded_connection_limit_;
-  be_exception *create_failure_;
-  be_exception *remove_failure_;
-  be_exception *finder_failure_;
-  be_exception *invalid_key_;
-  be_exception *unknown_key_value_;
-  be_exception *duplicate_key_value_;
+  be_exception *already_connected_ {};
+  be_exception *invalid_connection_ {};
+  be_exception *no_connection_ {};
+  be_exception *exceeded_connection_limit_ {};
+  be_exception *create_failure_ {};
+  be_exception *remove_failure_ {};
+  be_exception *finder_failure_ {};
+  be_exception *invalid_key_ {};
+  be_exception *unknown_key_value_ {};
+  be_exception *duplicate_key_value_ {};
 
   /// Working nodes.
-  be_component *comp_;
-  be_home *home_;
+  be_component *comp_ {};
+  be_home *home_ {};
 
   /// So we can look up Cookie and the CCM exceptions
   /// once when the first component is seen (then we
   /// know that Components.idl is included and the
   /// lookups will succeed).
-  bool ccm_lookups_done_;
+  bool ccm_lookups_done_ {};
 
 private:
   /// Generate a sendc_* receptacle for AMI4CCM.

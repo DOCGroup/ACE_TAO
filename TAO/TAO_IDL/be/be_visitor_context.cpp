@@ -14,18 +14,7 @@
 #include "be_helper.h"
 
 be_visitor_context::be_visitor_context ()
-  : ast_visitor_context (),
-    state_ (TAO_CodeGen::TAO_INITIAL),
-    sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
-    os_ (nullptr),
-    scope_ (nullptr),
-    node_ (nullptr),
-    alias_ (nullptr),
-    tdef_ (nullptr),
-    attr_ (nullptr),
-    exception_ (false),
-    comma_ (false),
-    interface_ (nullptr)
+  : ast_visitor_context ()
 {
 }
 

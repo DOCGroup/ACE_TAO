@@ -137,37 +137,37 @@ public:
 
 private:
   /// code generation state
-  TAO_CodeGen::CG_STATE state_;
+  TAO_CodeGen::CG_STATE state_ {TAO_CodeGen::TAO_INITIAL};
 
   /// code generation state
-  TAO_CodeGen::CG_SUB_STATE sub_state_;
+  TAO_CodeGen::CG_SUB_STATE sub_state_ {TAO_CodeGen::TAO_SUB_STATE_UNKNOWN};
 
   /// current output stream
-  TAO_OutStream *os_;
+  TAO_OutStream *os_ {};
 
   /// current scope in which code is generated
-  be_scope *scope_;
+  be_scope *scope_ {};
 
   /// current node
-  be_decl *node_;
+  be_decl *node_ {};
 
   /// aliased node used as a scoped name to define IDL types.
-  be_typedef *alias_;
+  be_typedef *alias_ {};
 
   /// typedef node
-  be_typedef *tdef_;
+  be_typedef *tdef_ {};
 
   /// attribute node stored here while generating its code
-  be_attribute *attr_;
+  be_attribute *attr_ {};
 
   /// is it the special ctor for exceptions?
-  bool exception_;
+  bool exception_ {};
 
   /// whether scope should generate a comma after every element
-  bool comma_;
+  bool comma_ {};
 
   /// See the method declaration above.
-  be_interface *interface_;
+  be_interface *interface_ {};
 
   /// Used in enough visitors to put it here.
   ACE_CString port_prefix_;

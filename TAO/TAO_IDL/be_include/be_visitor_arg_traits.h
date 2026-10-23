@@ -62,7 +62,7 @@ private:
 
 private:
   char *S_;
-  bool fixed_generated_;
+  bool fixed_generated_ {};
 };
 
 

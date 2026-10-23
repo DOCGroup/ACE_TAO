@@ -43,10 +43,7 @@
 
 be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
       be_visitor_context *ctx)
-  : be_visitor_ccm_pre_proc (ctx),
-    xplicit_ (nullptr),
-    type_holder_ (nullptr),
-    ref_type_ (false)
+  : be_visitor_ccm_pre_proc (ctx)
 {
 }
 

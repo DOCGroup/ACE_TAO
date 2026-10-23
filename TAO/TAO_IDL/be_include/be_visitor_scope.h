@@ -56,7 +56,7 @@ public:
   bool last_inout_or_out_node (be_decl *bd);
 
 protected:
-  int elem_number_;
+  int elem_number_ {};
 };
 
 

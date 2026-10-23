@@ -68,9 +68,9 @@ private:
   UTL_ScopedName *xplicit_iface_rel_name (AST_Decl *d);
 
 private:
-  be_interface *xplicit_;
-  AST_Decl *type_holder_;
-  bool ref_type_;
+  be_interface *xplicit_ {};
+  AST_Decl *type_holder_ {};
+  bool ref_type_ {};
 };
 
 #endif // TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
