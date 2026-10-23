@@ -170,7 +170,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -224,7 +224,7 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -294,7 +294,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -444,7 +444,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

@@ -59,7 +59,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
               si.next ();
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (
             ACE_TEXT (
@@ -115,7 +115,7 @@ ifr_removing_visitor::visit_root (AST_Root *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_root"));
 

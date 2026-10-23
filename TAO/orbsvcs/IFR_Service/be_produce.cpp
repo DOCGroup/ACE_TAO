@@ -126,7 +126,7 @@ BE_ifr_repo_init ()
 
     be_global->repository (repo._retn ());
   }
-  catch (const CORBA::ORB::InvalidName &)
+  catch (CORBA::ORB::InvalidName const &)
   {
     ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT ("resolution of Interface Repository failed\n")));
@@ -197,7 +197,7 @@ BE_produce ()
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("BE_produce"));
     }

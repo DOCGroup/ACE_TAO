@@ -185,7 +185,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -235,7 +235,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
       ++this->index_;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

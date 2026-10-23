@@ -61,12 +61,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
             }
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unknown Exception");
       return -1;

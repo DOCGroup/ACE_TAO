@@ -75,7 +75,7 @@ BE_ifr_orb_init (int &ac, ACE_TCHAR *av[])
                                        av,
                                        name));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("BE_ifr_orb_init"));
 

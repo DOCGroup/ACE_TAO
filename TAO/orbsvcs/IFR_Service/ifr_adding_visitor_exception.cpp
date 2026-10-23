@@ -96,7 +96,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
             CORBA::IDLType::_duplicate (this->ir_current_.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -150,7 +150,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -279,7 +279,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -349,7 +349,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -403,7 +403,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

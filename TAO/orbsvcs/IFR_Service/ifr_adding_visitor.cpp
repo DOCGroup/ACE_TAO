@@ -123,7 +123,7 @@ ifr_adding_visitor::visit_predefined_type (AST_PredefinedType *node)
       this->ir_current_ =
       be_global->repository ()->get_primitive (this->predefined_type_to_pkind (node));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_predefined_type"));
 
@@ -232,7 +232,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_module"));
 
@@ -424,7 +424,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_interface"));
 
@@ -504,7 +504,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
         }
 
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_interface_fwd"));
 
@@ -552,7 +552,7 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
 
       node->ifr_added (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_valuebox"));
 
@@ -749,7 +749,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_valuetype"));
 
@@ -827,7 +827,7 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
           v->ifr_fwd_added (true);
         }
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_valuetype_fwd"));
 
@@ -1000,7 +1000,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
             }
         }
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_component"));
 
@@ -1083,7 +1083,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
           c->ifr_fwd_added (true);
         }
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_component_fwd"));
 
@@ -1418,7 +1418,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_eventtype"));
 
@@ -1501,7 +1501,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
           v->ifr_fwd_added (true);
         }
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_eventtype_fwd"));
 
@@ -1605,7 +1605,7 @@ ifr_adding_visitor::visit_home (AST_Home *node)
             }
         }
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_home"));
 
@@ -1678,7 +1678,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -1732,7 +1732,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
           node->full_definition ()->ifr_fwd_added (true);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::")
                                ACE_TEXT ("visit_structure_fwd"));
@@ -1841,7 +1841,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
             CORBA::EnumDef::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::visit_enum"));
 
@@ -1980,7 +1980,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_attribute"));
 
@@ -2057,7 +2057,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::visit_union"));
 
@@ -2110,7 +2110,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
           node->full_definition ()->ifr_fwd_added (true);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::")
                                ACE_TEXT ("visit_union_fwd"));
@@ -2129,7 +2129,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
       return 0;
     }
 
-  const char *id = node->repoID ();
+  char const *id = node->repoID ();
 
   try
     {
@@ -2221,7 +2221,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_constant"));
 
@@ -2266,7 +2266,7 @@ ifr_adding_visitor::visit_array (AST_Array *node)
               );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_array"));
 
@@ -2289,7 +2289,7 @@ ifr_adding_visitor::visit_sequence (AST_Sequence *node)
                                       this->ir_current_.in ()
                                     );
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_sequence"));
 
@@ -2334,7 +2334,7 @@ ifr_adding_visitor::visit_string (AST_String *node)
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_string"));
 
@@ -2382,7 +2382,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
 
       node->ifr_added (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       if (!this->allow_duplicate_typedefs_)
         {
@@ -2502,7 +2502,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
             CORBA::NativeDef::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_native"));
 
@@ -2599,7 +2599,7 @@ ifr_adding_visitor::predefined_type_to_pkind (AST_PredefinedType *node)
       return CORBA::pk_value_base;
     case AST_PredefinedType::PT_pseudo:
       {
-        const char *local_name = node->local_name ()->get_string ();
+        char const *local_name = node->local_name ()->get_string ();
 
         if (!ACE_OS::strcmp (local_name, "Principal"))
           {
@@ -3481,7 +3481,7 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
                                  this->ir_current_.in (),
                                  vis);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("create_value_member"));
 
@@ -4051,7 +4051,7 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
 
 void
 ifr_adding_visitor::expand_id (ACE_CString &str,
-                               const char *local_name)
+                               char const *local_name)
 {
   ssize_t pos = str.rfind (':');
   str = str.substr (0, pos) + '/' + local_name + str.substr (pos);

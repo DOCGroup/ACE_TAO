@@ -168,7 +168,7 @@ protected:
                           CORBA::ComponentIR::HomeDef_ptr h);
 
   void expand_id (ACE_CString &str,
-                  const char *local_name);
+                  char const *local_name);
 
 protected:
   /**
