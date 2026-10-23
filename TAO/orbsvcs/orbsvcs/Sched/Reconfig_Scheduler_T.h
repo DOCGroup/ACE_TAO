@@ -535,7 +535,7 @@ protected:
    * order and then priority order at various points
    * during schedule computation.
    */
-  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
+  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_ {};
 
   /// Size of the array of scheduling entry pointers.
   long entry_ptr_array_size_;
@@ -547,7 +547,7 @@ protected:
    * order and then priority order at various points
    * during schedule computation.
    */
-  TAO_RT_Info_Tuple ** tuple_ptr_array_;
+  TAO_RT_Info_Tuple ** tuple_ptr_array_ {};
 
   /// Size of the array of scheduling entry pointers.
   long tuple_ptr_array_size_;

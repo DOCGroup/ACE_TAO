@@ -371,10 +371,10 @@ public:
 
 private:
   /// Pointer to previous tuple in the iteration.
-  TAO_Reconfig_Scheduler_Entry *previous_entry_;
+  TAO_Reconfig_Scheduler_Entry *previous_entry_ {};
 
   /// Pointer to first subpriority tuple in the priority level.
-  TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_;
+  TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_ {};
 
   /// Current priority value.
   RtecScheduler::Preemption_Priority_t priority_;

@@ -373,7 +373,7 @@ private:
   TUPLE_SET prop_tuple_subset_;
 
   /// A pointer to the entry's most recently admitted tuple.
-  TAO_RT_Info_Tuple * current_admitted_tuple_;
+  TAO_RT_Info_Tuple * current_admitted_tuple_ {};
 
   /// Flag indicating whether or not node is enabled.
   RtecScheduler::RT_Info_Enabled_Type_t enabled_;

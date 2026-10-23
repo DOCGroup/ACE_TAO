@@ -242,7 +242,7 @@ private:
                            u_long starting_dest_sub_frame = 0);
 
   // A pointer to the underlying RT_Info.
-  RT_Info *rt_info_;
+  RT_Info *rt_info_ {};
 
   // The effective period for the task entry.
   u_long effective_period_;

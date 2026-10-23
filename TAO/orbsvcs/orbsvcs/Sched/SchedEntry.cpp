@@ -21,8 +21,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Task_Entry::Task_Entry ()
-  : rt_info_ (nullptr),
-    effective_period_(0),
+  : effective_period_(0),
     dfs_status_ (NOT_VISITED),
     discovered_ (-1),
     finished_ (-1),

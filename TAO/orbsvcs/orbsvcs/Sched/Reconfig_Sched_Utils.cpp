@@ -232,7 +232,6 @@ TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
     prop_tuple_period_sum_ (0),
     orig_tuple_count_ (0),
     prop_tuple_count_ (0),
-    current_admitted_tuple_ (0),
     enabled_ (rt_info.enabled)
   //    effective_exec_multiplier_ (0),  //WSOA merge commented out
   //  effective_period_ (0)              //WSOA merge commented out

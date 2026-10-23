@@ -765,9 +765,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
                           TAO_Reconfig_Scheduler_Entry ** entry_ptr_array)
-  : previous_entry_ (0),
-    first_subpriority_entry_ (0),
-    priority_ (0),
+  : priority_ (0),
     subpriority_ (0),
     os_priority_ (ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                                   ACE_SCOPE_PROCESS)),
