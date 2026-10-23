@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 {
-  if (this->delete_properties_ == 1)
+  if (this->delete_properties_)
     {
       TAO_RT_Transport_Descriptor_Property *current =
         this->property_list_;
@@ -41,7 +41,7 @@ TAO_RT_Transport_Descriptor::duplicate ()
   TAO_RT_Transport_Descriptor *new_descriptor = nullptr;
 
   ACE_NEW_RETURN (new_descriptor,
-                  TAO_RT_Transport_Descriptor (endpoint, 1),
+                  TAO_RT_Transport_Descriptor (endpoint, true),
                   0);
 
   // Copy the Properties.
