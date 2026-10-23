@@ -17,8 +17,8 @@
 #include "ace/Get_Opt.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
-int use_rt_corba = 0;
-int nthreads = 0;
+bool use_rt_corba {};
+int nthreads {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -38,7 +38,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'r':
-        use_rt_corba = 1;
+        use_rt_corba = true;
         break;
 
       case '?':
@@ -114,7 +114,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Output the ior to the <ior_output_file>
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -125,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       do {
         ACE_Time_Value tv (1, 0);
         orb->run (tv);
-      } while (ec_impl->destroyed () == 0);
+      } while (!ec_impl->destroyed ());
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
     }
