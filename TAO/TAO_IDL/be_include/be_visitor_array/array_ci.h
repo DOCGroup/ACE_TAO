@@ -23,7 +23,7 @@ class be_visitor_array_ci : public be_visitor_array
 {
 public:
   /// constructor
-  be_visitor_array_ci (be_visitor_context *ctx);
+  explicit be_visitor_array_ci (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_array_ci () override = default;

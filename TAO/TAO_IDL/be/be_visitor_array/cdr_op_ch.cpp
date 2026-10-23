@@ -19,9 +19,7 @@ be_visitor_array_cdr_op_ch::be_visitor_array_cdr_op_ch (
 {
 }
 
-be_visitor_array_cdr_op_ch::~be_visitor_array_cdr_op_ch ()
-{
-}
+be_visitor_array_cdr_op_ch::~be_visitor_array_cdr_op_ch () = default;
 
 int
 be_visitor_array_cdr_op_ch::visit_array (be_array *node)

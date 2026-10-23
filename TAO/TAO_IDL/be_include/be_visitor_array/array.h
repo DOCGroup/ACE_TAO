@@ -24,7 +24,7 @@ class be_visitor_array : public be_visitor_decl
 {
 public:
   /// Constructor
-  be_visitor_array (be_visitor_context *ctx);
+  explicit be_visitor_array (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_array () override;

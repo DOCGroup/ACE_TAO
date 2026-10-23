@@ -26,7 +26,7 @@ class be_visitor_array_any_op_cs : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_array_any_op_cs (be_visitor_context *ctx);
+  explicit be_visitor_array_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_array_any_op_cs () override = default;
