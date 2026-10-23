@@ -177,7 +177,7 @@ namespace TAO
 
       /// Flag that determines whether or not the iiop_endpoint_ member is
       /// deallocated with delete().
-      bool destroy_iiop_endpoint_;
+      bool destroy_iiop_endpoint_ {};
 
       /// Quailty-of-Protection settings for this endpoint object.
       ::Security::QOP qop_;

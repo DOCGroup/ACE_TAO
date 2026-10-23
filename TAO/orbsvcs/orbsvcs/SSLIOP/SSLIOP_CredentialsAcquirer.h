@@ -118,7 +118,7 @@ namespace TAO
 
       /// Has this CredentialsAcquirer object completed credentials
       /// acquisition or been explicitly destroyed?
-      bool destroyed_;
+      bool destroyed_ {};
     };
   } // End SSLIOP namespace
 }  // End TAO namespace

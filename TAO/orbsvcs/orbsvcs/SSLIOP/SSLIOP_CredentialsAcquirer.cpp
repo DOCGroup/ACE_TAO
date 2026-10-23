@@ -71,8 +71,7 @@ TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
    CORBA::Any const & acquisition_arguments)
   : lock_ (),
     curator_ (TAO::SL3::CredentialsCurator::_duplicate (curator)),
-    acquisition_arguments_ (acquisition_arguments),
-    destroyed_ (false)
+    acquisition_arguments_ (acquisition_arguments)
 {
 }
 

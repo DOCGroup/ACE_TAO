@@ -19,7 +19,6 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (::SSLIOP::SSL const *ssl_component,
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
     object_addr_ (),
     iiop_endpoint_ (iiop_endp),
-    destroy_iiop_endpoint_ (false),
     qop_ (::Security::SecQOPIntegrityAndConfidentiality),
 #if !defined (VXWORKS) && !defined (__QNX__)
     // Some compilers don't like the initialization

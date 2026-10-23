@@ -8,8 +8,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
-  : tss_slot_ (0),
-    orb_core_ (orb_core)
+  : orb_core_ (orb_core)
 {
 }
 

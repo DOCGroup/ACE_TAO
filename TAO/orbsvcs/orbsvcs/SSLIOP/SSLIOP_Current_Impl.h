@@ -44,7 +44,7 @@ namespace TAO
     {
     public:
       /// Constructor.
-      Current_Impl ();
+      Current_Impl () = default;
 
       /// Destructor
       ~Current_Impl () override = default;
