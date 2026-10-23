@@ -26,7 +26,7 @@ TAO_FT_IOGR_Property::reset_tagged_components (
   this->ft_group_tagged_component_ =
     &ft_group;
 
-  return 1;
+  return true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

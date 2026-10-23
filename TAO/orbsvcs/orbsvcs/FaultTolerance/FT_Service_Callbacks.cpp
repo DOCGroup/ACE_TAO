@@ -193,7 +193,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
   sc.context_id = IOP::FT_GROUP_VERSION;
 
   if (service_context.get_context (sc) == 0)
-      return false; /* false */
+      return false;
 
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
@@ -206,7 +206,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
       ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                                 guard,
                                 const_cast <TAO_SYNCH_MUTEX&>(stub->profile_lock ()),
-                                0));
+                                false));
 
       // even now, the forward profiles might have been deleted in the meanwhile
       TAO_MProfile const& mprofile = stub->forward_profiles()
@@ -224,7 +224,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
 
       if (tagged_components.get_component (tc) == 0)
         // releasing lock
-        return false; /* false */
+        return false;
 
       return true; /* true */
 
@@ -242,7 +242,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
               mprofile.get_profile (0)->tagged_components ();
 
       if (tagged_components.get_component (tc) == 0)
-        return false; /* false */
+        return false;
 
       return true; /* true */
     }
@@ -308,11 +308,11 @@ TAO_FT_Service_Callbacks::restart_policy_check (
                                 service_list[i].context_data.length ());
               CORBA::Boolean byte_order;
               if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-                return 0;
+                return false;
               cdr.reset_byte_order (static_cast <int> (byte_order));
               FT::FTRequestServiceContext ftsrc;
               if ((cdr >> ftsrc) == 0)
-                return 0;
+                return false;
 
               return (ftsrc.expiration_time > now ());
             }
@@ -320,7 +320,7 @@ TAO_FT_Service_Callbacks::restart_policy_check (
     }
 
   // Failure
-  return 0;
+  return false;
 }
 
 TimeBase::TimeT

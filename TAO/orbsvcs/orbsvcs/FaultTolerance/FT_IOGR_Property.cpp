@@ -63,7 +63,7 @@ TAO_FT_IOGR_Property::set_property (
     }
 
   // Success
-  return 1;
+  return true;
 }
 
 
@@ -195,7 +195,7 @@ TAO_FT_IOGR_Property::set_primary (
   if (index == -1)
     throw TAO_IOP::NotFound ();
 
-  CORBA::Boolean val = 1;
+  CORBA::Boolean val = true;
 
   TAO_OutputCDR cdr;
   cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
@@ -225,7 +225,7 @@ TAO_FT_IOGR_Property::set_primary (
 
   tagg.set_component (tagged_components);
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -308,7 +308,7 @@ TAO_FT_IOGR_Property::get_primary_profile (
           return mprofile.get_profile (i);
         }
     }
-  return 0;
+  return nullptr;
 }
 
 
@@ -352,7 +352,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> fgtc) == 1)
-            return 1;
+            return true;
           else
             throw CORBA::MARSHAL ();
         }
@@ -381,7 +381,7 @@ TAO_FT_IOGR_Property::remove_primary_tag (
 
       if (pfile_tagged.remove_component (IOP::TAG_FT_PRIMARY))
         {
-          return 1;
+          return true;
         }
     }
   return false;
