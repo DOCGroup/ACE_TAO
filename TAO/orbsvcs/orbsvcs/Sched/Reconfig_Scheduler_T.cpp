@@ -41,7 +41,7 @@ using COMP_FUNC = int (*) (const void *, const void *);
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-TAO_Reconfig_Scheduler (int enforce_schedule_stability,
+TAO_Reconfig_Scheduler (bool enforce_schedule_stability,
                         const CORBA::Double & critical_utilization_threshold,
                         const CORBA::Double & noncritical_utilization_threshold)
   : config_info_count_ (0),
@@ -79,7 +79,7 @@ TAO_Reconfig_Scheduler (int config_count,
                         int dependency_count,
                         ACE_Scheduler_Factory::POD_Dependency_Info dependency_infos[],
                         u_long stability_flags,
-                        int enforce_schedule_stability,
+                        bool enforce_schedule_stability,
                         const CORBA::Double & critical_utilization_threshold,
                         const CORBA::Double & noncritical_utilization_threshold)
   : config_info_count_ (0),
