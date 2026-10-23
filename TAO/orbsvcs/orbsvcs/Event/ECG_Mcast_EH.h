@@ -220,7 +220,7 @@ private:
   struct Subscription
   {
     ACE_INET_Addr mcast_addr;
-    ACE_SOCK_Dgram_Mcast* dgram;
+    ACE_SOCK_Dgram_Mcast *dgram {};
   };
   using Subscriptions = ACE_Array_Base<Subscription>;
 
