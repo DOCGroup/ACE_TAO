@@ -31,7 +31,11 @@ public:
   TAO_CosEventChannelFactory_i ();
 
   /// Destructor.
-  ~TAO_CosEventChannelFactory_i () = default;
+  ~TAO_CosEventChannelFactory_i () override = default;
+  TAO_CosEventChannelFactory_i (TAO_CosEventChannelFactory_i const &) = delete;
+  TAO_CosEventChannelFactory_i (TAO_CosEventChannelFactory_i &&) = delete;
+  TAO_CosEventChannelFactory_i &operator= (TAO_CosEventChannelFactory_i const &) = delete;
+  TAO_CosEventChannelFactory_i &operator= (TAO_CosEventChannelFactory_i &&) = delete;
 
   /**
    * This method creates a child poa with <poa> as the
@@ -53,18 +57,19 @@ public:
    * @@ Pradeep: anyway you can just use exceptions and not return -1?
    */
   int init (PortableServer::POA_ptr poa,
-            const char* child_poa_name,
+            char const *child_poa_name,
             CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ());
 
   // = CosEventChannelFactory::ChannelFactory methods.
-  virtual CosEventChannelAdmin::EventChannel_ptr create (const char * channel_id,
-                                                         CORBA::Boolean store_in_naming_service);
+  CosEventChannelAdmin::EventChannel_ptr create (char const *channel_id,
+                                                  CORBA::Boolean store_in_naming_service) override;
 
-  virtual void destroy (const char * channel_id, CORBA::Boolean unbind_from_naming_service);
+  void destroy (char const *channel_id,
+                CORBA::Boolean unbind_from_naming_service) override;
 
-  virtual CosEventChannelAdmin::EventChannel_ptr find (const char * channel_id);
+  CosEventChannelAdmin::EventChannel_ptr find (char const *channel_id) override;
 
-  virtual char * find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel);
+  char *find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel) override;
 protected:
   /// The POA with which we activate all the Event Channels.
   PortableServer::POA_var poa_;

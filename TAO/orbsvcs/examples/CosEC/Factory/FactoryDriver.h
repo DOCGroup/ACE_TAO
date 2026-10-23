@@ -35,7 +35,11 @@ class FactoryDriver
 {
  public:
   /// Constructor.
-  FactoryDriver (const ACE_TCHAR* factory = ACE_TEXT("CosEC_Factory"));
+  explicit FactoryDriver (ACE_TCHAR const *factory = ACE_TEXT("CosEC_Factory"));
+  FactoryDriver (FactoryDriver const &) = delete;
+  FactoryDriver (FactoryDriver &&) = delete;
+  FactoryDriver &operator= (FactoryDriver const &) = delete;
+  FactoryDriver &operator= (FactoryDriver &&) = delete;
 
   /// Destructor.
   ~FactoryDriver () = default;
@@ -51,16 +55,16 @@ class FactoryDriver
   int parse_args (int argc, ACE_TCHAR *argv []);
 
   /// The name of the factory registered with the naming service.
-  const ACE_TCHAR *factoryName_;
+  ACE_TCHAR const *factoryName_;
 
   /// The name of the Child POA.
-  const char* child_poa_name_;
+  char const *child_poa_name_;
 
   /// The ORB that we use.
   CORBA::ORB_var orb_;
 
   /// The factory servant.
-  TAO_CosEventChannelFactory_i *factory_servant_;
+  TAO_CosEventChannelFactory_i *factory_servant_ {};
 
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
