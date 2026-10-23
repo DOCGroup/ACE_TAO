@@ -32,11 +32,11 @@ public:
     UTL_ScopedName *n,
     FE_Utils::T_PARAMLIST_INFO *template_params);
 
-  virtual ~be_template_module ();
+  ~be_template_module () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif /* TAO_BE_TEMPLATE_MODULE_H */

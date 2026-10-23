@@ -16,10 +16,10 @@ public:
   ~be_connector () override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   bool dds_connector ();
   bool ami_connector ();

@@ -31,11 +31,11 @@ class be_porttype : public virtual AST_PortType,
 public:
   be_porttype (UTL_ScopedName *n);
 
-  virtual ~be_porttype ();
+  ~be_porttype () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif // BE_PORTTYPE_H
