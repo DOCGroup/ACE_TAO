@@ -98,7 +98,7 @@ TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb,
 
   // Get an object reference for the ORBs IORManipulation object!
   CORBA::Object_var IORM = this->orb_->resolve_initial_references (
-    TAO_OBJID_IORMANIPULATION, 0);
+    TAO_OBJID_IORMANIPULATION, nullptr);
 
   this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
     IORM.in ());

@@ -485,8 +485,8 @@ TAO_UIPMC_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   const TAO_UIPMC_Profile *op =
     dynamic_cast<const TAO_UIPMC_Profile *> (other_profile);
 
-  if (op == 0)
-    return 0;
+  if (op == nullptr)
+    return false;
 
   return this->endpoint_.is_equivalent (&op->endpoint_);
 }
@@ -708,7 +708,7 @@ TAO_UIPMC_Profile::update_cached_group_component ()
     tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
-       iterator != 0;
+       iterator != nullptr;
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();

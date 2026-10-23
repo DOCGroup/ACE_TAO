@@ -30,7 +30,7 @@ void TAO_PG::Properties_Encoder::add (
 
 void TAO_PG::Properties_Encoder::encode (PortableGroup::Properties * property_set) const
 {
-  ACE_ASSERT (property_set != 0);
+  ACE_ASSERT (property_set != nullptr);
   CORBA::ULong const count = static_cast<CORBA::ULong> (values_.size());
   property_set->length(count);
   for( CORBA::ULong nItem = 0; nItem < count; ++nItem )

@@ -286,7 +286,7 @@ TAO_MIOP_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 TAO_PG::Fragments_Cleanup_Strategy *
 TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
 {
-  if (this->fragments_cleanup_strategy_ == 0)
+  if (this->fragments_cleanup_strategy_ == nullptr)
     {
       if (this->fragments_cleanup_strategy_type_ ==
           TAO_MIOP_CLEANUP_TIME_BOUND)

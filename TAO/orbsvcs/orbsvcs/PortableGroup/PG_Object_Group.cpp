@@ -191,7 +191,7 @@ TAO::PG_Object_Group::add_member_to_iogr (CORBA::Object_ptr member)
       cleaned =
         this->manipulator_.remove_profiles (cleaned.in (),
                                             this->reference_.in ());
-      this->empty_ = 0;
+      this->empty_ = false;
     }
 
   // create a list of references to be merged
@@ -349,9 +349,9 @@ TAO::PG_Object_Group::set_primary_member (
            ++it)
         {
           cleared = (*it).int_id_->is_primary_;
-          (*it).int_id_->is_primary_ = 0;
+          (*it).int_id_->is_primary_ = false;
         }
-      info->is_primary_ = 1;
+      info->is_primary_ = true;
 
       int set_ok =
         this->manipulator_.set_primary (prop,
@@ -419,7 +419,7 @@ TAO::PG_Object_Group::remove_member (
         }
       else
         {
-          empty_ = 1;
+          empty_ = true;
         }
 
       delete info;

@@ -163,11 +163,11 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   while (i < count)
     {
 #if defined (ACE_HAS_IPV6)
-      if (ACE_OS::strstr (preferred[i].c_str(), "if=") != 0
+      if (ACE_OS::strstr (preferred[i].c_str(), "if=") != nullptr
             && this->object_addr_.get_type () == AF_INET6)
         {
           latest->preferred_if_ = CORBA::string_dup (preferred[i].c_str() + 3);
-          latest->preferred_path_.host = static_cast<const char *> (0);
+          latest->preferred_path_.host = static_cast<const char *> (nullptr);
           if (TAO_debug_level > 3)
             ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, setting network interface name <%C>"
@@ -212,7 +212,7 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
           return count;
         }
 
-      latest->next_->preferred_path_.host = static_cast<const char *> (0);
+      latest->next_->preferred_path_.host = static_cast<const char *> (nullptr);
       ++count;
     }
 
@@ -222,7 +222,7 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 bool
 TAO_UIPMC_Endpoint::is_preferred_network () const
 {
-  return (this->preferred_path_.host.in () != 0 &&
+  return (this->preferred_path_.host.in () != nullptr &&
           this->preferred_path_.host.in ()[0] != 0);
 }
 

@@ -17,8 +17,8 @@ namespace TAO
       PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
-    if (ior->_stubobj () == 0)
-      return 0;
+    if (ior->_stubobj () == nullptr)
+      return false;
 
     // We need to apply the property for every profile in the IOR
     TAO_MProfile &tmp_pfiles =
@@ -35,7 +35,7 @@ namespace TAO
       PG_Utils::encode_properties (cdr,
                                    tg);
 
-    if (retval == 0)
+    if (!retval)
       return retval;
 
     // Get the length of the CDR stream
@@ -49,7 +49,7 @@ namespace TAO
       tagged_components.component_data.get_buffer ();
 
     for (const ACE_Message_Block *i = cdr.begin ();
-         i != 0;
+         i != nullptr;
          i = i->cont ())
       {
         ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
@@ -74,7 +74,7 @@ namespace TAO
       }
 
     // Success
-    return 1;
+    return true;
   }
 
   /*static*/ CORBA::Boolean
@@ -82,7 +82,7 @@ namespace TAO
       PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
-    if (ior->_stubobj () == 0)
+    if (ior->_stubobj () == nullptr)
       return false;
 
     TAO_MProfile &mprofile =

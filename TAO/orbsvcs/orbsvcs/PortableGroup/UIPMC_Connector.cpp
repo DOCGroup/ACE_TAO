@@ -276,13 +276,13 @@ TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_UIPMC_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   int r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;

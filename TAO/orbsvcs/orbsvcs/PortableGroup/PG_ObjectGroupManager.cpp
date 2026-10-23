@@ -67,7 +67,7 @@ TAO_PG_ObjectGroupManager::add_member (
 
   // Verify that the member's RepositoryId matches the object group's
   // type ID.
-  const CORBA::Boolean check_type_id = 1;
+  const CORBA::Boolean check_type_id = true;
 
   return this->add_member_i (object_group,
                              the_location,
@@ -97,7 +97,7 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
   try
     {
       // TypeId already checked by GenericFactory.
-      const CORBA::Boolean check_type_id = 0;
+      const CORBA::Boolean check_type_id = false;
 
       new_group = this->add_member_i (object_group,
                                       the_location,
@@ -730,7 +730,7 @@ TAO_PG_ObjectGroupManager::valid_type_id (
   CORBA::String_var type_id =
     CORBA::string_dup (group_entry->type_id.in ());
 
-  CORBA::Boolean right_type_id = 0;
+  CORBA::Boolean right_type_id = false;
   {
     // Release the lock during the type_id check.  No need to block
     // other threads during the invocation.
