@@ -18,7 +18,6 @@
 be_visitor_attr_assign::be_visitor_attr_assign  (
       be_visitor_context *ctx)
   : be_visitor_decl (ctx),
-    attr_name_ (nullptr),
     attr_name_string_ ("this->")
 {
 }

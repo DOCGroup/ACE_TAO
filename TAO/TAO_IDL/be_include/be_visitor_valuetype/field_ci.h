@@ -61,7 +61,7 @@ public:
   bool in_obv_space_ {};
 
 private:
-  char const *pre_op_;
+  char const *pre_op_ {};
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FIELD_CI_H_ */

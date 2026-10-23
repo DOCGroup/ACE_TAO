@@ -90,7 +90,7 @@ public:
 
   bool in_obv_space_ {};
 private:
-  char const *pre_op_;
+  char const *pre_op_ {};
 
   int valuetype_common (be_type *node);
 };

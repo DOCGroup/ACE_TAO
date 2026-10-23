@@ -50,7 +50,7 @@ private:
   void fini_file ();
 
 private:
-  TAO_OutStream *os_ptr_;
+  TAO_OutStream *os_ptr_ {};
 };
 
 #endif /* _BE_VISITOR_DDS_TS_IDL_H_ */

@@ -48,7 +48,7 @@ public:
   void attr_name (const char *name);
 
 private:
-  const char *attr_name_;
+  const char *attr_name_ {};
   ACE_CString attr_name_string_;
 };
 

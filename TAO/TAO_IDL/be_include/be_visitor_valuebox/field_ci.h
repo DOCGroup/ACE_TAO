@@ -93,7 +93,7 @@ private:
                         char const *access_modifier);
 
 private:
-  be_valuebox *vb_node_;
+  be_valuebox *vb_node_ {};
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_FIELD_CI_H_ */

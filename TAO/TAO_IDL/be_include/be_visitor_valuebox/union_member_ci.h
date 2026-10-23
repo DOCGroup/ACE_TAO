@@ -90,7 +90,7 @@ private:
                         char const *const_method);
 
 private:
-  be_valuebox *vb_node_;
+  be_valuebox *vb_node_ {};
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_ */

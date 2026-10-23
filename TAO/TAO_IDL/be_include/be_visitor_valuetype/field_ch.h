@@ -87,8 +87,8 @@ public:
   char const *post_op ();
 
 private:
-  char const *pre_op_;
-  char const *post_op_;
+  char const *pre_op_ {};
+  char const *post_op_ {};
   AST_Field::Visibility visibility_;
 };
 
