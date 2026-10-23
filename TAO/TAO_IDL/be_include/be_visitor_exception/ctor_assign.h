@@ -23,7 +23,7 @@
 class be_visitor_exception_ctor_assign : public be_visitor_scope
 {
 public:
-  be_visitor_exception_ctor_assign (be_visitor_context *ctx);
+  explicit be_visitor_exception_ctor_assign (be_visitor_context *ctx);
   ~be_visitor_exception_ctor_assign () override;
 
   int visit_exception (be_exception *node) override;

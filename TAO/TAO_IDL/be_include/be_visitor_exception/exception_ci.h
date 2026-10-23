@@ -24,7 +24,7 @@
 class be_visitor_exception_ci : public be_visitor_exception
 {
 public:
-  be_visitor_exception_ci (be_visitor_context *ctx);
+  explicit be_visitor_exception_ci (be_visitor_context *ctx);
   ~be_visitor_exception_ci () override;
 
   int visit_exception (be_exception *node) override;
