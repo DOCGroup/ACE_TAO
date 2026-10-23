@@ -22,9 +22,7 @@ be_visitor_typedef_cdr_op_cs::be_visitor_typedef_cdr_op_cs (
 {
 }
 
-be_visitor_typedef_cdr_op_cs::~be_visitor_typedef_cdr_op_cs ()
-{
-}
+be_visitor_typedef_cdr_op_cs::~be_visitor_typedef_cdr_op_cs () = default;
 
 int
 be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)

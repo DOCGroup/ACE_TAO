@@ -20,9 +20,7 @@ be_visitor_typedef_ch::be_visitor_typedef_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_ch::~be_visitor_typedef_ch ()
-{
-}
+be_visitor_typedef_ch::~be_visitor_typedef_ch () = default;
 
 int
 be_visitor_typedef_ch::visit_typedef (be_typedef *node)
@@ -231,14 +229,14 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << "ACE_INLINE " << static_decl << be_nl
           << td_name << "_slice *" << be_nl
           << td_name << "_dup (" << be_idt << be_idt_nl
-          << "const " << td_name << "_slice *_tao_slice);" << be_uidt
+          << td_name << "_slice const *_tao_slice);" << be_uidt
           << be_uidt_nl;
       // _copy
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
           << "void " << td_name << "_copy (" << be_idt << be_idt_nl
           << td_name << "_slice *_tao_to," << be_nl
-          << "const " << td_name << "_slice *_tao_from);" << be_uidt
+          << td_name << "_slice const *_tao_from);" << be_uidt
           << be_uidt_nl;
       // _free
       *os << be_nl

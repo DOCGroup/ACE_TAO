@@ -27,10 +27,15 @@ class be_visitor_typedef_ci : public be_visitor_typedef
 {
 public:
   /// constructor
-  be_visitor_typedef_ci (be_visitor_context *ctx);
+  explicit be_visitor_typedef_ci (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_typedef_ci () override;
+
+  be_visitor_typedef_ci (be_visitor_typedef_ci const &) = delete;
+  be_visitor_typedef_ci (be_visitor_typedef_ci &&) = delete;
+  be_visitor_typedef_ci &operator= (be_visitor_typedef_ci const &) = delete;
+  be_visitor_typedef_ci &operator= (be_visitor_typedef_ci &&) = delete;
 
   /// visit typedef. We provide code for this method in the derived class
   int visit_typedef (be_typedef *node) override;
