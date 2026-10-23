@@ -903,7 +903,7 @@ TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_pt
     }
 
   CORBA::Object_var IORM =
-    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm =
     TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());

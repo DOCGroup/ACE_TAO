@@ -28,7 +28,12 @@ public:
   /**
    *  Constructor
    */
-  NS_group_svc (bool quiet = false);
+  explicit NS_group_svc (bool quiet = false);
+
+  NS_group_svc (NS_group_svc const &) = delete;
+  NS_group_svc (NS_group_svc &&) = delete;
+  NS_group_svc &operator= (NS_group_svc const &) = delete;
+  NS_group_svc &operator= (NS_group_svc &&) = delete;
 
   /**
    * The naming service shall provide a command line utility for creating
