@@ -174,7 +174,7 @@ public:
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Sender objects using the static create() method.
-  TAO_ECG_UDP_Sender (CORBA::Boolean crc = 0);
+  explicit TAO_ECG_UDP_Sender (CORBA::Boolean crc = false);
 
 private:
   /// Helpers for the connect() method.

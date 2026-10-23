@@ -87,9 +87,9 @@ protected:
 class TAO_RTEvent_Serv_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 {
 public:
-  TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
-                size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
-                ACE_Notification_Strategy * = nullptr);
+  explicit TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
+                         size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
+                         ACE_Notification_Strategy * = nullptr);
   TAO_EC_Queue (const TAO_EC_Queue&) = delete;
   TAO_EC_Queue (TAO_EC_Queue&&) = delete;
   TAO_EC_Queue& operator= (const TAO_EC_Queue&) = delete;
@@ -112,12 +112,12 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNC
 public:
 #ifdef ACE_WIN32_VC14
   // Work around for Connect #2869042 Bugzilla #4215
-  TAO_EC_Dispatching_Task (
+  explicit TAO_EC_Dispatching_Task (
     ACE_Thread_Manager *thr_manager,
     TAO_EC_Queue_Full_Service_Object *queue_full_service_object = nullptr);
   TAO_EC_Dispatching_Task ();
 #else
-  TAO_EC_Dispatching_Task (
+  explicit TAO_EC_Dispatching_Task (
     ACE_Thread_Manager *thr_manager = nullptr,
     TAO_EC_Queue_Full_Service_Object *queue_full_service_object = nullptr);
 #endif

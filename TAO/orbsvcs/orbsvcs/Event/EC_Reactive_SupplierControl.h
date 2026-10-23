@@ -57,7 +57,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_
 {
 public:
   /// Constructor
-  TAO_EC_SupplierControl_Adapter (TAO_EC_Reactive_SupplierControl *adaptee);
+  explicit TAO_EC_SupplierControl_Adapter (TAO_EC_Reactive_SupplierControl *adaptee);
 
   // = Documented in ACE_Event_Handler.
   virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -141,7 +141,7 @@ private:
 class TAO_EC_Ping_Supplier : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
-  TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
+  explicit TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
 
   virtual void work (TAO_EC_ProxyPushConsumer *consumer) override;
 

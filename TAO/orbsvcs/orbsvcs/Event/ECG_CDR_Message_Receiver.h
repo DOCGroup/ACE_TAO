@@ -142,7 +142,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Receiver
 public:
   /// Initialization and termination methods.
   //@{
-  TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
+  explicit TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
   ~TAO_ECG_CDR_Message_Receiver ();
 
   /**

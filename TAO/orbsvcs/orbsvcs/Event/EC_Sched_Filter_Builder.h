@@ -42,7 +42,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Sched_Filter_Builder : public TAO_EC_Filter
 {
 public:
   /// constructor.
-  TAO_EC_Sched_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Sched_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   /// destructor...
   virtual ~TAO_EC_Sched_Filter_Builder () override;

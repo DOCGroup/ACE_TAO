@@ -37,7 +37,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin
 {
 public:
   /// Constructor
-  TAO_EC_Simple_AddrServer (CORBA::UShort port);
+  explicit TAO_EC_Simple_AddrServer (CORBA::UShort port);
 
   /// Destructor
   virtual ~TAO_EC_Simple_AddrServer () override;

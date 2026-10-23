@@ -44,7 +44,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Thread_Flags
 public:
   TAO_EC_Thread_Flags () { }
   /*! \brief See \a operator=() */
-  TAO_EC_Thread_Flags (const char* symbolic_flags)
+  explicit TAO_EC_Thread_Flags (const char* symbolic_flags)
     { this->parse_symbols(symbolic_flags); }
   ~TAO_EC_Thread_Flags ();
 

@@ -39,7 +39,7 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Scheduling : public TAO_EC_Scheduling
 {
 public:
   /// Constructor.
-  TAO_EC_Kokyu_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
+  explicit TAO_EC_Kokyu_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
   /// Destructor
   virtual ~TAO_EC_Kokyu_Scheduling () override;

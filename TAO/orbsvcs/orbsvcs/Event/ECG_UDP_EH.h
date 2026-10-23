@@ -51,7 +51,7 @@ public:
    * See comments for <receiver_> data member on why raw pointer is
    * used for the @a recv argument.
    */
-  TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
+  explicit TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
   virtual ~TAO_ECG_UDP_EH () override;

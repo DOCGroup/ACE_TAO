@@ -80,7 +80,7 @@ public:
 
   /// Initialization and termination methods.
   //@{
-  TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
+  explicit TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
 
   /// Set the endpoint for sending messages.
   /**

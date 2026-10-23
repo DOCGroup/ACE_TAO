@@ -52,7 +52,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
   TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching const &) = delete;
   TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching &&) = delete;

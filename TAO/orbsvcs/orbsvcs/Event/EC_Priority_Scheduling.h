@@ -38,7 +38,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Priority_Scheduling : public TAO_EC_Schedul
 {
 public:
   /// Constructor.
-  TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
+  explicit TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
   /// Destructor
   virtual ~TAO_EC_Priority_Scheduling () override;

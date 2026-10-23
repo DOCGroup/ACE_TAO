@@ -46,7 +46,7 @@ public:
    * See comments for <receiver_> data member on why raw pointer is
    * used for the <recv> argument.
    */
-  TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
+  explicit TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
   virtual ~TAO_ECG_Simple_Mcast_EH () override;
