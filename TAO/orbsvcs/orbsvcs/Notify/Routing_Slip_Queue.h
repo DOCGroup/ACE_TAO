@@ -55,6 +55,11 @@ namespace TAO_Notify
     /// Destructor.
     ~Routing_Slip_Queue ();
 
+    Routing_Slip_Queue (const Routing_Slip_Queue&) = delete;
+    Routing_Slip_Queue (Routing_Slip_Queue&&) = delete;
+    Routing_Slip_Queue& operator= (const Routing_Slip_Queue&) = delete;
+    Routing_Slip_Queue& operator= (Routing_Slip_Queue&&) = delete;
+
     /**
      * \brief Add a routing slip to the tail of the queue and dispatch if necessary.
      */
@@ -74,9 +79,6 @@ namespace TAO_Notify
     void dispatch (Guard & guard);
     bool dispatch_one (Guard & guard);
 
-  private:
-    Routing_Slip_Queue (const Routing_Slip_Queue & rhs);
-    Routing_Slip_Queue & operator = (const Routing_Slip_Queue & rhs);
   private:
     // configuration setting
     size_t allowed_;

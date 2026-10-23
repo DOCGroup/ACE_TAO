@@ -41,6 +41,11 @@ public:
   /// Constructor.
   TAO_Notify_Constraint_Visitor ();
 
+  TAO_Notify_Constraint_Visitor (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor (TAO_Notify_Constraint_Visitor&&) = delete;
+  TAO_Notify_Constraint_Visitor& operator= (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor& operator= (TAO_Notify_Constraint_Visitor&&) = delete;
+
   /// Put the event data into our hash map.
   int bind_structured_event (const CosNotification::StructuredEvent &s_event);
 
