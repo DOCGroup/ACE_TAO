@@ -26,8 +26,8 @@ public:
                                        bool full_def_only) override;
 
   // Extend lookup to the supported interfaces.
-  virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_supported (UTL_ScopedName *e,
+                               bool full_def_only) override;
 
   // Overridden for homes from the UTL_Scope method.
   AST_Decl *special_lookup (UTL_ScopedName *,
@@ -65,8 +65,8 @@ private:
   friend int tao_yyparse ();
   friend class ast_visitor_tmpl_module_inst;
 
-  virtual AST_Factory *fe_add_factory (AST_Factory *f);
-  virtual AST_Finder *fe_add_finder (AST_Finder *f);
+  AST_Factory *fe_add_factory (AST_Factory *f) override;
+  AST_Finder *fe_add_finder (AST_Finder *f) override;
 
 private:
   AST_Home *pd_base_home;
