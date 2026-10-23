@@ -90,31 +90,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_sys_stat.h"
 
 // Storage for preprocessor args.
-unsigned long const DRV_MAX_ARGCOUNT = 1024;
+constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 unsigned long DRV_argcount = 0;
 ACE_TCHAR const * DRV_arglist[DRV_MAX_ARGCOUNT] = { nullptr };
 
 static char const * output_arg_format = nullptr;
 static long output_arg_index = 0;
 
-ACE_TCHAR const TCHAR_DIR_DOT[] = ACE_TEXT(".");
+constexpr ACE_TCHAR TCHAR_DIR_DOT[] = ACE_TEXT(".");
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
 // ACE_TCHAR const DIR_DOT[] = ACE_TEXT(".");
-ACE_TCHAR const DIR_DOT_DOT[] = ACE_TEXT("..");
+constexpr ACE_TCHAR DIR_DOT_DOT[] = ACE_TEXT("..");
 #else
 // char const DIR_DOT[] = ".";
-char const DIR_DOT_DOT[] = "..";
+constexpr char DIR_DOT_DOT[] = "..";
 #endif /* ACE_HAS_TCHAR_DIRENT */
 
 // File names.
-static char tmp_file [MAXPATHLEN + 1] = { 0 };
-static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
+static char tmp_file [MAXPATHLEN + 1] {};
+static char tmp_ifile[MAXPATHLEN + 1] {};
 
 #if defined (ACE_CC_PREPROCESSOR_DIRECT_INPUT)
-static bool const copy_input_file = false;
+static constexpr bool copy_input_file = false;
 #else
-static bool const copy_input_file = true;
+static constexpr bool copy_input_file = true;
 #endif
 
 // Lines can be 1024 chars long intially -
@@ -134,7 +134,7 @@ DRV_cpp_new_location (char const * new_loc)
 
 // Push an argument into the DRV_arglist.
 void
-DRV_cpp_putarg (const char *str)
+DRV_cpp_putarg (char const *str)
 {
   if (DRV_argcount >= DRV_MAX_ARGCOUNT)
     {
@@ -152,13 +152,13 @@ DRV_cpp_putarg (const char *str)
       bool allocate_error = false;
 
 #ifdef ACE_WIN32
-      const char *const first_quote = ACE_OS::strchr (str, '"');
+      char const * const first_quote = ACE_OS::strchr (str, '"');
       if (first_quote)
         {
           // Escape Doublequotes on Windows
 
           size_t quote_count = 0;
-          for (const char *quote = first_quote; quote; quote = ACE_OS::strchr (quote, '"'))
+          for (char const *quote = first_quote; quote; quote = ACE_OS::strchr (quote, '"'))
             {
               ++quote_count;
               ++quote;
@@ -169,7 +169,7 @@ DRV_cpp_putarg (const char *str)
           if (replace)
             {
               char *to = replace;
-              for (const char *from = str; *from; ++from)
+              for (char const *from = str; *from; ++from)
                 {
                   if (*from == '"')
                     {
@@ -213,7 +213,7 @@ DRV_cpp_putarg (const char *str)
 
 // Expand the output argument with the given filename.
 void
-DRV_cpp_expand_output_arg (const char *filename)
+DRV_cpp_expand_output_arg (char const *filename)
 {
   if (output_arg_format != nullptr)
     {
@@ -348,7 +348,7 @@ DRV_cpp_init ()
     }
 #endif
 
-  const char *platform_cpp_args =
+  char const *platform_cpp_args =
     FE_get_cpp_args_from_env ();
 
   if (platform_cpp_args == nullptr)
@@ -447,8 +447,8 @@ DRV_cpp_init ()
 }
 
 int
-DRV_sweep_dirs (const char *rel_path,
-                const char *base_path)
+DRV_sweep_dirs (char const *rel_path,
+                char const *base_path)
 {
   // Zero rel_path means we're not using this option, and
   // so we become a no-op.
@@ -554,8 +554,8 @@ DRV_sweep_dirs (const char *rel_path,
 
 ACE_CString&
 DRV_add_include_path (ACE_CString& include_path,
-                      const char *path,
-                      const char *suffix,
+                      char const *path,
+                      char const *suffix,
                       bool is_system)
 {
   if (path == nullptr)
@@ -563,10 +563,10 @@ DRV_add_include_path (ACE_CString& include_path,
       return include_path;
     }
 
-  const bool needToQuote =
+  bool const needToQuote =
     (('"' == *path) || ACE_OS::strchr (path, ' '));
-  const size_t pathLength = ACE_OS::strlen (path);
-  const char
+  size_t const pathLength = ACE_OS::strlen (path);
+  char const
 #if defined (ACE_WIN32)
     nativeDir =  '\\',
     foreignDir = '/';
@@ -773,7 +773,7 @@ namespace
   // Advances the input char buffer to the first non-white
   // space character, handles /**/ comments as well.
   char
-  DRV_skip_over_white_spaces (const char *&input)
+  DRV_skip_over_white_spaces (char const *&input)
   {
     while (*input != 0)
       {
@@ -829,7 +829,7 @@ namespace
   // at the leading quote character of the filename if
   // #include is found.
   bool
-  DRV_find_include_filename (const char *&input)
+  DRV_find_include_filename (char const *&input)
   {
     // Must have initial # character
     if ('#' != DRV_skip_over_white_spaces (input))
@@ -838,7 +838,7 @@ namespace
       }
 
     // Only want #include to match
-    const char *include_str = "include";
+    char const *include_str = "include";
 
     if (*include_str != DRV_skip_over_white_spaces (++input))
       {
@@ -856,7 +856,7 @@ namespace
 
     // Next thing is finding the file that has been `#include'd. Skip
     // over to the starting " or < character.
-    const char start_char = DRV_skip_over_white_spaces (input);
+    char const start_char = DRV_skip_over_white_spaces (input);
     return ('"' == start_char || '<' == start_char);
   }
 
@@ -868,7 +868,7 @@ namespace
   // "#include's in the stubs and
   // skeletons.
   void
-  DRV_check_for_include (const char *buf)
+  DRV_check_for_include (char const *buf)
   {
     if (!DRV_find_include_filename (buf))
       {
@@ -878,7 +878,7 @@ namespace
     // Skip over this leading " or < and
     // copy the filename upto the
     // closing " or > character.
-    const char
+    char const
       start_char = *buf++,
       end_char   = ('<' == start_char) ? '>' : start_char;
 
@@ -954,7 +954,7 @@ namespace
   void
   DRV_convert_includes (char *buf)
   {
-    const char *input = buf;
+    char const *input = buf;
 
     if (!DRV_find_include_filename (input) || '"' != *input)
       {
@@ -987,7 +987,7 @@ namespace
 void
 DRV_get_orb_idl_includes ()
 {
-  static char const orb_idl[] = "tao/orb.idl";
+  static constexpr char orb_idl[] = "tao/orb.idl";
 
  // Search for orb.idl in supplied include file search paths.
   char const * directory = nullptr;
@@ -1035,8 +1035,8 @@ DRV_get_orb_idl_includes ()
 static void
 DRV_copy_input (FILE *fin,
                 FILE *f,
-                const char *fn,
-                const char *orig_filename)
+                char const *fn,
+                char const *orig_filename)
 {
   if (f == nullptr)
     {
@@ -1068,7 +1068,7 @@ DRV_copy_input (FILE *fin,
   char buf[2*MAXPATHLEN];
   char *d = buf;
 
-  for (const char *s = orig_filename; *s != 0; ++s)
+  for (char const *s = orig_filename; *s != 0; ++s)
     {
       if (*s == '\\')
         {
@@ -1139,7 +1139,7 @@ DRV_stripped_name (char *fn)
 
 // Pass input through preprocessor.
 void
-DRV_pre_proc (const char *myfile)
+DRV_pre_proc (char const *myfile)
 {
   // Check to see that the file is a normal file. If we don't and the file is a
   // directory, then the copy would be blank and any error message later might
@@ -1162,11 +1162,11 @@ DRV_pre_proc (const char *myfile)
       throw Bailout ();
     }
 
-  const char* tmpdir = idl_global->temp_dir ();
+  char const *tmpdir = idl_global->temp_dir ();
   static constexpr char temp_file_extension[] = ".cpp";
 
-  static char const tao_idlf_template[] = "tao-idlf_XXXXXX";
-  static char const tao_idli_template[] = "tao-idli_XXXXXX";
+  static constexpr char tao_idlf_template[] = "tao-idlf_XXXXXX";
+  static constexpr char tao_idli_template[] = "tao-idli_XXXXXX";
 
   size_t const tlen =
     ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension);
