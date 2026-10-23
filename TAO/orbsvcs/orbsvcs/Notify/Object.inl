@@ -80,14 +80,14 @@ TAO_Notify_Object::set_admin_properties( TAO_Notify_AdminProperties* admin_prope
 ACE_INLINE TAO_Notify_Event_Manager&
 TAO_Notify_Object::event_manager ()
 {
-  ACE_ASSERT( this->event_manager_.get() != 0 );
+  ACE_ASSERT( this->event_manager_.get() != nullptr );
   return *this->event_manager_;
 }
 
 ACE_INLINE TAO_Notify_AdminProperties&
 TAO_Notify_Object::admin_properties ()
 {
-  ACE_ASSERT( this->admin_properties_.get() != 0 );
+  ACE_ASSERT( this->admin_properties_.get() != nullptr );
   return *this->admin_properties_;
 }
 

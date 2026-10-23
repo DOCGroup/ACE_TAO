@@ -79,7 +79,7 @@ public:
   /// Add the statistics for this event channel.  If the ec was
   /// constructed with a non-zero length string, this method will
   /// do nothing.
-  void add_stats (const char* name = 0);
+  void add_stats (const char* name = nullptr);
 
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
     new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,

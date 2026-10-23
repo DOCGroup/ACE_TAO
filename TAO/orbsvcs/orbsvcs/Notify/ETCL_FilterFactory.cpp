@@ -25,7 +25,7 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
     iterator.advance ())
   {
     delete entry->int_id_;
-    entry->int_id_ = 0;
+    entry->int_id_ = nullptr;
   }
 
   this->filters_.unbind_all ();
@@ -97,7 +97,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
   TAO_Notify_ETCL_Filter*& filter)
 {
   // Create the RefCounted servant.
-  filter = 0;
+  filter = nullptr;
 
   ACE_NEW_THROW_EX (filter,
                     TAO_Notify_ETCL_Filter (this->filter_poa_.in (),
@@ -110,7 +110,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
     if (filters_.bind (id, filter) == -1)
     {
       throw CORBA::INTERNAL ();
-      return 0;
+      return nullptr;
     }
   }
 
@@ -128,7 +128,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
       catch (const CORBA::Exception& )
         {
           throw CORBA::INTERNAL ();
-          return 0;
+          return nullptr;
         }
     }
   CORBA::Object_var obj =
