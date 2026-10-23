@@ -73,11 +73,11 @@ private:
   int opt_startup;
 };
 
-typedef ACE_Singleton<Options, ACE_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Mutex>;
 
 Options::Options ()
   : opt_setargs (0),
-    opt_args (0),
+    opt_args (nullptr),
     opt_install (0),
     opt_remove (0),
     opt_start (0),
