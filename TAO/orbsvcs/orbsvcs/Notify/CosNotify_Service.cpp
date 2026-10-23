@@ -110,7 +110,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           current_arg = arg_shifter.get_the_parameter
                                 (ACE_TEXT("-UseSeparateDispatchingORB"));
-          if (current_arg != 0 &&
+          if (current_arg != nullptr &&
               (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
                ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
             {
@@ -125,9 +125,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                           ACE_TEXT ("argument (%s).  Ignoring invalid ")
                           ACE_TEXT ("-UseSeparateDispatchingORB usage.\n"),
-                          (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                          (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
             }
-          if (current_arg != 0)
+          if (current_arg != nullptr)
             arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllowReconnect")) == 0)
@@ -140,9 +140,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         current_arg = arg_shifter.get_the_parameter
                       (ACE_TEXT("-DefaultConsumerAdminFilterOp"));
         CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
-        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+        if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::AND_OP;
-        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+        else if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::OR_OP;
         else
           {
@@ -150,7 +150,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                         ACE_TEXT ("argument (%s).  Ignoring invalid ")
                         ACE_TEXT ("-DefaultConsumerAdminFilterOp usage.\n"),
-                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                        (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
           }
         properties->defaultConsumerAdminFilterOp (op);
         arg_shifter.consume_arg ();
@@ -160,9 +160,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         current_arg = arg_shifter.get_the_parameter
                       (ACE_TEXT("-DefaultSupplierAdminFilterOp"));
         CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
-        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+        if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::AND_OP;
-        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+        else if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::OR_OP;
         else
           {
@@ -170,7 +170,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                         ACE_TEXT ("argument (%s).  Ignoring invalid ")
                         ACE_TEXT ("-DefaultSupplierAdminFilterOp usage.\n"),
-                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                        (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
           }
         properties->defaultSupplierAdminFilterOp (op);
         arg_shifter.consume_arg ();
@@ -184,7 +184,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientDelay")) == 0)
       {
         current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientDelay"));
-        if (current_arg != 0)
+        if (current_arg != nullptr)
         {
           ACE_Time_Value tv (ACE_OS::atoi (current_arg));
           TAO_Notify_PROPERTIES::instance()->validate_client_delay (tv);
@@ -195,15 +195,15 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
             ACE_TEXT ("argument (%s).  Ignoring invalid ")
             ACE_TEXT ("-ValidateClientDelay usage.\n"),
-            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
         }
-        if (current_arg != 0)
+        if (current_arg != nullptr)
           arg_shifter.consume_arg ();
       }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientInterval")) == 0)
       {
         current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientInterval"));
-        if (current_arg != 0)
+        if (current_arg != nullptr)
         {
           ACE_Time_Value tv (ACE_OS::atoi (current_arg));
           TAO_Notify_PROPERTIES::instance()->validate_client_interval (tv);
@@ -214,9 +214,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
             ACE_TEXT ("argument (%s).  Ignoring invalid ")
             ACE_TEXT ("-ValidateClientDelay usage.\n"),
-            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
         }
-        if (current_arg != 0)
+        if (current_arg != nullptr)
           arg_shifter.consume_arg ();
       }
       else

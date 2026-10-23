@@ -32,7 +32,7 @@ TAO_Notify_Object::inherit_poas (TAO_Notify_Object& parent)
 ACE_INLINE void
 TAO_Notify_Object::adopt_poa (TAO_Notify_POA_Helper* single)
 {
-  ACE_ASSERT( single != 0 );
+  ACE_ASSERT( single != nullptr );
   this->set_proxy_poa( single );
   this->set_object_poa( single );
   this->set_poa( single );
@@ -73,7 +73,7 @@ TAO_Notify_Object::has_shutdown ()
 ACE_INLINE void
 TAO_Notify_Object::set_admin_properties( TAO_Notify_AdminProperties* admin_properties )
 {
-  ACE_ASSERT( admin_properties != 0 );
+  ACE_ASSERT( admin_properties != nullptr );
   this->admin_properties_.reset( admin_properties );
 }
 
