@@ -216,7 +216,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "ACE_NEW_RETURN ("
           << "this->proxy_factory_," << be_idt << be_idt_nl
           << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory (nullptr)," << be_nl
+          << "_Default_Proxy_Factory (0)," << be_nl
           << " nullptr);" << be_uidt_nl << be_uidt_nl << be_uidt_nl
           << "return "
           << "this->proxy_factory_->create_proxy (proxy);"

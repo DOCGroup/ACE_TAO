@@ -332,7 +332,7 @@ cancel_schedule_i (Guid_t guid)
 
   if (this->curr_scheduled_guid_ == guid)
     {
-      this->curr_scheduled_guid_ = 0;
+      this->curr_scheduled_guid_ = Guid_t {};
       this->curr_scheduled_thr_handle_ = 0;
     }
 

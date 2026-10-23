@@ -98,7 +98,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
                   "\nCalling EventLogFactory::create...\n"));
 
       DsLogAdmin::LogFullActionType logfullaction = DsLogAdmin::halt;
-      DsLogAdmin::CapacityAlarmThresholdList threshold = 0;
+      DsLogAdmin::CapacityAlarmThresholdList threshold {};
       CORBA::ULongLong max_size = 0; // 0 means "infinite"
 
       DsLogAdmin::LogId logid = 0;

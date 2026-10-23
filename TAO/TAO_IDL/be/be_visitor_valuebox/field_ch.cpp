@@ -18,6 +18,9 @@
 
 #include "valuebox.h"
 
+#include <memory>
+#include <string>
+
 namespace
 {
   void
@@ -38,13 +41,36 @@ namespace
         const_prefix += 6;
       }
 
+    std::unique_ptr<char[]> name_string (name->get_string_copy ());
+    std::string type_name (const_prefix);
+    type_name += name_string.get ();
+
     if (is_const)
       {
-        *os << const_prefix << name << " const" << type_suffix;
-        return;
+        std::string::size_type star = type_name.find ('*');
+
+        if (star == std::string::npos)
+          {
+            type_name += " const";
+          }
+        else
+          {
+            std::string::size_type position = star;
+            while (position > 0 && type_name[position - 1] == ' ')
+              {
+                --position;
+              }
+
+            type_name.insert (position, " const");
+            if (position == star)
+              {
+                type_name.insert (position + 6, " ");
+              }
+          }
       }
 
-    *os << const_prefix << name << type_suffix;
+    type_name += type_suffix;
+    *os << type_name.c_str ();
   }
 }
 
