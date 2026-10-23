@@ -44,7 +44,7 @@ struct TAO_NL_2
  */
 struct TAO_INDENT
 {
-  TAO_INDENT (int do_now = 0);
+  explicit TAO_INDENT (int do_now = 0);
 
   const int do_now_;
 };
@@ -57,7 +57,7 @@ struct TAO_INDENT
  */
 struct TAO_UNINDENT
 {
-  TAO_UNINDENT (int do_now = 0);
+  explicit TAO_UNINDENT (int do_now = 0);
 
   const int do_now_;
 };
