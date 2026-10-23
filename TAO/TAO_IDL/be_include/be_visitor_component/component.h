@@ -28,6 +28,10 @@ public:
   explicit be_visitor_component (be_visitor_context *ctx);
 
   ~be_visitor_component () override;
+  be_visitor_component (be_visitor_component const &) = delete;
+  be_visitor_component (be_visitor_component &&) = delete;
+  be_visitor_component &operator= (be_visitor_component const &) = delete;
+  be_visitor_component &operator= (be_visitor_component &&) = delete;
 
   /// This is the only type of declaration a component may contain.
   int visit_attribute (be_attribute *node) override;

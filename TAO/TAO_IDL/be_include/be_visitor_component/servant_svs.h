@@ -25,6 +25,10 @@ public:
   explicit be_visitor_servant_svs (be_visitor_context *ctx);
 
   ~be_visitor_servant_svs () override = default;
+  be_visitor_servant_svs (be_visitor_servant_svs const &) = delete;
+  be_visitor_servant_svs (be_visitor_servant_svs &&) = delete;
+  be_visitor_servant_svs &operator= (be_visitor_servant_svs const &) = delete;
+  be_visitor_servant_svs &operator= (be_visitor_servant_svs &&) = delete;
 
   int visit_component (be_component *node) override;
   int visit_connector (be_connector *node) override;
@@ -60,6 +64,10 @@ public:
   explicit be_visitor_obv_factory_reg (be_visitor_context *ctx);
 
   ~be_visitor_obv_factory_reg () override;
+  be_visitor_obv_factory_reg (be_visitor_obv_factory_reg const &) = delete;
+  be_visitor_obv_factory_reg (be_visitor_obv_factory_reg &&) = delete;
+  be_visitor_obv_factory_reg &operator= (be_visitor_obv_factory_reg const &) = delete;
+  be_visitor_obv_factory_reg &operator= (be_visitor_obv_factory_reg &&) = delete;
 
   int visit_publishes (be_publishes *node) override;
   int visit_emits (be_emits *node) override;
@@ -77,6 +85,10 @@ public:
   explicit be_visitor_attr_set (be_visitor_context *ctx);
 
   ~be_visitor_attr_set () override;
+  be_visitor_attr_set (be_visitor_attr_set const &) = delete;
+  be_visitor_attr_set (be_visitor_attr_set &&) = delete;
+  be_visitor_attr_set &operator= (be_visitor_attr_set const &) = delete;
+  be_visitor_attr_set &operator= (be_visitor_attr_set &&) = delete;
 
   int visit_attribute (be_attribute *node) override;
 
@@ -95,6 +107,10 @@ public:
   explicit be_visitor_facet_executor_block (be_visitor_context *ctx);
 
   ~be_visitor_facet_executor_block () override;
+  be_visitor_facet_executor_block (be_visitor_facet_executor_block const &) = delete;
+  be_visitor_facet_executor_block (be_visitor_facet_executor_block &&) = delete;
+  be_visitor_facet_executor_block &operator= (be_visitor_facet_executor_block const &) = delete;
+  be_visitor_facet_executor_block &operator= (be_visitor_facet_executor_block &&) = delete;
 
   int visit_provides (be_provides *node) override;
 };
@@ -108,6 +124,10 @@ public:
   explicit be_visitor_connect_block (be_visitor_context *ctx);
 
   ~be_visitor_connect_block () override;
+  be_visitor_connect_block (be_visitor_connect_block const &) = delete;
+  be_visitor_connect_block (be_visitor_connect_block &&) = delete;
+  be_visitor_connect_block &operator= (be_visitor_connect_block const &) = delete;
+  be_visitor_connect_block &operator= (be_visitor_connect_block &&) = delete;
 
   int visit_uses (be_uses *node) override;
 };
@@ -121,6 +141,10 @@ public:
   explicit be_visitor_disconnect_block (be_visitor_context *ctx);
 
   ~be_visitor_disconnect_block () override;
+  be_visitor_disconnect_block (be_visitor_disconnect_block const &) = delete;
+  be_visitor_disconnect_block (be_visitor_disconnect_block &&) = delete;
+  be_visitor_disconnect_block &operator= (be_visitor_disconnect_block const &) = delete;
+  be_visitor_disconnect_block &operator= (be_visitor_disconnect_block &&) = delete;
 
   int visit_uses (be_uses *node) override;
 };
@@ -135,6 +159,10 @@ public:
                               be_component *node);
 
   ~be_visitor_receptacle_desc () override;
+  be_visitor_receptacle_desc (be_visitor_receptacle_desc const &) = delete;
+  be_visitor_receptacle_desc (be_visitor_receptacle_desc &&) = delete;
+  be_visitor_receptacle_desc &operator= (be_visitor_receptacle_desc const &) = delete;
+  be_visitor_receptacle_desc &operator= (be_visitor_receptacle_desc &&) = delete;
 
   int visit_uses (be_uses *node) override;
 
@@ -152,6 +180,10 @@ public:
   explicit be_visitor_subscribe_block (be_visitor_context *ctx);
 
   ~be_visitor_subscribe_block () override;
+  be_visitor_subscribe_block (be_visitor_subscribe_block const &) = delete;
+  be_visitor_subscribe_block (be_visitor_subscribe_block &&) = delete;
+  be_visitor_subscribe_block &operator= (be_visitor_subscribe_block const &) = delete;
+  be_visitor_subscribe_block &operator= (be_visitor_subscribe_block &&) = delete;
 
   int visit_publishes (be_publishes *node) override;
 };
@@ -165,6 +197,10 @@ public:
   explicit be_visitor_unsubscribe_block (be_visitor_context *ctx);
 
   ~be_visitor_unsubscribe_block () override;
+  be_visitor_unsubscribe_block (be_visitor_unsubscribe_block const &) = delete;
+  be_visitor_unsubscribe_block (be_visitor_unsubscribe_block &&) = delete;
+  be_visitor_unsubscribe_block &operator= (be_visitor_unsubscribe_block const &) = delete;
+  be_visitor_unsubscribe_block &operator= (be_visitor_unsubscribe_block &&) = delete;
 
   int visit_publishes (be_publishes *node) override;
 };
@@ -178,6 +214,10 @@ public:
   explicit be_visitor_event_source_desc (be_visitor_context *ctx);
 
   ~be_visitor_event_source_desc () override;
+  be_visitor_event_source_desc (be_visitor_event_source_desc const &) = delete;
+  be_visitor_event_source_desc (be_visitor_event_source_desc &&) = delete;
+  be_visitor_event_source_desc &operator= (be_visitor_event_source_desc const &) = delete;
+  be_visitor_event_source_desc &operator= (be_visitor_event_source_desc &&) = delete;
 
   int visit_publishes (be_publishes *node) override;
 
@@ -194,6 +234,10 @@ public:
   explicit be_visitor_connect_consumer_block (be_visitor_context *ctx);
 
   ~be_visitor_connect_consumer_block () override;
+  be_visitor_connect_consumer_block (be_visitor_connect_consumer_block const &) = delete;
+  be_visitor_connect_consumer_block (be_visitor_connect_consumer_block &&) = delete;
+  be_visitor_connect_consumer_block &operator= (be_visitor_connect_consumer_block const &) = delete;
+  be_visitor_connect_consumer_block &operator= (be_visitor_connect_consumer_block &&) = delete;
 
   int visit_emits (be_emits *node) override;
 };
@@ -207,6 +251,10 @@ public:
   explicit be_visitor_disconnect_consumer_block (be_visitor_context *ctx);
 
   ~be_visitor_disconnect_consumer_block () override;
+  be_visitor_disconnect_consumer_block (be_visitor_disconnect_consumer_block const &) = delete;
+  be_visitor_disconnect_consumer_block (be_visitor_disconnect_consumer_block &&) = delete;
+  be_visitor_disconnect_consumer_block &operator= (be_visitor_disconnect_consumer_block const &) = delete;
+  be_visitor_disconnect_consumer_block &operator= (be_visitor_disconnect_consumer_block &&) = delete;
 
   int visit_emits (be_emits *node) override;
 };
@@ -220,6 +268,10 @@ public:
   explicit be_visitor_emitter_desc (be_visitor_context *ctx);
 
   ~be_visitor_emitter_desc () override;
+  be_visitor_emitter_desc (be_visitor_emitter_desc const &) = delete;
+  be_visitor_emitter_desc (be_visitor_emitter_desc &&) = delete;
+  be_visitor_emitter_desc &operator= (be_visitor_emitter_desc const &) = delete;
+  be_visitor_emitter_desc &operator= (be_visitor_emitter_desc &&) = delete;
 
   int visit_emits (be_emits *node) override;
 
@@ -236,6 +288,10 @@ public:
   explicit be_visitor_populate_port_tables (be_visitor_context *ctx);
 
   ~be_visitor_populate_port_tables () override;
+  be_visitor_populate_port_tables (be_visitor_populate_port_tables const &) = delete;
+  be_visitor_populate_port_tables (be_visitor_populate_port_tables &&) = delete;
+  be_visitor_populate_port_tables &operator= (be_visitor_populate_port_tables const &) = delete;
+  be_visitor_populate_port_tables &operator= (be_visitor_populate_port_tables &&) = delete;
 
   int visit_provides (be_provides *node) override;
 

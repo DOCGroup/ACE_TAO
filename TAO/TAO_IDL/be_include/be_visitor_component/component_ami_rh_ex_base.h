@@ -28,6 +28,10 @@ class be_visitor_component_ami_rh_ex_base
 public:
   explicit be_visitor_component_ami_rh_ex_base (be_visitor_context *ctx);
   ~be_visitor_component_ami_rh_ex_base () override;
+  be_visitor_component_ami_rh_ex_base (be_visitor_component_ami_rh_ex_base const &) = delete;
+  be_visitor_component_ami_rh_ex_base (be_visitor_component_ami_rh_ex_base &&) = delete;
+  be_visitor_component_ami_rh_ex_base &operator= (be_visitor_component_ami_rh_ex_base const &) = delete;
+  be_visitor_component_ami_rh_ex_base &operator= (be_visitor_component_ami_rh_ex_base &&) = delete;
 
   int post_process (be_decl *node) override;
 

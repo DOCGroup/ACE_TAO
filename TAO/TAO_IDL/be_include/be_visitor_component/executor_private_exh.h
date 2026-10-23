@@ -25,6 +25,10 @@ public:
   explicit be_visitor_executor_private_exh (be_visitor_context *ctx);
 
   ~be_visitor_executor_private_exh () override;
+  be_visitor_executor_private_exh (be_visitor_executor_private_exh const &) = delete;
+  be_visitor_executor_private_exh (be_visitor_executor_private_exh &&) = delete;
+  be_visitor_executor_private_exh &operator= (be_visitor_executor_private_exh const &) = delete;
+  be_visitor_executor_private_exh &operator= (be_visitor_executor_private_exh &&) = delete;
 
   int visit_provides (be_provides *node) override;
   int visit_attribute (be_attribute *node) override;

@@ -28,6 +28,10 @@ public:
   explicit be_visitor_servant_svh (be_visitor_context *ctx);
 
   ~be_visitor_servant_svh () override = default;
+  be_visitor_servant_svh (be_visitor_servant_svh const &) = delete;
+  be_visitor_servant_svh (be_visitor_servant_svh &&) = delete;
+  be_visitor_servant_svh &operator= (be_visitor_servant_svh const &) = delete;
+  be_visitor_servant_svh &operator= (be_visitor_servant_svh &&) = delete;
 
   int visit_component (be_component *node) override;
   int visit_connector (be_connector *node) override;

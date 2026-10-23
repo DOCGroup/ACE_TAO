@@ -24,6 +24,10 @@ public:
   explicit be_visitor_executor_exs (be_visitor_context *ctx);
 
   ~be_visitor_executor_exs () override = default;
+  be_visitor_executor_exs (be_visitor_executor_exs const &) = delete;
+  be_visitor_executor_exs (be_visitor_executor_exs &&) = delete;
+  be_visitor_executor_exs &operator= (be_visitor_executor_exs const &) = delete;
+  be_visitor_executor_exs &operator= (be_visitor_executor_exs &&) = delete;
 
   int visit_operation (be_operation *node) override;
   int visit_attribute (be_attribute *node) override;
