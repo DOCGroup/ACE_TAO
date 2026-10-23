@@ -168,7 +168,7 @@ private:
     /// constructor
     /// @param dir the directory path to add to the server or activator
     ///        filename
-    LocatorListings_XMLHandler(const ACE_TString& dir);
+    explicit LocatorListings_XMLHandler(const ACE_TString& dir);
 
     /// constructor for tracking only changes to what servers and activators
     /// are currently in the repo

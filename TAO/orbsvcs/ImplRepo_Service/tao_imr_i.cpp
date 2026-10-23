@@ -263,25 +263,10 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   ORBSVCS_DEBUG ((LM_DEBUG, "\n"));
 }
 
-TAO_IMR_Op_List::TAO_IMR_Op_List ()
-: verbose_server_information_ (0)
-, list_only_active_servers_ (0)
-, how_many_ (0)
-, terse_ (0)
-{
-  // Nothing
-}
-
 TAO_IMR_Op_Register::TAO_IMR_Op_Register (bool is_add)
 : is_add_ (is_add)
-, set_command_line_ (false)
-, set_environment_vars_(false)
-, set_working_dir_ (false)
-, set_activation_ (false)
 , activation_(ImplementationRepository::NORMAL)
-, set_retry_count_(false)
 , retry_count_ (0)
-, set_activator_ (false)
 {
   // Nothing
 }
@@ -584,13 +569,13 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
       switch (c)
       {
       case 'v': // verbose server display
-        this->verbose_server_information_ = 1;
+        this->verbose_server_information_ = true;
         break;
       case 't':
-        this->terse_ = 1;
+        this->terse_ = true;
         break;
       case 'a':
-        this->list_only_active_servers_ = 1;
+        this->list_only_active_servers_ = true;
         break;
       case 'n':
         this->how_many_ = ACE_OS::atoi (get_opts.opt_arg ());
@@ -706,11 +691,6 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
       }
     }
   return 0;
-}
-
-TAO_IMR_Op_ShutdownRepo::TAO_IMR_Op_ShutdownRepo()
-: activators_(false)
-{
 }
 
 void
@@ -1194,7 +1174,7 @@ TAO_IMR_Op_List::run ()
           this->imr_->find (this->server_name_.c_str (), si);
           if (ACE_OS::strlen (si->server.in()) > 0)
             {
-              this->verbose_server_information_ = 1;
+              this->verbose_server_information_ = true;
               this->display_server_information (si.in ());
             }
           else

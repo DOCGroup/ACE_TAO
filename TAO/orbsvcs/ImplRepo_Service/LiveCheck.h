@@ -74,7 +74,7 @@ class Locator_Export LiveListener
  public:
   /// Construct a new listener. The server name supplied is used to
   /// look up a listener entry in the LiveCheck map.
-  LiveListener (const char *server);
+  explicit LiveListener (const char *server);
 
   virtual ~LiveListener ();
 
