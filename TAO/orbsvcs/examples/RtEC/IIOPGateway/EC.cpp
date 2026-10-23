@@ -7,7 +7,7 @@
 #include "orbsvcs/Event/EC_Gateway.h"
 #include "ace/Arg_Shifter.h"
 
-static const ACE_TCHAR *ecname = 0;
+static ACE_TCHAR const *ecname = nullptr;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -18,10 +18,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-EC::EC ()
-{
-}
 
 int
 EC::run (int argc, ACE_TCHAR* argv[])
@@ -104,7 +100,7 @@ EC::run (int argc, ACE_TCHAR* argv[])
       // or using another thread, this example is too simple for that.
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("EC::run");
       return 1;
@@ -119,7 +115,7 @@ EC::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
         {
