@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   /// Tag for storing multiple ssl endpoints within a single profile.
-  const ACE_UINT32 TAG_SSL_ENDPOINTS = 0x54414f01U;
+  constexpr ACE_UINT32 TAG_SSL_ENDPOINTS = 0x54414f01U;
 }
 
 // namespace TAO
@@ -189,7 +189,7 @@ namespace TAO
       TAO::SSLIOP::OwnCredentials_var credentials_;
 
       /// A flag indicating that credentials_ was explicitly initialized
-      int credentials_set_;
+      bool credentials_set_ {};
     };
 
     /**

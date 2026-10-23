@@ -167,7 +167,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * Most likely the parse_string() will supply a subset of the
        * attributes - port number, for instance.
        */
-      int ssl_only_;
+      bool ssl_only_ {};
     };
 
 //   }  // End SSLIOP namespace.

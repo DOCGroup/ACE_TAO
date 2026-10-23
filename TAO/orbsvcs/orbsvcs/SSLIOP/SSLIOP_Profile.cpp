@@ -14,8 +14,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
                       object_key,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_component, nullptr),
-  ssl_only_ (0)
+  ssl_endpoint_ (ssl_component, nullptr)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
@@ -33,8 +32,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char * host,
                       addr,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_component, nullptr),
-  ssl_only_ (0)
+  ssl_endpoint_ (ssl_component, nullptr)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
@@ -42,8 +40,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char * host,
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
                                const ::SSLIOP::SSL * ssl_component)
   : TAO_IIOP_Profile (orb_core),
-    ssl_endpoint_ (ssl_component, nullptr),
-    ssl_only_ (0)
+    ssl_endpoint_ (ssl_component, nullptr)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
@@ -51,7 +48,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only)
   : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (nullptr, nullptr),
-    ssl_only_ (ssl_only)
+    ssl_only_ (ssl_only != 0)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
@@ -84,7 +81,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 
   // Attempt to decode SSLIOP::SSL tagged component.  It may not be
   // there if we are dealing with pure IIOP profile.
-  int ssl_component_found = 0;
+  bool ssl_component_found = false;
   IOP::TaggedComponent component;
   component.tag = ::SSLIOP::TAG_SSL_SEC_TRANS;
 
@@ -98,7 +95,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
       cdr_component.reset_byte_order (static_cast<int> (byte_order));
 
       if (cdr_component >> this->ssl_endpoint_.ssl_component_)
-        ssl_component_found = 1;
+        ssl_component_found = true;
       else
         return -1;
     }

@@ -111,7 +111,7 @@ namespace TAO
 {
   namespace SSLIOP
   {
-    static const long ACCEPT_TIMEOUT = 10;  // Default accept timeout
+    constexpr long ACCEPT_TIMEOUT = 10;  // Default accept timeout
                                             // in seconds.
   }
 }

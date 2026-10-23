@@ -25,8 +25,7 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
     // Some compilers don't like the initialization
     trust_ (),
 #endif /* !VXWORKS && !__QNX__ */
-    credentials_ (),
-    credentials_set_ (0)
+    credentials_ ()
 {
   if (ssl_component != nullptr)
     {
@@ -76,8 +75,8 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
   // Invalidate the Addr until the first attempt to use it is made.
   this->object_addr_.set_type (-1);
 
-  this->trust_.trust_in_target = 1;
-  this->trust_.trust_in_client = 1;
+  this->trust_.trust_in_target = true;
+  this->trust_.trust_in_client = true;
 }
 
 
@@ -178,8 +177,8 @@ TAO_SSLIOP_Endpoint::duplicate ()
   // shouldnt be a problem as long as SSL is not used with RTCORBA.
   ACE_NEW_RETURN (endpoint,
                   TAO_SSLIOP_Endpoint (&this->ssl_component_,
-                                         0),
-                  0);
+                                         nullptr),
+                  nullptr);
 
   if (this->credentials_set_)
     endpoint->set_sec_attrs (this->qop_,this->trust_, this->credentials_.in());
@@ -285,7 +284,7 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
   this->qop_ = q;
   this->trust_ = t;
   this->credentials_ = TAO::SSLIOP::OwnCredentials::_duplicate (c);
-  this->credentials_set_ = 1;
+  this->credentials_set_ = true;
 
   // reset the hash value to force a recomputation.
   this->hash_val_ = 0;
@@ -304,7 +303,7 @@ TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SS
 
 
 TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp)
-  : TAO_SSLIOP_Endpoint ((const ::SSLIOP::SSL *)0, iiop_endp)
+  : TAO_SSLIOP_Endpoint (nullptr, iiop_endp)
 {
    this->ssl_component_.port = iiop_endp->port ();
 }
@@ -352,7 +351,7 @@ TAO_SSLIOP_Synthetic_Endpoint::duplicate ()
   // shouldnt be a problem as long as SSL is not used with RTCORBA.
   ACE_NEW_RETURN (endpoint,
                   TAO_SSLIOP_Synthetic_Endpoint (&(this->ssl_component ())),
-                  0);
+                  nullptr);
 
   if (this->credentials_set())
     endpoint->set_sec_attrs (this->qop (),this->trust (), this->credentials ());
