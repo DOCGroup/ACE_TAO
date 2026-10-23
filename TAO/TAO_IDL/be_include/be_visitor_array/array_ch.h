@@ -28,6 +28,10 @@ public:
 
   /// destructor
   ~be_visitor_array_ch () override = default;
+  be_visitor_array_ch (be_visitor_array_ch const &) = delete;
+  be_visitor_array_ch (be_visitor_array_ch &&) = delete;
+  be_visitor_array_ch &operator= (be_visitor_array_ch const &) = delete;
+  be_visitor_array_ch &operator= (be_visitor_array_ch &&) = delete;
 
   /// visit the array node
   int visit_array (be_array *node) override;

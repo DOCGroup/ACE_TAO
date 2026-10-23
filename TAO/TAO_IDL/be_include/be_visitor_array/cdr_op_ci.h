@@ -30,6 +30,10 @@ public:
 
   /// destructor
   ~be_visitor_array_cdr_op_ci () override;
+  be_visitor_array_cdr_op_ci (be_visitor_array_cdr_op_ci const &) = delete;
+  be_visitor_array_cdr_op_ci (be_visitor_array_cdr_op_ci &&) = delete;
+  be_visitor_array_cdr_op_ci &operator= (be_visitor_array_cdr_op_ci const &) = delete;
+  be_visitor_array_cdr_op_ci &operator= (be_visitor_array_cdr_op_ci &&) = delete;
 
   /// visit array
   int visit_array (be_array *node) override;
