@@ -19,9 +19,7 @@ TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *)
 {
 }
 
-TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks ()
-{
-}
+TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks () = default;
 
 CORBA::Boolean
 TAO_FT_Service_Callbacks::select_profile (TAO_MProfile const& mprofile,

@@ -18,9 +18,7 @@ namespace TAO
   {
   }
 
-  FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor ()
-  {
-  }
+  FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor () = default;
 
   char *
   FT_ServerRequest_Interceptor::name ()
