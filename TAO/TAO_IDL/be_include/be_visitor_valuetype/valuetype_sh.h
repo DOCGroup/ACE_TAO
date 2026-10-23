@@ -25,13 +25,17 @@ class be_visitor_valuetype_sh : public be_visitor_valuetype
 {
 public:
   /// constructor
-  be_visitor_valuetype_sh (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_sh (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_valuetype_sh () override;
+  be_visitor_valuetype_sh (be_visitor_valuetype_sh const &) = delete;
+  be_visitor_valuetype_sh (be_visitor_valuetype_sh &&) = delete;
+  be_visitor_valuetype_sh &operator= (be_visitor_valuetype_sh const &) = delete;
+  be_visitor_valuetype_sh &operator= (be_visitor_valuetype_sh &&) = delete;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_SH_H_ */
