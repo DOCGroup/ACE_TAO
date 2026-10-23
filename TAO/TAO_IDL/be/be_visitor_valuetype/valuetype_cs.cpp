@@ -20,9 +20,7 @@ be_visitor_valuetype_cs::be_visitor_valuetype_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_cs::~be_visitor_valuetype_cs ()
-{
-}
+be_visitor_valuetype_cs::~be_visitor_valuetype_cs () = default;
 
 int
 be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)

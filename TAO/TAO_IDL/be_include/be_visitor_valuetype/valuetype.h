@@ -30,7 +30,7 @@ public:
   be_visitor_valuetype (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype ();
+  ~be_visitor_valuetype () override;
 
 public:
   /// visit the scope of the valuetype node

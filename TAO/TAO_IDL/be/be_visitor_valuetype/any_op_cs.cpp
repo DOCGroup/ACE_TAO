@@ -23,9 +23,7 @@ be_visitor_valuetype_any_op_cs::be_visitor_valuetype_any_op_cs (
 {
 }
 
-be_visitor_valuetype_any_op_cs::~be_visitor_valuetype_any_op_cs ()
-{
-}
+be_visitor_valuetype_any_op_cs::~be_visitor_valuetype_any_op_cs () = default;
 
 int
 be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)

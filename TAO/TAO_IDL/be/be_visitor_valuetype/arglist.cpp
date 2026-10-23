@@ -25,9 +25,7 @@ be_visitor_obv_operation_arglist::be_visitor_obv_operation_arglist (
 {
 }
 
-be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist ()
-{
-}
+be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist () = default;
 
 bool
 be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)

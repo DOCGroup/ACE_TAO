@@ -29,7 +29,7 @@ public:
   be_visitor_valuetype_init (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_init ();
+  ~be_visitor_valuetype_init () override;
 
 public:
   void begin_public ();
