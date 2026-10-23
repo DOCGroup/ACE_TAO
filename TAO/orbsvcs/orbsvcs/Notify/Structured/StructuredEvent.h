@@ -32,7 +32,7 @@ class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent_No_Copy : public TAO_Not
 {
 public:
   /// Constructor
-  TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
+  explicit TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
   virtual ~TAO_Notify_StructuredEvent_No_Copy ();
@@ -89,7 +89,7 @@ class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent : public TAO_Notify_Stru
 {
 public:
   /// Constructor
-  TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification);
+  explicit TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
   virtual ~TAO_Notify_StructuredEvent ();

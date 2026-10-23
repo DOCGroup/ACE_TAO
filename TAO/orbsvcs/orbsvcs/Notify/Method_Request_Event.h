@@ -34,10 +34,10 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
 {
 public:
   /// Construct from event
-  TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
+  explicit TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
 
   /// Construct from a delivery request
-  TAO_Notify_Method_Request_Event (
+  explicit TAO_Notify_Method_Request_Event (
     const TAO_Notify::Delivery_Request_Ptr & delivery_request);
 
   /// Construct from another Method Request
@@ -81,7 +81,7 @@ public:
     const TAO_Notify_Method_Request_Event & prev_request,
     const TAO_Notify_Event::Ptr & event);
 
-  TAO_Notify_Method_Request_Event_Queueable (
+  explicit TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request);
 
   /// Destructor

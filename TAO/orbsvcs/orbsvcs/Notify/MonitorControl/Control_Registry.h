@@ -32,7 +32,7 @@ public:
 
     ErrorReason why_;
 
-    Map_Error (ErrorReason why)
+    explicit Map_Error (ErrorReason why)
       : why_ (why)
     {
     }

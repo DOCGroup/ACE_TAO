@@ -42,7 +42,7 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannel
 public:
   /// Construct a named event channel and associate various
   /// statistic objects with it in the statistic registry.
-  TAO_MonitorEventChannel (const char* name);
+  explicit TAO_MonitorEventChannel (const char* name);
 
   /// Remove the statistics for this event channel.
   ~TAO_MonitorEventChannel ();

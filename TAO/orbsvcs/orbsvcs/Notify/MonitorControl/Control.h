@@ -32,7 +32,7 @@ public:
 
 protected:
   /// Construct a control object.
-  TAO_NS_Control (const char* name);
+  explicit TAO_NS_Control (const char* name);
 
 private:
   ACE_CString name_;

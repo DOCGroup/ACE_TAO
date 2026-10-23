@@ -31,7 +31,7 @@ class TAO_Notify_MC_Export NotificationServiceMonitor_i
 public:
   /// Construct a monitor service.  If the orb parameter is provided,
   /// it is possible that shutdown() will be called on it.
-  NotificationServiceMonitor_i (CORBA::ORB_ptr orb = nullptr);
+  explicit NotificationServiceMonitor_i (CORBA::ORB_ptr orb = nullptr);
 
   /// Get a list of statistic names
   virtual Monitor::NameList* get_statistic_names ();

@@ -147,7 +147,7 @@ private:
   bool create_persistence_manager();
 
   /// Private constructor for use by create method
-  Routing_Slip(const TAO_Notify_Event::Ptr& event);
+  explicit Routing_Slip(const TAO_Notify_Event::Ptr& event);
 
   /// Test to see if all deliveries are complete.
   bool all_deliveries_complete () const;

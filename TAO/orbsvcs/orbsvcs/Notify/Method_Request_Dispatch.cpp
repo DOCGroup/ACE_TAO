@@ -198,7 +198,9 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
         const TAO_Notify::Delivery_Request_Ptr & request,
         TAO_Notify_ProxySupplier* proxy_supplier,
         bool filtering)
-  : TAO_Notify_Method_Request_Dispatch (request, request->event ().get (), proxy_supplier, filtering)
+  : TAO_Notify_Method_Request_Dispatch (
+      TAO_Notify_Method_Request_Event (request),
+      request->event ().get (), proxy_supplier, filtering)
   , TAO_Notify_Method_Request_Queueable (request->event ().get ())
   , event_var_( request->event () )
 

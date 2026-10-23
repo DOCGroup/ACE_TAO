@@ -38,7 +38,7 @@ public:
   TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial);
 
   /// Constructor
-  TAO_Notify_PropertyBase_T (const char* name);
+  explicit TAO_Notify_PropertyBase_T (const char* name);
 
   /// Copy Constructor
   TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
@@ -96,7 +96,7 @@ public:
   TAO_Notify_Property_T (const char* name, const TYPE& initial);
 
   /// Constructor
-  TAO_Notify_Property_T (const char* name);
+  explicit TAO_Notify_Property_T (const char* name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
@@ -121,7 +121,7 @@ public:
   TAO_Notify_StructProperty_T (const char* name, const TYPE& initial);
 
   /// Constructor
-  TAO_Notify_StructProperty_T (const char* name);
+  explicit TAO_Notify_StructProperty_T (const char* name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error

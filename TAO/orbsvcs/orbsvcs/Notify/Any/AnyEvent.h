@@ -96,7 +96,7 @@ class TAO_Notify_Serv_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No
 {
 public:
   /// Constructor
-  TAO_Notify_AnyEvent (const CORBA::Any &event);
+  explicit TAO_Notify_AnyEvent (const CORBA::Any &event);
 
   /// Destructor
   virtual ~TAO_Notify_AnyEvent ();

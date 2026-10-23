@@ -31,7 +31,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Shutdown : public TAO_Not
 {
 public:
   /// Constructor
-  TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
+  explicit TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
 
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Shutdown ();

@@ -36,7 +36,7 @@ class TAO_Notify_Serv_Export TAO_Notify_SequencePushConsumer
   : public TAO_Notify_Consumer
 {
 public:
-  TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy);
+  explicit TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   virtual ~TAO_Notify_SequencePushConsumer ();
 

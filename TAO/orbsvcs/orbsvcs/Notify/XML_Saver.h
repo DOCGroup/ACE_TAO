@@ -32,7 +32,7 @@ class XML_Saver : public Topology_Saver
 public:
   /// Construct an XML_Saver.
   /// Initialization is deferred to "open()"
-  XML_Saver (bool timestamp = true);
+  explicit XML_Saver (bool timestamp = true);
 
   virtual ~XML_Saver ();
 

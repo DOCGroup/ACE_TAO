@@ -50,7 +50,7 @@ namespace TAO_Notify
      * \param allowed the number of Routing_Slips that can be handled
      *  simultaneously by the persistent store.
      */
-    Routing_Slip_Queue (size_t allowed = 1);
+    explicit Routing_Slip_Queue (size_t allowed = 1);
 
     /// Destructor.
     ~Routing_Slip_Queue ();

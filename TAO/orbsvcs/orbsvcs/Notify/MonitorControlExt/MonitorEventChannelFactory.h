@@ -29,7 +29,7 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannelFactory
 public:
   /// Construct a named event channel factory and associate various
   /// statistic objects with it in the statistic registry
-  TAO_MonitorEventChannelFactory (const char* name);
+  explicit TAO_MonitorEventChannelFactory (const char* name);
 
   /// Remove the factory name from the factory names statistic
   ~TAO_MonitorEventChannelFactory ();
