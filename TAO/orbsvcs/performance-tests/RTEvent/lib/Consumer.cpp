@@ -43,7 +43,7 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
     this->_this ();
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos;
-  consumer_qos.is_gateway = 0;
+  consumer_qos.is_gateway = false;
   consumer_qos.dependencies.length (2);
   RtecEventComm::EventHeader& h0 =
     consumer_qos.dependencies[0].event.header;
