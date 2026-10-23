@@ -260,10 +260,10 @@ TAO::SSLIOP::Connector::make_secure_profile ()
 TAO_Profile *
 TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
 {
-   int ssl_only = 0;
+   bool ssl_only = false;
    if (this->check_prefix (endpoint) == 0)
    {
-       ssl_only = 1;
+       ssl_only = true;
    }
    else
    {
