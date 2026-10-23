@@ -2457,7 +2457,7 @@ TAO_Container_i::create_value_common (
       ACE_TString supported_id;
       const char *supported_path = nullptr;
       CORBA::ULong kind = 0;
-      CORBA::Boolean concrete_seen = 0;
+      bool concrete_seen = false;
       CORBA::DefinitionKind def_kind;
 
       for (CORBA::ULong i = 0; i < length; ++i)
@@ -2482,9 +2482,9 @@ TAO_Container_i::create_value_common (
 
           if (def_kind == CORBA::dk_Interface)
             {
-              if (concrete_seen == 0)
+              if (!concrete_seen)
                 {
-                  concrete_seen = 1;
+                  concrete_seen = true;
                 }
               else
                 {

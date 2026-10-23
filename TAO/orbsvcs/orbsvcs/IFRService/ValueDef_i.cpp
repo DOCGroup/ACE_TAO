@@ -202,7 +202,7 @@ TAO_ValueDef_i::supported_interfaces_i (
   const char *supported_id = nullptr;
   const char *supported_path = nullptr;
   CORBA::ULong kind = 0;
-  CORBA::Boolean concrete_seen = 0;
+  bool concrete_seen = false;
   CORBA::DefinitionKind def_kind;
 
   for (CORBA::ULong i = 0; i < count; ++i)
@@ -228,9 +228,9 @@ TAO_ValueDef_i::supported_interfaces_i (
 
       if (def_kind == CORBA::dk_Interface)
         {
-          if (concrete_seen == 0)
+          if (!concrete_seen)
             {
-              concrete_seen = 1;
+              concrete_seen = true;
             }
           else
             {
@@ -769,7 +769,7 @@ TAO_ValueDef_i::is_a_i (const char *id)
                                              count);
   char *stringified = nullptr;
   ACE_Configuration_Section_Key base_key;
-  CORBA::Boolean success = 0;
+  bool success = false;
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
