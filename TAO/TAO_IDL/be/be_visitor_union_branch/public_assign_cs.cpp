@@ -25,9 +25,7 @@ be_visitor_union_branch_public_assign_cs (be_visitor_context *ctx)
 
 // destructor
 be_visitor_union_branch_public_assign_cs::
-~be_visitor_union_branch_public_assign_cs ()
-{
-}
+~be_visitor_union_branch_public_assign_cs () = default;
 
 // visit the union_branch node
 int
@@ -37,7 +35,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  const int index = be_visitor_union::branch_index (node);
+  int const index = be_visitor_union::branch_index (node);
 
   if (index == -1)
     {

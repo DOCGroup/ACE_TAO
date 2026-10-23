@@ -69,9 +69,7 @@ be_visitor_union_branch_public_reset_cs (be_visitor_context *ctx)
 }
 
 be_visitor_union_branch_public_reset_cs::
-~be_visitor_union_branch_public_reset_cs ()
-{
-}
+~be_visitor_union_branch_public_reset_cs () = default;
 
 // visit the union_branch node
 int
@@ -92,7 +90,7 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
 
   this->ctx_->node (node); // save the node
 
-  const int index = be_visitor_union::branch_index (node);
+  int const index = be_visitor_union::branch_index (node);
 
   if (index == -1)
     {
