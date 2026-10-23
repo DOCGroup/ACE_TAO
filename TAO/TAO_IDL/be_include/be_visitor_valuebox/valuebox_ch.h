@@ -26,10 +26,15 @@ class be_visitor_valuebox_ch : public be_visitor_valuebox
 {
 public:
   /// constructor
-  be_visitor_valuebox_ch (be_visitor_context *ctx);
+  explicit be_visitor_valuebox_ch (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_valuebox_ch () override;
+
+  be_visitor_valuebox_ch (be_visitor_valuebox_ch const &) = delete;
+  be_visitor_valuebox_ch (be_visitor_valuebox_ch &&) = delete;
+  be_visitor_valuebox_ch &operator= (be_visitor_valuebox_ch const &) = delete;
+  be_visitor_valuebox_ch &operator= (be_visitor_valuebox_ch &&) = delete;
 
   /// visit valuebox.
   int visit_valuebox (be_valuebox *node) override;

@@ -21,9 +21,7 @@ be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
 {
 }
 
-be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci ()
-{
-}
+be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci () = default;
 
 int
 be_visitor_valuebox_field_ci::visit_field (be_field *node)
@@ -430,7 +428,7 @@ be_visitor_valuebox_field_ci::visit_string (be_string *node)
 
   *os << "// Modifier to set the member." << be_nl;
 
-  const char *string_type = "";
+  char const *string_type {""};
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";

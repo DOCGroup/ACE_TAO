@@ -21,9 +21,7 @@ be_visitor_valuebox_union_member_ci::be_visitor_valuebox_union_member_ci (
 {
 }
 
-be_visitor_valuebox_union_member_ci::~be_visitor_valuebox_union_member_ci ()
-{
-}
+be_visitor_valuebox_union_member_ci::~be_visitor_valuebox_union_member_ci () = default;
 
 int
 be_visitor_valuebox_union_member_ci::visit_union_member (be_union_branch *node)
@@ -384,7 +382,7 @@ be_visitor_valuebox_union_member_ci::visit_string (be_string *node)
 
   *os << "// Modifier to set the member." << be_nl;
 
-  const char *string_type = "";
+  char const *string_type {""};
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";

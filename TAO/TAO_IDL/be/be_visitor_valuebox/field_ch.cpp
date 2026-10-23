@@ -25,9 +25,7 @@ be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
 {
 }
 
-be_visitor_valuebox_field_ch::~be_visitor_valuebox_field_ch ()
-{
-}
+be_visitor_valuebox_field_ch::~be_visitor_valuebox_field_ch () = default;
 
 int
 be_visitor_valuebox_field_ch::visit_field (be_field *node)
@@ -372,7 +370,7 @@ be_visitor_valuebox_field_ch::visit_string (be_string *node)
   this->emit_member_set (field, bt, "", "");
   this->emit_member_set (field, bt, "const ", "");
 
-  const char *string_type = "";
+  char const *string_type {""};
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";

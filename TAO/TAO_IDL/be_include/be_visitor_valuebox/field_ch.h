@@ -33,10 +33,15 @@ class be_visitor_valuebox_field_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_valuebox_field_ch (be_visitor_context *ctx);
+  explicit be_visitor_valuebox_field_ch (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_valuebox_field_ch () override;
+
+  be_visitor_valuebox_field_ch (be_visitor_valuebox_field_ch const &) = delete;
+  be_visitor_valuebox_field_ch (be_visitor_valuebox_field_ch &&) = delete;
+  be_visitor_valuebox_field_ch &operator= (be_visitor_valuebox_field_ch const &) = delete;
+  be_visitor_valuebox_field_ch &operator= (be_visitor_valuebox_field_ch &&) = delete;
 
   /// visit the union_branch node
   int visit_field (be_field *node) override;

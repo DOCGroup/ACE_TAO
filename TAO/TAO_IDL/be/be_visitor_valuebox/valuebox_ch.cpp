@@ -20,9 +20,7 @@ be_visitor_valuebox_ch::be_visitor_valuebox_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_ch::~be_visitor_valuebox_ch ()
-{
-}
+be_visitor_valuebox_ch::~be_visitor_valuebox_ch () = default;
 
 int
 be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
@@ -72,13 +70,13 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "::CORBA::ValueBase * _copy_value ();" << be_nl_2;
 
   // repository id methods
-  *os << "virtual const char* "
+  *os << "virtual char const * "
       << "_tao_obv_repository_id () const;"
       << be_nl_2
       << "virtual void "
       << "_tao_obv_truncatable_repo_ids (Repository_Id_List &ids) const;"
       << be_nl_2
-      << "static const char* "
+      << "static char const * "
       << "_tao_obv_static_repository_id ();" << be_nl_2;
 
   // unmarshal method
@@ -372,8 +370,8 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  const char *string_type;
-  const char *char_type;
+  char const *string_type {};
+  char const *char_type {};
 
   if (node->node_type () == AST_Decl::NT_string)
     {
