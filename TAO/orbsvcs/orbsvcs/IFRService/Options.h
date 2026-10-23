@@ -72,19 +72,19 @@ private:
   char *ior_output_file_;
 
   /// Is the Interface Repository persistent?
-  int persistent_;
+  bool persistent_ {};
 
   /// Default filename for persistent IFR.
   char *persistent_file_;
 
   /// Are we using a WIN32 registry as the backing store?
-  int using_registry_;
+  bool using_registry_ {};
 
   /// Should the repository have a real mutex or a null mutex?
-  int enable_locking_;
+  bool enable_locking_ {};
 
   /// If not zero multicast is enabled.
-  int support_multicast_;
+  bool support_multicast_ {};
 };
 
 // Options Singleton.
