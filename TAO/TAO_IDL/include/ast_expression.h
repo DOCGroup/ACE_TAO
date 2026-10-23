@@ -204,40 +204,40 @@ public:
                   AST_Expression *v1,
                   AST_Expression *v2);
 
-  AST_Expression (ACE_CDR::Short s);
+  explicit AST_Expression (ACE_CDR::Short s);
 
-  AST_Expression (ACE_CDR::UShort us);
+  explicit AST_Expression (ACE_CDR::UShort us);
 
-  AST_Expression (ACE_CDR::Long l);
+  explicit AST_Expression (ACE_CDR::Long l);
 
-  AST_Expression (ACE_CDR::LongLong ll);
+  explicit AST_Expression (ACE_CDR::LongLong ll);
 
-  AST_Expression (ACE_CDR::Boolean b);
+  explicit AST_Expression (ACE_CDR::Boolean b);
 
-  AST_Expression (ACE_CDR::ULong ul);
+  explicit AST_Expression (ACE_CDR::ULong ul);
 
-  AST_Expression (ACE_CDR::ULongLong ull);
+  explicit AST_Expression (ACE_CDR::ULongLong ull);
 
   AST_Expression (ACE_CDR::ULong,
                   ExprType t);
 
-  AST_Expression (ACE_CDR::Float f);
+  explicit AST_Expression (ACE_CDR::Float f);
 
-  AST_Expression (ACE_CDR::Double d);
+  explicit AST_Expression (ACE_CDR::Double d);
 
-  AST_Expression (ACE_CDR::Char c);
+  explicit AST_Expression (ACE_CDR::Char c);
 
-  AST_Expression (ACE_OutputCDR::from_wchar wc);
+  explicit AST_Expression (ACE_OutputCDR::from_wchar wc);
 
-  AST_Expression (ACE_CDR::Octet o);
+  explicit AST_Expression (ACE_CDR::Octet o);
 
-  AST_Expression (UTL_String *s);
+  explicit AST_Expression (UTL_String *s);
 
-  AST_Expression (char *s);
+  explicit AST_Expression (char *s);
 
-  AST_Expression (UTL_ScopedName *n);
+  explicit AST_Expression (UTL_ScopedName *n);
 
-  AST_Expression (const ACE_CDR::Fixed &f);
+  explicit AST_Expression (ACE_CDR::Fixed const& f);
 
   // Destructor.
   virtual ~AST_Expression ();
