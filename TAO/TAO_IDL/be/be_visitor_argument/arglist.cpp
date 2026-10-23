@@ -19,14 +19,11 @@
 // ************************************************************
 
 be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
-  : be_visitor_args (ctx),
-    unused_ (false)
+  : be_visitor_args (ctx)
 {
 }
 
-be_visitor_args_arglist::~be_visitor_args_arglist ()
-{
-}
+be_visitor_args_arglist::~be_visitor_args_arglist () = default;
 
 int be_visitor_args_arglist::visit_argument (be_argument *node)
 {

@@ -25,10 +25,10 @@ class be_visitor_args_invoke_cs : public be_visitor_args
 {
 public:
   /// constructor
-  be_visitor_args_invoke_cs (be_visitor_context *ctx);
+  explicit be_visitor_args_invoke_cs (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_invoke_cs ();
+  ~be_visitor_args_invoke_cs () override;
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);

@@ -33,7 +33,7 @@ class be_visitor_args : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_args (be_visitor_context *ctx);
+  explicit be_visitor_args (be_visitor_context *ctx);
 
   /// destructor
   virtual ~be_visitor_args ();
@@ -59,7 +59,7 @@ protected:
                   bool for_stub);
 
 private:
-  int fixed_direction_;
+  int fixed_direction_ {-1};
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_ARGUMENT_H_ */

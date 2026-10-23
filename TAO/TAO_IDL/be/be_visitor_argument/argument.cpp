@@ -13,14 +13,11 @@
 #include "argument.h"
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    fixed_direction_ (-1)
+  : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_args::~be_visitor_args ()
-{
-}
+be_visitor_args::~be_visitor_args () = default;
 
 int be_visitor_args::visit_argument (be_argument *)
 {

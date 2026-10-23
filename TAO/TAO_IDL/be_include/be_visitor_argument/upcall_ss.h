@@ -25,10 +25,10 @@ class be_visitor_args_upcall_ss : public be_visitor_args
 {
 public:
   /// constructor
-  be_visitor_args_upcall_ss (be_visitor_context *ctx);
+  explicit be_visitor_args_upcall_ss (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_upcall_ss ();
+  ~be_visitor_args_upcall_ss () override;
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);

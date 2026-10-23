@@ -32,10 +32,10 @@ class be_visitor_args_arglist : public be_visitor_args
 {
 public:
   /// constructor
-  be_visitor_args_arglist (be_visitor_context *ctx);
+  explicit be_visitor_args_arglist (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_arglist ();
+  ~be_visitor_args_arglist () override;
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);
@@ -109,7 +109,7 @@ private:
   int emit_common (be_type *node);
 
 private:
-  bool unused_;
+  bool unused_ {};
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_ARGLIST_H_ */
