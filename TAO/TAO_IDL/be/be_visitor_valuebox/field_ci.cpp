@@ -13,6 +13,36 @@
 
 #include "valuebox.h"
 
+namespace
+{
+  void
+  emit_field_inline_type (TAO_OutStream *os,
+                          char const *const_prefix,
+                          UTL_IdList *name,
+                          char const *type_suffix)
+  {
+    bool is_const = const_prefix[0] == 'c'
+      && const_prefix[1] == 'o'
+      && const_prefix[2] == 'n'
+      && const_prefix[3] == 's'
+      && const_prefix[4] == 't'
+      && const_prefix[5] == ' ';
+
+    if (is_const)
+      {
+        const_prefix += 6;
+      }
+
+    if (is_const)
+      {
+        *os << const_prefix << name << " const" << type_suffix;
+        return;
+      }
+
+    *os << const_prefix << name << type_suffix;
+  }
+}
+
 be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
     be_visitor_context *ctx
   )
@@ -133,7 +163,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
 
   *os << "/// Accessor to retrieve the member." << be_nl;
 
-  *os << "ACE_INLINE const " << fname << "_slice *" << be_nl
+  *os << "ACE_INLINE " << fname << "_slice const *" << be_nl
       << vb_node_->name () << "::" << field->local_name ()
       << " () const" << be_nl
       << "{" << be_idt_nl
@@ -440,7 +470,7 @@ be_visitor_valuebox_field_ci::visit_string (be_string *node)
 
   *os << "ACE_INLINE void" << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (const ::CORBA::" << string_type << "_var & val)"
+      << " (::CORBA::" << string_type << "_var const &val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
       << " = val;" << be_uidt_nl
@@ -545,16 +575,17 @@ be_visitor_valuebox_field_ci::visit_union (be_union *node)
 void
 be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
                                                be_type *field_type,
-                                               const char *const_arg,
-                                               const char *arg_modifier)
+                                               char const *const_arg,
+                                               char const *arg_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "// Modifier to set the member." << be_nl;
 
   *os << "ACE_INLINE void" << be_nl
-      << vb_node_->name () << "::" << field->local_name ()
-      << " (" << const_arg << field_type->name () << arg_modifier << " val)"
+      << vb_node_->name () << "::" << field->local_name () << " (";
+  emit_field_inline_type (os, const_arg, field_type->name (), arg_modifier);
+  *os << " val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
       << " = val;" << be_uidt_nl
@@ -564,17 +595,18 @@ be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
 void
 be_visitor_valuebox_field_ci::emit_member_get (be_decl *field,
                                                be_type *field_type,
-                                               const char *const_prefix,
-                                               const char *type_suffix,
-                                               const char *const_method,
-                                               const char *access_modifier)
+                                               char const *const_prefix,
+                                               char const *type_suffix,
+                                               char const *const_method,
+                                               char const *access_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "/// Accessor to retrieve the member." << be_nl;
 
-  *os << "ACE_INLINE " << const_prefix << field_type->name () << type_suffix
-      << be_nl
+  *os << "ACE_INLINE ";
+  emit_field_inline_type (os, const_prefix, field_type->name (), type_suffix);
+  *os << be_nl
       << vb_node_->name () << "::" << field->local_name ()
       << " () " << const_method << be_nl
       << "{" << be_idt_nl

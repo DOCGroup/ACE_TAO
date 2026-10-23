@@ -557,8 +557,6 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
       << "}" << be_nl_2;
 
   // Accessor: const
-  *os << "const ";
-
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -568,7 +566,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << " &" << be_nl;
+  *os << " const &" << be_nl;
   *os << vb_node->name ()
       << "::operator[] (::CORBA::ULong index) const" << be_nl
       << "{" << be_idt_nl;

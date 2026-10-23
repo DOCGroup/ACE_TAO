@@ -68,33 +68,33 @@ public:
 
 private:
   int emit_for_predef_enum(be_type *node,
-                           const char * type_suffix,
+                           char const *type_suffix,
                            bool is_any);
 
   void emit_default_constructor ();
 
   void emit_constructor_one_arg (be_decl *node,
-                                 const char * type_suffix,
-                                 const char * const_prefix,
-                                 const char * ref_modifier);
+                                 char const *type_suffix,
+                                 char const *const_prefix,
+                                 char const *ref_modifier);
 
   void emit_copy_constructor ();
 
   void emit_assignment (be_decl *node,
-                        const char * type_suffix,
-                        const char * const_prefix,
-                        const char * ref_modifier);
+                        char const *type_suffix,
+                        char const *const_prefix,
+                        char const *ref_modifier);
 
   void emit_boxed_access (be_decl *node,
-                          const char * type_suffix,
-                          const char *const_prefix,
-                          const char *in_ref_modifier,
-                          const char *out_ref_modifier);
+                          char const *type_suffix,
+                          char const *const_prefix,
+                          char const *in_ref_modifier,
+                          char const *out_ref_modifier);
 
   void emit_accessor_modifier (be_decl *node);
 
   void emit_boxed_member_var (be_decl *node,
-                              const char * type_suffix);
+                              char const *type_suffix);
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CH_H_ */

@@ -82,15 +82,15 @@ public:
 private:
   void emit_member_set (be_decl *field,
                         be_type *field_type,
-                        const char *const_arg,
-                        const char *arg_modifier);
+                        char const *const_arg,
+                        char const *arg_modifier);
 
   void emit_member_get (be_decl *field,
                         be_type *field_type,
-                        const char *const_prefix,
-                        const char *type_suffix,
-                        const char *const_method,
-                        const char *access_modifier);
+                        char const *const_prefix,
+                        char const *type_suffix,
+                        char const *const_method,
+                        char const *access_modifier);
 
 private:
   be_valuebox *vb_node_;

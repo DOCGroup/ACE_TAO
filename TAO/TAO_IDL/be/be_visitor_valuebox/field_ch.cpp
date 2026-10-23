@@ -18,6 +18,36 @@
 
 #include "valuebox.h"
 
+namespace
+{
+  void
+  emit_field_type (TAO_OutStream *os,
+                   char const *const_prefix,
+                   UTL_IdList *name,
+                   char const *type_suffix)
+  {
+    bool is_const = const_prefix[0] == 'c'
+      && const_prefix[1] == 'o'
+      && const_prefix[2] == 'n'
+      && const_prefix[3] == 's'
+      && const_prefix[4] == 't'
+      && const_prefix[5] == ' ';
+
+    if (is_const)
+      {
+        const_prefix += 6;
+      }
+
+    if (is_const)
+      {
+        *os << const_prefix << name << " const" << type_suffix;
+        return;
+      }
+
+    *os << const_prefix << name << type_suffix;
+  }
+}
+
 be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
     be_visitor_context *ctx
   )
@@ -124,7 +154,7 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
 
   *os << "void " << field->local_name () << " (" << fname << ");" << be_nl;
 
-  *os << "const " << fname << "_slice *" << field->local_name ()
+  *os << fname << "_slice const *" << field->local_name ()
       << " () const;" << be_nl;
 
   return 0;
@@ -381,7 +411,7 @@ be_visitor_valuebox_field_ch::visit_string (be_string *node)
     }
 
   *os << "void " << field->local_name ()
-      << " (const ::CORBA::" << string_type << "_var &);" << be_nl;
+      << " (::CORBA::" << string_type << "_var const &);" << be_nl;
 
   this->emit_member_get (field, bt, "const ", "", "const");
 
@@ -487,26 +517,27 @@ be_visitor_valuebox_field_ch::visit_union (be_union *node)
 void
 be_visitor_valuebox_field_ch::emit_member_set (be_decl *field,
                                                be_type *field_type,
-                                               const char *const_arg,
-                                               const char *arg_modifier)
+                                               char const *const_arg,
+                                               char const *arg_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "void " << field->local_name ()
-      << " (" << const_arg << field_type->name () << arg_modifier << ");"
-      << be_nl;
+  *os << "void " << field->local_name () << " (";
+  emit_field_type (os, const_arg, field_type->name (), arg_modifier);
+  *os << ");" << be_nl;
 }
 
 
 void
 be_visitor_valuebox_field_ch::emit_member_get (be_decl *field,
                                                be_type *field_type,
-                                               const char *const_prefix,
-                                               const char *type_suffix,
-                                               const char *const_method)
+                                               char const *const_prefix,
+                                               char const *type_suffix,
+                                               char const *const_method)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << const_prefix << field_type->name () << type_suffix << " "
+  emit_field_type (os, const_prefix, field_type->name (), type_suffix);
+  *os << " "
       << field->local_name () << " () " << const_method << ";" << be_nl;
 }
