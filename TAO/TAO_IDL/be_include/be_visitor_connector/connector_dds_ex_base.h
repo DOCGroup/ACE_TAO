@@ -32,6 +32,10 @@ public:
   explicit be_visitor_connector_dds_ex_base (be_visitor_context *ctx);
 
   ~be_visitor_connector_dds_ex_base () override;
+  be_visitor_connector_dds_ex_base (be_visitor_connector_dds_ex_base const &) = delete;
+  be_visitor_connector_dds_ex_base (be_visitor_connector_dds_ex_base &&) = delete;
+  be_visitor_connector_dds_ex_base &operator= (be_visitor_connector_dds_ex_base const &) = delete;
+  be_visitor_connector_dds_ex_base &operator= (be_visitor_connector_dds_ex_base &&) = delete;
 
 protected:
   bool begin (be_connector *node);
