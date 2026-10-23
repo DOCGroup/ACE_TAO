@@ -78,15 +78,15 @@ public:
   virtual int visit_union (be_union *node);
 
   /// print additional string before op (e.g. ACE_INLINE)
-  void setenclosings (const char *pre);
-  const char *pre_op ();
+  void setenclosings (char const *pre);
+  char const *pre_op ();
 
   /// if (in_obv_space_) print OBV_name else print name
   void op_name (be_valuetype *node, TAO_OutStream *os);
 
   bool in_obv_space_ {};
 private:
-  const char *pre_op_;
+  char const *pre_op_;
 
   int valuetype_common (be_type *node);
 };

@@ -54,7 +54,7 @@ public:
   /// visit union type
   virtual int visit_union (be_union *node);
 
-  const char *pre_, *post_;
+  char const *pre_, *post_;
 };
 
 #endif /*  _BE_VISITOR_VALUETYPE_FIELD_CDR_CH_H_ */

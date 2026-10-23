@@ -78,13 +78,13 @@ public:
   virtual int visit_union (be_union *node);
 
   /// print additional material around the field (e.g. virtual before)
-  void setenclosings (const char *pre, const char *post);
-  const char *pre_op ();
-  const char *post_op ();
+  void setenclosings (char const *pre, char const *post);
+  char const *pre_op ();
+  char const *post_op ();
 
 private:
-  const char *pre_op_;
-  const char *post_op_;
+  char const *pre_op_;
+  char const *post_op_;
   AST_Field::Visibility visibility_;
 };
 

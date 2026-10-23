@@ -49,14 +49,14 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
   ACE_CString full_skel_name_holder =
     this->generate_full_skel_name (node);
 
-  const char *full_skel_name = full_skel_name_holder.c_str ();
+  char const *full_skel_name = full_skel_name_holder.c_str ();
 
   TAO_INSERT_COMMENT (os);
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
   // each case.
-  const char *local_name_prefix = "";
+  char const *local_name_prefix = "";
 
   if (!node->is_nested ())
     {
@@ -66,7 +66,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
   ACE_CString node_local_name_holder =
     this->generate_local_name (node);
 
-  const char *node_local_name = node_local_name_holder.c_str ();
+  char const *node_local_name = node_local_name_holder.c_str ();
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name

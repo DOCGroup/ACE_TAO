@@ -195,12 +195,12 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_ci::setenclosings (const char *pre)
+be_visitor_valuetype_field_ci::setenclosings (char const *pre)
 {
   this->pre_op_ = pre;
 }
 
-const char*
+char const *
 be_visitor_valuetype_field_ci::pre_op ()
 {
   return this->pre_op_;

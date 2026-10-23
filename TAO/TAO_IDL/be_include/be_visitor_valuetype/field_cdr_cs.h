@@ -85,7 +85,7 @@ public:
   /// visit union type
   virtual int visit_union (be_union *node);
 
-  const char *pre_, *post_;
+  char const *pre_, *post_;
 
 private:
   int valuetype_common (be_type *);

@@ -37,7 +37,7 @@ be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
     {
       if (ACE_OS::strncmp (iface->local_name (), "AMH_", 4) == 0)
         {
-          const char *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
+          char const *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
 
           if (last_E != nullptr
               && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)

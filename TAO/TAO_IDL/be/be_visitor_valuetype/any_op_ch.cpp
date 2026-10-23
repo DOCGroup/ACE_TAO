@@ -35,7 +35,7 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  char const *macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -47,7 +47,7 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << " **); // non-copying" << be_nl;
 
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
+  *os << macro << " ::CORBA::Boolean operator>>= (::CORBA::Any const &, "
       << node->name () << " *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;
