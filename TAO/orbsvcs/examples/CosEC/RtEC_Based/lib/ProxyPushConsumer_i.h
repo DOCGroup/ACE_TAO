@@ -40,34 +40,38 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushConsumer_i :
   //
 public:
   /// Constructor.
-  TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
+  TAO_CosEC_ProxyPushConsumer_i (RtecEventChannelAdmin::SupplierQOS const &qos,
                                  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer);
 
   /// Destructor.
-  ~TAO_CosEC_ProxyPushConsumer_i ();
+  ~TAO_CosEC_ProxyPushConsumer_i () override = default;
+  TAO_CosEC_ProxyPushConsumer_i (TAO_CosEC_ProxyPushConsumer_i const &) = delete;
+  TAO_CosEC_ProxyPushConsumer_i (TAO_CosEC_ProxyPushConsumer_i &&) = delete;
+  TAO_CosEC_ProxyPushConsumer_i &operator= (TAO_CosEC_ProxyPushConsumer_i const &) = delete;
+  TAO_CosEC_ProxyPushConsumer_i &operator= (TAO_CosEC_ProxyPushConsumer_i &&) = delete;
 
   /// Suppliers call this method to pass data to connected consumers.
-  virtual void push (const CORBA::Any &data);
+  void push (CORBA::Any const &data) override;
 
   /// Disconnects the supplier from the event communication.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
   /// Connects a push supplier.
-  virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier);
+  void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
 private:
   /// Returns 0 if a push_supplier is already connected to this
   /// ProxyPushConsumer, otherwise it returns a 1.
-  int connected ();
+  bool connected ();
 
   /// The SupplierQOS specified by the user of this class.
-  const RtecEventChannelAdmin::SupplierQOS &qos_;
+  RtecEventChannelAdmin::SupplierQOS const &qos_;
 
   /// The Rtec ProxyPushConsumer specified by the user of this class.
   RtecEventChannelAdmin::ProxyPushConsumer_var proxypushconsumer_;
 
   /// The Rtec PushSupplier wrapper used by the Rtec ProxyPushConsumer.
-  TAO_CosEC_PushSupplierWrapper *wrapper_;
+  TAO_CosEC_PushSupplierWrapper *wrapper_ {};
 };
 
 #include /**/ "ace/post.h"
