@@ -52,8 +52,6 @@ TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   : orb_ (nullptr)
   , poa_ (nullptr)
   , objectId_ (nullptr)
-  , ior_output_file_ (nullptr)
-  , ns_name_ (nullptr)
   , naming_context_ (nullptr)
   , this_name_ (1)
   , domain_ (CORBA::string_dup("default_domain"))
@@ -61,8 +59,6 @@ TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   , notifier_ (nullptr)
   , replication_manager_ (nullptr)
   , factory_registry_ (nullptr)
-  , identity_ ("")
-  , empty_slots_ (0)
 {
   this->location_.length(1);
   this->location_[0].id = CORBA::string_dup("default_location");
@@ -176,7 +172,7 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
   return 0;
 }
 
-const char * TAO::FT_FaultDetectorFactory_i::identity () const
+char const * TAO::FT_FaultDetectorFactory_i::identity () const
 {
   return this->identity_.c_str();
 }
@@ -295,7 +291,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
         ORBSVCS_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "ReplicaFactory: Exception resolving ReplicationManager.  Factory will not be registered.\n");
@@ -426,7 +422,7 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
 // FT_FaultDetectorFactory_i CORBA methods
 
 void TAO::FT_FaultDetectorFactory_i::change_properties (
-    const PortableGroup::Properties & property_set)
+    PortableGroup::Properties const & property_set)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::change_properties);
 
@@ -470,8 +466,8 @@ void TAO::FT_FaultDetectorFactory_i::shutdown ()
 }
 
 CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::create_object);
@@ -482,7 +478,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   ::TAO::PG_Property_Set decoder (the_criteria);
 
   // boolean, becomes true if a required parameter is missing
-  int missingParameter = 0;
+  bool missingParameter {};
   char const * missingParameterName = nullptr;
 
   FT::FaultNotifier_ptr notifier = nullptr;
@@ -498,7 +494,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
         "FaultDetectorFactory::create_object: Missing parameter %s\n",
         ::FT::FT_NOTIFIER
         ));
-      missingParameter = 1;
+      missingParameter = true;
       missingParameterName = ::FT::FT_NOTIFIER;
     }
   }
@@ -510,7 +506,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
       ::FT::FT_MONITORABLE
       ));
-    missingParameter = 1;
+    missingParameter = true;
     missingParameterName = ::FT::FT_MONITORABLE;
   }
 
@@ -623,7 +619,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 }
 
 void TAO::FT_FaultDetectorFactory_i::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
+    PortableGroup::GenericFactory::FactoryCreationId const & factory_creation_id)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::delete_object);
 

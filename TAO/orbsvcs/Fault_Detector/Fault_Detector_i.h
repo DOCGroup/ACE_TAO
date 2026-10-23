@@ -66,7 +66,7 @@ namespace TAO
       FT::FaultNotifier_ptr & notifier,
       FT::PullMonitorable_ptr & monitorable,
       FT::FTDomainId domain_id,
-      const PortableGroup::Location & object_location,
+      PortableGroup::Location const & object_location,
       PortableGroup::TypeId object_type,
       PortableGroup::ObjectGroupId group_id);
     /**
@@ -172,7 +172,7 @@ namespace TAO
     /**
      * A boolean flag.  If true, this fault detector should leave.
      */
-    int quit_requested_;
+    bool quit_requested_ {};
   };
 }   // namespace TAO
 

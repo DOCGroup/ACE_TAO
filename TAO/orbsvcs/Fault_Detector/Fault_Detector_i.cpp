@@ -39,7 +39,7 @@ TAO::Fault_Detector_i::Fault_Detector_i (
       FT::FaultNotifier_ptr & notifier,
       FT::PullMonitorable_ptr & monitorable,
       FT::FTDomainId domain_id,
-      const PortableGroup::Location & object_location,
+      PortableGroup::Location const & object_location,
       PortableGroup::TypeId object_type,
       PortableGroup::ObjectGroupId group_id
       )
@@ -50,7 +50,6 @@ TAO::Fault_Detector_i::Fault_Detector_i (
   , object_type_(object_type)
   , group_id_(group_id)
   , sleep_(0)           // initially not signaled
-  , quit_requested_(0)
 {
   this->notifier_ = FT::FaultNotifier::_duplicate(notifier);
   this->monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
@@ -59,9 +58,7 @@ TAO::Fault_Detector_i::Fault_Detector_i (
     ));
 }
 
-TAO::Fault_Detector_i::~Fault_Detector_i ()
-{
-}
+TAO::Fault_Detector_i::~Fault_Detector_i () = default;
 
 ////////////////////////////////////
 // Fault_Detector_i public interface
@@ -69,7 +66,7 @@ TAO::Fault_Detector_i::~Fault_Detector_i ()
 
 void TAO::Fault_Detector_i::request_quit()
 {
-  this->quit_requested_ = 1;
+  this->quit_requested_ = true;
   // wake up the thread
   this->sleep_.signal ();
 }
@@ -101,16 +98,16 @@ void TAO::Fault_Detector_i::run()
           id_
           ));
         notify();
-        this->quit_requested_ = 1;
+        this->quit_requested_ = true;
       }
     }
-    catch (const CORBA::Exception&)// todo refine this
+    catch (CORBA::Exception const &) // todo refine this
     {
       ORBSVCS_ERROR ((LM_ERROR,
         "FaultDetector FAULT: exception.\n"
         ));
       notify();
-      this->quit_requested_ = 1;
+      this->quit_requested_ = true;
     }
   }
   // warning:  The following call will delete
@@ -170,7 +167,7 @@ void TAO::Fault_Detector_i::notify()
         ));
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Fault Detector cannot send notification.");
     }
