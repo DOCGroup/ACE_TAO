@@ -164,7 +164,7 @@ TAO_MonitorManager::shutdown ()
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
       TAO_NOTIFY_MONITOR_CONTROL_MANAGER);
 
-  if (monitor != 0)
+  if (monitor != nullptr)
     {
       monitor->fini ();
     }
@@ -250,7 +250,7 @@ TAO_MonitorManager::ORBTask::svc ()
           {
             FILE* fp = ACE_OS::fopen (this->ior_output_.c_str (), "w");
 
-            if (fp == 0)
+            if (fp == nullptr)
               {
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) TAO_MonitorManager: "

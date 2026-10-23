@@ -837,13 +837,13 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
           (this->variable_header_.find (ACE_CString (value, 0, false)) == 0);
         break;
       case TYPE_NAME:
-        result = (this->type_name_.in () != 0);
+        result = (this->type_name_.in () != nullptr);
         break;
       case EVENT_NAME:
-        result = (this->event_name_.in () != 0);
+        result = (this->event_name_.in () != nullptr);
         break;
       case DOMAIN_NAME:
-        result = (this->domain_name_.in () != 0);
+        result = (this->domain_name_.in () != nullptr);
         break;
         // Anything other than the above cases is an error.
       default:
@@ -1102,7 +1102,7 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (ETCL_Binary_Expr *binary)
           this->queue_.dequeue_head (right);
           CORBA::Boolean result =
             (ACE_OS::strstr ((const char *) right,
-                             (const char *) left) != 0);
+                             (const char *) left) != nullptr);
           this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
         }

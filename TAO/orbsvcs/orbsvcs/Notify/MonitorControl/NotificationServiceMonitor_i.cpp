@@ -224,7 +224,7 @@ NotificationServiceMonitor_i::get_data (
   // Get the statistic by name.
   Monitor_Base* monitor = registry->get (name);
 
-  if (monitor == 0)
+  if (monitor == nullptr)
     {
       // At the time that the list of names were acquired, this
       // statistic was available.  However, we have failed to
@@ -257,7 +257,7 @@ NotificationServiceMonitor_i::get_invalid_names (
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      if (registry->get (names[i].in ()) == 0)
+      if (registry->get (names[i].in ()) == nullptr)
         {
           if (TAO_debug_level > 7)
             {
