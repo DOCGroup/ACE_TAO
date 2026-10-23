@@ -226,7 +226,7 @@ private:
   LiveCheck pinger_;
 
   /// A collection of asynch activator instances
-  typedef ACE_Unbounded_Set<AsyncAccessManager_ptr> AAM_Set;
+  using AAM_Set = ACE_Unbounded_Set<AsyncAccessManager_ptr>;
   AAM_Set aam_active_;
   AAM_Set aam_terminating_;
 
