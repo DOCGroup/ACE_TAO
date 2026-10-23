@@ -111,10 +111,10 @@ private:
 
 private:
   /// Our managed type.
-  MANAGED_TYPE mt_;
+  MANAGED_TYPE mt_ {MNG_UNKNOWN};
 
   /// Used if we are an anonymous member, to help generate a unique name.
-  be_field *field_node_;
+  be_field *field_node_ {};
 };
 
 #endif

@@ -30,37 +30,12 @@
 TAO_CodeGen * tao_cg = nullptr;
 
 TAO_CodeGen::TAO_CodeGen ()
-  : client_header_ (nullptr),
-    client_stubs_ (nullptr),
-    client_inline_ (nullptr),
-    server_header_ (nullptr),
-    implementation_header_(nullptr),
-    implementation_skeleton_(nullptr),
-    server_template_header_ (nullptr),
-    server_skeletons_ (nullptr),
-    server_template_skeletons_ (nullptr),
-    anyop_header_ (nullptr),
-    anyop_source_ (nullptr),
-    gperf_input_stream_ (nullptr),
-    ciao_svnt_header_ (nullptr),
-    ciao_svnt_source_ (nullptr),
-    ciao_svnt_template_header_ (nullptr),
-    ciao_svnt_template_source_ (nullptr),
-    ciao_exec_header_ (nullptr),
-    ciao_exec_source_ (nullptr),
-    ciao_exec_idl_ (nullptr),
-    ciao_conn_header_ (nullptr),
-    ciao_conn_source_ (nullptr),
-    ciao_ami_conn_idl_ (nullptr),
-    gperf_input_filename_ (nullptr),
-    strategy_ (TAO_PERFECT_HASH)
+  : strategy_ (TAO_PERFECT_HASH)
 {
 }
 
 // destructor
-TAO_CodeGen::~TAO_CodeGen ()
-{
-}
+TAO_CodeGen::~TAO_CodeGen () = default;
 
 // Change the string to all upper case.
 const char *

@@ -39,7 +39,7 @@ public:
   be_scope (AST_Decl::NodeType nt);
 
   /// Destructor.
-  virtual ~be_scope ();
+  ~be_scope () override;
 
   /// To access the protected base class method fe_add_field.
   AST_Field *be_add_field (AST_Field *f);
@@ -64,7 +64,7 @@ public:
 
 private:
   /// If set, generate a comma after every element is handled.
-  unsigned short comma_;
+  unsigned short comma_ {};
 };
 
 #endif // if !defined

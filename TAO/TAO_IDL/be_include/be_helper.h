@@ -77,7 +77,7 @@ struct TAO_ACE_CHECK
                  bool do_return = false);
 
   const char *retval_;
-  bool do_return_;
+  bool do_return_ {};
 };
 
 /**
@@ -223,13 +223,13 @@ public:
 
 protected:
   /// The underlying low-level I/O handle
-  FILE *fp_;
+  FILE *fp_ {};
 
   /// Stream type
   TAO_OutStream::STREAM_TYPE st_;
 
   /// Indentation level
-  int indent_level_;
+  int indent_level_ {};
 
   /// Used to set tab spaces.
   ACE_CString tab_unit_str_;

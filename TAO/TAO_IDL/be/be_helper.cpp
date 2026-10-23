@@ -76,9 +76,7 @@ const TAO_UNINDENT be_uidt_nl (1);
 // Methods of the TAO_OutStream class.
 
 TAO_OutStream::TAO_OutStream ()
-  : fp_ (nullptr),
-    st_ (TAO_CLI_HDR),
-    indent_level_ (0)
+  : st_ (TAO_CLI_HDR)
 {
   for (unsigned long i = 0; i < be_global->tab_size (); ++i)
     {

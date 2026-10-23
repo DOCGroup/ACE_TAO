@@ -26,7 +26,7 @@ public:
   be_param_holder (UTL_ScopedName *parameter_name,
                    FE_Utils::T_Param_Info *info);
 
-  virtual ~be_param_holder ();
+  ~be_param_holder () override;
 
   // Cleanup function.
   virtual void destroy ();

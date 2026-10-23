@@ -17,7 +17,7 @@ public:
            AST_Type *uses_type,
            bool is_multiple);
 
-  virtual ~be_uses ();
+  ~be_uses () override;
 
   // Non-virtual override of frontend method.
   be_type *uses_type () const;
@@ -37,7 +37,7 @@ public:
   // applies only to implied IDL
 
 private:
-  be_uses *original_uses_;
+  be_uses *original_uses_ {};
 };
 
 #endif // BE_USES_H
