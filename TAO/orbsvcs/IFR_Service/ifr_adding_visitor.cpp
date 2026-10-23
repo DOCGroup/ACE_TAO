@@ -61,9 +61,7 @@ ifr_adding_visitor::ifr_adding_visitor (
 {
 }
 
-ifr_adding_visitor::~ifr_adding_visitor ()
-{
-}
+ifr_adding_visitor::~ifr_adding_visitor () = default;
 
 int
 ifr_adding_visitor::visit_scope (UTL_Scope *node)

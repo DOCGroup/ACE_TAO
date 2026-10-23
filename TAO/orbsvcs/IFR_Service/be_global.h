@@ -39,6 +39,10 @@ public:
   //
   /// Constructor.
   BE_GlobalData ();
+  BE_GlobalData (BE_GlobalData const &) = delete;
+  BE_GlobalData (BE_GlobalData &&) = delete;
+  BE_GlobalData &operator= (BE_GlobalData const &) = delete;
+  BE_GlobalData &operator= (BE_GlobalData &&) = delete;
 
   /// Destructor.
   virtual ~BE_GlobalData ();
@@ -83,7 +87,7 @@ public:
 
 private:
   /// Are we removing IR objects from the repository?
-  bool removing_;
+  bool removing_ {};
 
   /// Reference to our ORB.
   CORBA::ORB_var orb_;
@@ -98,16 +102,16 @@ private:
   ACE_Unbounded_Stack<CORBA::Container_ptr> ifr_scopes_;
 
   /// Name of the IDL file we are processing.
-  char *filename_;
+  char *filename_ {};
 
   /// Option to lock at the IDL file level.
-  bool enable_locking_;
+  bool enable_locking_ {};
 
   /// Option to process included IDL files.
-  bool do_included_files_;
+  bool do_included_files_ {true};
 
   /// Option to enable duplicate typedefs in parsed IDL.
-  bool allow_duplicate_typedefs_;
+  bool allow_duplicate_typedefs_ {};
 
   /// Holder for -ORB args saved and passed to DRV_fork.
   ACE_CString orb_args_;

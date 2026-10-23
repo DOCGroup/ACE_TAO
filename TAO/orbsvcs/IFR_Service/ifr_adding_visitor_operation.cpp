@@ -13,14 +13,11 @@
 #include "nr_extern.h"
 
 ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
-  : ifr_adding_visitor (scope),
-    index_ (0)
+  : ifr_adding_visitor (scope)
 {
 }
 
-ifr_adding_visitor_operation::~ifr_adding_visitor_operation ()
-{
-}
+ifr_adding_visitor_operation::~ifr_adding_visitor_operation () = default;
 
 int
 ifr_adding_visitor_operation::visit_operation (AST_Operation *node)

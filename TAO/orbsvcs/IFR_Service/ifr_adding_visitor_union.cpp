@@ -18,9 +18,7 @@ ifr_adding_visitor_union::ifr_adding_visitor_union (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_union::~ifr_adding_visitor_union ()
-{
-}
+ifr_adding_visitor_union::~ifr_adding_visitor_union () = default;
 
 // Specialized visit_scope method for unions only.
 int

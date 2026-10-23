@@ -20,9 +20,7 @@ ifr_adding_visitor_exception::ifr_adding_visitor_exception (
 {
 }
 
-ifr_adding_visitor_exception::~ifr_adding_visitor_exception ()
-{
-}
+ifr_adding_visitor_exception::~ifr_adding_visitor_exception () = default;
 
 // Specialized visit_scope method for exceptions only.
 int

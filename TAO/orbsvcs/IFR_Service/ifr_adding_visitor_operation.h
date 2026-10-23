@@ -53,7 +53,7 @@ private:
   CORBA::ParDescriptionSeq params_;
 
   /// Counter for building the parameter list.
-  CORBA::ULong index_;
+  CORBA::ULong index_ {};
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_OPERATION_H */

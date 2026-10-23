@@ -4,13 +4,9 @@
 #include "utl_scope.h"
 #include "ast_root.h"
 
-ifr_removing_visitor::ifr_removing_visitor ()
-{
-}
+ifr_removing_visitor::ifr_removing_visitor () = default;
 
-ifr_removing_visitor::~ifr_removing_visitor ()
-{
-}
+ifr_removing_visitor::~ifr_removing_visitor () = default;
 
 int
 ifr_removing_visitor::visit_scope (UTL_Scope *node)
