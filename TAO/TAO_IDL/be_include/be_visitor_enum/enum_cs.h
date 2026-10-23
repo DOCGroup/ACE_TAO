@@ -24,7 +24,7 @@ class be_visitor_enum_cs : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_enum_cs (be_visitor_context *ctx);
+  explicit be_visitor_enum_cs (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_enum_cs () override = default;
