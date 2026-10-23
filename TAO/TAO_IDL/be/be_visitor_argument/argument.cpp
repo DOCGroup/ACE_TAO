@@ -53,7 +53,7 @@ be_visitor_args::type_name (be_type *node,
                    "::%s",
                    bt->full_name ());
 
-  if (suffix)
+  if (suffix != nullptr)
     {
       ACE_OS::strcat (namebuf,
                       suffix);
