@@ -39,7 +39,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
 
   this->members_.length (nfields);
 
-  AST_Field **f = 0;
+  AST_Field **f = nullptr;
 
   try
     {
@@ -308,7 +308,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);
 
-          UTL_ScopedName *member_name = 0;
+          UTL_ScopedName *member_name = nullptr;
 
           // Get a list of the member names.
           for (CORBA::ULong i = 0; i < member_count; ++i)

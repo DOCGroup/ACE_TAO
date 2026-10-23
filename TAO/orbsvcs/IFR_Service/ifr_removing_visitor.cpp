@@ -18,7 +18,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
       UTL_ScopeActiveIterator si (node,
                                   UTL_Scope::IK_decls);
 
-      AST_Decl *d = 0;
+      AST_Decl *d = nullptr;
 
       try
         {
@@ -27,7 +27,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
             {
               d = si.item ();
 
-              if (d == 0)
+              if (d == nullptr)
                 {
                   ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,

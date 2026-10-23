@@ -63,7 +63,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       UTL_ExceptList *excepts = node->exceptions ();
 
-      if (excepts != 0)
+      if (excepts != nullptr)
         {
           length = static_cast<CORBA::ULong> (excepts->length ());
         }
@@ -75,7 +75,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       CORBA::ExceptionDefSeq exceptions (length);
       exceptions.length (length);
 
-      AST_Type *ex = 0;
+      AST_Type *ex = nullptr;
       CORBA::ULong i = 0;
 
       for (UTL_ExceptlistActiveIterator ex_iter (excepts);
@@ -95,7 +95,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       UTL_StrList *ctx_list = node->context ();
 
-      if (ctx_list != 0)
+      if (ctx_list != nullptr)
         {
           length = static_cast<CORBA::ULong> (ctx_list->length ());
         }
@@ -108,7 +108,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       contexts.length (length);
 
       UTL_StrlistActiveIterator ctx_iter (ctx_list);
-      UTL_String *str = 0;
+      UTL_String *str = nullptr;
       i = 0;
 
       while (!ctx_iter.is_done ())

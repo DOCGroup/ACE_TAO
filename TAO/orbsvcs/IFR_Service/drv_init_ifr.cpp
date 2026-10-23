@@ -80,19 +80,19 @@ DRV_init ()
            IDL_GlobalData);
 
   // Initialize some of its data.
-  idl_global->set_root (0);
-  idl_global->set_gen (0);
+  idl_global->set_root (nullptr);
+  idl_global->set_gen (nullptr);
   idl_global->set_err (FE_new_UTL_Error ());
   idl_global->set_err_count (0);
   idl_global->set_indent (FE_new_UTL_Indenter ());
-  idl_global->set_filename (0);
-  idl_global->set_main_filename (0);
-  idl_global->set_real_filename (0);
-  idl_global->set_stripped_filename (0);
+  idl_global->set_filename (nullptr);
+  idl_global->set_main_filename (nullptr);
+  idl_global->set_real_filename (nullptr);
+  idl_global->set_stripped_filename (nullptr);
   idl_global->set_import (I_TRUE);
   idl_global->set_in_main_file (I_FALSE);
   idl_global->set_lineno (-1);
-  idl_global->set_prog_name (0);
+  idl_global->set_prog_name (nullptr);
 
 #if defined (TAO_IDL_PREPROCESSOR)
   idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
@@ -112,7 +112,7 @@ DRV_init ()
   idl_global->set_be ("");
   idl_global->set_compile_flags (0);
   idl_global->set_read_from_stdin (I_FALSE);
-  idl_global->set_include_file_names (0);
+  idl_global->set_include_file_names (nullptr);
   idl_global->set_n_include_file_names (0);
   idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
 

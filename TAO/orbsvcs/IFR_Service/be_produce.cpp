@@ -153,7 +153,7 @@ BE_produce ()
       AST_Decl *d = idl_global->root ();
       AST_Root *root = dynamic_cast<AST_Root*> (d);
 
-      if (root == 0)
+      if (root == nullptr)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%N:%l) BE_produce - ")
@@ -182,7 +182,7 @@ BE_produce ()
         }
       else
         {
-          ifr_adding_visitor visitor (d, 0, be_global->allow_duplicate_typedefs ());
+          ifr_adding_visitor visitor (d, false, be_global->allow_duplicate_typedefs ());
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
