@@ -316,7 +316,7 @@ namespace TAO
     int distribute_;
 
     /// boolean true if empty group
-    int empty_;
+    bool empty_ {true};
 
     ACE_CString role_;
 

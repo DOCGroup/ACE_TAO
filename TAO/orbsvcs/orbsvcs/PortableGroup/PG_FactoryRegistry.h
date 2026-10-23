@@ -206,7 +206,7 @@ namespace TAO
     /**
      * Quit on idle flag.
      */
-    int quit_on_idle_;
+    bool quit_on_idle_ {};
 
     /**
      * State of the quit process

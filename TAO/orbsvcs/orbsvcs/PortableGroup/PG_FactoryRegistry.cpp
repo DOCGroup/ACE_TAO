@@ -48,7 +48,6 @@ TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
   , ns_name_("")
   , naming_context_(0)
   , this_name_(1)
-  , quit_on_idle_ (false)
   , quit_state_(LIVE)
   , linger_(0)
 {
