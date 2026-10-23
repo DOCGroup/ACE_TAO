@@ -110,6 +110,10 @@ class be_visitor_valuetype_field_cdr_decl : public be_visitor_scope
 public:
   /// constructor
   explicit be_visitor_valuetype_field_cdr_decl (be_visitor_context *ctx);
+  be_visitor_valuetype_field_cdr_decl (be_visitor_valuetype_field_cdr_decl const &) = delete;
+  be_visitor_valuetype_field_cdr_decl (be_visitor_valuetype_field_cdr_decl &&) = delete;
+  be_visitor_valuetype_field_cdr_decl &operator= (be_visitor_valuetype_field_cdr_decl const &) = delete;
+  be_visitor_valuetype_field_cdr_decl &operator= (be_visitor_valuetype_field_cdr_decl &&) = delete;
 
   /// visit the field node
   int visit_field (be_field *node) override;
