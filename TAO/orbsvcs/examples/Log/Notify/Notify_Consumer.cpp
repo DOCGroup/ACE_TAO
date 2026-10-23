@@ -3,15 +3,11 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/OS_main.h"
 
-#define NAMING_SERVICE_NAME "NameService"
-#define NOTIFY_TLS_LOG_FACTORY_NAME "NotifyLogFactory"
-#define LOG_EVENT_COUNT 29
-#define QUERY_1 "id > 0"
-#define QUERY_2 "id >= 0"
-#define QUERY_LANG "TCL"
-#define SA_FILTER "threshold > 10"
-#define TCL_GRAMMAR "TCL"
-#define EVENTS_TO_SEND 30
+namespace
+{
+  constexpr char naming_service_name[] = "NameService";
+  constexpr char notify_tls_log_factory_name[] = "NotifyLogFactory";
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -19,13 +15,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Consumer consumer;
 
   return consumer.run (argc, argv);
-}
-
-// ****************************************************************
-
-Consumer::Consumer ()
-  : event_count_ (0)
-{
 }
 
 int
@@ -51,7 +40,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 
       // Obtain the event channel
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
+        this->orb_->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
@@ -63,7 +52,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (NOTIFY_TLS_LOG_FACTORY_NAME);
+      name[0].id = CORBA::string_dup (notify_tls_log_factory_name);
 
       CORBA::Object_var obj =
         this->naming_context_->resolve (name);
@@ -77,7 +66,8 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       ACE_ASSERT (!CORBA::is_nil (objref.in ()));
 
       CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
-        this->notify_log_factory_->obtain_notification_push_supplier (CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_);
+        this->notify_log_factory_->obtain_notification_push_supplier (
+          CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_);
 
       ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
@@ -99,7 +89,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer::run");
       return 1;
@@ -108,7 +98,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Consumer::push (const CORBA::Any &event)
+Consumer::push (CORBA::Any const &event)
 {
   ACE_UNUSED_ARG (event);
 
@@ -129,8 +119,8 @@ Consumer::disconnect_push_consumer
 
 void
 Consumer::offer_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/)
+   (CosNotification::EventTypeSeq const & /*added*/,
+    CosNotification::EventTypeSeq const & /*removed*/)
 {
   // No-Op.
 }

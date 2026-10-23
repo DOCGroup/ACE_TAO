@@ -2,15 +2,18 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/OS_main.h"
 
-#define NAMING_SERVICE_NAME "NameService"
-#define NOTIFY_TLS_LOG_FACTORY_NAME "NotifyLogFactory"
-#define LOG_EVENT_COUNT 10
-#define QUERY_1 "id > 0"
-#define QUERY_2 "id >= 0"
-#define QUERY_LANG "TCL"
-#define SA_FILTER "threshold > 10"
-#define TCL_GRAMMAR "TCL"
-#define EVENTS_TO_SEND 10
+namespace
+{
+  constexpr char naming_service_name[] = "NameService";
+  constexpr char notify_tls_log_factory_name[] = "NotifyLogFactory";
+  constexpr int log_event_count = 10;
+  constexpr char query_1[] = "id > 0";
+  constexpr char query_2[] = "id >= 0";
+  constexpr char query_lang[] = "TCL";
+  constexpr char sa_filter_constraint[] = "threshold > 10";
+  constexpr char tcl_grammar[] = "TCL";
+  constexpr int events_to_send = 10;
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -18,16 +21,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Supplier supplier;
 
   return supplier.run (argc, argv);
-}
-
-// ****************************************************************
-
-Supplier::Supplier ()
-{
-}
-
-Supplier::~Supplier ()
-{
 }
 
 int
@@ -41,7 +34,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
 
       CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
+      this->orb_->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
@@ -53,7 +46,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (NOTIFY_TLS_LOG_FACTORY_NAME);
+      name[0].id = CORBA::string_dup (notify_tls_log_factory_name);
 
       CORBA::Object_var obj =
         this->naming_context_->resolve (name);
@@ -69,10 +62,10 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
                   "\nCalling NotifyLogFactory::create...\n"));
 
       DsLogAdmin::LogFullActionType logfullaction = DsLogAdmin::halt;
-      DsLogAdmin::CapacityAlarmThresholdList threshold = 0;
-      CORBA::ULongLong max_size = 0; // 0 means "infinite"
+      DsLogAdmin::CapacityAlarmThresholdList threshold {};
+      CORBA::ULongLong max_size {}; // 0 means "infinite"
 
-      DsLogAdmin::LogId logid = 0;
+      DsLogAdmin::LogId logid {};
       CosNotification::QoSProperties initial_qos;
       CosNotification::AdminProperties initial_admin;
 
@@ -89,18 +82,18 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
                   "Create returned logid = %d\n",logid));
 
       // Create some fake log events.
-      DsLogAdmin::Anys any_seq (LOG_EVENT_COUNT);
-      any_seq.length (LOG_EVENT_COUNT);
+      DsLogAdmin::Anys any_seq (log_event_count);
+      any_seq.length (log_event_count);
 
       //DsLogAdmin::RecordIdList id_seq (LOG_EVENT_COUNT);
       //id_seq.length (LOG_EVENT_COUNT);
 
-      for (int i = 0; i < LOG_EVENT_COUNT; i++)
+      for (int i = 0; i < log_event_count; i++)
         {
           any_seq [i] <<= i;
         }
 
-      CosNotifyChannelAdmin::AdminID adminID = 0;
+      CosNotifyChannelAdmin::AdminID adminID {};
       this->supplier_admin_ =
         notify_log_->new_for_suppliers (CosNotifyChannelAdmin::OR_OP, adminID);
       ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
@@ -110,7 +103,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       // setup a filter at the consumer admin
       CosNotifyFilter::Filter_var sa_filter =
-        ffact->create_filter (TCL_GRAMMAR);
+        ffact->create_filter (tcl_grammar);
 
       ACE_ASSERT (!CORBA::is_nil (sa_filter.in ()));
 
@@ -118,7 +111,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       constraint_list.length (1);
 
       constraint_list[0].event_types.length (0);
-      constraint_list[0].constraint_expr = CORBA::string_dup (SA_FILTER);
+      constraint_list[0].constraint_expr = CORBA::string_dup (sa_filter_constraint);
 
       sa_filter->add_constraints (constraint_list);
 
@@ -157,22 +150,22 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       event.filterable_data[0].name = CORBA::string_dup("threshold");
 
       event.filterable_data[1].name = CORBA::string_dup("temperature");
-      event.filterable_data[1].value <<= (CORBA::Long)70;
+      event.filterable_data[1].value <<= static_cast<CORBA::Long> (70);
 
       event.filterable_data[2].name = CORBA::string_dup("pressure");
-      event.filterable_data[2].value <<= (CORBA::Long)80;
+      event.filterable_data[2].value <<= static_cast<CORBA::Long> (80);
 
-      event.filterable_data[0].value <<= (CORBA::Long)4;
+      event.filterable_data[0].value <<= static_cast<CORBA::Long> (4);
 
       // any
-      event.remainder_of_body <<= (CORBA::Long)4;
+      event.remainder_of_body <<= static_cast<CORBA::Long> (4);
 
-      for (int k = 0; k < EVENTS_TO_SEND; k++)
+      for (int k = 0; k < events_to_send; k++)
       {
-        event.filterable_data[0].value <<= (CORBA::Long)k;
+        event.filterable_data[0].value <<= static_cast<CORBA::Long> (k);
 
         // any
-        event.remainder_of_body <<= (CORBA::Long)k;
+        event.remainder_of_body <<= static_cast<CORBA::Long> (k);
 
         supplier_1->send_event (event);
       }
@@ -190,12 +183,12 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
-      ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", QUERY_1));
+      ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", query_1));
       DsLogAdmin::Iterator_var iter_out;
       DsLogAdmin::RecordList_var rec_list =
-        notify_log_->query (QUERY_LANG, QUERY_1, iter_out);
+        notify_log_->query (query_lang, query_1, iter_out);
 
-      CORBA::ULong j = 0;
+      CORBA::ULong j {};
       for (; j < rec_list->length();++j)
       ACE_DEBUG ((LM_DEBUG,
                    "id = %Q, time= %Q\n",
@@ -204,7 +197,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
      ACE_DEBUG ((LM_DEBUG,
                  "Deleting records...\n"));
 
-     retval = notify_log_->delete_records (QUERY_LANG, QUERY_2);
+     retval = notify_log_->delete_records (query_lang, query_2);
 
      ACE_DEBUG ((LM_DEBUG,
                  "Calling NotifyLog::get_n_records...\n"));
@@ -220,7 +213,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
      this->notify_log_->destroy();
      }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
       return 1;
@@ -228,14 +221,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
-Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  ()
-{
-}
-
-Filter_StructuredPushSupplier::~Filter_StructuredPushSupplier ()
-{
-}
 
 void
 Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)
@@ -267,15 +252,15 @@ Filter_StructuredPushSupplier::disconnect ()
 
 void
 Filter_StructuredPushSupplier::subscription_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */)
+   (CosNotification::EventTypeSeq const & /*added*/,
+    CosNotification::EventTypeSeq const & /*removed */)
 {
   //No-Op.
 }
 
 void
 Filter_StructuredPushSupplier::send_event
-   (const CosNotification::StructuredEvent& event)
+   (CosNotification::StructuredEvent const &event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
