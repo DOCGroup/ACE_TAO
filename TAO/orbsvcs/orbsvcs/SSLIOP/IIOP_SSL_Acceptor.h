@@ -48,7 +48,7 @@ namespace TAO
     using TAO_IIOP_SSL_ACCEPT_STRATEGY = TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
     /// Constructor.
-    IIOP_SSL_Acceptor ();
+    IIOP_SSL_Acceptor () = default;
 
     /// Destructor.
     ~IIOP_SSL_Acceptor () override;
