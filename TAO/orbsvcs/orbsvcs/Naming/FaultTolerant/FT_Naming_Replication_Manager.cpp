@@ -111,10 +111,10 @@ TAO_FT_Naming_Replication_Manager::init_orb ()
     }
   else
     {
-      argv[8] = 0;
-      argv[9] = 0;
+      argv[8] = nullptr;
+      argv[9] = nullptr;
     }
-  argv[10] = 0;
+  argv[10] = nullptr;
 
   this->orb_ = CORBA::ORB_init (argc, argv, "replicator_orb");
   this->reactor_ = this->orb_->orb_core ()->reactor ();

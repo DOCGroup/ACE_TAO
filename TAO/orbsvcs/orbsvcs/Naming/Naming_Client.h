@@ -46,7 +46,7 @@ public:
    * @c resolve_initial_references.  Return 0 if Naming Service is
    * successfully located, and -1 on failure.
    */
-  int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = 0);
+  int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = nullptr);
 
   /// Destructor.
   ~TAO_Naming_Client ();

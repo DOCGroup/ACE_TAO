@@ -27,7 +27,7 @@ TAO_Naming_Loader::TAO_Naming_Loader (TAO_Naming_Server *server)
 
   // If no server was provided, then we will construct one of the
   // base class type.
-  if (naming_server_ == 0)
+  if (naming_server_ == nullptr)
     ACE_NEW (naming_server_, TAO_Naming_Server);
 }
 
@@ -68,7 +68,7 @@ int
 TAO_Naming_Loader::fini ()
 {
   // Remove the Naming Service.
-  if (this->naming_server_ == 0)
+  if (this->naming_server_ == nullptr)
     return 0;
   else
     return this->naming_server_->fini ();
@@ -79,7 +79,7 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
                                   int argc,
                                   ACE_TCHAR *argv[])
 {
-  if (this->naming_server_ == 0)
+  if (this->naming_server_ == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_Naming_Loader::create_object - naming_server_ ")

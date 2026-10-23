@@ -29,7 +29,7 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
 {
   TAO_NS_Persistence_Header header;
 
-  if (context.storable_context_ == 0)
+  if (context.storable_context_ == nullptr)
     {
       header.size (0);
       header.destroyed (0);

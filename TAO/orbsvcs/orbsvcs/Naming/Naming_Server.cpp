@@ -39,19 +39,19 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Server::TAO_Naming_Server (size_t bsize)
-  : ior_multicast_ (0),
-    pid_file_name_ (0),
-    iors_ (0),
+  : ior_multicast_ (nullptr),
+    pid_file_name_ (nullptr),
+    iors_ (nullptr),
     bundle_size_ (bsize),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     multicast_ (0),
 #if !defined (CORBA_E_MICRO)
-    context_index_ (0),
-    persistence_dir_ (0),
+    context_index_ (nullptr),
+    persistence_dir_ (nullptr),
     base_address_ (TAO_NAMING_BASE_ADDR),
     use_storable_context_ (0),
     use_servant_activator_ (false),
-    servant_activator_ (0),
+    servant_activator_ (nullptr),
 #endif /* CORBA_E_MICRO */
     use_redundancy_(0),
     round_trip_timeout_ (0),
@@ -72,19 +72,19 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       int round_trip_timeout,
                                       int use_round_trip_timeout,
                                       size_t bsize)
-  : ior_multicast_ (0),
-    pid_file_name_ (0),
-    iors_ (0),
+  : ior_multicast_ (nullptr),
+    pid_file_name_ (nullptr),
+    iors_ (nullptr),
     bundle_size_ (bsize),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     multicast_ (0),
 #if !defined (CORBA_E_MICRO)
-    context_index_ (0),
-    persistence_dir_ (0),
+    context_index_ (nullptr),
+    persistence_dir_ (nullptr),
     base_address_ (TAO_NAMING_BASE_ADDR),
     use_storable_context_ (use_storable_context),
     use_servant_activator_ (false),
-    servant_activator_ (0),
+    servant_activator_ (nullptr),
 #endif /* CORBA_E_MICRO */
     use_redundancy_(0),
     round_trip_timeout_ (0),
@@ -438,10 +438,10 @@ TAO_Naming_Server::init_with_orb (int argc,
       return -1;
     }
 
-  if (this->pid_file_name_ != 0)
+  if (this->pid_file_name_ != nullptr)
     {
       FILE *pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
-      if (pidf != 0)
+      if (pidf != nullptr)
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",
@@ -491,7 +491,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO_Storable_Naming_Context_Factory* cf =
             this->storable_naming_context_factory (context_size);
           // Make sure we got a factory
-          if (cf == 0) return -1;
+          if (cf == nullptr) return -1;
           std::unique_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
 
           // This instance will either get deleted after recreate all or,
@@ -499,7 +499,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // activator.
 
           // Was a location specified?
-          if (persistence_location == 0)
+          if (persistence_location == nullptr)
             {
               // No, assign the default location "NameService"
               persistence_location = ACE_TEXT ("NameService");
@@ -567,7 +567,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             }
 
       }
-      else if (persistence_location != 0)
+      else if (persistence_location != nullptr)
         //
         // Initialize Persistent Naming Service.
         //
@@ -577,7 +577,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO_Persistent_Naming_Context_Factory *naming_context_factory =
             this->persistent_naming_context_factory ();
           // Make sure we got a factory.
-          if (naming_context_factory == 0) return -1;
+          if (naming_context_factory == nullptr) return -1;
 
           // Allocate and initialize Persistent Context Index.
           ACE_NEW_RETURN (this->context_index_,
@@ -659,7 +659,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               const char *port_number =
                 ACE_OS::getenv ("NameServicePort");
 
-              if (port_number != 0)
+              if (port_number != nullptr)
                 port = static_cast<u_short> (ACE_OS::atoi (port_number));
             }
 
@@ -771,7 +771,7 @@ TAO_Naming_Server::fini ()
       orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
          ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
       delete this->ior_multicast_;
-      this->ior_multicast_ = 0;
+      this->ior_multicast_ = nullptr;
     }
 
   for (size_t i = 0; i < bundle_size_; i++ )
@@ -909,7 +909,7 @@ int
 TAO_Naming_Server::write(size_t ndx) const
 {
   const IOR_Bundle *b = bundle_at(ndx);
-  if (b == 0)
+  if (b == nullptr)
     return -1;
 
   if (b->filename_.length() == 0)
@@ -927,7 +927,7 @@ TAO_Naming_Server::write(size_t ndx) const
     }
 
   FILE *iorf = ACE_OS::fopen (b->filename_.c_str(), ACE_TEXT("w"));
-  if (iorf == 0)
+  if (iorf == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -949,7 +949,7 @@ void
 TAO_Naming_Server::assign (size_t ndx, bool take, CORBA::Object_ptr obj)
 {
   IOR_Bundle *b = this->bundle_at(ndx);
-  if (b == 0)
+  if (b == nullptr)
     return;
 
   b->ref_ = take ? obj : CORBA::Object::_duplicate (obj);

@@ -61,7 +61,7 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
       return resolved_ref._retn ();
 
     // If there is no naming manager, we will fail and report an error.
-    if ( this->naming_manager_ == 0)
+    if ( this->naming_manager_ == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_FT_Storable_Naming_Context::resolve ")
@@ -138,7 +138,7 @@ TAO_FT_Storable_Naming_Context::is_obsolete (time_t stored_time)
 {
   // If data has never been loaded, then the context_ object will
   // be a null pointer.
-  return ((this->context_ == 0) ||              // Has not been loaded
+  return ((this->context_ == nullptr) ||        // Has not been loaded
           this->stale () ||                     // Explicitly marked stale by peer
           (stored_time > this->last_changed_)); // File has been updated
 }

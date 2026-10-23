@@ -291,7 +291,7 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
   if (this->group_factory_.find_group (group, pg_group))
   { // Found the object group in the factory
     const char* grp_name = pg_group->get_name ();
-    if (grp_name != 0)
+    if (grp_name != nullptr)
     { // Valid group name defined
       name = CORBA::string_dup (grp_name);
       return true;
@@ -530,7 +530,7 @@ TAO_FT_Naming_Manager::locations_of_members (
       throw PortableGroup::ObjectGroupNotFound ();
     }
 
-  PortableGroup::Locations_var result = 0;
+  PortableGroup::Locations_var result = nullptr;
 
   // Find the object group corresponding to this IOGR
   TAO::PG_Object_Group * group = nullptr;
@@ -716,7 +716,7 @@ TAO_FT_Naming_Manager::create_object (
     // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = 0;
+  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = nullptr;
   ACE_NEW_THROW_EX (factory_id_ptr,
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (

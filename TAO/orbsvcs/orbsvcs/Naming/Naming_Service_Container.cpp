@@ -158,18 +158,18 @@ ACE_Unbounded_List<T>::~ACE_Unbounded_List ()
                          this->allocator_->free,
                          ACE_NS_Node,
                          <T>);
-  this->head_ = 0;
+  this->head_ = nullptr;
 }
 
 template <class T>
 ACE_Unbounded_List<T>::ACE_Unbounded_List (ACE_Allocator *alloc)
-  : head_ (0),
+  : head_ (nullptr),
     cur_size_ (0),
     allocator_ (alloc)
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::ACE_Unbounded_List");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -181,13 +181,13 @@ ACE_Unbounded_List<T>::ACE_Unbounded_List (ACE_Allocator *alloc)
 
 template <class T>
 ACE_Unbounded_List<T>::ACE_Unbounded_List (const ACE_Unbounded_List<T> &us)
-  : head_ (0),
+  : head_ (nullptr),
     cur_size_ (0),
     allocator_ (us.allocator_)
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::ACE_Unbounded_List");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,

@@ -48,7 +48,7 @@ public:
 
 private:
   ACE_NS_Node (const T &i, ACE_NS_Node<T> *n);
-  ACE_NS_Node (ACE_NS_Node<T> *n = 0, int = 0);
+  ACE_NS_Node (ACE_NS_Node<T> *n = nullptr, int = 0);
   ACE_NS_Node (const ACE_NS_Node<T> &n);
 
   /// Pointer to next element in the list of <ACE_NS_Node>s.
@@ -135,7 +135,7 @@ public:
 
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
-  ACE_Unbounded_List (ACE_Allocator *alloc = 0);
+  ACE_Unbounded_List (ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   ACE_Unbounded_List (const ACE_Unbounded_List<T> &);
