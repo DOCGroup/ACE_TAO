@@ -29,6 +29,10 @@ public:
 
   /// destructor
   ~be_visitor_component_fwd_ch () override;
+  be_visitor_component_fwd_ch (be_visitor_component_fwd_ch const &) = delete;
+  be_visitor_component_fwd_ch (be_visitor_component_fwd_ch &&) = delete;
+  be_visitor_component_fwd_ch &operator= (be_visitor_component_fwd_ch const &) = delete;
+  be_visitor_component_fwd_ch &operator= (be_visitor_component_fwd_ch &&) = delete;
 
   /// visit interface_fwd.
   int visit_component_fwd (be_component_fwd *node) override;
