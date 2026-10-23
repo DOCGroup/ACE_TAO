@@ -147,8 +147,10 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    PG_Property_Set(const PG_Property_Set & rhs) = delete;
-    PG_Property_Set & operator = (const PG_Property_Set & rhs) = delete;
+    PG_Property_Set (PG_Property_Set const &) = delete;
+    PG_Property_Set &operator= (PG_Property_Set const &) = delete;
+    PG_Property_Set (PG_Property_Set &&) = delete;
+    PG_Property_Set &operator= (PG_Property_Set &&) = delete;
 
     ///////////////
     // Data Members

@@ -88,10 +88,14 @@ protected:
             Entry *&entry);
 
 private:
-  // The acceptor registry should not be copied.
   TAO_PortableGroup_Acceptor_Registry (
-    const TAO_PortableGroup_Acceptor_Registry&);
-  void operator= (const TAO_PortableGroup_Acceptor_Registry&);
+    TAO_PortableGroup_Acceptor_Registry const &) = delete;
+  TAO_PortableGroup_Acceptor_Registry (
+    TAO_PortableGroup_Acceptor_Registry &&) = delete;
+  TAO_PortableGroup_Acceptor_Registry &operator= (
+    TAO_PortableGroup_Acceptor_Registry const &) = delete;
+  TAO_PortableGroup_Acceptor_Registry &operator= (
+    TAO_PortableGroup_Acceptor_Registry &&) = delete;
 
 private:
   /// List of acceptors that are currently open.
