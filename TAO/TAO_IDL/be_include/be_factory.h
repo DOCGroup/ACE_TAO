@@ -28,7 +28,7 @@ class be_factory : public virtual AST_Factory,
                    public virtual be_decl
 {
 public:
-  be_factory (UTL_ScopedName *n);
+  explicit be_factory (UTL_ScopedName *n);
 
   ~be_factory () override;
 

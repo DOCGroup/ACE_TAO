@@ -28,7 +28,7 @@ class be_native : public virtual AST_Native,
                   public virtual be_exception
 {
 public:
-  be_native (UTL_ScopedName *n);
+  explicit be_native (UTL_ScopedName *n);
 
   ~be_native () override {}
 

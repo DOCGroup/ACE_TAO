@@ -29,7 +29,7 @@ class be_porttype : public virtual AST_PortType,
                     public virtual be_type
 {
 public:
-  be_porttype (UTL_ScopedName *n);
+  explicit be_porttype (UTL_ScopedName *n);
 
   ~be_porttype () override;
 

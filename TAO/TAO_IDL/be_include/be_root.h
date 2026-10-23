@@ -26,7 +26,7 @@ class be_root : public virtual AST_Root,
                 public virtual be_module
 {
 public:
-  be_root (UTL_ScopedName *n);
+  explicit be_root (UTL_ScopedName *n);
 
   ~be_root () override;
 
