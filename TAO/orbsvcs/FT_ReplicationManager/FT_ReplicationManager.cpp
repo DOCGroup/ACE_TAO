@@ -68,12 +68,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
-  , ior_output_file_ (nullptr)
-  , ns_name_ ("")
   , naming_context_ (CosNaming::NamingContext::_nil ())
   , replication_manager_ref_ (FT::ReplicationManager::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
-  , fault_notifier_ior_string_ (nullptr)
   , fault_consumer_ ()
   , factory_registry_ ("ReplicationManager::FactoryRegistry")
 {

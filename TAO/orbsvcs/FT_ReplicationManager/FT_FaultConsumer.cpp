@@ -26,10 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::FT_FaultConsumer::FT_FaultConsumer ()
   : poa_ (PortableServer::POA::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
-  , fault_analyzer_ (nullptr)
-  , consumer_id_ (0)
   , consumer_ref_ (CosNotifyComm::StructuredPushConsumer::_nil ())
-  , notifications_ (0)
 {
 }
 

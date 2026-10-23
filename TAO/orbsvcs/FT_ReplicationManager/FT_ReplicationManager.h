@@ -365,7 +365,7 @@ namespace TAO
     PortableServer::POA_var poa_;
 
     /// A file to which the factory's IOR should be written.
-    ACE_TCHAR const * ior_output_file_;
+    ACE_TCHAR const * ior_output_file_ {};
 
     /// A name to be used to register the factory with the name service.
     ACE_CString ns_name_;
@@ -387,7 +387,7 @@ namespace TAO
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
     /// set by command line -f option
-    ACE_TCHAR const * fault_notifier_ior_string_;
+    ACE_TCHAR const * fault_notifier_ior_string_ {};
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;
