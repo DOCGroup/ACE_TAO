@@ -32,18 +32,8 @@
 #include "ace/Logging_Strategy.h"
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver ()
-: notify_service_ (nullptr)
-, bootstrap_ (false)
-, use_name_svc_ (true)
-, ior_output_file_name_ (nullptr)
-, notify_factory_name_ (NOTIFY_KEY)
-, register_event_channel_ (false)
-, nthreads_ (1)
-, separate_dispatching_orb_ (false)
-, timeout_ (0)
-, logging_worker_(this)
-, shutdown_orb_ (true)
-, shutdown_dispatching_orb_ (true)
+  : notify_factory_name_ (NOTIFY_KEY),
+    logging_worker_ (this)
 {
 }
 
@@ -477,7 +467,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
   ACE_TCHAR const * current_arg = nullptr;
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))) != nullptr)
         {
           this->notify_factory_name_.set (ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
@@ -486,35 +476,35 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
         {
           current_arg = arg_shifter.get_the_parameter
                               (ACE_TEXT("-ShutdownORB"));
-          if (current_arg != 0 &&
+          if (current_arg != nullptr &&
               (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
                ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
             {
               this->shutdown_orb_ =
-                            static_cast<bool> (ACE_OS::atoi(current_arg));
+                ACE_OS::atoi (current_arg) != 0;
             }
-          if (current_arg != 0)
+          if (current_arg != nullptr)
             arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownDispatchingORB")) == 0)
         {
           current_arg = arg_shifter.get_the_parameter
                               (ACE_TEXT("-ShutdownDispatchingORB"));
-          if (current_arg != 0 &&
+          if (current_arg != nullptr &&
               (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
                ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
             {
               this->shutdown_dispatching_orb_ =
-                            static_cast<bool> (ACE_OS::atoi(current_arg));
+                ACE_OS::atoi (current_arg) != 0;
             }
-          if (current_arg != 0)
+          if (current_arg != nullptr)
             arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
         {
           current_arg = arg_shifter.get_the_parameter
                               (ACE_TEXT("-UseSeparateDispatchingORB"));
-          if (current_arg != 0 &&
+          if (current_arg != nullptr &&
               (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
                ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
             {
@@ -524,7 +514,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
                               ACE_TEXT ("Using separate dispatching ORB\n")));
                 }
               this->separate_dispatching_orb_ =
-                            static_cast<bool> (ACE_OS::atoi(current_arg));
+                ACE_OS::atoi (current_arg) != 0;
             }
           else
             {
@@ -534,10 +524,10 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
                               ACE_TEXT ("WARNING: Unrecognized ")
                               ACE_TEXT ("argument (%s) to ")
                               ACE_TEXT ("-UseSeparateDispatchingORB.\n"),
-                              (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                              (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
                 }
             }
-          if (current_arg != 0)
+          if (current_arg != nullptr)
             arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
@@ -561,12 +551,12 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"))) != nullptr)
         {
           this->ior_output_file_name_ = current_arg;
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))) != nullptr)
         {
           this->notify_channel_name_.insert(ACE_CString(ACE_TEXT_ALWAYS_CHAR(current_arg)));
           arg_shifter.consume_arg ();
@@ -578,7 +568,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))) != nullptr)
         {
           if (TAO_debug_level > 0)
             {
@@ -590,12 +580,12 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunThreads"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunThreads"))) != nullptr)
         {
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout"))) != nullptr)
         {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
           this->timeout_ = ACE_OS::atoi (current_arg);
@@ -717,9 +707,7 @@ LoggingWorker::end ()
     }
 }
 
-Worker::Worker ()
-{
-}
+Worker::Worker () = default;
 
 void
 Worker::orb (CORBA::ORB_ptr orb)

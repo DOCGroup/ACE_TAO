@@ -35,6 +35,10 @@ public:
   using MUTEX = TAO_SYNCH_RECURSIVE_MUTEX;
 
   TAO_NT_Notify_Service ();
+  TAO_NT_Notify_Service (TAO_NT_Notify_Service const &) = delete;
+  TAO_NT_Notify_Service (TAO_NT_Notify_Service &&) = delete;
+  TAO_NT_Notify_Service &operator= (TAO_NT_Notify_Service const &) = delete;
+  TAO_NT_Notify_Service &operator= (TAO_NT_Notify_Service &&) = delete;
   ~TAO_NT_Notify_Service () override;
 
   /// We override <handle_control> because it handles stop requests
@@ -63,12 +67,12 @@ private:
 
   // = Keep track of the "command-line" arguments.
   /// Argument count.
-  int argc_;
-  int argc_save_;
+  int argc_ {};
+  int argc_save_ {};
 
   /// Argument list.
-  ACE_TCHAR **argv_;
-  ACE_TCHAR **argv_save_;
+  ACE_TCHAR **argv_ {};
+  ACE_TCHAR **argv_save_ {};
 
   friend class ACE_Singleton<TAO_NT_Notify_Service, MUTEX>;
 };
