@@ -38,16 +38,11 @@
 // *************************************************************************
 
 be_visitor_attribute::be_visitor_attribute (be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    for_facets_ (false),
-    op_scope_ (nullptr),
-    exec_class_extension_ ("_exec_i")
+  : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_attribute::~be_visitor_attribute ()
-{
-}
+be_visitor_attribute::~be_visitor_attribute () = default;
 
 int
 be_visitor_attribute::visit_attribute (be_attribute *node)
