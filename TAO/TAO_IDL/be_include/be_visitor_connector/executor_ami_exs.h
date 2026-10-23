@@ -27,12 +27,12 @@ class be_visitor_executor_ami_exs
   //
   //
 public:
-  be_visitor_executor_ami_exs (be_visitor_context *ctx);
+  explicit be_visitor_executor_ami_exs (be_visitor_context *ctx);
 
-  ~be_visitor_executor_ami_exs ();
+  ~be_visitor_executor_ami_exs () override;
 
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_provides (be_provides *node);
+  int visit_connector (be_connector *node) override;
+  int visit_provides (be_provides *node) override;
 };
 
 #endif /* _BE_CONNECTOR_EXECUTOR_AMI_EXS_H_ */

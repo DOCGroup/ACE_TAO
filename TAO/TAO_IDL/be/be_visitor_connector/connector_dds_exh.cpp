@@ -33,9 +33,7 @@ be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh ()
-{
-}
+be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh () = default;
 
 int
 be_visitor_connector_dds_exh::visit_connector (be_connector *node)

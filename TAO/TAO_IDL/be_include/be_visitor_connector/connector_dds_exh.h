@@ -29,19 +29,19 @@ class be_visitor_connector_dds_exh
   //
   //
 public:
-  be_visitor_connector_dds_exh (be_visitor_context *ctx);
+  explicit be_visitor_connector_dds_exh (be_visitor_context *ctx);
 
-  ~be_visitor_connector_dds_exh ();
+  ~be_visitor_connector_dds_exh () override;
 
-  virtual int visit_connector (be_connector *node);
+  int visit_connector (be_connector *node) override;
 
   /// Override which also calls the base class version.
-  virtual int visit_mirror_port (be_mirror_port *node);
+  int visit_mirror_port (be_mirror_port *node) override;
 
   /// Used to generate the traits structures.
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_provides (be_provides *node) override;
+  int visit_uses (be_uses *node) override;
+  int visit_attribute (be_attribute *node) override;
 
 private:
   /// Generate application-specific instantiations of

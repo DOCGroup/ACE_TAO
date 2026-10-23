@@ -15,15 +15,11 @@
 
 be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    for_reply_handler_ (true),
-    sync_(false)
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs ()
-{
-}
+be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs () = default;
 
 int
 be_visitor_facet_ami_exs::visit_component (be_component *node)

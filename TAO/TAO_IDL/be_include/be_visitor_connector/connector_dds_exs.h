@@ -27,11 +27,11 @@ class be_visitor_connector_dds_exs
   //
   //
 public:
-  be_visitor_connector_dds_exs (be_visitor_context *ctx);
+  explicit be_visitor_connector_dds_exs (be_visitor_context *ctx);
 
-  ~be_visitor_connector_dds_exs ();
+  ~be_visitor_connector_dds_exs () override;
 
-  virtual int visit_connector (be_connector *node);
+  int visit_connector (be_connector *node) override;
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_ */

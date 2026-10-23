@@ -25,18 +25,11 @@
 
 be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    t_inst_ (nullptr),
-    t_ref_ (nullptr),
-    t_params_ (nullptr),
-    base_tname_ (nullptr)
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_connector_dds_ex_base::~be_visitor_connector_dds_ex_base (
-  )
-{
-}
+be_visitor_connector_dds_ex_base::~be_visitor_connector_dds_ex_base () = default;
 
 bool
 be_visitor_connector_dds_ex_base::begin (be_connector *node)
