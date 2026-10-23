@@ -70,7 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_extern.h"
 
 
-const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
+constexpr size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 
 void
 DRV_init ()

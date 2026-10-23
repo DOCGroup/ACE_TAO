@@ -74,7 +74,7 @@ BE_GlobalData::destroy ()
 {
 }
 
-const char *
+char const *
 BE_GlobalData::filename () const
 {
   return this->filename_;
@@ -129,7 +129,7 @@ BE_GlobalData::orb_args () const
 }
 
 void
-BE_GlobalData::orb_args (const ACE_CString& args)
+BE_GlobalData::orb_args (ACE_CString const &args)
 {
   this->orb_args_ = args;
 }

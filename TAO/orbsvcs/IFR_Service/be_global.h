@@ -63,7 +63,7 @@ public:
   /// Cleanup function.
   void destroy ();
 
-  const char *filename () const;
+  char const *filename () const;
   void filename (char *fname);
 
   bool enable_locking () const;
@@ -76,7 +76,7 @@ public:
   void allow_duplicate_typedefs (bool val);
 
   ACE_CString orb_args () const;
-  void orb_args (const ACE_CString& args);
+  void orb_args (ACE_CString const &args);
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.

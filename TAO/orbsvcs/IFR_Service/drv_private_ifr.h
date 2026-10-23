@@ -70,7 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Data
 
-extern const char *DRV_files[];
+extern char const *DRV_files[];
 // All files to be processed.
 
 extern long DRV_nfiles;
@@ -81,7 +81,7 @@ extern long DRV_file_index;
 
 // Functions.
 
-extern void DRV_drive (const char *);
+extern void DRV_drive (char const *);
 // Compiler driver for single file.
 
 #endif /* TAO_IFR_DRV_PRIVATE_H */
