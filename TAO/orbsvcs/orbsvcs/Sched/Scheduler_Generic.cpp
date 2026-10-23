@@ -177,9 +177,9 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
 void
 Scheduler_Generic::init (const int minimum_priority,
                           const int maximum_priority,
-                          const char *runtime_filename,
-                          const char *rt_info_filename,
-                          const char *timeline_filename)
+                          char const *runtime_filename,
+                          char const *rt_info_filename,
+                          char const *timeline_filename)
 {
   minimum_priority_ = minimum_priority;
   maximum_priority_ = maximum_priority;

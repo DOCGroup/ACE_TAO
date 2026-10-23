@@ -133,12 +133,12 @@ public:
    * as VxWorks that use lower values to indicate higher priorities.
    *
    * When Scheduler::schedule is called, the schedule is output to the
-   * file named by "runtime_filename" if it is non-zero.
+   * file named by "runtime_filename" if it is non-null.
    * This file is compilable; it is linked into the runtime executable
    * to provide priorities to the runtime scheduling component.
-   * If the "rt_info_filename" is non-zero, the RT_Info for
+   * If the "rt_info_filename" is non-null, the RT_Info for
    * every task is exported to it.  It is not used at runtime.
-   * If the "timeline_filename" is non-zero, the timeline output
+   * If the "timeline_filename" is non-null, the timeline output
    * file is created.  It is not used at runtime.
    *
    * The runtime scheduling component ignores these filenames.  It just
@@ -147,9 +147,9 @@ public:
    */
   void init (const OS_Priority minimum_priority,
              const OS_Priority maximum_priority,
-             const char *runtime_filename = nullptr,
-             const char *rt_info_filename = nullptr,
-             const char *timeline_filename = nullptr);
+             char const *runtime_filename = nullptr,
+             char const *rt_info_filename = nullptr,
+             char const *timeline_filename = nullptr);
 
   /**
    * Prepare for another schedule computation: once a reasonable schedule
@@ -333,7 +333,7 @@ protected:
   OS_Priority maximum_priority_;
 
   /// Collection of known tasks.
-  Task_Entry *task_entries_;
+  Task_Entry *task_entries_ {};
 
   /**
    * An array of pointers to task entries which wrap RT_Infos. It is
@@ -341,29 +341,29 @@ protected:
    * over the call graph is used both to check for call chain cycles and
    * to correctly propagate scheduling information away from the threads.
    */
-  Task_Entry **ordered_task_entries_;
+  Task_Entry **ordered_task_entries_ {};
 
     /// identifies dispatch entries whose underlying
     /// Task Entries delineate threads
-  ACE_Unbounded_Set <Dispatch_Entry *> *thread_delineators_;
+  ACE_Unbounded_Set <Dispatch_Entry *> *thread_delineators_ {};
 
   /// An array of pointers to task entries which initiate call chains.
   /// It is sorted by the schedule_threads method defined in the derived class.
-  Dispatch_Entry **ordered_thread_dispatch_entries_;
+  Dispatch_Entry **ordered_thread_dispatch_entries_ {};
 
     /// the set of dispatch entries
-  ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_;
+  ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_ {};
 
   /// Collection of dispatch configuration entries.
-  ACE_Unbounded_Set <Config_Info *> *config_info_entries_;
+  ACE_Unbounded_Set <Config_Info *> *config_info_entries_ {};
 
     /// expanded set of dispatch entries (all dispatch entries produced by
     /// expanding sub-frames to the total frame size during timeline creation)
-  ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_;
+  ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_ {};
 
   /// An array of pointers to  dispatch entries. It is
   /// sorted by the schedule_dispatches method.
-  Dispatch_Entry **ordered_dispatch_entries_;
+  Dispatch_Entry **ordered_dispatch_entries_ {};
 
   /// the number of dispatch entries in the schedule
   u_int dispatch_entry_count_;
@@ -372,7 +372,7 @@ protected:
   u_int threads_;
 
   /// Ordered MultiSet of timeline entries.
-  ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_;
+  ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_ {};
 
 private:
   ///////////////////////////////
@@ -482,13 +482,13 @@ private:
   u_int handles_;
 
   /// Destination file of Scheduler output from the configuration run.
-  const char *runtime_filename_;
+  char const *runtime_filename_ {};
 
   /// Destination file of all rt_info data from the configuration run.
-  const char *rt_info_filename_;
+  char const *rt_info_filename_ {};
 
   /// The destination of the timeline.
-  const char *timeline_filename_;
+  char const *timeline_filename_ {};
 
   /// A binding of name to rt_info.  This is the mapping for every
   /// rt_info in the process.
