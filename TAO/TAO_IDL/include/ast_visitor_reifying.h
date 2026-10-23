@@ -40,7 +40,7 @@ class ast_visitor_context;
 class ast_visitor_reifying : public ast_visitor
 {
 public:
-  ast_visitor_reifying (ast_visitor_context *ctx);
+  explicit ast_visitor_reifying (ast_visitor_context *ctx);
 
   ~ast_visitor_reifying () override;
 

@@ -27,7 +27,7 @@ class ast_visitor_tmpl_module_ref
   : public ast_visitor_tmpl_module_inst
 {
 public:
-  ast_visitor_tmpl_module_ref (ast_visitor_context *ctx);
+  explicit ast_visitor_tmpl_module_ref (ast_visitor_context *ctx);
 
   ~ast_visitor_tmpl_module_ref () override;
 
