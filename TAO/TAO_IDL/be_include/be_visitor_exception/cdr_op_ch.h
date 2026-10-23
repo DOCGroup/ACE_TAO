@@ -28,6 +28,10 @@ class be_visitor_exception_cdr_op_ch : public be_visitor_exception
 public:
   explicit be_visitor_exception_cdr_op_ch (be_visitor_context *ctx);
   ~be_visitor_exception_cdr_op_ch () override;
+  be_visitor_exception_cdr_op_ch (be_visitor_exception_cdr_op_ch const &) = delete;
+  be_visitor_exception_cdr_op_ch (be_visitor_exception_cdr_op_ch &&) = delete;
+  be_visitor_exception_cdr_op_ch &operator= (be_visitor_exception_cdr_op_ch const &) = delete;
+  be_visitor_exception_cdr_op_ch &operator= (be_visitor_exception_cdr_op_ch &&) = delete;
 
   int visit_exception (be_exception *node) override;
 };

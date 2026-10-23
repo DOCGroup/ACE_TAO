@@ -26,6 +26,10 @@ class be_visitor_exception : public be_visitor_scope
 public:
   explicit be_visitor_exception (be_visitor_context *ctx);
   ~be_visitor_exception () override;
+  be_visitor_exception (be_visitor_exception const &) = delete;
+  be_visitor_exception (be_visitor_exception &&) = delete;
+  be_visitor_exception &operator= (be_visitor_exception const &) = delete;
+  be_visitor_exception &operator= (be_visitor_exception &&) = delete;
 
   int visit_exception (be_exception *node) override;
 
