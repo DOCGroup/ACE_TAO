@@ -84,6 +84,11 @@ namespace TAO
     bool list_obsolete ();
 
   private:
+    PG_Group_List_Store (PG_Group_List_Store const &) = delete;
+    PG_Group_List_Store (PG_Group_List_Store &&) = delete;
+    PG_Group_List_Store &operator= (PG_Group_List_Store const &) = delete;
+    PG_Group_List_Store &operator= (PG_Group_List_Store &&) = delete;
+
     Group_Ids group_ids_;
 
     /// Ensure ID is monotonically increasing even when groups gets
