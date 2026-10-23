@@ -36,9 +36,9 @@ public:
   // = Initialize the scheduler.
   void init (const int minimum_priority,
              const int maximum_priority,
-             const char *runtime_filename = nullptr,
-             const char *rt_info_filename = nullptr,
-             const char *timeline_filename = nullptr) override;
+             char const *runtime_filename = nullptr,
+             char const *rt_info_filename = nullptr,
+             char const *timeline_filename = nullptr) override;
 
   // = Registers a task.
   status_t register_task (RT_Info *[],
@@ -83,13 +83,13 @@ private:
   int maximum_priority_;
 
   /// Destination file of Scheduler output from the configuration run.
-  const char *runtime_filename_;
+  char const *runtime_filename_ {};
 
   /// Destination file of all rt_info data from the configuration run.
-  const char *rt_info_filename_;
+  char const *rt_info_filename_ {};
 
   /// The destination of the timeline.
-  const char *timeline_filename_;
+  char const *timeline_filename_ {};
 
   /**
    * Set to 1 if priority values increase with increasing priority,

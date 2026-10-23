@@ -23,9 +23,7 @@ be_visitor_valuetype_fwd_any_op_ch::be_visitor_valuetype_fwd_any_op_ch (
 {
 }
 
-be_visitor_valuetype_fwd_any_op_ch::~be_visitor_valuetype_fwd_any_op_ch ()
-{
-}
+be_visitor_valuetype_fwd_any_op_ch::~be_visitor_valuetype_fwd_any_op_ch () = default;
 
 int
 be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (

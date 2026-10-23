@@ -21,7 +21,7 @@
 class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {
 public:
-  Criteria_Evaluator (CosLifeCycle::Criteria const & criteria);
+  explicit Criteria_Evaluator (CosLifeCycle::Criteria const & criteria);
   ~Criteria_Evaluator ();
 
   LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const * getInitialization ();

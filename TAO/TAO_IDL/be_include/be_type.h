@@ -28,7 +28,7 @@ public:
   be_type (AST_Decl::NodeType nt,
            UTL_ScopedName *n);
 
-  virtual ~be_type ();
+  ~be_type () override;
 
   /**
    * Return the typecode name. When both, the prefix and the suffix
@@ -40,8 +40,8 @@ public:
   /// Type name of a node used when generating declarations for smart
   /// proxies.
   virtual const char *nested_sp_type_name (be_decl *use_scope,
-                                           const char *suffix = 0,
-                                           const char *prefix = 0);
+                                           const char *suffix = nullptr,
+                                           const char *prefix = nullptr);
 
   /// Compute the value of the member.
   void gen_fwd_helper_name ();
@@ -97,22 +97,22 @@ protected:
   virtual void compute_tc_name ();
 
   /// Typecode name.
-  UTL_ScopedName *tc_name_;
+  UTL_ScopedName *tc_name_ {};
 
   /// Used by interfaces, valuetypes and arrays to name helper structs.
   ACE_CString fwd_helper_name_;
 
   /// Have we generated our _var and _out class typedefs yet?
-  bool common_varout_gen_;
+  bool common_varout_gen_ {};
 
   /// Has this declaration been used as a sequence element?
-  bool seen_in_sequence_;
+  bool seen_in_sequence_ {};
 
   /// Has this declaration been used as a map element?
-  bool seen_in_map_;
+  bool seen_in_map_ {};
 
   /// Has this declaration been used as a return type or parameter?
-  bool seen_in_operation_;
+  bool seen_in_operation_ {};
 };
 
 #endif // end of if !defined

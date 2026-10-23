@@ -26,15 +26,15 @@ class be_root : public virtual AST_Root,
                 public virtual be_module
 {
 public:
-  be_root (UTL_ScopedName *n);
+  explicit be_root (UTL_ScopedName *n);
 
-  virtual ~be_root ();
+  ~be_root () override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif

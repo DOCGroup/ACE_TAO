@@ -74,7 +74,7 @@ class Locator_Export LiveListener
  public:
   /// Construct a new listener. The server name supplied is used to
   /// look up a listener entry in the LiveCheck map.
-  LiveListener (const char *server);
+  explicit LiveListener (const char *server);
 
   virtual ~LiveListener ();
 
@@ -176,7 +176,7 @@ class Locator_Export PingReceiver :
 {
  public:
   PingReceiver (LiveEntry * entry, PortableServer::POA_ptr poa);
-  virtual ~PingReceiver ();
+  ~PingReceiver () override;
 
   /// Called by the entry if it is no longer interested in the result of
   /// a ping.
@@ -208,9 +208,9 @@ class Locator_Export PingReceiver :
  * */
 
 #if (ACE_SIZEOF_VOID_P == 8)
-typedef ACE_INT64 LC_token_type;
+using LC_token_type = ACE_INT64;
 #else
-typedef ACE_INT32 LC_token_type;
+using LC_token_type = ACE_INT32;
 #endif
 
 class Locator_Export LC_TimeoutGuard
@@ -250,13 +250,13 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   friend class LC_TimeoutGuard;
 
   LiveCheck ();
-  ~LiveCheck ();
+  ~LiveCheck () override;
 
   void init (CORBA::ORB_ptr orb,
              const ACE_Time_Value &interval);
   void shutdown ();
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act = nullptr);
+                      const void *act = nullptr) override;
   bool has_server (const char *server);
   void add_server (const char *server,
                    bool may_ping,
@@ -280,14 +280,14 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   bool in_handle_timeout ();
   void remove_deferred_servers ();
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  LiveEntry *,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex> LiveEntryMap;
-  typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
-  typedef std::pair<ACE_CString, int> NamePidPair;
-  typedef ACE_Unbounded_Set<NamePidPair> NamePidStack;
+  using LiveEntryMap = ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                               LiveEntry *,
+                                               ACE_Hash<ACE_CString>,
+                                               ACE_Equal_To<ACE_CString>,
+                                               ACE_Null_Mutex>;
+  using PerClientStack = ACE_Unbounded_Set<LiveEntry *>;
+  using NamePidPair = std::pair<ACE_CString, int>;
+  using NamePidStack = ACE_Unbounded_Set<NamePidPair>;
 
   LiveEntryMap entry_map_;
   PerClientStack per_client_;

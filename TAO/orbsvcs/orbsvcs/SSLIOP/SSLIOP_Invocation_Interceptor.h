@@ -104,7 +104,7 @@ namespace TAO
        * Protected destructor to force deallocation by the reference
        * counting mechanism.
        */
-      ~Server_Invocation_Interceptor ();
+      ~Server_Invocation_Interceptor () override = default;
 
     private:
       /**

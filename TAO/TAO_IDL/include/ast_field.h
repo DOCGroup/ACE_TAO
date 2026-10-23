@@ -150,7 +150,7 @@ protected:
   Visibility visibility_;
   // Used with valuetype and eventtype fields.
 
-  bool owns_base_type_;
+  bool owns_base_type_ {};
   // If our field type is anonymous array or sequence, we're
   // responsible for destroying it.
 };

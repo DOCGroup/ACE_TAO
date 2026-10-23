@@ -48,15 +48,12 @@ TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
   , ns_name_("")
   , naming_context_(0)
   , this_name_(1)
-  , quit_on_idle_(0)
   , quit_state_(LIVE)
   , linger_(0)
 {
 }
 
-TAO::PG_FactoryRegistry::~PG_FactoryRegistry ()
-{
-}
+TAO::PG_FactoryRegistry::~PG_FactoryRegistry () = default;
 
 //////////////////////////////////////////////////////
 // PG_FactoryRegistry public, non-CORBA methods
@@ -82,7 +79,7 @@ int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'q':
       {
-        this->quit_on_idle_ = 1;
+        this->quit_on_idle_ = true;
         break;
       }
 

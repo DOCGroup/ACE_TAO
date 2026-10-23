@@ -9,10 +9,6 @@ TAO_EC_Reactive_Timeout_Generator::
 {
 }
 
-TAO_EC_Reactive_Timeout_Generator::~TAO_EC_Reactive_Timeout_Generator ()
-{
-}
-
 void
 TAO_EC_Reactive_Timeout_Generator::activate ()
 {

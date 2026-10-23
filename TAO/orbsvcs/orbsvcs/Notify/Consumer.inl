@@ -5,7 +5,7 @@ ACE_INLINE
 TAO_Notify_Consumer::Request_Queue&
 TAO_Notify_Consumer::pending_events()
 {
-  ACE_ASSERT( pending_events_.get() != 0 );
+  ACE_ASSERT( pending_events_.get() != nullptr );
   return *pending_events_;
 }
 

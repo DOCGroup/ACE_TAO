@@ -19,9 +19,7 @@ be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
 {
 }
 
-be_visitor_valuebox_cdr_op_ch::~be_visitor_valuebox_cdr_op_ch ()
-{
-}
+be_visitor_valuebox_cdr_op_ch::~be_visitor_valuebox_cdr_op_ch () = default;
 
 int
 be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
@@ -39,8 +37,8 @@ be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
   *os << be_global->core_versioning_begin () << be_nl;
 
   *os << be_global->stub_export_macro () << " "
-      << "::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
-      << node->full_name () << " *);" << be_nl;
+      << "::CORBA::Boolean operator<< (TAO_OutputCDR &, "
+      << node->full_name () << " const *);" << be_nl;
 
   *os << be_global->stub_export_macro () << " "
       << "::CORBA::Boolean operator>> (TAO_InputCDR &, "

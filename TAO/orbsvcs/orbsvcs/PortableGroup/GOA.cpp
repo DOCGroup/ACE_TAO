@@ -80,9 +80,7 @@ TAO_GOA::TAO_GOA (const TAO_Root_POA::String &name,
 {
 }
 
-TAO_GOA::~TAO_GOA ()
-{
-}
+TAO_GOA::~TAO_GOA () = default;
 
 TAO_Root_POA *
 TAO_GOA::new_POA (const String &name,

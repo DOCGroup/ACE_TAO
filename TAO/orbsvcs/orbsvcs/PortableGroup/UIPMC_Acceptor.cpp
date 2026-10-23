@@ -18,11 +18,11 @@ TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (
   bool listen_on_all_ifs,
   const char *listener_interfaces)
   : TAO_Acceptor (IOP::TAG_UIPMC),
-    addrs_ (0),
-    hosts_ (0),
+    addrs_ (nullptr),
+    hosts_ (nullptr),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
+    orb_core_ (nullptr),
     listen_on_all_ (listen_on_all_ifs),
     listener_interfaces_ (listener_interfaces)
 {
@@ -138,7 +138,7 @@ TAO_UIPMC_Acceptor::open (
           if (cp_pos[1] == ':')    // Look for a port
             port_separator_loc = cp_pos + 1;
           else
-            port_separator_loc = 0;
+            port_separator_loc = nullptr;
           // Extract out just the host part of the address.
           const size_t len = cp_pos - (address + 1);
           ACE_OS::memcpy (tmp_host, address + 1, len);
@@ -192,7 +192,7 @@ TAO_UIPMC_Acceptor::open (
                   char *[this->endpoint_count_],
                   -1);
 
-  this->hosts_[0] = 0;
+  this->hosts_[0] = nullptr;
 
   if (this->hostname (orb_core,
                       addr,

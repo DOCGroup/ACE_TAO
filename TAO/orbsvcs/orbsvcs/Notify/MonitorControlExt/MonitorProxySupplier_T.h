@@ -44,18 +44,23 @@ public:
   TAO_MonitorProxySupplier_T ();
 
   /// Remove the statistics for this event channel
-  virtual ~TAO_MonitorProxySupplier_T ();
+  ~TAO_MonitorProxySupplier_T () override;
+
+  TAO_MonitorProxySupplier_T (TAO_MonitorProxySupplier_T const&) = delete;
+  TAO_MonitorProxySupplier_T (TAO_MonitorProxySupplier_T&&) = delete;
+  TAO_MonitorProxySupplier_T& operator= (TAO_MonitorProxySupplier_T const&) = delete;
+  TAO_MonitorProxySupplier_T& operator= (TAO_MonitorProxySupplier_T&&) = delete;
 
   /// Configure the statistics after construction
   /// @param admin the parent admin for this proxy
   /// @proxy_id the ID assigned to this proxy
-  virtual void configure(
+  void configure(
     TAO_Notify_ConsumerAdmin & admin,
-    CosNotifyChannelAdmin::ProxyID_out proxy_id);
+    CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
   // Implement Tracer interface
-  virtual void update_queue_count (size_t count);
-  virtual void count_queue_overflow (bool local_overflow, bool global_overflow);
+  void update_queue_count (size_t count) override;
+  void count_queue_overflow (bool local_overflow, bool global_overflow) override;
 
   /// Access to Statistics Name
   ACE_CString & queue_item_stat_name ();

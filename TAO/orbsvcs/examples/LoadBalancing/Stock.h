@@ -9,13 +9,18 @@ class Stock
   : public POA_Test::Stock
 {
 public:
-  Stock (const char *symbol,
-         const char *full_name,
+  Stock (char const *symbol,
+         char const *full_name,
          CORBA::Double price);
 
-  char *symbol ();
-  char *full_name ();
-  CORBA::Double price ();
+  Stock (Stock const &) = delete;
+  Stock (Stock &&) = delete;
+  Stock &operator= (Stock const &) = delete;
+  Stock &operator= (Stock &&) = delete;
+
+  char *symbol () override;
+  char *full_name () override;
+  CORBA::Double price () override;
 
 private:
   std::string symbol_;

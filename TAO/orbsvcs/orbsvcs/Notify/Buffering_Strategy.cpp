@@ -31,11 +31,7 @@ TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
 , local_not_full_ (global_queue_lock_)
 , local_not_empty_ (global_queue_lock_)
 , shutdown_ (false)
-, tracker_ (0)
-{
-}
-
-TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
+, tracker_ (nullptr)
 {
 }
 
@@ -92,14 +88,12 @@ TAO_Notify_Buffering_Strategy::oldest_event ()
 
 
 TAO_Notify_Buffering_Strategy::Tracker::Tracker ()
-  : child_ (0)
+  : child_ (nullptr)
 {
 }
 
 
-TAO_Notify_Buffering_Strategy::Tracker::~Tracker ()
-{
-}
+TAO_Notify_Buffering_Strategy::Tracker::~Tracker () = default;
 
 
 void

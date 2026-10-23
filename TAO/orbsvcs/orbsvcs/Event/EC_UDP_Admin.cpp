@@ -8,10 +8,6 @@ TAO_EC_Simple_AddrServer::TAO_EC_Simple_AddrServer (CORBA::UShort port)
 {
 }
 
-TAO_EC_Simple_AddrServer::~TAO_EC_Simple_AddrServer ()
-{
-}
-
 void
 TAO_EC_Simple_AddrServer::get_addr (const RtecEventComm::EventHeader& header,
                                     RtecUDPAdmin::UDP_Addr_out addr)

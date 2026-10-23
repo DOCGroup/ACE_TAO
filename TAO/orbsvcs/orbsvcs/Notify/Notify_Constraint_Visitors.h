@@ -41,6 +41,11 @@ public:
   /// Constructor.
   TAO_Notify_Constraint_Visitor ();
 
+  TAO_Notify_Constraint_Visitor (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor (TAO_Notify_Constraint_Visitor&&) = delete;
+  TAO_Notify_Constraint_Visitor& operator= (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor& operator= (TAO_Notify_Constraint_Visitor&&) = delete;
+
   /// Put the event data into our hash map.
   int bind_structured_event (const CosNotification::StructuredEvent &s_event);
 
@@ -116,8 +121,7 @@ protected:
   /// @note A fixed set of 9 keys are stored in this map.  In the absence
   /// of a minimal perfect hash, ACE's default hash_pjw() and a hash size
   /// of 27 ensures each element is hashed to a unique bucket.
-  /// @todo define inline once VC6 support is deprecated.
-  static const size_t implicit_ids_size_;
+  static constexpr size_t implicit_ids_size_ = 27;
 
   /// Lookup table for the implicit ids, to avoid string comparisons in
   /// derived visitors.
@@ -125,16 +129,14 @@ protected:
     implicit_ids_;
 
   /// Size of filterable_data_ hash map.
-  /// @todo define inline once VC6 support is deprecated.
-  static const size_t filterable_data_size_;
+  static constexpr size_t filterable_data_size_ = 31;
 
   /// Used to lookup names and values in the event's 'filterable_data' field.
   ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>
     filterable_data_;
 
   /// Size of variable_header_ hash map.
-  /// @todo define inline once VC6 support is deprecated.
-  static const size_t variable_header_size_;
+  static constexpr size_t variable_header_size_ = 31;
 
   /// Used to lookup names and values in the event's 'variable_header' field.
   ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>

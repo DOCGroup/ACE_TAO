@@ -13,14 +13,11 @@
 #include "nr_extern.h"
 
 ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
-  : ifr_adding_visitor (scope),
-    index_ (0)
+  : ifr_adding_visitor (scope)
 {
 }
 
-ifr_adding_visitor_operation::~ifr_adding_visitor_operation ()
-{
-}
+ifr_adding_visitor_operation::~ifr_adding_visitor_operation () = default;
 
 int
 ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
@@ -66,7 +63,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       UTL_ExceptList *excepts = node->exceptions ();
 
-      if (excepts != 0)
+      if (excepts != nullptr)
         {
           length = static_cast<CORBA::ULong> (excepts->length ());
         }
@@ -78,7 +75,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       CORBA::ExceptionDefSeq exceptions (length);
       exceptions.length (length);
 
-      AST_Type *ex = 0;
+      AST_Type *ex = nullptr;
       CORBA::ULong i = 0;
 
       for (UTL_ExceptlistActiveIterator ex_iter (excepts);
@@ -98,7 +95,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       UTL_StrList *ctx_list = node->context ();
 
-      if (ctx_list != 0)
+      if (ctx_list != nullptr)
         {
           length = static_cast<CORBA::ULong> (ctx_list->length ());
         }
@@ -111,7 +108,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       contexts.length (length);
 
       UTL_StrlistActiveIterator ctx_iter (ctx_list);
-      UTL_String *str = 0;
+      UTL_String *str = nullptr;
       i = 0;
 
       while (!ctx_iter.is_done ())
@@ -188,7 +185,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -238,7 +235,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
       ++this->index_;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

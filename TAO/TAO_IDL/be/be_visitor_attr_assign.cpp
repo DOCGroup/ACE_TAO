@@ -18,7 +18,6 @@
 be_visitor_attr_assign::be_visitor_attr_assign  (
       be_visitor_context *ctx)
   : be_visitor_decl (ctx),
-    attr_name_ (nullptr),
     attr_name_string_ ("this->")
 {
 }
@@ -117,7 +116,7 @@ be_visitor_attr_assign::visit_sequence (be_sequence *)
     }
 
   os_ << be_nl
-      << "::" << bt->full_name () << " * _ciao_tmp = 0;" << be_nl
+      << "::" << bt->full_name () << " * _ciao_tmp = nullptr;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "_ciao_tmp," << be_nl
       << bt->full_name () << " (" << this->attr_name_
@@ -142,7 +141,7 @@ int
 be_visitor_attr_assign::visit_structure (be_structure *node)
 {
   os_ << be_nl
-      << "::" << node->full_name () << " * _ciao_tmp = 0;" << be_nl
+      << "::" << node->full_name () << " * _ciao_tmp = nullptr;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "_ciao_tmp," << be_nl
       << "::" << node->full_name () << ");" << be_uidt_nl << be_nl
@@ -175,7 +174,7 @@ int
 be_visitor_attr_assign::visit_union (be_union *node)
 {
   os_ << be_nl
-      << "::" << node->full_name () << " * _ciao_tmp = 0;" << be_nl
+      << "::" << node->full_name () << " * _ciao_tmp = nullptr;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "_ciao_tmp," << be_nl
       << "::" << node->full_name () << ");" << be_uidt_nl << be_nl

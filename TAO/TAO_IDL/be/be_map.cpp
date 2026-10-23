@@ -56,8 +56,7 @@ be_map::be_map (AST_Expression *v,
     be_decl (AST_Decl::NT_map,
              n),
     be_type (AST_Decl::NT_map,
-             n),
-    field_node_ (nullptr)
+             n)
 {
   // Always the case.
   this->has_constructor (true);

@@ -174,8 +174,8 @@ public:
   TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
                                  const char *poa_id,
                                  TAO_Persistent_Context_Index *context_index,
-                                 HASH_MAP * map = 0,
-                                 ACE_UINT32 *counter = 0);
+                                 HASH_MAP * map = nullptr,
+                                 ACE_UINT32 *counter = nullptr);
 
   /// Destructor.
   ~TAO_Persistent_Naming_Context () override;

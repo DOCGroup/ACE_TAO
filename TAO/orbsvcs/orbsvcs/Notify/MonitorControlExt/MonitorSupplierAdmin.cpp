@@ -20,7 +20,7 @@ public:
     id_ (id) {
   }
 
-  virtual bool execute (const char* command) {
+  bool execute (const char* command) override {
     if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN) == 0)
       {
         CosNotifyChannelAdmin::SupplierAdmin_var admin =
@@ -50,7 +50,7 @@ TAO_MonitorSupplierAdmin::~TAO_MonitorSupplierAdmin ()
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec != 0)
+  if (ec != nullptr)
     {
       ec->remove_supplieradmin (this->id ());
       TAO_Control_Registry* cinstance = TAO_Control_Registry::instance ();
@@ -88,7 +88,7 @@ TAO_MonitorSupplierAdmin::obtain_named_notification_push_consumer (
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec == 0)
+  if (ec == nullptr)
     throw CORBA::INTERNAL ();
 
   // Next, create the push consumer proxy
@@ -110,7 +110,7 @@ TAO_MonitorSupplierAdmin::obtain_notification_push_consumer (
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec == 0)
+  if (ec == nullptr)
     throw CORBA::INTERNAL ();
 
   // Next, create the push consumer proxy

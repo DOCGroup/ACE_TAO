@@ -12,9 +12,7 @@ TAO_LocalInterfaceDef_i::TAO_LocalInterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_LocalInterfaceDef_i::~TAO_LocalInterfaceDef_i ()
-{
-}
+TAO_LocalInterfaceDef_i::~TAO_LocalInterfaceDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_LocalInterfaceDef_i::def_kind ()

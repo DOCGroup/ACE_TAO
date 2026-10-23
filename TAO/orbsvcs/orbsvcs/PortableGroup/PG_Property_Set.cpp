@@ -21,12 +21,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // PG_Property_Set
 
 TAO::PG_Property_Set::PG_Property_Set()
-  : defaults_ (0)
+  : defaults_ (nullptr)
 {
 }
 
 TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps)
-  : defaults_ (0)
+  : defaults_ (nullptr)
 {
   this->decode (ps);
 }

@@ -54,7 +54,7 @@ public:
 using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
 
   /// Constructor
-  TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
+  explicit TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
   virtual ~TAO_Notify_Consumer ();

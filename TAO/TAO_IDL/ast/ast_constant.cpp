@@ -89,8 +89,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     AST_Decl (nt,
               n),
     pd_constant_value (v),
-    pd_et (t),
-    ifr_added_ (false)
+    pd_et (t)
 {
 }
 
@@ -102,8 +101,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     AST_Decl (AST_Decl::NT_const,
               n),
     pd_constant_value (v),
-    pd_et (t),
-    ifr_added_ (false)
+    pd_et (t)
 {
   // Avoids a truncation warning on MSVC when assigning a decimal
   // literal to a float constant. Must also check that the input
@@ -126,9 +124,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     }
 }
 
-AST_Constant::~AST_Constant ()
-{
-}
+AST_Constant::~AST_Constant () = default;
 
 // Redefinition of inherited virtual operations.
 

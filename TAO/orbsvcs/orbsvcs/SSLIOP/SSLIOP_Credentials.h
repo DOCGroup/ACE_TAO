@@ -85,7 +85,7 @@ namespace TAO
       char * add_relinquished_listener (
           SecurityLevel3::RelinquishedCredentialsListener_ptr listener) override;
 
-      void remove_relinquished_listener (const char * id) override;
+      void remove_relinquished_listener (char const * id) override;
       //@}
 
 
@@ -108,7 +108,7 @@ namespace TAO
       ::EVP_PKEY *evp ();
       //@}
 
-      bool operator== (const SSLIOP_Credentials &rhs);
+      bool operator== (SSLIOP_Credentials const &rhs);
 
       CORBA::ULong hash () const;
 
@@ -130,7 +130,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.
        */
-      ~SSLIOP_Credentials ();
+      ~SSLIOP_Credentials () override = default;
 
     protected:
       /// Reference to the X.509 certificate associated with this SSLIOP

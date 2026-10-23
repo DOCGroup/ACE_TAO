@@ -27,8 +27,7 @@
 
 be_visitor_dds_ts_idl::be_visitor_dds_ts_idl (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    os_ptr_ (nullptr)
+  : be_visitor_scope (ctx)
 {
 }
 

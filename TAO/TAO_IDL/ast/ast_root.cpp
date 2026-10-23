@@ -88,9 +88,7 @@ AST_Root::AST_Root (UTL_ScopedName *n)
 {
 }
 
-AST_Root::~AST_Root ()
-{
-}
+AST_Root::~AST_Root () = default;
 
 // Overrides the one in UTL_Scope - this one doesn't
 // count the predefined types.

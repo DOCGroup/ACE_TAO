@@ -39,7 +39,7 @@ TAO::be_visitor_alias_typecode::visit_valuebox (be_valuebox * node)
 int
 TAO::be_visitor_alias_typecode::common (be_type * node,
                                         be_type * base,
-                                        const char * tctype)
+                                        char const * tctype)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -52,8 +52,8 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
       if (fixed == nullptr)
         return -1;
 
-      const ACE_CDR::ULong digits = fixed->digits ()->ev ()->u.ulval;
-      const ACE_CDR::ULong scale = fixed->scale ()->ev ()->u.ulval;
+      ACE_CDR::ULong const digits = fixed->digits ()->ev ()->u.ulval;
+      ACE_CDR::ULong const scale = fixed->scale ()->ev ()->u.ulval;
 
       os << "#ifndef _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
          << "#define _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl

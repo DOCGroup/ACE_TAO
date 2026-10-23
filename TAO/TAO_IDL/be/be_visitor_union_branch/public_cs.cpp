@@ -22,9 +22,7 @@ be_visitor_union_branch_public_cs::be_visitor_union_branch_public_cs (
 {
 }
 
-be_visitor_union_branch_public_cs::~be_visitor_union_branch_public_cs ()
-{
-}
+be_visitor_union_branch_public_cs::~be_visitor_union_branch_public_cs () = default;
 
 int
 be_visitor_union_branch_public_cs::visit_union_branch (be_union_branch *node)

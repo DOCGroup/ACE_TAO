@@ -39,8 +39,8 @@ public:
 
 protected:
   // Storage for the current template module params and args.
-  FE_Utils::T_PARAMLIST_INFO *template_params_;
-  FE_Utils::T_ARGLIST const *template_args_;
+  FE_Utils::T_PARAMLIST_INFO *template_params_ {};
+  FE_Utils::T_ARGLIST const *template_args_ {};
 };
 
 #endif /* AST_VISITOR_CONTEXT_H */

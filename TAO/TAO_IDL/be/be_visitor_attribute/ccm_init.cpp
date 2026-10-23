@@ -14,15 +14,11 @@
 
 be_visitor_attribute_ccm_init::be_visitor_attribute_ccm_init (
     be_visitor_context *ctx)
-  : be_visitor_any_extracted_type_decl (ctx),
-    attr_ (nullptr)
+  : be_visitor_any_extracted_type_decl (ctx)
 {
 }
 
-be_visitor_attribute_ccm_init::~be_visitor_attribute_ccm_init (
-  )
-{
-}
+be_visitor_attribute_ccm_init::~be_visitor_attribute_ccm_init () = default;
 
 int
 be_visitor_attribute_ccm_init::visit_attribute (

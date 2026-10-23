@@ -59,6 +59,11 @@ public:
   void release ();
 
 private:
+  TAO_PG_Group_Guard (TAO_PG_Group_Guard const &) = delete;
+  TAO_PG_Group_Guard (TAO_PG_Group_Guard &&) = delete;
+  TAO_PG_Group_Guard &operator= (TAO_PG_Group_Guard const &) = delete;
+  TAO_PG_Group_Guard &operator= (TAO_PG_Group_Guard &&) = delete;
+
   /// Reference to the infrastructure TAO_PG_GenericFactory that
   /// created the below TAO_PG_Factory_Set.
   TAO_PG_GenericFactory & generic_factory_;

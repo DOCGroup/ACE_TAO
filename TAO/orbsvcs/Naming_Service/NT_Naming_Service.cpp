@@ -26,13 +26,7 @@ AutoFinalizer::~AutoFinalizer ()
 }
 
 
-TAO_NT_Naming_Service::TAO_NT_Naming_Service ()
-  : argc_ (0),
-    argc_save_ (0),
-    argv_ (0),
-    argv_save_ (0)
-{
-}
+TAO_NT_Naming_Service::TAO_NT_Naming_Service () = default;
 
 TAO_NT_Naming_Service::~TAO_NT_Naming_Service ()
 {
@@ -67,7 +61,7 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
         {
           TAO_ORB_Core_instance ()->orb ()->shutdown (1);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // What should we do here? Even the log messages are not
           // showing up, since the thread that runs this is not an ACE
@@ -87,13 +81,13 @@ TAO_NT_Naming_Service::handle_exception (ACE_HANDLE)
 }
 
 void
-TAO_NT_Naming_Service::report_error (const ACE_TCHAR *format,
-                                     const ACE_TCHAR *val,
+TAO_NT_Naming_Service::report_error (ACE_TCHAR const *format,
+                                     ACE_TCHAR const *val,
                                      LONG result)
 {
   ACE_TCHAR msg[100];
   ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
-                          0,
+                          nullptr,
                           result,
                           LANG_SYSTEM_DEFAULT,
                           msg,
@@ -104,7 +98,7 @@ TAO_NT_Naming_Service::report_error (const ACE_TCHAR *format,
 void
 TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
 {
-  HKEY hkey = 0;
+  HKEY hkey {};
 
   // It looks in the NT Registry under
   // \\HKEY_LOCAL_MACHINE\SOFTWARE\ACE\TAO for the value of
@@ -128,9 +122,9 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
         {
           result = ACE_TEXT_RegQueryValueEx (hkey,
                                              TAO_NAMING_SERVICE_OPTS_NAME,
-                                             0,
+                                             nullptr,
                                              &type,
-                                             (BYTE *)args,
+                                             reinterpret_cast<BYTE *> (args),
                                              &arglen);
           if (result != ERROR_SUCCESS)
             {
@@ -151,12 +145,12 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
           result = ACE_TEXT_RegCreateKeyEx (REGISTRY_KEY_ROOT,
                                             TAO_REGISTRY_SUBKEY,
                                             0,
-                                            0,
+                                            nullptr,
                                             0,
                                             KEY_WRITE,
-                                            0,
+                                            nullptr,
                                             &hkey,
-                                            0);
+                                            nullptr);
         }
       DWORD bufSize = static_cast<DWORD>(ACE_OS::strlen (args) + 1);
       if (result == ERROR_SUCCESS)
@@ -165,7 +159,7 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
                                            TAO_NAMING_SERVICE_OPTS_NAME,
                                            0,
                                            type,
-                                           (BYTE *)args,
+                                           reinterpret_cast<BYTE *> (args),
                                            bufSize);
           if (result != ERROR_SUCCESS)
             {
@@ -184,10 +178,10 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
 }
 
 int
-TAO_NT_Naming_Service::set_args (const ACE_TCHAR *args)
+TAO_NT_Naming_Service::set_args (ACE_TCHAR const *args)
 {
   char argbuf[ACE_DEFAULT_ARGV_BUFSIZ];
-  if (args == 0)
+  if (args == nullptr)
     {
       this->arg_manip (argbuf, ACE_DEFAULT_ARGV_BUFSIZ, true);
       ACE_OS::printf ("%s\n", argbuf);
@@ -216,7 +210,7 @@ TAO_NT_Naming_Service::init (int argc,
       // case we use a 'destructive' args list processor - this way we
       // maintain the correct argv and argc for memory freeing
       // operations in the destructor.
-      argv_save_ = (ACE_TCHAR **) ACE_OS::malloc (sizeof (ACE_TCHAR *) * (argc + args.argc ()));
+      argv_save_ = static_cast<ACE_TCHAR **> (ACE_OS::malloc (sizeof (ACE_TCHAR *) * (argc + args.argc ())));
 
       // Copy the values into the internal args buffer.
       int i;
@@ -261,7 +255,7 @@ TAO_NT_Naming_Service::svc ()
 
       naming_service.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ORBSVCS_DEBUG ((LM_INFO, "Exception in service - exiting\n"));
       ex._tao_print_exception ("TAO NT Naming Service");

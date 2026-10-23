@@ -100,9 +100,7 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception ()
-{
-}
+AST_Exception::~AST_Exception () = default;
 
 // Public operations.
 

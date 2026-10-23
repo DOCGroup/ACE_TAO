@@ -42,7 +42,7 @@ public:
   TAO_Notify_SequenceProxyPushConsumer ();
 
   /// Destructor
-  virtual ~TAO_Notify_SequenceProxyPushConsumer ();
+  ~TAO_Notify_SequenceProxyPushConsumer () override = default;
 
   virtual const char * get_proxy_type_name () const;
 

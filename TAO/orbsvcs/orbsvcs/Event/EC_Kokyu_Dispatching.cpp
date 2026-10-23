@@ -19,7 +19,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
-  :allocator_ (0),
+  :allocator_ (nullptr),
    dispatcher_ (nullptr),
    lanes_setup_ (0),
    disp_sched_policy_ (sched_policy),
@@ -29,7 +29,7 @@ TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *e
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
 
   //@@VS - need to revisit this - should be some other allocator
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     {
       this->allocator_ = ACE_Allocator::instance ();
     }
@@ -117,13 +117,13 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info)
 {
-    if (this->dispatcher_.get () == 0)
+    if (this->dispatcher_.get () == nullptr)
         this->setup_lanes ();
 
     void* buf =
       this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
 
-    if (buf == 0)
+    if (buf == nullptr)
       throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   // Create Dispatch_Command
@@ -153,10 +153,6 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 }
 
 // ****************************************************************
-
-TAO_EC_Kokyu_Shutdown_Command::~TAO_EC_Kokyu_Shutdown_Command()
-{
-}
 
 int
 TAO_EC_Kokyu_Shutdown_Command::execute()

@@ -57,7 +57,7 @@ public:
          create (int is_source_mapping = 1);
 
   /// Destructor
-  virtual ~TAO_ECG_Complex_Address_Server () override;
+  virtual ~TAO_ECG_Complex_Address_Server () override = default;
 
   /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.
@@ -79,7 +79,7 @@ protected:
   /// method.
   /// <is_source_mapping> flag indicates whether this
   /// server maps based on event header source or event header type.
-  TAO_ECG_Complex_Address_Server (int is_source_mapping = 1);
+  explicit TAO_ECG_Complex_Address_Server (int is_source_mapping = 1);
 
 private:
   /// Helper.  Given key and mcast address in string form, add them to

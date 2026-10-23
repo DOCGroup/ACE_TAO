@@ -92,10 +92,7 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
               n),
     AST_ConcreteType (AST_Decl::NT_struct,
                       n),
-    UTL_Scope (AST_Decl::NT_struct),
-    member_count_ (-1),
-    local_struct_ (-1),
-    fwd_decl_ (nullptr)
+    UTL_Scope (AST_Decl::NT_struct)
 {
 }
 
@@ -111,10 +108,7 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
               n),
     AST_ConcreteType (nt,
                       n),
-    UTL_Scope (nt),
-    member_count_ (-1),
-    local_struct_ (-1),
-    fwd_decl_ (nullptr)
+    UTL_Scope (nt)
 {
 }
 

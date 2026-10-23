@@ -258,12 +258,12 @@ TAO::SSLIOP::Connector::make_secure_profile ()
 
 
 TAO_Profile *
-TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
+TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
 {
-   int ssl_only = 0;
+   bool ssl_only = false;
    if (this->check_prefix (endpoint) == 0)
    {
-       ssl_only = 1;
+       ssl_only = true;
    }
    else
    {
@@ -272,8 +272,8 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
    }
 
    // Determine the (first in a list of possibly > 1) endpoint address
-   const char *comma_pos = ACE_OS::strchr (endpoint,',');
-   const char *slash_pos = ACE_OS::strchr (endpoint,'/');
+   char const *comma_pos = ACE_OS::strchr (endpoint,',');
+   char const *slash_pos = ACE_OS::strchr (endpoint,'/');
    if (comma_pos == nullptr && slash_pos == nullptr)
    {
        if (TAO_debug_level)
@@ -311,12 +311,12 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
 
 
 int
-TAO::SSLIOP::Connector::check_prefix (const char *endpoint)
+TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint) return -1;  // Failure
 
-  const char *protocol[] = { "ssliop", "sslioploc" };
+  char const *protocol[] = { "ssliop", "sslioploc" };
 
   size_t first_slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
@@ -344,7 +344,7 @@ TAO::SSLIOP::Connector::iiop_connect (
   ACE_Time_Value *timeout)
 {
 #if 0
-  const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
+  ::SSLIOP::SSL const &ssl_component = ssl_endpoint->ssl_component ();
 
   // Only allow connection to the insecure IIOP port if the endpoint
   // explicitly allows it, i.e. if the Security::NoProtection security
@@ -383,12 +383,12 @@ TAO_Transport *
 TAO::SSLIOP::Connector::ssliop_connect (
   TAO_SSLIOP_Endpoint *ssl_endpoint,
   ::Security::QOP qop,
-  const ::Security::EstablishTrust &trust,
+  ::Security::EstablishTrust const &trust,
   TAO::Profile_Transport_Resolver *resolver,
   TAO_Transport_Descriptor_Interface *desc,
   ACE_Time_Value *max_wait_time)
 {
-  const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
+  ::SSLIOP::SSL const &ssl_component = ssl_endpoint->ssl_component ();
 
   // @@ The following check for "required insecurity" seems odd, but
   //    I haven't seen anything in the Security spec that says this
@@ -419,7 +419,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       && qop == ::Security::SecQOPIntegrity)
     throw CORBA::INV_POLICY ();
 
-  const ACE_INET_Addr &remote_address = ssl_endpoint->object_addr ();
+  ACE_INET_Addr const &remote_address = ssl_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized
   // properly.  Failure can occur if hostname lookup failed when

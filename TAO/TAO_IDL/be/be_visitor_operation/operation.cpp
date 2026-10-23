@@ -20,9 +20,7 @@ be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation::~be_visitor_operation ()
-{
-}
+be_visitor_operation::~be_visitor_operation () = default;
 
 // Is the operation return type void?
 int

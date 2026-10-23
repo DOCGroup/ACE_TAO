@@ -8,7 +8,7 @@ TAO_CosEC_SupplierAdmin_i::TAO_CosEC_SupplierAdmin_i ()
 }
 
 int
-TAO_CosEC_SupplierAdmin_i::init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
+TAO_CosEC_SupplierAdmin_i::init (RtecEventChannelAdmin::SupplierQOS const &supplierqos,
                        RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin)
 {
   this->qos_ = supplierqos;

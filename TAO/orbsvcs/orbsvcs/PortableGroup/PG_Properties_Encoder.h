@@ -78,8 +78,10 @@ namespace TAO_PG
     void encode (PortableGroup::Properties * property_set) const;
 
   private:
-    Properties_Encoder (const Properties_Encoder & rhs) = delete;
-    Properties_Encoder & operator = (const Properties_Encoder & rhs) = delete;
+    Properties_Encoder (Properties_Encoder const &) = delete;
+    Properties_Encoder &operator= (Properties_Encoder const &) = delete;
+    Properties_Encoder (Properties_Encoder &&) = delete;
+    Properties_Encoder &operator= (Properties_Encoder &&) = delete;
   private:
     NamedValueVec values_;
   };

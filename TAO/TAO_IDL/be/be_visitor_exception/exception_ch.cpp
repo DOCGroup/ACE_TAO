@@ -23,9 +23,7 @@ be_visitor_exception_ch::be_visitor_exception_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception_ch::~be_visitor_exception_ch ()
-{
-}
+be_visitor_exception_ch::~be_visitor_exception_ch () = default;
 
 // Visit the Exception node and its scope.
 int be_visitor_exception_ch::visit_exception (be_exception *node)

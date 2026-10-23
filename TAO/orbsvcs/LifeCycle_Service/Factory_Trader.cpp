@@ -25,10 +25,7 @@ char const * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID =
 
 
 Factory_Trader::Factory_Trader (int debug_level)
-  : trader_ptr_(nullptr),
-    trading_Components_ptr_ (nullptr),
-    support_Attributes_ptr_(nullptr),
-    debug_level_ (debug_level)
+  : debug_level_ (debug_level)
 {
   try
     {
@@ -47,7 +44,7 @@ Factory_Trader::Factory_Trader (int debug_level)
       // Add the "Factory" type to the repository
       this->add_type ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "LifeCycle Server: (Factory_Trader::Factory_Trader) Failed adding a new type.\n");
@@ -96,7 +93,7 @@ Factory_Trader::add_type ()
                                   propStructSeq,
                                   superTypeSeq);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("LifeCycle Server: (Factory_Trader::init).\n");
     }
@@ -137,7 +134,7 @@ Factory_Trader::_cxx_export (char const * name,
                                  CORBA::string_dup("GenericFactory"),
                                  propertySeq);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "LifeCycle Server (Factory_Trader::export): ""Failed to export factory.\n");
@@ -204,7 +201,7 @@ Factory_Trader::query (char const * constraint)
         }
       return object_ptr;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Factory_Trader::query: Failed.\n");

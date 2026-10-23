@@ -14,9 +14,7 @@ AST_Fixed::AST_Fixed (UTL_ScopedName *name,
 {
 }
 
-AST_Fixed::~AST_Fixed ()
-{
-}
+AST_Fixed::~AST_Fixed () = default;
 
 void AST_Fixed::dump (ACE_OSTREAM_TYPE &os)
 {

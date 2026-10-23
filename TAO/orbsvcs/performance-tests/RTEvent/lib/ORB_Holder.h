@@ -24,7 +24,7 @@ class TAO_RTEC_Perf_Export ORB_Holder
 public:
   /// Constructor
   ORB_Holder (int &argc, ACE_TCHAR *argv[],
-              const char *orb_id = 0);
+              const char *orb_id = nullptr);
 
   /// Destructor
   /**

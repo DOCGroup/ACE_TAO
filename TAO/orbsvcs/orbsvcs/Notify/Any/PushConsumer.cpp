@@ -14,10 +14,6 @@ TAO_Notify_PushConsumer::TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* prox
 {
 }
 
-TAO_Notify_PushConsumer::~TAO_Notify_PushConsumer ()
-{
-}
-
 void
 TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
 {

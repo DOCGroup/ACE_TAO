@@ -111,8 +111,8 @@ public:
       ACE_CDR::ULong enum_val;
       ACE_CDR::LongLong longlong_val;
       ACE_CDR::ULongLong ulonglong_val;
-    } u;
-    long computed_;
+    } u {};
+    long computed_ {-2};
     // computed == -1 => error condition
     //          == 0 => does not exist because all cases have been covered
     //          == 1 => already computed
@@ -145,7 +145,7 @@ protected:
   int compute_size_type () override;
   // Compute the size type if it is unknown.
 
-  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
+  AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b) override;
   // Moved out of private section so it can be called from subclass.
 
 private:
@@ -196,7 +196,7 @@ private:
   DefaultValue default_value_;
   // Default value (if any).
 
-  int default_index_;
+  int default_index_ {-2};
   // Default label index (zero based indexing).
 
   /**

@@ -308,7 +308,8 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
     {
       this->delivery_requests_.push_back (request);
 //      Delivery_Method_Dispatch method (request, ps, filter);
-      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
+      TAO_Notify_Method_Request_Event event_request (request);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (event_request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -357,7 +358,8 @@ Routing_Slip::dispatch (
   if (! ps->has_shutdown() )
     {
       this->delivery_requests_.push_back (request);
-      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
+      TAO_Notify_Method_Request_Event event_request (request);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (event_request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ORBSVCS_DEBUG ((LM_DEBUG,

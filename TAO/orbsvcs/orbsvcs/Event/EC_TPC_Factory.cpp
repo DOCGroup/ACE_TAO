@@ -21,10 +21,6 @@ TAO_EC_TPC_Factory::TAO_EC_TPC_Factory ()
   TAO_EC_TPC_debug_level = 0;
 }
 
-TAO_EC_TPC_Factory::~TAO_EC_TPC_Factory ()
-{
-}
-
 int
 TAO_EC_TPC_Factory::init_svcs ()
 {

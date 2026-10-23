@@ -26,27 +26,31 @@ class be_visitor_facet_ami_exh
   //
   //
 public:
-  be_visitor_facet_ami_exh (be_visitor_context *ctx);
+  explicit be_visitor_facet_ami_exh (be_visitor_context *ctx);
 
-  ~be_visitor_facet_ami_exh ();
+  ~be_visitor_facet_ami_exh () override;
+  be_visitor_facet_ami_exh (be_visitor_facet_ami_exh const &) = delete;
+  be_visitor_facet_ami_exh (be_visitor_facet_ami_exh &&) = delete;
+  be_visitor_facet_ami_exh &operator= (be_visitor_facet_ami_exh const &) = delete;
+  be_visitor_facet_ami_exh &operator= (be_visitor_facet_ami_exh &&) = delete;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_component (be_component *node) override;
+  int visit_provides (be_provides *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
 
 protected:
   /// Common the this class and derived class.
   void init (bool for_impl);
 
 protected:
-  be_interface *iface_;
-  be_interface *callback_iface_;
+  be_interface *iface_ {};
+  be_interface *callback_iface_ {};
   ACE_CString handler_str_;
-  const char *scope_name_;
-  const char *iface_name_;
-  const char *smart_scope_;
-  bool sync_;
+  const char *scope_name_ {};
+  const char *iface_name_ {};
+  const char *smart_scope_ {};
+  bool sync_ {};
 
 private:
   int gen_reply_handler_class ();
@@ -60,11 +64,11 @@ private:
     : public TAO_IDL_Inheritance_Hierarchy_Worker
   {
   public:
-    Facet_AMI_ExecH_Op_Attr_Generator (be_visitor_scope * visitor);
+    explicit Facet_AMI_ExecH_Op_Attr_Generator (be_visitor_scope * visitor);
 
-    virtual int emit (be_interface * derived_interface,
-                      TAO_OutStream * os,
-                      be_interface * base_interface);
+    int emit (be_interface * derived_interface,
+              TAO_OutStream * os,
+              be_interface * base_interface) override;
 
   private:
     be_visitor_scope * visitor_;

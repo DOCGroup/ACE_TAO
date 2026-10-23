@@ -80,14 +80,7 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (nt,
-              n),
-    ifr_added_ (false),
-    ifr_fwd_added_ (false),
-    size_type_ (AST_Type::SIZE_UNKNOWN),
-    has_constructor_ (false),
-    nested_type_name_ (nullptr),
-    in_recursion_ (-1),
-    recursing_in_legal_pk_ (false)
+              n)
 {
 }
 
@@ -179,7 +172,7 @@ AST_Type::has_constructor (bool value)
   // Similarly to be_decl::size_type_, once this
   // gets set to true, we don't want it to
   // change back.
-  if (this->has_constructor_ == 0)
+  if (!this->has_constructor_)
     {
       this->has_constructor_ = value;
     }

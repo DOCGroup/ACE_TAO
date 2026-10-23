@@ -58,7 +58,7 @@ public:
 
   /// Profile constructor, default. Used when the profile contents
   /// are not yet known or when it is being decoded from an IOR.
-  TAO_UIPMC_Profile (TAO_ORB_Core *orb_core);
+  explicit TAO_UIPMC_Profile (TAO_ORB_Core *orb_core);
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.

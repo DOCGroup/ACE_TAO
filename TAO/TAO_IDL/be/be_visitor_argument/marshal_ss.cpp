@@ -23,10 +23,7 @@ be_visitor_args_marshal_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args_marshal_ss::
-~be_visitor_args_marshal_ss ()
-{
-}
+be_visitor_args_marshal_ss::~be_visitor_args_marshal_ss () = default;
 
 int be_visitor_args_marshal_ss::visit_argument (
   be_argument *node)

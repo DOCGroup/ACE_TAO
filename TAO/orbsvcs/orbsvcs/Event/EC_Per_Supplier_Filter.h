@@ -43,7 +43,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_Supplie
 {
 public:
   /// Constructor
-  TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   /// Destructor
   virtual ~TAO_EC_Per_Supplier_Filter () override;
@@ -91,7 +91,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter_Builder : public TAO_EC
 {
 public:
   /// constructor....
-  TAO_EC_Per_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Per_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
   virtual TAO_EC_Supplier_Filter*

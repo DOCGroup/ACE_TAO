@@ -73,21 +73,7 @@ be_exception *ADDL_EXCEPS[N_ADDL_EXCEPS];
 be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    module_id_ ("Components"),
-    cookie_ (nullptr),
-    already_connected_ (nullptr),
-    invalid_connection_ (nullptr),
-    no_connection_ (nullptr),
-    exceeded_connection_limit_ (nullptr),
-    create_failure_ (nullptr),
-    remove_failure_ (nullptr),
-    finder_failure_ (nullptr),
-    invalid_key_ (nullptr),
-    unknown_key_value_ (nullptr),
-    duplicate_key_value_ (nullptr),
-    comp_ (nullptr),
-    home_ (nullptr),
-    ccm_lookups_done_ (false)
+    module_id_ ("Components")
 {
 }
 

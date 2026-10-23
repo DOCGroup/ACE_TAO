@@ -63,7 +63,7 @@ private:
   TAO_RT_Transport_Descriptor_Property *property_list_ {};
 
   /// Flag to delete properties.
-  int delete_properties_;
+  bool delete_properties_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

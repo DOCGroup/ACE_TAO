@@ -92,6 +92,11 @@ namespace CORBA
     static NamedValue * _duplicate (NamedValue *);
     static NamedValue * _nil ();
 
+    NamedValue (NamedValue const &) = delete;
+    NamedValue (NamedValue &&) = delete;
+    NamedValue &operator= (NamedValue const &) = delete;
+    NamedValue &operator= (NamedValue &&) = delete;
+
     // = Reference counting.
     ULong _incr_refcount ();
     ULong _decr_refcount ();
@@ -189,6 +194,11 @@ namespace CORBA
     // = Reference counting.
     ULong _incr_refcount ();
     ULong _decr_refcount ();
+
+    NVList (NVList const &) = delete;
+    NVList (NVList &&) = delete;
+    NVList &operator= (NVList const &) = delete;
+    NVList &operator= (NVList &&) = delete;
 
     // = TAO Extensions:
 

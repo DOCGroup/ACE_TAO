@@ -16,9 +16,7 @@ be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype::~be_visitor_valuetype ()
-{
-}
+be_visitor_valuetype::~be_visitor_valuetype () = default;
 
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
@@ -842,7 +840,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
       << "public:" << be_idt_nl
       << "virtual ~" << node->local_name () << "_init ();" << be_nl;
 
-  *os << "virtual const char* tao_repository_id ();\n" << be_nl;
+  *os << "virtual char const * tao_repository_id ();\n" << be_nl;
   *os << "// create () goes here" << be_nl;
   *os << be_uidt_nl << "};" << be_nl;
 
@@ -881,7 +879,7 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
   *os << fname << "::~" << lname << " ()" << be_nl
       << "{" << be_nl << "}\n\n";
 
-  *os << "const char*" << be_nl
+  *os << "char const *" << be_nl
       << fname << "::tao_repository_id ()" << be_nl
       << "{" << be_idt_nl
       <<   "return " << node->local_name ()
@@ -963,7 +961,7 @@ be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
 {
  if (ACE_OS::strncmp (node->local_name (), "AMH_", 4) == 0)
    {
-     const char *last_E =
+     char const *last_E =
       ACE_OS::strrchr (node->full_name (), 'E');
 
      if (last_E != nullptr

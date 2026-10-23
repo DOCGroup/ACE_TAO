@@ -127,7 +127,7 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 {
   CORBA::ULong count = infos.length();
   FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
-  FT_Naming::UpdateInfoSeq_var block = 0;
+  FT_Naming::UpdateInfoSeq_var block = nullptr;
   ACE_NEW(block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
   {
     ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
@@ -775,7 +775,7 @@ TAO_FT_Naming_Server::update_naming_context (
   TAO_Naming_Context* changed_context_servant =
     dynamic_cast<TAO_Naming_Context*> (servant.in ());
 
-  if (changed_context_servant == 0)
+  if (changed_context_servant == nullptr)
   { // Another type of class was used as the servant. Should not happen.
     ORBSVCS_ERROR ((LM_ERROR,
                ACE_TEXT ("(%P|%t) ERROR: Invalid servant type registered")
@@ -805,7 +805,7 @@ TAO_FT_Naming_Server::update_naming_context (
 TAO_FT_Naming_Server::~TAO_FT_Naming_Server ()
 {
   // Clear out the static naming manager from the persistent naming context
-  TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (0);
+  TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (nullptr);
 }
 
 CosNaming::NamingContext_ptr
@@ -903,7 +903,7 @@ TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_pt
     }
 
   CORBA::Object_var IORM =
-    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm =
     TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());

@@ -16,14 +16,11 @@
 // ********************************
 
 be_visitor_root_ch::be_visitor_root_ch (be_visitor_context *ctx)
-  : be_visitor_root (ctx),
-    o_ (nullptr)
+  : be_visitor_root (ctx)
 {
 }
 
-be_visitor_root_ch::~be_visitor_root_ch ()
-{
-}
+be_visitor_root_ch::~be_visitor_root_ch () = default;
 
 int
 be_visitor_root_ch::visit_root (be_root *node)
@@ -175,14 +172,14 @@ be_visitor_root_ch::gen_fwd_decls ()
 void
 be_visitor_root_ch::gen_ref_counting_overrides ()
 {
-  size_t size = be_global->non_defined_interfaces.size ();
+  size_t const size = be_global->non_defined_interfaces.size ();
 
   if (size == 0)
     {
       return;
     }
 
-  size_t index = 0;
+  size_t index {};
   be_interface_fwd *ifwd = nullptr;
 
   TAO_INSERT_COMMENT (o_);
@@ -219,14 +216,14 @@ be_visitor_root_ch::gen_ref_counting_overrides ()
 void
 be_visitor_root_ch::gen_static_corba_overrides ()
 {
-  size_t size = idl_global->mixed_parentage_interfaces ().size ();
+  size_t const size = idl_global->mixed_parentage_interfaces ().size ();
 
   if (size == 0)
     {
       return;
     }
 
-  size_t index = 0;
+  size_t index {};
   AST_Interface *i = nullptr;
 
   TAO_INSERT_COMMENT (o_);

@@ -14,14 +14,11 @@
 
 be_visitor_executor_exs_attr_init::be_visitor_executor_exs_attr_init (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    semicolon_generated_ (false)
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init ()
-{
-}
+be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init () = default;
 
 int
 be_visitor_executor_exs_attr_init::visit_attribute (

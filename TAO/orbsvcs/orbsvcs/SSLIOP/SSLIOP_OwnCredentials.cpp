@@ -7,10 +7,6 @@ TAO::SSLIOP::OwnCredentials::OwnCredentials (X509 *cert, EVP_PKEY *evp)
 {
 }
 
-TAO::SSLIOP::OwnCredentials::~OwnCredentials ()
-{
-}
-
 TAO::SSLIOP::OwnCredentials_ptr
 TAO::SSLIOP::OwnCredentials::_duplicate (TAO::SSLIOP::OwnCredentials_ptr obj)
 {

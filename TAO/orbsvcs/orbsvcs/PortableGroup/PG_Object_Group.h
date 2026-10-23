@@ -283,8 +283,10 @@ namespace TAO
     // Forbidden methods
   private:
     PG_Object_Group ();
-    PG_Object_Group (const PG_Object_Group & rhs);
-    PG_Object_Group & operator = (const PG_Object_Group & rhs);
+    PG_Object_Group (PG_Object_Group const &) = delete;
+    PG_Object_Group (PG_Object_Group &&) = delete;
+    PG_Object_Group &operator= (PG_Object_Group const &) = delete;
+    PG_Object_Group &operator= (PG_Object_Group &&) = delete;
 
 
     /////////////////
@@ -316,7 +318,7 @@ namespace TAO
     int distribute_;
 
     /// boolean true if empty group
-    int empty_;
+    bool empty_ {true};
 
     ACE_CString role_;
 

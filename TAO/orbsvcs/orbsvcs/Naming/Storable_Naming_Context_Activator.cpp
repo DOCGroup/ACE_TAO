@@ -41,10 +41,10 @@ TAO_Storable_Naming_Context_Activator::incarnate (
     PortableServer::POA_ptr poa)
 {
   // Make sure complete initialization has been done
-  ACE_ASSERT (persistence_factory_ != 0);
+  ACE_ASSERT (persistence_factory_ != nullptr);
 
   // Make sure complete initialization has been done
-  ACE_ASSERT (context_impl_factory_ != 0);
+  ACE_ASSERT (context_impl_factory_ != nullptr);
 
   CORBA::String_var poa_id = PortableServer::ObjectId_to_string (oid);
 

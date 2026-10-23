@@ -15,28 +15,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       basic.shutdown ();
     }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const &ue)
     {
       ue._tao_print_exception ("CosEC_Basic user exception: ");
       return 1;
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
     {
       se._tao_print_exception ("CosEC_Basic system exception: ");
       return 1;
     }
 
   return 0;
-}
-
-Basic::Basic ()
-{
-  // No-Op.
-}
-
-Basic::~Basic ()
-{
-  // No-Op.
 }
 
 void
@@ -71,7 +61,7 @@ Basic::init_ORB  (int argc, ACE_TCHAR *argv [])
 void
 Basic::init_CosEC ()
 {
-  CosEC_ServantBase *ec = 0;
+  CosEC_ServantBase *ec = nullptr;
 
   ACE_NEW_THROW_EX (ec,
                     CosEC_ServantBase (),
@@ -81,7 +71,7 @@ Basic::init_CosEC ()
 
   ec->init (this->root_poa_.in(),
             this->root_poa_.in(),
-            0,0,0);
+            nullptr, nullptr, nullptr);
 
   int retval = ec->activate ();
 

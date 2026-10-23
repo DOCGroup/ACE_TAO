@@ -93,7 +93,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~OwnCredentials ();
+      ~OwnCredentials () override = default;
     };
   } // End SSLIOP namespace
 }  // End TAO namespace

@@ -215,7 +215,6 @@ private:
 class TAO_Policies
 {
 public:
-#define TAO_NUM_POLICIES  11
   /**
     * This enum represents the relative order that properties are
     * passed from one trader to another. Hence, as recommended by the
@@ -440,7 +439,7 @@ private:
   TAO_Policies& operator= (TAO_Policies&&) = delete;
 
   /// The policies indexable from the enumerated type.
-  CosTrading::Policy* policies_[TAO_NUM_POLICIES];
+  CosTrading::Policy* policies_[REQUEST_ID + 1] {};
 
   /// For the validating identifier names.
   TAO_Trader_Base& trader_;

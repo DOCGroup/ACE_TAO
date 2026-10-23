@@ -127,26 +127,26 @@ protected:
 
   // Data.
 protected:
-  UTL_ScopedName *interface_name_;
-  bool has_template_parent_;
+  UTL_ScopedName *interface_name_ {};
+  bool has_template_parent_ {};
 
   // Inherited interfaces.
-  AST_Type **inherits_;
-  long n_inherits_;
+  AST_Type **inherits_ {};
+  long n_inherits_ {};
 
   // Used for name clash checking.
-  AST_Interface  **inherits_flat_;
-  long n_inherits_flat_;
+  AST_Interface  **inherits_flat_ {};
+  long n_inherits_flat_ {};
 
-  bool is_local_;
-  bool is_abstract_;
+  bool is_local_ {};
+  bool is_abstract_ {};
 
-  AST_Type **iseen_;
-  AST_Interface **iseen_flat_;
-  long iallocated_;
-  long iused_;
-  long iallocated_flat_;
-  long iused_flat_;
+  AST_Type **iseen_ {};
+  AST_Interface **iseen_flat_ {};
+  long iallocated_ {};
+  long iused_ {};
+  long iallocated_flat_ {};
+  long iused_flat_ {};
 };
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH

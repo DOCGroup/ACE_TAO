@@ -411,7 +411,7 @@ TAO_Trading_Loader::init_multicast_server ()
                 "The multicast server setup is done.\n"));
 
   // Other trader instances will bootstrap to us.
-  this->bootstrapper_ = 1;
+  this->bootstrapper_ = true;
 
 #endif /* ACE_HAS_IP_MULTICAST */
   return 0;
@@ -431,7 +431,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
                           ACE_TEXT("-TSfederate")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->federate_ = 1;
+          this->federate_ = true;
         }
       if (ACE_OS::strcmp (current_arg,
                           ACE_TEXT("-TSdumpior")) == 0)

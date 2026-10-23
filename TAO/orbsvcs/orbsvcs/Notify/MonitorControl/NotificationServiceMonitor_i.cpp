@@ -29,7 +29,7 @@ NotificationServiceMonitor_i::get_statistic_names ()
   Monitor::NameList* the_names = nullptr;
   ACE_NEW_RETURN (the_names,
                   Monitor::NameList (the_length),
-                  0);
+                  nullptr);
   Monitor::NameList_var safe_names = the_names;
   the_names->length (the_length);
   CORBA::ULong i = 0;
@@ -88,7 +88,7 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
   ACE_NEW_RETURN (data,
                   Monitor::DataList (
                     length),
-                  0);
+                  nullptr);
   std::unique_ptr<Monitor::DataList> safe_data (data);
 
   data->length (length);
@@ -119,7 +119,7 @@ NotificationServiceMonitor_i::get_and_clear_statistics (
     {
       Monitor_Base* statistic = registry->get (names[i].in ());
 
-      if (statistic != 0)
+      if (statistic != nullptr)
         {
           statistic->clear ();
         }
@@ -148,7 +148,7 @@ NotificationServiceMonitor_i::clear_statistics (
     {
       Monitor_Base* statistic = registry->get (names[i].in ());
 
-      if (statistic != 0)
+      if (statistic != nullptr)
         {
           statistic->clear ();
         }
@@ -197,7 +197,7 @@ NotificationServiceMonitor_i::send_control_command (const char* name,
   // The control object execution should only return false when the
   // command given does not correspond to one that is supported by the
   // control object.
-  if (control == 0 || !control->execute (cmd))
+  if (control == nullptr || !control->execute (cmd))
     {
       Monitor::NameList invalid (1);
       invalid.length (1);
@@ -224,7 +224,7 @@ NotificationServiceMonitor_i::get_data (
   // Get the statistic by name.
   Monitor_Base* monitor = registry->get (name);
 
-  if (monitor == 0)
+  if (monitor == nullptr)
     {
       // At the time that the list of names were acquired, this
       // statistic was available.  However, we have failed to
@@ -257,7 +257,7 @@ NotificationServiceMonitor_i::get_invalid_names (
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      if (registry->get (names[i].in ()) == 0)
+      if (registry->get (names[i].in ()) == nullptr)
         {
           if (TAO_debug_level > 7)
             {

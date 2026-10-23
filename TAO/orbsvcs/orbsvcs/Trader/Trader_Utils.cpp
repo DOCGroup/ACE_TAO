@@ -493,9 +493,6 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
                             const CosTrading::PolicySeq& policies)
   : trader_ (trader)
 {
-  for (int i = 0; i < TAO_NUM_POLICIES; i++)
-    this->policies_[i] = nullptr;
-
   for (CORBA::ULong j = 0; j < policies.length (); j++)
     {
       char const* pol_name = (char const*) policies[j].name;

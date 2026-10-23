@@ -84,9 +84,9 @@ public:
   TAO_Naming_Server (CORBA::ORB_ptr orb,
                      PortableServer::POA_ptr poa,
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
-                     ACE_Time_Value *timeout = 0,
+                     ACE_Time_Value *timeout = nullptr,
                      bool resolve_for_existing_naming_service = true,
-                     const ACE_TCHAR *persistence_location = 0,
+                     const ACE_TCHAR *persistence_location = nullptr,
                      void *base_addr = TAO_NAMING_BASE_ADDR,
                      int enable_multicast = 1,
                      int use_storable_context = 0,
@@ -111,9 +111,9 @@ public:
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
-            ACE_Time_Value *timeout = 0,
+            ACE_Time_Value *timeout = nullptr,
             bool resolve_for_existing_naming_service = true,
-            const ACE_TCHAR *persistence_location = 0,
+            const ACE_TCHAR *persistence_location = nullptr,
             void *base_addr = TAO_NAMING_BASE_ADDR,
             int enable_multicast = 1,
             int use_storable_context = 0,
@@ -129,6 +129,11 @@ public:
 
   /// Destructor.
   virtual ~TAO_Naming_Server ();
+
+  TAO_Naming_Server (TAO_Naming_Server const &) = delete;
+  TAO_Naming_Server (TAO_Naming_Server &&) = delete;
+  TAO_Naming_Server &operator= (TAO_Naming_Server const &) = delete;
+  TAO_Naming_Server &operator= (TAO_Naming_Server &&) = delete;
 
   /// Returns the IOR of the naming service.
   char * naming_service_ior ();

@@ -143,8 +143,7 @@ AST_Expression::AST_Expression (UTL_ScopedName *nm)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nm),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -167,8 +166,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   AST_Param_Holder *ph = v->param_holder_;
   this->fill_definition_details ();
@@ -234,8 +232,7 @@ AST_Expression::AST_Expression (ExprComb c,
     pd_v1 (ev1),
     pd_v2 (ev2),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 }
@@ -247,8 +244,7 @@ AST_Expression::AST_Expression (ACE_CDR::Short sv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -266,8 +262,7 @@ AST_Expression::AST_Expression (ACE_CDR::UShort usv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -285,8 +280,7 @@ AST_Expression::AST_Expression (ACE_CDR::Long lv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -304,8 +298,7 @@ AST_Expression::AST_Expression (ACE_CDR::LongLong llv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -323,8 +316,7 @@ AST_Expression::AST_Expression (ACE_CDR::Boolean b)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -342,8 +334,7 @@ AST_Expression::AST_Expression (ACE_CDR::ULong ulv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -361,8 +352,7 @@ AST_Expression::AST_Expression (ACE_CDR::ULongLong ulv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -381,8 +371,7 @@ AST_Expression::AST_Expression (ACE_CDR::ULong ulv,
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -400,8 +389,7 @@ AST_Expression::AST_Expression (ACE_CDR::Float fv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -419,8 +407,7 @@ AST_Expression::AST_Expression (ACE_CDR::Double dv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -438,8 +425,7 @@ AST_Expression::AST_Expression (ACE_CDR::Char cv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -457,8 +443,7 @@ AST_Expression::AST_Expression (ACE_OutputCDR::from_wchar wcv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -476,8 +461,7 @@ AST_Expression::AST_Expression (ACE_CDR::Octet ov)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -495,8 +479,7 @@ AST_Expression::AST_Expression (UTL_String *sv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -518,8 +501,7 @@ AST_Expression::AST_Expression (char *sv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -536,8 +518,7 @@ AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -1072,43 +1053,43 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
       switch (ev->et)
         {
         case AST_Expression::EV_short:
-          tmp.bval = (ev->u.sval == 0) ? false : true;
+          tmp.bval = ev->u.sval != 0;
           break;
         case AST_Expression::EV_ushort:
-          tmp.bval = (ev->u.usval == 0) ? false : true;
+          tmp.bval = ev->u.usval != 0;
           break;
         case AST_Expression::EV_long:
-          tmp.bval = (ev->u.lval == 0) ? false : true;
+          tmp.bval = ev->u.lval != 0;
           break;
         case AST_Expression::EV_ulong:
-          tmp.bval = (ev->u.ulval == 0) ? false : true;
+          tmp.bval = ev->u.ulval != 0;
           break;
         case AST_Expression::EV_longlong:
-          tmp.bval = (ev->u.llval == 0) ? false : true;
+          tmp.bval = ev->u.llval != 0;
           break;
         case AST_Expression::EV_ulonglong:
-          tmp.bval = (ev->u.ullval == 0) ? false : true;
+          tmp.bval = ev->u.ullval != 0;
           break;
         case AST_Expression::EV_float:
-          tmp.bval = ACE::is_equal (ev->u.fval, 0.0f) ? false : true;
+          tmp.bval = !ACE::is_equal (ev->u.fval, 0.0f);
           break;
         case AST_Expression::EV_double:
-          tmp.bval = ACE::is_equal (ev->u.dval, 0.0) ? false : true;
+          tmp.bval = !ACE::is_equal (ev->u.dval, 0.0);
           break;
         case AST_Expression::EV_char:
-          tmp.bval = (ev->u.cval == 0) ? false : true;
+          tmp.bval = ev->u.cval != 0;
           break;
         case AST_Expression::EV_wchar:
-          tmp.bval = (ev->u.wcval == 0) ? false : true;
+          tmp.bval = ev->u.wcval != 0;
           break;
         case AST_Expression::EV_octet:
-          tmp.bval = (ev->u.oval == 0) ? false : true;
+          tmp.bval = ev->u.oval != 0;
           break;
         case AST_Expression::EV_int8:
-          tmp.bval = ev->u.int8val ? true : false;
+          tmp.bval = ev->u.int8val != 0;
           break;
         case AST_Expression::EV_uint8:
-          tmp.bval = ev->u.uint8val ? true : false;
+          tmp.bval = ev->u.uint8val != 0;
           break;
         default:
          return nullptr;

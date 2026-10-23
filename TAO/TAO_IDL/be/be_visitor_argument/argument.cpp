@@ -13,14 +13,11 @@
 #include "argument.h"
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    fixed_direction_ (-1)
+  : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_args::~be_visitor_args ()
-{
-}
+be_visitor_args::~be_visitor_args () = default;
 
 int be_visitor_args::visit_argument (be_argument *)
 {
@@ -56,7 +53,7 @@ be_visitor_args::type_name (be_type *node,
                    "::%s",
                    bt->full_name ());
 
-  if (suffix)
+  if (suffix != nullptr)
     {
       ACE_OS::strcat (namebuf,
                       suffix);

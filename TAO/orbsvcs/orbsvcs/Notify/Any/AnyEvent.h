@@ -39,7 +39,7 @@ public:
   TAO_Notify_AnyEvent_No_Copy (const CORBA::Any &event);
 
   /// Destructor
-  virtual ~TAO_Notify_AnyEvent_No_Copy ();
+  ~TAO_Notify_AnyEvent_No_Copy () override = default;
 
   /// Get the event type.
   virtual const TAO_Notify_EventType& type () const;
@@ -96,10 +96,10 @@ class TAO_Notify_Serv_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No
 {
 public:
   /// Constructor
-  TAO_Notify_AnyEvent (const CORBA::Any &event);
+  explicit TAO_Notify_AnyEvent (const CORBA::Any &event);
 
   /// Destructor
-  virtual ~TAO_Notify_AnyEvent ();
+  ~TAO_Notify_AnyEvent () override = default;
 
 protected:
   /// Copy of the Event.

@@ -48,7 +48,7 @@ TAO_FT_IOGR_Property::set_property (
   if (! retval)
     return retval;
 
-  const IOP::TaggedComponent &tmp_tc = tagged_components;
+  IOP::TaggedComponent const &tmp_tc = tagged_components;
 
   // Go through every profile and set the TaggedComponent field
   for (CORBA::ULong i = 0; i < count ; i++)
@@ -63,7 +63,7 @@ TAO_FT_IOGR_Property::set_property (
     }
 
   // Success
-  return 1;
+  return true;
 }
 
 
@@ -195,7 +195,7 @@ TAO_FT_IOGR_Property::set_primary (
   if (index == -1)
     throw TAO_IOP::NotFound ();
 
-  CORBA::Boolean val = 1;
+  CORBA::Boolean val = true;
 
   TAO_OutputCDR cdr;
   cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
@@ -225,7 +225,7 @@ TAO_FT_IOGR_Property::set_primary (
 
   tagg.set_component (tagged_components);
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -298,7 +298,7 @@ TAO_FT_IOGR_Property::get_primary_profile (
        i++)
     {
       // Get the Tagged Components
-      const TAO_Tagged_Components &pfile_tagged =
+      TAO_Tagged_Components const &pfile_tagged =
         mprofile.get_profile (i)->tagged_components ();
 
       // Look for the primary
@@ -308,14 +308,14 @@ TAO_FT_IOGR_Property::get_primary_profile (
           return mprofile.get_profile (i);
         }
     }
-  return 0;
+  return nullptr;
 }
 
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (
     CORBA::Object_ptr const iogr,
-    FT::TagFTGroupTaggedComponent& fgtc) const
+    FT::TagFTGroupTaggedComponent &fgtc) const
 {
   TAO_Stub *stub =
     iogr->_stubobj ();
@@ -336,13 +336,13 @@ TAO_FT_IOGR_Property::get_tagged_component (
        i++)
     {
       // Get the Tagged Components
-      const TAO_Tagged_Components &pfile_tagged =
+      TAO_Tagged_Components const &pfile_tagged =
         mprofile.get_profile (i)->tagged_components ();
 
       // Look for the primary
       if (pfile_tagged.get_component (tc) == 1)
         {
-          TAO_InputCDR cdr (reinterpret_cast<const char*> (tc.component_data.get_buffer ()),
+          TAO_InputCDR cdr (reinterpret_cast<char const *> (tc.component_data.get_buffer ()),
                             tc.component_data.length ());
           CORBA::Boolean byte_order;
 
@@ -352,7 +352,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> fgtc) == 1)
-            return 1;
+            return true;
           else
             throw CORBA::MARSHAL ();
         }
@@ -381,7 +381,7 @@ TAO_FT_IOGR_Property::remove_primary_tag (
 
       if (pfile_tagged.remove_component (IOP::TAG_FT_PRIMARY))
         {
-          return 1;
+          return true;
         }
     }
   return false;

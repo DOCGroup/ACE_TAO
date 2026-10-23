@@ -34,10 +34,6 @@ TAO_EC_Reactive_ConsumerControl::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_EC_Reactive_ConsumerControl::~TAO_EC_Reactive_ConsumerControl ()
-{
-}
-
 void
 TAO_EC_Reactive_ConsumerControl::query_consumers ()
 {

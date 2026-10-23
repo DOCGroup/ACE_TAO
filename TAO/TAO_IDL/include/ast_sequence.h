@@ -135,10 +135,10 @@ private:
   AST_Type *pd_base_type;
   // Sequence base type.
 
-  bool unbounded_;
+  bool unbounded_ {true};
   // Whether we are bounded or unbounded.
 
-  bool owns_base_type_;
+  bool owns_base_type_ {};
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.
 

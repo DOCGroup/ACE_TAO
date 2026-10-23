@@ -29,10 +29,10 @@ class TAO_Notify_Serv_Export TAO_Notify_PushConsumer : public TAO_Notify_Consume
 {
 public:
   /// Constructor
-  TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
+  explicit TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_PushConsumer ();
+  ~TAO_Notify_PushConsumer () override = default;
 
   /// Init
   void init (CosEventComm::PushConsumer_ptr push_consumer);

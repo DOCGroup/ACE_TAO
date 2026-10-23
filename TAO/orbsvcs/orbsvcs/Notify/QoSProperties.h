@@ -83,7 +83,7 @@ protected:
   /// Return 1 if <value> is unsupported.
   int unsupported (ACE_CString& name);
 
-  enum {UNSUPPORTED_PROPERTY_COUNT = 1};
+  static constexpr int UNSUPPORTED_PROPERTY_COUNT = 1;
 
   ///= Unsupported Properties.
   ACE_CString unsupported_[UNSUPPORTED_PROPERTY_COUNT];

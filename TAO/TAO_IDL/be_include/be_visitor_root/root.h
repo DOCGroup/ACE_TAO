@@ -24,13 +24,18 @@
 class be_visitor_root : public be_visitor_module
 {
 public:
-  be_visitor_root (be_visitor_context *ctx);
+  explicit be_visitor_root (be_visitor_context *ctx);
 
-  ~be_visitor_root ();
+  ~be_visitor_root () override;
+
+  be_visitor_root (const be_visitor_root &) = delete;
+  be_visitor_root (be_visitor_root &&) = delete;
+  be_visitor_root &operator= (const be_visitor_root &) = delete;
+  be_visitor_root &operator= (be_visitor_root &&) = delete;
 
   /// This is the only method that differs from that of the
   /// be_visitor_module bass class.
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_H_ */

@@ -217,10 +217,7 @@ IDL_GlobalData::IDL_GlobalData ()
   anon_type_diagnostic (ANON_TYPE_SILENT);
 #endif
 
-  // ambiguous_type_seen_ and basic_type_seen_ are not reset between
-  // command line idl files, so do those here and then reset the rest.
-  this->ambiguous_type_seen_ = false;
-  this->basic_type_seen_ = false;
+  // Reset the flags that are scoped to the current input file.
   this->reset_flag_seen ();
 }
 

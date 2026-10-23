@@ -16,10 +16,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Prefix_Filter_Builder::~TAO_EC_Prefix_Filter_Builder ()
-{
-}
-
 TAO_EC_Filter*
 TAO_EC_Prefix_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,

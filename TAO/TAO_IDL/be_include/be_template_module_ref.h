@@ -14,13 +14,13 @@ public:
                            AST_Template_Module *ref,
                            UTL_StrList *param_refs);
 
-  virtual ~be_template_module_ref ();
+  ~be_template_module_ref () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif           // BE_TEMPLATE_MODULE_REF_H

@@ -22,10 +22,6 @@ TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
 {
 }
 
-TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector ()
-{
-}
-
 int
 TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 {
@@ -77,7 +73,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   if (iiop_endpoint == nullptr)
     return -1;
 
-  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+  ACE_INET_Addr const &remote_address = iiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -114,7 +110,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (iiop_endpoint == nullptr)
     return nullptr;
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 4)

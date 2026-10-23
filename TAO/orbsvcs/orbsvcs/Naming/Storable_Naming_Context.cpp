@@ -340,7 +340,7 @@ int
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::load_from_stream ()
 {
-  if (context_ == 0)
+  if (context_ == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) File_Open_Lock_and_Check::load_from_stream -")
@@ -351,7 +351,7 @@ File_Open_Lock_and_Check::load_from_stream ()
   if (context_->storable_context_)
     {
       delete context_->storable_context_;
-      context_->storable_context_ = 0;
+      context_->storable_context_ = nullptr;
     }
 
   // and build a new one from disk
@@ -362,7 +362,7 @@ bool
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::is_loaded_from_stream ()
 {
-  return context_->storable_context_ != 0;
+  return context_->storable_context_ != nullptr;
 }
 
 TAO::Storable_Base *
@@ -387,7 +387,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                size_t hash_table_size)
   : TAO_Hash_Naming_Context (poa, context_name),
     counter_ (0),
-    storable_context_ (0),
+    storable_context_ (nullptr),
     orb_(CORBA::ORB::_duplicate (orb)),
     context_name_ (context_name),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -437,7 +437,7 @@ TAO_Storable_Naming_Context::context_written ()
 bool
 TAO_Storable_Naming_Context::is_obsolete (time_t stored_time)
 {
-  bool result = this->context_ == 0 ||
+  bool result = this->context_ == nullptr ||
     stored_time >= this->last_check_;
   this->last_check_ = ACE_OS::gettimeofday ().sec ();
   return result;
@@ -490,7 +490,7 @@ TAO_Storable_Naming_Context::make_new_context (
                                              context_name,
                                              pers_factory);
 
-  if (context_impl == 0)
+  if (context_impl == nullptr)
     throw CORBA::NO_MEMORY ();
 
   // Put <context_impl> into the unique pointer temporarily, in case next

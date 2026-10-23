@@ -151,7 +151,7 @@ public:
 
   bool annotatable () const override;
 
-  virtual AST_Field *fe_add_field (AST_Field *f);
+  AST_Field *fe_add_field (AST_Field *f) override;
 
   /// Easy Member Access
   ///{
@@ -163,13 +163,13 @@ protected:
   friend int tao_yyparse ();
   // Scope Management Protocol.
 
-  virtual AST_Union *fe_add_union (AST_Union *u);
+  AST_Union *fe_add_union (AST_Union *u) override;
 
-  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+  AST_Structure *fe_add_structure (AST_Structure *s) override;
 
-  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+  AST_Enum *fe_add_enum (AST_Enum *e) override;
 
-  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 
   int compute_size_type () override;
   // Compute the size type if it is unknown.
@@ -183,13 +183,13 @@ private:
   int compute_member_count ();
   // Count the number of members.
 
-  int member_count_;
+  int member_count_ {-1};
   // Number of members.
 
-  int local_struct_;
+  int local_struct_ {-1};
   // We also need to determine whether we contain any local type.
 
-  AST_StructureFwd *fwd_decl_;
+  AST_StructureFwd *fwd_decl_ {};
   // The forward declaration we may have been created from.
 };
 

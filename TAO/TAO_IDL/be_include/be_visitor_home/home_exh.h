@@ -25,14 +25,19 @@
 class be_visitor_home_exh : public be_visitor_scope
 {
 public:
-  be_visitor_home_exh (be_visitor_context *ctx);
+  explicit be_visitor_home_exh (be_visitor_context *ctx);
 
-  ~be_visitor_home_exh ();
+  ~be_visitor_home_exh () override;
 
-  virtual int visit_home (be_home *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_factory (be_factory *node);
+  be_visitor_home_exh (const be_visitor_home_exh &) = delete;
+  be_visitor_home_exh (be_visitor_home_exh &&) = delete;
+  be_visitor_home_exh &operator= (const be_visitor_home_exh &) = delete;
+  be_visitor_home_exh &operator= (be_visitor_home_exh &&) = delete;
+
+  int visit_home (be_home *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_factory (be_factory *node) override;
 
   /// Helper method passed to traverse_inheritance_graph(),
   /// collects supported operations and attributes.
@@ -46,8 +51,8 @@ private:
   void gen_entrypoint ();
 
 private:
-  be_home *node_;
-  AST_Component *comp_;
+  be_home *node_ {};
+  AST_Component *comp_ {};
   TAO_OutStream &os_;
   ACE_CString export_macro_;
 };

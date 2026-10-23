@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 bool
 UTL_String::strcmp_caseless (
-  const char *lhs,
-  const char *rhs,
+  char const* lhs,
+  char const* rhs,
   bool &mixed_case)
 {
   int difference;
@@ -119,7 +119,7 @@ UTL_String::strcmp_caseless (
 
 // Compare two const char *.
 bool
-UTL_String::compare (const char *lhs, const char *rhs)
+UTL_String::compare (char const* lhs, char const* rhs)
 {
   bool result= false;
   bool mixed=  false;
@@ -152,7 +152,7 @@ UTL_String::compare (const char *lhs, const char *rhs)
 
 // Like the above but without error or warning message output.
 bool
-UTL_String::compare_quiet (const char *lhs, const char *rhs)
+UTL_String::compare_quiet (char const* lhs, char const* rhs)
 {
   bool result= false;
   bool mixed=  false;
@@ -168,7 +168,7 @@ UTL_String::compare_quiet (const char *lhs, const char *rhs)
 // Get canonical representation. This is (implemented as) the all upper
 // case corresponding string.
 void
-UTL_String::get_canonical_rep (const char *src, char *dest)
+UTL_String::get_canonical_rep (char const* src, char *dest)
 {
   while (0 != (*dest++ = static_cast<char> (ACE_OS::ace_toupper (*src++))))
     {}
@@ -191,7 +191,7 @@ UTL_String::UTL_String ()
 {
 }
 
-UTL_String::UTL_String (const char *str, bool take_copy)
+UTL_String::UTL_String (char const* str, bool take_copy)
   : copy_taken (str ? take_copy : false),
     p_str      (this->copy_taken ? ACE::strnew (str)
                                  : const_cast<char *>(str)),

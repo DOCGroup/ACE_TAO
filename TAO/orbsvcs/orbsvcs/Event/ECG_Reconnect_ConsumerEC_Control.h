@@ -77,7 +77,7 @@ public:
                                         CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_ECG_Reconnect_ConsumerEC_Control () override;
+  virtual ~TAO_ECG_Reconnect_ConsumerEC_Control () override = default;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,

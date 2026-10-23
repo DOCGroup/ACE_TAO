@@ -24,9 +24,7 @@ be_visitor_valuetype_field_cdr_cs::be_visitor_valuetype_field_cdr_cs (
 {
 }
 
-be_visitor_valuetype_field_cdr_cs::~be_visitor_valuetype_field_cdr_cs ()
-{
-}
+be_visitor_valuetype_field_cdr_cs::~be_visitor_valuetype_field_cdr_cs () = default;
 
 int
 be_visitor_valuetype_field_cdr_cs::visit_field (be_field *node)

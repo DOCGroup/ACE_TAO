@@ -57,7 +57,7 @@ public:
   using Block_Type = ACE_UINT16;
 
   /// The constructor.
-  Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
+  explicit Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
 
   /// The destructor.
   ~Routing_Slip_Persistence_Manager();
@@ -129,7 +129,7 @@ private:
       BT_Overflow
       };
 
-    Block_Header(Header_Type type);
+    explicit Block_Header(Header_Type type);
     virtual ~Block_Header ();
     virtual size_t extract_header(Persistent_Storage_Block& psb,
       size_t offset = 0);

@@ -7,8 +7,8 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 
-static const ACE_TCHAR *supplierec = 0;
-static const ACE_TCHAR *consumerec = 0;
+static ACE_TCHAR const *supplierec = nullptr;
+static ACE_TCHAR const *consumerec = nullptr;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -19,10 +19,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Gateway::Gateway ()
-{
-}
 
 int
 Gateway::run (int argc, ACE_TCHAR* argv[])
@@ -118,7 +114,7 @@ Gateway::run (int argc, ACE_TCHAR* argv[])
       // Destroy the POA
       poa->destroy (1, 0);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Gateway::run");
       return 1;
@@ -134,7 +130,7 @@ Gateway::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-s")) == 0)
         {

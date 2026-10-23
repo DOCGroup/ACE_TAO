@@ -22,9 +22,7 @@ be_visitor_sequence_buffer_type::be_visitor_sequence_buffer_type (
 {
 }
 
-be_visitor_sequence_buffer_type::~be_visitor_sequence_buffer_type ()
-{
-}
+be_visitor_sequence_buffer_type::~be_visitor_sequence_buffer_type () = default;
 
 // helper
 int

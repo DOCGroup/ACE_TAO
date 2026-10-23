@@ -2,12 +2,6 @@
 #include "Supplier.h"
 #include "ace/Get_Opt.h"
 
-Supplier::Supplier ()
-  : event_count_ (1)
-{
-  // No-Op.
-}
-
 int
 Supplier::parse_args (int argc, ACE_TCHAR *argv [])
 {
@@ -85,7 +79,7 @@ Supplier::disconnect ()
 }
 
 void
-Supplier::send_event (const CORBA::Any & data)
+Supplier::send_event (CORBA::Any const &data)
 {
   this->consumer_proxy_->push (data);
 }
@@ -133,7 +127,7 @@ Supplier::run ()
 
       this->close ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in CosEC_Multiple::run\n");
     }

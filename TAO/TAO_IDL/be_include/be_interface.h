@@ -157,13 +157,13 @@ public:
   bool has_rw_attributes () const;
 
   /// Pass along BE-specific member values when redefining a fwd decl.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Helper method passed to the template method that generates code for the
   /// is_a method.
@@ -216,14 +216,14 @@ public:
   int convert_parent_ops (be_visitor *visitor);
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
 
   /// Overridden from class be_type.
-  virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
-                                            bool use_underscore,
-                                            bool accessor = false);
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                   const char *instance_name,
+                                   bool use_underscore,
+                                   bool accessor = false) override;
 
   /// Sets the original interface from which this one was created,
   /// applies only to implied IDL.
@@ -294,15 +294,15 @@ protected:
   static const char *tag_table_[];
 
   // Proxy Implementation names.
-  char *direct_proxy_impl_name_;
+  char *direct_proxy_impl_name_ {};
 
-  char *full_direct_proxy_impl_name_;
+  char *full_direct_proxy_impl_name_ {};
 
-  char *client_scope_;
-  char *flat_client_scope_;
+  char *client_scope_ {};
+  char *flat_client_scope_ {};
 
-  char *server_scope_;
-  char *flat_server_scope_;
+  char *server_scope_ {};
+  char *flat_server_scope_ {};
 
 private:
   /// Output the header (type declaration and %%) to the gperf's input
@@ -353,46 +353,46 @@ private:
 
 protected:
   /// Have these been done already?
-  bool var_out_seq_decls_gen_;
+  bool var_out_seq_decls_gen_ {};
 
 protected:
   /// Number of static skeletons in the operation table.
-  int skel_count_;
+  int skel_count_ {};
 
   /// Am I directly or indirectly involved in a multiple inheritance. If the
   /// value is -1 => not computed yet.
-  int in_mult_inheritance_;
+  int in_mult_inheritance_ {-1};
 
   /// The original interface from which this one was created,
   /// applies only to implied IDL
-  be_interface *original_interface_;
+  be_interface *original_interface_ {};
 
   /// Are we an AMH reply handler?
-  bool is_amh_rh_;
+  bool is_amh_rh_ {};
 
   /// Are we an AMI reply handler?
-  bool is_ami_rh_;
+  bool is_ami_rh_ {};
 
   /// Are we an AMI4CCM reply handler?
-  bool is_ami4ccm_rh_;
+  bool is_ami4ccm_rh_ {};
 
-  char *full_skel_name_;
+  char *full_skel_name_ {};
 
-  char *full_coll_name_;
+  char *full_coll_name_ {};
 
-  char *local_coll_name_;
+  char *local_coll_name_ {};
 
-  char *relative_skel_name_;
+  char *relative_skel_name_ {};
 
   /// Current cached collocated name.
-  int cached_type_;
+  int cached_type_ {-1};
 
   /// Used to suppress generation of some CCM servant methods/
-  bool has_rw_attributes_;
+  bool has_rw_attributes_ {};
 
   /// Flag to ensure that DDS connector impl traits members
   /// are generated only once per port interface.
-  bool dds_connector_traits_done_;
+  bool dds_connector_traits_done_ {};
 };
 
 /**
@@ -447,7 +447,7 @@ class be_code_emitter_wrapper
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
+  explicit be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
 
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *output_stream,

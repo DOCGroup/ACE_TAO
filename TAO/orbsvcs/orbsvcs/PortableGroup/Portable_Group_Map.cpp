@@ -64,7 +64,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
     }
   else
     {
-      new_entry->next = 0;
+      new_entry->next = nullptr;
 
       // Add the
       int result =

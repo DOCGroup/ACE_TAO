@@ -24,9 +24,7 @@ be_visitor_union_branch_public_ci::be_visitor_union_branch_public_ci (
 }
 
 // destructor
-be_visitor_union_branch_public_ci::~be_visitor_union_branch_public_ci ()
-{
-}
+be_visitor_union_branch_public_ci::~be_visitor_union_branch_public_ci () = default;
 
 int
 be_visitor_union_branch_public_ci::emit_getter_validation (
@@ -617,7 +615,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       || pt == AST_PredefinedType::PT_object
       || pt == AST_PredefinedType::PT_abstract)
     {
-      *os << "const ::" << bt->name () << "_ptr";
+      *os << "::" << bt->name () << "_ptr const";
     }
   else if (pt == AST_PredefinedType::PT_value)
     {
@@ -625,7 +623,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
     }
   else if (pt == AST_PredefinedType::PT_any)
     {
-      *os << "const ::" << bt->name () << " &";
+      *os << "::" << bt->name () << " const &";
     }
   else
     {
@@ -753,7 +751,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         // Get method with read-only access.
         *os << "/// Retrieve the member." << be_nl
             << "ACE_INLINE" << be_nl
-            << "const ::" << bt->name () << " &" << be_nl
+            << "::" << bt->name () << " const &" << be_nl
             << bu->name () << "::" << ub->local_name ()
             << " () const" << be_nl
             << "{" << be_idt_nl;
@@ -844,7 +842,7 @@ be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
       << "this->_reset ();" << be_nl
@@ -870,7 +868,7 @@ be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
   // Readonly get method.
   *os << "/// Readonly get method." << be_nl
       << "ACE_INLINE" << be_nl
-      << "const " << bt->name () << " &" << be_nl
+      << bt->name () << " const &" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)
@@ -958,11 +956,11 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << " (const char *val)" << be_nl << "{" << be_idt_nl;
+      *os << " (char const *val)" << be_nl << "{" << be_idt_nl;
     }
   else
     {
-      *os << " (const ::CORBA::WChar *val)" << be_nl << "{" << be_idt_nl;
+      *os << " (::CORBA::WChar const *val)" << be_nl << "{" << be_idt_nl;
     }
 
   *os << "// Set the discriminant value." << be_nl
@@ -1002,11 +1000,11 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << " (const ::CORBA::String_var &val)" << be_nl;
+      *os << " (::CORBA::String_var const &val)" << be_nl;
     }
   else
     {
-      *os << " (const ::CORBA::WString_var &val)" << be_nl;
+      *os << " (::CORBA::WString_var const &val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl
@@ -1046,11 +1044,11 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   // Get method.
   if (node->width () == (long) sizeof (char))
     {
-      *os << "const char *" << be_nl;
+      *os << "char const *" << be_nl;
     }
   else
     {
-      *os << "const ::CORBA::WChar *" << be_nl;
+      *os << "::CORBA::WChar const *" << be_nl;
     }
 
   *os << bu->name () << "::" << ub->local_name ()
@@ -1125,7 +1123,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
       << "this->_reset ();" << be_nl
@@ -1162,7 +1160,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
   // Readonly get method.
   *os << "// Readonly get method." << be_nl
       << "ACE_INLINE" << be_nl
-      << "const " << bt->name () << " &" << be_nl
+      << bt->name () << " const &" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
 
@@ -1298,7 +1296,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl
       << "// Set the discriminant value." << be_nl
       << "this->_reset ();" << be_nl
@@ -1324,7 +1322,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
   // Readonly get method.
   *os << "// Readonly get method." << be_nl
       << "ACE_INLINE" << be_nl
-      << "const " << bt->name () << " &" << be_nl
+      << bt->name () << " const &" << be_nl
       << bu->name () << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   if (this->emit_getter_validation (ub) == -1)

@@ -126,11 +126,11 @@ private:
   AST_Interface *pd_full_definition;
   // The interface this is a forward declaration of.
 
-  bool is_defined_;
+  bool is_defined_ {};
   // Checking the member above isn't good enough.
 
   /// True if we own pd_full_definition, which would be true if it's a dummy.
-  bool has_ownership_;
+  bool has_ownership_ {true};
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

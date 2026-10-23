@@ -22,9 +22,7 @@ be_visitor_connector_ami_exh::be_visitor_connector_ami_exh (
   this->export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_ami_exh::~be_visitor_connector_ami_exh ()
-{
-}
+be_visitor_connector_ami_exh::~be_visitor_connector_ami_exh () = default;
 
 int
 be_visitor_connector_ami_exh::visit_connector (be_connector *node)

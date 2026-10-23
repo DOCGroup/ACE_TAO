@@ -17,9 +17,7 @@ be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_ch::~be_visitor_sequence_ch ()
-{
-}
+be_visitor_sequence_ch::~be_visitor_sequence_ch () = default;
 
 int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 {
@@ -184,7 +182,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       if (node->unbounded ())
         {
           *os << be_nl
-              << node->local_name () << " (::CORBA::ULong max);";
+              << "explicit " << node->local_name () << " (::CORBA::ULong max);";
         }
 
       /// If we are using std::vector, we can't implement this
@@ -223,9 +221,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       // Default copy/move constructor and assignment operators
       *os << be_nl
-          << node->local_name () << " (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << " (" << node->local_name ()
+          << " const &) = default;" << be_nl
           << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl
-          << node->local_name () << "& operator= (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << "& operator= (" << node->local_name ()
+          << " const &) = default;" << be_nl
           << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
           << be_nl;
 
@@ -275,7 +275,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
         {
           *os << be_nl_2
               << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-              << node->local_name () << " (::CORBA::ULong length, const ACE_Message_Block* mb)"
+              << node->local_name () << " (::CORBA::ULong length, ACE_Message_Block const *mb)"
               << be_idt_nl
               << ": ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
               << " (length, mb) {}" << be_uidt_nl

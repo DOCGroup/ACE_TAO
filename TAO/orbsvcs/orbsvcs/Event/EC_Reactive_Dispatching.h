@@ -39,7 +39,12 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Reactive_Dispatching ();
+  TAO_EC_Reactive_Dispatching () = default;
+
+  TAO_EC_Reactive_Dispatching (TAO_EC_Reactive_Dispatching const &) = delete;
+  TAO_EC_Reactive_Dispatching (TAO_EC_Reactive_Dispatching &&) = delete;
+  TAO_EC_Reactive_Dispatching &operator= (TAO_EC_Reactive_Dispatching const &) = delete;
+  TAO_EC_Reactive_Dispatching &operator= (TAO_EC_Reactive_Dispatching &&) = delete;
 
   // = The EC_Dispatching methods.
   virtual void activate () override;
@@ -47,11 +52,11 @@ public:
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info &qos_info);
+                     TAO_EC_QOS_Info &qos_info) override;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info);
+                            TAO_EC_QOS_Info &qos_info) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

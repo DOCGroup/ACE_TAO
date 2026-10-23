@@ -266,7 +266,7 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
     }
 
     struct COMP_RESULT {
-        Compression::Buffer out; // We compress to this buffer
+        int out_max;             // Maximum compressed buffer length
         int len;                 // We expect this compressed Length
         ACE_Byte hex[16];        // We expect this compressed Data
     } comp_result[] = {
@@ -296,7 +296,8 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
     for (unsigned i = 0; i < sizeof(comp_data); i++) {
         COMP_RESULT &result = comp_result[i]; // Get A reference to our result for testing output
 
-        Compression::Buffer in_data(i, i, reinterpret_cast<CORBA::Octet*>(comp_data), false), &out_data = result.out;
+        Compression::Buffer in_data(i, i, reinterpret_cast<CORBA::Octet*>(comp_data), false);
+        Compression::Buffer out_data (result.out_max);
 
         compressor->compress(in_data, out_data);
 

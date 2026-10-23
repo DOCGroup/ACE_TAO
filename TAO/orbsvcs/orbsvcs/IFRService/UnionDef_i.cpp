@@ -20,9 +20,7 @@ TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_UnionDef_i::~TAO_UnionDef_i ()
-{
-}
+TAO_UnionDef_i::~TAO_UnionDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_UnionDef_i::def_kind ()

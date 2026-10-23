@@ -156,7 +156,7 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
 
   // check for memory allocation
   //
-  if (str_name == 0)
+  if (str_name == nullptr)
     {
       throw CORBA::NO_MEMORY ();
     }

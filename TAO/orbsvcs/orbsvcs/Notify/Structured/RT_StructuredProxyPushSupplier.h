@@ -32,7 +32,7 @@ public:
   TAO_Notify_RT_StructuredProxyPushSupplier ();
 
   /// Destructor
-  ~TAO_Notify_RT_StructuredProxyPushSupplier ();
+  ~TAO_Notify_RT_StructuredProxyPushSupplier () override = default;
 
   /// Activate this object and obtain the Event_Forwarder interface.
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant);

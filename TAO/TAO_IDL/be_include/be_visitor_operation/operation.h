@@ -29,10 +29,14 @@ class be_visitor_operation : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_operation (be_visitor_context *ctx);
+  explicit be_visitor_operation (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation ();
+  ~be_visitor_operation () override;
+  be_visitor_operation (be_visitor_operation const &) = delete;
+  be_visitor_operation (be_visitor_operation &&) = delete;
+  be_visitor_operation &operator= (be_visitor_operation const &) = delete;
+  be_visitor_operation &operator= (be_visitor_operation &&) = delete;
 
   // =helper
 

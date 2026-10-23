@@ -11,10 +11,6 @@ TAO_ECG_Simple_Mcast_EH::TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Simple_Mcast_EH::~TAO_ECG_Simple_Mcast_EH ()
-{
-}
-
 int
 TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
                                const ACE_TCHAR *net_if)

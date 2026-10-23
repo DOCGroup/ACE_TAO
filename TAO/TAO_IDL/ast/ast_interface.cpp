@@ -119,12 +119,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_inherits (ih),
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
-    pd_n_inherits_flat (nih_flat),
-    home_equiv_ (false),
-    fwd_decl_ (nullptr),
-    has_mixed_parentage_ (-1),
-    ami_handler_ (nullptr),
-    ami4ccm_uses_ (nullptr)
+    pd_n_inherits_flat (nih_flat)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
@@ -145,9 +140,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     }
 }
 
-AST_Interface::~AST_Interface ()
-{
-}
+AST_Interface::~AST_Interface () = default;
 
 void
 AST_Interface::be_replace_operation (AST_Decl *old_op,

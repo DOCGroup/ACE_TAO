@@ -76,9 +76,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     }
 }
 
-AST_ValueType::~AST_ValueType ()
-{
-}
+AST_ValueType::~AST_ValueType () = default;
 
 bool
 AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)

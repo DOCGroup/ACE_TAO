@@ -14,7 +14,7 @@ TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::execute
     {
       TAO_Notify_Peer* peer = this->proxy_->peer();
 
-      if (peer != 0)
+      if (peer != nullptr)
         {
           peer->dispatch_updates (this->added_, this->removed_);
         }

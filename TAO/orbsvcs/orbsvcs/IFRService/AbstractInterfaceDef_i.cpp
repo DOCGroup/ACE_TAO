@@ -12,9 +12,7 @@ TAO_AbstractInterfaceDef_i::TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AbstractInterfaceDef_i::~TAO_AbstractInterfaceDef_i ()
-{
-}
+TAO_AbstractInterfaceDef_i::~TAO_AbstractInterfaceDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_AbstractInterfaceDef_i::def_kind ()

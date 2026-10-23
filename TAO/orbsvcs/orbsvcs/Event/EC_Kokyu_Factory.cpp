@@ -17,10 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Kokyu_Factory::~TAO_EC_Kokyu_Factory ()
-{
-}
-
 int
 TAO_EC_Kokyu_Factory::init_svcs ()
 {

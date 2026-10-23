@@ -16,9 +16,7 @@ be_visitor_constant_cs::be_visitor_constant_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_constant_cs::~be_visitor_constant_cs ()
-{
-}
+be_visitor_constant_cs::~be_visitor_constant_cs () = default;
 
 // visit the Constant_cs node and its scope
 int

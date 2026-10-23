@@ -14,14 +14,11 @@
 be_visitor_home_ex_idl::be_visitor_home_ex_idl (
     be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
     os_ (*ctx->stream ())
 {
 }
 
-be_visitor_home_ex_idl::~be_visitor_home_ex_idl ()
-{
-}
+be_visitor_home_ex_idl::~be_visitor_home_ex_idl () = default;
 
 int
 be_visitor_home_ex_idl::visit_home (be_home *node)
@@ -246,8 +243,8 @@ be_visitor_home_ex_idl::gen_explicit ()
         IdentifierHelper::orig_sn (
           ScopeAsDecl (base->defined_in ())->name ());
 
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
+      char const *sname = sname_str.c_str ();
+      char const *global = (sname_str == "" ? "" : "::");
 
       os_ << global << sname << "::CCM_"
           << IdentifierHelper::try_escape (base->local_name ()).c_str ()
@@ -274,7 +271,7 @@ be_visitor_home_ex_idl::gen_derived ()
 {
   ACE_CString lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
-  const char *lname = lname_str.c_str ();
+  char const *lname = lname_str.c_str ();
 
   os_ << be_nl_2
       << "local interface CCM_" << lname << be_nl
@@ -304,7 +301,7 @@ be_visitor_home_ex_idl::gen_supported ()
 void
 be_visitor_home_ex_idl::gen_exception_list (
   UTL_ExceptList *exceptions,
-  const char *prefix,
+  char const *prefix,
   bool init_op)
 {
   ACE_CDR::Long cutoff = (init_op ? 1 : 0);
@@ -358,13 +355,13 @@ be_visitor_home_ex_idl::gen_home_executor ()
 
   ACE_CString sname_str =
     IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
+  char const *sname = sname_str.c_str ();
 
   ACE_CString lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
-  const char *lname = lname_str.c_str ();
+  char const *lname = lname_str.c_str ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
       << "module CIAO_" << comp->flat_name () << "_Impl" << be_nl

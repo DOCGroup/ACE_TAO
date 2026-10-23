@@ -96,7 +96,7 @@ public:
   ///)
 
 private:
-  AST_Enum *enum_parent_;
+  AST_Enum *enum_parent_ {};
 };
 
 #endif           // _AST_ENUM_VAL_AST_ENUM_VAL_HH

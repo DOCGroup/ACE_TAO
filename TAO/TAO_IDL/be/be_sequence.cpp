@@ -53,9 +53,7 @@ be_sequence::be_sequence (AST_Expression *v,
     be_decl (AST_Decl::NT_sequence,
              n),
     be_type (AST_Decl::NT_sequence,
-             n),
-    mt_ (be_sequence::MNG_UNKNOWN),
-    field_node_ (nullptr)
+             n)
 {
   // Always the case.
   this->has_constructor (true);

@@ -129,10 +129,6 @@ AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     bool anonymous)
   : COMMON_Base (),
-    repoID_ (nullptr),
-    flat_name_ (nullptr),
-    contains_wstring_ (-1),
-    annotation_appls_ (nullptr),
     builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -141,16 +137,8 @@ AST_Decl::AST_Decl (NodeType nt,
                      : nullptr),
     pd_node_type (nt),
     pd_line (idl_global->lineno ()),
-    pd_name (nullptr),
     pd_local_name (n ? n->last_component ()->copy () : nullptr),
-    pd_original_local_name (nullptr),
-    full_name_ (nullptr),
-    prefix_ (nullptr),
-    version_ (nullptr),
     anonymous_ (anonymous),
-    typeid_set_ (false),
-    last_referenced_as_ (nullptr),
-    prefix_scope_ (nullptr),
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
@@ -176,10 +164,6 @@ AST_Decl::AST_Decl (
   UTL_ScopedName *name,
   AST_Decl *other)
   : COMMON_Base (),
-    repoID_ (nullptr),
-    flat_name_ (nullptr),
-    contains_wstring_ (-1),
-    annotation_appls_ (nullptr),
     builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -188,16 +172,8 @@ AST_Decl::AST_Decl (
                      : nullptr),
     pd_node_type (other->node_type ()),
     pd_line (idl_global->lineno ()),
-    pd_name (nullptr),
     pd_local_name (name ? name->last_component ()->copy () : nullptr),
-    pd_original_local_name (nullptr),
-    full_name_ (nullptr),
-    prefix_ (nullptr),
-    version_ (nullptr),
     anonymous_ (other->anonymous ()),
-    typeid_set_ (false),
-    last_referenced_as_ (nullptr),
-    prefix_scope_ (nullptr),
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
@@ -219,9 +195,7 @@ AST_Decl::AST_Decl (
   this->compute_repoID ();
 }
 
-AST_Decl::~AST_Decl ()
-{
-}
+AST_Decl::~AST_Decl () = default;
 
 void
 AST_Decl::destroy ()

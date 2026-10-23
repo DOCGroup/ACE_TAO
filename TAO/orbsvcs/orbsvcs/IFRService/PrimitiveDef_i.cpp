@@ -9,9 +9,7 @@ TAO_PrimitiveDef_i::TAO_PrimitiveDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i ()
-{
-}
+TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_PrimitiveDef_i::def_kind ()

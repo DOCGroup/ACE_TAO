@@ -17,9 +17,8 @@ TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::TAO_Not
 }
 
 template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM>
-TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::~TAO_Notify_Method_Request_Updates_T ()
-{
-}
+TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::
+~TAO_Notify_Method_Request_Updates_T () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

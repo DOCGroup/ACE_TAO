@@ -37,7 +37,7 @@ class TAO_ESF_Copy_On_Read : public TAO_ESF_Proxy_Collection<PROXY>
 public:
   /// Constructors
   TAO_ESF_Copy_On_Read ();
-  TAO_ESF_Copy_On_Read (const COLLECTION &collection);
+  explicit TAO_ESF_Copy_On_Read (const COLLECTION &collection);
 
   // = The TAO_ESF_Proxy_Collection methods
   void for_each (TAO_ESF_Worker<PROXY> *worker) override;

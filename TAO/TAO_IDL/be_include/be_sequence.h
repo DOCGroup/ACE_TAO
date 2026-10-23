@@ -73,17 +73,17 @@ public:
   virtual AST_Sequence *fe_add_sequence (AST_Sequence *);
 
   /// Overridden method on the be_scope class.
-  virtual be_decl *decl ();
+  be_decl *decl () override;
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+                                     bool use_underscore) override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Report the instance name for instantiation.
   const char *instance_name ();
@@ -103,7 +103,7 @@ public:
 
 protected:
   /// Computes the fully scoped typecode name.
-  virtual void compute_tc_name ();
+  void compute_tc_name () override;
 
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,
@@ -111,10 +111,10 @@ private:
 
 private:
   /// Our managed type.
-  MANAGED_TYPE mt_;
+  MANAGED_TYPE mt_ {MNG_UNKNOWN};
 
   /// Used if we are an anonymous member, to help generate a unique name.
-  be_field *field_node_;
+  be_field *field_node_ {};
 };
 
 #endif

@@ -60,7 +60,7 @@ class Active_Pid_Setter;
 class Activator_Export Watchdog : public ACE_Task_Base
 {
 public:
-  Watchdog (ACE_Process_Manager& procman);
+  explicit Watchdog (ACE_Process_Manager& procman);
   int svc () override;
   bool start ();
   void stop ();

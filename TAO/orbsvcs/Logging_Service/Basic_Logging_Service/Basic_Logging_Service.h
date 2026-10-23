@@ -78,19 +78,19 @@ protected:
   CosNaming::NamingContext_var naming_;
   // A naming context.
 
-  ACE_CString service_name_;
+  ACE_CString service_name_ {"BasicLogFactory"};
   // The name we use to bind with the NameService
 
-  ACE_TCHAR const * ior_file_name_;
+  ACE_TCHAR const * ior_file_name_ {};
   // The name of the file where we output the factory IOR.
 
-  ACE_TCHAR const * pid_file_name_;
+  ACE_TCHAR const * pid_file_name_ {};
   // The name of the file where we output the process id.
 
-  bool bind_to_naming_service_;
+  bool bind_to_naming_service_ {true};
   // If true, bind to naming service
 
-  int nthreads_;
+  int nthreads_ {};
   // Number of worker threads.
 };
 #endif /* BASIC_LOGGING_SERVICE_H */

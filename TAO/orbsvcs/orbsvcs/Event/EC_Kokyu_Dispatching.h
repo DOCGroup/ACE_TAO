@@ -59,6 +59,11 @@ public:
                             int sched_policy,
                             int sched_scope);
 
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching &&) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching &&) = delete;
+
   // = The EC_Dispatching methods.
   virtual void activate () override;
   virtual void shutdown () override;
@@ -93,14 +98,14 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Shutdown_Command : public Kokyu::Disp
 {
 public:
   /// Constructor
-  TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
+  explicit TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
   virtual int execute () override;
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Shutdown_Command () override;
+  virtual ~TAO_EC_Kokyu_Shutdown_Command () override = default;
 };
 
 // ****************************************************************

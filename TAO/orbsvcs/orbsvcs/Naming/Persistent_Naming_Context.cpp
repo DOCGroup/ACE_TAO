@@ -64,8 +64,8 @@ TAO_Persistent_Bindings_Map::find (const char *id,
 }
 
 TAO_Persistent_Bindings_Map::TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb)
-  : allocator_ (0),
-    map_ (0),
+  : allocator_ (nullptr),
+    map_ (nullptr),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -110,7 +110,7 @@ TAO_Persistent_Bindings_Map::open (size_t hash_table_size, ACE_Allocator *alloc)
   hash_map = this->allocator_->malloc (map_size);
 
   // If allocation failed ...
-  if (hash_map == 0)
+  if (hash_map == nullptr)
     return -1;
 
   // Initialize allocated hash map through placement new.
@@ -154,7 +154,7 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
   // Allocation failed - bail out.
-  if (ptr == 0)
+  if (ptr == nullptr)
     return -1;
 
   // Allocation succeded - place the data into the allocated memory
@@ -239,7 +239,7 @@ TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::PO
   : TAO_Hash_Naming_Context (poa,
                              poa_id),
     counter_ (counter),
-    persistent_context_ (0),
+    persistent_context_ (nullptr),
     index_ (context_index)
 {
   ACE_NEW (this->persistent_context_,
@@ -250,7 +250,7 @@ TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::PO
 
   // If a map was provided (i.e., not defaulted) then set it in the
   // persistent_context_
-  if (map != 0)
+  if (map != nullptr)
     persistent_context_->set (map, index_->allocator ());
 }
 
@@ -298,7 +298,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
     poa_id);
 
   // Verify that a context implementation was created. If not, throw an exception
-  if (context_impl == 0)
+  if (context_impl == nullptr)
     throw CORBA::NO_MEMORY ();
 
   // Put <context_impl> into the unique pointer temporarily, in case next

@@ -12,14 +12,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector ()
-  : TAO_Default_Endpoint_Selector ()
-{
-}
+TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector () = default;
 
-TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector ()
-{
-}
+TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector () = default;
 
 void
 TAO_FT_Invocation_Endpoint_Selector::select_endpoint (

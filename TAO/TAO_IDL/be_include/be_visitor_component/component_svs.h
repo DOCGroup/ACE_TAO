@@ -24,12 +24,16 @@
 class be_visitor_component_svs : public be_visitor_component
 {
 public:
-  be_visitor_component_svs (be_visitor_context *ctx);
+  explicit be_visitor_component_svs (be_visitor_context *ctx);
 
-  ~be_visitor_component_svs ();
+  ~be_visitor_component_svs () override;
+  be_visitor_component_svs (be_visitor_component_svs const &) = delete;
+  be_visitor_component_svs (be_visitor_component_svs &&) = delete;
+  be_visitor_component_svs &operator= (be_visitor_component_svs const &) = delete;
+  be_visitor_component_svs &operator= (be_visitor_component_svs &&) = delete;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 
 private:
   void gen_entrypoint (AST_Component *node);

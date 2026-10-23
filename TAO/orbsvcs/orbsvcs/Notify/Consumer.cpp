@@ -24,7 +24,7 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
-static const int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a config param or qos setting
+static constexpr int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a config param or qos setting
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

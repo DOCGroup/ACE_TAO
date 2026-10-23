@@ -107,10 +107,7 @@ AST_Map::AST_Map (AST_Expression *ms,
                       n),
     pd_max_size (ms),
     key_pd_type (key_bt),
-    value_pd_type (val_bt),
-    unbounded_ (true),
-    owns_key_type_ (false),
-    owns_value_type_ (false)
+    value_pd_type (val_bt)
 {
   FE_Utils::tmpl_mod_ref_check (this, key_bt);
 

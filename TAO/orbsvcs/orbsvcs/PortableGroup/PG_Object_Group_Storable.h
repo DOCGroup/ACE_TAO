@@ -134,8 +134,10 @@ namespace TAO
     /////////////////////////
     // Forbidden methods
     PG_Object_Group_Storable ();
-    PG_Object_Group_Storable (const PG_Object_Group_Storable & rhs);
-    PG_Object_Group_Storable & operator = (const PG_Object_Group_Storable & rhs);
+    PG_Object_Group_Storable (PG_Object_Group_Storable const &) = delete;
+    PG_Object_Group_Storable (PG_Object_Group_Storable &&) = delete;
+    PG_Object_Group_Storable &operator= (PG_Object_Group_Storable const &) = delete;
+    PG_Object_Group_Storable &operator= (PG_Object_Group_Storable &&) = delete;
 
     /// Indicate if instance of object group has been restored from store
     bool group_previously_stored_;

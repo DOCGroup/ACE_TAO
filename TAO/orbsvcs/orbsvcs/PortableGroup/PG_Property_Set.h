@@ -70,7 +70,7 @@ namespace TAO
      * constructor
      * @param property_set the properties to be decoded
      */
-    PG_Property_Set (const PortableGroup::Properties & property_set);
+    explicit PG_Property_Set (PortableGroup::Properties const & property_set);
 
     /**
      * constructor with defaults
@@ -85,7 +85,7 @@ namespace TAO
      * (note this is not a copy constructor)
      * @param defaults a propert set decoder that supplies default values.
      */
-    PG_Property_Set (const PG_Property_Set_var & defaults);
+    explicit PG_Property_Set (PG_Property_Set_var const & defaults);
 
     ~PG_Property_Set ();
 
@@ -147,8 +147,10 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    PG_Property_Set(const PG_Property_Set & rhs) = delete;
-    PG_Property_Set & operator = (const PG_Property_Set & rhs) = delete;
+    PG_Property_Set (PG_Property_Set const &) = delete;
+    PG_Property_Set &operator= (PG_Property_Set const &) = delete;
+    PG_Property_Set (PG_Property_Set &&) = delete;
+    PG_Property_Set &operator= (PG_Property_Set &&) = delete;
 
     ///////////////
     // Data Members

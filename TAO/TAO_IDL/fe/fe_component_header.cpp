@@ -19,16 +19,13 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                         supports,
                         false,
                         false,
-                        false),
-    base_component_ (nullptr)
+                        false)
 {
   this->compile_inheritance (base_component);
   this->compile_supports (supports);
 }
 
-FE_ComponentHeader::~FE_ComponentHeader ()
-{
-}
+FE_ComponentHeader::~FE_ComponentHeader () = default;
 
 AST_Component *
 FE_ComponentHeader::base_component () const

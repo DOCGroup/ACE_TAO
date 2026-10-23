@@ -37,8 +37,8 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
                     ACE_Get_Opt::PERMUTE_ARGS,
                     1);
 
-  static const ACE_TCHAR* orbarg = ACE_TEXT ("ORBArg");
-  static const ACE_TCHAR* nonamesvc = ACE_TEXT ("NoNameSvc");
+  static constexpr ACE_TCHAR const* orbarg = ACE_TEXT ("ORBArg");
+  static constexpr ACE_TCHAR const* nonamesvc = ACE_TEXT ("NoNameSvc");
   opts.long_option (orbarg, ACE_Get_Opt::ARG_REQUIRED);
   opts.long_option (nonamesvc, ACE_Get_Opt::NO_ARG);
 
@@ -164,7 +164,7 @@ TAO_MonitorManager::shutdown ()
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
       TAO_NOTIFY_MONITOR_CONTROL_MANAGER);
 
-  if (monitor != 0)
+  if (monitor != nullptr)
     {
       monitor->fini ();
     }
@@ -250,7 +250,7 @@ TAO_MonitorManager::ORBTask::svc ()
           {
             FILE* fp = ACE_OS::fopen (this->ior_output_.c_str (), "w");
 
-            if (fp == 0)
+            if (fp == nullptr)
               {
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) TAO_MonitorManager: "

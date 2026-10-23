@@ -105,10 +105,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
     pd_return_type (rt),
     pd_flags (fl),
     pd_context (nullptr),
-    pd_exceptions (nullptr),
-    argument_count_ (-1),
-    has_in_arguments_ (false),
-    has_native_ (0)
+    pd_exceptions (nullptr)
 {
   AST_PredefinedType *pdt = nullptr;
 
@@ -133,9 +130,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
     }
 }
 
-AST_Operation::~AST_Operation ()
-{
-}
+AST_Operation::~AST_Operation () = default;
 
 // Public operations.
 

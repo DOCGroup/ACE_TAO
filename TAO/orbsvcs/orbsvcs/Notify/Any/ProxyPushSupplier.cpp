@@ -10,10 +10,6 @@ TAO_Notify_ProxyPushSupplier::TAO_Notify_ProxyPushSupplier ()
 {
 }
 
-TAO_Notify_ProxyPushSupplier::~TAO_Notify_ProxyPushSupplier ()
-{
-}
-
 void
 TAO_Notify_ProxyPushSupplier::release ()
 {

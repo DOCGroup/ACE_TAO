@@ -30,15 +30,20 @@ class Supplier : public POA_CosEventComm::PushSupplier
   //   This class is a supplier of events.
   //
 public:
-  Supplier ();
+  Supplier () = default;
   // Constructor
+
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
   int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
   // = The CosEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
   // The skeleton methods.
 
 private:

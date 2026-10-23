@@ -22,9 +22,7 @@ be_visitor_field_cdr_op_cs::be_visitor_field_cdr_op_cs (
 {
 }
 
-be_visitor_field_cdr_op_cs::~be_visitor_field_cdr_op_cs ()
-{
-}
+be_visitor_field_cdr_op_cs::~be_visitor_field_cdr_op_cs () = default;
 
 int
 be_visitor_field_cdr_op_cs::visit_field (be_field *node)

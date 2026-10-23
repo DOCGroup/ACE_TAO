@@ -67,7 +67,7 @@ TAO_PG_ObjectGroupManager::add_member (
 
   // Verify that the member's RepositoryId matches the object group's
   // type ID.
-  const CORBA::Boolean check_type_id = 1;
+  const CORBA::Boolean check_type_id = true;
 
   return this->add_member_i (object_group,
                              the_location,
@@ -97,7 +97,7 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
   try
     {
       // TypeId already checked by GenericFactory.
-      const CORBA::Boolean check_type_id = 0;
+      const CORBA::Boolean check_type_id = false;
 
       new_group = this->add_member_i (object_group,
                                       the_location,
@@ -439,6 +439,15 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
   // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
   // just call TAO_PG_ObjectGroupManager::object_group() here.
 
+  // This manager's map is keyed by the decimal ObjectId generated from
+  // the 32-bit FactoryCreationId.
+  char object_id_string[14] {};
+  ACE_OS::sprintf (object_id_string,
+                   "%ul",
+                   ACE_U64_TO_U32 (group_id));
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (object_id_string);
+
   TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -446,8 +455,7 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
                       this->lock_,
                       PortableGroup::ObjectGroup::_nil ());
 
-    if (this->object_group_map_.find (ACE_U64_TO_U32 (group_id),
-                                      group_entry)
+    if (this->object_group_map_.find (oid.in (), group_entry)
          != 0)
       {
         throw PortableGroup::ObjectGroupNotFound ();
@@ -730,7 +738,7 @@ TAO_PG_ObjectGroupManager::valid_type_id (
   CORBA::String_var type_id =
     CORBA::string_dup (group_entry->type_id.in ());
 
-  CORBA::Boolean right_type_id = 0;
+  CORBA::Boolean right_type_id = false;
   {
     // Release the lock during the type_id check.  No need to block
     // other threads during the invocation.

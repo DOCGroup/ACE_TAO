@@ -42,9 +42,7 @@ TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt ()
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     TAO_ESF_Copy_On_Write ()
-      :  pending_writes_ (0),
-         writing_ (0),
-         cond_ (mutex_)
+      :  cond_ (mutex_)
 {
   ACE_NEW (this->collection_, Collection);
 }
@@ -136,7 +134,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &m,
                                        ACE_SYNCH_CONDITION_T &c,
                                        int &p,
-                                       int &w,
+                                       bool &w,
                                        Collection*& cr)
       :  copy (nullptr),
          mutex (m),
@@ -150,10 +148,10 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
     this->pending_writes++;
 
-    while (this->writing_flag != 0)
+    while (this->writing_flag)
       this->cond.wait ();
 
-    this->writing_flag = 1;
+    this->writing_flag = true;
   }
 
   // Copy outside the mutex, because it may take a long time.
@@ -183,7 +181,7 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
     tmp = this->collection;
     this->collection = this->copy;
-    this->writing_flag = 0;
+    this->writing_flag = false;
     this->pending_writes--;
 
     this->cond.signal ();

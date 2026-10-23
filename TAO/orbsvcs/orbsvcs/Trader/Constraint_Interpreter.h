@@ -119,7 +119,7 @@ public:
   struct Preference_Info
   {
     /// True if the preference evaluation didn't return an error for this offer.
-    CORBA::Boolean evaluated_;
+    CORBA::Boolean evaluated_ {};
 
     /// The value of the preference evaluation.
     TAO_Literal_Constraint value_;

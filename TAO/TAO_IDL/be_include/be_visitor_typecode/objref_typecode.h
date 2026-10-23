@@ -29,7 +29,12 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-    be_visitor_objref_typecode (be_visitor_context * ctx);
+    explicit be_visitor_objref_typecode (be_visitor_context * ctx);
+
+    be_visitor_objref_typecode (be_visitor_objref_typecode const &) = delete;
+    be_visitor_objref_typecode (be_visitor_objref_typecode &&) = delete;
+    be_visitor_objref_typecode &operator= (be_visitor_objref_typecode const &) = delete;
+    be_visitor_objref_typecode &operator= (be_visitor_objref_typecode &&) = delete;
 
     /// Visit an object reference / interface.
     /**
@@ -39,13 +44,13 @@ namespace TAO
      *       rest of the legacy method names and their call sites are
      *       updated accordingly.
      */
-    virtual int visit_interface (be_interface * node);
+    int visit_interface (be_interface * node) override;
 
     /// Visit a native.
     /**
      * @see visit_interface
      */
-    virtual int visit_native (be_native * node);
+    int visit_native (be_native * node) override;
 
   private:
     /// Generate TypeCode instance.

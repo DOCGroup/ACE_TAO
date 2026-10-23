@@ -138,7 +138,7 @@ private:
   AST_Type *pd_base_type;
   // Base type of array.
 
-  bool owns_base_type_;
+  bool owns_base_type_ {};
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.
 

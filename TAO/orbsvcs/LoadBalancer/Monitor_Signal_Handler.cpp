@@ -25,7 +25,7 @@ TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
           this->load_manager_->remove_load_monitor (this->location_);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception");
 

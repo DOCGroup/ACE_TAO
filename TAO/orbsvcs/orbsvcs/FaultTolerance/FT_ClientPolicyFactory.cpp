@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_FT_ClientPolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &val)
+    CORBA::Any const &val)
 {
   if (type ==  FT::REQUEST_DURATION_POLICY)
     return TAO_FT_Request_Duration_Policy::create (val);

@@ -54,12 +54,12 @@ class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
 {
 public:
   /// Our Constructor
-  TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
+  explicit TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
   TAO_FT_IOGR_Property ();
 
   /// Destructor
-  ~TAO_FT_IOGR_Property ();
+  ~TAO_FT_IOGR_Property () override;
 
   /// Set the property for the IOGR
   CORBA::Boolean set_property (
@@ -88,7 +88,7 @@ public:
   /// Extract the TagFTGroupTaggedComponent inside the <ior>
   CORBA::Boolean get_tagged_component (
       CORBA::Object_ptr const iogr,
-      FT::TagFTGroupTaggedComponent& ft_group) const;
+      FT::TagFTGroupTaggedComponent &ft_group) const;
 
 private:
   /// An helper function that gets the primary profile from the <ior>

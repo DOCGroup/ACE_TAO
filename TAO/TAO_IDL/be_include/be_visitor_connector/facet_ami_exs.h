@@ -26,17 +26,21 @@ class be_visitor_facet_ami_exs
   //
   //
 public:
-  be_visitor_facet_ami_exs (be_visitor_context *ctx);
+  explicit be_visitor_facet_ami_exs (be_visitor_context *ctx);
 
-  ~be_visitor_facet_ami_exs ();
+  ~be_visitor_facet_ami_exs () override;
+  be_visitor_facet_ami_exs (be_visitor_facet_ami_exs const &) = delete;
+  be_visitor_facet_ami_exs (be_visitor_facet_ami_exs &&) = delete;
+  be_visitor_facet_ami_exs &operator= (be_visitor_facet_ami_exs const &) = delete;
+  be_visitor_facet_ami_exs &operator= (be_visitor_facet_ami_exs &&) = delete;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_component (be_component *node) override;
+  int visit_provides (be_provides *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
+  int visit_attribute (be_attribute *node) override;
 
-  virtual int post_process (be_decl *node);
+  int post_process (be_decl *node) override;
 
 private:
   void init ();
@@ -48,12 +52,12 @@ private:
 
 private:
   /// Storage for the interface type of the facet.
-  be_interface *iface_;
+  be_interface *iface_ {};
 
   /// Flag to tell us which operation body (reply handler
   /// or sendc_* class) we are generating.
-  bool for_reply_handler_;
-  bool sync_;
+  bool for_reply_handler_ {true};
+  bool sync_ {};
 };
 
 //==============================================================
@@ -64,11 +68,11 @@ class Facet_AMI_Exec_Op_Attr_Generator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  Facet_AMI_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
+  explicit Facet_AMI_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

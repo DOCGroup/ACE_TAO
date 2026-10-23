@@ -18,9 +18,7 @@ be_visitor_executor_ami_exs::be_visitor_executor_ami_exs (
 {
 }
 
-be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs ()
-{
-}
+be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs () = default;
 
 int
 be_visitor_executor_ami_exs::visit_connector (be_connector *node)

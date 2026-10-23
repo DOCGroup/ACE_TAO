@@ -52,19 +52,19 @@ namespace TAO_Notify
   public:
     /// The constructor.
     XML_Topology_Factory ();
-    virtual ~XML_Topology_Factory ();
+    ~XML_Topology_Factory () override;
 
     ////////////////////////////////////
     // Override Topology_Factory methods
     // documented in Topology_Factory.h
-    virtual Topology_Saver* create_saver ();
-    virtual Topology_Loader* create_loader();
+    Topology_Saver* create_saver () override;
+    Topology_Loader* create_loader() override;
 
     ////////////////////////////////
     // Override Share_Object methods
     // documented in ace/Shared_Object.h
-    virtual int init (int argc, ACE_TCHAR *argv[]);
-    virtual int fini ();
+    int init (int argc, ACE_TCHAR *argv[]) override;
+    int fini () override;
 
    private:
     ACE_TString save_base_path_;

@@ -11,6 +11,59 @@
 
 #include "valuebox.h"
 
+#include <string>
+
+namespace
+{
+  std::string
+  valuebox_type_name (char const *const_prefix,
+                      char const *name,
+                      char const *type_suffix)
+  {
+    bool is_const = const_prefix[0] == 'c'
+      && const_prefix[1] == 'o'
+      && const_prefix[2] == 'n'
+      && const_prefix[3] == 's'
+      && const_prefix[4] == 't'
+      && const_prefix[5] == ' ';
+
+    if (is_const)
+      {
+        const_prefix += 6;
+      }
+
+    std::string type_name (const_prefix);
+    type_name += name;
+
+    if (is_const)
+      {
+        std::string::size_type star = type_name.find ('*');
+
+        if (star == std::string::npos)
+          {
+            type_name += " const";
+          }
+        else
+          {
+            std::string::size_type position = star;
+            while (position > 0 && type_name[position - 1] == ' ')
+              {
+                --position;
+              }
+
+            type_name.insert (position, " const");
+            if (position == star)
+              {
+                type_name.insert (position + 6, " ");
+              }
+          }
+      }
+
+    type_name += type_suffix;
+    return type_name;
+  }
+}
+
 // ******************************************************
 // Valuebox visitor for client header
 // ******************************************************
@@ -20,9 +73,7 @@ be_visitor_valuebox_ch::be_visitor_valuebox_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_ch::~be_visitor_valuebox_ch ()
-{
-}
+be_visitor_valuebox_ch::~be_visitor_valuebox_ch () = default;
 
 int
 be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
@@ -72,13 +123,13 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "::CORBA::ValueBase * _copy_value ();" << be_nl_2;
 
   // repository id methods
-  *os << "virtual const char* "
+  *os << "virtual char const * "
       << "_tao_obv_repository_id () const;"
       << be_nl_2
       << "virtual void "
       << "_tao_obv_truncatable_repo_ids (Repository_Id_List &ids) const;"
       << be_nl_2
-      << "static const char* "
+      << "static char const * "
       << "_tao_obv_static_repository_id ();" << be_nl_2;
 
   // unmarshal method
@@ -125,7 +176,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   // Private unimplemented default assignment operator
   *os << be_uidt_nl << "private:" << be_idt_nl;
-  *os << "void operator= (const " << node->local_name () << " & val);"
+  *os << "void operator= (" << node->local_name () << " const &val);"
       << be_nl;
 
   *os << be_uidt_nl
@@ -177,25 +228,25 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   // Public accessor and modifier methods
   *os << "// Accessors and modifier" << be_nl;
 
-  *os << "const " << node->full_name () << "_slice* "
+  *os << node->full_name () << "_slice const * "
       << "_value () const;" << be_nl;
 
   *os << node->full_name () << "_slice* " << "_value ();" << be_nl;
 
-  *os << "void" << " _value (const " << node->full_name () << " val);"
+  *os << "void" << " _value (" << node->full_name () << " const val);"
       << be_nl_2;
 
   // Overloaded subscript operators
-  *os << "const " << node->full_name ()
-      << "_slice & operator[] (::CORBA::ULong index) const;" << be_nl;
+  *os << node->full_name ()
+      << "_slice const &operator[] (::CORBA::ULong index) const;" << be_nl;
 
   *os << node->full_name ()
       << "_slice &  operator[] (::CORBA::ULong index);"
       << be_nl_2;
 
   // Explicit conversion functions
-  *os << "const " << node->full_name ()
-      << "_slice * _boxed_in () const;"
+  *os << node->full_name ()
+      << "_slice const *_boxed_in () const;"
       << be_nl;
 
   *os << node->full_name () << "_slice * _boxed_inout ();" << be_nl;
@@ -344,8 +395,6 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   *os << "& operator[] (::CORBA::ULong index);" << be_nl;
 
   // Generate base type for sequence then remainder of operator []
-  *os << "const ";
-
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -355,7 +404,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << "& operator[] (::CORBA::ULong index) const;" << be_nl_2
+  *os << " const &operator[] (::CORBA::ULong index) const;" << be_nl_2
       << "::CORBA::ULong maximum () const;" << be_nl
       << "::CORBA::ULong length () const;" << be_nl
       << "void length (::CORBA::ULong len);" << be_nl_2;
@@ -372,8 +421,8 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  const char *string_type;
-  const char *char_type;
+  char const *string_type {};
+  char const *char_type {};
 
   if (node->node_type () == AST_Decl::NT_string)
     {
@@ -405,8 +454,8 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   this->emit_constructor_one_arg (node, "", "const ", "");
 
   // Public constructor with one argument of type const CORBA::String_var&
-  *os << vb_node->local_name () << " (const ::CORBA::" << string_type
-      << "_var& var);" << be_nl;
+  *os << vb_node->local_name () << " (::CORBA::" << string_type
+      << "_var const &var);" << be_nl;
 
   // Public copy constructor
   this->emit_copy_constructor ();
@@ -421,13 +470,13 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 
   // Public assignment operator with one argument of type
   // const CORBA::String_var&
-  *os << vb_node->local_name () << "& operator= (const ::CORBA::"
-      << string_type << "_var& var);" << be_nl_2;
+  *os << vb_node->local_name () << "& operator= (::CORBA::"
+      << string_type << "_var const &var);" << be_nl_2;
 
   *os << "// Accessor" << be_nl;
 
   // Accessor function takes no arguments and returns a const char *
-  *os << "const " << node->full_name ()
+  *os << valuebox_type_name ("const ", node->full_name (), "").c_str ()
       << " _value () const;" << be_nl_2;
 
   *os << "// Modifiers" << be_nl;
@@ -436,11 +485,13 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   *os << "void _value (" << node->full_name () << " val);" << be_nl;
 
   // Modifier function with one argument of type const char *
-  *os << "void _value (const " << node->full_name () << " val);"
+  *os << "void _value ("
+      << valuebox_type_name ("const ", node->full_name (), "").c_str ()
+      << " val);"
       << be_nl;
 
   // Modifier function with one argument of type const CORBA::String_var&
-  *os << "void _value (const ::CORBA::" << string_type << "_var& var);"
+  *os << "void _value (::CORBA::" << string_type << "_var const &var);"
       << be_nl_2;
 
   // Access to the boxed value for method signatures
@@ -669,7 +720,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
 
 int
 be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
-                                              const char * type_suffix,
+                                              char const *type_suffix,
                                               bool is_any)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -743,9 +794,9 @@ be_visitor_valuebox_ch::emit_default_constructor ()
 
 void
 be_visitor_valuebox_ch::emit_constructor_one_arg (be_decl *node,
-                                                  const char * type_suffix,
-                                                  const char * const_prefix,
-                                                  const char * ref_modifier)
+                                                  char const *type_suffix,
+                                                  char const *const_prefix,
+                                                  char const *ref_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -753,8 +804,9 @@ be_visitor_valuebox_ch::emit_constructor_one_arg (be_decl *node,
   be_decl * vb_node = this->ctx_->node ();
 
   // Public constructor with one argument of underlying type
-  *os << vb_node->local_name () << " (" << const_prefix << node->full_name ()
-      << type_suffix << ref_modifier << " val);" << be_nl;
+  *os << vb_node->local_name () << " ("
+      << valuebox_type_name (const_prefix, node->full_name (), type_suffix).c_str ()
+      << ref_modifier << " val);" << be_nl;
 }
 
 void
@@ -767,39 +819,40 @@ be_visitor_valuebox_ch::emit_copy_constructor ()
 
   // Public Copy constructor
   *os << vb_node->local_name ()
-      << " (const " << vb_node->local_name () << "& val);" << be_nl;
+      << " (" << vb_node->local_name () << " const &val);" << be_nl;
 }
 
 void
 be_visitor_valuebox_ch::emit_assignment (be_decl *node,
-                                         const char * type_suffix,
-                                         const char * const_prefix,
-                                         const char * ref_modifier)
+                                         char const *type_suffix,
+                                         char const *const_prefix,
+                                         char const *ref_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * vb_node = this->ctx_->node ();
 
-  *os << vb_node->local_name () << "& operator= (" << const_prefix
-      << node->full_name () << type_suffix << ref_modifier << " val);"
+  *os << vb_node->local_name () << "& operator= ("
+      << valuebox_type_name (const_prefix, node->full_name (), type_suffix).c_str ()
+      << ref_modifier << " val);"
       << be_nl_2;
 }
 
 void
 be_visitor_valuebox_ch::emit_boxed_access (be_decl *node,
-                                           const char * type_suffix,
-                                           const char *const_prefix,
-                                           const char *in_ref_modifier,
-                                           const char *out_ref_modifier)
+                                           char const *type_suffix,
+                                           char const *const_prefix,
+                                           char const *in_ref_modifier,
+                                           char const *out_ref_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "// Access to the boxed value for method signatures" << be_nl;
 
   // Access to the boxed value for method signatures
-  *os << const_prefix << node->full_name () << type_suffix << in_ref_modifier
-      << " _boxed_in () const;" << be_nl
+  *os << valuebox_type_name (const_prefix, node->full_name (), type_suffix).c_str ()
+      << in_ref_modifier << " _boxed_in () const;" << be_nl
       << node->full_name () << type_suffix << "&"
       << " _boxed_inout ();" << be_nl
       << node->full_name () << type_suffix << out_ref_modifier << "&"
@@ -814,21 +867,21 @@ be_visitor_valuebox_ch::emit_accessor_modifier (be_decl *node)
   *os << "// Accessors and modifier" << be_nl;
 
   // Public accessor method (const)
-  *os << "const " << node->full_name () << "& _value () const;"
+  *os << node->full_name () << " const &_value () const;"
       << be_nl;
 
   // Public accessor method
   *os << node->full_name () << "& _value ();" << be_nl;
 
   // Public modifier method
-  *os << "void" << " _value (const " << node->full_name () << "& val);"
+  *os << "void" << " _value (" << node->full_name () << " const &val);"
       << be_nl_2;
 }
 
 
 void
 be_visitor_valuebox_ch::emit_boxed_member_var (be_decl *node,
-                                               const char * type_suffix)
+                                               char const *type_suffix)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

@@ -156,7 +156,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
 
   if (this->filterable_data_.find (key, any) == 0)
     {
-      if (any.impl () != 0)
+      if (any.impl () != nullptr)
         {
           this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (&any));
           return_value = 0;
@@ -430,13 +430,13 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
   switch (this->implicit_id_)
   {
   case FILTERABLE_DATA:
-    if (this->filterable_data_.find (name, any) != 0 || any.impl () == 0)
+    if (this->filterable_data_.find (name, any) != 0 || any.impl () == nullptr)
       {
         return -1;
       }
     break;
   case VARIABLE_HEADER:
-    if (this->variable_header_.find (name, any) != 0|| any.impl () == 0)
+    if (this->variable_header_.find (name, any) != 0|| any.impl () == nullptr)
       {
         return -1;
       }
@@ -837,13 +837,13 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
           (this->variable_header_.find (ACE_CString (value, 0, false)) == 0);
         break;
       case TYPE_NAME:
-        result = (this->type_name_.in () != 0);
+        result = (this->type_name_.in () != nullptr);
         break;
       case EVENT_NAME:
-        result = (this->event_name_.in () != 0);
+        result = (this->event_name_.in () != nullptr);
         break;
       case DOMAIN_NAME:
-        result = (this->domain_name_.in () != 0);
+        result = (this->domain_name_.in () != nullptr);
         break;
         // Anything other than the above cases is an error.
       default:
@@ -1102,7 +1102,7 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (ETCL_Binary_Expr *binary)
           this->queue_.dequeue_head (right);
           CORBA::Boolean result =
             (ACE_OS::strstr ((const char *) right,
-                             (const char *) left) != 0);
+                             (const char *) left) != nullptr);
           this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
         }
@@ -1448,9 +1448,5 @@ TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
 
   return true;
 }
-
-const size_t TAO_Notify_Constraint_Visitor::implicit_ids_size_ = 27;
-const size_t TAO_Notify_Constraint_Visitor::filterable_data_size_ = 31;
-const size_t TAO_Notify_Constraint_Visitor::variable_header_size_ = 31;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

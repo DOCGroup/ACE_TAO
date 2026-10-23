@@ -31,10 +31,10 @@ class TAO_Notify_Serv_Export TAO_Notify_StructuredPushSupplier : public TAO_Noti
 {
 public:
   /// Constructor
-  TAO_Notify_StructuredPushSupplier (TAO_Notify_ProxyConsumer* proxy);
+  explicit TAO_Notify_StructuredPushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_StructuredPushSupplier ();
+  ~TAO_Notify_StructuredPushSupplier () override = default;
 
   /// Init
   void init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier);

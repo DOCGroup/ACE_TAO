@@ -30,7 +30,7 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
   // @@ I'm probably over complicating this implementation, but that's
   //    what you get when you try to be overly efficient.  :-)
   //        -Ossama
-  const char * password = static_cast<char *> (userdata);
+  char const * password = static_cast<char *> (userdata);
 
   int pwlen = -1;
 
@@ -68,15 +68,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
    TAO::SL3::CredentialsCurator_ptr curator,
-   const CORBA::Any & acquisition_arguments)
+   CORBA::Any const & acquisition_arguments)
   : lock_ (),
     curator_ (TAO::SL3::CredentialsCurator::_duplicate (curator)),
-    acquisition_arguments_ (acquisition_arguments),
-    destroyed_ (false)
-{
-}
-
-TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer ()
+    acquisition_arguments_ (acquisition_arguments)
 {
 }
 
@@ -115,7 +110,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
-    const CORBA::Any & /* acquisition_arguments */)
+    CORBA::Any const & /* acquisition_arguments */)
 {
   // SSL/TLS credentials acquisition does generate continuation data.
   throw CORBA::BAD_INV_ORDER ();
@@ -126,7 +121,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 {
   this->check_validity ();
 
-  const ::SSLIOP::AuthData *data {};
+  ::SSLIOP::AuthData const *data {};
 
   if (!(this->acquisition_arguments_ >>= data))
     throw CORBA::BAD_PARAM ();
@@ -199,12 +194,12 @@ TAO::SSLIOP::CredentialsAcquirer::check_validity ()
 }
 
 ::X509 *
-TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
+TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
 {
   // No password is used or needed when reading ASN.1 encoded
   // certificates.
 
-  const char *filename = certificate.filename.in ();
+      char const *filename = certificate.filename.in ();
 
   if (filename == nullptr)
     return nullptr;
@@ -251,7 +246,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
           return nullptr;
         }
 
-      const char *password = certificate.password.in ();
+      char const *password = certificate.password.in ();
 
       // Read PEM encoded X.509 certificate from a file, and convert
       // it to OpenSSL's internal X.509 format.
@@ -270,12 +265,12 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
 }
 
 ::EVP_PKEY *
-TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
+TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
 {
   // No password is used or needed when reading ASN.1 encoded
   // private keys.
 
-  const char *filename = key.filename.in ();
+      char const *filename = key.filename.in ();
 
   if (filename == nullptr)
     return nullptr;
@@ -324,7 +319,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
           return nullptr;
         }
 
-      const char *password = key.password.in ();
+      char const *password = key.password.in ();
 
       // Read PEM encoded private key from a file, and convert it to
       // OpenSSL's internal private key format.

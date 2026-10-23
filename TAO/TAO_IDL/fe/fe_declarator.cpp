@@ -157,7 +157,7 @@ FE_Declarator::compose (AST_Decl *d)
       // The right way to do this is with a separate traversal
       // after the entire AST is built.
       /*
-      char *current_prefix = 0;
+      char *current_prefix = nullptr;
       idl_global->pragma_prefixes ().top (current_prefix);
 
       if (current_prefix != 0

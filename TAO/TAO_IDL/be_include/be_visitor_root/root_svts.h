@@ -26,11 +26,16 @@
 class be_visitor_root_svts : public be_visitor_root
 {
 public:
-  be_visitor_root_svts (be_visitor_context *ctx);
+  explicit be_visitor_root_svts (be_visitor_context *ctx);
 
-  ~be_visitor_root_svts ();
+  ~be_visitor_root_svts () override;
 
-  virtual int visit_root (be_root *node);
+  be_visitor_root_svts (const be_visitor_root_svts &) = delete;
+  be_visitor_root_svts (be_visitor_root_svts &&) = delete;
+  be_visitor_root_svts &operator= (const be_visitor_root_svts &) = delete;
+  be_visitor_root_svts &operator= (be_visitor_root_svts &&) = delete;
+
+  int visit_root (be_root *node) override;
 
 private:
   /// Set the right context and make a visitor.

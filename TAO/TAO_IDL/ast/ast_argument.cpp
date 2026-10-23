@@ -114,9 +114,7 @@ AST_Argument::AST_Argument (Direction d,
     }
 }
 
-AST_Argument::~AST_Argument ()
-{
-}
+AST_Argument::~AST_Argument () = default;
 
 // Dump this AST_Argument node to the ostream o.
 void

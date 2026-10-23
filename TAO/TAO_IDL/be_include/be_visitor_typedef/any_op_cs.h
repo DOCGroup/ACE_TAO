@@ -29,10 +29,15 @@ class be_visitor_typedef_any_op_cs : public be_visitor_typedef
 {
 public:
   /// constructor
-  be_visitor_typedef_any_op_cs (be_visitor_context *ctx);
+  explicit be_visitor_typedef_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_typedef_any_op_cs () override;
+
+  be_visitor_typedef_any_op_cs (be_visitor_typedef_any_op_cs const &) = delete;
+  be_visitor_typedef_any_op_cs (be_visitor_typedef_any_op_cs &&) = delete;
+  be_visitor_typedef_any_op_cs &operator= (be_visitor_typedef_any_op_cs const &) = delete;
+  be_visitor_typedef_any_op_cs &operator= (be_visitor_typedef_any_op_cs &&) = delete;
 
   /// visit typedef
   int visit_typedef (be_typedef *node) override;

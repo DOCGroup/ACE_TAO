@@ -44,7 +44,7 @@ struct TAO_NL_2
  */
 struct TAO_INDENT
 {
-  TAO_INDENT (int do_now = 0);
+  explicit TAO_INDENT (int do_now = 0);
 
   const int do_now_;
 };
@@ -57,7 +57,7 @@ struct TAO_INDENT
  */
 struct TAO_UNINDENT
 {
-  TAO_UNINDENT (int do_now = 0);
+  explicit TAO_UNINDENT (int do_now = 0);
 
   const int do_now_;
 };
@@ -73,11 +73,11 @@ extern const TAO_UNINDENT be_uidt_nl;
 // conditionally output a newline and some form of "ACE_CHECK".
 struct TAO_ACE_CHECK
 {
-  TAO_ACE_CHECK (const char *retval = 0,
+  TAO_ACE_CHECK (const char *retval = nullptr,
                  bool do_return = false);
 
   const char *retval_;
-  bool do_return_;
+  bool do_return_ {};
 };
 
 /**
@@ -162,7 +162,7 @@ public:
 
   /// Generate a #if !defined, #defined macro
   int gen_ifdef_macro (const char *flat_name,
-                       const char *suffix = 0,
+                       const char *suffix = nullptr,
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
@@ -223,13 +223,13 @@ public:
 
 protected:
   /// The underlying low-level I/O handle
-  FILE *fp_;
+  FILE *fp_ {};
 
   /// Stream type
   TAO_OutStream::STREAM_TYPE st_;
 
   /// Indentation level
-  int indent_level_;
+  int indent_level_ {};
 
   /// Used to set tab spaces.
   ACE_CString tab_unit_str_;

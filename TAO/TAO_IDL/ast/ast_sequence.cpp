@@ -103,9 +103,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     AST_ConcreteType (AST_Decl::NT_sequence,
                       n),
     pd_max_size (ms),
-    pd_base_type (bt),
-    unbounded_ (true),
-    owns_base_type_ (false)
+    pd_base_type (bt)
 {
   FE_Utils::tmpl_mod_ref_check (this, bt);
 
@@ -145,9 +143,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     || nt == AST_Decl::NT_param_holder;
 }
 
-AST_Sequence::~AST_Sequence ()
-{
-}
+AST_Sequence::~AST_Sequence () = default;
 
 // Public operations.
 

@@ -50,11 +50,11 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_Connection_Handler
 {
 public:
-  TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = nullptr);
+  explicit TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
   /// Constructor. arg parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
-  TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
+  explicit TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
 
 
   /// Destructor.

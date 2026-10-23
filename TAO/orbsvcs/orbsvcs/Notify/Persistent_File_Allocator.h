@@ -129,6 +129,11 @@ public:
   /// The destructor.
   ~Persistent_File_Allocator();
 
+  Persistent_File_Allocator (const Persistent_File_Allocator&) = delete;
+  Persistent_File_Allocator (Persistent_File_Allocator&&) = delete;
+  Persistent_File_Allocator& operator= (const Persistent_File_Allocator&) = delete;
+  Persistent_File_Allocator& operator= (Persistent_File_Allocator&&) = delete;
+
   bool open (const ACE_TCHAR* filename,
     const size_t block_size = 512);
 

@@ -23,12 +23,16 @@
 class be_visitor_component_svth : public be_visitor_component
 {
 public:
-  be_visitor_component_svth (be_visitor_context *ctx);
+  explicit be_visitor_component_svth (be_visitor_context *ctx);
 
-  ~be_visitor_component_svth ();
+  ~be_visitor_component_svth () override;
+  be_visitor_component_svth (be_visitor_component_svth const &) = delete;
+  be_visitor_component_svth (be_visitor_component_svth &&) = delete;
+  be_visitor_component_svth &operator= (be_visitor_component_svth const &) = delete;
+  be_visitor_component_svth &operator= (be_visitor_component_svth &&) = delete;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 
 private:
   TAO_OutStream &os_;

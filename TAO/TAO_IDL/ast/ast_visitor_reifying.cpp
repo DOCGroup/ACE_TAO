@@ -38,8 +38,7 @@
 ast_visitor_reifying::ast_visitor_reifying (
       ast_visitor_context *ctx)
   : ast_visitor (),
-    ctx_ (ctx),
-    reified_node_ (nullptr)
+    ctx_ (ctx)
 {
 }
 

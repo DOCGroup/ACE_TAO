@@ -12,9 +12,7 @@ TAO_Contained_i::TAO_Contained_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_Contained_i::~TAO_Contained_i ()
-{
-}
+TAO_Contained_i::~TAO_Contained_i () = default;
 
 void
 TAO_Contained_i::destroy ()

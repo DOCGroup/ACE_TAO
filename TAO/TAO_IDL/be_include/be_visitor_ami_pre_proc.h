@@ -39,7 +39,7 @@ private:
   };
 
 public:
-  be_visitor_ami_pre_proc (be_visitor_context *ctx);
+  explicit be_visitor_ami_pre_proc (be_visitor_context *ctx);
 
   ~be_visitor_ami_pre_proc () override;
 

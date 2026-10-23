@@ -7,5 +7,5 @@
 ACE_INLINE void
 Implicit_Deactivator::release ()
 {
-  this->id_ = 0;
+  this->id_ = nullptr;
 }

@@ -34,12 +34,7 @@ be_type::be_type (AST_Decl::NodeType nt,
     AST_Type (nt,
               n),
     be_decl (nt,
-             n),
-    tc_name_ (nullptr),
-    common_varout_gen_ (false),
-    seen_in_sequence_ (false),
-    seen_in_map_(false),
-    seen_in_operation_ (false)
+             n)
 {
   if (n != nullptr)
     {
@@ -47,9 +42,7 @@ be_type::be_type (AST_Decl::NodeType nt,
     }
 }
 
-be_type::~be_type ()
-{
-}
+be_type::~be_type () = default;
 
 // Compute the typecode name. The idea is to use the fully scoped name,
 // however, prepend a _tc_ to the last component. A slightly different approach

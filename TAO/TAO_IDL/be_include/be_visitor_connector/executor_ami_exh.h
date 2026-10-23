@@ -27,12 +27,16 @@ class be_visitor_executor_ami_exh
   //
   //
 public:
-  be_visitor_executor_ami_exh (be_visitor_context *ctx);
+  explicit be_visitor_executor_ami_exh (be_visitor_context *ctx);
 
-  ~be_visitor_executor_ami_exh ();
+  ~be_visitor_executor_ami_exh () override;
+  be_visitor_executor_ami_exh (be_visitor_executor_ami_exh const &) = delete;
+  be_visitor_executor_ami_exh (be_visitor_executor_ami_exh &&) = delete;
+  be_visitor_executor_ami_exh &operator= (be_visitor_executor_ami_exh const &) = delete;
+  be_visitor_executor_ami_exh &operator= (be_visitor_executor_ami_exh &&) = delete;
 
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_provides (be_provides *node);
+  int visit_connector (be_connector *node) override;
+  int visit_provides (be_provides *node) override;
 };
 
 #endif /* _BE_CONNECTOR_EXECUTOR_AMI_EXH_H_ */

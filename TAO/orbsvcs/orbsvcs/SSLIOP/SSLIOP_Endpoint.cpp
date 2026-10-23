@@ -14,19 +14,17 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
+TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (::SSLIOP::SSL const *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
     object_addr_ (),
     iiop_endpoint_ (iiop_endp),
-    destroy_iiop_endpoint_ (false),
     qop_ (::Security::SecQOPIntegrityAndConfidentiality),
 #if !defined (VXWORKS) && !defined (__QNX__)
     // Some compilers don't like the initialization
     trust_ (),
 #endif /* !VXWORKS && !__QNX__ */
-    credentials_ (),
-    credentials_set_ (0)
+    credentials_ ()
 {
   if (ssl_component != nullptr)
     {
@@ -76,13 +74,13 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
   // Invalidate the Addr until the first attempt to use it is made.
   this->object_addr_.set_type (-1);
 
-  this->trust_.trust_in_target = 1;
-  this->trust_.trust_in_client = 1;
+  this->trust_.trust_in_target = true;
+  this->trust_.trust_in_client = true;
 }
 
 
 TAO_SSLIOP_Endpoint &
-TAO_SSLIOP_Endpoint::operator= (const TAO_SSLIOP_Endpoint &other)
+TAO_SSLIOP_Endpoint::operator= (TAO_SSLIOP_Endpoint const &other)
 {
   this->object_addr_ = other.object_addr_;
   this->qop_ = other.qop_;
@@ -130,7 +128,7 @@ TAO_SSLIOP_Endpoint::next ()
 }
 
 CORBA::Boolean
-TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_SSLIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
   TAO_Endpoint *const endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
@@ -178,8 +176,8 @@ TAO_SSLIOP_Endpoint::duplicate ()
   // shouldnt be a problem as long as SSL is not used with RTCORBA.
   ACE_NEW_RETURN (endpoint,
                   TAO_SSLIOP_Endpoint (&this->ssl_component_,
-                                         0),
-                  0);
+                                         nullptr),
+                  nullptr);
 
   if (this->credentials_set_)
     endpoint->set_sec_attrs (this->qop_,this->trust_, this->credentials_.in());
@@ -200,7 +198,7 @@ TAO_SSLIOP_Endpoint::hash ()
     return this->hash_val_;
 
   // Do this with no locks held, as it may try to acquire it, too.
-  const ACE_INET_Addr &oaddr = this->object_addr();
+  ACE_INET_Addr const &oaddr = this->object_addr();
 
   { // nested scope for the lock
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -229,7 +227,7 @@ TAO_SSLIOP_Endpoint::hash ()
 }
 
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_SSLIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
@@ -245,7 +243,7 @@ TAO_SSLIOP_Endpoint::object_addr () const
 #endif /* ACE_HAS_IPV6 */
      )
     {
-      const ACE_INET_Addr &iiop_addr = this->iiop_endpoint_->object_addr ();
+      ACE_INET_Addr const &iiop_addr = this->iiop_endpoint_->object_addr ();
 
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
@@ -268,8 +266,8 @@ TAO_SSLIOP_Endpoint::object_addr () const
 
 void
 TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
-                                    const ::Security::EstablishTrust &t,
-                                    const TAO::SSLIOP::OwnCredentials_ptr c)
+                                    ::Security::EstablishTrust const &t,
+                                    TAO::SSLIOP::OwnCredentials_ptr const c)
 {
   if (this->credentials_set_)
     return;
@@ -285,33 +283,27 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
   this->qop_ = q;
   this->trust_ = t;
   this->credentials_ = TAO::SSLIOP::OwnCredentials::_duplicate (c);
-  this->credentials_set_ = 1;
+  this->credentials_set_ = true;
 
   // reset the hash value to force a recomputation.
   this->hash_val_ = 0;
 }
 
-
-
-TAO_SSLIOP_Synthetic_Endpoint::~TAO_SSLIOP_Synthetic_Endpoint ()
-{
-}
-
-TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl)
+TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (
+  ::SSLIOP::SSL const *ssl)
   : TAO_SSLIOP_Endpoint (ssl, nullptr)
 {
 }
 
-
 TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp)
-  : TAO_SSLIOP_Endpoint ((const ::SSLIOP::SSL *)0, iiop_endp)
+  : TAO_SSLIOP_Endpoint (nullptr, iiop_endp)
 {
    this->ssl_component_.port = iiop_endp->port ();
 }
 
 
 CORBA::Boolean
-TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
   TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
@@ -352,7 +344,7 @@ TAO_SSLIOP_Synthetic_Endpoint::duplicate ()
   // shouldnt be a problem as long as SSL is not used with RTCORBA.
   ACE_NEW_RETURN (endpoint,
                   TAO_SSLIOP_Synthetic_Endpoint (&(this->ssl_component ())),
-                  0);
+                  nullptr);
 
   if (this->credentials_set())
     endpoint->set_sec_attrs (this->qop (),this->trust (), this->credentials ());

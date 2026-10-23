@@ -74,11 +74,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    supports_concrete,
                    abstract,
                    truncatable,
-                   custom),
-    supports_abstract_ (false),
-    var_out_seq_decls_gen_ (false),
-    full_obv_skel_name_ (nullptr),
-    is_amh_excep_holder_ (false)
+                   custom)
 {
   // Check that redefine() copies all members.
 
@@ -131,9 +127,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     }
 }
 
-be_valuetype::~be_valuetype ()
-{
-}
+be_valuetype::~be_valuetype () = default;
 
 void
 be_valuetype::redefine (AST_Interface *from)

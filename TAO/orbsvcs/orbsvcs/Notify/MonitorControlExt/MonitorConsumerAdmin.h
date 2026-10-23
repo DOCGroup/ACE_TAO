@@ -43,22 +43,27 @@ public:
   TAO_MonitorConsumerAdmin ();
 
   /// Remove the statistics for this event channel.
-  virtual ~TAO_MonitorConsumerAdmin ();
+  ~TAO_MonitorConsumerAdmin () override;
+
+  TAO_MonitorConsumerAdmin (TAO_MonitorConsumerAdmin const&) = delete;
+  TAO_MonitorConsumerAdmin (TAO_MonitorConsumerAdmin&&) = delete;
+  TAO_MonitorConsumerAdmin& operator= (TAO_MonitorConsumerAdmin const&) = delete;
+  TAO_MonitorConsumerAdmin& operator= (TAO_MonitorConsumerAdmin&&) = delete;
 
   /// Register our statistic and control objects.
   void register_stats_controls (TAO_MonitorEventChannel* mec,
                                 const ACE_CString& name);
 
-  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_named_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id,
-    const char * name);
+    const char * name) override;
 
-  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID_out proxy_id);
+    CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
 
   TAO_MonitorEventChannel* get_ec () const;
@@ -68,11 +73,11 @@ public:
 
   /// Receive the queue count and store the approximated queue size in
   /// our statistic object.
-  virtual void update_queue_count (size_t count);
+  void update_queue_count (size_t count) override;
 
-  virtual void count_queue_overflow (bool local_overflow, bool global_overflow);
+  void count_queue_overflow (bool local_overflow, bool global_overflow) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   virtual void remove ();

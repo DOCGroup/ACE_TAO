@@ -34,7 +34,7 @@ public:
   be_decl (AST_Decl::NodeType type,
            UTL_ScopedName *n);
 
-  ~be_decl ();
+  ~be_decl () override;
 
   // Methods used by the interface type strategy.
   /// Both the arguments should be non-null!!!. Applies prefix and
@@ -160,51 +160,51 @@ public:
 private:
   // Variables that indicate if the code generation for that node is already
   // been done. This way we avoid regenerating same code.
-  bool cli_hdr_gen_;
-  bool cli_stub_gen_;
-  bool cli_inline_gen_;
-  bool srv_hdr_gen_;
-  bool impl_hdr_gen_;
-  bool srv_skel_gen_;
-  bool impl_skel_gen_;
-  bool srv_inline_gen_;
-  bool tie_skel_gen_;
-  bool cli_hdr_any_op_gen_;
-  bool cli_stub_any_op_gen_;
-  bool cli_hdr_cdr_op_gen_;
-  bool cli_stub_cdr_op_gen_;
-  bool cli_inline_cdr_op_gen_;
-  bool cli_inline_cdr_decl_gen_;
-  bool cli_traits_gen_;
-  bool cli_arg_traits_gen_;
-  bool srv_arg_traits_gen_;
-  bool srv_sarg_traits_gen_;
-  bool cli_pragma_inst_gen_;
-  bool cli_inarg_tmpl_class_gen_;
-  bool cli_inarg_pragma_inst_gen_;
-  bool cli_inoutarg_tmpl_class_gen_;
-  bool cli_inoutarg_pragma_inst_gen_;
-  bool cli_outarg_tmpl_class_gen_;
-  bool cli_outarg_pragma_inst_gen_;
-  bool cli_retarg_tmpl_class_gen_;
-  bool cli_retarg_pragma_inst_gen_;
-  bool srv_tmpl_class_gen_;
-  bool srv_pragma_inst_gen_;
-  bool srv_inarg_tmpl_class_gen_;
-  bool srv_inarg_pragma_inst_gen_;
-  bool srv_inoutarg_tmpl_class_gen_;
-  bool srv_inoutarg_pragma_inst_gen_;
-  bool srv_outarg_tmpl_class_gen_;
-  bool srv_outarg_pragma_inst_gen_;
-  bool srv_retarg_tmpl_class_gen_;
-  bool srv_retarg_pragma_inst_gen_;
-  bool ccm_pre_proc_gen_;
-  bool ex_idl_facet_gen_;
-  bool svnt_hdr_facet_gen_;
-  bool svnt_src_facet_gen_;
-  bool exec_hdr_facet_gen_;
-  bool exec_src_facet_gen_;
-  bool ami4ccm_ex_idl_gen_;
+  bool cli_hdr_gen_ {};
+  bool cli_stub_gen_ {};
+  bool cli_inline_gen_ {};
+  bool srv_hdr_gen_ {};
+  bool impl_hdr_gen_ {};
+  bool srv_skel_gen_ {};
+  bool impl_skel_gen_ {};
+  bool srv_inline_gen_ {};
+  bool tie_skel_gen_ {};
+  bool cli_hdr_any_op_gen_ {};
+  bool cli_stub_any_op_gen_ {};
+  bool cli_hdr_cdr_op_gen_ {};
+  bool cli_stub_cdr_op_gen_ {};
+  bool cli_inline_cdr_op_gen_ {};
+  bool cli_inline_cdr_decl_gen_ {};
+  bool cli_traits_gen_ {};
+  bool cli_arg_traits_gen_ {};
+  bool srv_arg_traits_gen_ {};
+  bool srv_sarg_traits_gen_ {};
+  bool cli_pragma_inst_gen_ {};
+  bool cli_inarg_tmpl_class_gen_ {};
+  bool cli_inarg_pragma_inst_gen_ {};
+  bool cli_inoutarg_tmpl_class_gen_ {};
+  bool cli_inoutarg_pragma_inst_gen_ {};
+  bool cli_outarg_tmpl_class_gen_ {};
+  bool cli_outarg_pragma_inst_gen_ {};
+  bool cli_retarg_tmpl_class_gen_ {};
+  bool cli_retarg_pragma_inst_gen_ {};
+  bool srv_tmpl_class_gen_ {};
+  bool srv_pragma_inst_gen_ {};
+  bool srv_inarg_tmpl_class_gen_ {};
+  bool srv_inarg_pragma_inst_gen_ {};
+  bool srv_inoutarg_tmpl_class_gen_ {};
+  bool srv_inoutarg_pragma_inst_gen_ {};
+  bool srv_outarg_tmpl_class_gen_ {};
+  bool srv_outarg_pragma_inst_gen_ {};
+  bool srv_retarg_tmpl_class_gen_ {};
+  bool srv_retarg_pragma_inst_gen_ {};
+  bool ccm_pre_proc_gen_ {};
+  bool ex_idl_facet_gen_ {};
+  bool svnt_hdr_facet_gen_ {};
+  bool svnt_src_facet_gen_ {};
+  bool exec_hdr_facet_gen_ {};
+  bool exec_src_facet_gen_ {};
+  bool ami4ccm_ex_idl_gen_ {};
 };
 
 #endif // if !defined

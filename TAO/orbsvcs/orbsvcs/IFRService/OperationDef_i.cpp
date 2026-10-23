@@ -19,9 +19,7 @@ TAO_OperationDef_i::TAO_OperationDef_i (
 {
 }
 
-TAO_OperationDef_i::~TAO_OperationDef_i ()
-{
-}
+TAO_OperationDef_i::~TAO_OperationDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_OperationDef_i::def_kind ()

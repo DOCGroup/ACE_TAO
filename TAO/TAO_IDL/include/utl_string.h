@@ -81,9 +81,14 @@ class TAO_IDL_FE_Export UTL_String
 public:
   UTL_String ();
 
-  UTL_String (const char *str, bool take_copy= false);
+  explicit UTL_String (char const* str, bool take_copy = false);
 
-  UTL_String (UTL_String *s, bool force_copy= false);
+  explicit UTL_String (UTL_String *s, bool force_copy = false);
+
+  UTL_String (UTL_String const&) = delete;
+  UTL_String (UTL_String&&) = delete;
+  UTL_String& operator= (UTL_String const&) = delete;
+  UTL_String& operator= (UTL_String&&) = delete;
 
   virtual ~UTL_String ();
 
@@ -107,19 +112,19 @@ public:
   // Like the above but without error or warning message output.
 
   static bool strcmp_caseless (
-    const char *lhs,
-    const char *rhs,
+    char const* lhs,
+    char const* rhs,
     bool &mixed_case);
   // Caseless string compare returns true if match, mixed_case is
   // true if match only true due to ignoring case differences.
 
-  static bool compare (const char *lhs, const char *rhs);
+  static bool compare (char const* lhs, char const* rhs);
   // Compare two const char * (like the UTL_String compare)
 
-  static bool compare_quiet (const char *lhs, const char *rhs);
+  static bool compare_quiet (char const* lhs, char const* rhs);
   // Like the above but without error or warning message output.
 
-  static void get_canonical_rep (const char *src, char *dest);
+  static void get_canonical_rep (char const* src, char *dest);
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string.
 

@@ -395,13 +395,13 @@ protected:
   // be_predefined_type' constructor and can be called
   // from be_decl.
 
-  char *repoID_;
+  char *repoID_ {};
   // Repository ID.
 
-  char *flat_name_;
+  char *flat_name_ {};
   // Flattened fully scoped name.
 
-  int contains_wstring_;
+  int contains_wstring_ {-1};
   // If we are a scope, do we contain a wstring at some level?
 
   void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const;
@@ -419,7 +419,7 @@ protected:
   // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element
-  AST_Annotation_Appls *annotation_appls_;
+  AST_Annotation_Appls *annotation_appls_ {};
 
   /**
    * True if defined using idl_global->eval()
@@ -447,35 +447,35 @@ private:
   ACE_CString pd_file_name;
   // What file defined in.
 
-  UTL_ScopedName *pd_name;
+  UTL_ScopedName *pd_name {};
 
   Identifier *pd_local_name;
   // Name in scope.
 
-  Identifier *pd_original_local_name;
+  Identifier *pd_original_local_name {};
   // _cxx_ removed if any.
 
-  char *full_name_;
+  char *full_name_ {};
   // Our full scoped name.
 
-  char *prefix_;
+  char *prefix_ {};
   // The repository ID prefix.
 
-  char *version_;
+  char *version_ {};
   // Set by #pragma version.
 
   bool anonymous_;
   // Are we an anonymous (no repo ID) type?
 
-  bool typeid_set_;
+  bool typeid_set_ {};
   // Has our repo id been set by a typeId declaration?
 
-  UTL_ScopedName *last_referenced_as_;
+  UTL_ScopedName *last_referenced_as_ {};
   // Temporary holder of the most recent way we were reference.
   // The top level component of this is added to pd_name_referenced.
 
   // The scope in which our prefix, if any, was assigned.
-  UTL_Scope *prefix_scope_;
+  UTL_Scope *prefix_scope_ {};
 
   bool in_tmpl_mod_not_aliased_;
   // false by default - if true, we can't be referenced.

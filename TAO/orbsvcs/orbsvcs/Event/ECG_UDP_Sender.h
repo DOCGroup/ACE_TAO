@@ -107,7 +107,7 @@ public:
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
 
-  ~TAO_ECG_UDP_Sender () override;
+  ~TAO_ECG_UDP_Sender () override = default;
 
   /**
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
@@ -174,7 +174,7 @@ public:
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Sender objects using the static create() method.
-  TAO_ECG_UDP_Sender (CORBA::Boolean crc = 0);
+  explicit TAO_ECG_UDP_Sender (CORBA::Boolean crc = false);
 
 private:
   /// Helpers for the connect() method.

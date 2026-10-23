@@ -148,9 +148,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   this->flat_name_ = ACE::strnew (namebuf);
 }
 
-AST_String::~AST_String ()
-{
-}
+AST_String::~AST_String () = default;
 
 // Redefinition of inherited virtual operations.
 

@@ -87,15 +87,11 @@ AST_Factory::AST_Factory (UTL_ScopedName *n)
               n),
     UTL_Scope (AST_Decl::NT_factory),
     pd_exceptions (nullptr),
-    pd_n_exceptions (0),
-    argument_count_ (-1),
-    has_native_ (0)
+    pd_n_exceptions (0)
 {
 }
 
-AST_Factory::~AST_Factory ()
-{
-}
+AST_Factory::~AST_Factory () = default;
 
 // Public operations.
 

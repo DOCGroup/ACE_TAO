@@ -373,7 +373,7 @@ TAO_PG_GenericFactory::populate_object_group (
 
           // Do not allow the PortableGroup::MemberAlreadyPresent
           // exception to be propagated to this scope.
-          const CORBA::Boolean propagate_member_already_present = 0;
+          const CORBA::Boolean propagate_member_already_present = false;
 
           factory_node.factory_creation_id =
             this->create_member (object_group,
@@ -618,7 +618,7 @@ TAO_PG_GenericFactory::check_minimum_number_members (
 
           try
             {
-              const CORBA::Boolean propagate_member_already_present = 1;
+              const CORBA::Boolean propagate_member_already_present = true;
 
               node.factory_creation_id =
                 this->create_member (object_group,

@@ -54,7 +54,7 @@ namespace TAO
     FT_ServerRequest_Interceptor ();
 
     /// Destructor.
-    ~FT_ServerRequest_Interceptor ();
+    ~FT_ServerRequest_Interceptor () override;
 
     /**
      * @name Methods Required by the Server Request Interceptor
@@ -86,15 +86,15 @@ namespace TAO
         PortableInterceptor::ServerRequestInfo_ptr ri) override;
     //@}
   private:
-    void check_iogr_version (const IOP::ServiceContext &svc);
+    void check_iogr_version (IOP::ServiceContext const &svc);
 
     void update_iogr (
         PortableInterceptor::ServerRequestInfo_ptr ri);
 
   private:
-    CORBA::ULong object_group_ref_version_;
+    CORBA::ULong object_group_ref_version_ {};
 
-    CORBA::Boolean is_primary_;
+    CORBA::Boolean is_primary_ {};
 
     CORBA::Object_var iogr_;
 

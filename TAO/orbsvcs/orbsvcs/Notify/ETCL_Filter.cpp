@@ -422,7 +422,7 @@ TAO_Notify_ETCL_Filter::remove_all_constraints_i ()
       if (iter.next (entry) != 0)
         {
           delete entry->int_id_;
-          entry->int_id_ = 0;
+          entry->int_id_ = nullptr;
         }
     }
 

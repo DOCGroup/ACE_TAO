@@ -81,27 +81,7 @@ be_interface::be_interface (UTL_ScopedName *n,
     be_decl (AST_Decl::NT_interface,
              n),
     be_type (AST_Decl::NT_interface,
-             n),
-    direct_proxy_impl_name_ (nullptr),
-    full_direct_proxy_impl_name_ (nullptr),
-    client_scope_ (nullptr),
-    flat_client_scope_ (nullptr),
-    server_scope_ (nullptr),
-    flat_server_scope_ (nullptr),
-    var_out_seq_decls_gen_ (false),
-    skel_count_ (0),
-    in_mult_inheritance_ (-1),
-    original_interface_ (nullptr),
-    is_amh_rh_ (false),
-    is_ami_rh_ (false),
-    is_ami4ccm_rh_ (false),
-    full_skel_name_ (nullptr),
-    full_coll_name_ (nullptr),
-    local_coll_name_ (nullptr),
-    relative_skel_name_ (nullptr),
-    cached_type_ (-1),
-    has_rw_attributes_ (false),
-    dds_connector_traits_done_ (false)
+             n)
 {
   AST_Decl::NodeType nt = this->node_type ();
 

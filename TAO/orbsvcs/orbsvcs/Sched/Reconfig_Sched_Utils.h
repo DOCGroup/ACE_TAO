@@ -188,27 +188,27 @@ public:
 
   /// Accessor for flag indicating whether node is a thread
   /// delineator.
-  int is_thread_delineator () const;
+  bool is_thread_delineator () const;
 
   /// Mutator for flag indicating whether node is a thread
   /// delineator.
-  void is_thread_delineator (int i);
+  void is_thread_delineator (bool value);
 
   /// Accessor for flag indicating whether node has unresolved remote
   /// dependencies.
-  int has_unresolved_remote_dependencies () const;
+  bool has_unresolved_remote_dependencies () const;
 
   /// Mutator for flag indicating whether node has unresolved remote
   /// dependencies.
-  void has_unresolved_remote_dependencies (int i);
+  void has_unresolved_remote_dependencies (bool value);
 
   /// Accessor for flag indicating whether node has unresolved local
   /// dependencies.
-  int has_unresolved_local_dependencies () const;
+  bool has_unresolved_local_dependencies () const;
 
   /// Mutator for flag indicating whether node has unresolved local
   /// dependencies.
-  void has_unresolved_local_dependencies (int i);
+  void has_unresolved_local_dependencies (bool value);
 
   /**
    * Accessor for effective execution time of the corresponding
@@ -334,15 +334,15 @@ private:
   long rev_finished_;
 
   /// Flag identifying threads in the call graph.
-  int is_thread_delineator_;
+  bool is_thread_delineator_ {};
 
   /// Flag indicating whether or not there are unresolved remote
   /// dependencies in the entry's dependency call chain.
-  int has_unresolved_remote_dependencies_;
+  bool has_unresolved_remote_dependencies_ {};
 
   /// Flag indicating whether or not there are unresolved local
   /// dependencies in the entry's dependency call chain.
-  int has_unresolved_local_dependencies_;
+  bool has_unresolved_local_dependencies_ {};
 
   /// Effective execution time for corresponding RT_Info and its
   /// disjunctively executed dependants.
@@ -373,7 +373,7 @@ private:
   TUPLE_SET prop_tuple_subset_;
 
   /// A pointer to the entry's most recently admitted tuple.
-  TAO_RT_Info_Tuple * current_admitted_tuple_;
+  TAO_RT_Info_Tuple * current_admitted_tuple_ {};
 
   /// Flag indicating whether or not node is enabled.
   RtecScheduler::RT_Info_Enabled_Type_t enabled_;

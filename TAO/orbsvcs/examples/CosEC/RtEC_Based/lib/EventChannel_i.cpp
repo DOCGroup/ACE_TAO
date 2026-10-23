@@ -2,16 +2,14 @@
 #include <memory>
 
 TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i ()
-  : consumer_admin_ (0),
-    supplier_admin_ (0),
-    consumeradmin_ (CosEventChannelAdmin::ConsumerAdmin::_nil ()),
+  : consumeradmin_ (CosEventChannelAdmin::ConsumerAdmin::_nil ()),
     supplieradmin_ (CosEventChannelAdmin::SupplierAdmin::_nil ())
 {
 }
 
 int
-TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
-                                const RtecEventChannelAdmin::SupplierQOS &supplierqos,
+TAO_CosEC_EventChannel_i::init (RtecEventChannelAdmin::ConsumerQOS const &consumerqos,
+                                RtecEventChannelAdmin::SupplierQOS const &supplierqos,
                                 RtecEventChannelAdmin::EventChannel_ptr rtec)
 {
   // Allocate the admins..

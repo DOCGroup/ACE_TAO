@@ -53,7 +53,7 @@ public:
   TAO_EC_Filter ();
 
   /// destructor...
-  virtual ~TAO_EC_Filter ();
+  virtual ~TAO_EC_Filter () = default;
 
   /// Obtain the parent of this filter.
   TAO_EC_Filter* parent () const;

@@ -121,7 +121,7 @@ TAO_Transient_Naming_Context::TAO_Transient_Naming_Context (PortableServer::POA_
   : TAO_Hash_Naming_Context (poa,
                              poa_id),
     counter_ (0),
-    transient_context_ (0)
+    transient_context_ (nullptr)
 {
   ACE_NEW (this->transient_context_,
            TAO_Transient_Bindings_Map (hash_table_size));

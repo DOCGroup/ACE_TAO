@@ -227,15 +227,11 @@ TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
     rev_discovered_ (-1),
     fwd_finished_ (-1),
     rev_finished_ (-1),
-    is_thread_delineator_ (0),
-    has_unresolved_remote_dependencies_ (0),
-    has_unresolved_local_dependencies_ (0),
     aggregate_exec_time_ (0),
     orig_tuple_period_sum_ (0),
     prop_tuple_period_sum_ (0),
     orig_tuple_count_ (0),
     prop_tuple_count_ (0),
-    current_admitted_tuple_ (0),
     enabled_ (rt_info.enabled)
   //    effective_exec_multiplier_ (0),  //WSOA merge commented out
   //  effective_period_ (0)              //WSOA merge commented out
@@ -601,7 +597,7 @@ rev_dfs_status (TAO_Reconfig_Scheduler_Entry::DFS_Status ds)
 // Accessor for flag indicating whether node is a thread
 // delineator.
 
-int
+bool
 TAO_Reconfig_Scheduler_Entry::is_thread_delineator () const
 {
   return this->is_thread_delineator_;
@@ -612,16 +608,16 @@ TAO_Reconfig_Scheduler_Entry::is_thread_delineator () const
 // delineator.
 
 void
-TAO_Reconfig_Scheduler_Entry::is_thread_delineator (int i)
+TAO_Reconfig_Scheduler_Entry::is_thread_delineator (bool value)
 {
-  this->is_thread_delineator_ = i;
+  this->is_thread_delineator_ = value;
 }
 
 
 // Accessor for flag indicating whether node has unresolved remote
 // dependencies.
 
-int
+bool
 TAO_Reconfig_Scheduler_Entry::
 has_unresolved_remote_dependencies () const
 {
@@ -633,16 +629,16 @@ has_unresolved_remote_dependencies () const
 // dependencies.
 
 void
-TAO_Reconfig_Scheduler_Entry::has_unresolved_remote_dependencies (int i)
+TAO_Reconfig_Scheduler_Entry::has_unresolved_remote_dependencies (bool value)
 {
-  this->has_unresolved_remote_dependencies_ = i;
+  this->has_unresolved_remote_dependencies_ = value;
 }
 
 
 // Accessor for flag indicating whether node has unresolved local
 // dependencies.
 
-int
+bool
 TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies () const
 {
   return this->has_unresolved_local_dependencies_;
@@ -653,9 +649,9 @@ TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies () const
 // dependencies.
 
 void
-TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies (int i)
+TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies (bool value)
 {
-  this->has_unresolved_local_dependencies_ = i;
+  this->has_unresolved_local_dependencies_ = value;
 }
 
 /* WSOA merge - commented out
@@ -730,7 +726,7 @@ TAO_RSE_Reset_Visitor::visit (TAO_Reconfig_Scheduler_Entry &rse)
 
   if (rse.actual_rt_info ()->enabled != RtecScheduler::RT_INFO_NON_VOLATILE)
   {
-     rse.is_thread_delineator (1);
+     rse.is_thread_delineator (true);
 
      // Only reset the period for entries that are not root nodes.  Added by BRM.
      if (rse.actual_rt_info ()->threads == 0)
@@ -748,8 +744,8 @@ TAO_RSE_Reset_Visitor::visit (TAO_Reconfig_Scheduler_Entry &rse)
   rse.rev_discovered (-1);
   rse.fwd_finished (-1);
   rse.rev_finished (-1);
-  rse.has_unresolved_remote_dependencies (0);
-  rse.has_unresolved_local_dependencies (0);
+  rse.has_unresolved_remote_dependencies (false);
+  rse.has_unresolved_local_dependencies (false);
   rse.aggregate_exec_time (rse.actual_rt_info ()->worst_case_execution_time);
   rse.current_admitted_tuple (0);
 

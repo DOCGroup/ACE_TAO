@@ -65,7 +65,7 @@ protected:
 
 private:
   // = Data members
-  TAO_RTEventLogFactory_i * rtevent_log_factory_;
+  TAO_RTEventLogFactory_i * rtevent_log_factory_ {};
   // The RTEvent Log Factory.
 
   CORBA::ORB_var orb_;
@@ -77,19 +77,19 @@ private:
   CosNaming::NamingContext_var naming_;
   // A naming context.
 
-  ACE_CString service_name_;
+  ACE_CString service_name_ {"RTEventLogFactory"};
   // The name we use to bind with the NameService
 
-  ACE_TCHAR const * ior_file_name_;
+  ACE_TCHAR const * ior_file_name_ {};
   // The name of the file were we output the factory IOR.
 
-  ACE_TCHAR const * pid_file_name_;
+  ACE_TCHAR const * pid_file_name_ {};
   // The name of a file where the process stores its pid
 
-  bool bind_to_naming_service_;
+  bool bind_to_naming_service_ {true};
   // If true, bind to naming service
 
-  int nthreads_;
+  int nthreads_ {};
   // Number of worker threads.
 };
 

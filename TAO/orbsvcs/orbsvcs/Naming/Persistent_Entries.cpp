@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Persistent_IntId::TAO_Persistent_IntId ()
-  : ref_ (0),
+  : ref_ (nullptr),
     type_ (CosNaming::nobject)
 {
 }
@@ -46,8 +46,8 @@ TAO_Persistent_IntId::operator= (const TAO_Persistent_IntId &rhs)
 }
 
 TAO_Persistent_ExtId::TAO_Persistent_ExtId ()
-  : id_ (0),
-    kind_ (0)
+  : id_ (nullptr),
+    kind_ (nullptr)
 {
 }
 
@@ -116,8 +116,8 @@ TAO_Persistent_ExtId::kind ()
 }
 
 TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId ()
-  : counter_ (0),
-    hash_map_ (0)
+  : counter_ (nullptr),
+    hash_map_ (nullptr)
 {
 }
 
@@ -151,7 +151,7 @@ TAO_Persistent_Index_IntId::operator= (const TAO_Persistent_Index_IntId &rhs)
 }
 
 TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId ()
-  : poa_id_ (0)
+  : poa_id_ (nullptr)
 {
 }
 

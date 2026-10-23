@@ -25,7 +25,7 @@
 class Life_Cycle_Service_i : public POA_LifeCycleService::Life_Cycle_Service
 {
 public:
-  Life_Cycle_Service_i (int debug_level = 1);
+  explicit Life_Cycle_Service_i (int debug_level = 1);
   Life_Cycle_Service_i (Life_Cycle_Service_i const &) = delete;
   Life_Cycle_Service_i (Life_Cycle_Service_i &&) = delete;
   Life_Cycle_Service_i &operator= (Life_Cycle_Service_i const &) = delete;
@@ -52,7 +52,7 @@ public:
   // Registers a factory with specified properties
 
 private:
-  Factory_Trader * factory_trader_ptr_;
+  Factory_Trader * factory_trader_ptr_ {};
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;

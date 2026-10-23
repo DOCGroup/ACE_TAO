@@ -92,7 +92,7 @@ NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
 bool
 NS_group_svc::group_exist ( const ACE_TCHAR* group_name )
 {
-  if (group_name == 0 )
+  if (group_name == nullptr )
     {
       if (TAO_debug_level > 2)
         {
@@ -127,7 +127,7 @@ int
 NS_group_svc::group_create (const ACE_TCHAR* group_name,
                             const ACE_TCHAR* policy )
 {
-  if (group_name == 0 || policy == 0 )
+  if (group_name == nullptr || policy == nullptr )
     {
       if (TAO_debug_level > 2)
         {
@@ -220,7 +220,7 @@ int
 NS_group_svc::group_bind (const ACE_TCHAR* group_name,
                           const ACE_TCHAR* path)
 {
-  if (group_name == 0 || path == 0)
+  if (group_name == nullptr || path == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -307,7 +307,7 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
 int
 NS_group_svc::group_unbind (const ACE_TCHAR* path)
 {
-  if ( path == 0)
+  if ( path == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -407,7 +407,7 @@ int
 NS_group_svc::display_load_policy_group(FT_Naming::LoadBalancingStrategyValue strategy,
                                         const ACE_TCHAR *display_label)
 {
-  if( display_label == 0 )
+  if( display_label == nullptr )
     {
       if (TAO_debug_level > 2)
         {
@@ -468,7 +468,7 @@ int
 NS_group_svc::group_modify (const ACE_TCHAR* group_name,
                             const ACE_TCHAR* policy)
 {
-  if (group_name == 0 || policy == 0)
+  if (group_name == nullptr || policy == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -528,7 +528,7 @@ NS_group_svc::group_modify (const ACE_TCHAR* group_name,
 int
 NS_group_svc::group_remove (const ACE_TCHAR* group_name)
 {
-  if (group_name == 0)
+  if (group_name == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -577,7 +577,7 @@ NS_group_svc::member_add (const ACE_TCHAR* group_name,
                           const ACE_TCHAR* location,
                           const ACE_TCHAR* ior)
 {
-  if (group_name == 0 || location == 0 || ior == 0 )
+  if (group_name == nullptr || location == nullptr || ior == nullptr )
     {
       if (TAO_debug_level > 2)
         {
@@ -655,7 +655,7 @@ NS_group_svc::member_add (const ACE_TCHAR* group_name,
 int
 NS_group_svc::member_list (const ACE_TCHAR* group_name)
 {
-  if (group_name == 0)
+  if (group_name == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -722,7 +722,7 @@ int
 NS_group_svc::member_remove (const ACE_TCHAR* group_name,
                              const ACE_TCHAR* location)
 {
-  if (group_name == 0 || location == 0)
+  if (group_name == nullptr || location == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -797,7 +797,7 @@ int
 NS_group_svc::member_show (const ACE_TCHAR* group_name,
                            const ACE_TCHAR* location)
 {
-  if (group_name == 0 || location == 0)
+  if (group_name == nullptr || location == nullptr)
     {
       if (TAO_debug_level > 2)
         {

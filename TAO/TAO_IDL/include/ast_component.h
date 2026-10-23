@@ -33,8 +33,8 @@ public:
                                        bool full_def_only) override;
 
   // Extend lookup to the supported interfaces.
-  virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_supported (UTL_ScopedName *e,
+                               bool full_def_only) override;
 
   // Accessors.
 
@@ -68,19 +68,19 @@ public:
   using FWD_TYPE = AST_ComponentFwd;
 
 protected:
-  virtual AST_Provides *fe_add_provides (AST_Provides *p);
+  AST_Provides *fe_add_provides (AST_Provides *p) override;
 
-  virtual AST_Uses *fe_add_uses (AST_Uses *p);
+  AST_Uses *fe_add_uses (AST_Uses *p) override;
 
-  virtual AST_Publishes *fe_add_publishes (AST_Publishes *p);
+  AST_Publishes *fe_add_publishes (AST_Publishes *p) override;
 
-  virtual AST_Emits *fe_add_emits (AST_Emits *p);
+  AST_Emits *fe_add_emits (AST_Emits *p) override;
 
-  virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
+  AST_Consumes *fe_add_consumes (AST_Consumes *p) override;
 
-  virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p);
+  AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p) override;
 
-  virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);
+  AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p) override;
 
 protected:
   AST_Component *pd_base_component;

@@ -45,7 +45,7 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Group_List_Store
   {
   public:
-    PG_Group_List_Store (Storable_Factory & storable_factory);
+    explicit PG_Group_List_Store (Storable_Factory & storable_factory);
 
     ~PG_Group_List_Store ();
 
@@ -84,6 +84,11 @@ namespace TAO
     bool list_obsolete ();
 
   private:
+    PG_Group_List_Store (PG_Group_List_Store const &) = delete;
+    PG_Group_List_Store (PG_Group_List_Store &&) = delete;
+    PG_Group_List_Store &operator= (PG_Group_List_Store const &) = delete;
+    PG_Group_List_Store &operator= (PG_Group_List_Store &&) = delete;
+
     Group_Ids group_ids_;
 
     /// Ensure ID is monotonically increasing even when groups gets

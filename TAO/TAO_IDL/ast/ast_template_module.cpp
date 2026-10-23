@@ -29,9 +29,7 @@ AST_Template_Module::AST_Template_Module (
 {
 }
 
-AST_Template_Module::~AST_Template_Module ()
-{
-}
+AST_Template_Module::~AST_Template_Module () = default;
 
 FE_Utils::T_PARAMLIST_INFO *
 AST_Template_Module::template_params () const

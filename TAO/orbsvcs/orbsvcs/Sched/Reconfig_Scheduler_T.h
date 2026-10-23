@@ -75,7 +75,7 @@ public:
   using DEPENDENCY_SET_MAP_ITERATOR = typename DEPENDENCY_SET_MAP::ITERATOR;
 
   /// Default constructor.
-  TAO_Reconfig_Scheduler (int enforce_schedule_stability = 0,
+  TAO_Reconfig_Scheduler (bool enforce_schedule_stability = false,
                           const CORBA::Double & critical_utilization_threshold = 1.0,
                           const CORBA::Double & noncritical_utilization_threshold = 1.1);
 
@@ -88,7 +88,7 @@ public:
                           int dependency_count,
                           ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
                           u_long stability_flags,
-                          int enforce_schedule_stability = 0,
+                          bool enforce_schedule_stability = false,
                           const CORBA::Double & critical_utilization_threshold = 1.0,
                           const CORBA::Double & noncritical_utilization_threshold = 1.1);
 
@@ -535,7 +535,7 @@ protected:
    * order and then priority order at various points
    * during schedule computation.
    */
-  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
+  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_ {};
 
   /// Size of the array of scheduling entry pointers.
   long entry_ptr_array_size_;
@@ -547,7 +547,7 @@ protected:
    * order and then priority order at various points
    * during schedule computation.
    */
-  TAO_RT_Info_Tuple ** tuple_ptr_array_;
+  TAO_RT_Info_Tuple ** tuple_ptr_array_ {};
 
   /// Size of the array of scheduling entry pointers.
   long tuple_ptr_array_size_;
@@ -565,7 +565,7 @@ protected:
    * matters, it will simply return a default value if nothing
    * has been generated.
    */
-  int enforce_schedule_stability_;
+  bool enforce_schedule_stability_;
 
   /// The number of dependencies in the dependency lists of all RT_Infos.
   /// This is used when traversing the dependency graph.

@@ -11,9 +11,7 @@ TAO_StringDef_i::TAO_StringDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_StringDef_i::~TAO_StringDef_i ()
-{
-}
+TAO_StringDef_i::~TAO_StringDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_StringDef_i::def_kind ()

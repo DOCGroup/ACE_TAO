@@ -22,13 +22,17 @@ class TAO_CosEC_PushConsumerWrapper :
   //   class wraps the Cos PushConsumer to make it look like a Rtec
   //   PushConsumer.
 public:
-  TAO_CosEC_PushConsumerWrapper (CosEventComm::PushConsumer_ptr consumer);
+  explicit TAO_CosEC_PushConsumerWrapper (CosEventComm::PushConsumer_ptr consumer);
   // Constructor.
 
-  ~TAO_CosEC_PushConsumerWrapper () = default;
+  ~TAO_CosEC_PushConsumerWrapper () override = default;
+  TAO_CosEC_PushConsumerWrapper (TAO_CosEC_PushConsumerWrapper const &) = delete;
+  TAO_CosEC_PushConsumerWrapper (TAO_CosEC_PushConsumerWrapper &&) = delete;
+  TAO_CosEC_PushConsumerWrapper &operator= (TAO_CosEC_PushConsumerWrapper const &) = delete;
+  TAO_CosEC_PushConsumerWrapper &operator= (TAO_CosEC_PushConsumerWrapper &&) = delete;
   // Destructor.
 
-  void push (const RtecEventComm::EventSet & data) override;
+  void push (RtecEventComm::EventSet const &data) override;
   // This method is called by the RTEvent Channel to supply data.
 
   void disconnect_push_consumer () override;
@@ -50,7 +54,7 @@ TAO_CosEC_PushConsumerWrapper::TAO_CosEC_PushConsumerWrapper
 }
 
 void
-TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set)
+TAO_CosEC_PushConsumerWrapper::push (RtecEventComm::EventSet const &set)
 {
   for (CORBA::ULong i = 0;
        i < set.length ();
@@ -60,7 +64,7 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set)
         {
           this->consumer_->push (set[i].data.any_value);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Ignore the exception...
         }
@@ -86,11 +90,10 @@ TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer ()
 }
 
 TAO_CosEC_ProxyPushSupplier_i::TAO_CosEC_ProxyPushSupplier_i
-(const RtecEventChannelAdmin::ConsumerQOS &qos,
- RtecEventChannelAdmin::ProxyPushSupplier_ptr pps)
+  (RtecEventChannelAdmin::ConsumerQOS const &qos,
+   RtecEventChannelAdmin::ProxyPushSupplier_ptr pps)
   : qos_ (qos),
-    pps_ (RtecEventChannelAdmin::ProxyPushSupplier::_duplicate (pps)),
-    wrapper_ (0)
+    pps_ (RtecEventChannelAdmin::ProxyPushSupplier::_duplicate (pps))
 {
 }
 
@@ -141,9 +144,9 @@ TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer
   this->wrapper_ = auto_wrapper.release ();
 }
 
-int
+bool
 TAO_CosEC_ProxyPushSupplier_i::connected ()
 {
-  return this->wrapper_ == 0 ? 0 : 1;
+  return this->wrapper_ != nullptr;
 }
 

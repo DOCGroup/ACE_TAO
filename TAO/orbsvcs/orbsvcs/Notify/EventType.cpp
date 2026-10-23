@@ -50,9 +50,9 @@ TAO_Notify_EventType::TAO_Notify_EventType (
   this->init_i (event_type.domain_name.in (), event_type.type_name.in ());
 }
 
-TAO_Notify_EventType::~TAO_Notify_EventType ()
-{
-}
+TAO_Notify_EventType::TAO_Notify_EventType (const TAO_Notify_EventType& event_type) = default;
+
+TAO_Notify_EventType::~TAO_Notify_EventType () = default;
 
 void
 TAO_Notify_EventType::recompute_hash ()

@@ -54,7 +54,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
 {
   int result = 0;
 
-  const CosNotification::FilterableEventBody & filterable =
+  CosNotification::FilterableEventBody const & filterable =
     event.filterable_data;
   CORBA::ULong item_count = filterable.length ();
   if (TAO_debug_level > 6)
@@ -93,13 +93,13 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   if ((result == 0) && (item_count == 2))
   {
     // All objects at location failed.
-    fault_event_desc.all_at_location_failed = 1;
+    fault_event_desc.all_at_location_failed = true;
   }
 
   if ((result == 0) && (item_count == 3))
   {
     // All objects of type at location failed.
-    fault_event_desc.all_of_type_at_location_failed = 1;
+    fault_event_desc.all_of_type_at_location_failed = true;
     result = this->get_type_id (
       filterable[2].value, fault_event_desc.type_id.out());
   }
@@ -107,7 +107,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   if ((result == 0) && (item_count == 4))
   {
     // An object (replica) at a location failed.
-    fault_event_desc.object_at_location_failed = 1;
+    fault_event_desc.object_at_location_failed = true;
     result = this->get_type_id (
       filterable[2].value, fault_event_desc.type_id.out());
     if (result == 0)
@@ -118,19 +118,19 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   }
 
   // A specific object at a location failed.
-  if ((result == 0) && (fault_event_desc.object_at_location_failed == 1))
+  if ((result == 0) && fault_event_desc.object_at_location_failed)
   {
     result = this->single_replica_failure (fault_event_desc);
   }
 
   // All objects at location failed.
-  if ((result == 0) && (fault_event_desc.all_at_location_failed == 1))
+  if ((result == 0) && fault_event_desc.all_at_location_failed)
   {
     result = this->location_failure (fault_event_desc);
   }
 
   // All objects of type at location failed.
-  if ((result == 0) && (fault_event_desc.all_of_type_at_location_failed == 1))
+  if ((result == 0) && fault_event_desc.all_of_type_at_location_failed)
   {
     result = this->type_failure (fault_event_desc);
   }
@@ -147,9 +147,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
 // Extract a string type_id from CORBA::Any.
 // Caller owns the string returned via <type_id>.
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id (
-  const CORBA::Any& val, PortableGroup::TypeId_out type_id)
+  CORBA::Any const &val, PortableGroup::TypeId_out type_id)
 {
-  const char* type_id_value;
+  char const *type_id_value {};
   if ((val >>= type_id_value) == 0)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -165,7 +165,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id (
 
 // Extract the ObjectGroupId from CORBA::Any.
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id (
-  const CORBA::Any& val, PortableGroup::ObjectGroupId& id)
+  CORBA::Any const &val, PortableGroup::ObjectGroupId &id)
 {
   PortableGroup::ObjectGroupId temp_id = (PortableGroup::ObjectGroupId)0;
   if ((val >>= temp_id) == 0)
@@ -180,9 +180,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id (
 }
 
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_location (
-  const CORBA::Any& val, PortableGroup::Location_out location)
+  CORBA::Any const &val, PortableGroup::Location_out location)
 {
-  const PortableGroup::Location* temp_loc;
+  PortableGroup::Location const *temp_loc {};
   if ((val >>= temp_loc) == 0)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -202,7 +202,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_location (
 
 // Get the MembershipStyle property.
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style (
-  const PortableGroup::Properties & properties,
+  PortableGroup::Properties const & properties,
   PortableGroup::MembershipStyleValue & membership_style)
 {
   PortableGroup::Name prop_name (1);
@@ -232,7 +232,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style (
 }
 
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style (
-  const PortableGroup::Properties & properties,
+  PortableGroup::Properties const & properties,
   FT::ReplicationStyleValue & replication_style)
 {
   PortableGroup::Name prop_name (1);
@@ -262,7 +262,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style (
 }
 
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members (
-  const PortableGroup::Properties & properties,
+  PortableGroup::Properties const & properties,
   PortableGroup::MinimumNumberMembersValue & minimum_number_members)
 {
   PortableGroup::Name prop_name (1);
@@ -292,7 +292,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members (
 }
 
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members (
-  const PortableGroup::Properties & properties,
+  PortableGroup::Properties const & properties,
   PortableGroup::InitialNumberMembersValue & initial_number_members)
 {
   PortableGroup::Name prop_name (1);
@@ -322,7 +322,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members (
 }
 
 int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
-  const PortableGroup::Properties & properties,
+  PortableGroup::Properties const & properties,
   PortableGroup::FactoryInfos_out factories)
 {
   PortableGroup::Name prop_name (1);
@@ -330,7 +330,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
   prop_name[0].id = CORBA::string_dup (FT::FT_FACTORIES);
   int result = 0;
 
-  const PortableGroup::FactoryInfos* temp_factories = 0;
+  PortableGroup::FactoryInfos const *temp_factories = nullptr;
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value) == 1)
   {
@@ -361,9 +361,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
 }
 
 int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
-  const PortableGroup::ObjectGroup_ptr iogr,
-  const PortableGroup::Location & location,
-  int & object_is_primary)
+  PortableGroup::ObjectGroup_ptr const iogr,
+  PortableGroup::Location const & location,
+  bool & object_is_primary)
 {
   // To determine if this was a primary that faulted:
   // Get the TagFTGroupTaggedComponent from the IOGR and search
@@ -372,7 +372,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
   // those of the primary.  If they match, it was a primary fault.
 
   int result = 0;
-  object_is_primary = 0;
+  object_is_primary = false;
 
   try
   {
@@ -422,7 +422,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
           failed_obj.in());
         if (equiv)
         {
-          object_is_primary = 1;
+          object_is_primary = true;
           result = 0;
         }
       }
@@ -444,7 +444,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
       result = -1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "));
@@ -484,7 +484,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     properties = this->replication_manager_->get_properties (
       the_object_group.in());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       ACE_TEXT (
@@ -677,7 +677,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       the_object_group = new_object_group;
     }
 
-    if (fault_event_desc.object_is_primary == 1)
+    if (fault_event_desc.object_is_primary)
     {
       if (TAO_debug_level > 6)
       {
@@ -743,7 +743,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member (
         fault_event_desc.location.in());
     new_iogr = temp_iogr._retn ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member: ");
@@ -787,7 +787,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
         -1);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary: ");
@@ -887,7 +887,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
 
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::add_members: ");
@@ -949,7 +949,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
       result = this->single_replica_failure (fault_event_desc);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::location_failure: ");
@@ -1019,7 +1019,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
       }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       "TAO::FT_ReplicationManagerFaultAnalyzer::type_failure: ");

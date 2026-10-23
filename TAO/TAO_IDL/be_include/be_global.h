@@ -60,6 +60,10 @@ public:
 
   BE_GlobalData ();
   ~BE_GlobalData ();
+  BE_GlobalData (BE_GlobalData const &) = delete;
+  BE_GlobalData (BE_GlobalData &&) = delete;
+  BE_GlobalData &operator= (BE_GlobalData const &) = delete;
+  BE_GlobalData &operator= (BE_GlobalData &&) = delete;
 
   // To switch between changing or non-changing standard include
   // files (e.g. tao/corba.h)  so that #include statements can be
@@ -949,35 +953,35 @@ private:
    * files (e.g. tao/corba.h)  so that #include statements can be
    * generated with ""s or <>s respectively.
    */
-  size_t changing_standard_include_files_;
+  size_t changing_standard_include_files_ {1};
 
   // Macros and includes used to export classes from generated code.
-  char* skel_export_macro_;
-  char* skel_export_include_;
-  char* skel_export_file_;
-  char* stub_export_macro_;
-  char* stub_export_include_;
-  char* stub_export_file_;
+  char *skel_export_macro_ {};
+  char *skel_export_include_ {};
+  char *skel_export_file_ {};
+  char *stub_export_macro_ {};
+  char *stub_export_include_ {};
+  char *stub_export_file_ {};
 
   // Macro and include used on ORB .pidl files generating to the
   // AnyTypeCode library.
-  char* anyop_export_macro_;
-  char* anyop_export_include_;
+  char *anyop_export_macro_ {};
+  char *anyop_export_include_ {};
 
-  char* exec_export_macro_;
-  char* exec_export_include_;
-  char* svnt_export_macro_;
-  char* svnt_export_include_;
-  char* conn_export_macro_;
-  char* conn_export_include_;
+  char *exec_export_macro_ {};
+  char *exec_export_include_ {};
+  char *svnt_export_macro_ {};
+  char *svnt_export_include_ {};
+  char *conn_export_macro_ {};
+  char *conn_export_include_ {};
 
-  char* pch_include_;
-  char* pre_include_;
-  char* post_include_;
-  char* include_guard_;
-  char* safe_include_;
-  char* unique_include_;
-  char* stripped_filename_;
+  char *pch_include_ {};
+  char *pre_include_ {};
+  char *post_include_ {};
+  char *include_guard_ {};
+  char *safe_include_ {};
+  char *unique_include_ {};
+  char *stripped_filename_ {};
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
@@ -1095,247 +1099,247 @@ private:
    * kept. Default value is 0 for this string which means the current
    * directory from which the <tao_idl> is called.
    */
-  char* output_dir_;
+  char *output_dir_ {};
 
   /**
    * Path for all *C.* includes. Default value is 0, in which case
    * the local directory or $TAO_ROOT/tao is used.
    */
-  char* stub_include_dir_;
+  char *stub_include_dir_ {};
 
   /**
    * Directory where all the *S.* files are to be
    * kept. Default value is 0 for this string which means the
    * value for output_dir_ is used.
    */
-  char* skel_output_dir_;
+  char *skel_output_dir_ {};
 
   /**
    * Directory where all the *A.* files are to be
    * kept. Default value is 0 for this string which means the
    * value for output_dir_ is used.
    */
-  char* anyop_output_dir_;
+  char *anyop_output_dir_ {};
 
   /**
     * Directory where all the *exec.* files are to be
     * kept. Default value is 0 for this string which means the
     * value for output_dir_ is used.
     */
-  char* exec_output_dir_;
+  char *exec_output_dir_ {};
 
 
   /// do we support Any operators?
-  bool any_support_;
+  bool any_support_ {true};
 
   /// do we support cdr?
-  bool cdr_support_;
+  bool cdr_support_ {true};
 
   /// do we support typecodes?
-  bool tc_support_;
+  bool tc_support_ {true};
 
   /// do we optimize valuetype accessors?
-  bool obv_opt_accessor_;
+  bool obv_opt_accessor_ {};
 
   /// are we generating implementation files?
-  bool gen_impl_files_;
+  bool gen_impl_files_ {};
 
   /// are we generating source file and line numbers for implementation files?
-  bool gen_impl_debug_info_;
+  bool gen_impl_debug_info_ {};
 
   /// are we generating the copy constructor?
-  bool gen_copy_ctor_;
+  bool gen_copy_ctor_ {};
 
   /// are we generating the assignment operator?
-  bool gen_assign_op_;
+  bool gen_assign_op_ {};
 
   /// are we generating Thru_POA collocated stubs?
-  bool gen_thru_poa_collocation_;
+  bool gen_thru_poa_collocation_ {true};
 
   /// are we generating Direct collocated stubs?
-  bool gen_direct_collocation_;
+  bool gen_direct_collocation_ {};
 
   /// are we generating for CORBA/e
-  bool gen_corba_e_;
+  bool gen_corba_e_ {};
 
   /// are we generating for Minimum CORBA
-  bool gen_minimum_corba_;
+  bool gen_minimum_corba_ {};
 
   /// are we generating for LwCCM
-  bool gen_lwccm_;
+  bool gen_lwccm_ {};
 
   /// are we generating for noeventCCM
-  bool gen_noeventccm_;
+  bool gen_noeventccm_ {};
 
   /// do we generate optimized typecodes?
-  bool opt_tc_;
+  bool opt_tc_ {};
 
   /// Flag to indicate whether the AMI4ccm Call back feature should be enabled
   /// for the generated files or not.
-  bool ami4ccm_call_back_;
+  bool ami4ccm_call_back_ {};
 
   /**
    * Flag to indicate whether the AMI Call back feature of the
    * Messaging specification should be enabled for the generated files
    * or not.
    */
-  bool ami_call_back_;
+  bool ami_call_back_ {};
 
   /// Flag for generating AMH classes.
-  bool gen_amh_classes_;
+  bool gen_amh_classes_ {};
 
   /// Flag to indicate whether we generate the tie classes and
   /// files or not.
-  bool gen_tie_classes_;
+  bool gen_tie_classes_ {};
 
   /// Flag to indicate whether smart proxies classes will be generated
   /// or not.
-  bool gen_smart_proxies_;
+  bool gen_smart_proxies_ {};
 
   /// Flag to indicate whether we are using an inline form of constant
   /// generation that pleases the C++ compiler better on some platforms.
-  bool gen_inline_constants_;
+  bool gen_inline_constants_ {true};
 
   /// Flag to indicate whether ORB.h include should be generated, needed for
   /// regenerating the pidl files.
-  bool gen_orb_h_include_;
+  bool gen_orb_h_include_ {true};
 
   /// Flag to indicate whether an empty A.h should be generated
-  bool gen_empty_anyop_header_;
+  bool gen_empty_anyop_header_ {};
 
   /// The enumerated value indicating the lookup strategy.
-  LOOKUP_STRATEGY lookup_strategy_;
+  LOOKUP_STRATEGY lookup_strategy_ {TAO_PERFECT_HASH};
 
   /// The enumerated value indicating the DDS implementation.
-  DDS_IMPL dds_impl_;
+  DDS_IMPL dds_impl_ {DDS_NONE};
 
   /// Used for void operation return types.
-  AST_PredefinedType *void_type_;
+  AST_PredefinedType *void_type_ {};
 
   /// Reference holder for component skeleton visitors.
-  be_interface *ccmobject_;
+  be_interface *ccmobject_ {};
 
   /// Storage for the messaging exceptions holder's virtual scope.
-  be_module *messaging_;
+  be_module *messaging_ {};
 
   /// Storage for exception holders' base class node.
-  be_valuetype *messaging_exceptionholder_;
+  be_valuetype *messaging_exceptionholder_ {};
 
   /// Storage for the reply handlers' base class node.
-  be_interface *messaging_replyhandler_;
+  be_interface *messaging_replyhandler_ {};
 
   /// Separate files for generated Any operators?
-  bool gen_anyop_files_;
+  bool gen_anyop_files_ {};
 
   /// True by default, but a command line option can turn this off so that
   /// we don't generate a S.cpp file
-  bool gen_skel_files_;
+  bool gen_skel_files_ {true};
 
   /// True by default, but a command line option can turn this of so that
   /// we don't generate a svnt.cpp file
-  bool gen_svnt_cpp_files_;
+  bool gen_svnt_cpp_files_ {true};
 
   /// True by default, but a command line option can turn this of so that
   /// we don't generate a svnt_T.cpp file
-  bool gen_svnt_t_files_;
+  bool gen_svnt_t_files_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client inline file
-  bool gen_client_inline_;
+  bool gen_client_inline_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client stub file
-  bool gen_client_stub_;
+  bool gen_client_stub_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client header file
-  bool gen_client_header_;
+  bool gen_client_header_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a server skeleton file
-  bool gen_server_skeleton_;
+  bool gen_server_skeleton_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a server header file
-  bool gen_server_header_;
+  bool gen_server_header_ {true};
 
   /// True by default, can be turned off by a command line option
   /// for regenerating internal ORB files.
-  bool gen_local_iface_anyops_;
+  bool gen_local_iface_anyops_ {true};
 
   /// Use in_clonable_arg_val instead of in_arg_val?
-  bool use_clonable_in_args_;
+  bool use_clonable_in_args_ {};
 
   /// Generate explicit export for Visual Studio bug workaround,
   /// needed only in TAO basic sequence *C.h files.
-  bool gen_template_export_;
+  bool gen_template_export_ {};
 
   /// Generate ostream operators for each type declaration, for
   /// debugging or logging.
-  bool gen_ostream_operators_;
+  bool gen_ostream_operators_ {};
 
   /// Generate static description operations for each interface
-  bool gen_static_desc_operations_;
+  bool gen_static_desc_operations_ {};
 
   /**
    * True by default, but a command line option can turn this off so
    * custom ending will not be applied to files in $TAO_ROOT/,
    * $TAO_ROOT/tao, $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao.
    */
-  bool gen_custom_ending_;
+  bool gen_custom_ending_ {true};
 
  /**
    * True by default, but a command line option can turn this off so
    * the generated code (header) files will not be proteced by unique guards.
    */
-  bool gen_unique_guards_;
+  bool gen_unique_guards_ {true};
 
   /// False by default, these flags trigger code generation
-  bool gen_ciao_svnt_;
-  bool gen_ciao_exec_idl_;
-  bool gen_ciao_exec_impl_;
-  bool gen_ciao_exec_reactor_impl_;
+  bool gen_ciao_svnt_ {};
+  bool gen_ciao_exec_idl_ {};
+  bool gen_ciao_exec_impl_ {};
+  bool gen_ciao_exec_reactor_impl_ {};
 
   ///Flag to indicate whether generated exec files should
    ///overwritten already existing exe files
-   bool overwrite_not_exec_;
+   bool overwrite_not_exec_ {};
 
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.
-  bool gen_ciao_conn_impl_;
+  bool gen_ciao_conn_impl_ {};
 
   /// Used for DDS implementations other than OpenDDS.
-  bool gen_dds_typesupport_idl_;
+  bool gen_dds_typesupport_idl_ {};
 
   /// Generate automatic valuetype factory registration in
   /// CIAO servants.
-  bool gen_ciao_valuefactory_reg_;
+  bool gen_ciao_valuefactory_reg_ {true};
 
   /// Flags toggling export header file generation.
-  bool gen_stub_export_hdr_file_;
-  bool gen_skel_export_hdr_file_;
-  bool gen_svnt_export_hdr_file_;
-  bool gen_exec_export_hdr_file_;
-  bool gen_conn_export_hdr_file_;
+  bool gen_stub_export_hdr_file_ {};
+  bool gen_skel_export_hdr_file_ {};
+  bool gen_svnt_export_hdr_file_ {};
+  bool gen_exec_export_hdr_file_ {};
+  bool gen_conn_export_hdr_file_ {};
 
   /// 2 spaces by default, can be set from the command line.
-  unsigned int tab_size_;
+  unsigned int tab_size_ {2};
 
   /// Are we generating STL types?
-  bool alt_mapping_;
+  bool alt_mapping_ {};
 
   /// Are we in the act of generating a facet servant?
-  bool in_facet_servant_;
+  bool in_facet_servant_ {};
 
   /// Are we generating arg traits template instantiations?
-  bool gen_arg_traits_;
+  bool gen_arg_traits_ {true};
 
   /// Generating arg traits in the ORB for the basic type
   /// sequences requires the AnyTypeCode_Adapter class.
-  bool gen_anytypecode_adapter_;
+  bool gen_anytypecode_adapter_ {};
 
   /// Don't generate an error for usage of the fixed data type
-  bool no_fixed_err_;
+  bool no_fixed_err_ {};
 };
 
 #endif /* _BE_GLOBAL_H */

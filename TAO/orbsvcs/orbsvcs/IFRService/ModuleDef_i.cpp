@@ -14,9 +14,7 @@ TAO_ModuleDef_i::TAO_ModuleDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ModuleDef_i::~TAO_ModuleDef_i ()
-{
-}
+TAO_ModuleDef_i::~TAO_ModuleDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ModuleDef_i::def_kind ()

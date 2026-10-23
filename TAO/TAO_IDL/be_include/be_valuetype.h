@@ -41,28 +41,28 @@ public:
                 bool truncatable,
                 bool custom);
 
-  ~be_valuetype ();
+  ~be_valuetype () override;
 
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   /// Should generate optimized form?
   bool opt_accessor ();
 
   /// Generate the helper functions definition.
-  virtual int gen_helper_header (char *local_name = 0,
-                                 char *full_name = 0);
+  virtual int gen_helper_header (char *local_name = nullptr,
+                                 char *full_name = nullptr);
 
   /// Generate the helper functions inline implementation.
-  virtual int gen_helper_inline (char *local_name = 0,
-                                 char *full_name = 0);
+  virtual int gen_helper_inline (char *local_name = nullptr,
+                                 char *full_name = nullptr);
 
   /// Generate the helper functions implementation.
-  virtual int gen_helper_stubs (char *local_name = 0,
-                                char *full_name = 0);
+  virtual int gen_helper_stubs (char *local_name = nullptr,
+                                char *full_name = nullptr);
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
 
   /// Generate the declarations used by the template _var, _out
   /// classes for valuetypes, and by sequence template classes.
@@ -98,10 +98,10 @@ public:
   bool supports_abstract () const;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Compute the fully scoped skel class name.
   void compute_fullobvskelname ();
@@ -152,7 +152,7 @@ public:
 
   /// Use the above enum and methods to determine this after the
   /// node's scope is visited but before code generation.
-  virtual bool will_have_factory ();
+  bool will_have_factory () override;
 
   /// Decides whether to generate the initializing contstructor or not.
   bool has_member ();
@@ -163,16 +163,16 @@ public:
 
 private:
   /// Do we support at least one abstract interface?
-  bool supports_abstract_;
+  bool supports_abstract_ {};
 
   /// Have these been done already?
-  bool var_out_seq_decls_gen_;
+  bool var_out_seq_decls_gen_ {};
 
   /// To differentiate from the interface skeleton name.
-  char *full_obv_skel_name_;
+  char *full_obv_skel_name_ {};
 
   /// Flag used by default constructor generator.
-  bool is_amh_excep_holder_;
+  bool is_amh_excep_holder_ {};
 };
 
 #endif  // if !defined

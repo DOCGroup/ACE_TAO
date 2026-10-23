@@ -183,18 +183,18 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (
   // Here we perform a check before assignment to make sure
   // CORBA::string_dup is not called on 0 pointer, since the spec does
   // not say what should happen in that case.
-  if (hash_entry->ext_id_.id () != 0)
+  if (hash_entry->ext_id_.id () != nullptr)
     {
       b.binding_name[0].id =
         hash_entry->ext_id_.id ();
-      if (b.binding_name[0].id.in () == 0)
+      if (b.binding_name[0].id.in () == nullptr)
         return 0;
     }
-  if (hash_entry->ext_id_.kind () != 0)
+  if (hash_entry->ext_id_.kind () != nullptr)
     {
       b.binding_name[0].kind =
         hash_entry->ext_id_.kind ();
-      if (b.binding_name[0].kind.in () == 0)
+      if (b.binding_name[0].kind.in () == nullptr)
         return 0;
     }
   return 1;

@@ -10,16 +10,14 @@ template <typename RI, typename RV>
 class Log
 {
 public:
-  typedef RI RecordIdType;
-  typedef RV RecordValueType;
+  using RecordIdType = RI;
+  using RecordValueType = RV;
 
 private:
-  typedef
-  ACE_RB_Tree <RecordIdType,
-               RecordValueType,
-               ACE_Less_Than<RecordIdType>,
-               ACE_Null_Mutex>
-  Map_;
+  using Map_ = ACE_RB_Tree <RecordIdType,
+                            RecordValueType,
+                            ACE_Less_Than<RecordIdType>,
+                            ACE_Null_Mutex>;
 
 public:
   class Duplicate {};

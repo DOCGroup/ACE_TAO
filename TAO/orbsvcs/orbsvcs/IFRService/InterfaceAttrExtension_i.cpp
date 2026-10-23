@@ -18,9 +18,7 @@ TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
 {
 }
 
-TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i ()
-{
-}
+TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i () = default;
 
 
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *

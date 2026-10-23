@@ -15,9 +15,7 @@ be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_cs::~be_visitor_interface_cs ()
-{
-}
+be_visitor_interface_cs::~be_visitor_interface_cs () = default;
 
 int
 be_visitor_interface_cs::visit_interface (be_interface *node)
@@ -432,7 +430,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
     {
-      *os << node->full_name () << " *proxy = 0;"
+      *os << node->full_name () << " *proxy = nullptr;"
       << be_nl_2
           << "proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";

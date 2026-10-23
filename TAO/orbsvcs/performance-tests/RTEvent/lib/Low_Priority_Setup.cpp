@@ -95,7 +95,7 @@ Low_Priority_Setup<Client_Type>::stop_all_threads ()
   /// destructors automatically stop and wait for all the threads.
   /// Depending on your personal bias this is either "super neat" or
   /// "a horrible kludge", IMHO is just good use of the language :-)
-  this->stoppers_.reset (0);
+  this->stoppers_.reset (nullptr);
 }
 
 template<class Client_Type> void

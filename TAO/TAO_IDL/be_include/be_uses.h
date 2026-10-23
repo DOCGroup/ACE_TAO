@@ -17,16 +17,16 @@ public:
            AST_Type *uses_type,
            bool is_multiple);
 
-  virtual ~be_uses ();
+  ~be_uses () override;
 
   // Non-virtual override of frontend method.
   be_type *uses_type () const;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   void original_uses (be_uses *original_uses);
   // Sets the original uses from which this one was created,
@@ -37,7 +37,7 @@ public:
   // applies only to implied IDL
 
 private:
-  be_uses *original_uses_;
+  be_uses *original_uses_ {};
 };
 
 #endif // BE_USES_H

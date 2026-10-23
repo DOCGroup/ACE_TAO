@@ -42,7 +42,7 @@ class TAO_FT_ClientORB_Export TAO_FT_Service_Callbacks : public TAO_Service_Call
 {
 public:
   /// Constructor
-  TAO_FT_Service_Callbacks (TAO_ORB_Core *);
+  explicit TAO_FT_Service_Callbacks (TAO_ORB_Core *);
 
   /// Dtor
   ~TAO_FT_Service_Callbacks () override;

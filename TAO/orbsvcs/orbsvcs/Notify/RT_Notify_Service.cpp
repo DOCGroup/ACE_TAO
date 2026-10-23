@@ -58,7 +58,7 @@ TAO_RT_Notify_Service::create_factory ()
   TAO_Notify_Factory* factory =
     ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
 
-  if (factory == 0)
+  if (factory == nullptr)
     {
       ACE_NEW_THROW_EX (factory,
                         TAO_Notify_RT_Factory (),

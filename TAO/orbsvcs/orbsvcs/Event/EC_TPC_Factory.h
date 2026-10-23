@@ -33,7 +33,7 @@ public:
   TAO_EC_TPC_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_TPC_Factory () override;
+  virtual ~TAO_EC_TPC_Factory () override = default;
 
   TAO_EC_TPC_Factory (TAO_EC_TPC_Factory const &) = delete;
   TAO_EC_TPC_Factory (TAO_EC_TPC_Factory &&) = delete;

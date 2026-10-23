@@ -120,7 +120,7 @@ be_visitor_attr_return::visit_predefined_type (
             << "::CORBA::Any ("
             << this->attr_name_string_.c_str ()
             << ".in ())," << be_nl
-            << "0);" << be_uidt_nl << be_nl
+            << "nullptr);" << be_uidt_nl << be_nl
             << "return retval;";
         break;
       case AST_PredefinedType::PT_value:
@@ -153,13 +153,13 @@ be_visitor_attr_return::visit_sequence (be_sequence *)
     }
 
   os_ << be_nl
-      << "::" << bt->full_name () << " * retval = 0;" << be_nl
+      << "::" << bt->full_name () << " * retval = nullptr;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "retval," << be_nl
       << "::" << bt->full_name () << " (" << be_idt_nl
       << this->attr_name_string_.c_str ()
       << ".in ())," << be_uidt_nl
-      << "0);" << be_uidt_nl << be_nl
+      << "nullptr);" << be_uidt_nl << be_nl
       << "return retval;";
 
   return 0;
@@ -193,11 +193,11 @@ be_visitor_attr_return::visit_structure (be_structure *node)
     }
   else
     {
-      os_ << node->full_name () << " * retval = 0;" << be_nl
+      os_ << node->full_name () << " * retval = nullptr;" << be_nl
           << "ACE_NEW_RETURN (" << be_idt_nl
           << "retval," << be_nl
           << "::" << node->full_name () << "," << be_nl
-          << "0);" << be_uidt_nl << be_nl
+          << "nullptr);" << be_uidt_nl << be_nl
           << "*retval =" << be_idt_nl
           << this->attr_name_string_.c_str () << ".in ();"
           << be_uidt_nl << be_nl
@@ -241,11 +241,11 @@ be_visitor_attr_return::visit_union (be_union *node)
     }
   else
     {
-      os_ << node->full_name () << " * retval = 0;" << be_nl
+      os_ << node->full_name () << " * retval = nullptr;" << be_nl
           << "ACE_NEW_RETURN (" << be_idt_nl
           << "retval," << be_nl
           << "::" << node->full_name () << "," << be_nl
-          << "0);" << be_uidt_nl << be_nl
+          << "nullptr);" << be_uidt_nl << be_nl
           << "*retval =" << be_idt_nl
           << this->attr_name_string_.c_str () << ".in ();"
           << be_uidt_nl << be_nl

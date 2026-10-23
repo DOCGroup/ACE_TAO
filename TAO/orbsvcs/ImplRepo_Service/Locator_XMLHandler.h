@@ -28,8 +28,8 @@ class XML_Backing_Store;
 class Locator_XMLHandler : public ACEXML_DefaultHandler
 {
 public:
-  typedef std::pair<ACE_CString, ACE_CString> NameValue;
-  typedef std::vector<NameValue> NameValues;
+  using NameValue = std::pair<ACE_CString, ACE_CString>;
+  using NameValues = std::vector<NameValue>;
   // XML ELEMENT names
   static const ACE_TCHAR* ROOT_TAG;
   static const ACE_TCHAR* SERVER_INFO_TAG;
@@ -59,23 +59,23 @@ public:
     bool operator!=(const EnvVar&) const; // To allow Vector explicit instantiation
   };
 
-  typedef std::vector<EnvVar> EnvList;
-  typedef std::vector<ACE_CString> PeerList;
+  using EnvList = std::vector<EnvVar>;
+  using PeerList = std::vector<ACE_CString>;
 
   /// constructor
   /// @param repo the repo to update based on XML
   Locator_XMLHandler (XML_Backing_Store& repo);
 
   /// provide implementation for handling a new XML element
-  virtual void startElement (const ACEXML_Char* namespaceURI,
-                             const ACEXML_Char* localName,
-                             const ACEXML_Char* qName,
-                             ACEXML_Attributes* atts);
+  void startElement (const ACEXML_Char* namespaceURI,
+                     const ACEXML_Char* localName,
+                     const ACEXML_Char* qName,
+                     ACEXML_Attributes* atts) override;
 
   /// provide implementation for handling terminating an XML element
-  virtual void endElement (const ACEXML_Char* namespaceURI,
-                           const ACEXML_Char* localName,
-                           const ACEXML_Char* qName);
+  void endElement (const ACEXML_Char* namespaceURI,
+                   const ACEXML_Char* localName,
+                   const ACEXML_Char* qName) override;
 
  private:
   /// the repository

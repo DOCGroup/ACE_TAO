@@ -26,11 +26,16 @@
 class be_visitor_root_any_op : public be_visitor_root
 {
 public:
-  be_visitor_root_any_op (be_visitor_context *ctx);
+  explicit be_visitor_root_any_op (be_visitor_context *ctx);
 
-  ~be_visitor_root_any_op ();
+  ~be_visitor_root_any_op () override;
 
-  virtual int visit_root (be_root *node);
+  be_visitor_root_any_op (const be_visitor_root_any_op &) = delete;
+  be_visitor_root_any_op (be_visitor_root_any_op &&) = delete;
+  be_visitor_root_any_op &operator= (const be_visitor_root_any_op &) = delete;
+  be_visitor_root_any_op &operator= (be_visitor_root_any_op &&) = delete;
+
+  int visit_root (be_root *node) override;
 };
 
 #endif /* _BE_VISITOR_ROOT_ANY_OP_H_ */

@@ -43,7 +43,7 @@ private:
   AST_Structure *pd_full_definition;
   // The structure this is a forward declaration of.
 
-  bool is_defined_;
+  bool is_defined_ {};
   // Checking the member above isn't good enough.
 };
 

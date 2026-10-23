@@ -41,16 +41,14 @@ using COMP_FUNC = int (*) (const void *, const void *);
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-TAO_Reconfig_Scheduler (int enforce_schedule_stability,
+TAO_Reconfig_Scheduler (bool enforce_schedule_stability,
                         const CORBA::Double & critical_utilization_threshold,
                         const CORBA::Double & noncritical_utilization_threshold)
   : config_info_count_ (0),
     rt_info_count_ (0),
     rt_info_tuple_count_ (0),
     next_handle_ (1),
-    entry_ptr_array_ (0),
     entry_ptr_array_size_ (0),
-    tuple_ptr_array_ (0),
     tuple_ptr_array_size_ (0),
     stability_flags_ (SCHED_NONE_STABLE),
     enforce_schedule_stability_ (enforce_schedule_stability),
@@ -79,7 +77,7 @@ TAO_Reconfig_Scheduler (int config_count,
                         int dependency_count,
                         ACE_Scheduler_Factory::POD_Dependency_Info dependency_infos[],
                         u_long stability_flags,
-                        int enforce_schedule_stability,
+                        bool enforce_schedule_stability,
                         const CORBA::Double & critical_utilization_threshold,
                         const CORBA::Double & noncritical_utilization_threshold)
   : config_info_count_ (0),
@@ -2232,7 +2230,7 @@ detect_cycles_i ()
   for (int i = 0; i < this->rt_info_count_; ++i)
     {
       // Each new top level entry marks a potential new cycle.
-      scc_visitor.in_a_cycle (0);
+      scc_visitor.in_a_cycle (false);
 
       if (scc_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {

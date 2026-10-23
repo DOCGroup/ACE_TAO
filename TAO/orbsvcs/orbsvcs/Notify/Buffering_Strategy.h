@@ -44,7 +44,7 @@ public:
     TAO_Notify_Message_Queue& msg_queue,
     const TAO_Notify_AdminProperties::Ptr& admin_properties);
 
-  ~TAO_Notify_Buffering_Strategy ();
+  ~TAO_Notify_Buffering_Strategy () = default;
 
   /// Update state with the following QoS Properties:
   /// Order Policy

@@ -117,6 +117,11 @@ public:
   /// Destructor.
   ~TAO_Hash_Naming_Context () override;
 
+  TAO_Hash_Naming_Context (TAO_Hash_Naming_Context const &) = delete;
+  TAO_Hash_Naming_Context (TAO_Hash_Naming_Context &&) = delete;
+  TAO_Hash_Naming_Context &operator= (TAO_Hash_Naming_Context const &) = delete;
+  TAO_Hash_Naming_Context &operator= (TAO_Hash_Naming_Context &&) = delete;
+
   // = Accessors.
 
   /// Get the pointer to our interface.

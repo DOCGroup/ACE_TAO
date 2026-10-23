@@ -13,9 +13,7 @@ TAO_AliasDef_i::TAO_AliasDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AliasDef_i::~TAO_AliasDef_i ()
-{
-}
+TAO_AliasDef_i::~TAO_AliasDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_AliasDef_i::def_kind ()

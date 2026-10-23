@@ -36,7 +36,8 @@ public:
   /// Constructor
   TAO_Notify_EventType ();
   TAO_Notify_EventType (const char* domain_name, const char* type_name);
-  TAO_Notify_EventType (const CosNotification::EventType& event_type);
+  explicit TAO_Notify_EventType (const CosNotification::EventType& event_type);
+  TAO_Notify_EventType (const TAO_Notify_EventType& event_type);
   // Constructor
 
   /// Destructor

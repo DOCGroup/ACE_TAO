@@ -31,18 +31,22 @@ class be_visitor_valuetype_obv_ch : public be_visitor_valuetype
 {
 public:
   /// constructor
-  be_visitor_valuetype_obv_ch (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_obv_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_obv_ch ();
+  ~be_visitor_valuetype_obv_ch () override;
+  be_visitor_valuetype_obv_ch (be_visitor_valuetype_obv_ch const &) = delete;
+  be_visitor_valuetype_obv_ch (be_visitor_valuetype_obv_ch &&) = delete;
+  be_visitor_valuetype_obv_ch &operator= (be_visitor_valuetype_obv_ch const &) = delete;
+  be_visitor_valuetype_obv_ch &operator= (be_visitor_valuetype_obv_ch &&) = delete;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 
-  void begin_public ();
-  void begin_private ();
+  void begin_public () override;
+  void begin_private () override;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_OBV_CH_H_ */

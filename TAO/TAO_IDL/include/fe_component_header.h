@@ -33,7 +33,7 @@ protected:
   void compile_supports (UTL_NameList *supports);
 
 protected:
-  AST_Component *base_component_;
+  AST_Component *base_component_ {};
 };
 
 #endif /* FE_COMPONENT_HEADER_H */

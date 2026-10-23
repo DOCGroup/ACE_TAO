@@ -37,15 +37,13 @@ class TAO_Notify_Serv_Export Bit_Vector
 {
   using BASIC_UINT_TYPE = ACE_UINT32;
   using VECTOR_TYPE = ACE_Vector<BASIC_UINT_TYPE>;
-  enum {
-    BITS_PER_WORD = 32,
-    BPW_LOG_2 = 5
-  };
+  static constexpr int BITS_PER_WORD = 32;
+  static constexpr int BPW_LOG_2 = 5;
 public:
   /// The constructor.
   Bit_Vector();
   /// The destructor.
-  ~Bit_Vector();
+  ~Bit_Vector() = default;
 
   /// \brief Determine if a bit at location is set.
   bool is_set(const size_t location) const;

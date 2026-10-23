@@ -78,8 +78,8 @@ protected:
   bool pd_custom;
 
 protected:
-  virtual AST_Factory *fe_add_factory (AST_Factory *f);
-  virtual AST_Field *fe_add_field (AST_Field *o);
+  AST_Factory *fe_add_factory (AST_Factory *f) override;
+  AST_Field *fe_add_field (AST_Field *o) override;
 
   bool derived_from_primary_key_base (const AST_ValueType *node,
                                       const AST_ValueType *pk_base) const;

@@ -5,10 +5,6 @@ ServerRequestInterceptor::ServerRequestInterceptor ()
 {
 }
 
-ServerRequestInterceptor::~ServerRequestInterceptor ()
-{
-}
-
 char *
 ServerRequestInterceptor::name ()
 {

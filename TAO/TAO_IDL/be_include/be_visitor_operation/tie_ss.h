@@ -28,13 +28,17 @@ class be_visitor_operation_tie_ss : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_operation_tie_ss (be_visitor_context *ctx);
+  explicit be_visitor_operation_tie_ss (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_tie_ss ();
+  ~be_visitor_operation_tie_ss () override;
+  be_visitor_operation_tie_ss (be_visitor_operation_tie_ss const &) = delete;
+  be_visitor_operation_tie_ss (be_visitor_operation_tie_ss &&) = delete;
+  be_visitor_operation_tie_ss &operator= (be_visitor_operation_tie_ss const &) = delete;
+  be_visitor_operation_tie_ss &operator= (be_visitor_operation_tie_ss &&) = delete;
 
   /// set the right context and make a visitor
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_TIE_SS_H_ */

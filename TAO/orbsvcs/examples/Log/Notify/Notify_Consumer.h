@@ -34,31 +34,35 @@ class Consumer
   //   This class is a consumer of log generated events.
   //
 public:
-  Consumer ();
+  Consumer () = default;
   // Constructor
+
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
 protected:
-  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
   // The proxy_supplier id.
 
   // = Methods
 
   // = NotifyPublish method
-  virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void offer_change (CosNotification::EventTypeSeq const &added,
+                     CosNotification::EventTypeSeq const &removed) override;
 
   // = StructuredPushSupplier methods
-  virtual void push (const CORBA::Any &event);
+  void push (CORBA::Any const &event) override;
 
 
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
-  CORBA::ULong event_count_;
+  CORBA::ULong event_count_ {};
   // Keep track of the number of events received.
 
   // = Data Members

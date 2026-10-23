@@ -138,19 +138,8 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
                                         bool is_abstract,
                                         bool compile_now)
   : interface_name_ (n),
-    has_template_parent_ (false),
-    inherits_ (nullptr),
-    n_inherits_ (0),
-    inherits_flat_ (nullptr),
-    n_inherits_flat_ (0),
     is_local_ (is_local),
-    is_abstract_ (is_abstract),
-    iseen_ (nullptr),
-    iseen_flat_ (nullptr),
-    iallocated_ (0),
-    iused_ (0),
-    iallocated_flat_ (0),
-    iused_flat_ (0)
+    is_abstract_ (is_abstract)
 {
   if (compile_now)
     {
@@ -159,9 +148,7 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
     }
 }
 
-FE_InterfaceHeader::~FE_InterfaceHeader ()
-{
-}
+FE_InterfaceHeader::~FE_InterfaceHeader () = default;
 
 bool
 FE_InterfaceHeader::is_local () const

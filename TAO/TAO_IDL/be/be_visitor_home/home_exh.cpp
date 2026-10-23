@@ -13,16 +13,12 @@
 
 be_visitor_home_exh::be_visitor_home_exh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->exec_export_macro ())
 {
 }
 
-be_visitor_home_exh::~be_visitor_home_exh ()
-{
-}
+be_visitor_home_exh::~be_visitor_home_exh () = default;
 
 int
 be_visitor_home_exh::visit_home (be_home *node)
@@ -101,7 +97,7 @@ int
 be_visitor_home_exh::gen_exec_class ()
 {
   // We don't want a '_cxx_' prefix here.
-  const char *lname =
+  char const *lname =
     node_->original_local_name ()->get_string ();
 
   os_ << be_nl

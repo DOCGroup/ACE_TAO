@@ -24,8 +24,7 @@
 // ******************************************************
 
 be_visitor_scope::be_visitor_scope (be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    elem_number_ (0)
+  : be_visitor_decl (ctx)
 {
 }
 

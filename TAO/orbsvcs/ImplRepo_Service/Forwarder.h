@@ -84,7 +84,7 @@ private:
 class Locator_Export ImR_DSI_Forwarder : public virtual TAO_DynamicImplementation
 {
 public:
-  ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
+  explicit ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
   ~ImR_DSI_Forwarder () override;
 
   void _dispatch (TAO_ServerRequest& request,

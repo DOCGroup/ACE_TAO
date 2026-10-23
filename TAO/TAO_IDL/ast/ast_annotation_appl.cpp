@@ -50,8 +50,7 @@ AST_Annotation_Appl::AST_Annotation_Appl (
     AST_Structure (name, false, false),
     AST_Annotation_Decl (name),
     original_name_ (name->get_string_copy ()),
-    params_ (params),
-    annotation_decl_ (nullptr)
+    params_ (params)
 {
 }
 

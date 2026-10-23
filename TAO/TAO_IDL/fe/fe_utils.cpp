@@ -24,13 +24,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-FE_Utils::T_Param_Info::T_Param_Info ()
-  : type_ (AST_Decl::NT_fixed),
-    const_type_ (AST_Expression::EV_none),
-    enum_const_type_decl_ (nullptr)
-{
-}
-
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {

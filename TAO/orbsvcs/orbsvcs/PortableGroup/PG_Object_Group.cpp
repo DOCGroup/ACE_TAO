@@ -24,7 +24,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
   : member_ (CORBA::Object::_duplicate (member))
   , factory_(PortableGroup::GenericFactory::_nil ())
   , location_ (location)
-  , is_primary_ (0)
+  , is_primary_ (false)
 {
 }
 
@@ -37,7 +37,7 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
   , factory_ (PortableGroup::GenericFactory::_duplicate (factory))
   , factory_id_ (factory_id)
   , location_ (location)
-  , is_primary_ (0)
+  , is_primary_ (false)
 {
 }
 
@@ -63,13 +63,12 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , distribute_ (1)
-  , empty_ (1)
+  , distribute_ (true)
   , role_ (type_id)
   , type_id_ (type_id)
   , tagged_component_ (tagged_component)
   , reference_ (CORBA::Object::_duplicate(empty_group))
-  , group_name_ (0)
+  , group_name_ (nullptr)
   , members_ ()
   , primary_location_(0)
   , properties_ (the_criteria, type_properties)
@@ -87,13 +86,12 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , distribute_ (1)
-  , empty_ (1)
+  , distribute_ (true)
   , role_ ("")
   , type_id_ ()
   , tagged_component_ ()
   , reference_ (CORBA::Object::_nil ())
-  , group_name_ (0)
+  , group_name_ (nullptr)
   , members_ ()
   , primary_location_(0)
   , properties_ ()
@@ -191,7 +189,7 @@ TAO::PG_Object_Group::add_member_to_iogr (CORBA::Object_ptr member)
       cleaned =
         this->manipulator_.remove_profiles (cleaned.in (),
                                             this->reference_.in ());
-      this->empty_ = 0;
+      this->empty_ = false;
     }
 
   // create a list of references to be merged
@@ -349,9 +347,9 @@ TAO::PG_Object_Group::set_primary_member (
            ++it)
         {
           cleared = (*it).int_id_->is_primary_;
-          (*it).int_id_->is_primary_ = 0;
+          (*it).int_id_->is_primary_ = false;
         }
-      info->is_primary_ = 1;
+      info->is_primary_ = true;
 
       int set_ok =
         this->manipulator_.set_primary (prop,
@@ -419,7 +417,7 @@ TAO::PG_Object_Group::remove_member (
         }
       else
         {
-          empty_ = 1;
+          empty_ = true;
         }
 
       delete info;

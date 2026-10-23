@@ -17,9 +17,7 @@ TAO_ExtValueDef_i::TAO_ExtValueDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtValueDef_i::~TAO_ExtValueDef_i ()
-{
-}
+TAO_ExtValueDef_i::~TAO_ExtValueDef_i () = default;
 
 CORBA::ExtInitializerSeq *
 TAO_ExtValueDef_i::ext_initializers (

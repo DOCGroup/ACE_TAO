@@ -30,37 +30,12 @@
 TAO_CodeGen * tao_cg = nullptr;
 
 TAO_CodeGen::TAO_CodeGen ()
-  : client_header_ (nullptr),
-    client_stubs_ (nullptr),
-    client_inline_ (nullptr),
-    server_header_ (nullptr),
-    implementation_header_(nullptr),
-    implementation_skeleton_(nullptr),
-    server_template_header_ (nullptr),
-    server_skeletons_ (nullptr),
-    server_template_skeletons_ (nullptr),
-    anyop_header_ (nullptr),
-    anyop_source_ (nullptr),
-    gperf_input_stream_ (nullptr),
-    ciao_svnt_header_ (nullptr),
-    ciao_svnt_source_ (nullptr),
-    ciao_svnt_template_header_ (nullptr),
-    ciao_svnt_template_source_ (nullptr),
-    ciao_exec_header_ (nullptr),
-    ciao_exec_source_ (nullptr),
-    ciao_exec_idl_ (nullptr),
-    ciao_conn_header_ (nullptr),
-    ciao_conn_source_ (nullptr),
-    ciao_ami_conn_idl_ (nullptr),
-    gperf_input_filename_ (nullptr),
-    strategy_ (TAO_PERFECT_HASH)
+  : strategy_ (TAO_PERFECT_HASH)
 {
 }
 
 // destructor
-TAO_CodeGen::~TAO_CodeGen ()
-{
-}
+TAO_CodeGen::~TAO_CodeGen () = default;
 
 // Change the string to all upper case.
 const char *
@@ -262,7 +237,7 @@ TAO_CodeGen::start_client_header (const char *fname)
           char* idl_name = idl_global->included_idl_files ()[j];
 
           // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
+          UTL_String idl_name_str (idl_name);
 
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
@@ -859,7 +834,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
           if (got_pidl)
             {
               // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
+              UTL_String idl_name_str (idl_name);
 
               const char *anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
@@ -2518,7 +2493,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
           if (got_pidl)
             {
               // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
+              UTL_String idl_name_str (idl_name);
 
               char const * const anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, true);

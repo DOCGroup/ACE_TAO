@@ -66,17 +66,17 @@ public:
   virtual AST_Map *fe_add_map (AST_Map *);
 
   /// Overridden method on the be_scope class.
-  virtual be_decl *decl ();
+  be_decl *decl () override;
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+                                     bool use_underscore) override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Report the instance name for instantiation.
   const char *instance_name ();
@@ -94,7 +94,7 @@ private:
 
 private:
   /// Used if we are an anonymous member, to help generate a unique name.
-  be_field *field_node_;
+  be_field *field_node_ {};
 };
 
 #endif

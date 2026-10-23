@@ -36,8 +36,9 @@ template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured (const CosNotification::StructuredEvent& notification)
 {
   TAO_Notify_StructuredEvent_No_Copy event (notification);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 1);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, true);
 
   this->execute_task (request);
 }
@@ -46,8 +47,9 @@ template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured_no_filtering (const CosNotification::StructuredEvent& notification)
 {
   TAO_Notify_StructuredEvent_No_Copy event(notification);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 0);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, false);
 
   this->execute_task (request);
 }
@@ -56,8 +58,9 @@ template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any (const CORBA::Any & any)
 {
   TAO_Notify_AnyEvent_No_Copy event (any);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 1);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, true);
 
   this->execute_task (request);
 }
@@ -66,8 +69,9 @@ template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any_no_filtering (const CORBA::Any& any)
 {
   TAO_Notify_AnyEvent_No_Copy event(any);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 0);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, false);
 
   this->execute_task (request);
 }

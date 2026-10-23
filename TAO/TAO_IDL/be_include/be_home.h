@@ -35,15 +35,15 @@ public:
            AST_Interface **supports_flat,
            long n_supports_flat);
 
-  virtual ~be_home ();
+  ~be_home () override;
 
   void scan (UTL_Scope *s);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 };
 
 #endif // if !defined

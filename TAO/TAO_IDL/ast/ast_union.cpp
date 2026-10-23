@@ -104,11 +104,8 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     UTL_Scope (AST_Decl::NT_union),
     AST_Structure (n,
                    local,
-                   abstract),
-    default_index_ (-2)
+                   abstract)
 {
-  this->default_value_.computed_ = -2;
-
   AST_PredefinedType *pdt = nullptr;
 
   if (dt == nullptr)
@@ -197,9 +194,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     }
 }
 
-AST_Union::~AST_Union ()
-{
-}
+AST_Union::~AST_Union () = default;
 
 // Public operations.
 

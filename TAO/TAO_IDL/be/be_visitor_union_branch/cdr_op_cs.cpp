@@ -28,9 +28,7 @@ be_visitor_union_branch_cdr_op_cs::be_visitor_union_branch_cdr_op_cs (
 {
 }
 
-be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs ()
-{
-}
+be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs () = default;
 
 int
 be_visitor_union_branch_cdr_op_cs::visit_union_branch (be_union_branch *node)
@@ -1050,7 +1048,7 @@ be_visitor_union_branch_cdr_op_cs::explicit_default ()
       be_union_branch *ub =
         dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-      int i = 0;
+      int i {};
 
       // Instantiate a scope iterator.
       for (UTL_ScopeActiveIterator si (bu, UTL_Scope::IK_decls);

@@ -86,7 +86,7 @@ class TAO_IDL_FE_Export UTL_IdList : public UTL_List
   //  Used to maintain a list of identifiers. The primary usage of this class
   //  is to maintain a scoped name.
 public:
-  UTL_IdList (Identifier *car, UTL_IdList *cdr = nullptr);
+  explicit UTL_IdList (Identifier *car, UTL_IdList *cdr = nullptr);
   // Constructor(s)
 
   ~UTL_IdList () override = default;
@@ -137,7 +137,7 @@ class TAO_IDL_FE_Export UTL_IdListActiveIterator
   // =DESCRIPTION
   //  Iterator for the IDList
 public:
-  UTL_IdListActiveIterator (UTL_IdList *s);
+  explicit UTL_IdListActiveIterator (UTL_IdList *s);
 
   /// Retrieves the next item.
   Identifier *item ();

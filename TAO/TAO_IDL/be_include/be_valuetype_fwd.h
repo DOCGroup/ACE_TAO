@@ -31,13 +31,13 @@ public:
   be_valuetype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~be_valuetype_fwd ();
+  ~be_valuetype_fwd () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 
   // Cleanup
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif // if !defined

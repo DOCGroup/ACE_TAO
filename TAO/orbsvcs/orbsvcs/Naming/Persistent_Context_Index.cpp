@@ -39,7 +39,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
   size_t counter_len = sizeof (ACE_UINT32);
   char *ptr = (char *) this->allocator_->malloc (poa_id_len + counter_len);
 
-  if (ptr == 0)
+  if (ptr == nullptr)
     return -1;
   else
     {
@@ -82,10 +82,10 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
   (CORBA::ORB_ptr orb,
    PortableServer::POA_ptr poa,
    TAO_Persistent_Naming_Context_Factory * context_impl_factory)
-  : allocator_ (0),
-    index_ (0),
-    index_file_ (0),
-    base_address_ (0),
+  : allocator_ (nullptr),
+    index_ (nullptr),
+    index_file_ (nullptr),
+    base_address_ (nullptr),
     orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     context_impl_factory_ (context_impl_factory)
@@ -124,7 +124,7 @@ TAO_Persistent_Context_Index::open (const ACE_TCHAR *file_name,
   this->base_address_ = base_address;
 
   index_file_ = ACE_OS::strdup (file_name);
-  if (index_file_ == 0)
+  if (index_file_ == nullptr)
     return -1;
 
   return create_index ();
@@ -278,7 +278,7 @@ TAO_Persistent_Context_Index::create_index ()
       size_t index_size = sizeof (CONTEXT_INDEX);
       context_index = this->allocator_->malloc (index_size);
 
-      if (context_index == 0
+      if (context_index == nullptr
           || create_index_helper (context_index) == -1
           || this->allocator_->bind (TAO_NAMING_CONTEXT_INDEX,
                                      context_index) == -1)

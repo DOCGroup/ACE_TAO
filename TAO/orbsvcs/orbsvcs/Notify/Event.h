@@ -42,7 +42,8 @@ public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
 
   // Codes to distinguish marshaled events in persistent storage
-  enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
+  static constexpr int MARSHAL_ANY = 1;
+  static constexpr int MARSHAL_STRUCTURED = 2;
 
   /// Constructor
   TAO_Notify_Event ();

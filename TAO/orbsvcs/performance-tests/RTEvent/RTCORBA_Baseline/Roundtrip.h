@@ -14,10 +14,10 @@ public:
   Roundtrip (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::Timestamp test_method (Test::Timestamp send_time,
-                                       CORBA::Long workload_in_usecs);
+  Test::Timestamp test_method (Test::Timestamp send_time,
+                               CORBA::Long workload_in_usecs) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

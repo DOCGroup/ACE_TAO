@@ -38,7 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch
 {
 public:
   /// an arbitrary code (Octet) to identify this delivery method type in persistent storage
-  enum {persistence_code = 1};
+  static constexpr int persistence_code = 1;
 
   /// Constuct from event
   TAO_Notify_Method_Request_Dispatch (
@@ -112,7 +112,7 @@ public:
     bool filtering);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
+  ~TAO_Notify_Method_Request_Dispatch_Queueable () override = default;
 
   /// Execute the Request
   int execute () override;
@@ -141,7 +141,7 @@ public:
     bool filtering);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
+  ~TAO_Notify_Method_Request_Dispatch_No_Copy () override = default;
 
   /// Execute the Request
   int execute () override;

@@ -7,16 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-Event_Logging_Service::Event_Logging_Service ()
-  : event_log_factory_ (nullptr),
-    service_name_ ("EventLogFactory"),
-    ior_file_name_ (nullptr),
-    pid_file_name_ (nullptr),
-    bind_to_naming_service_ (true),
-    nthreads_ (0)
-{
-  // No-Op.
-}
+Event_Logging_Service::Event_Logging_Service () = default;
 
 Event_Logging_Service::~Event_Logging_Service () = default;
 

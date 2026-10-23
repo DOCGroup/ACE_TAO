@@ -19,8 +19,8 @@ TAO_Bindings_Map::~TAO_Bindings_Map ()
 
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                                                   const char *poa_id)
-  : context_ (0),
-    interface_ (0),
+  : context_ (nullptr),
+    interface_ (nullptr),
     destroyed_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
     poa_id_ (poa_id)

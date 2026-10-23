@@ -6,9 +6,7 @@ be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (
 {
 }
 
-be_visitor_operation_proxy_impl_xh::~be_visitor_operation_proxy_impl_xh ()
-{
-}
+be_visitor_operation_proxy_impl_xh::~be_visitor_operation_proxy_impl_xh () = default;
 
 int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
 {

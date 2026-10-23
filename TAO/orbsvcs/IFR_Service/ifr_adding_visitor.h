@@ -34,47 +34,51 @@ class UTL_ExceptList;
 class ifr_adding_visitor : public ifr_visitor
 {
 public:
-  ifr_adding_visitor (AST_Decl *scope,
-                      CORBA::Boolean in_reopened = 0,
-                      bool allow_duplicate_typedefs = false);
+  explicit ifr_adding_visitor (AST_Decl *scope,
+                               CORBA::Boolean in_reopened = false,
+                               bool allow_duplicate_typedefs = false);
 
-  virtual ~ifr_adding_visitor ();
+  ~ifr_adding_visitor () override;
+  ifr_adding_visitor (ifr_adding_visitor const &) = delete;
+  ifr_adding_visitor (ifr_adding_visitor &&) = delete;
+  ifr_adding_visitor &operator= (ifr_adding_visitor const &) = delete;
+  ifr_adding_visitor &operator= (ifr_adding_visitor &&) = delete;
 
-  virtual int visit_scope (UTL_Scope *node);
-  virtual int visit_predefined_type (AST_PredefinedType *node);
-  virtual int visit_module (AST_Module *node);
-  virtual int visit_interface (AST_Interface *node);
-  virtual int visit_interface_fwd (AST_InterfaceFwd *node);
-  virtual int visit_valuebox (AST_ValueBox *node);
-  virtual int visit_valuetype (AST_ValueType *node);
-  virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
-  virtual int visit_component (AST_Component *node);
-  virtual int visit_component_fwd (AST_ComponentFwd *node);
-  virtual int visit_provides (AST_Provides *node);
-  virtual int visit_uses (AST_Uses *node);
-  virtual int visit_publishes (AST_Publishes *node);
-  virtual int visit_emits (AST_Emits *node);
-  virtual int visit_consumes (AST_Consumes *node);
-  virtual int visit_eventtype (AST_EventType *node);
-  virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
-  virtual int visit_home (AST_Home *node);
-  virtual int visit_structure (AST_Structure *node);
-  virtual int visit_structure_fwd (AST_StructureFwd *node);
-  virtual int visit_exception (AST_Exception *node);
-  virtual int visit_enum (AST_Enum *node);
-  virtual int visit_operation (AST_Operation *node);
-  virtual int visit_field (AST_Field *node);
-  virtual int visit_attribute (AST_Attribute *node);
-  virtual int visit_union (AST_Union *node);
-  virtual int visit_union_fwd (AST_UnionFwd *node);
-  virtual int visit_constant (AST_Constant *node);
-  virtual int visit_array (AST_Array *node);
-  virtual int visit_sequence (AST_Sequence *node);
-  virtual int visit_map (AST_Map *node);
-  virtual int visit_string (AST_String *node);
-  virtual int visit_typedef (AST_Typedef *node);
-  virtual int visit_root (AST_Root *node);
-  virtual int visit_native (AST_Native *node);
+  int visit_scope (UTL_Scope *node) override;
+  int visit_predefined_type (AST_PredefinedType *node) override;
+  int visit_module (AST_Module *node) override;
+  int visit_interface (AST_Interface *node) override;
+  int visit_interface_fwd (AST_InterfaceFwd *node) override;
+  int visit_valuebox (AST_ValueBox *node) override;
+  int visit_valuetype (AST_ValueType *node) override;
+  int visit_valuetype_fwd (AST_ValueTypeFwd *node) override;
+  int visit_component (AST_Component *node) override;
+  int visit_component_fwd (AST_ComponentFwd *node) override;
+  int visit_provides (AST_Provides *node) override;
+  int visit_uses (AST_Uses *node) override;
+  int visit_publishes (AST_Publishes *node) override;
+  int visit_emits (AST_Emits *node) override;
+  int visit_consumes (AST_Consumes *node) override;
+  int visit_eventtype (AST_EventType *node) override;
+  int visit_eventtype_fwd (AST_EventTypeFwd *node) override;
+  int visit_home (AST_Home *node) override;
+  int visit_structure (AST_Structure *node) override;
+  int visit_structure_fwd (AST_StructureFwd *node) override;
+  int visit_exception (AST_Exception *node) override;
+  int visit_enum (AST_Enum *node) override;
+  int visit_operation (AST_Operation *node) override;
+  int visit_field (AST_Field *node) override;
+  int visit_attribute (AST_Attribute *node) override;
+  int visit_union (AST_Union *node) override;
+  int visit_union_fwd (AST_UnionFwd *node) override;
+  int visit_constant (AST_Constant *node) override;
+  int visit_array (AST_Array *node) override;
+  int visit_sequence (AST_Sequence *node) override;
+  int visit_map (AST_Map *node) override;
+  int visit_string (AST_String *node) override;
+  int visit_typedef (AST_Typedef *node) override;
+  int visit_root (AST_Root *node) override;
+  int visit_native (AST_Native *node) override;
 
 protected:
   /// Conversion functions.
@@ -164,7 +168,7 @@ protected:
                           CORBA::ComponentIR::HomeDef_ptr h);
 
   void expand_id (ACE_CString &str,
-                  const char *local_name);
+                  char const *local_name);
 
 protected:
   /**

@@ -48,7 +48,7 @@ private:
 
   /// Flag to prevent multiple module creations when we encounter
   /// 'chained' alias declarations.
-  bool processed_;
+  bool processed_ {};
 };
 
 #endif           // AST_TEMPLATE_MODULE_REF_H

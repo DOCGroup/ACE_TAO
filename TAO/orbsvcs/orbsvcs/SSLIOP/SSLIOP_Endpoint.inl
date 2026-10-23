@@ -34,7 +34,7 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
     }
 }
 
-ACE_INLINE const ::SSLIOP::SSL &
+ACE_INLINE ::SSLIOP::SSL const &
 TAO_SSLIOP_Endpoint::ssl_component () const
 {
   return this->ssl_component_;

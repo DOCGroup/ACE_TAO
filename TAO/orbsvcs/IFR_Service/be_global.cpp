@@ -16,23 +16,16 @@
 #include "global_extern.h"
 #include "idl_defines.h"
 
-TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
+TAO_IFR_BE_Export BE_GlobalData *be_global = nullptr;
 
 BE_GlobalData::BE_GlobalData ()
-  : removing_ (false),
-    filename_ (0),
-    enable_locking_ (false),
-    do_included_files_ (true),
-    allow_duplicate_typedefs_ (false)
 {
   // At this point, the FE has been initialized.  We can
   // now instruct it that we want to preserve c++ keywords.
   idl_global->preserve_cpp_keywords (true);
 }
 
-BE_GlobalData::~BE_GlobalData ()
-{
-}
+BE_GlobalData::~BE_GlobalData () = default;
 
 bool
 BE_GlobalData::removing () const
@@ -81,7 +74,7 @@ BE_GlobalData::destroy ()
 {
 }
 
-const char *
+char const *
 BE_GlobalData::filename () const
 {
   return this->filename_;
@@ -136,7 +129,7 @@ BE_GlobalData::orb_args () const
 }
 
 void
-BE_GlobalData::orb_args (const ACE_CString& args)
+BE_GlobalData::orb_args (ACE_CString const &args)
 {
   this->orb_args_ = args;
 }

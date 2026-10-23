@@ -26,10 +26,14 @@ class be_visitor_component_ami_rh_ex_base
   //
   //
 public:
-  be_visitor_component_ami_rh_ex_base (be_visitor_context *ctx);
-  ~be_visitor_component_ami_rh_ex_base ();
+  explicit be_visitor_component_ami_rh_ex_base (be_visitor_context *ctx);
+  ~be_visitor_component_ami_rh_ex_base () override;
+  be_visitor_component_ami_rh_ex_base (be_visitor_component_ami_rh_ex_base const &) = delete;
+  be_visitor_component_ami_rh_ex_base (be_visitor_component_ami_rh_ex_base &&) = delete;
+  be_visitor_component_ami_rh_ex_base &operator= (be_visitor_component_ami_rh_ex_base const &) = delete;
+  be_visitor_component_ami_rh_ex_base &operator= (be_visitor_component_ami_rh_ex_base &&) = delete;
 
-  virtual int post_process (be_decl *node);
+  int post_process (be_decl *node) override;
 
 protected:
   void init ();
@@ -40,8 +44,8 @@ protected:
   int gen_attr_op (be_attribute *node, bool for_defn);
 
 protected:
-  be_interface *iface_;
-  be_uses *port_;
+  be_interface *iface_ {};
+  be_uses *port_ {};
   ACE_CString class_name_;
   ACE_CString base_class_name_;
 };
@@ -54,12 +58,12 @@ class Exec_ReplyHandler_Op_Attr_Generator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  Exec_ReplyHandler_Op_Attr_Generator (
+  explicit Exec_ReplyHandler_Op_Attr_Generator (
     be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

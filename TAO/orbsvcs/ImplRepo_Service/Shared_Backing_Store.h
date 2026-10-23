@@ -65,12 +65,12 @@ public:
                         CORBA::ORB_ptr orb,
                         ImR_Locator_i *loc_impl);
 
-  virtual ~Shared_Backing_Store();
+  ~Shared_Backing_Store() override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  const ACE_TCHAR* repo_mode() const override;
 
   /// enum to indicate whether the repo is in-sync, individual
   /// server and/or activator files need to be sync-ed or if
@@ -83,9 +83,9 @@ public:
   ///        existed when data was persisted
   /// @param extra_params extra name value pairs that
   ///        were reported for the server
-  virtual void load_server (Server_Info *info,
-                            bool server_started,
-                            const NameValues& extra_params);
+  void load_server (Server_Info *info,
+                    bool server_started,
+                    const NameValues& extra_params) override;
 
   /// create the Activator_Info activator object
   /// @param activator_name the Activator_Info name
@@ -93,18 +93,18 @@ public:
   /// @param ior the Activator_Info ior
   /// @param extra_params extra name value pairs that
   ///        were reported for the activator
-  virtual void load_activator (const ACE_CString& activator_name,
-                               long token,
-                               const ACE_CString& ior,
-                               const NameValues& extra_params);
+  void load_activator (const ACE_CString& activator_name,
+                       long token,
+                       const ACE_CString& ior,
+                       const NameValues& extra_params) override;
 
-  virtual void notify_remote_access (const char * id,
-                                     ImplementationRepository::AAM_Status s);
+  void notify_remote_access (const char * id,
+                             ImplementationRepository::AAM_Status s) override;
 
   /// calls Locator_Repository::report_ior with the Fault Tolerant ImR
   /// Locator's IOR if available, otherwise reporting the ior is delayed
   /// until the peer replica registers with this replica
-  virtual int report_ior(PortableServer::POA_ptr imr_poa);
+  int report_ior(PortableServer::POA_ptr imr_poa) override;
 
   void gen_ior (char*& ft_imr_ior);
   void updates_available (const ImplementationRepository::UpdateInfoSeq& info,
@@ -117,20 +117,20 @@ protected:
   /// trys to connect to the peer replica, unless it is a
   /// STANDALONE_IMR, clears out the persisted store if needed,
   /// and loads the repo from the persisted store)
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  int init_repo(PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  int persistent_update(const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  int persistent_remove(const ACE_CString& name, bool activator) override;
 
   /// perform sync of repo with backing store
   /// uses sync_needed_ and sync_files_ to determine what to update
-  virtual int sync_load ();
+  int sync_load () override;
 
   /// create the Fault Tolerant ImR Locator IOR, using the peer_ior and
   /// this ImR Locator's IOR
@@ -168,7 +168,7 @@ private:
     /// constructor
     /// @param dir the directory path to add to the server or activator
     ///        filename
-    LocatorListings_XMLHandler(const ACE_TString& dir);
+    explicit LocatorListings_XMLHandler(const ACE_TString& dir);
 
     /// constructor for tracking only changes to what servers and activators
     /// are currently in the repo
@@ -181,15 +181,15 @@ private:
                                const Locator_Repository::AIMap& activators);
 
     /// provide implementation for handling a new XML element
-    virtual void startElement (const ACEXML_Char* namespaceURI,
-                               const ACEXML_Char* localName,
-                               const ACEXML_Char* qName,
-                               ACEXML_Attributes* attrs);
+    void startElement (const ACEXML_Char* namespaceURI,
+                       const ACEXML_Char* localName,
+                       const ACEXML_Char* qName,
+                       ACEXML_Attributes* attrs) override;
 
     /// provide implementation for handling terminating an XML element
-    virtual void endElement (const ACEXML_Char* namespaceURI,
-                             const ACEXML_Char* localName,
-                             const ACEXML_Char* qName);
+    void endElement (const ACEXML_Char* namespaceURI,
+                     const ACEXML_Char* localName,
+                     const ACEXML_Char* qName) override;
 
     /// remove the servers and activators that were in the repo but not
     /// in the listings file (this does nothing if existing servers and
@@ -214,8 +214,8 @@ private:
     /// indicates if only changes should be tracked
     const bool only_changes_;
   };
-  typedef ACE_Strong_Bound_Ptr
-    <LocatorListings_XMLHandler, ACE_Null_Mutex> XMLHandler_Ptr;
+  using XMLHandler_Ptr = ACE_Strong_Bound_Ptr<LocatorListings_XMLHandler,
+                                               ACE_Null_Mutex>;
 
   /// determine the filename where the replica ior is reported
   /// @param peer_ior_file if this is the filename for the peer

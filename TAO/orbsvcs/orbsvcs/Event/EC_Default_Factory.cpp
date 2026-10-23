@@ -40,10 +40,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Default_Factory::~TAO_EC_Default_Factory ()
-{
-}
-
 int
 TAO_EC_Default_Factory::init_svcs ()
 {

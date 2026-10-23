@@ -25,10 +25,15 @@ class be_visitor_interface_fwd_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_interface_fwd_ch (be_visitor_context *ctx);
+  explicit be_visitor_interface_fwd_ch (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_interface_fwd_ch () override;
+
+  be_visitor_interface_fwd_ch (be_visitor_interface_fwd_ch const &) = delete;
+  be_visitor_interface_fwd_ch (be_visitor_interface_fwd_ch &&) = delete;
+  be_visitor_interface_fwd_ch &operator= (be_visitor_interface_fwd_ch const &) = delete;
+  be_visitor_interface_fwd_ch &operator= (be_visitor_interface_fwd_ch &&) = delete;
 
   /// visit interface_fwd.
   int visit_interface_fwd (be_interface_fwd *node) override;

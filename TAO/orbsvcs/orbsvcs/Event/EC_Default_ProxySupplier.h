@@ -38,7 +38,7 @@ public:
   TAO_EC_Default_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
   /// Destructor...
-  virtual ~TAO_EC_Default_ProxyPushSupplier ();
+  virtual ~TAO_EC_Default_ProxyPushSupplier () = default;
 
   void activate (
      RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);

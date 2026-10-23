@@ -18,9 +18,7 @@ TAO_Container_i::TAO_Container_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_Container_i::~TAO_Container_i ()
-{
-}
+TAO_Container_i::~TAO_Container_i () = default;
 
 void
 TAO_Container_i::destroy ()
@@ -2119,12 +2117,12 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
   CORBA::TCKind kind = tc->kind ();
 
   u_int result = 0;
-  int default_label = 0;
+  bool default_label = false;
 
   switch (kind)
   {
     case CORBA::tk_octet:
-      default_label = 1;
+      default_label = true;
       break;
     case CORBA::tk_char:
     {
@@ -2195,7 +2193,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     {
       CORBA::ULong x;
       TAO::Any_Impl *impl = value.impl ();
-      TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+      TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
 
       if (impl->encoded ())
         {
@@ -2220,7 +2218,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       break;
   }
 
-  if (default_label == 1)
+  if (default_label)
     {
       this->repo_->config ()->set_string_value (key,
                                                 "label",
@@ -2459,7 +2457,7 @@ TAO_Container_i::create_value_common (
       ACE_TString supported_id;
       const char *supported_path = nullptr;
       CORBA::ULong kind = 0;
-      CORBA::Boolean concrete_seen = 0;
+      bool concrete_seen = false;
       CORBA::DefinitionKind def_kind;
 
       for (CORBA::ULong i = 0; i < length; ++i)
@@ -2484,9 +2482,9 @@ TAO_Container_i::create_value_common (
 
           if (def_kind == CORBA::dk_Interface)
             {
-              if (concrete_seen == 0)
+              if (!concrete_seen)
                 {
-                  concrete_seen = 1;
+                  concrete_seen = true;
                 }
               else
                 {

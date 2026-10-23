@@ -50,10 +50,15 @@ namespace TAO_Notify
      * \param allowed the number of Routing_Slips that can be handled
      *  simultaneously by the persistent store.
      */
-    Routing_Slip_Queue (size_t allowed = 1);
+    explicit Routing_Slip_Queue (size_t allowed = 1);
 
     /// Destructor.
     ~Routing_Slip_Queue ();
+
+    Routing_Slip_Queue (const Routing_Slip_Queue&) = delete;
+    Routing_Slip_Queue (Routing_Slip_Queue&&) = delete;
+    Routing_Slip_Queue& operator= (const Routing_Slip_Queue&) = delete;
+    Routing_Slip_Queue& operator= (Routing_Slip_Queue&&) = delete;
 
     /**
      * \brief Add a routing slip to the tail of the queue and dispatch if necessary.
@@ -74,9 +79,6 @@ namespace TAO_Notify
     void dispatch (Guard & guard);
     bool dispatch_one (Guard & guard);
 
-  private:
-    Routing_Slip_Queue (const Routing_Slip_Queue & rhs);
-    Routing_Slip_Queue & operator = (const Routing_Slip_Queue & rhs);
   private:
     // configuration setting
     size_t allowed_;

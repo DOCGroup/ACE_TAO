@@ -18,10 +18,6 @@ TAO_Notify_AnyEvent_No_Copy::TAO_Notify_AnyEvent_No_Copy (const CORBA::Any &even
 {
 }
 
-TAO_Notify_AnyEvent_No_Copy::~TAO_Notify_AnyEvent_No_Copy ()
-{
-}
-
 const TAO_Notify_EventType&
 TAO_Notify_AnyEvent_No_Copy::type () const
 {
@@ -89,7 +85,7 @@ TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSuppli
 void
 TAO_Notify_AnyEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 {
-  const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
+  constexpr ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
   cdr.write_octet (ANY_CODE);
   cdr << (*this->event_);
 }
@@ -125,10 +121,6 @@ TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
     , any_copy_ (event)
 {
   this->event_ = &any_copy_;
-}
-
-TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
-{
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

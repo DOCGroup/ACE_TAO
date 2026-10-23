@@ -13,11 +13,8 @@
 
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ()),
-    for_finder_ (false)
+    export_macro_ (be_global->svnt_export_macro ())
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
@@ -29,9 +26,7 @@ be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svs::~be_visitor_home_svs ()
-{
-}
+be_visitor_home_svs::~be_visitor_home_svs () = default;
 
 int
 be_visitor_home_svs::visit_home (be_home *node)
@@ -135,9 +130,9 @@ be_visitor_home_svs::visit_factory (be_factory *node)
     {
       ACE_CString comp_sname_str (
         ScopeAsDecl (comp_->defined_in ())->full_name ());
-      const char *comp_sname = comp_sname_str.c_str ();
-      const char *comp_lname = comp_->local_name ()->get_string ();
-      const char *global = (comp_sname_str == "" ? "" : "::");
+      char const *comp_sname = comp_sname_str.c_str ();
+      char const *comp_lname = comp_->local_name ()->get_string ();
+      char const *global = (comp_sname_str == "" ? "" : "::");
 
       ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
 
@@ -207,20 +202,20 @@ be_visitor_home_svs::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  char const *sname = sname_str.c_str ();
 
   // Avoid '_cxx_' prefix.
-  const char *lname =
+  char const *lname =
     node_->original_local_name ()->get_string ();
 
-  const char *clname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  char const *clname = comp_->local_name ()->get_string ();
+  char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl
       << lname << "_Servant::"
       << lname << "_Servant (" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
-      << "const char * ins_name," << be_nl
+      << "char const * ins_name," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c)" << be_uidt_nl
       << ": ::CIAO::Home_Servant_Impl_Base ()," << be_idt_nl
@@ -252,7 +247,7 @@ be_visitor_home_svs::gen_servant_class ()
       os_ << "for (::CORBA::ULong i = 0; i < descr.length (); ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
-          << "const char * descr_name = descr[i]->name ();"
+          << "char const * descr_name = descr[i]->name ();"
           << be_nl
           << "::CORBA::Any & descr_value = descr[i]->value ();";
 
@@ -383,13 +378,13 @@ be_visitor_home_svs::gen_entrypoint ()
 {
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *sname = sname_str.c_str ();
+  char const *sname = sname_str.c_str ();
 
   // Avoid _cxx_ prefix.
-  const char *lname =
+  char const *lname =
     node_->original_local_name ()->get_string ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
@@ -399,9 +394,9 @@ be_visitor_home_svs::gen_entrypoint ()
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c," << be_nl
-      << "const char * ins_name)" << be_uidt_nl
+      << "char const * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
+      << "::PortableServer::Servant retval = nullptr;" << be_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
@@ -421,7 +416,7 @@ be_visitor_home_svs::gen_entrypoint ()
 //=======================================================
 
 Home_Op_Attr_Generator::Home_Op_Attr_Generator (
-    be_visitor_scope * visitor)
+    be_visitor_scope *visitor)
   : visitor_ (visitor)
 {
 }
@@ -442,9 +437,7 @@ be_visitor_home_attr_set::be_visitor_home_attr_set (
 {
 }
 
-be_visitor_home_attr_set::~be_visitor_home_attr_set ()
-{
-}
+be_visitor_home_attr_set::~be_visitor_home_attr_set () = default;
 
 int
 be_visitor_home_attr_set::visit_home (be_home *node)

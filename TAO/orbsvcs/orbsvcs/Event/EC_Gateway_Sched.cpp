@@ -8,10 +8,6 @@ TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched ()
 {
 }
 
-TAO_EC_Gateway_Sched::~TAO_EC_Gateway_Sched ()
-{
-}
-
 void
 TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                            RtecEventChannelAdmin::EventChannel_ptr consumer_ec,

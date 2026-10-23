@@ -114,7 +114,7 @@ class TAO_IDL_FE_Export UTL_StrlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
-  UTL_StrlistActiveIterator(UTL_StrList *s);
+  explicit UTL_StrlistActiveIterator (UTL_StrList *s);
 
   // Get current item.
   UTL_String *item ();

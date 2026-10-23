@@ -88,7 +88,7 @@ void process_long_option(long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
-DRV_push_file (const char *s)
+DRV_push_file (char const *s)
 {
   // If filenames come from the command line, there is no
   // need to duplicate the string, but some backends have
@@ -567,8 +567,8 @@ print_idl_versions()
 void
 process_long_option(long ac, char **av, long &i)
 {
-  const char *long_option = av[i] + 2;
-  bool no_more_args = i + 1 >= ac;
+  char const *long_option = av[i] + 2;
+  bool const no_more_args = i + 1 >= ac;
   if (!ACE_OS::strcmp (long_option, "idl-version"))
     {
       bool invalid_version = no_more_args;

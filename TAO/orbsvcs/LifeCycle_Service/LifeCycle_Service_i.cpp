@@ -19,8 +19,7 @@
 
 // Constructor
 Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)
-  : factory_trader_ptr_ (nullptr),
-    debug_level_ (debug_level)
+  : debug_level_ (debug_level)
 {
 }
 
@@ -31,7 +30,7 @@ Life_Cycle_Service_i::~Life_Cycle_Service_i () = default;
 CORBA::Boolean
 Life_Cycle_Service_i::supports (CosLifeCycle::Key const &)
 {
-  return 0;
+  return false;
 }
 
 CORBA::Object_ptr
@@ -85,7 +84,7 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
               genericFactory_var =
                 CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr);
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // see if there is an exception, if yes then throw the
               // NoFactory exception throw a NoFactory exception
@@ -122,14 +121,14 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
 void
-Life_Cycle_Service_i::register_factory (const char * name,
-                                        const char * location,
-                                        const char * description,
+Life_Cycle_Service_i::register_factory (char const * name,
+                                        char const * location,
+                                        char const * description,
                                         CORBA::Object_ptr object)
 {
   if (factory_trader_ptr_ == nullptr)

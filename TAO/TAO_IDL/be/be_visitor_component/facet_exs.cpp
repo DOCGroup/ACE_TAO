@@ -13,16 +13,11 @@
 
 be_visitor_facet_exs::be_visitor_facet_exs (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    op_scope_ (nullptr),
-    comment_start_border_ ("/**"),
-    comment_end_border_ (" */")
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_facet_exs::~be_visitor_facet_exs ()
-{
-}
+be_visitor_facet_exs::~be_visitor_facet_exs () = default;
 
 int
 be_visitor_facet_exs::visit_operation (be_operation *node)

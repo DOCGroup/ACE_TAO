@@ -177,11 +177,11 @@ public:
 
   /// Accessor for whether or not the recursion is within a previously
   /// detected cycle.
-  int in_a_cycle ();
+  bool in_a_cycle ();
 
   /// Mutator for whether or not the recursion is within a previously
   /// detected cycle.
-  void in_a_cycle (int);
+  void in_a_cycle (bool value);
 
 protected:
   /**
@@ -237,7 +237,7 @@ private:
 
   /// Indicates whether or not the recursion is
   /// currently within a previously discovered cycle.
-  int in_a_cycle_;
+  bool in_a_cycle_ {};
 };
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
@@ -371,10 +371,10 @@ public:
 
 private:
   /// Pointer to previous tuple in the iteration.
-  TAO_Reconfig_Scheduler_Entry *previous_entry_;
+  TAO_Reconfig_Scheduler_Entry *previous_entry_ {};
 
   /// Pointer to first subpriority tuple in the priority level.
-  TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_;
+  TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_ {};
 
   /// Current priority value.
   RtecScheduler::Preemption_Priority_t priority_;

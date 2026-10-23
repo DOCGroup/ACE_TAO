@@ -85,9 +85,7 @@ AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
       }
 }
 
-AST_UnionLabel::~AST_UnionLabel ()
-{
-}
+AST_UnionLabel::~AST_UnionLabel () = default;
 
 // Redefinition of inherited virtual operations.
 

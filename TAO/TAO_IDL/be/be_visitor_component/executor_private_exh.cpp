@@ -14,15 +14,11 @@
 
 be_visitor_executor_private_exh::be_visitor_executor_private_exh (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    do_provides_ (true),
-    do_attribute_(true)
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_executor_private_exh::~be_visitor_executor_private_exh ()
-{
-}
+be_visitor_executor_private_exh::~be_visitor_executor_private_exh () = default;
 
 int
 be_visitor_executor_private_exh::visit_provides (be_provides *node)

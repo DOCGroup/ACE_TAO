@@ -20,9 +20,7 @@ be_visitor_valuetype_cs::be_visitor_valuetype_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_cs::~be_visitor_valuetype_cs ()
-{
-}
+be_visitor_valuetype_cs::~be_visitor_valuetype_cs () = default;
 
 int
 be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
@@ -94,7 +92,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_nl_2;
 
   // The _tao_obv_repository_id method.
-  *os << "const char *" << be_nl
+  *os << "char const *" << be_nl
       << node->name ()
       << "::_tao_obv_repository_id () const" << be_nl
       << "{" << be_idt_nl

@@ -65,6 +65,11 @@ public:
   /// a normal destructor.
   ~Delivery_Request ();
 
+  Delivery_Request (const Delivery_Request&) = delete;
+  Delivery_Request (Delivery_Request&&) = delete;
+  Delivery_Request& operator= (const Delivery_Request&) = delete;
+  Delivery_Request& operator= (Delivery_Request&&) = delete;
+
   /// \brief A method to indicate the delivery is complete.
   ///
   /// To be called by the delivery method associated with this delivery request.
@@ -108,10 +113,6 @@ public:
 private:
   /// No null constructor.
   Delivery_Request ();
-  /// No copy constructor.
-  Delivery_Request (const Delivery_Request & rhs);
-  /// no assignment operator
-  Delivery_Request & operator = (const Delivery_Request & rhs);
 
 private:
   Routing_Slip_Ptr routing_slip_;

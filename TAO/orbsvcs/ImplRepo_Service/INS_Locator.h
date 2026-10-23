@@ -52,7 +52,7 @@ class INS_Locator
     public virtual ::CORBA::LocalObject
 {
 public:
-  INS_Locator (ImR_Locator_i& loc);
+  explicit INS_Locator (ImR_Locator_i& loc);
 
   /// Locate the appropriate IOR.
   char* locate (const char *object_key);

@@ -175,6 +175,11 @@ namespace TAO
     ///////////////
     // Data Members
   private:
+    PG_Properties_Support (PG_Properties_Support const &) = delete;
+    PG_Properties_Support (PG_Properties_Support &&) = delete;
+    PG_Properties_Support &operator= (PG_Properties_Support const &) = delete;
+    PG_Properties_Support &operator= (PG_Properties_Support &&) = delete;
+
     /**
      * Protect internal state.
      */
