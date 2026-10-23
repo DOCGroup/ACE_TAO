@@ -130,6 +130,11 @@ public:
   /// Destructor.
   virtual ~TAO_Naming_Server ();
 
+  TAO_Naming_Server (TAO_Naming_Server const &) = delete;
+  TAO_Naming_Server (TAO_Naming_Server &&) = delete;
+  TAO_Naming_Server &operator= (TAO_Naming_Server const &) = delete;
+  TAO_Naming_Server &operator= (TAO_Naming_Server &&) = delete;
+
   /// Returns the IOR of the naming service.
   char * naming_service_ior ();
 

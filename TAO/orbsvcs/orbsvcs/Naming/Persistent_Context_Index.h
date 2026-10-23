@@ -100,6 +100,11 @@ public:
    */
   ~TAO_Persistent_Context_Index ();
 
+  TAO_Persistent_Context_Index (TAO_Persistent_Context_Index const &) = delete;
+  TAO_Persistent_Context_Index (TAO_Persistent_Context_Index &&) = delete;
+  TAO_Persistent_Context_Index &operator= (TAO_Persistent_Context_Index const &) = delete;
+  TAO_Persistent_Context_Index &operator= (TAO_Persistent_Context_Index &&) = delete;
+
   // = Methods for adding/removing entries.
 
   /**
