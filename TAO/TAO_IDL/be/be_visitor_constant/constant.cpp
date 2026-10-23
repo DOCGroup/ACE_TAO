@@ -43,6 +43,6 @@ const char *exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
     case AST_Expression::EV_uint8:
       return "CORBA::UInt8";
     default:
-      return 0;
+      return nullptr;
     }
 }
