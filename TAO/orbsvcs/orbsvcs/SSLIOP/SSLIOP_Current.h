@@ -116,7 +116,7 @@ namespace TAO
         return nullptr;
       }
 
-      const char* _interface_repository_id () const override;
+      char const* _interface_repository_id () const override;
       //@}
 
     protected:

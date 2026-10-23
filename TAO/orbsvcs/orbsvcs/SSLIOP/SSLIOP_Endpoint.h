@@ -54,7 +54,7 @@ namespace TAO
       friend class TAO_SSLIOP_Profile;
 
       /// Constructor
-      TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
+      TAO_SSLIOP_Endpoint (::SSLIOP::SSL const *ssl_component,
                 TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
@@ -63,7 +63,7 @@ namespace TAO
       /// Need to have an assignment operator since the SSLIOP_Profile class
       /// may have to reorder its list of endpoints based on filtering by
       /// the EndpointPolicy.
-      TAO_SSLIOP_Endpoint & operator= (const TAO_SSLIOP_Endpoint& other);
+      TAO_SSLIOP_Endpoint & operator= (TAO_SSLIOP_Endpoint const& other);
 
       /**
        * @name TAO_Endpoint Methods
@@ -80,7 +80,7 @@ namespace TAO
       /// Two endpoints may be equivalent even if their iiop counterparts are
       /// not. In fact, there are cases (as with the LPL processing)
       /// when those counterparts are not known at all.
-      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
+      CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
@@ -104,7 +104,7 @@ namespace TAO
        */
       //@{
       /// Return SSL component corresponding to this endpoint.
-      const ::SSLIOP::SSL &ssl_component () const;
+      ::SSLIOP::SSL const &ssl_component () const;
 
       /// Accessor to our IIOP counterpart.
       TAO_IIOP_Endpoint *iiop_endpoint () const;
@@ -119,14 +119,14 @@ namespace TAO
       void iiop_endpoint (TAO_IIOP_Endpoint *endpoint, bool destroy);
 
       /// Return the SSLIOP-specific ACE_INET_Addr.
-      const ACE_INET_Addr &object_addr () const;
+      ACE_INET_Addr const &object_addr () const;
 
       /// Set the Quality-of-Protection, establishment of trust, and
       /// credentials for this endpoint. This is all done in one function
       /// so that the guard may be used uniformly.
       void set_sec_attrs (::Security::QOP qop,
-                          const ::Security::EstablishTrust &trust,
-                          const TAO::SSLIOP::OwnCredentials_ptr creds);
+                          ::Security::EstablishTrust const &trust,
+                          TAO::SSLIOP::OwnCredentials_ptr const creds);
 
       /// Get the Quality-of-Protection settings for this endpoint.
       ::Security::QOP qop () const;
@@ -227,14 +227,14 @@ namespace TAO
        * equivalent, and, if both have non-zero ssl ports, their ssl
        * ports are the same.
        */
-      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
+      CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
       TAO_Endpoint *duplicate () override;
 
     private:
-      explicit TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
+      explicit TAO_SSLIOP_Synthetic_Endpoint (::SSLIOP::SSL const *ssl);
     };
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.

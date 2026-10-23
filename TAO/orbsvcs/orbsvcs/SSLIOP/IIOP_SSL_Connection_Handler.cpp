@@ -12,7 +12,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char * const TAO_IIOP_SSL_Connect_Timeprobe_Description[] =
+static char const * const TAO_IIOP_SSL_Connect_Timeprobe_Description[] =
 {
   "IIOP_SSL_Connection_Handler::handle_input - start",
   "IIOP_SSL_Connection_Handler::handle_input - end",

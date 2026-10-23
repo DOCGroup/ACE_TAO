@@ -18,7 +18,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
-                                 const ACE_Time_Value & timeout,
+                                 ACE_Time_Value const & timeout,
                                  bool check_host)
   : TAO::IIOP_SSL_Acceptor (),
     ssl_acceptor_ (this),
@@ -93,7 +93,7 @@ TAO::SSLIOP::Acceptor::~Acceptor ()
 }
 
 int
-TAO::SSLIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
+TAO::SSLIOP::Acceptor::create_profile (TAO::ObjectKey const &object_key,
                                        TAO_MProfile &mprofile,
                                        CORBA::Short priority)
 {
@@ -114,12 +114,12 @@ TAO::SSLIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
+TAO::SSLIOP::Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  const int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
@@ -200,7 +200,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
 
 int
-TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
+TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
                                               TAO_MProfile &mprofile,
                                               CORBA::Short priority)
 {
@@ -242,7 +242,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             &(this->ssl_component_)),
                       -1);
 
-      TAO_SSLIOP_Endpoint * const ssliop_endp =
+      TAO_SSLIOP_Endpoint *const ssliop_endp =
         dynamic_cast<TAO_SSLIOP_Endpoint *> (ssliop_profile->endpoint ());
 
       if (!ssliop_endp)
@@ -287,7 +287,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           CORBA::ULong const length = static_cast<CORBA::ULong> (cdr.total_length ());
           component.component_data.length (length);
           CORBA::Octet *buf = component.component_data.get_buffer ();
-          for (const ACE_Message_Block *i = cdr.begin ();
+          for (ACE_Message_Block const *i = cdr.begin ();
                i != nullptr;
                i = i->cont ())
             {
@@ -328,16 +328,16 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 {
-  const TAO_SSLIOP_Endpoint *endp =
-    dynamic_cast<const TAO_SSLIOP_Endpoint *> (endpoint);
+  TAO_SSLIOP_Endpoint const *endp =
+    dynamic_cast<TAO_SSLIOP_Endpoint const *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
     return 0;
 
-  const TAO_IIOP_Endpoint *iiop = endp->iiop_endpoint ();
+  TAO_IIOP_Endpoint const *iiop = endp->iiop_endpoint ();
 
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
@@ -364,8 +364,8 @@ TAO::SSLIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
                              int major,
                              int minor,
-                             const char *address,
-                             const char *options)
+                             char const *address,
+                             char const *options)
 {
   // Ensure that neither the endpoint configuration nor the ORB
   // configuration violate security measures.
@@ -403,7 +403,7 @@ TAO::SSLIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                                      ACE_Reactor *reactor,
                                      int major,
                                      int minor,
-                                     const char *options)
+                                     char const *options)
 {
   // Ensure that neither the endpoint configuration nor the ORB
   // configuration violate security measures.
@@ -440,7 +440,7 @@ TAO::SSLIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 
 int
 TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
-                                      const ACE_INET_Addr& addr,
+                                      ACE_INET_Addr const& addr,
                                       ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;

@@ -85,12 +85,12 @@ namespace TAO
       /// Write the complete Message_Block chain to the connection.
       ssize_t send (iovec *iov, int iovcnt,
                     size_t &bytes_transferred,
-                    const ACE_Time_Value *timeout = nullptr) override;
+                    ACE_Time_Value const *timeout = nullptr) override;
 
       /// Read len bytes from into buf.
       ssize_t recv (char *buf,
                     size_t len,
-                    const ACE_Time_Value *s = nullptr) override;
+                    ACE_Time_Value const *s = nullptr) override;
 
     public:
       /// @todo These methods IMHO should have more meaningful

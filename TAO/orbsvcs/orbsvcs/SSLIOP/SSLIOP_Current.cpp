@@ -126,7 +126,7 @@ TAO::SSLIOP::Current::_duplicate (TAO::SSLIOP::Current_ptr obj)
   return obj;
 }
 
-const char *
+char const *
 TAO::SSLIOP::Current::_interface_repository_id () const
 {
   return "IDL:TAO/SSLIOP/Current:1.0";

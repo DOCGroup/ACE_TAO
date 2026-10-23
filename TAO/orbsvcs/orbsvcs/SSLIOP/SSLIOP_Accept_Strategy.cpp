@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Accept_Strategy::Accept_Strategy (TAO_ORB_Core * orb_core,
-                                               const ACE_Time_Value & timeout,
+                                               ACE_Time_Value const & timeout,
                                                bool check_host)
   : TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
                         ACE_SSL_SOCK_Acceptor> (orb_core),

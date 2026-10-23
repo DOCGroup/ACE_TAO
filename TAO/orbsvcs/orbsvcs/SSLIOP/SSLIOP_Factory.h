@@ -63,10 +63,10 @@ namespace TAO
       int init (int argc, ACE_TCHAR* argv[]) override;
 
       /// Verify prefix is a match
-      int match_prefix (const ACE_CString & prefix) override;
+      int match_prefix (ACE_CString const & prefix) override;
 
       /// Returns the prefix used by the protocol.
-      const char * prefix () const override;
+      char const * prefix () const override;
 
       /// Return the character used to mark where an endpoint ends and
       /// where its options begin.
