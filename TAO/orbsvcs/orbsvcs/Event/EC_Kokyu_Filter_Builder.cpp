@@ -201,7 +201,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       RtecBase::handle_t conj_rt_info = parent_info;
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
@@ -219,7 +219,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                            conj_rt_info,
                                            conj_rt_info,
                                            RtecScheduler::CONJUNCTION),
-                      0);
+                      nullptr);
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
       // @@
@@ -243,7 +243,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
@@ -260,7 +260,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                            disj_rt_info,
                                            disj_rt_info,
                                            RtecScheduler::DISJUNCTION),
-                      0);
+                      nullptr);
 
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
@@ -365,7 +365,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                        parent_info,
                                        parent_info,
                                        RtecScheduler::OPERATION),
-                  0);
+                  nullptr);
 
   TAO_EC_QOS_Info qos_info;
   filter->get_qos_info (qos_info);

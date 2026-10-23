@@ -516,7 +516,7 @@ TAO_ECG_CDR_Message_Receiver::shutdown ()
        ++i)
     {
       delete (*i).int_id_;
-      (*i).int_id_ = 0;
+      (*i).int_id_ = nullptr;
     }
 
   this->ignore_from_.reset ();

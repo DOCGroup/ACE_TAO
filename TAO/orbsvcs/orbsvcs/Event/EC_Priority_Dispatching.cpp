@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base *ec)
   :  ntasks_ (0),
-     tasks_ (0)
+     tasks_ (nullptr)
 {
   CORBA::Object_var tmp = ec->scheduler ();
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
@@ -23,7 +23,7 @@ TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_B
 void
 TAO_EC_Priority_Dispatching::activate ()
 {
-  if (this->tasks_ != 0)
+  if (this->tasks_ != nullptr)
     return;
 
   // @@ Query the scheduler to obtain this....
@@ -84,7 +84,7 @@ TAO_EC_Priority_Dispatching::activate ()
 void
 TAO_EC_Priority_Dispatching::shutdown ()
 {
-  if (this->tasks_ == 0)
+  if (this->tasks_ == nullptr)
     return;
 
   for (int i = 0; i < this->ntasks_; ++i)
@@ -96,7 +96,7 @@ TAO_EC_Priority_Dispatching::shutdown ()
     delete this->tasks_[j];
 
   delete[] this->tasks_;
-  this->tasks_ = 0;
+  this->tasks_ = nullptr;
 }
 
 void
@@ -115,7 +115,7 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                           RtecEventComm::EventSet& event,
                                           TAO_EC_QOS_Info& qos_info)
 {
-  if (this->tasks_ == 0)
+  if (this->tasks_ == nullptr)
     this->activate ();
 
   int i = qos_info.preemption_priority;

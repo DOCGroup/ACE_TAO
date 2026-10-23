@@ -28,7 +28,7 @@ ACE_INLINE
 TAO_EC_Dispatching_Task::
 TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Service_Object *so)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
-     allocator_ (0),
+     allocator_ (nullptr),
      the_queue_ (TAO_EC_QUEUE_HWM, TAO_EC_QUEUE_LWM),
      queue_full_service_object_ (so)
 {
@@ -40,7 +40,7 @@ TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Serv
 ACE_INLINE
 TAO_EC_Dispatching_Task::
 TAO_EC_Dispatching_Task ()
-  : TAO_EC_Dispatching_Task (0, 0)
+  : TAO_EC_Dispatching_Task (nullptr, nullptr)
 {}
 #endif
 
