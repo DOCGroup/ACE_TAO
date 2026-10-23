@@ -121,7 +121,7 @@ namespace TAO_Notify
         ACE_Time_Value const now = ACE_High_Res_Timer::gettimeofday();
 
         ACE_UINT64 nowus = now.usec();
-        static const ACE_UINT64 USECSPERSEC = 1000 * 1000;
+        static constexpr ACE_UINT64 USECSPERSEC = 1000 * 1000;
         ACE_UINT64 const tmpus = now.sec();
         nowus += tmpus * USECSPERSEC;
 

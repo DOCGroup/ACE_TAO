@@ -30,8 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  static const ACE_UINT32 ROUTING_SLIP_ROOT_BLOCK_NUMBER = 0;
-  static const ACE_UINT64 ROUTING_SLIP_ROOT_SERIAL_NUMBER = 1;
+  constexpr ACE_UINT32 ROUTING_SLIP_ROOT_BLOCK_NUMBER = 0;
+  constexpr ACE_UINT64 ROUTING_SLIP_ROOT_SERIAL_NUMBER = 1;
 
   /// \brief Standard (i.e. default) implementation of Event_Persistence_Factory interface
   class TAO_Notify_Serv_Export Standard_Event_Persistence_Factory :
