@@ -83,7 +83,7 @@ public:
   static AST_Decl::NodeType const NT;
 
   // Constructor.
-  AST_Module (UTL_ScopedName *n, AST_Module *prev = nullptr);
+  explicit AST_Module (UTL_ScopedName *n, AST_Module *prev = nullptr);
 
   // Destructor.
   ~AST_Module () override;
