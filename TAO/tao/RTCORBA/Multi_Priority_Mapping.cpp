@@ -15,7 +15,7 @@ TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
   int base_native_priority,
   int base_corba_priority,
   int priority_spacing,
-  int priorities_contiguous,
+  bool priorities_contiguous,
   int policy)
   :  base_native_priority_ (base_native_priority)
   ,  base_corba_priority_ (base_corba_priority)
@@ -88,7 +88,7 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
   }
   else
   {
-     if (priorities_contiguous_ == 1)
+     if (priorities_contiguous_)
      {
         if ( this->min_ < this->max_ )
         {
@@ -159,7 +159,7 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   }
   else
   {
-     if (priorities_contiguous_ == 1)
+     if (priorities_contiguous_)
      {
         if ( this->min_ < this->max_ )
         {
