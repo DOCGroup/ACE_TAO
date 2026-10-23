@@ -130,7 +130,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.
        */
-      ~SSLIOP_Credentials ();
+      ~SSLIOP_Credentials () override = default;
 
     protected:
       /// Reference to the X.509 certificate associated with this SSLIOP

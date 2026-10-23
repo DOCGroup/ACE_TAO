@@ -47,7 +47,7 @@ namespace TAO
       Current_Impl ();
 
       /// Destructor
-      ~Current_Impl () override;
+      ~Current_Impl () override = default;
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::client_credentials() method.

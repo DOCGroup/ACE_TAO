@@ -219,7 +219,7 @@ namespace TAO
       explicit TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
-      ~TAO_SSLIOP_Synthetic_Endpoint () override;
+      ~TAO_SSLIOP_Synthetic_Endpoint () override = default;
 
       /**
        * Return true if this endpoint is equivalent to @p other_endpoint.

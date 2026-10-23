@@ -70,10 +70,6 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
     }
 }
 
-TAO::SSLIOP_Credentials::~SSLIOP_Credentials ()
-{
-}
-
 char *
 TAO::SSLIOP_Credentials::creds_id ()
 {

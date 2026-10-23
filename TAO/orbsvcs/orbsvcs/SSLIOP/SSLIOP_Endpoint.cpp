@@ -290,18 +290,11 @@ TAO_SSLIOP_Endpoint::set_sec_attrs (::Security::QOP q,
   this->hash_val_ = 0;
 }
 
-
-
-TAO_SSLIOP_Synthetic_Endpoint::~TAO_SSLIOP_Synthetic_Endpoint ()
-{
-}
-
 TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (
   ::SSLIOP::SSL const *ssl)
   : TAO_SSLIOP_Endpoint (ssl, nullptr)
 {
 }
-
 
 TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp)
   : TAO_SSLIOP_Endpoint (nullptr, iiop_endp)

@@ -27,10 +27,6 @@ TAO::SSLIOP::Transport::Transport (
 {
 }
 
-TAO::SSLIOP::Transport::~Transport ()
-{
-}
-
 ACE_Event_Handler *
 TAO::SSLIOP::Transport::event_handler_i ()
 {

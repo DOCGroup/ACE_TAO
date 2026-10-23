@@ -56,7 +56,7 @@ namespace TAO
       Protocol_Factory ();
 
       /// Destructor.
-      ~Protocol_Factory () override;
+      ~Protocol_Factory () override = default;
 
       // = Service Configurator hooks.
       /// Dynamic linking hook

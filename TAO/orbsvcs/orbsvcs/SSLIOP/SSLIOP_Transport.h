@@ -63,7 +63,7 @@ namespace TAO
                  TAO_ORB_Core *orb_core);
 
       /// Default destructor.
-      ~Transport () override;
+      ~Transport () override = default;
 
       /// Overload of the handle_input () in the TAO_Transport
       /// class. This is required to set up the state guard. The

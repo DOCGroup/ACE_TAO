@@ -74,8 +74,4 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   this->transport (specific_transport);
 }
 
-TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler ()
-{
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -93,7 +93,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsAcquirer ();
+      ~CredentialsAcquirer () override = default;
 
     private:
       /// Verify that this CredentialsAcquirer object is still valid,

@@ -121,7 +121,7 @@ namespace TAO
 
     protected:
       /// Destructor
-      ~Current () override;
+      ~Current () override = default;
 
       /// Set the TSS SSLIOP::Current implementation.
       int implementation (Current_Impl *impl);

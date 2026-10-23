@@ -22,10 +22,6 @@ TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
 {
 }
 
-TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector ()
-{
-}
-
 int
 TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 {

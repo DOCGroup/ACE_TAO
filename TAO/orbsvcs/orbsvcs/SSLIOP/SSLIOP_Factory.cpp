@@ -238,10 +238,6 @@ TAO::SSLIOP::Protocol_Factory::Protocol_Factory ()
 {
 }
 
-TAO::SSLIOP::Protocol_Factory::~Protocol_Factory ()
-{
-}
-
 int
 TAO::SSLIOP::Protocol_Factory::match_prefix (ACE_CString const &prefix)
 {

@@ -76,10 +76,6 @@ TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
 {
 }
 
-TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer ()
-{
-}
-
 char *
 TAO::SSLIOP::CredentialsAcquirer::acquisition_method ()
 {

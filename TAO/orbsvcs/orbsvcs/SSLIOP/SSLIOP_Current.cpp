@@ -13,10 +13,6 @@ TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO::SSLIOP::Current::~Current ()
-{
-}
-
 ::SSLIOP::ASN_1_Cert *
 TAO::SSLIOP::Current::get_peer_certificate ()
 {
