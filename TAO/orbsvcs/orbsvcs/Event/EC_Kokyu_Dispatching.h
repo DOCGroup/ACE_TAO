@@ -98,7 +98,7 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Shutdown_Command : public Kokyu::Disp
 {
 public:
   /// Constructor
-  TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
+  explicit TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
   virtual int execute () override;

@@ -45,7 +45,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_SupplierAdmin
 {
 public:
   /// constructor...
-  TAO_EC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_EC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
   virtual ~TAO_EC_SupplierAdmin ();

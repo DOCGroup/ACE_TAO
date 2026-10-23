@@ -39,7 +39,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Negation_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor. It assumes ownership of the child.
-  TAO_EC_Negation_Filter (TAO_EC_Filter* child);
+  explicit TAO_EC_Negation_Filter (TAO_EC_Filter* child);
 
   /// Destructor
   virtual ~TAO_EC_Negation_Filter () override;

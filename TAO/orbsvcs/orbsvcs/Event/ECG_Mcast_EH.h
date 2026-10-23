@@ -109,7 +109,7 @@ private:
   public:
     /// Constructor.  Changes in the EC subscriptions will be reported
     /// to the \a eh.
-    Observer (TAO_ECG_Mcast_EH* eh);
+    explicit Observer (TAO_ECG_Mcast_EH* eh);
 
     /// Shut down the observer: disconnect from EC and deactivate from
     /// POA.

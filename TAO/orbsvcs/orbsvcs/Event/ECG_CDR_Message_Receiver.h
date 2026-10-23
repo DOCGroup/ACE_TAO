@@ -243,7 +243,7 @@ struct TAO_ECG_CDR_Message_Receiver::Mcast_Header
   CORBA::ULong crc;
   int read (char * header,
             size_t bytes_received,
-            CORBA::Boolean checkcrc = 0);
+            CORBA::Boolean checkcrc = false);
 };
 
 // ****************************************************************
