@@ -33,17 +33,17 @@ public:
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
                                             const char *instance_name,
                                             bool use_underscore,
-                                            bool accessor = false);
+                                            bool accessor = false) override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 protected:
   /// Overridden method to compute typecode name.
-  virtual void compute_tc_name ();
+  void compute_tc_name () override;
 };
 
 #endif
