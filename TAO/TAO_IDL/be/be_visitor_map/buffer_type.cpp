@@ -19,9 +19,7 @@ be_visitor_map_buffer_type::be_visitor_map_buffer_type (be_visitor_context *ctx)
 {
 }
 
-be_visitor_map_buffer_type::~be_visitor_map_buffer_type ()
-{
-}
+be_visitor_map_buffer_type::~be_visitor_map_buffer_type () = default;
 
 int
 be_visitor_map_buffer_type::visit_node (be_type *node, bool var)

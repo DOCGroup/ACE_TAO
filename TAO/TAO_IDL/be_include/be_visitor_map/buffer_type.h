@@ -28,10 +28,15 @@ class be_visitor_map_buffer_type : public be_visitor_decl
 {
 public:
   /// Constructor
-  be_visitor_map_buffer_type (be_visitor_context *ctx);
+  explicit be_visitor_map_buffer_type (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_map_buffer_type () override;
+
+  be_visitor_map_buffer_type (const be_visitor_map_buffer_type &) = delete;
+  be_visitor_map_buffer_type (be_visitor_map_buffer_type &&) = delete;
+  be_visitor_map_buffer_type &operator= (const be_visitor_map_buffer_type &) = delete;
+  be_visitor_map_buffer_type &operator= (be_visitor_map_buffer_type &&) = delete;
 
   // = Visitor methods.
   int visit_predefined_type (be_predefined_type *node) override;
