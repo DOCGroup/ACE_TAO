@@ -29,6 +29,10 @@ public:
 
   /// destructor
   ~be_visitor_enum_cdr_op_cs () override = default;
+  be_visitor_enum_cdr_op_cs (be_visitor_enum_cdr_op_cs const &) = delete;
+  be_visitor_enum_cdr_op_cs (be_visitor_enum_cdr_op_cs &&) = delete;
+  be_visitor_enum_cdr_op_cs &operator= (be_visitor_enum_cdr_op_cs const &) = delete;
+  be_visitor_enum_cdr_op_cs &operator= (be_visitor_enum_cdr_op_cs &&) = delete;
 
   /// visit enum
   int visit_enum (be_enum *node) override;

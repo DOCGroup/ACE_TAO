@@ -28,6 +28,10 @@ public:
 
   /// destructor
   ~be_visitor_enum_cs () override = default;
+  be_visitor_enum_cs (be_visitor_enum_cs const &) = delete;
+  be_visitor_enum_cs (be_visitor_enum_cs &&) = delete;
+  be_visitor_enum_cs &operator= (be_visitor_enum_cs const &) = delete;
+  be_visitor_enum_cs &operator= (be_visitor_enum_cs &&) = delete;
 
   /// visit enum and generate the typecode
   int visit_enum (be_enum *node) override;
