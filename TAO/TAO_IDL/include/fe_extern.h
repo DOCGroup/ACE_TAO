@@ -114,14 +114,10 @@ FE_new_UTL_Indenter ();
 class TAO_IDL_FE_Export Bailout
 {
 public:
-  bool increment_errors_;
-  int errors_;
-  Bailout()
-    : increment_errors_ (true),
-      errors_ (-1) // (Invalid)
-  {
-  }
-  Bailout(int errors)
+  bool increment_errors_ {true};
+  int errors_ {-1}; // (Invalid)
+  Bailout () = default;
+  explicit Bailout (int errors)
     : increment_errors_ (false),
       errors_ (errors)
   {

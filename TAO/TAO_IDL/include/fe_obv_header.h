@@ -31,11 +31,11 @@ public:
 
 protected:
   // Supported interfaces.
-  AST_Type **supports_;
-  long n_supports_;
+  AST_Type **supports_ {};
+  long n_supports_ {};
 
-  AST_Type *inherits_concrete_;
-  AST_Type *supports_concrete_;
+  AST_Type *inherits_concrete_ {};
+  AST_Type *supports_concrete_ {};
 
   // Currently ignored.
   bool truncatable_;
