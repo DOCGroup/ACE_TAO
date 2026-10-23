@@ -237,7 +237,7 @@ TAO_CodeGen::start_client_header (const char *fname)
           char* idl_name = idl_global->included_idl_files ()[j];
 
           // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
+          UTL_String idl_name_str (idl_name);
 
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
@@ -834,7 +834,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
           if (got_pidl)
             {
               // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
+              UTL_String idl_name_str (idl_name);
 
               const char *anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
@@ -2493,7 +2493,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
           if (got_pidl)
             {
               // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
+              UTL_String idl_name_str (idl_name);
 
               char const * const anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
