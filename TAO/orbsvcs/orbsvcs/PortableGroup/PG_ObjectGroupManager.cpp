@@ -439,6 +439,15 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
   // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
   // just call TAO_PG_ObjectGroupManager::object_group() here.
 
+  // This manager's map is keyed by the decimal ObjectId generated from
+  // the 32-bit FactoryCreationId.
+  char object_id_string[14] {};
+  ACE_OS::sprintf (object_id_string,
+                   "%ul",
+                   ACE_U64_TO_U32 (group_id));
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (object_id_string);
+
   TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -446,8 +455,7 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
                       this->lock_,
                       PortableGroup::ObjectGroup::_nil ());
 
-    if (this->object_group_map_.find (ACE_U64_TO_U32 (group_id),
-                                      group_entry)
+    if (this->object_group_map_.find (oid.in (), group_entry)
          != 0)
       {
         throw PortableGroup::ObjectGroupNotFound ();
