@@ -109,9 +109,8 @@ public:
    * TAO-specific extension.
    * Return the ObjectGroup reference for the given ObjectGroupId.
    */
-   PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-        PortableGroup::ObjectGroupId group_id
-      ) override;
+  PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+    PortableGroup::ObjectGroupId group_id) override;
 
   //@}
 
