@@ -73,12 +73,12 @@ namespace CORBA
       static Bounds * _downcast (CORBA::Exception * ex);
       static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate () const;
+      virtual CORBA::Exception * _tao_duplicate () const override;
 
-      virtual void _raise () const;
+      virtual void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr);
+      virtual void _tao_encode (TAO_OutputCDR & cdr) const override;
+      virtual void _tao_decode (TAO_InputCDR & cdr) override;
     };
 
     /**
@@ -98,12 +98,12 @@ namespace CORBA
       static BadKind * _downcast (CORBA::Exception * ex);
       static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate () const;
+      virtual CORBA::Exception * _tao_duplicate () const override;
 
-      virtual void _raise () const;
+      virtual void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr);
+      virtual void _tao_encode (TAO_OutputCDR & cdr) const override;
+      virtual void _tao_decode (TAO_InputCDR & cdr) override;
     };
 
     static CORBA::TypeCode_ptr const _tc_Bounds;
