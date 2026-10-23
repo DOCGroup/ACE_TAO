@@ -37,8 +37,8 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
                     ACE_Get_Opt::PERMUTE_ARGS,
                     1);
 
-  static const ACE_TCHAR* orbarg = ACE_TEXT ("ORBArg");
-  static const ACE_TCHAR* nonamesvc = ACE_TEXT ("NoNameSvc");
+  static constexpr ACE_TCHAR const* orbarg = ACE_TEXT ("ORBArg");
+  static constexpr ACE_TCHAR const* nonamesvc = ACE_TEXT ("NoNameSvc");
   opts.long_option (orbarg, ACE_Get_Opt::ARG_REQUIRED);
   opts.long_option (nonamesvc, ACE_Get_Opt::NO_ARG);
 
