@@ -34,6 +34,10 @@ public:
 
   /// destructor
   ~be_visitor_attribute () override;
+  be_visitor_attribute (be_visitor_attribute const &) = delete;
+  be_visitor_attribute (be_visitor_attribute &&) = delete;
+  be_visitor_attribute &operator= (be_visitor_attribute const &) = delete;
+  be_visitor_attribute &operator= (be_visitor_attribute &&) = delete;
 
   /// visit attribute. We provide code for this method in the derived class
   int visit_attribute (be_attribute *node) override;

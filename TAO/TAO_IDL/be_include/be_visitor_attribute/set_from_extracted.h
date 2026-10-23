@@ -24,6 +24,10 @@ class be_visitor_attribute_set_from_extracted
 public:
   explicit be_visitor_attribute_set_from_extracted (be_visitor_context *ctx);
   ~be_visitor_attribute_set_from_extracted () override;
+  be_visitor_attribute_set_from_extracted (be_visitor_attribute_set_from_extracted const &) = delete;
+  be_visitor_attribute_set_from_extracted (be_visitor_attribute_set_from_extracted &&) = delete;
+  be_visitor_attribute_set_from_extracted &operator= (be_visitor_attribute_set_from_extracted const &) = delete;
+  be_visitor_attribute_set_from_extracted &operator= (be_visitor_attribute_set_from_extracted &&) = delete;
 
   int visit_array (be_array *) override;
   int visit_component (be_component *) override;
