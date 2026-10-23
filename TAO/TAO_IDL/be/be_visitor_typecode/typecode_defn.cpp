@@ -17,8 +17,13 @@
 class Scoped_Compute_Queue_Guard
 {
 public:
-  Scoped_Compute_Queue_Guard (be_visitor_typecode_defn* );
+  explicit Scoped_Compute_Queue_Guard (be_visitor_typecode_defn* );
   ~Scoped_Compute_Queue_Guard ();
+
+  Scoped_Compute_Queue_Guard (Scoped_Compute_Queue_Guard const &) = delete;
+  Scoped_Compute_Queue_Guard (Scoped_Compute_Queue_Guard &&) = delete;
+  Scoped_Compute_Queue_Guard &operator= (Scoped_Compute_Queue_Guard const &) = delete;
+  Scoped_Compute_Queue_Guard &operator= (Scoped_Compute_Queue_Guard &&) = delete;
 
 private:
   be_visitor_typecode_defn* customer_;
@@ -52,11 +57,7 @@ Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard ()
 // ******************************************************
 
 be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
-    : be_visitor_scope (ctx),
-      recursion_detect_ (false),
-      computed_encap_len_ (0),
-      computed_scope_encap_len_ (0),
-      index_ (0)
+    : be_visitor_scope (ctx)
 {
   if (be_global->gen_anyop_files ())
     {
@@ -64,10 +65,6 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
       this->ctx_->stream (tao_cg->anyop_source ());
     }
 
-  for (unsigned long i = 0UL; i < TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE; ++i)
-    {
-      scope_stack_[i] = 0;
-    }
 }
 
 be_visitor_typecode_defn::~be_visitor_typecode_defn ()
@@ -601,8 +598,8 @@ int
 be_visitor_typecode_defn::visit_fixed (be_fixed * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
-  const ACE_CDR::ULong digits = node->digits ()->ev ()->u.ulval;
-  const ACE_CDR::ULong scale = node->scale ()->ev ()->u.ulval;
+  ACE_CDR::ULong const digits = node->digits ()->ev ()->u.ulval;
+  ACE_CDR::ULong const scale = node->scale ()->ev ()->u.ulval;
 
   os << "#ifndef _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
      << "#define _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
@@ -729,7 +726,7 @@ be_visitor_typecode_defn::pop (ACE_CDR::Long &val)
   return 0;
 }
 
-const be_visitor_typecode_defn::QNode *
+be_visitor_typecode_defn::QNode const *
 be_visitor_typecode_defn::queue_insert (
     ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
     be_type *node,
@@ -755,7 +752,7 @@ be_visitor_typecode_defn::queue_insert (
   return qnode;
 }
 
-const be_visitor_typecode_defn::QNode *
+be_visitor_typecode_defn::QNode const *
 be_visitor_typecode_defn::queue_lookup (
     ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
     be_type *node

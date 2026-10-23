@@ -15,8 +15,6 @@
 TAO::be_visitor_union_typecode::be_visitor_union_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
-  , is_recursive_ (false)
-  , is_nested_ (false)
 {
 }
 
@@ -81,9 +79,9 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
       return -1;
     }
 
-  static char const StringType[]      = "char const *";
-  static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
-  static char const MemberArrayType[] =
+  static constexpr char StringType[]      = "char const *";
+  static constexpr char TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
+  static constexpr char MemberArrayType[] =
     "TAO::TypeCode::Case<char const *, "
     "::CORBA::TypeCode_ptr const *> const * const *";
 
@@ -178,7 +176,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   ACE_CString tao_cases ("_tao_cases_");
   ACE_CString const fields_name (tao_cases
                                  + node->flat_name ());
-  const char *fields_name_str = fields_name.c_str ();
+  char const *fields_name_str = fields_name.c_str ();
 
   TAO_OutStream & os = *this->ctx_->stream ();
   ACE_CDR::ULong countLabels = 0u;

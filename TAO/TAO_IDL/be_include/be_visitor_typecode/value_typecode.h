@@ -27,7 +27,12 @@ namespace TAO
   {
   public:
     /// Constructor.
-    be_visitor_value_typecode (be_visitor_context * ctx);
+    explicit be_visitor_value_typecode (be_visitor_context * ctx);
+
+    be_visitor_value_typecode (be_visitor_value_typecode const &) = delete;
+    be_visitor_value_typecode (be_visitor_value_typecode &&) = delete;
+    be_visitor_value_typecode &operator= (be_visitor_value_typecode const &) = delete;
+    be_visitor_value_typecode &operator= (be_visitor_value_typecode &&) = delete;
 
     /// Visit a structure.
     /**
@@ -37,7 +42,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_valuetype (be_valuetype * node);
+    int visit_valuetype (be_valuetype * node) override;
 
   private:
     /// Generate valuetype field TypeCode declarations, if necessary.
@@ -48,11 +53,11 @@ namespace TAO
 
   private:
     /// @c true if the valuetype or eventtype is recursive.
-    bool is_recursive_;
+    bool is_recursive_ {};
 
     /// @c true if this visitor is already visiting an outer scope
     /// struct or exception
-    bool is_nested_;
+    bool is_nested_ {};
   };
 }
 

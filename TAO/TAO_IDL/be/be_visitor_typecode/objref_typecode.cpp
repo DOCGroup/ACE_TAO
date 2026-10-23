@@ -24,11 +24,11 @@ TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
   if (!node->is_defined ())
     return this->gen_forward_declared_typecode (node);
 
-  static char const abstract_interface[] = "abstract_interface";
-  static char const component[]          = "component";
-  static char const home[]               = "home";
-  static char const local_interface[]    = "local_interface";
-  static char const objref[]             = "objref";
+  static constexpr char abstract_interface[] = "abstract_interface";
+  static constexpr char component[]          = "component";
+  static constexpr char home[]               = "home";
+  static constexpr char local_interface[]    = "local_interface";
+  static constexpr char objref[]             = "objref";
 
   char const * kind = nullptr;
 

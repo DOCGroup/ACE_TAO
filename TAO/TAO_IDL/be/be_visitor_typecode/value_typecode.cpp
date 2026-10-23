@@ -15,8 +15,6 @@
 TAO::be_visitor_value_typecode::be_visitor_value_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
-  , is_recursive_ (false)
-  , is_nested_ (false)
 {
 }
 
@@ -84,7 +82,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   if (count == 0)
     {
-      os << "* const " << fields_name.c_str () << " = 0;" << be_nl;
+      os << "* const " << fields_name.c_str () << " = nullptr;" << be_nl;
     }
   else
     {
@@ -102,9 +100,9 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   // Generate the TypeCode instantiation.
 
-  static char const StringType[]      = "char const *";
-  static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
-  static char const MemberArrayType[] =
+  static constexpr char StringType[]      = "char const *";
+  static constexpr char TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
+  static constexpr char MemberArrayType[] =
     "TAO::TypeCode::Value_Field<char const *, "
     "::CORBA::TypeCode_ptr const *> const *";
 
