@@ -40,7 +40,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
 {
 public:
   /// an arbitrary code (Octet) to identify this type of request in persistent storage
-  enum {persistence_code = 2};
+  static constexpr int persistence_code = 2;
 
   /// Destructor
   ~TAO_Notify_Method_Request_Lookup () override = default;

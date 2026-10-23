@@ -30,7 +30,7 @@ TAO_Notify_StructuredEvent_No_Copy::type () const
 void
 TAO_Notify_StructuredEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 {
-  static const ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
+  static constexpr ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
   cdr.write_octet (STRUCTURED_CODE);
   cdr << (*this->notification_);
 }
