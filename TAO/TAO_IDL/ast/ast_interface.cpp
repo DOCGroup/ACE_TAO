@@ -140,9 +140,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     }
 }
 
-AST_Interface::~AST_Interface ()
-{
-}
+AST_Interface::~AST_Interface () = default;
 
 void
 AST_Interface::be_replace_operation (AST_Decl *old_op,

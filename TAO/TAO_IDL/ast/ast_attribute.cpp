@@ -99,9 +99,7 @@ AST_Attribute::AST_Attribute (bool ro,
 {
 }
 
-AST_Attribute::~AST_Attribute ()
-{
-}
+AST_Attribute::~AST_Attribute () = default;
 
 // Redefinition of inherited virtual operations.
 

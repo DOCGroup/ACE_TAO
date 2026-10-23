@@ -96,9 +96,7 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
     }
 }
 
-AST_InterfaceFwd::~AST_InterfaceFwd ()
-{
-}
+AST_InterfaceFwd::~AST_InterfaceFwd () = default;
 
 // Private operations.
 

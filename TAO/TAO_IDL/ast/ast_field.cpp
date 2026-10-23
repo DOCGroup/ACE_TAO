@@ -166,9 +166,7 @@ AST_Field::AST_Field (
   // be an issue here.
 }
 
-AST_Field::~AST_Field ()
-{
-}
+AST_Field::~AST_Field () = default;
 
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)

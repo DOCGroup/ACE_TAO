@@ -46,9 +46,7 @@ AST_Component::AST_Component (UTL_ScopedName *n,
     }
 }
 
-AST_Component::~AST_Component ()
-{
-}
+AST_Component::~AST_Component () = default;
 
 void
 AST_Component::redefine (AST_Interface *from)

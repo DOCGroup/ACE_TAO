@@ -83,9 +83,7 @@ AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
 {
 }
 
-AST_EnumVal::~AST_EnumVal ()
-{
-}
+AST_EnumVal::~AST_EnumVal () = default;
 
 // Redefinition of inherited virtual operations.
 

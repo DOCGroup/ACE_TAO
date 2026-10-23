@@ -22,9 +22,7 @@ AST_Template_Module_Ref::AST_Template_Module_Ref (
 {
 }
 
-AST_Template_Module_Ref::~AST_Template_Module_Ref ()
-{
-}
+AST_Template_Module_Ref::~AST_Template_Module_Ref () = default;
 
 AST_Template_Module *
 AST_Template_Module_Ref::ref () const

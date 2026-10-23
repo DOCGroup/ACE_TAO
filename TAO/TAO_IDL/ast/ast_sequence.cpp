@@ -143,9 +143,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     || nt == AST_Decl::NT_param_holder;
 }
 
-AST_Sequence::~AST_Sequence ()
-{
-}
+AST_Sequence::~AST_Sequence () = default;
 
 // Public operations.
 

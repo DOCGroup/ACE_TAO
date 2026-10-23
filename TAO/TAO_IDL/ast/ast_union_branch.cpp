@@ -94,9 +94,7 @@ AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
 {
 }
 
-AST_UnionBranch::~AST_UnionBranch ()
-{
-}
+AST_UnionBranch::~AST_UnionBranch () = default;
 
 // Redefinition of inherited virtual operations.
 

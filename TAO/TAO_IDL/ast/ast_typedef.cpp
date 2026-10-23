@@ -96,9 +96,7 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
 {
 }
 
-AST_Typedef::~AST_Typedef ()
-{
-}
+AST_Typedef::~AST_Typedef () = default;
 
 // Given a typedef node, traverse the chain of base types until they are no
 // more typedefs, and return that most primitive base type.

@@ -21,9 +21,7 @@ AST_Annotation_Decl::AST_Annotation_Decl (UTL_ScopedName *name)
     }
 }
 
-AST_Annotation_Decl::~AST_Annotation_Decl ()
-{
-}
+AST_Annotation_Decl::~AST_Annotation_Decl () = default;
 
 void AST_Annotation_Decl::dump (ACE_OSTREAM_TYPE &o)
 {

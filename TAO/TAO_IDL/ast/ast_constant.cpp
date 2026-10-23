@@ -124,9 +124,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     }
 }
 
-AST_Constant::~AST_Constant ()
-{
-}
+AST_Constant::~AST_Constant () = default;
 
 // Redefinition of inherited virtual operations.
 

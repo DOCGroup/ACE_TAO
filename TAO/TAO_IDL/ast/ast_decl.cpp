@@ -195,9 +195,7 @@ AST_Decl::AST_Decl (
   this->compute_repoID ();
 }
 
-AST_Decl::~AST_Decl ()
-{
-}
+AST_Decl::~AST_Decl () = default;
 
 void
 AST_Decl::destroy ()

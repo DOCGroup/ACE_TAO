@@ -55,9 +55,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
     }
 }
 
-AST_Home::~AST_Home ()
-{
-}
+AST_Home::~AST_Home () = default;
 
 AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,

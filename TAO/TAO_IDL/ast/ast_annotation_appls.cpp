@@ -10,9 +10,7 @@ AST_Annotation_Appls::AST_Annotation_Appls (const AST_Annotation_Appls& other)
   *this = other;
 }
 
-AST_Annotation_Appls::~AST_Annotation_Appls ()
-{
-}
+AST_Annotation_Appls::~AST_Annotation_Appls () = default;
 
 AST_Annotation_Appls &
 AST_Annotation_Appls::operator= (const AST_Annotation_Appls& other)

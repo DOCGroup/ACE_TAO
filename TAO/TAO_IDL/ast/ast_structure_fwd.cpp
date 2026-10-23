@@ -22,9 +22,7 @@ AST_StructureFwd::AST_StructureFwd (AST_Structure *full_defn,
 {
 }
 
-AST_StructureFwd::~AST_StructureFwd ()
-{
-}
+AST_StructureFwd::~AST_StructureFwd () = default;
 
 // Redefinition of inherited virtual operations.
 

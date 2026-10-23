@@ -102,9 +102,7 @@ AST_Array::AST_Array (UTL_ScopedName *n,
                                       nd);
 }
 
-AST_Array::~AST_Array ()
-{
-}
+AST_Array::~AST_Array () = default;
 
 // Private operations.
 
