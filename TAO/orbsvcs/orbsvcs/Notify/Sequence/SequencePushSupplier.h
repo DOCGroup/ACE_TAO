@@ -34,7 +34,7 @@ public:
   explicit TAO_Notify_SequencePushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_SequencePushSupplier ();
+  ~TAO_Notify_SequencePushSupplier () override = default;
 
   /// Init
   void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier);

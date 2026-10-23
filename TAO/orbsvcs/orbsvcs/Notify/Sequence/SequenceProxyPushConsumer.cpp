@@ -13,10 +13,6 @@ TAO_Notify_SequenceProxyPushConsumer::TAO_Notify_SequenceProxyPushConsumer ()
 {
 }
 
-TAO_Notify_SequenceProxyPushConsumer::~TAO_Notify_SequenceProxyPushConsumer ()
-{
-}
-
 void
 TAO_Notify_SequenceProxyPushConsumer::release ()
 {

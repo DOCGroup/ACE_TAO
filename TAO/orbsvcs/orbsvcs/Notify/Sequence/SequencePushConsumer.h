@@ -38,7 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_SequencePushConsumer
 public:
   explicit TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy);
 
-  virtual ~TAO_Notify_SequencePushConsumer ();
+  ~TAO_Notify_SequencePushConsumer () override = default;
 
   /// Init the Consumer
   void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer);

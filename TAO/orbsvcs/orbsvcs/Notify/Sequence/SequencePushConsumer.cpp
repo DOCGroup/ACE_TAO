@@ -26,10 +26,6 @@ TAO_Notify_SequencePushConsumer::TAO_Notify_SequencePushConsumer (TAO_Notify_Pro
 {
 }
 
-TAO_Notify_SequencePushConsumer::~TAO_Notify_SequencePushConsumer ()
-{
-}
-
 void
 TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer)
 {
