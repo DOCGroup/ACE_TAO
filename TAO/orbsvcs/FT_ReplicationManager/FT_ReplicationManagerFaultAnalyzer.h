@@ -53,7 +53,7 @@ namespace TAO
     * Constructor.
     * @param replication_manager Pointer to TAO::FT_ReplicationManager.
     */
-    FT_ReplicationManagerFaultAnalyzer (
+    explicit FT_ReplicationManagerFaultAnalyzer (
       TAO::FT_ReplicationManager const * replication_manager);
 
     /**
