@@ -26,42 +26,41 @@ class ReplicaController
     public virtual ::CORBA::LocalObject
 {
 public:
-  virtual
-  ~ReplicaController ();
+  ~ReplicaController () override = default;
 
   ReplicaController (CORBA::ORB_ptr orb);
 
 public:
-  virtual char * name ();
+  char *name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-  virtual void
+  void
   tao_ft_interception_point (
     PortableInterceptor::ServerRequestInfo_ptr ri,
-    CORBA::OctetSeq_out ocs);
+    CORBA::OctetSeq_out ocs) override;
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
-  virtual void
+  void
   receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void
+  void
   receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void
+  void
   send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void
+  void
   send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void
+  void
   send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
 private:
   static ACE_THR_FUNC_RETURN
@@ -96,9 +95,7 @@ private:
     CORBA::Long retention_id_;
   };
 
-  typedef
-  Log<RecordId, CORBA::OctetSeq_var>
-  Log_;
+  using Log_ = Log<RecordId, CORBA::OctetSeq_var>;
 
   Log_ log_;
   CORBA::ORB_var orb_;

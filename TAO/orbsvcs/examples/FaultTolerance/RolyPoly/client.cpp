@@ -12,7 +12,7 @@
 
 #include "RolyPolyC.h"
 
-typedef ACE_Unbounded_Queue<ACE_SString> IOR_QUEUE;
+using IOR_QUEUE = ACE_Unbounded_Queue<ACE_SString>;
 
 IOR_QUEUE ior_strs;
 
@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG, "We got %d iors\n", ior_strs.size ()));
         IOR_QUEUE::ITERATOR ior_go = ior_strs.begin ();
-        ACE_SString *pior = 0;
+        ACE_SString *pior = nullptr;
          while (ior_go.next (pior) != 0)
            {
              ACE_DEBUG ((LM_DEBUG, "IOR: %s\n", pior->c_str ()));
@@ -88,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         IOR_QUEUE::ITERATOR ior_iter = ior_strs.begin ();
 
-        ACE_SString *ior = 0;
+        ACE_SString *ior = nullptr;
         ior_iter.next (ior);
 
         CORBA::Object_var object_primary;
@@ -134,7 +134,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ft_tag_component.object_group_ref_version = 0;
 
         // Domain id
-        const char *id = "iogr_testing";
+        char const *id = "iogr_testing";
         ft_tag_component.group_domain_id = id;
 
         // Object group id
@@ -160,7 +160,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       else
       {
-        ACE_SString *ior = 0;
+        ACE_SString *ior = nullptr;
         if (ior_strs.get (ior) != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to extract the only IOR string\n"),
@@ -206,7 +206,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

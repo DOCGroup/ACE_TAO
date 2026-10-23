@@ -5,8 +5,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 RolyPoly_i::RolyPoly_i (CORBA::ORB_ptr orb)
-  : number_ (0)
-  , orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -21,7 +20,7 @@ get_state ()
   return state._retn ();
   */
 
-  return 0;
+  return nullptr;
 }
 
 
