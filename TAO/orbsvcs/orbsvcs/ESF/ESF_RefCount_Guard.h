@@ -38,7 +38,7 @@ class TAO_ESF_RefCount_Guard
 {
 public:
   /// Constructor
-  TAO_ESF_RefCount_Guard (T &refcount);
+  explicit TAO_ESF_RefCount_Guard (T &refcount);
 
   /// Destructor
   ~TAO_ESF_RefCount_Guard ();

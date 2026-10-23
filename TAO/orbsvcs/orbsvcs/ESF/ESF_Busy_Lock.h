@@ -41,7 +41,7 @@ class TAO_ESF_Busy_Lock_Adapter
 {
 public:
   /// Constructor
-  TAO_ESF_Busy_Lock_Adapter (Adaptee* adaptee);
+  explicit TAO_ESF_Busy_Lock_Adapter (Adaptee* adaptee);
 
   /**
    * @name The ACE_Lock methods

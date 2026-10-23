@@ -63,7 +63,7 @@ class TAO_ESF_Proxy_Admin
 {
 public:
   /// Constructor, allocate the internal collection
-  TAO_ESF_Proxy_Admin (EVENT_CHANNEL *ec);
+  explicit TAO_ESF_Proxy_Admin (EVENT_CHANNEL *ec);
 
   /// Cleanup internal resources, destroy the internal collection
   virtual ~TAO_ESF_Proxy_Admin ();
@@ -131,7 +131,7 @@ template <class COUNTED>
 class TAO_ESF_RefCountedRef
 {
 public:
-  TAO_ESF_RefCountedRef (COUNTED *counted);
+  explicit TAO_ESF_RefCountedRef (COUNTED *counted);
   ~TAO_ESF_RefCountedRef ();
 private:
   TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef const &) = delete;

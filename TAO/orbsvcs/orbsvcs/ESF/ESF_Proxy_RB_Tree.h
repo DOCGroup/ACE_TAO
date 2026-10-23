@@ -32,7 +32,7 @@ public:
                                                ACE_Less_Than<PROXY *>,
                                                ACE_Null_Mutex>;
 
-  TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
+  explicit TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
 
   bool operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
   bool operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;

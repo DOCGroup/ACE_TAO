@@ -157,7 +157,7 @@ class TAO_ESF_Shutdown_Command : public ACE_Command_Base
 {
 public:
   /// constructor...
-  TAO_ESF_Shutdown_Command (Target *target);
+  explicit TAO_ESF_Shutdown_Command (Target *target);
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.

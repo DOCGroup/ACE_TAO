@@ -28,7 +28,7 @@ class TAO_ESF_Immediate_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   TAO_ESF_Immediate_Changes ();
-  TAO_ESF_Immediate_Changes (const COLLECTION &collection);
+  explicit TAO_ESF_Immediate_Changes (const COLLECTION &collection);
 
   // = The TAO_ESF_Proxy methods
   void for_each (TAO_ESF_Worker<PROXY> *worker) override;
