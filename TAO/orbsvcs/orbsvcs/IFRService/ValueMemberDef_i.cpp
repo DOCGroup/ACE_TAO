@@ -14,9 +14,7 @@ TAO_ValueMemberDef_i::TAO_ValueMemberDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i ()
-{
-}
+TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ValueMemberDef_i::def_kind ()

@@ -14,9 +14,7 @@ TAO_ExceptionDef_i::TAO_ExceptionDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExceptionDef_i::~TAO_ExceptionDef_i ()
-{
-}
+TAO_ExceptionDef_i::~TAO_ExceptionDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ExceptionDef_i::def_kind ()

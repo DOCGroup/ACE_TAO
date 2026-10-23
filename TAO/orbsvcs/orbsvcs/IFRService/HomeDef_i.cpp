@@ -23,9 +23,7 @@ TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_HomeDef_i::~TAO_HomeDef_i ()
-{
-}
+TAO_HomeDef_i::~TAO_HomeDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_HomeDef_i::def_kind ()

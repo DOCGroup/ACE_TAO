@@ -12,9 +12,7 @@ TAO_ProvidesDef_i::TAO_ProvidesDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ProvidesDef_i::~TAO_ProvidesDef_i ()
-{
-}
+TAO_ProvidesDef_i::~TAO_ProvidesDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ProvidesDef_i::def_kind ()

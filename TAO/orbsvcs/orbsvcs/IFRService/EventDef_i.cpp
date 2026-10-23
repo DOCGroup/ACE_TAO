@@ -13,9 +13,7 @@ TAO_EventDef_i::TAO_EventDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EventDef_i::~TAO_EventDef_i ()
-{
-}
+TAO_EventDef_i::~TAO_EventDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_EventDef_i::def_kind ()

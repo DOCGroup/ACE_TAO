@@ -10,9 +10,7 @@ TAO_FinderDef_i::TAO_FinderDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_FinderDef_i::~TAO_FinderDef_i ()
-{
-}
+TAO_FinderDef_i::~TAO_FinderDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_FinderDef_i::def_kind ()

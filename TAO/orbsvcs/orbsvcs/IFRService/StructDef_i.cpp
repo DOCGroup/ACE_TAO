@@ -17,9 +17,7 @@ TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_StructDef_i::~TAO_StructDef_i ()
-{
-}
+TAO_StructDef_i::~TAO_StructDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_StructDef_i::def_kind ()

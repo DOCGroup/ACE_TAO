@@ -17,9 +17,7 @@ TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentContainer_i::~TAO_ComponentContainer_i ()
-{
-}
+TAO_ComponentContainer_i::~TAO_ComponentContainer_i () = default;
 
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentContainer_i::create_component (

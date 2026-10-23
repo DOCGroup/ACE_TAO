@@ -465,9 +465,7 @@ TAO_IFR_Service_Utils::TAO_IFR_Service_Utils ()
 {
 }
 
-TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils ()
-{
-}
+TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils () = default;
 
 ACE_Configuration_Section_Key
 TAO_IFR_Service_Utils::tmp_key_;

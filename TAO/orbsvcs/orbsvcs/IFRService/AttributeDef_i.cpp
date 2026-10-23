@@ -13,9 +13,7 @@ TAO_AttributeDef_i::TAO_AttributeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AttributeDef_i::~TAO_AttributeDef_i ()
-{
-}
+TAO_AttributeDef_i::~TAO_AttributeDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_AttributeDef_i::def_kind ()

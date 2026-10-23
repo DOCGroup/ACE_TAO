@@ -10,9 +10,7 @@ TAO_FactoryDef_i::TAO_FactoryDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_FactoryDef_i::~TAO_FactoryDef_i ()
-{
-}
+TAO_FactoryDef_i::~TAO_FactoryDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_FactoryDef_i::def_kind ()

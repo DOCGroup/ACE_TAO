@@ -69,9 +69,7 @@ TAO_ComponentDef_i::TAO_ComponentDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentDef_i::~TAO_ComponentDef_i ()
-{
-}
+TAO_ComponentDef_i::~TAO_ComponentDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ComponentDef_i::def_kind ()

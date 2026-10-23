@@ -12,9 +12,7 @@ TAO_TypedefDef_i::TAO_TypedefDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_TypedefDef_i::~TAO_TypedefDef_i ()
-{
-}
+TAO_TypedefDef_i::~TAO_TypedefDef_i () = default;
 
 CORBA::Contained::Description *
 TAO_TypedefDef_i::describe ()

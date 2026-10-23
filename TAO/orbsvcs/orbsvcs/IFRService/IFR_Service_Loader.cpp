@@ -19,10 +19,7 @@ TAO_IFR_Service_Loader::TAO_IFR_Service_Loader ()
   // Constructor
 }
 
-TAO_IFR_Service_Loader::~TAO_IFR_Service_Loader ()
-{
-  // Destructor
-}
+TAO_IFR_Service_Loader::~TAO_IFR_Service_Loader () = default;
 
 int
 TAO_IFR_Service_Loader::init (int argc,

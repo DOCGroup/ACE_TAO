@@ -14,9 +14,7 @@ TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i ()
-{
-}
+TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i () = default;
 
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions (

@@ -17,9 +17,7 @@ TAO_InterfaceDef_i::TAO_InterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_InterfaceDef_i::~TAO_InterfaceDef_i ()
-{
-}
+TAO_InterfaceDef_i::~TAO_InterfaceDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_InterfaceDef_i::def_kind ()

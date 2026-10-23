@@ -17,9 +17,7 @@ TAO_ValueDef_i::TAO_ValueDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ValueDef_i::~TAO_ValueDef_i ()
-{
-}
+TAO_ValueDef_i::~TAO_ValueDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ValueDef_i::def_kind ()

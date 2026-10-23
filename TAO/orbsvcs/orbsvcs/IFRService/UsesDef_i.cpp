@@ -13,9 +13,7 @@ TAO_UsesDef_i::TAO_UsesDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_UsesDef_i::~TAO_UsesDef_i ()
-{
-}
+TAO_UsesDef_i::~TAO_UsesDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_UsesDef_i::def_kind ()

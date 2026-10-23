@@ -9,9 +9,7 @@ TAO_PublishesDef_i::TAO_PublishesDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_PublishesDef_i::~TAO_PublishesDef_i ()
-{
-}
+TAO_PublishesDef_i::~TAO_PublishesDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_PublishesDef_i::def_kind ()

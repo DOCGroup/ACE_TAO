@@ -14,9 +14,7 @@ TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EnumDef_i::~TAO_EnumDef_i ()
-{
-}
+TAO_EnumDef_i::~TAO_EnumDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_EnumDef_i::def_kind ()

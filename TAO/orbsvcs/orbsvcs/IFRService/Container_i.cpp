@@ -18,9 +18,7 @@ TAO_Container_i::TAO_Container_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_Container_i::~TAO_Container_i ()
-{
-}
+TAO_Container_i::~TAO_Container_i () = default;
 
 void
 TAO_Container_i::destroy ()

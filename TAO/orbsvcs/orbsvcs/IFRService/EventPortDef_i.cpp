@@ -14,9 +14,7 @@ TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EventPortDef_i::~TAO_EventPortDef_i ()
-{
-}
+TAO_EventPortDef_i::~TAO_EventPortDef_i () = default;
 
 CORBA::ComponentIR::EventDef_ptr
 TAO_EventPortDef_i::event (
