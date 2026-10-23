@@ -88,7 +88,7 @@ public:
   /// Extract the TagFTGroupTaggedComponent inside the <ior>
   CORBA::Boolean get_tagged_component (
       CORBA::Object_ptr const iogr,
-      FT::TagFTGroupTaggedComponent& ft_group) const;
+      FT::TagFTGroupTaggedComponent &ft_group) const;
 
 private:
   /// An helper function that gets the primary profile from the <ior>

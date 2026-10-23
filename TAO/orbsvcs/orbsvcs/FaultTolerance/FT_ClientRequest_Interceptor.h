@@ -103,7 +103,7 @@ namespace TAO
 
   private:
     /// Name of the interceptor
-    const char *name_;
+    char const *name_;
 
     /// UUID for this client
     ACE_Utils::UUID *uuid_;

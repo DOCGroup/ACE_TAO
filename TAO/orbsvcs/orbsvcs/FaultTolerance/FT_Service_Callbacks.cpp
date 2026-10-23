@@ -101,10 +101,10 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* this_p,
     {
       if (that_comp.get_component (that_tc) == 1)
         {
-          TAO_InputCDR this_cdr (reinterpret_cast<const char*> (this_tc.component_data.get_buffer ()),
+          TAO_InputCDR this_cdr (reinterpret_cast<char const *> (this_tc.component_data.get_buffer ()),
                              this_tc.component_data.length ());
 
-          TAO_InputCDR that_cdr (reinterpret_cast<const char*> (that_tc.component_data.get_buffer ()),
+          TAO_InputCDR that_cdr (reinterpret_cast<char const *> (that_tc.component_data.get_buffer ()),
                              that_tc.component_data.length ());
 
           CORBA::Boolean this_byte_order;
@@ -166,7 +166,7 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p, CORBA::ULong max)
     return 0;
 
   // extract the group component
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (tc.component_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char const *> (tc.component_data.get_buffer ()),
                     tc.component_data.length ());
 
   CORBA::Boolean byte_order;
@@ -304,7 +304,7 @@ TAO_FT_Service_Callbacks::restart_policy_check (
             {
               // This would be a heck of a lot easier if we had the invocation
               // here rather than just the contexts, but lemons -> lemonade I guess.
-              TAO_InputCDR cdr (reinterpret_cast <const char*> (service_list[i].context_data.get_buffer ()),
+              TAO_InputCDR cdr (reinterpret_cast <char const *> (service_list[i].context_data.get_buffer ()),
                                 service_list[i].context_data.length ());
               CORBA::Boolean byte_order;
               if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)

@@ -47,12 +47,12 @@ namespace TAO
 
         this->check_iogr_version (sc.in ());
       }
-    catch (const CORBA::BAD_PARAM&)
+    catch (CORBA::BAD_PARAM const &)
       {
         // No group version context, no problem just return.
         return;
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         throw;
       }
@@ -96,9 +96,9 @@ namespace TAO
 
   void
   FT_ServerRequest_Interceptor::check_iogr_version (
-      const IOP::ServiceContext &svc)
+      IOP::ServiceContext const &svc)
   {
-    TAO_InputCDR cdr (reinterpret_cast<const char*> (svc.context_data.get_buffer ()),
+    TAO_InputCDR cdr (reinterpret_cast<char const *> (svc.context_data.get_buffer ()),
                       svc.context_data.length ());
 
     CORBA::Boolean byte_order;

@@ -86,7 +86,7 @@ namespace TAO
         PortableInterceptor::ServerRequestInfo_ptr ri) override;
     //@}
   private:
-    void check_iogr_version (const IOP::ServiceContext &svc);
+    void check_iogr_version (IOP::ServiceContext const &svc);
 
     void update_iogr (
         PortableInterceptor::ServerRequestInfo_ptr ri);
