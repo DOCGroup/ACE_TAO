@@ -25,10 +25,10 @@ class be_visitor_interface_tie_sh : public be_visitor_interface
 {
 public:
   /// constructor
-  be_visitor_interface_tie_sh (be_visitor_context *ctx);
+  explicit be_visitor_interface_tie_sh (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_interface_tie_sh ();
+  ~be_visitor_interface_tie_sh () override;
 
   /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);

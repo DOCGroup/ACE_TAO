@@ -19,9 +19,7 @@ be_visitor_interface_ss::be_visitor_interface_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ss::~be_visitor_interface_ss ()
-{
-}
+be_visitor_interface_ss::~be_visitor_interface_ss () = default;
 
 int
 be_visitor_interface_ss::visit_interface (be_interface *node)

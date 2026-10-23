@@ -24,9 +24,9 @@
 class be_visitor_ami4ccm_rh_ex_idl : public be_visitor_scope
 {
 public:
-  be_visitor_ami4ccm_rh_ex_idl (be_visitor_context *ctx);
+  explicit be_visitor_ami4ccm_rh_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_ami4ccm_rh_ex_idl ();
+  ~be_visitor_ami4ccm_rh_ex_idl () override;
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_operation (be_operation *node);
@@ -43,7 +43,7 @@ private:
 
 private:
   TAO_OutStream &os_;
-  bool seen_in_or_inout_arg_;
+  bool seen_in_or_inout_arg_ {};
 };
 
 #endif /* _AMI4CCM_RH_EX_IDL_H_ */

@@ -24,7 +24,7 @@ class be_visitor_interface_direct_proxy_impl_sh : public be_visitor_interface
 {
 public:
   // -- Ctor/Dtor Decl. --
-  be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx);
+  explicit be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx);
 
   virtual ~be_visitor_interface_direct_proxy_impl_sh ();
 

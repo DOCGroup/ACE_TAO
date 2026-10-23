@@ -16,13 +16,13 @@
 class be_visitor_amh_rh_interface_ss : public be_visitor_interface_ss
 {
 public:
-  be_visitor_amh_rh_interface_ss (be_visitor_context *ctx);
+  explicit be_visitor_amh_rh_interface_ss (be_visitor_context *ctx);
 
   int visit_interface (be_interface *node);
 
   int visit_operation (be_operation *node);
 
-  ~be_visitor_amh_rh_interface_ss ();
+  ~be_visitor_amh_rh_interface_ss () override;
 };
 
 #endif /* AMH_RH_INTERFACE_SS_H */

@@ -18,9 +18,7 @@ be_visitor_interface_tie_sh::be_visitor_interface_tie_sh (
 {
 }
 
-be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh ()
-{
-}
+be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh () = default;
 
 int
 be_visitor_interface_tie_sh::visit_interface (be_interface *node)

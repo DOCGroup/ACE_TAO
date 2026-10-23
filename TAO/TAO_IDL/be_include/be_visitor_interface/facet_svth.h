@@ -25,9 +25,9 @@
 class be_visitor_facet_svth : public be_visitor_interface
 {
 public:
-  be_visitor_facet_svth (be_visitor_context *ctx);
+  explicit be_visitor_facet_svth (be_visitor_context *ctx);
 
-  ~be_visitor_facet_svth ();
+  ~be_visitor_facet_svth () override;
 
   virtual int visit_interface (be_interface *node);
 };

@@ -17,9 +17,7 @@ be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
 {
 }
 
-be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh ()
-{
-}
+be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh () = default;
 
 // The node is the original interface node but we 'tweak' with the
 // local_name and the the operation signatures to generate the AMH

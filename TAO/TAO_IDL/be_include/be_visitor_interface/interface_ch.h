@@ -26,8 +26,8 @@
 class be_visitor_interface_ch : public be_visitor_interface
 {
 public:
-  be_visitor_interface_ch (be_visitor_context *ctx);
-  ~be_visitor_interface_ch ();
+  explicit be_visitor_interface_ch (be_visitor_context *ctx);
+  ~be_visitor_interface_ch () override;
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_component (be_component *node);

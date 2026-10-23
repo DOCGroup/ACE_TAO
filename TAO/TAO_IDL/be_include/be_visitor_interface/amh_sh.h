@@ -14,8 +14,8 @@
 class be_visitor_amh_interface_sh : public be_visitor_interface_sh
 {
 public:
-  be_visitor_amh_interface_sh (be_visitor_context *ctx);
-  ~be_visitor_amh_interface_sh ();
+  explicit be_visitor_amh_interface_sh (be_visitor_context *ctx);
+  ~be_visitor_amh_interface_sh () override;
 
   int visit_interface (be_interface *node);
   int visit_operation (be_operation *node);

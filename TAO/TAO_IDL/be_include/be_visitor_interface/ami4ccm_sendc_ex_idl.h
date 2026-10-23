@@ -24,9 +24,9 @@
 class be_visitor_ami4ccm_sendc_ex_idl : public be_visitor_scope
 {
 public:
-  be_visitor_ami4ccm_sendc_ex_idl (be_visitor_context *ctx);
+  explicit be_visitor_ami4ccm_sendc_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_ami4ccm_sendc_ex_idl ();
+  ~be_visitor_ami4ccm_sendc_ex_idl () override;
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_operation (be_operation *node);
@@ -38,7 +38,7 @@ public:
 
 private:
   TAO_OutStream &os_;
-  be_interface *iface_;
+  be_interface *iface_ {};
 };
 
 #endif /* _AMI4CCM_SENDC_EX_IDL_H_ */

@@ -17,9 +17,7 @@ be_visitor_interface_smart_proxy_ch::be_visitor_interface_smart_proxy_ch (
 {
 }
 
-be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch ()
-{
-}
+be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch () = default;
 
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
