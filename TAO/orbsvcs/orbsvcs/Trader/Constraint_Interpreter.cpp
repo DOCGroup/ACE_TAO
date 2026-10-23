@@ -137,7 +137,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
 
       pref_info.offer_ = offer;
       pref_info.offer_id_ = offer_id;
-      pref_info.evaluated_ = 1;
+      pref_info.evaluated_ = true;
 
       if (evaluator.evaluate_preference (this->root_, pref_info.value_) == 0)
         {
@@ -169,7 +169,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
                   offer_iter.next (current_offer);
 
                   // Maintain the sorted order in the first partition.
-                  if (current_offer->evaluated_ == 1
+                  if (current_offer->evaluated_
                       && ((expr_type == TAO_MIN
                         && pref_info.value_ > current_offer->value_)
                        || (expr_type == TAO_MAX
@@ -189,7 +189,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
         {
           // If the evaluation fails, just tack the sucker onto the
           // end of the queue.
-          pref_info.evaluated_ = 0;
+          pref_info.evaluated_ = false;
           this->offers_.enqueue_tail (pref_info);
         }
     }

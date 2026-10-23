@@ -573,7 +573,7 @@ update_type_map (const char *name,
     {
       Type_Info *super_type_info =
         (*super_map_iterator).int_id_;
-      super_type_info->has_subtypes_ = 0;
+      super_type_info->has_subtypes_ = false;
     }
 
   // All parameters are valid, create an entry for this service type
@@ -587,7 +587,7 @@ update_type_map (const char *name,
   type->type_struct_.super_types = super_types;
   type->type_struct_.incarnation = this->incarnation_;
   type->type_struct_.masked = 0;
-  type->has_subtypes_ = 0;
+  type->has_subtypes_ = false;
 
   // Move the prop struct sequences and super type names from the in
   // params to the internal storage.
