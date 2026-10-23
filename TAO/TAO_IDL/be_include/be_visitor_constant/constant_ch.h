@@ -29,6 +29,10 @@ public:
 
   /// destructor
   ~be_visitor_constant_ch () override;
+  be_visitor_constant_ch (be_visitor_constant_ch const &) = delete;
+  be_visitor_constant_ch (be_visitor_constant_ch &&) = delete;
+  be_visitor_constant_ch &operator= (be_visitor_constant_ch const &) = delete;
+  be_visitor_constant_ch &operator= (be_visitor_constant_ch &&) = delete;
 
   /// visit constant.
   int visit_constant (be_constant *node) override;
