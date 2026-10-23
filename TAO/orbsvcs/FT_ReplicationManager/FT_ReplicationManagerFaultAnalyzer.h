@@ -101,37 +101,37 @@ namespace TAO
     /// Helper functions for fault analysis.
 
     // Extract the type id from a CORBA any.
-    int get_type_id (const CORBA::Any& val, PortableGroup::TypeId_out type_id);
+    int get_type_id (CORBA::Any const &val, PortableGroup::TypeId_out type_id);
 
     // Extract the ObjectGroupId from a CORBA any.
-    int get_object_group_id (const CORBA::Any& val, PortableGroup::ObjectGroupId& id);
+    int get_object_group_id (CORBA::Any const &val, PortableGroup::ObjectGroupId &id);
 
     // Extract the PortableGroup::Location from a CORBA any.
-    int get_location (const CORBA::Any& val, PortableGroup::Location_out location);
+    int get_location (CORBA::Any const &val, PortableGroup::Location_out location);
 
     // Get the MembershipStyle property.
     int get_membership_style (
-      const PortableGroup::Properties & properties,
+      PortableGroup::Properties const & properties,
       PortableGroup::MembershipStyleValue & membership_style);
 
     // Get the ReplicationStyle property.
     int get_replication_style (
-      const PortableGroup::Properties & properties,
+      PortableGroup::Properties const & properties,
       FT::ReplicationStyleValue & replication_style);
 
     // Get the MinimumNumberMembers property.
     int get_minimum_number_members (
-      const PortableGroup::Properties & properties,
+      PortableGroup::Properties const & properties,
       PortableGroup::MinimumNumberMembersValue & minimum_number_members);
 
     // Get the InitialNumberMembers property.
     int get_initial_number_members (
-      const PortableGroup::Properties & properties,
+      PortableGroup::Properties const & properties,
       PortableGroup::InitialNumberMembersValue & initial_number_members);
 
     // Get the Factories property.
     int get_factories (
-      const PortableGroup::Properties & properties,
+      PortableGroup::Properties const & properties,
       PortableGroup::FactoryInfos_out factories);
 
     // Handle a single replica failure.
@@ -150,8 +150,8 @@ namespace TAO
     // Sets <object_is_primary> and returns 0 on success.
     // Returns -1 on failure.
     int is_primary_member (
-      const PortableGroup::ObjectGroup_ptr iogr,
-      const PortableGroup::Location & location,
+      PortableGroup::ObjectGroup_ptr const iogr,
+      PortableGroup::Location const & location,
       bool & object_is_primary);
 
     /// remove a failed member from a group

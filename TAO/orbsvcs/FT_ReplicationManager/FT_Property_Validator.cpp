@@ -39,7 +39,7 @@ void
 TAO::FT_Property_Validator::validate_property (
     PortableGroup::Properties const & props)
 {
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -98,7 +98,7 @@ TAO::FT_Property_Validator::validate_property (
             throw PortableGroup::InvalidProperty (property.nam, property.val);
           else
             {
-              const CORBA::ULong flen = factories->length ();
+              CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
                 throw PortableGroup::InvalidProperty (
@@ -125,7 +125,7 @@ void
 TAO::FT_Property_Validator::validate_criteria (
     PortableGroup::Properties const & props)
 {
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   PortableGroup::Criteria invalid_criteria;
 
   // Optimize for the worst case scenario where all properties are
@@ -187,7 +187,7 @@ TAO::FT_Property_Validator::validate_criteria (
             invalid_criteria[p++] = property;
           else
             {
-              const CORBA::ULong flen = factories->length ();
+              CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
                 invalid_criteria[p++] = property;

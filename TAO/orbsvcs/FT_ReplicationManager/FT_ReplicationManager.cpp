@@ -123,7 +123,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
 }
 
 //public
-const char * TAO::FT_ReplicationManager::identity () const
+char const * TAO::FT_ReplicationManager::identity () const
 {
   return this->identity_.c_str ();
 }
@@ -403,7 +403,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
         analyzer);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("TAO::FT_ReplicationManager::register_fault_notifier_i: ")
@@ -444,7 +444,7 @@ TAO::FT_ReplicationManager::get_fault_notifier ()
 //CORBA
 ::PortableGroup::FactoryRegistry_ptr
 TAO::FT_ReplicationManager::get_factory_registry (
-  const PortableGroup::Criteria & selection_criteria)
+  PortableGroup::Criteria const & selection_criteria)
 {
   ACE_UNUSED_ARG (selection_criteria);
   return this->factory_registry_.reference ();
@@ -481,7 +481,7 @@ char * TAO::FT_ReplicationManager::type_id (
 //CORBA
 void
 TAO::FT_ReplicationManager::set_default_properties (
-  const PortableGroup::Properties & props)
+  PortableGroup::Properties const & props)
 {
   this->properties_support_.set_default_properties (props);
   //@@ validate properties?
@@ -497,7 +497,7 @@ TAO::FT_ReplicationManager::get_default_properties ()
 //CORBA
 void
 TAO::FT_ReplicationManager::remove_default_properties (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   this->properties_support_.remove_default_properties (props);
 }
@@ -505,8 +505,8 @@ TAO::FT_ReplicationManager::remove_default_properties (
 //CORBA
 void
 TAO::FT_ReplicationManager::set_type_properties (
-    const char *type_id,
-    const PortableGroup::Properties & overrides)
+    char const *type_id,
+    PortableGroup::Properties const & overrides)
 {
   this->properties_support_.set_type_properties (
     type_id,
@@ -516,7 +516,7 @@ TAO::FT_ReplicationManager::set_type_properties (
 //CORBA
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_type_properties (
-    const char *type_id)
+    char const *type_id)
 {
   return this->properties_support_.get_type_properties (type_id);
 }
@@ -524,8 +524,8 @@ TAO::FT_ReplicationManager::get_type_properties (
 //CORBA
 void
 TAO::FT_ReplicationManager::remove_type_properties (
-    const char *type_id,
-    const PortableGroup::Properties & props)
+    char const *type_id,
+    PortableGroup::Properties const & props)
 {
   this->properties_support_.remove_type_properties (
     type_id,
@@ -536,7 +536,7 @@ TAO::FT_ReplicationManager::remove_type_properties (
 void
 TAO::FT_ReplicationManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Properties & overrides)
+    PortableGroup::Properties const & overrides)
 {
   TAO::PG_Object_Group * group = nullptr;
   if (this->group_factory_.find_group (object_group, group))
@@ -578,7 +578,7 @@ TAO::FT_ReplicationManager::get_properties (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::set_primary_member (
   PortableGroup::ObjectGroup_ptr object_group,
-  const PortableGroup::Location & the_location)
+  PortableGroup::Location const & the_location)
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::set_primary_member);
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
@@ -609,9 +609,9 @@ TAO::FT_ReplicationManager::set_primary_member (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::create_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria)
+    PortableGroup::Location const & the_location,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria)
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
   TAO::PG_Object_Group * group = nullptr;
@@ -638,7 +638,7 @@ TAO::FT_ReplicationManager::create_member (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member)
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::add_member);
@@ -671,7 +671,7 @@ TAO::FT_ReplicationManager::add_member (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
@@ -724,7 +724,7 @@ TAO::FT_ReplicationManager::locations_of_members (
 //CORBA
 PortableGroup::ObjectGroups *
 TAO::FT_ReplicationManager::groups_at_location (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   return this->group_factory_.groups_at_location (the_location);
 }
@@ -810,7 +810,7 @@ TAO::FT_ReplicationManager::get_object_group_ref_from_id (
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   CORBA::Object_var result = CORBA::Object::_nil();
 
@@ -840,8 +840,8 @@ TAO::FT_ReplicationManager::get_member_ref (
 //CORBA
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::create_object (
-  const char * type_id,
-  const PortableGroup::Criteria & the_criteria,
+  char const * type_id,
+  PortableGroup::Criteria const & the_criteria,
   PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::create_object)
@@ -884,7 +884,7 @@ TAO::FT_ReplicationManager::create_object (
 //CORBA
 void
 TAO::FT_ReplicationManager::delete_object (
-  const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
+  PortableGroup::GenericFactory::FactoryCreationId const & factory_creation_id)
 {
   PortableGroup::ObjectGroupId group_id = 0;
   if (factory_creation_id >>= group_id)

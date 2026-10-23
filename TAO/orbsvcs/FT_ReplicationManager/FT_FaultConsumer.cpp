@@ -150,7 +150,7 @@ int TAO::FT_FaultConsumer::fini ()
         this->object_id_.in());
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")

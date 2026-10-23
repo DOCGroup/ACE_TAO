@@ -128,7 +128,7 @@ namespace TAO
      * Identify this fault detector factory.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * Get the type_id associated with an object group.

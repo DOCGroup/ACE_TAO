@@ -51,7 +51,7 @@ namespace TAO
     * @return 0 if it is a valid event type, -1 otherwise.
     */
     virtual int validate_event_type (
-      const CosNotification::StructuredEvent & event) = 0;
+      CosNotification::StructuredEvent const & event) = 0;
 
     /**
     * Analyze a fault event.
@@ -59,7 +59,7 @@ namespace TAO
     * @return 0 on success, -1 on failure.
     */
     virtual int analyze_fault_event (
-      const CosNotification::StructuredEvent & event) = 0;
+      CosNotification::StructuredEvent const & event) = 0;
 
     ////////////////////
     // Forbidden methods
