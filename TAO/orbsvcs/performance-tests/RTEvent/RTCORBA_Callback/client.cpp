@@ -33,16 +33,21 @@ public:
   {
   }
 
+  Roundtrip_Task (Roundtrip_Task const &) = delete;
+  Roundtrip_Task (Roundtrip_Task &&) = delete;
+  Roundtrip_Task &operator= (Roundtrip_Task const &) = delete;
+  Roundtrip_Task &operator= (Roundtrip_Task &&) = delete;
+
   virtual void run_test () = 0;
 
-  virtual int svc ()
+  int svc () override
   {
     this->the_barrier_->wait ();
     try
       {
         this->run_test ();
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
       }
 
@@ -71,7 +76,7 @@ public:
   {
   }
 
-  virtual void run_test ()
+  void run_test () override
   {
     Test::Callback_var cb =
       callback->_this ();
@@ -98,7 +103,7 @@ public:
         try{
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           (void) session->sample (start);
-        } catch (const CORBA::Exception&) {
+        } catch (CORBA::Exception const &) {
         }
       }
   }
@@ -120,7 +125,6 @@ public:
                      int period_in_usecs)
     : Roundtrip_Task (session_factory, the_barrier)
     , callback (new Callback (1, poa))
-    , stopped_ (0)
     , period_in_usecs_ (period_in_usecs)
   {
   }
@@ -128,10 +132,10 @@ public:
   void stop ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    this->stopped_ = 1;
+    this->stopped_ = true;
   }
 
-  virtual void run_test ()
+  void run_test () override
   {
     Test::Callback_var cb =
       callback->_this ();
@@ -155,9 +159,9 @@ public:
         }
 
         try{
-          CORBA::ULongLong dummy = 0;
+          CORBA::ULongLong dummy {};
           (void) session->sample (dummy);
-        } catch (const CORBA::Exception&) {
+        } catch (CORBA::Exception const &) {
         }
       }
   }
@@ -167,7 +171,7 @@ private:
 
   Servant_var<Callback> callback;
 
-  int stopped_;
+  bool stopped_ {};
 
   int period_in_usecs_;
 };
@@ -289,7 +293,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
