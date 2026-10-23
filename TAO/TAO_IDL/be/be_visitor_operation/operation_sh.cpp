@@ -16,9 +16,7 @@ be_visitor_operation_sh::be_visitor_operation_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_sh::~be_visitor_operation_sh ()
-{
-}
+be_visitor_operation_sh::~be_visitor_operation_sh () = default;
 
 int
 be_visitor_operation_sh::visit_operation (be_operation *node)

@@ -17,9 +17,7 @@ be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
 {
 }
 
-be_visitor_amh_operation_ss::~be_visitor_amh_operation_ss ()
-{
-}
+be_visitor_amh_operation_ss::~be_visitor_amh_operation_ss () = default;
 
 int
 be_visitor_amh_operation_ss::visit_operation (be_operation *node)

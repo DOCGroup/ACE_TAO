@@ -25,9 +25,7 @@ be_visitor_operation_argument_marshal::be_visitor_operation_argument_marshal (
 {
 }
 
-be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal ()
-{
-}
+be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal () = default;
 
 int
 be_visitor_operation_argument_marshal::pre_process (be_decl *bd)

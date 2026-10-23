@@ -28,10 +28,10 @@ class be_visitor_operation_tie_ss : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_operation_tie_ss (be_visitor_context *ctx);
+  explicit be_visitor_operation_tie_ss (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_tie_ss ();
+  ~be_visitor_operation_tie_ss () override;
 
   /// set the right context and make a visitor
   virtual int visit_operation (be_operation *node);

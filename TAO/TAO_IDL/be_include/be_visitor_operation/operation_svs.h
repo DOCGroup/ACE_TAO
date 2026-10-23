@@ -29,9 +29,9 @@
 class be_visitor_operation_svs : public be_visitor_scope
 {
 public:
-  be_visitor_operation_svs (be_visitor_context *ctx);
+  explicit be_visitor_operation_svs (be_visitor_context *ctx);
 
-  ~be_visitor_operation_svs ();
+  ~be_visitor_operation_svs () override;
 
   virtual int visit_operation (be_operation *node);
   virtual int visit_argument (be_argument *node);
@@ -44,7 +44,7 @@ private:
   int gen_op_body (be_operation *node);
 
 private:
-  be_decl *scope_;
+  be_decl *scope_ {};
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SVS_H_ */

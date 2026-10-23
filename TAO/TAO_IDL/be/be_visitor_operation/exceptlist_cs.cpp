@@ -23,9 +23,7 @@ be_visitor_operation_exceptlist_cs::be_visitor_operation_exceptlist_cs (
 {
 }
 
-be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs ()
-{
-}
+be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs () = default;
 
 int
 be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)

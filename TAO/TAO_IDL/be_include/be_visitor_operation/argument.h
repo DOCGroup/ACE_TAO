@@ -30,10 +30,10 @@ class be_visitor_operation_argument : public be_visitor_operation
 {
 public:
   /// constructor
-  be_visitor_operation_argument (be_visitor_context *ctx);
+  explicit be_visitor_operation_argument (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_argument ();
+  ~be_visitor_operation_argument () override;
 
   /// stuff to o/p after each element of the scope is handled
   virtual int post_process (be_decl *);

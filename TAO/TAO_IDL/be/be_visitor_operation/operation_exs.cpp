@@ -14,15 +14,12 @@
 be_visitor_operation_exs::be_visitor_operation_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
-    scope_ (nullptr),
     your_code_here_ ("/* Your code here. */"),
     class_extension_ ("_exec_i")
 {
 }
 
-be_visitor_operation_exs::~be_visitor_operation_exs ()
-{
-}
+be_visitor_operation_exs::~be_visitor_operation_exs () = default;
 
 int
 be_visitor_operation_exs::visit_operation (be_operation *node)

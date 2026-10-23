@@ -23,9 +23,9 @@
 class be_visitor_amh_rh_operation_ss : public be_visitor_operation
 {
  public:
-    be_visitor_amh_rh_operation_ss (be_visitor_context *ctx);
+    explicit be_visitor_amh_rh_operation_ss (be_visitor_context *ctx);
 
-    ~be_visitor_amh_rh_operation_ss ();
+    ~be_visitor_amh_rh_operation_ss () override;
 
     int visit_operation (be_operation *node);
 

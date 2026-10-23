@@ -23,9 +23,7 @@ be_visitor_operation_rettype::be_visitor_operation_rettype (be_visitor_context
 {
 }
 
-be_visitor_operation_rettype::~be_visitor_operation_rettype ()
-{
-}
+be_visitor_operation_rettype::~be_visitor_operation_rettype () = default;
 
 int
 be_visitor_operation_rettype::visit_array (

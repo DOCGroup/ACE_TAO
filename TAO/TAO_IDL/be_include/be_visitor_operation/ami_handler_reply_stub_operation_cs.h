@@ -30,7 +30,7 @@ class be_visitor_operation_ami_handler_reply_stub_operation_cs : public be_visit
 {
 public:
   /// constructor
-  be_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx);
+  explicit be_visitor_operation_ami_handler_reply_stub_operation_cs (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_operation_ami_handler_reply_stub_operation_cs ();

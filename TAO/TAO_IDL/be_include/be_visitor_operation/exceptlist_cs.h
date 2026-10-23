@@ -30,10 +30,10 @@ class be_visitor_operation_exceptlist_cs : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_operation_exceptlist_cs (be_visitor_context *ctx);
+  explicit be_visitor_operation_exceptlist_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_exceptlist_cs ();
+  ~be_visitor_operation_exceptlist_cs () override;
 
   /// visit the operation
   int visit_operation (be_operation *node);

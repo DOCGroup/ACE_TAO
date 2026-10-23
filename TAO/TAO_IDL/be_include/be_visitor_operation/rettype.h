@@ -29,10 +29,10 @@ class be_visitor_operation_rettype : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_operation_rettype (be_visitor_context *ctx);
+  explicit be_visitor_operation_rettype (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_rettype ();
+  ~be_visitor_operation_rettype () override;
 
   /// visit an array node
   int visit_array (be_array *node);

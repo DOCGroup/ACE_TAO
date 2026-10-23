@@ -30,7 +30,7 @@ class be_visitor_operation_rettype_return_cs :public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_operation_rettype_return_cs (be_visitor_context *ctx);
+  explicit be_visitor_operation_rettype_return_cs (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_operation_rettype_return_cs ();

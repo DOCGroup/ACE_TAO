@@ -30,10 +30,10 @@ class be_visitor_operation_smart_proxy_ch : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_operation_smart_proxy_ch (be_visitor_context *ctx);
+  explicit be_visitor_operation_smart_proxy_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_smart_proxy_ch ();
+  ~be_visitor_operation_smart_proxy_ch () override;
 
   /// visit operation node.
   virtual int visit_operation (be_operation *node);

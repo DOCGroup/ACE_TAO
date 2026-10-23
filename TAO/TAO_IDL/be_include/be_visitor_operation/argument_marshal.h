@@ -28,10 +28,10 @@ class be_visitor_operation_argument_marshal
 {
 public:
   /// constructor
-  be_visitor_operation_argument_marshal (be_visitor_context *ctx);
+  explicit be_visitor_operation_argument_marshal (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_argument_marshal ();
+  ~be_visitor_operation_argument_marshal () override;
 
   /// stuff to o/p before each element of the scope is handled
   virtual int pre_process (be_decl *bd);
@@ -65,7 +65,7 @@ class be_visitor_args_decl : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_args_decl (be_visitor_context *ctx);
+  explicit be_visitor_args_decl (be_visitor_context *ctx);
 
   int visit_array (be_array *node);
   int visit_typedef (be_typedef *node);

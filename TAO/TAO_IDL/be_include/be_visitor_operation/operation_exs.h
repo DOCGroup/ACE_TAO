@@ -28,9 +28,9 @@
 class be_visitor_operation_exs : public be_visitor_scope
 {
 public:
-  be_visitor_operation_exs (be_visitor_context *ctx);
+  explicit be_visitor_operation_exs (be_visitor_context *ctx);
 
-  ~be_visitor_operation_exs ();
+  ~be_visitor_operation_exs () override;
 
   virtual int visit_operation (be_operation *node);
 
@@ -42,7 +42,7 @@ private:
 
 private:
   TAO_OutStream &os_;
-  be_decl *scope_;
+  be_decl *scope_ {};
   const char *your_code_here_;
   ACE_CString class_extension_;
 };

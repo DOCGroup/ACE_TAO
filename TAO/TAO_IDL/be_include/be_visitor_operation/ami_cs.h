@@ -28,10 +28,10 @@ class be_visitor_operation_ami_cs : public be_visitor_operation
 {
 public:
   /// constructor
-  be_visitor_operation_ami_cs (be_visitor_context *ctx);
+  explicit be_visitor_operation_ami_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_ami_cs ();
+  ~be_visitor_operation_ami_cs () override;
 
   /// visit operation.
   virtual int visit_operation (be_operation *node);

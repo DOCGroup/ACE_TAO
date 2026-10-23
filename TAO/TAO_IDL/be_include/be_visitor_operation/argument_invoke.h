@@ -32,10 +32,10 @@ class be_visitor_operation_argument_invoke
   //
 public:
   /// constructor
-  be_visitor_operation_argument_invoke (be_visitor_context *ctx);
+  explicit be_visitor_operation_argument_invoke (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_argument_invoke ();
+  ~be_visitor_operation_argument_invoke () override;
 
   /// stuff to o/p before each element of the scope is handled
   virtual int pre_process (be_decl *bd);
@@ -52,7 +52,7 @@ public:
   };
 
 private:
-  LAST_ARG_PRINTED last_arg_printed_;
+  LAST_ARG_PRINTED last_arg_printed_ {TAO_ARG_NONE};
 };
 
 #endif /* _BE_VISITOR_OPERATION_ARGUMENT_INVOKE_H_ */
