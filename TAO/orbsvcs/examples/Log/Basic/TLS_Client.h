@@ -23,8 +23,13 @@ class TLS_Client
   // = DESCRIPTION
   //   This client demonstates how to use the log service.
  public:
-  TLS_Client ();
-  ~TLS_Client ();
+  TLS_Client () = default;
+  ~TLS_Client () = default;
+
+  TLS_Client (TLS_Client const &) = delete;
+  TLS_Client (TLS_Client &&) = delete;
+  TLS_Client &operator= (TLS_Client const &) = delete;
+  TLS_Client &operator= (TLS_Client &&) = delete;
 
   void init (int argc, ACE_TCHAR *argv []);
   // Init the Client.

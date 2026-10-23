@@ -1,22 +1,14 @@
 #include "TLS_Client.h"
 #include "ace/Log_Msg.h"
 
-#define NAMING_SERVICE_NAME "NameService"
-#define BASIC_TLS_LOG_FACTORY_NAME "BasicLogFactory"
-#define LOG_EVENT_COUNT 9
-#define QUERY_1 "id < 5"
-#define QUERY_2 "id >= 0"
-#define QUERY_LANG "TCL"
-
-
-TLS_Client::TLS_Client ()
+namespace
 {
-  // No-Op.
-}
-
-TLS_Client::~TLS_Client ()
-{
-  // No-Op.
+  constexpr char naming_service_name[] = "NameService";
+  constexpr char basic_tls_log_factory_name[] = "BasicLogFactory";
+  constexpr int log_event_count = 9;
+  constexpr char query_1[] = "id < 5";
+  constexpr char query_2[] = "id >= 0";
+  constexpr char query_lang[] = "TCL";
 }
 
 void
@@ -38,7 +30,7 @@ void
 TLS_Client::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
+    this->orb_->resolve_initial_references (naming_service_name);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -53,7 +45,7 @@ TLS_Client::resolve_TLS_Basic_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
-  name[0].id = CORBA::string_dup (BASIC_TLS_LOG_FACTORY_NAME);
+  name[0].id = CORBA::string_dup (basic_tls_log_factory_name);
 
   CORBA::Object_var obj =
     this->naming_context_->resolve (name);
@@ -73,9 +65,9 @@ TLS_Client::run_tests ()
               "\nCalling BasicLogFactory::create...\n"));
 
   DsLogAdmin::LogFullActionType logfullaction = DsLogAdmin::halt;
-  CORBA::ULongLong max_size = 0; // 0 means "infinite"
+  CORBA::ULongLong max_size {}; // 0 means "infinite"
 
-  DsLogAdmin::LogId logid = 0;
+  DsLogAdmin::LogId logid {};
 
   DsLogAdmin::BasicLog_var basic_log =
     this->basic_log_factory_->create (logfullaction,
@@ -86,16 +78,16 @@ TLS_Client::run_tests ()
               "Create returned logid = %d\n",logid));
 
   // Create some fake log events.
-  DsLogAdmin::Anys any_seq (LOG_EVENT_COUNT);
-  any_seq.length (LOG_EVENT_COUNT);
+  DsLogAdmin::Anys any_seq (log_event_count);
+  any_seq.length (log_event_count);
 
-  for (int i = 0; i < LOG_EVENT_COUNT; i++)
+  for (int i = 0; i < log_event_count; i++)
     {
       any_seq [i] <<= "Foo";
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "Writing %d records...\n", LOG_EVENT_COUNT));
+              "Writing %d records...\n", log_event_count));
   basic_log->write_records (any_seq);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -110,12 +102,12 @@ TLS_Client::run_tests ()
 
   ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
-  ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", QUERY_1));
+  ACE_DEBUG ((LM_DEBUG, "Querying the Log: %s\n", query_1));
   DsLogAdmin::Iterator_var iter_out;
   DsLogAdmin::RecordList_var rec_list =
-    basic_log->query (QUERY_LANG, QUERY_1, iter_out);
+    basic_log->query (query_lang, query_1, iter_out);
 
-  CORBA::ULong j = 0;
+  CORBA::ULong j {};
   for (; j < rec_list->length();++j)  //dhanvey added info
   ACE_DEBUG ((LM_DEBUG,
               "id = %Q, time= %Q\n",
@@ -124,7 +116,7 @@ TLS_Client::run_tests ()
   ACE_DEBUG ((LM_DEBUG,
               "Deleting records...\n"));
 
-  retval = basic_log->delete_records (QUERY_LANG, QUERY_2);
+  retval = basic_log->delete_records (query_lang, query_2);
 
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_n_records...\n"));
