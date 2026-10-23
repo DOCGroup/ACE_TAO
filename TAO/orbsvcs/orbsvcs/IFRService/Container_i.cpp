@@ -2117,12 +2117,12 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
   CORBA::TCKind kind = tc->kind ();
 
   u_int result = 0;
-  int default_label = 0;
+  bool default_label = false;
 
   switch (kind)
   {
     case CORBA::tk_octet:
-      default_label = 1;
+      default_label = true;
       break;
     case CORBA::tk_char:
     {
@@ -2193,7 +2193,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     {
       CORBA::ULong x;
       TAO::Any_Impl *impl = value.impl ();
-      TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+      TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
 
       if (impl->encoded ())
         {
@@ -2218,7 +2218,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       break;
   }
 
-  if (default_label == 1)
+  if (default_label)
     {
       this->repo_->config ()->set_string_value (key,
                                                 "label",

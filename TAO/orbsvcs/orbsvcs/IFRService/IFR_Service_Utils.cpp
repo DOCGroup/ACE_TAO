@@ -487,7 +487,7 @@ TAO_IFR_Service_Utils::valid_container (
     CORBA::DefinitionKind contained_kind
   )
 {
-  int error_flag = 0;
+  bool error_flag = false;
 
   switch (container_kind)
   {
@@ -504,7 +504,7 @@ TAO_IFR_Service_Utils::valid_container (
         case CORBA::dk_Enum:
           break;
         default:
-          error_flag = 1;
+          error_flag = true;
           break;
       }
       break;
@@ -518,7 +518,7 @@ TAO_IFR_Service_Utils::valid_container (
         case CORBA::dk_Module:
         case CORBA::dk_Interface:
         case CORBA::dk_Value:
-          error_flag = 1;
+          error_flag = true;
           break;
         default:
           break;
@@ -535,7 +535,7 @@ TAO_IFR_Service_Utils::valid_container (
         case CORBA::dk_Attribute:
           break;
         default:
-          error_flag = 1;
+          error_flag = true;
           break;
       }
       break;
@@ -543,7 +543,7 @@ TAO_IFR_Service_Utils::valid_container (
       break;
   }
 
-  if (error_flag == 1)
+  if (error_flag)
     {
       throw
         CORBA::BAD_PARAM (CORBA::OMGVMCID | 4,
