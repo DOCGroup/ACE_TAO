@@ -52,9 +52,9 @@ namespace TAO
   class FT_TSS
   {
   public:
-    CORBA::Long retention_id_;
+    CORBA::Long retention_id_ {};
 
-    bool clean_flag_;
+    bool clean_flag_ {};
   };
 
 

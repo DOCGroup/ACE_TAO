@@ -10,14 +10,10 @@ TAO_FT_IOGR_Property::TAO_FT_IOGR_Property (
 }
 
 ACE_INLINE
-TAO_FT_IOGR_Property::TAO_FT_IOGR_Property ()
-{
-}
+TAO_FT_IOGR_Property::TAO_FT_IOGR_Property () = default;
 
 ACE_INLINE
-TAO_FT_IOGR_Property::~TAO_FT_IOGR_Property ()
-{
-}
+TAO_FT_IOGR_Property::~TAO_FT_IOGR_Property () = default;
 
 ACE_INLINE CORBA::Boolean
 TAO_FT_IOGR_Property::reset_tagged_components (
