@@ -172,7 +172,7 @@ namespace TAO
     /**
      * A boolean flag.  If true, this fault detector should leave.
      */
-    bool quit_requested_ {};
+    int quit_requested_;
   };
 }   // namespace TAO
 
