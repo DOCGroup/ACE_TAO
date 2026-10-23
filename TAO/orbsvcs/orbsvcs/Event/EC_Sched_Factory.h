@@ -36,7 +36,7 @@ public:
   TAO_EC_Sched_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Sched_Factory () override;
+  virtual ~TAO_EC_Sched_Factory () override = default;
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]) override;

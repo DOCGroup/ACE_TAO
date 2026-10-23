@@ -47,7 +47,7 @@ public:
   TAO_EC_Gateway ();
 
   /// Destructor
-  virtual ~TAO_EC_Gateway ();
+  virtual ~TAO_EC_Gateway () = default;
 
   /// The gateway must disconnect from all the relevant event channels,
   /// or any other communication media (such as multicast groups).

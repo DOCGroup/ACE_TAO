@@ -15,10 +15,6 @@ TAO_EC_Masked_Type_Filter::
 {
 }
 
-TAO_EC_Masked_Type_Filter::~TAO_EC_Masked_Type_Filter ()
-{
-}
-
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Masked_Type_Filter::begin () const
 {

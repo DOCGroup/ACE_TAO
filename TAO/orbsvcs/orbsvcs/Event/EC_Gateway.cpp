@@ -7,10 +7,6 @@ TAO_EC_Gateway::TAO_EC_Gateway ()
 {
 }
 
-TAO_EC_Gateway::~TAO_EC_Gateway ()
-{
-}
-
 void
 TAO_EC_Gateway::observer_handle (RtecEventChannelAdmin::Observer_Handle h)
 {

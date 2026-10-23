@@ -57,7 +57,7 @@ public:
          create (int is_source_mapping = 1);
 
   /// Destructor
-  virtual ~TAO_ECG_Complex_Address_Server () override;
+  virtual ~TAO_ECG_Complex_Address_Server () override = default;
 
   /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.

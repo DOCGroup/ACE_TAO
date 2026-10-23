@@ -42,7 +42,7 @@ public:
   explicit TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = nullptr);
 
   /// destructor
-  virtual ~TAO_EC_Reactive_Timeout_Generator () override;
+  virtual ~TAO_EC_Reactive_Timeout_Generator () override = default;
 
   // = The TAO_EC_Timeout_Generator methods.
   virtual void activate () override;

@@ -36,10 +36,6 @@ TAO_EC_Gateway_IIOP_Factory::TAO_EC_Gateway_IIOP_Factory ()
 {
 }
 
-TAO_EC_Gateway_IIOP_Factory::~TAO_EC_Gateway_IIOP_Factory ()
-{
-}
-
 int
 TAO_EC_Gateway_IIOP_Factory::fini ()
 {

@@ -32,10 +32,6 @@ TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Thread_Flags::~TAO_EC_Thread_Flags ()
-{
-}
-
 void
 TAO_EC_Thread_Flags::parse_symbols (const char* syms)
 {

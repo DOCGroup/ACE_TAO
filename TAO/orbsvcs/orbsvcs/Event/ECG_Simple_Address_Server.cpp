@@ -10,10 +10,6 @@ TAO_ECG_Simple_Address_Server::TAO_ECG_Simple_Address_Server ()
 {
 }
 
-TAO_ECG_Simple_Address_Server::~TAO_ECG_Simple_Address_Server ()
-{
-}
-
 int
 TAO_ECG_Simple_Address_Server::init (const char *mcast_addr)
 {

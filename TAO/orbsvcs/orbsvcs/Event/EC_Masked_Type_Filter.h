@@ -45,7 +45,7 @@ public:
                              CORBA::ULong type_value);
 
   /// Destructor
-  virtual ~TAO_EC_Masked_Type_Filter () override;
+  virtual ~TAO_EC_Masked_Type_Filter () override = default;
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.

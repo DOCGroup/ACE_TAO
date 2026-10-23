@@ -48,7 +48,7 @@ public:
   explicit TAO_EC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  virtual ~TAO_EC_SupplierAdmin ();
+  virtual ~TAO_EC_SupplierAdmin () = default;
 
   TAO_EC_SupplierAdmin (TAO_EC_SupplierAdmin const &) = delete;
   TAO_EC_SupplierAdmin (TAO_EC_SupplierAdmin &&) = delete;

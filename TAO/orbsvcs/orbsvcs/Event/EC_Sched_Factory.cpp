@@ -17,10 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory ()
-{
-}
-
 int
 TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 {

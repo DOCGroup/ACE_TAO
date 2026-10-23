@@ -41,7 +41,7 @@ public:
   explicit TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
   /// Destructor
-  virtual ~TAO_EC_Priority_Scheduling () override;
+  virtual ~TAO_EC_Priority_Scheduling () override = default;
 
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,

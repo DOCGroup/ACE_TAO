@@ -57,7 +57,7 @@ public:
   explicit TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// Destructor...
-  virtual ~TAO_EC_ConsumerAdmin ();
+  virtual ~TAO_EC_ConsumerAdmin () = default;
 
   TAO_EC_ConsumerAdmin (TAO_EC_ConsumerAdmin const &) = delete;
   TAO_EC_ConsumerAdmin (TAO_EC_ConsumerAdmin &&) = delete;

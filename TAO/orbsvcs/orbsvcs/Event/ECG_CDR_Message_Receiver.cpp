@@ -16,9 +16,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor ()
-{
-}
 // ****************************************************************
 
 TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry ()

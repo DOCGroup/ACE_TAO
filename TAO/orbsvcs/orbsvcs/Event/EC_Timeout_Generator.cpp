@@ -8,10 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Timeout_Generator::~TAO_EC_Timeout_Generator ()
-{
-}
-
 // ****************************************************************
 
 int

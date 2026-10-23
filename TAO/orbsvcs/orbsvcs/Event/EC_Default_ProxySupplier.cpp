@@ -15,10 +15,6 @@ TAO_EC_Default_ProxyPushSupplier::TAO_EC_Default_ProxyPushSupplier (
 {
 }
 
-TAO_EC_Default_ProxyPushSupplier::~TAO_EC_Default_ProxyPushSupplier ()
-{
-}
-
 void
 TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,

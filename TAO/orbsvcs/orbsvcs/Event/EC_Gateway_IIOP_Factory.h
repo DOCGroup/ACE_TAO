@@ -41,7 +41,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP_Factory
 {
 public:
   TAO_EC_Gateway_IIOP_Factory ();
-  virtual ~TAO_EC_Gateway_IIOP_Factory () override;
+  virtual ~TAO_EC_Gateway_IIOP_Factory () override = default;
 
   TAO_EC_Gateway_IIOP_Factory (TAO_EC_Gateway_IIOP_Factory const &) = delete;
   TAO_EC_Gateway_IIOP_Factory (TAO_EC_Gateway_IIOP_Factory &&) = delete;

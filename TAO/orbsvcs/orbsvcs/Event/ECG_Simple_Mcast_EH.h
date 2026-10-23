@@ -49,7 +49,7 @@ public:
   explicit TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_Simple_Mcast_EH () override;
+  virtual ~TAO_ECG_Simple_Mcast_EH () override = default;
 
   /// Join the specified multicast group and register itself with the
   /// reactor.

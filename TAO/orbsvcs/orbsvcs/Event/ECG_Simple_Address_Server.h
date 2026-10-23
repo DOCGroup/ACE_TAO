@@ -34,7 +34,7 @@ public:
   static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create ();
 
   /// Destructor
-  virtual ~TAO_ECG_Simple_Address_Server () override;
+  virtual ~TAO_ECG_Simple_Address_Server () override = default;
 
   int init (const char *arg);
 

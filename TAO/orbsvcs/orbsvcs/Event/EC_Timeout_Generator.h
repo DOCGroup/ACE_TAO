@@ -46,7 +46,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Generator
 {
 public:
   /// destructor
-  virtual ~TAO_EC_Timeout_Generator ();
+  virtual ~TAO_EC_Timeout_Generator () = default;
 
   /// Activate any internal threads.
   virtual void activate () = 0;

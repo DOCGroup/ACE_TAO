@@ -154,10 +154,6 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
 // ****************************************************************
 
-TAO_EC_Kokyu_Shutdown_Command::~TAO_EC_Kokyu_Shutdown_Command()
-{
-}
-
 int
 TAO_EC_Kokyu_Shutdown_Command::execute()
 {

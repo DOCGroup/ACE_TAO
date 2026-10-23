@@ -46,7 +46,7 @@ public:
   /*! \brief See \a operator=() */
   explicit TAO_EC_Thread_Flags (const char* symbolic_flags)
     { this->parse_symbols(symbolic_flags); }
-  ~TAO_EC_Thread_Flags ();
+  ~TAO_EC_Thread_Flags () = default;
 
   // Default Copy CTOR is fine.
 

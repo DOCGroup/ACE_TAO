@@ -58,7 +58,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_ObserverStrategy
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_ObserverStrategy ();
+  virtual ~TAO_EC_ObserverStrategy () = default;
 
   /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -244,7 +244,7 @@ public:
                                     ACE_Lock* lock);
 
   /// Destructor
-  virtual ~TAO_EC_Reactive_ObserverStrategy () override;
+  virtual ~TAO_EC_Reactive_ObserverStrategy () override = default;
 
 protected:
   /// Helpers.

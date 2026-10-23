@@ -27,10 +27,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_ECG_Reactive_ConsumerEC_Control::~TAO_ECG_Reactive_ConsumerEC_Control ()
-{
-}
-
 void
 TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel ()
 {

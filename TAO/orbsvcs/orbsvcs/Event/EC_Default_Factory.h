@@ -49,7 +49,7 @@ public:
   TAO_EC_Default_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Default_Factory () override;
+  virtual ~TAO_EC_Default_Factory () override = default;
 
   TAO_EC_Default_Factory (TAO_EC_Default_Factory const &) = delete;
   TAO_EC_Default_Factory (TAO_EC_Default_Factory &&) = delete;

@@ -15,10 +15,6 @@ TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
 {
 }
 
-TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server ()
-{
-}
-
 int
 TAO_ECG_Complex_Address_Server::init (const char *arg)
 {

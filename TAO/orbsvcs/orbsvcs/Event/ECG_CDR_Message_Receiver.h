@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ECG_CDR_Processor
 {
 public:
-  virtual ~TAO_ECG_CDR_Processor ();
+  virtual ~TAO_ECG_CDR_Processor () = default;
 
   /// Extracts data from @a cdr.  Returns 0 on success, -1 on error.
   virtual int decode (TAO_InputCDR &cdr) = 0;

@@ -14,10 +14,6 @@ TAO_EC_RTCORBA_Factory::
 {
 }
 
-TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory ()
-{
-}
-
 
 int
 TAO_EC_RTCORBA_Factory::init (int argc, ACE_TCHAR* argv[])

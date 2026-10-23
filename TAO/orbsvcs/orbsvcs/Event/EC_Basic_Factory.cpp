@@ -24,10 +24,6 @@ TAO_EC_Basic_Factory::TAO_EC_Basic_Factory ()
 {
 }
 
-TAO_EC_Basic_Factory::~TAO_EC_Basic_Factory ()
-{
-}
-
 TAO_EC_Dispatching*
 TAO_EC_Basic_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
