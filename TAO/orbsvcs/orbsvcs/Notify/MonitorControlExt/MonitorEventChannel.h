@@ -44,6 +44,11 @@ public:
   /// statistic objects with it in the statistic registry.
   explicit TAO_MonitorEventChannel (const char* name);
 
+  TAO_MonitorEventChannel (TAO_MonitorEventChannel const&) = delete;
+  TAO_MonitorEventChannel (TAO_MonitorEventChannel&&) = delete;
+  TAO_MonitorEventChannel& operator= (TAO_MonitorEventChannel const&) = delete;
+  TAO_MonitorEventChannel& operator= (TAO_MonitorEventChannel&&) = delete;
+
   /// Remove the statistics for this event channel.
   ~TAO_MonitorEventChannel () override;
 

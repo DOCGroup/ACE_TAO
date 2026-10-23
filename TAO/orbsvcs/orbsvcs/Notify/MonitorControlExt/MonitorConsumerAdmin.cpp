@@ -26,7 +26,7 @@ public:
   {
   }
 
-  virtual bool execute (const char* command)
+  bool execute (const char* command) override
   {
     if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMERADMIN) == 0)
       {
@@ -54,8 +54,8 @@ private:
 TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin ()
   : stat_name_ (),
     control_name_ (),
-    queue_size_ (0),
-    overflows_ (0)
+    queue_size_ (nullptr),
+    overflows_ (nullptr)
 {
 }
 

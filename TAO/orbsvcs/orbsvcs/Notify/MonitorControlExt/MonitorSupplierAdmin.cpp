@@ -20,7 +20,7 @@ public:
     id_ (id) {
   }
 
-  virtual bool execute (const char* command) {
+  bool execute (const char* command) override {
     if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN) == 0)
       {
         CosNotifyChannelAdmin::SupplierAdmin_var admin =

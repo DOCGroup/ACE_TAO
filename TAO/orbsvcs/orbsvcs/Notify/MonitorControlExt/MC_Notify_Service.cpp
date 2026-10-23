@@ -13,10 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MC_Notify_Service::~TAO_MC_Notify_Service ()
-{
-}
-
 TAO_Notify_Factory*
 TAO_MC_Notify_Service::create_factory ()
 {

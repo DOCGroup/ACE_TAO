@@ -39,7 +39,7 @@ public:
   {
   }
 
-  virtual void update () {
+  void update () override {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
         Monitor_Control_Types::NameList list;
@@ -52,9 +52,9 @@ public:
     else
       {
         if (this->is_supplier_)
-          this->receive (this->interf_->get_suppliers (0));
+          this->receive (this->interf_->get_suppliers (nullptr));
         else
-          this->receive (this->interf_->get_consumers (0));
+          this->receive (this->interf_->get_consumers (nullptr));
       }
   }
 
@@ -75,7 +75,7 @@ public:
   {
   }
 
-  virtual void update () {
+  void update () override {
     Monitor_Control_Types::NameList list;
     this->interf_->get_timedout_consumers (&list);
     this->receive (list);
@@ -97,7 +97,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
@@ -118,11 +118,11 @@ public:
       {
         if (this->is_supplier_)
           {
-            this->receive (this->interf_->get_supplieradmins (0));
+            this->receive (this->interf_->get_supplieradmins (nullptr));
           }
         else
           {
-            this->receive (this->interf_->get_consumeradmins (0));
+            this->receive (this->interf_->get_consumeradmins (nullptr));
           }
       }
   }
@@ -146,7 +146,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     this->receive (this->interf_->calculate_queue_size (this->count_));
   }
@@ -168,7 +168,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     this->receive (this->interf_->get_oldest_event ());
   }
@@ -187,7 +187,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     Monitor_Control_Types::NameList list;
     this->interf_->determine_slowest_consumer (&list);
@@ -216,7 +216,7 @@ public:
   {
   }
 
-  virtual bool execute (const char* command)
+  bool execute (const char* command) override
   {
     if (ACE_OS::strcmp (command, TAO_NS_CONTROL_SHUTDOWN) == 0)
       {
@@ -248,7 +248,7 @@ public:
   {
   }
 
-  virtual bool execute (const char* command)
+  bool execute (const char* command) override
   {
     bool status = true;
 

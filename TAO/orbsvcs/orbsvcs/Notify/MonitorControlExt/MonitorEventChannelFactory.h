@@ -31,6 +31,11 @@ public:
   /// statistic objects with it in the statistic registry
   explicit TAO_MonitorEventChannelFactory (const char* name);
 
+  TAO_MonitorEventChannelFactory (TAO_MonitorEventChannelFactory const&) = delete;
+  TAO_MonitorEventChannelFactory (TAO_MonitorEventChannelFactory&&) = delete;
+  TAO_MonitorEventChannelFactory& operator= (TAO_MonitorEventChannelFactory const&) = delete;
+  TAO_MonitorEventChannelFactory& operator= (TAO_MonitorEventChannelFactory&&) = delete;
+
   /// Remove the factory name from the factory names statistic
   ~TAO_MonitorEventChannelFactory () override;
 
@@ -70,6 +75,10 @@ private:
   public:
     Unbinder (Map& map,
               const ACE_CString& name);
+    Unbinder (Unbinder const&) = delete;
+    Unbinder (Unbinder&&) = delete;
+    Unbinder& operator= (Unbinder const&) = delete;
+    Unbinder& operator= (Unbinder&&) = delete;
     ~Unbinder ();
     void release ();
 

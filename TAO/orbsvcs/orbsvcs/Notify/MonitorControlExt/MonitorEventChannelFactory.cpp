@@ -30,7 +30,7 @@ public:
   {
   }
 
-  virtual void update ()
+  void update () override
   {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
@@ -40,7 +40,7 @@ public:
       }
     else
       {
-        this->receive (this->interf_->get_ecs (0, this->active_));
+        this->receive (this->interf_->get_ecs (nullptr, this->active_));
       }
   }
 
