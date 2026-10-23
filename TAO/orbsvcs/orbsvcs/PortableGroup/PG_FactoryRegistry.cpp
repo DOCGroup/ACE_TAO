@@ -53,9 +53,7 @@ TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
 {
 }
 
-TAO::PG_FactoryRegistry::~PG_FactoryRegistry ()
-{
-}
+TAO::PG_FactoryRegistry::~PG_FactoryRegistry () = default;
 
 //////////////////////////////////////////////////////
 // PG_FactoryRegistry public, non-CORBA methods

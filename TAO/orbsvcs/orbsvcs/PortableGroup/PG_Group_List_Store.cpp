@@ -159,9 +159,7 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (
     }
 }
 
-TAO::PG_Group_List_Store::~PG_Group_List_Store ()
-{
-}
+TAO::PG_Group_List_Store::~PG_Group_List_Store () = default;
 
 PortableGroup::ObjectGroupId
 TAO::PG_Group_List_Store::get_next_group_id ()

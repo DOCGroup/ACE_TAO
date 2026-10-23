@@ -160,7 +160,7 @@ public:
            TAO_ORB_Core &orb_core,
            TAO_Object_Adapter *object_adapter);
 
-  virtual ~TAO_GOA ();
+  ~TAO_GOA () override;
 
     // Used to force the initialization of the code.
     static int Initializer ();
