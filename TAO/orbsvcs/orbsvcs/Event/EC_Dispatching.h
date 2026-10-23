@@ -45,7 +45,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatching
 {
 public:
   /// Destructor...
-  virtual ~TAO_EC_Dispatching ();
+  virtual ~TAO_EC_Dispatching () = default;
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.

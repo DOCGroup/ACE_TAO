@@ -6,10 +6,6 @@ TAO_EC_ConsumerControl::TAO_EC_ConsumerControl ()
 {
 }
 
-TAO_EC_ConsumerControl::~TAO_EC_ConsumerControl ()
-{
-}
-
 int
 TAO_EC_ConsumerControl::activate ()
 {

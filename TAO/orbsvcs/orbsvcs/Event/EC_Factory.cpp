@@ -10,8 +10,4 @@ TAO_EC_Factory::TAO_EC_Factory ()
   TAO_EC_debug_level = 0;
 }
 
-TAO_EC_Factory::~TAO_EC_Factory ()
-{
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL

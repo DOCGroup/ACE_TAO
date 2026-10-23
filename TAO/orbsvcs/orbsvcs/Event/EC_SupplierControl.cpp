@@ -7,10 +7,6 @@ TAO_EC_SupplierControl::TAO_EC_SupplierControl ()
 {
 }
 
-TAO_EC_SupplierControl::~TAO_EC_SupplierControl ()
-{
-}
-
 int
 TAO_EC_SupplierControl::activate ()
 {

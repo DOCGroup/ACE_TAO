@@ -50,7 +50,7 @@ public:
   TAO_EC_SupplierControl ();
 
   /// Destructor.
-  virtual ~TAO_EC_SupplierControl ();
+  virtual ~TAO_EC_SupplierControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of
   /// the suppliers

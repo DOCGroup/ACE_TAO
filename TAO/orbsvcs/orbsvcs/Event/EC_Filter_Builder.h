@@ -42,7 +42,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Filter_Builder
 {
 public:
   /// destructor...
-  virtual ~TAO_EC_Filter_Builder ();
+  virtual ~TAO_EC_Filter_Builder () = default;
 
   /// Create the filter, the caller must assume ownership of the filter
   /// returned.
@@ -67,7 +67,7 @@ public:
   TAO_EC_Null_Filter_Builder ();
 
   /// destructor...
-  virtual ~TAO_EC_Null_Filter_Builder () override;
+  virtual ~TAO_EC_Null_Filter_Builder () override = default;
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,

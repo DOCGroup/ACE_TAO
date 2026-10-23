@@ -67,7 +67,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_Supplier_Filter ();
+  virtual ~TAO_EC_Supplier_Filter () = default;
 
   /**
    * Whenever a ProxyPushConsumer is initialized it calls this method

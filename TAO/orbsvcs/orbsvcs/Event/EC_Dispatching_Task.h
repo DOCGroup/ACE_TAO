@@ -164,7 +164,7 @@ public:
   TAO_EC_Dispatch_Command& operator= (TAO_EC_Dispatch_Command&&) = delete;
 
   /// Destructor
-  virtual ~TAO_EC_Dispatch_Command () override;
+  virtual ~TAO_EC_Dispatch_Command () override = default;
 
   /// Command callback
   virtual int execute () = 0;
