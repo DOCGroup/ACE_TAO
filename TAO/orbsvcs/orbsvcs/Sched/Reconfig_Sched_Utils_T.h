@@ -177,11 +177,11 @@ public:
 
   /// Accessor for whether or not the recursion is within a previously
   /// detected cycle.
-  int in_a_cycle ();
+  bool in_a_cycle ();
 
   /// Mutator for whether or not the recursion is within a previously
   /// detected cycle.
-  void in_a_cycle (int);
+  void in_a_cycle (bool value);
 
 protected:
   /**
@@ -237,7 +237,7 @@ private:
 
   /// Indicates whether or not the recursion is
   /// currently within a previously discovered cycle.
-  int in_a_cycle_;
+  bool in_a_cycle_ {};
 };
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>

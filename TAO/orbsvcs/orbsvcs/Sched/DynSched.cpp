@@ -223,7 +223,6 @@ ACE_DynScheduler::ACE_DynScheduler ()
   , critical_set_utilization_ (0.0)
   , minimum_priority_queue_ (0)
   , minimum_guaranteed_priority_queue_ (-1)
-  , up_to_date_ (0)
   , min_dispatch_id_ (0)
   , max_dispatch_id_ (0)
 {
@@ -671,7 +670,7 @@ ACE_DynScheduler::reset ()
       timeline_ = 0;
          }
 
-    up_to_date_ = 0;
+    up_to_date_ = false;
   }
 }
 
@@ -1112,7 +1111,7 @@ ACE_DynScheduler::schedule (
     case ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS :
 
         // if we made it here, the schedule is done
-        up_to_date_ = 1;
+        up_to_date_ = true;
 
       break;
 

@@ -529,7 +529,7 @@ private:
 
     /// indicates whether the a valid schedule has been generated since the last
     /// relevant change (addition, alteration or removal of an RT_Info, etc.)
-  u_int up_to_date_;
+  bool up_to_date_ {};
 
   u_long min_dispatch_id_;
 

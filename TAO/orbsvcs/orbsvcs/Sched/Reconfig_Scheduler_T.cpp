@@ -2232,7 +2232,7 @@ detect_cycles_i ()
   for (int i = 0; i < this->rt_info_count_; ++i)
     {
       // Each new top level entry marks a potential new cycle.
-      scc_visitor.in_a_cycle (0);
+      scc_visitor.in_a_cycle (false);
 
       if (scc_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {

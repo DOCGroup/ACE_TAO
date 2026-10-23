@@ -327,8 +327,7 @@ TAO_RSE_SCC_Visitor
   : TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
       (dependency_map, rt_info_map),
     DFS_time_ (0),
-    number_of_cycles_ (0),
-    in_a_cycle_ (0)
+    number_of_cycles_ (0)
 {
 }
 
@@ -345,7 +344,7 @@ number_of_cycles ()
 // Accessor for whether or not the recursion is within a previously
 // detected cycle.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> bool
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 in_a_cycle ()
 {
@@ -358,9 +357,9 @@ in_a_cycle ()
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-in_a_cycle (int i)
+in_a_cycle (bool value)
 {
-  this->in_a_cycle_ = i;
+  this->in_a_cycle_ = value;
 }
 
 /* WSOA merge - commented out
@@ -434,9 +433,9 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
        && successor.rev_dfs_status () ==
        TAO_Reconfig_Scheduler_Entry::NOT_VISITED)
     {
-      if (this->in_a_cycle () == 0)
+      if (!this->in_a_cycle ())
         {
-          this->in_a_cycle (1);
+          this->in_a_cycle (true);
           ++this->number_of_cycles_;
         }
 
