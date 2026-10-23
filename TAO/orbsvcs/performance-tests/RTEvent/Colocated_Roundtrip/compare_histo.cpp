@@ -9,8 +9,8 @@
 #include <iterator>
 #include <map>
 
-typedef std::map<long,double> Vector;
-typedef std::pair<long,double> Element;
+using Vector = std::map<long, double>;
+using Element = std::pair<long, double>;
 
 std::ostream &
 operator<< (std::ostream &os,
