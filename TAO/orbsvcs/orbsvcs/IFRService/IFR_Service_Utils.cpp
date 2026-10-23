@@ -241,7 +241,7 @@ TAO_IFR_Server::open_config ()
           if (heap->open (filename))
             {
               delete heap;
-              heap = 0;
+              heap = nullptr;
 
               ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
@@ -349,7 +349,7 @@ TAO_IFR_Server::create_repository ()
     ACE_OS::fopen (OPTIONS::instance ()->ior_output_file (),
                    ACE_TEXT ("w"));
 
-  if (output_file_ == 0)
+  if (output_file_ == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_IFR_Server::create_repository - ")
@@ -393,7 +393,7 @@ TAO_IFR_Server::init_multicast_server ()
       const char *port_number =
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
-      if (port_number != 0)
+      if (port_number != nullptr)
         port = static_cast<u_short> (ACE_OS::atoi (port_number));
     }
 
@@ -1132,7 +1132,7 @@ TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "reference_to_path - parse_ir_object_key failed\n"));
-      return 0;
+      return nullptr;
     }
 
   return TAO_IFR_Service_Utils::oid_to_string (object_id);
@@ -1179,12 +1179,12 @@ TAO_IFR_Service_Utils::path_to_idltype (ACE_TString &path,
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
   TAO_IDLType_i *retval = repo->select_idltype (def_kind);
 
-  if (retval == 0)
+  if (retval == nullptr)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "path_to_idltype - not an IDLType: '%s'\n",
                   path.c_str ()));
-      return 0;
+      return nullptr;
     }
 
   retval->section_key (TAO_IFR_Service_Utils::tmp_key_);
@@ -1199,12 +1199,12 @@ TAO_IFR_Service_Utils::path_to_contained (ACE_TString &path,
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
   TAO_Contained_i *retval = repo->select_contained (def_kind);
 
-  if (retval == 0)
+  if (retval == nullptr)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "path_to_contained - not a contained type: '%s'\n",
                   path.c_str ()));
-      return 0;
+      return nullptr;
     }
 
   retval->section_key (TAO_IFR_Service_Utils::tmp_key_);
@@ -1219,7 +1219,7 @@ TAO_IFR_Service_Utils::path_to_container (ACE_TString &path,
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
   TAO_Container_i *retval = repo->select_container (def_kind);
 
-  if (retval != 0)
+  if (retval != nullptr)
     {
       retval->section_key (TAO_IFR_Service_Utils::tmp_key_);
     }
