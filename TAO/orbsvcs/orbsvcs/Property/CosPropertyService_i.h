@@ -45,10 +45,10 @@ public:
   CosProperty_Hash_Key ();
   // Default constructor.
 
-  CosProperty_Hash_Key (char const * & name);
+  explicit CosProperty_Hash_Key (char const * & name);
   // Constructor from a const string.
 
-  CosProperty_Hash_Key (CosPropertyService::PropertyName const & name);
+  explicit CosProperty_Hash_Key (CosPropertyService::PropertyName const & name);
   // Costructor that takes PropertyName.
 
   CosProperty_Hash_Key (CosProperty_Hash_Key const & hash_key);
@@ -214,7 +214,7 @@ public:
                    CosPropertyService::Properties const allowed_properties);
   // Init values that the PropertySetFactory will want to specify.
 
-  TAO_PropertySet (CosPropertyService::Properties const initial_properties);
+  explicit TAO_PropertySet (CosPropertyService::Properties const initial_properties);
   // PropertySetFactory needs this constructor.
 
   TAO_PropertySet (CosPropertyService::PropertyTypes const allowed_property_types,
@@ -333,7 +333,7 @@ public:
                       CosPropertyService::PropertyDefs const allowed_property);
   // The factory uses this constructor.
 
-  TAO_PropertySetDef (CosPropertyService::PropertyDefs const initial_property_defs);
+  explicit TAO_PropertySetDef (CosPropertyService::PropertyDefs const initial_property_defs);
   // This is also for the factory.
 
   ~TAO_PropertySetDef () override;
@@ -422,7 +422,7 @@ class TAO_Property_Serv_Export TAO_PropertyNamesIterator
   //     get_all_property_names operation returns an object supporting
   //     the PropertyNamesIterator interface with the additional names.
 public:
-  TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
+  explicit TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
   ~TAO_PropertyNamesIterator () override;
@@ -483,7 +483,7 @@ class TAO_Property_Serv_Export TAO_PropertiesIterator
   //     operation returns an object supporting the PropertiesIterator
   //     interface with the additional properties.
 public:
-  TAO_PropertiesIterator (TAO_PropertySet &property_set);
+  explicit TAO_PropertiesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
   ~TAO_PropertiesIterator () override;
