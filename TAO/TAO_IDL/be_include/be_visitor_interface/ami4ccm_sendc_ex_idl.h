@@ -27,14 +27,18 @@ public:
   explicit be_visitor_ami4ccm_sendc_ex_idl (be_visitor_context *ctx);
 
   ~be_visitor_ami4ccm_sendc_ex_idl () override;
+  be_visitor_ami4ccm_sendc_ex_idl (be_visitor_ami4ccm_sendc_ex_idl const &) = delete;
+  be_visitor_ami4ccm_sendc_ex_idl (be_visitor_ami4ccm_sendc_ex_idl &&) = delete;
+  be_visitor_ami4ccm_sendc_ex_idl &operator= (be_visitor_ami4ccm_sendc_ex_idl const &) = delete;
+  be_visitor_ami4ccm_sendc_ex_idl &operator= (be_visitor_ami4ccm_sendc_ex_idl &&) = delete;
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
-  virtual int visit_string (be_string *node);
-  virtual int visit_sequence (be_sequence *node);
+  int visit_interface (be_interface *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
+  int visit_string (be_string *node) override;
+  int visit_sequence (be_sequence *node) override;
 
-  virtual int pre_process (be_decl *node);
+  int pre_process (be_decl *node) override;
 
 private:
   TAO_OutStream &os_;

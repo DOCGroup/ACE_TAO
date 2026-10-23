@@ -28,8 +28,12 @@ public:
   explicit be_visitor_facet_svts (be_visitor_context *ctx);
 
   ~be_visitor_facet_svts () override;
+  be_visitor_facet_svts (be_visitor_facet_svts const &) = delete;
+  be_visitor_facet_svts (be_visitor_facet_svts &&) = delete;
+  be_visitor_facet_svts &operator= (be_visitor_facet_svts const &) = delete;
+  be_visitor_facet_svts &operator= (be_visitor_facet_svts &&) = delete;
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 };
 
 // ====================================================
@@ -40,9 +44,9 @@ class be_facet_op_attr_defn_helper
 public:
   be_facet_op_attr_defn_helper (be_interface *op_scope);
 
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *os,
-                    be_interface *base_interface);
+  int emit (be_interface *derived_interface,
+            TAO_OutStream *os,
+            be_interface *base_interface) override;
 
 private:
   be_interface *op_scope_;

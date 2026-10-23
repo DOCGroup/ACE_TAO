@@ -29,8 +29,12 @@ public:
   explicit be_visitor_interface_ex_idl (be_visitor_context *ctx);
 
   ~be_visitor_interface_ex_idl () override;
+  be_visitor_interface_ex_idl (be_visitor_interface_ex_idl const &) = delete;
+  be_visitor_interface_ex_idl (be_visitor_interface_ex_idl &&) = delete;
+  be_visitor_interface_ex_idl &operator= (be_visitor_interface_ex_idl const &) = delete;
+  be_visitor_interface_ex_idl &operator= (be_visitor_interface_ex_idl &&) = delete;
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_EX_IDL_H_ */

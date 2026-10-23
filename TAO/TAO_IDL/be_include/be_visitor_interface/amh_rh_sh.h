@@ -20,10 +20,14 @@ public:
   explicit be_visitor_amh_rh_interface_sh (be_visitor_context *ctx);
 
   ~be_visitor_amh_rh_interface_sh () override;
+  be_visitor_amh_rh_interface_sh (be_visitor_amh_rh_interface_sh const &) = delete;
+  be_visitor_amh_rh_interface_sh (be_visitor_amh_rh_interface_sh &&) = delete;
+  be_visitor_amh_rh_interface_sh &operator= (be_visitor_amh_rh_interface_sh const &) = delete;
+  be_visitor_amh_rh_interface_sh &operator= (be_visitor_amh_rh_interface_sh &&) = delete;
 
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* AMH_RH_SH_H_ */

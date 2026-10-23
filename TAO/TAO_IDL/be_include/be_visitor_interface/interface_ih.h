@@ -30,9 +30,13 @@ public:
 
   /// destructor
   ~be_visitor_interface_ih () override;
+  be_visitor_interface_ih (be_visitor_interface_ih const &) = delete;
+  be_visitor_interface_ih (be_visitor_interface_ih &&) = delete;
+  be_visitor_interface_ih &operator= (be_visitor_interface_ih const &) = delete;
+  be_visitor_interface_ih &operator= (be_visitor_interface_ih &&) = delete;
 
   /// set the right context and make a visitor
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   static int method_helper (be_interface *derived,
                             be_interface *node,

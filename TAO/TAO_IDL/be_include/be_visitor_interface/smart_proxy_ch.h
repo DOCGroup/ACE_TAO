@@ -28,13 +28,17 @@ public:
 
   /// destructor
   ~be_visitor_interface_smart_proxy_ch () override;
+  be_visitor_interface_smart_proxy_ch (be_visitor_interface_smart_proxy_ch const &) = delete;
+  be_visitor_interface_smart_proxy_ch (be_visitor_interface_smart_proxy_ch &&) = delete;
+  be_visitor_interface_smart_proxy_ch &operator= (be_visitor_interface_smart_proxy_ch const &) = delete;
+  be_visitor_interface_smart_proxy_ch &operator= (be_visitor_interface_smart_proxy_ch &&) = delete;
 
   /// visit an interface
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// This will just call the above method - no need to create
   /// another set of visitors for this stuff.
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 };
 
 #endif /* _BE_INTERFACE_SMART_PROXY_CH_H_ */
