@@ -16,9 +16,7 @@ be_visitor_component::be_visitor_component (be_visitor_context *ctx)
 {
 }
 
-be_visitor_component::~be_visitor_component ()
-{
-}
+be_visitor_component::~be_visitor_component () = default;
 
 int
 be_visitor_component::visit_attribute (be_attribute *node)

@@ -25,19 +25,19 @@ class be_visitor_component_ami_rh_exs
   : public be_visitor_component_ami_rh_ex_base
 {
 public:
-  be_visitor_component_ami_rh_exs (be_visitor_context *ctx);
-  ~be_visitor_component_ami_rh_exs ();
+  explicit be_visitor_component_ami_rh_exs (be_visitor_context *ctx);
+  ~be_visitor_component_ami_rh_exs () override;
 
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_argument (be_argument *node);
-
-private:
-  virtual void gen_op_body ();
+  int visit_uses (be_uses *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_argument (be_argument *node) override;
 
 private:
-  const char *your_code_here_;
+  void gen_op_body () override;
+
+private:
+  const char *your_code_here_ {"/* Your code here. */"};
 };
 
 #endif /* _BE_COMPONENT_AMI_RH_EXS_H_ */

@@ -14,16 +14,11 @@
 
 be_visitor_component_ami_rh_ex_base::be_visitor_component_ami_rh_ex_base (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    iface_ (nullptr),
-    port_ (nullptr)
+  : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_component_ami_rh_ex_base::~be_visitor_component_ami_rh_ex_base (
-  )
-{
-}
+be_visitor_component_ami_rh_ex_base::~be_visitor_component_ami_rh_ex_base () = default;
 
 int
 be_visitor_component_ami_rh_ex_base::post_process (be_decl *bd)

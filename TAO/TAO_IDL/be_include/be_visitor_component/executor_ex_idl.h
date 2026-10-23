@@ -20,23 +20,23 @@ class be_visitor_executor_ex_idl
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_executor_ex_idl (be_visitor_context *ctx);
+  explicit be_visitor_executor_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_executor_ex_idl ();
+  ~be_visitor_executor_ex_idl () override;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 
   /// To regenerate attribute declarations.
-  virtual int visit_attribute (be_attribute *node);
+  int visit_attribute (be_attribute *node) override;
 
   /// To regenerate the name of the attribute's referenced
   /// (anonymous) type. Anonymous arrays are not allowed.
-  virtual int visit_string (be_string *node);
-  virtual int visit_sequence (be_sequence *node);
+  int visit_string (be_string *node) override;
+  int visit_sequence (be_sequence *node) override;
 
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_consumes (be_consumes *node);
+  int visit_provides (be_provides *node) override;
+  int visit_consumes (be_consumes *node) override;
 
 private:
   void gen_supported ();

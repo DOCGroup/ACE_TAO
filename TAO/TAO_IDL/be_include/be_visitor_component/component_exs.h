@@ -22,11 +22,11 @@ class be_visitor_component_exs
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_component_exs (be_visitor_context *ctx);
+  explicit be_visitor_component_exs (be_visitor_context *ctx);
 
-  ~be_visitor_component_exs ();
+  ~be_visitor_component_exs () override;
 
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 };
 
 // =============================================
@@ -39,11 +39,11 @@ class Component_Exec_Op_Attr_Generator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  Component_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
+  explicit Component_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

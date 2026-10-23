@@ -21,15 +21,15 @@ class be_visitor_context_ex_idl
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_context_ex_idl (be_visitor_context *ctx);
+  explicit be_visitor_context_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_context_ex_idl ();
+  ~be_visitor_context_ex_idl () override;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_publishes (be_publishes *node);
-  virtual int visit_emits (be_emits *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_uses (be_uses *node) override;
+  int visit_publishes (be_publishes *node) override;
+  int visit_emits (be_emits *node) override;
 };
 
 #endif /* _BE_COMPONENT_CONTEXT_EX_IDL_H_ */

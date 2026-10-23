@@ -21,18 +21,18 @@ class be_visitor_facet_exs
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_facet_exs (be_visitor_context *ctx);
+  explicit be_visitor_facet_exs (be_visitor_context *ctx);
 
-  ~be_visitor_facet_exs ();
+  ~be_visitor_facet_exs () override;
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_provides (be_provides *node);
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_provides (be_provides *node) override;
 
 private:
-  be_decl *op_scope_;
-  const char *comment_start_border_;
-  const char *comment_end_border_;
+  be_decl *op_scope_ {};
+  const char *comment_start_border_ {"/**"};
+  const char *comment_end_border_ {" */"};
 };
 
 #endif /* _BE_COMPONENT_FACET_EXS_H_ */

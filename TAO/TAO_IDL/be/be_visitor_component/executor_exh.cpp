@@ -24,9 +24,7 @@ be_visitor_executor_exh::be_visitor_executor_exh (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_executor_exh::~be_visitor_executor_exh ()
-{
-}
+be_visitor_executor_exh::~be_visitor_executor_exh () = default;
 
 int
 be_visitor_executor_exh::visit_attribute (be_attribute *node)

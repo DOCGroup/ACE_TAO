@@ -22,9 +22,7 @@ be_visitor_component_exs::be_visitor_component_exs (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_component_exs::~be_visitor_component_exs ()
-{
-}
+be_visitor_component_exs::~be_visitor_component_exs () = default;
 
 int
 be_visitor_component_exs::visit_component (be_component *node)

@@ -14,14 +14,11 @@
 
 be_visitor_component_ami_rh_exs::be_visitor_component_ami_rh_exs (
       be_visitor_context *ctx)
-  : be_visitor_component_ami_rh_ex_base (ctx),
-    your_code_here_ ("/* Your code here. */")
+  : be_visitor_component_ami_rh_ex_base (ctx)
 {
 }
 
-be_visitor_component_ami_rh_exs::~be_visitor_component_ami_rh_exs ()
-{
-}
+be_visitor_component_ami_rh_exs::~be_visitor_component_ami_rh_exs () = default;
 
 int
 be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)

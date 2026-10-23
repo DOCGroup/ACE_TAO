@@ -18,10 +18,7 @@ be_visitor_executor_ex_idl::be_visitor_executor_ex_idl (
 {
 }
 
-be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl (
-  )
-{
-}
+be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl () = default;
 
 int
 be_visitor_executor_ex_idl::visit_component (

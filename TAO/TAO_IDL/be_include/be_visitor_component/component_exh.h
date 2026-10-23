@@ -22,11 +22,11 @@ class be_visitor_component_exh
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_component_exh (be_visitor_context *ctx);
+  explicit be_visitor_component_exh (be_visitor_context *ctx);
 
-  ~be_visitor_component_exh ();
+  ~be_visitor_component_exh () override;
 
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_EXH_H_ */

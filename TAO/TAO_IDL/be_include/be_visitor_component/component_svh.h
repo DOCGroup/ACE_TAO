@@ -23,12 +23,12 @@
 class be_visitor_component_svh : public be_visitor_component
 {
 public:
-  be_visitor_component_svh (be_visitor_context *ctx);
+  explicit be_visitor_component_svh (be_visitor_context *ctx);
 
-  ~be_visitor_component_svh ();
+  ~be_visitor_component_svh () override;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 
 private:
   void gen_entrypoint (be_component *node);
