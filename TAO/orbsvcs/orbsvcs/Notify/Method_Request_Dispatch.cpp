@@ -53,10 +53,6 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 {
 }
 
-TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch ()
-{
-}
-
 int TAO_Notify_Method_Request_Dispatch::execute_i ()
 {
   if (this->proxy_supplier_->has_shutdown ())
@@ -207,10 +203,6 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
 {
 }
 
-TAO_Notify_Method_Request_Dispatch_Queueable::~TAO_Notify_Method_Request_Dispatch_Queueable ()
-{
-}
-
 int
 TAO_Notify_Method_Request_Dispatch_Queueable::execute ()
 {
@@ -225,10 +217,6 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_N
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Dispatch (request, request.event (), proxy_supplier, filtering)
-{
-}
-
-TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch_No_Copy ()
 {
 }
 

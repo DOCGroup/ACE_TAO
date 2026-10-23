@@ -41,7 +41,7 @@ public:
                                        PROXY_PARAM proxy);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Updates_T ();
+  virtual ~TAO_Notify_Method_Request_Updates_T () = default;
 
   /// Execute the Request
   int execute_i ();

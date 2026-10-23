@@ -47,7 +47,7 @@ public:
 
 public:
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Event ();
+  virtual ~TAO_Notify_Method_Request_Event () = default;
 
   const TAO_Notify_Event * event() const;
   void complete ();
@@ -85,7 +85,7 @@ public:
     TAO_Notify::Delivery_Request_Ptr & request);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Event_Queueable ();
+  ~TAO_Notify_Method_Request_Event_Queueable () override = default;
 
   /// satisfy the pure virtual method.  Should never be called.
   int execute () override;

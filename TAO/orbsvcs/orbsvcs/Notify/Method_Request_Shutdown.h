@@ -34,7 +34,7 @@ public:
   explicit TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Shutdown ();
+  ~TAO_Notify_Method_Request_Shutdown () override = default;
 
   /// Create a copy of this object.
   TAO_Notify_Method_Request_Queueable* copy () override;

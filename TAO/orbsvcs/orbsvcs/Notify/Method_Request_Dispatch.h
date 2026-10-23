@@ -63,7 +63,7 @@ public:
 
 public:
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch ();
+  virtual ~TAO_Notify_Method_Request_Dispatch () = default;
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (
@@ -112,7 +112,7 @@ public:
     bool filtering);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
+  ~TAO_Notify_Method_Request_Dispatch_Queueable () override = default;
 
   /// Execute the Request
   int execute () override;
@@ -141,7 +141,7 @@ public:
     bool filtering);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
+  ~TAO_Notify_Method_Request_Dispatch_No_Copy () override = default;
 
   /// Execute the Request
   int execute () override;

@@ -43,7 +43,7 @@ public:
   enum {persistence_code = 2};
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup ();
+  ~TAO_Notify_Method_Request_Lookup () override = default;
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Lookup_Queueable * unmarshal (
@@ -92,7 +92,7 @@ public:
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup_Queueable ();
+  ~TAO_Notify_Method_Request_Lookup_Queueable () override = default;
 
   /// Execute the Request
   int execute () override;
@@ -120,7 +120,7 @@ public:
     TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup_No_Copy ();
+  ~TAO_Notify_Method_Request_Lookup_No_Copy () override = default;
 
   /// Execute the Request
   int execute () override;

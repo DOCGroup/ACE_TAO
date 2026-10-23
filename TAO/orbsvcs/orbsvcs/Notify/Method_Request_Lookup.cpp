@@ -35,10 +35,6 @@ TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
 {
 }
 
-TAO_Notify_Method_Request_Lookup::~TAO_Notify_Method_Request_Lookup ()
-{
-}
-
 void
 TAO_Notify_Method_Request_Lookup::work (
   TAO_Notify_ProxySupplier* proxy_supplier)
@@ -181,10 +177,6 @@ TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Que
 }
 
 
-TAO_Notify_Method_Request_Lookup_Queueable::~TAO_Notify_Method_Request_Lookup_Queueable ()
-{
-}
-
 int
 TAO_Notify_Method_Request_Lookup_Queueable::execute ()
 {
@@ -197,10 +189,6 @@ TAO_Notify_Method_Request_Lookup_No_Copy::TAO_Notify_Method_Request_Lookup_No_Co
         const TAO_Notify_Event* event,
         TAO_Notify_ProxyConsumer* proxy_consumer)
   : TAO_Notify_Method_Request_Lookup (event, proxy_consumer)
-{
-}
-
-TAO_Notify_Method_Request_Lookup_No_Copy::~TAO_Notify_Method_Request_Lookup_No_Copy ()
 {
 }
 
