@@ -113,12 +113,17 @@ protected:
   /// The Event Channel we belong to
   EVENT_CHANNEL *event_channel_;
 
+  TAO_ESF_Proxy_Admin (TAO_ESF_Proxy_Admin const &) = delete;
+  TAO_ESF_Proxy_Admin (TAO_ESF_Proxy_Admin &&) = delete;
+  TAO_ESF_Proxy_Admin &operator= (TAO_ESF_Proxy_Admin const &) = delete;
+  TAO_ESF_Proxy_Admin &operator= (TAO_ESF_Proxy_Admin &&) = delete;
+
 private:
   /// Shorthand for the Proxy collection
   using Collection = TAO_ESF_Proxy_Collection<PROXY>;
 
   /// The proxy collection object
-  Collection *collection_;
+  Collection *collection_ {};
 };
 
 // ****************************************************************

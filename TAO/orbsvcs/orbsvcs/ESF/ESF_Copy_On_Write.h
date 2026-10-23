@@ -36,6 +36,11 @@ public:
   /// The actual collection
   COLLECTION collection;
 
+  TAO_ESF_Copy_On_Write_Collection (TAO_ESF_Copy_On_Write_Collection const &) = delete;
+  TAO_ESF_Copy_On_Write_Collection (TAO_ESF_Copy_On_Write_Collection &&) = delete;
+  TAO_ESF_Copy_On_Write_Collection &operator= (TAO_ESF_Copy_On_Write_Collection const &) = delete;
+  TAO_ESF_Copy_On_Write_Collection &operator= (TAO_ESF_Copy_On_Write_Collection &&) = delete;
+
 private:
   /// The reference count
   CORBA::ULong refcount_;
@@ -63,6 +68,11 @@ public:
 
   /// Destructor
   ~TAO_ESF_Copy_On_Write_Read_Guard ();
+
+  TAO_ESF_Copy_On_Write_Read_Guard (TAO_ESF_Copy_On_Write_Read_Guard const &) = delete;
+  TAO_ESF_Copy_On_Write_Read_Guard (TAO_ESF_Copy_On_Write_Read_Guard &&) = delete;
+  TAO_ESF_Copy_On_Write_Read_Guard &operator= (TAO_ESF_Copy_On_Write_Read_Guard const &) = delete;
+  TAO_ESF_Copy_On_Write_Read_Guard &operator= (TAO_ESF_Copy_On_Write_Read_Guard &&) = delete;
 
   Collection *collection;
 
@@ -96,6 +106,11 @@ public:
   /// Destructor
   ~TAO_ESF_Copy_On_Write_Write_Guard ();
 
+  TAO_ESF_Copy_On_Write_Write_Guard (TAO_ESF_Copy_On_Write_Write_Guard const &) = delete;
+  TAO_ESF_Copy_On_Write_Write_Guard (TAO_ESF_Copy_On_Write_Write_Guard &&) = delete;
+  TAO_ESF_Copy_On_Write_Write_Guard &operator= (TAO_ESF_Copy_On_Write_Write_Guard const &) = delete;
+  TAO_ESF_Copy_On_Write_Write_Guard &operator= (TAO_ESF_Copy_On_Write_Write_Guard &&) = delete;
+
   Collection *copy;
 
 private:
@@ -128,6 +143,11 @@ public:
 
   /// Destructor
   ~TAO_ESF_Copy_On_Write () override;
+
+  TAO_ESF_Copy_On_Write (TAO_ESF_Copy_On_Write const &) = delete;
+  TAO_ESF_Copy_On_Write (TAO_ESF_Copy_On_Write &&) = delete;
+  TAO_ESF_Copy_On_Write &operator= (TAO_ESF_Copy_On_Write const &) = delete;
+  TAO_ESF_Copy_On_Write &operator= (TAO_ESF_Copy_On_Write &&) = delete;
 
   // = The TAO_ESF_Proxy methods
   void for_each (TAO_ESF_Worker<PROXY> *worker) override;
