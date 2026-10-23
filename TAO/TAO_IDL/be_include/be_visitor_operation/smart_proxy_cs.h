@@ -31,9 +31,13 @@ public:
 
   /// destructor
   ~be_visitor_operation_smart_proxy_cs () override;
+  be_visitor_operation_smart_proxy_cs (be_visitor_operation_smart_proxy_cs const &) = delete;
+  be_visitor_operation_smart_proxy_cs (be_visitor_operation_smart_proxy_cs &&) = delete;
+  be_visitor_operation_smart_proxy_cs &operator= (be_visitor_operation_smart_proxy_cs const &) = delete;
+  be_visitor_operation_smart_proxy_cs &operator= (be_visitor_operation_smart_proxy_cs &&) = delete;
 
   /// visit operation.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// A helper method to generate operation invocation code.
   virtual int gen_invoke (be_visitor_context &ctx, be_operation *node);

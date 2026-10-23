@@ -32,9 +32,13 @@ public:
 
   /// destructor
   ~be_visitor_operation_is () override;
+  be_visitor_operation_is (be_visitor_operation_is const &) = delete;
+  be_visitor_operation_is (be_visitor_operation_is &&) = delete;
+  be_visitor_operation_is &operator= (be_visitor_operation_is const &) = delete;
+  be_visitor_operation_is &operator= (be_visitor_operation_is &&) = delete;
 
   /// visit operation. We provide code for this method in the derived class
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_IS_CPP_ */

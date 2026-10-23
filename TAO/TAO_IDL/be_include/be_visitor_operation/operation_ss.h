@@ -33,12 +33,16 @@ public:
 
   /// destructor
   ~be_visitor_operation_ss () override;
+  be_visitor_operation_ss (be_visitor_operation_ss const &) = delete;
+  be_visitor_operation_ss (be_visitor_operation_ss &&) = delete;
+  be_visitor_operation_ss &operator= (be_visitor_operation_ss const &) = delete;
+  be_visitor_operation_ss &operator= (be_visitor_operation_ss &&) = delete;
 
   /// visit operation. We provide code for this method in the derived class
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// visit argument to generate ParamData entries
-  virtual int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node) override;
 
   // template methods
 

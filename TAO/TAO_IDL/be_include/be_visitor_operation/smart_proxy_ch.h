@@ -34,9 +34,13 @@ public:
 
   /// destructor
   ~be_visitor_operation_smart_proxy_ch () override;
+  be_visitor_operation_smart_proxy_ch (be_visitor_operation_smart_proxy_ch const &) = delete;
+  be_visitor_operation_smart_proxy_ch (be_visitor_operation_smart_proxy_ch &&) = delete;
+  be_visitor_operation_smart_proxy_ch &operator= (be_visitor_operation_smart_proxy_ch const &) = delete;
+  be_visitor_operation_smart_proxy_ch &operator= (be_visitor_operation_smart_proxy_ch &&) = delete;
 
   /// visit operation node.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_SMART_PROXY_CH_H_ */

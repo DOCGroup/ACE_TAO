@@ -34,15 +34,19 @@ public:
 
   /// destructor
   ~be_visitor_operation_argument () override;
+  be_visitor_operation_argument (be_visitor_operation_argument const &) = delete;
+  be_visitor_operation_argument (be_visitor_operation_argument &&) = delete;
+  be_visitor_operation_argument &operator= (be_visitor_operation_argument const &) = delete;
+  be_visitor_operation_argument &operator= (be_visitor_operation_argument &&) = delete;
 
   /// stuff to o/p after each element of the scope is handled
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 
   /// visit the operation
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// visit argument
-  virtual int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_ARGUMENT_H_ */

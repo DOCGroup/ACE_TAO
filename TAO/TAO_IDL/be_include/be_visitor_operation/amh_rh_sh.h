@@ -26,8 +26,12 @@ class be_visitor_amh_rh_operation_sh : public be_visitor_operation
     explicit be_visitor_amh_rh_operation_sh (be_visitor_context *ctx);
 
     ~be_visitor_amh_rh_operation_sh () override;
+    be_visitor_amh_rh_operation_sh (be_visitor_amh_rh_operation_sh const &) = delete;
+    be_visitor_amh_rh_operation_sh (be_visitor_amh_rh_operation_sh &&) = delete;
+    be_visitor_amh_rh_operation_sh &operator= (be_visitor_amh_rh_operation_sh const &) = delete;
+    be_visitor_amh_rh_operation_sh &operator= (be_visitor_amh_rh_operation_sh &&) = delete;
 
-    int visit_operation (be_operation *node);
+    int visit_operation (be_operation *node) override;
 };
 
 #endif /* AMH_RH_OPERATION_SH_H */

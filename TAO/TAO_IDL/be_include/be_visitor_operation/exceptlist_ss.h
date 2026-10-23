@@ -36,9 +36,13 @@ public:
 
   /// destructor
   ~be_visitor_operation_exceptlist_ss () override;
+  be_visitor_operation_exceptlist_ss (be_visitor_operation_exceptlist_ss const &) = delete;
+  be_visitor_operation_exceptlist_ss (be_visitor_operation_exceptlist_ss &&) = delete;
+  be_visitor_operation_exceptlist_ss &operator= (be_visitor_operation_exceptlist_ss const &) = delete;
+  be_visitor_operation_exceptlist_ss &operator= (be_visitor_operation_exceptlist_ss &&) = delete;
 
   /// visit the operation
-  int visit_operation (be_operation * node);
+  int visit_operation (be_operation * node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_EXCEPTIONLIST_SS_H_ */

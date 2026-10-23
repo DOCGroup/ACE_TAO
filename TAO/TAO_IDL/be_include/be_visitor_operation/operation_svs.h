@@ -32,11 +32,15 @@ public:
   explicit be_visitor_operation_svs (be_visitor_context *ctx);
 
   ~be_visitor_operation_svs () override;
+  be_visitor_operation_svs (be_visitor_operation_svs const &) = delete;
+  be_visitor_operation_svs (be_visitor_operation_svs &&) = delete;
+  be_visitor_operation_svs &operator= (be_visitor_operation_svs const &) = delete;
+  be_visitor_operation_svs &operator= (be_visitor_operation_svs &&) = delete;
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
 
-  virtual int post_process (be_decl *bd);
+  int post_process (be_decl *bd) override;
 
   void scope (be_decl *node);
 

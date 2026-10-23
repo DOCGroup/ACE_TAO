@@ -32,9 +32,13 @@ public:
 
   /// destructor
   ~be_visitor_operation_sh () override;
+  be_visitor_operation_sh (be_visitor_operation_sh const &) = delete;
+  be_visitor_operation_sh (be_visitor_operation_sh &&) = delete;
+  be_visitor_operation_sh &operator= (be_visitor_operation_sh const &) = delete;
+  be_visitor_operation_sh &operator= (be_visitor_operation_sh &&) = delete;
 
   /// visit operation.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SH_H_ */

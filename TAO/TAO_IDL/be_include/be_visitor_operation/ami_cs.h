@@ -32,12 +32,16 @@ public:
 
   /// destructor
   ~be_visitor_operation_ami_cs () override;
+  be_visitor_operation_ami_cs (be_visitor_operation_ami_cs const &) = delete;
+  be_visitor_operation_ami_cs (be_visitor_operation_ami_cs &&) = delete;
+  be_visitor_operation_ami_cs &operator= (be_visitor_operation_ami_cs const &) = delete;
+  be_visitor_operation_ami_cs &operator= (be_visitor_operation_ami_cs &&) = delete;
 
   /// visit operation.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// visit argument to generate ParamData entries
-  virtual int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node) override;
 
   // = template methods
   /// generate any info before the actual code for the stub is generated
@@ -46,7 +50,7 @@ public:
 
   // =helper
   /// stuff to output after every member of the scope is handled
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_AMI_CS_H_ */
