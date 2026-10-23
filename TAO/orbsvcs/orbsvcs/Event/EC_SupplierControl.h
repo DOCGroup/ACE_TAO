@@ -47,7 +47,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl
 {
 public:
   /// Constructor.
-  TAO_EC_SupplierControl ();
+  TAO_EC_SupplierControl () = default;
 
   /// Destructor.
   virtual ~TAO_EC_SupplierControl () = default;

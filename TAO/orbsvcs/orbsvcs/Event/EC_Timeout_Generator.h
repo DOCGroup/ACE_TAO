@@ -80,7 +80,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
 {
 public:
   /// Default construction.
-  TAO_EC_Timeout_Adapter ();
+  TAO_EC_Timeout_Adapter () = default;
 
 private:
   /// Casts @a act to EC_Filter and dispatches an event to it.
@@ -89,10 +89,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Generator.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

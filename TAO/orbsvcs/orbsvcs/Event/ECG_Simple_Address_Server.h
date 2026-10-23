@@ -48,7 +48,7 @@ protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Simple_Address_Server objects using the static create()
   /// method.
-  TAO_ECG_Simple_Address_Server ();
+  TAO_ECG_Simple_Address_Server () = default;
 
 private:
   ACE_INET_Addr addr_;

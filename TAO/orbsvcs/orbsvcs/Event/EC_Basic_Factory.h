@@ -40,7 +40,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor
-  TAO_EC_Basic_Factory ();
+  TAO_EC_Basic_Factory () = default;
 
   /// destructor...
   virtual ~TAO_EC_Basic_Factory () override = default;

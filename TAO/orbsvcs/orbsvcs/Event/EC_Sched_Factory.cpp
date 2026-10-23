@@ -10,10 +10,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.inl"
-#endif /* __ACE_INLINE__ */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

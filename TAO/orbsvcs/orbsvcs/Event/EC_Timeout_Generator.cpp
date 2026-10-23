@@ -2,10 +2,6 @@
 #include "orbsvcs/Event/EC_Timeout_Filter.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Generator.inl"
-#endif /* __ACE_INLINE__ */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************

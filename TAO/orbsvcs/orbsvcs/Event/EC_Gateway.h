@@ -44,7 +44,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway
 {
 public:
   /// Default constructor.
-  TAO_EC_Gateway ();
+  TAO_EC_Gateway () = default;
 
   /// Destructor
   virtual ~TAO_EC_Gateway () = default;
@@ -58,7 +58,7 @@ public:
   RtecEventChannelAdmin::Observer_Handle observer_handle () const;
 
 private:
-  RtecEventChannelAdmin::Observer_Handle handle_;
+  RtecEventChannelAdmin::Observer_Handle handle_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

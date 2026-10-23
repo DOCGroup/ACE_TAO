@@ -33,7 +33,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Sched_Factory : public TAO_EC_Default_Facto
 {
 public:
   /// Constructor
-  TAO_EC_Sched_Factory ();
+  TAO_EC_Sched_Factory () = default;
 
   /// destructor...
   virtual ~TAO_EC_Sched_Factory () override = default;
@@ -56,10 +56,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.inl"
-#endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Sched_Factory)
 ACE_FACTORY_DECLARE (TAO_RTSchedEvent, TAO_EC_Sched_Factory)
