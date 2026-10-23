@@ -27,7 +27,7 @@
 class be_visitor_dds_ts_idl : public be_visitor_scope
 {
 public:
-  be_visitor_dds_ts_idl (be_visitor_context *ctx);
+  explicit be_visitor_dds_ts_idl (be_visitor_context *ctx);
 
   ~be_visitor_dds_ts_idl () override;
 

@@ -26,7 +26,7 @@
 class be_visitor_xplicit_pre_proc : public be_visitor_ccm_pre_proc
 {
 public:
-  be_visitor_xplicit_pre_proc (be_visitor_context *ctx);
+  explicit be_visitor_xplicit_pre_proc (be_visitor_context *ctx);
 
   ~be_visitor_xplicit_pre_proc () override;
 

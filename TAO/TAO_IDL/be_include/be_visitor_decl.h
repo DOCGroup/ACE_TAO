@@ -27,7 +27,7 @@
 class be_visitor_decl : public be_visitor
 {
 public:
-  be_visitor_decl (be_visitor_context *ctx);
+  explicit be_visitor_decl (be_visitor_context *ctx);
 
   ~be_visitor_decl () override;
 

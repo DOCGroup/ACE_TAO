@@ -27,7 +27,7 @@ class TAO_OutStream;
 class be_visitor_attr_setarg_type : public be_visitor_decl
 {
 public:
-  be_visitor_attr_setarg_type (be_visitor_context *ctx);
+  explicit be_visitor_attr_setarg_type (be_visitor_context *ctx);
   ~be_visitor_attr_setarg_type () override;
 
   int visit_array (be_array *) override;

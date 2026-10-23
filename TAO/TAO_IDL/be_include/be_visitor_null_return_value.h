@@ -29,7 +29,7 @@ class TAO_OutStream;
 class be_visitor_null_return_value : public be_visitor_decl
 {
 public:
-  be_visitor_null_return_value (be_visitor_context *ctx);
+  explicit be_visitor_null_return_value (be_visitor_context *ctx);
   ~be_visitor_null_return_value () override;
 
   int visit_array (be_array *) override;

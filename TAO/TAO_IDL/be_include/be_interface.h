@@ -447,7 +447,7 @@ class be_code_emitter_wrapper
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
+  explicit be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
 
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *output_stream,

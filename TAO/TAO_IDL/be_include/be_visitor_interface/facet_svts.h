@@ -42,7 +42,7 @@ class be_facet_op_attr_defn_helper
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  be_facet_op_attr_defn_helper (be_interface *op_scope);
+  explicit be_facet_op_attr_defn_helper (be_interface *op_scope);
 
   int emit (be_interface *derived_interface,
             TAO_OutStream *os,

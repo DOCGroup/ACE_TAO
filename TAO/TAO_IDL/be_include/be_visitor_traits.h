@@ -23,7 +23,7 @@
 class be_visitor_traits : public be_visitor_scope
 {
 public:
-  be_visitor_traits (be_visitor_context *ctx);
+  explicit be_visitor_traits (be_visitor_context *ctx);
 
   ~be_visitor_traits () override;
 

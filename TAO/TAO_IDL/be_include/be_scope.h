@@ -36,7 +36,7 @@ public:
   be_scope ();
 
   /// Constructor that sets the node type.
-  be_scope (AST_Decl::NodeType nt);
+  explicit be_scope (AST_Decl::NodeType nt);
 
   /// Destructor.
   ~be_scope () override;

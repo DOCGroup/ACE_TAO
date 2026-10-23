@@ -28,7 +28,7 @@
 class be_visitor_component_scope : public be_visitor_scope
 {
 protected:
-  be_visitor_component_scope (be_visitor_context *ctx);
+  explicit be_visitor_component_scope (be_visitor_context *ctx);
 
   ~be_visitor_component_scope () override;
 

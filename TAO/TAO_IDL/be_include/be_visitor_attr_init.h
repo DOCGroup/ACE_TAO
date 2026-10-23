@@ -29,7 +29,7 @@ class TAO_OutStream;
 class be_visitor_attr_init : public be_visitor_decl
 {
 public:
-  be_visitor_attr_init (be_visitor_context *ctx);
+  explicit be_visitor_attr_init (be_visitor_context *ctx);
   ~be_visitor_attr_init () override;
 
   int visit_array (be_array *) override;
