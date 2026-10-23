@@ -71,14 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-/*
- * Constructors
- */
-UTL_Indenter::UTL_Indenter ()
-  : pd_indent_level (0)
-{
-}
-
 // Reset indentation level.
 void
 UTL_Indenter::reset ()

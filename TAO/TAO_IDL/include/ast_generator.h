@@ -103,9 +103,9 @@ class AST_Annotation_Member;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
-  AST_Generator () {}
+  AST_Generator () = default;
 
-  virtual ~AST_Generator () {}
+  virtual ~AST_Generator () = default;
 
   // Operations.
 
