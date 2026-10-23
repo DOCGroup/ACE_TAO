@@ -106,7 +106,7 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_DecllistActiveIterator (UTL_DeclList *s);
+  explicit UTL_DecllistActiveIterator (UTL_DeclList *s);
 
   // Get current item
   FE_Declarator *item ();

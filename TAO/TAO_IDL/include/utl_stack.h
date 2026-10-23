@@ -133,7 +133,7 @@ private:
 class TAO_IDL_FE_Export UTL_ScopeStackActiveIterator
 {
 public:
-  UTL_ScopeStackActiveIterator (UTL_ScopeStack &s);
+  explicit UTL_ScopeStackActiveIterator (UTL_ScopeStack &s);
 
   // Advance to next element.
   void next ();

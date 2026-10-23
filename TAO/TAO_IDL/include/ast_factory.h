@@ -78,7 +78,7 @@ class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
 public:
-  AST_Factory (UTL_ScopedName *n);
+  explicit AST_Factory (UTL_ScopedName *n);
 
   ~AST_Factory () override;
 
@@ -134,8 +134,8 @@ private:
   // Scope Management Protocol.
 
   friend int tao_yyparse ();
-  virtual AST_Argument *fe_add_argument (AST_Argument *a);
-  virtual UTL_NameList *fe_add_exceptions (UTL_NameList *e);
+  AST_Argument *fe_add_argument (AST_Argument *a) override;
+  UTL_NameList *fe_add_exceptions (UTL_NameList *e) override;
 };
 
 #endif           // _AST_FACTORY_AST_FACTORY_HH

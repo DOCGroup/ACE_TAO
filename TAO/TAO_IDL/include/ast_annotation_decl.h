@@ -13,7 +13,7 @@
 class TAO_IDL_FE_Export AST_Annotation_Decl : public virtual AST_Structure
 {
 public:
-  AST_Annotation_Decl (UTL_ScopedName *name);
+  explicit AST_Annotation_Decl (UTL_ScopedName *name);
 
   ~AST_Annotation_Decl () override;
 
@@ -37,10 +37,10 @@ public:
 
   bool annotatable () const override;
 
-  virtual AST_Annotation_Member *fe_add_annotation_member (
-    AST_Annotation_Member *annotation_member);
+  AST_Annotation_Member *fe_add_annotation_member (
+    AST_Annotation_Member *annotation_member) override;
 
-  virtual AST_Constant *fe_add_constant (AST_Constant *t);
+  AST_Constant *fe_add_constant (AST_Constant *t) override;
 
   int ast_accept (ast_visitor *visitor) override;
 

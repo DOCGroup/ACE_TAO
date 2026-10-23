@@ -103,7 +103,7 @@ private:
 class   UTL_NamelistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  UTL_NamelistActiveIterator (UTL_NameList *source);
+  explicit UTL_NamelistActiveIterator (UTL_NameList *source);
 
   // Get current item.
   UTL_ScopedName *item ();

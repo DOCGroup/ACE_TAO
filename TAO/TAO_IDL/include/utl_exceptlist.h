@@ -103,7 +103,7 @@ class TAO_IDL_FE_Export UTL_ExceptlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
-  UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
+  explicit UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
   // Get current item
   AST_Type *item ();

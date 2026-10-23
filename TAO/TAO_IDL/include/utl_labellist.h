@@ -100,7 +100,7 @@ private:
 class UTL_LabellistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  UTL_LabellistActiveIterator (UTL_LabelList *source);
+  explicit UTL_LabellistActiveIterator (UTL_LabelList *source);
 
   // Get current item.
   AST_UnionLabel *item ();

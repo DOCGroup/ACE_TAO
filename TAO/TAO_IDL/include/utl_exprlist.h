@@ -98,7 +98,7 @@ private:
 class   UTL_ExprlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  UTL_ExprlistActiveIterator (UTL_ExprList *s);
+  explicit UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
   // Get current item.
   AST_Expression *item ();

@@ -145,7 +145,7 @@ protected:
   int compute_size_type () override;
   // Compute the size type if it is unknown.
 
-  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
+  AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b) override;
   // Moved out of private section so it can be called from subclass.
 
 private:
