@@ -350,7 +350,7 @@ private:
   AST_Decl *tdef;
   // Propagates aliased constant type.
 
-  AST_Param_Holder *param_holder_;
+  AST_Param_Holder *param_holder_ {};
   // Non-zero if we were created from a reference template param.
 
   // Fill out the lineno, filename and definition scope details.

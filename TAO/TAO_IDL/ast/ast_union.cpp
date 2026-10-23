@@ -104,8 +104,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     UTL_Scope (AST_Decl::NT_union),
     AST_Structure (n,
                    local,
-                   abstract),
-    default_index_ (-2)
+                   abstract)
 {
   this->default_value_.computed_ = -2;
 

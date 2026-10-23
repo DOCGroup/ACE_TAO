@@ -96,8 +96,7 @@ AST_Array::AST_Array (UTL_ScopedName *n,
     AST_ConcreteType (AST_Decl::NT_array,
                       n),
     pd_n_dims (nd),
-    pd_base_type (nullptr),
-    owns_base_type_ (false)
+    pd_base_type (nullptr)
 {
   this->pd_dims = this->compute_dims (ds,
                                       nd);

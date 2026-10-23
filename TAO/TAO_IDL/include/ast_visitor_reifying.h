@@ -111,7 +111,7 @@ private:
 
 private:
   ast_visitor_context *ctx_;
-  AST_Decl *reified_node_;
+  AST_Decl *reified_node_ {};
 };
 
 #endif // TAO_AST_VISITOR_REIFYING_H

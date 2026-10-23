@@ -16,8 +16,7 @@ AST_Annotation_Member::AST_Annotation_Member (
   AST_Expression::ExprType expr_type, AST_Type *type, UTL_ScopedName *name)
   : AST_Decl (NT, name),
     AST_Field (type, name, vis_NA),
-    expr_type_ (expr_type),
-    value_ (nullptr)
+    expr_type_ (expr_type)
 {
 }
 
@@ -26,8 +25,7 @@ AST_Annotation_Member::AST_Annotation_Member (
   AST_Expression::ExprType expr_type, AST_Type *type, UTL_ScopedName *name)
   : AST_Decl (nt, name),
     AST_Field (nt, type, name, vis_NA),
-    expr_type_ (expr_type),
-    value_ (nullptr)
+    expr_type_ (expr_type)
 {
 }
 

@@ -212,7 +212,7 @@ public:
   bool annotatable () const override { return true; }
 
 private: // Data
-  bool pd_has_nested_valuetype_;
+  bool pd_has_nested_valuetype_ {};
 
   AST_Module *previous_opening_;
   /// The immediatly previous opening of this module.
@@ -220,10 +220,10 @@ private: // Data
   AST_Module *last_in_same_parent_scope_;
   /// Pointer to the last opening of this module in the same parent
 
-  AST_Template_Module_Inst *from_inst_;
+  AST_Template_Module_Inst *from_inst_ {};
   /// Reference to the instantiation that created us, if any.
 
-  AST_Template_Module_Ref *from_ref_;
+  AST_Template_Module_Ref *from_ref_ {};
   /// Reference to the 'alias' type that created us, if any.
 };
 

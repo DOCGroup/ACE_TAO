@@ -158,13 +158,13 @@ private:
   **/
   AST_Type *value_pd_type;
 
-  bool unbounded_;
+  bool unbounded_ {true};
   // Whether we are bounded or unbounded.
 
-  bool owns_key_type_;
+  bool owns_key_type_ {};
   // If our key type is anonymous array or map, we're
   // responsible for destroying it.
-  bool owns_value_type_;
+  bool owns_value_type_ {};
   // If our value type is anonymous array or map, we're
   // responsible for destroying it.
 

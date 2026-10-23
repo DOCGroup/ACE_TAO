@@ -196,10 +196,10 @@ protected:
   ACE_Unbounded_Queue<AST_Type *> del_queue;
 
   // Are we the equivalent interface of a home?
-  bool home_equiv_;
+  bool home_equiv_ {};
 
   // The forward declaration we may have been created from.
-  AST_InterfaceFwd *fwd_decl_;
+  AST_InterfaceFwd *fwd_decl_ {};
 
   // Must keep these base interface placeholders in a separate
   // container, so they can be destroyed. Iterating over
@@ -209,11 +209,11 @@ protected:
   ACE_Unbounded_Queue<AST_Type *> param_holders_;
 
   /// Do we have both abstract and concrete parents?
-  int has_mixed_parentage_;
+  int has_mixed_parentage_ {-1};
 
   /// Store here for quick retrieval without an AST lookup.
-  AST_Interface *ami_handler_;
-  AST_Interface *ami4ccm_uses_;
+  AST_Interface *ami_handler_ {};
+  AST_Interface *ami4ccm_uses_ {};
 
 public:
   // Scope Management Protocol.

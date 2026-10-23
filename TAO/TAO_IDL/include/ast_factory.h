@@ -119,10 +119,10 @@ protected:
   int pd_n_exceptions;
   // Exception count.
 
-  int argument_count_;
+  int argument_count_ {-1};
   // Number of arguments.
 
-  int has_native_;
+  int has_native_ {};
   // Is any argument of type native.
 
 private:

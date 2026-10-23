@@ -183,13 +183,13 @@ private:
   int compute_member_count ();
   // Count the number of members.
 
-  int member_count_;
+  int member_count_ {-1};
   // Number of members.
 
-  int local_struct_;
+  int local_struct_ {-1};
   // We also need to determine whether we contain any local type.
 
-  AST_StructureFwd *fwd_decl_;
+  AST_StructureFwd *fwd_decl_ {};
   // The forward declaration we may have been created from.
 };
 

@@ -57,7 +57,7 @@ private:
   AST_Expression::ExprType expr_type_;
 
   /// Value of the Member, can be null
-  AST_Expression *value_;
+  AST_Expression *value_ {};
 };
 
 #endif

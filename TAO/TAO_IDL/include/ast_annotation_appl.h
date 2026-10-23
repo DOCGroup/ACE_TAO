@@ -99,7 +99,7 @@ private:
   Params *params_;
 
   /// The AST_Annotation_Decl (Possibly could be null)
-  AST_Annotation_Decl *annotation_decl_;
+  AST_Annotation_Decl *annotation_decl_ {};
 };
 
 struct Decl_Annotations_Pair {

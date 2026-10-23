@@ -83,9 +83,7 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
     AST_Decl (AST_Decl::NT_interface_fwd,
               n),
     AST_Type (AST_Decl::NT_interface_fwd,
-              n),
-    is_defined_ (false),
-    has_ownership_ (true)
+              n)
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations

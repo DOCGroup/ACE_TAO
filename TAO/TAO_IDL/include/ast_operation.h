@@ -160,13 +160,13 @@ protected:
   UTL_ExceptList *pd_exceptions;
   // Exceptions raised
 
-  int argument_count_;
+  int argument_count_ {-1};
   // Number of arguments.
 
-  bool has_in_arguments_;
+  bool has_in_arguments_ {};
   // True if any arguments are IN or INOUT
 
-  int has_native_;
+  int has_native_ {};
   // Is any argument of type native.
 
   // Operations.

@@ -124,7 +124,7 @@ protected:
   AST_Expression::ExprType pd_et;
   // Its expression type.
 
-  bool ifr_added_;
+  bool ifr_added_ {};
   // Has this node been added to the IFR?
 };
 

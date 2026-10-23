@@ -196,7 +196,7 @@ private:
   DefaultValue default_value_;
   // Default value (if any).
 
-  int default_index_;
+  int default_index_ {-2};
   // Default label index (zero based indexing).
 
   /**

@@ -72,7 +72,7 @@ private:
   AST_Home *pd_base_home;
   AST_Component *pd_managed_component;
   AST_Type *pd_primary_key;
-  bool owns_primary_key_;
+  bool owns_primary_key_ {};
 };
 
 #endif // _AST_HOME_AST_HOME_HH

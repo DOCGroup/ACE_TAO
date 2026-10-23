@@ -151,26 +151,26 @@ protected:
 protected:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
-  bool ifr_added_;
+  bool ifr_added_ {};
 
   // Has this node been forward declared in this IDL file?
-  bool ifr_fwd_added_;
+  bool ifr_fwd_added_ {};
 
   // Whether we are fixed or variable size (by default fixed).
-  SIZE_TYPE size_type_;
+  SIZE_TYPE size_type_ {SIZE_UNKNOWN};
 
   // Attribute that helps a union determine whether a member
   // should be included by value or by reference.
-  bool has_constructor_;
+  bool has_constructor_ {};
 
   // For the corresponding method.
-  char *nested_type_name_;
+  char *nested_type_name_ {};
 
   // Storage once the value has been computed.
-  long in_recursion_;
+  long in_recursion_ {-1};
 
   // Node-specific flag to abort recursion in legal_for_primary_key().
-  mutable bool recursing_in_legal_pk_;
+  mutable bool recursing_in_legal_pk_ {};
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

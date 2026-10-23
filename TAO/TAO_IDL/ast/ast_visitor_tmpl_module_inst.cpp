@@ -54,10 +54,7 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
       ast_visitor_context *ctx,
       bool ref_only)
   : ast_visitor (),
-    tmi_ (nullptr),
     ctx_ (ctx),
-    for_eventtype_ (false),
-    for_finder_ (false),
     ref_only_ (ref_only)
 {
 }

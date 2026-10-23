@@ -18,8 +18,7 @@ AST_Template_Module_Ref::AST_Template_Module_Ref (
     AST_Field (AST_Decl::NT_module,
                ref,
                n),
-    param_refs_ (param_refs),
-    processed_ (false)
+    param_refs_ (param_refs)
 {
 }
 

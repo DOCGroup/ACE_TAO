@@ -109,10 +109,10 @@ public:
 private:
   friend int tao_yyparse ();
 
-  unsigned long pd_enum_counter;
+  unsigned long pd_enum_counter {};
   // Value for next enumerator.
 
-  int member_count_;
+  int member_count_ {-1};
   // Number of members.
 
   int compute_member_count ();

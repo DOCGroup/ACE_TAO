@@ -128,7 +128,7 @@ protected:
    */
   ///{
   AST_Annotation_Appls cached_annotations_;
-  bool has_cached_annotations_;
+  bool has_cached_annotations_ {};
   ///}
 };
 

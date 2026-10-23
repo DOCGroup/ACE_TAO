@@ -38,8 +38,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                    false),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
-    pd_primary_key (primary_key),
-    owns_primary_key_ (false)
+    pd_primary_key (primary_key)
 {
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
