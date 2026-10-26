@@ -44,14 +44,11 @@ namespace TAO
 
     struct TC_Info
     {
-      /// Constructor.
-      TC_Info () : id (0), type () {}
-
       /// Repository ID.
-      char const * id;
+      char const * id {};
 
       /// TypeCode
-      CORBA::TypeCode_ptr type;
+      CORBA::TypeCode_ptr type {};
     };
 
     using TC_Info_List = ACE_Array_Base<TC_Info>;

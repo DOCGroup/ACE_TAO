@@ -219,7 +219,7 @@ CORBA::Exception *
 CORBA::TypeCode::Bounds::_alloc ()
 {
   CORBA::Exception *retval = nullptr;
-  ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, 0);
+  ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, nullptr);
   return retval;
 }
 
@@ -229,7 +229,7 @@ CORBA::TypeCode::Bounds::_tao_duplicate () const
   CORBA::Exception *result;
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::Bounds (*this),
-                  0);
+                  nullptr);
   return result;
 }
 
@@ -275,7 +275,7 @@ CORBA::TypeCode::BadKind::_tao_duplicate () const
   CORBA::Exception *result = nullptr;
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::BadKind (*this),
-                  0);
+                  nullptr);
   return result;
 }
 

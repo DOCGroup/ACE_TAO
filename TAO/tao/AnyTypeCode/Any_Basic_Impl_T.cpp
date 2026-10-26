@@ -128,8 +128,8 @@ TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
   TAO::Any_Basic_Impl_T<T> * retval = nullptr;
   ACE_NEW_RETURN (retval,
                   TAO::Any_Basic_Impl_T<T> (tc,
-                                            static_cast<T> (0)),
-                  0);
+                                            T{}),
+                  nullptr);
   return retval;
 }
 

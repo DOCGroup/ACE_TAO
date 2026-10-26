@@ -262,7 +262,7 @@ namespace TAO
           CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
-                          0);
+                          nullptr);
         }
 
         break;
@@ -271,7 +271,7 @@ namespace TAO
           CORBA::ULongLong tmp = 0;
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
-                          0);
+                          nullptr);
         }
 
         break;
