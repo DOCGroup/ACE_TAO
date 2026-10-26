@@ -36,7 +36,7 @@ class TAO_ORB_Core;
 class TAO_BIDIRGIOP_Export TAO_BiDirPolicy_Validator : public TAO_Policy_Validator
 {
 public:
-  TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core);
+  explicit TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core);
 
   void validate_impl (TAO_Policy_Set &policies) override;
 
