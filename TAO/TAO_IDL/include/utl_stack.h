@@ -81,6 +81,10 @@ class TAO_IDL_FE_Export UTL_ScopeStack
 public:
   UTL_ScopeStack ();
   ~UTL_ScopeStack ();
+  UTL_ScopeStack (UTL_ScopeStack const&) = delete;
+  UTL_ScopeStack (UTL_ScopeStack&&) = delete;
+  UTL_ScopeStack& operator= (UTL_ScopeStack const&) = delete;
+  UTL_ScopeStack& operator= (UTL_ScopeStack&&) = delete;
 
   /// The initial capacity and how much to increment the capacity when needed.
   static const size_t increments;
@@ -117,13 +121,13 @@ public:
 
 private:
   // Store scopes stack
-  UTL_Scope **pd_stack_data;
+  UTL_Scope **pd_stack_data {};
 
   // How many allocated?
-  unsigned long pd_stack_data_nalloced;
+  unsigned long pd_stack_data_nalloced {increments};
 
   // How many used?
-  unsigned long pd_stack_top;
+  unsigned long pd_stack_top {};
 
   // Friend active iterator class for UTL_ScopeStack.
   friend class UTL_ScopeStackActiveIterator;

@@ -71,8 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 const size_t UTL_ScopeStack::increments = 64;
 
 UTL_ScopeStack::UTL_ScopeStack ()
-  : pd_stack_data_nalloced (increments),
-    pd_stack_top (0)
 {
   ACE_NEW (this->pd_stack_data, UTL_Scope *[increments]);
 }
@@ -219,10 +217,10 @@ UTL_ScopeStack::lookup_by_name (
   for (long i = pd_stack_top - 1; i >= 0; --i)
     {
       UTL_Scope *scope = pd_stack_data[i];
-      if (scope)
+      if (scope != nullptr)
         {
           AST_Decl *node = scope->lookup_by_name (name, full_def_only, for_add);
-          if (node) return node;
+          if (node != nullptr) return node;
         }
     }
   return nullptr;
