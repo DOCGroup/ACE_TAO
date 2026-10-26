@@ -294,29 +294,29 @@ protected:
   AST_Decl::NodeType const pd_scope_node_type;
 
   // Storage for declarations in this scope.
-  AST_Decl **pd_decls;                // Store declarations
-  long pd_decls_allocated;            // How many allocated?
-  long pd_decls_used;                 // How many used?
+  AST_Decl **pd_decls {};             // Store declarations
+  long pd_decls_allocated {};         // How many allocated?
+  long pd_decls_used {};              // How many used?
 
   // Storage for local manifest types in this scope.
-  AST_Decl **pd_local_types;          // Store types
-  long pd_locals_allocated;           // How many allocated?
-  long pd_locals_used;                // How many used?
+  AST_Decl **pd_local_types {};       // Store types
+  long pd_locals_allocated {};        // How many allocated?
+  long pd_locals_used {};             // How many used?
 
   // Storage for referenced nodes in this scope.
-  AST_Decl **pd_referenced;           // Store references
-  long pd_referenced_allocated;       // How many allocated?
-  long  pd_referenced_used;           // How many used?
+  AST_Decl **pd_referenced {};        // Store references
+  long pd_referenced_allocated {};    // How many allocated?
+  long pd_referenced_used {};         // How many used?
 
   // Storage for identifiers used in this scope. CORBA 2.3 introduced
   // stricter rules for clashes during name resolution, and the information
   // in pd_referenced is not enough to catch them all.
-  Identifier **pd_name_referenced;    // Store name references
-  long pd_name_referenced_allocated;  // How many allocated?
-  long pd_name_referenced_used;       // How many used?
+  Identifier **pd_name_referenced {}; // Store name references
+  long pd_name_referenced_allocated {}; // How many allocated?
+  long pd_name_referenced_used {};    // How many used?
 
   // Have we seen a #pragma prefix declaration in this scope?
-  bool has_prefix_;
+  bool has_prefix_ {};
 
   // Used in lookup of various CORBA pseudo objects, which also
   // determines generation of specific #include headers.
@@ -328,7 +328,7 @@ protected:
     PSEUDO_ABSTRACTBASE
   };
 
-  WHICH_PSEUDO which_pseudo_;
+  WHICH_PSEUDO which_pseudo_ {PSEUDO_ABSTRACTBASE};
 
 public:
   /// Scope Management Protocol.

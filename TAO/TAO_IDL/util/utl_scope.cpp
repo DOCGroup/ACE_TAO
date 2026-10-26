@@ -121,40 +121,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //  Constructors.
 
 UTL_Scope::UTL_Scope ()
-  : pd_scope_node_type (AST_Decl::NT_module),
-    pd_decls (nullptr),
-    pd_decls_allocated (0),
-    pd_decls_used (0),
-    pd_local_types (nullptr),
-    pd_locals_allocated (0),
-    pd_locals_used (0),
-    pd_referenced (nullptr),
-    pd_referenced_allocated (0),
-    pd_referenced_used (0),
-    pd_name_referenced (nullptr),
-    pd_name_referenced_allocated (0),
-    pd_name_referenced_used (0),
-    has_prefix_ (false),
-    which_pseudo_ (PSEUDO_ABSTRACTBASE)
+  : pd_scope_node_type (AST_Decl::NT_module)
 {
 }
 
 UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
-  : pd_scope_node_type (nt),
-    pd_decls (nullptr),
-    pd_decls_allocated (0),
-    pd_decls_used (0),
-    pd_local_types (nullptr),
-    pd_locals_allocated (0),
-    pd_locals_used (0),
-    pd_referenced (nullptr),
-    pd_referenced_allocated (0),
-    pd_referenced_used (0),
-    pd_name_referenced (nullptr),
-    pd_name_referenced_allocated (0),
-    pd_name_referenced_used (0),
-    has_prefix_ (false),
-    which_pseudo_ (PSEUDO_ABSTRACTBASE)
+  : pd_scope_node_type (nt)
 {
 }
 

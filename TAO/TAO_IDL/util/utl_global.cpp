@@ -1504,10 +1504,10 @@ IDL_GlobalData::fini ()
       dcps_entry->int_id_->name_ = nullptr;
 
       delete dcps_entry->int_id_;
-      dcps_entry->int_id_ = 0;
+      dcps_entry->int_id_ = nullptr;
 
       delete [] dcps_entry->ext_id_;
-      dcps_entry->ext_id_ = 0;
+      dcps_entry->ext_id_ = nullptr;
     }
 }
 
