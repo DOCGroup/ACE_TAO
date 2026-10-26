@@ -44,7 +44,7 @@ class TAO_EndpointPolicy_Export TAO_Endpoint_Acceptor_Filter
   : public TAO_Default_Acceptor_Filter
 {
 public:
-  TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const& eps);
+  explicit TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const &eps);
 
   /// Populate @a mprofile with endpoints match the POAManager endpoint
   /// policy.
