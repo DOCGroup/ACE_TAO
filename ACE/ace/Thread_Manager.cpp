@@ -1125,7 +1125,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
   ACE_ASSERT (this->thr_to_be_removed_.is_empty ()); \
   ACE_FIND (this->find_thread (t_id), ptr); \
-  if (ptr == 0) \
+  if (ptr == nullptr) \
     { \
       errno = ENOENT; \
       return -1; \

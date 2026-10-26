@@ -24,7 +24,7 @@ namespace XML
   class XML_Utils_Export XStr
   {
   public:
-    XStr() : _wstr(0L) { };
+    XStr() : _wstr(nullptr) { };
 
 // On unicode windows, ACE_TCHAR == XMLCh
 #if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)
