@@ -319,7 +319,11 @@ public:
   };
 
   IDL_GlobalData ();
-  ~IDL_GlobalData ();
+  ~IDL_GlobalData () = default;
+  IDL_GlobalData (IDL_GlobalData const&) = delete;
+  IDL_GlobalData (IDL_GlobalData&&) = delete;
+  IDL_GlobalData& operator= (IDL_GlobalData const&) = delete;
+  IDL_GlobalData& operator= (IDL_GlobalData&&) = delete;
 
   // Operations
   UTL_ScopeStack   &scopes ();              // Scopes stack
@@ -832,62 +836,62 @@ public:
    * In other words just check the syntax of the input files, do not create
    * any output.
    */
-  bool syntax_only_;
+  bool syntax_only_ {};
 
   /**
    * Exit when finished processing cli arguments
    * Default is false.
    */
-  bool parse_args_exit_;
+  bool parse_args_exit_ {};
 
   /**
    * If parse_args_exit_ is true, this is the program status to return from
    * main.
    * Default is 0.
    */
-  int parse_args_exit_status_;
+  int parse_args_exit_status_ {};
 
   /**
    * Print command line argument help message when finished processing
    * cli arguments.
    */
-  bool print_help_;
+  bool print_help_ {};
 
   /**
    * Print compiler version when finished processing cli arguments.
    */
-  bool print_version_;
+  bool print_version_ {};
 
   /**
    * If true, we are inside the eval() function
    */
-  bool in_eval_;
+  bool in_eval_ {};
 
   /**
    * Dump constructs defined using eval() if true.
    */
-  bool dump_builtins_;
+  bool dump_builtins_ {};
 
   /**
    * If true, Dump only the IDL defined using eval() and exit using
    * ignore_files_
    */
-  bool just_dump_builtins_;
+  bool just_dump_builtins_ {};
 
   /**
    * Exit right before parsing input files.
    */
-  bool ignore_files_;
+  bool ignore_files_ {};
 
   /**
    * If true, silently ignore lookup errors.
    */
-  bool ignore_lookup_errors_;
+  bool ignore_lookup_errors_ {};
 
   /**
    * Reaction to unknown annotations
    */
-  Unknown_Annotations unknown_annotations_;
+  Unknown_Annotations unknown_annotations_ {UNKNOWN_ANNOTATIONS_WARN_ONCE};
 
   /**
    * Set of the local names of unkown annotations already seen
@@ -897,61 +901,61 @@ public:
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack
-  AST_Root                   *pd_root;               // Store AST root
-  AST_Generator              *pd_gen;                // Store generator
-  AST_ValueType              *pd_primary_key_base;   // Store PrimaryKeyBase
-  UTL_Error                  *pd_err;                // Error object
-  int                        pd_err_count;           // Count of errors
-  long                       pd_lineno;              // What line #
-  UTL_String                 *pd_filename;           // What file
-  UTL_String                 *pd_main_filename;      // What main filename
-  UTL_String                 *pd_real_filename;      // What real filename
-  UTL_String                 *pd_stripped_filename;  // Stripped filename
-  bool                       pd_import;              // Is import on?
-  bool                       pd_in_main_file;        // Are we in it?
-  const char                 *pd_prog_name;          // Argv[0]
-  const char                 *pd_cpp_location;       // Where to find CPP
-  long                       pd_compile_flags;       // Compile flags
-  char                       *pd_local_escapes;      // Trapdoor argument
-  UTL_Indenter               *pd_indent;             // Indent object
+  AST_Root                   *pd_root {};             // Store AST root
+  AST_Generator              *pd_gen {};              // Store generator
+  AST_ValueType              *pd_primary_key_base {}; // Store PrimaryKeyBase
+  UTL_Error                  *pd_err {};              // Error object
+  int                        pd_err_count {};         // Count of errors
+  long                       pd_lineno {};            // What line #
+  UTL_String                 *pd_filename {};          // What file
+  UTL_String                 *pd_main_filename {};     // What main filename
+  UTL_String                 *pd_real_filename {};     // What real filename
+  UTL_String                 *pd_stripped_filename {}; // Stripped filename
+  bool                       pd_import {};             // Is import on?
+  bool                       pd_in_main_file {};       // Are we in it?
+  char const                 *pd_prog_name {};         // Argv[0]
+  char const                 *pd_cpp_location {};      // Where to find CPP
+  long                       pd_compile_flags {};      // Compile flags
+  char                       *pd_local_escapes {};     // Trapdoor argument
+  UTL_Indenter               *pd_indent {};            // Indent object
                                                      // as it's being built
-  UTL_String                 **pd_include_file_names;// Array of file names.
-  unsigned long              pd_n_include_file_names;// How many.
-  unsigned long              pd_n_alloced_file_names;// How many alloced.
+  UTL_String                 **pd_include_file_names {}; // Array of file names.
+  unsigned long              pd_n_include_file_names {}; // How many.
+  unsigned long              pd_n_alloced_file_names {}; // How many alloced.
 
-  char **included_idl_files_;
+  char **included_idl_files_ {};
   // IDL files that are "#include'd.
 
-  size_t n_included_idl_files_;
+  size_t n_included_idl_files_ {};
   // The number of such idl files that are currently stored.
 
-  size_t n_allocated_idl_files_;
+  size_t n_allocated_idl_files_ {};
   // For char*'s have been allocated for this.
 
-  ParseState                pd_parse_state;         // Parse state we're in.
+  ParseState                pd_parse_state {PS_NoState}; // Parse state we're in.
 
-  UTL_String                *pd_idl_src_file;       // IDL source file.
+  UTL_String                *pd_idl_src_file {};    // IDL source file.
 
-  char *tao_root_;
+  char *tao_root_ {};
   // Needed if orb.idl is included.
 
-  char *gperf_path_;
+  char *gperf_path_ {};
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
 
-  char *temp_dir_;
+  char *temp_dir_ {};
   // Temp directory where which we can rewsolve in drv_preproc.cpp by
   // checking for  TEMP env variable otherwise we assign to /tmp/.
 
-  char *ident_string_;
+  char *ident_string_ {};
   // Holds a string that begins with #ident, to be passed from the IDL
   // file to the generated files.
 
-  bool case_diff_error_;
+  bool case_diff_error_ {true};
   // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
 
-  bool nest_orb_;
+  bool nest_orb_ {};
   // Is this front end being used for the NEST ORB?
 
   ACE_CString idl_flags_;
@@ -963,7 +967,7 @@ private:
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
 
-  bool preserve_cpp_keywords_;
+  bool preserve_cpp_keywords_ {true};
   // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
   Unbounded_Paths_Queue include_paths_;
@@ -975,13 +979,13 @@ private:
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
 
-  bool pass_orb_idl_;
+  bool pass_orb_idl_ {};
   // Treat orb.idl like any other included IDL file.
 
-  bool using_ifr_backend_;
+  bool using_ifr_backend_ {};
   // Set by the IFR backend itself.
 
-  bool ignore_idl3_;
+  bool ignore_idl3_ {};
   // Need this for eventtypes left over after running idl3_to_idl2,
   // we don't want to try to generate another event consumer.
   DCPS_Type_Info_Map dcps_type_info_map_;
@@ -989,39 +993,39 @@ private:
 
   DCPS_Sequence_Types_List dcps_sequence_types_list_;
 
-  bool dcps_support_zero_copy_read_;
+  bool dcps_support_zero_copy_read_ {};
   // Are we enabled to support DCPS zero-copy read.
   // Need this flag to avoid generating wrong code for pre v0.12 DDS
   // with new TAO_IDL compiler.
 
-  bool dcps_gen_zero_copy_read_;
+  bool dcps_gen_zero_copy_read_ {};
   // Are we generating code insupport of DCPS zero-copy read data sequences?
 
   ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
   // List of valuetypes used as a primary key.
 
-  char *recursion_start_;
+  char *recursion_start_ {};
   // Path to directory subtree we are iterating/recursing over.
   // Not used by all backends.
 
-  bool multi_file_input_;
+  bool multi_file_input_ {};
   // Some backends process multiple files to a single output.
 
-  const char *big_file_name_;
+  char const *big_file_name_ {"PICML_IDL_file_bag"};
   // Used if the above flag is set.
 
-  FE_Utils::T_PARAMLIST_INFO *current_params_;
+  FE_Utils::T_PARAMLIST_INFO *current_params_ {};
   // Stored if we are parsing the scope of a template module,
   // 0 otherwise. Contains the params of the referenced
   // template module if we are traversing an alias.
 
-  UTL_StrList *alias_params_;
+  UTL_StrList *alias_params_ {};
   // Stored if we are parsing a template module reference. The
   // scope traversed will be that of the referenced template
   // module, but the param holder(s) created will use the
   // aliased names.
 
-  UTL_StrList *for_new_holder_;
+  UTL_StrList *for_new_holder_ {};
   // Stored if we are traversing an alias, this is a list of
   // the enclosing template module's params. When we create
   // a param holder, it will need this name rather than the
@@ -1051,7 +1055,7 @@ private:
   ACE_Unbounded_Queue<char *> included_ami_recep_names_;
   // We need to do something different with these...
 
-  bool included_ami_receps_done_;
+  bool included_ami_receps_done_ {};
   // ...but we need to do it only once.
 
   ACE_Unbounded_Queue<char *> ciao_ami_idl_fnames_;
@@ -1069,23 +1073,23 @@ private:
   ACE_Unbounded_Queue<AST_Interface *> mixed_parentage_interfaces_;
 
   /// For quick access.
-  AST_Module *corba_module_;
+  AST_Module *corba_module_ {};
 
-  ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_;
-  bool explicit_anon_type_diagnostic_;
+  ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_ {ANON_TYPE_ERROR};
+  bool explicit_anon_type_diagnostic_ {};
 
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.
-  bool in_typedef_;
+  bool in_typedef_ {};
 
   /// Used during AST creation, corresponding flag in each
   /// AST_Decl created is set to this flag's value.
-  bool in_tmpl_mod_no_alias_;
+  bool in_tmpl_mod_no_alias_ {};
 
   /// Disables the error check faciliated by the above flag.
   /// No errors are possible because created nodes are all
   /// implied IDL.
-  bool in_tmpl_mod_alias_;
+  bool in_tmpl_mod_alias_ {};
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

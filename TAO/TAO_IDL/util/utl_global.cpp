@@ -94,68 +94,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 static long *pSeenOnce = nullptr;
 
 IDL_GlobalData::IDL_GlobalData ()
-  : syntax_only_ (false),
-    parse_args_exit_ (false),
-    parse_args_exit_status_ (0),
-    print_help_ (false),
-    print_version_ (false),
-    in_eval_ (false),
-    dump_builtins_ (false),
-    just_dump_builtins_ (false),
-    ignore_files_ (false),
-    ignore_lookup_errors_ (false),
-    unknown_annotations_ (UNKNOWN_ANNOTATIONS_WARN_ONCE),
-    pd_root (nullptr),
-    pd_gen (nullptr),
-    pd_primary_key_base (nullptr),
-    pd_err (nullptr),
-    pd_err_count (0),
-    pd_lineno (0),
-    pd_filename (nullptr),
-    pd_main_filename (nullptr),
-    pd_real_filename (nullptr),
-    pd_stripped_filename (nullptr),
-    pd_import (false),
-    pd_in_main_file (false),
-    pd_prog_name (nullptr),
-    pd_cpp_location (nullptr),
-    pd_compile_flags (0),
-    pd_local_escapes (nullptr),
-    pd_indent (nullptr),
-    pd_include_file_names (nullptr),
-    pd_n_include_file_names (0),
-    pd_n_alloced_file_names (0),
-    included_idl_files_ (nullptr),
-    n_included_idl_files_ (0),
-    n_allocated_idl_files_ (0),
-    pd_parse_state (PS_NoState),
-    pd_idl_src_file (nullptr),
-    tao_root_ (nullptr),
-    gperf_path_ (nullptr),
-    temp_dir_ (nullptr),
-    ident_string_ (nullptr),
-    case_diff_error_ (true),
-    nest_orb_ (false),
-    idl_flags_ (""),
-    preserve_cpp_keywords_ (true),
-    pass_orb_idl_ (false),
-    using_ifr_backend_ (false),
-    ignore_idl3_ (false),
-    dcps_support_zero_copy_read_ (false),
-    dcps_gen_zero_copy_read_ (false),
-    recursion_start_ (nullptr),
-    multi_file_input_ (false),
-    big_file_name_ ("PICML_IDL_file_bag"),
-    current_params_ (nullptr),
-    alias_params_ (nullptr),
-    for_new_holder_ (nullptr),
-    included_ami_receps_done_ (false),
-    corba_module_ (nullptr),
-    anon_type_diagnostic_ (ANON_TYPE_ERROR),
-    explicit_anon_type_diagnostic_ (false),
-    in_typedef_ (false),
-    in_tmpl_mod_no_alias_ (false),
-    in_tmpl_mod_alias_ (false)
+  : idl_flags_ ("")
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -219,10 +158,6 @@ IDL_GlobalData::IDL_GlobalData ()
 
   // Reset the flags that are scoped to the current input file.
   this->reset_flag_seen ();
-}
-
-IDL_GlobalData::~IDL_GlobalData ()
-{
 }
 
 // When starting to process the next command line input idl file, reset.
