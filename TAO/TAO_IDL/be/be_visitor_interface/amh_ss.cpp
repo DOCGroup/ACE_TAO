@@ -189,9 +189,7 @@ public:
                     be_interface *derived) override;
 };
 
-TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker ()
-{
-}
+TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker () = default;
 
 int
 TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,

@@ -21,9 +21,7 @@
 
 #include "ace/config-all.h"
 
-be_visitor::be_visitor ()
-{
-}
+be_visitor::be_visitor () = default;
 
 be_visitor::~be_visitor () = default;
 
