@@ -30,7 +30,7 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
 }
 
 template<typename T> void
-TAO::Any_Dual_Impl_T<T>::value (const T & val)
+TAO::Any_Dual_Impl_T<T>::value (T const & val)
 {
   ACE_NEW (this->value_,
            T (val));
@@ -39,7 +39,7 @@ TAO::Any_Dual_Impl_T<T>::value (const T & val)
 template<typename T>
 TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
                                           CORBA::TypeCode_ptr tc,
-                                          const T & val)
+                                          T const & val)
   : Any_Impl (destructor,
               tc)
 {
@@ -73,7 +73,7 @@ void
 TAO::Any_Dual_Impl_T<T>::insert_copy (CORBA::Any & any,
                                       _tao_destructor destructor,
                                       CORBA::TypeCode_ptr tc,
-                                      const T & value)
+                                      T const & value)
 {
   Any_Dual_Impl_T<T> *new_impl = nullptr;
   ACE_NEW (new_impl,
@@ -85,10 +85,10 @@ TAO::Any_Dual_Impl_T<T>::insert_copy (CORBA::Any & any,
 
 template<typename T>
 CORBA::Boolean
-TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
+TAO::Any_Dual_Impl_T<T>::extract (CORBA::Any const & any,
                                   _tao_destructor destructor,
                                   CORBA::TypeCode_ptr tc,
-                                  const T *& _tao_elem)
+                                  T const *& _tao_elem)
 {
   _tao_elem = nullptr;
 
@@ -134,7 +134,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
 
       return replace (for_reading, any, destructor, any_tc, _tao_elem);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -144,10 +144,10 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
 template<typename T>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
-                                  const CORBA::Any &any,
+                                  CORBA::Any const &any,
                                   _tao_destructor destructor,
                                   CORBA::TypeCode_ptr any_tc,
-                                  const T *&_tao_elem)
+                                  T const *&_tao_elem)
 {
   T *empty_value = nullptr;
   ACE_NEW_RETURN (empty_value,
@@ -187,7 +187,7 @@ TAO::Any_Dual_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 }
 
 template<typename T>
-const void *
+void const *
 TAO::Any_Dual_Impl_T<T>::value () const
 {
   return this->value_;

@@ -44,7 +44,7 @@ namespace TAO
                         _tao_destructor destructor,
                         CORBA::TypeCode_ptr,
                         T_slice * const);
-    static CORBA::Boolean extract (const CORBA::Any &,
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
                                    T_slice *&);
@@ -53,7 +53,7 @@ namespace TAO
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     void _tao_decode (TAO_InputCDR &) override;
 
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
   private:

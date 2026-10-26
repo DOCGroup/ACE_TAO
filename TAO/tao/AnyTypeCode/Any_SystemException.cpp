@@ -25,7 +25,7 @@ TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,
 
 TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,
                                                CORBA::TypeCode_ptr tc,
-                                               const CORBA::SystemException & val)
+                                               CORBA::SystemException const & val)
   : Any_Impl (destructor,
               tc)
 {
@@ -57,7 +57,7 @@ void
 TAO::Any_SystemException::insert_copy (CORBA::Any & any,
                                        _tao_destructor destructor,
                                        CORBA::TypeCode_ptr tc,
-                                       const CORBA::SystemException & value)
+                                       CORBA::SystemException const & value)
 {
   Any_SystemException *new_impl = nullptr;
   ACE_NEW (new_impl,
@@ -68,10 +68,10 @@ TAO::Any_SystemException::insert_copy (CORBA::Any & any,
 }
 
 CORBA::Boolean
-TAO::Any_SystemException::extract (const CORBA::Any & any,
+TAO::Any_SystemException::extract (CORBA::Any const & any,
                                    _tao_destructor destructor,
                                    CORBA::TypeCode_ptr tc,
-                                   const CORBA::SystemException *& _tao_elem,
+                                   CORBA::SystemException const *& _tao_elem,
                                    TAO::excp_factory f)
 {
   _tao_elem = nullptr;
@@ -135,7 +135,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           return true;
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -155,7 +155,7 @@ TAO::Any_SystemException::free_value ()
   this->value_ = nullptr;
 }
 
-const void *
+void const *
 TAO::Any_SystemException::value () const
 {
   return this->value_;
@@ -169,7 +169,7 @@ TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
       this->value_->_tao_encode (cdr);
       return true;
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
   return false;
@@ -183,7 +183,7 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
       this->value_->_tao_decode (cdr);
       return true;
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
   return false;

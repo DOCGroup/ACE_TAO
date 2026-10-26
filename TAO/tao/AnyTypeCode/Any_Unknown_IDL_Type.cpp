@@ -78,7 +78,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR & cdr)
   return true;
 }
 
-const void *
+void const *
 TAO::Unknown_IDL_Type::value () const
 {
   return this->cdr_.start ();

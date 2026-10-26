@@ -66,10 +66,10 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
 
 template<typename T, typename from_T, typename to_T>
 CORBA::Boolean
-TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
+TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (CORBA::Any const & any,
                                                    _tao_destructor destructor,
                                                    CORBA::TypeCode_ptr tc,
-                                                   const T *& _tao_elem,
+                                                   T const *& _tao_elem,
                                                    CORBA::ULong bound)
 {
   _tao_elem = nullptr;
@@ -150,7 +150,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -165,7 +165,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::marshal_value (TAO_OutputCDR &cdr)
 }
 
 template<typename T, typename from_T, typename to_T>
-const void *
+void const *
 TAO::Any_Special_Impl_T<T, from_T, to_T>::value () const
 {
   return this->value_;

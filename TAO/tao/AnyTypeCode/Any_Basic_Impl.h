@@ -44,8 +44,8 @@ namespace TAO
 
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,
-                        const void *);
-    static CORBA::Boolean extract (const CORBA::Any &,
+                        void const *);
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    CORBA::TypeCode_ptr,
                                    void *);
 

@@ -71,7 +71,7 @@ namespace TAO
   void
   Any_Basic_Impl::insert (CORBA::Any &any,
                           CORBA::TypeCode_ptr tc,
-                          const void *value)
+                          void const *value)
   {
     Any_Basic_Impl *new_impl = nullptr;
     ACE_NEW (new_impl,
@@ -81,7 +81,7 @@ namespace TAO
   }
 
   CORBA::Boolean
-  Any_Basic_Impl::extract (const CORBA::Any &any,
+  Any_Basic_Impl::extract (CORBA::Any const &any,
                            CORBA::TypeCode_ptr tc,
                            void *_tao_elem)
   {
@@ -149,7 +149,7 @@ namespace TAO
         // Duplicated by Any_Impl base class constructor.
         ::CORBA::release (any_tc);
       }
-    catch (const ::CORBA::Exception&)
+    catch (::CORBA::Exception const &)
       {
       }
 

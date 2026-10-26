@@ -46,7 +46,7 @@ namespace TAO
 
     Any_SystemException (_tao_destructor destructor,
                          CORBA::TypeCode_ptr,
-                         const CORBA::SystemException &);
+                         CORBA::SystemException const &);
 
     explicit Any_SystemException (CORBA::TypeCode_ptr);
 
@@ -60,18 +60,18 @@ namespace TAO
     static void insert_copy (CORBA::Any &,
                              _tao_destructor destructor,
                              CORBA::TypeCode_ptr,
-                             const CORBA::SystemException &);
+                             CORBA::SystemException const &);
 
-    static CORBA::Boolean extract (const CORBA::Any &,
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const CORBA::SystemException *&,
+                                   CORBA::SystemException const *&,
                                    excp_factory f);
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
 
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
   protected:
