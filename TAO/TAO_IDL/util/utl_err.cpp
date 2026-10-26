@@ -947,7 +947,7 @@ UTL_Error::inheritance_fwd_error (UTL_ScopedName *n,
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " cannot inherit from forward declared interface "));
-  if (f)
+  if (f != nullptr)
     {
       f->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
     }

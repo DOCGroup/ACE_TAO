@@ -232,7 +232,7 @@ UTL_Scope::destroy ()
 AST_Decl *
 UTL_Scope::lookup_for_add (AST_Decl *d)
 {
-  if (!d)
+  if (d == nullptr)
     {
       return nullptr;
     }
@@ -399,7 +399,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
 
   // Now check for predefined base type.
   AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (bt);
-  if (!pdt)
+  if (pdt == nullptr)
     {
       return;
     }
@@ -548,11 +548,11 @@ AST_Field *
 UTL_Scope::fe_add_ref_decl (AST_Field *t)
 {
   AST_Decl *d = this->fe_add_decl (t);
-  if (d)
+  if (d != nullptr)
     {
       AST_Type *ft = t->field_type ();
       UTL_ScopedName *mru = ft->last_referenced_as ();
-      if (mru)
+      if (mru != nullptr)
         {
           this->add_to_referenced (ft,
                                    false,
@@ -563,7 +563,7 @@ UTL_Scope::fe_add_ref_decl (AST_Field *t)
   // Catches struct/union/exception which all maintain a queue
   // for fields as distinct from decls and enum values.
   AST_Structure *s = dynamic_cast<AST_Structure*> (this);
-  if (s)
+  if (s != nullptr)
     {
       s->fields ().enqueue_tail (t);
     }
@@ -576,7 +576,7 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
 {
   AST_Decl *predef = this->lookup_for_add (t);
 
-  if (predef)
+  if (predef != nullptr)
     {
       if (!FE_Utils::can_be_redefined (predef, t))
         {
@@ -624,7 +624,7 @@ UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
 {
   // Already defined and cannot be redefined? Or already used?
   AST_Decl *d = this->lookup_for_add (t);
-  if (d)
+  if (d != nullptr)
     {
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add() calls only
@@ -1113,7 +1113,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // generation of some #includes and, whether successful or not,
   // incurs no extra overhead.
   AST_Decl *d = this->lookup_pseudo (e);
-  if (d)
+  if (d != nullptr)
     {
       return d;
     }
@@ -1154,10 +1154,10 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // Ok the name wasn't found in the current scope, if this
   // scope is a module, we can check it's previous openings!
   AST_Module *m = dynamic_cast<AST_Module*> (this);
-  if (m)
+  if (m != nullptr)
     {
       d = m->look_in_prev_mods_local (e);
-      if (d && (!full_def_only || d->is_defined ()))
+      if (d != nullptr && (!full_def_only || d->is_defined ()))
         {
           return d;
         }
@@ -1167,10 +1167,10 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       // Or if this scope is an interface, we can check if
       // it was inherited!
       AST_Interface *i = dynamic_cast<AST_Interface*> (this);
-      if (i)
+      if (i != nullptr)
         {
           d = i->look_in_inherited_local (e);
-          if (d)
+          if (d != nullptr)
             {
               return d;
             }
@@ -1201,7 +1201,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                            bool for_add)
 {
   // Empty name? Exit immediately.
-  if (!e)
+  if (e == nullptr)
     {
       return nullptr;
     }
@@ -1217,7 +1217,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     {
       // No tail, exit directly
       UTL_List* tail = e->tail ();
-      if (!tail)
+      if (tail == nullptr)
         {
           return nullptr;
         }
@@ -1246,7 +1246,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           if (d != nullptr)
             {
               work = outer;
-              if (first_found_final_parent_decl)
+              if (first_found_final_parent_decl != nullptr)
                 {
                   // Hidden scopes can't be used indirectly, therefore we didn't actually
                   // find this one because the "first_found_final_parent_decl" was found and
@@ -1259,7 +1259,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                   break; // Ok found it, stop searching.
                 }
             }
-          else if (searching_module_path && !first_found_final_parent_decl)
+          else if (searching_module_path && first_found_final_parent_decl == nullptr)
             {
               first_found_final_parent_decl = next_found_final_parent_decl;
             }
@@ -1299,7 +1299,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // generation of some #includes and, whether successful or not,
       // incurs no extra overhead.
       AST_Decl *d = work->lookup_pseudo (e->head ());
-      if (d)
+      if (d != nullptr)
         {
           return d;
         }
@@ -1313,7 +1313,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // matches a template module parameter. If so, the return
       // value is created on the heap and is owned by the caller
       // of this lookup.
-      if (final_parent_decl)
+      if (final_parent_decl != nullptr)
         {
           // Since we are inside the scope of a template module, any
           // single-segment scoped name that matches a template
@@ -1324,7 +1324,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
           AST_Param_Holder *param_holder =
             UTL_Scope::match_param (e);
 
-          if (param_holder)
+          if (param_holder != nullptr)
             {
               return param_holder;
             }
@@ -1339,7 +1339,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
            i.next ())
         {
           d = i.item ()->adjust_found (true, full_def_only);
-          if (d
+          if (d != nullptr
           // Right now we populate the global scope with all the CORBA basic
           // types, so something like 'ULong' in an IDL file will find a
           // match, unless we skip over these items. This is a workaround until
@@ -1349,14 +1349,14 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
               && d->local_name ()->case_compare (e->head ()))
             {
               // Ok we found a match, is there any more to find?
-              if (final_parent_decl)
+              if (final_parent_decl != nullptr)
                 {
                   return d; // Last scope name matched
                 }
 
               UTL_Scope *next = DeclAsScope (d); // The next scope to search
 
-              if (next)
+              if (next != nullptr)
                 {
                   work = next;
                   work_another_level = true;
@@ -1374,7 +1374,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
   // A rare enough case that it's worth it to separate it and
   // do it as a last resort. Catches anonymnous types, enums
   // and members with their types defined all in one statement.
-  if (final_parent_decl)
+  if (final_parent_decl != nullptr)
     {
       for (UTL_ScopeActiveIterator i (work, IK_localtypes);
            !i.is_done ();
@@ -1401,7 +1401,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
                               AST_Decl *ex)
 {
   // Empty name? Exit immediately.
-  if (!e)
+  if (e == nullptr)
     {
       return;
     }
@@ -1414,7 +1414,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
       || nt == AST_Decl::NT_component)
     {
       AST_Interface *itf = dynamic_cast<AST_Interface*> (e);
-      if (itf
+      if (itf != nullptr
           && itf->defined_in () == this
           && !itf->is_defined ())
         {
@@ -1450,7 +1450,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
     }
 
   // Insert new reference.
-  if (!ex)
+  if (ex == nullptr)
     {
       this->pd_referenced [this->pd_referenced_used++] = e;
     }
@@ -1473,14 +1473,14 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
   if (recursive && !(e->has_ancestor (ScopeAsDecl (this))))
     {
       UTL_Scope *s = e->defined_in ();
-      if (s)
+      if (s != nullptr)
         {
           s->add_to_referenced (e, recursive, id);
         }
     }
 
   // Add the identifier arg, if non-null, to the identifier list.
-  if (id)
+  if (id != nullptr)
     {
       this->add_to_name_referenced (id);
     }
@@ -1544,7 +1544,7 @@ void
 UTL_Scope::add_to_scope (AST_Decl *e,
                          AST_Decl *ex)
 {
-  if (!e)
+  if (e == nullptr)
     {
       return;
     }
@@ -1660,7 +1660,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     }
 
   // Insert new decl.
-  if (!ex)
+  if (ex == nullptr)
     {
       this->pd_decls [this->pd_decls_used++] = e;
     }
@@ -1683,7 +1683,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
 void
 UTL_Scope::add_to_local_types (AST_Decl *e)
 {
-  if (!e)
+  if (e == nullptr)
     {
       return;
     }
@@ -1743,7 +1743,7 @@ UTL_Scope::referenced (AST_Decl *const e,
   // is a list of Identifiers that store the identifier (or
   // the first segment of a scoped name) used in the reference,
   // so we can catch these name reolution clashes.
-  if (id)
+  if (id != nullptr)
     {
       Identifier **name_tmp = this->pd_name_referenced;
       for (long j = this->pd_name_referenced_used;
@@ -1960,13 +1960,13 @@ bool
 UTL_Scope::inherited_op_attr_clash (AST_Decl *t)
 {
   AST_Interface *i = dynamic_cast<AST_Interface*> (this);
-  if (!i)
+  if (i == nullptr)
     {
       return false;
     }
 
   AST_Decl *d = i->look_in_inherited (t->name (), false);
-  if (d)
+  if (d != nullptr)
     {
       AST_Decl::NodeType nt = d->node_type ();
       if (   nt == AST_Decl::NT_attr
@@ -1987,7 +1987,7 @@ bool
 UTL_Scope::arg_specific_error (AST_Decl *t)
 {
   AST_Operation *op = dynamic_cast<AST_Operation*> (this);
-  if (!op)
+  if (op == nullptr)
     {
       return false;
     }
@@ -2029,7 +2029,7 @@ UTL_Scope::smart_local_add (AST_Decl *t)
 
   // Decls inside a struct/union/exception are also referenced by
   // fields, and so must be handled differently.
-  if (s && !f)
+  if (s != nullptr && f == nullptr)
     {
       this->add_to_local_types (t);
     }
@@ -2043,7 +2043,7 @@ UTL_Scope::smart_local_add (AST_Decl *t)
   // so a branch name clash with a label name will be caught.
   AST_Union *u = dynamic_cast<AST_Union*> (this);
   AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (t);
-  if (u && ub)
+  if (u != nullptr && ub != nullptr)
     {
       if (u->udisc_type () == AST_Expression::EV_enum)
         {
@@ -2060,7 +2060,7 @@ UTL_Scope::smart_local_add (AST_Decl *t)
 bool
 UTL_Scope::is_global_name (Identifier *i)
 {
-  if (!i)
+  if (i == nullptr)
     {
       return false;
     }
@@ -2075,10 +2075,10 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
                                       bool full_def_only)
 {
   // Remove all the layers of typedefs.
-  while (d && d->node_type () == AST_Decl::NT_typedef)
+  while (d != nullptr && d->node_type () == AST_Decl::NT_typedef)
     {
       AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
-      if (!td)
+      if (td == nullptr)
         {
           return nullptr;
         }
@@ -2086,14 +2086,14 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
       d = td->base_type ();
     }
 
-  if (!d)
+  if (d == nullptr)
     {
       return nullptr;
     }
 
   // Try to convert the AST_Decl to a UTL_Scope.
   UTL_Scope *sc = DeclAsScope (d);
-  if (!sc)
+  if (sc == nullptr)
     {
       return nullptr;
     }
@@ -2108,19 +2108,19 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
   else
     {
       AST_Interface *i = dynamic_cast<AST_Interface*> (d);
-      result = i ? i->look_in_inherited_local (e->head ())
-                 : sc->look_in_prev_mods_local (e->head (), true);
+      result = i != nullptr ? i->look_in_inherited_local (e->head ())
+                            : sc->look_in_prev_mods_local (e->head (), true);
     }
 
   UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
-  if (!result)
+  if (result == nullptr)
     {
-      if (!sn)
+      if (sn == nullptr)
         {
           result = UTL_Scope::match_param (e);
         }
     }
-  else if (sn)
+  else if (sn != nullptr)
     {
       // Look up the next component of the scoped name.
       result = iter_lookup_by_name_local (result,
