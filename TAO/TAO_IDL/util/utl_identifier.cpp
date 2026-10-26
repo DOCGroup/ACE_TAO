@@ -154,7 +154,7 @@ Identifier::preprocess_and_replace_string (char const * s)
           TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
           unsigned int len =
             static_cast<unsigned int> (str.length ());
-          const TAO_IDL_CPP_Keyword_Entry *entry =
+          TAO_IDL_CPP_Keyword_Entry const *entry =
             cpp_key_tbl.lookup (str.c_str (), len);
 
           if (entry != nullptr)

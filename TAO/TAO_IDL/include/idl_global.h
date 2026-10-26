@@ -369,17 +369,17 @@ public:
   bool             in_main_file ();         // Are we?
   void             set_in_main_file (bool);     // Set it
 
-  const char       *prog_name ();           // Invoked as..
-  void             set_prog_name (const char *);  // Set it
+  char const *prog_name ();           // Invoked as..
+  void             set_prog_name (char const *);  // Set it
 
-  const char       *cpp_location ();        // Where's CPP?
-  void             set_cpp_location (const char *);// Set it
+  char const *cpp_location ();        // Where's CPP?
+  void             set_cpp_location (char const *);// Set it
 
   long             compile_flags ();        // What flags are on?
   void             set_compile_flags (long);    // Turn some on or off
 
   char             *local_escapes ();       // Get local escapes
-  void             set_local_escapes (const char *);// Set it
+  void             set_local_escapes (char const *);// Set it
 
   UTL_Indenter     *indent ();              // Get indenter
   void             set_indent (UTL_Indenter *); // Set it
@@ -409,17 +409,17 @@ public:
 
   using DCPS_Data_Type_Info_Iter = ACE_Unbounded_Queue_Iterator<ACE_TString>;
 
-  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager_Ex<const char*,
+  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager_Ex<char const *,
                                                       DCPS_Data_Type_Info*,
                                                       ACE_Hash<char*>,
                                                       ACE_Equal_To<char*>,
                                                       ACE_Null_Mutex>;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
-  void add_dcps_data_type (const char* id);
+  void add_dcps_data_type (char const * id);
 
   // FE calls when #pragma DCPS_DATA_KEY is processed
-  bool add_dcps_data_key (const char* id, const char* key);
+  bool add_dcps_data_key (char const * id, char const * key);
 
   // returns null if not matching; otherwise pointer to the info
   DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
@@ -431,10 +431,10 @@ public:
   bool dcps_support_zero_copy_read () const;
 
   // FE calls when #pragma DCPS_DATA_SEQUENCE_TYPE is processed
-  void set_dcps_sequence_type (const char* seq_type);
+  void set_dcps_sequence_type (char const * seq_type);
 
   // BE calls to check whether pragma for this sequence has been set
-  bool dcps_sequence_type_defined (const char* seq_type);
+  bool dcps_sequence_type_defined (char const * seq_type);
 
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
   void dcps_gen_zero_copy_read (bool value);
@@ -448,7 +448,7 @@ public:
   //   preprocessor parsed the file.
 
   // Just storing the pointer. No memory will be allocated.
-  void add_to_included_idl_files (const char *file_name);
+  void add_to_included_idl_files (char const *file_name);
 
   // Get all the files.
   char** included_idl_files ();
@@ -470,32 +470,32 @@ public:
   void idl_src_file (UTL_String *);
   // Set the source IDL file that is being parsed.
 
-  void temp_dir (const char *s);
+  void temp_dir (char const *s);
   // Set the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  const char *temp_dir () const;
+  char const *temp_dir () const;
   // Get the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  void tao_root (const char *s);
+  void tao_root (char const *s);
   // Set the path of TAO_ROOT.
 
-  const char *tao_root () const;
+  char const *tao_root () const;
   // Get the path for TAO_ROOT.
 
-  void gperf_path (const char *s);
+  void gperf_path (char const *s);
   // Set the path for the perfect hashing program (GPERF).
 
-  const char *gperf_path () const;
+  char const *gperf_path () const;
   // Get the path for the perfect hashing program (GPERF).
 
-  void ident_string (const char *s);
+  void ident_string (char const *s);
   // Set the value of the #ident string.
 
-  const char *ident_string () const;
+  char const *ident_string () const;
   // Get the value of the #ident string.
 
   void case_diff_error (bool);
@@ -514,10 +514,10 @@ public:
   void destroy ();
   // Cleanup function.
 
-  void append_idl_flag (const char *s);
+  void append_idl_flag (char const *s);
   // Save each flag passed to the IDL compiler.
 
-  const char *idl_flags () const;
+  char const *idl_flags () const;
   // Get a string representation of the flags
   // passed to the idl compiler.
 
@@ -548,54 +548,54 @@ public:
   // keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Is set by the IFR Service.
 
-  void add_include_path (const char *s, bool is_system);
+  void add_include_path (char const *s, bool is_system);
   // Add another path to 'include_paths_'. is_system is true for TAO/CIAO
   // specific paths and false for paths provided by user.
 
-  void add_rel_include_path (const char *s);
+  void add_rel_include_path (char const *s);
   ACE_Unbounded_Queue<char *> const & rel_include_paths () const;
   // Accessor/mutator for the rel_include_paths_ member.
 
-  void add_ciao_lem_file_names (const char *s);
+  void add_ciao_lem_file_names (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_lem_file_names ();
   // Accessor/mutator for the ciao_lem_file_names_ member.
 
-  void add_ciao_rti_ts_file_names (const char *s);
+  void add_ciao_rti_ts_file_names (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_rti_ts_file_names ();
   // Accessor/mutator for the ciao_rti_ts_file_names_ member.
 
-  void add_ciao_spl_ts_file_names (const char *s);
+  void add_ciao_spl_ts_file_names (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_spl_ts_file_names ();
   // Accessor/mutator for the ciao_spl_ts_file_names_ member.
 
-  void add_ciao_oci_ts_file_names (const char *s);
+  void add_ciao_oci_ts_file_names (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_oci_ts_file_names ();
   // Accessor/mutator for the ciao_oci_ts_file_names_ member.
 
-    void add_ciao_coredx_ts_file_names (const char *s);
+    void add_ciao_coredx_ts_file_names (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_coredx_ts_file_names ();
   // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
 
-  void add_ciao_ami_iface_names (const char *s);
+  void add_ciao_ami_iface_names (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_iface_names ();
   // Accessor/mutator for the ciao_ami_iface_names_ member.
 
-  void add_ciao_ami_recep_names (const char *s);
+  void add_ciao_ami_recep_names (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_recep_names ();
   // Accessor/mutator for the ciao_ami_recep_names_ member.
 
-  void add_included_ami_recep_names (const char *s);
+  void add_included_ami_recep_names (char const *s);
   ACE_Unbounded_Queue<char *> & included_ami_recep_names ();
   // Accessor/mutator for the included_ami_recep_names_ member.
 
   bool included_ami_receps_done () const;
   void included_ami_receps_done (bool val);
 
-  void add_ciao_ami_idl_fnames (const char *s);
+  void add_ciao_ami_idl_fnames (char const *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames ();
   // Accessor/mutator for the included_ami_idl_fnames_ member.
 
-  void add_dds4ccm_impl_fnames (const char *s);
+  void add_dds4ccm_impl_fnames (char const *s);
   ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames ();
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
 
@@ -633,15 +633,15 @@ public:
   // be sure that all forward declared stucts or unions that
   // might be used in such a valuetype are fully defined.
 
-  const char *recursion_start () const;
-  void recursion_start (const char *val);
+  char const *recursion_start () const;
+  void recursion_start (char const *val);
   // Accessors for the member.
 
   bool multi_file_input () const;
   void multi_file_input (bool val);
   // Accessors for the member.
 
-  const char *big_file_name () const;
+  char const *big_file_name () const;
   // Just get the const string.
 
   FE_Utils::T_PARAMLIST_INFO const *current_params () const;
@@ -743,7 +743,7 @@ public:
    * to the Abstract Syntax Tree. It was added for use in be_post_init. THIS
    * SHOULD NOT BE CALLED WHILE IN THE MIDDLE OF PARSING.
    */
-  void eval (const char *string, bool disable_output = false);
+  void eval (char const *string, bool disable_output = false);
 
   /**
    * Dump AST after parsing files and exit

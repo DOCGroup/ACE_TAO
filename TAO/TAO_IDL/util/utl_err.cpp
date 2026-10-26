@@ -88,7 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Log_Msg.h"
 
 // Convert an error code into a const char *
-static const char *
+static char const *
 error_string (UTL_Error::ErrorCode c)
 {
   switch (c)
@@ -258,7 +258,7 @@ error_string (UTL_Error::ErrorCode c)
 /**
  * Get filename from node or from idl_global if node is null.
  */
-static const char *
+static char const *
 get_filename (AST_Decl *node = nullptr)
 {
   return node ? node->file_name ().c_str ()
@@ -282,7 +282,7 @@ static void
 idl_error_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   idl_global->err ()->last_error = c;
-  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_error_lineno = line_number;
   ACE_ERROR ((LM_ERROR,
               "Error - %C: \"%C\", line %d: %C",
@@ -307,7 +307,7 @@ static void
 idl_warning_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   idl_global->err ()->last_warning = c;
-  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_warning_lineno = lineno;
   ACE_ERROR ((LM_WARNING,
               "Warning - %C: \"%C\", line %d: %C",
@@ -324,7 +324,7 @@ idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 ///}
 
 // Convert a parse state into a possible error message
-static const char *
+static char const *
 parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 {
   switch (ps)
@@ -905,7 +905,7 @@ UTL_Error::version_number_error (char *n)
 }
 
 void
-UTL_Error::version_syntax_error (const char *msg)
+UTL_Error::version_syntax_error (char const *msg)
 {
   idl_error_header (EIDL_ILLEGAL_VERSION);
   ACE_ERROR ((LM_ERROR,
@@ -924,8 +924,8 @@ UTL_Error::version_reset_error ()
 
 // Report a reset of the id a second time to a different string.
 void
-UTL_Error::id_reset_error (const char *o,
-                           const char *n)
+UTL_Error::id_reset_error (char const *o,
+                           char const *n)
 {
   idl_error_header (EIDL_ID_RESET);
   ACE_ERROR ((LM_ERROR,
@@ -1242,7 +1242,7 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
 
 // Report clash between declared and referenced indentifiers.
 void
-UTL_Error::redef_error (const char *b, const char *n)
+UTL_Error::redef_error (char const *b, char const *n)
 {
   idl_error_header (EIDL_REDEF);
   ACE_ERROR ((LM_ERROR,
@@ -1443,14 +1443,14 @@ UTL_Error::duplicate_param_id (UTL_ScopedName *n)
 }
 
 void
-UTL_Error::mismatched_template_param (const char *name)
+UTL_Error::mismatched_template_param (char const *name)
 {
   idl_error_header (EIDL_MISMATCHED_T_PARAM);
   ACE_ERROR ((LM_ERROR, " - %s\n", name));
 }
 
 void
-UTL_Error::mismatch_seq_of_param (const char *param_id)
+UTL_Error::mismatch_seq_of_param (char const *param_id)
 {
   idl_error_header (EIDL_MISMATCHED_SEQ_PARAM);
   ACE_ERROR ((LM_ERROR, " - %s\n", param_id));
@@ -1460,9 +1460,9 @@ void
 UTL_Error::scope_masking_error (AST_Decl *masked,
                                 AST_Decl *masking)
 {
-  const char *this_file = idl_global->filename ()->get_string ();
-  const char *masked_file = masked->file_name ().c_str ();
-  const char *masking_file = masking->file_name ().c_str ();
+  char const *this_file = idl_global->filename ()->get_string ();
+  char const *masked_file = masked->file_name ().c_str ();
+  char const *masking_file = masking->file_name ().c_str ();
 
   idl_error_header (EIDL_MISC);
   ACE_ERROR ((LM_ERROR,
@@ -1470,7 +1470,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
               ACE_TEXT ("   declared at "),
               masked->full_name () ));
 
-  const bool same_file =
+  bool const same_file =
     (0 == ACE_OS::strcmp (this_file, masked_file));
 
   if (!same_file)
@@ -1488,7 +1488,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
               ACE_TEXT ("::%C\""),
               masking->full_name ()));
 
-  const bool same_file_again =
+  bool const same_file_again =
     (same_file
      && 0 == ACE_OS::strcmp (this_file, masking_file));
 
@@ -1544,7 +1544,7 @@ UTL_Error::template_scope_ref_not_aliased (AST_Decl *d)
 }
 
 void
-UTL_Error::idl_version_error (const char *reason)
+UTL_Error::idl_version_error (char const *reason)
 {
   idl_error_header (EIDL_IDL_VERSION_ERROR);
   ACE_ERROR ((LM_ERROR,
@@ -1555,14 +1555,14 @@ UTL_Error::idl_version_error (const char *reason)
 }
 
 void
-UTL_Error::unsupported_error (const char *reason)
+UTL_Error::unsupported_error (char const *reason)
 {
   idl_error_header (EIDL_UNSUPPORTED);
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
 }
 
 void
-UTL_Error::unsupported_warning (const char *reason)
+UTL_Error::unsupported_warning (char const *reason)
 {
   if (idl_global->print_warnings ())
     {
@@ -1572,14 +1572,14 @@ UTL_Error::unsupported_warning (const char *reason)
 }
 
 void
-UTL_Error::misc_error (const char *reason, AST_Decl *node)
+UTL_Error::misc_error (char const *reason, AST_Decl *node)
 {
   idl_error_header (EIDL_MISC, node);
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
 }
 
 void
-UTL_Error::misc_warning (const char *reason, AST_Decl *node)
+UTL_Error::misc_warning (char const *reason, AST_Decl *node)
 {
   if (idl_global->print_warnings ())
     {
@@ -1657,7 +1657,7 @@ UTL_Error::annotation_param_missing_error (
 
 void
 UTL_Error::direct_error (
-  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
+  char const *reason, ACE_CString const &filename, long lineno, UTL_Error::ErrorCode error_code)
 {
   idl_error_header (error_code, lineno, filename);
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
@@ -1665,7 +1665,7 @@ UTL_Error::direct_error (
 
 void
 UTL_Error::direct_warning (
-  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
+  char const *reason, ACE_CString const &filename, long lineno, UTL_Error::ErrorCode error_code)
 {
   if (idl_global->print_warnings ())
     {

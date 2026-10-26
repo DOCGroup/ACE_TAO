@@ -1212,7 +1212,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // if we're not there already, short_circuiting the
   // scope-expanding iteration below.
   Identifier *name = e->head ();
-  const bool global_scope_name = work->is_global_name (name);
+  bool const global_scope_name = work->is_global_name (name);
   if (global_scope_name)
     {
       // No tail, exit directly
@@ -1230,7 +1230,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     }
 
   AST_Decl *first_found_final_parent_decl = nullptr;
-  const bool searching_module_path = (e->length () != 1);
+  bool const searching_module_path = (e->length () != 1);
   AST_Decl *d = searching_module_path ?
     work->lookup_by_name_r (e, full_def_only, first_found_final_parent_decl) :
     work->lookup_by_name_r (e, full_def_only);
@@ -1888,7 +1888,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
       return nullptr;
     }
 
-  const char *name = e->first_component ()->get_string ();
+  char const *name = e->first_component ()->get_string ();
   FE_Utils::T_Param_Info *param = nullptr;
   unsigned long index = 0;
 
@@ -2239,7 +2239,7 @@ UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member
 }
 
 AST_Decl *
-UTL_Scope::lookup_by_name (const char *name)
+UTL_Scope::lookup_by_name (char const *name)
 {
   AST_Decl *node = nullptr;
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);

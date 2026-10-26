@@ -198,21 +198,21 @@ public:
    * Report an error that can be out of context of IDL parsing.
    */
   void direct_error (
-    const char *reason, const ACE_CString &filename, long lineno,
+    char const *reason, ACE_CString const &filename, long lineno,
     ErrorCode error_code = EIDL_MISC);
 
   /**
    * Report an warning that can be out of context of IDL parsing.
    */
   void direct_warning (
-    const char *reason, const ACE_CString &filename, long lineno,
+    char const *reason, ACE_CString const &filename, long lineno,
     ErrorCode error_code = EIDL_MISC);
 
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced identifiers
-  void redef_error (const char *n, const char *t);
+  void redef_error (char const *n, char const *t);
 
   // Report a name being used with different spellings
   void name_case_error (char *n,
@@ -242,14 +242,14 @@ public:
   void version_number_error (char *n);
 
   // Report an illegal #pragma version syntax
-  void version_syntax_error (const char *msg);
+  void version_syntax_error (char const *msg);
 
   // Repost an attempt to reset the version.
   void version_reset_error ();
 
   // Report an attempt to change the id once set.
-  void id_reset_error (const char *o,
-                       const char *n);
+  void id_reset_error (char const *o,
+                       char const *n);
 
   // Report an attempt to use a forward declared interface which
   // hasn't been defined yet in an inheritance spec
@@ -398,11 +398,11 @@ public:
   void duplicate_param_id (UTL_ScopedName *n);
 
   // Referenced template parameter not matched in param list.
-  void mismatched_template_param (const char *name);
+  void mismatched_template_param (char const *name);
 
   // Given a template param of the form 'sequence<T>', the
   // 'T' must match a previous param in the list.
-  void mismatch_seq_of_param (const char *param_id);
+  void mismatch_seq_of_param (char const *param_id);
 
   // Informative message when a lookup fails because a
   // masking scope has not been correctly differentiated
@@ -420,32 +420,32 @@ public:
   /**
    * Report IDL version error, with a given reason.
    */
-  void idl_version_error (const char *reason);
+  void idl_version_error (char const *reason);
 
   /**
    * Warn about an unsupported feature in the input IDL that can be ignored for
    * the most part.
    */
-  void unsupported_warning (const char *reason);
+  void unsupported_warning (char const *reason);
 
   /**
    * Report an unsupported feature in the input IDL that can't be ignored.
    */
-  void unsupported_error (const char *reason);
+  void unsupported_error (char const *reason);
 
   /**
    * Report a error for a specific situation
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_error (const char *reason, AST_Decl *node = nullptr);
+  void misc_error (char const *reason, AST_Decl *node = nullptr);
 
   /**
    * Report a warning for a specific situation
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_warning (const char *reason, AST_Decl *node = nullptr);
+  void misc_warning (char const *reason, AST_Decl *node = nullptr);
 
   /**
    * Report that an invalid annotation parameter was passed

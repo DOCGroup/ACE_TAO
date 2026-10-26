@@ -292,7 +292,7 @@ UTL_IdList::get_string_copy ()
         {
           size += 2; // For delimiter
         }
-      const char *item = i.item ()->get_string ();
+      char const *item = i.item ()->get_string ();
       size += ACE_OS::strlen (item);
       n++;
     }
@@ -309,7 +309,7 @@ UTL_IdList::get_string_copy ()
         {
           ACE_OS::strcat (buffer, "::");
         }
-      const char *item = i.item ()->get_string ();
+      char const *item = i.item ()->get_string ();
       ACE_OS::strcat (buffer, item);
       n++;
     }
