@@ -76,7 +76,7 @@ namespace TAO
       //@}
 
       /// Accessor for fields_
-      const FieldArrayType& fields() const;
+      FieldArrayType const & fields() const;
 
     protected:
       /**

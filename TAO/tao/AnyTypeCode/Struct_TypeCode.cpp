@@ -109,7 +109,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const FieldArrayType&
+FieldArrayType const &
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,

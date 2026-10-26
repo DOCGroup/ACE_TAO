@@ -96,7 +96,7 @@ CORBA::NVList::add (CORBA::Flags flags)
 
 // add an element and just initialize its flags and name
 CORBA::NamedValue_ptr
-CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
+CORBA::NVList::add_item (char const *name, CORBA::Flags flags)
 {
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags);
@@ -115,8 +115,8 @@ CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
 
 // add a value. If necessary, increment the list
 CORBA::NamedValue_ptr
-CORBA::NVList::add_value (const char *name,
-                          const CORBA::Any &value,
+CORBA::NVList::add_value (char const *name,
+                          CORBA::Any const &value,
                           CORBA::Flags flags)
 {
   // Call the helper to allocate a NamedValue element.
@@ -413,7 +413,7 @@ CORBA::NVList::_tao_target_alignment ()
       return ACE_CDR::MAX_ALIGNMENT;
     }
 
-  const char* rd = this->incoming_->start ()->rd_ptr ();
+  char const *rd = this->incoming_->start ()->rd_ptr ();
   ptrdiff_t t = ptrdiff_t (rd) % ACE_CDR::MAX_ALIGNMENT;
 
   if (t < 0)

@@ -105,7 +105,7 @@ template <typename StringType,
           typename TypeCodeType,
           class CaseArrayType,
           class RefCountPolicy>
-const CaseArrayType &
+CaseArrayType const &
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,

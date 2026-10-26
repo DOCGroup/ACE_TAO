@@ -55,7 +55,7 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
       if (std::strcmp (this_name, tc_name) != 0)
         return false;
     }
-  catch (const ::CORBA::TypeCode::BadKind&)
+  catch (::CORBA::TypeCode::BadKind const &)
     {
       // Some TypeCodes do not support the id() and name()
       // operations.  Ignore the failure, and continue equality
@@ -101,7 +101,7 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
           return std::strcmp (this_id, tc_id) == 0;
         }
     }
-  catch (const ::CORBA::TypeCode::BadKind&)
+  catch (::CORBA::TypeCode::BadKind const &)
     {
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode
@@ -334,7 +334,7 @@ TAO::TypeCode::aligned_offset (CORBA::ULong offset)
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr,
-            const CORBA::TypeCode_ptr tc)
+            CORBA::TypeCode_ptr const tc)
 {
   return TAO::TypeCode::marshal (cdr, tc, 0);
 }
@@ -345,7 +345,7 @@ operator<< (TAO_OutputCDR & cdr,
 
 std::ostream &
 operator<< (std::ostream & strm,
-            const CORBA::TypeCode_ptr)
+            CORBA::TypeCode_ptr const)
 {
   return strm << "CORBA::TypeCode";
 }

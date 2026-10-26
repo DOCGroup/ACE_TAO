@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-const char *
+char const *
 CORBA::NamedValue::name () const
 {
   return this->name_;

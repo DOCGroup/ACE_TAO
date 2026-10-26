@@ -80,7 +80,7 @@ namespace CORBA
 
   public:
     /// optional name
-    const char * name () const;
+    char const * name () const;
 
     /// return the value
     Any_ptr value () const;
@@ -167,10 +167,10 @@ namespace CORBA
     NamedValue_ptr add (Flags);
 
     /// add an element and initialize its name and flags
-    NamedValue_ptr add_item (const char *, Flags);
+    NamedValue_ptr add_item (char const *, Flags);
 
     /// initializes a value, name, and flags
-    NamedValue_ptr add_value (const char *, const Any &, Flags);
+    NamedValue_ptr add_value (char const *, Any const &, Flags);
 
     /// just like add_item. In addition, memory management of char *
     /// name is taken over by the NVList
