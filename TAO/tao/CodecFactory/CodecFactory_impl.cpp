@@ -85,10 +85,7 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
 
   switch (encoding_format)
     {
-      // @@ MSVC 6 gets confused and thinks that
-      //    IOP::ENCODING_CDR_ENCAPS is not a constant, so its actual
-      //    value (0) is used instead.
-    case 0 /* IOP::ENCODING_CDR_ENCAPS */:
+    case IOP::ENCODING_CDR_ENCAPS:
       if (major < 1)
         {
           // There is no such thing as a "0.x" CDR encapsulation.
