@@ -53,7 +53,7 @@ public:
 
   /// Try to determine if this object is same as the <other_prop>.
   CORBA::Boolean is_equivalent (
-      const TAO_Transport_Descriptor_Interface *other_prop) override;
+      TAO_Transport_Descriptor_Interface const *other_prop) override;
 
   /// Generate hash value for our class
   u_long hash () const override;

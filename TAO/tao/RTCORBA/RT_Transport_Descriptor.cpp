@@ -42,7 +42,7 @@ TAO_RT_Transport_Descriptor::duplicate ()
 
   ACE_NEW_RETURN (new_descriptor,
                   TAO_RT_Transport_Descriptor (endpoint, true),
-                  0);
+                  nullptr);
 
   // Copy the Properties.
   TAO_RT_Transport_Descriptor_Property *current_property =
@@ -70,10 +70,10 @@ TAO_RT_Transport_Descriptor::duplicate ()
 }
 
 CORBA::Boolean
-TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Interface *other_prop)
+TAO_RT_Transport_Descriptor::is_equivalent (TAO_Transport_Descriptor_Interface const *other_prop)
 {
-  const TAO_RT_Transport_Descriptor *rhs =
-    dynamic_cast<const TAO_RT_Transport_Descriptor*> (other_prop);
+  TAO_RT_Transport_Descriptor const *rhs =
+    dynamic_cast<TAO_RT_Transport_Descriptor const *> (other_prop);
 
   if (rhs == nullptr)
     return false;

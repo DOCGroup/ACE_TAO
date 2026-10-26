@@ -10,8 +10,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
-                          const TAO_MProfile &profiles,
+TAO_RT_Stub::TAO_RT_Stub (char const *repository_id,
+                          TAO_MProfile const &profiles,
                           TAO_ORB_Core *orb_core)
   : TAO_Stub (repository_id,
               profiles,
@@ -171,7 +171,7 @@ TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 
 
 TAO_Stub *
-TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
+TAO_RT_Stub::set_policy_overrides (CORBA::PolicyList const & policies,
                                    CORBA::SetOverrideType set_add)
 {
   // Validity check.  Make sure requested policies are allowed to be

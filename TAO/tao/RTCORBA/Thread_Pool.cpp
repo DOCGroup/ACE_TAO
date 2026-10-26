@@ -58,7 +58,7 @@ TAO_Thread_Pool_Threads::svc ()
       // Do the work
       this->run (orb_core);
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       // No point propagating this exception.  Print it out.
       TAOLIB_ERROR ((LM_ERROR,
@@ -374,7 +374,7 @@ TAO_Thread_Lane::wait ()
 }
 
 int
-TAO_Thread_Lane::is_collocated (const TAO_MProfile &mprofile)
+TAO_Thread_Lane::is_collocated (TAO_MProfile const &mprofile)
 {
   return this->resources_.is_collocated (mprofile);
 }
@@ -518,7 +518,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
 TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                                   CORBA::ULong id,
                                   CORBA::ULong stack_size,
-                                  const RTCORBA::ThreadpoolLanes &lanes,
+                                  RTCORBA::ThreadpoolLanes const &lanes,
                                   CORBA::Boolean allow_borrowing,
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
@@ -624,7 +624,7 @@ TAO_Thread_Pool::wait ()
 }
 
 int
-TAO_Thread_Pool::is_collocated (const TAO_MProfile &mprofile)
+TAO_Thread_Pool::is_collocated (TAO_MProfile const &mprofile)
 {
   // Finalize all the lanes.
   for (CORBA::ULong i = 0;
@@ -719,7 +719,7 @@ TAO_Thread_Pool_Manager::wait ()
 }
 
 int
-TAO_Thread_Pool_Manager::is_collocated (const TAO_MProfile &mprofile)
+TAO_Thread_Pool_Manager::is_collocated (TAO_MProfile const &mprofile)
 {
   // Finalize all the pools.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
@@ -761,7 +761,7 @@ TAO_Thread_Pool_Manager::create_threadpool (CORBA::ULong stacksize,
 
 RTCORBA::ThreadpoolId
 TAO_Thread_Pool_Manager::create_threadpool_with_lanes (CORBA::ULong stacksize,
-                                                       const RTCORBA::ThreadpoolLanes & lanes,
+                                                       RTCORBA::ThreadpoolLanes const & lanes,
                                                        CORBA::Boolean allow_borrowing,
                                                        CORBA::Boolean allow_request_buffering,
                                                        CORBA::ULong max_buffered_requests,
@@ -851,7 +851,7 @@ TAO_Thread_Pool_Manager::create_threadpool_i (CORBA::ULong stacksize,
 
 RTCORBA::ThreadpoolId
 TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
-                                                         const RTCORBA::ThreadpoolLanes &lanes,
+                                                         RTCORBA::ThreadpoolLanes const &lanes,
                                                          CORBA::Boolean allow_borrowing,
                                                          CORBA::Boolean allow_request_buffering,
                                                          CORBA::ULong max_buffered_requests,

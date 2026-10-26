@@ -431,7 +431,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint ()
           return -1;
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
         {

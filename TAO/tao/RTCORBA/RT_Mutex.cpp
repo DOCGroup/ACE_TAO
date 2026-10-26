@@ -60,20 +60,20 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
     throw ::CORBA::INTERNAL ();
 }
 
-const char *
+char const *
 TAO_RT_Mutex::name () const
 {
-  return 0;
+  return nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
-TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
+TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (char const *name)
   : name_ (name)
 {
 }
 
-const char *
+char const *
 TAO_Named_RT_Mutex::name () const
 {
   return this->name_.c_str ();

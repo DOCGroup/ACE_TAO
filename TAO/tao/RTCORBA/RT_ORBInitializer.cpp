@@ -247,7 +247,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
     RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
   };
 
-  const CORBA::PolicyType *end =
+  CORBA::PolicyType const *end =
     type + sizeof (type) / sizeof (type[0]);
 
   for (CORBA::PolicyType const * i = type;
@@ -258,7 +258,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, this->policy_factory_.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch (::CORBA::BAD_INV_ORDER const &ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {

@@ -38,7 +38,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
 {
 }
 
-TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs)
+TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (TAO_PriorityModelPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PriorityModelPolicy ()
@@ -49,7 +49,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy 
 }
 
 CORBA::Policy_ptr
-TAO_PriorityModelPolicy::create (const CORBA::Any &)
+TAO_PriorityModelPolicy::create (CORBA::Any const &)
 {
   /*
    * @@ The following code should be changed once the OMG spec has
@@ -145,7 +145,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 {
 }
 
-TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
+TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (TAO_ThreadpoolPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ThreadpoolPolicy ()
@@ -155,7 +155,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
 }
 
 CORBA::Policy_ptr
-TAO_ThreadpoolPolicy::create (const CORBA::Any &val)
+TAO_ThreadpoolPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::ThreadpoolId value;
   if (!(val >>= value))
@@ -214,7 +214,7 @@ TAO_ThreadpoolPolicy::_tao_scope () const
 
 // ****************************************************************
 
-TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &)
+TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (TAO_PrivateConnectionPolicy const &)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PrivateConnectionPolicy ()
@@ -223,7 +223,7 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const TAO_PrivateConne
 }
 
 CORBA::Policy_ptr
-TAO_PrivateConnectionPolicy::create (const CORBA::Any &)
+TAO_PrivateConnectionPolicy::create (CORBA::Any const &)
 {
   TAO_PrivateConnectionPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
@@ -273,7 +273,7 @@ TAO_PrivateConnectionPolicy::_tao_scope () const
 
 // ****************************************************************
 
-TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands)
+TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
@@ -282,7 +282,7 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const RT
 {
 }
 
-TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TAO_PriorityBandedConnectionPolicy &rhs)
+TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (TAO_PriorityBandedConnectionPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::PriorityBandedConnectionPolicy ()
@@ -292,7 +292,7 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (const TA
 }
 
 CORBA::Policy_ptr
-TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
+TAO_PriorityBandedConnectionPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::PriorityBands const *value = nullptr;
   if (!(val >>= value))
@@ -375,7 +375,7 @@ TAO_PriorityBandedConnectionPolicy::priority_bands_rep ()
 
 // ****************************************************************
 
-TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList &protocols)
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ServerProtocolPolicy ()
@@ -384,7 +384,7 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList 
 {
 }
 
-TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs)
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (TAO_ServerProtocolPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ServerProtocolPolicy ()
@@ -394,7 +394,7 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const TAO_ServerProtocolPoli
 }
 
 CORBA::Policy_ptr
-TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
+TAO_ServerProtocolPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::ProtocolList const *value = nullptr;
   if (!(val >>= value))
@@ -465,7 +465,7 @@ TAO_ServerProtocolPolicy::protocols_rep ()
 
 // ****************************************************************
 
-TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols)
+TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ClientProtocolPolicy ()
@@ -474,7 +474,7 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList 
 {
 }
 
-TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs)
+TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (TAO_ClientProtocolPolicy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , RTCORBA::ClientProtocolPolicy ()
@@ -484,7 +484,7 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const TAO_ClientProtocolPoli
 }
 
 CORBA::Policy_ptr
-TAO_ClientProtocolPolicy::create (const CORBA::Any &val)
+TAO_ClientProtocolPolicy::create (CORBA::Any const &val)
 {
   RTCORBA::ProtocolList const *value = nullptr;
   if (!(val >>= value))
@@ -779,8 +779,8 @@ TAO_SharedMemory_Protocol_Properties::TAO_SharedMemory_Protocol_Properties (CORB
                                                                             CORBA::Boolean dont_route,
                                                                             CORBA::Boolean no_delay,
                                                                             CORBA::Long preallocate_buffer_size,
-                                                                            const char *mmap_filename,
-                                                                            const char *mmap_lockname)
+                                                                            char const *mmap_filename,
+                                                                            char const *mmap_lockname)
   : send_buffer_size_ (send_buffer_size),
     recv_buffer_size_ (recv_buffer_size),
     keep_alive_ (keep_alive),
@@ -872,7 +872,7 @@ TAO_SharedMemory_Protocol_Properties::mmap_filename ()
 }
 
 void
-TAO_SharedMemory_Protocol_Properties::mmap_filename (const char * mmap_filename)
+TAO_SharedMemory_Protocol_Properties::mmap_filename (char const * mmap_filename)
 {
   this->mmap_filename_.set (mmap_filename);
 }
@@ -884,7 +884,7 @@ TAO_SharedMemory_Protocol_Properties::mmap_lockname ()
 }
 
 void
-TAO_SharedMemory_Protocol_Properties::mmap_lockname (const char * mmap_lockname)
+TAO_SharedMemory_Protocol_Properties::mmap_lockname (char const * mmap_lockname)
 {
   this->mmap_lockname_.set (mmap_lockname);
 }
@@ -1154,8 +1154,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       CORBA::Boolean keep_alive = true;
       CORBA::Boolean dont_route = false;
       CORBA::Long preallocate_buffer_size = false;
-      const char *mmap_filename = "";
-      const char *mmap_lockname = "";
+      char const *mmap_filename = "";
+      char const *mmap_lockname = "";
 
       ACE_NEW_RETURN (property,
                       TAO_SharedMemory_Protocol_Properties (send_buffer_size,
@@ -1177,7 +1177,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
       ACE_NEW_RETURN (property,
                       TAO_UnixDomain_Protocol_Properties (send_buffer_size,
                                                           recv_buffer_size),
-                      0);
+                      nullptr);
     }
 
   else if (id == TAO_TAG_DIOP_PROFILE)
@@ -1223,7 +1223,7 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
   if (id == IOP::TAG_INTERNET_IOP)
     ACE_NEW_RETURN (property,
                     TAO_GIOP_Protocol_Properties,
-                    0);
+                    nullptr);
 
   // Right now the only supported ORB protocol is GIOP
   // so we couple this with every protocol property.
@@ -1234,7 +1234,7 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
   else
     ACE_NEW_RETURN (property,
                     TAO_GIOP_Protocol_Properties,
-                    0);
+                    nullptr);
   return property;
 }
 

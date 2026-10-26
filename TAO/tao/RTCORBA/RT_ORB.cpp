@@ -52,14 +52,14 @@ TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex)
 
 
 RTCORBA::Mutex_ptr
-TAO_RT_ORB::create_named_mutex (const char *name,
+TAO_RT_ORB::create_named_mutex (char const *name,
                                 CORBA::Boolean_out created_flag)
 {
   return this->mutex_mgr_.create_named_mutex (name, created_flag);
 }
 
 RTCORBA::Mutex_ptr
-TAO_RT_ORB::open_named_mutex (const char *name)
+TAO_RT_ORB::open_named_mutex (char const *name)
 {
   return this->mutex_mgr_.open_named_mutex (name);
 }
@@ -92,7 +92,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
 
   // If this mutex is named, then we need to remove it from our table.
   // Otherwise, we don't have to do anything.
-  const char *name = tao_mutex->name ();
+  char const *name = tao_mutex->name ();
   if (name != nullptr)
     {
       // The following should be atomic.
@@ -116,7 +116,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr)
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 RTCORBA::Mutex_ptr
-TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
+TAO_Named_RT_Mutex_Manager::create_named_mutex (char const *name,
                                                 CORBA::Boolean_out created_flag)
 {
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
@@ -166,7 +166,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
 }
 
 RTCORBA::Mutex_ptr
-TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name)
+TAO_Named_RT_Mutex_Manager::open_named_mutex (char const *name)
 {
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   // The following should be atomic.
@@ -236,8 +236,8 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                       CORBA::Boolean dont_route,
                                                       CORBA::Boolean no_delay,
                                                       CORBA::Long preallocate_buffer_size,
-                                                      const char *mmap_filename,
-                                                      const char *mmap_lockname)
+                                                      char const *mmap_filename,
+                                                      char const *mmap_lockname)
 {
   TAO_SharedMemory_Protocol_Properties *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
@@ -319,7 +319,7 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
 
 RTCORBA::ThreadpoolId
 TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
-                                          const RTCORBA::ThreadpoolLanes &lanes,
+                                          RTCORBA::ThreadpoolLanes const &lanes,
                                           CORBA::Boolean allow_borrowing,
                                           CORBA::Boolean allow_request_buffering,
                                           CORBA::ULong max_buffered_requests,
@@ -392,7 +392,7 @@ TAO_RT_ORB::create_private_connection_policy ()
 }
 
 RTCORBA::ServerProtocolPolicy_ptr
-TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protocols)
+TAO_RT_ORB::create_server_protocol_policy (RTCORBA::ProtocolList const & protocols)
 {
   TAO_ServerProtocolPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
@@ -404,7 +404,7 @@ TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protoco
 }
 
 RTCORBA::ClientProtocolPolicy_ptr
-TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protocols)
+TAO_RT_ORB::create_client_protocol_policy (RTCORBA::ProtocolList const & protocols)
 {
   TAO_ClientProtocolPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,

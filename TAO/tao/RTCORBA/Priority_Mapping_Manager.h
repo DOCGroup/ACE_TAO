@@ -65,7 +65,7 @@ public:
       return nullptr;
     }
 
-  const char* _interface_repository_id () const override;
+  char const * _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -88,15 +88,15 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_var
 public:
   TAO_Priority_Mapping_Manager_var (); // default constructor
   TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_ptr);
-  TAO_Priority_Mapping_Manager_var (const TAO_Priority_Mapping_Manager_var &); // copy constructor
+  TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_var const &); // copy constructor
   ~TAO_Priority_Mapping_Manager_var (); // destructor
 
   TAO_Priority_Mapping_Manager_var &operator= (TAO_Priority_Mapping_Manager_ptr);
-  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Priority_Mapping_Manager_var &);
+  TAO_Priority_Mapping_Manager_var &operator= (TAO_Priority_Mapping_Manager_var const &);
   TAO_Priority_Mapping_Manager_ptr operator-> () const;
 
   /// in, inout, out, _retn
-  operator const TAO_Priority_Mapping_Manager_ptr &() const;
+  operator TAO_Priority_Mapping_Manager_ptr const &() const;
   operator TAO_Priority_Mapping_Manager_ptr &();
   TAO_Priority_Mapping_Manager_ptr in () const;
   TAO_Priority_Mapping_Manager_ptr &inout ();
@@ -114,8 +114,8 @@ public:
 
 private:
   TAO_Priority_Mapping_Manager_ptr ptr_;
-  TAO_Priority_Mapping_Manager_var (const TAO_Base_var &rhs) = delete;
-  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
+  TAO_Priority_Mapping_Manager_var (TAO_Base_var const &rhs) = delete;
+  TAO_Priority_Mapping_Manager_var &operator= (TAO_Base_var const &rhs) = delete;
 };
 
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_out
@@ -123,9 +123,9 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_out
 public:
   TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_ptr &);
   TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_var &);
-  TAO_Priority_Mapping_Manager_out (const TAO_Priority_Mapping_Manager_out &);
-  TAO_Priority_Mapping_Manager_out &operator= (const TAO_Priority_Mapping_Manager_out &);
-  TAO_Priority_Mapping_Manager_out &operator= (const TAO_Priority_Mapping_Manager_var &);
+  TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_out const &);
+  TAO_Priority_Mapping_Manager_out &operator= (TAO_Priority_Mapping_Manager_out const &);
+  TAO_Priority_Mapping_Manager_out &operator= (TAO_Priority_Mapping_Manager_var const &);
   TAO_Priority_Mapping_Manager_out &operator= (TAO_Priority_Mapping_Manager_ptr);
   operator TAO_Priority_Mapping_Manager_ptr &();
   TAO_Priority_Mapping_Manager_ptr &ptr ();
