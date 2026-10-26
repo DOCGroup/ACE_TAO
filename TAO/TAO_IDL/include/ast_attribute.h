@@ -108,7 +108,7 @@ public:
 private:
   // Data.
 
-  const bool pd_readonly;
+  bool const pd_readonly;
   // Is attribute read-only?
 
   UTL_ExceptList *pd_get_exceptions;

@@ -124,7 +124,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &base_type_annotations ();
-  void base_type_annotations (const AST_Annotation_Appls &annotations);
+  void base_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 private:

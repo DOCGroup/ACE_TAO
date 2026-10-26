@@ -300,7 +300,7 @@ public:
   // Accessor for the member.
   AST_Param_Holder *param_holder () const;
 
-  static const char *exprtype_to_string (ExprType t);
+  static char const *exprtype_to_string (ExprType t);
 
   /// Pointer to enum of this value if applicable
   ///{

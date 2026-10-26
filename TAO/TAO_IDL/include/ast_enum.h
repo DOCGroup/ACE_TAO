@@ -85,7 +85,7 @@ public:
   void dump (ACE_OSTREAM_TYPE &) override;
 
   // Look up an AST_EnumVal by value
-  AST_EnumVal *lookup_by_value (const AST_Expression *v);
+  AST_EnumVal *lookup_by_value (AST_Expression const *v);
 
   // Get value to be assigned to next enumerator.
   unsigned long next_enum_val ();
@@ -94,7 +94,7 @@ public:
   virtual int member_count ();
 
   // Convert a numeric value to the enum's string name for it.
-  UTL_ScopedName *value_to_name (const unsigned long v);
+  UTL_ScopedName *value_to_name (unsigned long const v);
 
   // Cleanup function.
   void destroy () override;

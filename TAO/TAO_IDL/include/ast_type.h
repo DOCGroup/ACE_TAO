@@ -117,9 +117,9 @@ public:
   void ifr_fwd_added (bool val);
 
   // Type name of a node used when generating declarations.
-  const char *nested_type_name (AST_Decl *d,
-                                const char *suffix = nullptr,
-                                const char *prefix = nullptr);
+  char const *nested_type_name (AST_Decl *d,
+                                char const *suffix = nullptr,
+                                char const *prefix = nullptr);
 
   // Utility function to make sure we are using the unaliased type.
   AST_Type *unaliased_type ();
@@ -140,11 +140,11 @@ protected:
   virtual int compute_size_type ();
 
   // Type name of a node used when generating declarations.
-  const char *nested_name (const char *local_name,
-                           const char *full_name,
+  char const *nested_name (char const *local_name,
+                           char const *full_name,
                            AST_Decl *use_scope,
-                           const char *suffix,
-                           const char *prefix);
+                           char const *suffix,
+                           char const *prefix);
 
   bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
 

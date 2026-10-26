@@ -61,7 +61,7 @@ public:
   /**
    * Get name of the annotation as written by the user
    */
-  const char* original_name () const;
+  char const *original_name () const;
 
   /**
    * Apply a Annotation Declaration to this Application. This will either fully
@@ -89,11 +89,11 @@ public:
    * Return the parameter with the specified name if it's in the stack else
    * returns 0.
    */
-  Param *find_param (const char *name);
+  Param *find_param (char const *name);
 
 private:
   /// Name of the Annotation as written
-  const char *original_name_;
+  char const *original_name_;
 
   /// Parameters List (Can be null)
   Params *params_;

@@ -155,8 +155,8 @@ public:
 
   /// Easy Member Access
   ///{
-  virtual AST_Decl *operator[] (const size_t index);
-  virtual AST_Decl *operator[] (const char* name);
+  virtual AST_Decl *operator[] (size_t const index);
+  virtual AST_Decl *operator[] (char const *name);
   ///}
 
 protected:

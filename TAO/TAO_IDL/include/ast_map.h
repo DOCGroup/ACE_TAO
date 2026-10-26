@@ -132,7 +132,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &key_type_annotations ();
-  void key_type_annotations (const AST_Annotation_Appls &annotations);
+  void key_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
   /**
@@ -140,7 +140,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &value_type_annotations ();
-  void value_type_annotations (const AST_Annotation_Appls &annotations);
+  void value_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 private:

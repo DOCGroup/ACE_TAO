@@ -72,7 +72,7 @@ extern void DRV_pre_proc (char const * myfile);
 extern void DRV_store_env_include_paths ();
 extern void DRV_cpp_init ();
 extern ACE_CString& DRV_add_include_path (ACE_CString&,
-                                          const char* p, const char* suffix,
+                                          char const *p, char const *suffix,
                                           bool is_system);
 extern void DRV_cpp_post_init ();
 extern void DRV_cpp_putarg (char const * str);

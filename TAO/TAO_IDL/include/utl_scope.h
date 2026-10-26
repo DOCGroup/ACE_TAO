@@ -291,7 +291,7 @@ protected:
 
   // What type is this node? This is a cache of the information
   // in AST_Decl
-  const AST_Decl::NodeType pd_scope_node_type;
+  AST_Decl::NodeType const pd_scope_node_type;
 
   // Storage for declarations in this scope.
   AST_Decl **pd_decls;                // Store declarations

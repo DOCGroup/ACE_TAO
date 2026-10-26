@@ -309,7 +309,7 @@ public:
 
   virtual AST_Expression *create_expr (ACE_CDR::Double d);
 
-  virtual AST_Expression *create_expr (const ACE_CDR::Fixed &f);
+  virtual AST_Expression *create_expr (ACE_CDR::Fixed const &f);
 
   // Create a node representing an enumerator.
   virtual AST_EnumVal *create_enum_val (ACE_CDR::ULong v,

@@ -228,8 +228,8 @@ public:
 
   UTL_ScopedName *name ();
 
-  UTL_ScopedName *compute_name (const char *prefix,
-                                const char *suffix);
+  UTL_ScopedName *compute_name (char const *prefix,
+                                char const *suffix);
   // Variation of the <name>. Computes scoped name string, applying
   // prefix and suffix to the local name component.
 
@@ -238,25 +238,25 @@ public:
   Identifier *local_name () const;
   void local_name (Identifier *id);
 
-  Identifier *compute_local_name (const char *prefix,
-                                  const char *sufix);
+  Identifier *compute_local_name (char const *prefix,
+                                  char const *sufix);
   // Apply prefix and suffix to the local name and return.
 
-  virtual const char *full_name ();
+  virtual char const *full_name ();
   // Return the stringified full name.
 
-  virtual const char *flat_name ();
+  virtual char const *flat_name ();
   // Return the flattened full scoped name.
 
-  const char *repoID ();
+  char const *repoID ();
   void repoID (char *value);
   // Accessors for the repository ID.
 
-  const char *prefix ();
-  void prefix (const char *value);
+  char const *prefix ();
+  void prefix (char const *value);
   // Accessors for the repository ID prefix.
 
-  const char *version ();
+  char const *version ();
   void version (char *value);
   // Accessors for the version_ member.
 
@@ -271,7 +271,7 @@ public:
   void set_id_with_typeid (char *value);
   // Called by a 'typeId' declaration.
 
-  void set_prefix_with_typeprefix (const char *value);
+  void set_prefix_with_typeprefix (char const *value);
   // Called by a 'type_prefix' declaration.
 
   // If there is _cxx_ in the beginning, we will remove that and keep
@@ -325,7 +325,7 @@ public:
 
   /// Set and get annotations for this IDL element
   ///{
-  void annotation_appls (const AST_Annotation_Appls &annotations);
+  void annotation_appls (AST_Annotation_Appls const &annotations);
   AST_Annotation_Appls &annotation_appls ();
   ///}
 
@@ -388,7 +388,7 @@ public:
    */
   virtual bool ami_visit ();
 
-  virtual const char *node_type_name() const;
+  virtual char const *node_type_name() const;
 
 protected:
   // These are not private because they're used by
@@ -404,7 +404,7 @@ protected:
   int contains_wstring_ {-1};
   // If we are a scope, do we contain a wstring at some level?
 
-  void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const;
+  void dump_i (ACE_OSTREAM_TYPE &o, char const *s) const;
 
   void compute_repoID ();
   // Computes the repoID.
@@ -415,7 +415,7 @@ protected:
   void compute_flat_name ();
   // Compute the flattened fully scoped name.
 
-  static const char *node_type_to_string (NodeType nt);
+  static char const *node_type_to_string (NodeType nt);
   // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element
@@ -483,7 +483,7 @@ private:
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.
 
-  void set_prefix_with_typeprefix_r (const char *value,
+  void set_prefix_with_typeprefix_r (char const *value,
                                      UTL_Scope *appeared_in);
   // Non-top-level version of set_prefix_with_typeprefix.
 };

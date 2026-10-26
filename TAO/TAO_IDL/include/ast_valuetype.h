@@ -81,8 +81,8 @@ protected:
   AST_Factory *fe_add_factory (AST_Factory *f) override;
   AST_Field *fe_add_field (AST_Field *o) override;
 
-  bool derived_from_primary_key_base (const AST_ValueType *node,
-                                      const AST_ValueType *pk_base) const;
+  bool derived_from_primary_key_base (AST_ValueType const *node,
+                                      AST_ValueType const *pk_base) const;
   AST_ValueType *lookup_primary_key_base () const;
 };
 

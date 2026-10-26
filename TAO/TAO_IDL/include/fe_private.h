@@ -70,8 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Define an entry for the C++ keyword and its mapping.
 struct TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Entry
 {
-  const char *keyword_;
-  const char *mapping_;
+  char const *keyword_;
+  char const *mapping_;
 };
 
 /**
@@ -81,10 +81,10 @@ struct TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Entry
 class TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Table
 {
 private:
-  unsigned int hash (const char *str,
+  unsigned int hash (char const *str,
                      unsigned int len);
 public:
-  const TAO_IDL_CPP_Keyword_Entry *lookup (const char *str,
+  TAO_IDL_CPP_Keyword_Entry const *lookup (char const *str,
                                            unsigned int len);
 };
 

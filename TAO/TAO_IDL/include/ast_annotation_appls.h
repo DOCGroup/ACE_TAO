@@ -25,10 +25,10 @@ public:
   using const_iterator = AST_Annotation_Appl_Ptrs::const_iterator;
 
   AST_Annotation_Appls ();
-  AST_Annotation_Appls (const AST_Annotation_Appls& other);
+  AST_Annotation_Appls (AST_Annotation_Appls const &other);
   ~AST_Annotation_Appls ();
 
-  AST_Annotation_Appls &operator= (const AST_Annotation_Appls& other);
+  AST_Annotation_Appls &operator= (AST_Annotation_Appls const &other);
 
   /**
    * Add an AST_Annotation_Appl to the vector. This class assumes ownership of
@@ -40,7 +40,7 @@ public:
    * Add all the AST_Annotation_Appls from another AST_Annotation_Appls to the
    * this one.
    */
-  void add (const AST_Annotation_Appls& other);
+  void add (AST_Annotation_Appls const &other);
 
   bool empty () const;
   size_t size () const;
@@ -68,7 +68,7 @@ public:
    * Same as find (AST_Annotation_Decl*) except do a look up of the
    * AST_Annotation_Decl first.
    */
-  AST_Annotation_Appl *find (const char *annotation);
+  AST_Annotation_Appl *find (char const *annotation);
 
 private:
   AST_Annotation_Appl_Ptrs vector_;

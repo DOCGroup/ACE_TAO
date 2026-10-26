@@ -25,7 +25,7 @@ class TAO_IDL_FE_Export ast_visitor_context
 public:
   ast_visitor_context ();
 
-  ast_visitor_context (const ast_visitor_context &ctx);
+  ast_visitor_context (ast_visitor_context const &ctx);
 
   ~ast_visitor_context ();
 

@@ -138,7 +138,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &disc_annotations ();
-  void disc_annotations (const AST_Annotation_Appls &annotations);
+  void disc_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 protected:

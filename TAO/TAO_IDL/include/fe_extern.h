@@ -75,8 +75,8 @@ TAO_IDL_FE_Export void FE_init ();
 TAO_IDL_FE_Export void FE_populate ();
 TAO_IDL_FE_Export void FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list);
 TAO_IDL_FE_Export void FE_store_env_include_paths ();
-TAO_IDL_FE_Export const char *FE_get_cpp_loc_from_env ();
-TAO_IDL_FE_Export const char *FE_get_cpp_args_from_env ();
+TAO_IDL_FE_Export char const *FE_get_cpp_loc_from_env ();
+TAO_IDL_FE_Export char const *FE_get_cpp_args_from_env ();
 
 TAO_IDL_FE_Export int
 FE_yyparse ();

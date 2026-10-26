@@ -124,7 +124,7 @@ protected:
 private:
   // Data.
 
-  const PredefinedType pd_pt;
+  PredefinedType const pd_pt;
   // The specific predefined type.
 };
 
