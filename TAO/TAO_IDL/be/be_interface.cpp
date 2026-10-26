@@ -789,7 +789,7 @@ public:
 
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *os,
-                    be_interface *base_interface);
+                    be_interface *base_interface) override;
 
 private:
   const char *skeleton_name_;
@@ -824,7 +824,7 @@ public:
 
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *os,
-                    be_interface *base_interface);
+                    be_interface *base_interface) override;
 
 private:
   be_visitor *visitor_;
@@ -2637,7 +2637,7 @@ public:
 
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *os,
-                    be_interface *base_interface);
+                    be_interface *base_interface) override;
 
 private:
   be_visitor *visitor_;

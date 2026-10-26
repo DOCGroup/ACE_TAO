@@ -141,7 +141,7 @@ public:
 
   virtual int emit (be_interface *base,
                     TAO_OutStream *os,
-                    be_interface *derived);
+                    be_interface *derived) override;
 };
 
 TAO_IDL_Downcast_Implementation_Worker::
@@ -186,7 +186,7 @@ public:
 
   virtual int emit (be_interface *base,
                     TAO_OutStream *os,
-                    be_interface *derived);
+                    be_interface *derived) override;
 };
 
 TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker ()

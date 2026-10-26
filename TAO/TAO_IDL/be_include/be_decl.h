@@ -58,7 +58,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   /// Cleanup function.
-  virtual void destroy ();
+  virtual void destroy () override;
 
   /// Temporarily set this node's is_local_ flag.
   void set_local (bool val);

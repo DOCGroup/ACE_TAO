@@ -451,7 +451,7 @@ public:
 
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *output_stream,
-                    be_interface *base_interface);
+                    be_interface *base_interface) override;
 
 private:
   be_interface::tao_code_emitter emitter_;

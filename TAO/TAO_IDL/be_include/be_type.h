@@ -87,10 +87,10 @@ public:
   virtual AST_Decl::NodeType base_node_type () const;
 
   /// Clean up allocated members.
-  virtual void destroy ();
+  virtual void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  virtual int accept (be_visitor* visitor) override;
 
 protected:
   /// Computes the fully scoped typecode name.

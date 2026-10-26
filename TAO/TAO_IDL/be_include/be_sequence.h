@@ -70,7 +70,7 @@ public:
   virtual MANAGED_TYPE managed_type ();
 
   // Scope management functions.
-  virtual AST_Sequence *fe_add_sequence (AST_Sequence *);
+  virtual AST_Sequence *fe_add_sequence (AST_Sequence *) override;
 
   /// Overridden method on the be_scope class.
   be_decl *decl () override;

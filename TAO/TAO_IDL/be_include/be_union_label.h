@@ -15,7 +15,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy ();
+  virtual void destroy () override;
 };
 
 #endif
