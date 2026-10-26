@@ -25,9 +25,7 @@ be_visitor::be_visitor ()
 {
 }
 
-be_visitor::~be_visitor ()
-{
-}
+be_visitor::~be_visitor () = default;
 
 // All the visit methods. Concrete visitors will selectively
 // override each one.

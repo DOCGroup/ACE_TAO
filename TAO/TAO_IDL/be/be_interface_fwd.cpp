@@ -35,9 +35,7 @@ be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
   this->size_type (AST_Type::VARIABLE);
 }
 
-be_interface_fwd::~be_interface_fwd ()
-{
-}
+be_interface_fwd::~be_interface_fwd () = default;
 
 void
 be_interface_fwd::seen_in_sequence (bool val)

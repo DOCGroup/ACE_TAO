@@ -21,9 +21,7 @@ be_visitor_attr_setarg_type::be_visitor_attr_setarg_type  (
 {
 }
 
-be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type ()
-{
-}
+be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type () = default;
 
 int
 be_visitor_attr_setarg_type::visit_array (be_array *)

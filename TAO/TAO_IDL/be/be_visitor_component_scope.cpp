@@ -39,10 +39,7 @@ be_visitor_component_scope::be_visitor_component_scope (
     }
 }
 
-be_visitor_component_scope::~be_visitor_component_scope (
-  )
-{
-}
+be_visitor_component_scope::~be_visitor_component_scope () = default;
 
 int
 be_visitor_component_scope::visit_extended_port (

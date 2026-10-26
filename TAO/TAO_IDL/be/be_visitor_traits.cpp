@@ -44,9 +44,7 @@ be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
 {
 }
 
-be_visitor_traits::~be_visitor_traits ()
-{
-}
+be_visitor_traits::~be_visitor_traits () = default;
 
 int
 be_visitor_traits::visit_root (be_root *node)

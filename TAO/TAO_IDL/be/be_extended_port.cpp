@@ -22,9 +22,7 @@ be_extended_port::be_extended_port (
 {
 }
 
-be_extended_port::~be_extended_port ()
-{
-}
+be_extended_port::~be_extended_port () = default;
 
 be_porttype *
 be_extended_port::port_type () const

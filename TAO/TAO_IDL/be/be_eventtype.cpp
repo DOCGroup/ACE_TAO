@@ -92,9 +92,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
 {
 }
 
-be_eventtype::~be_eventtype ()
-{
-}
+be_eventtype::~be_eventtype () = default;
 
 // The differences between valuetype and eventtype are too small
 // to warrant a separate set of visitors.

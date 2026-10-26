@@ -31,9 +31,7 @@ be_visitor_dds_ts_idl::be_visitor_dds_ts_idl (
 {
 }
 
-be_visitor_dds_ts_idl::~be_visitor_dds_ts_idl ()
-{
-}
+be_visitor_dds_ts_idl::~be_visitor_dds_ts_idl () = default;
 
 int
 be_visitor_dds_ts_idl::visit_root (be_root *node)

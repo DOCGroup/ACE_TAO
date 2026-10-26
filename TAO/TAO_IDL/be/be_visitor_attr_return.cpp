@@ -22,9 +22,7 @@ be_visitor_attr_return::be_visitor_attr_return  (
 {
 }
 
-be_visitor_attr_return::~be_visitor_attr_return ()
-{
-}
+be_visitor_attr_return::~be_visitor_attr_return () = default;
 
 int
 be_visitor_attr_return::visit_array (be_array *node)

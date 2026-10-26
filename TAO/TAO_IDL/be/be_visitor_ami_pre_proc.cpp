@@ -40,9 +40,7 @@ be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
 {
 }
 
-be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc ()
-{
-}
+be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc () = default;
 
 int
 be_visitor_ami_pre_proc::visit_root (be_root *node)

@@ -29,9 +29,7 @@ be_structure_fwd::be_structure_fwd (AST_Structure *dummy,
 {
 }
 
-be_structure_fwd::~be_structure_fwd ()
-{
-}
+be_structure_fwd::~be_structure_fwd () = default;
 
 void
 be_structure_fwd::destroy ()

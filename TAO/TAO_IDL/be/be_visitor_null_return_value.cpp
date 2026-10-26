@@ -23,9 +23,7 @@ be_visitor_null_return_value::be_visitor_null_return_value (
 {
 }
 
-be_visitor_null_return_value::~be_visitor_null_return_value ()
-{
-}
+be_visitor_null_return_value::~be_visitor_null_return_value () = default;
 
 int
 be_visitor_null_return_value::visit_array (be_array *node)

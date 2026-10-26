@@ -22,9 +22,7 @@ be_visitor_attr_init::be_visitor_attr_init (
 {
 }
 
-be_visitor_attr_init::~be_visitor_attr_init ()
-{
-}
+be_visitor_attr_init::~be_visitor_attr_init () = default;
 
 int
 be_visitor_attr_init::visit_array (be_array *)

@@ -47,9 +47,7 @@ be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
 {
 }
 
-be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc ()
-{
-}
+be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc () = default;
 
 int
 be_visitor_xplicit_pre_proc::visit_home (be_home *node)

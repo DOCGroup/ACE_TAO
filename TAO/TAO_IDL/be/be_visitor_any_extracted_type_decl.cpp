@@ -26,10 +26,7 @@ be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
 {
 }
 
-be_visitor_any_extracted_type_decl::~be_visitor_any_extracted_type_decl (
-  )
-{
-}
+be_visitor_any_extracted_type_decl::~be_visitor_any_extracted_type_decl () = default;
 
 int
 be_visitor_any_extracted_type_decl::visit_array (be_array *node)

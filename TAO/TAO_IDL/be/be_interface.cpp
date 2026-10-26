@@ -121,9 +121,7 @@ be_interface::be_interface (UTL_ScopedName *n,
     }
 }
 
-be_interface::~be_interface ()
-{
-}
+be_interface::~be_interface () = default;
 
 const char *
 be_interface::local_name ()
@@ -779,9 +777,7 @@ be_interface::gen_var_out_seq_decls ()
 
 // ****************************************************************
 
-TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker ()
-{
-}
+TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker () = default;
 
 // =================================================================
 

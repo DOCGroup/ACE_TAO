@@ -30,7 +30,7 @@ class be_native : public virtual AST_Native,
 public:
   explicit be_native (UTL_ScopedName *n);
 
-  ~be_native () override {}
+  ~be_native () override = default;
 
   /// Generate the typecode description.
   virtual int gen_typecode ();

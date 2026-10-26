@@ -19,9 +19,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs (
 }
 
 be_visitor_operation_ami_handler_reply_stub_operation_cs::
-~be_visitor_operation_ami_handler_reply_stub_operation_cs ()
-{
-}
+~be_visitor_operation_ami_handler_reply_stub_operation_cs () = default;
 
 // Processing to be done after every element in the scope is processed
 int

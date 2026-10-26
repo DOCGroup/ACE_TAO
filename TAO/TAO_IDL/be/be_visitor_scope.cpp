@@ -28,9 +28,7 @@ be_visitor_scope::be_visitor_scope (be_visitor_context *ctx)
 {
 }
 
-be_visitor_scope::~be_visitor_scope ()
-{
-}
+be_visitor_scope::~be_visitor_scope () = default;
 
 // Visit the scope and its elements.
 int

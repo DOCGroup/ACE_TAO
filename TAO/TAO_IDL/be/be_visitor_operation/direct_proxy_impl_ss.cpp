@@ -7,9 +7,7 @@ be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
 }
 
 be_visitor_operation_direct_proxy_impl_ss::
-~be_visitor_operation_direct_proxy_impl_ss ()
-{
-}
+~be_visitor_operation_direct_proxy_impl_ss () = default;
 
 int
 be_visitor_operation_direct_proxy_impl_ss::visit_operation (

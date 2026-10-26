@@ -36,9 +36,7 @@ be_valuetype_fwd::be_valuetype_fwd (AST_Interface *dummy,
 {
 }
 
-be_valuetype_fwd::~be_valuetype_fwd ()
-{
-}
+be_valuetype_fwd::~be_valuetype_fwd () = default;
 
 int
 be_valuetype_fwd::accept (be_visitor *visitor)
