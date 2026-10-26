@@ -124,7 +124,7 @@ UTL_String::compare (char const* lhs, char const* rhs)
   bool result= false;
   bool mixed=  false;
 
-  if (lhs && rhs && strcmp_caseless (lhs, rhs, mixed))
+  if (lhs != nullptr && rhs != nullptr && strcmp_caseless (lhs, rhs, mixed))
     {
       result= !mixed;
       if (mixed) // Strings match (differing case)
@@ -157,7 +157,7 @@ UTL_String::compare_quiet (char const* lhs, char const* rhs)
   bool result= false;
   bool mixed=  false;
 
-  if (lhs && rhs && strcmp_caseless (lhs, rhs, mixed))
+  if (lhs != nullptr && rhs != nullptr && strcmp_caseless (lhs, rhs, mixed))
     {
       result= mixed;
     }
@@ -192,7 +192,7 @@ UTL_String::UTL_String ()
 }
 
 UTL_String::UTL_String (char const* str, bool take_copy)
-  : copy_taken (str ? take_copy : false),
+  : copy_taken (str != nullptr ? take_copy : false),
     p_str      (this->copy_taken ? ACE::strnew (str)
                                  : const_cast<char *>(str)),
     c_str      (nullptr)
@@ -233,14 +233,14 @@ UTL_String::destroy ()
 bool
 UTL_String::compare (UTL_String *s)
 {
-  return (this->p_str && s && s->get_string () &&
+  return (this->p_str != nullptr && s != nullptr && s->get_string () != nullptr &&
           compare (this->p_str, s->get_string ()));
 }
 
 bool
 UTL_String::compare_quiet (UTL_String *s)
 {
-  return (this->p_str && s && s->get_string () &&
+  return (this->p_str != nullptr && s != nullptr && s->get_string () != nullptr &&
           compare_quiet (this->p_str, s->get_string ()));
 }
 
@@ -248,7 +248,7 @@ UTL_String::compare_quiet (UTL_String *s)
 char *
 UTL_String::get_canonical_rep ()
 {
-  if (!this->c_str && this->p_str)
+  if (this->c_str == nullptr && this->p_str != nullptr)
     {
       get_canonical_rep (
         this->p_str,

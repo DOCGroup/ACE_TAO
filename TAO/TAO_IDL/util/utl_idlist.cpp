@@ -214,7 +214,7 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      if (i.item ()->get_string ())
+      if (i.item ()->get_string () != nullptr)
         {
           i.item ()->dump (o);
 

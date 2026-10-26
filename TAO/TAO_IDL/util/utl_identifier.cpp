@@ -72,22 +72,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/streams.h"
 #include "ace/OS_NS_string.h"
 
-Identifier::Identifier ()
-  : pv_string (nullptr),
-    escaped_ (false)
-{
-}
-
-Identifier::Identifier (const char *s)
-  : pv_string (nullptr),
-    escaped_ (false)
+Identifier::Identifier (char const * s)
 {
   preprocess_and_replace_string (s);
 }
 
-Identifier::Identifier (const Identifier &other)
-  : pv_string (nullptr),
-    escaped_ (other.escaped ())
+Identifier::Identifier (Identifier const &other)
+  : escaped_ (other.escaped ())
 {
   *this = other;
 }
@@ -108,24 +99,24 @@ Identifier::get_string ()
   return this->pv_string;
 }
 
-const char *
+char const *
 Identifier::get_string () const
 {
   return this->pv_string;
 }
 
 void
-Identifier::replace_string (const char * s)
+Identifier::replace_string (char const * s)
 {
-  if (pv_string)
+  if (pv_string != nullptr)
     {
       delete [] this->pv_string;
     }
-  this->pv_string = s ? ACE::strnew (s) : nullptr;
+  this->pv_string = s != nullptr ? ACE::strnew (s) : nullptr;
 }
 
 void
-Identifier::preprocess_and_replace_string (const char * s)
+Identifier::preprocess_and_replace_string (char const * s)
 {
   bool shift = false;
 
@@ -140,7 +131,7 @@ Identifier::preprocess_and_replace_string (const char * s)
       shift = true;
       this->escaped_ = true;
       ACE_CString str (s);
-      const char *c_prefix = "_cxx_";
+      char const * c_prefix = "_cxx_";
 
       if (str.find ("_tc_") == 0
           || str.find ("_tao_") == 0)
@@ -150,7 +141,7 @@ Identifier::preprocess_and_replace_string (const char * s)
       else if (str.find (c_prefix) == 0)
         {
           str = str.substr (ACE_OS::strlen (c_prefix));
-          const char *eh_suffix = "_excep";
+          char const * eh_suffix = "_excep";
           ACE_CString::size_type pos =
             str.length () - ACE_OS::strlen (eh_suffix);
 
@@ -180,9 +171,9 @@ Identifier::preprocess_and_replace_string (const char * s)
 bool
 Identifier::compare (Identifier *o)
 {
-  if (!o ||
-      !o->pv_string ||
-      !this->pv_string ||
+  if (o == nullptr ||
+      o->pv_string == nullptr ||
+      this->pv_string == nullptr ||
       this->escaped_ ^ o->escaped_)
     {
       return false;
@@ -246,13 +237,13 @@ Identifier::destroy ()
 }
 
 bool
-Identifier::operator== (const Identifier &other) const
+Identifier::operator== (Identifier const &other) const
 {
   return !ACE_OS::strcmp (pv_string, other.get_string ());
 }
 
 Identifier &
-Identifier::operator= (const Identifier &other)
+Identifier::operator= (Identifier const &other)
 {
   replace_string (other.get_string ());
   return *this;

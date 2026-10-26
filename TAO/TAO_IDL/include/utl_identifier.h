@@ -72,13 +72,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export Identifier
 {
 public:
-  Identifier ();
+  Identifier () = default;
   // Default Constructor.
 
-  Identifier (const char *s);
+  explicit Identifier (char const * s);
   // Constructor.
 
-  Identifier (const Identifier &other);
+  Identifier (Identifier const &other);
 
   virtual ~Identifier ();
   // Destructor.
@@ -90,13 +90,13 @@ public:
    */
   ///{
   char *get_string ();
-  const char *get_string () const;
+  char const *get_string () const;
   ///}
 
-  void replace_string (const char *s);
+  void replace_string (char const * s);
   // Replace the underlying string and free the old one.
 
-  void preprocess_and_replace_string (const char *s);
+  void preprocess_and_replace_string (char const * s);
 
   bool compare (Identifier *other);
   // Compare with other Identifier.
@@ -119,16 +119,16 @@ public:
   virtual void destroy ();
   // Cleanup function.
 
-  bool operator== (const Identifier &other) const;
+  bool operator== (Identifier const &other) const;
 
-  Identifier &operator= (const Identifier &other);
+  Identifier &operator= (Identifier const &other);
 
 private:
   // Storage for data.
-  char *pv_string;
+  char *pv_string {};
 
   // Did the IDL string have a leading underscore?
-  bool escaped_;
+  bool escaped_ {};
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
