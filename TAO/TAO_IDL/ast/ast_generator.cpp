@@ -159,7 +159,7 @@ AST_Generator::create_module (UTL_Scope *s,
   AST_Module *prev_module = dynamic_cast<AST_Module*> (s);
   if (prev_module)
     {
-      while (0 != (prev_module = prev_module->previous_opening ()))
+      while ((prev_module = prev_module->previous_opening ()) != nullptr)
         {
           for (UTL_ScopeActiveIterator iter (prev_module, UTL_Scope::IK_decls);
                !iter.is_done ();
