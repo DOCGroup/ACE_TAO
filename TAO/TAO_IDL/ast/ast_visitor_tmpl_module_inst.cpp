@@ -59,9 +59,7 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
 {
 }
 
-ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst ()
-{
-}
+ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst () = default;
 
 int ast_visitor_tmpl_module_inst::visit_decl (AST_Decl *)
 {

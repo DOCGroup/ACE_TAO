@@ -92,9 +92,7 @@ COMMON_Base::COMMON_Base (bool local,
 {
 }
 
-COMMON_Base::~COMMON_Base ()
-{
-}
+COMMON_Base::~COMMON_Base () = default;
 
 void
 COMMON_Base::destroy ()

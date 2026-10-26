@@ -12,9 +12,7 @@
 
 #include "ast_visitor_context.h"
 
-ast_visitor_context::ast_visitor_context ()
-{
-}
+ast_visitor_context::ast_visitor_context () = default;
 
 ast_visitor_context::ast_visitor_context (const ast_visitor_context &ctx)
   : template_params_ (ctx.template_params_),
@@ -22,9 +20,7 @@ ast_visitor_context::ast_visitor_context (const ast_visitor_context &ctx)
 {
 }
 
-ast_visitor_context::~ast_visitor_context ()
-{
-}
+ast_visitor_context::~ast_visitor_context () = default;
 
 FE_Utils::T_PARAMLIST_INFO *
 ast_visitor_context::template_params () const

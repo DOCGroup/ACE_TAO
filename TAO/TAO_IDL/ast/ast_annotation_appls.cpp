@@ -1,9 +1,7 @@
 #include "ast_annotation_appls.h"
 #include "ast_annotation_appl.h"
 
-AST_Annotation_Appls::AST_Annotation_Appls ()
-{
-}
+AST_Annotation_Appls::AST_Annotation_Appls () = default;
 
 AST_Annotation_Appls::AST_Annotation_Appls (const AST_Annotation_Appls& other)
 {
