@@ -86,9 +86,7 @@ UTL_StrList::UTL_StrList (UTL_String *s,
 {
 }
 
-UTL_StrList::~UTL_StrList ()
-{
-}
+UTL_StrList::~UTL_StrList () = default;
 
 // Get list item.
 UTL_String *

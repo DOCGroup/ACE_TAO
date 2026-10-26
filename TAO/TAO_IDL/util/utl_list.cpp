@@ -78,9 +78,7 @@ UTL_List::UTL_List (UTL_List *c)
 {
 }
 
-UTL_List::~UTL_List ()
-{
-}
+UTL_List::~UTL_List () = default;
 
 // Compute list length.
 ACE_CDR::Long
