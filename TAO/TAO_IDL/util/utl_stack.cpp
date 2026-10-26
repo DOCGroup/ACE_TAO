@@ -68,8 +68,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 #include "global_extern.h"
 
-const size_t UTL_ScopeStack::increments = 64;
-
 UTL_ScopeStack::UTL_ScopeStack ()
 {
   ACE_NEW (this->pd_stack_data, UTL_Scope *[increments]);

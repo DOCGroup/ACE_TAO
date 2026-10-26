@@ -87,7 +87,7 @@ public:
   UTL_ScopeStack& operator= (UTL_ScopeStack&&) = delete;
 
   /// The initial capacity and how much to increment the capacity when needed.
-  static const size_t increments;
+  static constexpr size_t increments = 64;
 
   // Return top element.
   UTL_Scope *top ();
