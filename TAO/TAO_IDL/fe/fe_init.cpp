@@ -74,7 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "ast_root.h"
 
-const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
+constexpr size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 
 // Populate the global scope with all predefined entities.
 void
@@ -445,7 +445,7 @@ FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
 {
   ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
                                    (char *) nullptr);
-  const char *aggr_str = incl_paths;
+  char const *aggr_str = incl_paths;
 
   if (aggr_str != nullptr)
     {
@@ -485,10 +485,10 @@ FE_store_env_include_paths ()
     }
 }
 
-const char *
+char const *
 FE_get_cpp_loc_from_env ()
 {
-  const char *cpp_loc = nullptr;
+  char const *cpp_loc = nullptr;
 
   // See if TAO_IDL_PREPROCESSOR is defined.
   ACE_Env_Value<char*> preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"),
@@ -508,10 +508,10 @@ FE_get_cpp_loc_from_env ()
   return cpp_loc;
 }
 
-const char *
+char const *
 FE_get_cpp_args_from_env ()
 {
-  const char *cpp_args = nullptr;
+  char const *cpp_args = nullptr;
 
   // Added some customizable preprocessor options
   ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),

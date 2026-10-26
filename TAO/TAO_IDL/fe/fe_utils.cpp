@@ -182,7 +182,7 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
 }
 
 UTL_ScopedName *
-FE_Utils::string_to_scoped_name (const char *s)
+FE_Utils::string_to_scoped_name (char const *s)
 {
   UTL_ScopedName *retval = nullptr;
   ACE_CString str (s);
@@ -229,8 +229,8 @@ FE_Utils::string_to_scoped_name (const char *s)
   return retval;
 }
 
-const char *
-FE_Utils::stripped_preproc_include (const char *name)
+char const *
+FE_Utils::stripped_preproc_include (char const *name)
 {
   // Some preprocessors prepend "./" to filenames in the
   // working directory, some others prepend ".\". If either
@@ -249,7 +249,7 @@ FE_Utils::stripped_preproc_include (const char *name)
 void
 FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                       AST_Uses *u,
-                                      const char *prefix)
+                                      char const *prefix)
 {
   ACE_CString struct_name (prefix);
 
@@ -427,7 +427,7 @@ FE_Utils::create_implied_ami_uses_stuff ()
 }
 
 int
-FE_Utils::path_cmp (const char *s, const char *t)
+FE_Utils::path_cmp (char const *s, char const *t)
 {
 #if defined (WIN32)
   // Since Windows has case-insensitive filenames, the preprocessor,
@@ -444,11 +444,11 @@ FE_Utils::path_cmp (const char *s, const char *t)
 }
 
 bool
-FE_Utils::hasspace (const char *s)
+FE_Utils::hasspace (char const *s)
 {
   if (s)
     {
-      const size_t length = ACE_OS::strlen (s);
+      size_t const length = ACE_OS::strlen (s);
 
       // Windows can't have a space as the first or last character
       // but a unix filename can. Need to check all characters.
@@ -468,7 +468,7 @@ ACE_CString
 FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 {
   ACE_CString id, retval;
-  const char *pattern = "sequence<";
+  char const *pattern = "sequence<";
   size_t len = ACE_OS::strlen (pattern);
   size_t index = 0;
 
@@ -538,7 +538,7 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
 
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
-  const char *tmp_inc_file = inc_file.c_str ();
+  char const *tmp_inc_file = inc_file.c_str ();
 
   if (tmp_inc_file
       && FE_Utils::hasspace (tmp_inc_file)
@@ -785,7 +785,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
 void
 FE_Utils::original_local_name (Identifier *local_name)
 {
-  const char *lname = local_name->get_string ();
+  char const *lname = local_name->get_string ();
 
   // Remove _cxx_ if:
   // 1. it occurs and
@@ -798,7 +798,7 @@ FE_Utils::original_local_name (Identifier *local_name)
       unsigned int len =
         static_cast<unsigned int> (ACE_OS::strlen (lname + 5));
 
-      const TAO_IDL_CPP_Keyword_Entry *entry =
+      TAO_IDL_CPP_Keyword_Entry const *entry =
         cpp_key_tbl.lookup (lname + 5, len);
 
       if (entry != nullptr)
