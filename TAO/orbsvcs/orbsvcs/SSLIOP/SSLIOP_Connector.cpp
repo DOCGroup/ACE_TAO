@@ -27,7 +27,7 @@ TAO::SSLIOP::Connector::Connector (::Security::QOP qop, bool check_host)
     qop_ (qop),
     check_host_ (check_host),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 

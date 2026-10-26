@@ -24,8 +24,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
-  : SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : SVC_HANDLER (t, nullptr, nullptr),
+    TAO_Connection_Handler (nullptr),
     current_ ()
 {
   // This constructor should *never* get called, it is just here to
@@ -37,7 +37,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
 }
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
-  : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core),
     current_ ()
 {

@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
   : TAO_IIOP_Connector (),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 
