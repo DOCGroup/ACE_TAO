@@ -28,21 +28,21 @@ TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
 }
 
 bool
-TAO_DTP_Config_Registry::find (const ACE_CString& name,
+TAO_DTP_Config_Registry::find (ACE_CString const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.find (name, entry) == 0;
 }
 
 int
-TAO_DTP_Config_Registry::bind (const ACE_CString& name,
+TAO_DTP_Config_Registry::bind (ACE_CString const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.bind (name, entry);
 }
 
 int
-TAO_DTP_Config_Registry::rebind (const ACE_CString& name,
+TAO_DTP_Config_Registry::rebind (ACE_CString const &name,
                                  TAO_DTP_Definition &entry)
 {
   return registry_.rebind (name, entry);
@@ -226,7 +226,7 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 int
 TAO_DTP_Config::parse_long (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
-                                   const ACE_TCHAR *match, long &value)
+                                   ACE_TCHAR const *match, long &value)
 {
   ACE_TCHAR *str;
   int result = this->parse_string (curarg, argc, argv, match, str);
@@ -246,7 +246,7 @@ TAO_DTP_Config::parse_long (int &curarg,
 int
 TAO_DTP_Config::parse_bool (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
-                                   const ACE_TCHAR *match, bool &value)
+                                   ACE_TCHAR const *match, bool &value)
 {
   long num;
   int result = this->parse_long (curarg, argc, argv, match, num);
@@ -261,7 +261,7 @@ TAO_DTP_Config::parse_bool (int &curarg,
 int
 TAO_DTP_Config::parse_string (int &curarg,
                               int argc, ACE_TCHAR *argv[],
-                              const ACE_TCHAR *match, ACE_TCHAR *&value)
+                              ACE_TCHAR const *match, ACE_TCHAR *&value)
 {
   if (ACE_OS::strcasecmp (argv[curarg], match) != 0)
     return 0;
@@ -279,8 +279,8 @@ TAO_DTP_Config::parse_string (int &curarg,
 
 
 void
-TAO_DTP_Config::report_option_value_error (const ACE_TCHAR* option_name,
-                                           const ACE_TCHAR* option_value)
+TAO_DTP_Config::report_option_value_error (ACE_TCHAR const *option_name,
+                                           ACE_TCHAR const *option_value)
 {
   if (TAO_debug_level > 0)
     {

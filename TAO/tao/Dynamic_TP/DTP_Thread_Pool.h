@@ -49,7 +49,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_New_Leader_Generator
 {
 public:
   /// Constructor.
-  TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
+  explicit TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
@@ -78,7 +78,7 @@ class TAO_DTP_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
   /// Constructor.
-  TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
+  explicit TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
   int svc () override;
@@ -112,7 +112,7 @@ class TAO_DTP_Termination_Waiter : public ACE_Task_Base
 {
 public:
   /// Constructor.
-  TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
+  explicit TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
 
   /// Method executed when a thread is spawned.
   int svc () override;
@@ -181,7 +181,7 @@ public:
   /// @name Accessors
   // @{
   bool use_timeouts () const;
-  const ACE_Time_Value& dynamic_thread_time () const;
+  ACE_Time_Value const &dynamic_thread_time () const;
 
   TAO_DTP_Thread_Pool_Manager &manager () const;
   CORBA::ULong id () const;
@@ -239,7 +239,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool_Manager
 {
 public:
   /// Constructor.
-  TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_DTP_Thread_Pool_Manager ();

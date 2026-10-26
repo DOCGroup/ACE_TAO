@@ -161,8 +161,8 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 }
 
 void
-TAO_DTP_POA_Loader::report_option_value_error (const ACE_TCHAR* name,
-                                               const ACE_TCHAR* value)
+TAO_DTP_POA_Loader::report_option_value_error (ACE_TCHAR const *name,
+                                               ACE_TCHAR const *value)
 {
   if (TAO_debug_level > 0)
     {

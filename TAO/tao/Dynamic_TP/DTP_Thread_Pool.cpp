@@ -92,7 +92,7 @@ TAO_DTP_Thread_Pool_Threads::svc ()
       // Do the work
       this->run (orb_core);
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       // No point propagating this exception.  Print it out.
       TAOLIB_ERROR ((LM_ERROR,

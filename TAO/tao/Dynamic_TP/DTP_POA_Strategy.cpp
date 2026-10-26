@@ -120,9 +120,9 @@ TAO_DTP_POA_Strategy::poa_deactivated_event_i ()
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_DTP_POA_Strategy::dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant)
 {
   TAO::CSD::TP_Servant_State::HandleType servant_state =
@@ -169,9 +169,9 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
 TAO::CSD::Strategy_Base::DispatchResult
 TAO_DTP_POA_Strategy::dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant)
 {
   TAO::CSD::TP_Servant_State::HandleType servant_state =
@@ -279,7 +279,7 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
 void
 TAO_DTP_POA_Strategy::servant_activated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   if (this->serialize_servants_)
     {
@@ -291,7 +291,7 @@ TAO_DTP_POA_Strategy::servant_activated_event_i
 void
 TAO_DTP_POA_Strategy::servant_deactivated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->dtp_task_.cancel_servant (servant);

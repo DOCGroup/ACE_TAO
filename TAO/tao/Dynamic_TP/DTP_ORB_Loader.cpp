@@ -78,7 +78,7 @@ TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught while "
