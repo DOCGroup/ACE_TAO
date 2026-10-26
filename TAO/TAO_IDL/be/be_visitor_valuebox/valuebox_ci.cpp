@@ -10,58 +10,7 @@
 //=============================================================================
 
 #include "valuebox.h"
-
-#include <string>
-
-namespace
-{
-  std::string
-  valuebox_inline_type_name (char const *const_prefix,
-                             char const *name,
-                             char const *type_suffix = "")
-  {
-    bool is_const = const_prefix[0] == 'c'
-      && const_prefix[1] == 'o'
-      && const_prefix[2] == 'n'
-      && const_prefix[3] == 's'
-      && const_prefix[4] == 't'
-      && const_prefix[5] == ' ';
-
-    if (is_const)
-      {
-        const_prefix += 6;
-      }
-
-    std::string type_name (const_prefix);
-    type_name += name;
-
-    if (is_const)
-      {
-        std::string::size_type star = type_name.find ('*');
-        if (star == std::string::npos)
-          {
-            type_name += " const";
-          }
-        else
-          {
-            std::string::size_type position = star;
-            while (position > 0 && type_name[position - 1] == ' ')
-              {
-                --position;
-              }
-
-            type_name.insert (position, " const");
-            if (position == star)
-              {
-                type_name.insert (position + 6, " ");
-              }
-          }
-      }
-
-    type_name += type_suffix;
-    return type_name;
-  }
-}
+#include "valuebox_type_name.h"
 
 be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
   : be_visitor_valuebox (ctx)
@@ -335,7 +284,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public constructor with one const argument of underlying type
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ("
-      << valuebox_inline_type_name ("const ", node->full_name ()).c_str ()
+      << valuebox_type_name ("const ", node->full_name ()).c_str ()
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
@@ -353,7 +302,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public assignment operator with one argument of type const char *
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
       << vb_node->name () << "::operator= ("
-      << valuebox_inline_type_name ("const ", node->full_name ()).c_str ()
+      << valuebox_type_name ("const ", node->full_name ()).c_str ()
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_nl
@@ -373,7 +322,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Accessor function takes no arguments and returns a const char *
   *os << "ACE_INLINE "
-      << valuebox_inline_type_name ("const ", node->full_name ()).c_str () << be_nl
+      << valuebox_type_name ("const ", node->full_name ()).c_str () << be_nl
       << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -390,7 +339,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Modifier function with one argument of type const char *
   *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::_value ("
-      << valuebox_inline_type_name ("const ", node->full_name ()).c_str ()
+      << valuebox_type_name ("const ", node->full_name ()).c_str ()
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
@@ -406,7 +355,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Access to the boxed value for method signatures
   *os << "ACE_INLINE "
-      << valuebox_inline_type_name ("const ", node->full_name ()).c_str () << be_nl
+      << valuebox_type_name ("const ", node->full_name ()).c_str () << be_nl
       << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl

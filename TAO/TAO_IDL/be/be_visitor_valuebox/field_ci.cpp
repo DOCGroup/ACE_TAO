@@ -12,62 +12,7 @@
 //=============================================================================
 
 #include "valuebox.h"
-
-#include <memory>
-#include <string>
-
-namespace
-{
-  void
-  emit_field_inline_type (TAO_OutStream *os,
-                          char const *const_prefix,
-                          UTL_IdList *name,
-                          char const *type_suffix)
-  {
-    bool is_const = const_prefix[0] == 'c'
-      && const_prefix[1] == 'o'
-      && const_prefix[2] == 'n'
-      && const_prefix[3] == 's'
-      && const_prefix[4] == 't'
-      && const_prefix[5] == ' ';
-
-    if (is_const)
-      {
-        const_prefix += 6;
-      }
-
-    std::unique_ptr<char[]> name_string (name->get_string_copy ());
-    std::string type_name (const_prefix);
-    type_name += name_string.get ();
-
-    if (is_const)
-      {
-        std::string::size_type star = type_name.find ('*');
-
-        if (star == std::string::npos)
-          {
-            type_name += " const";
-          }
-        else
-          {
-            std::string::size_type position = star;
-            while (position > 0 && type_name[position - 1] == ' ')
-              {
-                --position;
-              }
-
-            type_name.insert (position, " const");
-            if (position == star)
-              {
-                type_name.insert (position + 6, " ");
-              }
-          }
-      }
-
-    type_name += type_suffix;
-    *os << type_name.c_str ();
-  }
-}
+#include "valuebox_type_name.h"
 
 be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
     be_visitor_context *ctx
@@ -600,8 +545,8 @@ be_visitor_valuebox_field_ci::visit_union (be_union *node)
 void
 be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
                                                be_type *field_type,
-                                               char const *const_arg,
-                                               char const *arg_modifier)
+                                               std::string const &const_arg,
+                                               std::string const &arg_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -609,7 +554,7 @@ be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
 
   *os << "ACE_INLINE void" << be_nl
       << vb_node_->name () << "::" << field->local_name () << " (";
-  emit_field_inline_type (os, const_arg, field_type->name (), arg_modifier);
+  emit_valuebox_type_name (os, const_arg, field_type->name (), arg_modifier);
   *os << " val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
@@ -620,8 +565,8 @@ be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
 void
 be_visitor_valuebox_field_ci::emit_member_get (be_decl *field,
                                                be_type *field_type,
-                                               char const *const_prefix,
-                                               char const *type_suffix,
+                                               std::string const &const_prefix,
+                                               std::string const &type_suffix,
                                                char const *const_method,
                                                char const *access_modifier)
 {
@@ -630,7 +575,7 @@ be_visitor_valuebox_field_ci::emit_member_get (be_decl *field,
   *os << "/// Accessor to retrieve the member." << be_nl;
 
   *os << "ACE_INLINE ";
-  emit_field_inline_type (os, const_prefix, field_type->name (), type_suffix);
+  emit_valuebox_type_name (os, const_prefix, field_type->name (), type_suffix);
   *os << be_nl
       << vb_node_->name () << "::" << field->local_name ()
       << " () " << const_method << be_nl
