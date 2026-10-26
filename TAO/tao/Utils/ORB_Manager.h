@@ -52,10 +52,10 @@ public:
    *                     If pointer is 0, a new POAManager is created
    *                     internally in the init() call.
    */
-  TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),
-                   PortableServer::POA_ptr poa = PortableServer::POA::_nil(),
-                   PortableServer::POAManager_ptr poa_manager =
-                      PortableServer::POAManager::_nil());
+  explicit TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),
+                            PortableServer::POA_ptr poa = PortableServer::POA::_nil(),
+                            PortableServer::POAManager_ptr poa_manager =
+                              PortableServer::POAManager::_nil());
 
   /**
    * Initialize the ORB/root POA, using the supplied command line
@@ -66,7 +66,7 @@ public:
    */
   int init (int &argc,
             ACE_TCHAR *argv[],
-            const char *orb_name = nullptr);
+            char const *orb_name = nullptr);
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -79,8 +79,8 @@ public:
    */
   int init_child_poa (int &argc,
                       ACE_TCHAR *argv[],
-                      const char *poa_name,
-                      const char *orb_name = nullptr);
+                      char const *poa_name,
+                      char const *orb_name = nullptr);
 #endif /* CORBA_E_MICRO */
 
   /**
@@ -123,7 +123,7 @@ public:
    *  @param id  A string representation of the Object ID
    *             of the servant to deactivate in the POA
    */
-  void deactivate (const char *id);
+  void deactivate (char const *id);
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -140,7 +140,7 @@ public:
    *           successful.  Caller of this method is responsible for
    *           memory deallocation of the string.
    */
-  char *activate_under_child_poa (const char *object_name,
+  char *activate_under_child_poa (char const *object_name,
                                   PortableServer::Servant servant);
 
   /**
@@ -149,7 +149,7 @@ public:
    * @param id  string representation of the object ID, which represents
    *            the object to deactivate in the POA
    */
-  void deactivate_under_child_poa (const char *id);
+  void deactivate_under_child_poa (char const *id);
 #endif /* CORBA_E_MICRO */
 
   /**
