@@ -20,7 +20,7 @@ namespace XSCRT
     {
     }
 
-    OptionalArg (T const& value) noexcept
+    explicit OptionalArg (T const& value) noexcept
         : value_ (std::addressof (value))
     {
     }
