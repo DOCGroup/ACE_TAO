@@ -4,7 +4,7 @@
 namespace XMLSchema
 {
   //@@ VC6
-  template<typename T>
+  template<typename T, typename Base = XSCRT::Type>
   void
   add_info (XSCRT::ExtendedTypeInfoMap& map, T*)
   {
@@ -16,7 +16,7 @@ namespace XMLSchema
 
     info.add_base (ExtendedTypeInfo::Access::public_,
                    false,
-                   typeid (XSCRT::Type));
+                   typeid (Base));
 
     map.insert (std::make_pair (id, info));
   }
@@ -58,14 +58,14 @@ namespace XMLSchema
 
     add_info<string<C> > (map, 0);
 
-    add_info<normalizedString<C> > (map, 0);
-    add_info<token<C> > (map, 0);
-    add_info<NMTOKEN<C> > (map, 0);
-    add_info<Name<C> > (map, 0);
-    add_info<NCName<C> > (map, 0);
-    add_info<QName<C> > (map, 0);
+    add_info<normalizedString<C>, string<C>> (map, 0);
+    add_info<token<C>, normalizedString<C>> (map, 0);
+    add_info<NMTOKEN<C>, token<C>> (map, 0);
+    add_info<Name<C>, token<C>> (map, 0);
+    add_info<NCName<C>, Name<C>> (map, 0);
+    add_info<QName<C>, Name<C>> (map, 0);
 
-    add_info<ID<C> > (map, 0);
+    add_info<ID<C>, NCName<C>> (map, 0);
 
     // IDREF_Base
     //

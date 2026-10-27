@@ -6,6 +6,8 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <stdexcept>
+#include <limits>
 #include "ace/ace_wchar.h"
 // #include <iostream> //@@ tmp
 
@@ -14,6 +16,22 @@
 
 namespace XSCRT
 {
+  namespace Details
+  {
+    template <typename C, typename X>
+    X parse_numeric (std::basic_string<C> const& value)
+    {
+      std::basic_istringstream<C> stream (value);
+      X result {};
+      if (!(stream >> result))
+        throw std::invalid_argument ("Invalid XML numeric value");
+      stream >> std::ws;
+      if (!stream.eof ())
+        throw std::invalid_argument ("Invalid XML numeric value");
+      return result;
+    }
+  }
+
   struct IdentityProvider
   {
     virtual bool
@@ -267,18 +285,14 @@ namespace XSCRT
 
     template<typename C>
     FundamentalType (XML::Element<C> const& e)
+        : x_ (Details::parse_numeric<C, X> (e.value ()))
     {
-      std::basic_stringstream<C> s;
-      s << e.value ();
-      s >> x_;
     }
 
     template<typename C>
     FundamentalType (XML::Attribute<C> const& a)
+        : x_ (Details::parse_numeric<C, X> (a.value ()))
     {
-      std::basic_stringstream<C> s;
-      s << a.value ();
-      s >> x_;
     }
 
     FundamentalType (X const& x)
@@ -305,7 +319,7 @@ namespace XSCRT
     }
 
   protected:
-    X x_;
+    X x_ {};
   };
 
   // Specialization for `signed char'
@@ -315,12 +329,10 @@ namespace XSCRT
   FundamentalType<signed char>::
   FundamentalType (XML::Element<C> const& e)
   {
-    std::basic_stringstream<C> s;
-    s << e.value ();
-
-    short t;
-    s >> t;
-
+    short const t (Details::parse_numeric<C, short> (e.value ()));
+    if (t < std::numeric_limits<signed char>::min () ||
+        t > std::numeric_limits<signed char>::max ())
+      throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
 
@@ -330,12 +342,10 @@ namespace XSCRT
   FundamentalType<signed char>::
   FundamentalType (XML::Attribute<C> const& a)
   {
-    std::basic_stringstream<C> s;
-    s << a.value ();
-
-    short t;
-    s >> t;
-
+    short const t (Details::parse_numeric<C, short> (a.value ()));
+    if (t < std::numeric_limits<signed char>::min () ||
+        t > std::numeric_limits<signed char>::max ())
+      throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
 
@@ -346,12 +356,9 @@ namespace XSCRT
   FundamentalType<unsigned char>::
   FundamentalType (XML::Element<C> const& e)
   {
-    std::basic_stringstream<C> s;
-    s << e.value ();
-
-    unsigned short t;
-    s >> t;
-
+    unsigned short const t (Details::parse_numeric<C, unsigned short> (e.value ()));
+    if (t > std::numeric_limits<unsigned char>::max ())
+      throw std::out_of_range ("XML unsignedByte value is out of range");
     x_ = static_cast<unsigned char> (t);
   }
 
@@ -361,12 +368,9 @@ namespace XSCRT
   FundamentalType<unsigned char>::
   FundamentalType (XML::Attribute<C> const& a)
   {
-    std::basic_stringstream<C> s;
-    s << a.value ();
-
-    unsigned short t;
-    s >> t;
-
+    unsigned short const t (Details::parse_numeric<C, unsigned short> (a.value ()));
+    if (t > std::numeric_limits<unsigned char>::max ())
+      throw std::out_of_range ("XML unsignedByte value is out of range");
     x_ = static_cast<unsigned char> (t);
   }
 

@@ -5,6 +5,9 @@
 #define XSCRT_XML_HPP
 
 #include <string>
+#include <algorithm>
+#include <type_traits>
+#include <utility>
 
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
@@ -31,19 +34,56 @@ namespace XSCRT
     public :
       template <typename C>
       string (std::basic_string<C> const& s)
-          : s_ (XSCRT::XML::transcode<C> (s))
+          : s_ (XSCRT::XML::transcode<C> (s)),
+            xerces_allocated_ (std::is_same<C, char>::value)
       {
       }
 
       template <typename C>
       string (C const* s)
-          : s_ (XSCRT::XML::transcode<C> (s))
+          : s_ (XSCRT::XML::transcode<C> (s)),
+            xerces_allocated_ (std::is_same<C, char>::value)
       {
+      }
+
+      string (string const& s)
+          : s_ (copy (s.s_)), xerces_allocated_ (false)
+      {
+      }
+
+      string (string&& s) noexcept
+          : s_ (s.s_), xerces_allocated_ (s.xerces_allocated_)
+      {
+        s.s_ = nullptr;
+      }
+
+      string& operator= (string const& s)
+      {
+        if (this != &s)
+        {
+          XMLCh* p (copy (s.s_));
+          release ();
+          s_ = p;
+          xerces_allocated_ = false;
+        }
+        return *this;
+      }
+
+      string& operator= (string&& s) noexcept
+      {
+        if (this != &s)
+        {
+          release ();
+          s_ = s.s_;
+          xerces_allocated_ = s.xerces_allocated_;
+          s.s_ = nullptr;
+        }
+        return *this;
       }
 
       ~string ()
       {
-        delete[] s_;
+        release ();
       }
 
       XMLCh const*
@@ -53,7 +93,26 @@ namespace XSCRT
       }
 
     private :
+      static XMLCh* copy (XMLCh const* s)
+      {
+        if (s == nullptr) return nullptr;
+        std::size_t const n (xercesc::XMLString::stringLen (s));
+        XMLCh* const r (new XMLCh[n + 1]);
+        std::copy (s, s + n + 1, r);
+        return r;
+      }
+
+      void release () noexcept
+      {
+        if (xerces_allocated_)
+          xercesc::XMLString::release (&s_);
+        else
+          delete[] s_;
+        s_ = nullptr;
+      }
+
       XMLCh* s_;
+      bool xerces_allocated_;
     };
 
 

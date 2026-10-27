@@ -4,6 +4,7 @@
 #define XSCRT_PARSER_HPP
 
 #include <string>
+#include <stdexcept>
 
 #include "ace/XML_Utils/XSCRT/XML.hpp"
 
@@ -22,13 +23,22 @@ namespace XSCRT
     bool
     more_elements () const
     {
-      return e_->getLength () > ei_;
+      for (XMLSize_t i (ei_); i < e_->getLength (); ++i)
+        if (e_->item (i)->getNodeType () == xercesc::DOMNode::ELEMENT_NODE)
+          return true;
+      return false;
     }
 
     XML::Element<C>
     next_element ()
     {
-      return XML::Element<C> (XML::dom_cast <xercesc::DOMElement*> (e_->item (ei_++)));
+      while (ei_ < e_->getLength ())
+      {
+        xercesc::DOMNode* const n (e_->item (ei_++));
+        if (n->getNodeType () == xercesc::DOMNode::ELEMENT_NODE)
+          return XML::Element<C> (XML::dom_cast <xercesc::DOMElement*> (n));
+      }
+      throw std::out_of_range ("No more child elements");
     }
 
     bool

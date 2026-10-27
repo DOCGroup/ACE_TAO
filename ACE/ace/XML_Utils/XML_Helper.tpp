@@ -10,6 +10,7 @@
 #include "XercesString.h"
 #include "xercesc/dom/DOMLSSerializer.hpp"
 #include <memory>
+#include <stdexcept>
 
 namespace XML
 {
@@ -54,7 +55,7 @@ namespace XML
     if (this->initialized_)
       return;
 
-    // Initialize the Xerces run-time
+    bool runtime_started (false);
     try
       {
         if (!resolver_)
@@ -70,31 +71,39 @@ namespace XML
           }
 
         xercesc::XMLPlatformUtils::Initialize();
+        runtime_started = true;
+
+        // Instantiate the DOM parser implementation.
+        static const XMLCh gLS[] = { xercesc::chLatin_L,
+                                     xercesc::chLatin_S,
+                                     xercesc::chNull };
+
+        impl_ = DOMImplementationRegistry::getDOMImplementation(gLS);
+        if (impl_ == nullptr)
+          throw std::runtime_error ("Xerces does not provide DOM Load/Store");
+
+        this->initialized_ = true;
       }
     catch (const XMLException& e)
       {
         char* message = XMLString::transcode (e.getMessage());
         std::unique_ptr<char[]> cleanup_message (message);
-
+        impl_ = nullptr;
+        if (runtime_started)
+          xercesc::XMLPlatformUtils::Terminate ();
+        if (release_resolver_) { delete resolver_; resolver_ = nullptr; release_resolver_ = false; }
+        if (release_e_handler_) { delete e_handler_; e_handler_ = nullptr; release_e_handler_ = false; }
         throw;
       }
     catch (...)
       {
-        ACELIB_DEBUG ((LM_DEBUG, "(%P|%t) Some other exception, returning\n"));
-        return;
+        impl_ = nullptr;
+        if (runtime_started)
+          xercesc::XMLPlatformUtils::Terminate ();
+        if (release_resolver_) { delete resolver_; resolver_ = nullptr; release_resolver_ = false; }
+        if (release_e_handler_) { delete e_handler_; e_handler_ = nullptr; release_e_handler_ = false; }
+        throw;
       }
-
-    // Instantiate the DOM parser.
-    static const XMLCh gLS[] = { xercesc::chLatin_L,
-                                 xercesc::chLatin_S,
-                                 xercesc::chNull };
-
-    // Get an implementation of the Load-Store (LS) interface
-    // and cache it for later use
-    impl_ = DOMImplementationRegistry::getDOMImplementation(gLS);
-
-    this->initialized_ = true;
-    return;
   }
 
   template <typename Resolver, typename Error>
@@ -105,6 +114,9 @@ namespace XML
   {
     if (!root || !ns)
       return nullptr;
+
+    if (!initialized_ || impl_ == nullptr)
+      throw std::logic_error ("XML_Helper is not initialized");
 
     return this->impl_->createDocument (XStr (ns),
                                         XStr (root),
@@ -117,6 +129,8 @@ namespace XML
                                                const ACE_TCHAR *pid,
                                                const ACE_TCHAR *sid) const
   {
+    if (!initialized_ || impl_ == nullptr)
+      throw std::logic_error ("XML_Helper is not initialized");
     return this->impl_->createDocumentType (XStr (qn),
                                             XStr (pid),
                                             XStr (sid));
@@ -128,6 +142,9 @@ namespace XML
 
     if (url == 0)
       return 0;
+
+    if (!initialized_ || impl_ == nullptr)
+      throw std::logic_error ("XML_Helper is not initialized");
 
     try
       {
@@ -250,7 +267,7 @@ namespace XML
   XML_Helper<Resolver, Error>::get_resolver ()
   {
     if (!this->resolver_)
-      throw std::exception ();
+      throw std::logic_error ("XML resolver is not available");
 
     return *this->resolver_;
   }
@@ -260,7 +277,7 @@ namespace XML
   XML_Helper<Resolver, Error>::get_error_handler ()
   {
     if (!this->e_handler_)
-      throw std::exception ();
+      throw std::logic_error ("XML error handler is not available");
 
     return *this->e_handler_;
   }
@@ -270,25 +287,43 @@ namespace XML
   XML_Helper<Resolver, Error>::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
                                           const ACE_TCHAR *file) const
   {
+    if (!initialized_ || impl_ == nullptr)
+      throw std::logic_error ("XML_Helper is not initialized");
+    if (doc == nullptr || file == nullptr)
+      return false;
+
+    struct SerializerReleaser
+    {
+      void operator() (XERCES_CPP_NAMESPACE::DOMLSSerializer* p) const
+      { if (p != nullptr) p->release (); }
+    };
+    struct OutputReleaser
+    {
+      void operator() (XERCES_CPP_NAMESPACE::DOMLSOutput* p) const
+      { if (p != nullptr) p->release (); }
+    };
+
     try
       {
-        bool retn;
-        XERCES_CPP_NAMESPACE::DOMLSSerializer *serializer (impl_->createLSSerializer ());
+        std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSSerializer, SerializerReleaser>
+          serializer (impl_->createLSSerializer ());
+        if (!serializer) return false;
         XERCES_CPP_NAMESPACE::DOMConfiguration *ser_config (serializer->getDomConfig ());
-        XERCES_CPP_NAMESPACE::DOMLSOutput *output (impl_->createLSOutput ());
+        std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSOutput, OutputReleaser>
+          output (impl_->createLSOutput ());
+        if (!output) return false;
 
         if (ser_config->canSetParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true))
           ser_config->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
 
-        XMLFormatTarget *format_target = new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (ACE_TEXT_ALWAYS_CHAR (file));
+        std::unique_ptr<XMLFormatTarget> format_target (
+          new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (ACE_TEXT_ALWAYS_CHAR (file)));
 
-        output->setByteStream (format_target);
+        output->setByteStream (format_target.get ());
 
-        retn = serializer->write (doc, output);
-
-        output->release ();
-        serializer->release ();
-        return retn;
+        bool const result (serializer->write (doc, output.get ()));
+        output.reset ();
+        return result;
       }
     catch (const xercesc::XMLException &e)
       {
