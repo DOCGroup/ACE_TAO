@@ -22,6 +22,11 @@ namespace XSCRT
     X parse_numeric (std::basic_string<C> const& value)
     {
       std::basic_istringstream<C> stream (value);
+      stream >> std::ws;
+      if (std::numeric_limits<X>::is_integer &&
+          !std::numeric_limits<X>::is_signed &&
+          stream.peek () == stream.widen ('-'))
+        throw std::invalid_argument ("Invalid XML numeric value");
       X result {};
       if (!(stream >> result))
         throw std::invalid_argument ("Invalid XML numeric value");
