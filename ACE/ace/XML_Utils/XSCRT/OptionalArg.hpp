@@ -25,6 +25,9 @@ namespace XSCRT
     {
     }
 
+    OptionalArg (T&&) = delete;
+    OptionalArg (T const&&) = delete;
+
     explicit operator bool () const noexcept
     {
       return value_ != nullptr;
