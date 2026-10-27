@@ -1088,13 +1088,13 @@ BASEHDR=`find \
     ACEXML/common \
     ACEXML/parser/parser \
     Kokyu \
-    -name '*.h' -not -name 'config-*'`
+    \( -name '*.h' -o -name '*.hpp' \) -not -name 'config-*'`
 %if 0%{?_with_tao:1}%{?_without_tao:0}
 TAO_MM_OPTS="-I TAO -I TAO/orbsvcs -I TAO/orbsvcs/orbsvcs"
 BASEHDR="$BASEHDR `find \
     TAO/tao \
     TAO/orbsvcs/orbsvcs \
-    -name '*.h' -not -name 'config-*'`"
+    \( -name '*.h' -o -name '*.hpp' \) -not -name 'config-*'`"
 %endif
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
