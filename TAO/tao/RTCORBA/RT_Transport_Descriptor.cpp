@@ -79,7 +79,7 @@ TAO_RT_Transport_Descriptor::is_equivalent (TAO_Transport_Descriptor_Interface c
     return false;
 
   // Check if endpoint is equivalent.
-  if (this->endpoint_->is_equivalent (rhs->endpoint_) == 0)
+  if (!this->endpoint_->is_equivalent (rhs->endpoint_))
     return false;
 
   // Check the property_list_.
@@ -94,7 +94,7 @@ TAO_RT_Transport_Descriptor::is_equivalent (TAO_Transport_Descriptor_Interface c
       if (rhs_current == nullptr || current == nullptr)
         return false;
 
-      if (current->is_equivalent (rhs_current) == 0)
+      if (!current->is_equivalent (rhs_current))
         return false;
 
       current = current->next_;

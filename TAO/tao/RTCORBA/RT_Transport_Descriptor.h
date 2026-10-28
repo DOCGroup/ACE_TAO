@@ -36,8 +36,8 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor
 {
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
-                               CORBA::Boolean flag = false);
+  explicit TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
+                                        CORBA::Boolean flag = false);
 
   /// Destructor
   ~TAO_RT_Transport_Descriptor () override;
