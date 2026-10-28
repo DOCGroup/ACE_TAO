@@ -36,21 +36,26 @@ public:
   /// Destructor
   ~TAO_Notify_PushSupplier () override = default;
 
+  TAO_Notify_PushSupplier (TAO_Notify_PushSupplier const &) = delete;
+  TAO_Notify_PushSupplier (TAO_Notify_PushSupplier &&) = delete;
+  TAO_Notify_PushSupplier &operator= (TAO_Notify_PushSupplier const &) = delete;
+  TAO_Notify_PushSupplier &operator= (TAO_Notify_PushSupplier &&) = delete;
+
   /// Init
   void init (CosEventComm::PushSupplier_ptr push_supplier);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior () const;
+  ACE_CString get_ior () const override;
 
 protected:
-  virtual CORBA::Object_ptr get_supplier ();
+  CORBA::Object_ptr get_supplier () override;
 
   /// The Supplier
   CosEventComm::PushSupplier_var push_supplier_;
 
 private:
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release ();
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
