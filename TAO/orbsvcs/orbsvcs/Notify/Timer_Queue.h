@@ -38,15 +38,20 @@ public:
   TAO_Notify_Timer_Queue ();
 
   /// Destructor
-  virtual ~TAO_Notify_Timer_Queue ();
+  ~TAO_Notify_Timer_Queue () override;
+
+  TAO_Notify_Timer_Queue (TAO_Notify_Timer_Queue const &) = delete;
+  TAO_Notify_Timer_Queue (TAO_Notify_Timer_Queue &&) = delete;
+  TAO_Notify_Timer_Queue &operator= (TAO_Notify_Timer_Queue const &) = delete;
+  TAO_Notify_Timer_Queue &operator= (TAO_Notify_Timer_Queue &&) = delete;
 
   /// Schedule a timer
-  virtual long schedule_timer (ACE_Event_Handler *handler,
+  long schedule_timer (ACE_Event_Handler *handler,
                                const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval);
+                               const ACE_Time_Value &interval) override;
 
   /// Cancel Timer
-  virtual int cancel_timer (long timer_id);
+  int cancel_timer (long timer_id) override;
 
   /// Get the native impl.
   ACE_Timer_Queue& impl ();
@@ -57,7 +62,7 @@ protected:
 
 private:
   /// Release
-  virtual void release ();
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
