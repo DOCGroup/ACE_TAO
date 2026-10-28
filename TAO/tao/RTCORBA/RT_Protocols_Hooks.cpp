@@ -418,7 +418,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint ()
 
       CORBA::Short const priority = this->current_->the_priority ();
 
-      if (pm->to_network (priority, codepoint) == 0)
+      if (!pm->to_network (priority, codepoint))
         {
           if (TAO_debug_level > 0)
             {
@@ -592,7 +592,7 @@ TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority)
 
   CORBA::Short native_priority;
 
-  if (priority_mapping->to_native (priority, native_priority) == 0)
+  if (!priority_mapping->to_native (priority, native_priority))
     {
       return -1;
     }
