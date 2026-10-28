@@ -12,6 +12,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_executor_private_exh::be_visitor_executor_private_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -30,8 +32,8 @@ be_visitor_executor_private_exh::visit_provides (be_provides *node)
   AST_Decl *i_scope = ScopeAsDecl (impl->defined_in ());
   bool is_global = (i_scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
-  ACE_CString scope_name =
-    IdentifierHelper::orig_sn (i_scope->name (), false);
+  std::string const scope_name (
+    IdentifierHelper::orig_sn (i_scope->name (), false).c_str ());
 
   os_ << be_nl_2;
   os_ << "/// Object reference to "<< this->ctx_->port_prefix ().c_str ()

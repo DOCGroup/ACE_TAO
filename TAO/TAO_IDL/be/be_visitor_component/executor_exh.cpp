@@ -54,8 +54,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
     }
   this->node_ = node;
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
 
   // No _cxx_ prefix.
   const char *lname =
@@ -288,8 +288,8 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
   be_type *impl = node->provides_type ();
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
   const char *lname =

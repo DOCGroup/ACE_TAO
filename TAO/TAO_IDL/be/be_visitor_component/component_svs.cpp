@@ -11,6 +11,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_component_svs::be_visitor_component_svs (be_visitor_context *ctx)
   : be_visitor_component (ctx),
     os_ (*ctx->stream ()),
@@ -81,9 +83,9 @@ be_visitor_component_svs::visit_connector (be_connector *node)
 void
 be_visitor_component_svs::gen_entrypoint (AST_Component *node)
 {
-  ACE_CString sname_str (
+  std::string const sname_str (
     ScopeAsDecl (node->defined_in ())->full_name ());
-  const char *sname = sname_str.c_str ();
+  char const * const sname = sname_str.c_str ();
   const char *lname = node->local_name ()->get_string ();
   const char *global = (sname_str == "" ? "" : "::");
 

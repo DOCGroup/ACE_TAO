@@ -48,7 +48,7 @@ be_visitor_component_ami_rh_ex_base::init ()
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
 
-  ACE_CString base ("AMI4CCM_");
+  std::string base ("AMI4CCM_");
   base += this->iface_->original_local_name ()->get_string ();
   base += "ReplyHandler";
 

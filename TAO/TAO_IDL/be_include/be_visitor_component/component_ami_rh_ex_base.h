@@ -13,6 +13,8 @@
 #ifndef _BE_COMPONENT_AMI_RH_EX_BASE_H_
 #define _BE_COMPONENT_AMI_RH_EX_BASE_H_
 
+#include <string>
+
 class be_visitor_context;
 
 /// This class inherits from the AMI connector visitor that its
@@ -46,8 +48,8 @@ protected:
 protected:
   be_interface *iface_ {};
   be_uses *port_ {};
-  ACE_CString class_name_;
-  ACE_CString base_class_name_;
+  std::string class_name_;
+  std::string base_class_name_;
 };
 
 // ======================================================

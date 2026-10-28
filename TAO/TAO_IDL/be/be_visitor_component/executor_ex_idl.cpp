@@ -42,12 +42,12 @@ be_visitor_executor_ex_idl::visit_component (
     }
   else
     {
-      ACE_CString sname_str =
+      std::string const sname_str (
         IdentifierHelper::orig_sn (
-          ScopeAsDecl (base->defined_in ())->name ());
+          ScopeAsDecl (base->defined_in ())->name ()).c_str ());
 
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
+      char const * const sname = sname_str.c_str ();
+      char const * const global = (sname_str.empty () ? "" : "::");
 
       os_ << global << sname << "::CCM_"
           << base->original_local_name ()->get_string ();
@@ -167,14 +167,14 @@ be_visitor_executor_ex_idl::visit_provides (
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
 
-  ACE_CString sname_str =
-    IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (
+    IdentifierHelper::orig_sn (scope->name ()).c_str ());
+  char const * const sname = sname_str.c_str ();
 
   const char *lname =
     impl->original_local_name ()->get_string ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  char const * const global = (sname_str.empty () ? "" : "::");
 
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();

@@ -11,6 +11,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_component_ex_idl::be_visitor_component_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_decl (ctx),
@@ -57,9 +59,9 @@ be_visitor_component_ex_idl::visit_component (
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
 
-  ACE_CString sname_str =
-    IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (
+    IdentifierHelper::orig_sn (scope->name ()).c_str ());
+  char const * const sname = sname_str.c_str ();
 
   const char *lname =
     node->original_local_name ()->get_string ();

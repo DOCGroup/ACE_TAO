@@ -28,14 +28,14 @@ be_visitor_servant_svh::visit_component (be_component *node)
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
   const char *lname =
     node_->original_local_name ()->get_string ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  char const * const global = (sname_str.empty () ? "" : "::");
 
 // ::CIAO::Session_Context_Impl<
 //       ::Inherited::CCM_Base_comp_Context,
@@ -287,11 +287,11 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       const char *obj_name = node->consumes_type ()->full_name ();
       const char *port_name = node->local_name ()->get_string ();
 
-      ACE_CString holder (obj_name);
-      ACE_CString::size_type pos = holder.rfind (':');
-      const char *ev_lname = nullptr;
+      std::string holder (obj_name);
+      std::size_t const pos = holder.rfind (':');
+      char const *ev_lname = nullptr;
 
-      if (pos == ACE_CString::npos)
+      if (pos == std::string::npos)
         {
           ev_lname = obj_name;
         }
@@ -313,11 +313,11 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
           << "{" << be_nl
           << "public:" << be_idt_nl;
 
-      ACE_CString sname_str (
+      std::string const sname_str (
         ScopeAsDecl (node_->defined_in ())->full_name ());
-      const char *sname = sname_str.c_str ();
-      const char *lname = node_->local_name ();
-      const char *global = (sname_str == "" ? "" : "::");
+      char const * const sname = sname_str.c_str ();
+      char const * const lname = node_->local_name ();
+      char const * const global = (sname_str.empty () ? "" : "::");
 
       os_ << ev_lname << "Consumer_" << port_name
           << "_Servant (" << be_idt_nl

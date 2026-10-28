@@ -30,8 +30,8 @@ be_visitor_context_svth::visit_component (be_component *node)
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
   const char *lname =
