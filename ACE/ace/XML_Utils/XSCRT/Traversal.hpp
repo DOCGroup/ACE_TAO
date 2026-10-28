@@ -44,9 +44,9 @@ namespace XSCRT
       }
 
     public:
-      typedef std::vector<TraverserBase<B> *> Traversers;
-      typedef std::map<TypeId, Traversers> TraversalMap;
-      typedef typename TraversalMap::const_iterator Iterator;
+      using Traversers = std::vector<TraverserBase<B> *>;
+      using TraversalMap = std::map<TypeId, Traversers>;
+      using Iterator = typename TraversalMap::const_iterator;
 
       Iterator begin () const
       {
@@ -67,8 +67,8 @@ namespace XSCRT
         }
       };
 
-      typedef std::map<ExtendedTypeInfo, std::size_t, TypeInfoComparator> LevelMap;
-      typedef std::set<ExtendedTypeInfo, TypeInfoComparator> TypeInfoSet;
+      using LevelMap = std::map<ExtendedTypeInfo, std::size_t, TypeInfoComparator>;
+      using TypeInfoSet = std::set<ExtendedTypeInfo, TypeInfoComparator>;
 
       static std::size_t compute_levels (ExtendedTypeInfo const &ti, std::size_t cur, LevelMap &map);
 
@@ -151,7 +151,7 @@ namespace XSCRT
       : TraverserBase<B>
       , virtual Dispatcher<B>
     {
-      typedef T Type;
+      using Type = T;
 
       Traverser ()
       {

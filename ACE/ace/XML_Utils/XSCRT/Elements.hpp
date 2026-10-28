@@ -270,7 +270,7 @@ namespace XSCRT
       }
     };
 
-    typedef std::map<IdentityProvider const *, Type *, IdentityComparator> Map_;
+    using Map_ = std::map<IdentityProvider const *, Type *, IdentityComparator>;
 
     std::unique_ptr<Map_> map_{};
   };
@@ -281,7 +281,7 @@ namespace XSCRT
   {
   public:
     // Trait for marshaling a FundamentalType X
-    typedef X CDR_Type__;
+    using CDR_Type__ = X;
 
     FundamentalType () = default;
 

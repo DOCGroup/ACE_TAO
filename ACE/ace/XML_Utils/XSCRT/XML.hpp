@@ -291,7 +291,7 @@ namespace XSCRT
     template <typename C>
     class Element
     {
-      typedef std::basic_string<C> string_;
+      using string_ = std::basic_string<C>;
 
     public:
       explicit Element (xercesc::DOMElement const *e)
@@ -405,7 +405,7 @@ namespace XSCRT
     template <typename C>
     class Attribute
     {
-      typedef std::basic_string<C> string_;
+      using string_ = std::basic_string<C>;
 
     public:
       explicit Attribute (xercesc::DOMAttr const *a)

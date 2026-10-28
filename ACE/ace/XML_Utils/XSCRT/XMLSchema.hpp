@@ -10,31 +10,31 @@
 
 namespace XMLSchema
 {
-  typedef XSCRT::FundamentalType<signed char> byte;
-  typedef XSCRT::FundamentalType<unsigned char> unsignedByte;
+  using byte = XSCRT::FundamentalType<signed char>;
+  using unsignedByte = XSCRT::FundamentalType<unsigned char>;
 
-  typedef XSCRT::FundamentalType<short> short_;
-  typedef XSCRT::FundamentalType<unsigned short> unsignedShort;
+  using short_ = XSCRT::FundamentalType<short>;
+  using unsignedShort = XSCRT::FundamentalType<unsigned short>;
 
-  typedef XSCRT::FundamentalType<int> int_;
-  typedef XSCRT::FundamentalType<unsigned int> unsignedInt;
+  using int_ = XSCRT::FundamentalType<int>;
+  using unsignedInt = XSCRT::FundamentalType<unsigned int>;
 
-  typedef XSCRT::FundamentalType<long long> long_;
-  typedef XSCRT::FundamentalType<unsigned long long> unsignedLong;
+  using long_ = XSCRT::FundamentalType<long long>;
+  using unsignedLong = XSCRT::FundamentalType<unsigned long long>;
 
   //@@ It would be nice to use some arbitrary-length integer class.
   //
-  typedef long_ decimal;
-  typedef decimal integer;
-  typedef integer nonPositiveInteger;
-  typedef integer nonNegativeInteger;
-  typedef nonNegativeInteger positiveInteger;
-  typedef nonPositiveInteger negativeInteger;
+  using decimal = long_;
+  using integer = decimal;
+  using nonPositiveInteger = integer;
+  using nonNegativeInteger = integer;
+  using positiveInteger = nonNegativeInteger;
+  using negativeInteger = nonPositiveInteger;
 
-  typedef XSCRT::FundamentalType<bool> boolean;
+  using boolean = XSCRT::FundamentalType<bool>;
 
-  typedef XSCRT::FundamentalType<float> float_;
-  typedef XSCRT::FundamentalType<double> double_;
+  using float_ = XSCRT::FundamentalType<float>;
+  using double_ = XSCRT::FundamentalType<double>;
 
   template <typename C>
   class string
@@ -42,7 +42,7 @@ namespace XMLSchema
     , public std::basic_string<C>
   {
   protected:
-    typedef std::basic_string<C> Base__;
+    using Base__ = std::basic_string<C>;
 
   public:
     string () = default;
@@ -73,7 +73,7 @@ namespace XMLSchema
   class normalizedString : public string<C>
   {
   protected:
-    typedef typename string<C>::Base__ Base__;
+    using Base__ = typename string<C>::Base__;
 
   public:
     normalizedString () = default;
@@ -104,7 +104,7 @@ namespace XMLSchema
   class token : public normalizedString<C>
   {
   protected:
-    typedef typename normalizedString<C>::Base__ Base__;
+    using Base__ = typename normalizedString<C>::Base__;
 
   public:
     token () = default;
@@ -135,7 +135,7 @@ namespace XMLSchema
   class NMTOKEN : public token<C>
   {
   protected:
-    typedef typename token<C>::Base__ Base__;
+    using Base__ = typename token<C>::Base__;
 
   public:
     NMTOKEN () = default;
@@ -166,7 +166,7 @@ namespace XMLSchema
   class Name : public token<C>
   {
   protected:
-    typedef typename token<C>::Base__ Base__;
+    using Base__ = typename token<C>::Base__;
 
   public:
     Name () = default;
@@ -197,7 +197,7 @@ namespace XMLSchema
   class NCName : public Name<C>
   {
   protected:
-    typedef typename Name<C>::Base__ Base__;
+    using Base__ = typename Name<C>::Base__;
 
   public:
     NCName () = default;
@@ -228,7 +228,7 @@ namespace XMLSchema
   class QName : public Name<C>
   {
   protected:
-    typedef typename Name<C>::Base__ Base__;
+    using Base__ = typename Name<C>::Base__;
 
   public:
     QName () = default;
@@ -282,7 +282,7 @@ namespace XMLSchema
   class ID : public NCName<C>
   {
   protected:
-    typedef typename NCName<C>::Base__ Base__;
+    using Base__ = typename NCName<C>::Base__;
 
   public:
     ~ID () override
@@ -491,7 +491,7 @@ namespace XMLSchema
       : XSCRT::Traversal::Traverser<T, XSCRT::Type>
       , XSCRT::Traversal::Traverser<IDREF_Base, XSCRT::Type>
     {
-      typedef T Type;
+      using Type = T;
 
       void traverse (XMLSchema::IDREF_Base &r) override
       {
@@ -500,22 +500,22 @@ namespace XMLSchema
       }
     };
 
-    typedef Traverser<byte> byte;
-    typedef Traverser<unsignedByte> unsignedByte;
+    using byte = Traverser<byte>;
+    using unsignedByte = Traverser<unsignedByte>;
 
-    typedef Traverser<short_> short_;
-    typedef Traverser<unsignedShort> unsignedShort;
+    using short_ = Traverser<short_>;
+    using unsignedShort = Traverser<unsignedShort>;
 
-    typedef Traverser<int_> int_;
-    typedef Traverser<unsignedInt> unsignedInt;
+    using int_ = Traverser<int_>;
+    using unsignedInt = Traverser<unsignedInt>;
 
-    typedef Traverser<long_> long_;
-    typedef Traverser<unsignedLong> unsignedLong;
+    using long_ = Traverser<long_>;
+    using unsignedLong = Traverser<unsignedLong>;
 
-    typedef Traverser<boolean> boolean;
+    using boolean = Traverser<boolean>;
 
-    typedef Traverser<float_> float_;
-    typedef Traverser<double_> double_;
+    using float_ = Traverser<float_>;
+    using double_ = Traverser<double_>;
 
     template <typename C>
     struct string : Traverser<XMLSchema::string<C>>

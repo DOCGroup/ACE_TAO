@@ -18,31 +18,31 @@
 #endif
 namespace XMLSchema
 {
-  typedef XSCRT::FundamentalType<ACE_INT8> byte;
-  typedef XSCRT::FundamentalType<ACE_UINT8> unsignedByte;
+  using byte = XSCRT::FundamentalType<ACE_INT8>;
+  using unsignedByte = XSCRT::FundamentalType<ACE_UINT8>;
 
-  typedef XSCRT::FundamentalType<ACE_INT16> short_;
-  typedef XSCRT::FundamentalType<ACE_UINT16> unsignedShort;
+  using short_ = XSCRT::FundamentalType<ACE_INT16>;
+  using unsignedShort = XSCRT::FundamentalType<ACE_UINT16>;
 
-  typedef XSCRT::FundamentalType<ACE_INT32> int_;
-  typedef XSCRT::FundamentalType<ACE_UINT32> unsignedInt;
+  using int_ = XSCRT::FundamentalType<ACE_INT32>;
+  using unsignedInt = XSCRT::FundamentalType<ACE_UINT32>;
 
-  typedef XSCRT::FundamentalType<ACE_INT64> long_;
-  typedef XSCRT::FundamentalType<ACE_UINT64> unsignedLong;
+  using long_ = XSCRT::FundamentalType<ACE_INT64>;
+  using unsignedLong = XSCRT::FundamentalType<ACE_UINT64>;
 
   //@@ It would be nice to use some arbitrary-length integer class.
   //
-  typedef long_ decimal;
-  typedef decimal integer;
-  typedef integer nonPositiveInteger;
-  typedef integer nonNegativeInteger;
-  typedef nonNegativeInteger positiveInteger;
-  typedef nonPositiveInteger negativeInteger;
+  using decimal = long_;
+  using integer = decimal;
+  using nonPositiveInteger = integer;
+  using nonNegativeInteger = integer;
+  using positiveInteger = nonNegativeInteger;
+  using negativeInteger = nonPositiveInteger;
 
-  typedef XSCRT::FundamentalType<bool> boolean;
+  using boolean = XSCRT::FundamentalType<bool>;
 
-  typedef XSCRT::FundamentalType<float> float_;
-  typedef XSCRT::FundamentalType<double> double_;
+  using float_ = XSCRT::FundamentalType<float>;
+  using double_ = XSCRT::FundamentalType<double>;
 
   using std::basic_string;
 
@@ -52,7 +52,7 @@ namespace XMLSchema
     , public basic_string<C>
   {
   protected:
-    typedef basic_string<C> Base__;
+    using Base__ = basic_string<C>;
 
   public:
     string () = default;
@@ -88,7 +88,7 @@ namespace XMLSchema
   class normalizedString : public string<C>
   {
   protected:
-    typedef typename string<C>::Base__ Base__;
+    using Base__ = typename string<C>::Base__;
 
   public:
     normalizedString () = default;
@@ -124,7 +124,7 @@ namespace XMLSchema
   class token : public normalizedString<C>
   {
   protected:
-    typedef typename normalizedString<C>::Base__ Base__;
+    using Base__ = typename normalizedString<C>::Base__;
 
   public:
     token () = default;
@@ -160,7 +160,7 @@ namespace XMLSchema
   class NMTOKEN : public token<C>
   {
   protected:
-    typedef typename token<C>::Base__ Base__;
+    using Base__ = typename token<C>::Base__;
 
   public:
     NMTOKEN () = default;
@@ -196,7 +196,7 @@ namespace XMLSchema
   class Name : public token<C>
   {
   protected:
-    typedef typename token<C>::Base__ Base__;
+    using Base__ = typename token<C>::Base__;
 
   public:
     Name () = default;
@@ -232,7 +232,7 @@ namespace XMLSchema
   class NCName : public Name<C>
   {
   protected:
-    typedef typename Name<C>::Base__ Base__;
+    using Base__ = typename Name<C>::Base__;
 
   public:
     NCName () = default;
@@ -268,7 +268,7 @@ namespace XMLSchema
   class QName : public Name<C>
   {
   protected:
-    typedef typename Name<C>::Base__ Base__;
+    using Base__ = typename Name<C>::Base__;
 
   public:
     QName () = default;
@@ -330,7 +330,7 @@ namespace XMLSchema
   class ID : public NCName<C>
   {
   protected:
-    typedef typename NCName<C>::Base__ Base__;
+    using Base__ = typename NCName<C>::Base__;
 
   public:
     ~ID () override
@@ -458,7 +458,7 @@ namespace XMLSchema
   class IDREF : public IDREF_Base
   {
   public:
-    typedef C CDR_Type__;
+    using CDR_Type__ = C;
     IDREF ()
       : id_provider_ (id_)
     {
@@ -574,11 +574,11 @@ namespace XMLSchema
     , public basic_string<C>
   {
   protected:
-    typedef basic_string<C> Base__;
+    using Base__ = basic_string<C>;
 
   public:
     // Trait for marshaling string
-    typedef C CDR_Type__;
+    using CDR_Type__ = C;
 
     anyURI ()
     {

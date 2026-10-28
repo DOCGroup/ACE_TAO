@@ -75,10 +75,10 @@ namespace XSCRT
     };
 
   private:
-    typedef std::vector<BaseInfo> BaseInfoList;
+    using BaseInfoList = std::vector<BaseInfo>;
 
   public:
-    typedef BaseInfoList::const_iterator BaseIterator;
+    using BaseIterator = BaseInfoList::const_iterator;
 
   public:
     explicit ExtendedTypeInfo (TypeId const &tid);
@@ -98,7 +98,7 @@ namespace XSCRT
     BaseInfoList base_{};
   };
 
-  typedef std::map<TypeId, ExtendedTypeInfo> ExtendedTypeInfoMap;
+  using ExtendedTypeInfoMap = std::map<TypeId, ExtendedTypeInfo>;
 
   ExtendedTypeInfoMap &extended_type_info_map ();
 
