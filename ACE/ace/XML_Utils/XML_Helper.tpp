@@ -10,6 +10,7 @@
 #include "xercesc/util/XMLUniDefs.hpp"
 #include <memory>
 #include <stdexcept>
+#include <string>
 
 namespace XML
 {
@@ -34,9 +35,16 @@ namespace XML
   }
 
   template <typename Resolver, typename Error>
-  XML_Helper<Resolver, Error>::~XML_Helper ()
+  XML_Helper<Resolver, Error>::~XML_Helper () noexcept
   {
-    this->terminate_parser ();
+    try
+    {
+      this->terminate_parser ();
+    }
+    catch (...)
+    {
+      // terminate_parser logs the exception before rethrowing it.
+    }
   }
 
   template <typename Resolver, typename Error>
@@ -82,6 +90,8 @@ namespace XML
     {
       char *const message (XMLString::transcode (e.getMessage ()));
       std::unique_ptr<char[]> cleanup_message (message);
+      ACELIB_ERROR ((LM_ERROR, "Caught Xerces exception while initializing XML parser: %C\n",
+                     message != nullptr ? message : "Unable to transcode Xerces exception"));
       impl_ = nullptr;
       if (runtime_started)
         xercesc::XMLPlatformUtils::Terminate ();
@@ -101,6 +111,7 @@ namespace XML
     }
     catch (...)
     {
+      ACELIB_DEBUG ((LM_DEBUG, "Caught an unknown exception while initializing XML parser\n"));
       impl_ = nullptr;
       if (runtime_started)
         xercesc::XMLPlatformUtils::Terminate ();
@@ -207,14 +218,21 @@ namespace XML
     catch (const DOMException &e)
     {
       const unsigned int maxChars (2047);
-      XMLCh errText[maxChars + 1];
+      XMLCh errText[maxChars + 1]{};
+      std::string message;
 
       if (DOMImplementation::loadDOMExceptionMsg (e.code, errText, maxChars))
       {
-        char *const message (XMLString::transcode (errText));
-        std::unique_ptr<char[]> cleanup_message (message);
+        char *const text (XMLString::transcode (errText));
+        std::unique_ptr<char[]> cleanup_text (text);
+        if (text != nullptr)
+          message = text;
       }
-      return nullptr;
+
+      if (message.empty ())
+        message = "Xerces DOM error (code " + std::to_string (e.code) + ")";
+
+      throw std::runtime_error (message);
     }
     catch (const XMLException &e)
     {
@@ -254,16 +272,23 @@ namespace XML
       }
 
       this->impl_ = nullptr;
+      this->initialized_ = false;
       xercesc::XMLPlatformUtils::Terminate ();
     }
     catch (const XMLException &e)
     {
       char *const message (XMLString::transcode (e.getMessage ()));
       std::unique_ptr<char[]> cleanup_message (message);
+      ACELIB_ERROR ((LM_ERROR, "Caught Xerces exception while terminating XML parser: %C\n",
+                     message != nullptr ? message : "Unable to transcode Xerces exception"));
+      throw;
+    }
+    catch (...)
+    {
+      ACELIB_DEBUG ((LM_DEBUG, "Caught an unknown exception while terminating XML parser\n"));
       throw;
     }
 
-    this->initialized_ = false;
     return;
   }
 

@@ -45,7 +45,7 @@ namespace XML
   public:
     XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
 
-    ~XML_Helper ();
+    ~XML_Helper () noexcept;
 
     /// Create a DOM tree
     XERCES_CPP_NAMESPACE::DOMDocument *create_dom (const ACE_TCHAR *uri) const;
