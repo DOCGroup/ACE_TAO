@@ -53,7 +53,6 @@ struct Mode_Entry
 
 Scheduler_Generic::Scheduler_Generic () :
   Scheduler (),
-  handles_ (0),
   // Set the minimum priority to that for the current platform.  This
   // shouldn't be necessary, but UPSingleProcessorOrb::initialize_reactors
   // creates threads before the Event Channel calls Scheduler::init ().

@@ -366,10 +366,10 @@ protected:
   Dispatch_Entry **ordered_dispatch_entries_ {};
 
   /// the number of dispatch entries in the schedule
-  u_int dispatch_entry_count_;
+  u_int dispatch_entry_count_ {};
 
   /// the number of dispatch entries in the schedule
-  u_int threads_;
+  u_int threads_ {};
 
   /// Ordered MultiSet of timeline entries.
   ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_ {};
@@ -479,7 +479,7 @@ private:
   ACE_Unbounded_Set <RT_Info *> rt_info_entries_;
 
   /// The number of task handles dispensed so far.
-  u_int handles_;
+  u_int handles_ {};
 
   /// Destination file of Scheduler output from the configuration run.
   char const *runtime_filename_ {};
@@ -494,30 +494,30 @@ private:
   /// rt_info in the process.
   Info_Collection info_collection_;
 
-  u_int tasks_;
+  u_int tasks_ {};
 
-  status_t status_;
+  status_t status_ {NOT_SCHEDULED};
 
-  u_int output_level_;
+  u_int output_level_ {};
 
     /// minimum frame size for all tasks
-  u_long frame_size_; /* 100 nanosec */
+  u_long frame_size_ {1}; /* 100 nanosec */
 
     /// minimum frame size for guaranteed schedulable tasks
-  u_long critical_set_frame_size_; /* 100 nanosec */
+  u_long critical_set_frame_size_ {}; /* 100 nanosec */
 
     /// total utilization for all tasks
-  double utilization_;
+  double utilization_ {};
 
     /// minimum frame size for guaranteed schedulable tasks
-  double critical_set_utilization_;
+  double critical_set_utilization_ {};
 
     /**
      * The platform-independent priority value of the Event Channel's
      * minimum priority dispatch queue.  The value of the maximum priority
      * dispatch queue is always 0.
      */
-  Preemption_Priority minimum_priority_queue_;
+  Preemption_Priority minimum_priority_queue_ {};
 
     /**
      * The platform-independent priority value of the minimum priority dispatch
@@ -525,15 +525,15 @@ private:
      * the maximum priority dispatch queue is always 0, -1 indicates none can
      * be guaranteed.
      */
-  Preemption_Priority minimum_guaranteed_priority_queue_;
+  Preemption_Priority minimum_guaranteed_priority_queue_ {-1};
 
     /// indicates whether the a valid schedule has been generated since the last
     /// relevant change (addition, alteration or removal of an RT_Info, etc.)
   bool up_to_date_ {};
 
-  u_long min_dispatch_id_;
+  u_long min_dispatch_id_ {};
 
-  u_long max_dispatch_id_;
+  u_long max_dispatch_id_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

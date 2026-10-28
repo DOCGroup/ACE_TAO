@@ -72,7 +72,7 @@ public:
 
 private:
   /// The number of task handles dispensed so far.
-  u_int handles_;
+  u_int handles_ {};
 
   /// The minimum priority value that the application specified (in
   /// its call to init ()).
@@ -80,7 +80,7 @@ private:
 
   /// The maximum priority value that the application specified (in
   /// its call to init ()).
-  int maximum_priority_;
+  int maximum_priority_ {};
 
   /// Destination file of Scheduler output from the configuration run.
   char const *runtime_filename_ {};

@@ -197,22 +197,8 @@ ACE_DynScheduler::ACE_DynScheduler ()
                                                        ACE_SCOPE_PROCESS))
   , maximum_priority_ (ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                                        ACE_SCOPE_PROCESS))
-  , dispatch_entry_count_ (0)
-  , threads_ (0)
   , lock_ ()
   , rt_info_entries_ ()
-  , handles_ (0)
-  , tasks_ (0)
-  , status_ (NOT_SCHEDULED)
-  , output_level_ (0)
-  , frame_size_ (1)
-  , critical_set_frame_size_ (0)
-  , utilization_ (0.0)
-  , critical_set_utilization_ (0.0)
-  , minimum_priority_queue_ (0)
-  , minimum_guaranteed_priority_queue_ (-1)
-  , min_dispatch_id_ (0)
-  , max_dispatch_id_ (0)
 {
 }
 

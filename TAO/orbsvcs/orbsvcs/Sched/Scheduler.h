@@ -277,15 +277,15 @@ private:
    * minimum priority dispatch queue.  The value of the maximum priority
    * dispatch queue is always 0.
    */
-  u_int minimum_priority_queue_;
+  u_int minimum_priority_queue_ {};
 
-  u_int modes_;
-  u_int tasks_;
-  u_int threads_;
+  u_int modes_ {};
+  u_int tasks_ {};
+  u_int threads_ {};
 
-  mode_t mode_;
-  status_t status_;
-  u_int output_level_;
+  mode_t mode_ {};
+  status_t status_ {NOT_SCHEDULED};
+  u_int output_level_ {};
 
   // the following functions are not implememented
   ACE_Scheduler (const ACE_Scheduler &) = delete;

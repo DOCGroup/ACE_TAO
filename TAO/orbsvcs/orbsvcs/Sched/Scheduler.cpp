@@ -100,17 +100,7 @@ ACE_Scheduler::output (FILE *file, const status_t status)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-ACE_Scheduler::ACE_Scheduler () :
-  minimum_priority_queue_ (0),  // Could initialize this to -1, but it's
-                                // unsigned and we don't really need to
-                                // distinguish between no queues and one
-                                // queue.
-  modes_ (0),
-  tasks_ (0),
-  threads_ (0),
-  mode_ (0),
-  status_ (NOT_SCHEDULED),
-  output_level_ (0)
+ACE_Scheduler::ACE_Scheduler ()
 {
 }
 
