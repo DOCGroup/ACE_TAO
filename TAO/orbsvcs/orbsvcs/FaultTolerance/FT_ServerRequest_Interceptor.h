@@ -96,9 +96,9 @@ namespace TAO
 
     CORBA::Boolean is_primary_ {};
 
-    CORBA::Object_var iogr_;
+    CORBA::Object_var iogr_ {};
 
-    CORBA::ORB_var orb_;
+    CORBA::ORB_var orb_ {};
 
     FT_ServerRequest_Interceptor (FT_ServerRequest_Interceptor const&) = delete;
     FT_ServerRequest_Interceptor& operator= (FT_ServerRequest_Interceptor const&) = delete;
