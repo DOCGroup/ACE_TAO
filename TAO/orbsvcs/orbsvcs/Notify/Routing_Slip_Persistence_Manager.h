@@ -59,6 +59,11 @@ public:
   /// The constructor.
   explicit Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
 
+  Routing_Slip_Persistence_Manager (Routing_Slip_Persistence_Manager const &) = delete;
+  Routing_Slip_Persistence_Manager (Routing_Slip_Persistence_Manager &&) = delete;
+  Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager const &) = delete;
+  Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager &&) = delete;
+
   /// The destructor.
   ~Routing_Slip_Persistence_Manager();
 
@@ -236,24 +241,24 @@ private:
 
 private:
   TAO_SYNCH_MUTEX lock_;
-  bool removed_;
-  ACE_UINT64 serial_number_;
+  bool removed_ = false;
+  ACE_UINT64 serial_number_ {};
   Persistent_File_Allocator* allocator_;
   Standard_Event_Persistence_Factory* factory_;
   Event_Header event_header_;
   Routing_Slip_Header routing_slip_header_;
-  Persistent_Storage_Block* first_event_block_;
-  Persistent_Storage_Block* first_routing_slip_block_;
+  Persistent_Storage_Block* first_event_block_ = nullptr;
+  Persistent_Storage_Block* first_routing_slip_block_ = nullptr;
   /// We are part of a doubly-linked list
   Routing_Slip_Persistence_Manager* prev_manager_;
   Routing_Slip_Persistence_Manager* next_manager_;
   ACE_Unbounded_Stack<size_t> allocated_event_blocks_;
   ACE_Unbounded_Stack<size_t> allocated_routing_slip_blocks_;
-  Persistent_Callback* callback_;
+  Persistent_Callback* callback_ = nullptr;
 
   /// If these are non-zero we own 'em
-  ACE_Message_Block * event_mb_;
-  ACE_Message_Block * routing_slip_mb_;
+  ACE_Message_Block * event_mb_ = nullptr;
+  ACE_Message_Block * routing_slip_mb_ = nullptr;
 };
 } /* namespace TAO_Notify */
 

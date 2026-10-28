@@ -10,15 +10,8 @@ namespace TAO_Notify
 {
 Routing_Slip_Persistence_Manager::Routing_Slip_Persistence_Manager(
   Standard_Event_Persistence_Factory* factory)
-  : removed_(false)
-  , serial_number_(0)
-  , allocator_(factory->allocator())
+  : allocator_(factory->allocator())
   , factory_(factory)
-  , first_event_block_(0)
-  , first_routing_slip_block_(0)
-  , callback_(0)
-  , event_mb_ (0)
-  , routing_slip_mb_(0)
 {
   this->prev_manager_ = this;
   this->next_manager_ = this;
@@ -29,13 +22,13 @@ Routing_Slip_Persistence_Manager::~Routing_Slip_Persistence_Manager()
   ACE_ASSERT(this->prev_manager_ == this);
   ACE_ASSERT(this->next_manager_ == this);
   delete this->first_event_block_;
-  this->first_event_block_ = 0;
+  this->first_event_block_ = nullptr;
   delete this->first_routing_slip_block_;
-  this->first_routing_slip_block_ = 0;
+  this->first_routing_slip_block_ = nullptr;
   delete this->event_mb_;
-  this->event_mb_ = 0;
+  this->event_mb_ = nullptr;
   delete this->routing_slip_mb_;
-  this->routing_slip_mb_ = 0;
+  this->routing_slip_mb_ = nullptr;
 }
 
 void
@@ -92,15 +85,15 @@ Routing_Slip_Persistence_Manager::reload(
   if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
     event = this->event_mb_;
-    this->event_mb_ = 0;
+    this->event_mb_ = nullptr;
     routing_slip = this->routing_slip_mb_;
-    this->routing_slip_mb_ = 0;
+    this->routing_slip_mb_ = nullptr;
     result = true;
   }
   else
   {
-    event = 0;
-    routing_slip = 0;
+    event = nullptr;
+    routing_slip = nullptr;
   }
   return result;
 }
@@ -163,9 +156,9 @@ Routing_Slip_Persistence_Manager::load(
   if (! result)
   {
     delete this->routing_slip_mb_;
-    this->routing_slip_mb_ = 0;
+    this->routing_slip_mb_ = nullptr;
     delete this->event_mb_;
-    this->event_mb_ = 0;
+    this->event_mb_ = nullptr;
   }
   return result;
 }
@@ -174,7 +167,7 @@ Routing_Slip_Persistence_Manager *
 Routing_Slip_Persistence_Manager::load_next ()
 {
   Routing_Slip_Persistence_Manager * result;
-  ACE_NEW_RETURN(result, Routing_Slip_Persistence_Manager (this->factory_), 0);
+  ACE_NEW_RETURN(result, Routing_Slip_Persistence_Manager (this->factory_), nullptr);
 
   if (result->load(this->routing_slip_header_.next_routing_slip_block,
     this->routing_slip_header_.next_serial_number))
@@ -186,13 +179,13 @@ Routing_Slip_Persistence_Manager::load_next ()
     // steal the psb for use as the next psb.
     // delete the rspm.  We'll create another one later.
     Persistent_Storage_Block * next_psb = result->first_routing_slip_block_;
-    result->first_routing_slip_block_ = 0;
+    result->first_routing_slip_block_ = nullptr;
 //    next_psb->set_allocator_owns(true);
     this->factory_->done_reloading (
       next_psb,
       result->serial_number_);
     delete result;
-    result = 0;
+    result = nullptr;
   }
   return result;
 }
@@ -245,13 +238,13 @@ Routing_Slip_Persistence_Manager::remove()
   {
     this->allocator_->free(this->first_routing_slip_block_->block_number());
     delete this->first_routing_slip_block_;
-    this->first_routing_slip_block_ = 0;
+    this->first_routing_slip_block_ = nullptr;
   }
   if (this->first_event_block_ != nullptr)
   {
     this->allocator_->free(this->first_event_block_->block_number());
     delete this->first_event_block_;
-    this->first_event_block_ = 0;
+    this->first_event_block_ = nullptr;
   }
   while (this->allocated_routing_slip_blocks_.pop(block_number) == 0)
   {

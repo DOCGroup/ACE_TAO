@@ -56,8 +56,13 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   /// Constructor
   explicit TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 
+  TAO_Notify_Consumer (TAO_Notify_Consumer const &) = delete;
+  TAO_Notify_Consumer (TAO_Notify_Consumer &&) = delete;
+  TAO_Notify_Consumer &operator= (TAO_Notify_Consumer const &) = delete;
+  TAO_Notify_Consumer &operator= (TAO_Notify_Consumer &&) = delete;
+
   /// Destructor
-  virtual ~TAO_Notify_Consumer ();
+  ~TAO_Notify_Consumer () override;
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt ();
@@ -179,11 +184,11 @@ protected:
   TAO_Notify_ProxySupplier* proxy_;
 
   /// Suspended Flag.
-  CORBA::Boolean is_suspended_;
+  CORBA::Boolean is_suspended_ = false;
 
   /// Interface that accepts offer_changes
   CosNotifyComm::NotifyPublish_var publish_;
-  bool have_not_yet_verified_publish_;
+  bool have_not_yet_verified_publish_ = true;
 
   /// The Pacing Interval
   const TAO_Notify_Property_Time & pacing_;

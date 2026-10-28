@@ -30,8 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
 : proxy_ (proxy)
-, is_suspended_ (0)
-, have_not_yet_verified_publish_ (true)
 , pacing_ (proxy->qos_properties_.pacing_interval ())
 , max_batch_size_ (CosNotification::MaximumBatchSize, 0)
 , timer_id_ (-1)
@@ -84,7 +82,7 @@ TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties
 void
 TAO_Notify_Consumer::resume ()
 {
-  this->is_suspended_ = 0;
+  this->is_suspended_ = false;
 
   this->dispatch_pending ();
 }
@@ -134,7 +132,7 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
       this->schedule_timer (false);
       return true;
     }
-  if (this->is_suspended_ == 1)
+  if (this->is_suspended_)
     {
       if (DEBUG_LEVEL > 3)
         ORBSVCS_DEBUG ((LM_DEBUG,

@@ -18,7 +18,7 @@ TAO_Notify_Consumer::is_suspended ()
 ACE_INLINE void
 TAO_Notify_Consumer::suspend ()
 {
-  this->is_suspended_ = 1;
+  this->is_suspended_ = true;
 }
 
 ACE_INLINE size_t

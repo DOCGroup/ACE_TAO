@@ -14,17 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class SERVANT_TYPE>
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::TAO_Notify_ProxySupplier_T ()
-  : is_suspended_ (0)
-{
-}
-
-template <class SERVANT_TYPE>
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::~TAO_Notify_ProxySupplier_T ()
-{
-}
-
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,
                                                            const CosNotification::EventTypeSeq & removed)
