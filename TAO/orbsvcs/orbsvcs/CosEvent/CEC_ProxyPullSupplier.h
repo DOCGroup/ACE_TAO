@@ -131,15 +131,15 @@ protected:
 
 private:
   /// The Event Channel that owns this object.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The consumer -- use apply_policy() instead of assigning directly to
   /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.

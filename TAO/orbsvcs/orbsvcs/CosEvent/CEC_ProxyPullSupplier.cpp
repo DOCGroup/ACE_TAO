@@ -16,7 +16,6 @@ TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier
 (TAO_CEC_EventChannel* ec, ACE_Time_Value const &timeout)
   : event_channel_ (ec),
     timeout_ (timeout),
-    refcount_ (1),
     wait_not_empty_ (queue_lock_)
 {
   this->lock_ =

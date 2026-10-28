@@ -106,15 +106,15 @@ private:
   TAO_CEC_TypedProxyPushConsumer &operator= (TAO_CEC_TypedProxyPushConsumer &&) = delete;
 
   /// The typed supplier admin, used for activation and memory management.
-  TAO_CEC_TypedEventChannel* typed_event_channel_;
+  TAO_CEC_TypedEventChannel* typed_event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The typed supplier -- use apply_policy() instead of assigning directly to
   /// typed_supplier_.  This will keep typed_supplier_ and
@@ -125,7 +125,7 @@ private:
   CosEventComm::PushSupplier_var nopolicy_typed_supplier_;
 
   /// The DSI impl
-  TAO_CEC_DynamicImplementationServer* dsi_impl_;
+  TAO_CEC_DynamicImplementationServer* dsi_impl_ {};
 
   /// The DSI Portable Server OID
   PortableServer::ObjectId_var oid_;

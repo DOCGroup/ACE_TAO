@@ -16,10 +16,9 @@ using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 TAO_CEC_ProxyPullConsumer::
 TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* ec,
-                           const ACE_Time_Value &timeout)
+                           ACE_Time_Value const &timeout)
   : event_channel_ (ec),
-    timeout_ (timeout),
-    refcount_ (1)
+    timeout_ (timeout)
 {
   this->lock_ =
     this->event_channel_->create_consumer_lock ();

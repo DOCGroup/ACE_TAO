@@ -20,8 +20,7 @@ using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
 (TAO_CEC_TypedEventChannel* ec, ACE_Time_Value const &timeout)
   : typed_event_channel_ (ec),
-    timeout_ (timeout),
-    refcount_ (1)
+    timeout_ (timeout)
 {
   this->lock_ = this->typed_event_channel_->create_consumer_lock ();
 
@@ -360,8 +359,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
  :   lock_ (lock),
      refcount_ (refcount),
      typed_event_channel_ (ec),
-     proxy_ (proxy),
-     locked_ (false)
+     proxy_ (proxy)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   // If the guard fails there is not much we can do, raising an
