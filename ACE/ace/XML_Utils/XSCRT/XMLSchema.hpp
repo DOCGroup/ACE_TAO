@@ -7,6 +7,14 @@
 
 #include "ace/XML_Utils/XSCRT/Elements.hpp"
 
+/* MSVC warning C4355 is triggered by ID's member initializer passing `this`
+ * to IdentityProvider. IdentityProvider stores the reference without using
+ * the ID while it is being constructed.
+ */
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable : 4355)
+#endif
 namespace XMLSchema
 {
   using byte = XSCRT::FundamentalType<signed char>;
