@@ -312,8 +312,7 @@ TAO_CEC_ProxyPushConsumer_Guard::
  :   lock_ (lock),
      refcount_ (refcount),
      event_channel_ (ec),
-     proxy_ (proxy),
-     locked_ (false)
+     proxy_ (proxy)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   // If the guard fails there is not much we can do, raising an

@@ -193,7 +193,7 @@ private:
 
   /// This flag is set to true if the reference count was successfully
   /// acquired.
-  bool locked_;
+  bool locked_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

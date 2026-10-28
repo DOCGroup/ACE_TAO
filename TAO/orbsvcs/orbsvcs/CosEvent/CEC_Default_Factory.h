@@ -141,7 +141,7 @@ private:
 
 private:
   /// Several flags to control the kind of object created.
-  int dispatching_;
+  bool dispatching_;
   int pulling_strategy_;
   int consumer_collection_;
   int supplier_collection_;
@@ -163,11 +163,11 @@ private:
   char *orbid_;
 
   /// Indicate ORB ID has been duplicated (memory allocated).
-  int orbid_dupped_;
+  bool orbid_dupped_ {};
 
   /// The consumer and supplier control policies.
-  int consumer_control_;
-  int supplier_control_;
+  bool consumer_control_;
+  bool supplier_control_;
 
   /// The consumer and supplier control periods in usecs
   int consumer_control_period_;
