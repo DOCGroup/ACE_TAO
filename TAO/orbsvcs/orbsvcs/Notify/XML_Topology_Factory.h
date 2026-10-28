@@ -54,6 +54,11 @@ namespace TAO_Notify
     XML_Topology_Factory ();
     ~XML_Topology_Factory () override;
 
+    XML_Topology_Factory (XML_Topology_Factory const &) = delete;
+    XML_Topology_Factory (XML_Topology_Factory &&) = delete;
+    XML_Topology_Factory &operator= (XML_Topology_Factory const &) = delete;
+    XML_Topology_Factory &operator= (XML_Topology_Factory &&) = delete;
+
     ////////////////////////////////////
     // Override Topology_Factory methods
     // documented in Topology_Factory.h

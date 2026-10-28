@@ -31,10 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // requires Topology_Factory.
 namespace TAO_Notify
 {
-  // virtual
-  Topology_Factory::~Topology_Factory ()
-  {
-  }
+  Topology_Factory::~Topology_Factory () = default;
 }
 
 using TAO_Notify_EventChannel_Find_Worker =
