@@ -15,10 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-Random_File::Random_File()
-  : block_size_(512)
-{
-}
+Random_File::Random_File () = default;
 
 Random_File::~Random_File()
 {

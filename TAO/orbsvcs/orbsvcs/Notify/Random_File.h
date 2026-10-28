@@ -43,6 +43,11 @@ public:
   /// The constructor.
   Random_File();
 
+  Random_File (Random_File const &) = delete;
+  Random_File (Random_File &&) = delete;
+  Random_File &operator= (Random_File const &) = delete;
+  Random_File &operator= (Random_File &&) = delete;
+
   /// The destructor, which closes the open file.
   ~Random_File();
 
@@ -79,7 +84,7 @@ private:
   bool sync();
 
 private:
-  size_t block_size_;
+  size_t block_size_ = 512;
   mutable TAO_SYNCH_MUTEX lock_;
 };
 } /* namespace TAO_Notify */
