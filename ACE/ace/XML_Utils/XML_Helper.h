@@ -80,14 +80,14 @@ namespace XML
     void init_parser ();
 
   private:
-    bool initialized_ { false };
+    bool initialized_ {};
     XERCES_CPP_NAMESPACE::DOMImplementation *impl_ {};
-    mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_;
+    mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_ {};
 
-    Resolver *resolver_;
-    bool release_resolver_ { false };
-    Error_Handler *e_handler_;
-    bool release_e_handler_ { false };
+    Resolver *resolver_ {};
+    bool release_resolver_ {};
+    Error_Handler *e_handler_ {};
+    bool release_e_handler_ {};
   };
 }
 

@@ -39,7 +39,7 @@ namespace XML
     : public virtual EntityResolver
   {
   public:
-    XML_Schema_Resolver ();
+    XML_Schema_Resolver () = default;
 
     XML_Schema_Resolver (Resolver &resolver);
 
@@ -53,7 +53,7 @@ namespace XML
   private:
     XML_Schema_Resolver (XML_Schema_Resolver<Resolver> &);
 
-    Resolver resolver_;
+    Resolver resolver_ {};
   };
 
   /**

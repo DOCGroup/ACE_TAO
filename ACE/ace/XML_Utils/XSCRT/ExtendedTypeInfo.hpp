@@ -108,7 +108,7 @@ namespace XSCRT
 
   private:
     TypeId tid_;
-    BaseInfoList base_;
+    BaseInfoList base_ {};
   };
 
   typedef

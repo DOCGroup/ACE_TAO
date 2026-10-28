@@ -5,8 +5,6 @@
 #include "XercesString.h"
 #include "xercesc/util/PlatformUtils.hpp"
 
-#include "ace/Truncate.h"
-
 using xercesc::XMLString;
 using xercesc::XMLPlatformUtils;
 
@@ -113,20 +111,20 @@ namespace XML
     return bOK;
   }
 
-  int XStr::size () const
+  XMLSize_t XStr::size () const
   {
     if (_wstr == nullptr)
-      return 0;
+      return XMLSize_t {};
 
-    return ACE_Utils::truncate_cast<int> (XMLString::stringLen(_wstr));
+    return XMLString::stringLen (_wstr);
   }
 
-  XMLCh XStr::operator [] (const int i)
+  XMLCh XStr::operator [] (XMLSize_t i)
   {
     return _wstr[i];
   }
 
-  XMLCh XStr::operator [] (const int i) const
+  XMLCh XStr::operator [] (XMLSize_t i) const
   {
     return _wstr[i];
   }

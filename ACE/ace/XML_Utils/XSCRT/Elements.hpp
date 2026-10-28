@@ -258,7 +258,7 @@ namespace XSCRT
 
   private:
     // Data member to handle unbounded IDREF attributes and elements
-    std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*> idref_map_;
+    std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*> idref_map_ {};
 
     Type* container_ {};
 
@@ -275,7 +275,7 @@ namespace XSCRT
     std::map<IdentityProvider const*, Type*, IdentityComparator>
     Map_;
 
-    std::unique_ptr<Map_> map_;
+    std::unique_ptr<Map_> map_ {};
   };
 
   // Fundamental types template.

@@ -113,8 +113,8 @@ namespace XSCRT
         s_ = nullptr;
       }
 
-      XMLCh* s_;
-      bool xerces_allocated_;
+      XMLCh* s_ {};
+      bool xerces_allocated_ {};
     };
 
 
@@ -423,7 +423,7 @@ namespace XSCRT
       xercesc::DOMElement const* ce_ {};
 
       string_ name_;
-      string_ namespace__;
+      string_ namespace__ {};
     };
 
 

@@ -49,11 +49,11 @@ namespace XML
 
     bool erase (const XMLCh* head, const XMLCh* tail);
 
-    int size() const;
+    XMLSize_t size () const;
 
-    XMLCh operator [] (const int i);
+    XMLCh operator [] (XMLSize_t i);
 
-    XMLCh operator [] (const int i) const;
+    XMLCh operator [] (XMLSize_t i) const;
 
     operator const XMLCh* () const { return _wstr; };
 

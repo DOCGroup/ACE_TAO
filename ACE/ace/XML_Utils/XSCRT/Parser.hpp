@@ -15,8 +15,8 @@ namespace XSCRT
   {
   public:
     Parser (XML::Element<C> const& e)
-        : e_ (e.dom_element ()->getChildNodes ()), ei_ (0),
-          a_ (e.dom_element ()->getAttributes ()), ai_ (0)
+        : e_ (e.dom_element ()->getChildNodes ()),
+          a_ (e.dom_element ()->getAttributes ())
     {
     }
 
@@ -56,10 +56,10 @@ namespace XSCRT
 
   private:
     xercesc::DOMNodeList const* e_;
-    unsigned long ei_;
+    XMLSize_t ei_ {};
 
     xercesc::DOMNamedNodeMap const* a_;
-    unsigned long ai_;
+    XMLSize_t ai_ {};
 
   private:
     Parser (Parser const&);

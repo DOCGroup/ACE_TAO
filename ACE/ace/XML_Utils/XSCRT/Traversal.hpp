@@ -83,7 +83,7 @@ namespace XSCRT
       flatten_tree (ExtendedTypeInfo const& ti, TypeInfoSet& set);
 
     private:
-      TraversalMap traversal_map_;
+      TraversalMap traversal_map_ {};
     };
 
     template <typename B>
@@ -164,7 +164,7 @@ namespace XSCRT
 
     private:
       bool merge_;
-      DispatcherBase<B> dispatcher_;
+      DispatcherBase<B> dispatcher_ {};
     };
 
     template <typename T, typename B>

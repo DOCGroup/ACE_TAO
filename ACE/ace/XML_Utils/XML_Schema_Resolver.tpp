@@ -14,12 +14,6 @@ using xercesc::LocalFileInputSource;
 namespace XML
 {
   template<typename Resolver>
-  XML_Schema_Resolver<Resolver>::XML_Schema_Resolver (void)
-    : resolver_ ()
-  {
-  }
-
-  template<typename Resolver>
   XML_Schema_Resolver<Resolver>::XML_Schema_Resolver (Resolver &res)
     : resolver_ (res)
   {
