@@ -125,7 +125,7 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
     it.advance();
   }
 
-  context.write_occurred_ = 1;
+  context.write_occurred_ = true;
 }
 
 int

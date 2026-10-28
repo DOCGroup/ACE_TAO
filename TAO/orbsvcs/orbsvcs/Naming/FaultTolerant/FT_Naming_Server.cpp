@@ -77,7 +77,6 @@ TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
 TAO_FT_Naming_Server::TAO_FT_Naming_Server ()
   : TAO_Naming_Server (IOR_ARRAY_SIZE),
     naming_manager_ (),
-    use_object_group_persistence_ (0),
     server_role_ (STANDALONE),
     ft_endpoint_ (""),
     ft_update_delay_ (ACE_Time_Value::zero),
@@ -515,7 +514,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
         u_opt_used = true;
         break;
       case 'v':
-        this->use_object_group_persistence_ = 1;
+        this->use_object_group_persistence_ = true;
         this->object_group_dir_ = get_opts.opt_arg ();
         v_opt_used = true;
         break;

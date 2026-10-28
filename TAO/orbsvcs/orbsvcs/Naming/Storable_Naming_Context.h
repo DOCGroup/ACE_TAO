@@ -474,7 +474,7 @@ private:
   void Write(TAO::Storable_Base& wrtr);
 
   /// Is set by the Write operation.  Used to determine
-  int write_occurred_;
+  bool write_occurred_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -173,7 +173,7 @@ protected:
   /// The Object Group Manager POA.
   PortableServer::POA_var naming_manager_poa_;
 
-  int use_object_group_persistence_;
+  bool use_object_group_persistence_ {};
   ACE_TString object_group_dir_;
 
   /// The role this server is supporting in the dual redundant
