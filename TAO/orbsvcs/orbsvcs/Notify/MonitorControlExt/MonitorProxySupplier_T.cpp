@@ -17,17 +17,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename ProxyPushSupplier>
-TAO_MonitorProxySupplier_T<ProxyPushSupplier>::TAO_MonitorProxySupplier_T ()
-  : queue_item_stat_name_ ()
-  , overflow_stat_name_ ()
-  , queue_item_count_ (nullptr)
-  , overflows_ (nullptr)
-  , event_channel_ (nullptr)
-  , admin_ (nullptr)
-{
-}
-
-template <typename ProxyPushSupplier>
 TAO_MonitorProxySupplier_T<ProxyPushSupplier>::~TAO_MonitorProxySupplier_T ()
 {
   if (this->admin_ != nullptr)

@@ -41,7 +41,7 @@ class TAO_MonitorProxySupplier_T
 {
 public:
   /// Construct a monitor supplier admin
-  TAO_MonitorProxySupplier_T ();
+  TAO_MonitorProxySupplier_T () = default;
 
   /// Remove the statistics for this event channel
   ~TAO_MonitorProxySupplier_T () override;
@@ -73,11 +73,11 @@ private:
   ACE_CString queue_item_stat_name_;
   ACE_CString overflow_stat_name_;
 
-  Monitor_Base * queue_item_count_;
-  Monitor_Base * overflows_;
+  Monitor_Base *queue_item_count_ {};
+  Monitor_Base *overflows_ {};
 
-  TAO_MonitorEventChannel* event_channel_;
-  TAO_MonitorConsumerAdmin * admin_;
+  TAO_MonitorEventChannel* event_channel_ {};
+  TAO_MonitorConsumerAdmin *admin_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
