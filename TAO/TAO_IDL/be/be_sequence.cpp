@@ -29,6 +29,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <string>
+
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
                           UTL_ScopedName *n,
@@ -819,10 +821,9 @@ be_sequence::compute_tc_name ()
                    "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                    this->max_size ()->ev ()->u.ulval);
 
-  ACE_CString local_tc_name =
-    ACE_CString ("tc_")
-    + ACE_CString (this->flat_name ())
-    + ACE_CString (bound);
+  std::string local_tc_name ("tc_");
+  local_tc_name += this->flat_name ();
+  local_tc_name += bound;
 
   Identifier * typecode_scope = nullptr;
   ACE_NEW (typecode_scope,
@@ -847,15 +848,15 @@ be_sequence::compute_tc_name ()
   this->tc_name_->nconc (conc_name);
 }
 
-const char *
+std::string
 be_sequence::smart_fwd_helper_name (AST_Decl *ctx_scope,
                                     be_type *elem)
 {
   if (ScopeAsDecl (elem->defined_in ()) == ctx_scope)
     {
-      ACE_CString retval = "tao_";
+      std::string retval = "tao_";
       retval += elem->local_name ()->get_string ();
-      return retval.rep ();
+      return retval;
     }
 
   return elem->fwd_helper_name ();

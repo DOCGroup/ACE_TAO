@@ -19,6 +19,8 @@
 #include "be_type.h"
 #include "ast_map.h"
 
+#include <string>
+
 class AST_Expression;
 class AST_Type;
 class be_visitor;
@@ -89,7 +91,7 @@ public:
   virtual char *gen_name ();
 
 private:
-  const char *smart_fwd_helper_name (AST_Decl *elem_scope,
+  std::string smart_fwd_helper_name (AST_Decl *elem_scope,
                                      be_type *elem);
 
 private:

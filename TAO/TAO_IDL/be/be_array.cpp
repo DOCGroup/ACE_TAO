@@ -22,6 +22,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <string>
+
 be_array::be_array (UTL_ScopedName *n,
                     unsigned long ndims,
                     UTL_ExprList *dims,
@@ -161,9 +163,8 @@ be_array::compute_tc_name ()
            UTL_ScopedName (tao_id,
                            nullptr));
 
-  ACE_CString local_tc_name =
-    ACE_CString ("tc_")
-    + ACE_CString (this->flat_name ());
+  std::string local_tc_name ("tc_");
+  local_tc_name += this->flat_name ();
 
   Identifier * typecode_scope = nullptr;
   ACE_NEW (typecode_scope,
@@ -237,11 +238,11 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
 {
   be_scope* scope = dynamic_cast<be_scope*> (this->defined_in ());
   be_decl* parent = scope->decl ();
-  ACE_CString arg_name (ACE_CString (parent->full_name ())
-                        + "::"
-                        + (use_underscore ? "_" : "")
-                        + this->local_name ()->get_string ()
-                        + "_forany &_tao_array");
+  std::string arg_name (parent->full_name ());
+  arg_name += "::";
+  arg_name += use_underscore ? "_" : "";
+  arg_name += this->local_name ()->get_string ();
+  arg_name += "_forany &_tao_array";
 
   // Using 'const' with xxx_forany here prevents the compiler from
   // automatically converting back to xxx_slice *.
@@ -274,13 +275,14 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
 
   *os << "strm << ";
 
-  ACE_CString instance_name ("_tao_array.in ()");
+  std::string instance_name ("_tao_array.in ()");
 
   for (i = 0; i < ndims; ++i)
     {
-      char *working = instance_name.rep ();
+      char index[32];
+      ACE_OS::itoa (i, index, 10);
       instance_name += "[i";
-      instance_name += ACE_OS::itoa (i, working, 10);
+      instance_name += index;
       instance_name += "]";
     }
 
@@ -312,10 +314,10 @@ be_array::gen_member_ostream_operator (TAO_OutStream *os,
 {
   be_scope* scope = dynamic_cast<be_scope*> (this->defined_in ());
   be_decl* parent = scope->decl ();
-  ACE_CString decl_name (ACE_CString (parent->full_name ())
-                         + "::"
-                         + (use_underscore ? "_" : "")
-                         + this->local_name ()->get_string ());
+  std::string decl_name (parent->full_name ());
+  decl_name += "::";
+  decl_name += use_underscore ? "_" : "";
+  decl_name += this->local_name ()->get_string ();
 
  // The container is always const, so the member is const as well,
  // but we have to cast it away for the forany constructor.

@@ -20,6 +20,8 @@
 #include "be_type.h"
 #include "ast_sequence.h"
 
+#include <string>
+
 class AST_Expression;
 class AST_Type;
 class be_visitor;
@@ -106,7 +108,7 @@ protected:
   void compute_tc_name () override;
 
 private:
-  const char *smart_fwd_helper_name (AST_Decl *elem_scope,
+  std::string smart_fwd_helper_name (AST_Decl *elem_scope,
                                      be_type *elem);
 
 private:

@@ -30,6 +30,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <string>
+
 be_map::be_map (AST_Expression *v,
                 AST_Type *kt,
                 AST_Type *vt,
@@ -270,15 +272,15 @@ be_map::field_node (be_field *node)
   this->field_node_ = node;
 }
 
-const char *
+std::string
 be_map::smart_fwd_helper_name (AST_Decl *ctx_scope,
                                     be_type *elem)
 {
   if (ScopeAsDecl (elem->defined_in ()) == ctx_scope)
     {
-      ACE_CString retval = "tao_";
+      std::string retval = "tao_";
       retval += elem->local_name ()->get_string ();
-      return retval.rep ();
+      return retval;
     }
 
   return elem->fwd_helper_name ();
