@@ -477,9 +477,8 @@ FE_Utils::hasspace (char const *s)
 ACE_CString
 FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 {
-  ACE_CString id, retval;
-  char const *pattern = "sequence<";
-  size_t len = ACE_OS::strlen (pattern);
+  std::string retval;
+  std::string_view const pattern ("sequence<");
   size_t index = 0;
 
 
@@ -494,18 +493,19 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
         {
           // Get the substring of what's between the brackets.
           // It will have to match a previous param in the list.
-          id = param->name_.substr (len,
-                                    param->name_.length () - (len + 1));
+          std::string_view id (param->name_);
+          id.remove_prefix (pattern.size ());
+          id.remove_suffix (1);
 
           if (!FE_Utils::check_one_seq_of_param (list, id, index))
             {
-              retval = id;
+              retval.assign (id);
               break;
             }
         }
     }
 
-  return retval;
+  return ACE_CString (retval.c_str ());
 }
 
 FILE *
@@ -959,7 +959,7 @@ FE_Utils::tmpl_mod_ref_check (AST_Decl *context,
 
 bool
 FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
-                                  ACE_CString &param_id,
+                                  std::string_view param_id,
                                   size_t index)
 {
   size_t local_index = 0;
@@ -976,7 +976,7 @@ FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
       FE_Utils::T_Param_Info *info = nullptr;
       i.next (info);
 
-      if (info->name_ == param_id)
+      if (std::string_view (info->name_) == param_id)
         {
           return true;
         }

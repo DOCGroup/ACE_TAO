@@ -2,6 +2,7 @@
 #define FE_UTILS_H
 
 #include <string_view>
+#include <string>
 
 #include "ace/Unbounded_Queue.h"
 
@@ -26,8 +27,8 @@ struct TAO_IDL_FE_Export FE_Utils
     AST_Decl::NodeType type_ {AST_Decl::NT_fixed};
     AST_Expression::ExprType const_type_ {AST_Expression::EV_none};
     AST_Enum *enum_const_type_decl_ {};
-    ACE_CString name_;
-    ACE_CString seq_param_ref_;
+    std::string name_;
+    std::string seq_param_ref_;
 
     T_Param_Info () = default;
   };
@@ -126,7 +127,7 @@ struct TAO_IDL_FE_Export FE_Utils
 private:
   static bool
   check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
-                          ACE_CString &param_id,
+                          std::string_view param_id,
                           size_t index);
 
   static AST_Template_Module *
