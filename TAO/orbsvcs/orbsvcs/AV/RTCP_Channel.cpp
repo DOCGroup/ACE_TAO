@@ -9,16 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
                                   const ACE_Addr *peer_addr)
  : remote_ssrc_ (ssrc),
-   cname_ (""),
-   transit_ (0),
-   jitter_ (0.0),
-   first_data_packet_ (1),
-   ntp_ts_msw_ (0),
-   ntp_ts_lsw_ (0),
-   last_sr_time_ (0),
-   active_ (0),
-   no_data_counter_ (0),
-   data_since_last_report_ (0)
+   cname_ ("")
 {
   const ACE_INET_Addr *const_inet_addr = dynamic_cast<const ACE_INET_Addr*> (peer_addr);
 

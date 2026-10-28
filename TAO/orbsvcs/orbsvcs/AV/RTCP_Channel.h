@@ -102,14 +102,14 @@ private:
   ACE_UINT32 received_prior_ {};
 
   /// The last transit time.
-  ACE_UINT32 transit_;
+  ACE_UINT32 transit_ {};
 
   /// The inter-arrival jitter measured in timestamp units.
-  double jitter_;
+  double jitter_ {};
 
   // Used for jitter calculations
   /// Flag to indicate the first data packet received.
-  char first_data_packet_;
+  char first_data_packet_ {1};
 
   /// The first timestamp received.
   ACE_UINT32 init_time_stamp_ {};
@@ -121,28 +121,28 @@ private:
   ACE_Addr *peer_address_ {};
 
   /// The most significant word of the last sender report NTP timestamp.
-  ACE_UINT32 ntp_ts_msw_;
+  ACE_UINT32 ntp_ts_msw_ {};
 
   /// The least significant word of the last sender report NTP timestamp.
-  ACE_UINT32 ntp_ts_lsw_;
+  ACE_UINT32 ntp_ts_lsw_ {};
 
   /// The last sender report RTP timestamp.
   ACE_UINT32 rtp_ts_ {};
 
   /// The last time a sender report was received in 1/65536 seconds.
   /// Used to calculate DLSR.
-  ACE_UINT32 last_sr_time_;
+  ACE_UINT32 last_sr_time_ {};
 
   /// Flag to indicate whether or not the source is active.
-  int active_;
+  int active_ {};
 
   /// This is a counter to indicate the number of reporting intervals that have
   /// passed since data has been received.  After 32, declare the source inactive.
-  int no_data_counter_;
+  int no_data_counter_ {};
 
   /// This flag indicates that data has been received since the last report was
   /// sent.
-  char data_since_last_report_;
+  char data_since_last_report_ {};
 
   /// The RTP payload type.
   int payload_type_ {};
