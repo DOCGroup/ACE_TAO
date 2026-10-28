@@ -20,21 +20,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CC_Lock::CC_Lock ()
-  : mode_ (CosConcurrencyControl::intention_read),
-    lock_held_ (0)
-{
-}
+CC_Lock::CC_Lock () = default;
 
 CC_Lock::CC_Lock (CosConcurrencyControl::lock_mode mode)
-  : mode_ (mode),
-    lock_held_ (0)
+  : mode_ (mode)
 {
 }
 
-CC_Lock::~CC_Lock ()
-{
-}
+CC_Lock::~CC_Lock () = default;
 
 void
 CC_Lock::lock ()
@@ -66,7 +59,7 @@ CC_Lock::try_lock ()
       if (errno == EBUSY)
         {
           lock_held_--;
-          return 0;
+          return false;
         }
       else
         throw CORBA::INTERNAL ();
@@ -75,7 +68,7 @@ CC_Lock::try_lock ()
               "lock_held_: %i, ",
               lock_held_));
 
-  return 1;
+  return true;
 }
 
 void
@@ -121,7 +114,7 @@ CC_Lock::set_mode (CosConcurrencyControl::lock_mode mode)
 }
 
 CORBA::Boolean
-CC_Lock::Compatible (const CC_Lock &other)
+CC_Lock::Compatible (CC_Lock const &other)
 {
   return this->Compatible (other.mode_);
 }
@@ -174,24 +167,18 @@ CC_Lock::dump ()
 //        IR     X
 //        IW  X  X  X
 //
-CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] ={
-  {1, 0, 1, 1, 0},
-  {0, 0, 0, 0, 0},
-  {1, 0, 0, 1, 0},
-  {1, 0, 1, 1, 1},
-  {0, 0, 0, 1, 1}};
+CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] = {
+  {true, false, true, true, false},
+  {false, false, false, false, false},
+  {true, false, false, true, false},
+  {true, false, true, true, true},
+  {false, false, false, true, true}};
 
 // CC_LockModeterator
 
-CC_LockModeIterator::CC_LockModeIterator ()
-  : current_ (CosConcurrencyControl::intention_read)
-{
-}
+CC_LockModeIterator::CC_LockModeIterator () = default;
 
-CC_LockModeIterator::~CC_LockModeIterator ()
-{
-  // Do nothing
-}
+CC_LockModeIterator::~CC_LockModeIterator () = default;
 void CC_LockModeIterator::First ()
 {
   current_ = CosConcurrencyControl::intention_read;
@@ -223,10 +210,7 @@ void CC_LockModeIterator::Next ()
 CORBA::Boolean
 CC_LockModeIterator::IsDone ()
 {
-  if (current_ == CosConcurrencyControl::write)
-    return 1;
-  else
-    return 0;
+  return current_ == CosConcurrencyControl::write;
 }
 
 CosConcurrencyControl::lock_mode

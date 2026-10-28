@@ -51,10 +51,15 @@ public:
   CC_Lock ();
 
   /// Creates the lock with the desired mode
-  CC_Lock (CosConcurrencyControl::lock_mode mode);
+  explicit CC_Lock (CosConcurrencyControl::lock_mode mode);
 
   /// Deletes the lock
   ~CC_Lock ();
+
+  CC_Lock (CC_Lock const &) = delete;
+  CC_Lock &operator = (CC_Lock const &) = delete;
+  CC_Lock (CC_Lock &&) = delete;
+  CC_Lock &operator = (CC_Lock &&) = delete;
 
   /// Acquires this lock. Blocks until lock is obtained
   void lock ();
@@ -73,7 +78,7 @@ public:
   void set_mode (CosConcurrencyControl::lock_mode mode);
 
   /// Returns true if this lock is compatible with the other lock.
-  CORBA::Boolean Compatible (const CC_Lock &other);
+  CORBA::Boolean Compatible (CC_Lock const &other);
 
   /// Returns true is this lock is compatible with the referenced mode.
   CORBA::Boolean Compatible (CosConcurrencyControl::lock_mode mode);
@@ -92,11 +97,11 @@ public:
 
 protected:
   /// Holds the lock's mode.
-  CosConcurrencyControl::lock_mode mode_;
+  CosConcurrencyControl::lock_mode mode_ {CosConcurrencyControl::intention_read};
 
 private:
   /// If greater than zero the lock is held (that number of times).
-  int lock_held_;
+  int lock_held_ {};
 
   /// Defines the compatibility of the locks.
   static CORBA::Boolean compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
@@ -135,7 +140,7 @@ public:
   CosConcurrencyControl::lock_mode GetLockMode();
 
 private:
-  CosConcurrencyControl::lock_mode current_;
+  CosConcurrencyControl::lock_mode current_ {CosConcurrencyControl::intention_read};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

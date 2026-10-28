@@ -49,6 +49,11 @@ public:
   /// Destructor.
   ~TAO_Concurrency_Server ();
 
+  TAO_Concurrency_Server (TAO_Concurrency_Server const &) = delete;
+  TAO_Concurrency_Server &operator = (TAO_Concurrency_Server const &) = delete;
+  TAO_Concurrency_Server (TAO_Concurrency_Server &&) = delete;
+  TAO_Concurrency_Server &operator = (TAO_Concurrency_Server &&) = delete;
+
   /// Initialize the concurrency server under the given ORB and POA.
   CORBA::Object_ptr init (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
@@ -64,7 +69,7 @@ private:
   CC_LockSetFactory lock_set_factory_;
 
   /// The POA which the lock set factory servant was registered.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

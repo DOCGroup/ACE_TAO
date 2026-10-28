@@ -42,6 +42,11 @@ public:
   /// Destructor.
   ~CC_LockSetFactory () override;
 
+  CC_LockSetFactory (CC_LockSetFactory const &) = delete;
+  CC_LockSetFactory &operator = (CC_LockSetFactory const &) = delete;
+  CC_LockSetFactory (CC_LockSetFactory &&) = delete;
+  CC_LockSetFactory &operator = (CC_LockSetFactory &&) = delete;
+
   CosConcurrencyControl::LockSet_ptr create () override;
 
   CosConcurrencyControl::LockSet_ptr create_related (
