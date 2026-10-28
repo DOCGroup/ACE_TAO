@@ -23,12 +23,13 @@ namespace XSCRT
     {
       std::basic_istringstream<C> stream (value);
       stream >> std::ws;
-      if (std::numeric_limits<X>::is_integer &&
-          !std::numeric_limits<X>::is_signed &&
-          stream.peek () == stream.widen ('-'))
-        throw std::invalid_argument ("Invalid XML numeric value");
+      bool const negative (stream.peek () == stream.widen ('-'));
       X result {};
       if (!(stream >> result))
+        throw std::invalid_argument ("Invalid XML numeric value");
+      if (std::numeric_limits<X>::is_integer &&
+          !std::numeric_limits<X>::is_signed &&
+          negative && result != 0)
         throw std::invalid_argument ("Invalid XML numeric value");
       stream >> std::ws;
       if (!stream.eof ())
