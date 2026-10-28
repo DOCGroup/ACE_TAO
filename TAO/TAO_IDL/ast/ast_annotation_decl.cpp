@@ -1,3 +1,5 @@
+#include <string>
+
 #include "ast_annotation_decl.h"
 #include "ast_annotation_member.h"
 #include "utl_indenter.h"
@@ -42,16 +44,9 @@ void
 AST_Annotation_Decl::escape_name (Identifier *name)
 {
   FE_Utils::original_local_name (name); // Annotations can't clash with C++ keywords
-  char *old_name = name->get_string ();
-  char *new_name = new char [ACE_OS::strlen (old_name) + 2]; // '@' and '\0'
-  if (new_name)
-    {
-      new_name[0] = '@';
-      new_name[1] = '\0';
-      ACE_OS::strcat (new_name, old_name);
-      name->replace_string (new_name);
-      delete [] new_name;
-    }
+  std::string new_name ("@");
+  new_name += name->get_string_view ();
+  name->replace_string (new_name);
 }
 
 void
