@@ -166,13 +166,9 @@ Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 
 Routing_Slip::Routing_Slip(
       const TAO_Notify_Event::Ptr& event)
-  : is_safe_ (false)
-  , until_safe_ (internals_)
+  : until_safe_ (internals_)
   , this_ptr_ (0)
   , event_(event)
-  , state_ (rssCREATING)
-  , complete_requests_ (0)
-  , rspm_ (0)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, sequence_lock_);
   this->sequence_ = ++routing_slip_sequence_;

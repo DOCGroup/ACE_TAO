@@ -109,8 +109,13 @@ namespace TAO_Notify
     /// The constructor.
     Topology_Object ();
 
+    Topology_Object (Topology_Object const &) = delete;
+    Topology_Object (Topology_Object &&) = delete;
+    Topology_Object &operator= (Topology_Object const &) = delete;
+    Topology_Object &operator= (Topology_Object &&) = delete;
+
     /// The destructor.
-    virtual ~Topology_Object ();
+    ~Topology_Object () override;
 
     /// Init this object with data from <rhs>.
     virtual void initialize (Topology_Parent* topology_parent);
@@ -178,12 +183,12 @@ namespace TAO_Notify
 
   protected:
     /// true if this object changed since last save_persistent
-    bool self_changed_;
+    bool self_changed_ = false;
     /// true of any of this object's children changed since last save_persistent
-    bool children_changed_;
+    bool children_changed_ = false;
 
     /// A safely-typed copy of parent_;
-    Topology_Parent * topology_parent_;
+    Topology_Parent * topology_parent_ = nullptr;
   };
 
   /// \brief Interface for topology objects that act as parents.

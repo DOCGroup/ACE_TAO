@@ -79,7 +79,12 @@ public:
   void reconnect ();
 
   /// Destructor (should be private but that inspires compiler wars)
-  virtual ~Routing_Slip ();
+  ~Routing_Slip () override;
+
+  Routing_Slip (Routing_Slip const &) = delete;
+  Routing_Slip (Routing_Slip &&) = delete;
+  Routing_Slip &operator= (Routing_Slip const &) = delete;
+  Routing_Slip &operator= (Routing_Slip &&) = delete;
 
   //////////////////
   // Action requests
@@ -165,7 +170,7 @@ private:
   /// Protection for internal information
   TAO_SYNCH_MUTEX internals_;
   /// true when event persistence qos is guaranteed
-  bool is_safe_;
+  bool is_safe_ = false;
   /// signalled when is_safe_ goes true
   ACE_SYNCH_CONDITION until_safe_;
 
@@ -194,7 +199,7 @@ private:
     rssCOMPLETE,
     rssDELETING,
     rssTERMINAL
-  } state_;
+  } state_ = rssCREATING;
 
   /// A collection of delivery requests
   Delivery_Request_Vec delivery_requests_;
@@ -203,10 +208,10 @@ private:
   Delivery_Method_Vec delivery_methods_;
 
   /// How many delivery requests are complete
-  size_t complete_requests_;
+  size_t complete_requests_ {};
 
   /// Pointer to a Routing_Slip_Persistence_Manager
-  Routing_Slip_Persistence_Manager * rspm_;
+  Routing_Slip_Persistence_Manager * rspm_ = nullptr;
 
   int sequence_;
 
