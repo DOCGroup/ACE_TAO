@@ -77,7 +77,7 @@ void
 be_visitor_connector_ami_exh::gen_entrypoint ()
 {
   os_ << be_nl_2
-      << "extern \"C\" " << this->export_macro_.c_str ()
+      << "extern \"C\" " << this->export_macro_
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_"
       << ScopeAsDecl (this->node_->defined_in ())->flat_name ()

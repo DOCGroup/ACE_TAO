@@ -13,6 +13,8 @@
 #ifndef _BE_COMPONENT_COMPONENT_SCOPE_H_
 #define _BE_COMPONENT_COMPONENT_SCOPE_H_
 
+#include <string_view>
+
 #include "ace/SString.h"
 
 #include "be_visitor_scope.h"
@@ -60,7 +62,7 @@ protected:
 protected:
   be_component *node_ {};
   TAO_OutStream &os_;
-  ACE_CString export_macro_;
+  std::string_view export_macro_;
   bool in_ext_port_ {};
 };
 

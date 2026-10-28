@@ -30,7 +30,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // compiler front end would have told us.
 
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (!CORBA::is_nil (prev_def.in ()))
         {
@@ -85,7 +85,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           ex = ex_iter.item ();
 
           prev_def =
-            be_global->repository ()->lookup_id (ex->repoID ());
+            be_global->repository ()->lookup_id (IFR_C_String (ex->repoID ()));
 
           exceptions[i] =
             CORBA::ExceptionDef::_narrow (prev_def.in ());
@@ -148,9 +148,9 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                 CORBA::InterfaceDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
-                iface->create_operation (node->repoID (),
+                iface->create_operation (IFR_C_String (node->repoID ()),
                                          node->local_name ()->get_string (),
-                                         node->version (),
+                                         IFR_C_String (node->version ()),
                                          this->ir_current_.in (),
                                          mode,
                                          this->params_,
@@ -163,9 +163,9 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                 CORBA::ValueDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
-                vtype->create_operation (node->repoID (),
+                vtype->create_operation (IFR_C_String (node->repoID ()),
                                          node->local_name ()->get_string (),
-                                         node->version (),
+                                         IFR_C_String (node->version ()),
                                          this->ir_current_.in (),
                                          mode,
                                          this->params_,

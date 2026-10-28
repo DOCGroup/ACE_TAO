@@ -76,7 +76,7 @@ public:
 
   ~AST_Root () override;
 
-  unsigned long nmembers () override;
+  unsigned long nmembers () const override;
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;

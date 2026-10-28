@@ -16,7 +16,6 @@ be_visitor_union::be_visitor_union (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union::~be_visitor_union () = default;
 
 int
 be_visitor_union::visit_union (be_union *)

@@ -14,6 +14,8 @@
 #ifndef _BE_HOME_HOME_EX_IDL_H_
 #define _BE_HOME_HOME_EX_IDL_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_home_ex_idl
  *

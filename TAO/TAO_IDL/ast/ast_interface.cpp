@@ -303,21 +303,15 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
     }
 
   UTL_Scope *scope = i->defined_in ();
-  const char *prefix_holder = nullptr;
+  std::string_view prefix_holder;
 
   // If our prefix is empty, we check to see if an ancestor has one.
-  while (ACE_OS::strcmp (i->prefix (), "") == 0 && scope != nullptr)
+  while (i->prefix ().empty () && scope != nullptr)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
       prefix_holder = parent->prefix ();
 
-      // We have reached global scope.
-      if (prefix_holder == nullptr)
-        {
-          break;
-        }
-
-      i->prefix (const_cast<char *> (prefix_holder));
+      i->prefix (prefix_holder);
       scope = parent->defined_in ();
     }
 
@@ -329,18 +323,12 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       scope = d->defined_in ();
 
       // If the lookup prefix is empty, we check to see if an ancestor has one.
-      while (ACE_OS::strcmp (d->prefix (), "") == 0 && scope != nullptr)
+      while (d->prefix ().empty () && scope != nullptr)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
           prefix_holder = parent->prefix ();
 
-          // We have reached global scope.
-          if (prefix_holder == nullptr)
-            {
-              break;
-            }
-
-          d->prefix (const_cast<char *> (prefix_holder));
+          d->prefix (prefix_holder);
           scope = parent->defined_in ();
         }
 
@@ -351,8 +339,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
           if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
             {
-              idl_global->err ()->redef_error (i->full_name (),
-                                               d->full_name ());
+              idl_global->err ()->redef_error (i->full_name ().data (),
+                                               d->full_name ().data ());
               return;
             }
         }
@@ -503,7 +491,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
         }
     }
 
-  const char *full_name = t->full_name ();
+  std::string_view const full_name = t->full_name ();
 
   // Initialize an iterator to search the queue for duplicates.
   for (ACE_Unbounded_Queue_Iterator<AST_Type *> q_iter (
@@ -517,8 +505,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
 
       (void) q_iter.next (temp);
 
-      if (!ACE_OS::strcmp (full_name,
-                           (*temp)->full_name ()))
+      if (full_name == (*temp)->full_name ())
         {
           // We exist in this queue and cannot be inserted.
           return 0;
@@ -537,8 +524,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
 
       (void) del_q_iter.next (temp);
 
-      if (!ACE_OS::strcmp (full_name,
-                           (*temp)->full_name ()))
+      if (full_name == (*temp)->full_name ())
         {
           // We exist in this del_queue and cannot be inserted.
           return 0;
@@ -598,7 +584,7 @@ AST_Interface::redefine (AST_Interface *from)
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ()->get_string ());
+  this->set_file_name (idl_global->filename ()->get_string_view_or_empty ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
 }
@@ -822,7 +808,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
                 {
                   ACE_ERROR ((LM_ERROR,
                               "warning in %C line %d: ",
-                              idl_global->filename ()->get_string (),
+                              idl_global->filename ()->get_string_view_or_empty ().data (),
                               idl_global->lineno ()));
 
                   e->dump (*ACE_DEFAULT_LOG_STREAM);

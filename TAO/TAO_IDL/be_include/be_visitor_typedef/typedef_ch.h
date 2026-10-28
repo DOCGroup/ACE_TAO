@@ -30,7 +30,7 @@ public:
   explicit be_visitor_typedef_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_typedef_ch () override;
+  ~be_visitor_typedef_ch () override  = default;
 
   be_visitor_typedef_ch (be_visitor_typedef_ch const &) = delete;
   be_visitor_typedef_ch (be_visitor_typedef_ch &&) = delete;

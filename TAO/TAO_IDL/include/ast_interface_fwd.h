@@ -73,6 +73,10 @@ class AST_Interface;
 class TAO_IDL_FE_Export AST_InterfaceFwd : public virtual AST_Type
 {
 public:
+  AST_InterfaceFwd (AST_InterfaceFwd const &) = delete;
+  AST_InterfaceFwd (AST_InterfaceFwd &&) = delete;
+  AST_InterfaceFwd &operator= (AST_InterfaceFwd const &) = delete;
+  AST_InterfaceFwd &operator= (AST_InterfaceFwd &&) = delete;
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
@@ -113,7 +117,7 @@ public:
   int ast_accept (ast_visitor *visitor) override;
 
   // Is this decl a forward declared type (Yes)
-  bool is_fwd () override;
+  bool is_fwd () const override;
 
   // We don't actually want the forward declaration,
   // but want to return the full definition member,

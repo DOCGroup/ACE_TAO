@@ -19,7 +19,6 @@ be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
 {
 }
 
-be_visitor_valuebox_cdr_op_ch::~be_visitor_valuebox_cdr_op_ch () = default;
 
 int
 be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)

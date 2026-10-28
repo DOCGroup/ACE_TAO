@@ -32,7 +32,7 @@ be_visitor_context_svts::visit_component (be_component *node)
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   std::string const sname_str (scope->full_name ());
-  const char *lname = node_->local_name ();
+  std::string_view const lname = node_->local_name ();
   char const * const global = (sname_str.empty () ? "" : "::");
 
   os_ << be_nl
@@ -51,8 +51,8 @@ be_visitor_context_svts::visit_component (be_component *node)
   AST_Component * base = node->base_component ();
   if (base)
     {
-      const char *lbase_name =
-        base->original_local_name ()->get_string ();
+      std::string_view const lbase_name =
+        base->original_local_name ()->get_string_view_or_empty ();
 
       os_ << global << "CIAO_" << base->flat_name ()
           << "_Impl::" << lbase_name << "_Context_T<CONTAINER_TYPE, BASE>";
@@ -121,7 +121,7 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
   AST_Type *obj = node->publishes_type ();
   const char *port_name =
     node->local_name ()->get_string ();
-  const char *fname = obj->full_name ();
+  std::string_view const fname = obj->full_name ();
   const char *lname = obj->local_name ()->get_string ();
   std::string const sname_str (
     ScopeAsDecl (obj->defined_in ())->full_name ());
@@ -175,7 +175,7 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
       << "                  0);";
 
   os_ << be_nl_2
-      << "::" << fname << "Consumer_var ciao_var = " << be_idt_nl
+      << "::" << fname << "Consumer_var ciao_var =" << be_idt_nl
       << "::" << fname << "Consumer::_duplicate (c);" << be_uidt << be_nl_2
       << "std::pair<" << tao_cg->upcase (port_name) <<"_TABLE::iterator, bool> ret =" << be_idt_nl
       << "this->ciao_publishes_" << port_name
@@ -208,7 +208,7 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl
       << "ptrdiff_t key = 0UL;" << be_nl_2
-      << "if (ck == 0 || ! ::CIAO::Cookie_Impl::extract (ck, key))"
+      << "if (ck == nullptr || ! ::CIAO::Cookie_Impl::extract (ck, key))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
@@ -255,11 +255,12 @@ int
 be_visitor_context_svts::visit_emits (be_emits *node)
 {
   AST_Type *obj = node->emits_type ();
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
-  const char *fname = obj->full_name ();
-  const char *lname = obj->local_name ()->get_string ();
+  std::string_view const fname = obj->full_name ();
+  std::string_view const lname =
+    obj->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
@@ -320,9 +321,9 @@ be_visitor_context_svts::visit_emits (be_emits *node)
 
 void
 be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
-                                          const char *port_name)
+                                          std::string_view port_name)
 {
-  const char *fname = obj->full_name ();
+  std::string_view const fname = obj->full_name ();
 
   os_ << be_nl_2
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
@@ -377,9 +378,9 @@ be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
 void
 be_visitor_context_svts::gen_uses_multiplex (
   AST_Type *obj,
-  const char *port_name)
+  std::string_view port_name)
 {
-  const char *fname = obj->full_name ();
+  std::string_view const fname = obj->full_name ();
 
   os_ << be_nl_2
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
@@ -423,7 +424,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << be_nl
       << "                  ::CORBA::NO_MEMORY ());" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "return retv._retn (); " << be_uidt_nl
+      << "return retv._retn ();" << be_uidt_nl
       << "}";
 
   os_ << be_nl_2
@@ -449,7 +450,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << "                  0);";
 
   os_ << be_nl_2
-      << "::" << fname << "_var ciao_var = " << be_idt_nl
+      << "::" << fname << "_var ciao_var =" << be_idt_nl
       << "::" << fname << "::_duplicate (c);" << be_uidt << be_nl_2
       << "std::pair<" << tao_cg->upcase (port_name) <<"_TABLE::iterator, bool> ret =" << be_idt_nl
       << "this->ciao_uses_" << port_name
@@ -484,7 +485,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << "ptrdiff_t key = 0UL;" << be_nl
       << tao_cg->upcase (port_name)
       << "_TABLE::size_type n = 0UL;" << be_nl_2
-      << "if (ck == 0 || ! ::CIAO::Cookie_Impl::extract (ck, key))"
+      << "if (ck == nullptr || ! ::CIAO::Cookie_Impl::extract (ck, key))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl

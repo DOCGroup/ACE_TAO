@@ -23,7 +23,6 @@ be_visitor_valuetype_fwd_any_op_ch::be_visitor_valuetype_fwd_any_op_ch (
 {
 }
 
-be_visitor_valuetype_fwd_any_op_ch::~be_visitor_valuetype_fwd_any_op_ch () = default;
 
 int
 be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
@@ -47,7 +46,7 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  std::string_view macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

@@ -137,7 +137,10 @@ BE_GlobalData::orb_args (ACE_CString const &args)
 ACE_CString
 BE_GlobalData::spawn_options ()
 {
-  return this->orb_args_ + idl_global->idl_flags ().c_str ();
+  ACE_CString result (this->orb_args_);
+  std::string const idl_flags (idl_global->idl_flags ());
+  result += idl_flags.c_str ();
+  return result;
 }
 
 #define UNKNOWN_OPTION \

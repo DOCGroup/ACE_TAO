@@ -32,7 +32,7 @@ public:
   explicit be_visitor_sequence_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_cs () override;
+  ~be_visitor_sequence_cs () override  = default;
 
   be_visitor_sequence_cs (const be_visitor_sequence_cs &) = delete;
   be_visitor_sequence_cs (be_visitor_sequence_cs &&) = delete;

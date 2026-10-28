@@ -15,6 +15,8 @@
 #ifndef _BE_VISITOR_VALUEBOX_CH_H_
 #define _BE_VISITOR_VALUEBOX_CH_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_valuebox_ch
  *
@@ -29,7 +31,7 @@ public:
   explicit be_visitor_valuebox_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_ch () override;
+  ~be_visitor_valuebox_ch () override  = default;
 
   be_visitor_valuebox_ch (be_visitor_valuebox_ch const &) = delete;
   be_visitor_valuebox_ch (be_visitor_valuebox_ch &&) = delete;
@@ -71,14 +73,14 @@ private:
                            char const *type_suffix,
                            bool is_any);
 
-  void emit_default_constructor ();
+  void emit_default_constructor () const;
 
   void emit_constructor_one_arg (be_decl *node,
                                  char const *type_suffix,
                                  char const *const_prefix,
                                  char const *ref_modifier);
 
-  void emit_copy_constructor ();
+  void emit_copy_constructor () const;
 
   void emit_assignment (be_decl *node,
                         char const *type_suffix,
@@ -91,7 +93,7 @@ private:
                           char const *in_ref_modifier,
                           char const *out_ref_modifier);
 
-  void emit_accessor_modifier (be_decl *node);
+  void emit_accessor_modifier (be_decl *node) const;
 
   void emit_boxed_member_var (be_decl *node,
                               char const *type_suffix);

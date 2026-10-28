@@ -65,12 +65,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_IDL_GLOBAL_HH
 #define _IDL_IDL_GLOBAL_HH
 
-#include <optional>
-#include <string>
-#include <string_view>
-
 // May of them could be forward declared..
 #include "ace/SString.h"
+#include "ace/Functor_String.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
 #include "ace/Synch_Traits.h"
@@ -82,6 +79,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_stack.h"
 #include "fe_utils.h"
 #include "idl_version.h"
+
+#include <optional>
+#include <string>
+#include <string_view>
+#include <unordered_set>
+#include <vector>
 
 class AST_Root;
 class AST_Module;
@@ -332,75 +335,76 @@ public:
   // Operations
   UTL_ScopeStack   &scopes ();              // Scopes stack
 
-  AST_Root         *root ();                // Root of AST
+  AST_Root         *root () const;          // Root of AST
   void             set_root (AST_Root *);       // Set it
 
-  AST_Generator    *gen ();                 // Generator
+  AST_Generator    *gen () const;           // Generator
   void             set_gen (AST_Generator *);   // Set it
 
-  AST_ValueType    *primary_key_base ();    // PrimaryKeyBase
+  AST_ValueType    *primary_key_base () const; // PrimaryKeyBase
   void             primary_key_base (AST_ValueType *);   // Set it
 
-  UTL_Error        *err ();                 // Error reporter
+  UTL_Error        *err () const;           // Error reporter
   void             set_err (UTL_Error *);       // Set it
 
-  int              err_count ();            // How many errors?
+  int              err_count () const;      // How many errors?
   void             set_err_count (int);         // Set it
 
-  long             lineno ();               // Where in file?
+  long             lineno () const;         // Where in file?
   void             set_lineno (long);           // Set it
 
-  UTL_String       *filename ();            // What file?
+  UTL_String       *filename () const;      // What file?
   void             set_filename (UTL_String *); // Set it
 
-  UTL_String       *main_filename ();       // What's the main
+  UTL_String       *main_filename () const; // What's the main
                                                 // file name?
   void             set_main_filename (UTL_String *);
                                                 // Set it
 
-  UTL_String       *real_filename ();       // What's the real
+  UTL_String       *real_filename () const; // What's the real
                                                 // file name?
   void             set_real_filename (UTL_String *);
                                                 // Set it
 
-  UTL_String       *stripped_filename ();   // Stripped filename
+  UTL_String       *stripped_filename () const; // Stripped filename
   void             set_stripped_filename (UTL_String *);  // Set it
 
-  bool             imported ();             // Are we imported?
-  bool             import ();               // Is import on?
+  bool             imported () const;       // Are we imported?
+  bool             import () const;         // Is import on?
   void             set_import (bool);           // Set it
 
-  bool             in_main_file ();         // Are we?
+  bool             in_main_file () const;   // Are we?
   void             set_in_main_file (bool);     // Set it
 
-  char const *prog_name ();           // Invoked as..
-  void             set_prog_name (char const *);  // Set it
+  std::string_view prog_name () const;
+  void set_prog_name (std::string_view name);
+  void clear_prog_name ();
 
-  char const *cpp_location ();        // Where's CPP?
-  void             set_cpp_location (char const *);// Set it
+  std::optional<std::string_view> cpp_location () const;
+  std::string_view cpp_location_or_empty () const;
+  void set_cpp_location (std::string_view location);
 
-  long             compile_flags ();        // What flags are on?
+  long             compile_flags () const;  // What flags are on?
   void             set_compile_flags (long);    // Turn some on or off
 
-  void append_local_escapes (std::string_view escapes);
+  std::string_view local_escapes () const;
+  void             append_local_escape (std::string_view escape);
+  void             set_local_escapes (std::string_view escapes);
 
-  UTL_Indenter     *indent ();              // Get indenter
+  UTL_Indenter     *indent () const;        // Get indenter
   void             set_indent (UTL_Indenter *); // Set it
 
   void             store_include_file_name (UTL_String *);
 
-  UTL_String       **include_file_names (); // Array of file names
+  UTL_String       **include_file_names () const; // Array of file names
   void             set_include_file_names (UTL_String **); // Set it
 
-  unsigned long    n_include_file_names (); // How many
+  unsigned long    n_include_file_names () const; // How many
   void             set_n_include_file_names (unsigned long n);
 
   void             reset_flag_seen ();
 
   // = Types & methods supporting DDS DCPS sequence definitions (from #pragma)
-  using DCPS_Sequence_Types_List = ACE_Unbounded_Queue<char *>;
-
-
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
   using DCPS_Key_List = ACE_Unbounded_Queue<ACE_TString>;
 
@@ -412,17 +416,15 @@ public:
 
   using DCPS_Data_Type_Info_Iter = ACE_Unbounded_Queue_Iterator<ACE_TString>;
 
-  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager_Ex<char const *,
-                                                      DCPS_Data_Type_Info*,
-                                                      ACE_Hash<char*>,
-                                                      ACE_Equal_To<char*>,
-                                                      ACE_Null_Mutex>;
+  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager<std::string,
+                                                   DCPS_Data_Type_Info*,
+                                                   ACE_Null_Mutex>;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
-  void add_dcps_data_type (char const * id);
+  void add_dcps_data_type (std::string_view id);
 
   // FE calls when #pragma DCPS_DATA_KEY is processed
-  bool add_dcps_data_key (char const * id, char const * key);
+  bool add_dcps_data_key (std::string_view id, std::string_view key);
 
   // returns null if not matching; otherwise pointer to the info
   DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
@@ -434,10 +436,10 @@ public:
   bool dcps_support_zero_copy_read () const;
 
   // FE calls when #pragma DCPS_DATA_SEQUENCE_TYPE is processed
-  void set_dcps_sequence_type (char const * seq_type);
+  void set_dcps_sequence_type (std::string_view seq_type);
 
   // BE calls to check whether pragma for this sequence has been set
-  bool dcps_sequence_type_defined (char const * seq_type);
+  bool dcps_sequence_type_defined (std::string_view seq_type) const;
 
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
   void dcps_gen_zero_copy_read (bool value);
@@ -450,19 +452,13 @@ public:
   //   "#include"d in the main IDL file, not the ones after CC
   //   preprocessor parsed the file.
 
-  // Just storing the pointer. No memory will be allocated.
-  void add_to_included_idl_files (char const *file_name);
+  void add_to_included_idl_files (std::string_view file_name);
 
   // Get all the files.
-  char** included_idl_files ();
+  std::vector<std::string> & included_idl_files ();
 
   // The number of currently availabe include files.
   size_t n_included_idl_files ();
-
-  // Set the number of included_idl_files. Use this carefully. This
-  // method is used when we validate all the #included idl files,
-  // against the ones that we get after preprocessing.
-  void n_included_idl_files (size_t n);
 
   ParseState parse_state ();       // What state we're in
   void set_parse_state (ParseState s); // Set it
@@ -487,6 +483,7 @@ public:
   // Set the path of TAO_ROOT.
 
   std::optional<std::string_view> tao_root () const;
+  std::string_view tao_root_or_empty () const;
   // Get the path for TAO_ROOT.
 
   void gperf_path (std::string_view s);
@@ -498,7 +495,7 @@ public:
   void ident_string (std::string_view s);
   // Set the value of the #ident string.
 
-  std::optional<std::string_view> ident_string () const;
+  std::string_view ident_string () const;
   // Get the value of the #ident string.
 
   void case_diff_error (bool);
@@ -520,11 +517,11 @@ public:
   void append_idl_flag (std::string_view s);
   // Save each flag passed to the IDL compiler.
 
-  std::string const &idl_flags () const;
+  std::string_view idl_flags () const;
   // Get a string representation of the flags
   // passed to the idl compiler.
 
-  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
+  std::unordered_set<std::string> &
   idl_keywords ();
   // Accessor for the IDL keyword container.
 
@@ -534,7 +531,7 @@ public:
   void update_prefix (char *filename);
   // Do repo id prefix bookkeeping when the file changes.
 
-  long seen_include_file_before (char *);
+  long seen_include_file_before (std::string_view filename);
   // Seen this include before?
 
   long last_seen_index () const;
@@ -556,50 +553,50 @@ public:
   // specific paths and false for paths provided by user.
 
   void add_rel_include_path (char const *s);
-  ACE_Unbounded_Queue<char *> const & rel_include_paths () const;
+  std::vector<std::string> const & rel_include_paths () const;
   // Accessor/mutator for the rel_include_paths_ member.
 
   void add_ciao_lem_file_names (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_lem_file_names ();
+  std::vector<std::string> const & ciao_lem_file_names () const;
   // Accessor/mutator for the ciao_lem_file_names_ member.
 
   void add_ciao_rti_ts_file_names (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_rti_ts_file_names ();
+  std::vector<std::string> const & ciao_rti_ts_file_names () const;
   // Accessor/mutator for the ciao_rti_ts_file_names_ member.
 
   void add_ciao_spl_ts_file_names (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_spl_ts_file_names ();
+  std::vector<std::string> const & ciao_spl_ts_file_names () const;
   // Accessor/mutator for the ciao_spl_ts_file_names_ member.
 
   void add_ciao_oci_ts_file_names (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_oci_ts_file_names ();
+  std::vector<std::string> const & ciao_oci_ts_file_names () const;
   // Accessor/mutator for the ciao_oci_ts_file_names_ member.
 
-    void add_ciao_coredx_ts_file_names (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_coredx_ts_file_names ();
+  void add_ciao_coredx_ts_file_names (char const *s);
+  std::vector<std::string> const & ciao_coredx_ts_file_names () const;
   // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
 
   void add_ciao_ami_iface_names (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_iface_names ();
+  std::vector<std::string> const & ciao_ami_iface_names () const;
   // Accessor/mutator for the ciao_ami_iface_names_ member.
 
   void add_ciao_ami_recep_names (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_recep_names ();
+  std::vector<std::string> const & ciao_ami_recep_names () const;
   // Accessor/mutator for the ciao_ami_recep_names_ member.
 
   void add_included_ami_recep_names (char const *s);
-  ACE_Unbounded_Queue<char *> & included_ami_recep_names ();
+  std::vector<std::string> const & included_ami_recep_names () const;
   // Accessor/mutator for the included_ami_recep_names_ member.
 
   bool included_ami_receps_done () const;
   void included_ami_receps_done (bool val);
 
   void add_ciao_ami_idl_fnames (char const *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames ();
+  std::vector<std::string> const & ciao_ami_idl_fnames () const;
   // Accessor/mutator for the included_ami_idl_fnames_ member.
 
   void add_dds4ccm_impl_fnames (char const *s);
-  ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames ();
+  std::vector<std::string> const & dds4ccm_impl_fnames () const;
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
 
   ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces ();
@@ -644,7 +641,7 @@ public:
   void multi_file_input (bool val);
   // Accessors for the member.
 
-  char const *big_file_name () const;
+  std::string_view big_file_name () const;
   // Just get the const string.
 
   FE_Utils::T_PARAMLIST_INFO const *current_params () const;
@@ -676,7 +673,7 @@ public:
 
   struct Include_Path_Info
   {
-    char *path_;
+    std::optional<std::string> path_;
     bool is_system_;
   };
 
@@ -916,24 +913,18 @@ private:
   UTL_String                 *pd_stripped_filename {}; // Stripped filename
   bool                       pd_import {};             // Is import on?
   bool                       pd_in_main_file {};       // Are we in it?
-  char const                 *pd_prog_name {};         // Argv[0]
-  char const                 *pd_cpp_location {};      // Where to find CPP
+  std::string pd_prog_name {};
+  std::optional<std::string> pd_cpp_location {};
   long                       pd_compile_flags {};      // Compile flags
-  std::string                 local_escapes_;          // Trapdoor argument
+  std::string                 pd_local_escapes {};     // Trapdoor argument
   UTL_Indenter               *pd_indent {};            // Indent object
                                                      // as it's being built
   UTL_String                 **pd_include_file_names {}; // Array of file names.
   unsigned long              pd_n_include_file_names {}; // How many.
   unsigned long              pd_n_alloced_file_names {}; // How many alloced.
 
-  char **included_idl_files_ {};
+  std::vector<std::string> included_idl_files_;
   // IDL files that are "#include'd.
-
-  size_t n_included_idl_files_ {};
-  // The number of such idl files that are currently stored.
-
-  size_t n_allocated_idl_files_ {};
-  // For char*'s have been allocated for this.
 
   ParseState                pd_parse_state {PS_NoState}; // Parse state we're in.
 
@@ -950,7 +941,7 @@ private:
   // Temp directory where which we can rewsolve in drv_preproc.cpp by
   // checking for  TEMP env variable otherwise we assign to /tmp/.
 
-  std::optional<std::string> ident_string_;
+  std::string ident_string_;
   // Holds a string that begins with #ident, to be passed from the IDL
   // file to the generated files.
 
@@ -964,7 +955,7 @@ private:
   std::string idl_flags_;
   // Concatenation of all the command line options.
 
-  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> idl_keywords_;
+  std::unordered_set<std::string> idl_keywords_;
   // Container for all the IDL keywords so local names can be checked.
 
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
@@ -976,7 +967,7 @@ private:
   Unbounded_Paths_Queue include_paths_;
   // List of -I options passed to us.
 
-  ACE_Unbounded_Queue<char *> rel_include_paths_;
+  std::vector<std::string> rel_include_paths_;
   // Used by backends with the -r option.
 
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> file_prefixes_;
@@ -994,7 +985,7 @@ private:
   DCPS_Type_Info_Map dcps_type_info_map_;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
 
-  DCPS_Sequence_Types_List dcps_sequence_types_list_;
+  std::vector<std::string> dcps_sequence_types_list_ {};
 
   bool dcps_support_zero_copy_read_ {};
   // Are we enabled to support DCPS zero-copy read.
@@ -1014,7 +1005,6 @@ private:
   bool multi_file_input_ {};
   // Some backends process multiple files to a single output.
 
-  char const *big_file_name_ {"PICML_IDL_file_bag"};
   // Used if the above flag is set.
 
   FE_Utils::T_PARAMLIST_INFO *current_params_ {};
@@ -1034,38 +1024,38 @@ private:
   // a param holder, it will need this name rather than the
   // name of the alias's referenced param.
 
-  ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
+  std::vector<std::string> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
 
-  ACE_Unbounded_Queue<char *> ciao_rti_ts_file_names_;
+  std::vector<std::string> ciao_rti_ts_file_names_;
   // Files parsed with RTI typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_spl_ts_file_names_;
+  std::vector<std::string> ciao_spl_ts_file_names_;
   // Files parsed with OpenSplice typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_oci_ts_file_names_;
+  std::vector<std::string> ciao_oci_ts_file_names_;
   // Files parsed with OpenDDS typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_coredx_ts_file_names_;
+  std::vector<std::string> ciao_coredx_ts_file_names_;
   // Files parsed with CoreDX typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_ami_iface_names_;
+  std::vector<std::string> ciao_ami_iface_names_;
   // Interfaces that get a reply handler generated for AMI4CCM.
 
-  ACE_Unbounded_Queue<char *> ciao_ami_recep_names_;
+  std::vector<std::string> ciao_ami_recep_names_;
   // Receptacles that get a sendc_ version added for AMI4CCM.
 
-  ACE_Unbounded_Queue<char *> included_ami_recep_names_;
+  std::vector<std::string> included_ami_recep_names_;
   // We need to do something different with these...
 
   bool included_ami_receps_done_ {};
   // ...but we need to do it only once.
 
-  ACE_Unbounded_Queue<char *> ciao_ami_idl_fnames_;
+  std::vector<std::string> ciao_ami_idl_fnames_;
   // Stores directives from #pragma ciao ami4ccm idl "xxx"
   // or  #pragma ami4ccm idl "xxx".
 
-  ACE_Unbounded_Queue<char *> dds4ccm_impl_fnames_;
+  std::vector<std::string> dds4ccm_impl_fnames_;
   // Stores directives from #pragma dds4ccm impl "xxx".
 
   /**

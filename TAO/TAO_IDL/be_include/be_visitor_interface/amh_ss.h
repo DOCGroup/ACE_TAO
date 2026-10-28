@@ -13,6 +13,7 @@
 #ifndef AMH_INTERFACE_SS_H
 #define AMH_INTERFACE_SS_H
 
+#include <string>
 
 class be_visitor_amh_interface_ss : public be_visitor_interface_ss
 {

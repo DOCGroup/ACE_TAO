@@ -223,7 +223,7 @@ AST_Module::referenced (AST_Decl *e,
 }
 
 AST_Module *
-AST_Module::previous_opening ()
+AST_Module::previous_opening () const
 {
   return this->previous_opening_;
 }
@@ -344,22 +344,15 @@ AST_Module *
 AST_Module::fe_add_module (AST_Module *t)
 {
   // If our prefix is empty, we check to see if an ancestor has one.
-  if (!ACE_OS::strcmp (t->prefix (), ""))
+  if (t->prefix ().empty ())
     {
       UTL_Scope *scope = t->defined_in ();
       while (scope)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
-          const char *prefix_holder = parent->prefix ();
+          t->prefix (parent->prefix ());
 
-          if (!prefix_holder)
-            {
-              break; // We have reached global scope.
-            }
-
-          t->prefix (const_cast<char *> (prefix_holder));
-
-          if (ACE_OS::strcmp (t->prefix (), ""))
+          if (!t->prefix ().empty ())
             {
               break;
             }
@@ -391,16 +384,16 @@ AST_Module::fe_add_module (AST_Module *t)
           return nullptr;
         }
 
-      const char *prev_prefix = d->prefix ();
-      const char *this_prefix = t->prefix ();
+      std::string_view const prev_prefix = d->prefix ();
+      std::string_view const this_prefix = t->prefix ();
 
-      if (!ACE_OS::strcmp (this_prefix, ""))
+      if (this_prefix.empty ())
         {
-          t->prefix (const_cast<char *> (prev_prefix));
+          t->prefix (prev_prefix);
         }
-      else if (!ACE_OS::strcmp (prev_prefix, ""))
+      else if (prev_prefix.empty ())
         {
-          d->prefix (const_cast<char *> (this_prefix));
+          d->prefix (this_prefix);
         }
     }
 

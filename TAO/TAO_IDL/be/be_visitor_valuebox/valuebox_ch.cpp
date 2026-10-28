@@ -21,7 +21,6 @@ be_visitor_valuebox_ch::be_visitor_valuebox_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_ch::~be_visitor_valuebox_ch () = default;
 
 int
 be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
@@ -727,7 +726,7 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
 }
 
 void
-be_visitor_valuebox_ch::emit_default_constructor ()
+be_visitor_valuebox_ch::emit_default_constructor () const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -758,7 +757,7 @@ be_visitor_valuebox_ch::emit_constructor_one_arg (be_decl *node,
 }
 
 void
-be_visitor_valuebox_ch::emit_copy_constructor ()
+be_visitor_valuebox_ch::emit_copy_constructor () const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -808,7 +807,7 @@ be_visitor_valuebox_ch::emit_boxed_access (be_decl *node,
 }
 
 void
-be_visitor_valuebox_ch::emit_accessor_modifier (be_decl *node)
+be_visitor_valuebox_ch::emit_accessor_modifier (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

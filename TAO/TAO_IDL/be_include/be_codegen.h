@@ -17,6 +17,10 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Unbounded_Queue.h"
 
+#include <string>
+#include <string_view>
+#include <vector>
+
 #include "TAO_IDL_BE_Export.h"
 
 class TAO_OutStream;
@@ -35,6 +39,11 @@ class be_decl;
 class TAO_IDL_BE_Export TAO_CodeGen
 {
 public:
+  TAO_CodeGen (TAO_CodeGen const &) = delete;
+  TAO_CodeGen (TAO_CodeGen &&) = delete;
+  TAO_CodeGen &operator= (TAO_CodeGen const &) = delete;
+  TAO_CodeGen &operator= (TAO_CodeGen &&) = delete;
+
   // Define all the code generation states.
   // The first letter C/S of the suffix stands for client/server-side
   // The second letter H/I/S stands for header/inline/impl file.
@@ -204,48 +213,48 @@ public:
   ~TAO_CodeGen ();
 
   /// Set the client header stream.
-  int start_client_header (const char *fname);
+  int start_client_header (const std::string &fname);
 
   /// Set the client inline stream.
-  int start_client_inline (const char *fname);
+  int start_client_inline (const std::string &fname);
 
   /// Set the client stub stream.
-  int start_client_stubs (const char *fname);
+  int start_client_stubs (const std::string &fname);
 
   /// Set the server header stream.
-  int start_server_header (const char *fname);
+  int start_server_header (const std::string &fname);
 
   /// Set the implementation header stream.
-  int start_implementation_header (const char *fname);
+  int start_implementation_header (const std::string &fname);
 
   /// Set the implementation skeleton stream.
-  int start_implementation_skeleton (const char *fname);
+  int start_implementation_skeleton (const std::string &fname);
 
   /// Set the server template header stream.
-  int start_server_template_header (const char *fname);
+  int start_server_template_header (const std::string &fname);
 
   /// Set the server skeletons stream.
-  int start_server_skeletons (const char *fname);
+  int start_server_skeletons (const std::string &fname);
 
   /// Set the server template skeletons stream.
-  int start_server_template_skeletons (const char *fname);
+  int start_server_template_skeletons (const std::string &fname);
 
   /// Set the anyop header stream.
-  int start_anyop_header (const char *fname);
+  int start_anyop_header (const std::string &fname);
 
   /// Set the anyop source stream.
-  int start_anyop_source (const char *fname);
+  int start_anyop_source (const std::string &fname);
 
-  int start_ciao_svnt_header (const char *fname);
-  int start_ciao_svnt_source (const char *fname);
-  int start_ciao_svnt_template_header (const char *fname);
-  int start_ciao_svnt_template_source (const char *fname);
-  int start_ciao_exec_header (const char *fname);
-  int start_ciao_exec_source (const char *fname);
-  int start_ciao_exec_idl (const char *fname);
-  int start_ciao_conn_header (const char *fname);
-  int start_ciao_conn_source (const char *fname);
-  int start_ciao_ami_conn_idl (const char *fname);
+  int start_ciao_svnt_header (const std::string &fname);
+  int start_ciao_svnt_source (const std::string &fname);
+  int start_ciao_svnt_template_header (const std::string &fname);
+  int start_ciao_svnt_template_source (const std::string &fname);
+  int start_ciao_exec_header (const std::string &fname);
+  int start_ciao_exec_source (const std::string &fname);
+  int start_ciao_exec_idl (const std::string &fname);
+  int start_ciao_conn_header (const std::string &fname);
+  int start_ciao_conn_source (const std::string &fname);
+  int start_ciao_ami_conn_idl (const std::string &fname);
 
   /// Generate code at the end such as the <<= and >>= operators along
   /// with the ending #endif statement.
@@ -261,7 +270,7 @@ public:
   int end_server_header ();
 
   /// Put a last #endif in the server header.
-  int end_implementation_header (const char *fname);
+  int end_implementation_header (const std::string &fname);
 
   /// Put a last #endif in the server header.
   int end_implementation_skeleton (const char *fname);
@@ -365,7 +374,7 @@ public:
   TAO_OutStream *gperf_input_stream ();
 
   /// Set the gperf input file name.
-  void gperf_input_filename (char *filename);
+  void gperf_input_filename (std::string_view filename);
 
   /**
    * Retrieve the gperf input file name being used.
@@ -373,11 +382,11 @@ public:
    * program. This is needed coz I do ACE_OS::open on this when I need
    * ACE_HANDLE for the file instead FILE*.
    */
-  char *gperf_input_filename ();
+  std::string_view gperf_input_filename () const;
 
   /// Convert input string to all one case.
-  const char *upcase (const char *str);
-  const char *downcase (const char *str);
+  static std::string upcase (std::string_view str);
+  static std::string downcase (std::string_view str);
 
   /// Pass along the #ident string, if any, from the IDL file.
   void gen_ident_string (TAO_OutStream *stream) const;
@@ -388,21 +397,21 @@ public:
   /// Generate file include, with optional empty comment to
   /// short-circuit DOxygen.
   void gen_standard_include (TAO_OutStream *stream,
-                             const char *included_file,
+                             std::string_view included_file,
                              bool add_comment = false);
 
   /// Generate a system include using angle brackets.
   void gen_system_include (TAO_OutStream *stream,
-                           const char *included_file);
+                           std::string_view included_file);
 
   /// Cleanup.
   void destroy ();
 
 private:
-  void gen_ifndef_string (const char *fname,
+  void gen_ifndef_string (std::string_view fname,
                           TAO_OutStream *stream,
-                          const char *prefix,
-                          const char *suffix);
+                          std::string_view prefix,
+                          std::string_view suffix);
 
   /// Utility methods for generating file includes.
   void gen_stub_hdr_includes ();
@@ -431,16 +440,16 @@ private:
   void gen_conn_src_includes ();
   void gen_ami_conn_idl_includes ();
 
-  bool is_system_file (const char * idl_name) const;
+  bool is_system_file (std::string_view idl_name) const;
 
-  void gen_export_file (char const *filename,
-                        char const *macro,
-                        char const *msg,
+  void gen_export_file (std::string_view filename,
+                        std::string_view macro,
+                        const char *msg,
                         bool for_skel = false);
 
-  void make_rand_extension (char * const t);
+  void make_rand_extension (std::string &name);
 
-  void gen_conn_ts_includes (ACE_Unbounded_Queue<char *> &ts_files);
+  void gen_conn_ts_includes (std::vector<std::string> const &ts_files);
 
 private:
   /// Client header stream.
@@ -514,7 +523,7 @@ private:
    * program. This is needed coz I do ACE_OS::open on this when I need
    * ACE_HANDLE for the file instead FILE*.
    */
-  char *gperf_input_filename_ {};
+  std::string gperf_input_filename_;
 
   /// The enumerated value indicating the lookup strategy.
   LOOKUP_STRATEGY strategy_;

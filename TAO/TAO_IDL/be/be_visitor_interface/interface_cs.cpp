@@ -10,6 +10,8 @@
 
 #include "interface.h"
 
+#include <string_view>
+
 be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
@@ -108,7 +110,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // If we are generating CORBA Policy we need to add some more methods
-  if (ACE_OS::strcmp (node->full_name (), "CORBA::Policy") == 0)
+  if (node->full_name () == "CORBA::Policy")
     {
       *os << be_nl
           << "CORBA::Boolean" << be_nl
@@ -394,7 +396,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 }
 
 bool
-be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
+be_visitor_interface_cs::gen_xxx_narrow (std::string_view pre,
                                          be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -438,7 +440,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
       *os << be_idt << be_idt_nl;
 
       *os << "_tao_objref";
-      if (ACE_OS::strcmp (pre, "narrow") == 0)
+      if (pre == "narrow")
         {
           *os << "," << be_nl
               << "\"" << node->repoID () << "\"";
@@ -469,7 +471,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
       *os << "_tao_objref";
 
-      if (ACE_OS::strcmp (pre, "narrow") == 0)
+      if (pre == "narrow")
         {
           *os << ", "
               << "\"" << node->repoID () << "\"";
@@ -499,8 +501,8 @@ be_visitor_interface_cs::visit_connector (be_connector *node)
 int
 be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string_view_or_empty ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -521,15 +523,15 @@ be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 
 int
 be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string_view_or_empty ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -550,7 +552,7 @@ be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 

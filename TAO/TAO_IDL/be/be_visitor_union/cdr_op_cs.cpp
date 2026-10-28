@@ -17,7 +17,6 @@ be_visitor_union_cdr_op_cs::be_visitor_union_cdr_op_cs (
 {
 }
 
-be_visitor_union_cdr_op_cs::~be_visitor_union_cdr_op_cs () = default;
 
 namespace {
   void

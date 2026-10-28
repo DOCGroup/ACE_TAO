@@ -22,6 +22,10 @@ public:
                  UTL_NameList *supports,
                  UTL_ScopedName *managed_component,
                  UTL_ScopedName *primary_key);
+  FE_HomeHeader (FE_HomeHeader const &) = delete;
+  FE_HomeHeader (FE_HomeHeader &&) = delete;
+  FE_HomeHeader &operator= (FE_HomeHeader const &) = delete;
+  FE_HomeHeader &operator= (FE_HomeHeader &&) = delete;
 
   ~FE_HomeHeader () override;
 

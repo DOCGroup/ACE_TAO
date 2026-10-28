@@ -20,7 +20,6 @@ be_visitor_structure_cs::be_visitor_structure_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_cs::~be_visitor_structure_cs () = default;
 
 int
 be_visitor_structure_cs::visit_structure (be_structure *node)

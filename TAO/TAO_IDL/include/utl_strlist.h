@@ -97,12 +97,14 @@ public:
 
   // Get list element
   UTL_String *head ();
+  UTL_String const *head () const;
 
   // Set the list element
   void set_head (UTL_String *);
 
   // Get last element in this list
   UTL_String *last_component ();
+  UTL_String const *last_component () const;
 
 private:
   // The list item
@@ -117,7 +119,7 @@ public:
   explicit UTL_StrlistActiveIterator (UTL_StrList *s);
 
   // Get current item.
-  UTL_String *item ();
+  UTL_String *item () const;
 };
 
 #endif           // _UTL_STRLIST_UTL_STRLIST_HH

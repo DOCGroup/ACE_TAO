@@ -31,7 +31,7 @@ public:
   explicit be_visitor_typedef_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_typedef_cdr_op_cs () override;
+  ~be_visitor_typedef_cdr_op_cs () override  = default;
 
   be_visitor_typedef_cdr_op_cs (be_visitor_typedef_cdr_op_cs const &) = delete;
   be_visitor_typedef_cdr_op_cs (be_visitor_typedef_cdr_op_cs &&) = delete;

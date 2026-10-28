@@ -6,6 +6,10 @@
 class TAO_IDL_FE_Export AST_EventType : public virtual AST_ValueType
 {
 public:
+  AST_EventType (AST_EventType const &) = delete;
+  AST_EventType (AST_EventType &&) = delete;
+  AST_EventType &operator= (AST_EventType const &) = delete;
+  AST_EventType &operator= (AST_EventType &&) = delete;
   AST_EventType (UTL_ScopedName *n,
                  AST_Type **inherits,
                  long n_inherits,

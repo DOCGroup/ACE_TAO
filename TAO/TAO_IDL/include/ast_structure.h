@@ -79,11 +79,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ace/Unbounded_Queue.h"
 
+#include <string_view>
+
 class TAO_IDL_FE_Export AST_Structure
   : public virtual AST_ConcreteType,
     public virtual UTL_Scope
 {
 public:
+  AST_Structure (AST_Structure const &) = delete;
+  AST_Structure (AST_Structure &&) = delete;
+  AST_Structure &operator= (AST_Structure const &) = delete;
+  AST_Structure &operator= (AST_Structure &&) = delete;
   AST_Structure (UTL_ScopedName *n,
                  bool local,
                  bool abstract);
@@ -156,7 +162,7 @@ public:
   /// Easy Member Access
   ///{
   virtual AST_Decl *operator[] (size_t const index);
-  virtual AST_Decl *operator[] (char const *name);
+  virtual AST_Decl *operator[] (std::string_view name);
   ///}
 
 protected:

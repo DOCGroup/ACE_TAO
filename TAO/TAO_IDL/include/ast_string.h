@@ -82,10 +82,14 @@ public:
               long wide = 1);
 
   ~AST_String () override;
+  AST_String (AST_String const &) = delete;
+  AST_String (AST_String &&) = delete;
+  AST_String &operator= (AST_String const &) = delete;
+  AST_String &operator= (AST_String &&) = delete;
 
   // Data Accessors.
-  AST_Expression *max_size ();
-  long width ();
+  AST_Expression *max_size () const;
+  long width () const;
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;

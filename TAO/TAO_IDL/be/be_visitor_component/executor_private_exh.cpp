@@ -36,13 +36,13 @@ be_visitor_executor_private_exh::visit_provides (be_provides *node)
     IdentifierHelper::orig_sn (i_scope->name (), false).c_str ());
 
   os_ << be_nl_2;
-  os_ << "/// Object reference to "<< this->ctx_->port_prefix ().c_str ()
+  os_ << "/// Object reference to " << this->ctx_->port_prefix ()
       << node->original_local_name () << " facet";
 
   os_ << be_nl
-      << smart_scope << scope_name.c_str () << "::CCM_"
+      << smart_scope << scope_name << "::CCM_"
       << impl->original_local_name () << "_var ciao_"
-      << this->ctx_->port_prefix ().c_str ()
+      << this->ctx_->port_prefix ()
       << node->original_local_name () << "_;";
 
   return 0;
@@ -78,7 +78,7 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  os_ << this->ctx_->port_prefix ().c_str ()
+  os_ << this->ctx_->port_prefix ()
       << node->local_name () << "_;";
 
   return 0;

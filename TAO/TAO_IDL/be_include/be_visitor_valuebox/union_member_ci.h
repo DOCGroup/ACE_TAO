@@ -33,7 +33,7 @@ public:
   explicit be_visitor_valuebox_union_member_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_union_member_ci () override;
+  ~be_visitor_valuebox_union_member_ci () override  = default;
 
   be_visitor_valuebox_union_member_ci (be_visitor_valuebox_union_member_ci const &) = delete;
   be_visitor_valuebox_union_member_ci (be_visitor_valuebox_union_member_ci &&) = delete;

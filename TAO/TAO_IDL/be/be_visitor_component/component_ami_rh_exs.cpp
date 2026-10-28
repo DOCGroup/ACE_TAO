@@ -71,7 +71,7 @@ be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
                         -1);
     }
 
-  this->ctx_->port_prefix () = port_pfix;
+  this->ctx_->port_prefix (port_pfix);
   return 0;
 }
 
@@ -100,7 +100,7 @@ be_visitor_component_ami_rh_exs::visit_operation (
   os_ << be_nl_2
       << "void" << be_nl
       << this->class_name_ << "::"
-      << node->local_name ()->get_string ()
+      << node->local_name ()->get_string_view_or_empty ()
       << " (";
 
   int count =

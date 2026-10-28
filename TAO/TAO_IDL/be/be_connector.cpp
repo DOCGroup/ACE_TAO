@@ -89,15 +89,15 @@ be_connector::check_ancestors ()
 
   while (base != nullptr)
     {
-      const char *base_fname = base->full_name ();
+      std::string_view const base_fname = base->full_name ();
 
-      if (ACE_OS::strcmp (base_fname, "CCM_DDS::DDS_Base") == 0)
+      if (base_fname == "CCM_DDS::DDS_Base")
         {
           this->dds_connector_ = true;
           idl_global->dds_connector_seen_ = true;
           break;
         }
-      else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI4CCM_Base") == 0)
+      else if (base_fname == "CCM_AMI::AMI4CCM_Base")
         {
           this->ami_connector_ = true;
           idl_global->ami_connector_seen_ = true;

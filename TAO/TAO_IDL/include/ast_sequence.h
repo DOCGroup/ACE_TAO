@@ -81,12 +81,16 @@ public:
                 bool abstract);
 
   ~AST_Sequence () override;
+  AST_Sequence (AST_Sequence const &) = delete;
+  AST_Sequence (AST_Sequence &&) = delete;
+  AST_Sequence &operator= (AST_Sequence const &) = delete;
+  AST_Sequence &operator= (AST_Sequence &&) = delete;
 
   bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
-  AST_Expression *max_size ();
+  AST_Expression *max_size () const;
 
   AST_Type *base_type () const;
 

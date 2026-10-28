@@ -20,7 +20,6 @@ be_visitor_typedef_ci::be_visitor_typedef_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_ci::~be_visitor_typedef_ci () = default;
 
 int
 be_visitor_typedef_ci::visit_typedef (be_typedef *node)

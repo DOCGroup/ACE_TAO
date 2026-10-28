@@ -14,6 +14,8 @@
 #ifndef _BE_COMPONENT_CONTEXT_SVS_H_
 #define _BE_COMPONENT_CONTEXT_SVS_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_context_svts
  *
@@ -41,9 +43,9 @@ public:
 
 private:
   void gen_uses_simplex (AST_Type *obj,
-                         const char *port_name);
+                         std::string_view port_name);
   void gen_uses_multiplex (AST_Type *obj,
-                           const char *port_name);
+                           std::string_view port_name);
 };
 
 #endif /* _BE_COMPONENT_CONTEXT_SVS_H_ */

@@ -20,7 +20,6 @@ be_visitor_structure_ch::be_visitor_structure_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_ch::~be_visitor_structure_ch () = default;
 
 // Visit the Structure node and its scope.
 int be_visitor_structure_ch::visit_structure (be_structure *node)

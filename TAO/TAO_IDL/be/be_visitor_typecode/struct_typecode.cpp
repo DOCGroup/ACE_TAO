@@ -12,6 +12,8 @@
 
 #include "typecode.h"
 
+#include <string_view>
+
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
@@ -90,9 +92,8 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                         -1);
     }
 
-  ACE_CString const tao_fields ("_tao_fields_");
-  ACE_CString const fields_name (tao_fields
-                                 + node->flat_name ());
+  std::string fields_name ("_tao_fields_");
+  fields_name += node->flat_name ();
 
   // Generate array containing struct field characteristics.
   os << "static TAO::TypeCode::Struct_Field<" << be_idt_nl
@@ -103,12 +104,12 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
     {
       // Should only be possible for user exceptions with no fields.
       os << " * const" << be_idt_nl
-         << fields_name.c_str () << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
+         << fields_name << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
     }
   else
     {
       os << be_idt_nl
-         << fields_name.c_str () << "[] =" << be_idt_nl
+         << fields_name << "[] =" << be_idt_nl
          << "{" << be_idt_nl;
 
       if (this->visit_members (node) != 0)

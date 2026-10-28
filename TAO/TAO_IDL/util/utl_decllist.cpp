@@ -93,6 +93,12 @@ UTL_DeclList::head ()
   return pd_car_data;
 }
 
+FE_Declarator const *
+UTL_DeclList::head () const
+{
+  return pd_car_data;
+}
+
 void
 UTL_DeclList::destroy ()
 {
@@ -131,14 +137,14 @@ UTL_DecllistActiveIterator::UTL_DecllistActiveIterator (UTL_DeclList *s)
 
 // Get current item
 FE_Declarator *
-UTL_DecllistActiveIterator::item ()
+UTL_DecllistActiveIterator::item () const
 {
   if (source == nullptr)
     {
       return nullptr;
     }
 
-  return ((UTL_DeclList *) source)->head ();
+  return static_cast<UTL_DeclList *> (source)->head ();
 }
 
 /*

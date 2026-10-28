@@ -96,13 +96,13 @@ AST_Factory::~AST_Factory () = default;
 // Public operations.
 
 UTL_ExceptList *
-AST_Factory::exceptions ()
+AST_Factory::exceptions () const
 {
   return this->pd_exceptions;
 }
 
 int
-AST_Factory::n_exceptions ()
+AST_Factory::n_exceptions () const
 {
   return this->pd_n_exceptions;
 }

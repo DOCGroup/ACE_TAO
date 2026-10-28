@@ -11,6 +11,9 @@
 #ifndef TAO_BE_VISITOR_ARG_TRAITS_H
 #define TAO_BE_VISITOR_ARG_TRAITS_H
 
+#include <string>
+#include <string_view>
+
 #include "be_visitor_scope.h"
 
 /**
@@ -21,7 +24,7 @@
 class be_visitor_arg_traits : public be_visitor_scope
 {
 public:
-  be_visitor_arg_traits (const char *S,
+  be_visitor_arg_traits (std::string_view S,
                          be_visitor_context *ctx);
 
   ~be_visitor_arg_traits () override;
@@ -58,10 +61,10 @@ private:
   void generated (be_decl *node,
                   bool val);
 
-  const char *insert_policy ();
+  std::string_view insert_policy () const;
 
 private:
-  char *S_;
+  std::string S_;
   bool fixed_generated_ {};
 };
 

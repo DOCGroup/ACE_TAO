@@ -146,7 +146,7 @@ AST_Generator::create_module (UTL_Scope *s,
           // Create this new module with referance to the
           // "first" previous module found in scope.
           ACE_NEW_RETURN (retval, AST_Module (n, m), nullptr);
-          retval->prefix (const_cast<char *> (m->prefix ()));
+          retval->prefix (m->prefix ());
           return retval;
         }
     }
@@ -785,7 +785,7 @@ AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-AST_Generator::create_expr (char *s)
+AST_Generator::create_expr (std::string_view s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -793,6 +793,12 @@ AST_Generator::create_expr (char *s)
                   nullptr);
 
   return retval;
+}
+
+AST_Expression *
+AST_Generator::create_expr (char const *s)
+{
+  return this->create_expr (std::string_view (s));
 }
 
 AST_Expression *

@@ -116,35 +116,22 @@ be_home::scan (UTL_Scope *s)
 void
 be_home::destroy ()
 {
-  delete [] this->full_skel_name_;
-  this->full_skel_name_ = nullptr;
+  this->full_skel_name_.clear ();
 
-  delete [] this->full_coll_name_;
-  this->full_coll_name_ = nullptr;
+  this->full_coll_name_.clear ();
+  this->local_coll_name_.clear ();
 
-  delete [] this->local_coll_name_;
-  this->local_coll_name_ = nullptr;
+  this->direct_proxy_impl_name_.clear ();
+  this->full_direct_proxy_impl_name_.clear ();
 
-  delete [] this->relative_skel_name_;
-  this->relative_skel_name_ = nullptr;
+  this->client_scope_.clear ();
+  this->client_scope_computed_ = false;
 
-  delete [] this->direct_proxy_impl_name_;
-  this->direct_proxy_impl_name_ = nullptr;
+  this->flat_client_scope_.clear ();
+  this->flat_client_scope_computed_ = false;
 
-  delete [] this->full_direct_proxy_impl_name_;
-  this->full_direct_proxy_impl_name_ = nullptr;
-
-  delete [] this->client_scope_;
-  this->client_scope_ = nullptr;
-
-  delete [] this->flat_client_scope_;
-  this->flat_client_scope_ = nullptr;
-
-  delete [] this->server_scope_;
-  this->server_scope_ = nullptr;
-
-  delete [] this->flat_server_scope_;
-  this->flat_server_scope_ = nullptr;
+  this->server_scope_.clear ();
+  this->server_scope_computed_ = false;
 
   this->be_scope::destroy ();
   this->be_type::destroy ();

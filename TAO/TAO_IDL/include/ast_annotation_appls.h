@@ -7,6 +7,8 @@
 
 #include "TAO_IDL_FE_Export.h"
 
+#include <string_view>
+
 class AST_Annotation_Appl;
 class AST_Annotation_Decl;
 
@@ -60,7 +62,7 @@ public:
 
   /**
    * Return last AST_Annotation_Appl that applies the AST_Annotation_Decl
-   * or return 0 if there are non that do.
+   * or return nullptr if there are none that do.
    */
   AST_Annotation_Appl *find (AST_Annotation_Decl *annotation);
 
@@ -68,7 +70,7 @@ public:
    * Same as find (AST_Annotation_Decl*) except do a look up of the
    * AST_Annotation_Decl first.
    */
-  AST_Annotation_Appl *find (char const *annotation);
+  AST_Annotation_Appl *find (std::string_view annotation);
 
 private:
   AST_Annotation_Appl_Ptrs vector_;

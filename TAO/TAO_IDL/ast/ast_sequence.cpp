@@ -186,8 +186,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   bool recursion_found = false;
   AST_Type** recursable_type = nullptr;
   list.get (recursable_type, 0);
-  if (!ACE_OS::strcmp (type->full_name (),
-                           (*recursable_type)->full_name ()))
+  if (type->full_name () == (*recursable_type)->full_name ())
     {
       // They match.
       recursion_found = true;
@@ -232,7 +231,7 @@ AST_Sequence::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Expression *
-AST_Sequence::max_size ()
+AST_Sequence::max_size () const
 {
   return this->pd_max_size;
 }

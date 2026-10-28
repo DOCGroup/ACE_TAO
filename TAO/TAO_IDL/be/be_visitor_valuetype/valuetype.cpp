@@ -11,6 +11,9 @@
 
 #include "valuetype.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
@@ -788,9 +791,9 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
 
       *os << (index++ != 0 ? "," : "") << be_nl;
 
-      ACE_CString arg_name ("_tao_init_");
-      arg_name += f->local_name ()->get_string ();
-      Identifier id (arg_name.c_str ());
+      std::string arg_name ("_tao_init_");
+      arg_name += f->local_name ()->get_string_view_or_empty ();
+      Identifier id {std::string_view (arg_name)};
       UTL_ScopedName sn (&id, nullptr);
       be_type *ft = dynamic_cast<be_type*> (f->field_type ());
       bool seen = ft->seen_in_operation ();
@@ -858,22 +861,10 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   os->indent ();
 
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _out names
-
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::sprintf (fname,
-                   "%s_init",
-                   node->full_name ());
-
-  ACE_OS::memset (lname,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::sprintf (lname,
-                   "%s_init",
-                   node->local_name ());
+  std::string fname (node->full_name ());
+  fname += "_init";
+  std::string lname (node->local_name ());
+  lname += "_init";
 
   // Destructor.
   *os << fname << "::~" << lname << " ()" << be_nl
@@ -959,13 +950,13 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 bool
 be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
 {
- if (ACE_OS::strncmp (node->local_name (), "AMH_", 4) == 0)
+ if (node->local_name ().substr (0, 4) == "AMH_")
    {
-     char const *last_E =
-      ACE_OS::strrchr (node->full_name (), 'E');
+     std::string_view const full_name = node->full_name ();
+     std::string_view::size_type const last_E = full_name.rfind ('E');
 
-     if (last_E != nullptr
-         && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+     if (last_E != std::string_view::npos
+         && full_name.substr (last_E) == "ExceptionHolder")
        {
          return true;
        }

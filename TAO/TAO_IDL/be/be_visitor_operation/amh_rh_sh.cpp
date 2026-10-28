@@ -73,7 +73,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str ()
+  *os << this->ctx_->port_prefix ()
       << node->local_name();
 
   be_visitor_context ctx (*this->ctx_);

@@ -12,6 +12,8 @@
 #ifndef _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 #define _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 
+#include <string_view>
+
 /**
  * This is a concrete visitor to generate the
  * CIAO executor class IDL.
@@ -45,7 +47,7 @@ public:
 private:
   void gen_supported ();
   void gen_exception_list (UTL_ExceptList *exceptions,
-                           const char *prefix = "",
+                           std::string_view prefix = {},
                            bool closed = true);
 };
 

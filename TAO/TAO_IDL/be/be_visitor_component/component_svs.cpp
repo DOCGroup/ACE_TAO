@@ -90,7 +90,7 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node->flat_name ()
       << "_Servant (" << be_idt_nl
@@ -103,7 +103,7 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
+      << "::PortableServer::Servant retval = nullptr;" << be_nl
       << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "ACE_NEW_NORETURN (retval," << be_nl

@@ -11,6 +11,8 @@
 #include "operation.h"
 #include "ace/SString.h"
 
+#include <string>
+
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
       be_visitor_context *ctx)
   : be_visitor_operation (ctx)
@@ -296,7 +298,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
 int
 be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                                                        TAO_OutStream *os,
-                                                       const char *skel_prefix)
+                                                       std::string_view skel_prefix)
 {
   TAO_INSERT_COMMENT (os);
 
@@ -376,12 +378,12 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << "TAO_AMH_BUFFER_ALLOCATOR" << be_uidt_nl
       << "> buffer_allocator (amh_allocator);"
       << be_uidt_nl << be_nl
-      << response_handler_implementation_name.c_str ()
+      << response_handler_implementation_name
       << "_ptr _tao_rh_ptr = "
       << be_idt_nl
       << "buffer_allocator.allocate();"
       << be_uidt_nl << be_nl
-      << "if (!_tao_rh_ptr) " << be_idt_nl << "throw ::CORBA::NO_MEMORY ();"
+      << "if (!_tao_rh_ptr)" << be_idt_nl << "throw ::CORBA::NO_MEMORY ();"
       << be_uidt_nl;
 
   // Initialize amh rh
@@ -389,7 +391,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << be_nl;
 
   *os <<  "ACE_Utils::Auto_Functor <"
-      << response_handler_implementation_name.c_str ()
+      << response_handler_implementation_name
       << ", TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);"
       << be_nl;
 

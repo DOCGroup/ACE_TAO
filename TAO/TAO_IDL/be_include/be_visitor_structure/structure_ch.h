@@ -29,7 +29,7 @@ public:
   explicit be_visitor_structure_ch (be_visitor_context *ctx);
 
   /// destructureor
-  ~be_visitor_structure_ch () override;
+  ~be_visitor_structure_ch () override  = default;
 
   be_visitor_structure_ch (const be_visitor_structure_ch &) = delete;
   be_visitor_structure_ch (be_visitor_structure_ch &&) = delete;

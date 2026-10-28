@@ -24,7 +24,6 @@ be_visitor_valuebox_any_op_cs::be_visitor_valuebox_any_op_cs (
 {
 }
 
-be_visitor_valuebox_any_op_cs::~be_visitor_valuebox_any_op_cs () = default;
 
 int
 be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)

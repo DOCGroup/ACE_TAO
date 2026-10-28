@@ -86,12 +86,16 @@ public:
              bool abstract);
 
   ~AST_Array () override;
+  AST_Array (AST_Array const &) = delete;
+  AST_Array (AST_Array &&) = delete;
+  AST_Array &operator= (AST_Array const &) = delete;
+  AST_Array &operator= (AST_Array &&) = delete;
 
   // Data Accessors.
 
-  ACE_CDR::ULong n_dims ();
+  ACE_CDR::ULong n_dims () const;
 
-  AST_Expression **dims ();
+  AST_Expression **dims () const;
   void set_dims (AST_Expression **,
                  ACE_CDR::ULong);
 

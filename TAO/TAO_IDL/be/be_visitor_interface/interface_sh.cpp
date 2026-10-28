@@ -11,6 +11,8 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
@@ -51,7 +53,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os  = this->ctx_->stream ();
-  ACE_CString class_name;
+  std::string class_name;
 
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())
@@ -62,7 +64,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
   else
     {
-      class_name +=  node->local_name ();
+      class_name += node->local_name ();
     }
 
   *os << be_nl_2;
@@ -71,11 +73,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // Generate the skeleton class name.
   *os << be_nl_2
-      << "class " << class_name.c_str () << ";" << be_nl;
+      << "class " << class_name << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "using " << class_name.c_str () << "_ptr = "
-      << class_name.c_str () << " *;";
+  *os << "using " << class_name << "_ptr = "
+      << class_name << " *;";
 
 
   if (be_global->gen_direct_collocation ())
@@ -88,7 +90,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Now generate the class definition.
   *os << be_nl_2
       << "class " << be_global->skel_export_macro ()
-      << " " << class_name.c_str () << be_idt_nl
+      << " " << class_name << be_idt_nl
       << ": " << be_idt;
 
   node->gen_skel_inheritance (os);
@@ -98,7 +100,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "protected:" << be_idt_nl;
 
   // Default constructor.
-  *os << class_name.c_str () << " ();"
+  *os << class_name << " ();"
       << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
@@ -112,9 +114,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << be_nl_2;
 
   // Copy constructor and destructor.
-  *os << class_name.c_str () << " (const "
-      << class_name.c_str () << "& rhs) = default;" << be_nl
-      << "virtual ~" << class_name.c_str () << " () = default;" << be_nl_2;
+  *os << class_name << " (const "
+      << class_name << "& rhs) = default;" << be_nl
+      << "virtual ~" << class_name << " () = default;" << be_nl_2;
 
   // _is_a
   *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;

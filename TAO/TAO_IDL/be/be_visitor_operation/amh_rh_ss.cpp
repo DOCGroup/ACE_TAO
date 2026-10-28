@@ -10,6 +10,9 @@
 
 #include "operation.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_amh_rh_operation_ss::be_visitor_amh_rh_operation_ss (
     be_visitor_context *ctx)
   : be_visitor_operation (ctx)
@@ -69,7 +72,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
-      << response_handler_implementation_name.c_str () << "::";
+      << response_handler_implementation_name << "::";
 
   // Check if we are an attribute node in disguise
   if (this->ctx_->attribute ())
@@ -85,7 +88,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str ()
+  *os << this->ctx_->port_prefix ()
       << node->local_name ();
 
   // Step 2 : Generate the params of the method
@@ -115,10 +118,11 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // 3) The argument takes an implied valuetype generated from the
   //    original interface
   // 4) The implied valuetype ends in ExceptionHolder
-  const char *last_underbar = ACE_OS::strrchr (node->full_name (), '_');
+  std::string_view const node_name = node->full_name ();
+  size_t const last_underbar = node_name.rfind ('_');
 
-  if (last_underbar != nullptr
-      && ACE_OS::strcmp (last_underbar, "_excep") == 0)
+  if (last_underbar != std::string_view::npos
+      && node_name.substr (last_underbar) == "_excep")
     {
       if (node->nmembers () == 1)
         {
@@ -135,11 +139,11 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
               if (vt != nullptr
                   && vt->original_interface () == intf->original_interface ())
                 {
-                  const char *last_E =
-                    ACE_OS::strrchr (vt->full_name (), 'E');
+                  std::string_view const vt_name = vt->full_name ();
+                  size_t const last_E = vt_name.rfind ('E');
 
-                  if (last_E != nullptr
-                      && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+                  if (last_E != std::string_view::npos
+                      && vt_name.substr (last_E) == "ExceptionHolder")
                     {
                       is_an_exception_reply = 1;
                     }
@@ -152,15 +156,16 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     {
       // Remove the trailing '_excep' from the operation name, we know
       // there is one from the checks above...
-      ACE_CString operation_name (node->local_name ()->get_string ());
-      ACE_CString::size_type const idx = operation_name.rfind ('_');
-      ACE_ASSERT (idx != ACE_CString::npos);
-      operation_name[idx] = '\0';
+      std::string operation_name (
+        node->local_name ()->get_string_view_or_empty ());
+      std::string::size_type const idx = operation_name.rfind ('_');
+      ACE_ASSERT (idx != std::string::npos);
+      operation_name.resize (idx);
 
       *os << be_nl << "{" << be_idt_nl
           << "try" << be_nl
           << "{" << be_idt_nl
-          << "holder->raise_" << operation_name.c_str ()
+          << "holder->raise_" << operation_name
           << " ();" << be_uidt_nl
           << "}" << be_nl
           << "catch (const ::CORBA::Exception& ex)"

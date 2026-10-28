@@ -17,7 +17,6 @@ be_visitor_union_discriminant_ch::be_visitor_union_discriminant_ch (
 {
 }
 
-be_visitor_union_discriminant_ch::~be_visitor_union_discriminant_ch () = default;
 
 int
 be_visitor_union_discriminant_ch::visit_enum (be_enum *node)

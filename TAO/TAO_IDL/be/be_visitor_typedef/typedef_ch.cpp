@@ -11,6 +11,8 @@
 
 #include "typedef.h"
 
+#include <string_view>
+
 // ******************************************************
 // Typedef visitor for client header
 // ******************************************************
@@ -20,7 +22,6 @@ be_visitor_typedef_ch::be_visitor_typedef_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_ch::~be_visitor_typedef_ch () = default;
 
 int
 be_visitor_typedef_ch::visit_typedef (be_typedef *node)
@@ -203,7 +204,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 
       // If the typedef is not declared globally or in a module, the
       // associated array memory management function must be static.
-      char const *const static_decl = tdef_scope ? "" : "static ";
+      std::string_view const static_decl = tdef_scope ? "" : "static ";
 
       std::string td_name (tdef->nested_type_name (tdef_scope));
 

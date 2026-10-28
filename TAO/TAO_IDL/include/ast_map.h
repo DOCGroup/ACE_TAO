@@ -82,6 +82,10 @@ public:
            bool abstract);
 
   ~AST_Map () override = default;
+  AST_Map (AST_Map const &) = delete;
+  AST_Map (AST_Map &&) = delete;
+  AST_Map &operator= (AST_Map const &) = delete;
+  AST_Map &operator= (AST_Map &&) = delete;
 
   bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.

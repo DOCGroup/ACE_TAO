@@ -178,7 +178,7 @@ AST_Home::transfer_scope_elements (AST_Interface *dst)
 
       Identifier *local_id = nullptr;
       ACE_NEW (local_id,
-               Identifier (d->local_name ()->get_string ()));
+               Identifier (d->local_name ()->get_string_view ()));
       UTL_ScopedName *last_segment = nullptr;
       ACE_NEW (last_segment,
                UTL_ScopedName (local_id,

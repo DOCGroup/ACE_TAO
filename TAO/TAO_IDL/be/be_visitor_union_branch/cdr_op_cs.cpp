@@ -17,6 +17,9 @@
 
 #include "union_branch.h"
 
+#include <string>
+#include <string_view>
+
 // **********************************************
 //  Visitor for union_branch in the client stubs file.
 // **********************************************
@@ -96,13 +99,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // fullname with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];  // to hold the full and
-
-  // Save the node's local name and full name in a buffer for quick
-  // use later on.
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()->decl ()))
@@ -115,22 +112,20 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, "%s", node->full_name ());
+      fname = node->full_name ();
     }
 
   // Check what is the code generations substate. Are we generating code for

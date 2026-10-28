@@ -154,17 +154,16 @@ be_valuetype::opt_accessor ()
 
 // Compute stringified fully scoped skeleton name (OBV_name).
 void
-be_valuetype::compute_fullobvskelname ()
+be_valuetype::compute_fullobvskelname () const
 {
-  this->compute_full_skel_name ("OBV_",
-                                this->full_obv_skel_name_);
+  this->full_obv_skel_name_ = this->compute_full_skel_name ("OBV_");
 }
 
 // Retrieve the fully scoped skeleton name.
-const char*
-be_valuetype::full_obv_skel_name ()
+std::string_view
+be_valuetype::full_obv_skel_name () const
 {
-  if (nullptr == this->full_obv_skel_name_)
+  if (this->full_obv_skel_name_.empty ())
     {
       this->compute_fullobvskelname ();
     }
@@ -172,10 +171,10 @@ be_valuetype::full_obv_skel_name ()
   return this->full_obv_skel_name_;
 }
 
-const char *
+std::string_view
 be_valuetype::fwd_helper_name () const
 {
-  return this->fwd_helper_name_.fast_rep ();
+  return {this->fwd_helper_name_.data (), this->fwd_helper_name_.size ()};
 }
 
 be_valuetype::FactoryStyle
@@ -505,7 +504,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
   *os << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
       << "{" << be_idt_nl
-      << "if (vt != 0)" << be_idt_nl
+      << "if (vt != nullptr)" << be_idt_nl
       << "{" << be_idt_nl
       << "vt->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
@@ -514,7 +513,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
   *os << "void" << be_nl
       << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
       << "{" << be_idt_nl
-      << "if (vt != 0)" << be_idt_nl
+      << "if (vt != nullptr)" << be_idt_nl
       << "{" << be_idt_nl
       << "vt->_remove_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
@@ -560,7 +559,7 @@ be_valuetype::gen_var_out_seq_decls ()
   os->gen_ifdef_macro (this->flat_name (),
                        "var_out");
 
-  const char *lname = this->local_name ();
+  std::string_view const lname = this->local_name ();
 
   *os << be_nl_2
       << "class " << lname << ";" << be_nl
@@ -573,14 +572,14 @@ be_valuetype::gen_var_out_seq_decls ()
 }
 
 // For building the pre and postfix of private data fields.
-const char *
-be_valuetype::field_pd_prefix ()
+std::string_view
+be_valuetype::field_pd_prefix () const
 {
   return "_pd_";
 }
 
-const char *
-be_valuetype::field_pd_postfix ()
+std::string_view
+be_valuetype::field_pd_postfix () const
 {
   return "";
 }
@@ -610,8 +609,7 @@ be_valuetype::accept (be_visitor *visitor)
 void
 be_valuetype::destroy ()
 {
-  delete [] this->full_obv_skel_name_;
-  this->full_obv_skel_name_ = nullptr;
+  this->full_obv_skel_name_.clear ();
 
   this->be_interface::destroy ();
   this->AST_ValueType::destroy ();

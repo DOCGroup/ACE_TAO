@@ -29,6 +29,10 @@ public:
   AST_Annotation_Member (
     UTL_ScopedName *name,
     AST_Annotation_Member *other);
+  AST_Annotation_Member (AST_Annotation_Member const &) = delete;
+  AST_Annotation_Member (AST_Annotation_Member &&) = delete;
+  AST_Annotation_Member &operator= (AST_Annotation_Member const &) = delete;
+  AST_Annotation_Member &operator= (AST_Annotation_Member &&) = delete;
 
   ~AST_Annotation_Member () override;
 
@@ -42,15 +46,15 @@ public:
 
   /// Get and Set the Value
   ///{
-  AST_Expression *value ();
+  AST_Expression *value () const;
   void value (AST_Expression *value);
   ///}
 
   /// Get the ExprType
-  AST_Expression::ExprType expr_type ();
+  AST_Expression::ExprType expr_type () const;
 
   /// Returns true if the expression value is null or invalid
-  bool invalid_value ();
+  bool invalid_value () const;
 
 private:
   /// Keep ExprType at hand for convience

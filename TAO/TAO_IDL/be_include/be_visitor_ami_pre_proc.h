@@ -80,9 +80,9 @@ private:
   /// concatenate the prefix, middle_name and suffix
   /// and store the result in desination.
   int generate_name (std::string &destination,
-                     char const *prefix,
-                     char const *middle_name,
-                     char const *suffix);
+                     std::string_view prefix,
+                     std::string_view middle_name,
+                     std::string_view suffix);
 
   /// generate a get operation out of the attribute.
   be_operation *generate_get_operation (be_attribute *node);

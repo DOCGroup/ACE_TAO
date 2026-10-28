@@ -38,6 +38,8 @@
 #include "utl_string.h"
 #include "nr_extern.h"
 
+#include <string_view>
+
 ast_visitor_reifying::ast_visitor_reifying (
       ast_visitor_context *ctx)
   : ast_visitor (),
@@ -672,7 +674,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                      ACE_TEXT ("ast_visitor_reifying::")
                      ACE_TEXT ("visit_param_holder() - no match for ")
                      ACE_TEXT ("template param %C in %C\n"),
-                     node->local_name ()->get_string (),
+                     node->local_name ()->get_string_view ().data (),
                      ScopeAsDecl (idl_global->scopes ().top ())->full_name ()),
                     -1);
 }
@@ -707,8 +709,7 @@ UTL_ScopedName *
 ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
-  char const *full_name = d->full_name ();
-  std::string_view const name (full_name != nullptr ? full_name : "");
+  std::string_view const name = d->full_name ();
 
   while (tmp != nullptr)
     {

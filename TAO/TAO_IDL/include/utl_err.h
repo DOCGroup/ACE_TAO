@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_global.h"
 #include "utl_scoped_name.h"
 
+#include <string_view>
+
 class AST_Decl;
 class AST_Interface;
 class AST_Enum;
@@ -163,10 +165,10 @@ public:
     EIDL_OK                     // No error
   };
 
-  ErrorCode last_error;
-  long last_error_lineno;
-  ErrorCode last_warning;
-  long last_warning_lineno;
+  ErrorCode last_error {EIDL_OK};
+  long last_error_lineno {-1};
+  ErrorCode last_warning {EIDL_OK};
+  long last_warning_lineno {-1};
 
   // Operations
 
@@ -198,35 +200,35 @@ public:
    * Report an error that can be out of context of IDL parsing.
    */
   void direct_error (
-    char const *reason, ACE_CString const &filename, long lineno,
+    std::string_view reason, std::string_view filename, long lineno,
     ErrorCode error_code = EIDL_MISC);
 
   /**
    * Report an warning that can be out of context of IDL parsing.
    */
   void direct_warning (
-    char const *reason, ACE_CString const &filename, long lineno,
+    std::string_view reason, std::string_view filename, long lineno,
     ErrorCode error_code = EIDL_MISC);
 
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced identifiers
-  void redef_error (char const *n, char const *t);
+  void redef_error (std::string_view n, std::string_view t);
 
   // Report a name being used with different spellings
-  void name_case_error (char *n,
-                        char *t);
+  void name_case_error (std::string_view n,
+                        std::string_view t);
 
   // Same as above, but doesn't increment the error count.
-  void name_case_warning (char *n,
-                          char *t);
+  void name_case_warning (std::string_view n,
+                          std::string_view t);
 
   // Differs from spelling of IDL keyword only by case.
-  void idl_keyword_error (char *n);
+  void idl_keyword_error (std::string_view n);
 
   // Same as above, but doesn't increment the error count.
-  void idl_keyword_warning (char *n);
+  void idl_keyword_warning (std::string_view n);
 
   // Report an unsuccessful coercion attempt
   void coercion_error (AST_Expression *v,
@@ -239,17 +241,17 @@ public:
   void lookup_warning (UTL_ScopedName *n);
 
   // Report an illegal #pragma version.
-  void version_number_error (char *n);
+  void version_number_error (std::string_view n);
 
   // Report an illegal #pragma version syntax
-  void version_syntax_error (char const *msg);
+  void version_syntax_error (std::string_view msg);
 
   // Repost an attempt to reset the version.
   void version_reset_error ();
 
   // Report an attempt to change the id once set.
-  void id_reset_error (char const *o,
-                       char const *n);
+  void id_reset_error (std::string_view o,
+                       std::string_view n);
 
   // Report an attempt to use a forward declared interface which
   // hasn't been defined yet in an inheritance spec
@@ -398,11 +400,11 @@ public:
   void duplicate_param_id (UTL_ScopedName *n);
 
   // Referenced template parameter not matched in param list.
-  void mismatched_template_param (char const *name);
+  void mismatched_template_param (std::string_view name);
 
   // Given a template param of the form 'sequence<T>', the
   // 'T' must match a previous param in the list.
-  void mismatch_seq_of_param (char const *param_id);
+  void mismatch_seq_of_param (std::string_view param_id);
 
   // Informative message when a lookup fails because a
   // masking scope has not been correctly differentiated
@@ -420,32 +422,32 @@ public:
   /**
    * Report IDL version error, with a given reason.
    */
-  void idl_version_error (char const *reason);
+  void idl_version_error (std::string_view reason);
 
   /**
    * Warn about an unsupported feature in the input IDL that can be ignored for
    * the most part.
    */
-  void unsupported_warning (char const *reason);
+  void unsupported_warning (std::string_view reason);
 
   /**
    * Report an unsupported feature in the input IDL that can't be ignored.
    */
-  void unsupported_error (char const *reason);
+  void unsupported_error (std::string_view reason);
 
   /**
    * Report a error for a specific situation
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_error (char const *reason, AST_Decl *node = nullptr);
+  void misc_error (std::string_view reason, AST_Decl *node = nullptr);
 
   /**
    * Report a warning for a specific situation
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_warning (char const *reason, AST_Decl *node = nullptr);
+  void misc_warning (std::string_view reason, AST_Decl *node = nullptr);
 
   /**
    * Report that an invalid annotation parameter was passed

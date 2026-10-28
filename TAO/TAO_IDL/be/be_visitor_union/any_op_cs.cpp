@@ -17,7 +17,6 @@ be_visitor_union_any_op_cs::be_visitor_union_any_op_cs (
 {
 }
 
-be_visitor_union_any_op_cs::~be_visitor_union_any_op_cs () = default;
 
 int
 be_visitor_union_any_op_cs::visit_union (be_union *node)

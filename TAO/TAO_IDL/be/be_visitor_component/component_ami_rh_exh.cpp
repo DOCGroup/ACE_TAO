@@ -11,6 +11,8 @@
 
 #include "component.h"
 
+#include <string_view>
+
 be_visitor_component_ami_rh_exh::be_visitor_component_ami_rh_exh (
       be_visitor_context *ctx)
   : be_visitor_component_ami_rh_ex_base (ctx),
@@ -100,7 +102,7 @@ be_visitor_component_ami_rh_exh::visit_operation (
 
   os_ << be_nl_2
       << "virtual void" << be_nl
-      << node->local_name ()->get_string () << " (";
+      << node->local_name ()->get_string_view_or_empty () << " (";
 
   int count =
     node->count_arguments_with_direction (

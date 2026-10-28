@@ -79,7 +79,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
+
+#include <string>
 
 AST_Decl::NodeType const
 AST_PredefinedType::NT = AST_Decl::NT_pre_defined;
@@ -104,7 +106,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
   if (t == AST_PredefinedType::PT_void)
     {
       ACE_NEW (id,
-               Identifier (n->last_component ()->get_string ()));
+               Identifier (n->last_component ()->get_string_view ()));
 
       ACE_NEW (new_name,
                UTL_ScopedName (id,
@@ -193,7 +195,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
           break;
         case AST_PredefinedType::PT_pseudo:
           ACE_NEW (id,
-                   Identifier (n->last_component ()->get_string ()));
+                   Identifier (n->last_component ()->get_string_view ()));
           break;
         case AST_PredefinedType::PT_uint8:
           ACE_NEW (id, Identifier ("UInt8"));
@@ -270,7 +272,7 @@ AST_PredefinedType::destroy ()
 // Data accessors.
 
 AST_PredefinedType::PredefinedType
-AST_PredefinedType::pt ()
+AST_PredefinedType::pt () const
 {
   return this->pd_pt;
 }

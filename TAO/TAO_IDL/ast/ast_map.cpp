@@ -228,10 +228,8 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   bool recursion_found = false;
   AST_Type** recursable_type = nullptr;
   list.get (recursable_type, 0);
-  if (!std::strcmp (key_type->full_name (),
-                  (*recursable_type)->full_name ())
-      || !std::strcmp(val_type->full_name (),
-                  (*recursable_type)->full_name ()))
+  if (key_type->full_name () == (*recursable_type)->full_name ()
+      || val_type->full_name () == (*recursable_type)->full_name ())
     {
       // They match.
       recursion_found = true;

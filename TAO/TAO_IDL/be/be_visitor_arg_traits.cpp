@@ -44,18 +44,16 @@
 #include "ace/Log_Msg.h"
 
 #include <string>
+#include <string_view>
 
-be_visitor_arg_traits::be_visitor_arg_traits (const char *S,
+be_visitor_arg_traits::be_visitor_arg_traits (std::string_view S,
                                               be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    S_ (ACE::strnew (S))
+    S_ (S)
 {
 }
 
-be_visitor_arg_traits::~be_visitor_arg_traits ()
-{
-  delete [] this->S_;
-}
+be_visitor_arg_traits::~be_visitor_arg_traits () = default;
 
 int
 be_visitor_arg_traits::visit_root (be_root *node)
@@ -142,12 +140,11 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
 
   TAO_INSERT_COMMENT (os);
 
-  std::string guard_suffix =
-    std::string (this->S_) + std::string ("arg_traits");
+  std::string guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a forward declaration may appear more than once.
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
   *os << be_nl_2
       << "template<>" << be_nl
@@ -160,7 +157,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       << "::" << node->name () << "_var," << be_nl
       << "::" << node->name () << "_out";
 
-  if (ACE_OS::strlen (this->S_) == 0)
+  if (this->S_.empty ())
     {
       *os << "," << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">";
@@ -256,7 +253,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
       << "::" << node->name () << "_out";
 
   // The SArgument classes don't need the traits parameter (yet?)
-  if (ACE_OS::strlen (this->S_) == 0)
+  if (this->S_.empty ())
     {
       os << "," << be_nl
           << "TAO::Value_Traits<" << node->name () << ">";
@@ -298,12 +295,11 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
 
   TAO_INSERT_COMMENT (&os);
 
-  std::string guard_suffix =
-    std::string (this->S_) + std::string ("arg_traits");
+  std::string guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a forward declaration may appear more than once.
-  os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
+  os.gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
   os << be_nl_2
       << "template<>" << be_nl
@@ -317,7 +313,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
       << "::" << node->name () << "_out";
 
   // The SArgument classes don't need the traits parameter (yet?)
-  if (ACE_OS::strlen (this->S_) == 0)
+  if (this->S_.empty ())
     {
       os << "," << be_nl
           << "TAO::Value_Traits<" << node->name () << ">";
@@ -420,21 +416,20 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
 
           TAO_INSERT_COMMENT (os);
 
-          std::string guard_suffix =
-            std::string (this->S_) + std::string ("arg_traits");
+          std::string guard_suffix = this->S_ + "arg_traits";
 
           // The guard should be generated to prevent multiple declarations,
           // since a bounded (w)string of the same length may be used or typedef'd
           // more than once.
 
-          os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
+          os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
           bool wide = (str->width () != 1);
 
           *os << be_nl_2;
 
           // Avoid generating a duplicate structure in the skeleton.
-          if (ACE_OS::strlen (this->S_) == 0)
+          if (this->S_.empty ())
             {
               *os << "struct " << node->flat_name () << " {};"
                   << be_nl_2;
@@ -499,14 +494,13 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   TAO_INSERT_COMMENT (os);
 
-  std::string guard_suffix =
-    std::string (this->S_) + std::string ("arg_traits");
+  std::string guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a bounded (w)string of the same length may be used or typedef'd
   // more than once.
 
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
   bool wide = (st->width () != 1);
 
@@ -520,7 +514,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
   *os << be_nl;
 
   // Avoid generating a duplicate structure in the skeleton.
-  if (ACE_OS::strlen (this->S_) == 0)
+  if (this->S_.empty ())
     {
       *os << "struct " << node->flat_name () << " {};"
           << be_nl_2;
@@ -578,14 +572,13 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   TAO_INSERT_COMMENT (os);
 
-  std::string guard_suffix =
-    std::string (this->S_) + std::string ("arg_traits");
+  std::string guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a bounded (w)string of the same length may be used or typedef'd
   // more than once.
 
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
   bool wide = (st->width () != 1);
 
@@ -601,21 +594,21 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
   AST_Decl *intf = ScopeAsDecl (op->defined_in ());
   std::string arg_flat_name (intf->flat_name ());
   arg_flat_name += '_';
-  arg_flat_name += op->local_name ()->get_string ();
+  arg_flat_name += op->local_name ()->get_string_view_or_empty ();
   arg_flat_name += '_';
-  arg_flat_name += node->local_name ()->get_string ();
+  arg_flat_name += node->local_name ()->get_string_view_or_empty ();
 
   // Avoid generating a duplicate structure in the skeleton.
-  if (ACE_OS::strlen (this->S_) == 0)
+  if (this->S_.empty ())
     {
-      *os << "struct " << arg_flat_name.c_str () << " {};"
+      *os << "struct " << arg_flat_name << " {};"
           << be_nl_2;
     }
 
   *os << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<"
-      << arg_flat_name.c_str ()
+      << arg_flat_name
       << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
@@ -723,8 +716,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  std::string guard_suffix =
-    std::string (this->S_) + std::string ("arg_traits");
+  std::string guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a bounded (w)string of the same length may be used or typedef'd
@@ -732,42 +724,21 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   if (alias == nullptr)
     {
-      os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
+      os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
     }
   else
     {
       // Form a unique macro name using the local name and the bound.
-      ACE_CDR::ULong l = bound;
-      int num_digits = 0;
+      std::string macro_name (
+        alias->local_name ()->get_string_view_or_empty ());
+      macro_name += std::to_string (bound);
 
-      while (l > 0)
-        {
-          l /= 10 ;
-          ++num_digits ;
-        }
-
-      size_t bound_length = num_digits + 1;
-      char* bound_string = nullptr;
-      ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
-      ACE_OS::sprintf (bound_string, ACE_UINT32_FORMAT_SPECIFIER_ASCII, bound);
-
-      size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
-                          ACE_OS::strlen (bound_string) +
-                          1;
-      char* cat_string = nullptr;
-      ACE_NEW_RETURN (cat_string, char[cat_length], -1) ;
-      ACE_OS::strcpy (cat_string, alias->local_name ()->get_string ()) ;
-      ACE_OS::strcat (cat_string, bound_string);
-
-      os->gen_ifdef_macro (cat_string, guard_suffix.c_str (), false);
-
-      delete [] cat_string;
-      delete [] bound_string;
+      os->gen_ifdef_macro (macro_name, guard_suffix, false);
     }
 
   // Avoid generating a duplicate structure in the skeleton since
   // it has already been generated in *C.h.
-  if (ACE_OS::strlen (this->S_) == 0)
+  if (this->S_.empty ())
     {
       // A workaround 'dummy' type, since bounded (w)strings are all
       // generated as typedefs of (w)char *.
@@ -1218,7 +1189,7 @@ be_visitor_arg_traits::visit_home (be_home *node)
 bool
 be_visitor_arg_traits::generated (be_decl *node) const
 {
-  if (ACE_OS::strcmp (this->S_, "") == 0)
+  if (this->S_.empty ())
     {
       switch (this->ctx_->state ())
         {
@@ -1238,7 +1209,7 @@ void
 be_visitor_arg_traits::generated (be_decl *node,
                                   bool val)
 {
-  if (ACE_OS::strcmp (this->S_, "") == 0)
+  if (this->S_.empty ())
     {
       switch (this->ctx_->state ())
         {
@@ -1256,8 +1227,8 @@ be_visitor_arg_traits::generated (be_decl *node,
   node->srv_sarg_traits_gen (val);
 }
 
-const char *
-be_visitor_arg_traits::insert_policy ()
+std::string_view
+be_visitor_arg_traits::insert_policy () const
 {
   if (be_global->any_support ())
     {

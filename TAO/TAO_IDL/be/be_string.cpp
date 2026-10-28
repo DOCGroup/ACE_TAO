@@ -59,7 +59,7 @@ be_string::be_string (AST_Decl::NodeType nt,
 // Overridden method.
 void
 be_string::gen_member_ostream_operator (TAO_OutStream *os,
-                                        const char *instance_name,
+                                        std::string_view instance_name,
                                         bool use_underscore,
                                         bool accessor)
 {
@@ -150,7 +150,7 @@ be_string::compute_tc_name ()
       this->tc_name_->nconc (tc_scope_conc_name);
 
       ACE_NEW (id,
-               Identifier (local_tc_name.c_str ()));
+               Identifier (local_tc_name));
     }
 
   zero.destroy ();

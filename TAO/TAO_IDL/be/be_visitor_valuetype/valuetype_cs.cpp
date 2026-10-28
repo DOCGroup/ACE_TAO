@@ -11,6 +11,9 @@
 
 #include "valuetype.h"
 
+#include <string>
+#include <string_view>
+
 // ************************************************************
 // Valuetype visitor for client stubs.
 // ************************************************************
@@ -537,10 +540,10 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
       *os << be_nl
           << "     << ";
 
-      ACE_CString instance_name ("this->");
-      instance_name += f->local_name ()->get_string ();
+      std::string instance_name ("this->");
+      instance_name += f->local_name ()->get_string_view_or_empty ();
       f->gen_member_ostream_operator (os,
-                                      instance_name.c_str (),
+                                      instance_name,
                                       false,
                                       true);
     }

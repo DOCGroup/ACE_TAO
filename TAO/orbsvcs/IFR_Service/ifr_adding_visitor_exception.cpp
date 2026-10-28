@@ -115,7 +115,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
     {
       // Is this union already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -169,7 +169,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
     {
       CORBA::ExceptionDef_var new_def;
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -191,9 +191,9 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
             }
 
           new_def =
-            current_scope->create_exception (node->repoID (),
+            current_scope->create_exception (IFR_C_String (node->repoID ()),
                                             node->local_name ()->get_string (),
-                                            node->version (),
+                                            IFR_C_String (node->version ()),
                                             dummyMembers);
 
           if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
@@ -298,7 +298,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -323,9 +323,9 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
 
           this->ir_current_ =
             be_global->repository ()->create_enum (
-                                          node->repoID (),
+                                          IFR_C_String (node->repoID ()),
                                           node->local_name ()->get_string (),
-                                          node->version (),
+                                          IFR_C_String (node->version ()),
                                           members
                                         );
 
@@ -368,7 +368,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
     {
       // Is this union already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))

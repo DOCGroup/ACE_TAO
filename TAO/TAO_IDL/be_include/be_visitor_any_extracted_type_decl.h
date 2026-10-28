@@ -15,6 +15,8 @@
 
 #include "be_visitor_decl.h"
 
+#include <string_view>
+
 class TAO_OutStream;
 
 /**

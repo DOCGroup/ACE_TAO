@@ -18,7 +18,6 @@ be_visitor_union_fwd_ch::be_visitor_union_fwd_ch (
 {
 }
 
-be_visitor_union_fwd_ch::~be_visitor_union_fwd_ch () = default;
 
 // Visit the interface_fwd_ch node and its scope.
 int

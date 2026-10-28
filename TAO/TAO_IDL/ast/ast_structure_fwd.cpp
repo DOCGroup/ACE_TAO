@@ -85,7 +85,7 @@ AST_StructureFwd::destroy ()
 }
 
 bool
-AST_StructureFwd::is_fwd ()
+AST_StructureFwd::is_fwd () const
 {
   return true; // This is a fwd declared type
 }

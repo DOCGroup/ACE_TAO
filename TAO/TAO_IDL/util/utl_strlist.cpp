@@ -77,7 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/streams.h"
 
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <string_view>
 
 UTL_StrList::UTL_StrList (UTL_String *s,
                           UTL_StrList *cdr)
@@ -91,6 +92,12 @@ UTL_StrList::~UTL_StrList () = default;
 // Get list item.
 UTL_String *
 UTL_StrList::head ()
+{
+  return this->pd_car_data;
+}
+
+UTL_String const *
+UTL_StrList::head () const
 {
   return this->pd_car_data;
 }
@@ -111,7 +118,18 @@ UTL_StrList::last_component ()
       return pd_car_data;
     }
 
-  return ((UTL_StrList *) this->tail ())->last_component();
+  return static_cast<UTL_StrList *> (this->tail ())->last_component();
+}
+
+UTL_String const *
+UTL_StrList::last_component () const
+{
+  if (this->tail () == nullptr)
+    {
+      return this->pd_car_data;
+    }
+
+  return static_cast<UTL_StrList const *> (this->tail ())->last_component ();
 }
 
 // Copy a list.
@@ -131,7 +149,7 @@ UTL_StrList::copy ()
     {
       ACE_NEW_RETURN (retval,
                       UTL_StrList (head (),
-                                   (UTL_StrList *) this->tail ()->copy ()),
+                                   static_cast<UTL_StrList *> (this->tail ()->copy ())),
                       nullptr);
     }
 
@@ -156,7 +174,6 @@ UTL_StrList::destroy ()
 void
 UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
 {
-  char *s = nullptr;
   bool first = true;
   bool second = false;
 
@@ -171,12 +188,12 @@ UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      s = i.item ()->get_string ();
+      std::string_view const s = i.item ()->get_string_view_or_empty ();
       o << s;
 
       if (first)
         {
-          if (ACE_OS::strcmp (s, "::") != 0)
+          if (s != "::")
             {
               first = false;
             }
@@ -213,14 +230,14 @@ UTL_StrlistActiveIterator::UTL_StrlistActiveIterator (UTL_StrList *s)
 
 // Get current item
 UTL_String *
-UTL_StrlistActiveIterator::item ()
+UTL_StrlistActiveIterator::item () const
 {
   if (source == nullptr)
     {
       return nullptr;
     }
 
-  return ((UTL_StrList *) source)->head ();
+  return static_cast<UTL_StrList *> (source)->head ();
 }
 
 /*

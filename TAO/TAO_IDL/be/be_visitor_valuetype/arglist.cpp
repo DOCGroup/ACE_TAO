@@ -35,12 +35,13 @@ be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 
   if (iface != nullptr)
     {
-      if (ACE_OS::strncmp (iface->local_name (), "AMH_", 4) == 0)
+      if (iface->local_name ().substr (0, 4) == "AMH_")
         {
-          char const *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
+          std::string_view const full_name = iface->full_name ();
+          std::string_view::size_type const last_E = full_name.rfind ('E');
 
-          if (last_E != nullptr
-              && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+          if (last_E != std::string_view::npos
+              && full_name.substr (last_E) == "ExceptionHolder")
             {
               return true;
             }

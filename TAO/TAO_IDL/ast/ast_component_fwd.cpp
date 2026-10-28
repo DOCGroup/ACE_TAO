@@ -44,7 +44,7 @@ AST_ComponentFwd::destroy ()
 }
 
 bool
-AST_ComponentFwd::is_fwd ()
+AST_ComponentFwd::is_fwd () const
 {
   return true; // This is a fwd declared type
 }

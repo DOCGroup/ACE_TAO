@@ -34,8 +34,8 @@ int
 be_visitor_facet_exh::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
-  const char *iname =
-    impl->original_local_name ()->get_string ();
+  std::string_view const iname =
+    impl->original_local_name ()->get_string_view_or_empty ();
 
   std::string lname_str (this->ctx_->port_prefix ());
   lname_str += node->original_local_name ()->get_string ();
@@ -49,7 +49,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
 
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (is_global ? "" : "::");
+  std::string_view const smart_scope = (is_global ? "" : "::");
 
   os_ << be_nl_2
       << "///  Executor implementation class for "
@@ -58,7 +58,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   os_ << be_nl
       << "class "
       << lname << "_exec_i" << be_idt_nl
-      << ": public virtual " << global << sname << "::CCM_"
+      << ": public virtual " << global << sname_str << "::CCM_"
       << iname << "," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
       << be_uidt << be_uidt_nl

@@ -6,6 +6,8 @@
 #include "utl_identifier.h"
 #include "ast_constant.h"
 
+#include <string_view>
+
 AST_Decl::NodeType const AST_Annotation_Decl::NT =
   AST_Decl::NT_annotation_decl;
 
@@ -16,7 +18,8 @@ AST_Annotation_Decl::AST_Annotation_Decl (UTL_ScopedName *name)
     UTL_Scope (NT),
     AST_Structure (name, false, false)
 {
-  if (!ACE_OS::strcmp(name->last_component ()->get_string (), "@annotation"))
+  if (name->last_component ()->get_string_view ()
+      == "@annotation")
     {
       idl_global->err ()-> misc_error(
         "An Annotation can not be named \"annotation\"");
@@ -99,7 +102,7 @@ AST_Annotation_Decl::ast_accept (ast_visitor *visitor)
 }
 
 bool
-AST_Annotation_Decl::ami_visit ()
+AST_Annotation_Decl::ami_visit () const
 {
   return false;
 }

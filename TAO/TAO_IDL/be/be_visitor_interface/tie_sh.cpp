@@ -12,6 +12,8 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_interface_tie_sh::be_visitor_interface_tie_sh (
     be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -28,17 +30,11 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       return 0;
     }
 
-  static char namebuf [NAMEBUFSIZE];
-  static char tiename [NAMEBUFSIZE];
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (tiename,
-                  '\0',
-                  NAMEBUFSIZE);
-
   TAO_OutStream *os = this->ctx_->stream ();
+
+  std::string const local_name (node->local_name ());
+  std::string namebuf;
+  std::string tiename;
 
   // Generate the skeleton class name which will be used to determine the TIE
   // class name.
@@ -46,23 +42,17 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (node->is_nested ())
     {
-      ACE_OS::sprintf (namebuf,
-                       "%s",
-                       node->local_name ());
-      ACE_OS::sprintf (tiename,
-                       "%s_tie",
-                       node->local_name ());
+      namebuf = local_name;
+      tiename = local_name;
     }
   else
     {
       // We are outermost.
-      ACE_OS::sprintf (namebuf,
-                       "POA_%s",
-                       node->local_name ());
-      ACE_OS::sprintf (tiename,
-                       "POA_%s_tie",
-                       node->local_name ());
+      namebuf = "POA_";
+      namebuf += local_name;
+      tiename = namebuf;
     }
+  tiename += "_tie";
 
   // Now generate the class definition.
   TAO_INSERT_COMMENT (os);
@@ -120,8 +110,10 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
       << "::CORBA::Boolean rel_;" << be_nl_2
-      << tiename << " (const " << tiename << " &) = delete;" << be_nl
-      << "void operator= (const " << tiename << " &) = delete;" << be_uidt_nl
+      << tiename << " (" << tiename << " const &) = delete;" << be_nl
+      << tiename << " (" << tiename << " &&) = delete;" << be_nl
+      << tiename << " &operator= (" << tiename << " const &) = delete;" << be_nl
+      << tiename << " &operator= (" << tiename << " &&) = delete;" << be_uidt_nl
       << "};";
 
   return 0;

@@ -11,6 +11,8 @@
 
 #include "operation.h"
 
+#include <string_view>
+
 be_visitor_operation_exs::be_visitor_operation_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
@@ -62,9 +64,9 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
 
   // Generate the operation name
   os_ << be_nl
-      << this->ctx_->port_prefix ().c_str ()
-      << this->scope_->original_local_name ()->get_string ()
-      << this->class_extension_.c_str () << "::"
+      << this->ctx_->port_prefix ()
+      << this->scope_->original_local_name ()->get_string_view_or_empty ()
+      << this->class_extension_ << "::"
       << node->local_name ();
 
   // Generate the argument list, which will use our overrridden
@@ -95,7 +97,7 @@ be_visitor_operation_exs::scope (be_decl *node)
 }
 
 void
-be_visitor_operation_exs::class_extension (const char *extension)
+be_visitor_operation_exs::class_extension (std::string_view extension)
 {
   this->class_extension_ = extension;
 }

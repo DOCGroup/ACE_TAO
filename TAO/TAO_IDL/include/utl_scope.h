@@ -159,7 +159,7 @@ public:
   ~UTL_Scope () override;
 
   // Data Accessors.
-  AST_Decl::NodeType scope_node_type ()
+  AST_Decl::NodeType scope_node_type () const
   {
     return pd_scope_node_type;
   }
@@ -203,7 +203,7 @@ public:
                                     AST_Decl *&final_parent_decl);
 
   // How many entries are used?
-  virtual unsigned long nmembers ();
+  virtual unsigned long nmembers () const;
 
   // If the Identifier string (from the scoped name which has been
   // already determined to be of length 1) matches a param,
@@ -224,7 +224,7 @@ public:
   void add_to_name_referenced (Identifier *id);
 
   // Accessors for the has_prefix_ member.
-  bool has_prefix ();
+  bool has_prefix () const;
   void has_prefix (bool val);
 
   // Cleanup function.
@@ -499,7 +499,7 @@ public:
 
 protected:
   /// Quick check on the head of a name to see if it's global.
-  bool is_global_name (Identifier *i);
+  bool is_global_name (Identifier const *i) const;
 
 private:
   /// Checks called from fe_add_decl() specific to interfaces
@@ -539,10 +539,10 @@ public:
   bool is_done ();
 
   // What kind of iterator is this?
-  UTL_Scope::ScopeIterationKind iteration_kind ();
+  UTL_Scope::ScopeIterationKind iteration_kind () const;
 
   // What stage are we in with this iterator?
-  UTL_Scope::ScopeIterationKind iteration_stage ();
+  UTL_Scope::ScopeIterationKind iteration_stage () const;
 
 private:
   // Scope to iterate over.

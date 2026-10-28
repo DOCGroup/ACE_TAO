@@ -16,7 +16,6 @@ be_visitor_union_cs::be_visitor_union_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_cs::~be_visitor_union_cs () = default;
 
 // Visit the Union_cs node and its scope.
 int be_visitor_union_cs::visit_union (be_union *node)

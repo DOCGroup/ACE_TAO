@@ -47,7 +47,7 @@ public:
   /**
    * Should AMI visit this node? (NO)
    */
-  bool ami_visit () override;
+  bool ami_visit () const override;
 };
 
 #endif

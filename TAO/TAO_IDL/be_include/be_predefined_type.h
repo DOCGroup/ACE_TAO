@@ -18,6 +18,8 @@
 #include "be_type.h"
 #include "ast_predefined_type.h"
 
+#include <string_view>
+
 class be_visitor;
 
 class be_predefined_type : public virtual AST_PredefinedType,
@@ -29,7 +31,7 @@ public:
 
   // Overridden from class be_type.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
+                                            std::string_view instance_name,
                                             bool use_underscore,
                                             bool accessor = false) override;
 

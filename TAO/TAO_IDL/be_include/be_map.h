@@ -81,14 +81,14 @@ public:
   int accept (be_visitor *visitor) override;
 
   /// Report the instance name for instantiation.
-  const char *instance_name ();
+  std::string instance_name () const;
 
   /// Accessors for the member.
   be_field *field_node () const;
   void field_node (be_field *node);
 
   /// Helper to create_name, also used by the traits visitor.
-  virtual char *gen_name ();
+  virtual std::string gen_name ();
 
 private:
   std::string smart_fwd_helper_name (AST_Decl *elem_scope,

@@ -13,6 +13,8 @@
 #ifndef _BE_COMPONENT_EXECUTOR_EXS_H_
 #define _BE_COMPONENT_EXECUTOR_EXS_H_
 
+#include <string_view>
+
 /**
  * This is a concrete visitor to generate
  * the executor implementation source.

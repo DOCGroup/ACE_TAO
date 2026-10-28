@@ -40,7 +40,7 @@ struct TAO_IDL_BE_Export IdentifierHelper
   type_name (be_type *t, be_visitor *visitor);
 
   static Identifier *
-  original_local_name (Identifier * local_name);
+  original_local_name (Identifier const *local_name);
 
   // Removes '_cxx_ from segments of a scoped name, and optionally
   // de-escape the last segment, if it's to be appended to.
@@ -49,7 +49,7 @@ struct TAO_IDL_BE_Export IdentifierHelper
 
   // Detects case-insensitive match with IDL keyword.
   static bool
-  is_idl_keyword (Identifier * local_name);
+  is_idl_keyword (Identifier const *local_name);
 
   // Preserves the 'escape' (leading underscore) in a
   // generated identifier if necessary.

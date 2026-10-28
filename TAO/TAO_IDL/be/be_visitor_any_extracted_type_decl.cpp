@@ -20,6 +20,8 @@
 
 #include "utl_identifier.h"
 
+#include <string_view>
+
 be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx)
@@ -130,16 +132,16 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (
         os_ << "_ptr " << var_name_ << " = ::CORBA::Object::_nil ();";
         break;
       case AST_PredefinedType::PT_value:
-        os_ << " * " << var_name_ << " = 0;";
+        os_ << " * " << var_name_ << " = nullptr;";
         break;
       case AST_PredefinedType::PT_abstract:
         os_ << "_ptr " << var_name_ << " = ::CORBA::AbstractBase::_nil ();";
         break;
       case AST_PredefinedType::PT_any:
-        os_ << " * " << var_name_ << " = 0;";
+        os_ << " * " << var_name_ << " = nullptr;";
         break;
       case AST_PredefinedType::PT_pseudo:
-        if (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0)
+        if (node->local_name ()->get_string_view_or_empty () == "TCKind")
           {
             os_ << var_name_ << " = ::CORBA::tk_null;";
           }
@@ -168,7 +170,7 @@ be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
     }
 
   os_ << "const " << bt->nested_type_name (idl_global->root ())
-      << " * " << var_name_ << " = 0;";
+      << " * " << var_name_ << " = nullptr;";
 
   return 0;
 }
@@ -177,7 +179,7 @@ int
 be_visitor_any_extracted_type_decl::visit_string (be_string *node)
 {
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  os_ << "const " << node->full_name () << " " << tmp_name_ << " = 0;" << be_nl;
+  os_ << "const " << node->full_name () << " " << tmp_name_ << " = nullptr;" << be_nl;
   if (node->width () == (long) sizeof (char))
     os_ << "::CORBA::Any::to_string " << var_name_;
   else
@@ -189,7 +191,7 @@ be_visitor_any_extracted_type_decl::visit_string (be_string *node)
 int
 be_visitor_any_extracted_type_decl::visit_structure (be_structure *node)
 {
-  os_ << "const " << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << "const " << node->full_name () << " * " << var_name_ << " = nullptr;";
   return 0;
 }
 
@@ -215,21 +217,21 @@ be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
 int
 be_visitor_any_extracted_type_decl::visit_union (be_union *node)
 {
-  os_ << "const " << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << "const " << node->full_name () << " * " << var_name_ << " = nullptr;";
   return 0;
 }
 
 int
 be_visitor_any_extracted_type_decl::visit_valuebox (be_valuebox *node)
 {
-  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << node->full_name () << " * " << var_name_ << " = nullptr;";
   return 0;
 }
 
 int
 be_visitor_any_extracted_type_decl::visit_valuetype (be_valuetype *node)
 {
-  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << node->full_name () << " * " << var_name_ << " = nullptr;";
   return 0;
 }
 

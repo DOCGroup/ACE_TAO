@@ -58,7 +58,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   op_name += node->local_name ()->get_string ();
   Identifier *op_id = nullptr;
   ACE_NEW_RETURN (op_id,
-                  Identifier (op_name.c_str ()),
+                  Identifier (op_name),
                   -1);
 
   UTL_ScopedName *op_ln = nullptr;
@@ -192,7 +192,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
-        visitor.class_extension (this->exec_class_extension_.c_str ());
+        visitor.class_extension (this->exec_class_extension_);
         status = get_op.accept (&visitor);
         break;
       }
@@ -363,7 +363,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
-        visitor.class_extension (this->exec_class_extension_.c_str ());
+        visitor.class_extension (this->exec_class_extension_);
         status = set_op.accept (&visitor);
         break;
       }
@@ -419,7 +419,7 @@ be_visitor_attribute::op_scope (be_decl *node)
 }
 
 void
-be_visitor_attribute::exec_class_extension (const char *extension)
+be_visitor_attribute::exec_class_extension (std::string_view extension)
 {
   this->exec_class_extension_ = extension;
 }

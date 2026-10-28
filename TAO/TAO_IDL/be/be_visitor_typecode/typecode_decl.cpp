@@ -11,6 +11,8 @@
 
 #include "typecode.h"
 
+#include <string_view>
+
 be_visitor_typecode_decl::be_visitor_typecode_decl (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
@@ -31,9 +33,9 @@ be_visitor_typecode_decl::visit_type (be_type *node)
   TAO_INSERT_COMMENT (os);
 
   // If -GA is used but anyop macro isn't set, defaults to stub macro.
-  char const *export_macro = (be_global->gen_anyop_files ()
-                              ? this->ctx_->non_null_export_macro ()
-                              : be_global->stub_export_macro ());
+  std::string_view const export_macro = (be_global->gen_anyop_files ()
+                                         ? this->ctx_->non_null_export_macro ()
+                                         : be_global->stub_export_macro ());
 
   if (node->is_nested ())
     {

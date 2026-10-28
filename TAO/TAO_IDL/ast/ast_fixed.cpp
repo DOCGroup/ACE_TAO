@@ -43,12 +43,12 @@ int AST_Fixed::ast_accept (ast_visitor *visitor)
   return visitor->visit_fixed (this);
 }
 
-AST_Expression *AST_Fixed::digits ()
+AST_Expression *AST_Fixed::digits () const
 {
   return pd_digits;
 }
 
-AST_Expression *AST_Fixed::scale ()
+AST_Expression *AST_Fixed::scale () const
 {
   return pd_scale;
 }

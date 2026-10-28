@@ -12,7 +12,6 @@
 #include "native.h"
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"
-#include <cstring>
 
 // ********************************************************************
 // Visitor implementation for the Native type
@@ -37,18 +36,18 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   TAO_INSERT_COMMENT (os);
 
-  char const *node_name = node->full_name ();
+  std::string_view const node_name = node->full_name ();
 
-  if (ACE_OS::strcmp (node_name, "PortableServer::ServantLocator::Cookie") == 0)
+  if (node_name == "PortableServer::ServantLocator::Cookie")
     {
       *os << "using Cookie = void *;" << be_nl;
     }
-  else if (ACE_OS::strcmp (node_name, "CORBA::VoidData") == 0)
+  else if (node_name == "CORBA::VoidData")
     {
       *os << "using VoidData = void *;" << be_nl;
     }
   else if (idl_global->dcps_support_zero_copy_read ()
-           && 0 == ACE_OS::strcmp (node->full_name (),"DDS::SampleInfoSeq"))
+           && node_name == "DDS::SampleInfoSeq")
     {
       // DDS/DCPS zero-copy read sequence type support.
       *os << be_nl_2
@@ -62,16 +61,14 @@ be_visitor_native_ch::visit_native (be_native *node)
 
       // strip  the "Seq" ending to get the sample's name
       constexpr size_t max_name_length = 2000;
-      size_t const node_name_length = std::strlen (node_name);
+      size_t const node_name_length = node_name.size ();
       if (node_name_length >= max_name_length ||
           node_name_length <= 3)
         {
           return -1;
         }
-      char sample_name[max_name_length];
-      // Copy node_name into sample_name and shorten to remove Seq suffix
-      std::strcpy (sample_name, node_name);
-      sample_name[node_name_length - 3] = '\0';
+      std::string_view const sample_name =
+        node_name.substr (0, node_name_length - 3);
 
       *os << be_nl_2
           << "using " << node->local_name () << " = ::TAO::DCPS::ZeroCopyDataSeq< "

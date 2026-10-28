@@ -28,7 +28,7 @@ int
 be_visitor_attr_assign::visit_array (be_array *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << "::" << node->full_name () << "_dup ("
       << this->attr_name_ << ");";
 
@@ -39,7 +39,7 @@ int
 be_visitor_attr_assign::visit_component (be_component *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_ << ");";
 
@@ -50,8 +50,7 @@ int
 be_visitor_attr_assign::visit_enum (be_enum *)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " = "
-      << this->attr_name_ << ";";
+      << this->attr_name_string_ << " = " << this->attr_name_ << ";";
 
   return 0;
 }
@@ -61,7 +60,7 @@ be_visitor_attr_assign::visit_eventtype (be_eventtype *)
 {
   os_ << be_nl
       << this->attr_name_ << "->_add_ref ();" << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << this->attr_name_ << ";";
 
   return 0;
@@ -71,7 +70,7 @@ int
 be_visitor_attr_assign::visit_home (be_home *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_ << ");";
 
@@ -83,7 +82,7 @@ be_visitor_attr_assign::visit_interface (
   be_interface *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << "::" << node->full_name () << "::_duplicate ("
       << this->attr_name_ << ");";
 
@@ -95,7 +94,7 @@ be_visitor_attr_assign::visit_predefined_type (
   be_predefined_type *)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << this->attr_name_ << ";";
 
   return 0;
@@ -119,7 +118,7 @@ be_visitor_attr_assign::visit_sequence (be_sequence *)
       << "_ciao_tmp," << be_nl
       << bt->full_name () << " (" << this->attr_name_
       << "));" << be_uidt_nl << be_nl
-      << this->attr_name_string_.c_str () << " = _ciao_tmp;";
+      << this->attr_name_string_ << " = _ciao_tmp;";
 
   return 0;
 }
@@ -128,7 +127,7 @@ int
 be_visitor_attr_assign::visit_string (be_string *node)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << "::CORBA::" << (node->width () == (ssize_t) sizeof (char) ? "" : "w")
       << "string_dup (" << this->attr_name_ << ");";
 
@@ -144,7 +143,7 @@ be_visitor_attr_assign::visit_structure (be_structure *node)
       << "_ciao_tmp," << be_nl
       << "::" << node->full_name () << ");" << be_uidt_nl << be_nl
       << "*_ciao_tmp = " << this->attr_name_ << ";" << be_nl
-      << this->attr_name_string_.c_str () << " = _ciao_tmp;";
+      << this->attr_name_string_ << " = _ciao_tmp;";
 
   return 0;
 }
@@ -177,7 +176,7 @@ be_visitor_attr_assign::visit_union (be_union *node)
       << "_ciao_tmp," << be_nl
       << "::" << node->full_name () << ");" << be_uidt_nl << be_nl
       << "*_ciao_tmp = " << this->attr_name_ << ";" << be_nl
-      << this->attr_name_string_.c_str () << " = _ciao_tmp;";
+      << this->attr_name_string_ << " = _ciao_tmp;";
 
   return 0;
 }
@@ -187,7 +186,7 @@ be_visitor_attr_assign::visit_valuebox (be_valuebox *)
 {
   os_ << be_nl
       << this->attr_name_ << "->_add_ref ();" << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << this->attr_name_ << ";";
 
   return 0;
@@ -198,18 +197,16 @@ be_visitor_attr_assign::visit_valuetype (be_valuetype *)
 {
   os_ << be_nl
       << this->attr_name_ << "->_add_ref ();" << be_nl
-      << this->attr_name_string_.c_str () << " = "
+      << this->attr_name_string_ << " = "
       << this->attr_name_ << ";";
 
   return 0;
 }
 
 void
-be_visitor_attr_assign::attr_name (const char *name)
+be_visitor_attr_assign::attr_name (std::string_view name)
 {
-  // No need for copying, the lifetime of the attr
-  // the arg is from is longer than that of this visitor.
-  this->attr_name_ = name;
+  this->attr_name_.assign (name.data (), name.size ());
 
   // Add to this string for convenience, it's generated
   // in each method above at least once.

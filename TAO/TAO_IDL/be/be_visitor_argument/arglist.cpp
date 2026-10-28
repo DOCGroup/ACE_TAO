@@ -11,6 +11,8 @@
 
 #include "argument.h"
 
+#include <string_view>
+
 #include "be_map.h"
 
 // ************************************************************
@@ -56,7 +58,7 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
   if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
     {
       *os << " " << (unused_ ? "/* " : "" )
-          << node->local_name ()->get_string ()
+          << node->local_name ()->get_string_view_or_empty ()
           << (unused_ ? " */" : "");
     }
 
@@ -214,7 +216,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
       bool is_tckind =
-        (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0);
+        (node->local_name ()->get_string_view_or_empty () == "TCKind");
 
       switch (this->direction ())
         {
@@ -267,7 +269,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 int be_visitor_args_arglist::visit_fixed (be_fixed *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  const char * const type = this->type_name (node);
+  std::string const type = this->type_name (node);
 
   if (this->direction () == AST_Argument::dir_IN)
     {

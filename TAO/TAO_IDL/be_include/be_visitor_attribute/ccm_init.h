@@ -13,6 +13,8 @@
 #ifndef BE_VISITOR_ATTRIBUTE_CCM_INIT_H
 #define BE_VISITOR_ATTRIBUTE_CCM_INIT_H
 
+#include <string_view>
+
 /**
  * Generates the body of a CIAO component or home's set_attributes() method.
  */
@@ -46,7 +48,7 @@ public:
 
 private:
   void emit_init_block ();
-  void emit_error (const char *);
+  void emit_error (std::string_view);
   void open_if_block ();
   void close_if_block ();
 

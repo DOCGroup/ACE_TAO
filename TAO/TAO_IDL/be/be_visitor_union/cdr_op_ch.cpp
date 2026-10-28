@@ -18,7 +18,6 @@ be_visitor_union_cdr_op_ch::be_visitor_union_cdr_op_ch (
 {
 }
 
-be_visitor_union_cdr_op_ch::~be_visitor_union_cdr_op_ch () = default;
 
 int
 be_visitor_union_cdr_op_ch::visit_union (be_union *node)

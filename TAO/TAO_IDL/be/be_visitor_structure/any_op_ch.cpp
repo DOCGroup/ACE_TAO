@@ -32,7 +32,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  char const *macro = this->ctx_->export_macro ();
+  std::string_view const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

@@ -73,8 +73,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
-#include "idl_defines.h"
 #include "global_extern.h"
+
+#include <string>
 
 // Note we are overlooking the wstring case here.
 AST_Decl::NodeType const
@@ -170,13 +171,13 @@ AST_String::destroy ()
 // Data accessors.
 
 AST_Expression *
-AST_String::max_size ()
+AST_String::max_size () const
 {
   return this->pd_max_size;
 }
 
 long
-AST_String::width ()
+AST_String::width () const
 {
   return this->pd_width;
 }

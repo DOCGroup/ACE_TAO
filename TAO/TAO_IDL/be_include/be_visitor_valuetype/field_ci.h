@@ -16,6 +16,8 @@
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CI_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CI_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_valuetype_field_ci
  *

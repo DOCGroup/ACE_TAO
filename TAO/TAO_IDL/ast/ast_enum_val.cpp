@@ -101,7 +101,7 @@ AST_EnumVal::ast_accept (ast_visitor *visitor)
 }
 
 AST_Enum *
-AST_EnumVal::enum_parent ()
+AST_EnumVal::enum_parent () const
 {
   return enum_parent_;
 }

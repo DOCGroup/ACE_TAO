@@ -73,6 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/iosfwd.h"
 
+#include <optional>
+#include <string>
+#include <string_view>
+
 class TAO_IDL_FE_Export Identifier
 {
 public:
@@ -96,6 +100,10 @@ public:
   char *get_string ();
   char const *get_string () const;
   std::string_view get_string_view () const;
+  std::string_view get_string_view_or_empty () const
+  {
+    return this->get_string_view ();
+  }
   ///}
 
   void replace_string (std::string_view s);
@@ -103,16 +111,16 @@ public:
 
   void preprocess_and_replace_string (std::string_view s);
 
-  bool compare (Identifier *other);
+  bool compare (Identifier const *other) const;
   // Compare with other Identifier.
 
-  bool case_compare (Identifier *other);
+  bool case_compare (Identifier const *other) const;
   // Also check for case-only difference.
 
-  bool case_compare_quiet (Identifier *other);
+  bool case_compare_quiet (Identifier const *other) const;
   // Like the above but suppressing error or warning I/O
 
-  Identifier *copy ();
+  Identifier *copy () const;
   // Create a deep copy.
 
   bool escaped () const;

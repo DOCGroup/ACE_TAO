@@ -13,6 +13,9 @@
 #include "array.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_array_cdr_op_ch::be_visitor_array_cdr_op_ch (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx)
@@ -100,19 +103,19 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   be_scope* scope = dynamic_cast<be_scope*> (node->defined_in ());
   be_decl* parent = scope->decl ();
   be_typedef *td = this->ctx_->tdef ();
-  ACE_CString arg_name (ACE_CString (parent->full_name ())
-                        + "::"
-                        + (td == nullptr ? "_" : "")
-                        + node->local_name ()->get_string ()
-                        + "_forany &_tao_array");
+  std::string arg_name (parent->full_name ());
+  arg_name += "::";
+  arg_name += (td == nullptr ? "_" : "");
+  arg_name += node->local_name ()->get_string_view_or_empty ();
+  arg_name += "_forany &_tao_array";
 
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &strm, const "
-      << arg_name.c_str () << ");" << be_nl;
+      << arg_name << ");" << be_nl;
 
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>> (TAO_InputCDR &, " << arg_name.c_str ()
+      << " operator>> (TAO_InputCDR &, " << arg_name
       << ");" << be_nl;
 
   // Using 'const' with xxx_forany prevents the compiler from
@@ -121,7 +124,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
     {
       *os << be_global->stub_export_macro () << " std::ostream&"
           << " operator<< (std::ostream &strm, const "
-          << arg_name.c_str () << ");" << be_nl;
+          << arg_name << ");" << be_nl;
     }
 
   *os << be_global->core_versioning_end ();

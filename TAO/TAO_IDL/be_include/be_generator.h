@@ -231,7 +231,7 @@ public:
 
   AST_Expression *create_expr (UTL_String *s) override;
 
-  AST_Expression *create_expr (char *s) override;
+  AST_Expression *create_expr (std::string_view s) override;
 
   AST_Expression *create_expr (ACE_CDR::Char c) override;
 

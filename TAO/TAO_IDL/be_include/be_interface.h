@@ -21,6 +21,9 @@
 #include "be_codegen.h"
 #include "ast_interface.h"
 
+#include <string>
+#include <string_view>
+
 class TAO_OutStream;
 class TAO_IDL_Inheritance_Hierarchy_Worker;
 class be_visitor;
@@ -55,48 +58,45 @@ public:
   // Methods, which access the strategy.
 
   /// Return the local name.
-  const char *local_name ();
+  std::string_view local_name () const;
 
   /// Retrieve the fully scoped skel class name.
-  const char *full_skel_name ();
+  std::string_view full_skel_name () const;
 
   /// Retrieve the fully qualified collocated class name.
-  const char *full_coll_name (int);
+  std::string_view full_coll_name (int) const;
 
   /// Retrieve the fully qualified collocated class name.
-  const char *local_coll_name (int);
+  std::string_view local_coll_name (int) const;
 
   /// retrieve the name of the direct proxy implementation.
-  virtual const char *direct_proxy_impl_name ();
+  virtual std::string_view direct_proxy_impl_name () const;
 
   /// retrieve the fully qualified name of the direct proxy
   /// implementation.
-  virtual const char *full_direct_proxy_impl_name ();
+  virtual std::string_view full_direct_proxy_impl_name () const;
 
   /// Return the client scope that encloses the interface.
-  virtual const char *client_enclosing_scope ();
+  virtual std::string_view client_enclosing_scope () const;
 
   /// Return the "flattened" scope that encloses
   /// the interface.
-  virtual const char *flat_client_enclosing_scope ();
+  virtual std::string_view flat_client_enclosing_scope () const;
 
   /// Return the server scope that encloses the interface.
-  virtual const char *server_enclosing_scope ();
+  virtual std::string_view server_enclosing_scope () const;
 
   /// Retrieve skeleton name.
-  const char *relative_skel_name (const char *skel_name);
+  std::string relative_skel_name (std::string_view skel_name) const;
 
   /// Build up the skeleton name.
-  void compute_full_skel_name (const char *prefix,
-                               char *&skel_name);
+  std::string compute_full_skel_name (std::string_view prefix) const;
 
   /// Compute the collocation names.
-  void compute_coll_names (int type,
-                           const char *prefix,
-                           const char *suffix);
+  void compute_coll_names (int type) const;
 
-  static const char *relative_name (const char *localname,
-                                    const char *othername);
+  static std::string relative_name (std::string_view localname,
+                                    std::string_view othername);
 
   /// Call the default constructors of all the base classes.
   virtual void gen_def_ctors (TAO_OutStream* os);
@@ -203,12 +203,12 @@ public:
                                   TAO_OutStream *os);
 
   /// Generate the operation table including entries for inherited interfaces.
-  int gen_operation_table (const char *flat_name,
-                           const char *skeleton_class_name);
+  int gen_operation_table (std::string_view flat_name,
+                           std::string_view skeleton_class_name);
 
   /// generate the operation table entries.
   int gen_optable_entries (be_interface *derived_interface,
-                           const char *full_skeleton_name,
+                           std::string_view full_skeleton_name,
                            TAO_OutStream *os);
 
   /// If we are local, regenerate non-local base class operations as
@@ -221,7 +221,7 @@ public:
 
   /// Overridden from class be_type.
   void gen_member_ostream_operator (TAO_OutStream *os,
-                                   const char *instance_name,
+                                   std::string_view instance_name,
                                    bool use_underscore,
                                    bool accessor = false) override;
 
@@ -234,7 +234,7 @@ public:
   be_interface *original_interface ();
 
   /// Is EventConsumerBase our parent?
-  bool is_event_consumer ();
+  bool is_event_consumer () const;
 
   /**
    * Common code for facet generation, whether we are
@@ -271,10 +271,10 @@ protected:
    * of "str" and "suffix" and using the
    * "separator" to concatenate the two.
    */
-  char *create_with_prefix_suffix (const char *prefix,
-                                   const char *str,
-                                   const char *suffix,
-                                   const char *separator = "");
+  std::string create_with_prefix_suffix (std::string_view prefix,
+                                         std::string_view str,
+                                         std::string_view suffix,
+                                         std::string_view separator = "") const;
 
 protected:
   enum Suffix_Code
@@ -290,19 +290,21 @@ protected:
                   // with the user classes.
   };
 
-  static const char *suffix_table_[];
-  static const char *tag_table_[];
+  inline static constexpr std::string_view suffix_table_[] = {"_Proxy_Impl"};
+  inline static constexpr std::string_view tag_table_[] = {"_Direct", "_TAO_"};
 
   // Proxy Implementation names.
-  char *direct_proxy_impl_name_ {};
+  mutable std::string direct_proxy_impl_name_;
 
-  char *full_direct_proxy_impl_name_ {};
+  mutable std::string full_direct_proxy_impl_name_;
 
-  char *client_scope_ {};
-  char *flat_client_scope_ {};
+  mutable std::string client_scope_;
+  mutable bool client_scope_computed_ {};
+  mutable std::string flat_client_scope_;
+  mutable bool flat_client_scope_computed_ {};
 
-  char *server_scope_ {};
-  char *flat_server_scope_ {};
+  mutable std::string server_scope_;
+  mutable bool server_scope_computed_ {};
 
 private:
   /// Output the header (type declaration and %%) to the gperf's input
@@ -314,32 +316,32 @@ private:
    * depending on which strategy we are using. Returns 0 on sucess, -1
    * on error.
    */
-  int gen_gperf_things (const char *flat_name);
+  int gen_gperf_things (std::string const &flat_name);
 
   /// Outputs the class definition for the perfect hashing. This class
   /// will inherit from the TAO_Perfect_Hash_OpTable.
-  void gen_perfect_hash_class_definition (const char *flat_name);
+  void gen_perfect_hash_class_definition (std::string const &flat_name);
 
   /// Outputs the class definition for the binary search . This class
   /// will inherit from the TAO_Binary_Search_OpTable.
-  void gen_binary_search_class_definition (const char *flat_name);
+  void gen_binary_search_class_definition (std::string const &flat_name);
 
   /// Outputs the class definition for the linear search. This class
   /// will inherit from the TAO_Linear_Search.
-  void gen_linear_search_class_definition (const char *flat_name);
+  void gen_linear_search_class_definition (std::string const &flat_name);
 
   /// This calls the GPERF program and gets the correct operation
   /// lookup methods for the current OpLookup strategy.
-  int gen_gperf_lookup_methods (const char *flat_name);
+  int gen_gperf_lookup_methods (std::string const &flat_name);
 
   /// Create an instance of this perfect hash table.
-  void gen_perfect_hash_instance (const char *flat_name);
+  void gen_perfect_hash_instance (std::string const &flat_name);
 
   /// Create an instance of the binary search optable.
-  void gen_binary_search_instance (const char *flat_name);
+  void gen_binary_search_instance (std::string const &flat_name);
 
   /// Create an instance of the linear search optable.
-  void gen_linear_search_instance (const char *flat_name);
+  void gen_linear_search_instance (std::string const &flat_name);
 
   /**
    * Called from traverse_inheritance_graph(), since base
@@ -376,16 +378,14 @@ protected:
   /// Are we an AMI4CCM reply handler?
   bool is_ami4ccm_rh_ {};
 
-  char *full_skel_name_ {};
+  mutable std::string full_skel_name_;
 
-  char *full_coll_name_ {};
+  mutable std::string full_coll_name_;
 
-  char *local_coll_name_ {};
-
-  char *relative_skel_name_ {};
+  mutable std::string local_coll_name_;
 
   /// Current cached collocated name.
-  int cached_type_ {-1};
+  mutable int cached_type_ {-1};
 
   /// Used to suppress generation of some CCM servant methods/
   bool has_rw_attributes_ {};

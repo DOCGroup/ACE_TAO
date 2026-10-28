@@ -69,7 +69,7 @@ public:
   virtual int create_name (be_typedef *node);
 
   /// Return the managed type.
-  virtual MANAGED_TYPE managed_type ();
+  virtual MANAGED_TYPE managed_type () const;
 
   // Scope management functions.
   virtual AST_Sequence *fe_add_sequence (AST_Sequence *) override;
@@ -88,12 +88,12 @@ public:
   int accept (be_visitor *visitor) override;
 
   /// Report the instance name for instantiation.
-  const char *instance_name ();
+  std::string instance_name () const;
 
   /// Common code for generating the name and parameters of our
   /// template sequence base class.
   int gen_base_class_name (TAO_OutStream *os,
-                           const char * linebreak,
+                           std::string_view linebreak,
                            AST_Decl *elem_scope);
 
   /// Accessors for the member.
@@ -101,7 +101,7 @@ public:
   void field_node (be_field *node);
 
   /// Helper to create_name, also used by the traits visitor.
-  virtual char *gen_name ();
+  virtual std::string gen_name ();
 
 protected:
   /// Computes the fully scoped typecode name.
@@ -113,7 +113,7 @@ private:
 
 private:
   /// Our managed type.
-  MANAGED_TYPE mt_ {MNG_UNKNOWN};
+  mutable MANAGED_TYPE mt_ {MNG_UNKNOWN};
 
   /// Used if we are an anonymous member, to help generate a unique name.
   be_field *field_node_ {};

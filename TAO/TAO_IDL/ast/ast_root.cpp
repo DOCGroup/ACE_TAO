@@ -93,15 +93,13 @@ AST_Root::~AST_Root () = default;
 // Overrides the one in UTL_Scope - this one doesn't
 // count the predefined types.
 unsigned long
-AST_Root::nmembers ()
+AST_Root::nmembers () const
 {
   unsigned long retval = 0;
 
-  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
-        !si.is_done ();
-        si.next ())
+  for (long i = 0; i < this->pd_decls_used; ++i)
     {
-      if (si.item ()->node_type () == AST_Decl::NT_pre_defined)
+      if (this->pd_decls[i]->node_type () == AST_Decl::NT_pre_defined)
         {
           continue;
         }

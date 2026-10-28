@@ -29,7 +29,7 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  std::string_view macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

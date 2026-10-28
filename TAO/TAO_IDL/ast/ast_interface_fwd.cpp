@@ -279,7 +279,7 @@ AST_InterfaceFwd::destroy ()
 }
 
 bool
-AST_InterfaceFwd::is_fwd ()
+AST_InterfaceFwd::is_fwd () const
 {
   return true; // This is a fwd declared type
 }

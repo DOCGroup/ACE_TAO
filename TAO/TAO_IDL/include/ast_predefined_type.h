@@ -72,6 +72,10 @@ class ast_visitor;
 class TAO_IDL_FE_Export AST_PredefinedType : public virtual AST_ConcreteType
 {
 public:
+  AST_PredefinedType (AST_PredefinedType const &) = delete;
+  AST_PredefinedType (AST_PredefinedType &&) = delete;
+  AST_PredefinedType &operator= (AST_PredefinedType const &) = delete;
+  AST_PredefinedType &operator= (AST_PredefinedType &&) = delete;
   // Enum for all the different predefined types.
   enum PredefinedType
     {
@@ -104,7 +108,7 @@ public:
   ~AST_PredefinedType () override;
 
   // Data Accessors.
-  PredefinedType pt ();
+  PredefinedType pt () const;
 
   // AST Dumping
   void dump (ACE_OSTREAM_TYPE &o) override;

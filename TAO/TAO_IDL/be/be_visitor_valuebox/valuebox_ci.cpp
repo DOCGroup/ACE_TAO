@@ -17,7 +17,6 @@ be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_ci::~be_visitor_valuebox_ci () = default;
 
 int
 be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
@@ -630,7 +629,7 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 }
 
 void
-be_visitor_valuebox_ci::emit_default_constructor ()
+be_visitor_valuebox_ci::emit_default_constructor () const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -645,7 +644,7 @@ be_visitor_valuebox_ci::emit_default_constructor ()
 }
 
 void
-be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -686,7 +685,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
 }
 
 void
-be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -707,7 +706,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
 }
 
 void
-be_visitor_valuebox_ci::emit_copy_constructor ()
+be_visitor_valuebox_ci::emit_copy_constructor () const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -727,7 +726,7 @@ be_visitor_valuebox_ci::emit_copy_constructor ()
 }
 
 void
-be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -771,7 +770,7 @@ be_visitor_valuebox_ci::emit_assignment (be_decl *node,
 }
 
 void
-be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -795,7 +794,7 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
 
 
 void
-be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
+be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

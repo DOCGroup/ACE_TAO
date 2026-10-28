@@ -14,6 +14,9 @@
 #ifndef _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H
 #define _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H
 
+#include <string>
+#include <string_view>
+
 // ************************************************************
 // Attribute visitor
 // ************************************************************
@@ -44,7 +47,7 @@ public:
 
   void for_facets (bool val);
   void op_scope (be_decl *node);
-  void exec_class_extension (const char *extension);
+  void exec_class_extension (std::string_view extension);
 
 private:
   bool for_facets_ {};
@@ -52,7 +55,7 @@ private:
 
   /// Defaults to "exec_i" but in special cases we want to
   /// modify it.
-  ACE_CString exec_class_extension_ {"_exec_i"};
+  std::string exec_class_extension_ {"_exec_i"};
 };
 
 #endif /* _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H*/

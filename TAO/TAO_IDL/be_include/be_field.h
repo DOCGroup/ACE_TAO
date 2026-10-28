@@ -17,6 +17,8 @@
 #include "be_decl.h"
 #include "ast_field.h"
 
+#include <string_view>
+
 class be_visitor;
 class TAO_OutStream;
 
@@ -33,7 +35,7 @@ public:
 
   // Generate debugging ostream operator for members.
   void gen_member_ostream_operator (TAO_OutStream *os,
-                                    const char *instance_name,
+                                    std::string_view instance_name,
                                     bool use_underscore,
                                     bool accessor = false);
 

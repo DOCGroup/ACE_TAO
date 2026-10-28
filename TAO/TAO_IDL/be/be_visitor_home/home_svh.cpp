@@ -11,6 +11,8 @@
 
 #include "home.h"
 
+#include <string_view>
+
 be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
@@ -118,7 +120,7 @@ int
 be_visitor_home_svh::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
+  std::string sname_str (scope->full_name ());
   char const *sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
@@ -129,7 +131,7 @@ be_visitor_home_svh::gen_servant_class ()
   char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl
-      << "class " << export_macro_.c_str () << " " << lname
+      << "class " << export_macro_ << " " << lname
       << "_Servant" << be_idt_nl
       << ": public virtual" << be_idt << be_idt_nl
       << "::CIAO::"
@@ -243,7 +245,7 @@ void
 be_visitor_home_svh::gen_entrypoint ()
 {
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl

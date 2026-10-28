@@ -83,6 +83,10 @@ public:
                       bool is_local,
                       bool is_abstract,
                       bool compile_now);
+  FE_InterfaceHeader (FE_InterfaceHeader const &) = delete;
+  FE_InterfaceHeader (FE_InterfaceHeader &&) = delete;
+  FE_InterfaceHeader &operator= (FE_InterfaceHeader const &) = delete;
+  FE_InterfaceHeader &operator= (FE_InterfaceHeader &&) = delete;
 
   virtual ~FE_InterfaceHeader ();
 

@@ -76,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_list.h"
 #include "ace/iosfwd.h"
 
+#include <string>
+
 class Identifier;
 
 class TAO_IDL_FE_Export UTL_IdList : public UTL_List
@@ -102,26 +104,29 @@ public:
   // Copy the list.
 
   Identifier *head ();
+  Identifier const *head () const;
   // Get element.
 
   Identifier *last_component ();
+  Identifier const *last_component () const;
   // Get last element in this list.
 
   Identifier *first_component ();
+  Identifier const *first_component () const;
   // Get first element in this list holding a non-empty string.
 
-  int compare (UTL_IdList *other);
+  int compare (UTL_IdList const *other) const;
   // Compares each component for equality.
 
   /**
    * Return a copy of the contents as a string
    */
-  char *get_string_copy ();
+  std::string get_string_copy () const;
 
   /**
    * Return true if the list begins with "::"
    */
-  bool is_absolute ();
+  bool is_absolute () const;
 
 private:
   Identifier *pd_car_data;
@@ -140,7 +145,7 @@ public:
   explicit UTL_IdListActiveIterator (UTL_IdList *s);
 
   /// Retrieves the next item.
-  Identifier *item ();
+  Identifier *item () const;
 };
 
 #endif          // _UTL_IDLIST_UTL_IDLIST_HH

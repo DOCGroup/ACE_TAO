@@ -19,6 +19,10 @@ public:
                       UTL_ScopedName *base_component,
                       UTL_NameList *supports,
                       bool compile_now);
+  FE_ComponentHeader (FE_ComponentHeader const &) = delete;
+  FE_ComponentHeader (FE_ComponentHeader &&) = delete;
+  FE_ComponentHeader &operator= (FE_ComponentHeader const &) = delete;
+  FE_ComponentHeader &operator= (FE_ComponentHeader &&) = delete;
   ~FE_ComponentHeader () override;
 
   // Data Accessors.

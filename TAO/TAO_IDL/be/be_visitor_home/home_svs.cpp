@@ -11,6 +11,8 @@
 
 #include "home.h"
 
+#include <string_view>
+
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
@@ -102,7 +104,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
 
   os_ << be_nl_2
       << "::" << c->name () << "_ptr" << be_nl
-      << node_->original_local_name ()->get_string ()
+      << node_->original_local_name ()->get_string_view_or_empty ()
       << "_Servant::" << node->local_name ();
 
   be_visitor_operation_arglist al_visitor (this->ctx_);
@@ -128,17 +130,18 @@ be_visitor_home_svs::visit_factory (be_factory *node)
     }
   else
     {
-      ACE_CString comp_sname_str (
+      std::string comp_sname_str (
         ScopeAsDecl (comp_->defined_in ())->full_name ());
       char const *comp_sname = comp_sname_str.c_str ();
       char const *comp_lname = comp_->local_name ()->get_string ();
       char const *global = (comp_sname_str == "" ? "" : "::");
 
-      ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
+      std::string_view const sname =
+        ScopeAsDecl (node_->defined_in ())->full_name ();
 
-      os_ << sname_str << global << "CCM_" << node_->original_local_name ()
-          << "_var executor = " << be_idt_nl
-          << sname_str << global << "CCM_" << node_->original_local_name ()
+      os_ << sname << global << "CCM_" << node_->original_local_name ()
+          << "_var executor =" << be_idt_nl
+          << sname << global << "CCM_" << node_->original_local_name ()
           << "::_duplicate (this->executor_.in ());" << be_uidt
           << be_nl_2;
 
@@ -201,7 +204,7 @@ int
 be_visitor_home_svs::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
+  std::string sname_str (scope->full_name ());
   char const *sname = sname_str.c_str ();
 
   // Avoid '_cxx_' prefix.
@@ -376,7 +379,7 @@ be_visitor_home_svs::gen_servant_class ()
 void
 be_visitor_home_svs::gen_entrypoint ()
 {
-  ACE_CString sname_str (
+  std::string sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
   char const *sname = sname_str.c_str ();
 
@@ -387,7 +390,7 @@ be_visitor_home_svs::gen_entrypoint ()
   char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl

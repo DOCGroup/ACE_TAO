@@ -11,6 +11,8 @@
 
 #include "connector.h"
 
+#include <string_view>
+
 #include "global_extern.h"
 #include "utl_strlist.h"
 #include "utl_string.h"
@@ -70,7 +72,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       this->gen_connector_traits ();
 
       os_ << be_nl_2
-          << "class " << this->export_macro_.c_str () << " "
+          << "class " << this->export_macro_ << " "
           << this->node_->local_name () << "_exec_i" << be_idt_nl
           << ": public " << this->base_tname_ << "_Connector_T";
 
@@ -186,7 +188,7 @@ be_visitor_connector_dds_exh::visit_mirror_port (
   be_mirror_port *node)
 {
   os_ << be_nl
-      << "struct " << node->local_name ()->get_string ()
+      << "struct " << node->local_name ()->get_string_view_or_empty ()
       << "_traits" << be_nl
       << "{" << be_idt;
 
@@ -261,7 +263,8 @@ be_visitor_connector_dds_exh::visit_attribute (
     }
 
   os_ << be_nl
-      << "using " << node->local_name ()->get_string () << "_type = "
+      << "using " << node->local_name ()->get_string_view_or_empty ()
+      << "_type = "
       << node->field_type ()->full_name () << ";";
 
   return 0;
@@ -394,11 +397,11 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
     {
       AST_Decl *scope = ScopeAsDecl (iface->defined_in ());
       bool global = (scope->node_type () == AST_Decl::NT_root);
-      const char *smart_scope = (global ? "" : "::");
-      const char *lname = iface->local_name ();
+      std::string_view const smart_scope = global ? "" : "::";
+      std::string_view const lname = iface->local_name ();
 
       os_ << be_nl
-          << "using " << port_elem->local_name ()->get_string () << "_type = ::"
+          << "using " << port_elem->local_name ()->get_string_view_or_empty () << "_type = ::"
           << scope->name () << smart_scope << (!for_facet ? "" : "CCM_")
           << lname << ";";
 

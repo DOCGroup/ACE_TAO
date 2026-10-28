@@ -10,6 +10,8 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
     be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
@@ -51,9 +53,9 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   // the _this () operation
   //const char *non_amh_name = node->full_name () + 4;
-  ACE_CString non_amh_name = "";
+  std::string non_amh_name;
   non_amh_name += node->client_enclosing_scope ();
-  non_amh_name += node->local_name ();
+  non_amh_name += node->local_name ().data ();
 
   std::string full_skel_name_holder =
     this->generate_full_skel_name (node);
@@ -61,7 +63,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << non_amh_name.c_str () << "*" << be_nl
+  *os << non_amh_name << "*" << be_nl
       << full_skel_name
       << "::_this ()" << be_nl
       << "{" << be_idt_nl

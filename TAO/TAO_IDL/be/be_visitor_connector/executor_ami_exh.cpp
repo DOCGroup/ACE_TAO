@@ -12,6 +12,8 @@
 
 #include "connector.h"
 
+#include <string_view>
+
 be_visitor_executor_ami_exh::be_visitor_executor_ami_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -30,11 +32,11 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 {
   node_ = node;
 
-  const char *suffix = "_exec_i";
+  std::string_view const suffix = "_exec_i";
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
 
   os_ << be_nl_2
-      << "class " << this->export_macro_.c_str () << " "
+      << "class " << this->export_macro_ << " "
       << scope->local_name () << suffix << be_idt_nl
       << ": public virtual AMI4CCM_Connector_Exec," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
@@ -54,11 +56,9 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
                         -1);
     }
 
-  const char *container_type = be_global->ciao_container_type ();
-
   os_ << be_nl_2
       << "virtual void set_"
-      << tao_cg->downcase (container_type)
+      << tao_cg->downcase (be_global->ciao_container_type ())
       << "_context ("
       << "::Components::" << be_global->ciao_container_type ()
       << "Context_ptr ctx);"
@@ -79,15 +79,16 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   /// that we use for building related names)
   /// and 'sendc' interface, respectively.
   /// First, we strip off the "_Connector" suffix.
-  ACE_CString connector_name (scope->local_name ()->get_string ());
-  ACE_CString half_stripped_name (
-    connector_name.substr (0, connector_name.find ("_Connector")));
+  std::string_view const connector_name =
+    scope->local_name ()->get_string_view_or_empty ();
+  std::string_view const half_stripped_name =
+    connector_name.substr (0, connector_name.find ("_Connector"));
 
-  os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_0_;" << be_nl;
+  os_ << half_stripped_name << "_exec_i *facet_exec_0_;" << be_nl;
 
-  ACE_CString double_stripped_name (
-     half_stripped_name.substr (ACE_OS::strlen ("AMI4CCM_")));
-  os_ << double_stripped_name.c_str () <<  "_exec_i *facet_exec_1_;";
+  std::string_view const double_stripped_name =
+    half_stripped_name.substr (std::string_view ("AMI4CCM_").size ());
+  os_ << double_stripped_name << "_exec_i *facet_exec_1_;";
 
   os_ << be_uidt_nl
       << "};";
@@ -101,7 +102,7 @@ be_visitor_executor_ami_exh::visit_provides (be_provides *node)
   AST_Type *t = node->provides_type ();
   AST_Decl *scope = ScopeAsDecl (t->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
+  std::string_view const smart_scope = global ? "" : "::";
 
   os_ << be_nl_2
       << "virtual " << smart_scope << scope->full_name ()

@@ -17,6 +17,8 @@
 #include "be_type.h"
 #include "ast_typedef.h"
 
+#include <string_view>
+
 class be_visitor;
 
 class be_typedef : public virtual AST_Typedef,
@@ -44,7 +46,7 @@ public:
 
   /// Overridden from class be_type.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
+                                            std::string_view instance_name,
                                             bool use_underscore,
                                             bool accessor = false) override;
 

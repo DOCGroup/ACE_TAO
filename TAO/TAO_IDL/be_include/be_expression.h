@@ -46,7 +46,7 @@ public:
 
   explicit be_expression (UTL_String *s);
 
-  explicit be_expression (char *s);
+  explicit be_expression (std::string_view s);
 
   explicit be_expression (ACE_CDR::Char c);
 

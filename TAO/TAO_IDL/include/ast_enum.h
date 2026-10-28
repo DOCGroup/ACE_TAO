@@ -75,6 +75,10 @@ class TAO_IDL_FE_Export AST_Enum
     public virtual UTL_Scope
 {
 public:
+  AST_Enum (AST_Enum const &) = delete;
+  AST_Enum (AST_Enum &&) = delete;
+  AST_Enum &operator= (AST_Enum const &) = delete;
+  AST_Enum &operator= (AST_Enum &&) = delete;
   AST_Enum (UTL_ScopedName *n,
             bool local,
             bool abstract);

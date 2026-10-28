@@ -16,6 +16,9 @@
 #include "be_visitor_structure/cdr_op_cs.h"
 #include "be_visitor_union/cdr_op_cs.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_field_cdr_op_cs::be_visitor_field_cdr_op_cs (
       be_visitor_context *ctx)
   : be_visitor_decl (ctx)
@@ -93,13 +96,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute
   // the full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];
-
-  // Save the node's local name and full name in a buffer for quick
-  // use later on.
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (this->ctx_->alias () == nullptr // Not a typedef.
       && node->is_child (this->ctx_->scope ()->decl ()))
@@ -112,24 +109,20 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       node->full_name ());
+      fname = node->full_name ();
     }
 
   // Check what is the code generation substate. Are we generating
@@ -1049,11 +1042,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute
   // the full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];
-
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (this->ctx_->alias () == nullptr // Not a typedef.
       && node->is_child (this->ctx_->scope ()->decl ()))
@@ -1066,24 +1055,20 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       node->full_name ());
+      fname = node->full_name ();
     }
 
   // Check what is the code generation substate. Are we generating code for

@@ -162,7 +162,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
   upcall_command_visitor.visit (node,
                                 intf->full_skel_name (),
-                                upcall_command_name.c_str ());
+                                upcall_command_name);
 
   TAO_INSERT_COMMENT (os);
 
@@ -182,7 +182,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str () << node->local_name ()
+  *os << this->ctx_->port_prefix () << node->local_name ()
       << "_skel (" << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "TAO::Portable_Server::Servant_Upcall *TAO_INTERCEPTOR (servant_upcall)," << be_nl
@@ -246,7 +246,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "}" << be_uidt << be_nl_2;
 
   // Upcall_Command instantiation.
-  *os << upcall_command_name.c_str()
+  *os << upcall_command_name
       << " command (" << be_idt_nl
       << "impl";
 

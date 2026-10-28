@@ -17,6 +17,10 @@ public:
                 UTL_NameList *supports,
                 bool truncatable,
                 bool is_eventtype = false);
+  FE_OBVHeader (FE_OBVHeader const &) = delete;
+  FE_OBVHeader (FE_OBVHeader &&) = delete;
+  FE_OBVHeader &operator= (FE_OBVHeader const &) = delete;
+  FE_OBVHeader &operator= (FE_OBVHeader &&) = delete;
   ~FE_OBVHeader () override;
 
   // Data Accessors.

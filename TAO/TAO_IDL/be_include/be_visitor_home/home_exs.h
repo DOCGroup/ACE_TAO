@@ -14,6 +14,8 @@
 #ifndef _BE_HOME_HOME_EXS_H_
 #define _BE_HOME_HOME_EXS_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_home_exs
  *
@@ -51,7 +53,7 @@ private:
   char const *const comment_start_border_ {"/**"};
   char const *const comment_end_border_ {" */"};
   char const *const your_code_here_ {"/* Your code here. */"};
-  ACE_CString export_macro_;
+  std::string_view export_macro_;
 };
 
 /// Worker class passed to traverse_inheritance_graph(),

@@ -13,6 +13,9 @@
 #ifndef _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 
+#include <string>
+#include <string_view>
+
 // ************************************************************
 // Operation visitor for CIAO executor implementations
 // ************************************************************
@@ -39,7 +42,7 @@ public:
   int visit_operation (be_operation *node) override;
 
   void scope (be_decl *node);
-  void class_extension (const char *extension);
+  void class_extension (std::string_view extension);
 
 private:
   int gen_op_body (be_type *return_type);
@@ -48,7 +51,7 @@ private:
   TAO_OutStream &os_;
   be_decl *scope_ {};
   const char *your_code_here_;
-  ACE_CString class_extension_;
+  std::string_view class_extension_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_EXS_H_ */

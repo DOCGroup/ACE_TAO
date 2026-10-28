@@ -236,7 +236,7 @@ We can set it to use IDL4 by default in `BE_init ()`:
 int BE_init (int &, ACE_TCHAR *[])
 {
   // ...
-  idl_global->default_idl_version_ = IDL_VERSION_4;
+  idl_global->default_idl_version_.version (IDL_VERSION_4);
   // ...
 }
 
@@ -259,7 +259,7 @@ int BE_init (int &, ACE_TCHAR *[])
 {
   // ...
 #ifdef TAO_IDL_HAS_ANNOTATIONS
-  idl_global->default_idl_version_ = IDL_VERSION_4;
+  idl_global->default_idl_version_.version (IDL_VERSION_4);
 #endif
   // ...
 }
@@ -328,14 +328,14 @@ To get the annotations for most nodes types, use
 `node->annotations ().find (annotation_decl)` where `annotation_decl` can be the
 `AST_Annotation_Decl` object or its canonical internal TAO IDL name (see next
 paragraph). This will return the last `AST_Annotation_Appl*` of that type on
-the node or `NULL` if there no annotation of that type. Because
+the node or `nullptr` if there is no annotation of that type. Because
 `AST_Annotation_Appls::find` can take a `AST_Annotation_Decl`, they can be looked
 up after `idl_eval` creates them and cached for a slightly faster
 `find`.
 
 Internally, annotation local names are prefixed with `@` to prevent clashes
 with other elements in IDL with the same name. For example when trying to use
-`AST_Annotation_Appls::find (const char*)` with annotation named `bar` in a module
+`AST_Annotation_Appls::find (std::string_view)` with annotation named `bar` in a module
 named `foo`, the proper internal scoped name to pass as the second argument is
 either `foo::@bar` or `::foo::@bar` if we want to be explicit that `foo` is in
 the root module. In IDL, this annotation's full name would be `@foo::bar`or

@@ -163,7 +163,7 @@ Identifier::preprocess_and_replace_string (std::string_view s)
 
 // Compare two Identifier *
 bool
-Identifier::compare (Identifier *o)
+Identifier::compare (Identifier const *o) const
 {
   if (o == nullptr ||
       !o->pv_string_ ||
@@ -178,20 +178,20 @@ Identifier::compare (Identifier *o)
 
 // Report the appropriate error if the two identifiers differ only in case.
 bool
-Identifier::case_compare (Identifier *o)
+Identifier::case_compare (Identifier const *o) const
 {
   return UTL_String::compare (this->get_string (), o->get_string ());
 }
 
 // Report no error if the two identifiers differ only in case.
 bool
-Identifier::case_compare_quiet (Identifier *o)
+Identifier::case_compare_quiet (Identifier const *o) const
 {
   return UTL_String::compare_quiet (this->get_string (), o->get_string ());
 }
 
 Identifier *
-Identifier::copy ()
+Identifier::copy () const
 {
   Identifier *retval = nullptr;
   ACE_NEW_RETURN (retval,

@@ -1,6 +1,6 @@
 #include "constant.h"
 
-const char *exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
+std::string_view exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
 {
   switch (et)
     {

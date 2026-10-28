@@ -12,6 +12,9 @@
 #ifndef BE_VISITOR_ATTR_RETURN_H
 #define BE_VISITOR_ATTR_RETURN_H
 
+#include <string>
+#include <string_view>
+
 #include "be_visitor_decl.h"
 
 #include <string>
@@ -47,7 +50,7 @@ public:
   int visit_valuebox (be_valuebox *) override;
   int visit_valuetype (be_valuetype *) override;
 
-  void attr_name (const char *name);
+  void attr_name (std::string_view name);
 
 private:
   std::string attr_name_string_;

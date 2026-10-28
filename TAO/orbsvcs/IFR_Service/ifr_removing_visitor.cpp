@@ -46,7 +46,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
                 }
 
               CORBA::Contained_var top_level =
-                be_global->repository ()->lookup_id (d->repoID ());
+                be_global->repository ()->lookup_id (IFR_C_String (d->repoID ()));
 
               if (!CORBA::is_nil (top_level.in ()))
                 {

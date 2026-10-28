@@ -30,7 +30,7 @@ be_visitor_attr_return::visit_array (be_array *node)
   os_ << be_nl
       << "return "
       << "::" << node->full_name () << "_dup ("
-      << this->attr_name_string_.c_str ()
+      << this->attr_name_string_
       << ".in ());";
 
   return 0;
@@ -42,7 +42,7 @@ be_visitor_attr_return::visit_component (be_component *node)
   os_ << be_nl
       << "return "
       << "::" << node->full_name () << "::_duplicate ("
-      << this->attr_name_string_.c_str ()
+      << this->attr_name_string_
       << ".in ());";
 
   return 0;
@@ -52,7 +52,7 @@ int
 be_visitor_attr_return::visit_enum (be_enum *)
 {
   os_ << be_nl
-      << "return " << this->attr_name_string_.c_str () << ";";
+      << "return " << this->attr_name_string_ << ";";
 
   return 0;
 }
@@ -61,10 +61,10 @@ int
 be_visitor_attr_return::visit_eventtype (be_eventtype *)
 {
   os_ << be_nl
-      << "this->" << this->attr_name_string_.c_str ()
+      << "this->" << this->attr_name_string_
       << "->_add_ref ();" << be_nl_2
       << "return "
-      << "this->" << this->attr_name_string_.c_str ()
+      << "this->" << this->attr_name_string_
       << ".in ();";
 
   return 0;
@@ -76,7 +76,7 @@ be_visitor_attr_return::visit_home (be_home *node)
   os_ << be_nl
       << "return "
       << "::" << node->full_name () << "::_duplicate ("
-      << this->attr_name_string_.c_str ()
+      << this->attr_name_string_
       << ".in ());";
 
   return 0;
@@ -89,7 +89,7 @@ be_visitor_attr_return::visit_interface (
   os_ << be_nl
       << "return "
       << "::" << node->full_name () << "::_duplicate ("
-      << this->attr_name_string_.c_str ()
+      << this->attr_name_string_
       << ".in ());";
 
   return 0;
@@ -109,28 +109,28 @@ be_visitor_attr_return::visit_predefined_type (
         os_ << "return "
             << "::" << node->full_name ()
             << "::_duplicate (" << be_idt_nl
-            << this->attr_name_string_.c_str () << ".in ());";
+            << this->attr_name_string_ << ".in ());";
         break;
       case AST_PredefinedType::PT_any:
         os_ << "::CORBA::Any * retval {};" << be_nl
             << "ACE_NEW_RETURN (" << be_idt_nl
             << "retval," << be_nl
             << "::CORBA::Any ("
-            << this->attr_name_string_.c_str ()
+            << this->attr_name_string_
             << ".in ())," << be_nl
             << "nullptr);" << be_uidt_nl << be_nl
             << "return retval;";
         break;
       case AST_PredefinedType::PT_value:
         os_ << "::CORBA::ValueBase * retval =" << be_idt_nl
-            << this->attr_name_string_.c_str () << ".in ();"
+            << this->attr_name_string_ << ".in ();"
             << be_uidt_nl
             << "retval->_add_ref ();" << be_nl
             << "return retval;";
         break;
       default:
         os_ << "return "
-            << this->attr_name_string_.c_str ()
+            << this->attr_name_string_
             << ";";
         break;
     }
@@ -155,7 +155,7 @@ be_visitor_attr_return::visit_sequence (be_sequence *)
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "retval," << be_nl
       << "::" << bt->full_name () << " (" << be_idt_nl
-      << this->attr_name_string_.c_str ()
+      << this->attr_name_string_
       << ".in ())," << be_uidt_nl
       << "nullptr);" << be_uidt_nl << be_nl
       << "return retval;";
@@ -170,7 +170,7 @@ be_visitor_attr_return::visit_string (be_string *node)
       << "return "
       << "::CORBA::"
       << (node->width () == (ssize_t) sizeof (char) ? "" : "w")
-      << "string_dup (" << this->attr_name_string_.c_str ()
+      << "string_dup (" << this->attr_name_string_
       << ".in ());";
 
   return 0;
@@ -185,7 +185,7 @@ be_visitor_attr_return::visit_structure (be_structure *node)
     {
       os_ << "::" << node->full_name () << " retval ="
           << be_idt_nl
-          << this->attr_name_string_.c_str () << ".in ();"
+          << this->attr_name_string_ << ".in ();"
           << be_uidt_nl << be_nl
           << "return retval;";
     }
@@ -197,7 +197,7 @@ be_visitor_attr_return::visit_structure (be_structure *node)
           << "::" << node->full_name () << "," << be_nl
           << "nullptr);" << be_uidt_nl << be_nl
           << "*retval =" << be_idt_nl
-          << this->attr_name_string_.c_str () << ".in ();"
+          << this->attr_name_string_ << ".in ();"
           << be_uidt_nl << be_nl
           << "return retval;";
     }
@@ -233,7 +233,7 @@ be_visitor_attr_return::visit_union (be_union *node)
     {
       os_ << "::" << node->full_name () << " retval ="
           << be_idt_nl
-          << this->attr_name_string_.c_str () << ".in ();"
+          << this->attr_name_string_ << ".in ();"
           << be_uidt_nl << be_nl
           << "return retval;";
     }
@@ -245,7 +245,7 @@ be_visitor_attr_return::visit_union (be_union *node)
           << "::" << node->full_name () << "," << be_nl
           << "nullptr);" << be_uidt_nl << be_nl
           << "*retval =" << be_idt_nl
-          << this->attr_name_string_.c_str () << ".in ();"
+          << this->attr_name_string_ << ".in ();"
           << be_uidt_nl << be_nl
           << "return retval;";
     }
@@ -257,10 +257,10 @@ int
 be_visitor_attr_return::visit_valuebox (be_valuebox *)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << "->_add_ref ();"
+      << this->attr_name_string_ << "->_add_ref ();"
       << be_nl_2
       << "return "
-      << this->attr_name_string_.c_str ()
+      << this->attr_name_string_
       << ".in ();";
 
   return 0;
@@ -270,17 +270,17 @@ int
 be_visitor_attr_return::visit_valuetype (be_valuetype *)
 {
   os_ << be_nl
-      << this->attr_name_string_.c_str () << "->_add_ref ();"
+      << this->attr_name_string_ << "->_add_ref ();"
       << be_nl_2
       << "return "
-      << this->attr_name_string_.c_str ()
+      << this->attr_name_string_
       << ".in ();";
 
   return 0;
 }
 
 void
-be_visitor_attr_return::attr_name (const char *name)
+be_visitor_attr_return::attr_name (std::string_view name)
 {
   this->attr_name_string_ += this->ctx_->port_prefix ();
   this->attr_name_string_ += name;

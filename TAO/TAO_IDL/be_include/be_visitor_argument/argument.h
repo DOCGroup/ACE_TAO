@@ -15,6 +15,9 @@
 
 #include "ast_argument.h"
 
+#include <string>
+#include <string_view>
+
 /**
  * @class be_visitor_args
  *
@@ -36,7 +39,7 @@ public:
   explicit be_visitor_args (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_args () override;
+  ~be_visitor_args () override = default;
   be_visitor_args (be_visitor_args const &) = delete;
   be_visitor_args (be_visitor_args &&) = delete;
   be_visitor_args &operator= (be_visitor_args const &) = delete;
@@ -45,8 +48,8 @@ public:
   //= helper
   /// helper that produces either a nested name for
   /// header files or full name for others.
-  virtual const char *type_name (be_type *type,
-                                 const char *suffix = nullptr);
+  virtual std::string type_name (be_type *type,
+                                 std::string_view suffix = {});
 
   /// return the direction of the argument node
   virtual AST_Argument::Direction direction ();

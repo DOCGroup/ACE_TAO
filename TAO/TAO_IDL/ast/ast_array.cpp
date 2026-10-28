@@ -198,13 +198,13 @@ AST_Array::compute_size_type ()
 
 // Data accessors.
 ACE_CDR::ULong
-AST_Array::n_dims ()
+AST_Array::n_dims () const
 {
   return this->pd_n_dims;
 }
 
 AST_Expression **
-AST_Array::dims ()
+AST_Array::dims () const
 {
   return this->pd_dims;
 }

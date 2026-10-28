@@ -16,7 +16,7 @@ TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref)
 {
   // Get the RepositoryId from the Group reference so
   // we know what kind of reference to make.
-  const char* repository_id = the_ref->_stubobj ()->type_id.in ();
+  char const *repository_id = the_ref->_stubobj ()->type_id.in ();
 
   // Create a temporary object reference and then get the
   // ObjectId out of it.
@@ -35,12 +35,12 @@ TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref)
 PortableGroup::IDs *
 TAO_GOA::reference_to_ids (CORBA::Object_ptr)
 {
-  return 0;
+  return nullptr;
 }
 
 void
 TAO_GOA::associate_reference_with_id (CORBA::Object_ptr ref,
-                                      const PortableServer::ObjectId & oid)
+                                      PortableServer::ObjectId const &oid)
 {
   // Create a reference for the specified ObjectId, since
   // it is much easier to extract the object key from the
@@ -54,16 +54,16 @@ TAO_GOA::associate_reference_with_id (CORBA::Object_ptr ref,
 
 void
 TAO_GOA::disassociate_reference_with_id (CORBA::Object_ptr ref,
-                                         const PortableServer::ObjectId & oid)
+                                         PortableServer::ObjectId const &oid)
 {
   ACE_UNUSED_ARG (ref);
   ACE_UNUSED_ARG (oid);
 }
 
 
-TAO_GOA::TAO_GOA (const TAO_Root_POA::String &name,
+TAO_GOA::TAO_GOA (TAO_Root_POA::String const &name,
                   PortableServer::POAManager_ptr poa_manager,
-                  const TAO_POA_Policy_Set &policies,
+                  TAO_POA_Policy_Set const &policies,
                   TAO_Root_POA *parent,
                   ACE_Lock &lock,
                   TAO_SYNCH_MUTEX &thread_lock,
@@ -83,9 +83,9 @@ TAO_GOA::TAO_GOA (const TAO_Root_POA::String &name,
 TAO_GOA::~TAO_GOA () = default;
 
 TAO_Root_POA *
-TAO_GOA::new_POA (const String &name,
+TAO_GOA::new_POA (String const &name,
                   PortableServer::POAManager_ptr poa_manager,
-                  const TAO_POA_Policy_Set &policies,
+                  TAO_POA_Policy_Set const &policies,
                   TAO_Root_POA *parent,
                   ACE_Lock &lock,
                   TAO_SYNCH_MUTEX &thread_lock,
@@ -110,9 +110,9 @@ TAO_GOA::new_POA (const String &name,
 
 // Standard POA interfaces
 PortableServer::POA_ptr
-TAO_GOA::create_POA (const char *adapter_name,
+TAO_GOA::create_POA (char const *adapter_name,
                         PortableServer::POAManager_ptr poa_manager,
-                        const CORBA::PolicyList &policies)
+                        CORBA::PolicyList const &policies)
 {
   PortableServer::POA_ptr poa = this->TAO_Regular_POA::create_POA (adapter_name,
                                                            poa_manager,
@@ -121,7 +121,7 @@ TAO_GOA::create_POA (const char *adapter_name,
 }
 
 PortableServer::POA_ptr
-TAO_GOA::find_POA (const char *adapter_name,
+TAO_GOA::find_POA (char const *adapter_name,
                       CORBA::Boolean activate_it)
 {
   PortableServer::POA_ptr poa = this->TAO_Regular_POA::find_POA (adapter_name,
@@ -294,20 +294,20 @@ TAO_GOA::activate_object (PortableServer::Servant p_servant)
 }
 
 void
-TAO_GOA::activate_object_with_id (const PortableServer::ObjectId &id,
+TAO_GOA::activate_object_with_id (PortableServer::ObjectId const &id,
                                      PortableServer::Servant p_servant)
 {
   this->TAO_Regular_POA::activate_object_with_id (id, p_servant);
 }
 
 void
-TAO_GOA::deactivate_object (const PortableServer::ObjectId &oid)
+TAO_GOA::deactivate_object (PortableServer::ObjectId const &oid)
 {
   this->TAO_Regular_POA::deactivate_object (oid);
 }
 
 CORBA::Object_ptr
-TAO_GOA::create_reference (const char *intf)
+TAO_GOA::create_reference (char const *intf)
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::create_reference (intf);
@@ -315,8 +315,8 @@ TAO_GOA::create_reference (const char *intf)
 }
 
 CORBA::Object_ptr
-TAO_GOA::create_reference_with_id (const PortableServer::ObjectId &oid,
-                                   const char *intf)
+TAO_GOA::create_reference_with_id (PortableServer::ObjectId const &oid,
+                                   char const *intf)
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::create_reference_with_id (oid,
@@ -358,7 +358,7 @@ TAO_GOA::reference_to_id (CORBA::Object_ptr reference)
 }
 
 PortableServer::Servant
-TAO_GOA::id_to_servant (const PortableServer::ObjectId &oid)
+TAO_GOA::id_to_servant (PortableServer::ObjectId const &oid)
 {
   PortableServer::Servant servant =
     this->TAO_Regular_POA::id_to_servant (oid);
@@ -366,7 +366,7 @@ TAO_GOA::id_to_servant (const PortableServer::ObjectId &oid)
 }
 
 CORBA::Object_ptr
-TAO_GOA::id_to_reference (const PortableServer::ObjectId &oid)
+TAO_GOA::id_to_reference (PortableServer::ObjectId const &oid)
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::id_to_reference (oid);
@@ -380,11 +380,11 @@ TAO_GOA::id ()
 }
 
 int
-TAO_GOA::find_group_component (const CORBA::Object_ptr the_ref,
+TAO_GOA::find_group_component (CORBA::Object_ptr const the_ref,
                                PortableGroup::TagGroupTaggedComponent &group)
 {
-  const TAO_MProfile& profiles = the_ref->_stubobj ()->base_profiles ();
-  const TAO_Profile* profile;
+  TAO_MProfile const &profiles = the_ref->_stubobj ()->base_profiles ();
+  TAO_Profile const *profile;
   CORBA::ULong slot;
 
   // Iterate through the tagged profiles, and
@@ -403,12 +403,12 @@ TAO_GOA::find_group_component (const CORBA::Object_ptr the_ref,
 }
 
 int
-TAO_GOA::find_group_component_in_profile (const TAO_Profile* profile,
+TAO_GOA::find_group_component_in_profile (TAO_Profile const *profile,
                                           PortableGroup::TagGroupTaggedComponent &group)
 {
   // Iterate through the tagged components looking for
   // group tag.
-  const TAO_Tagged_Components& components = profile->tagged_components ();
+  TAO_Tagged_Components const &components = profile->tagged_components ();
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = IOP::TAG_GROUP;
@@ -418,10 +418,10 @@ TAO_GOA::find_group_component_in_profile (const TAO_Profile* profile,
     return -1;
 
   // Found it.
-  const CORBA::Octet *buf =
+  CORBA::Octet const *buf =
     tagged_component.component_data.get_buffer ();
 
-  TAO_InputCDR in_cdr (reinterpret_cast <const char*> (buf),
+  TAO_InputCDR in_cdr (reinterpret_cast <char const *> (buf),
                        tagged_component.component_data.length ());
 
   // Extract the Byte Order.
@@ -441,8 +441,8 @@ TAO_GOA::create_group_acceptors (CORBA::Object_ptr the_ref,
                                  TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
                                  TAO_ORB_Core &orb_core)
 {
-  const TAO_MProfile& profiles = the_ref->_stubobj ()->base_profiles ();
-  const TAO_Profile* profile;
+  TAO_MProfile const &profiles = the_ref->_stubobj ()->base_profiles ();
+  TAO_Profile const *profile;
   CORBA::ULong slot;
   int num = 0;
 
@@ -507,7 +507,7 @@ TAO_GOA::associate_group_with_ref (
                                 this->orb_core_);
 
   // Add a mapping from GroupId to Object key in the PortableGroup
-  const TAO::ObjectKey &key =
+  TAO::ObjectKey const &key =
     obj_ref->_stubobj ()->profile_in_use ()->object_key ();
   rd->group_map_.add_groupid_objectkey_pair (group_id._retn (), key);
 }

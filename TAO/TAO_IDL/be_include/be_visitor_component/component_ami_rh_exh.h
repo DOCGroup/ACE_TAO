@@ -16,6 +16,8 @@
 #ifndef _BE_COMPONENT_AMI_RH_EXH_H_
 #define _BE_COMPONENT_AMI_RH_EXH_H_
 
+#include <string_view>
+
 class be_visitor_context;
 
 /**
@@ -43,7 +45,7 @@ public:
   int visit_argument (be_argument *node) override;
 
 private:
-  ACE_CString export_macro_;
+  std::string_view export_macro_;
 };
 
 #endif /* _BE_COMPONENT_AMI_RH_EXH_H_ */

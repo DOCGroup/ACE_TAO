@@ -23,6 +23,11 @@ class be_valuebox : public virtual AST_ValueBox,
                     public virtual be_type
 {
 public:
+  be_valuebox (be_valuebox const &) = delete;
+  be_valuebox (be_valuebox &&) = delete;
+  be_valuebox &operator= (be_valuebox const &) = delete;
+  be_valuebox &operator= (be_valuebox &&) = delete;
+
   be_valuebox ( AST_Type *boxed_type,
                 UTL_ScopedName *n );
 

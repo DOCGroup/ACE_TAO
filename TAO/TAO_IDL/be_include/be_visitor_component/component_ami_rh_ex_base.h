@@ -39,7 +39,7 @@ public:
 
 protected:
   void init ();
-  void gen_excep_op (const char *prefix,
+  void gen_excep_op (std::string_view prefix,
                      be_decl *node,
                      bool for_defn);
   virtual void gen_op_body ();

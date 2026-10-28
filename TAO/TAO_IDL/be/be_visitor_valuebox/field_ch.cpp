@@ -19,6 +19,10 @@
 #include "valuebox.h"
 #include "valuebox_type_name.h"
 
+#include <string>
+#include <string_view>
+#include "valuebox_type_name.h"
+
 be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
     be_visitor_context *ctx
   )
@@ -26,7 +30,6 @@ be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
 {
 }
 
-be_visitor_valuebox_field_ch::~be_visitor_valuebox_field_ch () = default;
 
 int
 be_visitor_valuebox_field_ch::visit_field (be_field *node)
@@ -87,10 +90,7 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
 
-  char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (bt->node_type () != AST_Decl::NT_typedef)
     {
@@ -101,23 +101,19 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
         {
           be_decl *parent =
                  dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           bt->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += bt->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           bt->full_name ());
+          fname = "_";
+          fname += bt->full_name ();
         }
     }
   else
     { // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       bt->full_name ());
+      fname = bt->full_name ();
     }
 
 

@@ -109,11 +109,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "ast_extern.h"
 
+#include <string_view>
+
 #include "fe_extern.h"
 #include "nr_extern.h"
 #include "global_extern.h"
-
-#include "ace/OS_NS_strings.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -231,10 +231,9 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
 
   // Convert the identifier string into canonical (uppercase) form.
   std::string ext_id (e->get_string_view ());
-  UTL_String::get_canonical_rep (ext_id);
-  ACE_CString const keyword (ext_id.c_str ());
-
-  if (!idl_global->idl_keywords ().find (keyword))
+  ext_id = UTL_String::get_canonical_rep (ext_id);
+  if (idl_global->idl_keywords ().find (ext_id)
+      != idl_global->idl_keywords ().end ())
     {
       if (idl_global->case_diff_error ())
         {
@@ -349,7 +348,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
 
   // Must be defined in the CORBA module.
   AST_Decl *p = ScopeAsDecl (bt->defined_in ());
-  if (ACE_OS::strcmp (p->local_name ()->get_string (), "CORBA"))
+  if (p->local_name ()->get_string_view_or_empty () != "CORBA")
     {
       return;
     }
@@ -924,27 +923,28 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     }
 
   bool *seen = nullptr;
-  char *name_string = e->get_string ();
+  std::string_view const name = e->get_string_view_or_empty ();
+  bool mixed_case = false;
   UTL_Scope *start_scope = idl_global->corba_module ();
 
-  if (ACE_OS::strcasecmp (name_string, "TypeCode") == 0
-      || ACE_OS::strcasecmp (name_string, "TCKind") == 0)
+  if (UTL_String::strcmp_caseless (name, "TypeCode", mixed_case)
+      || UTL_String::strcmp_caseless (name, "TCKind", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_TYPECODE;
       start_scope = this;
       seen = &idl_global->typecode_seen_;
     }
-  else if (ACE_OS::strcasecmp (name_string, "Object") == 0)
+  else if (UTL_String::strcmp_caseless (name, "Object", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_OBJECT;
       seen = &idl_global->base_object_seen_;
     }
-  else if (ACE_OS::strcasecmp (name_string, "ValueBase") == 0)
+  else if (UTL_String::strcmp_caseless (name, "ValueBase", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_VALUEBASE;
       seen = &idl_global->valuebase_seen_;
     }
-  else if (ACE_OS::strcasecmp (name_string, "AbstractBase") == 0)
+  else if (UTL_String::strcmp_caseless (name, "AbstractBase", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_ABSTRACTBASE;
       seen = &idl_global->abstractbase_seen_;
@@ -1097,7 +1097,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       return nullptr;
     }
 
-  bool in_corba = (ACE_OS::strcmp (e->get_string (), "CORBA") == 0);
+  bool const in_corba = (e->get_string_view_or_empty () == "CORBA");
 
   // We search only the decls here, the local types are done
   // below as a last resort.
@@ -1117,7 +1117,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           // match, unless we skip over these items. This is a workaround until
           // there's time to fix the code generation for CORBA basic types.
               && (in_corba
-                  || (ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA") != 0))
+                  || d->name ()->head ()->get_string_view_or_empty () != "CORBA")
               && e->case_compare (item_name))
             {
               return d; // We have found the one and only one we are looking for.
@@ -1305,8 +1305,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
         }
 
       work_another_level = false; // Until we find something.
-      bool in_corba =
-        (ACE_OS::strcmp (e->head ()->get_string (), "CORBA") == 0);
+      bool const in_corba = (e->head ()->get_string_view_or_empty () == "CORBA");
 
       for (UTL_ScopeActiveIterator i (work, IK_decls);
            !i.is_done ();
@@ -1318,8 +1317,8 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
           // types, so something like 'ULong' in an IDL file will find a
           // match, unless we skip over these items. This is a workaround until
           // there's time to fix the code generation for CORBA basic types.
-              && (in_corba ||
-                  ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA"))
+              && (in_corba
+                  || d->name ()->head ()->get_string_view_or_empty () != "CORBA")
               && d->local_name ()->case_compare (e->head ()))
             {
               // Ok we found a match, is there any more to find?
@@ -1524,7 +1523,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     }
 
   Identifier *decl_name = e->local_name ();
-  char *decl_string = decl_name->get_string ();
+  std::string_view const decl_string = decl_name->get_string_view_or_empty ();
   AST_Decl::NodeType new_nt = e->node_type ();
 
   // First, make sure there's no clash between e, that was
@@ -1537,7 +1536,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     {
       // A local declaration doesn't use a scoped name.
       Identifier *ref_name = (*tmp)->local_name ();
-      char *ref_string = ref_name->get_string ();
+      std::string_view const ref_string = ref_name->get_string_view_or_empty ();
 
       // If the names compare exactly, it's a redefini8tion
       // error, unless they're both modules (which can be
@@ -1588,8 +1587,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
       if (decl_name->compare (parent_name))
         {
           idl_global->err ()->redef_error (
-                                  decl_name->get_string (),
-                                  parent_name->get_string ()
+                                  decl_name->get_string_view_or_empty (),
+                                  parent_name->get_string_view_or_empty ()
                                 );
 
           // if we try to continue from here, we risk a crash.
@@ -1600,8 +1599,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           if (idl_global->case_diff_error ())
             {
               idl_global->err ()->name_case_error (
-                                      decl_name->get_string (),
-                                      parent_name->get_string ()
+                                      decl_name->get_string_view_or_empty (),
+                                      parent_name->get_string_view_or_empty ()
                                     );
 
               // if we try to continue from here, we risk a crash.
@@ -1610,8 +1609,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           else
             {
               idl_global->err ()->name_case_warning (
-                                      decl_name->get_string (),
-                                      parent_name->get_string ()
+                                      decl_name->get_string_view_or_empty (),
+                                      parent_name->get_string_view_or_empty ()
                                     );
             }
         }
@@ -1735,8 +1734,9 @@ UTL_Scope::referenced (AST_Decl *const e,
               && e->defined_in () == this
               && id->compare (*name_tmp))
             {
-              idl_global->err ()->redef_error (id->get_string (),
-                                               (*name_tmp)->get_string ());
+              idl_global->err ()->redef_error (
+                id->get_string_view_or_empty (),
+                (*name_tmp)->get_string_view_or_empty ());
               return true;
             }
           // No clash if one or the other of the identifiers was escaped.
@@ -1746,15 +1746,15 @@ UTL_Scope::referenced (AST_Decl *const e,
               if (idl_global->case_diff_error ())
                 {
                   idl_global->err ()->name_case_error (
-                                          id->get_string (),
-                                          (*name_tmp)->get_string ()
+                                          id->get_string_view_or_empty (),
+                                          (*name_tmp)->get_string_view_or_empty ()
                                         );
                 }
               else
                 {
                   idl_global->err ()->name_case_warning (
-                                          id->get_string (),
-                                          (*name_tmp)->get_string ()
+                                          id->get_string_view_or_empty (),
+                                          (*name_tmp)->get_string_view_or_empty ()
                                         );
                 }
 
@@ -1768,7 +1768,7 @@ UTL_Scope::referenced (AST_Decl *const e,
 }
 
 bool
-UTL_Scope::has_prefix ()
+UTL_Scope::has_prefix () const
 {
   return this->has_prefix_;
 }
@@ -1844,7 +1844,7 @@ UTL_Scope::ast_accept (ast_visitor *visitor)
 
 // How many entries are defined?
 unsigned long
-UTL_Scope::nmembers ()
+UTL_Scope::nmembers () const
 {
   return this->pd_decls_used;
 }
@@ -1881,7 +1881,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
        i.next (param);
        i.advance (), ++index)
     {
-      if (param->name_ == name)
+      if (std::string_view (param->name_.c_str ()) == name)
         {
           /// If we are parsing this template module as a
           /// reference, the param holder we create must have
@@ -1909,7 +1909,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
                                     0);
                 }
 
-              Identifier id (alias_param->get_string ());
+              Identifier id (alias_param->get_string_view_or_empty ());
               UTL_ScopedName sn (&id, nullptr);
 
               return
@@ -2032,7 +2032,7 @@ UTL_Scope::smart_local_add (AST_Decl *t)
 
 // Determines if a name is global.
 bool
-UTL_Scope::is_global_name (Identifier *i)
+UTL_Scope::is_global_name (Identifier const *i) const
 {
   if (i == nullptr)
     {
@@ -2188,14 +2188,14 @@ UTL_ScopeActiveIterator::is_done ()
 
 // What kind of iterator is this?
 UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_kind ()
+UTL_ScopeActiveIterator::iteration_kind () const
 {
   return this->ik;
 }
 
 // And where are we in the iteration?
 UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_stage ()
+UTL_ScopeActiveIterator::iteration_stage () const
 {
   return this->stage;
 }

@@ -18,9 +18,30 @@
 #include "be_extern.h"
 #include "tao/Environment.h"
 
+#include <string>
+#include <string_view>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+/** Convert a string_view for the duration of a legacy CORBA C-string call. */
+class IFR_C_String
+{
+public:
+  explicit IFR_C_String (std::string_view value)
+    : value_ (value)
+  {
+  }
+
+  operator char const *() const
+  {
+    return this->value_.c_str ();
+  }
+
+private:
+  std::string value_;
+};
 
 /**
  * @class ifr_visitor

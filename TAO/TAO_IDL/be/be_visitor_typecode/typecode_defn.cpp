@@ -768,8 +768,7 @@ be_visitor_typecode_defn::queue_lookup (
       iter.next (addr);
       item = *addr;
 
-      if (!ACE_OS::strcmp (item->node->full_name (),
-                           node->full_name ()))
+      if (item->node->full_name () == node->full_name ())
         {
           // Found.
           return item;

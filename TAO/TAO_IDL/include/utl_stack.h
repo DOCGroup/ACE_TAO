@@ -90,7 +90,7 @@ public:
   static constexpr size_t increments = 64;
 
   // Return top element.
-  UTL_Scope *top ();
+  UTL_Scope *top () const;
 
   // Pop top element.
   void pop ();
@@ -102,16 +102,16 @@ public:
   UTL_ScopeStack *push (UTL_Scope *el);
 
   // How deep is the stack now?
-  unsigned long depth ();
+  unsigned long depth () const;
 
   // Return bottom element.
-  UTL_Scope *bottom ();
+  UTL_Scope *bottom () const;
 
   // Return (top - 1) element.
-  UTL_Scope *next_to_top ();
+  UTL_Scope *next_to_top () const;
 
   // return topmost non-NULL element.
-  UTL_Scope *top_non_null ();
+  UTL_Scope *top_non_null () const;
 
   /**
    * Call lookup_by_name on all the scopes from the top down.
@@ -143,7 +143,7 @@ public:
   void next ();
 
   // Get current item.
-  UTL_Scope* item ();
+  UTL_Scope* item () const;
 
   // Is the iteration finished?
   bool is_done () const;

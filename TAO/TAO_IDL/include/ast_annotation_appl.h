@@ -12,6 +12,9 @@
 #include "ace/Containers_T.h"
 #include "ace/Vector_T.h"
 
+#include <string>
+#include <string_view>
+
 /**
  * Abstract Syntax Tree Node for an application of an annotation.
  *
@@ -46,6 +49,10 @@ public:
   AST_Annotation_Appl (UTL_ScopedName *name, Params *params);
 
   ~AST_Annotation_Appl () override;
+  AST_Annotation_Appl (AST_Annotation_Appl const &) = delete;
+  AST_Annotation_Appl (AST_Annotation_Appl &&) = delete;
+  AST_Annotation_Appl &operator= (AST_Annotation_Appl const &) = delete;
+  AST_Annotation_Appl &operator= (AST_Annotation_Appl &&) = delete;
 
   /// AST Dumping
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -61,7 +68,7 @@ public:
   /**
    * Get name of the annotation as written by the user
    */
-  char const *original_name () const;
+  std::string_view original_name () const;
 
   /**
    * Apply a Annotation Declaration to this Application. This will either fully
@@ -89,11 +96,11 @@ public:
    * Return the parameter with the specified name if it's in the stack else
    * returns 0.
    */
-  Param *find_param (char const *name);
+  Param *find_param (std::string_view name) const;
 
 private:
   /// Name of the Annotation as written
-  char const *original_name_;
+  std::string original_name_;
 
   /// Parameters List (Can be null)
   Params *params_;

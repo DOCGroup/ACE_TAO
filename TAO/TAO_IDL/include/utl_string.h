@@ -74,7 +74,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/iosfwd.h"
   /* Basic_Types.h are needed in QNX for size_t type. */
 #include "ace/Basic_Types.h"
-#include "ace/SStringfwd.h"
+
+#include <optional>
+#include <string>
+#include <string_view>
 
 class TAO_IDL_FE_Export UTL_String
 {
@@ -83,11 +86,14 @@ class TAO_IDL_FE_Export UTL_String
   // =DESCRIPTION
   //  string class to store identifiers
 public:
-  UTL_String ();
+  UTL_String () = default;
 
-  explicit UTL_String (char const* str, bool take_copy = false);
+  explicit UTL_String (char const* str);
+  UTL_String (char const* str, bool take_copy);
 
-  explicit UTL_String (UTL_String *s, bool force_copy = false);
+  explicit UTL_String (std::string_view str);
+
+  explicit UTL_String (UTL_String const *s);
 
   UTL_String (UTL_String const&) = delete;
   UTL_String (UTL_String&&) = delete;
@@ -102,56 +108,58 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
-  char *get_string () const;
+  char *get_string ()
+  {
+    return this->p_str ? this->p_str->data () : nullptr;
+  }
+  char const *get_string () const
+  {
+    return this->p_str ? this->p_str->c_str () : nullptr;
+  }
   // Get contents of utl_string.
 
-  std::string_view get_string_view () const;
-  // Get contents of utl_string, or an empty view when there is no string.
+  std::optional<std::string_view> get_string_view () const
+  {
+    return this->p_str ? std::optional<std::string_view> (*this->p_str) : std::nullopt;
+  }
+  // Get contents of utl_string as a non-owning view, if present.
+
+  std::string_view get_string_view_or_empty () const
+  {
+    return this->p_str ? std::string_view (*this->p_str) : std::string_view {};
+  }
 
   bool has_string () const;
   // Check whether this string has a value, including an empty string.
 
-  char *get_canonical_rep ();
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
+  std::optional<std::string_view> get_canonical_rep ();
+  // Get canonical representation as a non-owning view, if present.
 
-  bool compare (UTL_String *s);
+  bool compare (UTL_String const *s) const;
   // Compare two UTL_String *
 
-  bool compare_quiet (UTL_String *s);
+  bool compare_quiet (UTL_String const *s) const;
   // Like the above but without error or warning message output.
 
   static bool strcmp_caseless (
-    char const* lhs,
-    char const* rhs,
+    std::string_view lhs,
+    std::string_view rhs,
     bool &mixed_case);
   // Caseless string compare returns true if match, mixed_case is
   // true if match only true due to ignoring case differences.
 
-  static bool compare (char const* lhs, char const* rhs);
+  static bool compare (std::string_view lhs, std::string_view rhs);
   // Compare two const char * (like the UTL_String compare)
 
-  static bool compare_quiet (char const* lhs, char const* rhs);
+  static bool compare_quiet (std::string_view lhs, std::string_view rhs);
   // Like the above but without error or warning message output.
 
-  static void get_canonical_rep (char const* src, char *dest);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
-
-  static void get_canonical_rep (ACE_CString &cstr);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
-
-  static void get_canonical_rep (std::string &str);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
+  static std::string get_canonical_rep (std::string_view str);
 
 private:
   // Data
-  std::optional<std::string> owned_string_;
-  std::string_view string_;
-  bool has_string_ {};
-  std::optional<std::string> canonical_string_;
+  std::optional<std::string> p_str {};
+  std::optional<std::string> canonical_rep {};
 };
 
 #endif           // _STRING_STRING_HH

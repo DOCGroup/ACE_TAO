@@ -7,6 +7,10 @@ class TAO_IDL_FE_Export AST_ValueType
   : public virtual AST_Interface
 {
 public:
+  AST_ValueType (AST_ValueType const &) = delete;
+  AST_ValueType (AST_ValueType &&) = delete;
+  AST_ValueType &operator= (AST_ValueType const &) = delete;
+  AST_ValueType &operator= (AST_ValueType &&) = delete;
   AST_ValueType (UTL_ScopedName *n,
                  AST_Type **inherits,
                  long n_inherits,

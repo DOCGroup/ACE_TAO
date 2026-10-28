@@ -15,6 +15,8 @@
 
 #include "be_visitor_scope.h"
 
+#include <string_view>
+
 /**
  * @class be_visitor_valuetype_field_cdr_cs
  *
@@ -89,7 +91,7 @@ public:
   /// visit union type
   int visit_union (be_union *node) override;
 
-  char const *pre_, *post_;
+  std::string_view pre_, post_;
 
 private:
   int valuetype_common (be_type *);

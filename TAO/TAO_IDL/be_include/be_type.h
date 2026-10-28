@@ -19,6 +19,9 @@
 #include "be_decl.h"
 #include "ast_type.h"
 
+#include <string>
+#include <string_view>
+
 #include "ace/SString.h"
 
 class TAO_OutStream;
@@ -41,9 +44,9 @@ public:
 
   /// Type name of a node used when generating declarations for smart
   /// proxies.
-  virtual std::string const& nested_sp_type_name (be_decl *use_scope,
-                                                  const char *suffix = nullptr,
-                                                  const char *prefix = nullptr);
+  virtual std::string nested_sp_type_name (be_decl *use_scope,
+                                           std::string_view suffix = {},
+                                           std::string_view prefix = {}) const;
 
   /// Compute the value of the member.
   void gen_fwd_helper_name ();
@@ -54,13 +57,13 @@ public:
 
   /// Generic implementation here, overridden for some types.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
+                                            std::string_view instance_name,
                                             bool use_underscore,
                                             bool accessor = false);
 
   /// Accessor to the member.
-  const char *fwd_helper_name () const;
-  void fwd_helper_name (const char *name);
+  std::string_view fwd_helper_name () const;
+  void fwd_helper_name (std::string_view name);
 
   /// Generate _var and _out typedefs for structs and unions.
   void gen_common_varout (TAO_OutStream *os);
@@ -102,7 +105,7 @@ protected:
   UTL_ScopedName *tc_name_ {};
 
   /// Used by interfaces, valuetypes and arrays to name helper structs.
-  ACE_CString fwd_helper_name_;
+  std::string fwd_helper_name_;
 
   /// Have we generated our _var and _out class typedefs yet?
   bool common_varout_gen_ {};

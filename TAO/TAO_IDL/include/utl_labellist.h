@@ -85,6 +85,7 @@ public:
 
   // Get list item.
   AST_UnionLabel *head ();
+  AST_UnionLabel const *head () const;
 
   // Override of base class method.
   UTL_LabelList *copy () override;
@@ -103,7 +104,7 @@ public:
   explicit UTL_LabellistActiveIterator (UTL_LabelList *source);
 
   // Get current item.
-  AST_UnionLabel *item ();
+  AST_UnionLabel *item () const;
 };
 
 #endif           // _UTL_LABELLIST_UTL_LABELLIST_HH

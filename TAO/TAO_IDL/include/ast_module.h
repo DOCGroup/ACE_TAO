@@ -80,6 +80,10 @@ class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
+  AST_Module (AST_Module const &) = delete;
+  AST_Module (AST_Module &&) = delete;
+  AST_Module &operator= (AST_Module const &) = delete;
+  AST_Module &operator= (AST_Module &&) = delete;
   static AST_Decl::NodeType const NT;
 
   // Constructor.
@@ -113,7 +117,7 @@ public:
                    Identifier *id = nullptr) override;
 
   // Accessor to this module's previous opening.
-  AST_Module *previous_opening ();
+  AST_Module *previous_opening () const;
 
   // Called to look up some declaration
   // in a previous opening of this module.

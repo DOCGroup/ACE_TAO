@@ -4,11 +4,10 @@
  * Header File Counterpart is include/idl_version.h
  */
 
-#include "ace/OS_NS_string.h"
 #include "idl_version.h"
 
 namespace {
-  constexpr char const * idlVersionNames[IDL_VERSION_COUNT] = {
+  constexpr std::string_view idlVersionNames[IDL_VERSION_COUNT] = {
     "Invalid",
     "3",
     "4"
@@ -17,15 +16,11 @@ namespace {
   /**
    * Values for __TAO_IDL_IDL_VERSION. Should work like __TAO_IDL does.
    */
-  constexpr char const * idl_version_macros[IDL_VERSION_COUNT] = {
+  constexpr std::string_view idl_version_macros[IDL_VERSION_COUNT] = {
     "0x0",
     "0x030000",
     "0x040000"
   };
-}
-
-IdlVersion::IdlVersion () : version_(DEFAULT_DEFAULT_IDL_VERSION)
-{
 }
 
 IdlVersion::IdlVersion (SpecificIdlVersion version)
@@ -48,28 +43,25 @@ bool IdlVersion::is_valid () const
   return version_ != IDL_VERSION_INVALID;
 }
 
-char const * IdlVersion::to_string () const
+std::string_view IdlVersion::to_string () const
 {
   return idlVersionNames[version_];
 }
 
-void IdlVersion::from_string (char const * version)
+void IdlVersion::from_string (std::string_view version)
 {
-  if (version != nullptr)
+  for (int i = 0; i < IDL_VERSION_COUNT; i++)
     {
-      for (int i = 0; i < IDL_VERSION_COUNT; i++)
+      if (version == idlVersionNames[i])
         {
-          if (!ACE_OS::strcmp (version, idlVersionNames[i]))
-            {
-              version_ = static_cast<SpecificIdlVersion> (i);
-              return;
-            }
+          version_ = static_cast<SpecificIdlVersion> (i);
+          return;
         }
     }
   version_ = IDL_VERSION_INVALID;
 }
 
-char const * IdlVersion::to_macro () const
+std::string_view IdlVersion::to_macro () const
 {
   return idl_version_macros[version_];
 }

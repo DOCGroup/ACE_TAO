@@ -72,77 +72,62 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_ctype.h"
 
+#include <string>
+
 //////////////////////////////////////////////////////////////////////
-//// Static functions may be used by non-UTL_String i.e. const char *
+//// Static functions may be used by non-UTL_String instances.
 //////////////////////////////////////////////////////////////////////
 
 bool
 UTL_String::strcmp_caseless (
-  char const* lhs,
-  char const* rhs,
+  std::string_view lhs,
+  std::string_view rhs,
   bool &mixed_case)
 {
-  int difference;
-
-  // Advance until (difference between the strings is found) or (End of String)
-  while (0 == (difference = static_cast<int> (*lhs) - static_cast<int> (*rhs)) && *lhs)
+  mixed_case = false;
+  if (lhs.size () != rhs.size ())
     {
-      ++lhs;
-      ++rhs;
+      return false;
     }
 
-  // If not (End of Strings, therefore difference found above) check if a
-  // caseless match would work instead.
-  mixed_case=
-    (*lhs &&
-     *rhs &&
-     !(static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
-       static_cast<int> (ACE_OS::ace_toupper (*rhs))
-    ) );
-  if (mixed_case)
+  for (size_t i = 0; i < lhs.size (); ++i)
     {
-      ++lhs;
-      ++rhs;
-
-      // Continue caseless compare until (difference between strings) or (End of String)
-      while (0 == (difference = static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
-                                static_cast<int> (ACE_OS::ace_toupper (*rhs))) && *lhs)
+      if (lhs[i] != rhs[i])
         {
-          ++lhs;
-          ++rhs;
+          if (ACE_OS::ace_toupper (lhs[i]) != ACE_OS::ace_toupper (rhs[i]))
+            {
+              return false;
+            }
+
+          mixed_case = true;
         }
     }
 
-  // true is match (no difference found), false is difference found.
-  return !difference;
+  return true;
 }
 
-// Compare two const char *.
+// Compare two strings.
 bool
-UTL_String::compare (char const* lhs, char const* rhs)
+UTL_String::compare (std::string_view lhs, std::string_view rhs)
 {
   bool result= false;
   bool mixed=  false;
 
-  if (lhs != nullptr && rhs != nullptr && strcmp_caseless (lhs, rhs, mixed))
+  if (strcmp_caseless (lhs, rhs, mixed))
     {
       result= !mixed;
       if (mixed) // Strings match (differing case)
         {
           if (idl_global->case_diff_error ())
             {
-              idl_global->err ()->name_case_error (
-                  const_cast<char *> (lhs),
-                  const_cast<char *> (rhs));
+              idl_global->err ()->name_case_error (lhs, rhs);
 
               // If we try to continue from here, we risk a crash.
               throw Bailout ();
             }
           else
             {
-              idl_global->err ()->name_case_warning (
-                const_cast<char *> (lhs),
-                const_cast<char *> (rhs));
+              idl_global->err ()->name_case_warning (lhs, rhs);
             }
         }
     }
@@ -152,12 +137,12 @@ UTL_String::compare (char const* lhs, char const* rhs)
 
 // Like the above but without error or warning message output.
 bool
-UTL_String::compare_quiet (char const* lhs, char const* rhs)
+UTL_String::compare_quiet (std::string_view lhs, std::string_view rhs)
 {
   bool result= false;
   bool mixed=  false;
 
-  if (lhs != nullptr && rhs != nullptr && strcmp_caseless (lhs, rhs, mixed))
+  if (strcmp_caseless (lhs, rhs, mixed))
     {
       result= mixed;
     }
@@ -165,124 +150,89 @@ UTL_String::compare_quiet (char const* lhs, char const* rhs)
   return result;
 }
 
-// Get canonical representation. This is (implemented as) the all upper
-// case corresponding string.
-void
-UTL_String::get_canonical_rep (char const* src, char *dest)
+// Get canonical representation. This is the all upper case corresponding string.
+std::string
+UTL_String::get_canonical_rep (std::string_view str)
 {
-  while (0 != (*dest++ = static_cast<char> (ACE_OS::ace_toupper (*src++))))
-    {}
-}
+  std::string result (str);
 
-// Get canonical representation. This is (implemented as) the all upper
-// case corresponding string.
-void
-UTL_String::get_canonical_rep (ACE_CString &cstr)
-{
-  get_canonical_rep (&cstr [0], &cstr [0]);
-}
-
-void
-UTL_String::get_canonical_rep (std::string &str)
-{
-  for (char &ch : str)
+  for (char &c : result)
     {
-      ch = static_cast<char> (ACE_OS::ace_toupper (ch));
+      c = static_cast<char> (ACE_OS::ace_toupper (static_cast<unsigned char> (c)));
     }
+
+  return result;
 }
 
 //////////////////////////////////////////////////////////////////////
 
-UTL_String::UTL_String ()
-  : string_ (),
-    has_string_ (false)
+UTL_String::UTL_String (char const* str)
+  : p_str (str != nullptr ? std::optional<std::string> (str) : std::nullopt)
 {
 }
 
 UTL_String::UTL_String (char const* str, bool take_copy)
-  : string_ (str != nullptr ? str : ""),
-    has_string_ (str != nullptr)
+  : UTL_String (str)
 {
-  if (this->has_string_ && take_copy)
-    {
-      this->owned_string_.emplace (str);
-      this->string_ = *this->owned_string_;
-    }
+  ACE_UNUSED_ARG (take_copy);
 }
 
-UTL_String::UTL_String (UTL_String *s, bool force_copy)
-  : string_ (s->string_),
-    has_string_ (s->has_string_)
+UTL_String::UTL_String (std::string_view str)
+  : p_str (str)
 {
-  if (this->has_string_ && (force_copy || s->owned_string_))
-    {
-      this->owned_string_.emplace (s->string_);
-      this->string_ = *this->owned_string_;
-    }
+}
+
+UTL_String::UTL_String (UTL_String const *s)
+  : p_str (s->p_str)
+{
 }
 
 UTL_String::~UTL_String () = default;
 
-char *
-UTL_String::get_string () const
-{
-  return this->has_string_ ? const_cast<char *> (this->string_.data ()) : nullptr;
-}
-
-std::string_view
-UTL_String::get_string_view () const
-{
-  return this->has_string_ ? this->string_ : std::string_view ();
-}
-
-bool
-UTL_String::has_string () const
-{
-  return this->has_string_;
-}
-
 void
 UTL_String::destroy ()
 {
-  this->canonical_string_.reset ();
-  this->owned_string_.reset ();
-  this->string_ = std::string_view ();
-  this->has_string_ = false;
+  this->canonical_rep.reset ();
+  this->p_str.reset ();
 }
 
 // Compare two UTL_String *.
 bool
-UTL_String::compare (UTL_String *s)
+UTL_String::compare (UTL_String const *s) const
 {
-  return (this->has_string_ && s != nullptr && s->has_string () &&
-          compare (this->string_.data (), s->string_.data ()));
+  std::optional<std::string_view> const lhs = this->get_string_view ();
+  std::optional<std::string_view> const rhs = s != nullptr ? s->get_string_view () : std::nullopt;
+  return lhs && rhs && compare (*lhs, *rhs);
 }
 
 bool
-UTL_String::compare_quiet (UTL_String *s)
+UTL_String::compare_quiet (UTL_String const *s) const
 {
-  return (this->has_string_ && s != nullptr && s->has_string () &&
-          compare_quiet (this->string_.data (), s->string_.data ()));
+  std::optional<std::string_view> const lhs = this->get_string_view ();
+  std::optional<std::string_view> const rhs = s != nullptr ? s->get_string_view () : std::nullopt;
+  return lhs && rhs && compare_quiet (*lhs, *rhs);
 }
 
 // Get the canonical representation from a String.
-char *
+std::optional<std::string_view>
 UTL_String::get_canonical_rep ()
 {
-  if (!this->canonical_string_ && this->has_string_)
+  if (!this->p_str)
     {
-      this->canonical_string_.emplace (this->string_);
-      get_canonical_rep (*this->canonical_string_);
+      return std::nullopt;
     }
 
-  return this->canonical_string_
-    ? const_cast<char *> (this->canonical_string_->data ())
-    : nullptr;
+  if (!this->canonical_rep)
+    {
+      this->canonical_rep = get_canonical_rep (*this->p_str);
+    }
+
+  return std::string_view (*this->canonical_rep);
 }
 
 // AST Dumping.
 void
 UTL_String::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << (this->has_string_ ? this->string_.data () : "");
+  o << this->get_string_view_or_empty ();
 }

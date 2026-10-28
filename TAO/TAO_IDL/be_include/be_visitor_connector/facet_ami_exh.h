@@ -13,6 +13,9 @@
 #ifndef _BE_COMPONENT_FACET_AMI_EXH_H_
 #define _BE_COMPONENT_FACET_AMI_EXH_H_
 
+#include <string>
+#include <string_view>
+
 class be_visitor_facet_ami_exh
   : public be_visitor_component_scope
 {
@@ -28,7 +31,7 @@ class be_visitor_facet_ami_exh
 public:
   explicit be_visitor_facet_ami_exh (be_visitor_context *ctx);
 
-  ~be_visitor_facet_ami_exh () override;
+  ~be_visitor_facet_ami_exh () override = default;
   be_visitor_facet_ami_exh (be_visitor_facet_ami_exh const &) = delete;
   be_visitor_facet_ami_exh (be_visitor_facet_ami_exh &&) = delete;
   be_visitor_facet_ami_exh &operator= (be_visitor_facet_ami_exh const &) = delete;
@@ -46,10 +49,10 @@ protected:
 protected:
   be_interface *iface_ {};
   be_interface *callback_iface_ {};
-  ACE_CString handler_str_;
-  const char *scope_name_ {};
-  const char *iface_name_ {};
-  const char *smart_scope_ {};
+  std::string handler_str_;
+  std::string_view scope_name_ {};
+  std::string_view iface_name_ {};
+  std::string_view smart_scope_ {};
   bool sync_ {};
 
 private:

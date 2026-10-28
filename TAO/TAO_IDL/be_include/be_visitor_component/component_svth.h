@@ -13,6 +13,8 @@
 #ifndef _BE_COMPONENT_COMPONENT_SVTH_H_
 #define _BE_COMPONENT_COMPONENT_SVTH_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_component_svth
  *
@@ -36,7 +38,7 @@ public:
 
 private:
   TAO_OutStream &os_;
-  ACE_CString export_macro_;
+  std::string_view export_macro_;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SVTH_H_ */

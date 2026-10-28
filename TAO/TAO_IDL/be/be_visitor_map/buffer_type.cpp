@@ -29,7 +29,7 @@ be_visitor_map_buffer_type::visit_node (be_type *node, bool var)
   be_typedef *const td = this->ctx_->alias ();
   be_type *const bt = td ? static_cast<be_type *> (td) : node;
 
-  *os << bt->nested_type_name (this->ctx_->scope ()->decl (), var ? "_var" : nullptr);
+  *os << bt->nested_type_name (this->ctx_->scope ()->decl (), var ? "_var" : "");
   return 0;
 }
 

@@ -84,6 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+#include <string_view>
+
 AST_Expression::ExprType
 AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
 {
@@ -181,7 +183,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
               AST_ExprValue);
 
       ACE_NEW (this->pd_ev->u.strval,
-               UTL_String (v->pd_ev->u.strval, true));
+               UTL_String (v->pd_ev->u.strval));
 
       this->pd_ev->et = EV_string;
     }
@@ -488,14 +490,14 @@ AST_Expression::AST_Expression (UTL_String *sv)
 
   UTL_String *new_str = nullptr;
   ACE_NEW (new_str,
-           UTL_String (sv, true));
+           UTL_String (sv));
 
   this->pd_ev->u.strval = new_str;
   this->pd_ev->et = EV_string;
 }
 
 // An AST_Expression denoting a wide string.
-AST_Expression::AST_Expression (char *sv)
+AST_Expression::AST_Expression (std::string_view sv)
   : pd_ec (EC_none),
     pd_ev (nullptr),
     pd_v1 (nullptr),
@@ -509,7 +511,7 @@ AST_Expression::AST_Expression (char *sv)
            AST_ExprValue);
 
   this->pd_ev->et = EV_wstring;
-  this->pd_ev->u.wstrval = ACE::strnew (sv);
+  this->pd_ev->u.wstrval = ACE::strndup (sv.data (), sv.size ());
 }
 
 AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
@@ -532,12 +534,6 @@ AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
 AST_Expression::~AST_Expression ()
 {
   destroy ();
-}
-
-AST_Expression::AST_ExprValue::AST_ExprValue ()
-{
-  this->u.ulval = 0UL;
-  this->et = AST_Expression::EV_none;
 }
 
 // Static operations.
@@ -2612,8 +2608,8 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_bool:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_string:
-      return !ACE_OS::strcmp (pd_ev->u.strval->get_string (),
-        vc->ev ()->u.strval->get_string ());
+      return pd_ev->u.strval->get_string_view_or_empty ()
+        == vc->ev ()->u.strval->get_string_view_or_empty ();
     case EV_wstring:
       return !ACE_OS::strcmp (pd_ev->u.wstrval, vc->ev ()->u.wstrval);
     case EV_longlong:
@@ -2926,7 +2922,7 @@ AST_Expression::destroy ()
 // Data accessors.
 
 UTL_Scope *
-AST_Expression::defined_in ()
+AST_Expression::defined_in () const
 {
   return this->pd_defined_in;
 }
@@ -2938,7 +2934,7 @@ AST_Expression::set_defined_in (UTL_Scope *d)
 }
 
 long
-AST_Expression::line ()
+AST_Expression::line () const
 {
   return this->pd_line;
 }
@@ -2950,7 +2946,7 @@ AST_Expression::set_line (long l)
 }
 
 UTL_String *
-AST_Expression::file_name ()
+AST_Expression::file_name () const
 {
   return this->pd_file_name;
 }
@@ -2962,13 +2958,13 @@ AST_Expression::set_file_name (UTL_String *f)
 }
 
 AST_Expression::ExprComb
-AST_Expression::ec ()
+AST_Expression::ec () const
 {
   return this->pd_ec;
 }
 
 AST_Expression::AST_ExprValue   *
-AST_Expression::ev ()
+AST_Expression::ev () const
 {
   return this->pd_ev;
 }
@@ -2981,7 +2977,7 @@ AST_Expression::set_ev (AST_Expression::AST_ExprValue *new_ev)
 }
 
 AST_Expression *
-AST_Expression::v1 ()
+AST_Expression::v1 () const
 {
   return this->pd_v1;
 }
@@ -2993,7 +2989,7 @@ AST_Expression::set_v1 (AST_Expression *e)
 }
 
 AST_Expression *
-AST_Expression::v2 ()
+AST_Expression::v2 () const
 {
   return this->pd_v2;
 }
@@ -3005,7 +3001,7 @@ AST_Expression::set_v2 (AST_Expression *e)
 }
 
 UTL_ScopedName *
-AST_Expression::n ()
+AST_Expression::n () const
 {
   return this->pd_n;
 }
@@ -3016,7 +3012,7 @@ AST_Expression::set_n (UTL_ScopedName *new_n)
   this->pd_n = new_n;
 }
 
-const char *
+std::string_view
 AST_Expression::exprtype_to_string (ExprType t)
 {
   switch (t) {
@@ -3072,7 +3068,7 @@ AST_Expression::exprtype_to_string (ExprType t)
 }
 
 AST_Enum *
-AST_Expression::enum_parent ()
+AST_Expression::enum_parent () const
 {
   return enum_parent_;
 }

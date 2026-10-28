@@ -12,6 +12,8 @@
 
 #include "valuetype.h"
 
+#include <string>
+
 be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
     be_visitor_context *ctx
   )
@@ -50,22 +52,10 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _out names
-
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::sprintf (fname,
-                   "%s_init",
-                   node->full_name ());
-
-  ACE_OS::memset (lname,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::sprintf (lname,
-                   "%s_init",
-                   node->local_name ());
+  std::string fname (node->full_name ());
+  fname += "_init";
+  std::string lname (node->local_name ());
+  lname += "_init";
 
   TAO_INSERT_COMMENT (os);
 

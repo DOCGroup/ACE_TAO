@@ -115,8 +115,8 @@ DRV_usage ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C: usage: %C [[flag|file] ...] [-- file ...]\n"),
-              idl_global->prog_name (),
-              idl_global->prog_name ()));
+              idl_global->prog_name ().data (),
+              idl_global->prog_name ().data ()));
 
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("Legal flags:\n")
@@ -194,7 +194,7 @@ DRV_parse_args (long ac, char **av)
 
           switch (av[i][1])
             {
-            case 0:
+            case '\0':
               // One or more letters expected after the dash.
               ACE_ERROR ((
                   LM_ERROR,
@@ -228,7 +228,7 @@ DRV_parse_args (long ac, char **av)
                   s = av[i] + 2;
                 }
 
-              idl_global->append_local_escapes (s);
+              idl_global->append_local_escape (s);
               break;
             case 'a':
               if (av[i][2] == 'e')
@@ -279,7 +279,7 @@ DRV_parse_args (long ac, char **av)
                       arg += av[i + 1];
 
                       DRV_cpp_putarg (arg.c_str ());
-                      idl_global->add_include_path (arg.substr (2).c_str (), false);
+                      idl_global->add_include_path (arg.c_str () + 2, false);
                       ++i;
                     }
                   else
@@ -292,7 +292,7 @@ DRV_parse_args (long ac, char **av)
                   std::string arg (av[i], 2);
                   arg += av[i] + 2;
 
-                  idl_global->add_include_path (arg.substr (2).c_str (), false);
+                  idl_global->add_include_path (arg.c_str () + 2, false);
                   DRV_cpp_putarg (arg.c_str ());
                 }
 
@@ -550,7 +550,7 @@ print_idl_versions()
   for (int v = 1; v < IDL_VERSION_COUNT; v++)
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ()
+        IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ().data ()
         ));
     }
 }
@@ -558,9 +558,9 @@ print_idl_versions()
 void
 process_long_option(long ac, char **av, long &i)
 {
-  char const *long_option = av[i] + 2;
+  std::string_view const long_option (av[i] + 2);
   bool const no_more_args = i + 1 >= ac;
-  if (!ACE_OS::strcmp (long_option, "idl-version"))
+  if (long_option == "idl-version")
     {
       bool invalid_version = no_more_args;
       if (no_more_args)
@@ -588,49 +588,49 @@ process_long_option(long ac, char **av, long &i)
           idl_global->parse_args_exit (1);
         }
     }
-  else if (!ACE_OS::strcmp (long_option, "syntax-only"))
+  else if (long_option == "syntax-only")
     {
       idl_global->syntax_only_ = true;
     }
-  else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
+  else if (long_option == "default-idl-version")
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        idl_global->default_idl_version_.to_string ()));
+        idl_global->default_idl_version_.to_string ().data ()));
       idl_global->parse_args_exit (0);
     }
-  else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
+  else if (long_option == "list-idl-versions")
     {
       print_idl_versions ();
       idl_global->parse_args_exit (0);
     }
-  else if (!ACE_OS::strcmp (long_option, "help"))
+  else if (long_option == "help")
     {
       idl_global->print_help ();
     }
-  else if (!ACE_OS::strcmp (long_option, "bison-trace"))
+  else if (long_option == "bison-trace")
     {
       FE_yydebug (true);
     }
-  else if (!ACE_OS::strcmp (long_option, "version"))
+  else if (long_option == "version")
     {
       idl_global->print_version ();
     }
-  else if (!ACE_OS::strcmp (long_option, "dump-builtins"))
+  else if (long_option == "dump-builtins")
     {
       idl_global->dump_builtins_ = true;
       idl_global->dump_ast ();
     }
-  else if (!ACE_OS::strcmp (long_option, "just-dump-builtins"))
+  else if (long_option == "just-dump-builtins")
     {
       // Don't use dump_ast because we need to dump before parsing any files.
       idl_global->dump_builtins_ = true;
       idl_global->just_dump_builtins_ = true;
     }
-  else if (!ACE_OS::strcmp (long_option, "dump"))
+  else if (long_option == "dump")
     {
       idl_global->dump_ast ();
     }
-  else if (!ACE_OS::strcmp (long_option, "unknown-annotations"))
+  else if (long_option == "unknown-annotations")
     {
       bool invalid_argument = no_more_args;
       if (no_more_args)
@@ -642,22 +642,22 @@ process_long_option(long ac, char **av, long &i)
       else
         {
           i++;
-          if (!ACE_OS::strcmp (av[i], "warn-once"))
+          if (std::string_view (av[i]) == "warn-once")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE;
             }
-          else if (!ACE_OS::strcmp (av[i], "warn-all"))
+          else if (std::string_view (av[i]) == "warn-all")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ALL;
             }
-          else if (!ACE_OS::strcmp (av[i], "error"))
+          else if (std::string_view (av[i]) == "error")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
             }
-          else if (!ACE_OS::strcmp (av[i], "ignore"))
+          else if (std::string_view (av[i]) == "ignore")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_IGNORE;

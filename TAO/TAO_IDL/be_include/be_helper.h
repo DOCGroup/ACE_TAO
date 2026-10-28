@@ -14,12 +14,12 @@
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
 
-#include <string>
-
 #include "ace/CDR_Base.h"
-#include "ace/SString.h"
 
 #include "ace/OS_NS_stdio.h"
+
+#include <string>
+#include <string_view>
 #include <type_traits>
 
 class Identifier;
@@ -129,7 +129,7 @@ public:
   virtual ~TAO_OutStream ();
 
   /// Open the underlying low-level handle for output.
-  int open (const char *fname,
+  int open (std::string_view fname,
             TAO_OutStream::STREAM_TYPE st = TAO_OutStream::TAO_CLI_HDR);
 
   /// Set the stream type
@@ -163,8 +163,8 @@ public:
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a #if !defined, #defined macro
-  int gen_ifdef_macro (const char *flat_name,
-                       const char *suffix = nullptr,
+  int gen_ifdef_macro (std::string_view flat_name,
+                       std::string_view suffix = {},
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
@@ -179,6 +179,7 @@ public:
                           TAO_OutStream &>::type
   operator << (const size_t num)
   {
+    this->flush_pending_whitespace ();
     ACE_OS::fprintf (this->fp_,
                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
                      num);
@@ -188,8 +189,8 @@ public:
 
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (char ch);
-  TAO_OutStream &operator<< (const ACE_CString &str);
-  TAO_OutStream &operator<< (std::string const& str);
+  TAO_OutStream &operator<< (std::string const &str);
+  TAO_OutStream &operator<< (std::string_view str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
@@ -225,6 +226,9 @@ public:
 #define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:
+  void flush_pending_whitespace ();
+  void write_text (std::string_view text);
+
   /// The underlying low-level I/O handle
   FILE *fp_ {};
 
@@ -235,7 +239,10 @@ protected:
   int indent_level_ {};
 
   /// Used to set tab spaces.
-  ACE_CString tab_unit_str_;
+  std::string tab_unit_str_;
+
+  /// Trailing whitespace is buffered until non-whitespace or newline output.
+  std::string pending_whitespace_;
 };
 
 #endif // if !defined

@@ -16,6 +16,10 @@ class TAO_IDL_FE_Export AST_Component
   : public virtual AST_Interface
 {
 public:
+  AST_Component (AST_Component const &) = delete;
+  AST_Component (AST_Component &&) = delete;
+  AST_Component &operator= (AST_Component const &) = delete;
+  AST_Component &operator= (AST_Component &&) = delete;
   AST_Component (UTL_ScopedName *n,
                  AST_Component *base_component,
                  AST_Type **supports,

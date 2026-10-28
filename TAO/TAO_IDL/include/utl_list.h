@@ -100,12 +100,13 @@ public:
 
   // Get next list.
   UTL_List *tail ();
+  UTL_List const *tail () const;
 
   // Set next list
   void set_tail (UTL_List *l);
 
   // How long is this list?
-  ACE_CDR::Long length ();
+  ACE_CDR::Long length () const;
 
   // Cleanup.
   virtual void destroy ();
@@ -115,7 +116,7 @@ private:
   UTL_List *pd_cdr_data;
 
   // Operations
-  ACE_CDR::Long list_length (ACE_CDR::Long n);
+  ACE_CDR::Long list_length (ACE_CDR::Long n) const;
 
   // Friend class.
   friend class UTL_ListActiveIterator;
@@ -133,7 +134,7 @@ public:
   virtual void next ();
 
   // Are we at the end of this list?
-  virtual bool is_done ();
+  virtual bool is_done () const;
 
 protected:
   // On what to iterate?

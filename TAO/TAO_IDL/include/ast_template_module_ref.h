@@ -15,6 +15,10 @@ public:
                            UTL_StrList *param_refs);
 
   ~AST_Template_Module_Ref () override;
+  AST_Template_Module_Ref (AST_Template_Module_Ref const &) = delete;
+  AST_Template_Module_Ref (AST_Template_Module_Ref &&) = delete;
+  AST_Template_Module_Ref &operator= (AST_Template_Module_Ref const &) = delete;
+  AST_Template_Module_Ref &operator= (AST_Template_Module_Ref &&) = delete;
 
   AST_Template_Module *ref () const;
 

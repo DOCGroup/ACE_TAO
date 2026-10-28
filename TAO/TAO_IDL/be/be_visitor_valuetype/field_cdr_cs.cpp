@@ -11,6 +11,9 @@
 
 #include "valuetype.h"
 
+#include <string>
+#include <string_view>
+
 // **********************************************
 //  Visitor for field in the client inline file.
 // **********************************************
@@ -74,10 +77,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute
   // the full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (!this->ctx_->alias ()
       && node->is_child (this->ctx_->scope ()->decl ()))
@@ -91,24 +91,20 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       node->full_name ());
+      fname = node->full_name ();
     }
 
   // Check what is the code generation substate. Are we generating
@@ -946,10 +942,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute
   // the full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (!this->ctx_->alias ()
       && node->is_child (this->ctx_->scope ()->decl ()))
@@ -963,24 +956,20 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       node->full_name ());
+      fname = node->full_name ();
     }
 
   // Check what is the code generation substate. Are we generating code for

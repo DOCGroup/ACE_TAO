@@ -28,6 +28,11 @@ class be_template_module : public virtual AST_Template_Module,
                            public virtual be_decl
 {
 public:
+  be_template_module (be_template_module const &) = delete;
+  be_template_module (be_template_module &&) = delete;
+  be_template_module &operator= (be_template_module const &) = delete;
+  be_template_module &operator= (be_template_module &&) = delete;
+
   be_template_module (
     UTL_ScopedName *n,
     FE_Utils::T_PARAMLIST_INFO *template_params);

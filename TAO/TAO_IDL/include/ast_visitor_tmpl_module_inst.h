@@ -35,8 +35,12 @@ class ast_visitor_context;
 class ast_visitor_tmpl_module_inst : public ast_visitor
 {
 public:
-  ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
-                                bool ref_only = false);
+  explicit ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
+                                         bool ref_only = false);
+  ast_visitor_tmpl_module_inst (ast_visitor_tmpl_module_inst const &) = delete;
+  ast_visitor_tmpl_module_inst (ast_visitor_tmpl_module_inst &&) = delete;
+  ast_visitor_tmpl_module_inst &operator= (ast_visitor_tmpl_module_inst const &) = delete;
+  ast_visitor_tmpl_module_inst &operator= (ast_visitor_tmpl_module_inst &&) = delete;
 
   ~ast_visitor_tmpl_module_inst () override;
 

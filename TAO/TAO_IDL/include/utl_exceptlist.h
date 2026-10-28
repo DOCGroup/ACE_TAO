@@ -85,6 +85,7 @@ public:
 
   // Get list item.
   AST_Type *head ();
+  AST_Type const *head () const;
 
   // Cleanup.
   void destroy () override;
@@ -106,7 +107,7 @@ public:
   explicit UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
   // Get current item
-  AST_Type *item ();
+  AST_Type *item () const;
 };
 
 #endif           // _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH

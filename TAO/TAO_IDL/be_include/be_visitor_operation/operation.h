@@ -14,6 +14,8 @@
 #ifndef _BE_VISITOR_OPERATION_OPERATION_H_
 #define _BE_VISITOR_OPERATION_OPERATION_H_
 
+#include <string_view>
+
 // ************************************************************
 // Generic Operation visitor with some helper methods
 // ************************************************************
@@ -52,8 +54,8 @@ public:
   virtual int is_amh_exception_holder (be_interface *node);
 
   /// helper that generates code for raising an exception
-  virtual int gen_raise_exception (const char *exception_name,
-                                   const char *exception_arguments);
+  virtual int gen_raise_exception (std::string_view exception_name,
+                                   std::string_view exception_arguments);
 
   /**
    * Generates the code from opening brace to closing brace for

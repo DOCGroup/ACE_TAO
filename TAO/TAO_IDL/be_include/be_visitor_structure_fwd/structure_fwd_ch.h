@@ -25,7 +25,7 @@ class be_visitor_structure_fwd_ch : public be_visitor_decl
 public:
   explicit be_visitor_structure_fwd_ch (be_visitor_context *ctx);
 
-  ~be_visitor_structure_fwd_ch () override;
+  ~be_visitor_structure_fwd_ch () override  = default;
 
   be_visitor_structure_fwd_ch (const be_visitor_structure_fwd_ch &) = delete;
   be_visitor_structure_fwd_ch (be_visitor_structure_fwd_ch &&) = delete;

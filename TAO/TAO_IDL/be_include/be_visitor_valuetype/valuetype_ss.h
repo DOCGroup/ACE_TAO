@@ -41,8 +41,8 @@ public:
   int visit_eventtype (be_eventtype *node) override;
 
 protected:
-  std::string generate_local_name (be_valuetype *node);
-  std::string generate_full_skel_name (be_valuetype *node);
+  std::string_view generate_local_name (be_valuetype *node);
+  std::string_view generate_full_skel_name (be_valuetype *node);
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_SS_H_ */

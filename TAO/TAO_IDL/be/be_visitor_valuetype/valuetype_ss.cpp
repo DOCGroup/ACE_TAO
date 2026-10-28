@@ -12,6 +12,8 @@
 #include "valuetype.h"
 #include "nr_extern.h"
 
+#include <string_view>
+
 // ************************************************************
 // Interface visitor for server skeletons.
 // ************************************************************
@@ -46,10 +48,8 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  std::string full_skel_name_holder =
+  std::string_view const full_skel_name =
     this->generate_full_skel_name (node);
-
-  char const *full_skel_name = full_skel_name_holder.c_str ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -63,10 +63,8 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       local_name_prefix = "POA_";
     }
 
-  std::string node_local_name_holder =
+  std::string_view const node_local_name =
     this->generate_local_name (node);
-
-  char const *node_local_name = node_local_name_holder.c_str ();
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
@@ -121,13 +119,13 @@ be_visitor_valuetype_ss::visit_eventtype (be_eventtype *node)
   return this->visit_valuetype (node);
 }
 
-std::string
+std::string_view
 be_visitor_valuetype_ss::generate_local_name (be_valuetype *node)
 {
   return node->local_name ();
 }
 
-std::string
+std::string_view
 be_visitor_valuetype_ss::generate_full_skel_name (be_valuetype *node)
 {
   return node->full_skel_name ();

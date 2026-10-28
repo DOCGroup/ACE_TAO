@@ -148,7 +148,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
       // If this module been opened before, it will already be in
       // the repository.
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -159,9 +159,9 @@ ifr_adding_visitor::visit_module (AST_Module *node)
           if (be_global->ifr_scopes ().top (container) == 0)
             {
               new_def = container->create_module (
-                                       node->repoID (),
+                                       IFR_C_String (node->repoID ()),
                                        node->local_name ()->get_string (),
-                                       node->version ()
+                                       IFR_C_String (node->version ())
                                      );
             }
           else
@@ -254,7 +254,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -323,7 +323,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               for (CORBA::ULong i = 0; i < n_parents; ++i)
                 {
                   result =
-                    be_global->repository ()->lookup_id (parents[i]->repoID ());
+                    be_global->repository ()->lookup_id (IFR_C_String (parents[i]->repoID ()));
 
                   // If one of our interface's parents is not in the repository,
                   // that means that it has not yet been seen (even as a
@@ -448,7 +448,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (i->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (i->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -469,9 +469,9 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                 {
                   this->ir_current_ =
                     current_scope->create_local_interface (
-                                       i->repoID (),
+                                       IFR_C_String (i->repoID ()),
                                        i->local_name ()->get_string (),
-                                       i->version (),
+                                       IFR_C_String (i->version ()),
                                        bases
                                      );
                 }
@@ -479,9 +479,9 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                 {
                   this->ir_current_ =
                     current_scope->create_interface (
-                                       i->repoID (),
+                                       IFR_C_String (i->repoID ()),
                                        i->local_name ()->get_string (),
-                                       i->version (),
+                                       IFR_C_String (i->version ()),
                                        bases
                                      );
                 }
@@ -533,9 +533,9 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
         {
           this->ir_current_ =
             current_scope->create_value_box (
-                node->repoID (),
+                IFR_C_String (node->repoID ()),
                 node->local_name ()->get_string (),
-                node->version (),
+                IFR_C_String (node->version ()),
                 this->ir_current_.in ()
               );
         }
@@ -574,7 +574,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
     {
       // Is this valuetype already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -773,7 +773,7 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (v->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (v->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -799,9 +799,9 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
             {
               this->ir_current_ =
                 current_scope->create_value (
-                                   v->repoID (),
+                                   IFR_C_String (v->repoID ()),
                                    v->local_name ()->get_string (),
-                                   v->version (),
+                                   IFR_C_String (v->version ()),
                                    0, // 'custom' not handled yet
                                    abstract,
                                    CORBA::ValueDef::_nil (),
@@ -849,7 +849,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -1025,7 +1025,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (c->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (c->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -1060,9 +1060,9 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
 
               this->ir_current_ =
                 ccm_scope->create_component (
-                               c->repoID (),
+                               IFR_C_String (c->repoID ()),
                                c->local_name ()->get_string (),
-                               c->version (),
+                               IFR_C_String (c->version ()),
                                base_component.in (),
                                supported_interfaces
                              );
@@ -1098,7 +1098,7 @@ ifr_adding_visitor::visit_provides (AST_Provides *node)
 {
   ::CORBA::Contained_var contained =
     be_global->repository ()->lookup_id (
-      node->provides_type ()->repoID ());
+      IFR_C_String (node->provides_type ()->repoID ()));
 
   ::CORBA::InterfaceDef_var interface_type =
     ::CORBA::InterfaceDef::_narrow (contained.in ());
@@ -1114,7 +1114,7 @@ ifr_adding_visitor::visit_provides (AST_Provides *node)
   ::CORBA::ComponentIR::ProvidesDef_var new_def =
     c->create_provides (comp_str.fast_rep (),
                         local_name,
-                        node->provides_type ()->version (),
+                        IFR_C_String (node->provides_type ()->version ()),
                         interface_type.in ());
 
   return 0;
@@ -1125,7 +1125,7 @@ ifr_adding_visitor::visit_uses (AST_Uses *node)
 {
   ::CORBA::Contained_var contained =
     be_global->repository ()->lookup_id (
-      node->uses_type ()->repoID ());
+      IFR_C_String (node->uses_type ()->repoID ()));
 
   ::CORBA::InterfaceDef_var interface_type =
     ::CORBA::InterfaceDef::_narrow (contained.in ());
@@ -1141,7 +1141,7 @@ ifr_adding_visitor::visit_uses (AST_Uses *node)
   ::CORBA::ComponentIR::UsesDef_var new_def =
     c->create_uses (comp_str.fast_rep (),
                     local_name,
-                    node->uses_type ()->version (),
+                    IFR_C_String (node->uses_type ()->version ()),
                     interface_type.in (),
                     static_cast<CORBA::Boolean> (node->is_multiple ()));
 
@@ -1153,7 +1153,7 @@ ifr_adding_visitor::visit_publishes (AST_Publishes *node)
 {
   ::CORBA::Contained_var contained =
     be_global->repository ()->lookup_id (
-      node->publishes_type ()->repoID ());
+      IFR_C_String (node->publishes_type ()->repoID ()));
 
   ::CORBA::ComponentIR::EventDef_var event_type =
     ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
@@ -1169,7 +1169,7 @@ ifr_adding_visitor::visit_publishes (AST_Publishes *node)
   ::CORBA::ComponentIR::PublishesDef_var new_def =
     c->create_publishes (comp_str.fast_rep (),
                          local_name,
-                         node->publishes_type ()->version (),
+                         IFR_C_String (node->publishes_type ()->version ()),
                          event_type.in ());
 
   return 0;
@@ -1180,7 +1180,7 @@ ifr_adding_visitor::visit_emits (AST_Emits *node)
 {
   ::CORBA::Contained_var contained =
     be_global->repository ()->lookup_id (
-      node->emits_type ()->repoID ());
+      IFR_C_String (node->emits_type ()->repoID ()));
 
   ::CORBA::ComponentIR::EventDef_var event_type =
     ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
@@ -1196,7 +1196,7 @@ ifr_adding_visitor::visit_emits (AST_Emits *node)
   ::CORBA::ComponentIR::EmitsDef_var new_def =
     c->create_emits (comp_str.fast_rep (),
                      local_name,
-                     node->emits_type ()->version (),
+                     IFR_C_String (node->emits_type ()->version ()),
                      event_type.in ());
 
   return 0;
@@ -1207,7 +1207,7 @@ ifr_adding_visitor::visit_consumes (AST_Consumes *node)
 {
   ::CORBA::Contained_var contained =
     be_global->repository ()->lookup_id (
-      node->consumes_type ()->repoID ());
+      IFR_C_String (node->consumes_type ()->repoID ()));
 
   ::CORBA::ComponentIR::EventDef_var event_type =
     ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
@@ -1223,7 +1223,7 @@ ifr_adding_visitor::visit_consumes (AST_Consumes *node)
   ::CORBA::ComponentIR::ConsumesDef_var new_def =
     c->create_consumes (comp_str.fast_rep (),
                         local_name,
-                        node->consumes_type ()->version (),
+                        IFR_C_String (node->consumes_type ()->version ()),
                         event_type.in ());
 
   return 0;
@@ -1241,7 +1241,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -1442,7 +1442,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (v->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (v->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -1473,9 +1473,9 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
 
               this->ir_current_ =
                 ccm_scope->create_event (
-                               v->repoID (),
+                               IFR_C_String (v->repoID ()),
                                v->local_name ()->get_string (),
-                               v->version (),
+                               IFR_C_String (v->version ()),
                                0, // 'custom' not handled yet
                                abstract,
                                CORBA::ValueDef::_nil (),
@@ -1523,7 +1523,7 @@ ifr_adding_visitor::visit_home (AST_Home *node)
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -1626,7 +1626,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
   try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -1701,7 +1701,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
   try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -1723,9 +1723,9 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
 
           CORBA::StructDef_var struct_def =
             current_scope->create_struct (
-                node->repoID (),
+                IFR_C_String (node->repoID ()),
                 node->local_name ()->get_string (),
-                node->version (),
+                IFR_C_String (node->version ()),
                 dummyMembers
               );
 
@@ -1772,7 +1772,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -1803,9 +1803,9 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
             {
               this->ir_current_ =
                 current_scope->create_enum (
-                    node->repoID (),
+                    IFR_C_String (node->repoID ()),
                     node->local_name ()->get_string (),
-                    node->version (),
+                    IFR_C_String (node->version ()),
                     members
                   );
             }
@@ -1941,9 +1941,9 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
               CORBA::ExtAttributeDef_var new_def =
                 value->create_ext_attribute (
-                    node->repoID (),
+                    IFR_C_String (node->repoID ()),
                     node->local_name ()->get_string (),
-                    node->version (),
+                    IFR_C_String (node->version ()),
                     this->ir_current_.in (),
                     mode,
                     get_exceptions,
@@ -1959,9 +1959,9 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
               CORBA::ExtAttributeDef_var new_def =
                 iface->create_ext_attribute (
-                    node->repoID (),
+                    IFR_C_String (node->repoID ()),
                     node->local_name ()->get_string (),
-                    node->version (),
+                    IFR_C_String (node->version ()),
                     this->ir_current_.in (),
                     mode,
                     get_exceptions,
@@ -2005,7 +2005,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
   try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -2078,7 +2078,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
   try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -2100,9 +2100,9 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
 
           CORBA::UnionDef_var union_def =
             current_scope->create_union (
-                node->repoID (),
+                IFR_C_String (node->repoID ()),
                 node->local_name ()->get_string (),
-                node->version (),
+                IFR_C_String (node->version ()),
                 CORBA::IDLType::_nil (),
                 dummyMembers
               );
@@ -2129,12 +2129,12 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
       return 0;
     }
 
-  char const *id = node->repoID ();
+  std::string const id (node->repoID ());
 
   try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (id);
+        be_global->repository ()->lookup_id (id.c_str ());
 
       // Nothing prevents this constant's repo id from already being
       // in the repository as another type, if it came from another
@@ -2180,7 +2180,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           AST_Decl *d = ScopeAsDecl (enum_val->defined_in ());
 
           CORBA::Contained_var contained =
-            be_global->repository ()->lookup_id (d->repoID ());
+            be_global->repository ()->lookup_id (IFR_C_String (d->repoID ()));
 
           this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
         }
@@ -2203,9 +2203,9 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
         {
           CORBA::ConstantDef_var new_def =
             current_scope->create_constant (
-                id,
+                id.c_str (),
                 node->local_name ()->get_string (),
-                node->version (),
+                IFR_C_String (node->version ()),
                 this->ir_current_.in (),
                 any
               );
@@ -2363,9 +2363,9 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
         {
           this->ir_current_ =
             current_scope->create_alias (
-                node->repoID (),
+                IFR_C_String (node->repoID ()),
                 node->local_name ()->get_string (),
-                node->version (),
+                IFR_C_String (node->version ()),
                 this->ir_current_.in ()
               );
         }
@@ -2455,7 +2455,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
   try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -2466,9 +2466,9 @@ ifr_adding_visitor::visit_native (AST_Native *node)
             {
               this->ir_current_ =
                 current_scope->create_native (
-                    node->repoID (),
+                    IFR_C_String (node->repoID ()),
                     node->local_name ()->get_string (),
-                    node->version ()
+                    IFR_C_String (node->version ())
                   );
             }
           else
@@ -2714,7 +2714,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
   else
     {
       CORBA::Contained_var contained =
-        be_global->repository ()->lookup_id (base_type->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (base_type->repoID ()));
 
       if (CORBA::is_nil (contained.in ()))
         {
@@ -2762,7 +2762,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
             }
 
           result =
-            be_global->repository ()->lookup_id (intf->repoID ());
+            be_global->repository ()->lookup_id (IFR_C_String (intf->repoID ()));
 
           // If we got to visit_interface() from a forward declared interface,
           // this node may not yet be in the repository.
@@ -2824,7 +2824,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
             }
 
           result =
-            be_global->repository ()->lookup_id (intf->repoID ());
+            be_global->repository ()->lookup_id (IFR_C_String (intf->repoID ()));
 
           // If we got to visit_interface() from a forward declared interface,
           // this node may not yet be in the repository.
@@ -2876,9 +2876,9 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
         {
           new_def =
             current_scope->create_local_interface (
-                               node->repoID (),
+                               IFR_C_String (node->repoID ()),
                                node->local_name ()->get_string (),
-                               node->version (),
+                               IFR_C_String (node->version ()),
                                bases
                              );
         }
@@ -2886,9 +2886,9 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
         {
           new_def =
             current_scope->create_abstract_interface (
-                               node->repoID (),
+                               IFR_C_String (node->repoID ()),
                                node->local_name ()->get_string (),
-                               node->version (),
+                               IFR_C_String (node->version ()),
                                abs_bases
                              );
         }
@@ -2896,9 +2896,9 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
         {
           new_def =
             current_scope->create_interface (
-                               node->repoID (),
+                               IFR_C_String (node->repoID ()),
                                node->local_name ()->get_string (),
-                               node->version (),
+                               IFR_C_String (node->version ()),
                                bases
                              );
         }
@@ -3000,9 +3000,9 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node)
 
       CORBA::ExtValueDef_var new_def =
         current_scope->create_ext_value (
-                           node->repoID (),
+                           IFR_C_String (node->repoID ()),
                            node->local_name ()->get_string (),
-                           node->version (),
+                           IFR_C_String (node->version ()),
                            static_cast<CORBA::Boolean> (node->custom ()),
                            static_cast<CORBA::Boolean> (node->is_abstract ()),
                            base_value.in (),
@@ -3102,9 +3102,9 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
         CORBA::ComponentIR::Container::_narrow (current_scope);
 
       CORBA::ComponentIR::ComponentDef_var new_def =
-        ccm_scope->create_component (node->repoID (),
+        ccm_scope->create_component (IFR_C_String (node->repoID ()),
                                      node->local_name ()->get_string (),
-                                     node->version (),
+                                     IFR_C_String (node->version ()),
                                      base_component.in (),
                                      supported_interfaces);
 
@@ -3202,9 +3202,9 @@ ifr_adding_visitor::create_home_def (AST_Home *node)
         CORBA::ComponentIR::Container::_narrow (current_scope);
 
       CORBA::ComponentIR::HomeDef_var new_def =
-        ccm_scope->create_home (node->repoID (),
+        ccm_scope->create_home (IFR_C_String (node->repoID ()),
                                 node->local_name ()->get_string (),
-                                node->version (),
+                                IFR_C_String (node->version ()),
                                 base_home.in (),
                                 managed_component.in (),
                                 supported_interfaces,
@@ -3317,9 +3317,9 @@ ifr_adding_visitor::create_event_def (AST_EventType *node)
 
       CORBA::ExtValueDef_var new_def =
         ccm_scope->create_event (
-                       node->repoID (),
+                       IFR_C_String (node->repoID ()),
                        node->local_name ()->get_string (),
-                       node->version (),
+                       IFR_C_String (node->version ()),
                        static_cast<CORBA::Boolean> (node->custom ()),
                        static_cast<CORBA::Boolean> (node->is_abstract ()),
                        base_value.in (),
@@ -3432,7 +3432,7 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
         {
           // If the IDL is legal, this will succeed.
           CORBA::Contained_var holder =
-                be_global->repository ()->lookup_id (bt->repoID ());
+                be_global->repository ()->lookup_id (IFR_C_String (bt->repoID ()));
 
           this->ir_current_ =
             CORBA::IDLType::_narrow (holder.in ());
@@ -3475,9 +3475,9 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
         CORBA::ValueDef::_narrow (current_scope);
 
       CORBA::ValueMemberDef_var vm =
-        vt->create_value_member (node->repoID (),
+        vt->create_value_member (IFR_C_String (node->repoID ()),
                                  node->local_name ()->get_string (),
-                                 node->version (),
+                                 IFR_C_String (node->version ()),
                                  this->ir_current_.in (),
                                  vis);
     }
@@ -3520,7 +3520,7 @@ ifr_adding_visitor::get_referenced_type (AST_Type *node)
     default:
       {
         CORBA::Contained_var prev_def =
-          be_global->repository ()->lookup_id (node->repoID ());
+          be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
         this->ir_current_ =
           CORBA::IDLType::_narrow (prev_def.in ());
@@ -3543,7 +3543,7 @@ ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
 
   CORBA::Contained_var holder =
     be_global->repository ()->lookup_id (
-                                  base_value->repoID ()
+                                  IFR_C_String (base_value->repoID ())
                                 );
 
   if (!CORBA::is_nil (holder.in ()))
@@ -3569,7 +3569,7 @@ ifr_adding_visitor::fill_base_component (
 
   CORBA::Contained_var holder =
     be_global->repository ()->lookup_id (
-                                  base_component->repoID ()
+                                  IFR_C_String (base_component->repoID ())
                                 );
 
   if (!CORBA::is_nil (holder.in ()))
@@ -3593,7 +3593,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
 
   CORBA::Contained_var holder =
     be_global->repository ()->lookup_id (
-                                  base_home->repoID ()
+                                  IFR_C_String (base_home->repoID ())
                                 );
 
   if (!CORBA::is_nil (holder.in ()))
@@ -3626,7 +3626,7 @@ ifr_adding_visitor::fill_managed_component (
     }
 
   CORBA::Contained_var holder =
-    be_global->repository ()->lookup_id (managed_component->repoID ());
+    be_global->repository ()->lookup_id (IFR_C_String (managed_component->repoID ()));
 
   if (!CORBA::is_nil (holder.in ()))
     {
@@ -3656,7 +3656,7 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
     }
 
   CORBA::Contained_var holder =
-    be_global->repository ()->lookup_id (primary_key->repoID ());
+    be_global->repository ()->lookup_id (IFR_C_String (primary_key->repoID ()));
 
   if (!CORBA::is_nil (holder.in ()))
     {
@@ -3863,10 +3863,13 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
           excp = dynamic_cast<AST_Exception*> (ei.item ());
           result[i].exceptions[index].name =
             CORBA::string_dup (excp->local_name ()->get_string ());
-          result[i].exceptions[index].id = excp->repoID ();
+          result[i].exceptions[index].id =
+            CORBA::string_dup (IFR_C_String (excp->repoID ()));
           result[i].exceptions[index].defined_in =
-            ScopeAsDecl (excp->defined_in ())->repoID ();
-          result[i].exceptions[index].version = excp->version ();
+            CORBA::string_dup (
+              IFR_C_String (ScopeAsDecl (excp->defined_in ())->repoID ()));
+          result[i].exceptions[index].version =
+            CORBA::string_dup (IFR_C_String (excp->version ()));
           result[i].exceptions[index++].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
         }
@@ -3942,7 +3945,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
       // inherit from IDLType.
       (void) d->ast_accept (this);
 
-      holder = be_global->repository ()->lookup_id (d->repoID ());
+      holder = be_global->repository ()->lookup_id (IFR_C_String (d->repoID ()));
 
       result[index] =
         CORBA::ExceptionDef::_narrow (holder.in ());
@@ -4007,9 +4010,9 @@ ifr_adding_visitor::visit_all_factories (AST_Home *node,
       CORBA::ExceptionDefSeq exceptions;
       this->fill_exceptions (exceptions, f);
 
-      new_def = h->create_factory (f->repoID (),
+      new_def = h->create_factory (IFR_C_String (f->repoID ()),
                                    f->local_name ()->get_string (),
-                                   f->version (),
+                                   IFR_C_String (f->version ()),
                                    params,
                                    exceptions);
     }
@@ -4041,9 +4044,9 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
       CORBA::ExceptionDefSeq exceptions;
       this->fill_exceptions (exceptions, f);
 
-      new_def = h->create_finder (f->repoID (),
+      new_def = h->create_finder (IFR_C_String (f->repoID ()),
                                   f->local_name ()->get_string (),
-                                  f->version (),
+                                  IFR_C_String (f->version ()),
                                   params,
                                   exceptions);
     }

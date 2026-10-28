@@ -16,7 +16,6 @@ be_visitor_union_ci::be_visitor_union_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_ci::~be_visitor_union_ci () = default;
 
 int be_visitor_union_ci::visit_union (be_union *node)
 {

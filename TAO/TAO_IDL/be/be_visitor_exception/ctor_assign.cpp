@@ -80,7 +80,7 @@ be_visitor_exception_ctor_assign::visit_array (be_array *node)
 
   *os << be_nl;
 
-  if (ACE_OS::strcmp (bd->flat_name (), node->flat_name ()) != 0)
+  if (bd->flat_name () != node->flat_name ())
     {
       // We are typedef'd.
       *os << node->name ();
