@@ -4,13 +4,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Peer::TAO_Notify_Peer ()
-{
-}
+TAO_Notify_Peer::TAO_Notify_Peer () = default;
 
-TAO_Notify_Peer::~TAO_Notify_Peer ()
-{
-}
+TAO_Notify_Peer::~TAO_Notify_Peer () = default;
 
 void
 TAO_Notify_Peer::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)
