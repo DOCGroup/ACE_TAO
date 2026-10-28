@@ -44,6 +44,8 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <string>
+
 const char *LW_EXCEP_NAMES[] =
   {
     "AlreadyConnected",
@@ -195,8 +197,8 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
     {
       // If this facet comes from a porttype, the instantiated
       // port/mirrorport name is prefixed to the facet name.
-      ACE_CString prefix ("provide_");
-      prefix += this->ctx_->port_prefix ();
+      std::string prefix ("provide_");
+      prefix += this->ctx_->port_prefix ().c_str ();
 
       AST_Operation *provides_op = nullptr;
       UTL_ScopedName *op_name =
@@ -514,8 +516,8 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
 {
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the receptacle name.
-  ACE_CString prefix ("connect_");
-  prefix += this->ctx_->port_prefix ();
+  std::string prefix ("connect_");
+  prefix += this->ctx_->port_prefix ().c_str ();
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
@@ -570,8 +572,8 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
 {
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the receptacle name.
-  ACE_CString prefix ("disconnect_");
-  prefix += this->ctx_->port_prefix ();
+  std::string prefix ("disconnect_");
+  prefix += this->ctx_->port_prefix ().c_str ();
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
@@ -609,8 +611,8 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
 {
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the receptacle name.
-  ACE_CString prefix ("get_connection_");
-  prefix += this->ctx_->port_prefix ();
+  std::string prefix ("get_connection_");
+  prefix += this->ctx_->port_prefix ().c_str ();
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
@@ -642,8 +644,8 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
 {
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the receptacle name.
-  ACE_CString prefix ("connect_");
-  prefix += this->ctx_->port_prefix ();
+  std::string prefix ("connect_");
+  prefix += this->ctx_->port_prefix ().c_str ();
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
@@ -698,8 +700,8 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
 {
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the receptacle name.
-  ACE_CString prefix ("disconnect_");
-  prefix += this->ctx_->port_prefix ();
+  std::string prefix ("disconnect_");
+  prefix += this->ctx_->port_prefix ().c_str ();
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
@@ -748,8 +750,8 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
 {
   // If this facet comes from a porttype, the instantiated
   // port/mirrorport name is prefixed to the receptacle name.
-  ACE_CString prefix ("get_connections_");
-  prefix += this->ctx_->port_prefix ();
+  std::string prefix ("get_connections_");
+  prefix += this->ctx_->port_prefix ().c_str ();
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
@@ -761,7 +763,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
   // It will be the return type of the created operation. The
   // sequence was originally created with the port prefix (if
   // any) in its name, so we must use it here.
-  ACE_CString connections_string (this->ctx_->port_prefix ());
+  std::string connections_string (this->ctx_->port_prefix ().c_str ());
   connections_string += node->local_name ()->get_string ();
   connections_string += "Connections";
   Identifier connections_id (connections_string.c_str ());
@@ -814,11 +816,9 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
       push_op->set_defined_in (consumer);
       push_op->set_imported (node->imported ());
       push_op->set_name (op_full_name);
-      ACE_CString arg_string ("the_",
-                              nullptr,
-                              false);
+      std::string arg_string ("the_");
       arg_string += node->local_name ();
-      Identifier arg_id (arg_string.fast_rep ());
+      Identifier arg_id (arg_string.c_str ());
       UTL_ScopedName arg_name (&arg_id,
                                nullptr);
       be_argument *arg = nullptr;
@@ -1549,9 +1549,9 @@ AST_Interface *
 be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
 {
   AST_Type *impl = node->field_type ();
-  ACE_CString rettype_string (impl->local_name ()->get_string ());
+  std::string rettype_string (impl->local_name ()->get_string ());
   rettype_string += "Consumer";
-  Identifier rettype_id (rettype_string.fast_rep ());
+  Identifier rettype_id (rettype_string.c_str ());
   AST_Decl *d =
     impl->defined_in ()->lookup_by_name_local (&rettype_id, false);
   rettype_id.destroy ();
@@ -1739,14 +1739,18 @@ be_visitor_ccm_pre_proc::create_scoped_name (const char *prefix,
                                              const char *suffix,
                                              AST_Decl *parent)
 {
-  ACE_CString local_string (prefix,
-                            nullptr,
-                            false);
-  local_string += local_name;
-  local_string += suffix;
+  std::string local_string (prefix != nullptr ? prefix : "");
+  if (local_name != nullptr)
+    {
+      local_string += local_name;
+    }
+  if (suffix != nullptr)
+    {
+      local_string += suffix;
+    }
   Identifier *local_id = nullptr;
   ACE_NEW_RETURN (local_id,
-                  Identifier (local_string.fast_rep ()),
+                  Identifier (local_string.c_str ()),
                   nullptr);
   UTL_ScopedName *last_segment = nullptr;
   ACE_NEW_RETURN (last_segment,
@@ -1787,7 +1791,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
   else
     {
-      ACE_CString new_local (
+      std::string new_local (
           node->base_home ()->local_name ()->get_string ()
         );
       new_local += "Explicit";
@@ -1892,7 +1896,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
 
       if (ami_iface == nullptr)
         {
-          ACE_CString iname ("AMI4CCM_");
+          std::string iname ("AMI4CCM_");
 
           iname += iface->local_name ();
           Identifier itmp_id (iname.c_str ());
@@ -1926,7 +1930,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
       /// in the main IDL file from the interface's
       /// contents, so it's ok that it's empty.
 
-      ACE_CString uname ("sendc_");
+      std::string uname ("sendc_");
       uname += u->local_name ()->get_string ();
       Identifier utmp_id (uname.c_str ());
       UTL_ScopedName utmp_sn (&utmp_id, nullptr);
