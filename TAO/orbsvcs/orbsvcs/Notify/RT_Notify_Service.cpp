@@ -9,9 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Notify_Service::TAO_RT_Notify_Service ()
-{
-}
+TAO_RT_Notify_Service::TAO_RT_Notify_Service () = default;
 
 TAO_RT_Notify_Service::~TAO_RT_Notify_Service () = default;
 
