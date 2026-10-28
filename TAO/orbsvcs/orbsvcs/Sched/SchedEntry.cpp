@@ -197,13 +197,13 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
@@ -220,13 +220,13 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local
               // dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }
@@ -294,13 +294,13 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
@@ -317,12 +317,12 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }

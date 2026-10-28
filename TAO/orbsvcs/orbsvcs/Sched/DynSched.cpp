@@ -268,7 +268,7 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
           if (output_level () >= 5)
             {
               ACE_OS::printf ("registered task \"%s\" with RT_Info at %p\n",
-                              (const char*)(rt_info->entry_point), rt_info);
+                              static_cast<char const *> (rt_info->entry_point), rt_info);
             }
         }
         break;
@@ -428,8 +428,9 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Sched (%t) adding %s dependency to caller: %C\n"),
-              (const ACE_TCHAR *) ((d.dependency_type == RtecBase::TWO_WAY_CALL)
-                              ? ACE_TEXT("TWO_WAY") : ACE_TEXT("ONE_WAY")),
+              static_cast<ACE_TCHAR const *> (
+                d.dependency_type == RtecBase::TWO_WAY_CALL
+                  ? ACE_TEXT("TWO_WAY") : ACE_TEXT("ONE_WAY")),
               temp_info->entry_point.in ()));
 
   RtecScheduler::Dependency_Set& set = temp_info->dependencies;
@@ -465,7 +466,7 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
     {
       RT_Info tmp;
       (void) ACE_OS::fprintf (file, "%s, %d\n",
-                              (const char*)tmp.entry_point,
+                              static_cast<char const *> (tmp.entry_point),
                               info.dependencies[i].number_of_calls);
     }
 
@@ -503,7 +504,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::lookup_rt_info (handle_t handle,
                                   RT_Info*& rtinfo)
 {
-  if (handle < 0 || (size_t) handle > rt_info_entries_.size ())
+  if (handle < 0 || static_cast<size_t> (handle) > rt_info_entries_.size ())
   {
     return ST_UNKNOWN_TASK;
   }
@@ -534,7 +535,7 @@ ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
     return NOT_SCHEDULED;
   }
 
-  if (priority < 0 || (size_t) priority > config_info_entries_->size ())
+  if (priority < 0 || static_cast<size_t> (priority) > config_info_entries_->size ())
   {
     return ST_UNKNOWN_PRIORITY;
   }
@@ -1523,12 +1524,12 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
              (LM_DEBUG,
               ACE_TEXT("Warning: an operation identified by ")
               ACE_TEXT("\"%C\" has unresolved remote dependencies.\n"),
-              (const char*)task_entries_ [i].rt_info ()->entry_point));
+              static_cast<char const *> (task_entries_ [i].rt_info ()->entry_point)));
 
           // Record entry point in list of unresolved remote dependencies
           ACE_OS::sprintf (string_buffer, "// %s\n",
-                           (const char*) task_entries_ [i].rt_info ()->
-                                                               entry_point);
+                           static_cast<char const *> (task_entries_ [i].rt_info ()->
+                                                               entry_point));
           unresolved_remotes +=
             ACE_CString (string_buffer);
         }
@@ -1540,7 +1541,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
               ACE_TEXT("Error: operation \"%C\" does not specify a period or\n")
               ACE_TEXT("visible threads, and is not called by any other operation.\n")
               ACE_TEXT("Are there backwards dependencies.\n"),
-              (const char*)task_entries_ [i].rt_info ()->entry_point));
+              static_cast<char const *> (task_entries_ [i].rt_info ()->entry_point)));
 
           result = ST_UNRESOLVED_LOCAL_DEPENDENCIES;
 
@@ -1548,8 +1549,8 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
 
           // Record entry point in list of unresolved local dependencies
           ACE_OS::sprintf (string_buffer, "// %s\n",
-                           (const char*) task_entries_ [i].rt_info ()->
-                                                               entry_point);
+                           static_cast<char const *> (task_entries_ [i].rt_info ()->
+                                                               entry_point));
           unresolved_locals +=
             ACE_CString (string_buffer);
         }
@@ -1565,7 +1566,7 @@ ACE_DynScheduler::check_dependency_cycles ()
   status_t return_status = SUCCEEDED;
 
   // sort the pointers to entries in order of descending finish time
-  ACE_OS::qsort ((void *) ordered_task_entries_,
+  ACE_OS::qsort (static_cast<void *> (ordered_task_entries_),
                  tasks (),
                  sizeof (Task_Entry *),
                  compare_entry_finish_times);
@@ -1949,9 +1950,9 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
             "---------    --------  --------  -----------  -----------\n",
       dispatch_count, threads_, tasks_, status_,
       status_message(status_), frame_size_,
-      (double) (10000000.0 / ((double) frame_size_)),
+      static_cast<double> (10000000.0 / static_cast<double> (frame_size_)),
       critical_set_frame_size_,
-      (double) (10000000.0 / ((double) critical_set_frame_size_)),
+      static_cast<double> (10000000.0 / static_cast<double> (critical_set_frame_size_)),
       utilization_, critical_set_utilization_,
       int(minimum_priority_queue_),
       int(minimum_guaranteed_priority_queue_),

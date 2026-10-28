@@ -210,7 +210,7 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
                           ACE_TEXT("%d\n%d\n")
                           ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
                           ACE_TEXT("%u\n# begin dependencies\n%d\n"),
-                          (const char*)info.entry_point,
+                          static_cast<char const *> (info.entry_point),
                           info.handle,
                           ORBSVCS_Time::to_hrtime (info.worst_case_execution_time) / 1,
                           ORBSVCS_Time::to_hrtime (info.typical_execution_time) / 1,
@@ -226,7 +226,7 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
       RT_Info tmp;
       // TODO: info.dependencies [i].rt_info >>= &tmp;
       (void) ACE_OS::fprintf (file, "%s, %d\n",
-                              (const char*)tmp.entry_point,
+                              static_cast<char const *> (tmp.entry_point),
                               info.dependencies[i].number_of_calls);
     }
 

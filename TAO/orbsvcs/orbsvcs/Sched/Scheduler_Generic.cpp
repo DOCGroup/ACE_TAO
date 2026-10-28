@@ -83,7 +83,7 @@ Scheduler::status_t
 Scheduler_Generic::lookup_rt_info (handle_t handle,
                                    RT_Info*& rtinfo)
 {
-  if (handle < 0 || (size_t) handle > task_entries_.size ())
+  if (handle < 0 || static_cast<size_t> (handle) > task_entries_.size ())
     {
       return ST_UNKNOWN_TASK;
     }
@@ -152,7 +152,7 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
             {
               ACE_OS::printf ("registered task \"%s\" with RT_Info starting "
                               "at %p\n",
-                              (const char*)rt_info[0]->entry_point,
+                              static_cast<char const *> (rt_info[0]->entry_point),
                               rt_info[0]);
             }
         }

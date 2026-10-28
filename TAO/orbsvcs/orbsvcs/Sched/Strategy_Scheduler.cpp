@@ -18,7 +18,7 @@
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
 {
-using COMP_FUNC = int (*) (void const*, void const*);
+using COMP_FUNC = int (*) (void const *, void const *);
 }
 
 ///////////////////////////////////////////////////
@@ -746,10 +746,10 @@ ACE_MUF_Scheduler_Strategy::priority_comp (const Dispatch_Entry &first_entry,
 void
 ACE_MUF_Scheduler_Strategy::sort (Dispatch_Entry **dispatch_entries, u_int size)
 {
-  ACE_OS::qsort ((void *) dispatch_entries,
+  ACE_OS::qsort (static_cast<void *> (dispatch_entries),
                  size,
                  sizeof (Dispatch_Entry *),
-                 (COMP_FUNC) ACE_MUF_Scheduler_Strategy::sort_function);
+                 static_cast<COMP_FUNC> (ACE_MUF_Scheduler_Strategy::sort_function));
 }
 
 
@@ -823,11 +823,11 @@ ACE_MUF_Scheduler_Strategy::dynamic_subpriority_comp
 // = Comparison function to pass to qsort.
 
 int
-ACE_MUF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
+ACE_MUF_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
 {
   return ACE_MUF_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
-                      ** static_cast<Dispatch_Entry **> (arg2));
+           sort_comp (** static_cast<Dispatch_Entry * const *> (arg1),
+                      ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
 
@@ -906,10 +906,10 @@ void
 ACE_RMS_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort ((void *) dispatch_entries_,
+  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
-                 (COMP_FUNC) ACE_RMS_Scheduler_Strategy::sort_function);
+                 static_cast<COMP_FUNC> (ACE_RMS_Scheduler_Strategy::sort_function));
 }
 
 
@@ -955,11 +955,11 @@ ACE_RMS_Scheduler_Strategy::dynamic_subpriority_comp
 // Comparison function to pass to qsort.
 
 int
-ACE_RMS_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
+ACE_RMS_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
 {
   return ACE_RMS_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
-                      ** static_cast<Dispatch_Entry **> (arg2));
+           sort_comp (** static_cast<Dispatch_Entry * const *> (arg1),
+                      ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
 
@@ -1023,10 +1023,10 @@ void
 ACE_MLF_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort ((void *) dispatch_entries_,
+  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
-                 (COMP_FUNC) ACE_MLF_Scheduler_Strategy::sort_function);
+                 static_cast<COMP_FUNC> (ACE_MLF_Scheduler_Strategy::sort_function));
 }
 
 
@@ -1097,11 +1097,11 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority_comp
 // = Comparison function to pass to qsort.
 
 int
-ACE_MLF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
+ACE_MLF_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
 {
   return ACE_MLF_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
-                      ** static_cast<Dispatch_Entry **> (arg2));
+           sort_comp (** static_cast<Dispatch_Entry * const *> (arg1),
+                      ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
 
@@ -1155,10 +1155,10 @@ void
 ACE_EDF_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort ((void *) dispatch_entries_,
+  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
-                 (COMP_FUNC) ACE_EDF_Scheduler_Strategy::sort_function);
+                 static_cast<COMP_FUNC> (ACE_EDF_Scheduler_Strategy::sort_function));
 }
 
 
@@ -1222,11 +1222,11 @@ ACE_EDF_Scheduler_Strategy::dynamic_subpriority_comp
 // = Comparison function to pass to qsort.
 
 int
-ACE_EDF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
+ACE_EDF_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
 {
   return ACE_EDF_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
-                      ** static_cast<Dispatch_Entry **> (arg2));
+           sort_comp (** static_cast<Dispatch_Entry * const *> (arg1),
+                      ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
 // = Provides the dispatching queue type for the given dispatch entry.
@@ -1296,10 +1296,10 @@ void
 ACE_Criticality_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort ((void *) dispatch_entries_,
+  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
-                 (COMP_FUNC) ACE_Criticality_Scheduler_Strategy::sort_function);
+                 static_cast<COMP_FUNC> (ACE_Criticality_Scheduler_Strategy::sort_function));
 }
 
 
@@ -1344,11 +1344,11 @@ ACE_Criticality_Scheduler_Strategy::dynamic_subpriority_comp
 // = Comparison function to pass to qsort.
 
 int
-ACE_Criticality_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
+ACE_Criticality_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
 {
   return ACE_Criticality_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
-                      ** static_cast<Dispatch_Entry **> (arg2));
+           sort_comp (** static_cast<Dispatch_Entry * const *> (arg1),
+                      ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
 
