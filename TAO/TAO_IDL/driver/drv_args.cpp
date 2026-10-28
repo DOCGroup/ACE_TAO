@@ -65,8 +65,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // drv_args.cpp - Argument parsing for IDL compiler main driver
 
 #include <string>
+#include <string_view>
 
 #include "idl_defines.h"
+
 #include "global_extern.h"
 #include "drv_extern.h"
 #include "fe_extern.h"
@@ -92,17 +94,16 @@ DRV_push_file (char const *s)
 
 // Prepare a CPP argument
 static void
-DRV_prep_cpp_arg (char *s)
+DRV_prep_cpp_arg (std::string_view input)
 {
-  std::string instr (s);
   std::string newarg;
   newarg.reserve (512);
 
-  for (std::string::size_type pos = instr.find_first_of (',');
+  for (std::string_view::size_type pos = input.find (',');
        pos != std::string::npos;
-       instr = instr.substr (pos + 1), pos = instr.find_first_of (','))
+       input.remove_prefix (pos + 1), pos = input.find (','))
     {
-      newarg.append (instr.substr (0, pos));
+      newarg.append (input.substr (0, pos));
     }
 
   DRV_cpp_putarg (newarg.c_str ());
@@ -175,7 +176,6 @@ DRV_usage ()
 void
 DRV_parse_args (long ac, char **av)
 {
-  ACE_CString buffer;
   char *s = nullptr;
   long i;
 
@@ -275,7 +275,7 @@ DRV_parse_args (long ac, char **av)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
 
-                      ACE_CString arg = av[i];
+                      std::string arg (av[i]);
                       arg += av[i + 1];
 
                       DRV_cpp_putarg (arg.c_str ());
@@ -289,7 +289,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  ACE_CString arg (av[i], 2);
+                  std::string arg (av[i], 2);
                   arg += av[i] + 2;
 
                   idl_global->add_include_path (arg.substr (2).c_str (), false);
