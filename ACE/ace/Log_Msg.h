@@ -25,6 +25,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Basic_Types.h"
 
+#include <cstddef>
+
 // The ACE_ASSERT macro used to be defined here, include ace/Assert.h
 // for backwards compatibility.
 #include "ace/Assert.h"
@@ -249,6 +251,23 @@ public:
 
   /// Returns last error.
   static int last_error_adapter ();
+
+  /// Convert an error return value to the integer status used by the logger.
+  static int error_return_op_status (std::nullptr_t)
+  {
+    return 0;
+  }
+
+  static int error_return_op_status (int const status)
+  {
+    return status;
+  }
+
+  template <typename T>
+  static int error_return_op_status (T const&)
+  {
+    return 0;
+  }
 
   /// Returns non-null if an ACE_Log_Msg exists for the calling thread.
   static int exists ();
