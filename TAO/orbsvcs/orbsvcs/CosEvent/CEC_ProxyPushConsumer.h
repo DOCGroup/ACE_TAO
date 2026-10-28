@@ -51,7 +51,7 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
   /// destructor...
   ~TAO_CEC_ProxyPushConsumer () override;
@@ -121,15 +121,15 @@ protected:
 
 private:
   /// The supplier admin, used for activation and memory management.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The supplier -- use apply_policy() instead of assigning directly to
   /// supplier_.  This will keep supplier_ and nopolicy_supplier_ in sync.
@@ -140,7 +140,7 @@ private:
 
   /// If the flag is true then we are connected, notice that the
   /// supplier can be nil.
-  bool connected_;
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;

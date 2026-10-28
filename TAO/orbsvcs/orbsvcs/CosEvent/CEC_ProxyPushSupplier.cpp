@@ -31,15 +31,10 @@ using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 // TAO_CEC_ProxyPushSupplier Constructure (Un-typed EC)
 TAO_CEC_ProxyPushSupplier::
-TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec, const ACE_Time_Value &timeout)
+TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec, ACE_Time_Value const &timeout)
   : event_channel_ (ec),
-    timeout_ (timeout),
-    refcount_ (1)
+    timeout_ (timeout)
 {
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  typed_event_channel_ = nullptr;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
   this->lock_ =
     this->event_channel_->create_supplier_lock ();
 
@@ -52,13 +47,10 @@ TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec, const ACE_Time_Value &timeo
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 TAO_CEC_ProxyPushSupplier::
 TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* ec,
-                           const ACE_Time_Value &timeout)
+                           ACE_Time_Value const &timeout)
   : timeout_ (timeout),
-    typed_event_channel_ (ec),
-    refcount_ (1)
+    typed_event_channel_ (ec)
 {
-  event_channel_ = 0;
-
   this->lock_ = this->typed_event_channel_->create_supplier_lock ();
 
   this->default_POA_ = this->typed_event_channel_->typed_supplier_poa ();

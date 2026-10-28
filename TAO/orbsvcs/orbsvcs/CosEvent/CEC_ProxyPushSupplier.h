@@ -61,12 +61,12 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
   /// typed ec constructor
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
@@ -168,20 +168,20 @@ protected:
 
 private:
   /// The Event Channel that owns this object.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The Typed Event Channel that owns this object.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_TypedEventChannel *typed_event_channel_;
+  TAO_CEC_TypedEventChannel *typed_event_channel_ {};
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The consumer -- use apply_policy() instead of assigning directly to
   /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.
