@@ -52,7 +52,7 @@ class TAO_Event_Serv_Export TAO_CEC_SupplierControl_Adapter
 {
 public:
   /// Constructor
-  TAO_CEC_SupplierControl_Adapter (TAO_CEC_Reactive_SupplierControl *adaptee);
+  explicit TAO_CEC_SupplierControl_Adapter (TAO_CEC_Reactive_SupplierControl *adaptee);
 
   TAO_CEC_SupplierControl_Adapter (TAO_CEC_SupplierControl_Adapter const &) = delete;
   TAO_CEC_SupplierControl_Adapter (TAO_CEC_SupplierControl_Adapter &&) = delete;
@@ -85,8 +85,8 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_SupplierControl
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
-                                    const ACE_Time_Value &timeout,
+  TAO_CEC_Reactive_SupplierControl (ACE_Time_Value const &rate,
+                                    ACE_Time_Value const &timeout,
                                     unsigned int retries,
                                     TAO_CEC_EventChannel *event_channel,
                                     CORBA::ORB_ptr orb);
@@ -94,8 +94,8 @@ public:
   /// Constructor for the typed ec.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   TAO_CEC_Reactive_SupplierControl (
-      const ACE_Time_Value &rate,
-      const ACE_Time_Value &timeout,
+      ACE_Time_Value const &rate,
+      ACE_Time_Value const &timeout,
       unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
       CORBA::ORB_ptr orb);
@@ -110,8 +110,8 @@ public:
   TAO_CEC_Reactive_SupplierControl &operator= (TAO_CEC_Reactive_SupplierControl &&) = delete;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
-                       const void* arg);
+  void handle_timeout (ACE_Time_Value const &tv,
+                       void const *arg);
 
   // = Documented in TAO_CEC_SupplierControl
   int activate () override;
@@ -182,7 +182,7 @@ private:
 class TAO_CEC_Ping_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer>
 {
 public:
-  TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
+  explicit TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
 
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_Ping_Push_Supplier const &) = delete;
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_Ping_Push_Supplier &&) = delete;
@@ -201,7 +201,7 @@ private:
 class TAO_CEC_Ping_Typed_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer>
 {
 public:
-  TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
+  explicit TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
 
   TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_Ping_Typed_Push_Supplier const &) = delete;
   TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_Ping_Typed_Push_Supplier &&) = delete;
@@ -221,7 +221,7 @@ private:
 class TAO_CEC_Ping_Pull_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>
 {
 public:
-  TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
+  explicit TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
 
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_Ping_Pull_Supplier const &) = delete;
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_Ping_Pull_Supplier &&) = delete;
