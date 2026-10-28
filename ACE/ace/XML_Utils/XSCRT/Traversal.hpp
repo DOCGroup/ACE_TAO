@@ -155,7 +155,7 @@ namespace XSCRT
 
       Traverser ()
       {
-        DispatcherBase<B>::map (typeid (Type), *this);
+        DispatcherBase<B>::map (TypeId (typeid (Type)), *this);
       }
 
       virtual void traverse (Type &)

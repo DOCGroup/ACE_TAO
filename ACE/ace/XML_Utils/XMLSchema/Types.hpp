@@ -375,23 +375,14 @@ namespace XMLSchema
 
     ID &operator= (Base__ const &x)
     {
-      unregister_id ();
-
-      static_cast<NCName<C> &> (*this) = x;
-
-      register_id ();
-
+      assign_id_ (x);
       return *this;
     }
 
     ID &operator= (ID const &x)
     {
-      unregister_id ();
-
-      static_cast<NCName<C> &> (*this) = static_cast<NCName<C> const &> (x);
-
-      register_id ();
-
+      if (this != std::addressof (x))
+        assign_id_ (static_cast<Base__ const &> (x));
       return *this;
     }
 
@@ -410,6 +401,25 @@ namespace XMLSchema
   private:
     using NCName<C>::empty;
     using NCName<C>::root;
+
+    void assign_id_ (Base__ const &value)
+    {
+      Base__ next (value);
+
+      unregister_id ();
+      static_cast<Base__ &> (*this).swap (next);
+
+      try
+      {
+        register_id ();
+      }
+      catch (...)
+      {
+        static_cast<Base__ &> (*this).swap (next);
+        register_id ();
+        throw;
+      }
+    }
 
     void register_id ()
     {

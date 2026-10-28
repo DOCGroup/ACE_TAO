@@ -154,13 +154,22 @@ namespace XSCRT
         map_ = std::unique_ptr<Map_> (new Map_);
       }
 
-      if (!map_->insert (std::pair<IdentityProvider const *, Type *> (std::addressof (id), t)).second)
+      auto const insertion (map_->insert (std::pair<IdentityProvider const *, Type *> (std::addressof (id), t)));
+      if (!insertion.second)
       {
         throw std::logic_error ("XML ID is already registered");
       }
 
-      if (container () != this)
-        container ()->register_id (id, t);
+      try
+      {
+        if (container () != this)
+          container ()->register_id (id, t);
+      }
+      catch (...)
+      {
+        map_->erase (insertion.first);
+        throw;
+      }
     }
 
     void unregister_id (IdentityProvider const &id)
