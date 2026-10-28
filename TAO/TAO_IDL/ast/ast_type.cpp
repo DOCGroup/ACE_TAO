@@ -236,29 +236,21 @@ AST_Type::nested_name (const char* local_name,
   // scopes as well.
 
   // Thus we need some sort of relative name to be generated.
-  // Hold the fully scoped name.
-  char def_name [NAMEBUFSIZE];
-  char use_name [NAMEBUFSIZE];
+  // Hold the fully scoped names.
+  std::string def_name;
+  std::string use_name;
 
-  // These point to the prev, curr and next component in the scope.
-  char *def_curr = def_name;
-  char *def_next = nullptr;
-  char *use_curr = use_name;
-  char *use_next = nullptr;
+  // These point to the current and next component in the scope.
+  char const *def_curr = nullptr;
+  char const *def_next = nullptr;
+  char const *use_curr = nullptr;
+  char const *use_next = nullptr;
 
   // How many chars to compare.
   int len_to_match = 0;
 
-  // Initialize the buffers.
+  // Initialize the result.
   this->nested_type_name_.clear ();
-
-  ACE_OS::memset (def_name,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  ACE_OS::memset (use_name,
-                  '\0',
-                  NAMEBUFSIZE);
 
   // Traverse every component of the def_scope and use_scope beginning at the
   // root and proceeding towards the leaf trying to see if the components
@@ -290,11 +282,10 @@ AST_Type::nested_name (const char* local_name,
   if (def_scope != nullptr && !in_root && use_scope != nullptr)
     // If both scopes exist and that we are not in the root scope.
     {
-      ACE_OS::strcpy (def_name,
-                      def_scope->full_name ());
-
-      ACE_OS::strcpy (use_name,
-                      use_scope->full_name ());
+      def_name = def_scope->full_name ();
+      use_name = use_scope->full_name ();
+      def_curr = def_name.c_str ();
+      use_curr = use_name.c_str ();
 
       // Find the first occurrence of a :: and advance
       // the next pointers accordingly.
@@ -302,7 +293,7 @@ AST_Type::nested_name (const char* local_name,
       use_next = ACE_OS::strstr (use_curr, "::");
 
       // If the scopes are identical, don't supply them.
-      if  (ACE_OS::strcmp (def_name, use_name) == 0)
+      if (def_name == use_name)
         {
           if (prefix != nullptr)
             {
