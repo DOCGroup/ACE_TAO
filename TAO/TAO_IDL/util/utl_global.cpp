@@ -113,37 +113,20 @@ IDL_GlobalData::IDL_GlobalData ()
       // The actual gperf program must be included in the definition of
       // ACE_GPERF, not just the directory in which it is located.
       char const ace_gperf[] = ACE_GPERF;
-      ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_gperf) + 1]);
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s",
-                       ace_gperf);
-#else
-      this->gperf_path_ = nullptr;
+      this->gperf_path_ = ace_gperf;
 #endif
     }
   else
     {
 #if defined (ACE_GPERF)
       char const ace_gperf[] = ACE_GPERF;
-      ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_root)
-                     + ACE_OS::strlen ("/bin/")
-                     + ACE_OS::strlen (ace_gperf)
-                     + 1]);
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "%s",
-                       ace_root,
-                       ace_gperf);
+      this->gperf_path_ = std::string (ace_root)
+        + ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A
+        + ace_gperf;
 #else /* Not ACE_GPERF */
       // Set it to the default value.
-      ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_root)
-                     + ACE_OS::strlen ("/bin/ace_gperf")
-                     + 1]);
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "ace_gperf",
-                       ace_root);
+      this->gperf_path_ = std::string (ace_root)
+        + ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "ace_gperf";
 #endif /* ACE_GPERF */
     }
 
@@ -695,78 +678,82 @@ void IDL_GlobalData::idl_src_file (UTL_String *s)
 }
 
 void
-IDL_GlobalData::temp_dir (char const *s)
+IDL_GlobalData::temp_dir (std::string_view s)
 {
-  // Delete the old pointer.
-  delete [] this->temp_dir_;
-  this->temp_dir_ = nullptr; // In case the ACE_NEW fails below.
+  std::string path (s);
+  size_t const separator_length = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
 
-  size_t const lengthSep = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
-  size_t const lengthPath = ACE_OS::strlen (s);
-
-  // Allocate memory, 1 for the end of string.
-  ACE_NEW (this->temp_dir_, char [lengthPath + lengthSep + 1u]);
-
-  // Copy the strings.
-  if (lengthSep < lengthPath &&
-      0 == ACE_OS::strcmp (s + lengthPath - lengthSep, ACE_DIRECTORY_SEPARATOR_STR_A))
+  if (path.size () < separator_length
+      || path.compare (path.size () - separator_length,
+                       separator_length,
+                       ACE_DIRECTORY_SEPARATOR_STR_A) != 0)
     {
-      // Already has a directory seporator on end of temp root, don't add another.
-      ACE_OS::strcpy (this->temp_dir_, s);
+      path.append (ACE_DIRECTORY_SEPARATOR_STR_A);
     }
-  else
-    {
-      // Need to add a directory seporator to temp root.
-      ACE_OS::sprintf (this->temp_dir_,
-                       "%s%s",
-                       s,
-                       ACE_DIRECTORY_SEPARATOR_STR_A);
-    }
+
+  this->temp_dir_ = path;
 }
 
-char const *
+std::optional<std::string_view>
 IDL_GlobalData::temp_dir () const
 {
-  return this->temp_dir_;
+  if (!this->temp_dir_)
+    {
+      return std::nullopt;
+    }
+
+  return std::string_view (*this->temp_dir_);
 }
 
 void
-IDL_GlobalData::tao_root (char const *s)
+IDL_GlobalData::tao_root (std::string_view s)
 {
-  delete [] this->tao_root_;
-  this->tao_root_ = ACE::strnew (s);
+  this->tao_root_ = std::string (s);
 }
 
-char const *
+std::optional<std::string_view>
 IDL_GlobalData::tao_root () const
 {
-  return this->tao_root_;
+  if (!this->tao_root_)
+    {
+      return std::nullopt;
+    }
+
+  return std::string_view (*this->tao_root_);
 }
 
 void
-IDL_GlobalData::gperf_path (char const *s)
+IDL_GlobalData::gperf_path (std::string_view s)
 {
-  delete [] this->gperf_path_;
-  this->gperf_path_ = ACE::strnew (s);
+  this->gperf_path_ = std::string (s);
 }
 
-char const *
+std::optional<std::string_view>
 IDL_GlobalData::gperf_path () const
 {
-  return this->gperf_path_;
+  if (!this->gperf_path_)
+    {
+      return std::nullopt;
+    }
+
+  return std::string_view (*this->gperf_path_);
 }
 
 void
-IDL_GlobalData::ident_string (char const *s)
+IDL_GlobalData::ident_string (std::string_view s)
 {
-  delete [] this->ident_string_;
-  this->ident_string_ = ACE::strnew (s);
+  this->ident_string_ = std::string (s);
 }
 
-char const *
+std::optional<std::string_view>
 IDL_GlobalData::ident_string () const
 {
-  return this->ident_string_;
+  if (!this->ident_string_)
+    {
+      return std::nullopt;
+    }
+
+  return std::string_view (*this->ident_string_);
 }
 
 void
@@ -1234,7 +1221,7 @@ IDL_GlobalData::check_gperf ()
 {
   // If absolute path is not specified yet, let us call just
   // "gperf". Hopefully PATH is set up correctly to locate the gperf.
-  if (this->gperf_path_ == nullptr)
+  if (!this->gperf_path_)
     {
       // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
@@ -1251,14 +1238,14 @@ IDL_GlobalData::check_gperf ()
 
   // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
-  if (ACE_OS::strcmp (this->gperf_path_, ACE_GPERF) != 0)
+  if (ACE_OS::strcmp (this->gperf_path_->c_str (), ACE_GPERF) != 0)
 #else
-  if (ACE_OS::strcmp (this->gperf_path_, "ace_gperf") != 0)
+  if (ACE_OS::strcmp (this->gperf_path_->c_str (), "ace_gperf") != 0)
 #endif /* ACE_GPERF */
     {
       // It is absolute path. Check the existence, permissions and
       // the modes.
-      if (ACE_OS::access (this->gperf_path_,
+      if (ACE_OS::access (this->gperf_path_->c_str (),
                           F_OK | X_OK) == -1)
         {
           // Problem with the file. No point in having the absolute
@@ -1281,7 +1268,7 @@ IDL_GlobalData::check_gperf ()
 
   // Set the command line for the gperf program.
   process_options.command_line (ACE_TEXT ("\"%s\" -V"),
-                                this->gperf_path_);
+                                this->gperf_path_->c_str ());
 
   // Spawn a process for gperf.
   if (process.spawn (process_options) == -1)
@@ -1352,14 +1339,10 @@ IDL_GlobalData::fini ()
   this->pd_indent = nullptr;
   delete [] this->pd_local_escapes;
   this->pd_local_escapes = nullptr;
-  delete [] this->tao_root_;
-  this->tao_root_ = nullptr;
-  delete [] this->gperf_path_;
-  this->gperf_path_ = nullptr;
-  delete [] this->temp_dir_;
-  this->temp_dir_ = nullptr;
-  delete [] this->ident_string_;
-  this->ident_string_ = nullptr;
+  this->tao_root_.reset ();
+  this->gperf_path_.reset ();
+  this->temp_dir_.reset ();
+  this->ident_string_.reset ();
   delete [] this->pd_include_file_names;
   this->pd_include_file_names = nullptr;
 

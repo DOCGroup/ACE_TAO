@@ -12,6 +12,9 @@
  */
 //=============================================================================
 
+#include <optional>
+#include <string_view>
+
 #include "be_interface.h"
 #include "be_component.h"
 #include "be_connector.h"
@@ -1074,9 +1077,17 @@ be_interface::gen_operation_table (const char *flat_name,
         // We must randomize this a bit in order to avoid problems with
         // processing more than one idl file (in separate processes) with
         // the same name (in different directories).
+        std::optional<std::string_view> const temp_dir = idl_global->temp_dir ();
+        if (!temp_dir)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "be_interface::gen_operation_table: temp directory is not set\n"),
+                              -1);
+          }
+
         char *temp_file = nullptr;
         ACE_NEW_RETURN (temp_file,
-                        char [ACE_OS::strlen (idl_global->temp_dir ())
+                        char [ACE_OS::strlen (temp_dir->data ())
                               + 11 // The number of possible digits in
                                    // a 32-bit number plus a dot
                               + 11 // for process id
@@ -1094,7 +1105,7 @@ be_interface::gen_operation_table (const char *flat_name,
            + static_cast<unsigned int> (ACE_OS::getpid ()));
         ACE_OS::sprintf (temp_file,
                          "%s%d.%d.%s.gperf",
-                         idl_global->temp_dir (),
+                         temp_dir->data (),
                          ACE_OS::rand_r (&seed),
                          static_cast<int> (ACE_OS::getpid ()),
                          flat_name);
@@ -1102,7 +1113,7 @@ be_interface::gen_operation_table (const char *flat_name,
         // QNX can't handle individual file names (path components)
         // longer than 48 characters.
 #if defined(__QNX__)
-        size_t const temp_dir_len = ACE_OS::strlen (idl_global->temp_dir ());
+        size_t const temp_dir_len = ACE_OS::strlen (temp_dir->data ());
 
         if (ACE_OS::strlen (temp_file) > temp_dir_len + 47)
           {
@@ -1961,6 +1972,14 @@ be_interface::gen_linear_search_class_definition (const char *flat_name)
 int
 be_interface::gen_gperf_lookup_methods (const char *flat_name)
 {
+  std::optional<std::string_view> const gperf_path = idl_global->gperf_path ();
+  if (!gperf_path)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_interface::gen_gperf_lookup_methods: gperf path is not set\n"),
+                        -1);
+    }
+
   // Using ACE_Process.
   ACE_Process process;
   ACE_Process_Options process_options;
@@ -2054,7 +2073,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                                     ACE_TEXT ("-Z TAO_%s_Perfect_Hash_OpTable")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-N lookup"),
-                                    idl_global->gperf_path (),
+                                    gperf_path->data (),
                                     flat_name);
       break;
 
@@ -2077,7 +2096,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                                     ACE_TEXT ("-Z TAO_%s_Binary_Search_OpTable")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-N lookup"),
-                                    idl_global->gperf_path (),
+                                    gperf_path->data (),
                                     flat_name);
       break;
 
@@ -2100,7 +2119,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                                     ACE_TEXT ("-Z TAO_%s_Linear_Search_OpTable")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-N lookup"),
-                                    idl_global->gperf_path (),
+                                    gperf_path->data (),
                                     flat_name);
       break;
 

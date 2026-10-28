@@ -1002,7 +1002,8 @@ DRV_get_orb_idl_includes ()
     {
       // Fall back on $TAO_ROOT/tao/orb.idl if orb.idl is not in the
       // include path.
-      ACE_CString orb_idl_path (ACE_CString (idl_global->tao_root ())
+      std::optional<std::string_view> const tao_root = idl_global->tao_root ();
+      ACE_CString orb_idl_path (ACE_CString (tao_root ? tao_root->data () : "")
                                 + ACE_CString ('/')
                                 + ACE_CString (orb_idl));
 
@@ -1167,7 +1168,17 @@ DRV_pre_proc (char const *myfile)
       throw Bailout ();
     }
 
-  char const *tmpdir = idl_global->temp_dir ();
+  std::optional<std::string_view> const temp_dir = idl_global->temp_dir ();
+  if (!temp_dir)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: temporary directory is not set\n",
+                  idl_global->prog_name ()));
+
+      throw Bailout ();
+    }
+
+  char const *tmpdir = temp_dir->data ();
   static constexpr char temp_file_extension[] = ".cpp";
 
   static constexpr char tao_idlf_template[] = "tao-idlf_XXXXXX";

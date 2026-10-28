@@ -8,6 +8,9 @@
  */
 //=============================================================================
 
+#include <optional>
+#include <string_view>
+
 #include "be_codegen.h"
 #include "be_uses.h"
 #include "be_interface.h"
@@ -1995,11 +1998,11 @@ TAO_CodeGen::gperf_input_filename ()
 void
 TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 {
-  const char *str = idl_global->ident_string ();
+  std::optional<std::string_view> const str = idl_global->ident_string ();
 
-  if (str != nullptr)
+  if (str)
     {
-      *stream << "#" << str << be_nl_2;
+      *stream << "#" << str->data () << be_nl_2;
     }
 }
 
