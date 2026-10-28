@@ -36,7 +36,7 @@ class TAO_NS_Persistence_Global;
 class TAO_Storable_Naming_Context_ReaderWriter
 {
 public:
-  TAO_Storable_Naming_Context_ReaderWriter (TAO::Storable_Base & stream);
+  explicit TAO_Storable_Naming_Context_ReaderWriter (TAO::Storable_Base & stream);
 
   int read (TAO_Storable_Naming_Context & context);
 

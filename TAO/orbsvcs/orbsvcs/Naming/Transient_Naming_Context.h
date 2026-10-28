@@ -40,7 +40,7 @@ public:
   using HASH_MAP = ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
 
   /// Constructor.
-  TAO_Transient_Bindings_Map (size_t hash_table_size);
+  explicit TAO_Transient_Bindings_Map (size_t hash_table_size);
 
   /// Destructor.
   ~TAO_Transient_Bindings_Map () override;

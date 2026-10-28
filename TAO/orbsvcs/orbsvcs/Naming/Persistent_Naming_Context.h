@@ -37,7 +37,7 @@ public:
   using HASH_MAP = ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
 
   /// Constructor.
-  TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
+  explicit TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
 
   /// Allocate hash map of size @a hash_map_size from persistent storage
   /// using the @a alloc.
