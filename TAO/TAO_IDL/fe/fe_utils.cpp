@@ -261,7 +261,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                       AST_Uses *u,
                                       char const *prefix)
 {
-  ACE_CString struct_name (prefix);
+  std::string struct_name (prefix);
 
   if (!struct_name.empty ())
     {
@@ -343,7 +343,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                          false,
                                          false);
 
-  ACE_CString seq_string (struct_name);
+  std::string seq_string (struct_name);
   seq_string += 's';
   Identifier seq_id (seq_string.c_str ());
   UTL_ScopedName seq_name (&seq_id,
@@ -810,7 +810,7 @@ FE_Utils::original_local_name (Identifier *local_name)
 
       if (entry != nullptr)
         {
-          ACE_CString tmp (lname + 5);
+          std::string tmp (lname + 5);
           local_name->replace_string (tmp.c_str ());
         }
     }
