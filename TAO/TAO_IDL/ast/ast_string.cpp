@@ -67,11 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_String nodes have a maximum size (an AST_Expression which must
 // evaluate to a positive integer).
 
+#include <string>
+
 #include "ast_string.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "global_extern.h"
@@ -124,26 +124,16 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 
   unsigned long bound = ms->ev ()->u.ulval;
 
-  static char namebuf[NAMEBUFSIZE];
-  static char boundbuf[NAMEBUFSIZE];
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (boundbuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  if (bound)
+  std::string namebuf ("CORBA_");
+  if (wide != 1)
     {
-      ACE_OS::sprintf (boundbuf,
-                       "_%ld",
-                       bound);
+      namebuf += 'W';
     }
-
-  ACE_OS::sprintf (namebuf,
-                   "CORBA_%sSTRING%s",
-                   (wide == 1 ? "" : "W"),
-                   boundbuf);
+  namebuf += "STRING";
+  if (bound != 0)
+    {
+      namebuf += '_' + std::to_string (bound);
+    }
 
   this->flat_name_ = namebuf;
 }
