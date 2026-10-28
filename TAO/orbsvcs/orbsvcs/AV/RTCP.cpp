@@ -491,7 +491,6 @@ TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 
 // TAO_AV_RTCP_Callback
 TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
-  : packet_size_ (0)
 {
   char cname[256];
   char host[256];

@@ -95,7 +95,7 @@ public:
   int value ();
   void value (int val);
 protected:
-  int value_;
+  int value_ {};
 };
 
 using TAO_AV_PolicyList = TAO::unbounded_value_sequence<TAO_AV_Policy*>;

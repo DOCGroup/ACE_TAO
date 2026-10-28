@@ -105,7 +105,6 @@ RTP_Packet::RTP_Packet(unsigned char padding,
                        ACE_UINT32 *csrc_list,
                        char *data,
                        ACE_UINT16 data_size)
-  :extension_bytes_(0)
 {
   //size of header (in octets) without contributing sources
   ACE_UINT16 size = 3*4;
@@ -620,7 +619,6 @@ TAO_AV_RTP_Object::send_frame (const char*,
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   : TAO_AV_Protocol_Object (callback, transport)
-  , format_ (0)
   , control_object_ (nullptr)
 {
   this->sequence_num_ = static_cast<ACE_UINT16> (ACE_OS::rand ());

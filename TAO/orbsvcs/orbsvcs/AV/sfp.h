@@ -56,12 +56,9 @@ public:
 class TAO_SFP_Fragment_Table_Entry
 {
 public:
-  TAO_SFP_Fragment_Table_Entry ()
-    :last_received_ (0),
-     num_fragments_ (0)
-    {}
-  int last_received_;
-  size_t num_fragments_;
+  TAO_SFP_Fragment_Table_Entry () = default;
+  bool last_received_ {};
+  size_t num_fragments_ {};
   TAO_AV_frame_info frame_info;
   ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node> fragment_set_;
 };
@@ -93,8 +90,8 @@ public:
   flowProtocol::frameHeader frame_header_;
   flowProtocol::fragment fragment_;
   flowProtocol::frame frame_;
-  CORBA::Boolean more_fragments_;
-  ACE_Message_Block *frame_block_;
+  bool more_fragments_ {};
+  ACE_Message_Block *frame_block_ {};
   // boolean flags indicating that there are more fragments.
   ACE_Message_Block static_frame_;
   TAO_SFP_Fragment_Table_Map fragment_table_map_;

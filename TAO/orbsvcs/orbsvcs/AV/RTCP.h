@@ -174,13 +174,13 @@ public:
 protected:
   ACE_Hash_Map_Manager<ACE_UINT32, RTCP_Channel_In*, ACE_Null_Mutex> inputs_;
   RTCP_Channel_Out output_;
-  int timeout_;
-  int timestamp_offset_;
-  int sdes_count_;
+  int timeout_ {};
+  int timestamp_offset_ {};
+  int sdes_count_ {};
 
   bool is_initial_timeout_ {true};
-  int avg_rtcp_size_;
-  int packet_size_;
+  int avg_rtcp_size_ {};
+  int packet_size_ {};
 };
 
 class RTP_Packet;

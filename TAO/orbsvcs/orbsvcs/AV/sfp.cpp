@@ -227,7 +227,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
     {
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));
-      state.more_fragments_ = 1;
+      state.more_fragments_ = true;
       ACE_Message_Block *data = nullptr;
       switch (frame_header.message_type)
         {
@@ -311,7 +311,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
           state.frame_block_ =
             TAO_SFP_Base::check_all_fragments (fragment_entry);
           if (state.frame_block_ != nullptr)
-            state.more_fragments_ = 0;
+            state.more_fragments_ = false;
         }
       else
         {
@@ -350,10 +350,10 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
     }
   else
     {
-      state.more_fragments_ = 0;
+      state.more_fragments_ = false;
       state.frame_block_ = message_block;
     }
-  if (state.more_fragments_ == 0)
+  if (!state.more_fragments_)
     {
       if (fragment_entry != nullptr)
         {
@@ -437,7 +437,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"Last fragment received\n"));
       // if bit 1 is not set then there are
       // no more fragments.
-      fragment_entry->last_received_ = 1;
+      fragment_entry->last_received_ = true;
       // since fragment number starts from 0 to n-1 we add 1.
       fragment_entry->num_fragments_ = fragment.frag_number + 1;
     }
@@ -446,7 +446,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
   state.frame_block_ = check_all_fragments (fragment_entry);
   if (state.frame_block_ != nullptr)
     {
-      state.more_fragments_ = 0;
+      state.more_fragments_ = false;
       ACE_NEW_RETURN (frame_info,
                       TAO_AV_frame_info,
                       -1);
@@ -1293,9 +1293,7 @@ TAO_SFP_Frame_State::TAO_SFP_Frame_State ()
                             0,
                             0),
         0,
-        TAO_ENCAP_BYTE_ORDER),
-   more_fragments_ (0),
-   frame_block_ (nullptr)
+        TAO_ENCAP_BYTE_ORDER)
 {
 }
 

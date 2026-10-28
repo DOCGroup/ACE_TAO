@@ -338,7 +338,7 @@ private:
   char host_byte_order_payload_[RTP_MTU];
 
   /// The number of bytes in the header extension - 0 if no extension.
-  unsigned int extension_bytes_;
+  unsigned int extension_bytes_ {};
 
   /// The size of the overall data packet.
   ACE_UINT16 packet_size_;
@@ -379,7 +379,7 @@ public:
 protected:
   ACE_UINT16 sequence_num_;
   ACE_UINT32 timestamp_offset_;
-  int format_;
+  int format_ {};
   ACE_UINT32 ssrc_;
   TAO_AV_Protocol_Object *control_object_;
 
