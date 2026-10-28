@@ -74,8 +74,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "ast_root.h"
 
-constexpr size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
-
 // Populate the global scope with all predefined entities.
 void
 fe_populate_global_scope ()
@@ -379,12 +377,6 @@ FE_init ()
   idl_global->set_lineno (-1);
   idl_global->set_prog_name (nullptr);
 
-  char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
-  ACE_OS::memset (&local_escapes,
-                  0,
-                  LOCAL_ESCAPES_BUFFER_SIZE);
-
-  idl_global->set_local_escapes (local_escapes);
   idl_global->set_compile_flags (0);
   idl_global->set_include_file_names (nullptr);
   idl_global->set_n_include_file_names (0);

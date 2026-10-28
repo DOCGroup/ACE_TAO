@@ -382,8 +382,7 @@ public:
   long             compile_flags ();        // What flags are on?
   void             set_compile_flags (long);    // Turn some on or off
 
-  char             *local_escapes ();       // Get local escapes
-  void             set_local_escapes (char const *);// Set it
+  void append_local_escapes (std::string_view escapes);
 
   UTL_Indenter     *indent ();              // Get indenter
   void             set_indent (UTL_Indenter *); // Set it
@@ -920,7 +919,7 @@ private:
   char const                 *pd_prog_name {};         // Argv[0]
   char const                 *pd_cpp_location {};      // Where to find CPP
   long                       pd_compile_flags {};      // Compile flags
-  char                       *pd_local_escapes {};     // Trapdoor argument
+  std::string                 local_escapes_;          // Trapdoor argument
   UTL_Indenter               *pd_indent {};            // Indent object
                                                      // as it's being built
   UTL_String                 **pd_include_file_names {}; // Array of file names.

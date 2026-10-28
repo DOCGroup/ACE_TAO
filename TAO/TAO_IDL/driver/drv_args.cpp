@@ -236,8 +236,7 @@ DRV_parse_args (long ac, char **av)
                   s = av[i] + 2;
                 }
 
-              ACE_OS::strcat (idl_global->local_escapes (), s);
-              ACE_OS::strcat (idl_global->local_escapes (), " ");
+              idl_global->append_local_escapes (s);
               break;
             case 'a':
               if (av[i][2] == 'e')
