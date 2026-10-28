@@ -65,6 +65,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_IDL_GLOBAL_HH
 #define _IDL_IDL_GLOBAL_HH
 
+#include <string>
+#include <string_view>
+
 // May of them could be forward declared..
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -514,10 +517,10 @@ public:
   void destroy ();
   // Cleanup function.
 
-  void append_idl_flag (char const *s);
+  void append_idl_flag (std::string_view s);
   // Save each flag passed to the IDL compiler.
 
-  char const *idl_flags () const;
+  std::string const &idl_flags () const;
   // Get a string representation of the flags
   // passed to the idl compiler.
 
@@ -958,7 +961,7 @@ private:
   bool nest_orb_ {};
   // Is this front end being used for the NEST ORB?
 
-  ACE_CString idl_flags_;
+  std::string idl_flags_;
   // Concatenation of all the command line options.
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> idl_keywords_;

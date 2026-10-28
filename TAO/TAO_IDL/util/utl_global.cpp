@@ -94,7 +94,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 static long *pSeenOnce = nullptr;
 
 IDL_GlobalData::IDL_GlobalData ()
-  : idl_flags_ ("")
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -882,15 +881,16 @@ IDL_GlobalData::destroy ()
 }
 
 void
-IDL_GlobalData::append_idl_flag (char const *s)
+IDL_GlobalData::append_idl_flag (std::string_view s)
 {
-  this->idl_flags_ += " " + ACE_CString (s);
+  this->idl_flags_.append (" ");
+  this->idl_flags_.append (s);
 }
 
-char const *
+std::string const &
 IDL_GlobalData::idl_flags () const
 {
-  return this->idl_flags_.c_str ();
+  return this->idl_flags_;
 }
 
 ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
