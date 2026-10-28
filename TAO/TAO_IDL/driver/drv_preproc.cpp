@@ -83,6 +83,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Truncate.h"
 
+#include <optional>
+#include <string>
+#include <vector>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -93,11 +97,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Storage for preprocessor args.
 constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
-unsigned long DRV_argcount = 0;
-ACE_TCHAR const * DRV_arglist[DRV_MAX_ARGCOUNT] = { nullptr };
+std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
 
-static char const * output_arg_format = nullptr;
-static long output_arg_index = 0;
+static std::optional<std::basic_string<ACE_TCHAR>> output_arg_format;
+static size_t output_arg_index = 0;
 
 constexpr ACE_TCHAR TCHAR_DIR_DOT[] = ACE_TEXT(".");
 
@@ -129,16 +132,14 @@ static size_t drv_line_size = LINEBUF_SIZE + 1;
 void
 DRV_cpp_new_location (char const * new_loc)
 {
-  ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[0]));
-  DRV_arglist[0] =
-    ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (new_loc));
+  DRV_arglist[0] = ACE_TEXT_CHAR_TO_TCHAR (new_loc);
 }
 
 // Push an argument into the DRV_arglist.
 void
 DRV_cpp_putarg (char const *str)
 {
-  if (DRV_argcount >= DRV_MAX_ARGCOUNT)
+  if (DRV_arglist.size () >= DRV_MAX_ARGCOUNT)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: More than %d arguments to preprocessor\n",
@@ -148,97 +149,57 @@ DRV_cpp_putarg (char const *str)
       throw Bailout ();
     }
 
-  char *replace = nullptr;
-  if (str)
-    {
-      bool allocate_error = false;
+  std::string argument (str);
 
 #ifdef ACE_WIN32
-      char const * const first_quote = ACE_OS::strchr (str, '"');
-      if (first_quote)
-        {
-          // Escape Doublequotes on Windows
-
-          size_t quote_count = 0;
-          for (char const *quote = first_quote; quote; quote = ACE_OS::strchr (quote, '"'))
-            {
-              ++quote_count;
-              ++quote;
-            }
-
-          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + quote_count + 1]);
-          allocate_error = !replace;
-          if (replace)
-            {
-              char *to = replace;
-              for (char const *from = str; *from; ++from)
-                {
-                  if (*from == '"')
-                    {
-                      *to = '\\';
-                      ++to;
-                    }
-                  *to = *from;
-                  ++to;
-                }
-              *to = '\0';
-            }
-        }
-#endif
-      if (ACE_OS::strchr (str, ' '))
-        {
-          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
-          allocate_error = !replace;
-          if (replace)
-            {
-              replace[0] = '"';
-              ACE_OS::strcpy (replace + 1, str);
-              ACE_OS::strcat (replace, "\"");
-            }
-        }
-
-      if (allocate_error)
-        {
-          idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate memory for argument!");
-          throw Bailout ();
-        }
-    }
-
-  DRV_arglist[DRV_argcount++] = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (replace ? replace : str));
-
-  if (replace)
+  if (argument.find ('"') != std::string::npos)
     {
-      delete [] replace;
-      replace = nullptr;
+      std::string escaped;
+      escaped.reserve (argument.size () + 4);
+      for (char const character : argument)
+        {
+          if (character == '"')
+            {
+              escaped += '\\';
+            }
+          escaped += character;
+        }
+      argument = escaped;
     }
+#endif
+
+  if (argument.find (' ') != std::string::npos)
+    {
+      argument.insert (argument.begin (), '"');
+      argument += '"';
+    }
+
+  DRV_arglist.emplace_back (ACE_TEXT_CHAR_TO_TCHAR (argument.c_str ()));
 }
 
 // Expand the output argument with the given filename.
 void
 DRV_cpp_expand_output_arg (char const *filename)
 {
-  if (output_arg_format != nullptr)
+  if (output_arg_format)
     {
-      ACE::strdelete (const_cast<ACE_TCHAR *> (
-                        DRV_arglist[output_arg_index]));
-      DRV_arglist[output_arg_index] = nullptr;
-
-      ACE_NEW (DRV_arglist[output_arg_index],
-               ACE_TCHAR [ACE_OS::strlen (output_arg_format)
-                     + ACE_OS::strlen (filename)
-                     + 1]);
+      std::basic_string<ACE_TCHAR> tchar_filename (
+        ACE_TEXT_CHAR_TO_TCHAR (filename));
+      std::basic_string<ACE_TCHAR> &output_arg =
+        DRV_arglist[output_arg_index];
+      output_arg.resize (output_arg_format->size () + tchar_filename.size () + 1);
 
 #ifdef __GNUC__
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #endif
-      ACE_OS::sprintf (const_cast<ACE_TCHAR *> (
-                         DRV_arglist[output_arg_index]),
-                       ACE_TEXT_CHAR_TO_TCHAR (output_arg_format),
-                       ACE_TEXT_CHAR_TO_TCHAR (filename));
+      ACE_OS::sprintf (output_arg.data (),
+                       output_arg_format->c_str (),
+                       tchar_filename.c_str ());
 #ifdef __GNUC__
 #  pragma GCC diagnostic pop
 #endif
+      output_arg.resize (ACE_OS::strlen (output_arg.c_str ()));
     }
 }
 
@@ -247,11 +208,9 @@ unsigned int
 DRV_cpp_calc_total_argsize()
 {
   unsigned long size = 0;
-  unsigned long ix = 0;
-  while (DRV_arglist[ix] != nullptr)
+  for (std::basic_string<ACE_TCHAR> const &argument : DRV_arglist)
     {
-      size += ACE_Utils::truncate_cast<unsigned long> (ACE_OS::strlen (DRV_arglist[ix]) + 1);
-      ++ix;
+      size += ACE_Utils::truncate_cast<unsigned long> (argument.size () + 1);
     }
   return size;
 }
@@ -316,6 +275,10 @@ DRV_get_line (FILE *file)
 void
 DRV_cpp_init ()
 {
+  DRV_arglist.clear ();
+  output_arg_format.reset ();
+  output_arg_index = 0;
+
   // Create the line buffer.
   // (JP) Deleting this at the end or DRV_pre_proc() causes
   // Purify to output a Freeing Mismatched Memory warning.
@@ -434,12 +397,11 @@ DRV_cpp_init ()
       // Check for an argument that specifies
       // the preprocessor's output file.
       if (ACE_OS::strstr (platform_arglist[i], ACE_TEXT ("%s")) != nullptr
-          && output_arg_format == nullptr)
+          && !output_arg_format)
         {
-          output_arg_format =
-            ACE::strnew (ACE_TEXT_ALWAYS_CHAR (platform_arglist[i]));
-          output_arg_index = static_cast<long> (DRV_argcount);
-          DRV_cpp_putarg (nullptr);
+          output_arg_format = platform_arglist[i];
+          output_arg_index = DRV_arglist.size ();
+          DRV_cpp_putarg ("");
         }
       else
         {
@@ -1325,7 +1287,14 @@ DRV_pre_proc (char const *myfile)
 
   DRV_cpp_expand_output_arg (t_file);
   DRV_cpp_putarg (input_file);
-  DRV_cpp_putarg (nullptr); // Null terminate the DRV_arglist.
+
+  std::vector<ACE_TCHAR const *> cpp_arglist;
+  cpp_arglist.reserve (DRV_arglist.size () + 1);
+  for (std::basic_string<ACE_TCHAR> const &argument : DRV_arglist)
+    {
+      cpp_arglist.push_back (argument.c_str ());
+    }
+  cpp_arglist.push_back (nullptr);
 
   // For complex builds, the default
   // command line buffer size of 1024
@@ -1336,14 +1305,15 @@ DRV_pre_proc (char const *myfile)
                                    DRV_cpp_calc_total_argsize (),
                                    16 * 1024,
                                    512,
-                                   DRV_argcount);
+                                   ACE_Utils::truncate_cast<unsigned long> (
+                                     cpp_arglist.size ()));
 
-  if (cpp_options.command_line (DRV_arglist) != 0)
+  if (cpp_options.command_line (cpp_arglist.data ()) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%C: command line processing \"%s\" failed\n"),
                   idl_global->prog_name (),
-                  DRV_arglist[0]));
+                  DRV_arglist[0].c_str ()));
 
       if (copy_input_file)
         {
@@ -1390,7 +1360,7 @@ DRV_pre_proc (char const *myfile)
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
-  if (output_arg_format == nullptr)
+  if (!output_arg_format)
     {
       // If the following open() fails, then we're either being hit with a
       // symbolic link attack, or another process opened the file before
@@ -1433,7 +1403,7 @@ DRV_pre_proc (char const *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%C: spawn of \"%s\" failed\n",
                   idl_global->prog_name (),
-                  DRV_arglist[0]));
+                  DRV_arglist[0].c_str ()));
 
 
       (void) ACE_OS::unlink (t_file);
@@ -1457,13 +1427,9 @@ DRV_pre_proc (char const *myfile)
         }
     }
 
-  // Remove the null termination and the
-  // input file from the DRV_arglist,
-  // the next file will the previous args.
-  DRV_argcount -= 2;
-  ACE::strdelete (
-    const_cast<ACE_TCHAR *> (DRV_arglist[DRV_argcount]));
-  DRV_arglist[DRV_argcount] = nullptr;
+  // Remove the input file from the argument storage so the next file can use
+  // the same preprocessor options.
+  DRV_arglist.pop_back ();
   ACE_exitcode status = 0;
 
   if (process.wait (&status) == ACE_INVALID_PID)
@@ -1488,7 +1454,7 @@ DRV_pre_proc (char const *myfile)
                       "%C: preprocessor \"%s\" "
                       "returned with an error\n",
                       idl_global->prog_name (),
-                      DRV_arglist[0]));
+                      DRV_arglist[0].c_str ()));
 
           (void) ACE_OS::unlink (t_file);
           (void) ACE_OS::unlink (t_ifile);
@@ -1504,7 +1470,7 @@ DRV_pre_proc (char const *myfile)
                   "%C: preprocessor \"%s\" appears "
                   "to have been interrupted\n",
                   idl_global->prog_name (),
-                  DRV_arglist[0]));
+                  DRV_arglist[0].c_str ()));
 
       (void) ACE_OS::unlink (t_file);
       (void) ACE_OS::unlink (t_ifile);

@@ -88,9 +88,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #  include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-extern const ACE_TCHAR *DRV_arglist[];
-extern unsigned long DRV_argcount;
-
 std::vector<std::string> DRV_files;
 
 void
@@ -157,11 +154,6 @@ DRV_cleanup ()
   idl_global->fini ();
   delete idl_global;
   idl_global = nullptr;
-
-  for (unsigned long i = 0; i < DRV_argcount; ++i)
-    {
-      ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[i]));
-    }
 }
 
 /*
