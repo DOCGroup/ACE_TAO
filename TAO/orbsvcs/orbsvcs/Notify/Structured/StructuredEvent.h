@@ -32,36 +32,42 @@ class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent_No_Copy : public TAO_Not
 {
 public:
   /// Constructor
-  explicit TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
+  explicit TAO_Notify_StructuredEvent_No_Copy (
+    CosNotification::StructuredEvent const &notification);
+
+  TAO_Notify_StructuredEvent_No_Copy (TAO_Notify_StructuredEvent_No_Copy const &) = delete;
+  TAO_Notify_StructuredEvent_No_Copy (TAO_Notify_StructuredEvent_No_Copy &&) = delete;
+  TAO_Notify_StructuredEvent_No_Copy &operator= (TAO_Notify_StructuredEvent_No_Copy const &) = delete;
+  TAO_Notify_StructuredEvent_No_Copy &operator= (TAO_Notify_StructuredEvent_No_Copy &&) = delete;
 
   /// Destructor
   ~TAO_Notify_StructuredEvent_No_Copy () override = default;
 
   /// marshal this event into a CDR buffer (for persistence)
-  virtual void marshal (TAO_OutputCDR & cdr) const;
+  void marshal (TAO_OutputCDR & cdr) const override;
 
-  CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const;
+  CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const override;
 
   /// Convert to CosNotification::Structured type
-  virtual void convert (CosNotification::StructuredEvent& notification) const;
+  void convert (CosNotification::StructuredEvent& notification) const override;
 
   /// Get the event type.
-  virtual const TAO_Notify_EventType& type () const;
+  TAO_Notify_EventType const &type () const override;
 
   /// Push event to consumer
-  virtual void push (TAO_Notify_Consumer* consumer) const;
+  void push (TAO_Notify_Consumer* consumer) const override;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const;
+  void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const override;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const;
+  void push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const override;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const;
+  void push (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const override;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const;
+  void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const override;
 
   /// unmarshal this event from a CDR buffer (for persistence)
   /// \return the new event, or NULL if this is the wrong type of event.
@@ -69,7 +75,7 @@ public:
 
 protected:
   /// returns a copy of this event allocated on the heap
-  virtual TAO_Notify_Event * copy () const;
+  TAO_Notify_Event * copy () const override;
 
   /// Structured Event
   const CosNotification::StructuredEvent* notification_;
