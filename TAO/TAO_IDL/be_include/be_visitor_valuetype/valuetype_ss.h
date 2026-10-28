@@ -14,6 +14,8 @@
 #ifndef _BE_VALUETYPE_VALUETYPE_SS_H_
 #define _BE_VALUETYPE_VALUETYPE_SS_H_
 
+#include <string>
+
 /**
  * @class be_visitor_valuetype_ss
  *
@@ -39,8 +41,8 @@ public:
   int visit_eventtype (be_eventtype *node) override;
 
 protected:
-  ACE_CString generate_local_name (be_valuetype *node);
-  ACE_CString generate_full_skel_name (be_valuetype *node);
+  std::string generate_local_name (be_valuetype *node);
+  std::string generate_full_skel_name (be_valuetype *node);
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_SS_H_ */

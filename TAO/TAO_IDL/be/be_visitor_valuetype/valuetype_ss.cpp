@@ -46,7 +46,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  ACE_CString full_skel_name_holder =
+  std::string full_skel_name_holder =
     this->generate_full_skel_name (node);
 
   char const *full_skel_name = full_skel_name_holder.c_str ();
@@ -63,7 +63,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       local_name_prefix = "POA_";
     }
 
-  ACE_CString node_local_name_holder =
+  std::string node_local_name_holder =
     this->generate_local_name (node);
 
   char const *node_local_name = node_local_name_holder.c_str ();
@@ -121,14 +121,14 @@ be_visitor_valuetype_ss::visit_eventtype (be_eventtype *node)
   return this->visit_valuetype (node);
 }
 
-ACE_CString
+std::string
 be_visitor_valuetype_ss::generate_local_name (be_valuetype *node)
 {
-  return ACE_CString (node->local_name ());
+  return node->local_name ();
 }
 
-ACE_CString
+std::string
 be_visitor_valuetype_ss::generate_full_skel_name (be_valuetype *node)
 {
-  return ACE_CString (node->full_skel_name ());
+  return node->full_skel_name ();
 }

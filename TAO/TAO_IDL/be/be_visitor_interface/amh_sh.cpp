@@ -72,17 +72,12 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
     {
       for (int i = 0; i < n_parents; ++i)
         {
-          ACE_CString amh_name ("POA_");
+          std::string amh_name ("POA_");
 
-          // @@ The following code is *NOT* exception-safe.
-          char *buf = nullptr;
           be_interface *base =
             dynamic_cast<be_interface*> (node->inherits ()[i]);
-          base->compute_full_name ("AMH_", "", buf);
-          amh_name += buf;
-          // buf was allocated by ACE_OS::strdup, so we need to use free
-          // instead of delete.
-          ACE_OS::free (buf);
+          std::string const full_name = base->compute_full_name ("AMH_", "");
+          amh_name += full_name;
 
           if (i != 0)
             {

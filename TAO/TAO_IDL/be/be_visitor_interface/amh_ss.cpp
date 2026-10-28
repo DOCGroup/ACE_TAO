@@ -55,7 +55,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
   non_amh_name += node->client_enclosing_scope ();
   non_amh_name += node->local_name ();
 
-  ACE_CString full_skel_name_holder =
+  std::string full_skel_name_holder =
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
@@ -97,7 +97,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  ACE_CString full_skel_name_holder =
+  std::string full_skel_name_holder =
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
@@ -155,23 +155,15 @@ emit (be_interface * /* derived */,
       TAO_OutStream *os,
       be_interface *base)
 {
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString amh_name ("POA_");
+  std::string amh_name ("POA_");
 
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = nullptr;
-  base->compute_full_name ("AMH_", "", buf);
+  std::string const buf = base->compute_full_name ("AMH_", "");
   amh_name += buf;
-  // buf was allocated using ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
 
   *os << "if (ACE_OS::strcmp (logical_type_id, \""
       << base->repoID () << "\") == 0)" << be_idt_nl
       << "return static_cast<"
-      << amh_name.c_str () << "*> (this);" << be_uidt_nl;
+      << amh_name << "*> (this);" << be_uidt_nl;
 
   return 0;
 }
@@ -213,20 +205,12 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
     }
   else
     {
-      // @@ This whole thing would be more efficient if we could pass the
-      // ACE_CString to compute_full_name, after all it uses that
-      // internally.
-      ACE_CString amh_name ("POA_");
+      std::string amh_name ("POA_");
 
-      // @@ The following code is *NOT* exception-safe.
-      char *buf = nullptr;
-      base->compute_full_name ("AMH_", "", buf);
+      std::string const buf = base->compute_full_name ("AMH_", "");
       amh_name += buf;
-      // buf was allocated by ACE_OS::strdup, so we need to use free
-      // instead of delete.
-      ACE_OS::free (buf);
 
-      *os << amh_name.c_str () << " (rhs)";
+      *os << amh_name << " (rhs)";
     }
 
   *os << be_uidt;
@@ -257,47 +241,25 @@ be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
 
 // ****************************************************************
 
-ACE_CString
+std::string
 be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
 {
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = nullptr;
-  node->compute_flat_name ("AMH_", "", buf);
-
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_flat_name, after all it uses that
-  // internally.
-  ACE_CString result (buf);
-  // buf was allocated using ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
-
-  return result;
+  return node->compute_flat_name ("AMH_", "");
 }
 
-ACE_CString
+std::string
 be_visitor_amh_interface_ss::generate_local_name (be_interface *node)
 {
-  ACE_CString local_name = "AMH_";
+  std::string local_name = "AMH_";
   local_name += node->local_name ();
   return local_name;
 }
 
-ACE_CString
+std::string
 be_visitor_amh_interface_ss::generate_full_skel_name (be_interface *node)
 {
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString result ("POA_");
-
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = nullptr;
-  node->compute_full_name ("AMH_", "", buf);
-  result += buf;
-  // buf was allocated using ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
+  std::string result ("POA_");
+  result += node->compute_full_name ("AMH_", "");
 
   return result;
 }

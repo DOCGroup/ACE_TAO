@@ -61,14 +61,9 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
         }
     }
 
-  char *buf = nullptr;
-  intf->compute_full_name ("TAO_", "", buf);
-  ACE_CString response_handler_implementation_name ("POA_");
+  std::string const buf = intf->compute_full_name ("TAO_", "");
+  std::string response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
-  // buf was allocated by ACE_OS::strdup, so we need to use free instead
-  // of delete.
-  ACE_OS::free (buf);
-  buf = nullptr;
 
   // Step 1 : Generate return type: always void
   TAO_INSERT_COMMENT (os);

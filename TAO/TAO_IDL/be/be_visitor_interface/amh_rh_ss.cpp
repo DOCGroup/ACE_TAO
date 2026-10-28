@@ -40,17 +40,13 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   //    need to fix that...
   // Generate the skeleton class name, use the AMH-node name as a
   // basis, this is AMH_<InterfaceName>ResponseHandler...
-  ACE_CString rh_skel_prefix =  "TAO_";
+  std::string rh_skel_prefix = "TAO_";
 
-  char *buf;
-  node->compute_full_name (rh_skel_prefix.c_str(), "", buf);
-  ACE_CString rh_skel_full_scope_name ("POA_");
+  std::string const buf = node->compute_full_name (rh_skel_prefix, "");
+  std::string rh_skel_full_scope_name ("POA_");
   rh_skel_full_scope_name += buf;
-  // buf was allocated by ACE_OS::strdup, so we need to use free instead
-  // of delete.
-  ACE_OS::free (buf);
 
-  ACE_CString rh_skel_class_name_prefix (rh_skel_prefix.c_str ());
+  std::string rh_skel_class_name_prefix (rh_skel_prefix);
 
   if (!node->is_nested ())
     {
@@ -59,7 +55,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
       rh_skel_class_name_prefix = "POA_TAO_";
     }
 
-  ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
+  std::string rh_skel_class_name (rh_skel_class_name_prefix);
   rh_skel_class_name += node->local_name ();
 
   TAO_INSERT_COMMENT (os);

@@ -16,6 +16,9 @@
 
 #include "ast_decl.h"
 
+#include <string>
+#include <string_view>
+
 class be_scope;
 class be_visitor;
 class be_type;
@@ -39,15 +42,13 @@ public:
   // Methods used by the interface type strategy.
   /// Both the arguments should be non-null!!!. Applies prefix and
   /// suffix to the local name and makes a flat name.
-  void compute_full_name  (const char *prefix,
-                           const char *suffix,
-                           char *&name);
+  std::string compute_full_name (std::string_view prefix,
+                                 std::string_view suffix);
 
   /// Both the arguments should be non-null!!!. Applies prefix and
   /// suffix to the local name and makes a flat name.
-  void compute_flat_name (const char *prefix,
-                          const char *suffix,
-                          char *& name);
+  std::string compute_flat_name (std::string_view prefix,
+                                 std::string_view suffix);
 
   // End of Methods use by the interface type strategy.
 

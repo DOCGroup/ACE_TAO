@@ -39,7 +39,6 @@
 
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
-#include "ace/String_Base.h"
 
 be_decl::be_decl (AST_Decl::NodeType type,
                   UTL_ScopedName *n)
@@ -51,19 +50,11 @@ be_decl::be_decl (AST_Decl::NodeType type,
 
 be_decl::~be_decl () = default;
 
-void
-be_decl::compute_full_name  (const char *prefix,
-                             const char *suffix,
-                             char *&name)
+std::string
+be_decl::compute_full_name (std::string_view prefix,
+                            std::string_view suffix)
 {
-  if (prefix == nullptr || suffix == nullptr)
-    {
-      return;
-    }
-
-  ACE_CString prefix_str (prefix);
-  ACE_CString suffix_str (suffix);
-  ACE_CString result_str;
+  std::string result_str (prefix);
 
   // Get parent.
   if (this->defined_in () == nullptr)
@@ -71,13 +62,11 @@ be_decl::compute_full_name  (const char *prefix,
       // Global scope.
 
       // Prefix.
-      result_str = prefix_str;
-
       // Local name.
-      result_str += ACE_CString (this->local_name ()->get_string ());
+      result_str.append (this->local_name ()->get_string_view ());
 
       // Suffix.
-      result_str += suffix_str;
+      result_str.append (suffix);
     }
   else
     {
@@ -92,45 +81,36 @@ be_decl::compute_full_name  (const char *prefix,
                       "compute_full_name - "
                       "scope name is nil\n"));
 
-          return;
+          return {};
         }
 
       // Parent name.
-      result_str = ACE_CString (parent->full_name ());
+      result_str = parent->full_name ();
 
       // _
-      if (ACE_OS::strcmp (parent->full_name (), "") != 0)
+      if (!result_str.empty ())
         {
-          result_str += ACE_CString ("::");
+          result_str += "::";
         }
 
       // Prefix.
-      result_str += prefix_str;
+      result_str.append (prefix);
 
       // Local name.
-      result_str += ACE_CString (this->local_name ()->get_string ());
+      result_str.append (this->local_name ()->get_string_view ());
 
       // Suffix.
-      result_str += suffix_str;
+      result_str.append (suffix);
     }
 
-  name = ACE_OS::strdup (result_str.fast_rep ());
+  return result_str;
 }
 
-void
-be_decl::compute_flat_name  (const char *prefix,
-                             const char *suffix,
-                             char *&name)
+std::string
+be_decl::compute_flat_name (std::string_view prefix,
+                            std::string_view suffix)
 {
-  if (prefix == nullptr || suffix == nullptr)
-    {
-      return;
-    }
-
-  ACE_CString prefix_str (prefix);
-  ACE_CString suffix_str (suffix);
-
-  ACE_CString result_str;
+  std::string result_str (prefix);
 
   // Get parent.
   if (this->defined_in () == nullptr)
@@ -138,15 +118,11 @@ be_decl::compute_flat_name  (const char *prefix,
       // Global scope.
 
       // Prefix.
-      result_str = prefix_str;
-
       // Local name. Leave out _cxx_ prefix, if any.
-      result_str +=
-        ACE_CString (
-          this->original_local_name ()->get_string ());
+      result_str.append (this->original_local_name ()->get_string_view ());
 
       // Suffix.
-      result_str += suffix_str;
+      result_str.append (suffix);
     }
   else
     {
@@ -160,29 +136,29 @@ be_decl::compute_flat_name  (const char *prefix,
                       "compute_flat_name - "
                       "scope name is nil\n"));
 
-          return;
+          return {};
         }
 
       // Parent name.
-      result_str = ACE_CString (parent->flat_name ());
+      result_str = parent->flat_name ();
 
       // _
-      if (ACE_OS::strcmp (parent->flat_name (), "") != 0)
-        result_str += "_";
+      if (!result_str.empty ())
+        {
+          result_str += '_';
+        }
 
       // Prefix.
-      result_str += prefix_str;
+      result_str.append (prefix);
 
       // Local name. Leave out _cxx_ prefix, if any.
-      result_str +=
-        ACE_CString (
-          this->original_local_name ()->get_string ());
+      result_str.append (this->original_local_name ()->get_string_view ());
 
       // Suffix.
-      result_str += suffix_str;
+      result_str.append (suffix);
     }
 
-  name = ACE_OS::strdup (result_str.c_str ());
+  return result_str;
 }
 
 void

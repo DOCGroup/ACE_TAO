@@ -316,17 +316,12 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
     }
 
 
-  char *buf;
-  intf->compute_full_name ("AMH_", "", buf);
-  ACE_CString amh_skel_name ("POA_");
+  std::string const buf = intf->compute_full_name ("AMH_", "");
+  std::string amh_skel_name ("POA_");
   amh_skel_name += buf;
-  // buf was allocated by ACE_OS::strdup, so we need to use free instead
-  // of delete.
-  ACE_OS::free (buf);
-  buf = nullptr;
 
   *os << "void" << be_nl
-      << amh_skel_name.c_str () << "::"
+      << amh_skel_name << "::"
       << skel_prefix << this->ctx_->port_prefix ().c_str ()
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
@@ -340,8 +335,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   *os << "{" << be_idt_nl;
 
   // Get the right object implementation.
-  *os << amh_skel_name.c_str () << " * const _tao_impl =" << be_idt_nl
-      << "dynamic_cast<" << amh_skel_name.c_str () << " *> ("
+  *os << amh_skel_name << " * const _tao_impl =" << be_idt_nl
+      << "dynamic_cast<" << amh_skel_name << " *> ("
       << "_tao_servant" << ");" << be_uidt_nl;
 
   *os << "if (!_tao_impl)" << be_idt_nl
@@ -366,14 +361,9 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
     }
 
   // Create the response handler
-  char *buf;
-  intf->compute_full_name ("TAO_AMH_", "ResponseHandler", buf);
-  ACE_CString response_handler_implementation_name ("POA_");
+  std::string const buf = intf->compute_full_name ("TAO_AMH_", "ResponseHandler");
+  std::string response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
-  // buf was allocated by ACE_OS::strdup, so we need to use free instead
-  // of delete.
-  ACE_OS::free (buf);
-  buf = nullptr;
 
   *os << be_nl
       << "TAO_ORB_Core *orb_core =" << be_idt_nl
@@ -382,7 +372,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << "orb_core->lane_resources ().amh_response_handler_allocator ();"
       << be_uidt_nl << be_nl
       << "TAO::TAO_Buffer_Allocator<" << be_idt << be_idt_nl
-      << response_handler_implementation_name.c_str () << "," << be_nl
+      << response_handler_implementation_name << "," << be_nl
       << "TAO_AMH_BUFFER_ALLOCATOR" << be_uidt_nl
       << "> buffer_allocator (amh_allocator);"
       << be_uidt_nl << be_nl

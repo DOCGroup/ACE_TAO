@@ -47,12 +47,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       return -1;
     }
-  ACE_CString full_skel_name_holder =
+  std::string full_skel_name_holder =
     this->generate_full_skel_name (node);
 
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  ACE_CString flat_name_holder =
+  std::string flat_name_holder =
     this->generate_flat_name (node);
 
   const char *flat_name = flat_name_holder.c_str ();
@@ -98,7 +98,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       local_name_prefix = "POA_";
     }
 
-  ACE_CString node_local_name_holder =
+  std::string node_local_name_holder =
     this->generate_local_name (node);
 
   const char *node_local_name = node_local_name_holder.c_str ();
@@ -426,20 +426,20 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
   return 0;
 }
 
-ACE_CString
+std::string
 be_visitor_interface_ss::generate_flat_name (be_interface *node)
 {
-  return ACE_CString (node->flat_name ());
+  return node->flat_name ();
 }
 
-ACE_CString
+std::string
 be_visitor_interface_ss::generate_local_name (be_interface *node)
 {
-  return ACE_CString (node->local_name ());
+  return node->local_name ();
 }
 
-ACE_CString
+std::string
 be_visitor_interface_ss::generate_full_skel_name  (be_interface *node)
 {
-  return ACE_CString (node->full_skel_name ());
+  return node->full_skel_name ();
 }

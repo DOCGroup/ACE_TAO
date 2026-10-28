@@ -39,9 +39,9 @@ protected:
 //                                                 TAO_OutStream *os);
   virtual int generate_copy_ctor (be_interface *node,
                                   TAO_OutStream *os);
-  ACE_CString generate_flat_name (be_interface *node) override;
-  ACE_CString generate_local_name (be_interface *node) override;
-  ACE_CString generate_full_skel_name (be_interface *node) override;
+  std::string generate_flat_name (be_interface *node) override;
+  std::string generate_local_name (be_interface *node) override;
+  std::string generate_full_skel_name (be_interface *node) override;
 };
 
 #endif /* AMH_INTERFACE_SS_H */

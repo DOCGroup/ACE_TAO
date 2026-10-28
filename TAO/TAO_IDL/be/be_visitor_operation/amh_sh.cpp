@@ -165,14 +165,9 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
   //         parameter listing. We also generate the ResponseHandler
   //         argument 'on the fly' and add it to the argument list
 
-  char *buf;
   // @@ TODO this must be kept consistent with the code in
   //    be_visitor_interface/amh_sh.cpp
-  intf->compute_full_name ("AMH_", "ResponseHandler_ptr", buf);
+  std::string const buf = intf->compute_full_name ("AMH_", "ResponseHandler_ptr");
 
   *os << buf << " _tao_rh";
-  // buf was allocated by ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
-  buf = nullptr;
 }
