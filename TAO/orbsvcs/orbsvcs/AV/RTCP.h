@@ -178,7 +178,7 @@ protected:
   int timestamp_offset_;
   int sdes_count_;
 
-  int is_initial_timeout_;
+  bool is_initial_timeout_ {true};
   int avg_rtcp_size_;
   int packet_size_;
 };

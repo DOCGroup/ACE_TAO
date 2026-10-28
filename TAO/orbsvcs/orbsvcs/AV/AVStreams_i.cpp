@@ -1419,10 +1419,7 @@ TAO_MCastConfigIf::in_flowSpec (const AVStreams::flowSpec& flow_spec, const char
 // TAO_Base_StreamEndPoint
 // ----------------------------------------------------------------------
 
-TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint ()
-  : protocol_object_set_ (0)
-{
-}
+TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint () = default;
 
 TAO_Base_StreamEndPoint::~TAO_Base_StreamEndPoint () = default;
 
@@ -1491,7 +1488,7 @@ TAO_Base_StreamEndPoint::set_protocol_object (const char * /*flowname*/,
 void
 TAO_Base_StreamEndPoint::protocol_object_set ()
 {
-  this->protocol_object_set_ = 1;
+  this->protocol_object_set_ = true;
 }
 
 
@@ -3343,7 +3340,6 @@ TAO_MMDevice::~TAO_MMDevice ()
 // default constructor.
 TAO_FlowConnection::TAO_FlowConnection ()
   :fp_name_ (CORBA::string_dup ("")),
-   ip_multicast_ (0),
    mcastconfigif_i_ (nullptr)
 {
 }
@@ -3686,7 +3682,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
               else
                 {
                   // ATM Multicasting is in use.
-                  this->ip_multicast_ = 0;
+                  this->ip_multicast_ = false;
                 }
             }
           // set the multicast peer.
@@ -3809,10 +3805,7 @@ TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target)
 // -----------------------------------------------------------------
 
 //default constructor.
-TAO_FlowEndPoint::TAO_FlowEndPoint ()
-  :lock_ (0)
-{
-}
+TAO_FlowEndPoint::TAO_FlowEndPoint () = default;
 
 TAO_FlowEndPoint::TAO_FlowEndPoint (const char *flowname,
                                     AVStreams::protocolSpec &protocols,
@@ -3884,7 +3877,7 @@ TAO_FlowEndPoint::lock ()
 
   if (this->lock_)
     return 0;
-  this->lock_ = 1;
+  this->lock_ = true;
   return 1;
 }
 
@@ -3892,7 +3885,7 @@ TAO_FlowEndPoint::lock ()
 void
 TAO_FlowEndPoint::unlock ()
 {
-  this->lock_ = 0;
+  this->lock_ = false;
 }
 
 

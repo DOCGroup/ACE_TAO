@@ -206,9 +206,9 @@ protected:
 
   /// Addr information for the carrier protocol.
   ACE_Addr *address_;
-  int clean_up_address_;         // added to clean up a memory leak
+  bool clean_up_address_ {};     // added to clean up a memory leak
   ACE_Addr *control_address_;
-  int clean_up_control_address_; // added to clean up a memory leak
+  bool clean_up_control_address_ {}; // added to clean up a memory leak
 
   /// Fwd Addr in string format i.e hostname:port.
   ACE_CString address_str_;
@@ -237,13 +237,13 @@ protected:
   /// flow protocol string.
   ACE_CString flow_protocol_;
 
-  int use_flow_protocol_;
+  bool use_flow_protocol_ {};
 
   /// The flowspec entry;
   ACE_CString entry_;
 
-  int is_multicast_;
-  bool delete_peer_addr_;
+  bool is_multicast_ {};
+  bool delete_peer_addr_ {};
   ACE_Addr *peer_addr_;
   char** local_sec_addr_;
   int num_local_sec_addrs_;

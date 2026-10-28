@@ -34,7 +34,6 @@ TAO_AV_Core::TAO_AV_Core ()
   : connector_registry_ (nullptr)
   , acceptor_registry_ (nullptr)
   , reactor_ (nullptr)
-  , stop_run_ (false)
 {
   ACE_NEW (this->connector_registry_,
            TAO_AV_Connector_Registry

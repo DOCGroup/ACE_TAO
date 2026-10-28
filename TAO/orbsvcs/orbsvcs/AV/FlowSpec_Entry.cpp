@@ -20,9 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry ()
   :address_ (nullptr),
-   clean_up_address_ (0),
    control_address_ (nullptr),
-   clean_up_control_address_ (0),
    address_str_ (),
    format_ (),
    direction_ (TAO_AV_INVALID),
@@ -31,10 +29,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry ()
    protocol_ (TAO_AV_Core::TAO_AV_NOPROTOCOL),
    carrier_protocol_ (),
    flow_protocol_ (),
-   use_flow_protocol_ (0),
    entry_ (),
-   is_multicast_ (0),
-   delete_peer_addr_ (false),
    peer_addr_ (nullptr),
    local_sec_addr_ (nullptr),
    num_local_sec_addrs_ (0),
@@ -63,19 +58,14 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         //ACE_Addr *peer_address,
                                         ACE_Addr *control_address)
   :address_ (fwd_address),
-   clean_up_address_ (0),
    control_address_ (control_address),
-   clean_up_control_address_ (0),
    address_str_ (),
    format_ (format_name),
    direction_str_ (), // This is initialized in the call to set_direction()
    flowname_ ( flowname ),
    carrier_protocol_ ( carrier_protocol ),
    flow_protocol_ ( flow_protocol ),
-   use_flow_protocol_ (0),
    entry_ (),
-   is_multicast_ (0),
-   delete_peer_addr_ (false),
    peer_addr_ (nullptr),
    local_sec_addr_ (nullptr),
    num_local_sec_addrs_ (0),
@@ -103,18 +93,14 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *flow_protocol,
                                         const char *address)
   :address_ (nullptr),
-   clean_up_address_ (0),
    control_address_ (nullptr),
-   clean_up_control_address_ (0),
    address_str_ ( address ),
    format_ ( format_name ),
    direction_str_ (), // This is initialized in the call to set_direction()
    flowname_ ( flowname ),
    carrier_protocol_ (),
    flow_protocol_ ( flow_protocol ),
-   use_flow_protocol_ (0),
    entry_ (),
-   is_multicast_ (0),
    peer_addr_ (nullptr),
    local_sec_addr_ (nullptr),
    num_local_sec_addrs_ (0),
@@ -211,7 +197,7 @@ TAO_FlowSpec_Entry::set_protocol ()
         ORBSVCS_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s %x\n",buf, inet_addr->get_ip_address ()));
       if (IN_CLASSD (inet_addr->get_ip_address ()))
         {
-          this->is_multicast_ = 1;
+          this->is_multicast_ = true;
           switch (this->protocol_)
             {
             case TAO_AV_Core::TAO_AV_UDP:
@@ -306,12 +292,12 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                                 -1);
                 if (flow_comp == TAO_AV_Core::TAO_AV_DATA)
                   {
-                    this->clean_up_address_ = 1;
+                    this->clean_up_address_ = true;
                     this->address_ = inet_addr;
                   }
                 else
                   {
-                    this->clean_up_control_address_ = 1;
+                    this->clean_up_control_address_ = true;
                     this->control_address_ = inet_addr;
                   }
 
@@ -320,7 +306,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                     if (TAO_debug_level > 0)
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
 
-                    this->is_multicast_ = 1;
+                    this->is_multicast_ = true;
                     switch (this->protocol_)
                       {
                       case TAO_AV_Core::TAO_AV_UDP:
@@ -409,7 +395,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                 ACE_NEW_RETURN (inet_addr,
                                 ACE_INET_Addr (addr.c_str() ),
                                 -1);
-                this->clean_up_address_ = 1;
+                this->clean_up_address_ = true;
                 this->address_ = inet_addr;
 
                 if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
@@ -418,7 +404,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                     ACE_NEW_RETURN (control_inet_addr,
                                     ACE_INET_Addr (control_addr.c_str() ),
                                     -1);
-                    this->clean_up_control_address_ = 1;
+                    this->clean_up_control_address_ = true;
                     this->control_address_ = control_inet_addr;
                   }
 
@@ -427,7 +413,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                     if (TAO_debug_level > 0)
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
 
-                    this->is_multicast_ = 1;
+                    this->is_multicast_ = true;
                     switch (this->protocol_)
                       {
                       case TAO_AV_Core::TAO_AV_UDP:

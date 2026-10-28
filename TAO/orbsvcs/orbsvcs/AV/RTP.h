@@ -386,7 +386,7 @@ protected:
   /// Pre-allocated memory to receive the data...
   ACE_Message_Block frame_;
 
-  int connection_gone_;
+  bool connection_gone_ {};
 };
 
 

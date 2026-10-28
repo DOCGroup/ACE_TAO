@@ -491,8 +491,7 @@ TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 
 // TAO_AV_RTCP_Callback
 TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
-  :is_initial_timeout_(1),
-   packet_size_(0)
+  : packet_size_ (0)
 {
   char cname[256];
   char host[256];
@@ -578,7 +577,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
     }
 
   if (b_iter)
-    b_iter->next_ = 0;
+    b_iter->next_ = nullptr;
 
   if (this->output_.active ())
     {
@@ -755,7 +754,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
                                          &this->avg_rtcp_size_,    // avg_rtcp_size
                                          this->is_initial_timeout_);  // initial)
 
-  this->is_initial_timeout_ = 0;
+  this->is_initial_timeout_ = false;
 
   ACE_NEW (tv,
            ACE_Time_Value);

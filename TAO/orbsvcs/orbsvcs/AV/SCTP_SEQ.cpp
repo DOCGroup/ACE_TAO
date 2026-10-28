@@ -474,7 +474,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   ACE_Multihomed_INET_Addr local_addr; //This can be a multihomed address
   ACE_INET_Addr *addr;
-  if (entry->get_peer_addr () != 0)
+  if (entry->get_peer_addr () != nullptr)
     {
       addr = dynamic_cast<ACE_INET_Addr *> (entry->get_peer_addr ());
     }

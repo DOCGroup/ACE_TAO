@@ -332,7 +332,7 @@ TAO_AV_RTP_Object::handle_input ()
     {
       if ((errno == EADDRNOTAVAIL) || (errno == ECONNRESET))
         {
-          this->connection_gone_ = 1;
+          this->connection_gone_ = true;
           return -1;
         }
       else
@@ -622,7 +622,6 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
   : TAO_AV_Protocol_Object (callback, transport)
   , format_ (0)
   , control_object_ (nullptr)
-  , connection_gone_ (0)
 {
   this->sequence_num_ = static_cast<ACE_UINT16> (ACE_OS::rand ());
   this->timestamp_offset_ = ACE_OS::rand ();

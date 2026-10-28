@@ -1148,7 +1148,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   ACE_INET_Addr *local_addr;
 
-  if (entry->get_peer_addr () != 0)
+  if (entry->get_peer_addr () != nullptr)
     {
       local_addr = dynamic_cast<ACE_INET_Addr*> (entry->get_peer_addr ());
     }

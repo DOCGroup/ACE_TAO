@@ -453,7 +453,7 @@ protected:
   TAO_AV_QoS qos_;
   Flow_Handler_Map flow_handler_map_;
   Flow_Handler_Map control_flow_handler_map_;
-  int protocol_object_set_;
+  bool protocol_object_set_ {};
 };
 
 // Forward declarations.
@@ -897,7 +897,7 @@ protected:
   CORBA::String_var producer_address_;
 
   /// IP Multicasting is used.
-  int ip_multicast_;
+  bool ip_multicast_ {};
   TAO_MCastConfigIf *mcastconfigif_i_;
   AVStreams::MCastConfigIf_var mcastconfigif_;
   u_short mcast_port_;
@@ -1042,7 +1042,7 @@ protected:
   AVStreams::MCastConfigIf_var mcast_peer_;
 
   /// Lock.
-  CORBA::Boolean lock_;
+  bool lock_ {};
 
   CORBA::String_var format_;
   CORBA::String_var flowname_;

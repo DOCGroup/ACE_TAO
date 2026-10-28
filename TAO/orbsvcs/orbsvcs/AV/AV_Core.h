@@ -160,7 +160,7 @@ protected:
   ACE_Reactor *reactor_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
-  CORBA::Boolean stop_run_;
+  bool stop_run_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
