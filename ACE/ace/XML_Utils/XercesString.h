@@ -23,12 +23,12 @@ namespace XML
 
 // On unicode windows, ACE_TCHAR == XMLCh
 #if !defined(_MSC_VER) || !defined(ACE_USES_WCHAR)
-    XStr (const ACE_TCHAR *str);
+    explicit XStr (const ACE_TCHAR *str);
 #endif
 
-    XStr (XMLCh *wstr);
+    explicit XStr (XMLCh *wstr);
 
-    XStr (const XMLCh *wstr);
+    explicit XStr (const XMLCh *wstr);
 
     XStr (const XStr &copy);
     XStr (XStr &&other) noexcept;

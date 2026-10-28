@@ -520,6 +520,16 @@ namespace XMLSchema
       return *this;
     }
 
+    bool operator== (IDREF const &x) const
+    {
+      return id_.compare (x.id_) == 0;
+    }
+
+    bool operator!= (IDREF const &x) const
+    {
+      return !(*this == x);
+    }
+
   public:
     NCName<C> id () const
     {
