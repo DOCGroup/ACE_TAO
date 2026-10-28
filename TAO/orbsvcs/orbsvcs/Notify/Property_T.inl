@@ -35,7 +35,7 @@ TAO_Notify_PropertyBase_T<TYPE>::operator!= (const TYPE &rhs) const
 template <class TYPE> ACE_INLINE void
 TAO_Notify_PropertyBase_T<TYPE>:: invalidate ()
 {
-  this->valid_ = 0;
+  this->valid_ = false;
 }
 
 template <class TYPE> ACE_INLINE
@@ -43,7 +43,7 @@ void
 TAO_Notify_PropertyBase_T<TYPE>:: assign (const TYPE& value)
 {
   this->value_ = value;
-  this->valid_ = 1;
+  this->valid_ = true;
 }
 
 
