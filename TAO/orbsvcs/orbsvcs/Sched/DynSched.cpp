@@ -315,7 +315,7 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
       if (info_collection_.bind (lookup, rtinfo) != 0)
         {
           delete rtinfo;
-          rtinfo = 0;
+          rtinfo = nullptr;
           return FAILED; // Error!
         }
       else
@@ -1307,14 +1307,9 @@ ACE_DynScheduler::setup_task_entries ()
   // allocate new table of pointers to task entries (for sorting)
   ACE_NEW_RETURN (ordered_task_entries_, Task_Entry *[task_count],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
-  // @@ TODO: this is completely bogus code, the bit-wise
-  //    representation of a null pointer is not always a string of
-  //    zeroes.  The correct way to intialize this array is with a for
-  //    loop.
-  // ACE_OS::memset (ordered_task_entries_, 0,
-  //                 sizeof (Task_Entry *) * task_count);
+  // Initialize the array with null pointers.
   for (size_t j = 0; j != task_count; ++j)
-    ordered_task_entries_[j] = 0;
+    ordered_task_entries_[j] = nullptr;
 
   // allocate new unbounded set for pointers to
   // task entries that delineate threads
@@ -2250,8 +2245,8 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
     accumulated_execution = 0;
     current_accumulated_execution = 0;
     current_completion = 0;
-    current_entry = 0;
-    current_last_entry = 0;
+    current_entry = nullptr;
+    current_last_entry = nullptr;
 
     ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> iter (*timeline_);
     for (iter.first (); iter.done () == 0; iter.advance ())

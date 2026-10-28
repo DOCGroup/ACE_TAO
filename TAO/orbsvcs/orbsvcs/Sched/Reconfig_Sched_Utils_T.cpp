@@ -107,7 +107,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 
               // Extract a pointer to the scheduling entry from the RT_Info.
 
-              if (next_rt_info == 0)
+              if (next_rt_info == nullptr)
                 {
                   ORBSVCS_ERROR_RETURN ((LM_ERROR, "RT_Info in map was null.\n"),
                                     -1);
@@ -119,7 +119,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
               next_rse =
                 ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                                      next_rt_info->volatile_token);
-              if (next_rse == 0)
+              if (next_rse == nullptr)
                 {
                   ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                      "Entry pointer in RT_Info was null.\n"),
@@ -688,7 +688,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   while (orig_tuple_iter.done () == 0)
     {
       if (orig_tuple_iter.next (tuple_ptr_ptr) == 0
-          || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
+          || tuple_ptr_ptr == nullptr || *tuple_ptr_ptr == nullptr)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       "Failed to access tuple under iterator"));
@@ -721,7 +721,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   while (prop_tuple_iter.done () == 0)
     {
       if (prop_tuple_iter.next (tuple_ptr_ptr) == 0
-          || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
+          || tuple_ptr_ptr == nullptr || *tuple_ptr_ptr == nullptr)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       "Failed to access tuple under iterator"));
@@ -793,7 +793,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
               rse.actual_rt_info ()->period));
 #endif
 
-  if (previous_entry_ == 0)
+  if (previous_entry_ == nullptr)
     {
       // Indicate a new priority level was assigned.
       result = 1;

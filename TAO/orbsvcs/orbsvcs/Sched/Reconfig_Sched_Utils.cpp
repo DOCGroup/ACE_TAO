@@ -264,7 +264,7 @@ remove_tuples (u_long tuple_flags)
       while (orig_tuple_iter.done () == 0)
         {
           if (orig_tuple_iter.next (tuple_ptr_ptr) == 0
-              || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
+              || tuple_ptr_ptr == nullptr || *tuple_ptr_ptr == nullptr)
             {
               ORBSVCS_ERROR ((LM_ERROR,
                           "Failed to access tuple under iterator"));
@@ -314,7 +314,7 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
     {
       // Get a pointer to the tuple under the iterator.
       if (tuple_iter.next (tuple_ptr_ptr) == 0
-          || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
+          || tuple_ptr_ptr == nullptr || *tuple_ptr_ptr == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
@@ -379,7 +379,7 @@ update_tuple (TAO_RT_Info_Ex &info,
     {
       // Get a pointer to the tuple under the iterator.
       if (tuple_iter.next (tuple_ptr_ptr) == 0
-          || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
+          || tuple_ptr_ptr == nullptr || *tuple_ptr_ptr == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
@@ -420,7 +420,7 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
     {
       // Get a pointer to the tuple under the iterator.
       if (tuple_iter.next (tuple_ptr_ptr) == 0
-          || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
+          || tuple_ptr_ptr == nullptr || *tuple_ptr_ptr == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
         }
@@ -1074,11 +1074,11 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
     reinterpret_cast<TAO_Reconfig_Scheduler_Entry **> (const_cast<void *> (t));
 
   // Check the converted pointers.
-  if (first == 0 || *first == 0)
+  if (first == nullptr || *first == nullptr)
     {
-      return (second == 0 || *second == 0) ? 0 : 1;
+      return (second == nullptr || *second == nullptr) ? 0 : 1;
     }
-  else if (second == 0 || *second == 0)
+  else if (second == nullptr || *second == nullptr)
     {
       return -1;
     }
@@ -1136,11 +1136,11 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
                            (*second)->volatile_token);
 
   // Check the converted pointers.
-  if (first == 0 || *first == 0)
+  if (first == nullptr || *first == nullptr)
     {
-      return (second == 0 || *second == 0) ? 0 : 1;
+      return (second == nullptr || *second == nullptr) ? 0 : 1;
     }
-  else if (second == 0 || *second == 0)
+  else if (second == nullptr || *second == nullptr)
     {
       return -1;
     }
@@ -1273,11 +1273,11 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
     reinterpret_cast<TAO_Reconfig_Scheduler_Entry **> (const_cast<void *> (t));
 
   // Check the converted pointers.
-  if (first == 0 || *first == 0)
+  if (first == nullptr || *first == nullptr)
     {
-      return (second == 0 || *second == 0) ? 0 : 1;
+      return (second == nullptr || *second == nullptr) ? 0 : 1;
     }
-  else if (second == 0 || *second == 0)
+  else if (second == nullptr || *second == nullptr)
     {
       return -1;
     }
@@ -1338,11 +1338,11 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
                            (*second)->volatile_token);
 
   // Check the converted pointers.
-  if (first == 0 || *first == 0)
+  if (first == nullptr || *first == nullptr)
     {
-      return (second == 0 || *second == 0) ? 0 : 1;
+      return (second == nullptr || *second == nullptr) ? 0 : 1;
     }
-  else if (second == 0 || *second == 0)
+  else if (second == nullptr || *second == nullptr)
     {
       return -1;
     }
@@ -1497,11 +1497,11 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const v
     reinterpret_cast<TAO_Reconfig_Scheduler_Entry **> (const_cast<void *> (t));
 
   // Check the converted pointers.
-  if (first == 0 || *first == 0)
+  if (first == nullptr || *first == nullptr)
     {
-      return (second == 0 || *second == 0) ? 0 : 1;
+      return (second == nullptr || *second == nullptr) ? 0 : 1;
     }
-  else if (second == 0 || *second == 0)
+  else if (second == nullptr || *second == nullptr)
     {
       return -1;
     }
@@ -1562,11 +1562,11 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
                          (*second)->volatile_token);
 
   // Check the converted pointers.
-  if (first == 0 || *first == 0)
+  if (first == nullptr || *first == nullptr)
     {
-      return (second == 0 || *second == 0) ? 0 : 1;
+      return (second == nullptr || *second == nullptr) ? 0 : 1;
     }
-  else if (second == 0 || *second == 0)
+  else if (second == nullptr || *second == nullptr)
     {
       return -1;
     }
