@@ -140,7 +140,7 @@ be_visitor_amh_pre_proc::create_response_handler (
   )
 {
   // Generate 'AMH_InterfaceResponseHandler'
-  ACE_CString class_name;
+  std::string class_name;
   class_name += "AMH_";
   class_name += node->local_name ();
   class_name += "ResponseHandler";
@@ -409,7 +409,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
 
-  ACE_CString original_op_name (
+  std::string original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
 
@@ -661,7 +661,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
 
-  ACE_CString new_local_name ("raise_");
+  std::string new_local_name ("raise_");
 
   if (operation_kind == Operation_Kind::SET)
     {
@@ -723,10 +723,10 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
 
 int
-be_visitor_amh_pre_proc::generate_name (ACE_CString &destination,
-                                        const char *prefix,
-                                        const char *middle_name,
-                                        const char *suffix)
+be_visitor_amh_pre_proc::generate_name (std::string &destination,
+                                        char const *prefix,
+                                        char const *middle_name,
+                                        char const *suffix)
 {
   destination = prefix;
   destination += middle_name;
@@ -738,10 +738,11 @@ be_visitor_amh_pre_proc::generate_name (ACE_CString &destination,
 be_operation *
 be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
+  std::string original_op_name (
       node->name ()->last_component ()->get_string ()
     );
-  ACE_CString new_op_name = ACE_CString ("get_") + original_op_name;
+  std::string new_op_name ("get_");
+  new_op_name += original_op_name;
 
   UTL_ScopedName *get_name =
     static_cast<UTL_ScopedName *> (node->name ()-> copy ());
@@ -765,10 +766,11 @@ be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 be_operation *
 be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
+  std::string original_op_name (
       node->name ()->last_component ()->get_string ()
     );
-  ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
+  std::string new_op_name ("set_");
+  new_op_name += original_op_name;
 
   UTL_ScopedName *set_op_name =
     dynamic_cast<UTL_ScopedName *> (node->name ()-> copy ());
