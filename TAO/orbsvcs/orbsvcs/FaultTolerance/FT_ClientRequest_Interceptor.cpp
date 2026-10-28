@@ -22,19 +22,17 @@ namespace TAO
   {
     ACE_Utils::UUID_GENERATOR::instance ()->init ();
 
-    this->uuid_ =
-      ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ();
+    this->uuid_.reset (
+      ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
 
     // Would be nice to have runtime option.
-    ACE_NEW (this->lock_,
+    ACE_Lock *lock = nullptr;
+    ACE_NEW (lock,
              ACE_Lock_Adapter<TAO_SYNCH_MUTEX>);
+    this->lock_.reset (lock);
   }
 
-  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor ()
-  {
-    delete this->uuid_;
-    delete this->lock_;
-  }
+  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor () = default;
 
   char *
   FT_ClientRequest_Interceptor::name ()
