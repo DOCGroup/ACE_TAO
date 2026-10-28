@@ -88,9 +88,9 @@ namespace XSCRT
       {
         for (auto const &entry : d)
         {
-          for (TraverserBase<B> *traverser : entry.second)
+          for (TraverserBase<B> *item : entry.second)
           {
-            dispatcher_.map (entry.first, *traverser);
+            dispatcher_.map (entry.first, *item);
           }
         }
       }

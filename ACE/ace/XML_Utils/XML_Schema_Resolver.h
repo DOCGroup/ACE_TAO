@@ -64,7 +64,7 @@ namespace XML
     const XMLCh *operator() (const XMLCh *const, const XMLCh *const systemId) const
     {
       return systemId;
-    };
+    }
   };
 
   /**

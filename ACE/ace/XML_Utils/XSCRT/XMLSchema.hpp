@@ -335,11 +335,20 @@ namespace XMLSchema
 
     void container (XSCRT::Type *c) override
     {
+      XSCRT::Type *const previous_container (NCName<C>::container ());
       unregister_id ();
 
-      NCName<C>::container (c);
-
-      register_id ();
+      try
+      {
+        NCName<C>::container (c);
+        register_id ();
+      }
+      catch (...)
+      {
+        NCName<C>::container (previous_container == this ? nullptr : previous_container);
+        register_id ();
+        throw;
+      }
     }
 
   private:
@@ -393,6 +402,10 @@ namespace XMLSchema
     IdentityProvider<C> id_provider_;
     bool registered_{};
   };
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
   struct IDREF_Base : public XSCRT::Type
   {

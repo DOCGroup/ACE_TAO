@@ -332,7 +332,7 @@ namespace XML
       if (ser_config->canSetParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true))
         ser_config->setParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true);
 
-      std::unique_ptr<XMLFormatTarget> format_target (
+      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> format_target (
         new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (ACE_TEXT_ALWAYS_CHAR (file)));
 
       output->setByteStream (format_target.get ());

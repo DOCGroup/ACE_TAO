@@ -5,6 +5,7 @@
 
 #include "ace/ace_wchar.h"
 #include <limits>
+#include <locale>
 #include <map>
 #include <memory>
 #include <sstream>
@@ -21,6 +22,27 @@ namespace XSCRT
     X parse_numeric (std::basic_string<C> const &value)
     {
       std::basic_istringstream<C> stream (value);
+      stream.imbue (std::locale::classic ());
+
+      if constexpr (std::numeric_limits<X>::has_infinity && std::numeric_limits<X>::has_quiet_NaN)
+      {
+        std::basic_istringstream<C> special_stream (value);
+        special_stream.imbue (std::locale::classic ());
+
+        std::basic_string<C> special;
+        special_stream >> std::ws >> special >> std::ws;
+
+        if (special_stream.eof ())
+        {
+          if (special == std::basic_string<C> { C ('I'), C ('N'), C ('F') })
+            return std::numeric_limits<X>::infinity ();
+          if (special == std::basic_string<C> { C ('-'), C ('I'), C ('N'), C ('F') })
+            return -std::numeric_limits<X>::infinity ();
+          if (special == std::basic_string<C> { C ('N'), C ('a'), C ('N') })
+            return std::numeric_limits<X>::quiet_NaN ();
+        }
+      }
+
       stream >> std::ws;
       bool const negative (stream.peek () == stream.widen ('-'));
       X result{};
