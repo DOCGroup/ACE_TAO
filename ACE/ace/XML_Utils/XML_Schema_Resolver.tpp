@@ -6,8 +6,6 @@
 
 #include <xercesc/framework/LocalFileInputSource.hpp>
 
-using xercesc::LocalFileInputSource;
-
 namespace XML
 {
   template <typename Resolver>
@@ -25,14 +23,15 @@ namespace XML
   /// This function is called by the Xerces infrastructure to
   /// actually resolve the location of a schema.
   template <typename Resolver>
-  InputSource *XML_Schema_Resolver<Resolver>::resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId)
+  xercesc::InputSource *XML_Schema_Resolver<Resolver>::resolveEntity (const XMLCh *const publicId,
+                                                                      const XMLCh *const systemId)
   {
     XStr path (resolver_ (publicId, systemId));
     if (path.begin () == nullptr)
       return nullptr;
 
     // Ownership of these objects is given to other people.
-    return new LocalFileInputSource (path.begin ());
+    return new xercesc::LocalFileInputSource (path.begin ());
   }
 }
 

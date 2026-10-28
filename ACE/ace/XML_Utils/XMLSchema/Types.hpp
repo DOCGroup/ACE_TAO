@@ -43,15 +43,13 @@ namespace XMLSchema
   using float_ = XSCRT::FundamentalType<float>;
   using double_ = XSCRT::FundamentalType<double>;
 
-  using std::basic_string;
-
   template <typename C>
   class string
     : public XSCRT::Type
-    , public basic_string<C>
+    , public std::basic_string<C>
   {
   protected:
-    using Base__ = basic_string<C>;
+    using Base__ = std::basic_string<C>;
 
   public:
     string () = default;
@@ -485,7 +483,7 @@ namespace XMLSchema
     {
     }
 
-    IDREF (basic_string<C> const &id)
+    IDREF (std::basic_string<C> const &id)
       : id_ (id)
       , id_provider_ (id_)
     {
@@ -503,7 +501,7 @@ namespace XMLSchema
       return *this;
     }
 
-    IDREF &operator= (basic_string<C> const &x)
+    IDREF &operator= (std::basic_string<C> const &x)
     {
       id_ = x;
       return *this;
@@ -573,18 +571,16 @@ namespace XMLSchema
   template <typename C>
   class anyURI
     : public XSCRT::Type
-    , public basic_string<C>
+    , public std::basic_string<C>
   {
   protected:
-    using Base__ = basic_string<C>;
+    using Base__ = std::basic_string<C>;
 
   public:
     // Trait for marshaling string
     using CDR_Type__ = C;
 
-    anyURI ()
-    {
-    }
+    anyURI () = default;
 
     explicit anyURI (XSCRT::XML::Element<C> const &e)
       : Base__ (e.value ())
@@ -606,10 +602,7 @@ namespace XMLSchema
     {
     }
 
-    anyURI (const anyURI &s)
-      : Base__ (s)
-    {
-    }
+    anyURI (anyURI const &) = default;
 
     anyURI &operator= (Base__ const &x)
     {

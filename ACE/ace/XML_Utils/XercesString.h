@@ -8,10 +8,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <iosfwd>
-#ifdef __BORLANDC__
-using std::memcpy;
-#endif
-
 #include <xercesc/util/XMLString.hpp>
 
 // Utility class that provides a std::string like facade to XMLString.

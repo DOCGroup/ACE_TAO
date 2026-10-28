@@ -20,8 +20,6 @@
 #include <vector>
 #include <xercesc/sax/EntityResolver.hpp>
 
-using namespace xercesc;
-
 namespace XML
 {
   // forward decl.
@@ -35,7 +33,7 @@ namespace XML
    * const ACE_TCHAR * operator () (...arguments from resolveEntity...)
    */
   template <typename Resolver = NoOp_Resolver>
-  class XML_Schema_Resolver : public virtual EntityResolver
+  class XML_Schema_Resolver : public virtual xercesc::EntityResolver
   {
   public:
     XML_Schema_Resolver () = default;
@@ -44,7 +42,7 @@ namespace XML
 
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
-    InputSource *resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId) override;
+    xercesc::InputSource *resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId) override;
 
     Resolver &get_resolver ();
 

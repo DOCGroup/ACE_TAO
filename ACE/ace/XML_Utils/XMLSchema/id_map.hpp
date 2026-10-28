@@ -57,7 +57,7 @@ class ID_Map
     public:
       explicit Unresolved_IDREF(const std::basic_string<ACE_TCHAR> &a_message) : message(a_message)
       {}
-      ~Unresolved_IDREF(){}
+      ~Unresolved_IDREF() = default;
       std::basic_string<ACE_TCHAR> get_message ()
       {
         return message;

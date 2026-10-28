@@ -6,11 +6,8 @@ namespace XMLSchema
   template <typename T, typename Base = XSCRT::Type>
   void add_info (XSCRT::ExtendedTypeInfoMap &map, T *)
   {
-    using XSCRT::TypeId;
-    using XSCRT::ExtendedTypeInfo;
-
-    TypeId const id (typeid (T));
-    ExtendedTypeInfo info (id);
+    XSCRT::TypeId const id (typeid (T));
+    XSCRT::ExtendedTypeInfo info (id);
 
     info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (Base));
 
@@ -20,14 +17,11 @@ namespace XMLSchema
   template <typename C>
   inline TypeInfoInitializer<C>::TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &map)
   {
-    using XSCRT::TypeId;
-    using XSCRT::ExtendedTypeInfo;
-
     // XSCRT::Type
     //
     {
-      TypeId const id (typeid (XSCRT::Type));
-      map.insert (std::make_pair (id, ExtendedTypeInfo (id)));
+      XSCRT::TypeId const id (typeid (XSCRT::Type));
+      map.insert (std::make_pair (id, XSCRT::ExtendedTypeInfo (id)));
     }
 
     add_info<byte> (map, nullptr);
@@ -61,8 +55,8 @@ namespace XMLSchema
     // IDREF_Base
     //
     {
-      TypeId const id (typeid (IDREF_Base));
-      ExtendedTypeInfo info (id);
+      XSCRT::TypeId const id (typeid (IDREF_Base));
+      XSCRT::ExtendedTypeInfo info (id);
 
       info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (XSCRT::Type));
 
@@ -72,8 +66,8 @@ namespace XMLSchema
     // IDREF
     //
     {
-      TypeId const id (typeid (IDREF<C>));
-      ExtendedTypeInfo info (id);
+      XSCRT::TypeId const id (typeid (IDREF<C>));
+      XSCRT::ExtendedTypeInfo info (id);
 
       info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (IDREF_Base));
 

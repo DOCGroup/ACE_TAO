@@ -33,8 +33,6 @@ namespace XML
     this->add_path (variable, relpath);
   }
 
-  using xercesc::XMLPlatformUtils;
-
   void Environment_Resolver::add_path (const ACE_TCHAR *variable, const ACE_TCHAR *relpath)
   {
     ACE_Env_Value<ACE_TString> path_env (variable, ACE_TEXT (""));
@@ -56,11 +54,11 @@ namespace XML
       if (!path.append (systemId))
         continue;
 
-      FileHandle const file (XMLPlatformUtils::openFile (path));
+      xercesc::FileHandle const file (xercesc::XMLPlatformUtils::openFile (path));
 
       if (file != nullptr)
       {
-        XMLPlatformUtils::closeFile (file);
+        xercesc::XMLPlatformUtils::closeFile (file);
         return path.release ();
       }
     }

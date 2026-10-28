@@ -31,13 +31,11 @@ namespace XMLSchema
       void
       traverse (T const& o) override
       {
-        using namespace XSCRT::XML;
-
         std::basic_ostringstream<C> os;
 
         os << o;
 
-        if (Attribute<C>* a = attr_ ())
+        if (XSCRT::XML::Attribute<C>* a = attr_ ())
         {
           a->value (os.str ());
         }
@@ -73,8 +71,6 @@ namespace XMLSchema
       void
       traverse (XSCRT::FundamentalType<bool> const &o) override
       {
-        using namespace XSCRT::XML;
-
         std::basic_ostringstream<C> os;
 
         if (o)
@@ -86,7 +82,7 @@ namespace XMLSchema
             os << "false";
           }
 
-        if (Attribute<C>* a = attr_ ())
+        if (XSCRT::XML::Attribute<C>* a = attr_ ())
         {
           a->value (os.str ());
         }
@@ -120,9 +116,7 @@ namespace XMLSchema
       traverse (
         typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type const& o) override
       {
-        using namespace XSCRT::XML;
-
-        if (Attribute<C>* a = XSCRT::Writer<C>::attr_ ())
+        if (XSCRT::XML::Attribute<C>* a = XSCRT::Writer<C>::attr_ ())
         {
           a->value (o.id ());
         }
