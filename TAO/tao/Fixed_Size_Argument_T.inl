@@ -13,7 +13,7 @@ In_Fixed_Size_Argument_T (S const & x)
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-const S &
+S const &
 TAO::In_Fixed_Size_Argument_T<S,Insert_Policy>::arg () const
 {
   return *this->x_;
@@ -23,8 +23,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Fixed_Size_Clonable_Argument_T<S,Insert_Policy>::In_Fixed_Size_Clonable_Argument_T (S const & x)
-  : In_Fixed_Size_Argument_T<S,Insert_Policy> (x),
-    is_clone_ (false)
+  : In_Fixed_Size_Argument_T<S,Insert_Policy> (x)
 {
 }
 
@@ -73,9 +72,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::
-Ret_Fixed_Size_Argument_T ()
-{
-}
+Ret_Fixed_Size_Argument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>

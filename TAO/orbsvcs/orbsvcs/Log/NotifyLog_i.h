@@ -59,88 +59,76 @@ public:
                    TAO_LogMgr_i &logmgr_i,
                    DsLogAdmin::LogMgr_ptr factory,
                    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
-                   TAO_LogNotification *log_notifier,
+                   TAO_LogNotification * log_notifier,
                    DsLogAdmin::LogId id);
 
   /// Destructor.
-  ~TAO_NotifyLog_i ();
+  ~TAO_NotifyLog_i () override;
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
+  DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId & id) override;
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
+  DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id) override;
 
   /// Destroy the log object and all contained records.
-  void
-  destroy ();
+  void destroy () override;
 
   /// Activate the NotifyLog.
   void
   activate ();
 
   // = Methods from CosNotifyChannelAdmin::EventChannel.
-  CosNotifyFilter::Filter_ptr
-  get_filter ();
+  CosNotifyFilter::Filter_ptr get_filter () override;
 
-  void set_filter (CosNotifyFilter::Filter_ptr filter);
+  void set_filter (CosNotifyFilter::Filter_ptr filter) override;
 
-  CosNotifyChannelAdmin::EventChannelFactory_ptr
-  MyFactory ();
+  CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory () override;
 
-  CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  default_consumer_admin ();
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin () override;
 
-  CosNotifyChannelAdmin::SupplierAdmin_ptr
-  default_supplier_admin ();
+  CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin () override;
 
-  CosNotifyFilter::FilterFactory_ptr
-  default_filter_factory ();
+  CosNotifyFilter::FilterFactory_ptr default_filter_factory () override;
 
-  CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID& id);
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (
+    CosNotifyChannelAdmin::InterFilterGroupOperator op,
+    CosNotifyChannelAdmin::AdminID & id) override;
 
-  CosNotifyChannelAdmin::SupplierAdmin_ptr
-  new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID& id);
+  CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (
+    CosNotifyChannelAdmin::InterFilterGroupOperator op,
+    CosNotifyChannelAdmin::AdminID & id) override;
 
-  CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  get_consumeradmin (CosNotifyChannelAdmin::AdminID id);
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr get_consumeradmin (
+    CosNotifyChannelAdmin::AdminID id) override;
 
-  CosNotifyChannelAdmin::SupplierAdmin_ptr
-  get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
+  CosNotifyChannelAdmin::SupplierAdmin_ptr get_supplieradmin (
+    CosNotifyChannelAdmin::AdminID id) override;
 
-  CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_consumeradmins ();
+  CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins () override;
 
-  CosNotifyChannelAdmin::AdminIDSeq*
-  get_all_supplieradmins ();
+  CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins () override;
 
-  CosNotification::AdminProperties*
-  get_admin ();
+  CosNotification::AdminProperties * get_admin () override;
 
-  void set_admin (const CosNotification::AdminProperties& admin);
+  void set_admin (CosNotification::AdminProperties const & admin) override;
 
-  CosNotification::QoSProperties*
-  get_qos ();
+  CosNotification::QoSProperties * get_qos () override;
 
-  void set_qos (const CosNotification::QoSProperties&);
+  void set_qos (CosNotification::QoSProperties const &) override;
 
-  void validate_qos (const CosNotification::QoSProperties&,
-    CosNotification::NamedPropertyRangeSeq_out);
+  void validate_qos (CosNotification::QoSProperties const &,
+    CosNotification::NamedPropertyRangeSeq_out) override;
 
   // = Methods from DsEventLogAdmin::EventLog.
-  CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers ();
+  CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-  CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers ();
+  CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
 private:
   /// The PushConsumer that consumes the events and stores them
   /// in the log.
-  TAO_Notify_LogConsumer *my_log_consumer_;
+  TAO_Notify_LogConsumer * my_log_consumer_;
 
   /// The Event Channel that the log uses.
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
@@ -155,6 +143,11 @@ private:
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
   PortableServer::POA_var poa_;
+
+  TAO_NotifyLog_i (TAO_NotifyLog_i const &) = delete;
+  TAO_NotifyLog_i (TAO_NotifyLog_i &&) = delete;
+  TAO_NotifyLog_i & operator= (TAO_NotifyLog_i const &) = delete;
+  TAO_NotifyLog_i & operator= (TAO_NotifyLog_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

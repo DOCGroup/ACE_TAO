@@ -34,7 +34,7 @@ class TAO_GIOP_Message_Generator_Parser_11
 {
 public:
   /// Our minor version
-  virtual CORBA::Octet minor_version () const;
+  CORBA::Octet minor_version () const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

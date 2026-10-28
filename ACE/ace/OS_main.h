@@ -71,7 +71,7 @@
 
 #   if defined (ACE_VXWORKS) && !defined (__RTP__)
 
-typedef int (*ace_main_proc_ptr)(int, char *[]);
+using ace_main_proc_ptr = int (*) (int, char *[]);
 
 extern ace_main_proc_ptr vx_ace_main_i_ptr;
 

@@ -38,7 +38,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
             unsigned long len,
-            const ACE_Time_Value *tv = 0);
+            const ACE_Time_Value *tv = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,

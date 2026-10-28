@@ -301,17 +301,17 @@ IFR_DII_Client::invoke_and_display ()
     {
       CORBA::NVList_ptr args = this->req_->arguments ();
 
-      const char *artist = 0;
+      char const* artist = nullptr;
 
       ACE_ASSERT ((*args->item (0)->value () >>= artist) == true);
 
       ACE_ASSERT (ACE_OS::strcmp (artist, "the Beatles") == 0);
 
-      const char *title = 0;
+      char const* title = nullptr;
 
       ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
 
-      const char *correct = "Sgt. Pepper's Lonely Hearts Club Band";
+      char const* correct = "Sgt. Pepper's Lonely Hearts Club Band";
       ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
       ACE_UNUSED_ARG (correct);
 
@@ -335,7 +335,7 @@ IFR_DII_Client::invoke_and_display ()
                       price));
         }
 
-      CORBA::Boolean in_stock = 0;
+      CORBA::Boolean in_stock = false;
 
       CORBA::Boolean ret_status =
         (this->req_->return_value () >>= CORBA::Any::to_boolean (in_stock));

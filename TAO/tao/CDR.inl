@@ -410,6 +410,12 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const ACE_CDR::Fixed &x)
+{
+  return os.write_fixed (x);
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const char * x)
 {
   return
@@ -556,6 +562,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Double &x)
 {
   return static_cast<ACE_InputCDR &> (is) >> x;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      ACE_CDR::Fixed &x)
+{
+  return is.read_fixed (x);
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,

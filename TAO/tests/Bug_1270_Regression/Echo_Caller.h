@@ -11,11 +11,15 @@
 class Echo_Caller : public POA_Test::Echo_Caller
 {
 public:
-  Echo_Caller(CORBA::ORB_ptr orb);
+  Echo_Caller (CORBA::ORB_ptr orb);
+  Echo_Caller (Echo_Caller const &) = delete;
+  Echo_Caller &operator= (Echo_Caller const &) = delete;
+  Echo_Caller (Echo_Caller &&) = delete;
+  Echo_Caller &operator= (Echo_Caller &&) = delete;
 
-  virtual void start_task(Test::Echo_ptr client);
+  void start_task (Test::Echo_ptr client) override;
 
-  virtual void shutdown();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

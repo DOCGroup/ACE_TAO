@@ -64,7 +64,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
 {
 public:
   TAO_EC_Gateway_IIOP ();
-  virtual ~TAO_EC_Gateway_IIOP ();
+  virtual ~TAO_EC_Gateway_IIOP () override;
 
   /**
    * To do its job this class requires to know the local and remote ECs it will
@@ -88,9 +88,9 @@ public:
   int shutdown ();
 
   // The following methods are documented in the base class.
-  virtual void close ();
-  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
-  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub);
+  virtual void close () override;
+  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub) override;
+  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub) override;
 
   // Let the gateway reconnect itself to the consumer ec given exisiting QoS
   void reconnect_consumer_ec();
@@ -205,8 +205,12 @@ protected:
   bool supplier_is_active_;
 
   // We use a different Consumer_Proxy
-  typedef ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map;
-  typedef ACE_Map_Iterator<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map_Iterator;
+  using Consumer_Map =
+    ACE_Map_Manager<RtecEventComm::EventSourceID,
+                    RtecEventChannelAdmin::ProxyPushConsumer_ptr, ACE_Null_Mutex>;
+  using Consumer_Map_Iterator =
+    ACE_Map_Iterator<RtecEventComm::EventSourceID,
+                     RtecEventChannelAdmin::ProxyPushConsumer_ptr, ACE_Null_Mutex>;
 
   /// We talk to the EC (as a supplier) using either an per-supplier
   /// proxy or a generic proxy for the type only subscriptions. We push the

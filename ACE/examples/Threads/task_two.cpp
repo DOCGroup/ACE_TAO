@@ -11,7 +11,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
+using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 static int zero = 0;
 static ATOMIC_INT task_count (zero);
@@ -24,7 +24,7 @@ static int n_threads = 0;
 static const int default_threads = ACE_DEFAULT_THREADS;
 
 // Default number of times to run the test.
-static const int default_iterations = 1000;
+static constexpr int default_iterations = 1000;
 
 class Task_Test : public ACE_Task<ACE_MT_SYNCH>
 {

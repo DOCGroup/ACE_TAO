@@ -39,12 +39,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Incremental_Key_Generator
 {
 public:
-  TAO_Incremental_Key_Generator ();
+  TAO_Incremental_Key_Generator () = default;
+
+  TAO_Incremental_Key_Generator (TAO_Incremental_Key_Generator const &) = delete;
+  TAO_Incremental_Key_Generator &operator= (TAO_Incremental_Key_Generator const &) = delete;
+  TAO_Incremental_Key_Generator (TAO_Incremental_Key_Generator &&) = delete;
+  TAO_Incremental_Key_Generator &operator= (TAO_Incremental_Key_Generator &&) = delete;
 
   int operator() (PortableServer::ObjectId &id);
 
 protected:
-  CORBA::ULong counter_;
+  CORBA::ULong counter_ {};
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +65,7 @@ class TAO_PortableServer_Export TAO_ObjectId_Hash
 {
 public:
   /// Returns hash value.
-  u_long operator () (const PortableServer::ObjectId &id) const;
+  u_long operator () (PortableServer::ObjectId const &id) const;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -77,14 +82,14 @@ public:
 class TAO_Ignore_Original_Key_Adapter
 {
 public:
-  int encode (const PortableServer::ObjectId &original_key,
-              const ACE_Active_Map_Manager_Key &active_key,
+  int encode (PortableServer::ObjectId const &original_key,
+              ACE_Active_Map_Manager_Key const &active_key,
               PortableServer::ObjectId &modified_key);
 
-  int decode (const PortableServer::ObjectId &modified_key,
+  int decode (PortableServer::ObjectId const &modified_key,
               ACE_Active_Map_Manager_Key &active_key);
 
-  int decode (const PortableServer::ObjectId &modified_key,
+  int decode (PortableServer::ObjectId const &modified_key,
               PortableServer::ObjectId &original_key);
 };
 
@@ -102,14 +107,14 @@ public:
 class TAO_Preserve_Original_Key_Adapter
 {
 public:
-  int encode (const PortableServer::ObjectId &original_key,
-              const ACE_Active_Map_Manager_Key &active_key,
+  int encode (PortableServer::ObjectId const &original_key,
+              ACE_Active_Map_Manager_Key const &active_key,
               PortableServer::ObjectId &modified_key);
 
-  int decode (const PortableServer::ObjectId &modified_key,
+  int decode (PortableServer::ObjectId const &modified_key,
               ACE_Active_Map_Manager_Key &active_key);
 
-  int decode (const PortableServer::ObjectId &modified_key,
+  int decode (PortableServer::ObjectId const &modified_key,
               PortableServer::ObjectId &original_key);
 };
 

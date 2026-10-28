@@ -12,8 +12,7 @@ template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
 class JAWS_Cache_Hash
 {
 public:
-  typedef JAWS_Hash_Bucket_Manager<EXT_ID, JAWS_Cache_Object *, EQ_FUNC>
-          CACHE_BUCKET_MANAGER;
+  using CACHE_BUCKET_MANAGER = JAWS_Hash_Bucket_Manager<EXT_ID, JAWS_Cache_Object *, EQ_FUNC>;
 
   JAWS_Cache_Hash (ACE_Allocator *alloc = 0, size_t size = 521);
   // 521 == smallest number > 512 that is prime.  Why is a prime

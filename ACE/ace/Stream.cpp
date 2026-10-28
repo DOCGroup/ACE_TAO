@@ -147,7 +147,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace (const ACE_TCHAR *replace_name,
                                     int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace");
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev_mod = 0;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev_mod = nullptr;
 
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *rep_mod = this->stream_head_;
        rep_mod != 0;
@@ -232,7 +232,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove (const ACE_TCHAR *name,
                                    int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove");
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev = 0;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev = nullptr;
 
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod = this->stream_head_;
        mod != 0;
@@ -298,8 +298,8 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module (ACE_Module<ACE_SYNCH_USE, T
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module");
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *nt_reader = new_top->reader ();
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *nt_writer = new_top->writer ();
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_reader = 0;
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_writer = 0;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_reader = nullptr;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_writer = nullptr;
 
   if (current_top)
     {
@@ -336,17 +336,17 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *h1 = 0, *h2 = 0;
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *t1 = 0, *t2 = 0;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *h1 = nullptr, *h2 = nullptr;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *t1 = nullptr, *t2 = nullptr;
 
   if (head == 0)
     {
-      typedef ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY> STREAM_HEAD_TYPE;
+      using STREAM_HEAD_TYPE = ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (h1,
                         STREAM_HEAD_TYPE);
       ACE_NEW_NORETURN (h2,
                         STREAM_HEAD_TYPE);
-      typedef ACE_Module<ACE_SYNCH_USE, TIME_POLICY> MODULE_TYPE;
+      using MODULE_TYPE = ACE_Module<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (head,
                         MODULE_TYPE (ACE_TEXT ("ACE_Stream_Head"),
                                      h1, h2,
@@ -356,12 +356,12 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
 
   if (tail == 0)
     {
-      typedef ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY> STREAM_TAIL_TYPE;
+      using STREAM_TAIL_TYPE = ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (t1,
                         STREAM_TAIL_TYPE);
       ACE_NEW_NORETURN (t2,
                         STREAM_TAIL_TYPE);
-      typedef ACE_Module<ACE_SYNCH_USE, TIME_POLICY> MODULE_TYPE;
+      using MODULE_TYPE = ACE_Module<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (tail,
                         MODULE_TYPE (ACE_TEXT ("ACE_Stream_Tail"),
                                      t1, t2,

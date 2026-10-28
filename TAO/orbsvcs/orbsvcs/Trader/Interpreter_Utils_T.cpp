@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class OPERAND_TYPE> CORBA::Boolean
 TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
 {
-  CORBA::Boolean return_value = 0;
+  CORBA::Boolean return_value = false;
   TAO_Element_Equal<OPERAND_TYPE> functor;
   TAO_DynSequence_i dyn_seq;
 
@@ -26,14 +26,14 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
       for (CORBA::ULong i = 0 ; i < length && ! return_value; i++)
         {
           if (functor (dyn_seq, element))
-            return_value = 1;
+            return_value = true;
 
           dyn_seq.next( );
         }
     }
   catch (const CORBA::Exception&)
     {
-      return 0;
+      return false;
     }
 
   return return_value;

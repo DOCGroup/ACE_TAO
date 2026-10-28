@@ -13,9 +13,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  Any_Basic_Impl::~Any_Basic_Impl () = default;
+
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
                                   void *value)
-    : Any_Impl (0, tc),
+    : Any_Impl (nullptr, tc),
       kind_ (CORBA::tk_null)
   {
     this->kind_ = TAO::unaliased_kind (tc);
@@ -66,16 +68,12 @@ namespace TAO
     }
   }
 
-  Any_Basic_Impl::~Any_Basic_Impl ()
-  {
-  }
-
   void
   Any_Basic_Impl::insert (CORBA::Any &any,
                           CORBA::TypeCode_ptr tc,
                           const void *value)
   {
-    Any_Basic_Impl *new_impl = 0;
+    Any_Basic_Impl *new_impl = nullptr;
     ACE_NEW (new_impl,
              Any_Basic_Impl (tc,
                              const_cast<void *> (value)));
@@ -104,7 +102,7 @@ namespace TAO
             TAO::Any_Basic_Impl * const narrow_impl =
               dynamic_cast<TAO::Any_Basic_Impl *> (impl);
 
-            if (narrow_impl == 0)
+            if (narrow_impl == nullptr)
               {
                 return false;
               }
@@ -255,7 +253,7 @@ namespace TAO
   {
     CORBA::TCKind const kind = tc->kind ();
 
-    TAO::Any_Basic_Impl * retval = 0;
+    TAO::Any_Basic_Impl *retval = nullptr;
 
     switch (kind)
     {

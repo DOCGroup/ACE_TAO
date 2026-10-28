@@ -24,9 +24,9 @@ Messenger_i::~Messenger_i ()
 {
 }
 
-void Messenger_i::send_message (const char * user_name,
-                                const char * subject,
-                                const char * message)
+void Messenger_i::send_message (char const * user_name,
+                                char const * subject,
+                                char const * message)
 {
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;

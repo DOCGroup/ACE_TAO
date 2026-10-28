@@ -48,9 +48,9 @@ public:
    * point a lock has already been acquired.  In short, the table is
    * only modified during ORB bootstrap-time.
    */
-  typedef ACE_Map_Manager<CORBA::PolicyType,
-                          PortableInterceptor::PolicyFactory_ptr,
-                          ACE_Null_Mutex> TABLE;
+  using TABLE = ACE_Map_Manager<CORBA::PolicyType,
+                                PortableInterceptor::PolicyFactory_ptr,
+                                ACE_Null_Mutex>;
 
 public:
   /// Constructor

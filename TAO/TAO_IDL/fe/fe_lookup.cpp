@@ -186,5 +186,5 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
             return &wordlist[key];
         }
     }
-  return 0;
+  return nullptr;
 }

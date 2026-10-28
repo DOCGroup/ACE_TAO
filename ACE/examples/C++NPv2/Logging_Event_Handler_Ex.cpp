@@ -18,7 +18,7 @@ int Logging_Event_Handler_Ex::open () {
     result =
       reactor ()->schedule_timer
         (this,
-         0,
+         nullptr,
          max_client_timeout_,  // Initial timeout.
          reschedule);          // Subsequent timeouts.
   }

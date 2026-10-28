@@ -45,12 +45,11 @@ class ACE_Metrics_Timeprobe :
   public ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
   {
 public:
-  typedef ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>
-          ACE_METRICS_TIMEPROBE_TYPE;
+  using ACE_METRICS_TIMEPROBE_TYPE = ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>;
 
-  typedef ACE_timeprobe_t ACE_METRICS_TIMEPROBE_DATA_TYPE;
-  typedef ACE_METRICS_TIMEPROBE_TYPE* ACE_METRICS_TIMEPROBE_BASED_PTR_TYPE;
-  typedef char* ACE_METRICS_NAME_BASED_PTR_TYPE;
+  using ACE_METRICS_TIMEPROBE_DATA_TYPE = ACE_timeprobe_t;
+  using ACE_METRICS_TIMEPROBE_BASED_PTR_TYPE = ACE_METRICS_TIMEPROBE_TYPE *;
+  using ACE_METRICS_NAME_BASED_PTR_TYPE = char *;
 
   /// Enumerated timeprobe event types.
   enum event_id
@@ -63,13 +62,13 @@ public:
 
   /// Default constructor: plugs in the above event descriptions.
   ACE_Metrics_Timeprobe (u_int id = 0,
-                         const char *name = 0,
+                         const char *name = nullptr,
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
   /// Constructor with allocator: plugs in the above event descriptions.
   ACE_Metrics_Timeprobe (ALLOCATOR *allocatorPtr,
                          u_int id = 0,
-                         const char *name = 0,
+                         const char *name = nullptr,
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
   /// Destructor.
@@ -117,7 +116,7 @@ template <class ACE_LOCK, class ALLOCATOR>
 class ACE_Metrics_Cache
 {
 public:
-  typedef ACE_Metrics_Cache <ACE_LOCK, ALLOCATOR> ACE_METRICS_CACHE_TYPE;
+  using ACE_METRICS_CACHE_TYPE = ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>;
 
   /// Default constructor.
   ACE_Metrics_Cache (u_long table_size

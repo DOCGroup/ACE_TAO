@@ -3,7 +3,7 @@
 
 Client_Task::Client_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , terminate_loop_ (0)
+  , terminate_loop_ (false)
 {
 }
 
@@ -11,7 +11,7 @@ void
 Client_Task::terminate_loop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->terminate_loop_ = 1;
+  this->terminate_loop_ = true;
 }
 
 int
@@ -20,14 +20,14 @@ Client_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
   try
     {
-      while (1)
+      while (true)
         {
           // run the even loop for 1 second...
           ACE_Time_Value tv (1, 0);
           this->orb_->run (tv);
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-          if (this->terminate_loop_ != 0)
+          if (this->terminate_loop_)
             break;
         }
     }

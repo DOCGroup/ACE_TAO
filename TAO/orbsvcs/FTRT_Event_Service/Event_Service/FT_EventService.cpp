@@ -20,11 +20,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 }
 
 FT_EventService::FT_EventService()
-: global_scheduler_(0)
-, sched_impl_(0)
-, membership_(TAO_FTEC_Event_Channel::UNSPECIFIED)
-, num_threads_(1)
-, task_(orb_)
+  : global_scheduler_ (0)
+  , sched_impl_ (nullptr)
+  , membership_ (TAO_FTEC_Event_Channel::UNSPECIFIED)
+  , num_threads_ (1)
+  , task_ (orb_)
 {
 }
 
@@ -69,21 +69,21 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     CosNaming::NamingContext_var naming_context =
       CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-    setup_scheduler(naming_context.in());
+    this->setup_scheduler (naming_context.in ());
 
-    poa_manager->activate();
+    poa_manager->activate ();
 
     // Activate the Event channel implementation
 
-    TAO_FTEC_Event_Channel ec(orb_, root_poa);
+    TAO_FTEC_Event_Channel ec (orb_, root_poa);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
-      ec.activate(membership_);
+      ec.activate (membership_);
 
-    if (report_factory(orb_.in(), ec_ior.in() )==-1)
+    if (this->report_factory (orb_.in (), ec_ior.in ()) == -1)
       return -1;
 
-    orb_->run();
+    orb_->run ();
   }
   catch (const CORBA::Exception& ex)
   {
@@ -235,7 +235,7 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
   try{
     char* addr = ACE_OS::getenv("EventChannelFactoryAddr");
 
-    if (addr != 0) {
+    if (addr != nullptr) {
       // instaniated by object factory, report my ior back to the factory
       ACE_INET_Addr factory_addr(addr);
       ACE_SOCK_Connector connector;

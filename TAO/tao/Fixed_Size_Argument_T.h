@@ -35,9 +35,9 @@ namespace TAO
   public:
     In_Fixed_Size_Argument_T (S const & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S const & arg () const;
 
@@ -58,12 +58,12 @@ namespace TAO
   {
   public:
     In_Fixed_Size_Clonable_Argument_T (S const & x);
-    virtual ~In_Fixed_Size_Clonable_Argument_T ();
+    ~In_Fixed_Size_Clonable_Argument_T () override;
 
-    virtual Argument* clone ();
+    Argument* clone () override;
 
   private:
-    bool is_clone_;
+    bool is_clone_ {};
   };
 
   /**
@@ -79,10 +79,10 @@ namespace TAO
   public:
     Inout_Fixed_Size_Argument_T (S & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -103,9 +103,9 @@ namespace TAO
   public:
     Out_Fixed_Size_Argument_T (S & x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
 
@@ -126,16 +126,16 @@ namespace TAO
   public:
     Ret_Fixed_Size_Argument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S & arg ();
     S excp ();
     S retn ();
 
   protected:
-    S x_;
+    S x_ {};
   };
 
   /**
@@ -148,17 +148,16 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Fixed_Size_Arg_Traits_T
   {
-    typedef T                                            ret_type;
-    typedef T const &                                    in_type;
-    typedef T &                                          inout_type;
-    typedef T &                                          out_type;
+    using ret_type = T;
+    using in_type = T const &;
+    using inout_type = T &;
+    using out_type = T &;
 
-    typedef In_Fixed_Size_Argument_T<T,Insert_Policy>    in_arg_val;
-    typedef In_Fixed_Size_Clonable_Argument_T<T,Insert_Policy>
-                                                         in_clonable_arg_val;
-    typedef Inout_Fixed_Size_Argument_T<T,Insert_Policy> inout_arg_val;
-    typedef Out_Fixed_Size_Argument_T<T,Insert_Policy>   out_arg_val;
-    typedef Ret_Fixed_Size_Argument_T<T,Insert_Policy>   ret_val;
+    using in_arg_val = In_Fixed_Size_Argument_T<T, Insert_Policy>;
+    using in_clonable_arg_val = In_Fixed_Size_Clonable_Argument_T<T, Insert_Policy>;
+    using inout_arg_val = Inout_Fixed_Size_Argument_T<T, Insert_Policy>;
+    using out_arg_val = Out_Fixed_Size_Argument_T<T, Insert_Policy>;
+    using ret_val = Ret_Fixed_Size_Argument_T<T, Insert_Policy>;
   };
 }
 

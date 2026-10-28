@@ -46,7 +46,7 @@ public:
   TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
 
-  virtual int svc ();
+  int svc () override;
 
   /**
    * @name CosLoadBalancing::LoadManager Methods
@@ -55,48 +55,48 @@ public:
    */
   //@{
   /// For the PUSH load monitoring style.
-  virtual void push_loads (const PortableGroup::Location & the_location,
-                           const CosLoadBalancing::LoadList & loads);
+  void push_loads (PortableGroup::Location const & the_location,
+                   CosLoadBalancing::LoadList const & loads) override;
 
   /// Return the raw loads at the given location.
-  virtual CosLoadBalancing::LoadList * get_loads (
-      const PortableGroup::Location & the_location);
+  CosLoadBalancing::LoadList * get_loads (
+      PortableGroup::Location const & the_location) override;
 
   /// Inform member at given location of load alert condition.
-  virtual void enable_alert (const PortableGroup::Location & the_location);
+  void enable_alert (PortableGroup::Location const & the_location) override;
 
   /// Inform member at given location that load alert condition has
   /// passed.
-  virtual void disable_alert (const PortableGroup::Location & the_location);
+  void disable_alert (PortableGroup::Location const & the_location) override;
 
   /// Register a LoadAlert object for the member at the given
   /// location.
-  virtual void register_load_alert (
-      const PortableGroup::Location & the_location,
-      CosLoadBalancing::LoadAlert_ptr load_alert);
+  void register_load_alert (
+      PortableGroup::Location const & the_location,
+      CosLoadBalancing::LoadAlert_ptr load_alert) override;
 
   /// Retrieve the LoadAlert object for the member at the given
   /// location.
-  virtual CosLoadBalancing::LoadAlert_ptr get_load_alert (
-      const PortableGroup::Location & the_location);
+  CosLoadBalancing::LoadAlert_ptr get_load_alert (
+      PortableGroup::Location const & the_location) override;
 
   /// Remove (de-register) the LoadAlert object for the member at the
   /// given location.
-  virtual void remove_load_alert (const PortableGroup::Location & the_location);
+  void remove_load_alert (PortableGroup::Location const & the_location) override;
 
   /// Register a load monitor with the load balancer.
-  virtual void register_load_monitor (
-      const PortableGroup::Location & the_location,
-      CosLoadBalancing::LoadMonitor_ptr load_monitor);
+  void register_load_monitor (
+      PortableGroup::Location const & the_location,
+      CosLoadBalancing::LoadMonitor_ptr load_monitor) override;
 
   /// Return a reference to the load monitor at the given location.
-  virtual CosLoadBalancing::LoadMonitor_ptr get_load_monitor (
-      const PortableGroup::Location & the_location);
+  CosLoadBalancing::LoadMonitor_ptr get_load_monitor (
+      PortableGroup::Location const & the_location) override;
 
   /// Remove a load monitor at the given location from the load
   /// balancer.
-  virtual void remove_load_monitor (
-      const PortableGroup::Location & the_location);
+  void remove_load_monitor (
+      PortableGroup::Location const & the_location) override;
 
   //@}
 
@@ -107,34 +107,34 @@ public:
    */
   //@{
   /// Set the default properties to be used by all object groups.
-  virtual void set_default_properties (
-      const PortableGroup::Properties & props);
+  void set_default_properties (
+      PortableGroup::Properties const & props) override;
 
   /// Get the default properties used by all object groups.
-  virtual PortableGroup::Properties * get_default_properties ();
+  PortableGroup::Properties * get_default_properties () override;
 
   /// Remove default properties.
-  virtual void remove_default_properties (
-      const PortableGroup::Properties & props);
+  void remove_default_properties (
+      PortableGroup::Properties const & props) override;
 
   /// Set properties associated with a given Replica type.  These
   /// properties override the default properties.
-  virtual void set_type_properties (
-      const char * type_id,
-      const PortableGroup::Properties & overrides);
+  void set_type_properties (
+      char const * type_id,
+      PortableGroup::Properties const & overrides) override;
 
   /**
    * Return the properties associated with a give Replica type.  These
    * properties include the type-specific properties in use, in
    * addition to the default properties that were not overridden.
    */
-  virtual PortableGroup::Properties * get_type_properties (
-      const char * type_id);
+  PortableGroup::Properties * get_type_properties (
+      char const * type_id) override;
 
   /// Remove the given properties associated with the Replica type ID.
-  virtual void remove_type_properties (
-      const char * type_id,
-      const PortableGroup::Properties & props);
+  void remove_type_properties (
+      char const * type_id,
+      PortableGroup::Properties const & props) override;
 
   /**
    * Dynamically set the properties associated with a given object
@@ -142,9 +142,9 @@ public:
    * These properties override the type-specific and default
    * properties.
    */
-  virtual void set_properties_dynamically (
+  void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides);
+      PortableGroup::Properties const & overrides) override;
 
   /**
    * Return the properties currently in use by the given object
@@ -153,8 +153,8 @@ public:
    * were used when the Replica was created, and default properties
    * that weren't overridden.
    */
-  virtual PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::Properties * get_properties (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   //@}
 
@@ -167,17 +167,17 @@ public:
   //@{
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
-  virtual PortableGroup::ObjectGroup_ptr create_member (
+  PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria);
+      PortableGroup::Location const & the_location,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria) override;
 
   /// Add an existing object to the ObjectGroup.
-  virtual PortableGroup::ObjectGroup_ptr add_member (
+  PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location,
-      CORBA::Object_ptr member);
+      PortableGroup::Location const & the_location,
+      CORBA::Object_ptr member) override;
 
   /**
    * Remove an object at a specific location from the given
@@ -186,25 +186,25 @@ public:
    * infrastructure (load balancer) will be deleted by the
    * infrastructure.
    */
-  virtual PortableGroup::ObjectGroup_ptr remove_member (
+  PortableGroup::ObjectGroup_ptr remove_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location);
+      PortableGroup::Location const & the_location) override;
 
   /// Return the locations of the members in the given ObjectGroup.
-  virtual PortableGroup::Locations * locations_of_members (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::Locations * locations_of_members (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// Return the locations of the members in the given ObjectGroup.
-  virtual PortableGroup::ObjectGroups * groups_at_location (
-      const PortableGroup::Location & the_location);
+  PortableGroup::ObjectGroups * groups_at_location (
+      PortableGroup::Location const & the_location) override;
 
   /// Return the ObjectGroupId for the given ObjectGroup.
-  virtual PortableGroup::ObjectGroupId get_object_group_id (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::ObjectGroupId get_object_group_id (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// @note Does this method make sense for load balanced objects?
-  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
-      PortableGroup::ObjectGroup_ptr object_group);
+  PortableGroup::ObjectGroup_ptr get_object_group_ref (
+      PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// TAO specific method
   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
@@ -212,9 +212,9 @@ public:
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
-  virtual CORBA::Object_ptr get_member_ref (
+  CORBA::Object_ptr get_member_ref (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & loc);
+      PortableGroup::Location const & loc) override;
 
   //@}
 
@@ -230,11 +230,11 @@ public:
    * FactoryCreationId parameter may be passed to the delete_object()
    * method to delete the object.
    */
-  virtual CORBA::Object_ptr create_object (
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
+  CORBA::Object_ptr create_object (
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id);
+        factory_creation_id) override;
 
   /**
    * Delete the object corresponding to the provided
@@ -242,9 +242,9 @@ public:
    * then all members within the ObjectGroup will be deleted.
    * Afterward, the ObjectGroup itself will be deleted.
    */
-  virtual void delete_object (
-      const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id);
+  void delete_object (
+      PortableGroup::GenericFactory::FactoryCreationId const &
+        factory_creation_id) override;
 
   //@}
 
@@ -255,7 +255,12 @@ public:
    * given ObjectId.  The object group's load balancing strategy
    * will be queried for that member.
    */
-  CORBA::Object_ptr next_member (const PortableServer::ObjectId & oid);
+  CORBA::Object_ptr next_member (PortableServer::ObjectId const & oid);
+
+  TAO_LB_LoadManager (TAO_LB_LoadManager const &) = delete;
+  TAO_LB_LoadManager (TAO_LB_LoadManager &&) = delete;
+  TAO_LB_LoadManager & operator= (TAO_LB_LoadManager const &) = delete;
+  TAO_LB_LoadManager & operator= (TAO_LB_LoadManager &&) = delete;
 
 public:
   /// Initialize the load balancer.  This will cause a child POA to be
@@ -271,7 +276,7 @@ protected:
    * Destructor is protected to enforce correct memory management
    * through reference counting.
    */
-  ~TAO_LB_LoadManager ();
+  ~TAO_LB_LoadManager () override;
 
 private:
   /// Extract the value of the InitialNumberReplicas property from
@@ -310,7 +315,7 @@ private:
   CORBA::ORB_var orb_;
 
   /// Reactor used when pulling loads from registered load monitors.
-  ACE_Reactor * reactor_;
+  ACE_Reactor * reactor_ {};
 
   /// The POA that dispatches requests to the MemberLocator.
   PortableServer::POA_var poa_;

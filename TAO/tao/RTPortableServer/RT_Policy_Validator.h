@@ -74,6 +74,11 @@ protected:
   CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) override;
 
 private:
+  TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator const &) = delete;
+  TAO_POA_RT_Policy_Validator &operator= (TAO_POA_RT_Policy_Validator const &) = delete;
+  TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator &&) = delete;
+  TAO_POA_RT_Policy_Validator &operator= (TAO_POA_RT_Policy_Validator &&) = delete;
+
   void validate_server_protocol (TAO_Policy_Set &policies);
 
   void validate_priorities (TAO_Policy_Set &policies);

@@ -1,7 +1,6 @@
 #include "Scheduling_Service.h"
 
 #include "ace/Get_Opt.h"
-#include <memory>
 #include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_main.h"
@@ -9,41 +8,31 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"
 
-TAO_Scheduling_Service::TAO_Scheduling_Service ()
-  : scheduler_impl_ (0),
-    service_name_ ("ScheduleService"),
-    scheduler_type_ (CONFIG)
-{
-}
+TAO_Scheduling_Service::TAO_Scheduling_Service () = default;
 
 // Constructor taking the command-line arguments.
-TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[])
-  : scheduler_impl_ (0),
-    service_name_ ("ScheduleService"),
-    scheduler_type_ (CONFIG)
+TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR * argv[])
 {
   this->init (argc, argv);
 }
 
-TAO_Scheduling_Service::~TAO_Scheduling_Service ()
-{
-}
+TAO_Scheduling_Service::~TAO_Scheduling_Service () = default;
 
 // Initialize the Scheduling Service with the arguments.
 int
-TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
+TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
 {
-  int result;
-  CORBA::ORB_var orb;
-  PortableServer::POAManager_ptr poa_manager;
+  int result {};
+  CORBA::ORB_var orb {};
+  PortableServer::POAManager_ptr poa_manager = nullptr;
 
   try
     {
       // Copy command line parameter.
-      ACE_Argv_Type_Converter command_line(argc, argv);
+      ACE_Argv_Type_Converter command_line (argc, argv);
 
       // Initialize ORB manager.
-      this->orb_manager_.init (command_line.get_argc(), command_line.get_TCHAR_argv());
+      this->orb_manager_.init (command_line.get_argc (), command_line.get_TCHAR_argv ());
 
       orb = this->orb_manager_.orb ();
 
@@ -55,7 +44,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       // initialize the scheduler implementation so that we know which
       // type of scheduler to use.
 
-      result = this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv());
+      result = this->parse_args (command_line.get_argc (), command_line.get_TCHAR_argv ());
       if (result < 0)
         return result;
 
@@ -103,13 +92,13 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
-      schedule_name[0].id = CORBA::string_dup (this->service_name_.rep());
+      schedule_name[0].id = CORBA::string_dup (this->service_name_.rep ());
       naming_context->rebind (schedule_name, scheduler.in ());
 
-      if (this->ior_file_name_.rep() != 0)
+      if (this->ior_file_name_.rep () != nullptr)
         {
-          FILE *iorf = ACE_OS::fopen (this->ior_file_name_.rep(), "w");
-          if (iorf != 0)
+          FILE *iorf = ACE_OS::fopen (this->ior_file_name_.rep (), "w");
+          if (iorf != nullptr)
             {
               ACE_OS::fprintf (iorf,
                                "%s\n",
@@ -118,10 +107,10 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      if (this->pid_file_name_.rep() != 0)
+      if (this->pid_file_name_.rep () != nullptr)
         {
-          FILE *pidf = ACE_OS::fopen (this->pid_file_name_.rep(), "w");
-          if (pidf != 0)
+          FILE *pidf = ACE_OS::fopen (this->pid_file_name_.rep (), "w");
+          if (pidf != nullptr)
             {
               ACE_OS::fprintf (pidf,
                                ACE_TEXT("%ld\n"),
@@ -130,7 +119,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_Scheduling_Service::init");
       return -1;
@@ -153,10 +142,10 @@ TAO_Scheduling_Service::run ()
 // Parses the command line arguments.
 
 int
-TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
+TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:p:o:s:"));
-  int opt;
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -217,7 +206,8 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -234,10 +224,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       scheduling_service.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("schedule_service");
-          return 1;
+      return 1;
     }
 
   return 0;

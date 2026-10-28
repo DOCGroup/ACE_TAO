@@ -62,7 +62,7 @@ namespace TAO
   class Cache_IntId_T
   {
   public:
-    typedef TRANSPORT_TYPE transport_type;
+    using transport_type = TRANSPORT_TYPE;
 
     /// Constructor.
     Cache_IntId_T ();
@@ -141,7 +141,7 @@ namespace TAO
   class Cache_ExtId_T
   {
   public:
-    typedef TRANSPORT_DESCRIPTOR_TYPE transport_descriptor_type;
+    using transport_descriptor_type = TRANSPORT_DESCRIPTOR_TYPE;
 
     /// Constructor.
     Cache_ExtId_T ();

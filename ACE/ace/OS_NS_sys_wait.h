@@ -62,7 +62,7 @@ namespace ACE_OS
    */
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t waitpid (pid_t pid,
-                 ACE_exitcode *status = 0,
+                 ACE_exitcode *status = nullptr,
                  int wait_options = 0,
                  ACE_HANDLE handle = 0);
 } /* namespace ACE_OS */

@@ -228,7 +228,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->shutdown();
   }
-  catch(...)
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("Filter: ");
+    return 1;
+  }
+  catch (...)
   {
     std::cerr << "Filter: Some exceptions was caught!" << std::endl;
     exit(1);
@@ -237,5 +242,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
-

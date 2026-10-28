@@ -24,15 +24,15 @@ namespace TAO_Notify
 // in this header
 class Delivery_Request;
 /// A reference-counted smart pointer to a Delivery_Request.
-typedef ACE_Strong_Bound_Ptr<Delivery_Request, TAO_SYNCH_MUTEX> Delivery_Request_Ptr;
+using Delivery_Request_Ptr = ACE_Strong_Bound_Ptr<Delivery_Request, TAO_SYNCH_MUTEX>;
 
-typedef ACE_Unbounded_Queue<Delivery_Request_Ptr> Delivery_Request_Queue;
+using Delivery_Request_Queue = ACE_Unbounded_Queue<Delivery_Request_Ptr>;
 
 // Forward declarations of TAO_Notify classes/pointers/collections referenced
 // in this header
 
 class Routing_Slip;
-typedef ACE_Strong_Bound_Ptr<Routing_Slip, TAO_SYNCH_MUTEX> Routing_Slip_Ptr;
+using Routing_Slip_Ptr = ACE_Strong_Bound_Ptr<Routing_Slip, TAO_SYNCH_MUTEX>;
 
 /// \brief Represents a request to deliver an event to a particular destination.
 ///

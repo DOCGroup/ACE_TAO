@@ -15,35 +15,31 @@ namespace TAO
     }
 
     ACE_INLINE
-    Creation_Time::Creation_Time (const ACE_Time_Value &creation_time)
+    Creation_Time::Creation_Time (ACE_Time_Value const &creation_time)
     {
-      this->time_stamp_[Creation_Time::SEC_FIELD]  = (CORBA::ULong) creation_time.sec ();
-      this->time_stamp_[Creation_Time::USEC_FIELD] = (CORBA::ULong) creation_time.usec ();
+      this->time_stamp_[Creation_Time::SEC_FIELD] = static_cast<CORBA::ULong> (creation_time.sec ());
+      this->time_stamp_[Creation_Time::USEC_FIELD] = static_cast<CORBA::ULong> (creation_time.usec ());
     }
 
     ACE_INLINE
-    Creation_Time::Creation_Time ()
-    {
-      this->time_stamp_[Creation_Time::SEC_FIELD]  = 0;
-      this->time_stamp_[Creation_Time::USEC_FIELD] = 0;
-    }
+    Creation_Time::Creation_Time () = default;
 
     ACE_INLINE void
-    Creation_Time::creation_time (const void *creation_time)
+    Creation_Time::creation_time (void const *creation_time)
     {
       ACE_OS::memcpy (&this->time_stamp_,
                       creation_time,
                       Creation_Time::creation_time_length ());
     }
 
-    ACE_INLINE const void *
+    ACE_INLINE void const *
     Creation_Time::creation_time () const
     {
       return &this->time_stamp_;
     }
 
     ACE_INLINE bool
-    Creation_Time::operator== (const Creation_Time &rhs) const
+    Creation_Time::operator== (Creation_Time const &rhs) const
     {
     #if (POA_NO_TIMESTAMP == 1)
       ACE_UNUSED_ARG (rhs);
@@ -56,7 +52,7 @@ namespace TAO
     }
 
     ACE_INLINE bool
-    Creation_Time::operator!= (const Creation_Time &rhs) const
+    Creation_Time::operator!= (Creation_Time const &rhs) const
     {
     #if (POA_NO_TIMESTAMP == 1)
       ACE_UNUSED_ARG (rhs);
@@ -69,7 +65,7 @@ namespace TAO
     }
 
     ACE_INLINE bool
-    Temporary_Creation_Time::operator== (const Creation_Time &rhs) const
+    Temporary_Creation_Time::operator== (Creation_Time const &rhs) const
     {
     #if (POA_NO_TIMESTAMP == 1)
       ACE_UNUSED_ARG (rhs);
@@ -82,7 +78,7 @@ namespace TAO
     }
 
     ACE_INLINE bool
-    Temporary_Creation_Time::operator!= (const Creation_Time &rhs) const
+    Temporary_Creation_Time::operator!= (Creation_Time const &rhs) const
     {
     #if (POA_NO_TIMESTAMP == 1)
       ACE_UNUSED_ARG (rhs);
@@ -95,27 +91,24 @@ namespace TAO
     }
 
     ACE_INLINE bool
-    Creation_Time::operator== (const Temporary_Creation_Time &rhs) const
+    Creation_Time::operator== (Temporary_Creation_Time const &rhs) const
     {
       return rhs == *this;
     }
 
     ACE_INLINE bool
-    Creation_Time::operator!= (const Temporary_Creation_Time &rhs) const
+    Creation_Time::operator!= (Temporary_Creation_Time const &rhs) const
     {
       return rhs != *this;
     }
 
     ACE_INLINE
-    Temporary_Creation_Time::Temporary_Creation_Time ()
-      : time_stamp_ (0)
-    {
-    }
+    Temporary_Creation_Time::Temporary_Creation_Time () = default;
 
     ACE_INLINE void
-    Temporary_Creation_Time::creation_time (const void *creation_time)
+    Temporary_Creation_Time::creation_time (void const *creation_time)
     {
-      this->time_stamp_ = (void *) creation_time;
+      this->time_stamp_ = creation_time;
     }
   }
 }

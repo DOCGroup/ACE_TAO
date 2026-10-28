@@ -110,7 +110,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                   if (value.length() > 0 &&
                       this->repo_.servers ().find (value, this->si_->alt_info_) != 0)
                     {
-                      Server_Info *base_si = 0;
+                      Server_Info *base_si = nullptr;
                       ACE_NEW (base_si, Server_Info);
                       base_si->key_name_ = value;
                       this->si_->alt_info_.reset (base_si);

@@ -46,7 +46,7 @@ namespace TAO
                        char const * name);
 
       /// Constructor used by recursive @c TypeCodes.
-      Base_Attributes (char const * id);
+      explicit Base_Attributes (char const * id);
 
       /// Get the @c RepositoryId globally identifying the type.
       char const * id () const;

@@ -40,21 +40,21 @@ class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
 {
 public:
   /// Constructor
-  TAO_ZIOP_Loader ();
+  TAO_ZIOP_Loader () = default;
 
   /// Destructor
-  virtual ~TAO_ZIOP_Loader ();
+  ~TAO_ZIOP_Loader () override;
 
-  virtual bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core);
+  bool decompress (ACE_Data_Block **db, TAO_Queued_Data &qd, TAO_ORB_Core &orb_core) override;
 
   // Compress the @a stream. Starting point of the compression is rd_ptr()
-  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub);
-  virtual bool marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request);
+  bool marshal_data (TAO_OutputCDR &cdr, TAO_Stub &stub) override;
+  bool marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_ServerRequest *request) override;
 
   /// Initialize the BiDIR loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator);
+  void load_policy_validators (TAO_Policy_Validator &validator) override;
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
@@ -63,8 +63,13 @@ public:
   static const char * ziop_compressorid_name (::Compression::CompressorId st);
 
 private:
+  TAO_ZIOP_Loader (TAO_ZIOP_Loader const &) = delete;
+  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader const &) = delete;
+  TAO_ZIOP_Loader (TAO_ZIOP_Loader &&) = delete;
+  TAO_ZIOP_Loader &operator= (TAO_ZIOP_Loader &&) = delete;
+
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {false};
 
   /// dump a ZIOP datablock after (de)compression
   void dump_msg (const char *type,  const u_char *ptr,

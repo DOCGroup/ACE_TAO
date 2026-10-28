@@ -24,10 +24,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
+  using NamedValue_ptr = NamedValue *;
 
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 }
 
 namespace Dynamic
@@ -45,16 +45,20 @@ namespace TAO
   class NamedValue_Argument : public RetArgument
   {
   public:
-    NamedValue_Argument (CORBA::NamedValue_ptr);
+    explicit NamedValue_Argument (CORBA::NamedValue_ptr);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 
-    virtual void interceptor_value (CORBA::Any *any) const;
+#if TAO_HAS_INTERCEPTORS == 1
+    void interceptor_value (CORBA::Any *any) const override;
+#else
+    void interceptor_value (CORBA::Any *any) const;
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
     int byte_order () const;
 
   private:
-    CORBA::NamedValue_ptr x_;
+    CORBA::NamedValue_ptr x_ {};
 
     /// Byte order that the Request class will use
     int byte_order_ {};
@@ -71,9 +75,9 @@ namespace TAO
     NVList_Argument (CORBA::NVList_ptr,
                      bool lazy_eval);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 
     // Not an override of a base class method, but a new one that
     // deals with the argument list as a whole.
@@ -82,9 +86,9 @@ namespace TAO
     CORBA::NVList_ptr arg () const;
 
   private:
-    CORBA::NVList_ptr x_;
+    CORBA::NVList_ptr x_ {};
 
-    bool lazy_evaluation_;
+    bool lazy_evaluation_ {};
   };
 }
 

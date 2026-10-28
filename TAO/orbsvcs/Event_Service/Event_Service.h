@@ -32,33 +32,36 @@ class Event_Service : public POA_RtecEventChannelAdmin::EventChannel
 {
 public:
   Event_Service ();
-  virtual ~Event_Service ();
+  ~Event_Service () override;
 
   /// Run the event service.
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
 
   // = The RtecEventChannelAdmin::Event_Channel methods
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers ();
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers ();
-  virtual void destroy ();
-  virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer);
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
+  RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
+  RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
+  void destroy () override;
+  RtecEventChannelAdmin::Observer_Handle
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
+  void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
 private:
+  Event_Service (Event_Service const &) = delete;
+  Event_Service (Event_Service &&) = delete;
+  Event_Service & operator= (Event_Service const &) = delete;
+  Event_Service & operator= (Event_Service &&) = delete;
+
   /// Parse the command line args
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   enum Sched_type_t {ES_SCHED_NONE, ES_SCHED_GLOBAL, ES_SCHED_LOCAL};
 
 private:
   /// The Scheduler implementation.
-  POA_RtecScheduler::Scheduler *sched_impl_;
+  POA_RtecScheduler::Scheduler *sched_impl_ {};
 
   /// The Event Channel implementation.
-  POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
+  POA_RtecEventChannelAdmin::EventChannel *ec_impl_ {};
 
   /// The name we use to bind with the NameService
   ACE_CString service_name_;
@@ -73,16 +76,16 @@ private:
   ACE_CString object_id_;
 
   /// Should we use a global scheduler or a local one or none?
-  Sched_type_t scheduler_type_;
+  Sched_type_t scheduler_type_ {ES_SCHED_NONE};
 
   /// A reference to the ORB, to shut it down properly.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Use BiDirectional GIOP
-  bool use_bidir_giop_;
+  bool use_bidir_giop_ {};
 
   /// Should we bind to the naming service
-  bool bind_to_naming_service_;
+  bool bind_to_naming_service_ {true};
 };
 
 #include /**/ "ace/post.h"

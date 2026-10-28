@@ -39,14 +39,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef enum
+enum TAO_Service_ID
 {
   TAO_SERVICEID_NAMESERVICE,
   TAO_SERVICEID_TRADINGSERVICE,
   TAO_SERVICEID_IMPLREPOSERVICE,
   TAO_SERVICEID_INTERFACEREPOSERVICE,
   TAO_SERVICEID_MCASTSERVER
-} TAO_Service_ID;
+};
 
 /// Forward declarations.
 class TAO_MProfile;
@@ -70,83 +70,64 @@ namespace CORBA
   class ORB_ObjectIdList;
 
   class Object;
-  typedef Object * Object_ptr;
+  using Object_ptr = Object *;
 
   class ExceptionList;
-  typedef ExceptionList * ExceptionList_ptr;
+  using ExceptionList_ptr = ExceptionList *;
 
   class ContextList;
-  typedef ContextList * ContextList_ptr;
+  using ContextList_ptr = ContextList *;
 
   class Context;
-  typedef Context * Context_ptr;
+  using Context_ptr = Context *;
 
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
+  using NamedValue_ptr = NamedValue *;
 
   class Policy;
-  typedef Policy *Policy_ptr;
+  using Policy_ptr = Policy *;
 
   class OperationDef;
-  typedef OperationDef * OperationDef_ptr;
+  using OperationDef_ptr = OperationDef *;
 
-  typedef CORBA::ULong PolicyType;
+  using PolicyType = CORBA::ULong;
 
   // TODO - implement OMG's 'ORBid CORBA::ORB::id ()'.
 
-  typedef
-    TAO_VarSeq_Var_T<
-        ORB_ObjectIdList
-      >
-    ORB_ObjectIdList_var;
+  using ORB_ObjectIdList_var = TAO_VarSeq_Var_T<ORB_ObjectIdList>;
 
-  typedef
-    TAO_Seq_Out_T<
-        ORB_ObjectIdList
-      >
-    ORB_ObjectIdList_out;
+  using ORB_ObjectIdList_out = TAO_Seq_Out_T<ORB_ObjectIdList>;
 
   class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
+  using ValueFactory = ValueFactoryBase *;
 
-  typedef UShort ServiceType;
+  using ServiceType = UShort;
 
   class Request;
-  typedef Request * Request_ptr;
-  typedef TAO_Pseudo_Var_T<Request> Request_var;
-  typedef TAO_Pseudo_Out_T<Request> Request_out;
+  using Request_ptr = Request *;
+  using Request_var = TAO_Pseudo_Var_T<Request>;
+  using Request_out = TAO_Pseudo_Out_T<Request>;
 
   class ORB;
-  typedef ORB * ORB_ptr;
-  typedef TAO_Pseudo_Var_T<ORB> ORB_var;
-  typedef TAO_Pseudo_Out_T<ORB> ORB_out;
+  using ORB_ptr = ORB *;
+  using ORB_var = TAO_Pseudo_Var_T<ORB>;
+  using ORB_out = TAO_Pseudo_Out_T<ORB>;
 
-  typedef CORBA::Short ValueModifier;
+  using ValueModifier = CORBA::Short;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
     // Typedefs for CORBA::RequestSeq, which is an argument of
     // send_multiple_requests_*().
-    typedef
-      TAO::unbounded_object_reference_sequence<
-          CORBA::Request, CORBA::Request_var
-        >
-      RequestSeq;
+    using RequestSeq = TAO::unbounded_object_reference_sequence<CORBA::Request,
+                                                                  CORBA::Request_var>;
 
-    typedef
-      TAO_VarSeq_Var_T<
-          RequestSeq
-        >
-      RequestSeq_var;
+    using RequestSeq_var = TAO_VarSeq_Var_T<RequestSeq>;
 
-    typedef
-      TAO_Seq_Out_T<
-          RequestSeq
-        >
-      RequestSeq_out;
+    using RequestSeq_out = TAO_Seq_Out_T<RequestSeq>;
 #endif
 
   /**
@@ -185,15 +166,15 @@ namespace CORBA
       virtual void _tao_decode (TAO_InputCDR &);
     };
 
-    typedef char *ObjectId;
-    typedef CORBA::String_var ObjectId_var;
-    typedef CORBA::String_out ObjectId_out;
+    using ObjectId = char *;
+    using ObjectId_var = CORBA::String_var;
+    using ObjectId_out = CORBA::String_out;
     static CORBA::TypeCode_ptr const _tc_ObjectId;
 
-    typedef CORBA::ORB_ObjectIdList ObjectIdList;
-    typedef CORBA::ORB_ObjectIdList_var ObjectIdList_var;
-    typedef CORBA::ORB_ObjectIdList_out ObjectIdList_out;
-    typedef CORBA::ORB_ObjectIdList *ObjectIdList_ptr;
+    using ObjectIdList = CORBA::ORB_ObjectIdList;
+    using ObjectIdList_var = CORBA::ORB_ObjectIdList_var;
+    using ObjectIdList_out = CORBA::ORB_ObjectIdList_out;
+    using ObjectIdList_ptr = CORBA::ORB_ObjectIdList *;
     static CORBA::TypeCode_ptr const _tc_ObjectIdList;
 
     /// Return a duplicate of @c orb.
@@ -523,9 +504,9 @@ namespace CORBA
     static CORBA::ORB_ptr _tao_make_ORB (TAO_ORB_Core * orb_core);
 
     // Useful for template programming.
-    typedef ORB_ptr _ptr_type;
-    typedef ORB_var _var_type;
-    typedef ORB_out _out_type;
+    using _ptr_type = ORB_ptr;
+    using _var_type = ORB_var;
+    using _out_type = ORB_out;
 
     /// Get the Timeout value
     ACE_Time_Value *get_timeout ();

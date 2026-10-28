@@ -12,9 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
 
-ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO ()
-{
-}
+ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO () = default;
 
 int
 ACE_Reactive_MEM_IO::init (ACE_HANDLE handle,
@@ -124,7 +122,7 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
   if (this->mq_ == 0)
     return 0;
 
-  ACE_MEM_SAP_Node *retv = 0;
+  ACE_MEM_SAP_Node *retv = nullptr;
 
   ACE_SEH_TRY
     {
@@ -186,14 +184,14 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   ACE_OS::strcpy (client_lock, basename);
   ACE_OS::strcat (client_lock, ACE_TEXT ("_lock_to_client"));
 
-  void *to_server_ptr = 0;
+  void *to_server_ptr = nullptr;
   // @@ Here, we assume the shared memory fill will never be resued.
   //    So we can determine whether we are server or client by examining
   //    if the simple message queues have already been set up in
   //    the Malloc object or not.
   if (this->shm_malloc_->find ("to_server", to_server_ptr) == -1)
     {
-      void *ptr = 0;
+      void *ptr = nullptr;
       // We are server.
       ACE_ALLOCATOR_RETURN (ptr,
                             this->shm_malloc_->malloc (2 * sizeof (MQ_Struct)),

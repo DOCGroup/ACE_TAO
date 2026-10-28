@@ -49,7 +49,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
   ACE_GUARD (ACE_Log_Msg, ace_mon, *ACE_Log_Msg::instance ());
 
   TAOLIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::%s, ")
               ACE_TEXT ("sending %d buffers\n"),
               id, location, iovcnt));
 
@@ -64,7 +64,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         }
 
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::%s, ")
                   ACE_TEXT ("buffer %d/%d has %d bytes\n"),
                   id, location,
                   i, iovcnt,
@@ -101,7 +101,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
     }
 
   TAOLIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::%s, ")
               ACE_TEXT ("end of data\n"),
               id, location));
 }
@@ -116,9 +116,7 @@ monotonic_milliseconds ()
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-TAO::Transport::Stats::~Stats ()
-{
-}
+TAO::Transport::Stats::~Stats () = default;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
@@ -191,7 +189,7 @@ TAO_Transport::~TAO_Transport ()
 {
   if (TAO_debug_level > 9)
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport, start\n"),
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%B]::~Transport, start\n"),
                   this->id_));
     }
 
@@ -227,7 +225,7 @@ TAO_Transport::~TAO_Transport ()
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   if (TAO_debug_level > 9)
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport, end\n"),
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%B]::~Transport, end\n"),
                   this->id_));
     }
 }
@@ -316,7 +314,7 @@ TAO_Transport::register_if_necessary ()
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_if_necessary, ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%B]::register_if_necessary, ")
                       ACE_TEXT ("could not register the transport ")
                       ACE_TEXT ("in the reactor.\n"),
                       this->id ()));
@@ -340,7 +338,7 @@ TAO_Transport::close_connection ()
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::close_connection\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::close_connection\n"),
                   this->id ()));
     }
 
@@ -353,7 +351,7 @@ TAO_Transport::register_handler ()
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_handler\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::register_handler\n"),
                   this->id ()));
     }
 
@@ -373,7 +371,7 @@ TAO_Transport::register_handler ()
       if (TAO_debug_level > 6)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_handler - ")
+                         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::register_handler - ")
                          ACE_TEXT ("already registered with reactor\n"),
                          this->id ()));
         }
@@ -384,7 +382,7 @@ TAO_Transport::register_handler ()
   if (TAO_debug_level > 6)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_handler - ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::register_handler - ")
                   ACE_TEXT ("registering event handler with reactor\n"),
                   this->id ()));
     }
@@ -404,7 +402,7 @@ TAO_Transport::remove_handler ()
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::remove_handler\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::remove_handler\n"),
                   this->id ()));
     }
 
@@ -426,7 +424,7 @@ TAO_Transport::remove_handler ()
   if (TAO_debug_level > 6)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::remove_handler - ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::remove_handler - ")
                   ACE_TEXT ("removing event handler from reactor\n"),
                   this->id ()));
     }
@@ -441,7 +439,7 @@ TAO_Transport::remove_handler ()
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - Transport[%d]::remove_handler - ")
+                    ACE_TEXT ("TAO (%P|%t) - Transport[%B]::remove_handler - ")
                     ACE_TEXT ("reactor->remove_handler failed\n"),
                     this->id ()));
       return -1;
@@ -489,7 +487,7 @@ TAO_Transport::generate_locate_request (
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::generate_locate_request, ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%B]::generate_locate_request, ")
                       ACE_TEXT ("error while marshalling the LocateRequest header\n"),
                       this->id ()));
         }
@@ -513,7 +511,7 @@ TAO_Transport::generate_request_header (
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::generate_request_header, ")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%B]::generate_request_header, ")
                       ACE_TEXT ("error while marshalling the Request header\n"),
                       this->id()));
         }
@@ -542,7 +540,7 @@ TAO_Transport::purge_entry ()
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry, ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::purge_entry, ")
                   ACE_TEXT ("entry is %@\n"),
                   this->id (), this->cache_map_entry_));
     }
@@ -563,7 +561,7 @@ TAO_Transport::make_idle ()
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::make_idle\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::make_idle\n"),
                   this->id ()));
     }
 
@@ -576,7 +574,7 @@ TAO_Transport::update_transport ()
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::update_transport\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::update_transport\n"),
                   this->id ()));
     }
 
@@ -592,7 +590,7 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_output")
                   ACE_TEXT (" - block_on_io=%d, timeout=%d.%06d\n"),
                   this->id (),
                   dc.block_on_io(),
@@ -608,7 +606,7 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output, ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_output, ")
                   ACE_TEXT ("drain_queue returns %d/%d\n"),
                   this->id (),
                   static_cast<int> (retval.dre_), ACE_ERRNO_GET));
@@ -708,7 +706,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - ")
-                          ACE_TEXT ("Transport[%d]::send_synchronous_message_i, ")
+                          ACE_TEXT ("Transport[%B]::send_synchronous_message_i, ")
                           ACE_TEXT ("timeout encountered before any bytes sent\n"),
                           this->id ()));
             }
@@ -736,7 +734,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%B]::")
                       ACE_TEXT ("send_synchronous_message_i, ")
                       ACE_TEXT ("error while scheduling flush - %m\n"),
                       this->id ()));
@@ -751,7 +749,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // block for a long time writing out data.
   int flush_result;
   {
-    typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+    using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
     TAO_REVERSE_LOCK reverse (*this->handler_lock_);
     ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
 
@@ -771,7 +769,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_synchronous_message_i, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_synchronous_message_i, ")
              ACE_TEXT ("error while sending message - %m\n"),
              this->id ()));
         }
@@ -803,7 +801,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_reply_message_i, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_reply_message_i, ")
          ACE_TEXT ("preparing to add to queue before leaving\n"),
          this->id ()));
     }
@@ -828,7 +826,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
     {
       if (TAO_debug_level > 5)
         {
-          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Transport[%d]::send_reply_"
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Transport[%B]::send_reply_"
                       "message_i, dequeuing msg due to schedule_output "
                       "failure\n", this->id ()));
         }
@@ -837,7 +835,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
     }
   else if (result == TAO_Flushing_Strategy::MUST_FLUSH)
     {
-      typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+      using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
       TAO_REVERSE_LOCK reverse (*this->handler_lock_);
       ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
       (void) flushing_strategy->flush_transport (this, nullptr);
@@ -885,7 +883,7 @@ TAO_Transport::schedule_output_i ()
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - ")
-                      ACE_TEXT ("Transport[%d]::schedule_output_i, ")
+                      ACE_TEXT ("Transport[%B]::schedule_output_i, ")
                       ACE_TEXT ("no reactor,")
                       ACE_TEXT ("returning -1\n"),
                       this->id ()));
@@ -907,7 +905,7 @@ TAO_Transport::schedule_output_i ()
             {
               TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - ")
-                          ACE_TEXT ("Transport[%d]::schedule_output_i ")
+                          ACE_TEXT ("Transport[%B]::schedule_output_i ")
                           ACE_TEXT ("event handler not found in reactor,")
                           ACE_TEXT ("returning -1\n"),
                           this->id ()));
@@ -920,7 +918,7 @@ TAO_Transport::schedule_output_i ()
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::schedule_output_i\n"),
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::schedule_output_i\n"),
          this->id ()));
     }
 
@@ -936,7 +934,7 @@ TAO_Transport::cancel_output_i ()
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cancel_output_i\n"),
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cancel_output_i\n"),
          this->id ()));
     }
 
@@ -950,7 +948,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
   if (TAO_debug_level > 6)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_timeout, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_timeout, ")
          ACE_TEXT ("timer expired\n"),
          this->id ()));
     }
@@ -971,7 +969,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
       int const result = flushing_strategy->schedule_output (this);
       if (result == TAO_Flushing_Strategy::MUST_FLUSH)
         {
-          typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+          using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
           TAO_REVERSE_LOCK reverse (*this->handler_lock_);
           ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
           if (flushing_strategy->flush_transport (this, nullptr) == -1)
@@ -1108,7 +1106,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
       if (TAO_debug_level > 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::drain_queue_helper, ")
              ACE_TEXT ("send() returns 0\n"),
              this->id ()));
         }
@@ -1119,7 +1117,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
       if (TAO_debug_level > 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::drain_queue_helper, ")
              ACE_TEXT ("error during send() (errno: %d) - %m\n"),
              this->id (), ACE_ERRNO_GET));
         }
@@ -1147,7 +1145,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::drain_queue_helper, ")
          ACE_TEXT ("byte_count = %d, head_is_empty = %d\n"),
          this->id(), byte_count, this->queue_is_empty_i ()));
     }
@@ -1188,7 +1186,7 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
           if (TAO_debug_level > 3)
           {
             TAOLIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::drain_queue_i, ")
               ACE_TEXT ("Discarding expired queued message.\n"),
               this->id ()));
           }
@@ -1214,7 +1212,7 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
           if (TAO_debug_level > 4)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%B]::drain_queue_i, ")
                  ACE_TEXT ("helper retval = %d\n"),
                  this->id (), static_cast<int> (retval.dre_)));
             }
@@ -1241,7 +1239,7 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
       if (TAO_debug_level > 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::drain_queue_i, ")
               ACE_TEXT ("helper retval = %d\n"),
               this->id (), static_cast<int> (retval.dre_)));
         }
@@ -1274,7 +1272,7 @@ TAO_Transport::cleanup_queue_i ()
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cleanup_queue_i, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cleanup_queue_i, ")
          ACE_TEXT ("cleaning up complete queue\n"),
          this->id ()));
     }
@@ -1305,7 +1303,7 @@ TAO_Transport::cleanup_queue_i ()
   if (TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cleanup_queue_i, ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cleanup_queue_i, ")
                   ACE_TEXT ("discarded %d messages, %u bytes.\n"),
                   this->id (), msg_count, byte_count));
     }
@@ -1321,7 +1319,7 @@ TAO_Transport::cleanup_queue (size_t byte_count)
       if (TAO_debug_level > 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cleanup_queue, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cleanup_queue, ")
              ACE_TEXT ("byte_count = %d\n"),
              this->id (), byte_count));
         }
@@ -1332,7 +1330,7 @@ TAO_Transport::cleanup_queue (size_t byte_count)
       if (TAO_debug_level > 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cleanup_queue, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cleanup_queue, ")
              ACE_TEXT ("after transfer, bc = %d, all_sent = %d, ml = %d\n"),
              this->id (), byte_count, i->all_data_sent (),
              i->message_length ()));
@@ -1426,7 +1424,7 @@ TAO_Transport::report_invalid_event_handler (const char *caller)
   if (TAO_debug_level > 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::report_invalid_event_handler")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::report_invalid_event_handler")
          ACE_TEXT ("(%C) no longer associated with handler [tag=%d]\n"),
          this->id (), caller, this->tag_));
     }
@@ -1531,7 +1529,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       if (TAO_debug_level > 6)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_asynchronous_message_i, ")
              ACE_TEXT ("trying to send the message (ml = %d)\n"),
              this->id (), total_length));
         }
@@ -1556,7 +1554,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
               if (TAO_debug_level > 0)
                 {
                   TAOLIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, ")
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_asynchronous_message_i, ")
                      ACE_TEXT ("fatal error in ")
                      ACE_TEXT ("send_message_block_chain_i - %m\n"),
                      this->id ()));
@@ -1593,7 +1591,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - ")
-                          ACE_TEXT ("Transport[%d]::send_asynchronous_message_i, ")
+                          ACE_TEXT ("Transport[%B]::send_asynchronous_message_i, ")
                           ACE_TEXT ("timeout encountered before any bytes sent\n"),
                           this->id ()));
             }
@@ -1608,7 +1606,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       if (TAO_debug_level > 6)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_asynchronous_message_i, ")
              ACE_TEXT ("partial send %d / %d bytes\n"),
              this->id (), byte_count, total_length));
         }
@@ -1634,7 +1632,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       if (TAO_debug_level > 0)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%B]::")
                       ACE_TEXT ("send_asynchronous_message_i, ")
                       ACE_TEXT ("cannot queue message for  - %m\n"),
                       this->id ()));
@@ -1645,7 +1643,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   if (TAO_debug_level > 6)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_asynchronous_message_i, ")
          ACE_TEXT ("message is queued\n"),
          this->id ()));
     }
@@ -1658,7 +1656,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       if (TAO_debug_level > 0)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                      ACE_TEXT ("TAO (%P|%t) - Transport[%B]::")
                       ACE_TEXT ("send_asynchronous_message_i, ")
                       ACE_TEXT ("timeout after partial send, closing.\n"),
                       this->id ()));
@@ -1696,7 +1694,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::")
+                          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::")
                           ACE_TEXT ("send_asynchronous_message_i, ")
                           ACE_TEXT ("flushing transport.\n"),
                           this->id ()));
@@ -1705,7 +1703,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
           size_t const sent_byte = sent_byte_count_;
           int ret = 0;
           {
-            typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+            using TAO_REVERSE_LOCK = ACE_Reverse_Lock<ACE_Lock>;
             TAO_REVERSE_LOCK reverse (*this->handler_lock_);
             ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
             ret = flushing_strategy->flush_transport (this, max_wait_time);
@@ -1723,7 +1721,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
                         {
                           TAOLIB_DEBUG ((LM_DEBUG,
                                       ACE_TEXT ("TAO (%P|%t) - ")
-                                      ACE_TEXT ("Transport[%d]::send_asynchronous_message_i, ")
+                                      ACE_TEXT ("Transport[%B]::send_asynchronous_message_i, ")
                                       ACE_TEXT ("2 timeout encountered before any bytes sent\n"),
                                       this->id ()));
                         }
@@ -1772,7 +1770,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input\n"),
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input\n"),
          this->id ()));
     }
 
@@ -1786,7 +1784,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
           if (TAO_debug_level > 2)
             {
               TAOLIB_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input, ")
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input, ")
                  ACE_TEXT ("error while parsing the head of the queue\n"),
                  this->id()));
             }
@@ -1813,7 +1811,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
           if (TAO_debug_level > 0)
             {
               TAOLIB_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input, ")
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input, ")
                  ACE_TEXT ("error consolidating incoming message\n"),
                  this->id ()));
             }
@@ -1827,7 +1825,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
           if (TAO_debug_level > 0)
             {
               TAOLIB_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input, ")
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input, ")
                  ACE_TEXT ("error parsing incoming message\n"),
                  this->id ()));
             }
@@ -1848,7 +1846,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
       if (TAO_debug_level > 0)
         {
            TAOLIB_ERROR ((LM_ERROR,
-              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
+              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::consolidate_process_message, ")
               ACE_TEXT ("missing data\n"),
               this->id ()));
         }
@@ -1872,7 +1870,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
               if (TAO_debug_level > 0)
                 {
                   TAOLIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%B]::consolidate_process_message, ")
                      ACE_TEXT ("error, consolidated message is NULL\n"),
                      this->id ()));
                 }
@@ -1887,7 +1885,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
               if (TAO_debug_level > 0)
                 {
                   TAOLIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%B]::consolidate_process_message, ")
                      ACE_TEXT ("error processing consolidated message\n"),
                      this->id ()));
                 }
@@ -1911,7 +1909,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
           if (TAO_debug_level > 0)
             {
               TAOLIB_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_process_message, ")
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%B]::consolidate_process_message, ")
                  ACE_TEXT ("error processing message\n"),
                  this->id ()));
             }
@@ -1951,7 +1949,7 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
               if (TAO_debug_level > 0)
                 {
                   TAOLIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::consolidate_enqueue_message, ")
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%B]::consolidate_enqueue_message, ")
                      ACE_TEXT ("error, consolidated message is NULL\n"),
                      this->id ()));
                 }
@@ -1995,7 +1993,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_missing_data_message, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_missing_data_message, ")
          ACE_TEXT ("enter (missing data == %d)\n"),
          this->id (), q_data->missing_data ()));
     }
@@ -2025,17 +2023,17 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
-  this->touch_activity ();
-
   if (n <= 0)
     {
       return ACE_Utils::truncate_cast<int> (n);
     }
 
+  this->touch_activity ();
+
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_missing_data_message, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_missing_data_message, ")
          ACE_TEXT ("read bytes %d\n"),
          this->id (), n));
     }
@@ -2111,7 +2109,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_parse_data, ")
          ACE_TEXT ("enter\n"),
          this->id ()));
     }
@@ -2223,7 +2221,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_parse_data, ")
              ACE_TEXT ("Error - endless loop detection, closing connection"),
              this->id ()));
         }
@@ -2247,8 +2245,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                 recv_size,
                                 max_wait_time);
 
-  this->touch_activity ();
-
   // If there is an error return to the reactor..
   // do not reset partial message in case of n == 0 (EWOULDBLOCK || EAGAIN),
   // we will need it during next try
@@ -2263,6 +2259,8 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       return ACE_Utils::truncate_cast<int> (n);
     }
 
+  this->touch_activity ();
+
   if (this->partial_message_ != nullptr && this->partial_message_->length () > 0)
     {
       this->partial_message_->reset ();
@@ -2271,7 +2269,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_parse_data, ")
          ACE_TEXT ("read %d bytes\n"),
          this->id (), n));
     }
@@ -2304,7 +2302,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
            if (TAO_debug_level > 0)
             {
                 TAOLIB_ERROR ((LM_ERROR,
-                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
+                   ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_parse_data, ")
                    ACE_TEXT ("error consolidating message from input buffer\n"),
                    this->id () ));
              }
@@ -2484,7 +2482,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
               if (TAO_debug_level > 0)
                 {
                   TAOLIB_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_input_parse_data, ")
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_parse_data, ")
                      ACE_TEXT ("notify reactor\n"),
                      this->id ()));
                 }
@@ -2551,7 +2549,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_parsed_messages, ")
          ACE_TEXT ("entering (missing data == %d)\n"),
          this->id(), qd->missing_data ()));
     }
@@ -2568,7 +2566,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       if (TAO_debug_level > 0)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_parsed_messages, ")
              ACE_TEXT ("received CloseConnection message - %m\n"),
              this->id()));
         }
@@ -2609,7 +2607,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
             if (TAO_debug_level > 0)
               {
                 TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_parsed_messages, ")
                   ACE_TEXT ("error in process_reply_message - %m\n"),
                   this->id ()));
               }
@@ -2627,7 +2625,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           if (TAO_debug_level > 0)
             {
               TAOLIB_ERROR ((LM_ERROR,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_parsed_messages, ")
                  ACE_TEXT ("error processing CancelRequest\n"),
                  this->id ()));
             }
@@ -2644,7 +2642,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       if (TAO_debug_level > 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_parsed_messages, ")
              ACE_TEXT ("received MessageError, closing connection\n"),
              this->id ()));
         }
@@ -2665,7 +2663,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_queue_head, %d enqueued\n"),
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, %d enqueued\n"),
          this->id (), this->incoming_message_queue_.queue_length () ));
     }
 
@@ -2679,7 +2677,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
       if (TAO_debug_level > 3)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_queue_head, ")
+             ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, ")
              ACE_TEXT ("the size of the queue is [%d]\n"),
              this->id (),
              this->incoming_message_queue_.queue_length()));
@@ -2691,7 +2689,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_queue_head, ")
+                 ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, ")
                  ACE_TEXT ("notify reactor\n"),
                  this->id ()));
             }
@@ -2737,7 +2735,7 @@ TAO_Transport::notify_reactor_now ()
   if (TAO_debug_level > 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::notify_reactor, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::notify_reactor, ")
          ACE_TEXT ("notify to Reactor\n"),
          this->id ()));
     }
@@ -2750,7 +2748,7 @@ TAO_Transport::notify_reactor_now ()
       // @todo: need to think about what is the action that
       // we can take when we get here.
       TAOLIB_ERROR ((LM_ERROR,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::notify_reactor, ")
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::notify_reactor, ")
          ACE_TEXT ("notify to the reactor failed..\n"),
          this->id ()));
     }
@@ -2829,7 +2827,7 @@ TAO_Transport::pre_close ()
 {
   if (TAO_debug_level > 9)
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::pre_close\n"),
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%B]::pre_close\n"),
                   this->id_));
     }
   // @TODO: something needs to be done with is_connected_. Checking it is
@@ -2852,7 +2850,7 @@ TAO_Transport::post_open (size_t id)
   if (TAO_debug_level > 9)
     {
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
-                  ACE_TEXT ("transport id changed from [%d] to [%d]\n"), this->id_, id));
+                  ACE_TEXT ("transport id changed from [%B] to [%B]\n"), this->id_, id));
     }
   this->id_ = id;
 
@@ -2891,7 +2889,7 @@ TAO_Transport::post_open (size_t id)
           if (TAO_debug_level > 0)
             {
               TAOLIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open , ")
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%B]::post_open , ")
                      ACE_TEXT ("could not register the transport ")
                      ACE_TEXT ("in the reactor.\n"),
                      this->id ()));
@@ -2908,7 +2906,7 @@ TAO_Transport::post_open (size_t id)
 
   if (TAO_debug_level > 9)
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
+      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%B]::post_open")
                             ACE_TEXT (", cache_map_entry_ is [%@]\n"), this->id_, this->cache_map_entry_));
     }
 

@@ -177,7 +177,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   int numif = ifc.ifc_len / sizeof(struct ifreq);
 
   // find first eligible device
-  struct ifreq* ifr = 0;
+  struct ifreq* ifr = nullptr;
   for (int i=0; i< numif ;++i)
     {
       ifr = &ifr_buf[i];
@@ -227,7 +227,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   char buffer[BUFFERSIZE];
 
   struct ifconf ifc;
-  struct ifreq* ifr = 0;
+  struct ifreq* ifr = nullptr;
 
   ACE_HANDLE handle =
     ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
@@ -390,7 +390,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
   if (!addr_storage)
     {
       ACE_ALLOC free (*result);
-      *result = 0;
+      *result = nullptr;
       return EAI_MEMORY;
     }
 

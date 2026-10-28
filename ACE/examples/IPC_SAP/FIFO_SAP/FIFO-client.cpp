@@ -12,7 +12,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_FIFO_Send client (ACE_DEFAULT_RENDEZVOUS);
   ACE_TCHAR     buf[BUFSIZ];
 
-  while (ACE_OS::fgets (buf, sizeof buf, stdin) != 0)
+  while (ACE_OS::fgets (buf, sizeof buf, stdin) != nullptr)
     {
       ssize_t n = ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (buf));
 

@@ -86,7 +86,7 @@ reader (void *)
   for (int iterations = 1;
        iterations <= n_iterations; iterations++)
     {
-      ACE_READ_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, 0);
+      ACE_READ_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, nullptr);
 
       ++current_readers;
 
@@ -109,7 +109,7 @@ reader (void *)
 
       ACE_Thread::yield ();
     }
-  return 0;
+  return nullptr;
 }
 
 // Iterate <n_iterations> each time modifying the global data
@@ -124,7 +124,7 @@ writer (void *)
        iterations <= n_iterations;
        iterations++)
     {
-      ACE_WRITE_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, 0);
+      ACE_WRITE_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, nullptr);
 
       ++current_writers;
 
@@ -150,7 +150,7 @@ writer (void *)
 
       ACE_Thread::yield ();
     }
-  return 0;
+  return nullptr;
 }
 
 // Spawn off threads.
@@ -165,8 +165,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread starting\n"));
 
-  if (thr_mgr.spawn_n (n_readers, (ACE_THR_FUNC) reader, 0, THR_NEW_LWP) == -1 ||
-      thr_mgr.spawn_n (n_writers, (ACE_THR_FUNC) writer, 0, THR_NEW_LWP) == -1)
+  if (thr_mgr.spawn_n (n_readers, (ACE_THR_FUNC) reader, nullptr, THR_NEW_LWP) == -1 ||
+      thr_mgr.spawn_n (n_writers, (ACE_THR_FUNC) writer, nullptr, THR_NEW_LWP) == -1)
      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   thr_mgr.wait ();

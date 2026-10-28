@@ -309,13 +309,12 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << global << sname << "::CCM_" << lname << "_var tmp_var = " << be_idt_nl
         << global << sname <<"::CCM_" << lname
         << "::_narrow (tmp.in());" << be_uidt_nl << be_nl
-        << "typedef " << global << "CIAO_FACET" << prefix_connector
+        << "using " << lname << "_type = " << global << "CIAO_FACET" << prefix_connector
         << scope->flat_name () << "::" << obj->local_name () << "_Servant_T <" << be_idt_nl
         << "POA_" << sname << global << obj->local_name ()
         << "," << be_nl << global << sname <<"::CCM_" << lname << "," << be_nl
         << global << "Components::" << be_global->ciao_container_type ()
-        << "Context>" << be_idt_nl << lname
-        << "_type;" << be_uidt_nl << be_uidt_nl
+        << "Context>;" << be_uidt_nl << be_uidt_nl
         << lname << "_type *" << port_name << "_servant_impl = 0;" << be_nl
         << "ACE_NEW_THROW_EX (" << be_idt_nl
         << port_name << "_servant_impl," << be_nl

@@ -37,7 +37,7 @@ ACE_MEM_SAP::acquire_buffer (const ssize_t size)
   if (this->shm_malloc_ == 0)
     return 0;                  // not initialized.
 
-  ACE_MEM_SAP_Node *buf = 0;
+  ACE_MEM_SAP_Node *buf = nullptr;
 
   ACE_NEW_MALLOC_RETURN (buf,
                          static_cast<ACE_MEM_SAP_Node *>

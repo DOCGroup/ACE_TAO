@@ -23,13 +23,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
-                             , CosNotifyChannelAdmin::ProxySupplier
-                             , CosNotifyChannelAdmin::ProxySupplier_ptr
-                             , CosNotifyChannelAdmin::ProxyNotFound>
-TAO_Notify_ProxySupplier_Find_Worker;
+using TAO_Notify_ProxySupplier_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_Proxy,
+                           CosNotifyChannelAdmin::ProxySupplier,
+                           CosNotifyChannelAdmin::ProxySupplier_ptr,
+                           CosNotifyChannelAdmin::ProxyNotFound>;
 
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Seq_Worker;
+using TAO_Notify_Proxy_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>;
 
 TAO_Notify_ConsumerAdmin::TAO_Notify_ConsumerAdmin ()
   : TAO_Notify_Admin ()
@@ -143,7 +143,7 @@ TAO_Notify_ConsumerAdmin::load_proxy (
     bld->build_proxy (this
                , ctype
                , id);
-  ACE_ASSERT(proxy != 0);
+  ACE_ASSERT(proxy != nullptr);
   proxy->load_attrs (attrs);
   return proxy;
 }
@@ -345,7 +345,7 @@ TAO_Notify_ConsumerAdmin::find_proxy_supplier (
     TAO_Notify::IdVec & id_path,
     size_t position)
 {
-  TAO_Notify_ProxySupplier * result = 0;
+  TAO_Notify_ProxySupplier * result = nullptr;
   size_t path_size = id_path.size ();
   if (position < path_size)
   {

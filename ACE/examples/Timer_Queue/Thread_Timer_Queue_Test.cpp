@@ -30,9 +30,7 @@ Handler::Handler(const ACE_Time_Value &expiration_time)
 {
 }
 
-Handler::~Handler ()
-{
-}
+Handler::~Handler () = default;
 
 void
 Handler::set_id (int id)
@@ -220,7 +218,7 @@ Thread_Timer_Queue_Test_Driver::display_menu ()
 int
 Thread_Timer_Queue_Test_Driver::init ()
 {
-  typedef Command<Input_Task, Input_Task::ACTION> CMD;
+  using CMD = Command<Input_Task, Input_Task::ACTION>;
 
   // initialize the <Command> objects with their corresponding
   // methods from <Input_Task>

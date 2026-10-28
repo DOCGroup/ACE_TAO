@@ -184,18 +184,18 @@ protected:
   ACE_TOKEN_CONST::MUTEX lock_;
 
   /// This may be changed to a template type.
-  typedef ACE_Token_Name TOKEN_NAME;
+  using TOKEN_NAME = ACE_Token_Name;
 
   /// COLLECTION maintains a mapping from token names to mutexes.
-  typedef ACE_Map_Manager<TOKEN_NAME, ACE_Mutex_Invariants *, ACE_Null_Mutex>
-    MUTEX_COLLECTION;
+  using MUTEX_COLLECTION =
+    ACE_Map_Manager<TOKEN_NAME, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
 
   /// MUTEX_COLLECTION maintains a mapping from token names to mutexes.
   MUTEX_COLLECTION mutex_collection_;
 
   /// COLLECTION maintains a mapping from token names to mutexes.
-  typedef ACE_Map_Manager<TOKEN_NAME, ACE_RWLock_Invariants *, ACE_Null_Mutex>
-    RWLOCK_COLLECTION;
+  using RWLOCK_COLLECTION =
+    ACE_Map_Manager<TOKEN_NAME, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
 
   /// MUTEX_COLLECTION maintains a mapping from token names to mutexes.
   RWLOCK_COLLECTION rwlock_collection_;

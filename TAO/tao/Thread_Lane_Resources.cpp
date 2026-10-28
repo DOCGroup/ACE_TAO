@@ -46,9 +46,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
             orb_core.resource_factory ()->transport_idle_scan_interval ()));
 }
 
-TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources ()
-{
-}
+TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources () = default;
 
 TAO::Transport_Cache_Manager &
 TAO_Thread_Lane_Resources::transport_cache ()

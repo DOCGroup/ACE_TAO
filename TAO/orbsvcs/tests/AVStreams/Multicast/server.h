@@ -15,25 +15,29 @@ class FTP_Server_StreamEndPoint
 {
 public:
   FTP_Server_StreamEndPoint ();
-  virtual int get_callback (const char *flowname,
-                            TAO_AV_Callback *&callback);
+  int get_callback (const char *flowname,
+                    TAO_AV_Callback *&callback) override;
 };
 
 class FTP_Server_Callback
   :public TAO_AV_Callback
 {
 public:
-  virtual int handle_stop ();
-  virtual int receive_frame (ACE_Message_Block *frame,
-                             TAO_AV_frame_info *,
-                             const ACE_Addr &);
-  virtual int handle_end_stream ();
+  int handle_stop () override;
+  int receive_frame (ACE_Message_Block *frame,
+                     TAO_AV_frame_info *,
+                     ACE_Addr const &) override;
+  int handle_end_stream ();
 };
 
 class Server
 {
 public:
   Server ();
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
   int init (int argc,
             ACE_TCHAR *argv[]);
   int run ();
@@ -47,4 +51,4 @@ protected:
   char *protocol_;
 };
 
-typedef ACE_Unmanaged_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;
+using FTP_SERVER = ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex>;

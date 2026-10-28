@@ -15,6 +15,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler ()
+  : peer_addr_ (nullptr)
+  , dgram_mcast_ (nullptr)
 {
   ACE_NEW (transport_,
            TAO_AV_UDP_MCast_Transport (this));
@@ -61,7 +63,7 @@ TAO_AV_UDP_MCast_Flow_Handler::set_peer_addr (ACE_INET_Addr *peer_addr)
 //------------------------------------------------------------
 
 TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport ()
-  :handler_ (0)
+  : handler_ (nullptr)
 {
 }
 
@@ -70,9 +72,7 @@ TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Ha
 {
 }
 
-TAO_AV_UDP_MCast_Transport::~TAO_AV_UDP_MCast_Transport ()
-{
-}
+TAO_AV_UDP_MCast_Transport::~TAO_AV_UDP_MCast_Transport () = default;
 
 int
 TAO_AV_UDP_MCast_Transport::open (ACE_Addr * /*address*/)
@@ -112,7 +112,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   ssize_t nbytes = 0;
 
   for (const ACE_Message_Block *i = mblk;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       // Make sure there is something to send!

@@ -10,8 +10,8 @@
 class CommandModule : public ACE_Module<ACE_MT_SYNCH, ACE_System_Time_Policy>
 {
 public:
-  typedef ACE_Module<ACE_MT_SYNCH, ACE_System_Time_Policy> inherited;
-  typedef ACE_Task<ACE_MT_SYNCH, ACE_System_Time_Policy> Task;
+  using inherited = ACE_Module<ACE_MT_SYNCH, ACE_System_Time_Policy>;
+  using Task = ACE_Task<ACE_MT_SYNCH, ACE_System_Time_Policy>;
 
   CommandModule (const ACE_TCHAR *module_name,
                    CommandTask *writer,

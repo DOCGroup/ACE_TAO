@@ -77,11 +77,11 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::clone () const
 {
-  Case<StringType, TypeCodeType> * p = 0;
+  Case<StringType, TypeCodeType> *p = nullptr;
 
-  typedef Case_T<DiscriminatorType,
-                 StringType,
-                 TypeCodeType> case_type;
+  using case_type = Case_T<DiscriminatorType,
+                           StringType,
+                           TypeCodeType>;
 
   // The compiler generated memberwise copy constructor is sufficient.
   ACE_NEW_RETURN (p,
@@ -139,7 +139,7 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::label () const
 {
-  CORBA::Any * value = 0;
+  CORBA::Any *value = nullptr;
 
   ACE_NEW_THROW_EX (value,
                     CORBA::Any,

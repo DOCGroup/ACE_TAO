@@ -41,22 +41,22 @@ namespace TAO
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
                       TAO_InputCDR &cdr);
 
-    Unknown_IDL_Type (CORBA::TypeCode_ptr);
+    explicit Unknown_IDL_Type (CORBA::TypeCode_ptr);
 
-    virtual ~Unknown_IDL_Type ();
+    ~Unknown_IDL_Type () override;
 
-    virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
-    virtual const void *value () const;
-    virtual void free_value ();
+    CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
+    const void *value () const;
+    void free_value () override;
 
-    virtual TAO_InputCDR &_tao_get_cdr ();
-    virtual int _tao_byte_order () const;
+    TAO_InputCDR &_tao_get_cdr ();
+    int _tao_byte_order () const override;
 
-    virtual void _tao_decode (TAO_InputCDR &);
+    void _tao_decode (TAO_InputCDR &) override;
 
-    virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
-    virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
-    virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
+    CORBA::Boolean to_object (CORBA::Object_ptr &) const override;
+    CORBA::Boolean to_value (CORBA::ValueBase *&) const override;
+    CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const override;
 
   private:
     // We make the lock global, so that it won't be deleted when shared.
@@ -76,9 +76,8 @@ namespace TAO
     // initialized at the first invocation. Using ACE_Refcounted_Auto_Ptr
     // ensures that the ref count will not drop to zero until the library
     // is unloaded *and* all Unknown_IDL_Type instances have been destroyed.
-    typedef ACE_Refcounted_Auto_Ptr<ACE_Lock,
-                                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
-      LOCK;
+    using LOCK = ACE_Refcounted_Auto_Ptr<ACE_Lock,
+                                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
     static LOCK const lock_i ();
     LOCK const lock_;
     mutable TAO_InputCDR cdr_;

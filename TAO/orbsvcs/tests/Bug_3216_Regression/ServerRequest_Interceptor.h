@@ -22,45 +22,50 @@ class TAO249_ServerRequest_Interceptor
   public virtual ::CORBA::LocalObject
 {
 public:
-/// Constructor.
-TAO249_ServerRequest_Interceptor ();
+  /// Constructor.
+  TAO249_ServerRequest_Interceptor ();
 
-/// Destructor.
-~TAO249_ServerRequest_Interceptor ();
+  TAO249_ServerRequest_Interceptor (TAO249_ServerRequest_Interceptor const &) = delete;
+  TAO249_ServerRequest_Interceptor (TAO249_ServerRequest_Interceptor &&) = delete;
+  TAO249_ServerRequest_Interceptor &operator= (TAO249_ServerRequest_Interceptor const &) = delete;
+  TAO249_ServerRequest_Interceptor &operator= (TAO249_ServerRequest_Interceptor &&) = delete;
 
-/**
- * @name Methods Required by the Server Request Interceptor
- * Interface
- *
- * These are methods that must be implemented since they are pure
- * virtual in the abstract base class.  They are the canonical
- * methods required for all server request interceptors.
- */
-//@{
-/// Return the name of this ServerRequestinterceptor.
-virtual char * name ();
+  /// Destructor.
+  ~TAO249_ServerRequest_Interceptor () override;
 
-virtual void destroy ();
+  /**
+   * @name Methods Required by the Server Request Interceptor
+   * Interface
+   *
+   * These are methods that must be implemented since they are pure
+   * virtual in the abstract base class.  They are the canonical
+   * methods required for all server request interceptors.
+   */
+  //@{
+  /// Return the name of this ServerRequestinterceptor.
+  char * name () override;
 
-virtual void receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr ri);
+  void destroy () override;
 
-virtual void receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-virtual void send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-virtual void send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-virtual void send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
-//@}
+  void send_exception (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
+
+  void send_other (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
+  //@}
 private:
-CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_;
 
-CORBA:: Long client_id_;
+  CORBA::Long client_id_;
 };
 
 #endif  /* TAO249_SERVER_REQUEST_INTERCEPTOR_H */

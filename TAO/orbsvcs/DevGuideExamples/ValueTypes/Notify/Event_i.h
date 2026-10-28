@@ -15,15 +15,15 @@ class MyEvent_i
   , public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  MyEvent_i(const char* n, CORBA::Long k)
+  MyEvent_i (char const * n, CORBA::Long k)
   {
     name(n);
     kind(k);
   }
 
-  virtual ::CORBA::ValueBase *_copy_value ()
+  ::CORBA::ValueBase * _copy_value () override
   {
-    ::CORBA::ValueBase *ret_val = 0;
+    ::CORBA::ValueBase * ret_val = nullptr;
     ACE_NEW_THROW_EX (
       ret_val,
       MyEvent_i (
@@ -35,7 +35,7 @@ public:
     return ret_val;
   }
 
-  virtual void dump ()
+  void dump () override
   {
     CORBA::LongSeq& pl = payload();
     ACE_DEBUG((LM_DEBUG, "\nPayload contents.\n"));
@@ -46,12 +46,12 @@ public:
     ACE_DEBUG((LM_DEBUG, "\n"));
   }
 
-  virtual CORBA::Long size ()
+  CORBA::Long size () override
   {
     return payload().length();
   }
 
-  virtual void add_long (CORBA::Long n)
+  void add_long (CORBA::Long n) override
   {
     CORBA::LongSeq& pl = payload();
     CORBA::ULong idx = pl.length();
@@ -64,7 +64,7 @@ class MyEventFactory
   : public virtual CORBA::ValueFactoryBase
 {
 public:
-  virtual CORBA::ValueBase * create_for_unmarshal ()
+  CORBA::ValueBase * create_for_unmarshal () override
   {
     // It doesn't matter what values we construct it with
     // because they will be overwritten with the demarshaled values.

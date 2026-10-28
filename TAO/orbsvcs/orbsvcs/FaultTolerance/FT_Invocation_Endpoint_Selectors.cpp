@@ -61,7 +61,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
 
   TAO_MProfile &basep = r->stub ()->base_profiles ();
 
-  if (prof_list ==0)
+  if (prof_list == nullptr)
     {
       prof_list = &basep;
       // No need to hold stub lock any more. We needed it only to use
@@ -69,7 +69,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       guard.release ();
     }
 
-  if (prof_list == 0)
+  if (prof_list == nullptr)
     return false;
 
   // Try to look for primaries all over the place
@@ -87,7 +87,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
         this->check_profile_for_primary (tmp);
 
       // Found a primary
-      if (retval == true && tmp != 0)
+      if (retval && tmp != nullptr)
         {
           retval =
             this->try_connect (r,
@@ -120,7 +120,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
   TAO_MProfile &basep =
     r->stub ()->base_profiles ();
 
-  if (prof_list ==0)
+  if (prof_list == nullptr)
     {
       prof_list = &basep;
       // No need to hold stub lock any more. We needed it only to use
@@ -128,7 +128,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
       guard.release ();
     }
 
-  if (prof_list == 0)
+  if (prof_list == nullptr)
     return false;
 
   CORBA::ULong const sz = prof_list->size ();
@@ -144,14 +144,14 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
         this->check_profile_for_primary (tmp);
 
       // Found a non-primary
-      if (retval == false && tmp != 0)
+      if (! retval && tmp != nullptr)
         {
           retval =
             this->try_connect (r,
                                tmp,
                                max_wait_time);
 
-          if (retval == true)
+          if (retval)
             return true;
         }
     }

@@ -61,7 +61,7 @@ namespace Kokyu
   class Sched_Ready_Queue
   {
     /// Extract the necessary types from the traits class
-    typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
+    using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
 
     typedef typename
     DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor_t;

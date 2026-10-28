@@ -32,9 +32,9 @@ namespace TAO
       {
       public:
         /// Initializes object when dynamic linking occurs.
-        virtual int init (int argc, ACE_TCHAR *argv[]);
-        virtual ~Current_Loader ();
-        Current_Loader ();
+        int init (int argc, ACE_TCHAR *argv[]) override;
+        ~Current_Loader () override;
+        Current_Loader () = default;
       };
     }
   }

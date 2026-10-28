@@ -7,14 +7,19 @@
 class IFR_Service_Shutdown_Functor : public Shutdown_Functor
 {
 public:
-  IFR_Service_Shutdown_Functor (IFR_Service& ifr);
+  IFR_Service_Shutdown_Functor (IFR_Service & ifr);
+
+  IFR_Service_Shutdown_Functor (IFR_Service_Shutdown_Functor const &) = delete;
+  IFR_Service_Shutdown_Functor (IFR_Service_Shutdown_Functor &&) = delete;
+  IFR_Service_Shutdown_Functor &operator= (IFR_Service_Shutdown_Functor const &) = delete;
+  IFR_Service_Shutdown_Functor &operator= (IFR_Service_Shutdown_Functor &&) = delete;
 
   void operator() (int which_signal);
 private:
-  IFR_Service& ifr_;
+  IFR_Service & ifr_;
 };
 
-IFR_Service_Shutdown_Functor::IFR_Service_Shutdown_Functor (IFR_Service &ifr)
+IFR_Service_Shutdown_Functor::IFR_Service_Shutdown_Functor (IFR_Service & ifr)
   : ifr_(ifr)
 {
 }
@@ -29,7 +34,7 @@ IFR_Service_Shutdown_Functor::operator() (int which_signal)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   IFR_Service server;
 

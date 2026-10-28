@@ -12,11 +12,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, typename TypeCodeType>
-TAO::TypeCode::Case<StringType, TypeCodeType>::~Case ()
-{
-}
-
-template <typename StringType, typename TypeCodeType>
 bool
 TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
                                                       CORBA::TypeCode_ptr tc) const

@@ -67,12 +67,12 @@ TAO_UTF8_Latin1_Factory::assign (TAO_OutputCDR *cdr) const
 void
 TAO_UTF8_Latin1_Factory::create_translator () const
 {
-  if (this->translator_ == 0)
+  if (this->translator_ == nullptr)
   {
     TAO_UTF8_Latin1_Factory * pthis =
       const_cast <TAO_UTF8_Latin1_Factory *>(this);
     ACE_NEW (pthis->translator_, TAO_UTF8_Latin1_Translator);
-    if (this->translator_ == 0)
+    if (this->translator_ == nullptr)
     {
       if (TAO_debug_level)
         TAOLIB_ERROR ((LM_ERROR,

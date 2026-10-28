@@ -87,10 +87,10 @@ public:
   AST_UnionLabel *head ();
 
   // Override of base class method.
-  virtual UTL_LabelList *copy ();
+  UTL_LabelList *copy () override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   AST_UnionLabel *pd_car_data;

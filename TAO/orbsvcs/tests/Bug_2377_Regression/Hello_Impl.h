@@ -8,6 +8,11 @@ public:
   MessageLog (int num, bool sprs = false);
   ~MessageLog ();
 
+  MessageLog (MessageLog const &) = delete;
+  MessageLog (MessageLog &&) = delete;
+  MessageLog &operator= (MessageLog const &) = delete;
+  MessageLog &operator= (MessageLog &&) = delete;
+
   void register_message_send (int message_num);
   void register_message_recv (int message_num);
   int report_statistics ();
@@ -29,10 +34,15 @@ public:
   // Constructor
   Hello_Impl (CORBA::ORB_ptr orb, MessageLog *log);
 
-  // The skeleton methods
-  virtual void say_hello (CORBA::Short count);
+  Hello_Impl (Hello_Impl const &) = delete;
+  Hello_Impl (Hello_Impl &&) = delete;
+  Hello_Impl &operator= (Hello_Impl const &) = delete;
+  Hello_Impl &operator= (Hello_Impl &&) = delete;
 
-  virtual void shutdown ();
+  // The skeleton methods
+  void say_hello (CORBA::Short count) override;
+
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

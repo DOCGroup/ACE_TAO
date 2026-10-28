@@ -36,21 +36,21 @@ public:
   TAO_EC_Sched_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Sched_Factory ();
+  virtual ~TAO_EC_Sched_Factory () override;
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  virtual int init (int argc, ACE_TCHAR* argv[]) override;
+  virtual int fini () override;
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
-      create_dispatching (TAO_EC_Event_Channel_Base*);
+      create_dispatching (TAO_EC_Event_Channel_Base*) override;
   virtual TAO_EC_Filter_Builder*
-      create_filter_builder (TAO_EC_Event_Channel_Base*);
+      create_filter_builder (TAO_EC_Event_Channel_Base*) override;
   virtual TAO_EC_Timeout_Generator*
-      create_timeout_generator (TAO_EC_Event_Channel_Base*);
+      create_timeout_generator (TAO_EC_Event_Channel_Base*) override;
   virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel_Base*);
+      create_scheduling_strategy (TAO_EC_Event_Channel_Base*) override;
 
 private:
 };

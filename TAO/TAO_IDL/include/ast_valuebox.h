@@ -9,19 +9,19 @@ public:
   AST_ValueBox (UTL_ScopedName *n,
                 AST_Type       *boxed_type);
 
-  virtual ~AST_ValueBox ();
+  ~AST_ValueBox () override;
 
   // Data Accessors.
   AST_Type            *boxed_type () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 

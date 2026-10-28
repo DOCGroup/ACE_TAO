@@ -35,7 +35,7 @@ namespace CORBA
   class InterfaceDef;
 
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 namespace TAO

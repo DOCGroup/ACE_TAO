@@ -263,9 +263,8 @@ be_visitor_connector_dds_exh::visit_attribute (
     }
 
   os_ << be_nl
-      << "typedef "
-      << node->field_type ()->full_name () << " "
-      << node->local_name ()->get_string () << "_type;";
+      << "using " << node->local_name ()->get_string () << "_type = "
+      << node->field_type ()->full_name () << ";";
 
   return 0;
 }
@@ -288,66 +287,66 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
           << "struct " << datatype->flat_name () << "_DDS_Traits" << be_nl
           << "{" << be_idt_nl
           << "static const char* get_type_name () { return \"" << dt_name << "\"; };" << be_nl
-          << "typedef ::" << dt_name << " value_type;" << be_nl
-          << "typedef ::" << dt_name;
+          << "using value_type = ::" << dt_name << ";" << be_nl
+          << "using dds_seq_type = ::" << dt_name;
 
       if (the_dds_impl == BE_GlobalData::NDDS)
         {
           os_ << "RTI";
         }
 
-      os_ << "Seq dds_seq_type;" << be_nl;
+      os_ << "Seq;" << be_nl;
 
       if (the_dds_impl == BE_GlobalData::NDDS)
         {
-          os_ << "typedef ::" << dt_name
-              << "TypeSupport type_support;" << be_nl;
+          os_ << "using type_support = ::" << dt_name
+              << "TypeSupport;" << be_nl;
         }
       else if (the_dds_impl == BE_GlobalData::COREDX)
         {
-          os_ << "typedef ::" << dt_name
-              << "TypeSupport type_support;" << be_nl;
+          os_ << "using type_support = ::" << dt_name
+              << "TypeSupport;" << be_nl;
         }
       else if (the_dds_impl == BE_GlobalData::OPENDDS)
         {
-          os_ << "typedef ::" << dt_name
-              << "TypeSupportImpl type_support;" << be_nl;
+          os_ << "using type_support = ::" << dt_name
+              << "TypeSupportImpl;" << be_nl;
         }
 
       if (the_dds_impl == BE_GlobalData::NDDS)
         {
-          os_ << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
-              << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl;
+          os_ << "using sampleinfo_seq_type = ::DDS_SampleInfoSeq;" << be_nl
+              << "using sampleinfo_type = ::DDS_SampleInfo;" << be_nl;
         }
       else if (the_dds_impl == BE_GlobalData::COREDX)
         {
-          os_ << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
-              << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl;
+          os_ << "using sampleinfo_seq_type = ::DDS_SampleInfoSeq;" << be_nl
+              << "using sampleinfo_type = ::DDS_SampleInfo;" << be_nl;
         }
       else if (the_dds_impl == BE_GlobalData::OPENDDS)
         {
-          os_ << "typedef ::DDS::SampleInfoSeq sampleinfo_seq_type;" << be_nl
-              << "typedef ::DDS::SampleInfo sampleinfo_type;" << be_nl;
+          os_ << "using sampleinfo_seq_type = ::DDS::SampleInfoSeq;" << be_nl
+              << "using sampleinfo_type = ::DDS::SampleInfo;" << be_nl;
         }
 
-      os_ << "typedef ::" << dt_name
-          << "DataWriter datawriter_type;" << be_nl
-          << "typedef ::" << dt_name
-          << "DataReader datareader_type;" << be_nl;
+      os_ << "using datawriter_type = ::" << dt_name
+          << "DataWriter;" << be_nl
+          << "using datareader_type = ::" << dt_name
+          << "DataReader;" << be_nl;
 
       if (the_dds_impl == BE_GlobalData::NDDS)
         {
-          os_ << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
-              << "::DataWriter typed_writer_type;" << be_nl
-              << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
-              << "::DataReader typed_reader_type;" ;
+          os_ << "using typed_writer_type = " << (global_comp ? "" : "::")
+              << comp_scope->full_name () << "::DataWriter;" << be_nl
+              << "using typed_reader_type = " << (global_comp ? "" : "::")
+              << comp_scope->full_name () << "::DataReader;";
         }
       else if (the_dds_impl == BE_GlobalData::OPENDDS)
         {
-          os_ << "typedef ::" << dt_name
-              << "DataWriter typed_writer_type;" << be_nl
-              << "typedef ::" << dt_name
-              << "DataReader typed_reader_type;";
+          os_ << "using typed_writer_type = ::" << dt_name
+              << "DataWriter;" << be_nl
+              << "using typed_reader_type = ::" << dt_name
+              << "DataReader;";
         }
 
       os_ << be_uidt_nl << "};";
@@ -367,11 +366,11 @@ be_visitor_connector_dds_exh::gen_connector_traits ()
       << "struct CCM_" << this->node_->flat_name ()
       << "_Traits" << be_nl
       << "{" << be_idt_nl
-      << "typedef ::CIAO_" << this->node_->flat_name () << "_Impl::"
-      << this->node_->local_name () << "_Exec base_type;" << be_nl
-      << "typedef " << (global_comp ? "" : "::")
+      << "using base_type = ::CIAO_" << this->node_->flat_name () << "_Impl::"
+      << this->node_->local_name () << "_Exec;" << be_nl
+      << "using context_type = " << (global_comp ? "" : "::")
       << comp_scope->name () << "::CCM_"
-      << this->node_->local_name () << "_Context context_type;"
+      << this->node_->local_name () << "_Context;"
       << be_nl;
 
   if (this->visit_component_scope (this->node_) == -1)
@@ -401,10 +400,9 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
       const char *lname = iface->local_name ();
 
       os_ << be_nl
-          << "typedef ::" << scope->name () << smart_scope
-          << (!for_facet ? "" : "CCM_") << lname
-          << " " << port_elem->local_name ()->get_string ()
-          << "_type;";
+          << "using " << port_elem->local_name ()->get_string () << "_type = ::"
+          << scope->name () << smart_scope << (!for_facet ? "" : "CCM_")
+          << lname << ";";
 
       iface->dds_connector_traits_done (true);
       this->port_ifaces_.enqueue_tail (iface);

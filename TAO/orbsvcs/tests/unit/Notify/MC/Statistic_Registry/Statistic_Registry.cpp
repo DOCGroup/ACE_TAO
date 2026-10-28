@@ -2,6 +2,7 @@
 #include "ace/Monitor_Point_Registry.h"
 
 #include "tao/TAO_Singleton_Manager.h"
+#include "tao/Exception.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -94,6 +95,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       TAO_Singleton_Manager::instance ()->fini ();
     }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Statistic_Registry: ");
+      error ("Caught a CORBA exception");
+    }
   catch (...)
     {
       error ("Caught an unexpected exception type");
@@ -103,4 +109,3 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   return 0;
 }
-

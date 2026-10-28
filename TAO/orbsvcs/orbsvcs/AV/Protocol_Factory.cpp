@@ -14,9 +14,7 @@ TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory ()
 {
 }
 
-TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory ()
-{
-}
+TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory () = default;
 
 int
 TAO_AV_Flow_Protocol_Factory::init (int /* argc */,
@@ -37,21 +35,21 @@ TAO_AV_Flow_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry * /* entr
                                                     TAO_AV_Flow_Handler * /* handler */,
                                                     TAO_AV_Transport * /* transport */)
 {
-  return 0;
+  return nullptr;
 }
 
 const char *
 TAO_AV_Flow_Protocol_Factory::control_flow_factory ()
 {
-  return 0;
+  return nullptr;
 }
 
 //----------------------------------------------------------------------
 // TAO_AV_Protocol_Object
 //----------------------------------------------------------------------
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object ()
-  :transport_ (0),
-   callback_ (0)
+  :transport_ (nullptr),
+   callback_ (nullptr)
 {
 }
 
@@ -71,9 +69,7 @@ TAO_AV_Protocol_Object::open (TAO_AV_Callback *callback,
   return 0;
 }
 
-TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object ()
-{
-}
+TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object () = default;
 
 int
 TAO_AV_Protocol_Object::start ()

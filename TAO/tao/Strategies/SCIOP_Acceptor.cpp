@@ -21,17 +21,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
-    addrs_ (0),
-    port_span_ (1),
-    hosts_ (0),
-    endpoint_count_ (0),
-    hostname_in_ior_ (0),
     version_ (TAO_DEF_SCIOP_MAJOR, TAO_DEF_SCIOP_MINOR),
-    orb_core_ (0),
-    base_acceptor_ (this),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0)
+    base_acceptor_ (this)
 {
 }
 
@@ -92,7 +83,7 @@ TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // Create a profile for each acceptor endpoint.
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
-      TAO_SCIOP_Profile *pfile = 0;
+      TAO_SCIOP_Profile *pfile = nullptr;
       ACE_NEW_RETURN (pfile,
                       TAO_SCIOP_Profile (this->hosts_[i],
                                         this->addrs_[i].get_port_number (),
@@ -106,7 +97,7 @@ TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (pfile) == -1)
         {
           pfile->_decr_refcnt ();
-          pfile = 0;
+          pfile = nullptr;
           return -1;
         }
 
@@ -126,7 +117,7 @@ TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            CORBA::Short priority)
 {
   CORBA::ULong index = 0;
-  TAO_SCIOP_Profile *sciop_profile = 0;
+  TAO_SCIOP_Profile *sciop_profile = nullptr;
 
   // Do not check <mprofile> for the presence of an existing
   // SCIOP_Profile.  With SCIOP, there is a one-to-one relationship
@@ -145,7 +136,7 @@ TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (sciop_profile) == -1)
         {
           sciop_profile->_decr_refcnt ();
-          sciop_profile = 0;
+          sciop_profile = nullptr;
           return -1;
         }
 
@@ -163,7 +154,7 @@ TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
        index < this->endpoint_count_;
        ++index)
     {
-      TAO_SCIOP_Endpoint *endpoint = 0;
+      TAO_SCIOP_Endpoint *endpoint = nullptr;
       ACE_NEW_RETURN (endpoint,
                       TAO_SCIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
@@ -183,7 +174,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast<const TAO_SCIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return 0;
 
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
@@ -218,7 +209,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -229,7 +220,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                         -1);
     }
 
-  if (address == 0)
+  if (address == nullptr)
     return -1;
 
   // Parse options
@@ -270,15 +261,15 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // more hostnames, followed perhaps by a port.
 
   u_short port_number = 0;
-  char *tmp_host = 0;
+  char *tmp_host = nullptr;
   size_t hostname_length = 0;
 
-  if (port_separator_loc != 0) {
+  if (port_separator_loc != nullptr) {
     // Port separator was found.  Check that the next character is
     // not the terminator.
     const char *port_loc = port_separator_loc;
     ++port_loc;
-    if (port_loc == 0) {
+  if (port_loc == nullptr) {
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
                          ACE_TEXT ("SCIOP_Acceptor::open - ")
@@ -342,7 +333,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   }
 
   // Allocate an array of secondary ip addresses.
-  ACE_UINT32 *secondary_ip_addrs = 0;
+  ACE_UINT32 *secondary_ip_addrs = nullptr;
   std::unique_ptr<ACE_UINT32[]> secondary_ip_addrs_auto;
   size_t num_secondary_ip_addrs = hostnames.size() - 1;
   if (num_secondary_ip_addrs > 0) {
@@ -405,7 +396,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   i = 0;
   while (i < hostnames.size()) {
     // The hostname_in_ior_ field may override the FIRST hostname only.
-    if (this->hostname_in_ior_ != 0 && i == 0)
+    if (this->hostname_in_ior_ != nullptr && i == 0)
     {
       if (TAO_debug_level > 2)
       {
@@ -452,7 +443,7 @@ TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -621,7 +612,7 @@ TAO_SCIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       // just return ours.
       return this->dotted_decimal_address (addr, host);
     }
-  else if (specified_hostname != 0)
+  else if (specified_hostname != nullptr)
     {
       // If the user specified a hostname, pass it back
       // blindly as it overrides our choice of hostname.
@@ -651,7 +642,7 @@ TAO_SCIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                            char *&host)
 {
   int result = 0;
-  const char *tmp = 0;
+  char const *tmp = nullptr;
 
   // If the IP address in the INET_Addr is the INADDR_ANY address,
   // then force the actual IP address to be used by initializing a new
@@ -668,7 +659,7 @@ TAO_SCIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   else
     tmp = addr.get_host_addr ();
 
-  if (tmp == 0 || result != 0)
+  if (tmp == nullptr || result != 0)
     {
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
@@ -690,7 +681,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // it.  The hostnames will then be used when creating a
   // TAO_SCIOP_Profile for each endpoint setup on the probed
   // network interfaces.
-  ACE_INET_Addr *if_addrs = 0;
+  ACE_INET_Addr *if_addrs = nullptr;
   size_t if_cnt = 0;
 
   if (ACE::get_ip_interfaces (if_cnt,
@@ -703,7 +694,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       return -1;
     }
 
-  if (if_cnt == 0 || if_addrs == 0)
+  if (if_cnt == 0 || if_addrs == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -761,7 +752,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if_addrs[i].is_loopback ())
         continue;
 
-      if (this->hostname_in_ior_ != 0)
+      if (this->hostname_in_ior_ != nullptr)
         {
           if (TAO_debug_level > 2)
             {
@@ -802,7 +793,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 {
   // Make a copy of hostnames string
   int const hostnames_string_length = std::strlen(hostnames) + 1;
-  char* hostnames_copy = 0;
+  char *hostnames_copy = nullptr;
   ACE_NEW_RETURN (hostnames_copy,
                   char[hostnames_string_length],
                   -1);
@@ -811,10 +802,10 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 
   // Count the number of hostnames separated by "+"
   size_t num_hostnames = 0;
-  char *last = 0;
+  char *last = nullptr;
   const char* hostname = ACE_OS::strtok_r (hostnames_copy, "+", &last);
 
-  while (hostname != 0) {
+  while (hostname != nullptr) {
     ++num_hostnames;
     hostname = ACE_OS::strtok_r (0, "+", &last);
   }
@@ -837,7 +828,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 
   // Iterate over the hostnames and stuff them into the array
   size_t index = 0;
-  last = 0;
+  last = nullptr;
   hostname = ACE_OS::strtok_r (hostnames_copy, "+", &last);
 
   while (index < num_hostnames) {
@@ -914,7 +905,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 int
 TAO_SCIOP_Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in

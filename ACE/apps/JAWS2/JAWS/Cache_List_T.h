@@ -22,8 +22,8 @@ class JAWS_Cache_List
 // trying to simplify all the heap operations to be O(1).
 {
 public:
-  typedef JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
-  typedef JAWS_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN> Cache_List_Item;
+  using Cache_Manager = JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN>;
+  using Cache_List_Item = JAWS_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN>;
 
   JAWS_Cache_List (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
   // maxsize is the total number of objects the in memory cache is
@@ -82,7 +82,7 @@ class JAWS_Cache_List_Item
   friend class JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
-  typedef JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN> Cache_List;
+  using Cache_List = JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
   JAWS_Cache_List_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
   unsigned int priority ();

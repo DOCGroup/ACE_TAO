@@ -21,20 +21,20 @@ template<typename charT, CORBA::ULong MAX>
 class bounded_basic_string_sequence
 {
 public:
-  typedef charT character_type;
-  typedef charT * value_type;
-  typedef charT const * const_value_type;
-  typedef ::CORBA::ULong size_type;
+  using character_type = charT;
+  using value_type = charT *;
+  using const_value_type = charT const *;
+  using size_type = ::CORBA::ULong;
 
-  typedef details::string_traits<charT,true> element_traits;
-  typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
+  using element_traits = details::string_traits<charT, true>;
+  using allocation_traits = details::bounded_reference_allocation_traits<value_type, element_traits, MAX, true>;
 
-  typedef details::string_sequence_element<element_traits> element_type;
-  typedef details::string_const_sequence_element<element_traits> const_element_type;
-  typedef element_type subscript_type;
-  typedef const_value_type const_subscript_type;
+  using element_type = details::string_sequence_element<element_traits>;
+  using const_element_type = details::string_const_sequence_element<element_traits>;
+  using subscript_type = element_type;
+  using const_subscript_type = const_value_type;
 
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
+  using implementation_type = details::generic_sequence<value_type, allocation_traits, element_traits>;
 
   // @copydoc TAO::details::generic_sequence::generic_sequence()
   inline bounded_basic_string_sequence()

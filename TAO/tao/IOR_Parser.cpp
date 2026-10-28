@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IOR_Parser::~TAO_IOR_Parser ()
-{
-}
+TAO_IOR_Parser::~TAO_IOR_Parser () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

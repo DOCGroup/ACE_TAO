@@ -35,6 +35,6 @@ struct Activator_Info
   ImplementationRepository::Activator_var activator;
 };
 
-typedef ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex> Activator_Info_Ptr;
+using Activator_Info_Ptr = ACE_Strong_Bound_Ptr<Activator_Info, ACE_Null_Mutex>;
 
 #endif /* ACTIVATOR_INFO_H */

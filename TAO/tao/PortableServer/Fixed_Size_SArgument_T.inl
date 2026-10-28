@@ -16,9 +16,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Fixed_Size_SArgument_T<S,Insert_Policy>::
-Inout_Fixed_Size_SArgument_T ()
-{
-}
+Inout_Fixed_Size_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -36,8 +34,7 @@ template<typename S,
 ACE_INLINE
 TAO::Out_Fixed_Size_SArgument_T<S,
                                 Insert_Policy>::
-Out_Fixed_Size_SArgument_T ()
-{}
+Out_Fixed_Size_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -53,8 +50,7 @@ TAO::Out_Fixed_Size_SArgument_T<S,Insert_Policy>::arg ()
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Fixed_Size_SArgument_T<S,Insert_Policy>::Ret_Fixed_Size_SArgument_T ()
-{}
+TAO::Ret_Fixed_Size_SArgument_T<S,Insert_Policy>::Ret_Fixed_Size_SArgument_T () = default;
 
 template<typename S,
          template <typename> class Insert_Policy>

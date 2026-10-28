@@ -33,7 +33,7 @@
                                     return retval; } while(0)
 
 ReadHandler::ReadHandler() : ACE_Event_Handler(), mStream(), mDataSize(0),
-        mData(0), mCallCounter(0), mInvocationCounter(0) {
+        mData(nullptr), mCallCounter(0), mInvocationCounter(0) {
     ACE_TRACE("ReadHandler::ReadHandler()");
 }
 
@@ -91,7 +91,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         // check mDataSize for plausability then allocate memory
         if (mDataSize > 0) {
             mData = new (std::nothrow) char[mDataSize];
-            if (mData == 0)
+            if (mData == nullptr)
               ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate ")
                          ACE_TEXT ("data buffer.\n")));
             else

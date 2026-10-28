@@ -97,7 +97,7 @@ namespace TAO
     ObjectKey& operator= (ObjectKey &&) = default;
     ~ObjectKey ();
 
-    typedef ObjectKey_var _var_type;
+    using _var_type = ObjectKey_var;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     ObjectKey (

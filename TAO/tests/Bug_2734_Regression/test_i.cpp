@@ -8,7 +8,7 @@ ACE_High_Res_Timer sleep_duration;
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
-  sleep_duration.calibrate();
+  sleep_duration.calibrate ();
 }
 
 CORBA::Long
@@ -20,14 +20,14 @@ Simple_Server_i::echo (CORBA::Long x,
   ACE_DEBUG ((LM_DEBUG, "server (%P) will request sleep for %d sec and %d msecs.\n",
               tv.sec(), tv.msec ()));
 
-  sleep_duration.reset();
-  sleep_duration.start();
+  sleep_duration.reset ();
+  sleep_duration.start ();
   ACE_OS::sleep (tv);
-  sleep_duration.stop();
+  sleep_duration.stop ();
   ACE_hrtime_t usec;
-  sleep_duration.elapsed_microseconds(usec);
+  sleep_duration.elapsed_microseconds (usec);
   ACE_DEBUG ((LM_DEBUG, "server (%P) actually slept for %d sec and %d msecs.\n",
-              usec/1000000, (usec % 1000000)/1000));
+              usec / 1000000, (usec % 1000000) / 1000));
 
   return x;
 }

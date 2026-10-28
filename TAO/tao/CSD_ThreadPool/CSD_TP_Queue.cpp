@@ -8,6 +8,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::CSD::TP_Queue::~TP_Queue () = default;
+
 void
 TAO::CSD::TP_Queue::put(TP_Request* request)
 {
@@ -16,21 +18,21 @@ TAO::CSD::TP_Queue::put(TP_Request* request)
   // perform an _add_ref() on the request now to make the queue's "copy".
   request->_add_ref();
 
-  if (this->tail_ == 0)
+  if (this->tail_ == nullptr)
     {
       // The tail_ is a NULL pointer only when the queue is empty.
       // Make the request be the only element in the queue.
       this->head_ = this->tail_ = request;
 
       // Make sure the request's prev_ and next_ pointers are set to NULL.
-      request->prev_ = request->next_ = 0;
+      request->prev_ = request->next_ = nullptr;
     }
   else
     {
       // There is at least one request already in the queue.  "Append" the
       // supplied request object to the end of the queue.
       request->prev_ = this->tail_;
-      request->next_ = 0;
+      request->next_ = nullptr;
       this->tail_->next_ = request;
       this->tail_ = request;
     }
@@ -41,12 +43,12 @@ TAO::CSD::TP_Queue::put(TP_Request* request)
 void
 TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
 {
-  TP_Request* cur = this->head_;
+  TP_Request *cur = this->head_;
 
-  while (cur != 0)
+  while (cur != nullptr)
     {
-      TP_Request* prev = cur->prev_;
-      TP_Request* next = cur->next_;
+      TP_Request *prev = cur->prev_;
+      TP_Request *next = cur->next_;
 
       // Pass the current request to the visitor.  Also pass-in a reference
       // to the remove_from_queue flag.  The visitor may decide that it
@@ -72,17 +74,17 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
               // Move the head_ to the next request in the queue.
               this->head_ = next;
 
-              if (this->head_ == 0)
+              if (this->head_ == nullptr)
                 {
                   // Not only was the current request at the front of the
                   // queue - it was the *only* request in the queue.
                   // Update the tail_ pointer now that the queue is empty.
-                  this->tail_ = 0;
+                  this->tail_ = nullptr;
                 }
               else
                 {
                   // Set the (new) head_ request's prev_ pointer to be NULL.
-                  this->head_->prev_ = 0;
+                  this->head_->prev_ = nullptr;
                 }
             }
           else if (this->tail_ == cur)
@@ -94,7 +96,7 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
               // The point is that we can now assume that the 'prev' pointer
               // is never NULL in this case.
               this->tail_ = prev;
-              this->tail_->next_ = 0;
+              this->tail_->next_ = nullptr;
             }
           else
             {

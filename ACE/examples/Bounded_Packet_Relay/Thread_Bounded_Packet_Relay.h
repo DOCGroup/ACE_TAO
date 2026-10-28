@@ -27,20 +27,12 @@
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "BPR_Drivers.h"
 
-// These typedefs ensure that we use the minimal amount of locking
+// These aliases ensure that we use the minimal amount of locking
 // necessary.
-typedef ACE_Event_Handler_Handle_Timeout_Upcall
-        Upcall;
-typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                         Upcall,
-                         ACE_Null_Mutex>
-        Timer_Heap;
-typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-                                  Upcall,
-                                  ACE_Null_Mutex>
-        Timer_Heap_Iterator;
-typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
-        Thread_Timer_Queue;
+using Upcall = ACE_Event_Handler_Handle_Timeout_Upcall;
+using Timer_Heap = ACE_Timer_Heap_T<ACE_Event_Handler *, Upcall, ACE_Null_Mutex>;
+using Timer_Heap_Iterator = ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, Upcall, ACE_Null_Mutex>;
+using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
 
 // Forward declaration.
 class Thread_Bounded_Packet_Relay_Driver;
@@ -160,7 +152,7 @@ class User_Input_Task : public ACE_Task_Base
 public:
   // = Trait for command accessible entry points.
 
-  typedef int (User_Input_Task::*ACTION) (void *);
+  using ACTION = int (User_Input_Task::*) (void *);
 
   /// Constructor.
   User_Input_Task (Bounded_Packet_Relay *relay,
@@ -237,7 +229,7 @@ class BPR_Handler_Base : public ACE_Event_Handler
 public:
   // = Trait for command accessible entry points.
 
-  typedef int (BPR_Handler_Base::*ACTION) (void *);
+  using ACTION = int (BPR_Handler_Base::*) (void *);
 
 
   /// Constructor.
@@ -281,7 +273,7 @@ class Send_Handler : public BPR_Handler_Base
 public:
   // = Trait for command accessible entry points.
 
-  typedef int (Send_Handler::*ACTION) (void *);
+  using ACTION = int (Send_Handler::*) (void *);
 
   /// Constructor.
   Send_Handler (u_long send_count,
@@ -365,7 +357,7 @@ class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <T
 {
 public:
   // = Trait for commands issued from this driver
-  typedef ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION> MYCOMMAND;
+  using MYCOMMAND = ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION>;
 
   /// Constructor.
   Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);

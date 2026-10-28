@@ -59,8 +59,8 @@ public:
   void accumulate (ACE_Throughput_Stats& stats) const;
   // Add our throughput and latency statistics to <stats>
 
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (const RtecEventComm::EventSet& events) override;
+  void disconnect_push_consumer () override;
   // The skeleton methods.
 
 private:

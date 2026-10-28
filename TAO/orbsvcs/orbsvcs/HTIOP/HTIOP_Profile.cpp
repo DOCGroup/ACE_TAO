@@ -66,10 +66,10 @@ TAO::HTIOP::Profile::~Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = 0;
+  TAO_Endpoint *tmp = nullptr;
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
-       next != 0;
+       next != nullptr;
        next = tmp)
     {
       tmp = next->next ();
@@ -115,7 +115,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
 
   const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
 
-  if (okd == 0 || okd == ior)
+  if (okd == nullptr || okd == ior)
     {
       // No object key delimiter or no hostname specified.
       throw CORBA::INV_OBJREF(
@@ -139,7 +139,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
           EINVAL),
         CORBA::COMPLETED_NO);
     }
-  else if (cp_pos != 0)
+  else if (cp_pos != nullptr)
     {
       // A port number or port name was specified.
       CORBA::ULong length_port = okd - cp_pos - 1;
@@ -210,13 +210,13 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
   const TAO::HTIOP::Profile *op =
     dynamic_cast<const TAO::HTIOP::Profile *> (other_profile);
 
-  if (op == 0)
+  if (op == nullptr)
     return 0;
 
   // Check endpoints equivalence.
   const TAO::HTIOP::Endpoint *other_endp = &op->endpoint_;
   for (TAO::HTIOP::Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
@@ -234,7 +234,7 @@ TAO::HTIOP::Profile::hash (CORBA::ULong max)
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
   for (TAO::HTIOP::Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       hashval += endp->hash ();
@@ -393,7 +393,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
     tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
-       iterator != 0;
+       iterator != nullptr;
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
@@ -447,7 +447,7 @@ TAO::HTIOP::Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO::HTIOP::Endpoint *endpoint = 0;
+          TAO::HTIOP::Endpoint *endpoint = nullptr;
           ACE_NEW_RETURN (endpoint,
                           TAO::HTIOP::Endpoint (endpoints[i].host,
                                               endpoints[i].port,

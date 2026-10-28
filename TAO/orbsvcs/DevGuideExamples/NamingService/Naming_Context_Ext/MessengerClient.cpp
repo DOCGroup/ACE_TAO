@@ -4,10 +4,10 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT("file://url.ior");
+ACE_TCHAR const * ior_input_file = ACE_TEXT("file://url.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -32,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try {
     // Initialize orb

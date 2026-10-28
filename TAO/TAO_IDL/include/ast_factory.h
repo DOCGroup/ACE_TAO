@@ -80,7 +80,7 @@ class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
 public:
   AST_Factory (UTL_ScopedName *n);
 
-  virtual ~AST_Factory ();
+  ~AST_Factory () override;
 
   UTL_ExceptList *exceptions ();
   // Return exception list.
@@ -97,13 +97,13 @@ public:
   // generated for the stubs.
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Method to add exceptions.
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);

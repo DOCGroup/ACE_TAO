@@ -88,9 +88,9 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal_kind (TAO_OutputCDR & cdr) const;
-      virtual bool tao_marshal (TAO_OutputCDR & cdr,
-                                CORBA::ULong offset) const;
+      bool tao_marshal_kind (TAO_OutputCDR & cdr) const override;
+      bool tao_marshal (TAO_OutputCDR & cdr,
+                        CORBA::ULong offset) const override;
       //@}
 
     protected:
@@ -103,8 +103,8 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
+      CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
+      CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       //@}
 
     public:
@@ -139,7 +139,7 @@ namespace TAO
       class Reset
       {
       public:
-        Reset (CORBA::ULong & flag) : flag_ (flag) { }
+        explicit Reset (CORBA::ULong & flag) : flag_ (flag) { }
         ~Reset () { this->flag_ = 0; }
       private:
         CORBA::ULong & flag_;
@@ -155,7 +155,7 @@ namespace TAO
        * This flag is used to prevent @c TypeCode equality and
        * equivalence operations from recursing indefinitely.
        */
-      mutable CORBA::ULong recursion_start_offset_;
+      mutable CORBA::ULong recursion_start_offset_ {};
 
       /// Track whether data has been initialized.
       bool data_initialized_;

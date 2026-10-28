@@ -15,15 +15,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_UIOP_Transport::~TAO_UIOP_Transport () = default;
+
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_UIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
-{
-}
-
-TAO_UIOP_Transport::~TAO_UIOP_Transport ()
 {
 }
 
@@ -103,7 +101,7 @@ TAO_UIOP_Transport::send_request (TAO_Stub *stub,
       return -1;
     }
 
-  if (this->send_message (stream, stub, 0, message_semantics, max_wait_time) == -1)
+  if (this->send_message (stream, stub, nullptr, message_semantics, max_wait_time) == -1)
     {
       return -1;
     }
@@ -140,7 +138,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) closing transport %d after fault %p\n"),
+                    ACE_TEXT ("TAO (%P|%t) closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 

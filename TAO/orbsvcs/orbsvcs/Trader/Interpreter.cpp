@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 
 TAO_Interpreter::TAO_Interpreter ()
-  : root_ (0)
+  : root_ (nullptr)
 {
 }
 
@@ -26,16 +26,16 @@ TAO_Interpreter::build_tree (const char* constraints)
   TAO_Lex_String_Input::reset ((char*)constraints);
   int return_value = 0;
 
-  yyval.constraint_ = 0;
+  yyval.constraint_ = nullptr;
   return_value = ::yyparse ();
 
-  if (return_value == 0 && yyval.constraint_ != 0)
+  if (return_value == 0 && yyval.constraint_ != nullptr)
     this->root_ = yyval.constraint_;
   else
     {
       while (yylex () > 0)
         continue;
-      this->root_ = 0;
+      this->root_ = nullptr;
     }
 
   return return_value;
@@ -46,7 +46,7 @@ TAO_Interpreter::is_empty_string (const char* str)
 {
   int return_value = 0;
 
-  if (str != 0)
+  if (str != nullptr)
     {
       int i = 0;
       while (str[i] != '\0')
@@ -64,9 +64,9 @@ TAO_Interpreter::is_empty_string (const char* str)
   return return_value;
 }
 
-char* TAO_Lex_String_Input::string_ = 0;
-char* TAO_Lex_String_Input::current_ = 0;
-char* TAO_Lex_String_Input::end_ = 0;
+char* TAO_Lex_String_Input::string_ = nullptr;
+char* TAO_Lex_String_Input::current_ = nullptr;
+char* TAO_Lex_String_Input::end_ = nullptr;
 
 // Routine to have Lex read its input from the constraint string.
 

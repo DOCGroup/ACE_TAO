@@ -11,7 +11,11 @@ TestBroadcaster::~TestBroadcaster() noexcept
   {
     disconnect();
   } /* end of try */
-  catch(...)
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("TestBroadcaster::~TestBroadcaster: ");
+  }
+  catch (...)
   {
   }
 }
@@ -48,7 +52,12 @@ bool TestBroadcaster::connect(
     mv_sequenceProxyPushConsumer->connect_sequence_push_supplier(
       CosNotifyComm::SequencePushSupplier::_nil());
   }
-  catch(...)
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("TestBroadcaster::connect: ");
+    return false;
+  }
+  catch (...)
   {
     return false;
   }
@@ -66,7 +75,12 @@ bool TestBroadcaster::disconnect()
       mv_sequenceProxyPushConsumer = CosNotifyChannelAdmin::SequenceProxyPushConsumer_var();
     }
   } /* end of try */
-  catch(...)
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("TestBroadcaster::disconnect: ");
+    return false;
+  }
+  catch (...)
   {
     return false;
   }
@@ -99,7 +113,12 @@ bool TestBroadcaster::sendData()
 
     mv_sequenceProxyPushConsumer->push_structured_events(events);
   }
-  catch(...)
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("TestBroadcaster::sendEvents: ");
+    return false;
+  }
+  catch (...)
   {
     return false;
   }

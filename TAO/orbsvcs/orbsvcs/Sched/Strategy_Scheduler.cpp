@@ -18,7 +18,7 @@
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
 {
-typedef int (*COMP_FUNC) (const void*, const void*);
+using COMP_FUNC = int (*) (void const*, void const*);
 }
 
 ///////////////////////////////////////////////////
@@ -68,7 +68,7 @@ ACE_Strategy_Scheduler::assign_priorities (
   // Start with happy status.
   ACE_DynScheduler::status_t status = SUCCEEDED;
 
-  RtecScheduler::Scheduling_Anomaly * anomaly = 0;
+  RtecScheduler::Scheduling_Anomaly *anomaly = nullptr;
 
   // Start with the highest OS priority in the given range and work downward:
   // if we run out of values to assign, return an error.
@@ -207,7 +207,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
   ACE_DynScheduler::status_t status = ACE_DynScheduler::SUCCEEDED;
-  RtecScheduler::Scheduling_Anomaly * anomaly = 0;
+  RtecScheduler::Scheduling_Anomaly *anomaly = nullptr;
 
   // Start subpriority levels and element counts at 1, set level values in
   // the first entry, increment the static subpriority level.
@@ -426,8 +426,8 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
   // Initialize last stop time to arrival time of the dispatch.
   Time last_stop = dispatch_entry.arrival ();
 
-  TimeLine_Entry *last_entry = 0;
-  TimeLine_Entry *current_entry = 0;
+  TimeLine_Entry *last_entry = nullptr;
+  TimeLine_Entry *current_entry = nullptr;
   ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> iter (*timeline_);
   for (iter.first (); (remaining_time > 0U) && (iter.done () == 0);
        iter.advance ())
@@ -449,7 +449,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
     while ((iter.done () == 0) &&
            (link->entry ().start() < last_stop + remaining_time) &&
            (link->entry ().start() >= last_stop) &&
-           (link->entry ().prev () == 0) &&
+           (link->entry ().prev () == nullptr) &&
            (link->entry ().dispatch_entry().priority () >=
             dispatch_entry.priority ()) &&
            (strategy_.dynamic_subpriority (dispatch_entry, link->entry ().start ()) >
@@ -492,7 +492,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 
       // Remove entries corresponding to the rescheduled
       // dispatch from the timeline and destroy them.
-      TimeLine_Entry *next_remove_entry = 0;
+      TimeLine_Entry *next_remove_entry = nullptr;
       while (remove_entry)
       {
         next_remove_entry = remove_entry->next ();
@@ -584,12 +584,12 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 template <class STRATEGY> ACE_Strategy_Scheduler *
 ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Priority_t minimum_critical_priority)
 {
-  ACE_Strategy_Scheduler *the_scheduler = 0;
+  ACE_Strategy_Scheduler *the_scheduler = nullptr;
   STRATEGY *the_strategy;
 
-  ACE_NEW_RETURN(the_strategy, STRATEGY(minimum_critical_priority), 0);
+  ACE_NEW_RETURN(the_strategy, STRATEGY(minimum_critical_priority), nullptr);
 
-  ACE_NEW_RETURN (the_scheduler, ACE_Strategy_Scheduler (*the_strategy), 0);
+  ACE_NEW_RETURN (the_scheduler, ACE_Strategy_Scheduler (*the_strategy), nullptr);
 
   return the_scheduler;
 }
@@ -695,7 +695,7 @@ ACE_Scheduler_Strategy::minimum_critical_priority ()
 // class ACE_MUF_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_MUF_Scheduler_Strategy * ACE_MUF_Scheduler_Strategy::instance_ = 0;
+ACE_MUF_Scheduler_Strategy *ACE_MUF_Scheduler_Strategy::instance_ = nullptr;
 
 ///////////////////////////////////////////////////////
 // class ACE_MUF_Scheduler_Strategy member functions //
@@ -706,10 +706,10 @@ ACE_MUF_Scheduler_Strategy * ACE_MUF_Scheduler_Strategy::instance_ = 0;
 ACE_MUF_Scheduler_Strategy *
 ACE_MUF_Scheduler_Strategy::instance ()
 {
-  if (0 == ACE_MUF_Scheduler_Strategy::instance_)
+  if (nullptr == ACE_MUF_Scheduler_Strategy::instance_)
   {
     ACE_NEW_RETURN (ACE_MUF_Scheduler_Strategy::instance_,
-                    ACE_MUF_Scheduler_Strategy, 0);
+                    ACE_MUF_Scheduler_Strategy, nullptr);
   }
 
   return ACE_MUF_Scheduler_Strategy::instance_;
@@ -854,7 +854,7 @@ ACE_MUF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 // class ACE_RMS_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_RMS_Scheduler_Strategy * ACE_RMS_Scheduler_Strategy::instance_ = 0;
+ACE_RMS_Scheduler_Strategy *ACE_RMS_Scheduler_Strategy::instance_ = nullptr;
 
 ///////////////////////////////////////////////////////
 // class ACE_RMS_Scheduler_Strategy member functions //
@@ -865,10 +865,10 @@ ACE_RMS_Scheduler_Strategy * ACE_RMS_Scheduler_Strategy::instance_ = 0;
 ACE_RMS_Scheduler_Strategy *
 ACE_RMS_Scheduler_Strategy::instance ()
 {
-  if (0 == ACE_RMS_Scheduler_Strategy::instance_)
+  if (nullptr == ACE_RMS_Scheduler_Strategy::instance_)
   {
     ACE_NEW_RETURN (ACE_RMS_Scheduler_Strategy::instance_,
-                    ACE_RMS_Scheduler_Strategy, 0);
+                    ACE_RMS_Scheduler_Strategy, nullptr);
   }
 
   return ACE_RMS_Scheduler_Strategy::instance_;
@@ -985,7 +985,7 @@ ACE_RMS_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 // class ACE_MLF_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_MLF_Scheduler_Strategy * ACE_MLF_Scheduler_Strategy::instance_ = 0;
+ACE_MLF_Scheduler_Strategy *ACE_MLF_Scheduler_Strategy::instance_ = nullptr;
 
 ///////////////////////////////////////////////////////
 // class ACE_MLF_Scheduler_Strategy member functions //
@@ -996,10 +996,10 @@ ACE_MLF_Scheduler_Strategy * ACE_MLF_Scheduler_Strategy::instance_ = 0;
 ACE_MLF_Scheduler_Strategy *
 ACE_MLF_Scheduler_Strategy::instance ()
 {
-  if (0 == ACE_MLF_Scheduler_Strategy::instance_)
+  if (nullptr == ACE_MLF_Scheduler_Strategy::instance_)
   {
     ACE_NEW_RETURN (ACE_MLF_Scheduler_Strategy::instance_,
-                    ACE_MLF_Scheduler_Strategy, 0);
+                    ACE_MLF_Scheduler_Strategy, nullptr);
   }
 
   return ACE_MLF_Scheduler_Strategy::instance_;
@@ -1118,7 +1118,7 @@ ACE_MLF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 // class ACE_EDF_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_EDF_Scheduler_Strategy * ACE_EDF_Scheduler_Strategy::instance_ = 0;
+ACE_EDF_Scheduler_Strategy *ACE_EDF_Scheduler_Strategy::instance_ = nullptr;
 
 ///////////////////////////////////////////////////////
 // class ACE_EDF_Scheduler_Strategy member functions //
@@ -1129,10 +1129,10 @@ ACE_EDF_Scheduler_Strategy * ACE_EDF_Scheduler_Strategy::instance_ = 0;
 ACE_EDF_Scheduler_Strategy *
 ACE_EDF_Scheduler_Strategy::instance ()
 {
-  if (0 == ACE_EDF_Scheduler_Strategy::instance_)
+  if (nullptr == ACE_EDF_Scheduler_Strategy::instance_)
   {
     ACE_NEW_RETURN (ACE_EDF_Scheduler_Strategy::instance_,
-                    ACE_EDF_Scheduler_Strategy, 0);
+                    ACE_EDF_Scheduler_Strategy, nullptr);
   }
 
   return ACE_EDF_Scheduler_Strategy::instance_;
@@ -1244,7 +1244,7 @@ ACE_EDF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 //////////////////////////////////////////////
 
 ACE_Criticality_Scheduler_Strategy *
-ACE_Criticality_Scheduler_Strategy::instance_ = 0;
+ACE_Criticality_Scheduler_Strategy::instance_ = nullptr;
 
 ///////////////////////////////////////////////////////////////
 // class ACE_Criticality_Scheduler_Strategy member functions //
@@ -1255,10 +1255,10 @@ ACE_Criticality_Scheduler_Strategy::instance_ = 0;
 ACE_Criticality_Scheduler_Strategy *
 ACE_Criticality_Scheduler_Strategy::instance ()
 {
-  if (0 == ACE_Criticality_Scheduler_Strategy::instance_)
+  if (nullptr == ACE_Criticality_Scheduler_Strategy::instance_)
   {
     ACE_NEW_RETURN (ACE_Criticality_Scheduler_Strategy::instance_,
-                    ACE_Criticality_Scheduler_Strategy, 0);
+                    ACE_Criticality_Scheduler_Strategy, nullptr);
   }
 
   return ACE_Criticality_Scheduler_Strategy::instance_;

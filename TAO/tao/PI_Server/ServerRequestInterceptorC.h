@@ -63,19 +63,11 @@ namespace PortableInterceptor
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__VAR_OUT_CH_
 
   class ServerRequestInfo;
-  typedef ServerRequestInfo *ServerRequestInfo_ptr;
+  using ServerRequestInfo_ptr = ServerRequestInfo *;
 
-  typedef
-    TAO_Objref_Var_T<
-        ServerRequestInfo
-      >
-    ServerRequestInfo_var;
+  using ServerRequestInfo_var = TAO_Objref_Var_T<ServerRequestInfo>;
 
-  typedef
-    TAO_Objref_Out_T<
-        ServerRequestInfo
-      >
-    ServerRequestInfo_out;
+  using ServerRequestInfo_out = TAO_Objref_Out_T<ServerRequestInfo>;
 
 #endif /* end #if !defined */
 
@@ -86,19 +78,11 @@ namespace PortableInterceptor
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__VAR_OUT_CH_
 
   class ServerRequestInterceptor;
-  typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
+  using ServerRequestInterceptor_ptr = ServerRequestInterceptor *;
 
-  typedef
-    TAO_Objref_Var_T<
-        ServerRequestInterceptor
-      >
-    ServerRequestInterceptor_var;
+  using ServerRequestInterceptor_var = TAO_Objref_Var_T<ServerRequestInterceptor>;
 
-  typedef
-    TAO_Objref_Out_T<
-        ServerRequestInterceptor
-      >
-    ServerRequestInterceptor_out;
+  using ServerRequestInterceptor_out = TAO_Objref_Out_T<ServerRequestInterceptor>;
 
 #endif /* end #if !defined */
 
@@ -112,8 +96,8 @@ namespace PortableInterceptor
     : public virtual ::PortableInterceptor::Interceptor
   {
   public:
-    typedef ServerRequestInterceptor_ptr _ptr_type;
-    typedef ServerRequestInterceptor_var _var_type;
+    using _ptr_type = ServerRequestInterceptor_ptr;
+    using _var_type = ServerRequestInterceptor_var;
 
     // The static operations.
     static ServerRequestInterceptor_ptr _duplicate (ServerRequestInterceptor_ptr obj);

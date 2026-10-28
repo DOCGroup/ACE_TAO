@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE>
 class TAO_Notify_Serv_Export TAO_Notify_Container_T
 {
-  typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
+  using COLLECTION = TAO_ESF_Proxy_Collection<TYPE>;
  public:
   /// Constructor
   TAO_Notify_Container_T ();

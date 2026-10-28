@@ -15,10 +15,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl ()
-{
-}
-
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
@@ -35,7 +31,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
 
   try
     {
-      oc = 0;
+      oc = nullptr;
 
       bool is_remote_request = !server_request.collocated ();
       TAO::ServerRequestInfo request_info (server_request,
@@ -56,7 +52,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
                 tao_ft_interception_point (&request_info, oc);
             }
 
-          if (oc != 0)
+          if (oc != nullptr)
             {
               (void) this->send_other (server_request,
                                        args,
@@ -514,7 +510,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors ()
 TAO::PICurrent_Impl *
 TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current ()
 {
-  TAO::PICurrent_Impl *pi = 0;
+  TAO::PICurrent_Impl *pi = nullptr;
   ACE_NEW_RETURN (pi,
                   TAO::PICurrent_Impl,
                   pi);

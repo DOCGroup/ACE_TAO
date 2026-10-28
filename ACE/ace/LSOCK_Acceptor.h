@@ -59,7 +59,7 @@ public:
   /// Accept a new data transfer connection.
   int accept (ACE_LSOCK_Stream &new_ipc_sap,
               ACE_Addr * = 0,
-              ACE_Time_Value *timeout = 0,
+              ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
 

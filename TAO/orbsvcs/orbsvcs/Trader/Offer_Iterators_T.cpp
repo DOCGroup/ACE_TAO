@@ -73,7 +73,7 @@ next_n (CORBA::ULong n,
       CosTrading::OfferId_var offerid_var (id);
       CosTrading::Offer* offer = this->db_.lookup_offer (id);
 
-      if (offer != 0)
+      if (offer != nullptr)
         this->pfilter_.filter_offer (offer,
                                      offers[ret_offers++]);
     }

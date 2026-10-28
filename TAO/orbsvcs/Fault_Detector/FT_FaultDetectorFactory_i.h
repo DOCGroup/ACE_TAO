@@ -86,7 +86,7 @@ namespace TAO
   // Class Declarations
   class  FT_FaultDetectorFactory_i : public virtual POA_FT::FaultDetectorFactory
   {
-    typedef ACE_Vector<Fault_Detector_i *> DetectorVec;
+    using DetectorVec = ACE_Vector<Fault_Detector_i *>;
 
     //////////////////////
     // non-CORBA interface
@@ -99,7 +99,7 @@ namespace TAO
     /**
      * Virtual destructor.
      */
-    virtual ~FT_FaultDetectorFactory_i ();
+    ~FT_FaultDetectorFactory_i () override;
 
     /**
      * Parse command line arguments.
@@ -151,29 +151,34 @@ namespace TAO
 
     ///////////////////////////////////////////////
     // CORBA interface FaultDetectorFactory methods
-    virtual void change_properties (
-        const PortableGroup::Properties & property_set);
+    void change_properties (
+        PortableGroup::Properties const & property_set) override;
 
-    virtual void shutdown ();
+    void shutdown () override;
 
     /////////////////////////////////////////
     // CORBA interface GenericFactory methods
-    virtual CORBA::Object_ptr create_object (
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id);
+    CORBA::Object_ptr create_object (
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
+      PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id) override;
 
-    virtual void delete_object (
-      const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id);
+    void delete_object (
+      PortableGroup::GenericFactory::FactoryCreationId const & factory_creation_id) override;
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
 
-    virtual CORBA::Boolean is_alive ();
+    CORBA::Boolean is_alive () override;
 
     /////////////////////////
     // Implementation methods
   private:
+    FT_FaultDetectorFactory_i (FT_FaultDetectorFactory_i const &) = delete;
+    FT_FaultDetectorFactory_i (FT_FaultDetectorFactory_i &&) = delete;
+    FT_FaultDetectorFactory_i & operator= (FT_FaultDetectorFactory_i const &) = delete;
+    FT_FaultDetectorFactory_i & operator= (FT_FaultDetectorFactory_i &&) = delete;
+
     /**
      * Find or allocate an ID for a new detector
      */
@@ -226,12 +231,12 @@ namespace TAO
     /**
      * A file to which the factory's IOR should be written.
      */
-    const ACE_TCHAR * ior_output_file_;
+    ACE_TCHAR const * ior_output_file_;
 
     /**
      * A name to be used to register the factory with the name service.
      */
-    const char * ns_name_;
+    char const * ns_name_;
 
     ::CosNaming::NamingContext_var naming_context_;
 

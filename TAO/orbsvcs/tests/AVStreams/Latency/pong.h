@@ -17,11 +17,11 @@
 class Pong_Recv_Callback : public TAO_AV_Callback
 {
 public:
-  virtual int handle_stop ();
-  virtual int receive_frame (ACE_Message_Block *frame,
-                             TAO_AV_frame_info *frame_info = 0,
-                             const ACE_Addr &peer_address = ACE_Addr::sap_any);
-  virtual int handle_destroy ();
+  int handle_stop () override;
+  int receive_frame (ACE_Message_Block *frame,
+                     TAO_AV_frame_info *frame_info = nullptr,
+                     ACE_Addr const &peer_address = ACE_Addr::sap_any) override;
+  int handle_destroy () override;
 };
 
 class Pong_Recv : public TAO_FlowConsumer
@@ -29,8 +29,8 @@ class Pong_Recv : public TAO_FlowConsumer
 public:
   Pong_Recv ();
 
-  virtual int get_callback (const char *flowname,
-                            TAO_AV_Callback *&callback);
+  int get_callback (const char *flowname,
+                    TAO_AV_Callback *&callback) override;
 
 private:
   /// The callback object...
@@ -42,10 +42,10 @@ class Ping_Send_Callback : public TAO_AV_Callback
 public:
   Ping_Send_Callback ();
 
-  virtual int handle_timeout (void *arg);
-  virtual int handle_end_stream ();
-  virtual void get_timeout (ACE_Time_Value *&tv,
-                            void *&arg);
+  int handle_timeout (void *arg) override;
+  int handle_end_stream ();
+  void get_timeout (ACE_Time_Value *&tv,
+                    void *&arg) override;
 
 private:
   /// the timeout value
@@ -60,17 +60,18 @@ class Ping_Send : public TAO_FlowProducer
 {
 public:
   Ping_Send ();
-  virtual int get_callback (const char *flowname,
-                            TAO_AV_Callback *&callback);
+  int get_callback (const char *flowname,
+                    TAO_AV_Callback *&callback) override;
 
 private:
   /// The callback object...
   Ping_Send_Callback callback_;
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A <TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> Reactive_Strategy;
+using Reactive_Strategy = TAO_AV_Endpoint_Reactive_Strategy_A
+  <TAO_StreamEndPoint_A, TAO_VDev, AV_Null_MediaCtrl>;
 
-typedef TAO_FDev<TAO_FlowProducer,Pong_Recv> Pong_Recv_FDev;
-typedef TAO_FDev<Ping_Send,TAO_FlowConsumer> Ping_Send_FDev;
+using Pong_Recv_FDev = TAO_FDev<TAO_FlowProducer, Pong_Recv>;
+using Ping_Send_FDev = TAO_FDev<Ping_Send, TAO_FlowConsumer>;
 
 #endif /* TAO_PONG_H */

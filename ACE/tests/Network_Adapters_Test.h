@@ -162,9 +162,9 @@ class Stop_Handler : public ACE_Event_Handler
 {
 public:
 #ifdef ACE_HAS_THREADS
-  typedef ACE_Atomic_Op<ACE_Mutex, long> counter_sig;
+  using counter_sig = ACE_Atomic_Op<ACE_Mutex, long>;
 #else
-  typedef long counter_sig;
+  using counter_sig = long;
 #endif
 
   // Constructor.

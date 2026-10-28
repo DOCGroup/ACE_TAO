@@ -2,7 +2,7 @@
 #include "ace/Log_Msg.h"
 
 int
-ACE_TMAIN(int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_TCHAR const * const scpc_loadOrb =
     ACE_DYNAMIC_SERVICE_DIRECTIVE ("testDllORB",
@@ -15,7 +15,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 
   // Do not use the default svc.conf file
   ACE_Service_Config::open (ACE_TEXT ("server"),
-                            ACE_DEFAULT_LOGGER_KEY, 1, 1, 0);
+                            ACE_DEFAULT_LOGGER_KEY, true, true, false);
 
   ACE_Service_Config::process_directive (scpc_loadOrb);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("loading ORB (1) done\n")));

@@ -28,7 +28,7 @@ TAO::CSD::TP_Custom_Request::execute_op()
   // object - which has already been destructed!  Thus, we reset the op_
   // data member here to the 'nil' state - causing the _remove_ref() to
   // be performed now.
-  this->op_ = 0;
+  this->op_ = nullptr;
 }
 
 
@@ -39,7 +39,7 @@ TAO::CSD::TP_Custom_Request::cancel_op()
   this->op_->cancel();
 
   // See comments in the execute_op() method.
-  this->op_ = 0;
+  this->op_ = nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

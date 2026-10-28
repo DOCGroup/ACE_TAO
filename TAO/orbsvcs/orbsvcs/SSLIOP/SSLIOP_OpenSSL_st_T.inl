@@ -14,7 +14,7 @@ TAO::SSLIOP::_duplicate (T * st)
   // OpenSSL provides no structure-specific functions to increase the
   // reference count on the structure it defines, so we do it
   // manually.
-  if (st != 0)
+  if (st != nullptr)
   {
     TAO::SSLIOP::OpenSSL_traits<T>::_duplicate(st);
   }
@@ -39,7 +39,6 @@ TAO::SSLIOP::release (T * st)
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var ()
-  : st_ (0)
 {
 }
 
@@ -142,7 +141,7 @@ template <typename T> ACE_INLINE T *&
 TAO::SSLIOP::OpenSSL_st_var<T>::out ()
 {
   TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
-  this->st_ = 0;
+  this->st_ = nullptr;
   return this->st_;
 }
 
@@ -151,7 +150,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::_retn ()
 {
   // Yield ownership of the OpenSSL structure.
   T * st = this->st_;
-  this->st_ = 0;
+  this->st_ = nullptr;
   return st;
 }
 

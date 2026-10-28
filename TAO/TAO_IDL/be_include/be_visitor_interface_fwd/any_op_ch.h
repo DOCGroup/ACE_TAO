@@ -29,10 +29,10 @@ public:
   be_visitor_interface_fwd_any_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_interface_fwd_any_op_ch ();
+  ~be_visitor_interface_fwd_any_op_ch () override;
 
   /// visit interface_fwd
-  virtual int visit_interface_fwd (be_interface_fwd *node);
+  int visit_interface_fwd (be_interface_fwd *node) override;
 };
 
 #endif /* _BE_INTERFACE_FWD_ANY_OP_CH_H_ */

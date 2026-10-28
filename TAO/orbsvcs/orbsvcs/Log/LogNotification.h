@@ -51,7 +51,7 @@ public:
   void object_deletion (DsLogAdmin::LogId id);
 
   /// Event generated.
-  void processing_error_alarm (CORBA::ULong error_num, const char* error_string);
+  void processing_error_alarm (CORBA::ULong error_num, char const * error_string);
 
   /// AttributeValueChange event generation method.
   void attribute_value_change (DsLogAdmin::Log_ptr log,
@@ -63,8 +63,8 @@ public:
   /// AttributeValueChange event generation method.
   void capacity_alarm_threshold_value_change (DsLogAdmin::Log_ptr log,
                         DsLogAdmin::LogId id,
-                        const DsLogAdmin::CapacityAlarmThresholdList& oldValue,
-                        const DsLogAdmin::CapacityAlarmThresholdList& newValue);
+                        DsLogAdmin::CapacityAlarmThresholdList const & oldValue,
+                        DsLogAdmin::CapacityAlarmThresholdList const & newValue);
 
   /// AttributeValueChange event generation method.
   void log_full_action_value_change (DsLogAdmin::Log_ptr log,
@@ -93,8 +93,8 @@ public:
   /// AttributeValueChange event generation method.
   void week_mask_value_change (DsLogAdmin::Log_ptr log,
                               DsLogAdmin::LogId id,
-                              const DsLogAdmin::WeekMask& oldValue,
-                              const DsLogAdmin::WeekMask& newValue);
+                              DsLogAdmin::WeekMask const & oldValue,
+                              DsLogAdmin::WeekMask const & newValue);
 
   /// AttributeValueChange event generation method.
   void max_record_life_value_change (DsLogAdmin::Log_ptr log,
@@ -105,8 +105,8 @@ public:
   /// AttributeValueChange event generation method.
   void quality_of_service_value_change (DsLogAdmin::Log_ptr log,
                               DsLogAdmin::LogId id,
-                              const DsLogAdmin::QoSList& oldValue,
-                              const DsLogAdmin::QoSList& newValue);
+                              DsLogAdmin::QoSList const & oldValue,
+                              DsLogAdmin::QoSList const & newValue);
 
   /// StateChange event generation method.
   void state_change (DsLogAdmin::Log_ptr log,
@@ -138,7 +138,7 @@ public:
 
   /// Method overriden by by event-aware logging services to cause
   /// a notification event to be sent.
-  virtual void send_notification (const CORBA::Any &);
+  virtual void send_notification (CORBA::Any const &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

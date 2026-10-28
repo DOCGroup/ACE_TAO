@@ -29,13 +29,13 @@
 #include "ace/os_include/os_netdb.h"
 
 TAO_Trading_Loader::TAO_Trading_Loader ()
-  : federate_ (0),
-    ior_output_file_ (0),
-    bootstrapper_ (0)
+  : federate_ (false),
+    ior_output_file_ (nullptr),
+    bootstrapper_ (false)
 {
   char *trader_name = CORBA::string_alloc (MAXHOSTNAMELEN + 10);
 
-  if (trader_name != 0)
+  if (trader_name != nullptr)
     {
       // The trader name is the concatenation of the local host name
       // and the server's process id.
@@ -43,8 +43,8 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
       ACE_INET_Addr localhost ((u_short) 0);
       if (localhost.get_host_name (host_name, sizeof (host_name)) != 0)
         {
-          const char *tmp = localhost.get_host_addr ();
-          if (tmp == 0)
+          char const* tmp = localhost.get_host_addr ();
+          if (tmp == nullptr)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
                         ACE_TEXT ("TAO_Trading_Loader ")
@@ -59,8 +59,8 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
                        host_name,
                        static_cast<long> (ACE_OS::getpid ()));
 
-      for (char *dot = 0;
-           (dot = ACE_OS::strchr (trader_name, '.')) != 0;
+      for (char* dot = nullptr;
+           (dot = ACE_OS::strchr (trader_name, '.')) != nullptr;
            *dot = '_')
         continue;
 
@@ -108,7 +108,7 @@ TAO_Trading_Loader::fini ()
 {
   try
     {
-      if (this->trader_.get () != 0)
+      if (this->trader_.get () != nullptr)
         {
           TAO_Trading_Components_i& trd_comp
             = this->trader_->trading_components ();
@@ -215,7 +215,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
     return CORBA::Object::_nil ();
 
   // Dump the ior to a file.
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != nullptr)
     {
       ACE_OS::fprintf (this->ior_output_file_,
                        "%s",
@@ -444,7 +444,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
               this->ior_output_file_ =
                 ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
-              if (this->ior_output_file_ == 0)
+              if (this->ior_output_file_ == nullptr)
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    "Unable to open %s for writing: %p\n",
                                    file_name), -1);

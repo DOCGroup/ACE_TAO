@@ -1,7 +1,7 @@
 #include "ChildServant.h"
 
-ChildServant::ChildServant(CORBA::ORB_ptr orb)
-: orb_(CORBA::ORB::_duplicate(orb))
+ChildServant::ChildServant (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -21,5 +21,5 @@ ChildServant::parentMethod ()
 void
 ChildServant::shutdown ()
 {
-   this->orb_->shutdown(0);
+   this->orb_->shutdown (false);
 }

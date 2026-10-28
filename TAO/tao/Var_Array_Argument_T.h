@@ -34,11 +34,11 @@ namespace TAO
   class In_Var_Array_Argument_T : public InArgument
   {
   public:
-    In_Var_Array_Argument_T (const typename S_forany::_slice_type * x);
+    In_Var_Array_Argument_T (typename S_forany::_slice_type const * x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type const * arg () const;
 
@@ -58,13 +58,13 @@ namespace TAO
           public In_Var_Array_Argument_T<S_forany, Insert_Policy>
   {
   public:
-    In_Var_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x);
-    virtual ~In_Var_Array_Clonable_Argument_T ();
+    In_Var_Array_Clonable_Argument_T (typename S_forany::_slice_type const * x);
+    ~In_Var_Array_Clonable_Argument_T () override;
 
-    virtual Argument* clone ();
+    Argument* clone () override;
 
   private:
-    bool is_clone_;
+    bool is_clone_ {};
   };
 
   /**
@@ -80,10 +80,10 @@ namespace TAO
   public:
     Inout_Var_Array_Argument_T (typename S_forany::_slice_type *&x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type * arg ();
 
@@ -105,9 +105,9 @@ namespace TAO
   public:
     Out_Var_Array_Argument_T (S_out x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type *& arg ();
 
@@ -129,9 +129,9 @@ namespace TAO
   public:
     Ret_Var_Array_Argument_T ();
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const;
+    void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type *& arg ();
 
@@ -139,7 +139,7 @@ namespace TAO
     typename S_forany::_slice_type * retn ();
 
   private:
-    S_var x_;
+    S_var x_ {};
   };
 
   /**
@@ -153,24 +153,16 @@ namespace TAO
            template <typename> class Insert_Policy>
   struct Var_Array_Arg_Traits_T
   {
-    typedef typename T_forany::_slice_type *            ret_type;
-    typedef const typename T_forany::_array_type        in_type;
-    typedef typename T_forany::_array_type              inout_type;
-    typedef T_out                                       out_type;
+    using ret_type = typename T_forany::_slice_type *;
+    using in_type = typename T_forany::_array_type const;
+    using inout_type = typename T_forany::_array_type;
+    using out_type = T_out;
 
-    typedef In_Var_Array_Argument_T<T_forany,
-                                    Insert_Policy>      in_arg_val;
-    typedef In_Var_Array_Clonable_Argument_T<T_forany,
-                                             Insert_Policy>
-                                                        in_clonable_arg_val;
-    typedef Inout_Var_Array_Argument_T<T_forany,
-                                       Insert_Policy>   inout_arg_val;
-    typedef Out_Var_Array_Argument_T<T_out,
-                                     T_forany,
-                                     Insert_Policy>     out_arg_val;
-    typedef Ret_Var_Array_Argument_T<typename T_out::_var_type,
-                                     T_forany,
-                                     Insert_Policy>     ret_val;
+    using in_arg_val = In_Var_Array_Argument_T<T_forany, Insert_Policy>;
+    using in_clonable_arg_val = In_Var_Array_Clonable_Argument_T<T_forany, Insert_Policy>;
+    using inout_arg_val = Inout_Var_Array_Argument_T<T_forany, Insert_Policy>;
+    using out_arg_val = Out_Var_Array_Argument_T<T_out, T_forany, Insert_Policy>;
+    using ret_val = Ret_Var_Array_Argument_T<typename T_out::_var_type, T_forany, Insert_Policy>;
   };
 }
 

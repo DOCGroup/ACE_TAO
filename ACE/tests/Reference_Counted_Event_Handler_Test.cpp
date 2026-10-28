@@ -21,7 +21,7 @@
 #include "ace/ACE.h"
 
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
-static const int message_size = 26;
+static constexpr int message_size = 26;
 static int test_select_reactor = 1;
 static int test_tp_reactor = 1;
 static int test_wfmo_reactor = 1;
@@ -1092,4 +1092,3 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   return result;
 }
-

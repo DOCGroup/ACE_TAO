@@ -9,7 +9,8 @@
 #include "tao/Object.h"
 #include "tao/ObjectIdListC.h"
 
-int ACE_TMAIN( int argc, ACE_TCHAR * argv[] )
+int
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   int retcode = 1;
 
@@ -17,14 +18,14 @@ int ACE_TMAIN( int argc, ACE_TCHAR * argv[] )
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::ORB_ObjectIdList_var listsrv = orb->list_initial_services();
-      for (CORBA::ULong index = 0 ; index < listsrv->length(); index++ )
-        if (ACE_OS::strcmp(listsrv[index],"MyObjectId") == 0)
+      CORBA::ORB_ObjectIdList_var listsrv = orb->list_initial_services ();
+      for (CORBA::ULong index = 0; index < listsrv->length (); ++index)
+        if (ACE_OS::strcmp (listsrv[index], "MyObjectId") == 0)
           retcode = 0;
 
-      orb->destroy();
+      orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

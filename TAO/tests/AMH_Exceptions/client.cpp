@@ -2,7 +2,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int received_expected_exception = 0;
+  bool received_expected_exception = false;
   try
     {
       CORBA::ORB_var orb =
@@ -64,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       catch (const Test::ServerOverload& )
         {
           ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
-          received_expected_exception = 1;
+          received_expected_exception = true;
 
           roundtrip->shutdown ();
         }
@@ -77,7 +77,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  if(!received_expected_exception)
+  if (!received_expected_exception)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "ERROR, expecting a ServerOverload exception!!\n"),

@@ -13,15 +13,19 @@ public:
   /// Constructor
   AMI_Buffering (CORBA::ORB_ptr orb,
                  Test::AMI_Buffering_Admin_ptr admin);
+  AMI_Buffering (AMI_Buffering const &) = delete;
+  AMI_Buffering &operator= (AMI_Buffering const &) = delete;
+  AMI_Buffering (AMI_Buffering &&) = delete;
+  AMI_Buffering &operator= (AMI_Buffering &&) = delete;
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload);
+  void receive_data (Test::Payload const &the_payload) override;
 
-  virtual void flush ();
+  void flush () override;
 
-  virtual void sync ();
+  void sync () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// internal implementation of shutdown. This
   void try_shutdown ();
@@ -31,6 +35,10 @@ public:
     public:
       Nest_Guard (AMI_Buffering &);
       ~Nest_Guard ();
+      Nest_Guard (Nest_Guard const &) = delete;
+      Nest_Guard &operator= (Nest_Guard const &) = delete;
+      Nest_Guard (Nest_Guard &&) = delete;
+      Nest_Guard &operator= (Nest_Guard &&) = delete;
     private:
       AMI_Buffering &target_;
     };

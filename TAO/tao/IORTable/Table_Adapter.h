@@ -36,24 +36,24 @@ public:
   TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
-  virtual ~TAO_Table_Adapter ();
+  ~TAO_Table_Adapter () override;
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open ();
-  virtual void close (int wait_for_completion);
-  virtual void check_close (int wait_for_completion);
-  virtual int priority () const;
-  virtual int dispatch (TAO::ObjectKey &key,
-                        TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to);
+  void open () override;
+  void close (int wait_for_completion) override;
+  void check_close (int wait_for_completion) override;
+  int priority () const override;
+  int dispatch (TAO::ObjectKey &key,
+                TAO_ServerRequest &request,
+                CORBA::Object_out foward_to) override;
 
-  virtual const char *name () const;
-  virtual CORBA::Object_ptr root ();
-  virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                                      const TAO_MProfile &);
+  char const *name () const override;
+  CORBA::Object_ptr root () override;
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *,
+                                              TAO_MProfile const &) override;
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *stub);
+  CORBA::Long initialize_collocated_object (TAO_Stub *stub) override;
 
 protected:
   static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
@@ -68,9 +68,15 @@ protected:
   /// The table implementation
   TAO_IOR_Table_Impl_var root_;
 
-  bool closed_;
+  bool closed_ {true};
   TAO_SYNCH_MUTEX thread_lock_;
   ACE_Lock *lock_;
+
+private:
+  TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter (TAO_Table_Adapter &&) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter &&) = delete;
 };
 
 // ****************************************************************
@@ -79,11 +85,17 @@ class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
   /// Constructor
-  TAO_Table_Adapter_Factory ();
+  TAO_Table_Adapter_Factory () = default;
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
+  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
+
+private:
+  TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory const &) = delete;
+  TAO_Table_Adapter_Factory &operator= (TAO_Table_Adapter_Factory const &) = delete;
+  TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory &&) = delete;
+  TAO_Table_Adapter_Factory &operator= (TAO_Table_Adapter_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -12,8 +12,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
                                        bool tsc_to_rsc)
-  : src_ (0),
-    dest_ (0)
 {
   // This constructor is used on the server side.
 
@@ -26,7 +24,7 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
 
   // If the slot count is zero, there is nothing to copy.  Prevent any
   // copying (and hence TSS accesses) from occurring.
-  if (pi_current != 0 && pi_current->slot_count () != 0)
+  if (pi_current != nullptr && pi_current->slot_count () != 0)
     {
       // Retrieve the request scope current.
       PICurrent_Impl * rsc = server_request.rs_pi_current ();
@@ -55,7 +53,7 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
 
 TAO::PICurrent_Guard::~PICurrent_Guard ()
 {
-  if (this->src_ != 0 && this->dest_ != 0
+  if (this->src_ != nullptr && this->dest_ != nullptr
       && this->src_ != this->dest_)
     {
       this->dest_->take_lazy_copy (this->src_);

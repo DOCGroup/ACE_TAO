@@ -13,9 +13,7 @@ TAO_LF_CH_Event::TAO_LF_CH_Event ()
 {
 }
 
-TAO_LF_CH_Event::~TAO_LF_CH_Event ()
-{
-}
+TAO_LF_CH_Event::~TAO_LF_CH_Event () = default;
 
 int
 TAO_LF_CH_Event::bind (TAO_LF_Follower *follower)

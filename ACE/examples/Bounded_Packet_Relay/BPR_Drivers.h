@@ -64,7 +64,7 @@ public:
   };
 
   /// Command entry point type definition.
-  typedef int (Bounded_Packet_Relay::*ACTION) (void *);
+  using ACTION = int (Bounded_Packet_Relay::*) (void *);
 
   /// Constructor.
   Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,

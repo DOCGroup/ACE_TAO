@@ -15,12 +15,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DynAny_i::~TAO_DynAny_i () = default;
+
 TAO_DynAny_i::TAO_DynAny_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
-{
-}
-
-TAO_DynAny_i::~TAO_DynAny_i ()
 {
 }
 
@@ -142,7 +140,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
         TAO_OutputCDR stream;
         stream << CORBA::Object::_nil ();
         TAO_InputCDR in (stream);
-        TAO::Unknown_IDL_Type *unk = 0;
+        TAO::Unknown_IDL_Type *unk = nullptr;
         ACE_NEW (unk,
                  TAO::Unknown_IDL_Type (tc, in));
         this->any_.replace (unk);
@@ -188,7 +186,7 @@ TAO_DynAny_i::init (CORBA::TypeCode_ptr tc)
 }
 
 void
-TAO_DynAny_i::init (const CORBA::Any& any)
+TAO_DynAny_i::init (CORBA::Any const& any)
 {
   this->type_ = any.type ();
   this->check_typecode (this->type_.in ());
@@ -205,7 +203,7 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return 0;
+      return nullptr;
     }
 
   return dynamic_cast<TAO_DynAny_i *> (_tao_objref);
@@ -214,7 +212,7 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 // ****************************************************************
 
 void
-TAO_DynAny_i::from_any (const CORBA::Any &any)
+TAO_DynAny_i::from_any (CORBA::Any const& any)
 {
   if (this->destroyed_)
     {
@@ -262,7 +260,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
   TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
 
-  if (rhs_n == 0)
+  if (rhs_n == nullptr)
     {
       return false;
     }
@@ -385,19 +383,19 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       }
     case CORBA::tk_any:
       {
-        const CORBA::Any *rhs_v;
+        CORBA::Any const* rhs_v;
         rhs_n->any_ >>= rhs_v;
-        const CORBA::Any *lhs_v;
+        CORBA::Any const* lhs_v;
         this->any_ >>= lhs_v;
 
         DynamicAny::DynAny_var rhs_dyn =
-          TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+          TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
             rhs_v->_tao_get_typecode (),
             *rhs_v,
             this->allow_truncation_ );
 
         DynamicAny::DynAny_var lhs_dyn =
-          TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+          TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
             lhs_v->_tao_get_typecode (),
             *lhs_v,
             this->allow_truncation_ );
@@ -435,7 +433,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         CORBA::ULong bound =
           unaliased_tc->length ();
 
-        const char *rhs_v, *lhs_v;
+        char const* rhs_v, *lhs_v;
         CORBA::Boolean rstatus, lstatus;
 
         if (bound == 0)
@@ -469,7 +467,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         CORBA::ULong bound =
           unaliased_tc->length ();
 
-        const CORBA::WChar *rhs_v, *lhs_v;
+        CORBA::WChar const* rhs_v, *lhs_v;
         CORBA::Boolean rstatus, lstatus;
 
         if (bound == 0)
@@ -803,7 +801,7 @@ TAO_DynAny_i::destroy ()
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 

@@ -11,7 +11,7 @@
 class SignalableTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int handle_signal (int signum, siginfo_t *  = 0, ucontext_t * = 0)
+  int handle_signal (int signum, siginfo_t *  = nullptr, ucontext_t * = nullptr) override
   {
     if (signum == SIGUSR1)
       {
@@ -24,15 +24,15 @@ public:
     return 0;
   }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
     while (1)
       {
-        ACE_Message_Block* mb = 0;
+        ACE_Message_Block* mb = nullptr;
         ACE_Time_Value tv (0, 1000);
-        tv += ACE_OS::time (0);
+        tv += ACE_OS::time (nullptr);
 
         int result = this->getq(mb, &tv);
 

@@ -8,9 +8,10 @@
 
 #if defined (ACE_HAS_THREADS)
 
-static void *
-worker (intptr_t iterations)
+static ACE_THR_FUNC_RETURN
+worker (void *arg)
 {
+  intptr_t const iterations = reinterpret_cast<intptr_t> (arg);
   for (intptr_t i = 0; i < iterations; i++)
     {
       if ((i % 10) == 0
@@ -21,7 +22,7 @@ worker (intptr_t iterations)
         }
     }
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
@@ -40,8 +41,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-  int grp_id = thr_mgr->spawn_n (n_threads, ACE_THR_FUNC (worker),
-                                 (void *) n_iterations,
+  int grp_id = thr_mgr->spawn_n (n_threads, worker,
+                                 reinterpret_cast<void *> (n_iterations),
                                  THR_NEW_LWP | THR_DETACHED);
 
   // Wait for 2 seconds and then suspend every thread in the group.

@@ -8,7 +8,7 @@ create_persistent_POA (PortableServer::POA_ptr parent,
                        char const * name)
 {
   TAO::Utils::PolicyList_Destroyer plist (3);
-  plist.length(3);
+  plist.length (3);
 
   plist[0] =
     parent->create_lifespan_policy (PortableServer::PERSISTENT);
@@ -24,7 +24,7 @@ create_persistent_POA (PortableServer::POA_ptr parent,
     parent->the_POAManager ();
 
   return parent->create_POA (name,
-                             mgr.in(),
+                             mgr.in (),
                              plist);
 }
 
@@ -35,7 +35,7 @@ test_create_object_before_servant_reactivation (
 {
   // Create a persistent POA and then create a reference in it...
   PortableServer::POA_var persistent_poa =
-    create_persistent_POA(root_poa,
+    create_persistent_POA (root_poa,
                           "T1");
 
 
@@ -73,7 +73,7 @@ test_create_object_before_servant_reactivation (
   object =
     orb->string_to_object (ior.in ());
 
-  if(CORBA::is_nil (object.in ()))
+  if (CORBA::is_nil (object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) nil reference in string_to_object (servant reactivation)\n"));
@@ -85,7 +85,7 @@ test_create_object_before_servant_reactivation (
 }
 
 void
-test_create_object_before_POA_reactivation(
+test_create_object_before_POA_reactivation (
   CORBA::ORB_ptr orb,
   PortableServer::POA_ptr root_poa)
 {
@@ -165,10 +165,10 @@ test_no_implicit_activation (
     }
 
   if (!succeed)
-  {
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, Implicit activation failed with invalid exception\n"));
-  }
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) ERROR, Implicit activation failed with invalid exception\n"));
+    }
 
   // Now destroy the POA...
   persistent_poa->destroy (true,
@@ -184,7 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc,
                          argv);
 
-      TAO::Utils::ORB_Destroyer orb_destroyer (orb.in());
+      TAO::Utils::ORB_Destroyer orb_destroyer (orb.in ());
 
       PortableServer::POA_var root_poa =
         TAO::Utils::RIR_Narrow<PortableServer::POA>::narrow (orb.in (),
@@ -195,7 +195,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      test_create_object_before_POA_reactivation (orb.in(),
+      test_create_object_before_POA_reactivation (orb.in (),
                                                   root_poa.in ());
 
       test_create_object_before_servant_reactivation (orb.in (),

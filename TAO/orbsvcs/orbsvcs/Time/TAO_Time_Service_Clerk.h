@@ -41,19 +41,19 @@ public:
   friend class Timer_Helper;
 
   /// Unbounded set of IORs.
-  typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
+  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
 
   /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,
                           int timer_value_usecs,
-                          const IORS& server);
+                          IORS const & server);
 
   /// Destructor.
-  ~TAO_Time_Service_Clerk ();
+  ~TAO_Time_Service_Clerk () override;
 
   /// This operation returns the global time and an estimate of
   /// inaccuracy in a UTO.
-  virtual CosTime::UTO_ptr universal_time ();
+  CosTime::UTO_ptr universal_time () override;
 
   /**
    * This operation returns the global time in a UTO only if the time
@@ -61,22 +61,22 @@ public:
    * operation is not implemented and throws a CORBA::NO_IMPLEMENT
    * exception, if called.
    */
-  virtual CosTime::UTO_ptr secure_universal_time ();
+  CosTime::UTO_ptr secure_universal_time () override;
 
   /// This creates a new UTO based on the given parameters.
-  virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
-                                               TimeBase::InaccuracyT inaccuracy,
-                                               TimeBase::TdfT tdf);
+  CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
+                                       TimeBase::InaccuracyT inaccuracy,
+                                       TimeBase::TdfT tdf) override;
 
   /// This creates a new UTO given a time in the UtcT form.
-  virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc);
+  CosTime::UTO_ptr uto_from_utc (TimeBase::UtcT const & utc) override;
 
   /// This creates a new TIO with the given parameters.
-  virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
-                                         TimeBase::TimeT upper);
+  CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
+                                 TimeBase::TimeT upper) override;
 
   /// Return the globally synchronized time.
-  virtual CORBA::ULongLong get_time ();
+  CORBA::ULongLong get_time ();
 
   /// Returns the time displacement factor.
   CORBA::Short time_displacement_factor ();
@@ -94,6 +94,11 @@ public:
   CORBA::ULongLong time_;
 
 private:
+  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk const &) = delete;
+  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk &&) = delete;
+  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk const &) = delete;
+  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk &&) = delete;
+
   /// Time displacement factor in minutes.
   CORBA::Short time_displacement_factor_;
 

@@ -43,8 +43,8 @@ namespace {
 class Shared_Backing_Store : public XML_Backing_Store
 {
 public:
-  typedef ImplementationRepository::UpdatePushNotification_var Replica_var;
-  typedef ImplementationRepository::UpdatePushNotification_ptr Replica_ptr;
+  using Replica_var = ImplementationRepository::UpdatePushNotification_var;
+  using Replica_ptr = ImplementationRepository::UpdatePushNotification_ptr;
   struct UniqueId
   {
     Options::ImrType repo_type;
@@ -53,11 +53,11 @@ public:
     ACE_TString repo_id_str;
     ACE_TString unique_filename;
   };
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+  using UniqueIdMap = ACE_Hash_Map_Manager_Ex<ACE_CString,
     UniqueId,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
-    ACE_Null_Mutex> UniqueIdMap;
+    ACE_Null_Mutex>;
 
   enum ExtraParams { REPO_TYPE = 0, REPO_ID = 1 };
 

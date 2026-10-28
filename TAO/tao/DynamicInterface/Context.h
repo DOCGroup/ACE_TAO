@@ -37,22 +37,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  typedef ULong Flags;
+  using Flags = ULong;
 
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class Context;
-  typedef Context * Context_ptr;
+  using Context_ptr = Context *;
 
   class ContextList;
-  typedef ContextList * ContextList_ptr;
+  using ContextList_ptr = ContextList *;
 
-  typedef TAO_Pseudo_Var_T<Context> Context_var;
-  typedef TAO_Pseudo_Out_T<Context> Context_out;
+  using Context_var = TAO_Pseudo_Var_T<Context>;
+  using Context_out = TAO_Pseudo_Out_T<Context>;
 
-  typedef TAO_Pseudo_Var_T<ContextList> ContextList_var;
-  typedef TAO_Pseudo_Out_T<ContextList> ContextList_out;
+  using ContextList_var = TAO_Pseudo_Var_T<ContextList>;
+  using ContextList_out = TAO_Pseudo_Out_T<ContextList>;
 
   /**
    * @class Context
@@ -83,28 +83,28 @@ namespace CORBA
     // = All the spec-required functions below will just throw a
     //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-    const char *context_name () const;
+    char const* context_name () const;
 
     CORBA::Context_ptr parent () const;
 
-    void create_child (const char *child_ctx_name,
+    void create_child (char const* child_ctx_name,
                        CORBA::Context_out child_ctx);
 
-    void set_one_value (const char *propname, const CORBA::Any &propvalue);
+    void set_one_value (char const* propname, CORBA::Any const& propvalue);
 
     void set_values (CORBA::NVList_ptr values);
 
-    void delete_values (const char *propname);
+    void delete_values (char const* propname);
 
-    void get_values (const char *start_scope,
+    void get_values (char const* start_scope,
                      CORBA::Flags op_flags,
-                     const char *pattern,
+                     char const* pattern,
                      CORBA::NVList_ptr &values);
 
     // Useful for template programming.
-    typedef CORBA::Context_ptr _ptr_type;
-    typedef CORBA::Context_var _var_type;
-    typedef CORBA::Context_out _out_type;
+    using _ptr_type = CORBA::Context_ptr;
+    using _var_type = CORBA::Context_var;
+    using _out_type = CORBA::Context_out;
 
   private:
     /// Reference counter.
@@ -163,16 +163,18 @@ namespace CORBA
     void  _decr_refcount ();
 
     // Useful for template programming.
-    typedef CORBA::ContextList_ptr _ptr_type;
-    typedef CORBA::ContextList_var _var_type;
-    typedef CORBA::ContextList_out _out_type;
+    using _ptr_type = CORBA::ContextList_ptr;
+    using _var_type = CORBA::ContextList_var;
+    using _out_type = CORBA::ContextList_out;
 
   private:
-    ContextList (const ContextList &) = delete;
-    ContextList &operator= (const ContextList &) = delete;
+    ContextList (ContextList const &) = delete;
+    ContextList &operator= (ContextList const &) = delete;
+    ContextList (ContextList &&) = delete;
+    ContextList &operator= (ContextList &&) = delete;
 
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
 
     /// Internal list of typecodes.
     ACE_Unbounded_Queue<char *> ctx_list_;

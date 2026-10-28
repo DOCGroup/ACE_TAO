@@ -24,16 +24,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
                                 int is_inside)
   : TAO_Acceptor (OCI_TAG_HTIOP_PROFILE),
-    addrs_ (0),
-    hosts_ (0),
+    addrs_ (nullptr),
+    hosts_ (nullptr),
     endpoint_count_ (0),
-    hostname_in_ior_ (0),
+    hostname_in_ior_ (nullptr),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
+    orb_core_ (nullptr),
     base_acceptor_ (this),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0),
+    creation_strategy_ (nullptr),
+    concurrency_strategy_ (nullptr),
+    accept_strategy_ (nullptr),
     ht_env_ (ht_env),
     inside_ (is_inside)
 {
@@ -97,7 +97,7 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // Create a profile for each acceptor endpoint.
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
-      TAO::HTIOP::Profile *pfile = 0;
+      TAO::HTIOP::Profile *pfile = nullptr;
       ACE_NEW_RETURN (pfile,
                       TAO::HTIOP::Profile (this->hosts_[i],
                                          this->addrs_[i].get_port_number (),
@@ -112,7 +112,7 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (pfile) == -1)
         {
           pfile->_decr_refcnt ();
-          pfile = 0;
+          pfile = nullptr;
           return -1;
         }
 
@@ -139,8 +139,8 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            CORBA::Short priority)
 {
   CORBA::ULong index = 0;
-  TAO_Profile *pfile = 0;
-  TAO::HTIOP::Profile *htiop_profile = 0;
+  TAO_Profile *pfile = nullptr;
+  TAO::HTIOP::Profile *htiop_profile = nullptr;
 
   // First see if <mprofile> already contains a TAO_HTIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -155,7 +155,7 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 
   // If <mprofile> doesn't contain a TAO::HTIOP::Profile, we need to create
   // one.
-  if (htiop_profile == 0)
+  if (htiop_profile == nullptr)
     {
       ACE_NEW_RETURN (htiop_profile,
                       TAO::HTIOP::Profile (this->hosts_[0],
@@ -171,7 +171,7 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (htiop_profile) == -1)
         {
           htiop_profile->_decr_refcnt ();
-          htiop_profile = 0;
+          htiop_profile = nullptr;
           return -1;
         }
 
@@ -195,7 +195,7 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
        index < this->endpoint_count_;
        ++index)
     {
-      TAO::HTIOP::Endpoint *endpoint = 0;
+      TAO::HTIOP::Endpoint *endpoint = nullptr;
       ACE_NEW_RETURN (endpoint,
                       TAO::HTIOP::Endpoint (this->hosts_[index],
                                           this->addrs_[index].get_port_number (),
@@ -216,7 +216,7 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast<const TAO::HTIOP::Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return 0;
 
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
@@ -260,7 +260,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -283,7 +283,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                        proxy_port),
                       -1);
 
-  if (address == 0)
+  if (address == nullptr)
     return -1;
 
   if (major >=0 && minor >= 0)
@@ -307,7 +307,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
   // consideration.
   const char *port_separator_loc = ACE_OS::strchr (address, ':');
 
-  const char *specified_hostname = 0;
+  const char *specified_hostname = nullptr;
   char tmp_host[MAXHOSTNAMELEN + 1];
 
   if (port_separator_loc == address)
@@ -336,7 +336,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
           return this->open_i (addr, reactor);
         }
     }
-  else if (port_separator_loc == 0)
+  else if (port_separator_loc == nullptr)
     {
       // The address is a hostname.  No port was specified, so assume
       // port zero (port will be chosen for us).
@@ -369,9 +369,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                   char *[this->endpoint_count_],
                   -1);
 
-  this->hosts_[0] = 0;
+  this->hosts_[0] = nullptr;
 
-  if (this->hostname_in_ior_ != 0)
+  if (this->hostname_in_ior_ != nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -413,7 +413,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->hosts_ != 0)
+  if (this->hosts_ != nullptr)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
@@ -563,7 +563,7 @@ TAO::HTIOP::Acceptor::hostname (TAO_ORB_Core *orb_core,
       // just return ours.
       return this->dotted_decimal_address (addr, host);
     }
-  else if (specified_hostname != 0)
+  else if (specified_hostname != nullptr)
     {
       // If the user specified a hostname, pass it back
       // blindly as it overrides our choice of hostname.
@@ -593,7 +593,7 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                             char *&host)
 {
   int result = 0;
-  const char *tmp = 0;
+  const char *tmp = nullptr;
 
   // If the IP address in the INET_Addr is the INADDR_ANY address,
   // then force the actual IP address to be used by initializing a new
@@ -612,7 +612,7 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   else
     tmp = addr.get_host_addr ();
 
-  if (tmp == 0 || result != 0)
+  if (tmp == nullptr || result != 0)
     {
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -637,7 +637,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // network interfaces.
   size_t if_cnt = 0;
 
-  ACE_INET_Addr *inet_addrs = 0;
+  ACE_INET_Addr *inet_addrs = nullptr;
 
   if (ACE::get_ip_interfaces (if_cnt,
                               inet_addrs) != 0
@@ -649,7 +649,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       return -1;
     }
 
-  if (if_cnt == 0 || inet_addrs == 0)
+  if (if_cnt == 0 || inet_addrs == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -707,7 +707,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           inet_addrs[i].is_loopback ())
         continue;
 
-      if (this->hostname_in_ior_ != 0)
+      if (this->hostname_in_ior_ != nullptr)
         {
           if (TAO_debug_level > 2)
             {
@@ -806,7 +806,7 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
 int
 TAO::HTIOP::Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in

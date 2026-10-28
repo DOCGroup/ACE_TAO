@@ -12,8 +12,13 @@ class ClientInitializer :
 {
  public:
   ClientInitializer ();
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  ClientInitializer (ClientInitializer const &) = delete;
+  ClientInitializer (ClientInitializer &&) = delete;
+  ClientInitializer &operator= (ClientInitializer const &) = delete;
+  ClientInitializer &operator= (ClientInitializer &&) = delete;
+
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
   void set_slot_data ();
 
  private:

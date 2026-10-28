@@ -12,9 +12,7 @@ TAO_RTScheduler_Loader::TAO_RTScheduler_Loader ()
 {
 }
 
-TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader ()
-{
-}
+TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader () = default;
 
 int
 TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
@@ -39,9 +37,9 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
       "RTScheduler_Loader",
       true);
 
-  if (rts_loader != 0 && rts_loader != this)
+  if (rts_loader != nullptr && rts_loader != this)
     {
-      return rts_loader->init (0, 0);
+      return rts_loader->init (0, nullptr);
     }
 
   // Register the ORB initializer.

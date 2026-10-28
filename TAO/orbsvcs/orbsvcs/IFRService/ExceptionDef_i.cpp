@@ -57,7 +57,7 @@ TAO_ExceptionDef_i::describe ()
 CORBA::Contained::Description *
 TAO_ExceptionDef_i::describe_i ()
 {
-  CORBA::Contained::Description *desc_ptr = 0;
+  CORBA::Contained::Description *desc_ptr = nullptr;
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -197,7 +197,7 @@ TAO_ExceptionDef_i::members_i ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
 
-  CORBA::StructMemberSeq *members = 0;
+  CORBA::StructMemberSeq *members = nullptr;
   ACE_NEW_THROW_EX (members,
                     CORBA::StructMemberSeq (size),
                     CORBA::NO_MEMORY ());
@@ -211,7 +211,7 @@ TAO_ExceptionDef_i::members_i ()
   CORBA::DefinitionKind kind = CORBA::dk_none;
   CORBA::Object_var obj;
   ACE_Configuration_Section_Key member_key;
-  TAO_IDLType_i *impl = 0;
+  TAO_IDLType_i *impl = nullptr;
 
   // Store to replace below.
   ACE_Configuration_Section_Key key_holder = this->section_key_;
@@ -278,7 +278,7 @@ TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members)
                                             "refs",
                                             1,
                                             refs_key);
-      char *path = 0;
+      char *path = nullptr;
 
       // Create a section for each new member. We just store the
       // member name and the path to its database entry.

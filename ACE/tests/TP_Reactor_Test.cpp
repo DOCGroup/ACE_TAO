@@ -88,8 +88,8 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 // Log options
 static int loglevel = 1; // 0 full , 1 only errors
 
-static const size_t MIN_TIME = 1;    // min 1 sec
-static const size_t MAX_TIME = 3600; // max 1 hour
+static constexpr size_t MIN_TIME = 1;    // min 1 sec
+static constexpr size_t MAX_TIME = 3600; // max 1 hour
 static u_int seconds = 2;  // default time to run - 2 seconds
 
 static char data[] =

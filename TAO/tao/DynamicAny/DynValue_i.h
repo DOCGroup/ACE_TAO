@@ -36,13 +36,13 @@ class TAO_DynamicAny_Export TAO_DynValue_i
 {
 public:
   /// Constructor.
-  TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
+  explicit TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
 
   /// Destructor.
   ~TAO_DynValue_i () = default;
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   /// Initialize using a TypeCode and an input stream
   void init (CORBA::TypeCode_ptr tc, TAO_InputCDR &in);
@@ -54,40 +54,40 @@ public:
   static TAO_DynValue_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynValue.
-  virtual DynamicAny::FieldName current_member_name ();
+  DynamicAny::FieldName current_member_name () override;
 
-  virtual CORBA::TCKind current_member_kind ();
+  CORBA::TCKind current_member_kind () override;
 
-  virtual DynamicAny::NameValuePairSeq * get_members ();
+  DynamicAny::NameValuePairSeq * get_members () override;
 
-  virtual void set_members (const DynamicAny::NameValuePairSeq & value);
+  void set_members (DynamicAny::NameValuePairSeq const& value) override;
 
-  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any ();
+  DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any () override;
 
-  virtual void set_members_as_dyn_any (
-      const DynamicAny::NameDynAnyPairSeq & value);
+  void set_members_as_dyn_any (
+      DynamicAny::NameDynAnyPairSeq const& value) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (CORBA::Any const& value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
-  virtual void insert_val (CORBA::ValueBase * value);
+  void insert_val (CORBA::ValueBase * value) override;
 
-  virtual CORBA::ValueBase * get_val ();
+  CORBA::ValueBase * get_val () override;
 
   // = DynValueCommon needed to be provided here
-  virtual void set_to_value ();
+  void set_to_value () override;
 
 private:
   /// List of base types.
-  typedef ACE_Array_Base<CORBA::TypeCode_var> BaseTypesList_t;
+  using BaseTypesList_t = ACE_Array_Base<CORBA::TypeCode_var>;
 
   /// Decompose the given TypeCode into its hierarchical list of
   /// basetypes. The first element of the list is our actual type,
@@ -97,29 +97,29 @@ private:
   static void get_base_types (
     CORBA::TypeCode_ptr,
     BaseTypesList_t &,
-    CORBA::ULong *total_member_count = 0);
+    CORBA::ULong *total_member_count = nullptr);
 
   /// Return the unaliased valuetype typecode that corresponds to
   /// index (0..total_members-1) from the given hierarchical list of
   /// the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_correct_base_type (
-    const BaseTypesList_t &base_types,
+    BaseTypesList_t const& base_types,
     CORBA::ULong &index);
 
   /// Return the member_type at index (0..total_members-1) from
   /// the given hierarchical list of the derived type and it basetypes.
   static CORBA::TypeCode_ptr get_member_type (
-    const BaseTypesList_t &,
+    BaseTypesList_t const&,
     CORBA::ULong index);
 
   /// Return the member_name at index (0..total_members-1) from
   /// the given hierarchical list of the derived type and it basetypes.
-  static const char * get_member_name (
-    const BaseTypesList_t &,
+  static char const* get_member_name (
+    BaseTypesList_t const&,
     CORBA::ULong index);
 
   /// Check if the typecode is acceptable.
-  void check_typecode (CORBA::TypeCode_ptr tc);
+  void check_typecode (CORBA::TypeCode_ptr tc) override;
 
   /// Common code from the init() functions, initializes the
   /// private bits from the given TypeCode
@@ -127,7 +127,7 @@ private:
 
   /// Code common to the init(Any) and the member
   /// function from_any().
-  void from_any_helper (const CORBA::Any &any);
+  void from_any_helper (CORBA::Any const& any);
 
   /// Write the value to the output stream.
   void to_outputCDR (TAO_OutputCDR &);
@@ -137,8 +137,10 @@ private:
 
   /// These are not implemented!
   /// Use copy() or assign() instead of these.
-  TAO_DynValue_i (const TAO_DynValue_i &src) = delete;
-  TAO_DynValue_i &operator= (const TAO_DynValue_i &src) = delete;
+  TAO_DynValue_i (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i (TAO_DynValue_i &&) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i &&) = delete;
 
   /// Each component of DynValue and DynValueBox is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;

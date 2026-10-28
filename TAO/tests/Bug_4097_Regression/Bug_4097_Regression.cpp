@@ -13,10 +13,10 @@
 
 namespace {
 bool
-checkResult (const CORBA::Any &any, const MultiLabelUnion &mlu)
+checkResult (CORBA::Any const &any, MultiLabelUnion const &mlu)
 {
-  bool error = false;
-  const MultiLabelUnion *extracted = 0;
+  bool error {};
+  MultiLabelUnion const *extracted {};
   if (any >>= extracted)
     {
       if (extracted->_d () == mlu._d ())
@@ -140,7 +140,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Test FAILED due to Exception:");
       return 1;

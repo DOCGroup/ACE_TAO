@@ -4,8 +4,7 @@
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/Timer_Heap.h"
 
-typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>
-   ActiveTimer;
+using ActiveTimer = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
 
 // Listing 1
 // Listing 2 code/ch20

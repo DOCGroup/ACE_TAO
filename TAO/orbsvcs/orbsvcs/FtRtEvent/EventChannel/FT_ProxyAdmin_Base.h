@@ -27,7 +27,12 @@ class FT_ProxyAdmin_Base
 public:
   FT_ProxyAdmin_Base(PortableServer::ServantBase* servant,
               PortableServer::POA_var poa);
-  virtual ~FT_ProxyAdmin_Base();
+  virtual ~FT_ProxyAdmin_Base() = default;
+
+  FT_ProxyAdmin_Base(FT_ProxyAdmin_Base const&) = delete;
+  FT_ProxyAdmin_Base(FT_ProxyAdmin_Base&&) = delete;
+  FT_ProxyAdmin_Base& operator=(FT_ProxyAdmin_Base const&) = delete;
+  FT_ProxyAdmin_Base& operator=(FT_ProxyAdmin_Base&&) = delete;
   void activate(const FtRtecEventComm::ObjectId& oid);
 
   const FtRtecEventComm::ObjectId& object_id() const;

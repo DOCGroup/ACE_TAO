@@ -8,7 +8,7 @@
 #include "ace/Service_Config.h"
 #include "ace/UPIPE_Stream.h"
 
-typedef ACE_Svc_Handler <ACE_UPIPE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
+using SVC_HANDLER = ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
 
 class Server_Service : public SVC_HANDLER
   // = TITLE

@@ -36,8 +36,8 @@ namespace TAO
 
     bool
     LifespanStrategyTransient::validate (CORBA::Boolean is_persistent,
-                                         const TAO::Portable_Server::
-                                         Temporary_Creation_Time
+                                         TAO::Portable_Server::
+                                         Temporary_Creation_Time const
                                          &creation_time) const
     {
       return (!is_persistent && this->creation_time_ == creation_time);
@@ -62,7 +62,7 @@ namespace TAO
                                            CORBA::ULong &starting_at)
     {
       // Copy the persistence byte.
-      buffer[starting_at] = (CORBA::Octet)this->key_type ();
+      buffer[starting_at] = static_cast<CORBA::Octet> (this->key_type ());
       starting_at += this->key_type_length ();
 
 #if (POA_NO_TIMESTAMP == 0)
@@ -103,10 +103,10 @@ namespace TAO
     }
 
     CORBA::Object_ptr
-    LifespanStrategyTransient::imr_key_to_object (const TAO::ObjectKey &,
-                                                  const char *) const
+    LifespanStrategyTransient::imr_key_to_object (TAO::ObjectKey const &,
+                                                  char const *) const
     {
-      return CORBA::Object::_nil();
+      return CORBA::Object::_nil ();
     }
   } /* namespace Portable_Server */
 } /* namespace TAO */

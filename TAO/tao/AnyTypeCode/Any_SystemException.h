@@ -48,9 +48,9 @@ namespace TAO
                          CORBA::TypeCode_ptr,
                          const CORBA::SystemException &);
 
-    Any_SystemException (CORBA::TypeCode_ptr);
+    explicit Any_SystemException (CORBA::TypeCode_ptr);
 
-    virtual ~Any_SystemException ();
+    ~Any_SystemException () override = default;
 
     static void insert (CORBA::Any &,
                         _tao_destructor,
@@ -68,14 +68,14 @@ namespace TAO
                                    const CORBA::SystemException *&,
                                    excp_factory f);
 
-    virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
+    CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
 
-    virtual const void *value () const;
-    virtual void free_value ();
+    const void *value () const;
+    void free_value () override;
 
   protected:
-    CORBA::SystemException *value_;
+    CORBA::SystemException *value_ {};
   };
 }
 

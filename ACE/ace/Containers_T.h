@@ -317,7 +317,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_DNode (const T &i, ACE_DNode<T> *n = 0, ACE_DNode<T> *p = 0);
+  ACE_DNode (const T &i, ACE_DNode<T> *n = nullptr, ACE_DNode<T> *p = nullptr);
 
   /// Pointer to next element in the list of {ACE_DNode}s.
   ACE_DNode<T> *next_;
@@ -957,7 +957,7 @@ protected:
    */
   int insert_element (T *new_item,
                       int before = 0,
-                      T *old_item = 0);
+                      T *old_item = nullptr);
 
   ///Constant time delete an item from the list structure.
   /**

@@ -2,7 +2,6 @@
 #include "Event_Service.h"
 
 #include "ace/Get_Opt.h"
-#include <memory>
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
@@ -20,10 +19,11 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "ace/OS_NS_strings.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   bool use_thread_per_consumer = false;
-  for(int i = 0; i < argc; i++)
+  for (int i = 0; i < argc; ++i)
     {
       if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-a")) == 0)
         {
@@ -42,25 +42,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
 // ****************************************************************
 
-Event_Service::Event_Service ()
-  : sched_impl_ (0),
-    ec_impl_ (0),
-    scheduler_type_ (ES_SCHED_NONE),
-    use_bidir_giop_ (false),
-    bind_to_naming_service_ (true)
-{
-}
+Event_Service::Event_Service () = default;
 
 Event_Service::~Event_Service ()
 {
   delete this->ec_impl_;
-  this->ec_impl_ = 0;
+  this->ec_impl_ = nullptr;
   delete this->sched_impl_;
-  this->sched_impl_ = 0;
+  this->sched_impl_ = nullptr;
 }
 
 int
-Event_Service::run (int argc, ACE_TCHAR* argv[])
+Event_Service::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -93,8 +86,8 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       // When we have a service name or a non local scheduler we must use the
       // naming service.
 
-      bool use_name_service = bind_to_naming_service_ ||
-                              this->scheduler_type_ != ES_SCHED_NONE;
+      bool const use_name_service = this->bind_to_naming_service_ ||
+                                    this->scheduler_type_ != ES_SCHED_NONE;
 
       CORBA::Object_var naming_obj;
       RtecScheduler::Scheduler_var scheduler;
@@ -102,7 +95,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       if (use_name_service)
         {
-          naming_obj=
+          naming_obj =
             this->orb_->resolve_initial_references ("NameService");
 
           if (CORBA::is_nil (naming_obj.in ()))
@@ -159,7 +152,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           attr.scheduler = scheduler.in ();
         }
 
-      TAO_EC_Event_Channel* ec_impl = 0;
+      TAO_EC_Event_Channel *ec_impl = nullptr;
       ACE_NEW_RETURN (ec_impl,
                       TAO_EC_Event_Channel (attr),
                       1);
@@ -172,8 +165,8 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       // If the object_id_ is empty and we don't use BiDIR GIOP, activate the
       // servant under the default POA, else create a new child POA with
       // the needed policies
-      int persistent = ACE_OS::strcmp(this->object_id_.c_str(), "");
-      if ((persistent == 0) && (this->use_bidir_giop_ == false))
+      bool const persistent = ACE_OS::strcmp (this->object_id_.c_str (), "") != 0;
+      if (!persistent && !this->use_bidir_giop_)
         {
           // Notice that we activate *this* object with the POA, but we
           // forward all the requests to the underlying EC
@@ -182,12 +175,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         }
       else
         {
-          CORBA::ULong index = 0;
+          CORBA::ULong index {};
 
           // Create child POA
           CORBA::PolicyList policies (3);
 
-          if (persistent != 0)
+          if (persistent)
             {
               policies.length (index++);
               policies[index] =
@@ -198,7 +191,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                 root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
             }
 
-          if (this->use_bidir_giop_ == true)
+          if (this->use_bidir_giop_)
             {
               CORBA::Any pol;
               pol <<= BiDirPolicy::BOTH;
@@ -228,26 +221,26 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                               1);
 
           PortableServer::ObjectId_var ec_object_id =
-            PortableServer::string_to_ObjectId(object_id_.c_str());
+            PortableServer::string_to_ObjectId (this->object_id_.c_str ());
 
-          child_poa->activate_object_with_id(ec_object_id.in(), this);
+          child_poa->activate_object_with_id (ec_object_id.in (), this);
 
           CORBA::Object_var ec_obj =
-            child_poa->id_to_reference(ec_object_id.in());
+            child_poa->id_to_reference (ec_object_id.in ());
 
           ec =
-            RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
+            RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
         }
 
       CORBA::String_var str =
          this->orb_->object_to_string (ec.in ());
 
-      if (ACE_OS::strcmp(this->ior_file_name_.c_str(), ACE_TEXT("")) != 0)
+      if (ACE_OS::strcmp (this->ior_file_name_.c_str (), ACE_TEXT("")) != 0)
         {
-          FILE *output_file=
+          FILE *output_file =
             ACE_OS::fopen (this->ior_file_name_.c_str(),
                            ACE_TEXT("w"));
-          if (output_file == 0)
+          if (output_file == nullptr)
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                this->ior_file_name_.c_str()),
@@ -256,12 +249,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           ACE_OS::fclose (output_file);
         }
 
-      if (ACE_OS::strcmp(this->pid_file_name_.c_str(), ACE_TEXT("")) != 0)
+      if (ACE_OS::strcmp (this->pid_file_name_.c_str (), ACE_TEXT("")) != 0)
         {
           FILE *pidf =
             ACE_OS::fopen (this->pid_file_name_.c_str(),
                            ACE_TEXT("w"));
-          if (pidf != 0)
+          if (pidf != nullptr)
             {
               ACE_OS::fprintf (pidf,
                                "%ld\n",
@@ -278,7 +271,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         {
           CosNaming::Name channel_name (1);
           channel_name.length (1);
-          channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
+          channel_name[0].id = CORBA::string_dup (this->service_name_.c_str ());
           naming_context->rebind (channel_name, ec.in ());
         }
 
@@ -292,7 +285,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         {
           CosNaming::Name channel_name (1);
           channel_name.length (1);
-          channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
+          channel_name[0].id = CORBA::string_dup (this->service_name_.c_str ());
           naming_context->unbind (channel_name);
         }
 
@@ -303,7 +296,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("EC");
     }
@@ -313,13 +306,13 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 }
 
 int
-Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
+Event_Service::parse_args (int argc, ACE_TCHAR *argv [])
 {
   // default values...
   this->service_name_ = "EventService";
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("an:o:p:s:q:bx"));
-  int opt;
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {

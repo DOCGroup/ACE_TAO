@@ -71,7 +71,7 @@ Barrier_Task::svc ()
 }
 
 // Default number of threads to spawn.
-static const int DEFAULT_ITERATIONS = 5;
+static constexpr int DEFAULT_ITERATIONS = 5;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

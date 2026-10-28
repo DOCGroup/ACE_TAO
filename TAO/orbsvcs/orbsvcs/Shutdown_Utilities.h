@@ -30,8 +30,8 @@ public:
   virtual void operator() (int which_signal) = 0;
 
 protected:
-  Shutdown_Functor () {}
-  virtual ~Shutdown_Functor () {}
+  Shutdown_Functor () = default;
+  virtual ~Shutdown_Functor () = default;
 };
 
 /**
@@ -47,18 +47,18 @@ protected:
 class TAO_Svc_Utils_Export Service_Shutdown : public ACE_Event_Handler
 {
 public:
-  Service_Shutdown (Shutdown_Functor& sf);
-  Service_Shutdown (Shutdown_Functor& sf, ACE_Sig_Set& which_signals);
-  ~Service_Shutdown ();
+  explicit Service_Shutdown (Shutdown_Functor &sf);
+  Service_Shutdown (Shutdown_Functor &sf, ACE_Sig_Set &which_signals);
+  ~Service_Shutdown () override;
 
-  void set_signals (ACE_Sig_Set& which_signals);
+  void set_signals (ACE_Sig_Set &which_signals);
 
-  virtual int handle_signal (int which_sig,
-                             siginfo_t* siginfo,
-                             ucontext_t* context);
+  int handle_signal (int which_sig,
+                     siginfo_t *siginfo,
+                     ucontext_t *context) override;
 
 protected:
-  Shutdown_Functor& functor_;
+  Shutdown_Functor &functor_;
   ACE_Sig_Handler   shutdown_;
   ACE_Sig_Set       registered_signals_;
 };

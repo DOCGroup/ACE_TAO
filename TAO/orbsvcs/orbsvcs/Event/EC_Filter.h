@@ -66,9 +66,9 @@ public:
   static int matches (const RtecEventComm::EventHeader& rhs,
                       const RtecEventComm::EventHeader& lhs);
 
-  typedef TAO_EC_Filter* value_type;
-  typedef TAO_EC_Filter* const const_value_type;
-  typedef const_value_type* ChildrenIterator;
+  using value_type = TAO_EC_Filter *;
+  using const_value_type = TAO_EC_Filter * const;
+  using ChildrenIterator = const_value_type *;
 
   /**
    * STL-like iterators
@@ -176,18 +176,18 @@ public:
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info);
+                      TAO_EC_QOS_Info& qos_info) override;
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info);
+                             TAO_EC_QOS_Info& qos_info) override;
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
+                     TAO_EC_QOS_Info& qos_info) override;
   virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
-  virtual void clear ();
-  virtual CORBA::ULong max_event_size () const;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const;
+                            TAO_EC_QOS_Info& qos_info) override;
+  virtual void clear () override;
+  virtual CORBA::ULong max_event_size () const override;
+  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info);
+                                const TAO_EC_QOS_Info &qos_info) override;
 };
 
 // ****************************************************************

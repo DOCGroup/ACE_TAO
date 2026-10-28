@@ -4,7 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 #include <iostream>
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try {
     // Initialize orb

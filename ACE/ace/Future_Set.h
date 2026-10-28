@@ -43,7 +43,7 @@ class ACE_Future_Set : public ACE_Future_Observer<T>
 {
 public:
   /// Constructor.
-  ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
+  ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
 
   ACE_Future_Set (const ACE_Future_Set &) = delete;
   ACE_Future_Set (ACE_Future_Set &&) = delete;
@@ -90,7 +90,7 @@ public:
    * remove that ACE_Future object from its list of subjects.
    */
   int next_readable (ACE_Future<T> &result,
-                     ACE_Time_Value *tv = 0);
+                     ACE_Time_Value *tv = nullptr);
 
   /// Called by the ACE_Future subject in which we are subscribed to
   /// when its value is written to.

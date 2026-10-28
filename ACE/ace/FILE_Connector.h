@@ -56,7 +56,7 @@ public:
    */
   ACE_FILE_Connector (ACE_FILE_IO &new_io,
                       const ACE_FILE_Addr &remote_sap,
-                      ACE_Time_Value *timeout = 0,
+                      ACE_Time_Value *timeout = nullptr,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = O_RDWR | O_CREAT,
@@ -80,7 +80,7 @@ public:
    */
   int connect (ACE_FILE_IO &new_io,
                const ACE_FILE_Addr &remote_sap,
-               ACE_Time_Value *timeout = 0,
+               ACE_Time_Value *timeout = nullptr,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR | O_CREAT,

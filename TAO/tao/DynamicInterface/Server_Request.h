@@ -36,10 +36,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ServerRequest;
-  typedef ServerRequest *ServerRequest_ptr;
+  using ServerRequest_ptr = ServerRequest *;
 
-  typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
-  typedef TAO_Pseudo_Out_T<ServerRequest> ServerRequest_out;
+  using ServerRequest_var = TAO_Pseudo_Var_T<ServerRequest>;
+  using ServerRequest_out = TAO_Pseudo_Out_T<ServerRequest>;
 
   /**
    * @class ServerRequest
@@ -70,14 +70,14 @@ namespace CORBA
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_result (const CORBA::Any &value);
+    void set_result (CORBA::Any const& value);
 
     /// Implementation uses this to provide the exception value which is
     /// the only result of this particular invocation.
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_exception (const CORBA::Any &value);
+    void set_exception (CORBA::Any const& value);
 
     // = Get various universal call attributes.
 
@@ -98,7 +98,7 @@ namespace CORBA
     void ctx (CORBA::Context_ptr);
 
     /// Get the operation name.
-    const char *operation () const;
+    char const* operation () const;
 
     // Pseudo object methods.
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
@@ -125,34 +125,34 @@ namespace CORBA
     void gateway_exception_reply (ACE_CString &raw_exception);
 
     /// Useful for template programming.
-    typedef CORBA::ServerRequest_ptr _ptr_type;
-    typedef CORBA::ServerRequest_var _var_type;
-    typedef CORBA::ServerRequest_out _out_type;
+    using _ptr_type = CORBA::ServerRequest_ptr;
+    using _var_type = CORBA::ServerRequest_var;
+    using _out_type = CORBA::ServerRequest_out;
 
   private:
     /// If zero then the NVList is evaluated ASAP.
-    bool lazy_evaluation_;
+    bool lazy_evaluation_ {};
 
     /// Context associated with this request.
-    CORBA::Context_ptr ctx_;
+    CORBA::Context_ptr ctx_ {};
 
     /// Incoming parameters.
-    CORBA::NVList_ptr params_;
+    CORBA::NVList_ptr params_ {};
 
     /// Return value.
-    CORBA::Any_ptr retval_;
+    CORBA::Any_ptr retval_ {};
 
     /// Any exception which might be raised.
-    CORBA::Any_ptr exception_;
+    CORBA::Any_ptr exception_ {};
 
     /// Reference counting.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
 
     /// Request from the ORB.
     TAO_ServerRequest &orb_server_request_;
 
     /// Have we sent a user exception obtained from a gateway?
-    bool sent_gateway_exception_;
+    bool sent_gateway_exception_ {};
   };
 } // End CORBA namespace
 

@@ -31,8 +31,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_IIOP_SVC_HANDLER;
+using TAO_IIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
@@ -72,22 +71,22 @@ public:
 
   /// Called by the @c Strategy_Acceptor when the handler is completely
   /// connected.  Argument is unused.
-  virtual int open (void *);
+  int open (void *) override;
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
-  int close (u_long = 0);
+  int close (u_long = 0) override;
 
   //@{
   /** @name Event Handler overloads
    */
-  virtual int resume_handler ();
-  virtual int close_connection ();
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_output (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = nullptr);
+  int resume_handler () override;
+  int close_connection () override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
   //@}
 
   /// Add ourselves to Cache.
@@ -100,10 +99,10 @@ public:
   int enable_network_priority ();
 
   /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint) override;
 
-  virtual int open_handler (void *);
+  int open_handler (void *) override;
 
   /// This is used during a canceled connection attempt. Force the
   /// SO_LINGER timeout to 0 so that when the peer is closed, it won't
@@ -115,10 +114,10 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  virtual int release_os_resources ();
+  int release_os_resources () override;
   //@}
 
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
+  int handle_write_ready (ACE_Time_Value const *timeout) override;
 
   /// helper function used by the set_dscp_codepoint () methods to
   /// set the TOS field in the IP packets.

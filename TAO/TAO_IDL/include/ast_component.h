@@ -23,14 +23,14 @@ public:
                  AST_Interface **supports_flat,
                  long n_supports_flat);
 
-  virtual ~AST_Component ();
+  ~AST_Component () override;
 
   // This also calls the base class version.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   // Extend lookup to the base component.
-  virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_inherited (UTL_ScopedName *e,
+                                       bool full_def_only) override;
 
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
@@ -45,27 +45,27 @@ public:
   long n_supports () const;
 
   // Override for component of UTL_Scope method.
-  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
+  AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+                                    AST_Decl *&final_parent_decl) override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Allows adding an uses to a later point
   // The port i is inserted after port ix, if
   // ix is not null.
   int be_add_uses (AST_Uses *i,
-                   AST_Uses *ix = 0);
+                   AST_Uses *ix = nullptr);
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
-  typedef AST_ComponentFwd FWD_TYPE;
+  using FWD_TYPE = AST_ComponentFwd;
 
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);

@@ -36,10 +36,15 @@ public:
   TAO_Naming_Service ();
 
   /// Constructor taking the command-line arguments.
-  TAO_Naming_Service (int argc, ACE_TCHAR* argv[]);
+  TAO_Naming_Service (int argc, ACE_TCHAR * argv[]);
+
+  TAO_Naming_Service (TAO_Naming_Service const &) = delete;
+  TAO_Naming_Service (TAO_Naming_Service &&) = delete;
+  TAO_Naming_Service &operator= (TAO_Naming_Service const &) = delete;
+  TAO_Naming_Service &operator= (TAO_Naming_Service &&) = delete;
 
   /// Initialize the Naming Service with the arguments.
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  virtual int init (int argc, ACE_TCHAR * argv[]);
 
   /// The opposite of init().
   virtual int fini ();
@@ -56,20 +61,20 @@ public:
 protected:
   /// Parse the command line arguments to find
   /// the timeout period.
-  int parse_args (int &argc, ACE_TCHAR* argv[]);
+  int parse_args (int & argc, ACE_TCHAR * argv[]);
 
   /// The ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Naming Server instance.
   TAO_Naming_Server my_naming_server_;
 
   /// After how long the server should stop listening to requests (in
   /// seconds).
-  long time_;
+  long time_ {};
 
   /// Number of threads for running the ORB. Default is 1
-  int num_threads_;
+  int num_threads_ {1};
 };
 
 #include /**/ "ace/post.h"

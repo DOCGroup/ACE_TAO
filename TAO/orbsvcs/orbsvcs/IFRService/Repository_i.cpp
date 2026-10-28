@@ -23,8 +23,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
     orb_ (orb),
     root_poa_ (poa),
     config_ (config),
-    extension_ (CORBA::string_dup ("TAO_IFR_name_extension")),
-    lock_ (0)
+    extension_ (CORBA::string_dup ("TAO_IFR_name_extension"))
 {
 }
 
@@ -719,7 +718,7 @@ TAO_Repository_i::create_servants_and_poas ()
                                  poa_manager.in (), \
                                  policies); \
 \
-  TAO_ ## name ## _i * name ## _impl = 0; \
+  TAO_ ## name ## _i * name ## _impl = nullptr; \
   ACE_NEW_RETURN (name ## _impl, \
                   TAO_ ## name ## _i (this), \
                   -1); \

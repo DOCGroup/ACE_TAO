@@ -11,14 +11,14 @@ The following makes PROTOTYPES default to 0 if it has not already
 #endif
 
 /* POINTER defines a generic pointer type */
-typedef unsigned char *POINTER;
+using POINTER = unsigned char *;
 
 #if !defined(INTEGRITY)
 /* UINT2 defines a two byte word */
-typedef unsigned short int UINT2;
+using UINT2 = unsigned short int;
 
 /* UINT4 defines a four byte word */
-typedef unsigned long int UINT4;
+using UINT4 = unsigned long int;
 #endif
 
 /* PROTO_LIST is defined depending on how PROTOTYPES is defined above.

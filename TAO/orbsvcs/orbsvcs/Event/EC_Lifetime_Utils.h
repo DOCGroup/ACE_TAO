@@ -54,6 +54,11 @@ public:
   /// have been invoked.
   ~TAO_EC_Object_Deactivator ();
 
+  TAO_EC_Object_Deactivator (TAO_EC_Object_Deactivator const &) = delete;
+  TAO_EC_Object_Deactivator (TAO_EC_Object_Deactivator &&) = delete;
+  TAO_EC_Object_Deactivator &operator= (TAO_EC_Object_Deactivator const &) = delete;
+  TAO_EC_Object_Deactivator &operator= (TAO_EC_Object_Deactivator &&) = delete;
+
   /// Set <id> which will be deactivated from <poa> in
   /// the deactivator's destructor, unless deactivate () or
   /// disallow_deactivation () are invoked before the destruction.
@@ -81,12 +86,6 @@ public:
   PortableServer::POA_var poa () const;
 
 private:
-  /// Disallow.
-  //@{
-  TAO_EC_Object_Deactivator (const TAO_EC_Object_Deactivator &rhs);
-  TAO_EC_Object_Deactivator& operator= (const TAO_EC_Object_Deactivator &rhs);
-  //@}
-
   /// POA from which the object will be deactivated.
   PortableServer::POA_var poa_;
 
@@ -126,6 +125,11 @@ protected:
   TAO_EC_Deactivated_Object ();
   ~TAO_EC_Deactivated_Object ();
 
+  TAO_EC_Deactivated_Object (TAO_EC_Deactivated_Object const &) = delete;
+  TAO_EC_Deactivated_Object (TAO_EC_Deactivated_Object &&) = delete;
+  TAO_EC_Deactivated_Object &operator= (TAO_EC_Deactivated_Object const &) = delete;
+  TAO_EC_Deactivated_Object &operator= (TAO_EC_Deactivated_Object &&) = delete;
+
   /// Utility for deactivating ourselves from POA.
   TAO_EC_Object_Deactivator deactivator_;
 };
@@ -149,18 +153,17 @@ public:
   /// Destructor.  If holding an ORB, destroy it.
   ~TAO_EC_ORB_Holder ();
 
+  TAO_EC_ORB_Holder (TAO_EC_ORB_Holder const &) = delete;
+  TAO_EC_ORB_Holder (TAO_EC_ORB_Holder &&) = delete;
+  TAO_EC_ORB_Holder &operator= (TAO_EC_ORB_Holder const &) = delete;
+  TAO_EC_ORB_Holder &operator= (TAO_EC_ORB_Holder &&) = delete;
+
   /// Set the ORB to be destroyed in destructor to <orb_var>.  If
   /// TAO_EC_ORB_Holder already held an orb prior to invocation of
   /// this method, that orb is NOT destroyed.
   void init (CORBA::ORB_var orb_var);
 
 private:
-  /// Disallow.
-  //@{
-  TAO_EC_ORB_Holder & operator= (const TAO_EC_ORB_Holder &rhs);
-  TAO_EC_ORB_Holder(const TAO_EC_ORB_Holder &rhs);
-  //@}
-
   /// ORB to be destroyed.
   CORBA::ORB_var orb_;
 };
@@ -184,18 +187,17 @@ public:
   /// Destructor.  If holding an Event Channel, destroy it.
   ~TAO_EC_Event_Channel_Holder ();
 
+  TAO_EC_Event_Channel_Holder (TAO_EC_Event_Channel_Holder const &) = delete;
+  TAO_EC_Event_Channel_Holder (TAO_EC_Event_Channel_Holder &&) = delete;
+  TAO_EC_Event_Channel_Holder &operator= (TAO_EC_Event_Channel_Holder const &) = delete;
+  TAO_EC_Event_Channel_Holder &operator= (TAO_EC_Event_Channel_Holder &&) = delete;
+
   /// Set the Event Channel to be destroyed in destructor to @a ec_var.  If
   /// TAO_EC_Event_Channel_Holder already held an Event Channel prior
   /// to invocation of this method, that Event Channel is NOT destroyed.
   void init (RtecEventChannelAdmin::EventChannel_var ec_var);
 
 private:
-  /// Disallow.
-  //@{
-  TAO_EC_Event_Channel_Holder & operator= (const TAO_EC_Event_Channel_Holder &rhs);
-  TAO_EC_Event_Channel_Holder(const TAO_EC_Event_Channel_Holder &rhs);
-  //@}
-
   /// EC to be destroyed.
   RtecEventChannelAdmin::EventChannel_var ec_;
 };

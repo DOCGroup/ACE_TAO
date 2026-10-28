@@ -107,7 +107,7 @@ ACE_INLINE T *
 PortableServer::Servant_var<T>::_retn ()
 {
   T * const rval = ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return rval;
 }
 

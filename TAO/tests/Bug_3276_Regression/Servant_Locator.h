@@ -10,17 +10,17 @@ class Servant_Locator
   , public virtual ::CORBA::LocalObject
 {
 public:
-  virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr adapter,
-                                             const char *operation,
-                                             PortableServer::ServantLocator::Cookie &the_cookie);
+  PortableServer::Servant preinvoke (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr adapter,
+                                     char const *operation,
+                                     PortableServer::ServantLocator::Cookie &the_cookie) override;
   // This method is invoked by a POA whenever it receives a request.
 
-  virtual void postinvoke (const PortableServer::ObjectId &oid,
-                           PortableServer::POA_ptr adapter,
-                           const char *operation,
-                           PortableServer::ServantLocator::Cookie the_cookie,
-                           PortableServer::Servant the_servant);
+  void postinvoke (PortableServer::ObjectId const &oid,
+                   PortableServer::POA_ptr adapter,
+                   char const *operation,
+                   PortableServer::ServantLocator::Cookie the_cookie,
+                   PortableServer::Servant the_servant) override;
   // This method is invoked whenever a servant completes a
   // request.
 };

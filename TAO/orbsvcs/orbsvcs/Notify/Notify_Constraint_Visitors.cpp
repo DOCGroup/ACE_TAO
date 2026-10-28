@@ -121,7 +121,7 @@ TAO_Notify_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
   this->queue_.reset ();
 
   // Evaluate the constraint in root_;
-  if (root != 0)
+  if (root != nullptr)
     {
       if ((root->accept (this) == 0) && (! this->queue_.is_empty ()))
         {
@@ -250,7 +250,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                 TAO_OutputCDR cdr;
                 cdr.write_ulong ((CORBA::ULong) disc_val);
                 TAO_InputCDR in_cdr (cdr);
-                TAO::Unknown_IDL_Type *unk = 0;
+                TAO::Unknown_IDL_Type *unk = nullptr;
                 ACE_NEW_RETURN (unk,
                                 TAO::Unknown_IDL_Type (disc_tc.in (),
                                 in_cdr),
@@ -288,7 +288,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
             const char *name = (const char *) disc_val;
             CORBA::ULong count = tc->member_count ();
 
-            const char *member_name = 0;
+            const char *member_name = nullptr;
             CORBA::ULong i = 0;
 
             for (i = 0; i < count; ++i)
@@ -320,7 +320,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
         // union member value on the queue. Otherwise, we want
         // the member value in current_value_ while we visit
         // the nested component.
-        if (nested == 0)
+        if (nested == nullptr)
           {
             TAO_ETCL_Literal_Constraint lit (this->current_value_.ptr ());
             this->queue_.enqueue_head (lit);
@@ -399,7 +399,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
     CORBA::Any_var value = member->to_any ();
     ETCL_Constraint *comp = pos->component ();
 
-    if (comp == 0)
+    if (comp == nullptr)
       {
         TAO_ETCL_Literal_Constraint result (value.ptr ());
         this->queue_.enqueue_head (result);
@@ -448,9 +448,9 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
   }
 
   ETCL_Constraint *comp = assoc->component ();
-  CORBA::Any *any_ptr = 0;
+  CORBA::Any *any_ptr = nullptr;
 
-  if (comp == 0)
+  if (comp == nullptr)
     {
       TAO_ETCL_Literal_Constraint result (&any);
       this->queue_.enqueue_head (result);
@@ -533,7 +533,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
     CORBA::Any_var value = member->to_any ();
     ETCL_Constraint *comp = array->component ();
 
-    if (comp == 0)
+    if (comp == nullptr)
       {
         TAO_ETCL_Literal_Constraint result (value.ptr ());
         this->queue_.enqueue_head (result);
@@ -642,7 +642,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
   ACE_CString component_name (identifier->value (),
                               0,
                               false);
-  CORBA::Any *any_ptr = 0;
+  CORBA::Any *any_ptr = nullptr;
   int result =
     this->implicit_ids_.find (component_name, this->implicit_id_);
 
@@ -665,7 +665,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
                       CORBA::Any,
                       -1);
 
-      if (nested == 0)
+      if (nested == nullptr)
         {
           // If this is the end of the line, we put the component name
           // into current_value_ so visit_exist can use it.
@@ -691,7 +691,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
         }
     }
 
-  if (nested != 0)
+  if (nested != nullptr)
     {
       return nested->accept (this);
     }
@@ -753,7 +753,7 @@ TAO_Notify_Constraint_Visitor::visit_default (ETCL_Default *def)
 {
   ETCL_Constraint *comp = def->component ();
 
-  if (comp == 0)
+    if (comp == nullptr)
     {
       return -1;
     }
@@ -799,7 +799,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
 
   if (component->accept (this) == 0)
     {
-      const char *value = 0;
+      const char *value = nullptr;
       CORBA::Boolean result = 0;
 
       // For the two cases below, we don't want the item at the top of
@@ -819,7 +819,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
           ETCL_Identifier* ident =
             dynamic_cast<ETCL_Identifier*> (component);
 
-          if (ident != 0)
+          if (ident != nullptr)
             {
               this->implicit_id_ = FILTERABLE_DATA;
               value = ident->value ();
@@ -1132,7 +1132,7 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
 
           if (bag.expr_type () == ETCL_COMPONENT)
             {
-              CORBA::Any_ptr any_ptr = 0;
+              CORBA::Any_ptr any_ptr = nullptr;
               ACE_NEW_RETURN (any_ptr,
                               CORBA::Any,
                               -1);
@@ -1394,7 +1394,7 @@ TAO_Notify_Constraint_Visitor::any_does_contain (
     TAO_ETCL_Literal_Constraint &item
   )
 {
-  const CORBA::Any *result = 0;
+  const CORBA::Any *result = nullptr;
   *any >>= result;
 
   TAO_ETCL_Literal_Constraint element (const_cast<CORBA::Any *>(result));

@@ -36,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class Fill_ACE_QoS
 {
 public:
-  typedef ACE_Hash_Map_Manager <ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex> FLOW_SPEC_HASH_MAP;
+  using FLOW_SPEC_HASH_MAP = ACE_Hash_Map_Manager<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
 
   //Initialization and termination methods.
   /// constructor.

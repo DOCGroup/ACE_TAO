@@ -7,18 +7,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRT {
-  const unsigned FT_TRANSACTION_DEPTH = 30;
-  const unsigned FT_FORWARD = 32;
+  constexpr unsigned int FT_TRANSACTION_DEPTH = 30;
+  constexpr unsigned int FT_FORWARD = 32;
 }
 
 FTRT_ClientORB_Interceptor::
 FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth)
   : myname_ ("FTRT_ClientORB_Interceptor")
   , transaction_depth_(transaction_depth)
-{
-}
-
-FTRT_ClientORB_Interceptor::~FTRT_ClientORB_Interceptor ()
 {
 }
 

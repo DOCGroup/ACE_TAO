@@ -17,9 +17,9 @@
 #include <stdexcept>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ec_ior = ACE_TEXT("file://ec.ior");
-const ACE_TCHAR *hostname = ACE_TEXT("localhost");
-const ACE_TCHAR *port = ACE_TEXT("8888");
+ACE_TCHAR const * ec_ior = ACE_TEXT("file://ec.ior");
+ACE_TCHAR const * hostname = ACE_TEXT("localhost");
+ACE_TCHAR const * port = ACE_TEXT("8888");
 //const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
 
 int
@@ -86,7 +86,7 @@ public:
     , poa_(poa)
     , orb_(orb)
   {
-    if (reactor_ == 0 || CORBA::is_nil (ecf))
+    if (reactor_ == nullptr || CORBA::is_nil (ecf))
       throw std::invalid_argument("TestSupplier::CTOR: reactor == 0 || CORBA::is_nil(ecf)");
 
     CORBA::Object_var obj =
@@ -113,15 +113,20 @@ public:
     std::cout << "Supplier initialized." << std::endl;
   }
 
-  virtual ~TestSupplier() {
+  ~TestSupplier () override {
     std::cout << "~TestSupplier()" << std::endl;
   }
 
-  void schedule_next_event(const ACE_Time_Value& tv) {
+  TestSupplier (TestSupplier const &) = delete;
+  TestSupplier (TestSupplier &&) = delete;
+  TestSupplier &operator= (TestSupplier const &) = delete;
+  TestSupplier &operator= (TestSupplier &&) = delete;
+
+  void schedule_next_event (ACE_Time_Value const & tv) {
     reactor_->schedule_timer(this, 0, tv, ACE_Time_Value::zero);
   }
 
-  virtual void disconnect_push_supplier() {
+  void disconnect_push_supplier () override {
     // this should never be called. The notify service uses this to allow its
     // clients to disconnect gracefully.
     std::cout << "disconnect_push_supplier()." << std::endl;
@@ -150,7 +155,7 @@ public:
         schedule_next_event(EVENT_DELAY);
       }
       return true;
-    } catch(const CORBA::Exception& e) {
+    } catch (CORBA::Exception const & e) {
       std::cerr << "TestSupplier::push_next_event() exception: " << e << std::endl;
     }
     return false;
@@ -163,7 +168,7 @@ public:
       disconnect_self();
       orb_->shutdown(0);
       std::cout << "Supplier Disconnected." << std::endl;
-    } catch(const CORBA::Exception& e) {
+    } catch (CORBA::Exception const & e) {
       std::cerr <<  "TestSupplier::disconnect() exception: " << e << std::endl;
     }
   }
@@ -176,7 +181,7 @@ public:
     poa_->deactivate_object(id_.in());
   }
 
-  virtual int handle_timeout (const ACE_Time_Value&, const void*) {
+  int handle_timeout (ACE_Time_Value const &, void const *) override {
     if (! push_next_event()) {
       return -1;
     }
@@ -238,17 +243,17 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
       orb->run();
     }
 
-    event_ = 0;
+    event_ = nullptr;
 
     poa->destroy(1, 1);
     orb->destroy();
 
     return 0;
-  } catch(CORBA::Exception& e) {
+  } catch (CORBA::Exception const & e) {
     std::cerr << "Supplier: main() exception: " << e << std::endl;
-  } catch(std::invalid_argument& e) {
+  } catch (std::invalid_argument const & e) {
     std::cerr << "Supplier: main() exception: " << e.what () << std::endl;
-  } catch(std::runtime_error& e) {
+  } catch (std::runtime_error const & e) {
     std::cerr << "Supplier: main() exception: " << e.what () << std::endl;
   } catch(...) {
     std::cerr << "Supplier: main() unknown exception: " << std::endl;

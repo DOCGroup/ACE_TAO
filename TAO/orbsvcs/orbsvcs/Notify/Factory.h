@@ -53,13 +53,13 @@ namespace CORBA
 
 template <class PROXY> class TAO_ESF_Proxy_Collection;
 
-typedef TAO_ESF_Proxy_Collection<TAO_Notify_ProxyConsumer> TAO_Notify_ProxyConsumer_Collection;
-typedef TAO_ESF_Proxy_Collection<TAO_Notify_ProxySupplier> TAO_Notify_ProxySupplier_Collection;
+using TAO_Notify_ProxyConsumer_Collection = TAO_ESF_Proxy_Collection<TAO_Notify_ProxyConsumer>;
+using TAO_Notify_ProxySupplier_Collection = TAO_ESF_Proxy_Collection<TAO_Notify_ProxySupplier>;
 
-typedef TAO_ESF_Proxy_Collection<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Collection;
-typedef TAO_ESF_Proxy_Collection<TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Collection;
-typedef TAO_ESF_Proxy_Collection<TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Collection;
-typedef TAO_ESF_Proxy_Collection<TAO_Notify_Proxy> TAO_Notify_Proxy_Collection;
+using TAO_Notify_EventChannel_Collection = TAO_ESF_Proxy_Collection<TAO_Notify_EventChannel>;
+using TAO_Notify_ConsumerAdmin_Collection = TAO_ESF_Proxy_Collection<TAO_Notify_ConsumerAdmin>;
+using TAO_Notify_SupplierAdmin_Collection = TAO_ESF_Proxy_Collection<TAO_Notify_SupplierAdmin>;
+using TAO_Notify_Proxy_Collection = TAO_ESF_Proxy_Collection<TAO_Notify_Proxy>;
 
 /**
  * @class TAO_Notify_Factory

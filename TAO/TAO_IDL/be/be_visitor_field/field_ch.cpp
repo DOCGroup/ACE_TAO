@@ -284,6 +284,24 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
 }
 
 int
+be_visitor_field_ch::visit_fixed (be_fixed *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = this->ctx_->alias ();
+
+  if (bt != nullptr)
+    {
+      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
+    }
+  else
+    {
+      *os << "::ACE_CDR::Fixed";
+    }
+
+  return 0;
+}
+
+int
 be_visitor_field_ch::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -339,9 +357,9 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
 
           TAO_INSERT_COMMENT (os);
 
-          *os << "typedef " << bt->nested_type_name (bs)
-              << " _" << this->ctx_->node ()->local_name ()
-              << "_seq;" << be_nl;
+          *os << "using _" << this->ctx_->node ()->local_name ()
+              << "_seq = " << bt->nested_type_name (bs)
+              << ";" << be_nl;
         }
     }
 
@@ -419,9 +437,9 @@ be_visitor_field_ch::visit_map (be_map *node)
 
             TAO_INSERT_COMMENT (os);
 
-            *os << "typedef " << bt->nested_type_name (bs)
-                << " _" << this->ctx_->node ()->local_name ()
-                << "_map;" << be_nl;
+            *os << "using _" << this->ctx_->node ()->local_name ()
+                << "_map = " << bt->nested_type_name (bs)
+                << ";" << be_nl;
           }
     }
 

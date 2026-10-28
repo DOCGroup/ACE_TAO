@@ -28,8 +28,8 @@ namespace TAO
   namespace CSD
   {
     class TP_Custom_Asynch_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Custom_Asynch_Request>
-                                             TP_Custom_Asynch_Request_Handle;
+    using TP_Custom_Asynch_Request_Handle =
+      TAO_Intrusive_Ref_Count_Handle<TP_Custom_Asynch_Request>;
 
     /**
      * @class TP_Custom_Asynch_Request
@@ -49,14 +49,14 @@ namespace TAO
                                TP_Servant_State*            servant_state);
 
       /// Virtual Destructor.
-      virtual ~TP_Custom_Asynch_Request();
+      ~TP_Custom_Asynch_Request() override;
 
     protected:
       /// Dispatch the request to the servant.
-      virtual void dispatch_i();
+      void dispatch_i() override;
 
       /// Cancel the request.
-      virtual void cancel_i();
+      void cancel_i() override;
     };
   }
 }

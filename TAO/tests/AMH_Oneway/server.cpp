@@ -35,9 +35,13 @@ class ST_AMH_Servant
 {
 public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);
+  ST_AMH_Servant (ST_AMH_Servant const &) = delete;
+  ST_AMH_Servant &operator= (ST_AMH_Servant const &) = delete;
+  ST_AMH_Servant (ST_AMH_Servant &&) = delete;
+  ST_AMH_Servant &operator= (ST_AMH_Servant &&) = delete;
 
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                    Test::Timestamp send_time);
+                    Test::Timestamp send_time) override;
 
 protected:
   CORBA::ORB_var orb_;
@@ -73,16 +77,20 @@ class ST_AMH_Server
 {
 public:
   ST_AMH_Server (int *argc, ACE_TCHAR **argv);
-  virtual ~ST_AMH_Server () = default;
+  ~ST_AMH_Server () = default;
+  ST_AMH_Server (ST_AMH_Server const &) = delete;
+  ST_AMH_Server &operator= (ST_AMH_Server const &) = delete;
+  ST_AMH_Server (ST_AMH_Server &&) = delete;
+  ST_AMH_Server &operator= (ST_AMH_Server &&) = delete;
 
   /// ORB initialization stuff
   int start_orb_and_poa ();
 
   /// register the servant with the poa
-  virtual void register_servant (ST_AMH_Servant *servant);
+  void register_servant (ST_AMH_Servant *servant);
 
   /// orb-perform_work () abstraction
-  virtual void run_event_loop ();
+  void run_event_loop ();
 
   /// do post-run cleanup. This is necessary here because the servant
   /// supplied to register_servant happens to be allocated on the
@@ -91,7 +99,7 @@ public:
   /// class's destructor. And alternative solution would be allocate
   /// the servant on the stack and rely on the reference count to
   /// delete it.
-  virtual void cleanup ();
+  void cleanup ();
 
 public:
   /// Accesor method (for servants) to the initialized ORB
@@ -100,7 +108,7 @@ public:
 protected:
   int *argc_;
   ACE_TCHAR **argv_;
-  char *ior_output_file_;
+  char const *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
@@ -111,11 +119,11 @@ private:
 
 /*** Server Declaration ***/
 
-ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
+ST_AMH_Server::ST_AMH_Server (int *argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
 {
-  this->ior_output_file_ = const_cast<char*> ("test.ior");
+  this->ior_output_file_ = "test.ior";
 }
 
 void
@@ -123,7 +131,7 @@ ST_AMH_Server::cleanup ()
 {
   try
     {
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }
@@ -201,13 +209,13 @@ ST_AMH_Server::run_event_loop ()
 {
   try
     {
-      while (1)
+      while (true)
         {
           ACE_Time_Value period (0, 11000);
           this->orb_->perform_work (&period);
 
           // when all calls from client have been received, exit
-          if (calls_received == num_calls )
+          if (calls_received == num_calls)
             return;
         }
     }
@@ -219,9 +227,9 @@ int
 ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file= ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
-                                    "w");
-  if (output_file == 0)
+  FILE *output_file = ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
+                                     "w");
+  if (output_file == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",

@@ -27,15 +27,25 @@ class TAO_BiDIR_Service_Context_Handler :
   public TAO_Service_Context_Handler
 {
 public:
+  TAO_BiDIR_Service_Context_Handler () = default;
+
   int process_service_context (TAO_Transport& transport,
-                               const IOP::ServiceContext& context,
+                               IOP::ServiceContext const& context,
                                TAO_ServerRequest *request) override;
   int generate_service_context (
-    TAO_Stub* stub,
+    TAO_Stub * stub,
     TAO_Transport &transport,
     TAO_Operation_Details &opdetails,
     TAO_Target_Specification &spec,
     TAO_OutputCDR &msg) override;
+
+ private:
+  TAO_BiDIR_Service_Context_Handler (TAO_BiDIR_Service_Context_Handler const &) = delete;
+  TAO_BiDIR_Service_Context_Handler &operator= (
+    TAO_BiDIR_Service_Context_Handler const &) = delete;
+  TAO_BiDIR_Service_Context_Handler (TAO_BiDIR_Service_Context_Handler &&) = delete;
+  TAO_BiDIR_Service_Context_Handler &operator= (
+    TAO_BiDIR_Service_Context_Handler &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -9,7 +9,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
    {
-      int failed = 0;
+      bool failed = false;
 
       ACE_DEBUG((LM_DEBUG, "Start of Client\n"));
       // Initialise ORB.
@@ -129,14 +129,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if( count != numParams )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed - wrong number of elements n list\n")) ;
-         failed = 1 ;
+         failed = true;
       }
 
       CORBA::NamedValue_ptr nv = opList->item( 0 ) ;
       if(ACE_OS::strcmp( nv->name(), "p1") != 0 )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong name\n"));
-         failed = 1 ;
+         failed = true;
       }
 
       CORBA::Boolean const eq_char =
@@ -145,19 +145,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if( !eq_char  )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong type\n"));
-         failed = 1 ;
+         failed = true;
       }
       if( nv->flags() != CORBA::ARG_IN )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong mode\n"));
-         failed = 1 ;
+         failed = true;
       }
 
       nv = opList->item( 1 ) ;
       if(ACE_OS::strcmp( nv->name(), "p2") != 0 )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong name\n"));
-         failed = 1 ;
+         failed = true;
       }
 
       CORBA::Boolean const eq_long =
@@ -166,12 +166,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if( !eq_long  )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong type\n"));
-         failed = 1 ;
+         failed = true;
       }
       if( nv->flags() != CORBA::ARG_OUT )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong mode\n"));
-         failed = 1 ;
+         failed = true;
       }
 
       nv = opList->item( 2 ) ;
@@ -204,13 +204,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       //orb->destroy();
 
-      if( failed == 1 )
+      if (failed)
       {
          return 1 ;
       }
       ACE_DEBUG((LM_DEBUG, ". seems OK\n"));
    }
-   catch (const CORBA::Exception& ex)
+   catch (CORBA::Exception const &ex)
    {
       ex._tao_print_exception ("Exception - test failed:\n");
       return 1;

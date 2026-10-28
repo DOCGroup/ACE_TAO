@@ -33,7 +33,7 @@
 
 // Directory to scan - we need to figure it out based on environment.
 static ACE_TString TestDir;
-static const int RECURSION_INDENT = 3;
+static constexpr int RECURSION_INDENT = 3;
 
 // Number of entries in the directory.
 static int entrycount = 0;

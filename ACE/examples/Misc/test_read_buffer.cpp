@@ -16,9 +16,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Read_Buffer rb (handle);
 
-  char *buf = 0;
+  char *buf = nullptr;
 
-  while ((buf = rb.read (term, search, replace)) != 0)
+  while ((buf = rb.read (term, search, replace)) != nullptr)
     {
       ACE_OS::write (ACE_STDOUT, buf, rb.size ());
       ACE_Allocator::instance ()->free (buf);

@@ -16,7 +16,7 @@ public:
   ~UIPMC_Object_Impl ();
 
   // The skeleton methods
-  virtual void process (Test::Octets const &payload);
+  void process (Test::Octets const& payload) override;
 
 private:
   CORBA::ULong payload_;
@@ -25,9 +25,9 @@ private:
 
   CORBA::ULong calls_;
 
-  typedef ACE_Hash_Map_Manager<CORBA::Octet,
-                               CORBA::ULong,
-                               TAO_SYNCH_MUTEX> Client_Count_Map;
+  using Client_Count_Map = ACE_Hash_Map_Manager<CORBA::Octet,
+                                                 CORBA::ULong,
+                                                 TAO_SYNCH_MUTEX>;
   Client_Count_Map received_;
 };
 
@@ -39,9 +39,9 @@ public:
   Hello_Impl (CORBA::ORB_ptr orb, Test::UIPMC_Object_ptr obj);
 
   // The skeleton methods
-  virtual Test::UIPMC_Object_ptr get_object ();
+  Test::UIPMC_Object_ptr get_object () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

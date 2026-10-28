@@ -41,7 +41,7 @@ static u_int errors = 0;
   // iterations with 4 worker threads should be sufficient to check
   // the TSS wrappers without exceeding the minimum requirements.
 
-  static const int ITERATIONS = 25;
+  static constexpr int ITERATIONS = 25;
 #endif /* ACE_DEFAULT_THREAD_KEYS */
 
 // Static variables.

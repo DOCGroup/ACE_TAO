@@ -17,7 +17,7 @@ Dynamic_Bitset::~Dynamic_Bitset()
 }
 
 ACE_INLINE
-Dynamic_Bitset::Dynamic_Bitset(const Dynamic_Bitset& other)
+Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset const& other)
   : buffer_size_(other.buffer_size_)
   , bit_size_(other.bit_size_)
   , buffer_(new block[other.buffer_size_])
@@ -26,7 +26,7 @@ Dynamic_Bitset::Dynamic_Bitset(const Dynamic_Bitset& other)
 }
 
 ACE_INLINE
-Dynamic_Bitset operator & (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs)
+Dynamic_Bitset operator & (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs)
 {
   Dynamic_Bitset tmp(lhs);
   tmp &= rhs;

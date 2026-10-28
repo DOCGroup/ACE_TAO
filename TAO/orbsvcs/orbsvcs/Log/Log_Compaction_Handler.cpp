@@ -4,13 +4,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Log_Compaction_Handler::TAO_Log_Compaction_Handler (ACE_Reactor* reactor,
-                                                        TAO_Log_i* log,
-                                                        const ACE_Time_Value& interval)
-  : timer_id_(-1),
-    reactor_(reactor),
-    log_(log),
-    interval_(interval)
+TAO_Log_Compaction_Handler::TAO_Log_Compaction_Handler (ACE_Reactor * reactor,
+                                                        TAO_Log_i * log,
+                                                        ACE_Time_Value const & interval)
+  : timer_id_ (-1),
+    reactor_ (reactor),
+    log_ (log),
+    interval_ (interval)
 {
 }
 
@@ -26,7 +26,7 @@ TAO_Log_Compaction_Handler::schedule ()
 {
   this->cancel ();
   this->timer_id_ =
-    this->reactor_->schedule_timer (this, 0, this->interval_, this->interval_);
+    this->reactor_->schedule_timer (this, nullptr, this->interval_, this->interval_);
 }
 
 
@@ -42,14 +42,14 @@ TAO_Log_Compaction_Handler::cancel ()
 
 
 int
-TAO_Log_Compaction_Handler::handle_timeout (const ACE_Time_Value&,
-                                            const void *)
+TAO_Log_Compaction_Handler::handle_timeout (ACE_Time_Value const &,
+                                            void const *)
 {
   try
     {
       this->log_->remove_old_records();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 

@@ -10,12 +10,12 @@
 #include "orbsvcs/CosNamingC.h"// for Naming Service interfaces
 
 #include <iostream>
-const RtecEventComm::EventSourceID MY_SOURCE_ID_START = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventSourceID MY_SOURCE_ID_END   = ACE_ES_EVENT_SOURCE_ANY + 3;
-const RtecEventComm::EventType MY_EVENT_START = ACE_ES_EVENT_UNDEFINED + 1;
-const RtecEventComm::EventType MY_EVENT_END   = ACE_ES_EVENT_UNDEFINED + 4;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID_START = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID_END = ACE_ES_EVENT_SOURCE_ANY + 3;
+constexpr RtecEventComm::EventType MY_EVENT_START = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventType MY_EVENT_END = ACE_ES_EVENT_UNDEFINED + 4;
 
-const int EVENT_DELAY_MS = 10;
+constexpr int EVENT_DELAY_MS = 10;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -76,7 +76,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     consumer->connect_push_supplier (supplier.in (), qos.get_SupplierQOS ());
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup("Hello, world.");
+    CORBA::String_var const eventData = CORBA::string_dup("Hello, world.");
 
     // Create an event set for one event
     RtecEventComm::EventSet event (1);
@@ -90,7 +90,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     event[0].data.any_value <<= eventData;
 
     std::cout << "Supplier starting sending events.\n";
-    while (1) {
+    while (true) {
       event[0].header.type++;
       if (event[0].header.type > MY_EVENT_END) {
         event[0].header.type = MY_EVENT_START;
@@ -109,7 +109,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& exc)
+  catch (CORBA::Exception const & exc)
   {
     std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
   }

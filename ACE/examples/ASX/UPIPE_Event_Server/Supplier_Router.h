@@ -21,11 +21,11 @@
 class Supplier_Handler;
 
 // Type of search key for SUPPLIER_MAP.
-typedef ACE_HANDLE SUPPLIER_KEY;
+using SUPPLIER_KEY = ACE_HANDLE;
 
 // Instantiated type for routing messages to suppliers.
 
-typedef Peer_Router<Supplier_Handler, SUPPLIER_KEY> SUPPLIER_ROUTER;
+using SUPPLIER_ROUTER = Peer_Router<Supplier_Handler, SUPPLIER_KEY>;
 
 class Supplier_Handler
   : public Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>

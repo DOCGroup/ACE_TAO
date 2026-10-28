@@ -34,12 +34,17 @@ class Trading_Shutdown : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Trading_Shutdown (Trading_Service& trader);
+  explicit Trading_Shutdown (Trading_Service &trader);
+
+  Trading_Shutdown (Trading_Shutdown const &) = delete;
+  Trading_Shutdown (Trading_Shutdown &&) = delete;
+  Trading_Shutdown &operator= (Trading_Shutdown const &) = delete;
+  Trading_Shutdown &operator= (Trading_Shutdown &&) = delete;
 
   /// Signal handler.
-  virtual int handle_signal (int,
-                             siginfo_t *,
-                             ucontext_t *);
+  int handle_signal (int,
+                     siginfo_t *,
+                     ucontext_t *) override;
 
 protected:
   Trading_Service &trader_;
@@ -56,11 +61,16 @@ class Trading_Service
 public:
   Trading_Service () = default;
 
+  Trading_Service (Trading_Service const &) = delete;
+  Trading_Service (Trading_Service &&) = delete;
+  Trading_Service &operator= (Trading_Service const &) = delete;
+  Trading_Service &operator= (Trading_Service &&) = delete;
+
   ~Trading_Service ();
 
   /// Initialize the Trading Service with arguments.
   int init (int argc,
-            ACE_TCHAR *argv[]);
+            ACE_TCHAR * argv[]);
 
   /// Run the Trading Service.
   int run ();

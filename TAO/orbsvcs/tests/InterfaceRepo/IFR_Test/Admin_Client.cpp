@@ -8,8 +8,8 @@
 #include "ace/SString.h"
 
 Admin_Client::Admin_Client ()
-  : debug_ (0),
-    all_tests_ (1),
+  : debug_ (false),
+    all_tests_ (true),
     which_test_ (0),
     iterations_ (1)
 {
@@ -27,13 +27,11 @@ Admin_Client::Admin_Client ()
   this->test_array_[10] = &Admin_Client::module_test;
 }
 
-Admin_Client::~Admin_Client ()
-{
-}
+Admin_Client::~Admin_Client () = default;
 
 // An array of test names, so we can step through them when
 // trying to find a match for a test selected on the command line.
-const char *Admin_Client::test_names_[] =
+char const* Admin_Client::test_names_[] =
 {
   "array",
   "enum",
@@ -95,7 +93,7 @@ Admin_Client::run ()
 {
   try
     {
-      if (this->all_tests_ == 1)
+      if (this->all_tests_)
         {
           for (CORBA::ULong i = 0; i < NUMBER_OF_TESTS; ++i)
             {
@@ -132,13 +130,13 @@ Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
   int result = 0;
   CORBA::ULong i = 0;
-  ACE_TCHAR *name = 0;
+  ACE_TCHAR* name = nullptr;
 
   while ((c = opts ()) != -1)
     switch (c)
       {
       case 'd':   // debug flag
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
       case 'i':   // iterations
         result = ACE_OS::atoi (opts.opt_arg ());
@@ -146,7 +144,7 @@ Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
           this->iterations_ = result;
         break;
       case 't':   // test selection
-        this->all_tests_ = 0;
+        this->all_tests_ = false;
         name = opts.opt_arg ();
 
         for (i = 0; i < NUMBER_OF_TESTS; ++i)

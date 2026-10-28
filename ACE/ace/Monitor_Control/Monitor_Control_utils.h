@@ -25,29 +25,29 @@
 
 #include "ace/Monitor_Control/Auto_Update_Starter.h"
 
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::CPU_Load_Monitor
-  CPU_LOAD_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Memory_Usage_Monitor
-  MEMORY_USAGE_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Num_Threads_Monitor
-  NUM_THREADS_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Sent_Monitor
-  BYTES_SENT_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Sent_Monitor
-  PACKETS_SENT_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Received_Monitor
-  BYTES_RECEIVED_MONITOR;
-typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Received_Monitor
-  PACKETS_RECEIVED_MONITOR;
+using CPU_LOAD_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::CPU_Load_Monitor;
+using MEMORY_USAGE_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Memory_Usage_Monitor;
+using NUM_THREADS_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Num_Threads_Monitor;
+using BYTES_SENT_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Sent_Monitor;
+using PACKETS_SENT_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Sent_Monitor;
+using BYTES_RECEIVED_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Bytes_Received_Monitor;
+using PACKETS_RECEIVED_MONITOR =
+  ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Packets_Received_Monitor;
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 template<typename OS_MP_TYPE>
 Monitor_Base*
-create_os_monitor (const char* name = 0,
+create_os_monitor (const char* name = nullptr,
                    ACE_Time_Value period = ACE_Time_Value::zero)
 {
-  Monitor_Base* retval = 0;
+  Monitor_Base* retval = nullptr;
 
   ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr =
     ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service<

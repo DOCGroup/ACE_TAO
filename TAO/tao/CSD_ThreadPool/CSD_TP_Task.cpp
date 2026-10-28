@@ -9,9 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Task::~TP_Task()
-{
-}
+TAO::CSD::TP_Task::~TP_Task () = default;
 
 
 bool
@@ -48,7 +46,7 @@ TAO::CSD::TP_Task::open(void* args)
   Thread_Counter num = 1;
   Thread_Counter* tmp = static_cast<Thread_Counter*> (args);
 
-  if (tmp == 0)
+  if (tmp == nullptr)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       TAOLIB_ERROR_RETURN((LM_ERROR,

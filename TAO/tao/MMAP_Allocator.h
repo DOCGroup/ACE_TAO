@@ -31,7 +31,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // An ACE_Lite_MMAP_Memory_Pool is used since sync()ing is not
 // needed.  All memory allocated by the TAO_MMAP_Allocator is meant
 // for strictly transient data, not persistent.
-typedef ACE_Allocator_Adapter <ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX> > TAO_MMAP_Allocator_Base;
+using TAO_MMAP_Allocator_Base =
+  ACE_Allocator_Adapter <ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX> >;
 
 /**
  * @class TAO_MMAP_Allocator
@@ -48,7 +49,7 @@ public:
   TAO_MMAP_Allocator ();
 
   /// Destructor.
-  virtual ~TAO_MMAP_Allocator ();
+  ~TAO_MMAP_Allocator () override;
 
   /// Return backing store handle.
   ACE_HANDLE handle ();
@@ -59,9 +60,9 @@ public:
 
 private:
   TAO_MMAP_Allocator (TAO_MMAP_Allocator const &) = delete;
-  void operator= (TAO_MMAP_Allocator const &) = delete;
+  TAO_MMAP_Allocator &operator= (TAO_MMAP_Allocator const &) = delete;
   TAO_MMAP_Allocator (TAO_MMAP_Allocator &&) = delete;
-  void operator= (TAO_MMAP_Allocator &&) = delete;
+  TAO_MMAP_Allocator &operator= (TAO_MMAP_Allocator &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

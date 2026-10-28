@@ -12,7 +12,7 @@ class MyTimerHandler : public ACE_Event_Handler
 {
 public:
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void * = 0)
+                      const void * = nullptr) override
   {
     time_t epoch = ((timespec_t)current_time).tv_sec;
 
@@ -30,7 +30,7 @@ public:
 class SigintHandler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0)
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     if (signum == SIGINT)
       {
@@ -47,7 +47,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value initialDelay (3);
   ACE_Time_Value interval (5);
   ACE_Reactor::instance()->schedule_timer (timer,
-                                           0,
+                                           nullptr,
                                            initialDelay,
                                            interval);
   // Listing 2

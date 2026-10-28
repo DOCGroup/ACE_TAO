@@ -3,34 +3,39 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *hostname = ACE_TEXT ("localhost");
-const ACE_TCHAR *port = ACE_TEXT ("12345");
+ACE_TCHAR const *hostname = ACE_TEXT ("localhost");
+ACE_TCHAR const *port = ACE_TEXT ("12345");
 
 class AdderCallback
   : public POA_AMI_test::AMI_adderHandler,
     public ACE_Task_Base {
   public:
-    AdderCallback(CORBA::ORB_ptr orb)
-      : orb(CORBA::ORB::_duplicate(orb)) {
-      activate();
+    AdderCallback (CORBA::ORB_ptr orb)
+      : orb (CORBA::ORB::_duplicate (orb))
+      {
+        this->activate ();
     }
+    AdderCallback (AdderCallback const &) = delete;
+    AdderCallback &operator= (AdderCallback const &) = delete;
+    AdderCallback (AdderCallback &&) = delete;
+    AdderCallback &operator= (AdderCallback &&) = delete;
 
-    virtual void add (
+    void add (
         CORBA::Long ami_return_val
-      )
+      ) override
       {
         ACE_DEBUG ((LM_DEBUG, "Return value: %d\n", ami_return_val));
       }
 
-    virtual void add_excep (
+    void add_excep (
         ::Messaging::ExceptionHolder *
-      )
+      ) override
       {
         ACE_DEBUG ((LM_DEBUG, "Caught exception in _excep\n"));
       }
 
-    virtual int svc() {
-      orb->run();
+    int svc () override {
+      this->orb->run ();
 
       return 0;
     }

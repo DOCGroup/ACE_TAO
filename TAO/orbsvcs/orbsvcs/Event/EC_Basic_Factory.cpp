@@ -174,8 +174,9 @@ TAO_EC_ProxyPushSupplier_Collection*
 TAO_EC_Basic_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base *)
 {
 #if defined (__SUNPRO_CC)
-  // This typedef is a workaround for a SunCC 4.2 bug
-  typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator TAO_EC_Supplier_List_Iterator;
+  // This alias works around a SunCC 4.2 bug.
+  using TAO_EC_Supplier_List_Iterator =
+    TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator;
 #endif
   return new TAO_ESF_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,

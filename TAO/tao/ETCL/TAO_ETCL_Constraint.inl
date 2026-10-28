@@ -2,55 +2,46 @@
 // ****************************************************************
 
 ACE_INLINE
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint ()
-  : any_ (0)
-{
-}
+TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint () = default;
 
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  const ETCL_Literal_Constraint *lit)
-  : ETCL_Literal_Constraint (*lit),
-    any_ (0)
+  ETCL_Literal_Constraint const* lit)
+  : ETCL_Literal_Constraint (*lit)
 {}
 
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   CORBA::ULong uinteger)
-  : ETCL_Literal_Constraint (uinteger),
-    any_ (0)
+  : ETCL_Literal_Constraint (uinteger)
 {
 }
 
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   CORBA::Long integer)
-  : ETCL_Literal_Constraint (integer),
-    any_ (0)
+  : ETCL_Literal_Constraint (integer)
 {
 }
 
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   CORBA::Boolean boolean)
-  : ETCL_Literal_Constraint (boolean),
-    any_ (0)
+  : ETCL_Literal_Constraint (boolean)
 {
 }
 
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   CORBA::Double doub)
-  : ETCL_Literal_Constraint (doub),
-    any_ (0)
+  : ETCL_Literal_Constraint (doub)
 {
 }
 
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  const char* str)
-  : ETCL_Literal_Constraint (str),
-    any_ (0)
+  char const* str)
+  : ETCL_Literal_Constraint (str)
 {
 }
 

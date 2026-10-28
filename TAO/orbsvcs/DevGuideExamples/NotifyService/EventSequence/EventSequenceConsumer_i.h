@@ -8,16 +8,17 @@ class EventSequenceConsumer_i : public POA_CosNotifyComm::SequencePushConsumer
 public:
   EventSequenceConsumer_i(CORBA::ORB_ptr orb);
 
-  virtual void push_structured_events (
-    const CosNotification::EventBatch & events
-    );
+  EventSequenceConsumer_i (EventSequenceConsumer_i const &) = delete;
+  EventSequenceConsumer_i (EventSequenceConsumer_i &&) = delete;
+  EventSequenceConsumer_i &operator= (EventSequenceConsumer_i const &) = delete;
+  EventSequenceConsumer_i &operator= (EventSequenceConsumer_i &&) = delete;
 
-  virtual void offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-    );
+  void push_structured_events (CosNotification::EventBatch const & events) override;
 
-  virtual void disconnect_sequence_push_consumer ();
+  void offer_change (CosNotification::EventTypeSeq const & added,
+                     CosNotification::EventTypeSeq const & removed) override;
+
+  void disconnect_sequence_push_consumer () override;
 private:
   CORBA::ORB_var orb_;
 };

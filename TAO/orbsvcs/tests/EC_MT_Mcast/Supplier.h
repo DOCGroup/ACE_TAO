@@ -35,7 +35,7 @@ public:
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
   // The skeleton methods.
 
 private:

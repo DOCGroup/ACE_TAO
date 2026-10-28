@@ -14,7 +14,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynUnion_i::TAO_DynUnion_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
-  , member_slot_ (0u)
 {
 }
 
@@ -31,7 +30,7 @@ TAO_DynUnion_i::init_common ()
 }
 
 void
-TAO_DynUnion_i::init (const CORBA::Any& any)
+TAO_DynUnion_i::init (CORBA::Any const& any)
 {
   CORBA::TypeCode_var tc = any.type ();
 
@@ -97,7 +96,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
   else
     {
       this->discriminator_ =
-        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
           first_label.in ()._tao_get_typecode (),
           first_label.in (),
           this->allow_truncation_ );
@@ -121,7 +120,7 @@ TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return 0;
+      return nullptr;
     }
 
   return dynamic_cast<TAO_DynUnion_i *> (_tao_objref);
@@ -130,7 +129,7 @@ TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref)
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
-TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
+TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
 {
   // discriminator_type () does not work with aliased type codes,
   // only on unions, so strip the alias out of the type code
@@ -142,19 +141,19 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
     tc->discriminator_type ();
 
   CORBA::Any disc_any;
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk = nullptr;
 
   // Get a CDR stream - if the Any doesn't have one, make one.
   TAO::Any_Impl *impl = any.impl ();
   TAO_OutputCDR out;
-  TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+  TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
 
   if (impl->encoded ())
     {
       TAO::Unknown_IDL_Type * const tmp =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-      if (!tmp)
+      if (tmp == nullptr)
         throw CORBA::INTERNAL ();
 
       in = tmp->_tao_get_cdr ();
@@ -181,7 +180,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
 
   // Set the discriminator.
   this->discriminator_ =
-    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+    TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
       disc_any._tao_get_typecode (),
       disc_any,
       this->allow_truncation_ );
@@ -221,14 +220,14 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
       CORBA::TypeCode_var member_tc = tc->member_type (i);
 
       CORBA::Any member_any;
-      TAO::Unknown_IDL_Type *unk = 0;
+      TAO::Unknown_IDL_Type *unk = nullptr;
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (member_tc.in (),
                                       in));
       member_any.replace (unk);
 
       this->member_ =
-        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
           member_any._tao_get_typecode (),
           member_any,
           this->allow_truncation_ );
@@ -259,14 +258,14 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
             tc->member_type (index);
 
           CORBA::Any default_any;
-          TAO::Unknown_IDL_Type *unk = 0;
+          TAO::Unknown_IDL_Type *unk = nullptr;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (default_tc.in (),
                                           in));
           default_any.replace (unk);
 
           this->member_ =
-            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+            TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
               default_any._tao_get_typecode (),
               default_any,
               this->allow_truncation_ );
@@ -288,7 +287,7 @@ TAO_DynUnion_i::get_discriminator ()
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
   // Set the flag so the caller can't destroy.
-  this->set_flag (this->discriminator_.in (), 0);
+  this->set_flag (this->discriminator_.in (), false);
 
   return DynamicAny::DynAny::_duplicate (this->discriminator_.in ());
 }
@@ -325,7 +324,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  CORBA::Boolean match = 0;
+  CORBA::Boolean match = false;
 
   for (i = 0; i < length; ++i)
     {
@@ -556,7 +555,7 @@ TAO_DynUnion_i::member ()
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
   // Set the flag so the caller can't destroy.
-  this->set_flag (this->member_.in (), 0);
+  this->set_flag (this->member_.in (), false);
 
   return DynamicAny::DynAny::_duplicate (this->member_.in ());
 }
@@ -577,7 +576,7 @@ TAO_DynUnion_i::member_name ()
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  const char *retval = this->type_->member_name (this->member_slot_);
+  char const* retval = this->type_->member_name (this->member_slot_);
 
   return CORBA::string_dup (retval);
 }
@@ -606,7 +605,7 @@ TAO_DynUnion_i::member_kind ()
 // ****************************************************************
 
 void
-TAO_DynUnion_i::from_any (const CORBA::Any& any)
+TAO_DynUnion_i::from_any (CORBA::Any const& any)
 {
   if (this->destroyed_)
     {
@@ -655,14 +654,14 @@ TAO_DynUnion_i::to_any ()
 
   TAO::Any_Impl *disc_any_impl = disc_any->impl ();
   TAO_OutputCDR disc_out_cdr;
-  TAO_InputCDR disc_in_cdr (static_cast<ACE_Message_Block *> (0));
+  TAO_InputCDR disc_in_cdr (static_cast<ACE_Message_Block *> (nullptr));
 
   if (disc_any_impl->encoded ())
     {
       TAO::Unknown_IDL_Type * const disc_unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (disc_any_impl);
 
-      if (!disc_unk)
+      if (disc_unk == nullptr)
         throw CORBA::INTERNAL ();
 
       disc_in_cdr = disc_unk->_tao_get_cdr ();
@@ -679,7 +678,7 @@ TAO_DynUnion_i::to_any ()
                                              &out_cdr);
 
   // Add the member to the CDR stream unless it has no active member.
-  if (this->has_no_active_member () == 0)
+  if (!this->has_no_active_member ())
     {
       CORBA::TypeCode_var member_tc =
         this->member_->type ();
@@ -689,14 +688,14 @@ TAO_DynUnion_i::to_any ()
 
       TAO::Any_Impl *member_any_impl = member_any->impl ();
       TAO_OutputCDR member_out_cdr;
-      TAO_InputCDR member_in_cdr (static_cast<ACE_Message_Block *> (0));
+      TAO_InputCDR member_in_cdr (static_cast<ACE_Message_Block *> (nullptr));
 
       if (member_any_impl->encoded ())
         {
           TAO::Unknown_IDL_Type * const member_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (member_any_impl);
 
-          if (!member_unk)
+          if (member_unk == nullptr)
             throw CORBA::INTERNAL ();
 
           member_in_cdr = member_unk->_tao_get_cdr ();
@@ -716,12 +715,12 @@ TAO_DynUnion_i::to_any ()
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval = nullptr;
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk = nullptr;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -741,9 +740,9 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
   TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs);
 
-  if (impl == 0)
+  if (impl == nullptr)
     {
-      return 0;
+      return false;
     }
 
   CORBA::Boolean equivalent =
@@ -751,7 +750,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
   if (!equivalent)
     {
-      return 0;
+      return false;
     }
 
   CORBA::Boolean member_equal =
@@ -779,16 +778,16 @@ TAO_DynUnion_i::destroy ()
 
       if (! CORBA::is_nil (this->member_.in ()))
         {
-          this->set_flag (this->member_.in (), 1);
+          this->set_flag (this->member_.in (), true);
 
           this->member_->destroy ();
         }
 
-      this->set_flag (this->discriminator_.in (), 1);
+      this->set_flag (this->discriminator_.in (), true);
 
       this->discriminator_->destroy ();
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
@@ -802,13 +801,13 @@ TAO_DynUnion_i::current_component ()
 
   if (this->current_position_ == 1)
     {
-      this->set_flag (this->member_.in (), 0);
+      this->set_flag (this->member_.in (), false);
 
       return DynamicAny::DynAny::_duplicate (this->member_.in ());
     }
   else
     {
-      this->set_flag (this->discriminator_.in (), 0);
+      this->set_flag (this->discriminator_.in (), false);
 
       return DynamicAny::DynAny::_duplicate (this->discriminator_.in ());
     }
@@ -817,8 +816,8 @@ TAO_DynUnion_i::current_component ()
 // ****************************************************************
 
 CORBA::Boolean
-TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
-                             const CORBA::Any &other_any)
+TAO_DynUnion_i::label_match (CORBA::Any const& my_any,
+                             CORBA::Any const& other_any)
 {
   // Use my_any so we can detect a default case label,
   // if we are iterating through the union type code's
@@ -833,7 +832,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
   {
     case CORBA::tk_octet:
       // Default case label - just skip it.
-      return 0;
+      return false;
     case CORBA::tk_short:
       {
         CORBA::Short my_val;
@@ -949,7 +948,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
             TAO::Unknown_IDL_Type * const my_unk =
               dynamic_cast<TAO::Unknown_IDL_Type *> (my_impl);
 
-            if (!my_unk)
+            if (my_unk == nullptr)
               throw CORBA::INTERNAL ();
 
             // We don't want unk's rd_ptr to move, in case we are shared by
@@ -972,7 +971,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
             TAO::Unknown_IDL_Type * const other_unk =
               dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
 
-            if (!other_unk)
+            if (other_unk == nullptr)
               throw CORBA::INTERNAL ();
 
             // We don't want unk's rd_ptr to move, in case we are shared by
@@ -992,7 +991,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
       }
     // Cannot happen - we've covered all the legal discriminator types.
     default:
-      return 0;
+      return false;
   }
 }
 

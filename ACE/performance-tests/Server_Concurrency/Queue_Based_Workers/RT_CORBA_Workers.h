@@ -29,7 +29,7 @@ enum DEBUGGING_RANGE
   DEBUG
 };
 
-typedef ACE_Message_Queue<ACE_MT_SYNCH> Message_Queue;
+using Message_Queue = ACE_Message_Queue<ACE_MT_SYNCH>;
 
 /**************************************************************/
 /**

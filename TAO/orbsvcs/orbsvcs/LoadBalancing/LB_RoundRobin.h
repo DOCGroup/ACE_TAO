@@ -49,39 +49,43 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name ();
+  char * name () override;
 
-  virtual CosLoadBalancing::Properties * get_properties ();
+  CosLoadBalancing::Properties * get_properties () override;
 
-  virtual void push_loads (
-      const PortableGroup::Location & the_location,
-      const CosLoadBalancing::LoadList & loads);
+  void push_loads (
+      PortableGroup::Location const & the_location,
+      CosLoadBalancing::LoadList const & loads) override;
 
-  virtual CosLoadBalancing::LoadList * get_loads (
+  CosLoadBalancing::LoadList * get_loads (
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Location & the_location);
+      PortableGroup::Location const & the_location) override;
 
-  virtual CORBA::Object_ptr next_member (
+  CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager);
+      CosLoadBalancing::LoadManager_ptr load_manager) override;
 
-  virtual void analyze_loads (
+  void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager);
+      CosLoadBalancing::LoadManager_ptr load_manager) override;
   //@}
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (
-    );
+  PortableServer::POA_ptr _default_POA () override;
+
+  TAO_LB_RoundRobin (TAO_LB_RoundRobin const &) = delete;
+  TAO_LB_RoundRobin (TAO_LB_RoundRobin &&) = delete;
+  TAO_LB_RoundRobin & operator= (TAO_LB_RoundRobin const &) = delete;
+  TAO_LB_RoundRobin & operator= (TAO_LB_RoundRobin &&) = delete;
 
 protected:
   /// Destructor
-  ~TAO_LB_RoundRobin ();
+  ~TAO_LB_RoundRobin () override;
 
 private:
   /// Keep a copy of location list for verify if the list is changed
   /// in next next_member() call.
-  void copy_locations (PortableGroup::Locations_var& locations);
+  void copy_locations (PortableGroup::Locations_var & locations);
 
   /// This servant's default POA.
   PortableServer::POA_var poa_;
@@ -103,7 +107,7 @@ private:
   TAO_LB_Location_Index_Map location_index_map_;
 
   /// Locations list retrieved in last next_member() call.
-  ACE_Vector <PortableGroup::Location> last_locations_;
+  ACE_Vector<PortableGroup::Location> last_locations_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

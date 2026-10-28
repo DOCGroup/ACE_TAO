@@ -40,7 +40,7 @@ namespace TAO_Notify
   void
   Topology_Object::initialize (Topology_Parent* topology_parent)
   {
-    ACE_ASSERT (topology_parent != 0 && this->topology_parent_ == 0);
+    ACE_ASSERT (topology_parent != nullptr && this->topology_parent_ == nullptr);
     this->topology_parent_ = topology_parent;
     TAO_Notify_Object::initialize (topology_parent);
   }
@@ -124,7 +124,7 @@ namespace TAO_Notify
     {
       bool result = false;
       Topology_Parent * parent = this->topology_parent();
-      if (parent != 0)
+      if (parent != nullptr)
       {
         result = parent->child_change();
       }

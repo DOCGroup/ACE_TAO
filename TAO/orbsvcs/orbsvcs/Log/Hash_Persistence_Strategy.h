@@ -39,13 +39,16 @@ public:
   TAO_Hash_Persistence_Strategy ();
 
   /// Destructor.
-  virtual ~TAO_Hash_Persistence_Strategy ();
+  ~TAO_Hash_Persistence_Strategy () override;
 
   /// @brief Log Store Factory
-  virtual TAO_LogStore*
-    create_log_store (TAO_LogMgr_i* mgr);
+  TAO_LogStore * create_log_store (TAO_LogMgr_i * mgr) override;
 
 private:
+  TAO_Hash_Persistence_Strategy (TAO_Hash_Persistence_Strategy const &) = delete;
+  TAO_Hash_Persistence_Strategy (TAO_Hash_Persistence_Strategy &&) = delete;
+  TAO_Hash_Persistence_Strategy &operator= (TAO_Hash_Persistence_Strategy const &) = delete;
+  TAO_Hash_Persistence_Strategy &operator= (TAO_Hash_Persistence_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

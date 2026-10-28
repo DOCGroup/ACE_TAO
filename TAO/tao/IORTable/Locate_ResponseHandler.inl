@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
 TAO_AMH_Locate_ResponseHandler::_duplicate (TAO_AMH_Locate_ResponseHandler_ptr x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
       x->_add_ref ();
     }
@@ -38,7 +38,8 @@ TAO_AMH_Locate_ResponseHandler_var::ptr () const
 }
 
 ACE_INLINE
-TAO_AMH_Locate_ResponseHandler_var::TAO_AMH_Locate_ResponseHandler_var (const TAO_AMH_Locate_ResponseHandler_var &p)
+TAO_AMH_Locate_ResponseHandler_var::TAO_AMH_Locate_ResponseHandler_var (
+    TAO_AMH_Locate_ResponseHandler_var const &p)
   : ptr_ (TAO_AMH_Locate_ResponseHandler::_duplicate (p.ptr ()))
 {}
 
@@ -51,7 +52,8 @@ TAO_AMH_Locate_ResponseHandler_var::operator= (TAO_AMH_Locate_ResponseHandler_pt
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_var &
-TAO_AMH_Locate_ResponseHandler_var::operator= (const TAO_AMH_Locate_ResponseHandler_var &p)
+TAO_AMH_Locate_ResponseHandler_var::operator= (
+    TAO_AMH_Locate_ResponseHandler_var const &p)
 {
   if (this != &p)
     {
@@ -62,7 +64,7 @@ TAO_AMH_Locate_ResponseHandler_var::operator= (const TAO_AMH_Locate_ResponseHand
 }
 
 ACE_INLINE
-TAO_AMH_Locate_ResponseHandler_var::operator const TAO_AMH_Locate_ResponseHandler_ptr &() const
+TAO_AMH_Locate_ResponseHandler_var::operator TAO_AMH_Locate_ResponseHandler_ptr const &() const
 {
   return this->ptr_;
 }

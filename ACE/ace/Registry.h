@@ -55,7 +55,7 @@ public:
   // but the <kind_> field is currently ignored
 
   /// A Name is an ordered collections of components (ids)
-  typedef ACE_Unbounded_Set<Name_Component> Name;
+  using Name = ACE_Unbounded_Set<Name_Component>;
 
   /// Separator for components in a name
   static const ACE_TCHAR STRING_SEPARATOR[];
@@ -110,7 +110,7 @@ public:
   };
 
   /// A list of bindings
-  typedef ACE_Unbounded_Set<Binding> Binding_List;
+  using Binding_List = ACE_Unbounded_Set<Binding>;
 
   // Forward declaration of iterator
   class Binding_Iterator;
@@ -130,7 +130,7 @@ public:
   {
   public:
     /// Default constructor
-    Object (void *data = 0,
+    Object (void *data = nullptr,
             u_long size = 0,
             u_long type = REG_NONE);
 
@@ -541,7 +541,7 @@ public:
    */
   static int connect (ACE_Registry::Naming_Context &naming_context,
                       HKEY predefined = HKEY_LOCAL_MACHINE,
-                      const ACE_TCHAR *machine_name = 0);
+                      const ACE_TCHAR *machine_name = nullptr);
 
 private:
   /// Check if @a machine_name is the local host

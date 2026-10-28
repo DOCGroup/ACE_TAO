@@ -20,7 +20,7 @@ TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                                                PortableServer::POA_var poa)
   : orb_(orb)
   , poa_(poa)
-  , ec_impl_(0)
+  , ec_impl_(nullptr)
 {
 }
 
@@ -63,9 +63,9 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     FTRTEC::Fault_Detector_Loader* detector_loader =
       ACE_Dynamic_Service<FTRTEC::Fault_Detector_Loader>::instance("FTRTEC_Fault_Detector");
 
-    detector_loader->init(0, 0);
+    detector_loader->init(0, nullptr);
 
-    if (FTRTEC::Identification_Service::instance() == 0)
+    if (FTRTEC::Identification_Service::instance() == nullptr)
       ORBSVCS_ERROR_RETURN((LM_ERROR, "No Identification\n"), 0);
 
     // initialize naming_contex
@@ -74,7 +74,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     // initialize group info publisher
     GroupInfoPublisher::instance()->set_naming_context(naming_context);
 
-    if (FTRTEC::Replication_Service::instance()->init(0,0) == -1)
+    if (FTRTEC::Replication_Service::instance()->init(0, nullptr) == -1)
       return 0;
 
     GroupInfoPublisher::instance()->subscribe(FTRTEC::Replication_Service::instance());
@@ -95,7 +95,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
       persistent_poa_.in ());
 
 
-    TAO_FTEC_Event_Channel_Impl* ec = 0;
+    TAO_FTEC_Event_Channel_Impl* ec = nullptr;
     ACE_NEW_THROW_EX (ec,
       TAO_FTEC_Event_Channel_Impl (attr),
       CORBA::NO_MEMORY());

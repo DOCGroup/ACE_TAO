@@ -27,7 +27,7 @@ CORBA::Context::_decr_refcount ()
   return new_count;
 }
 
-const char *
+char const*
 CORBA::Context::context_name () const
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
@@ -40,15 +40,15 @@ CORBA::Context::parent () const
 }
 
 void
-CORBA::Context::create_child (const char * /* child_ctx_name */,
+CORBA::Context::create_child (char const* /* child_ctx_name */,
                               CORBA::Context_out /* child_ctx */)
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 void
-CORBA::Context::set_one_value (const char * /* propname */,
-                               const CORBA::Any & /* propvalue */)
+CORBA::Context::set_one_value (char const* /* propname */,
+                               CORBA::Any const& /* propvalue */)
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
@@ -60,22 +60,21 @@ CORBA::Context::set_values (CORBA::NVList_ptr)
 }
 
 void
-CORBA::Context::delete_values (const char * /* propname */)
+CORBA::Context::delete_values (char const* /* propname */)
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 void
-CORBA::Context::get_values (const char * /* start_scope */,
+CORBA::Context::get_values (char const* /* start_scope */,
                             CORBA::Flags /* op_flags */,
-                            const char * /* pattern */,
+                            char const* /* pattern */,
                             CORBA::NVList_ptr & /* values */)
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
-  : refcount_ (1)
 {
   for (CORBA::ULong i=0; i < len; i++)
     {
@@ -87,7 +86,7 @@ CORBA::ContextList::~ContextList ()
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {
-      char **ctx = 0;
+      char **ctx = nullptr;
 
       if (this->ctx_list_.get (ctx, i) == -1)
         {
@@ -113,7 +112,7 @@ CORBA::ContextList::add_consume (char *ctx)
 char *
 CORBA::ContextList::item (CORBA::ULong slot)
 {
-  char **ctx = 0;
+  char **ctx = nullptr;
 
   if (this->ctx_list_.get (ctx, slot) == -1)
     {

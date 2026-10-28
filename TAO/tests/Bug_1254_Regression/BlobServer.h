@@ -11,12 +11,15 @@ class BlobServerImpl
 public:
   /// Constructor
   BlobServerImpl (CORBA::ORB_ptr orb);
+  BlobServerImpl (BlobServerImpl const &) = delete;
+  BlobServerImpl &operator= (BlobServerImpl const &) = delete;
+  BlobServerImpl (BlobServerImpl &&) = delete;
+  BlobServerImpl &operator= (BlobServerImpl &&) = delete;
 
   // = The skeleton methods
-    virtual void test(
-        BlobType1& blob1,
-        BlobType2& blob2);
-  virtual void shutdown ();
+  void test (BlobType1 &blob1,
+             BlobType2 &blob2) override;
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

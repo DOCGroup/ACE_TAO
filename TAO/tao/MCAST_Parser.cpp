@@ -22,9 +22,7 @@ static const char mcast_prefix[] = "mcast:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MCAST_Parser::~TAO_MCAST_Parser ()
-{
-}
+TAO_MCAST_Parser::~TAO_MCAST_Parser () = default;
 
 bool
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const

@@ -29,10 +29,10 @@ public:
   be_visitor_valuebox_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_any_op_cs ();
+  ~be_visitor_valuebox_any_op_cs () override;
 
   /// visit valuebox
-  virtual int visit_valuebox (be_valuebox *node);
+  int visit_valuebox (be_valuebox *node) override;
 };
 
 #endif /* _BE_VALUEBOX_ANY_OP_CS_H_ */

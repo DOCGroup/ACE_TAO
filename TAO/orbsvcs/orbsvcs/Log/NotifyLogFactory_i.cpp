@@ -9,8 +9,9 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i ()
 {
 }
 
-TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf)
-: notify_factory_ (ecf)
+TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
+  CosNotifyChannelAdmin::EventChannelFactory_ptr event_channel_factory)
+  : notify_factory_ (event_channel_factory)
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotifyChannelAdmin::AdminID adminID = 0;
@@ -71,11 +72,10 @@ DsNotifyLogAdmin::NotifyLog_ptr
 TAO_NotifyLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        const CosNotification::QoSProperties & initial_qos,
-        const CosNotification::AdminProperties & initial_admin,
-        DsLogAdmin::LogId_out id_out
-      )
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
+        CosNotification::QoSProperties const & initial_qos,
+        CosNotification::AdminProperties const & initial_admin,
+        DsLogAdmin::LogId_out id_out)
 {
   ACE_UNUSED_ARG (initial_qos);
   ACE_UNUSED_ARG (initial_admin);
@@ -109,10 +109,9 @@ TAO_NotifyLogFactory_i::create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        const CosNotification::QoSProperties & initial_qos,
-        const CosNotification::AdminProperties & initial_admin
-      )
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
+        CosNotification::QoSProperties const & initial_qos,
+        CosNotification::AdminProperties const & initial_admin)
 {
   ACE_UNUSED_ARG (initial_qos);
   ACE_UNUSED_ARG (initial_admin);
@@ -149,7 +148,7 @@ TAO_NotifyLogFactory_i::create_repositoryid ()
 PortableServer::ServantBase*
 TAO_NotifyLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 {
-  TAO_NotifyLog_i* notify_log_i;
+  TAO_NotifyLog_i * notify_log_i;
 
   ACE_NEW_THROW_EX (notify_log_i,
                     TAO_NotifyLog_i (this->orb_.in (),

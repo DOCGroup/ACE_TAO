@@ -44,12 +44,12 @@ TAO_Notify_ProxyConsumer::peer ()
 void
 TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent* topology_parent)
 {
-  ACE_ASSERT( this->supplier_admin_.get() == 0 );
+  ACE_ASSERT( this->supplier_admin_.get() == nullptr );
 
   TAO_Notify_Proxy::initialize (topology_parent);
 
   this->supplier_admin_.reset (dynamic_cast<TAO_Notify_SupplierAdmin *>(topology_parent));
-  ACE_ASSERT (this->supplier_admin_.get() != 0);
+  ACE_ASSERT (this->supplier_admin_.get() != nullptr);
 
   this->filter_admin_.event_channel (this->supplier_admin_->event_channel());
 
@@ -94,7 +94,7 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
   }
 
   // Inform QoS values.
-  ACE_ASSERT (this->supplier_.get() != 0);
+  ACE_ASSERT (this->supplier_.get() != nullptr);
   this->supplier_->qos_changed (this->qos_properties_);
 
   TAO_Notify_EventTypeSeq removed;
@@ -166,7 +166,7 @@ TAO_Notify_ProxyConsumer::shutdown ()
 
   this->disconnect ();
 
-  if (this->supplier_.get() != 0)
+  if (this->supplier_.get() != nullptr)
   {
     this->supplier_->shutdown ();
   }

@@ -13,9 +13,7 @@ TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
 {
 }
 
-TAO_Exclusive_TMS::~TAO_Exclusive_TMS ()
-{
-}
+TAO_Exclusive_TMS::~TAO_Exclusive_TMS () = default;
 
 // Generate and return an unique request id for the current
 // invocation. We can actually return a predecided ULong, since we

@@ -26,18 +26,18 @@ namespace TAO
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       const TAO_Transport* t = this->transport ();
-      if (t == 0)
+      if (t == nullptr)
         throw NoContext ();
 
       TAO_Connection_Handler *ch = const_cast<TAO_Transport*>(t)->connection_handler ();
-      if (ch == 0)
+      if (ch == nullptr)
         throw NoContext ();
 
       // Make sure that this connection handler is for IIOP.  This
       // implementation is not intended to operate under SSLIOP.
       TAO_IIOP_Connection_Handler* iiop_ch =
         dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
-      if (iiop_ch == 0)
+      if (iiop_ch == nullptr)
         throw NoContext ();
 
       return iiop_ch;
@@ -54,12 +54,8 @@ namespace TAO
     {
     }
 
+    IIOP_Current_Impl::~IIOP_Current_Impl () = default;
 
-    /// Dtor
-
-    IIOP_Current_Impl::~IIOP_Current_Impl ()
-    {
-    }
 
     CORBA::Long
     IIOP_Current_Impl::id ()

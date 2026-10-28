@@ -30,8 +30,8 @@ namespace TAO
   namespace CSD
   {
     class TP_Collocated_Synch_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Collocated_Synch_Request>
-                                          TP_Collocated_Synch_Request_Handle;
+    using TP_Collocated_Synch_Request_Handle =
+      TAO_Intrusive_Ref_Count_Handle<TP_Collocated_Synch_Request>;
 
     /**
      * @class TP_Collocated_Synch_Request
@@ -58,7 +58,7 @@ namespace TAO
                             TP_Servant_State*               servant_state);
 
       /// Virtual Destructor.
-      virtual ~TP_Collocated_Synch_Request();
+      ~TP_Collocated_Synch_Request() override;
 
       /// Wait until the request has been dispatched (and completed), or
       /// until it has been cancelled.
@@ -72,19 +72,19 @@ namespace TAO
       /// need to clone the Server Request object.
 
       /// Dispatch the request to the servant.
-      virtual void dispatch_i();
+      void dispatch_i() override;
 
       /// Cancel the request.
-      virtual void cancel_i();
+      void cancel_i() override;
 
     private:
       /// Helper used to block and unblock the thread that invokes our
       /// wait() method.
       TP_Synch_Helper synch_helper_;
 
-      /// Set to NULL initially, and will only be set thereafter if an
+      /// Set to null initially, and will only be set thereafter if an
       /// exception is raised from the dispatch() call on the server_request_.
-      CORBA::Exception* exception_;
+      CORBA::Exception* exception_ {};
     };
   }
 }

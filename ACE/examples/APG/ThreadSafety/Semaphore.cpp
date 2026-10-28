@@ -15,7 +15,7 @@ public:
     : psema_(psema), csema_(csema), exit_condition_(0)
   { }
 
-  int svc ()
+  int svc () override
   {
     while (!is_closed ())
       consume_item ();
@@ -27,7 +27,7 @@ public:
     csema_.acquire ();
     if (!is_closed ())
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         this->getq (mb);
         if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
@@ -77,7 +77,7 @@ public:
       : psema_(psema), csema_(csema), consumer_(consumer)
   { }
 
-  int svc ()
+  int svc () override
   {
     for (int i = 0; i <= MAX_PROD; i++)
       produce_item (i);

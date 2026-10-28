@@ -32,7 +32,7 @@ Widget_Part *Widget_Impl::remove_part ()
 {
   ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> removed_part;
   if (parts_.dequeue_head (removed_part) == -1)
-    return 0;
+    return nullptr;
 
   // Ownership of the part object is released and transferred to the caller.
   return removed_part.release();

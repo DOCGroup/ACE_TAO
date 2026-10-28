@@ -128,6 +128,21 @@ be_visitor_operation_rettype::visit_predefined_type (
 }
 
 int
+be_visitor_operation_rettype::visit_fixed (be_fixed *)
+{
+  if (this->ctx_->alias () != nullptr)
+    {
+      *os << "::" << this->ctx_->alias ()->name ();
+    }
+  else
+    {
+      *os << "::ACE_CDR::Fixed";
+    }
+
+  return 0;
+}
+
+int
 be_visitor_operation_rettype::visit_sequence (
   be_sequence *node)
 {

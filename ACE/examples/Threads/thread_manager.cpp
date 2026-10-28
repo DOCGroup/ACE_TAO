@@ -40,7 +40,7 @@ worker (intptr_t iterations)
     }
 
   // Destructor removes thread from Thread_Manager.
-  return 0;
+  return nullptr;
 }
 
 static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;

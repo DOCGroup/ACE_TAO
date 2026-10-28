@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 /**
@@ -44,7 +44,7 @@ class TAO_Export TAO_Collocation_Resolver
 {
 public:
   /// Destructor.
-  virtual ~TAO_Collocation_Resolver ();
+  ~TAO_Collocation_Resolver () override;
 
   /// Is @a object collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const = 0;

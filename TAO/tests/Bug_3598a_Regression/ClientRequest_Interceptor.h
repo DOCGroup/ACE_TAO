@@ -28,31 +28,34 @@ class ClientRequest_Interceptor
   public virtual ::CORBA::LocalObject
 {
 public:
-ClientRequest_Interceptor ();
+  ClientRequest_Interceptor ();
+  ClientRequest_Interceptor (ClientRequest_Interceptor const &) = delete;
+  ClientRequest_Interceptor (ClientRequest_Interceptor &&) = delete;
+  ClientRequest_Interceptor &operator= (ClientRequest_Interceptor const &) = delete;
+  ClientRequest_Interceptor &operator= (ClientRequest_Interceptor &&) = delete;
 
-~ClientRequest_Interceptor ();
+  ~ClientRequest_Interceptor () override = default;
 
-/// Canonical name of the interceptor.
-virtual char * name ();
+  /// Canonical name of the interceptor.
+  char *name () override;
 
+  void destroy () override;
 
-virtual void destroy ();
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
-
-virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 static CORBA::Boolean success_flag_;
 
 private:
 /// Name of the interceptor
-const char *name_;
+  char const *name_;
 };
 #if defined(_MSC_VER)
 #pragma warning(pop)

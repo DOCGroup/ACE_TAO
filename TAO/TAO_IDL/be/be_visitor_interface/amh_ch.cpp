@@ -73,11 +73,11 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
       << "public:" << be_idt_nl
 
       // Generate the _ptr_type and _var_type typedefs.
-      << "typedef " << node->local_name () << "_ptr _ptr_type;"
+      << "using _ptr_type = " << node->local_name () << "_ptr;"
       << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;"
+      << "using _var_type = " << node->local_name () << "_var;"
       << be_nl
-      << "typedef " << node->local_name () << "_out _out_type;"
+      << "using _out_type = " << node->local_name () << "_out;"
       << be_nl;
 
   // Generate code for the interface definition by traversing thru the

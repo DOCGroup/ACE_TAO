@@ -47,6 +47,11 @@ protected:
   /// successfully builds a tree from the constraints.
   TAO_Constraint* root_;
 private:
+  TAO_Interpreter (TAO_Interpreter const&) = delete;
+  TAO_Interpreter& operator= (TAO_Interpreter const&) = delete;
+  TAO_Interpreter (TAO_Interpreter&&) = delete;
+  TAO_Interpreter& operator= (TAO_Interpreter&&) = delete;
+
   /// This mutex protects the <build_tree> method from reentrance.
   static TAO_SYNCH_MUTEX parserMutex__;
 };
@@ -89,10 +94,10 @@ private:
 
 // The union used by lex and yacc to build the Abstract Syntax Tree.
 #define YYSTYPE_IS_DECLARED
-typedef union
+union YYSTYPE
 {
   TAO_Constraint* constraint_;
-} YYSTYPE;
+};
 
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;

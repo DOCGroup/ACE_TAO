@@ -45,20 +45,25 @@ public:
   TAO_LB_Pull_Handler ();
 
   /// Receive the timeout event.
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
+  int handle_timeout (ACE_Time_Value const & current_time,
+                      void const * arg) override;
 
   /// Initialize this event handler.
   void initialize (TAO_LB_MonitorMap * monitor_map,
                    TAO_LB_LoadManager * load_manager);
 
+  TAO_LB_Pull_Handler (TAO_LB_Pull_Handler const &) = delete;
+  TAO_LB_Pull_Handler (TAO_LB_Pull_Handler &&) = delete;
+  TAO_LB_Pull_Handler & operator= (TAO_LB_Pull_Handler const &) = delete;
+  TAO_LB_Pull_Handler & operator= (TAO_LB_Pull_Handler &&) = delete;
+
 private:
   /// The table that contains all load monitors registered with the
   /// load balancer.
-  TAO_LB_MonitorMap * monitor_map_;
+  TAO_LB_MonitorMap * monitor_map_ {};
 
   /// Pointer to the LoadManager servant.
-  TAO_LB_LoadManager * load_manager_;
+  TAO_LB_LoadManager * load_manager_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

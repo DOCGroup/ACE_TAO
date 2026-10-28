@@ -26,25 +26,31 @@ struct XImpl
   : POA_X
 #endif
 {
+  XImpl () = default;
+  XImpl (XImpl const &) = delete;
+  XImpl (XImpl &&) = delete;
+  XImpl &operator= (XImpl const &) = delete;
+  XImpl &operator= (XImpl &&) = delete;
+
 #if defined LOCAL && (TAO_MAJOR_VERSION < 2 && TAO_MINOR_VERSION < 6)
   unsigned long _refcount_value () const { return refcount_.value (); }
 #endif
 
-  void op () {}
+  void op () override {}
 };
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
 #ifdef LOCAL
-  XImpl* ximpl = new XImpl;
+  XImpl *ximpl = new XImpl;
   X_var x = ximpl;
 #else
-  int zero_args = 0;
+  int zero_args {};
   CORBA::ORB_var orb = CORBA::ORB_init (zero_args,
-                                        static_cast<ACE_TCHAR **> (0));
+                                        nullptr);
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
   PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
-  XImpl* x_servant = new XImpl;
+  XImpl *x_servant = new XImpl;
   PortableServer::ServantBase_var sbv (x_servant);
   X_var x = x_servant->_this ();
   X* ximpl = x;

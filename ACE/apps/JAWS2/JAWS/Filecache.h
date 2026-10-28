@@ -22,23 +22,17 @@ public:
   virtual void destroy (JAWS_Cache_Object *);
 };
 
-typedef JAWS_Cache_Manager<JAWS_Strdup_String,
-                           JAWS_Referenced_Filecache_Factory,
-                           JAWS_String_Hash_Functor,
-                           JAWS_String_Equal_Functor>
-        JAWS_Referenced_Filecache_Manager;
+using JAWS_Referenced_Filecache_Manager =
+  JAWS_Cache_Manager<JAWS_Strdup_String, JAWS_Referenced_Filecache_Factory, JAWS_String_Hash_Functor,
+                     JAWS_String_Equal_Functor>;
 
-typedef JAWS_Cache_Manager<JAWS_Strdup_String,
-                           JAWS_Counted_Filecache_Factory,
-                           JAWS_String_Hash_Functor,
-                           JAWS_String_Equal_Functor>
-        JAWS_Counted_Filecache_Manager;
+using JAWS_Counted_Filecache_Manager =
+  JAWS_Cache_Manager<JAWS_Strdup_String, JAWS_Counted_Filecache_Factory, JAWS_String_Hash_Functor,
+                     JAWS_String_Equal_Functor>;
 
-typedef JAWS_Counted_Filecache_Manager JAWS_Filecache_Manager;
+using JAWS_Filecache_Manager = JAWS_Counted_Filecache_Manager;
 
-typedef JAWS_Cache_Proxy<const char *,
-                         JAWS_FILE, JAWS_Filecache_Manager>
-        JAWS_Filecache_Proxy;
+using JAWS_Filecache_Proxy = JAWS_Cache_Proxy<const char *, JAWS_FILE, JAWS_Filecache_Manager>;
 
 class JAWS_Export JAWS_Cached_FILE : private JAWS_Filecache_Proxy
 {

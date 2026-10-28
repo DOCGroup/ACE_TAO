@@ -46,6 +46,8 @@ public:
   TAO_CEC_TypedEvent (CORBA::NVList_ptr list,
                       const char * operation);
 
+  TAO_CEC_TypedEvent (TAO_CEC_TypedEvent const &) = default;
+
   TAO_CEC_TypedEvent & operator= (const TAO_CEC_TypedEvent &);
 
 private:

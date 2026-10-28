@@ -10,10 +10,10 @@
 #include "orbsvcs/CosNamingC.h"
 
 #include <iostream>
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-const int EVENT_DELAY_MS = 10;
+constexpr int EVENT_DELAY_MS = 10;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -74,7 +74,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     poa_manager->activate();
 
     // Create an event (just a string in this case).
-    const CORBA::String_var eventData = CORBA::string_dup("Hello, world.");
+    CORBA::String_var const eventData = CORBA::string_dup("Hello, world.");
 
     // Create an event set for one event
     RtecEventComm::EventSet events (1);
@@ -89,7 +89,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     std::cout << "Supplier starting sending of events" << std::endl;
 
-    while (1) {
+    while (true) {
       consumer->push (events);
       ACE_Time_Value tv(0, 1000 * EVENT_DELAY_MS);
       orb->run(tv);
@@ -99,7 +99,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     std::cerr << "Supplier::main() Caught CORBA::Exception" << std::endl << ex << std::endl;
   }

@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @struct RTCP_Common_Header
  * @brief This is the header data that is common to all RTCP messages.
  */
-typedef struct
+struct RTCP_Common_Header
 {
   /// the RTP version being used
   unsigned int ver_:2;
@@ -31,7 +31,7 @@ typedef struct
 
   /// packet length in words without this word
   ACE_UINT16 length_;
-} RTCP_Common_Header;
+};
 
 /**
  * @class RTCP_Packet
@@ -50,6 +50,10 @@ public:
 
   /// Destructor
   virtual ~RTCP_Packet();
+  RTCP_Packet (RTCP_Packet const &) = delete;
+  RTCP_Packet &operator= (RTCP_Packet const &) = delete;
+  RTCP_Packet (RTCP_Packet &&) = delete;
+  RTCP_Packet &operator= (RTCP_Packet &&) = delete;
 
   /// Returns a pointer to a local buffer containing the packet.
   void get_packet_data(char **buffer, ACE_UINT16 &length);
@@ -88,17 +92,21 @@ public:
   /// and an optional reason for leaving the session.
   RTCP_BYE_Packet (ACE_UINT32 *srcList,
                    unsigned char length,
-                   const char* text=0);
+                   const char *text = nullptr);
 
   /// Constructor for incoming BYE RTCP packets.
   RTCP_BYE_Packet (char *buffer,
                    int *len);
 
   /// Destructor.
-  virtual ~RTCP_BYE_Packet ();
+  ~RTCP_BYE_Packet () override;
+  RTCP_BYE_Packet (RTCP_BYE_Packet const &) = delete;
+  RTCP_BYE_Packet &operator= (RTCP_BYE_Packet const &) = delete;
+  RTCP_BYE_Packet (RTCP_BYE_Packet &&) = delete;
+  RTCP_BYE_Packet &operator= (RTCP_BYE_Packet &&) = delete;
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size ();
+  unsigned int packet_size () override;
 
   /// Returns a pointer to a local list of synchronization source ids that are
   /// leaving the session.
@@ -113,7 +121,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet();
+  void build_packet () override;
 
   /// List of synchronization source ids that are leaving the session.
   ACE_UINT32 *ssrc_list_;
@@ -180,10 +188,14 @@ public:
   RTCP_RR_Packet (ACE_UINT32 ssrc, RR_Block *blocks);
 
   /// Destructor.
-  virtual ~RTCP_RR_Packet ();
+  ~RTCP_RR_Packet () override;
+  RTCP_RR_Packet (RTCP_RR_Packet const &) = delete;
+  RTCP_RR_Packet &operator= (RTCP_RR_Packet const &) = delete;
+  RTCP_RR_Packet (RTCP_RR_Packet &&) = delete;
+  RTCP_RR_Packet &operator= (RTCP_RR_Packet &&) = delete;
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size();
+  unsigned int packet_size () override;
 
   /// Returns the synchronization source id of the source sending this packet.
   ACE_INT32 ssrc () { return this->ssrc_; }
@@ -193,7 +205,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet();
+  void build_packet () override;
 
   /// The synchronization source id of the sender of this report.
   ACE_UINT32 ssrc_;
@@ -202,7 +214,8 @@ private:
   RR_Block *rr_;
 };
 
-typedef struct sdesItem_s sdesItem_t;
+struct sdesItem_s;
+using sdesItem_t = sdesItem_s;
 
 /**
  * @struct sdesItem_s
@@ -245,7 +258,8 @@ struct sdesItem_s
   } info_;
 };
 
-typedef struct sdesChunk_s sdesChunk_t;
+struct sdesChunk_s;
+using sdesChunk_t = sdesChunk_s;
 
 /**
  * @struct sdesChunk_s
@@ -281,7 +295,11 @@ public:
   RTCP_SDES_Packet();
 
   /// Destructor.
-  virtual ~RTCP_SDES_Packet();
+  ~RTCP_SDES_Packet () override;
+  RTCP_SDES_Packet (RTCP_SDES_Packet const &) = delete;
+  RTCP_SDES_Packet &operator= (RTCP_SDES_Packet const &) = delete;
+  RTCP_SDES_Packet (RTCP_SDES_Packet &&) = delete;
+  RTCP_SDES_Packet &operator= (RTCP_SDES_Packet &&) = delete;
 
   /// This will add a standard item of type and length for the ssrc specified.
   /// When the first item for a ssrc is added, a chunk is created.  Subsequent
@@ -303,7 +321,7 @@ public:
                      const char *data);
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size();
+  unsigned int packet_size () override;
 
   /// Prints the contents of the packet.
   void dump ();
@@ -315,7 +333,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet();
+  void build_packet () override;
 
   /// Add a chunk to the packet.
   void add_chunk(ACE_UINT32 ssrc);
@@ -354,10 +372,14 @@ public:
                  RR_Block *rrBlocks);
 
   /// Destructor
-  virtual ~RTCP_SR_Packet();
+  ~RTCP_SR_Packet () override;
+  RTCP_SR_Packet (RTCP_SR_Packet const &) = delete;
+  RTCP_SR_Packet &operator= (RTCP_SR_Packet const &) = delete;
+  RTCP_SR_Packet (RTCP_SR_Packet &&) = delete;
+  RTCP_SR_Packet &operator= (RTCP_SR_Packet &&) = delete;
 
   /// Returns the size of the packet in bytes.
-  unsigned int packet_size();
+  unsigned int packet_size () override;
 
   /// Returns the synchronization source id for the sender of this packet.
   ACE_UINT32 ssrc () { return this->ssrc_; }
@@ -373,7 +395,7 @@ public:
 
 private:
   /// Used to create the byte representation of the RTCP packet.
-  void build_packet();
+  void build_packet () override;
 
   /// The synchronization source id of the sender generating this report.
   ACE_UINT32 ssrc_;

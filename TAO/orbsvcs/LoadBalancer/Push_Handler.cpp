@@ -3,7 +3,7 @@
 
 TAO_LB_Push_Handler::TAO_LB_Push_Handler (
   CosLoadBalancing::LoadMonitor_ptr monitor,
-  const PortableGroup::Location & location,
+  PortableGroup::Location const & location,
   CosLoadBalancing::LoadManager_ptr manager)
   : monitor_ (CosLoadBalancing::LoadMonitor::_duplicate (monitor)),
     location_ (location),
@@ -13,8 +13,8 @@ TAO_LB_Push_Handler::TAO_LB_Push_Handler (
 
 int
 TAO_LB_Push_Handler::handle_timeout (
-  const ACE_Time_Value & /* current_time */,
-  const void * /* arg */)
+  ACE_Time_Value const & /* current_time */,
+  void const * /* arg */)
 {
   try
     {

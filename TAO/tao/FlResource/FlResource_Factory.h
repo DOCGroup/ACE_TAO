@@ -43,11 +43,16 @@ namespace TAO
 
   protected:
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl ();
+    ACE_Reactor_Impl *reactor_impl () override;
 
   private:
+    FlResource_Factory (FlResource_Factory const &) = delete;
+    FlResource_Factory &operator= (FlResource_Factory const &) = delete;
+    FlResource_Factory (FlResource_Factory &&) = delete;
+    FlResource_Factory &operator= (FlResource_Factory &&) = delete;
+
     /// Reactor created by this factory.
-    ACE_FlReactor *reactor_impl_;
+    ACE_FlReactor *reactor_impl_ {};
   };
 }
 

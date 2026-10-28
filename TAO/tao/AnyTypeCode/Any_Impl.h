@@ -32,14 +32,14 @@ class TAO_InputCDR;
 namespace CORBA
 {
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 
   class ValueBase;
   class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 }
 
 namespace TAO
@@ -56,7 +56,7 @@ namespace TAO
   public:
     /// Generated data types define a 'destructor' function that
     /// correctly destroys an object stored in an Any.
-    typedef void (*_tao_destructor)(void *);
+    using _tao_destructor = void (*) (void *);
 
     CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &) = 0;
@@ -96,7 +96,7 @@ namespace TAO
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
   };
 }
 

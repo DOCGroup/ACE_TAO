@@ -58,7 +58,9 @@ protected:
 
 protected:
   /// Property Map.
-  typedef ACE_Hash_Map_Manager <ACE_CString, CosNotification::PropertyValue, ACE_SYNCH_NULL_MUTEX> PROPERTY_MAP;
+  using PROPERTY_MAP = ACE_Hash_Map_Manager <ACE_CString,
+                                             CosNotification::PropertyValue,
+                                             ACE_SYNCH_NULL_MUTEX>;
 
   PROPERTY_MAP property_map_;
 };

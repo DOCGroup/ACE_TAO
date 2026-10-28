@@ -123,36 +123,36 @@ be_util::gen_nesting_close (TAO_OutStream &os, AST_Decl *node)
 void
 be_util::prep_be_arg (char *s)
 {
-  static const char arg_macro[]            = "export_macro=";
-  static const char arg_include[]          = "export_include=";
-  static const char skel_arg_macro[]       = "skel_export_macro=";
-  static const char skel_arg_include[]     = "skel_export_include=";
-  static const char skel_arg_file[]        = "skel_export_file=";
-  static const char stub_arg_macro[]       = "stub_export_macro=";
-  static const char stub_arg_include[]     = "stub_export_include=";
-  static const char stub_arg_file[]        = "stub_export_file=";
-  static const char anyop_arg_macro[]      = "anyop_export_macro=";
-  static const char anyop_arg_include[]    = "anyop_export_include=";
-  static const char exec_arg_macro[]       = "exec_export_macro=";
-  static const char exec_arg_include[]     = "exec_export_include=";
-  static const char svnt_arg_macro[]       = "svnt_export_macro=";
-  static const char svnt_arg_include[]     = "svnt_export_include=";
-  static const char conn_arg_macro[]       = "conn_export_macro=";
-  static const char conn_arg_include[]     = "conn_export_include=";
-  static const char arg_pch_include[]      = "pch_include=";
-  static const char arg_pre_include[]      = "pre_include=";
-  static const char arg_post_include[]     = "post_include=";
-  static const char arg_versioning_begin[] = "versioning_begin=";
-  static const char arg_versioning_end[]   = "versioning_end=";
-  static const char arg_versioning_include[]  = "versioning_include=";
-  static const char obv_opt_accessor[]     = "obv_opt_accessor";
-  static const char ciao_container_type[]  = "ciao_container_type=";
-  static const char include_guard[]        = "include_guard=";
-  static const char safe_include[]         = "safe_include=";
-  static const char unique_include[]       = "unique_include=";
-  static const char dds_impl[]             = "dds_impl=";
-  static const char stripped_filename[]    = "stripped_filename=";
-  static const char no_fixed_err[]         = "no_fixed_err";
+  static constexpr char arg_macro[]            = "export_macro=";
+  static constexpr char arg_include[]          = "export_include=";
+  static constexpr char skel_arg_macro[]       = "skel_export_macro=";
+  static constexpr char skel_arg_include[]     = "skel_export_include=";
+  static constexpr char skel_arg_file[]        = "skel_export_file=";
+  static constexpr char stub_arg_macro[]       = "stub_export_macro=";
+  static constexpr char stub_arg_include[]     = "stub_export_include=";
+  static constexpr char stub_arg_file[]        = "stub_export_file=";
+  static constexpr char anyop_arg_macro[]      = "anyop_export_macro=";
+  static constexpr char anyop_arg_include[]    = "anyop_export_include=";
+  static constexpr char exec_arg_macro[]       = "exec_export_macro=";
+  static constexpr char exec_arg_include[]     = "exec_export_include=";
+  static constexpr char svnt_arg_macro[]       = "svnt_export_macro=";
+  static constexpr char svnt_arg_include[]     = "svnt_export_include=";
+  static constexpr char conn_arg_macro[]       = "conn_export_macro=";
+  static constexpr char conn_arg_include[]     = "conn_export_include=";
+  static constexpr char arg_pch_include[]      = "pch_include=";
+  static constexpr char arg_pre_include[]      = "pre_include=";
+  static constexpr char arg_post_include[]     = "post_include=";
+  static constexpr char arg_versioning_begin[] = "versioning_begin=";
+  static constexpr char arg_versioning_end[]   = "versioning_end=";
+  static constexpr char arg_versioning_include[]  = "versioning_include=";
+  static constexpr char obv_opt_accessor[]     = "obv_opt_accessor";
+  static constexpr char ciao_container_type[]  = "ciao_container_type=";
+  static constexpr char include_guard[]        = "include_guard=";
+  static constexpr char safe_include[]         = "safe_include=";
+  static constexpr char unique_include[]       = "unique_include=";
+  static constexpr char dds_impl[]             = "dds_impl=";
+  static constexpr char stripped_filename[]    = "stripped_filename=";
+  static constexpr char no_fixed_err[]         = "no_fixed_err";
 
   char* last = nullptr;
 

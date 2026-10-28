@@ -55,32 +55,32 @@ public:
    * Please check the documentation in Transport_Acceptor.h for details.
    */
   //@{
-  virtual int open (TAO_ORB_Core *orb_core,
+  int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
-                    const char *address,
-                    const char *options = 0);
-  virtual int open_default (TAO_ORB_Core *orb_core,
+                    char const *address,
+                    char const *options = nullptr) override;
+  int open_default (TAO_ORB_Core *orb_core,
                             ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
-                            const char *options = 0);
-  virtual int close ();
-  virtual int create_profile (const TAO::ObjectKey &object_key,
+                            char const *options = nullptr) override;
+  int close () override;
+  int create_profile (TAO::ObjectKey const &object_key,
                               TAO_MProfile &mprofile,
-                              CORBA::Short priority);
+                      CORBA::Short priority) override;
 
-  virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count ();
+  int is_collocated (TAO_Endpoint const *endpoint) override;
+  CORBA::ULong endpoint_count () override;
 
-  virtual int object_key (IOP::TaggedProfile &profile,
-                          TAO::ObjectKey &key);
+  int object_key (IOP::TaggedProfile &profile,
+                  TAO::ObjectKey &key) override;
   //@}
 
 protected:
   /// Parse protocol specific options.
-  virtual int parse_options (const char *options);
+  virtual int parse_options (char const *options);
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
@@ -108,7 +108,7 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

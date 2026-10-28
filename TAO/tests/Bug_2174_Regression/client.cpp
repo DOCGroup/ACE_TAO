@@ -1,7 +1,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int min_timeout = 0;
 int max_timeout = 20;
 
@@ -71,7 +71,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "client (%P) _non_existent() returned %d\n",
-                  static_cast<int>(non_existent) ));
+                  static_cast<int> (non_existent) ));
 
       orb->destroy ();
     }

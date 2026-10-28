@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Any;
-  typedef Any *Any_ptr;
+  using Any_ptr = Any *;
 }
 
 class TAO_ETCL_Export TAO_ETCL_Literal_Constraint
@@ -48,25 +48,25 @@ public:
   explicit TAO_ETCL_Literal_Constraint (CORBA::Long integer);
   explicit TAO_ETCL_Literal_Constraint (CORBA::Boolean boolean);
   explicit TAO_ETCL_Literal_Constraint (CORBA::Double doub);
-  explicit TAO_ETCL_Literal_Constraint (const char* str);
+  explicit TAO_ETCL_Literal_Constraint (char const* str);
   explicit TAO_ETCL_Literal_Constraint (CORBA::Any* any);
 
   /// Copy constructors
-  TAO_ETCL_Literal_Constraint (const TAO_ETCL_Literal_Constraint& lit);
-  TAO_ETCL_Literal_Constraint (const ETCL_Literal_Constraint *lit);
+  TAO_ETCL_Literal_Constraint (TAO_ETCL_Literal_Constraint const& lit);
+  TAO_ETCL_Literal_Constraint (ETCL_Literal_Constraint const* lit);
 
   /// Destructor.
-  virtual ~TAO_ETCL_Literal_Constraint();
+  ~TAO_ETCL_Literal_Constraint() override;
 
   /// Assignment operator.
-  void operator= (const TAO_ETCL_Literal_Constraint& co);
+  void operator= (TAO_ETCL_Literal_Constraint const& co);
 
   // Conversion routines.
   operator ACE_CDR::Boolean () const;
   operator ACE_CDR::ULong () const;
   operator ACE_CDR::Long () const;
   operator ACE_CDR::Double () const;
-  operator const char* () const;
+  operator char const* () const;
   operator TAO::Any_Impl* () const;
 
   // Return the type represented by this MysteryOperand.
@@ -74,24 +74,23 @@ public:
   // = Arithmetic operators.
 
   TAO_ETCL_Literal_Constraint
-  operator+ (const TAO_ETCL_Literal_Constraint& rhs);
+  operator+ (TAO_ETCL_Literal_Constraint const& rhs);
 
   TAO_ETCL_Literal_Constraint
-  operator- (const TAO_ETCL_Literal_Constraint& rhs);
+  operator- (TAO_ETCL_Literal_Constraint const& rhs);
 
   TAO_ETCL_Literal_Constraint
-  operator* (const TAO_ETCL_Literal_Constraint& rhs);
+  operator* (TAO_ETCL_Literal_Constraint const& rhs);
 
   TAO_ETCL_Literal_Constraint
-  operator/ (const TAO_ETCL_Literal_Constraint& rhs);
+  operator/ (TAO_ETCL_Literal_Constraint const& rhs);
 
   // Unary minus.
   TAO_ETCL_Literal_Constraint
   operator- ();
 
   /// Ensure both operands are of the same simple numeric type.
-  virtual Literal_Type
-  widest_type (const ETCL_Literal_Constraint& rhs);
+  Literal_Type widest_type (ETCL_Literal_Constraint const& rhs) override;
 
   /// Determine the comparable Expression Type from the CORBA type
   static Literal_Type
@@ -99,10 +98,10 @@ public:
 
 private:
   /// Private copy method.
-  void copy (const TAO_ETCL_Literal_Constraint& co);
+  void copy (TAO_ETCL_Literal_Constraint const& co);
 
   /// Possible literal type not covered by the base class.
-  TAO::Any_Impl* any_;
+  TAO::Any_Impl* any_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -18,17 +18,17 @@ class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
   public:
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
 
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &flow_spec);
+                             AVStreams::flowSpec const &flow_spec) override;
 
   /// The over-ridden modify_qos method to change the qos of the
   /// flows specified in the flow spec to that in the new_qos.
@@ -38,11 +38,10 @@ protected:
   /// Application callback.
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A
-<Sender_StreamEndPoint,
-  TAO_VDev,
-  AV_Null_MediaCtrl>
-SENDER_ENDPOINT_STRATEGY;
+using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
+  <Sender_StreamEndPoint,
+   TAO_VDev,
+   AV_Null_MediaCtrl>;
 
 /**
  * @class Sender
@@ -55,6 +54,10 @@ class Sender
 public:
   Sender ();
   /// Constructor
+  Sender (Sender const &) = delete;
+  Sender &operator= (Sender const &) = delete;
+  Sender (Sender &&) = delete;
+  Sender &operator= (Sender &&) = delete;
 
   int init (int argc,
             ACE_TCHAR *argv[]);

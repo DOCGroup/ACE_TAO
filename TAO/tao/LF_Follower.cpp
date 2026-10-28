@@ -13,9 +13,7 @@ TAO_LF_Follower::TAO_LF_Follower (TAO_Leader_Follower &leader_follower)
 {
 }
 
-TAO_LF_Follower::~TAO_LF_Follower ()
-{
-}
+TAO_LF_Follower::~TAO_LF_Follower () = default;
 
 int
 TAO_LF_Follower::signal ()

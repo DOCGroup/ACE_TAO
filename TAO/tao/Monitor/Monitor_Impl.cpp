@@ -14,7 +14,7 @@ public:
   {
   }
 
-  virtual void execute (const char* /* command */)
+  void execute (char const* /* command */) override
   {
     try
       {
@@ -28,6 +28,11 @@ public:
   }
 
 private:
+  TAO_Control_Action (TAO_Control_Action const &) = delete;
+  TAO_Control_Action &operator= (TAO_Control_Action const &) = delete;
+  TAO_Control_Action (TAO_Control_Action &&) = delete;
+  TAO_Control_Action &operator= (TAO_Control_Action &&) = delete;
+
   ::Monitor::Subscriber_var sub_;
 };
 
@@ -42,7 +47,7 @@ Monitor_Impl::get_statistic_names (const char * filter)
   Monitor_Control_Types::NameList mc_names =
     Monitor_Point_Registry::instance ()->names ();
 
-  ::Monitor::NameList *namelist = 0;
+  ::Monitor::NameList *namelist = nullptr;
   ACE_NEW_THROW_EX (namelist,
                     ::Monitor::NameList (static_cast<CORBA::ULong> (mc_names.size ())),
                     CORBA::NO_MEMORY ());
@@ -51,7 +56,7 @@ Monitor_Impl::get_statistic_names (const char * filter)
        !i.done ();
        i.advance ())
     {
-      ACE_CString *item = 0;
+      ACE_CString *item = nullptr;
       i.next (item);
 
       if (ACE::wild_match (item->c_str (), filter, false))
@@ -68,7 +73,7 @@ Monitor_Impl::get_statistic_names (const char * filter)
 ::Monitor::DataList *
 Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
 {
-  ::Monitor::DataList *datalist = 0;
+  ::Monitor::DataList *datalist = nullptr;
   ACE_NEW_THROW_EX (datalist,
                     ::Monitor::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -84,7 +89,7 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
       ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-      if (monitor != 0)
+      if (monitor != nullptr)
         {
           Monitor_Control_Types::Data d (monitor->type ());
           CORBA::ULong const length = datalist->length();
@@ -103,7 +108,7 @@ Monitor_Impl::get_statistics (const ::Monitor::NameList & names)
 ::Monitor::DataList *
 Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
 {
-  ::Monitor::DataList *datalist = 0;
+  ::Monitor::DataList *datalist = nullptr;
   ACE_NEW_THROW_EX (datalist,
                     ::Monitor::DataList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -118,7 +123,7 @@ Monitor_Impl::get_and_clear_statistics (const ::Monitor::NameList & names)
       ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-      if (monitor != 0)
+      if (monitor != nullptr)
         {
           CORBA::ULong const length = datalist->length();
           datalist->length (length + 1);
@@ -160,7 +165,6 @@ TAO_Monitor::get_monitor_data (
           list[i] = CORBA::string_dup (slist[i].c_str ());
         }
 
-      data.data_union._d (::Monitor::DATA_TEXT);
       data.data_union.list (list);
     }
   else
@@ -195,7 +199,6 @@ TAO_Monitor::get_monitor_data (
           num.sum_of_squares = monitor->sum_of_squares ();
         }
 
-      data.data_union._d (::Monitor::DATA_NUMERIC);
       data.data_union.num (num);
       data.data_union.num ().dlist[0].value = d.value_;
       data.data_union.num ().dlist[0].timestamp = usecs;
@@ -206,7 +209,7 @@ TAO_Monitor::get_monitor_data (
 ::Monitor::NameList *
 Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
 {
-  ::Monitor::NameList *namelist = 0;
+  ::Monitor::NameList *namelist = nullptr;
   ACE_NEW_THROW_EX (namelist,
                     ::Monitor::NameList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -222,7 +225,7 @@ Monitor_Impl::clear_statistics (const ::Monitor::NameList & names)
       ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-      if (monitor != 0)        {
+      if (monitor != nullptr)        {
           CORBA::ULong const length = namelist->length ();
           namelist->length (length + 1);
           (*namelist)[length] = CORBA::string_dup (names[index].in ());
@@ -241,7 +244,7 @@ Monitor_Impl::register_constraint (
       const char * cs,
       ::Monitor::Subscriber_ptr sub)
 {
-  ::Monitor::ConstraintStructList *constraintlist = 0;
+  ::Monitor::ConstraintStructList *constraintlist = nullptr;
   ACE_NEW_THROW_EX (constraintlist,
                     ::Monitor::ConstraintStructList (names.length ()),
                     CORBA::NO_MEMORY ());
@@ -256,7 +259,7 @@ Monitor_Impl::register_constraint (
       ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (names[index]);
 
-      if (monitor != 0)
+      if (monitor != nullptr)
         {
           TAO_Control_Action* ca = new TAO_Control_Action (sub);
           long id = monitor->add_constraint (cs, ca);
@@ -286,12 +289,12 @@ Monitor_Impl::unregister_constraints (
       ACE::Monitor_Control::Monitor_Base *monitor =
         mgr->admin ().monitor_point (constraint[index].itemname.in ());
 
-      if (monitor != 0)
+      if (monitor != nullptr)
         {
           ACE::Monitor_Control::Control_Action *action =
             monitor->remove_constraint (constraint[index].id);
 
-          if (action != 0)
+          if (action != nullptr)
             {
               action->remove_ref ();
             }

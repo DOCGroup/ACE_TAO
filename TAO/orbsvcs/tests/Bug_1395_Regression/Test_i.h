@@ -6,19 +6,24 @@
 
 #include "TestS.h"
 
-class Test_i: public POA_Test
+class Test_i : public POA_Test
 {
 public:
    /// Constructor
    Test_i (CORBA::ORB_ptr orb);
 
+   Test_i (Test_i const &) = delete;
+   Test_i (Test_i &&) = delete;
+   Test_i &operator= (Test_i const &) = delete;
+   Test_i &operator= (Test_i &&) = delete;
+
    /// Destructor
-   ~Test_i ();
+   ~Test_i () override;
 
    /// Try and create a persistant POA
    int try_and_create_POA ();
 
-   void shutdown ();
+   void shutdown () override;
 
 protected:
    CORBA::ORB_var orb_;

@@ -15,7 +15,7 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   :info_(info),
    manual_start_ (false),
    retries_ (info->start_limit_),
-   remove_on_death_rh_ (0),
+   remove_on_death_rh_ (nullptr),
    locator_ (locator),
    poa_ (locator.root_poa ()),
    rh_list_ (),
@@ -54,7 +54,7 @@ bool
 AsyncAccessManager::is_terminating () const
 {
   return this->status_ == ImplementationRepository::AAM_ACTIVE_TERMINATE ||
-    remove_on_death_rh_ != 0;
+    remove_on_death_rh_ != nullptr;
 }
 
 bool
@@ -142,7 +142,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
     {
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
-      AccessLiveListener *l = 0;
+      AccessLiveListener *l = nullptr;
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                      this,
                                      this->locator_.pinger()));
@@ -172,9 +172,9 @@ bool
 AsyncAccessManager::force_remove_rh (ImR_ResponseHandler *rh)
 {
   bool busy = true;
-  if (this->remove_on_death_rh_ == 0 || rh == 0)
+  if (this->remove_on_death_rh_ == nullptr || rh == nullptr)
     {
-      if (rh == 0)
+      if (rh == nullptr)
         {
           delete this->remove_on_death_rh_;
         }
@@ -234,11 +234,11 @@ AsyncAccessManager::final_state (bool active)
                           ACE_TEXT ("removing this from map, server <%C> remove_on_death_rh_ <%@>\n"),
                           this, info_->ping_id (), this->remove_on_death_rh_));
         }
-      if (this->remove_on_death_rh_ != 0)
+      if (this->remove_on_death_rh_ != nullptr)
         {
           this->locator_.remove_server_i (this->info_.edit());
           this->remove_on_death_rh_->send_ior("");
-          this->remove_on_death_rh_ = 0;
+          this->remove_on_death_rh_ = nullptr;
         }
       AsyncAccessManager_ptr aam (this);
       this->locator_.remove_aam (aam);
@@ -326,7 +326,7 @@ AsyncAccessManager::notify_waiters ()
       try
       {
         ImR_ResponseHandler *rh = this->rh_list_[i];
-        if (rh != 0)
+        if (rh != nullptr)
           {
             this->notify_waiter (rh);
           }
@@ -519,7 +519,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
       this->final_state ();
     }
 
-  AccessLiveListener *l = 0;
+  AccessLiveListener *l = nullptr;
   if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
     {
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
@@ -632,7 +632,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
           {
-            AccessLiveListener *l = 0;
+            AccessLiveListener *l = nullptr;
             ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                             this,
                                             this->locator_.pinger()));
@@ -962,7 +962,7 @@ AccessLiveListener::start ()
     this->pinger_.add_listener (this);
   if (!started)
     {
-      this->aam_ = 0;
+      this->aam_ = nullptr;
     }
   return started;
 }
@@ -981,7 +981,7 @@ AccessLiveListener::status_changed (LiveStatus status)
         {
           this->aam_->ping_replied (status);
         }
-      this->aam_ = 0;
+      this->aam_ = nullptr;
     }
   return true;
 }

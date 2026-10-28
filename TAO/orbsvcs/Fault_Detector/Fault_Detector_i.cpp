@@ -125,10 +125,10 @@ void TAO::Fault_Detector_i::notify()
 {
   CosNotification::StructuredEvent_var vEvent;
   ACE_NEW_NORETURN(vEvent, CosNotification::StructuredEvent );
-  if (vEvent.ptr() != 0)
+  if (vEvent.ptr() != nullptr)
   {
     CORBA::ULong length = 2;
-    if( this->object_type_ != 0)
+    if( this->object_type_ != nullptr)
     {
       length = 3;
       if (this->group_id_!= 0)
@@ -144,7 +144,7 @@ void TAO::Fault_Detector_i::notify()
     (vEvent->filterable_data[0].value) <<= this->domain_id_;
     vEvent->filterable_data[1].name = FT::FT_LOCATION;
     (vEvent->filterable_data[1].value) <<= this->object_location_;
-    if (this->object_type_!= 0)
+    if (this->object_type_ != nullptr)
     {
       vEvent->filterable_data[2].name = FT::FT_TYPE_ID;
       (vEvent->filterable_data[2].value) <<= this->object_type_;
@@ -192,7 +192,7 @@ ACE_THR_FUNC_RETURN TAO::Fault_Detector_i::thr_func (void * arg)
 {
   TAO::Fault_Detector_i * detector = static_cast<TAO::Fault_Detector_i * > (arg);
   detector->run ();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

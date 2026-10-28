@@ -19,15 +19,13 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::
-Inout_Object_SArgument_T ()
-{
-}
+Inout_Object_SArgument_T () = default;
 
 template<typename S_ptr,
          typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
-S_ptr&
+S_ptr &
 TAO::Inout_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::arg ()
 {
   return this->x_.inout ();
@@ -41,9 +39,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out,Insert_Policy>::
-Out_Object_SArgument_T ()
-{
-}
+Out_Object_SArgument_T () = default;
 
 template<typename S_ptr,
          typename S_var,
@@ -63,9 +59,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::
-Ret_Object_SArgument_T ()
-{
-}
+Ret_Object_SArgument_T () = default;
 
 template<typename S_ptr,
          typename S_var,

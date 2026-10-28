@@ -72,7 +72,7 @@ TAO_EnumDef_i::members_i ()
                                              "count",
                                              count);
 
-  CORBA::EnumMemberSeq *retval = 0;
+  CORBA::EnumMemberSeq *retval = nullptr;
   ACE_NEW_THROW_EX (retval,
                     CORBA::EnumMemberSeq (count),
                     CORBA::NO_MEMORY ());

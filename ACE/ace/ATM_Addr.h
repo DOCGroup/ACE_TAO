@@ -25,12 +25,12 @@
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ATMSAPAddress ATM_Addr;
+using ATM_Addr = ATMSAPAddress;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_FORE_ATM_WS2)
 #define FORE_NAME_SPACE NS_ALL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef struct sockaddr_atm ATM_Addr;
+using ATM_Addr = struct sockaddr_atm;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_LINUX_ATM)
 
@@ -46,7 +46,7 @@ typedef struct _linux_atm_addr
   struct atm_sap atmsap;
 } ATM_Addr;
 #else
-typedef int ATM_Addr;
+using ATM_Addr = int;
 #endif /* ACE_HAS_FORE_ATM_XTI/ACE_HAS_FORE_ATM_WS2/ACE_HAS_LINUX_ATM */
 
 /**

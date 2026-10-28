@@ -34,9 +34,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IORTable_Export TAO_IOR_Table_Impl;
-typedef TAO_IOR_Table_Impl *TAO_IOR_Table_Impl_ptr;
-typedef TAO_Objref_Var_T <TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_var;
-typedef TAO_Objref_Out_T <TAO_IOR_Table_Impl> TAO_IOR_Table_Impl_out;
+using TAO_IOR_Table_Impl_ptr = TAO_IOR_Table_Impl *;
+using TAO_IOR_Table_Impl_var = TAO_Objref_Var_T <TAO_IOR_Table_Impl>;
+using TAO_IOR_Table_Impl_out = TAO_Objref_Out_T <TAO_IOR_Table_Impl>;
 
 class TAO_IORTable_Export TAO_IOR_Table_Impl
   : public virtual IORTable::Table,
@@ -49,12 +49,12 @@ public:
   }
 
   /// Constructor
-  TAO_IOR_Table_Impl ();
+  TAO_IOR_Table_Impl () = default;
 
   virtual bool async_available () { return false; }
 
   /// Find the object, using the locator if it is not on the table.
-  char *find (const char *object_key);
+  char *find (char const *object_key);
 
   /**
    * @name The IORTable::Table methods
@@ -62,20 +62,20 @@ public:
    * Please check the IORTable.pidl file for details.
    */
   //@{
-  virtual void bind (const char * object_key, const char * IOR);
+  void bind (char const *object_key, char const *IOR) override;
 
-  virtual void rebind (const char * object_key, const char * IOR);
+  void rebind (char const *object_key, char const *IOR) override;
 
-  virtual void unbind (const char * object_key);
+  void unbind (char const *object_key) override;
 
-  virtual void set_locator (IORTable::Locator_ptr the_locator);
+  void set_locator (IORTable::Locator_ptr the_locator) override;
   //@}
 
 protected:
-  typedef ACE_Hash_Map_Manager_Ex <ACE_CString, ACE_CString,
-                                   ACE_Hash <ACE_CString>,
-                                   ACE_Equal_To <ACE_CString>,
-                                   ACE_Null_Mutex> Map;
+  using Map = ACE_Hash_Map_Manager_Ex <ACE_CString, ACE_CString,
+                                       ACE_Hash <ACE_CString>,
+                                       ACE_Equal_To <ACE_CString>,
+                                       ACE_Null_Mutex>;
 
   /// The map
   Map map_;
@@ -85,6 +85,12 @@ protected:
 
   /// Synchronization
   TAO_SYNCH_MUTEX lock_;
+
+private:
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl &&) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl &&) = delete;
 };
 
 // Traits specializations.
@@ -100,7 +106,7 @@ namespace TAO
 
     static TAO_IOR_Table_Impl_ptr nil ();
 
-    static ::CORBA::Boolean marshal (const TAO_IOR_Table_Impl_ptr p,
+    static ::CORBA::Boolean marshal (TAO_IOR_Table_Impl_ptr const p,
                                      TAO_OutputCDR &cdr);
   }
   ;

@@ -7,7 +7,7 @@
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Array<DataElement*> arr (10);
-  DataElement *elem = 0;
+  DataElement *elem = nullptr;
   // Allocate and insert elements.
   for (int i = 0; i < 10; i++)
     {

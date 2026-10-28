@@ -32,7 +32,7 @@ class TAO_MProfile;
 class TAO_Profile;
 class TAO_InputCDR;
 
-typedef TAO_Connector** TAO_ConnectorSetIterator;
+using TAO_ConnectorSetIterator = TAO_Connector**;
 
 /**
  * @class TAO_Connector_Registry
@@ -81,17 +81,17 @@ public:
   TAO_ConnectorSetIterator end () const;
 
 private:
-  TAO_Connector_Registry (const TAO_Connector_Registry&) = delete;
-  void operator= (const TAO_Connector_Registry&) = delete;
-  TAO_Connector_Registry (TAO_Connector_Registry&&) = delete;
-  void operator= (TAO_Connector_Registry&&) = delete;
+  TAO_Connector_Registry (TAO_Connector_Registry const &) = delete;
+  TAO_Connector_Registry &operator= (TAO_Connector_Registry const &) = delete;
+  TAO_Connector_Registry (TAO_Connector_Registry &&) = delete;
+  TAO_Connector_Registry &operator= (TAO_Connector_Registry &&) = delete;
 
 private:
   /// List of connectors that are currently open.
-  TAO_Connector** connectors_;
+  TAO_Connector **connectors_ {};
 
   /// Number of connectors that are currently open.
-  size_t size_;
+  size_t size_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

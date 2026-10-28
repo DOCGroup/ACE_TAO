@@ -36,7 +36,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
 #endif
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-  TAO::Transport_Queueing_Strategy* queuing_strategy = 0;
+  TAO::Transport_Queueing_Strategy* queuing_strategy = nullptr;
   ACE_NEW (queuing_strategy,
            TAO::Eager_Transport_Queueing_Strategy);
   tao_info->orb_core ()->set_eager_transport_queueing_strategy (queuing_strategy);
@@ -90,7 +90,7 @@ TAO_Messaging_ORBInitializer::register_value_factory (
       throw ::CORBA::INTERNAL ();
     }
 
-  TAO::ExceptionHolderFactory *base_factory = 0;
+  TAO::ExceptionHolderFactory *base_factory = nullptr;
   ACE_NEW (base_factory,
            TAO::ExceptionHolderFactory);
   CORBA::ValueFactory_var factory = base_factory;

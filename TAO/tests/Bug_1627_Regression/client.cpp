@@ -1,7 +1,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
+ACE_TCHAR const *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
 int shutdown_server = 0;
 
 int
@@ -45,10 +45,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test_var server =
-        Test::_narrow(tmp.in ());
+        Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -59,15 +59,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
 
-      server->test_method();
-      result =0;
+      server->test_method ();
+      result = 0;
 
 
       orb->destroy ();
     }
   catch (const CORBA::Exception&)
     {
-      result =1;
+      result = 1;
     }
 
   return result;

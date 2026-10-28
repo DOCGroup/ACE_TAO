@@ -19,9 +19,7 @@
 #include "ace/Truncate.h"
 #include "ace/os_include/os_fcntl.h"
 
-typedef ACE_Hash_Map_Manager<ACE_HANDLE,
-                             ACE_FILE_IO *,
-                             ACE_Null_Mutex> LOG_MAP;
+using LOG_MAP = ACE_Hash_Map_Manager<ACE_HANDLE, ACE_FILE_IO *, ACE_Null_Mutex>;
 
 class Reactive_Logging_Server_Ex : public Logging_Server
 {

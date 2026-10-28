@@ -42,7 +42,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       life->destroy ();
       assign->destroy ();
 
-      Hello *hello_impl = 0;
+      Hello *hello_impl = nullptr;
       ACE_NEW_RETURN (hello_impl, Hello, 1);
       PortableServer::ServantBase_var owner_transfer (hello_impl);
 
@@ -63,7 +63,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -1,13 +1,13 @@
 #include "TestCallback.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,7 +37,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -54,11 +54,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create client callback CORBA object
 
-      TestCallback *test_impl = 0;
+      TestCallback *test_impl = nullptr;
       ACE_NEW_RETURN (test_impl,
-                      TestCallback (orb.in()),
+                      TestCallback (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(test_impl);
+      PortableServer::ServantBase_var owner_transfer (test_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (test_impl);
@@ -71,9 +71,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get server CORBA object and call it
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
-      Test::TestServer_var server = Test::TestServer::_narrow(tmp.in ());
+      Test::TestServer_var server = Test::TestServer::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -84,11 +84,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - calling server\n"));
-      server->pass_callback (client.in());
+      server->pass_callback (client.in ());
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - call failed to block\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

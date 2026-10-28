@@ -20,7 +20,7 @@
 
 #   if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> MT_INT;
+using MT_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 class Thr_ID
   // TITLE

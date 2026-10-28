@@ -92,88 +92,29 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
 
   this->ctx_->node (node); // save the node
 
-  const be_visitor_union::BoolUnionBranch bub =
-    be_visitor_union::boolean_branch (node);
-  be_union *bu = dynamic_cast<be_union*> (node->defined_in ());
-  bool first_branch = true;
+  const int index = be_visitor_union::branch_index (node);
 
-  for (unsigned long i = 0; bu != nullptr && i < bu->nfields (); ++i)
+  if (index == -1)
     {
-      AST_Field **field = nullptr;
-
-      if (bu->field (field, i) != 0 || field == nullptr || *field == node)
-        {
-          break;
-        }
-
-      if (dynamic_cast<be_union_branch*> (*field) != nullptr)
-        {
-          first_branch = false;
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_reset_cs::"
+                         "visit_union_branch - "
+                         "failed to determine union branch index\n"),
+                        -1);
     }
 
   if (!be_visitor_union_branch_public_reset_cs::requires_reset (bt))
     {
-      if (bub == be_visitor_union::BUB_NONE)
-        {
-          if (!first_branch)
-            {
-              *os << be_nl;
-            }
-
-          for (unsigned long i = 0; i < node->label_list_length (); ++i)
-            {
-              if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
-                {
-                  *os << "default:" << be_nl;
-                }
-              else
-                {
-                  *os << "case ";
-                  node->gen_label_value (os, i);
-                  *os << ":" << be_nl;
-                }
-            }
-
-          *os << "break;";
-        }
+      *os << be_nl
+          << "case " << static_cast<ACE_CDR::ULong> (index) << "UL:" << be_nl
+          << "break;";
 
       return 0;
     }
 
-  if (bub != be_visitor_union::BUB_NONE || !first_branch)
-    {
-      *os << be_nl;
-    }
-
-  switch (bub)
-    {
-    case be_visitor_union::BUB_NONE:
-      for (unsigned long i = 0; i < node->label_list_length (); ++i)
-        {
-          // check if we are printing the default case
-          if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
-            {
-              *os << "default:";
-            }
-          else
-            {
-              *os << "case ";
-              node->gen_label_value (os, i);
-              *os << ":";
-            }
-          *os << be_nl;
-        }
-
-      *os << "{" << be_idt_nl;
-      break;
-    case be_visitor_union::BUB_TRUE:
-    case be_visitor_union::BUB_FALSE:
-      *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
-          << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
-    default:
-      break;
-    }
+  *os << be_nl
+      << "case " << static_cast<ACE_CDR::ULong> (index) << "UL:" << be_nl
+      << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
     {
@@ -184,17 +125,7 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
                         -1);
     }
 
-  switch (bub)
-    {
-    case be_visitor_union::BUB_NONE:
-      *os << be_uidt_nl << "}" << be_nl << "break;";
-      break;
-    case be_visitor_union::BUB_TRUE:
-    case be_visitor_union::BUB_FALSE:
-      *os << be_uidt_nl << "}" << be_uidt_nl;
-    default:
-      break;
-    }
+  *os << be_uidt_nl << "}" << be_nl << "break;";
 
   return 0;
 }

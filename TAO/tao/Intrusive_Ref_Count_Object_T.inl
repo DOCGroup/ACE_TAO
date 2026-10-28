@@ -3,11 +3,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename OBJ, typename ACE_LOCK>
 ACE_INLINE
-TAO_Intrusive_Ref_Count_Object<OBJ,ACE_LOCK>::TAO_Intrusive_Ref_Count_Object ()
-{}
-
-template <typename OBJ, typename ACE_LOCK>
-ACE_INLINE
 TAO_Intrusive_Ref_Count_Object<OBJ,ACE_LOCK>::TAO_Intrusive_Ref_Count_Object (OBJ* obj)
 : obj_ (obj)
 {}

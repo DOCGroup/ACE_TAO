@@ -19,8 +19,8 @@ StructuredEventSupplier_i::disconnect_structured_push_supplier ()
 
 void
 StructuredEventSupplier_i::subscription_change (
-                    const CosNotification::EventTypeSeq &,
-                    const CosNotification::EventTypeSeq &)
+                    CosNotification::EventTypeSeq const &,
+                    CosNotification::EventTypeSeq const &)
 {
 }
 

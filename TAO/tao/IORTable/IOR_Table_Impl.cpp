@@ -34,18 +34,14 @@ TAO::Objref_Traits <TAO_IOR_Table_Impl>::nil ()
 }
 
 ::CORBA::Boolean
-TAO::Objref_Traits <TAO_IOR_Table_Impl>::marshal (const TAO_IOR_Table_Impl_ptr,
+TAO::Objref_Traits <TAO_IOR_Table_Impl>::marshal (TAO_IOR_Table_Impl_ptr const,
                                                   TAO_OutputCDR &)
 {
   return false;
 }
 
-TAO_IOR_Table_Impl::TAO_IOR_Table_Impl ()
-{
-}
-
 char *
-TAO_IOR_Table_Impl::find (const char *object_key)
+TAO_IOR_Table_Impl::find (char const *object_key)
 {
   // We don't want the lock held during locate, so make it go out
   // of scope before then.
@@ -66,7 +62,7 @@ TAO_IOR_Table_Impl::find (const char *object_key)
 }
 
 void
-TAO_IOR_Table_Impl::bind (const char * object_key, const char * IOR)
+TAO_IOR_Table_Impl::bind (char const *object_key, char const *IOR)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.bind (object_key, IOR) != 0)
@@ -74,14 +70,14 @@ TAO_IOR_Table_Impl::bind (const char * object_key, const char * IOR)
 }
 
 void
-TAO_IOR_Table_Impl::rebind (const char * object_key, const char * IOR)
+TAO_IOR_Table_Impl::rebind (char const *object_key, char const *IOR)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->map_.rebind (object_key, IOR);
 }
 
 void
-TAO_IOR_Table_Impl::unbind (const char * object_key)
+TAO_IOR_Table_Impl::unbind (char const *object_key)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.unbind (object_key) != 0)

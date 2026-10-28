@@ -1,12 +1,12 @@
-# include "source_i.h"
+#include "source_i.h"
 
 // A ThreeTier client that calls tick and/or tock
 
-const ACE_TCHAR * ior_input_file = 0;
+ACE_TCHAR const *ior_input_file = nullptr;
 
 char input_ior[5000];
 
-void eat_args (int & argc, ACE_TCHAR *argv[], int argp, int how_many)
+void eat_args (int &argc, ACE_TCHAR *argv[], int argp, int how_many)
 {
   for (int marg = argp; marg + how_many < argc; ++marg)
     {
@@ -15,15 +15,15 @@ void eat_args (int & argc, ACE_TCHAR *argv[], int argp, int how_many)
   argc -= how_many;
 }
 
-bool parse_args (int & argc, ACE_TCHAR *argv[])
+bool parse_args (int &argc, ACE_TCHAR *argv[])
 {
   int argp = 1;
   while (argp < argc)
     {
-      const ACE_TCHAR* arg = argv[argp];
-      if(arg[0] == '-' && arg[1] == 'f' && argp + 1 < argc)
+      ACE_TCHAR const *arg = argv[argp];
+      if (arg[0] == '-' && arg[1] == 'f' && argp + 1 < argc)
         {
-          if (ior_input_file != 0)
+          if (ior_input_file != nullptr)
             {
               ACE_ERROR ((LM_DEBUG,
                           "Sink (%P|%t) duplicate -f options\n"));
@@ -36,11 +36,11 @@ bool parse_args (int & argc, ACE_TCHAR *argv[])
         }
       else
         {
-           argp += 1;
-           // just ignore unknown arguments
+          ++argp;
+          // Just ignore unknown arguments.
         }
     }
-  if (ior_input_file == 0)
+  if (ior_input_file == nullptr)
     {
       ACE_ERROR ((LM_DEBUG,
                   "Sink (%P|%t) missing required -f option\n"));
@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       FILE *input_file = ACE_OS::fopen (ior_input_file, "r");
-      if (input_file == 0)
+      if (input_file == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open input IOR file: %s",
@@ -94,9 +94,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       Source_i source (server.in ());
-      result = source.run();
+      result = source.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       result = -1;

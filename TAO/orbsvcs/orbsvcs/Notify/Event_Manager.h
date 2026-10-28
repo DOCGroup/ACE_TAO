@@ -31,13 +31,11 @@ class TAO_Notify_EventTypeSeq;
 template <class PROXY, class ACE_LOCK>
 class TAO_Notify_Event_Map_T;
 
-typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier,
-                               TAO_SYNCH_RW_MUTEX>
-  TAO_Notify_Consumer_Map;
+using TAO_Notify_Consumer_Map = TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier,
+                                                        TAO_SYNCH_RW_MUTEX>;
 
-typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer,
-                               TAO_SYNCH_RW_MUTEX>
-  TAO_Notify_Supplier_Map;
+using TAO_Notify_Supplier_Map = TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer,
+                                                        TAO_SYNCH_RW_MUTEX>;
 
 namespace CORBA
 {
@@ -52,7 +50,7 @@ namespace CORBA
 class TAO_Notify_Serv_Export TAO_Notify_Event_Manager : public TAO_Notify_Refcountable
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager > Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager >;
   /// Constructor
   TAO_Notify_Event_Manager ();
 

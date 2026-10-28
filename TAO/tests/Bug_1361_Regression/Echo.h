@@ -13,11 +13,15 @@
 class Echo : public POA_Test::Echo
 {
 public:
-  Echo(CORBA::ORB_ptr orb, int abort_counter);
+  Echo (CORBA::ORB_ptr orb, int abort_counter);
+  Echo (Echo const &) = delete;
+  Echo &operator= (Echo const &) = delete;
+  Echo (Echo &&) = delete;
+  Echo &operator= (Echo &&) = delete;
 
-  virtual void echo_payload (Test::Payload const & data);
+  void echo_payload (Test::Payload const &data) override;
 
-  virtual void echo_payload_out (Test::Payload_out data);
+  void echo_payload_out (Test::Payload_out data) override;
 
 private:
   CORBA::ORB_var orb_;

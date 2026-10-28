@@ -6,8 +6,8 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file1 = ACE_TEXT ("messenger1.ior");
-const ACE_TCHAR *ior_output_file2 = ACE_TEXT ("messenger2.ior");
+ACE_TCHAR const * ior_output_file1 = ACE_TEXT ("messenger1.ior");
+ACE_TCHAR const * ior_output_file2 = ACE_TEXT ("messenger2.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -35,8 +35,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 PortableServer::POA_ptr
-createPersistentPOA(PortableServer::POA_ptr root_poa,
-                    const char* poa_name) {
+createPersistentPOA (PortableServer::POA_ptr root_poa,
+                     char const * poa_name) {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
 
@@ -58,7 +58,7 @@ createPersistentPOA(PortableServer::POA_ptr root_poa,
   return poa._retn();
 }
 
-void writeIORFile(const char* ior, const ACE_TCHAR* name) {
+void writeIORFile (char const * ior, ACE_TCHAR const * name) {
   std::ofstream out(ACE_TEXT_ALWAYS_CHAR (name));
   out << ior;
 }
@@ -77,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POAManager_var mgr = root_poa->the_POAManager();
 
-    const char* poa_name = "MessengerService";
+    char const * poa_name = "MessengerService";
 
     PortableServer::POA_var poa = createPersistentPOA(root_poa.in(), poa_name);
 
@@ -94,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = poa->id_to_reference(id2.in());
     CORBA::String_var ior2 = orb->object_to_string(obj.in());
 
-    TAO_Root_POA* tpoa = dynamic_cast<TAO_Root_POA*>(poa.in());
+    TAO_Root_POA * tpoa = dynamic_cast<TAO_Root_POA *>(poa.in());
     obj = tpoa->id_to_reference_i(id1.in(), false);
     CORBA::String_var direct_ior1 = orb->object_to_string(obj.in());
 
@@ -118,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
 
     return 0;
-  } catch(const CORBA::Exception& ex) {
+  } catch (CORBA::Exception const & ex) {
     std::cerr << "Server main() Caught Exception" << ex << std::endl;
   }
   return 1;

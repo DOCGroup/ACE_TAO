@@ -83,7 +83,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       hp = ACE_OS::gethostbyaddr ((char *) &cli_addr.sin_addr,
                                   addr_len, AF_INET);
 
-      if (hp != 0)
+      if (hp != nullptr)
         ACE_OS::printf ("client %s\n", hp->h_name), ACE_OS::fflush (stdout);
       else
         ACE_OS::perror (ACE_TEXT("gethostbyaddr"));

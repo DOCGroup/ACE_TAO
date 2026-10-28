@@ -14,7 +14,7 @@
 #include "ace/RW_Thread_Mutex.h"
 
 // Type of search key for CONSUMER_MAP
-typedef ACE_HANDLE ROUTING_KEY;
+using ROUTING_KEY = ACE_HANDLE;
 
 // Forward declarations.
 class Peer_Router;
@@ -95,13 +95,10 @@ private:
   Peer_Router *peer_router_;
   // Pointer to the <Peer_Router> that we are accepting for.
 
-  // = Useful typedefs.
-  typedef ACE_Map_Manager <ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
-          PEER_MAP;
-  typedef ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
-          PEER_ITERATOR;
-  typedef ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>
-          PEER_ENTRY;
+  // = Useful aliases.
+  using PEER_MAP = ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
+  using PEER_ITERATOR = ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
+  using PEER_ENTRY = ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>;
 
   PEER_MAP peer_map_;
   // Map used to keep track of active peers.
@@ -139,7 +136,7 @@ protected:
   Peer_Router_Context *context () const;
   // Returns the routing context.
 
-  typedef ACE_Task<ACE_SYNCH> inherited;
+  using inherited = ACE_Task<ACE_SYNCH>;
   // Helpful typedef.
 
 private:

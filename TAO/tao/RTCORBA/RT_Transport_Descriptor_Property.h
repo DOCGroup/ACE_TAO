@@ -34,18 +34,18 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Property
 
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor_Property ();
+  TAO_RT_Transport_Descriptor_Property () = default;
 
   /// Destructor
   virtual ~TAO_RT_Transport_Descriptor_Property ();
 
   virtual TAO_RT_Transport_Descriptor_Property *duplicate () = 0;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) = 0;
+  virtual CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) = 0;
 
 protected:
   /// Properties can be chanined using the <next_> pointer;
-  TAO_RT_Transport_Descriptor_Property* next_;
+  TAO_RT_Transport_Descriptor_Property* next_ {};
 
 private:
   TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &) = delete;
@@ -68,18 +68,18 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Private_Connection_Property
 {
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor_Private_Connection_Property ();
-  TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
+  TAO_RT_Transport_Descriptor_Private_Connection_Property () = default;
+  explicit TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Private_Connection_Property ();
+  ~TAO_RT_Transport_Descriptor_Private_Connection_Property () override;
 
   /// Init
   void init (long object_id);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate ();
+  TAO_RT_Transport_Descriptor_Property *duplicate () override;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
+  CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) override;
 
 private:
   /**
@@ -87,7 +87,7 @@ private:
    * identified with this descriptor belongs.  The value of
    * @c object_id_ is the @c TAO_Stub* of the object.
    */
-  long object_id_;
+  long object_id_ {-1};
 };
 
 /*****************************************************************************/
@@ -104,26 +104,26 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Banded_Connection_Property
 {
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor_Banded_Connection_Property ();
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property () = default;
   TAO_RT_Transport_Descriptor_Banded_Connection_Property (CORBA::Short low_priority,
                                                           CORBA::Short high_priority);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property ();
+  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property () override;
 
   /// Init
   void init (CORBA::Short low_priority, CORBA::Short high_priority);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate ();
+  TAO_RT_Transport_Descriptor_Property *duplicate () override;
 
-  virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
+  CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) override;
 
 protected:
   /// The low priority of the Band.
-  CORBA::Short low_priority_;
+  CORBA::Short low_priority_ {-1};
 
   /// The high priority of the Band.
-  CORBA::Short high_priority_;
+  CORBA::Short high_priority_ {-1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

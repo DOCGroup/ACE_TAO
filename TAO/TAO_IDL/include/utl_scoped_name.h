@@ -69,7 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Define UTL_ScopedName as a list of strings.
 
-typedef UTL_IdList UTL_ScopedName;
-typedef UTL_IdListActiveIterator UTL_ScopedNameActiveIterator;
+using UTL_ScopedName = UTL_IdList;
+using UTL_ScopedNameActiveIterator = UTL_IdListActiveIterator;
 
 #endif           // _AST_SCOPED_NAME_AST_SCOPED_NAME_HH

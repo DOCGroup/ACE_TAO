@@ -12,7 +12,7 @@
 #include "ace/OS_NS_stdio.h"
 #include <iostream>
 
-const int EVENTS_TILL_SHUTDOWN = 10;
+constexpr int EVENTS_TILL_SHUTDOWN = 10;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -73,10 +73,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "Ready to receive events..." << std::endl;
 
     CORBA::String_var str = orb->object_to_string (consumer.in ());
-    const char* ior_file_name = "Consumer.ior";
-    FILE *output_file= ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name),
-                                      ACE_TEXT("w"));
-    if (output_file == 0) {
+    char const * ior_file_name = "Consumer.ior";
+    FILE * output_file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name),
+                                        ACE_TEXT("w"));
+    if (output_file == nullptr) {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Cannot open output file for writing IOR: %s",
                          ior_file_name),
@@ -96,7 +96,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     std::cerr << "Caught CORBA::Exception. " << std::endl << ex << std::endl;
   }

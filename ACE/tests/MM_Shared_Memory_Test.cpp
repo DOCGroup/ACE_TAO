@@ -27,7 +27,7 @@
 
 #if defined (ACE_LACKS_FORK)
 #include "ace/Thread_Semaphore.h"
-typedef ACE_Thread_Semaphore SYNCHRONIZER;
+using SYNCHRONIZER = ACE_Thread_Semaphore;
 #define SYNC_EXTRA_ARGS
 #elif defined (ACE_HAS_POSIX_SEM) && defined(ACE_HAS_SYSV_IPC)
 /**
@@ -49,7 +49,7 @@ public:
 #define SYNC_EXTRA_ARGS
 #else
 
-typedef ACE_Process_Semaphore SYNCHRONIZER;
+using SYNCHRONIZER = ACE_Process_Semaphore;
 
 #define SYNC_EXTRA_ARGS , sem_name ()
 ACE_TCHAR sem_name_[ACE_UNIQUE_NAME_LEN] = ACE_TEXT ("/");

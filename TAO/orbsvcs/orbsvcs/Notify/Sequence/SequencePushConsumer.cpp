@@ -124,7 +124,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     Request_Queue completed;
 
     CORBA::Long pos = 0;
-    TAO_Notify_Method_Request_Event_Queueable * request = 0;
+    TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
     while (pos < batch_size && requests.dequeue_head (request) == 0)
     {
       if (DEBUG_LEVEL > 0)
@@ -153,7 +153,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     {
     case DISPATCH_SUCCESS:
       {
-        TAO_Notify_Method_Request_Event_Queueable * request = 0;
+        TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
         while (completed.dequeue_head (request) == 0)
         {
           request->complete ();
@@ -167,7 +167,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       // Fall through
     case DISPATCH_FAIL:
       {
-        TAO_Notify_Method_Request_Event_Queueable * request = 0;
+        TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
         while (completed.dequeue_head (request) == 0)
         {
           if (request->should_retry ())
@@ -226,7 +226,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     case DISPATCH_RETRY:
     case DISPATCH_DISCARD:
       {
-        TAO_Notify_Method_Request_Event_Queueable *  request = 0;
+        TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
         while (completed.dequeue_head (request) == 0)
         {
           if (request->should_retry ())
@@ -329,7 +329,7 @@ void
 TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer)
 {
   TAO_Notify_SequencePushConsumer* tmp = dynamic_cast<TAO_Notify_SequencePushConsumer *> (old_consumer);
-  ACE_ASSERT(tmp != 0);
+  ACE_ASSERT(tmp != nullptr);
   this->init(tmp->push_consumer_.in());
   this->schedule_timer(false);
 }

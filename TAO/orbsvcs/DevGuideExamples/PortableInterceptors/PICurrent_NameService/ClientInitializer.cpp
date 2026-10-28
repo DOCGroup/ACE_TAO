@@ -37,7 +37,7 @@ ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   while ( CORBA::is_nil( obj.in() ) ) {
     try {
       obj = root->resolve( name );
-    } catch (const CosNaming::NamingContext::NotFound&) {
+    } catch (CosNaming::NamingContext::NotFound const &) {
       // Sleep for a second and try again
       ACE_OS::sleep(1);
     }
@@ -69,7 +69,7 @@ ClientInitializer::set_slot_data ()
 {
   // Set the recursion flag
   CORBA::Any flag;
-  CORBA::Boolean x = 0;
+  CORBA::Boolean x = false;
   flag <<= CORBA::Any::from_boolean(x);
   current_->set_slot(slot_, flag);
 

@@ -31,8 +31,7 @@ ACE_INLINE
 TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::In_Special_Basic_Clonable_Argument_T (
      S const & x
   )
-  : In_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy> (x),
-    is_clone_ (false)
+  : In_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy> (x)
 {}
 
 // ===========================================================================
@@ -89,9 +88,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::
-Ret_Special_Basic_Argument_T ()
-{
-}
+Ret_Special_Basic_Argument_T () = default;
 
 template<typename S,
          typename to_S,

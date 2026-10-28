@@ -15,14 +15,12 @@
 #include "tao/PI/PIForwardRequestC.h"
 
 TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 ()
-: orb_ (0),
-  expired_ (0)
+  : orb_ (nullptr)
+  , expired_ (false)
 {
 }
 
-TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 ()
-{
-}
+TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 () = default;
 
 char *
 TAO249_ServerRequest_Interceptor2::name ()

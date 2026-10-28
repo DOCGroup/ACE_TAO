@@ -68,7 +68,7 @@ namespace ACE
 
       /// Add a constraint, returns a unique constraint id.
       long add_constraint (const char* expression,
-                           Control_Action* action = 0);
+                           Control_Action* action = nullptr);
 
       /// Remove a constraint and return the associated control action,
       /// which may be shared, for deletion or further use.

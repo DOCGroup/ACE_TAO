@@ -444,7 +444,7 @@ ACE_INLINE wchar_t *
 ACE_OS::strtok (wchar_t *s, const wchar_t *tokens)
 {
 #if defined (ACE_HAS_3_PARAM_WCSTOK)
-  static wchar_t *lasts = 0;
+  static wchar_t *lasts = nullptr;
   return ::wcstok (s, tokens, &lasts);
 #else
   return ::wcstok (s, tokens);

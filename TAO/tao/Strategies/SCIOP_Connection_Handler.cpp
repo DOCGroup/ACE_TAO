@@ -50,7 +50,7 @@ TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_co
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_SCIOP_Transport* specific_transport = 0;
+  TAO_SCIOP_Transport *specific_transport = nullptr;
   ACE_NEW (specific_transport,
            TAO_SCIOP_Transport (this, orb_core));
 
@@ -99,7 +99,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph != nullptr)
     {
       try
         {
@@ -444,7 +444,7 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
     {
       TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-      if (tph != 0)
+      if (tph != nullptr)
         {
           CORBA::Long codepoint = tph->get_dscp_codepoint ();
           tos = (int)(codepoint) << 2;

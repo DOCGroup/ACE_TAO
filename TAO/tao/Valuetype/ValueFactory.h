@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
+  using AbstractBase_ptr = AbstractBase *;
 
   class ValueBase;
 
@@ -42,15 +42,14 @@ namespace CORBA
   extern TAO_Valuetype_Export void add_ref (ValueFactoryBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueFactoryBase *);
 
-  typedef TAO_Value_Var_T<ValueFactoryBase>
-    ValueFactoryBase_var;
+  using ValueFactoryBase_var = TAO_Value_Var_T<ValueFactoryBase>;
 
-  typedef ValueFactoryBase_var ValueFactory_var;
+  using ValueFactory_var = ValueFactoryBase_var;
 
   class TAO_Valuetype_Export ValueFactoryBase
   {
   public:
-    ValueFactoryBase ();
+    ValueFactoryBase () = default;
     virtual ~ValueFactoryBase ();
 
     // non-virtual is non-standard
@@ -67,8 +66,13 @@ namespace CORBA
     virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();
 
   private:
+    ValueFactoryBase (ValueFactoryBase const &) = delete;
+    ValueFactoryBase &operator= (ValueFactoryBase const &) = delete;
+    ValueFactoryBase (ValueFactoryBase &&) = delete;
+    ValueFactoryBase &operator= (ValueFactoryBase &&) = delete;
+
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
   };
 }  // End CORBA namespace
 

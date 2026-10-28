@@ -22,9 +22,6 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                                  bool check_host)
   : TAO::IIOP_SSL_Acceptor (),
     ssl_acceptor_ (this),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0),
     timeout_ (timeout),
     check_host_ (check_host)
 {
@@ -130,7 +127,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // Create a profile for each acceptor endpoint.
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
-      TAO_SSLIOP_Profile *pfile = 0;
+      TAO_SSLIOP_Profile *pfile = nullptr;
 
       // @@ We need to create an SSLIOP::SSL component for the object
       //    we're creating an MProfile for.  This will allow us to
@@ -153,7 +150,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (pfile) == -1)
         {
           pfile->_decr_refcnt ();
-          pfile = 0;
+          pfile = nullptr;
           return -1;
         }
 
@@ -208,8 +205,8 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                               CORBA::Short priority)
 {
   size_t index = 0;
-  TAO_Profile *pfile = 0;
-  TAO_SSLIOP_Profile *ssliop_profile = 0;
+  TAO_Profile *pfile = nullptr;
+  TAO_SSLIOP_Profile *ssliop_profile = nullptr;
 
   // First see if <mprofile> already contains a SSLIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -218,7 +215,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (pfile->tag () == IOP::TAG_INTERNET_IOP)
         {
           ssliop_profile = dynamic_cast<TAO_SSLIOP_Profile *> (pfile);
-          if (ssliop_profile == 0)
+          if (ssliop_profile == nullptr)
             return -1;
           break;
         }
@@ -226,7 +223,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 
   // If <mprofile> doesn't contain SSLIOP_Profile, we need to create
   // one.
-  if (ssliop_profile == 0)
+  if (ssliop_profile == nullptr)
     {
       // @@ We need to create an SSLIOP::SSL component for the object
       //    we're creating an MProfile for.  This will allow us to
@@ -257,7 +254,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (ssliop_profile) == -1)
         {
           ssliop_profile->_decr_refcnt ();
-          ssliop_profile = 0;
+          ssliop_profile = nullptr;
           return -1;
         }
 
@@ -291,7 +288,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           component.component_data.length (length);
           CORBA::Octet *buf = component.component_data.get_buffer ();
           for (const ACE_Message_Block *i = cdr.begin ();
-               i != 0;
+               i != nullptr;
                i = i->cont ())
             {
               ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
@@ -309,8 +306,8 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
        index < this->endpoint_count_;
        ++index)
     {
-      TAO_SSLIOP_Endpoint *ssl_endp = 0;
-      TAO_IIOP_Endpoint *iiop_endp = 0;
+      TAO_SSLIOP_Endpoint *ssl_endp = nullptr;
+      TAO_IIOP_Endpoint *iiop_endp = nullptr;
       ACE_NEW_RETURN (iiop_endp,
                       TAO_IIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
@@ -337,7 +334,7 @@ TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast<const TAO_SSLIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return 0;
 
   const TAO_IIOP_Endpoint *iiop = endp->iiop_endpoint ();

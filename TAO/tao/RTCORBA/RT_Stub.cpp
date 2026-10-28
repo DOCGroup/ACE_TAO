@@ -16,10 +16,9 @@ TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
   : TAO_Stub (repository_id,
               profiles,
               orb_core),
-    priority_model_policy_ (0),
-    priority_banded_connection_policy_ (0),
-    client_protocol_policy_ (0),
-    are_policies_parsed_ (false)
+    priority_model_policy_ (nullptr),
+    priority_banded_connection_policy_ (nullptr),
+    client_protocol_policy_ (nullptr)
 {
 }
 

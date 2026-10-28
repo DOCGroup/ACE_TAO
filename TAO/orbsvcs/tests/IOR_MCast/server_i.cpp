@@ -12,9 +12,9 @@
 
 Server_i::Server_i ()
   : argc_ (0),
-    argv_ (0),
+    argv_ (nullptr),
     orb_ (),
-    ior_multicast_ (0),
+    ior_multicast_ (nullptr),
     service_ior_ (),
     mcast_address_ ()
 {
@@ -26,8 +26,8 @@ Server_i::~Server_i ()
 }
 
 int
-Server_i::init (int &argc,
-                ACE_TCHAR **argv)
+Server_i::init (int& argc,
+                ACE_TCHAR** argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -107,13 +107,13 @@ Server_i::init (int &argc,
 }
 
 int
-Server_i::enable_multicast (const char *ior)
+Server_i::enable_multicast (char const* ior)
 {
   if (this->parse_args (this->argc_, this->argv_) != 0)
     return -1;
 
   // Get reactor instance from TAO.
-  ACE_Reactor *reactor =
+  ACE_Reactor* reactor =
     this->orb_->orb_core ()->reactor ();
 
   // Instantiate a handler which will handle client requests for the
@@ -141,7 +141,7 @@ Server_i::enable_multicast (const char *ior)
 }
 
 int
-Server_i::parse_args (int argc, ACE_TCHAR *argv[])
+Server_i::parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:"));
   int c;

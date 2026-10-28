@@ -54,7 +54,7 @@ TAO_LB_Signal_Handler::activate (long flags,
                                  void *stack[],
                                  size_t stack_size[],
                                  ACE_thread_t thread_ids[],
-                                 const char* thr_name[])
+                                 char const *thr_name[])
 {
   // sigwait() is not implemented on MS Windows.  Handle signals
   // asynchronously through the ORB's reactor in that case instead.

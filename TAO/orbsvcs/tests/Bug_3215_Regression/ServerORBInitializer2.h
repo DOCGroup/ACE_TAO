@@ -27,9 +27,14 @@ class Server_ORBInitializer2 :
 public:
   Server_ORBInitializer2 ();
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Server_ORBInitializer2 (Server_ORBInitializer2 const &) = delete;
+  Server_ORBInitializer2 (Server_ORBInitializer2 &&) = delete;
+  Server_ORBInitializer2 &operator= (Server_ORBInitializer2 const &) = delete;
+  Server_ORBInitializer2 &operator= (Server_ORBInitializer2 &&) = delete;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void set_server_iogr (CORBA::Object_ptr obj);
 

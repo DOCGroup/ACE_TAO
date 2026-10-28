@@ -53,24 +53,24 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Group_Factory
   {
     ////////////////////////////////////////////////////////////
-    // typedef private implementation classes
-    typedef ACE_Hash_Map_Manager_Ex <
+    // Private implementation classes.
+    using Group_Map = ACE_Hash_Map_Manager_Ex<
         PortableGroup::ObjectGroupId,
         ::TAO::PG_Object_Group *,
         ACE_Hash<ACE_UINT64>,
         ACE_Equal_To<ACE_UINT64>,
-         TAO_SYNCH_MUTEX> Group_Map;
+         TAO_SYNCH_MUTEX>;
 
-    typedef ACE_Hash_Map_Entry <
+    using Group_Map_Entry = ACE_Hash_Map_Entry<
       PortableGroup::ObjectGroupId,
-      ::TAO::PG_Object_Group *> Group_Map_Entry;
+      ::TAO::PG_Object_Group *>;
 
-    typedef ACE_Hash_Map_Iterator_Ex <
+    using Group_Map_Iterator = ACE_Hash_Map_Iterator_Ex<
       PortableGroup::ObjectGroupId,
       ::TAO::PG_Object_Group *,
       ACE_Hash<ACE_UINT64>,
       ACE_Equal_To<ACE_UINT64>,
-       TAO_SYNCH_MUTEX> Group_Map_Iterator;
+       TAO_SYNCH_MUTEX>;
 
   public:
     /// Constructor.
@@ -190,7 +190,7 @@ namespace TAO
 
     bool use_persistence_;
 
-    PG_Group_List_Store * list_store_;
+    PG_Group_List_Store * list_store_ {};
 
   private:
     CORBA::ORB_var orb_;
@@ -217,7 +217,7 @@ namespace TAO
 
     // Lazily read groups from store
     bool groups_read_;
-    Storable_Factory * storable_factory_;
+    Storable_Factory * storable_factory_ {};
   };
 } // namespace TAO
 

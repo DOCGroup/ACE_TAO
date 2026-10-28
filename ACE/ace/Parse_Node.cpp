@@ -49,8 +49,8 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   // So traverse mods_ and and reverse the list, then iterate over it to push
   // the modules in the stream in the correct order.
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  typedef std::list<const ACE_Static_Node *,
-                    ACE_Allocator_Std_Adapter<const ACE_Static_Node *> > list_t;
+  using list_t = std::list<const ACE_Static_Node *,
+                           ACE_Allocator_Std_Adapter<const ACE_Static_Node *>>;
 #else
   using list_t = std::list<const ACE_Static_Node *>;
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -223,9 +223,7 @@ ACE_Suspend_Node::ACE_Suspend_Node (const ACE_TCHAR *name)
   ACE_TRACE ("ACE_Suspend_Node::ACE_Suspend_Node");
 }
 
-ACE_Suspend_Node::~ACE_Suspend_Node ()
-{
-}
+ACE_Suspend_Node::~ACE_Suspend_Node () = default;
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Resume_Node)
 
@@ -243,9 +241,7 @@ ACE_Resume_Node::ACE_Resume_Node (const ACE_TCHAR *name)
   ACE_TRACE ("ACE_Resume_Node::ACE_Resume_Node");
 }
 
-ACE_Resume_Node::~ACE_Resume_Node ()
-{
-}
+ACE_Resume_Node::~ACE_Resume_Node () = default;
 
 void
 ACE_Suspend_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
@@ -297,9 +293,7 @@ ACE_Remove_Node::ACE_Remove_Node (const ACE_TCHAR *name)
   ACE_TRACE ("ACE_Remove_Node::ACE_Remove_Node");
 }
 
-ACE_Remove_Node::~ACE_Remove_Node ()
-{
-}
+ACE_Remove_Node::~ACE_Remove_Node () = default;
 
 void
 ACE_Remove_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
@@ -882,9 +876,7 @@ ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
 }
 
 
-ACE_Service_Type_Factory::~ACE_Service_Type_Factory ()
-{
-}
+ACE_Service_Type_Factory::~ACE_Service_Type_Factory () = default;
 
 
 ACE_Service_Type *

@@ -21,7 +21,7 @@ public:
   void initialize_handler ();
   int handle_command_requests ();
 
-  int svc ()
+  int svc () override
   {
     initialize_handler ();
     startup_barrier_.wait ();

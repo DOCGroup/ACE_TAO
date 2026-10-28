@@ -4,7 +4,7 @@
 #include "ace/Thread_Manager.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -41,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ());
@@ -87,22 +87,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner(hello_impl);
+      PortableServer::ServantBase_var owner (hello_impl);
 
       PortableServer::ObjectId_var id =
-        child_poa->activate_object(hello_impl);
+        child_poa->activate_object (hello_impl);
 
-      obj = child_poa->id_to_reference (id.in());
+      obj = child_poa->id_to_reference (id.in ());
 
       Test::Hello_var hello =
-        Test::Hello::_narrow (obj.in());
+        Test::Hello::_narrow (obj.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior_output_file),
@@ -118,7 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Wait for threads that may have been started by the Hello
       // implementation.
-      ACE_Thread_Manager::instance()->wait();
+      ACE_Thread_Manager::instance ()->wait ();
 
       root_poa->destroy (true, true);
 

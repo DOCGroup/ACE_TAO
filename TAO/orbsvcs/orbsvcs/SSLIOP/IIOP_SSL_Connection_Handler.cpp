@@ -65,7 +65,7 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   // Delete the transport with TAO_IIOP_Connection_Handler.
   delete this->transport ();
 
-  IIOP_SSL_Transport* specific_transport = 0;
+  IIOP_SSL_Transport *specific_transport = nullptr;
   ACE_NEW (specific_transport,
            IIOP_SSL_Transport (this,
                                orb_core));

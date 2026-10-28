@@ -11,8 +11,8 @@
 #include "ace/Stream.h"
 
 // Typedef these components to handle multi-threading correctly.
-typedef ACE_Stream<ACE_SYNCH> MT_Stream;
-typedef ACE_Module<ACE_SYNCH> MT_Module;
+using MT_Stream = ACE_Stream<ACE_SYNCH>;
+using MT_Module = ACE_Module<ACE_SYNCH>;
 
 
 class Event_Server : public ACE_Sig_Adapter
@@ -116,7 +116,7 @@ Event_Server::configure_stream ()
                   Peer_Router_Context (Options::instance ()->supplier_port ()),
                   -1);
 
-  MT_Module *srm = 0;
+  MT_Module *srm = nullptr;
   // Create the <Supplier_Router> module.
   ACE_NEW_RETURN (srm,
                   MT_Module
@@ -125,7 +125,7 @@ Event_Server::configure_stream ()
                    new Supplier_Router (src)),
                   -1);
 
-  MT_Module *eam = 0;
+  MT_Module *eam = nullptr;
   // Create the <Event_Analyzer> module.
   ACE_NEW_RETURN (eam,
                   MT_Module
@@ -142,7 +142,7 @@ Event_Server::configure_stream ()
                   Peer_Router_Context (Options::instance ()->consumer_port ()),
                   -1);
 
-  MT_Module *crm = 0;
+  MT_Module *crm = nullptr;
   // Create the <Consumer_Router> module.
   ACE_NEW_RETURN (crm,
                   MT_Module

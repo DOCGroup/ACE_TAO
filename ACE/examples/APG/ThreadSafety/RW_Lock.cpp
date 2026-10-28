@@ -14,8 +14,8 @@ public:
   int id_;
 };
 
-typedef ACE_DLList<Device> DeviceList;
-typedef ACE_DLList_Iterator<Device> DeviceListIterator;
+using DeviceList = ACE_DLList<Device>;
+using DeviceListIterator = ACE_DLList_Iterator<Device>;
 
 // Listing 1 code/ch14
 class HA_DiscoveryAgent
@@ -94,7 +94,7 @@ public:
   Runner(HA_DiscoveryAgent &agent) : agent_(agent)
   { }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_ASSERT(agent_.contains_device(devices[9]) == 1);
     agent_.remove_device (devices[9]);

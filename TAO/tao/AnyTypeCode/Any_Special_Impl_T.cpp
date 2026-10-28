@@ -28,11 +28,6 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::Any_Special_Impl_T (
 }
 
 template<typename T, typename from_T, typename to_T>
-TAO::Any_Special_Impl_T<T, from_T, to_T>::~Any_Special_Impl_T ()
-{
-}
-
-template<typename T, typename from_T, typename to_T>
 void
 TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
                                                   _tao_destructor destructor,
@@ -77,7 +72,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
                                                    const T *& _tao_elem,
                                                    CORBA::ULong bound)
 {
-  _tao_elem = 0;
+  _tao_elem = nullptr;
 
   try
     {
@@ -104,15 +99,14 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl * const impl = any.impl ();
 
-      typedef TAO::Any_Special_Impl_T<T, from_T, to_T>
-        BOUNDED_TSTRING_ANY_IMPL;
+      using BOUNDED_TSTRING_ANY_IMPL = TAO::Any_Special_Impl_T<T, from_T, to_T>;
 
       if (impl && !impl->encoded ())
         {
           TAO::Any_Special_Impl_T<T, from_T, to_T> * const narrow_impl =
             dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
 
-          if (narrow_impl == 0)
+          if (narrow_impl == nullptr)
             {
               return false;
             }
@@ -121,11 +115,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           return true;
         }
 
-      TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = 0;
+      TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = nullptr;
       ACE_NEW_RETURN (replacement,
                       BOUNDED_TSTRING_ANY_IMPL (destructor,
                                                 tc,
-                                                0,
+                                                nullptr,
                                                 bound),
                       false);
 

@@ -11,13 +11,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
-  const ACE_TCHAR * location_id,
-  const ACE_TCHAR * location_kind)
+  ACE_TCHAR const * location_id,
+  ACE_TCHAR const * location_kind)
   : location_ (1)
 {
   this->location_.length (1);
 
-  if (location_id == 0)
+  if (location_id == nullptr)
     {
       char host[MAXHOSTNAMELEN + 1];
       if (ACE_OS::hostname (host, sizeof (host)) != 0)
@@ -44,14 +44,12 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
     {
       this->location_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_id));
 
-      if (location_kind != 0)
+      if (location_kind != nullptr)
         this->location_[0].kind = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(location_kind));
     }
 }
 
-TAO_LB_CPU_Load_Average_Monitor::~TAO_LB_CPU_Load_Average_Monitor ()
-{
-}
+TAO_LB_CPU_Load_Average_Monitor::~TAO_LB_CPU_Load_Average_Monitor () = default;
 
 CosLoadBalancing::Location *
 TAO_LB_CPU_Load_Average_Monitor::the_location ()
@@ -125,7 +123,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
   // Obtain the load average directly from the `/proc' filesystem.
   FILE * s = ACE_OS::fopen ("/proc/loadavg", "r");
 
-  if (s == 0)
+  if (s == nullptr)
     throw CORBA::NO_IMPLEMENT (
       CORBA::SystemException::_tao_minor_code (
         TAO::VMCID,
@@ -136,17 +134,17 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
 
   (void) ACE_OS::fclose (s);
 
-  const int samples = 1;
+  int const samples = 1;
 
 # else
 
 #   if defined (ACE_LACKS_GETLOADAVG)
 
-  const int samples = 0;
+  int const samples = 0;
 
 #   else
 
-  const int samples = ::getloadavg (loadavg, 1);
+  int const samples = ::getloadavg (loadavg, 1);
 
 #   endif /* ACE_LACKS_GETLOADAVG */
 
@@ -156,7 +154,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
 
   if (samples == 1)
     {
-      const long num_processors = ACE_OS::sysconf (_SC_NPROCESSORS_ONLN);
+      long const num_processors = ACE_OS::sysconf (_SC_NPROCESSORS_ONLN);
 
       ACE_ASSERT (num_processors > 0);
 
@@ -172,7 +170,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
 
   double loadavg[1];
 
-  const int samples = ::getloadavg (loadavg, 1);
+  int const samples = ::getloadavg (loadavg, 1);
 
   if (samples == 1)
     {
@@ -197,7 +195,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
 #endif
 
 #if defined (ACE_LINUX) || defined(__NetBSD__) || defined (__APPLE__)
-  CosLoadBalancing::LoadList * tmp = 0;
+  CosLoadBalancing::LoadList * tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (

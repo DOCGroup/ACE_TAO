@@ -67,11 +67,11 @@ public:
   TAO_EC_Null_Filter_Builder ();
 
   /// destructor...
-  virtual ~TAO_EC_Null_Filter_Builder ();
+  virtual ~TAO_EC_Null_Filter_Builder () override;
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

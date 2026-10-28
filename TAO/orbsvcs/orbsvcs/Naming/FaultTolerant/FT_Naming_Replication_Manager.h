@@ -36,14 +36,19 @@ class FT_Update_Replicant_i : public virtual POA_FT_Naming::UpdatePushNotifier
 public:
   FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner);
 
-  virtual void register_peer (::FT_Naming::UpdatePushNotifier_ptr peer,
-                              const ::FT_Naming::ReplicaInfo & info,
-                              CORBA::ULongLong seq_num);
+  void register_peer (::FT_Naming::UpdatePushNotifier_ptr peer,
+                      ::FT_Naming::ReplicaInfo const &info,
+                      CORBA::ULongLong seq_num) override;
 
-  virtual void notify_update (CORBA::ULongLong seq_num,
-                              FT_Naming::UpdateInfoSeq& info);
+  void notify_update (CORBA::ULongLong seq_num,
+                      FT_Naming::UpdateInfoSeq &info) override;
 
 private:
+  FT_Update_Replicant_i (FT_Update_Replicant_i const &) = delete;
+  FT_Update_Replicant_i (FT_Update_Replicant_i &&) = delete;
+  FT_Update_Replicant_i &operator= (FT_Update_Replicant_i const &) = delete;
+  FT_Update_Replicant_i &operator= (FT_Update_Replicant_i &&) = delete;
+
   TAO_FT_Naming_Replication_Manager &owner_;
 };
 
@@ -65,15 +70,15 @@ class TAO_FT_Naming_Replication_Manager : public ACE_Task_Base
 public:
   friend class FT_Update_Replicant_i;
 
-  typedef FT_Naming::UpdatePushNotifier_var Replica_var;
-  typedef FT_Naming::UpdatePushNotifier_ptr Replica_ptr;
+  using Replica_var = FT_Naming::UpdatePushNotifier_var;
+  using Replica_ptr = FT_Naming::UpdatePushNotifier_ptr;
 
   TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
 
-  virtual ~TAO_FT_Naming_Replication_Manager();
+  ~TAO_FT_Naming_Replication_Manager () override;
 
-  virtual int svc ();
-  virtual int handle_exception (ACE_HANDLE );
+  int svc () override;
+  int handle_exception (ACE_HANDLE) override;
 
   void stop ();
   void send_context_update (const ACE_CString &ctx,
@@ -92,13 +97,20 @@ public:
   char * ior ();
 
 private:
+  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager const &) = delete;
+  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager &&) = delete;
+  TAO_FT_Naming_Replication_Manager &operator= (
+    TAO_FT_Naming_Replication_Manager const &) = delete;
+  TAO_FT_Naming_Replication_Manager &operator= (
+    TAO_FT_Naming_Replication_Manager &&) = delete;
+
   Replica_var me_;
   Replica_var peer_;
   CORBA::ULongLong seq_num_;
   CORBA::ULongLong replica_seq_num_;
   TAO_FT_Naming_Server &server_;
   CORBA::ORB_var orb_;
-  ACE_Reactor *reactor_;
+  ACE_Reactor *reactor_ {};
   TAO_SYNCH_MUTEX lock_;
   bool notified_;
   FT_Naming::UpdateInfoSeq to_send_;

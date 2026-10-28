@@ -37,12 +37,12 @@ class TAO_ServantBase;
 namespace CORBA
 {
   class InterfaceDef;
-  typedef InterfaceDef *InterfaceDef_ptr;
+  using InterfaceDef_ptr = InterfaceDef *;
 
   class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
+  using Object_ptr = Object *;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
+  using Object_out = TAO_Pseudo_Out_T<Object>;
 }
 
 namespace TAO
@@ -55,12 +55,12 @@ namespace TAO
   }
 }
 
-typedef void (*TAO_Skeleton)(
+using TAO_Skeleton = void (*) (
     TAO_ServerRequest &,
     TAO::Portable_Server::Servant_Upcall *,
     TAO_ServantBase *);
 
-typedef void (*TAO_Collocated_Skeleton)(
+using TAO_Collocated_Skeleton = void (*) (
     TAO_Abstract_ServantBase *,
     TAO::Argument **);
 

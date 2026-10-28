@@ -8,14 +8,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Refcounted_ObjectKey::Refcounted_ObjectKey (const TAO::ObjectKey &key)
+TAO::Refcounted_ObjectKey::Refcounted_ObjectKey (TAO::ObjectKey const &key)
   : object_key_ (key)
   , refcount_ (1)
 {
 }
 
-TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey ()
-{
-}
+TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

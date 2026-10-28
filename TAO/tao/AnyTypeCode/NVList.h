@@ -54,10 +54,10 @@ namespace CORBA
     RESP_NO_WAIT            = 0x400
   };
 
-  typedef TAO_Pseudo_Var_T<NamedValue> NamedValue_var;
-  typedef TAO_Pseudo_Out_T<NamedValue> NamedValue_out;
+  using NamedValue_var = TAO_Pseudo_Var_T<NamedValue>;
+  using NamedValue_out = TAO_Pseudo_Out_T<NamedValue>;
 
-  typedef ULong Flags;
+  using Flags = ULong;
 
   /**
    * @class NamedValue
@@ -97,9 +97,9 @@ namespace CORBA
     ULong _decr_refcount ();
 
     // Useful for template programming.
-    typedef NamedValue_ptr _ptr_type;
-    typedef NamedValue_var _var_type;
-    typedef NamedValue_out _out_type;
+    using _ptr_type = NamedValue_ptr;
+    using _var_type = NamedValue_var;
+    using _out_type = NamedValue_out;
 
   protected:
     /// Destructor
@@ -112,26 +112,26 @@ namespace CORBA
   private:
     /// private constructor. Cannot be directly instantiated other than
     /// by its friends.
-    NamedValue ();
+    NamedValue () = default;
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
 
     /// holds the value
     Any any_;
 
     /// parameter mode flags
-    Flags flags_;
+    Flags flags_ {};
 
     /// optional IDL name of the parameter
-    char * name_;
+    char *name_ {};
   };
 
   // ****************************************************************
 
-  typedef TAO_Pseudo_Var_T<NVList> NVList_var;
-  typedef TAO_Pseudo_Out_T<NVList> NVList_out;
+  using NVList_var = TAO_Pseudo_Var_T<NVList>;
+  using NVList_out = TAO_Pseudo_Out_T<NVList>;
 
   /**
    * @class NVList
@@ -224,9 +224,9 @@ namespace CORBA
     Boolean _lazy_has_arguments () const;
 
     // Useful for template programming.
-    typedef NVList_ptr _ptr_type;
-    typedef NVList_var _var_type;
-    typedef NVList_out _out_type;
+    using _ptr_type = NVList_ptr;
+    using _var_type = NVList_var;
+    using _out_type = NVList_out;
 
   protected:
     /// Destructor
@@ -239,7 +239,7 @@ namespace CORBA
   private:
     /// Constructor - cannot be instantiated directly other than
     /// through the CORBA::ORB::create_list method
-    NVList ();
+    NVList () = default;
 
     /// Helper to increase the list size. This is used by all the add_
     /// methods of the NVList class
@@ -254,10 +254,10 @@ namespace CORBA
     ACE_Unbounded_Queue<NamedValue_ptr> values_;
 
     /// Maximum length of list
-    ULong max_;
+    ULong max_ {};
 
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ {1};
 
     /// Protects the incoming pointer.
     TAO_SYNCH_MUTEX lock_;
@@ -267,11 +267,11 @@ namespace CORBA
      * store the CDR buffer and perform lazy evaluation to compute the
      * Anys.
      */
-    TAO_InputCDR * incoming_;
+    TAO_InputCDR *incoming_ {};
 
     /// The flags used to check which parameters are actually extracted
     /// from the <incoming_> buffer
-    int incoming_flag_;
+    int incoming_flag_ {};
   };
 }
 

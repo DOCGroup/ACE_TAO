@@ -24,9 +24,9 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // Return the any provide as an "in" argument.
-  virtual CORBA::Any * get_any (CORBA::Any const & the_any);
+  CORBA::Any * get_any (CORBA::Any const & the_any) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB which will be shutdown by Hello::shutdown().

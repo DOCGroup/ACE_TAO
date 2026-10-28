@@ -47,15 +47,15 @@ namespace TAO
       Current_Impl ();
 
       /// Destructor
-      ~Current_Impl ();
+      ~Current_Impl () override;
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::client_credentials() method.
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ();
+      SecurityLevel3::ClientCredentials_ptr client_credentials () override;
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::request_is_local() method.
-      virtual CORBA::Boolean request_is_local ();
+      CORBA::Boolean request_is_local () override;
 
       /// Return the SSL peer certificate associated with the
       /// current request as an octet sequence, i.e. a DER encoded
@@ -74,7 +74,7 @@ namespace TAO
 
     protected:
       /// Return the unique tag that identifies the concrete subclass.
-      virtual CORBA::ULong tag () const;
+      CORBA::ULong tag () const override;
 
     private:
       Current_Impl (const Current_Impl &) = delete;
@@ -82,7 +82,7 @@ namespace TAO
 
     private:
       /// The SSL session state corresponding to the current upcall.
-      SSL *ssl_;
+      SSL *ssl_ {};
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

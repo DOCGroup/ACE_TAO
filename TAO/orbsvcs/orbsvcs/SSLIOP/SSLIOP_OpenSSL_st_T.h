@@ -109,7 +109,7 @@ namespace TAO
 
     private:
       /// The OpenSSL structure whose reference count is managed.
-      T * st_;
+      T * st_ {};
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

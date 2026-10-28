@@ -55,16 +55,16 @@ public:
   TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
   // = The EC_Dispatching methods.
-  virtual void activate ();
-  virtual void shutdown ();
+  virtual void activate () override;
+  virtual void shutdown () override;
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
+                     TAO_EC_QOS_Info& qos_info) override;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
+                            TAO_EC_QOS_Info& qos_info) override;
 
 private:
   /// Use our own thread manager.

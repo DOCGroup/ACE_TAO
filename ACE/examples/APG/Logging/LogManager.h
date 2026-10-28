@@ -92,8 +92,7 @@ LogManager::redirectToCallback (ACE_Log_Msg_Callback * callback)
 // Listing 2
 
 // Listing 3 code/ch03
-typedef ACE_Singleton<LogManager, ACE_Null_Mutex>
-        LogManagerSingleton;
+using LogManagerSingleton = ACE_Singleton<LogManager, ACE_Null_Mutex>;
 #define LOG_MANAGER LogManagerSingleton::instance()
 // Listing 3
 

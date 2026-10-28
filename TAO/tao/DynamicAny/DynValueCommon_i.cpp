@@ -7,7 +7,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_DynValueCommon_i::TAO_DynValueCommon_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
   , TAO_DynAny_i (allow_truncation)
-  , is_null_ (true)
 {
 }
 
@@ -39,7 +38,7 @@ TAO_DynValueCommon_i *
 TAO_DynValueCommon_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   return (CORBA::is_nil (_tao_objref)) ?
-         0 :
+         nullptr :
          dynamic_cast<TAO_DynValueCommon_i *> (_tao_objref);
 }
 

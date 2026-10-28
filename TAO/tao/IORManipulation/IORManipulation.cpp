@@ -11,13 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IOR_Manipulation_impl::TAO_IOR_Manipulation_impl ()
-{
-}
-
-TAO_IOR_Manipulation_impl::~TAO_IOR_Manipulation_impl ()
-{
-}
+TAO_IOR_Manipulation_impl::TAO_IOR_Manipulation_impl () = default;
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
@@ -265,16 +259,16 @@ TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior2)
 {
   CORBA::ULong count = 0;
-  TAO_Profile *pfile1 = 0;
-  TAO_Profile *pfile2 = 0;
+  TAO_Profile *pfile1 = nullptr;
+  TAO_Profile *pfile2 = nullptr;
   std::unique_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   std::unique_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
 
   tmp_pfiles1->rewind ();
-  while ((pfile1 = tmp_pfiles1->get_next ()) != 0)
+  while ((pfile1 = tmp_pfiles1->get_next ()) != nullptr)
     {
       tmp_pfiles2->rewind ();
-      while ((pfile2 = tmp_pfiles2->get_next ()) != 0)
+      while ((pfile2 = tmp_pfiles2->get_next ()) != nullptr)
         {
           if (pfile1->is_equivalent (pfile2))
             ++count;

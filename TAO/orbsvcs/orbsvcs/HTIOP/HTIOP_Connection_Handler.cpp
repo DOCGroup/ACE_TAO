@@ -25,8 +25,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
-  : SVC_HANDLER (t,0,0),
-    TAO_Connection_Handler (0)
+  : SVC_HANDLER (t, nullptr, nullptr),
+    TAO_Connection_Handler (nullptr)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -37,10 +37,10 @@ TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
 }
 
 TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
-  : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core)
 {
-  TAO::HTIOP::Transport* specific_transport = 0;
+  TAO::HTIOP::Transport* specific_transport = nullptr;
   ACE_NEW(specific_transport,
           TAO::HTIOP::Transport (this, orb_core));
 
@@ -157,7 +157,7 @@ TAO::HTIOP::Connection_Handler::handle_input (ACE_HANDLE h)
   // Figure out if the peer is associated with an identified session.
   // If not, do whatever is necessary to complete the linkage.
   ACE::HTBP::Session *session = peer().session();
-  if (session == 0)
+  if (session == nullptr)
     {
       int result = this->handle_input_eh (h,this);
 

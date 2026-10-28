@@ -28,7 +28,7 @@
 
 ImR_DSI_Forwarder::ImR_DSI_Forwarder (ImR_Locator_i& imr_impl)
   : locator_ (imr_impl)
-  , orb_ (0)
+  , orb_ (nullptr)
 {
 }
 
@@ -73,7 +73,7 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = 0;
+  CORBA::ServerRequest *dsi_request = nullptr;
   ACE_NEW (dsi_request,
            CORBA::ServerRequest (request));
   try
@@ -82,7 +82,7 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
       ACE_NEW (rhp, TAO_AMH_DSI_Response_Handler(request));
       TAO_AMH_DSI_Response_Handler_var rh(rhp);
 
-      rh->init (request, 0);
+      rh->init (request, nullptr);
       // Delegate to user.
       this->invoke (dsi_request, rh.in());
     }
@@ -133,11 +133,11 @@ ImR_DSI_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   TAO::Portable_Server::POA_Current* tao_current =
     dynamic_cast <TAO::Portable_Server::POA_Current*> (this->poa_current_var_.in ());
 
-  ACE_ASSERT(tao_current != 0);
+  ACE_ASSERT(tao_current != nullptr);
   TAO::Portable_Server::POA_Current_Impl* impl = tao_current->implementation ();
   TAO::ObjectKey::encode_sequence_to_string (key_str.out (), impl->object_key ());
 
-  ImR_DSI_ResponseHandler * rh = 0;
+  ImR_DSI_ResponseHandler *rh = nullptr;
   ACE_NEW (rh, ImR_DSI_ResponseHandler(key_str.in(),
                                     this->locator_.debug() > 0 ?
                                     server_name.in() : "",

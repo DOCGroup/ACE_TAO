@@ -27,9 +27,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
 {
 }
 
-TAO_IIOP_Transport::~TAO_IIOP_Transport ()
-{
-}
+TAO_IIOP_Transport::~TAO_IIOP_Transport () = default;
 
 ACE_Event_Handler *
 TAO_IIOP_Transport::event_handler_i ()
@@ -59,7 +57,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
       if (TAO_debug_level > 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::send, ")
                       ACE_TEXT ("send failure (errno: %d) - %m\n"),
                       this->id (), ACE_ERRNO_GET));
         }
@@ -139,7 +137,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   if (retval <= 0 && TAO_debug_level > 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::sendfile, ")
                   ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
                   this->id (),
                   ACE_ERRNO_GET));
@@ -165,7 +163,7 @@ TAO_IIOP_Transport::recv (char *buf,
   if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
                   ACE_ERRNO_GET));
@@ -247,7 +245,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send_message, ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%B]::send_message, ")
                       ACE_TEXT ("write failure - %m\n"),
                       this->id ()));
         }
@@ -393,9 +391,9 @@ TAO_IIOP_Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
       // If this is an IPv6 decimal linklocal address containing a scopeid than
       // remove the scopeid from the information being sent.
-      const char *cp_scope = 0;
+      char const *cp_scope = nullptr;
       if (endpoint_addr[index].get_type () == PF_INET6 &&
-          (cp_scope = ACE_OS::strchr (interface_name.in (), '%')) != 0)
+          (cp_scope = ACE_OS::strchr (interface_name.in (), '%')) != nullptr)
         {
           CORBA::ULong len = cp_scope - interface_name.in ();
           interface_name[len] = '\0';

@@ -108,7 +108,7 @@ class ACE_Strong_Bound_Ptr
 public:
   /// Constructor that initializes an ACE_Strong_Bound_Ptr to point to the
   /// object \<p\> immediately.
-  explicit ACE_Strong_Bound_Ptr (X *p = 0);
+  explicit ACE_Strong_Bound_Ptr (X *p = nullptr);
 
   /// Copy constructor binds @c this and @a r to the same object.
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
@@ -204,7 +204,7 @@ public:
 
   /// Resets the ACE_Strong_Bound_Ptr to refer to a different
   /// underlying object.
-  void reset (X *p = 0);
+  void reset (X *p = nullptr);
 
   /// Allows us to check for NULL on all ACE_Strong_Bound_Ptr
   /// objects.
@@ -251,7 +251,7 @@ class ACE_Weak_Bound_Ptr
 public:
   /// Constructor that initializes an ACE_Weak_Bound_Ptr to point to
   /// the object \<p\> immediately.
-  explicit ACE_Weak_Bound_Ptr (X *p = 0);
+  explicit ACE_Weak_Bound_Ptr (X *p = nullptr);
 
   /// Copy constructor binds @c this and @a r to the same object.
   ACE_Weak_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
@@ -320,7 +320,7 @@ public:
 
   /// Resets the ACE_Weak_Bound_Ptr to refer to a different underlying
   /// object.
-  void reset (X *p = 0);
+  void reset (X *p = nullptr);
 
   /// Increment the reference count on the underlying object.
   /**

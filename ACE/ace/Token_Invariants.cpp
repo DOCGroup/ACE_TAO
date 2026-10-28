@@ -47,7 +47,7 @@ ACE_Token_Invariant_Manager::mutex_acquired (const ACE_TCHAR *token_name)
 
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
-  ACE_Mutex_Invariants *inv = 0;
+  ACE_Mutex_Invariants *inv = nullptr;
   if (this->get_mutex (token_name, inv) == -1)
     return -1;
 
@@ -89,7 +89,7 @@ ACE_Token_Invariant_Manager::mutex_releasing (const ACE_TCHAR *token_name)
   ACE_TRACE ("ACE_Token_Invariant_Manager::mutex_releasing");
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
 
-  ACE_Mutex_Invariants *inv = 0;
+  ACE_Mutex_Invariants *inv = nullptr;
   if (this->get_mutex (token_name, inv) == 0)
     inv->releasing ();
 }
@@ -100,7 +100,7 @@ ACE_Token_Invariant_Manager::reader_acquired (const ACE_TCHAR *token_name)
   ACE_TRACE ("ACE_Token_Invariant_Manager::reader_acquired");
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
-  ACE_RWLock_Invariants *inv = 0;
+  ACE_RWLock_Invariants *inv = nullptr;
   if (this->get_rwlock (token_name, inv) == -1)
     return -1;
 
@@ -114,7 +114,7 @@ ACE_Token_Invariant_Manager::writer_acquired (const ACE_TCHAR *token_name)
 
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
-  ACE_RWLock_Invariants *inv = 0;
+  ACE_RWLock_Invariants *inv = nullptr;
   if (this->get_rwlock (token_name, inv) == -1)
     return -1;
 
@@ -128,7 +128,7 @@ ACE_Token_Invariant_Manager::rwlock_releasing (const ACE_TCHAR *token_name)
 
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
 
-  ACE_RWLock_Invariants *inv = 0;
+  ACE_RWLock_Invariants *inv = nullptr;
   if (this->get_rwlock (token_name, inv) == 0)
     inv->releasing ();
 }
@@ -208,14 +208,14 @@ ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager ()
 
   MUTEX_COLLECTION::ITERATOR iterator (mutex_collection_);
 
-  for (MUTEX_COLLECTION::ENTRY *temp = 0;
+  for (MUTEX_COLLECTION::ENTRY *temp = nullptr;
        iterator.next (temp) != 0;
        iterator.advance ())
     delete temp->int_id_;
 
   RWLOCK_COLLECTION::ITERATOR iterator2 (rwlock_collection_);
 
-  for (RWLOCK_COLLECTION::ENTRY *temp2 = 0;
+  for (RWLOCK_COLLECTION::ENTRY *temp2 = nullptr;
        iterator2.next (temp2) != 0;
        iterator2.advance ())
     delete temp2->int_id_;

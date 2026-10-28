@@ -6,7 +6,7 @@
 #include "Hello.h"
 
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -37,12 +37,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   try
     {
       int one = 1;
       char CLIENT[] = "client"; // Copy const into non-const storage.
-      char *argv1[] = { CLIENT, 0 };
+      char *argv1[] = { CLIENT, nullptr };
 
       CORBA::ORB_var orb1 =
       CORBA::ORB_init (one, argv1, "orb1");
@@ -50,7 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int three = 3;
       char OPTION[] = "-ORBFTSendFullGroupTC"; // Copy const into non-const storage.
       char VALUE[]  = "1"; // Copy const into non-const storage.
-      char *argv2[] = { CLIENT, OPTION, VALUE, 0 };
+      char *argv2[] = { CLIENT, OPTION, VALUE, nullptr };
       CORBA::ORB_var orb2;
 
       try
@@ -122,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb1->destroy ();
       orb2->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
                            "Test failed (Not regression) because unexpected exception caught:");

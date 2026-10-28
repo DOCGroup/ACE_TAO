@@ -27,7 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
+  using Object_ptr = Object *;
 }
 
 namespace PortableInterceptor
@@ -39,7 +39,7 @@ namespace PortableInterceptor
 namespace PortableServer
 {
   class POA;
-  typedef POA* POA_ptr;
+  using POA_ptr = POA *;
 }
 
 namespace TAO
@@ -91,8 +91,7 @@ namespace TAO
     //@}
   };
 
- typedef
-  ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*> ORT_Array;
+  using ORT_Array = ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*>;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -44,11 +44,16 @@ namespace TAO
 
   protected:
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl ();
+    ACE_Reactor_Impl *reactor_impl () override;
 
   private:
+    QtResource_Factory (QtResource_Factory const &) = delete;
+    QtResource_Factory &operator= (QtResource_Factory const &) = delete;
+    QtResource_Factory (QtResource_Factory &&) = delete;
+    QtResource_Factory &operator= (QtResource_Factory &&) = delete;
+
     /// Reactor created by this factory.
-    ACE_QtReactor *reactor_impl_;
+    ACE_QtReactor *reactor_impl_ {};
 
     /// QApplication running reactor
     QApplication *qapp_;

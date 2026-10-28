@@ -574,10 +574,10 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 #if defined (ACE_HAS_IPV6)
   // For IPv6 decimal addresses make sure the possibly included scopeid
   // is not published as this has only local meaning.
-  const char* host = 0;
-  const char* pos = 0;
+  char const *host = nullptr;
+  char const *pos = nullptr;
   if (this->endpoint_.is_ipv6_decimal_ &&
-      (pos = std::strchr (host = this->endpoint_.host (), '%')) != 0)
+      (pos = std::strchr (host = this->endpoint_.host (), '%')) != nullptr)
     {
       ACE_CString tmp;
       size_t len = pos - host;
@@ -631,10 +631,10 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
 #if defined (ACE_HAS_IPV6)
       // For IPv6 decimal addresses make sure the possibly included scopeid
       // is not published as this has only local meaning.
-      const char* host = 0;
-      const char* pos = 0;
+      char const *host = nullptr;
+      char const *pos = nullptr;
       if (endpoint->is_ipv6_decimal_ &&
-          (pos = std::strchr (host = endpoint->host (), '%')) != 0)
+          (pos = std::strchr (host = endpoint->host (), '%')) != nullptr)
         {
           ACE_CString tmp;
           size_t len = pos - host;

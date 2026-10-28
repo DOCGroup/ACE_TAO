@@ -62,33 +62,33 @@ public:
   ~TAO_FT_IOGR_Property ();
 
   /// Set the property for the IOGR
-  virtual CORBA::Boolean set_property (
-      CORBA::Object_ptr &ior);
+  CORBA::Boolean set_property (
+      CORBA::Object_ptr& ior) override;
 
   /// Set <ior1> as  primary which is a part of <ior2>
-  virtual CORBA::Boolean set_primary (
-      CORBA::Object_ptr &ior1,
-      CORBA::Object_ptr ior2);
+  CORBA::Boolean set_primary (
+      CORBA::Object_ptr& ior1,
+      CORBA::Object_ptr ior2) override;
 
   /// Get the primary member from the IOGR <ior>
-  virtual CORBA::Object_ptr get_primary (
-      CORBA::Object_ptr ior);
+  CORBA::Object_ptr get_primary (
+      CORBA::Object_ptr ior) override;
 
   /// Is there a primary available for <ior>
-  virtual CORBA::Boolean is_primary_set (
-      CORBA::Object_ptr ior);
+  CORBA::Boolean is_primary_set (
+      CORBA::Object_ptr ior) override;
 
-  virtual CORBA::Boolean remove_primary_tag (
-      CORBA::Object_ptr &iogr);
+  CORBA::Boolean remove_primary_tag (
+      CORBA::Object_ptr& iogr) override;
 
   /// Reset the underlying tagged components held by the class
   CORBA::Boolean reset_tagged_components (
-      FT::TagFTGroupTaggedComponent &ft_group);
+      FT::TagFTGroupTaggedComponent& ft_group);
 
   /// Extract the TagFTGroupTaggedComponent inside the <ior>
   CORBA::Boolean get_tagged_component (
-      const CORBA::Object_ptr iogr,
-      FT::TagFTGroupTaggedComponent &ft_group) const;
+      CORBA::Object_ptr const iogr,
+      FT::TagFTGroupTaggedComponent& ft_group) const;
 
 private:
   /// An helper function that gets the primary profile from the <ior>
@@ -97,11 +97,11 @@ private:
   /// An helper method for encoding the proeprties
   CORBA::Boolean encode_properties (
       TAO_OutputCDR &cdr,
-      IOP::TaggedComponent &tagged_components);
+      IOP::TaggedComponent& tagged_components);
 
 private:
   /// Hold the reference to the FT group tagged component
-  FT::TagFTGroupTaggedComponent *ft_group_tagged_component_;
+  FT::TagFTGroupTaggedComponent *ft_group_tagged_component_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -87,7 +87,7 @@ TAO::SSLIOP::Transport::recv (char *buf,
   if (n == -1 && TAO_debug_level > 4 && errno != ETIME)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport[%B]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
                   errno));
@@ -157,7 +157,7 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::send_message, ")
-                    ACE_TEXT ("closing transport %d after fault %p\n"),
+                    ACE_TEXT ("closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
@@ -241,7 +241,7 @@ TAO::SSLIOP::Transport::get_listen_point (
   TAO::SSLIOP::Acceptor *ssliop_acceptor =
     dynamic_cast<TAO::SSLIOP::Acceptor *> (acceptor);
 
-  if (ssliop_acceptor == 0)
+  if (ssliop_acceptor == nullptr)
     return -1;
 
   // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
@@ -289,9 +289,9 @@ TAO::SSLIOP::Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
   // If this is an IPv6 decimal linklocal address containing a scopeid than
   // remove the scopeid from the information being sent.
-  const char *cp_scope = 0;
+  const char *cp_scope = nullptr;
   if (local_addr.get_type () == PF_INET6 &&
-        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != 0)
+        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != nullptr)
     {
       CORBA::ULong len = cp_scope - local_interface.in ();
       local_interface[len] = '\0';

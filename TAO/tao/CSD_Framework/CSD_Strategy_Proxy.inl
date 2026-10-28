@@ -2,25 +2,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::Strategy_Proxy::Strategy_Proxy()
-  : strategy_impl_(0)
-{
-}
-
-ACE_INLINE
-TAO::CSD::Strategy_Proxy::~Strategy_Proxy()
-{
-  strategy_impl_ = 0; // don't delete it! The var will do it for us.
-}
-
-ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::dispatch_request
                                 (TAO_ServerRequest& server_request,
                                  TAO::Portable_Server::Servant_Upcall& upcall)
 {
 
-  if (this->strategy_impl_ == 0)
+  if (this->strategy_impl_ == nullptr)
     {
       // This is the "default" strategy implementation.
       upcall.servant()->_dispatch(server_request, &upcall);
@@ -38,7 +26,7 @@ TAO::CSD::Strategy_Proxy::poa_activated_event(TAO_ORB_Core& orb_core)
 {
   // Delegate to the custom strategy object (or return true if this proxy
   // is not holding a custom strategy).
-  return (this->strategy_impl_ == 0) ? true
+  return (this->strategy_impl_ == nullptr) ? true
     : this->strategy_impl_->poa_activated_event(orb_core);
 }
 

@@ -26,8 +26,8 @@ CORBA::Boolean
 TAO_Base_Transport_Property::is_equivalent
   (const TAO_Transport_Descriptor_Interface *rhs)
 {
-  const TAO_Base_Transport_Property *other_desc =
-    dynamic_cast<const TAO_Base_Transport_Property *> (rhs);
+  TAO_Base_Transport_Property const *other_desc =
+    dynamic_cast<TAO_Base_Transport_Property const *> (rhs);
 
   if (other_desc == nullptr)
     return false;

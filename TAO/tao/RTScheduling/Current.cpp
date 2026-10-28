@@ -13,15 +13,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 std::atomic<long> TAO_RTScheduler_Current::guid_counter;
 
+TAO_RTScheduler_Current::~TAO_RTScheduler_Current () = default;
+
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const
 {
   return ACE::hash_pjw ((const char *) id.get_buffer (),
                         id.length ());
-}
-
-TAO_RTScheduler_Current::~TAO_RTScheduler_Current ()
-{
 }
 
 void
@@ -66,7 +64,7 @@ TAO_RTScheduler_Current::begin_scheduling_segment (
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     {
       ACE_NEW_THROW_EX (impl,
                         TAO_RTScheduler_Current_i (this->orb_,
@@ -92,7 +90,7 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
 
   impl->update_scheduling_segment (name,
@@ -105,7 +103,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     {
       TAOLIB_ERROR ((LM_ERROR,
                   "Missing scheduling context OR DT cancelled\n"));
@@ -141,7 +139,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->spawn (start,
@@ -158,7 +156,7 @@ TAO_RTScheduler_Current::id ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->id ();
@@ -169,7 +167,7 @@ TAO_RTScheduler_Current::scheduling_parameter ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->scheduling_parameter ();
@@ -180,7 +178,7 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->implicit_scheduling_parameter ();
@@ -191,7 +189,7 @@ TAO_RTScheduler_Current::current_scheduling_segment_names ()
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
-  if (impl == 0)
+  if (impl == nullptr)
     throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->current_scheduling_segment_names ();
@@ -255,7 +253,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
                                                       DT_Hash_Map* dt_hash)
   :orb_ (orb),
    dt_ (RTScheduling::DistributableThread::_nil ()),
-   previous_current_ (0),
+   previous_current_ (nullptr),
    dt_hash_ (dt_hash)
 {
   CORBA::Object_var scheduler_obj =
@@ -290,9 +288,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
   this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ());
 }
 
-TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i ()
-{
-}
+TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i () = default;
 
 void
 TAO_RTScheduler_Current_i::begin_scheduling_segment(
@@ -359,7 +355,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
-      TAO_RTScheduler_Current_i* new_current = 0;
+      TAO_RTScheduler_Current_i *new_current = nullptr;
         ACE_NEW_THROW_EX (new_current,
                           TAO_RTScheduler_Current_i (this->orb_,
                                                      this->dt_hash_,
@@ -411,7 +407,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
       this->cancel_thread ();
     }
 
-  if (this->previous_current_ == 0)
+  if (this->previous_current_ == nullptr)
     {
       // Let the scheduler know that the DT is
       // terminating.
@@ -455,20 +451,20 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
     }
 
   // Create new task for new DT.
-  DTTask *dttask = 0;
+  DTTask *dttask = nullptr;
 
   // If no scheduling parameter is specified then use the current
   // implicit scheduling parameter as the scheduling parameter
-  if (sched_param == 0)
+  if (sched_param == nullptr)
     sched_param = this->implicit_sched_param_.in ();
 
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
-  TAO_RTScheduler_Current_i *new_current = 0;
+  TAO_RTScheduler_Current_i *new_current = nullptr;
 
   ACE_NEW_RETURN (new_current,
                   TAO_RTScheduler_Current_i (this->orb_,
                                              this->dt_hash_),
-                  0);
+                  nullptr);
 
   new_current->DT (dt.in ());
 
@@ -482,7 +478,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
                           name,
                           sched_param,
                           implicit_sched_param),
-                  0);
+                  nullptr);
 
   if (dttask->activate_task (base_priority,
                              stack_size) == -1)
@@ -621,11 +617,11 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names ()
   RTScheduling::Current::NameList* name_list;
   ACE_NEW_RETURN (name_list,
                   RTScheduling::Current::NameList,
-                  0);
+                  nullptr);
 
   TAO_RTScheduler_Current_i* current = this;
 
-  for (int index = 0; current != 0; index++)
+  for (int index = 0; current != nullptr; index++)
     {
       name_list->length (index+1);
       (*name_list) [index] = current->name ();
@@ -694,7 +690,7 @@ TAO_RTScheduler_Current_i::delete_all_currents ()
 {
   TAO_RTScheduler_Current_i* current = this;
 
-  while (current != 0)
+  while (current != nullptr)
     {
       TAO_RTScheduler_Current_i* prev_current = current->previous_current_;
       current->cleanup_current ();

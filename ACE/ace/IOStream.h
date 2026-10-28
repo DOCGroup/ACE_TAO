@@ -37,7 +37,7 @@
 # include /**/ <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef std::string ACE_IOStream_String;
+using ACE_IOStream_String = std::string;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -137,7 +137,7 @@ public:
   virtual ~ACE_Streambuf ();
 
   /// Get the current Time_Value pointer and provide a new one.
-  ACE_Time_Value *recv_timeout (ACE_Time_Value *tv = 0);
+  ACE_Time_Value *recv_timeout (ACE_Time_Value *tv = nullptr);
 
   /**
    * Use this to allocate a new/different buffer for put operations.
@@ -148,7 +148,7 @@ public:
    * It is your responsibility to delete this memory when you are done
    * with it.
    */
-  char *reset_put_buffer (char *newBuffer = 0,
+  char *reset_put_buffer (char *newBuffer = nullptr,
                           u_int _streambuf_size = 0,
                           u_int _pptr = 0 );
 
@@ -165,7 +165,7 @@ public:
    * It is your responsibility to delete this memory when you are done
    * with it.
    */
-  char *reset_get_buffer (char *newBuffer = 0,
+  char *reset_get_buffer (char *newBuffer = nullptr,
                           u_int _streambuf_size = 0,
                           u_int _gptr = 0,
                           u_int _egptr = 0);
@@ -280,15 +280,15 @@ protected:
                         ssize_t len) = 0;
   virtual ssize_t recv (char *buf,
                         ssize_t len,
-                        ACE_Time_Value *tv = 0) = 0;
+                        ACE_Time_Value *tv = nullptr) = 0;
   virtual ssize_t recv (char *buf,
                         ssize_t len,
                         int flags,
-                        ACE_Time_Value *tv = 0) = 0;
+                        ACE_Time_Value *tv = nullptr) = 0;
   virtual ssize_t recv_n (char *buf,
                           ssize_t len,
                           int flags = 0,
-                          ACE_Time_Value *tv = 0) = 0;
+                          ACE_Time_Value *tv = nullptr) = 0;
 
   virtual ACE_HANDLE get_handle ();
 

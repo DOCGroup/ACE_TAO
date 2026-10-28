@@ -16,9 +16,7 @@ CORBA::Principal::Principal ()
 {
 }
 
-CORBA::Principal::~Principal ()
-{
-}
+CORBA::Principal::~Principal () = default;
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)

@@ -25,9 +25,9 @@ class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (JAWS_HAS_THREAD_SAFE_ACCEPT)
-typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> JAWS_IO_SOCK_Acceptor;
+using JAWS_IO_SOCK_Acceptor = ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX>;
 #else
-typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> JAWS_IO_SOCK_Acceptor;
+using JAWS_IO_SOCK_Acceptor = ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 #endif /* JAWS_HAS_THREAD_SAFE_ACCEPT */
 
 class JAWS_Export JAWS_IO_Acceptor
@@ -125,10 +125,8 @@ private:
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 };
 
-typedef ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>
-        JAWS_IO_Synch_Acceptor_Singleton;
+using JAWS_IO_Synch_Acceptor_Singleton = ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>;
 
-typedef ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>
-        JAWS_IO_Asynch_Acceptor_Singleton;
+using JAWS_IO_Asynch_Acceptor_Singleton = ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>;
 
 #endif /* !defined (JAWS_IO_ACCEPTOR_H) */

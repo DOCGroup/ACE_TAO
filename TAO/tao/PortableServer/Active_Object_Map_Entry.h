@@ -35,25 +35,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 struct TAO_Active_Object_Map_Entry
 {
   /// Default constructor.
-  TAO_Active_Object_Map_Entry ();
+  TAO_Active_Object_Map_Entry () = default;
 
   /// User id.
-  PortableServer::ObjectId user_id_;
+  PortableServer::ObjectId user_id_ {};
 
   /// System id.
-  PortableServer::ObjectId system_id_;
+  PortableServer::ObjectId system_id_ {};
 
   /// Servant.
-  PortableServer::Servant servant_;
+  PortableServer::Servant servant_ {};
 
   /// Reference count on outstanding requests on this servant.
-  CORBA::UShort reference_count_;
+  CORBA::UShort reference_count_ {1};
 
   /// Has this servant been deactivated already?
-  CORBA::Boolean deactivated_;
+  CORBA::Boolean deactivated_ {false};
 
   /// Priority of this servant.
-  CORBA::Short priority_;
+  CORBA::Short priority_ {-1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

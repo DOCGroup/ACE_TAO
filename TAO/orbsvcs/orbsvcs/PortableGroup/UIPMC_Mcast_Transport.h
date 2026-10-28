@@ -48,20 +48,20 @@ class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Transport : public TAO_Transport
   friend class TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard;
 
 public:
-  typedef ACE_Hash_Map_Manager<u_long,
+  using Packets_Map = ACE_Hash_Map_Manager<u_long,
                                TAO_PG::UIPMC_Recv_Packet *,
-                               ACE_SYNCH_NULL_MUTEX> Packets_Map;
+                               ACE_SYNCH_NULL_MUTEX>;
 
   /// Constructor.
   TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_UIPMC_Mcast_Transport ();
+  ~TAO_UIPMC_Mcast_Transport () override;
 
   /// Look for the documentation in Transport.h.
-  virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0);
+  int handle_input (TAO_Resume_Handle &rh,
+                    ACE_Time_Value *max_wait_time = nullptr) override;
 
 protected:
   /** @name Overridden Template Methods
@@ -69,39 +69,39 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  virtual ACE_Event_Handler *event_handler_i ();
-  virtual TAO_Connection_Handler *connection_handler_i ();
+  ACE_Event_Handler *event_handler_i () override;
+  TAO_Connection_Handler *connection_handler_i () override;
 
   /// Write the complete Message_Block chain to the connection.
   /// Shouldn't ever be called on the server side.
-  virtual ssize_t send (iovec *,
+  ssize_t send (iovec *,
                         int,
                         size_t &,
-                        ACE_Time_Value const *);
+                        ACE_Time_Value const *) override;
 
   /// Shouldn't ever be called. We use recv_all() with different semantics.
-  virtual ssize_t recv (char *,
+  ssize_t recv (char *,
                         size_t,
-                        ACE_Time_Value const *);
+                        ACE_Time_Value const *) override;
 
-  virtual int register_handler ();
+  int register_handler () override;
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful
   /// names. The names seem to indicate nothing.
   /// Shouldn't ever be called on the server side.
-  virtual int send_request (TAO_Stub *,
+  int send_request (TAO_Stub *,
                             TAO_ORB_Core *,
                             TAO_OutputCDR &,
                             TAO_Message_Semantics,
-                            ACE_Time_Value *);
+                            ACE_Time_Value *) override;
 
   /// Shouldn't ever be called on the server side.
-  virtual int send_message (TAO_OutputCDR &,
-                            TAO_Stub * = 0,
-                            TAO_ServerRequest * = 0,
+  int send_message (TAO_OutputCDR &,
+                            TAO_Stub * = nullptr,
+                            TAO_ServerRequest * = nullptr,
                             TAO_Message_Semantics = TAO_Message_Semantics (),
-                            ACE_Time_Value * = 0);
+                            ACE_Time_Value * = nullptr) override;
   //@}
 
 private:
@@ -135,7 +135,7 @@ private:
   TAO_SYNCH_MUTEX recv_lock_;
 
   /// Complete packets.
-  typedef ACE_Unbounded_Queue<TAO_PG::UIPMC_Recv_Packet *> Packets_Queue;
+  using Packets_Queue = ACE_Unbounded_Queue<TAO_PG::UIPMC_Recv_Packet *>;
   Packets_Queue complete_;
 
   /// A lock for access synchronization to complete queue.

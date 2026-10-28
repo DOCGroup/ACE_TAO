@@ -53,13 +53,13 @@ public:
   TAO_OC_Endpoint_Selector_Factory () = default;
 
   /// Destructor.
-  virtual ~TAO_OC_Endpoint_Selector_Factory ();
+  ~TAO_OC_Endpoint_Selector_Factory () override;
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
+  TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 protected:
   /// The possible endpoint selector strategies that can be
@@ -68,6 +68,14 @@ protected:
   TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_ {};
 
   int register_orb_initializer ();
+
+private:
+  TAO_OC_Endpoint_Selector_Factory (TAO_OC_Endpoint_Selector_Factory const &) = delete;
+  TAO_OC_Endpoint_Selector_Factory &operator= (
+    TAO_OC_Endpoint_Selector_Factory const &) = delete;
+  TAO_OC_Endpoint_Selector_Factory (TAO_OC_Endpoint_Selector_Factory &&) = delete;
+  TAO_OC_Endpoint_Selector_Factory &operator= (
+    TAO_OC_Endpoint_Selector_Factory &&) = delete;
 };
 
 

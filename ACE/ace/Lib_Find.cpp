@@ -173,7 +173,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       else
         {
 #if defined (ACE_WIN32)
-          ACE_TCHAR *file_component = 0;
+          ACE_TCHAR *file_component = nullptr;
           DWORD pathlen =
             ACE_TEXT_SearchPath (0,
                                  searchfilename,

@@ -52,7 +52,7 @@ class TAO_Notify_LogConsumer :
 {
 public:
   /// Constructor.
-  TAO_Notify_LogConsumer (TAO_NotifyLog_i *log);
+  TAO_Notify_LogConsumer (TAO_NotifyLog_i * log);
 
   /// Connect to NotifyLog.
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
@@ -62,18 +62,22 @@ public:
 
 protected:
   /// Destructor.
-  virtual ~TAO_Notify_LogConsumer ();
+  ~TAO_Notify_LogConsumer () override;
 
   // = NotifyPublish method
-  virtual void offer_change (
-      const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+  void offer_change (
+    CosNotification::EventTypeSeq const & added,
+    CosNotification::EventTypeSeq const & removed) override;
 
   // = PushSupplier methods
-  virtual void push (const CORBA::Any & event);
+  void push (CORBA::Any const & event) override;
 
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
+
+  TAO_Notify_LogConsumer (TAO_Notify_LogConsumer const &) = delete;
+  TAO_Notify_LogConsumer (TAO_Notify_LogConsumer &&) = delete;
+  TAO_Notify_LogConsumer & operator= (TAO_Notify_LogConsumer const &) = delete;
+  TAO_Notify_LogConsumer & operator= (TAO_Notify_LogConsumer &&) = delete;
 
   /// ProxyPushSupplier used to connect to NotifyLog.
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
@@ -83,7 +87,7 @@ protected:
 
   /// The NotifyLog that this consumer connects to
   /// and whose events are to be logged.
-  TAO_NotifyLog_i *log_;
+  TAO_NotifyLog_i * log_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

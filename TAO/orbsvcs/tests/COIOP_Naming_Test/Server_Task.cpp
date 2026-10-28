@@ -21,7 +21,7 @@ Server_Task::svc ()
  try
    {
      CORBA::Object_var poa_object =
-       this->sorb_->resolve_initial_references("RootPOA");
+       this->sorb_->resolve_initial_references ("RootPOA");
 
      PortableServer::POA_var root_poa =
        PortableServer::POA::_narrow (poa_object.in ());
@@ -34,22 +34,22 @@ Server_Task::svc ()
      PortableServer::POAManager_var poa_manager =
        root_poa->the_POAManager ();
 
-     Hello *hello_impl = 0;
+     Hello *hello_impl = nullptr;
      ACE_NEW_RETURN (hello_impl,
                      Hello (this->sorb_.in (),
                             ACE_Thread::self ()),
                      1);
 
-     PortableServer::ServantBase_var owner_transfer(hello_impl);
+     PortableServer::ServantBase_var owner_transfer (hello_impl);
 
      Test::Hello_var hello =
        hello_impl->_this ();
 
      CosNaming::NamingContext_var example_nc;
      CosNaming::Name name;
-     name.length(1);
-     name[0].id = CORBA::string_dup("Hello");
-     root_context_->rebind(name, hello.in());
+     name.length (1);
+     name[0].id = CORBA::string_dup ("Hello");
+     root_context_->rebind (name, hello.in ());
 
      poa_manager->activate ();
 
@@ -61,7 +61,7 @@ Server_Task::svc ()
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
    }
- catch (const CORBA::Exception& ex)
+ catch (CORBA::Exception const & ex)
    {
      ex._tao_print_exception ("Exception caught:");
      return 1;

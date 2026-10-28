@@ -158,6 +158,10 @@ public:
   /// Report whether fragmented input is pending for the idle scanner.
   bool has_pending_fragments () const;
 
+  /// Close a connection, first sending GIOP::CloseConnection.
+  void send_close_connection (TAO_GIOP_Message_Version const &version,
+                              TAO_Transport *transport);
+
 private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
@@ -209,10 +213,6 @@ private:
 
   /// Send error messages
   int send_error (TAO_Transport *transport);
-
-  /// Close a connection, first sending GIOP::CloseConnection.
-  void send_close_connection (const TAO_GIOP_Message_Version &version,
-                              TAO_Transport *transport);
 
   /// We must send a LocateReply through @a transport, this request
   /// resulted in some kind of exception.

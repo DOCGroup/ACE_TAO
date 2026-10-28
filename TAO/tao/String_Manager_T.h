@@ -36,8 +36,8 @@ template <typename charT>
 class String_Manager_T
 {
 public:
-  typedef charT character_type;
-  typedef TAO::details::string_traits_base <charT> s_traits;
+  using character_type = charT;
+  using s_traits = TAO::details::string_traits_base<charT>;
 
   /// Default CTOR will initialize the underlying ptr_ to empty string.
   inline String_Manager_T () : ptr_ (s_traits::default_initializer())
@@ -130,8 +130,8 @@ private:
   character_type *ptr_;
 };
 
-  typedef TAO::String_Manager_T<CORBA::Char> String_Manager;
-  typedef TAO::String_Manager_T<CORBA::WChar> WString_Manager;
+  using String_Manager = TAO::String_Manager_T<CORBA::Char>;
+  using WString_Manager = TAO::String_Manager_T<CORBA::WChar>;
 }
 
 inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)

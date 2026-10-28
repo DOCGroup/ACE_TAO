@@ -29,7 +29,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq
   : public ACE_Unbounded_Set <TAO_Notify_EventType>
   , public TAO_Notify::Topology_Object
 {
- typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
+  using inherited = ACE_Unbounded_Set <TAO_Notify_EventType>;
 
 public:
   /// Constructor

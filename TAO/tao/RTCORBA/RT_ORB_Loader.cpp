@@ -13,14 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_ORB_Loader::TAO_RT_ORB_Loader ()
-  : initialized_ (false)
-{
-}
-
-TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader ()
-{
-}
+TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader () = default;
 
 int
 TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
@@ -41,7 +34,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
       "RT_ORB_Loader",
       true);
 
-  if (rt_loader != 0 && rt_loader != this)
+  if (rt_loader != nullptr && rt_loader != this)
     {
       return rt_loader->init (argc, argv);
     }
@@ -63,7 +56,7 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   // Parse any service configurator parameters.
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = 0;
+      ACE_TCHAR const *current_arg = nullptr;
       if (0 != (current_arg = arg_shifter.get_the_parameter
                   (ACE_TEXT("-ORBPriorityMapping"))))
         {

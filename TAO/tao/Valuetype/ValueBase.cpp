@@ -47,9 +47,7 @@ TAO_ChunkInfo::TAO_ChunkInfo (CORBA::Boolean do_chunking,
                               CORBA::Long init_level)
   : chunking_(do_chunking),
     value_nesting_level_(init_level),
-    chunk_size_pos_ (0),
-    length_to_chunk_octets_pos_ (0),
-    chunk_octets_end_pos_ (0)
+    length_to_chunk_octets_pos_ (0)
 {
 }
 
@@ -69,14 +67,10 @@ CORBA::ValueBase::_copy_value ()
     __FILE__,
     __LINE__,
     ACE_TEXT_CHAR_TO_TCHAR ("Valuetype's _copy_value() should be implemented in user's most derived class"));
-  return 0;
+  return nullptr;
 }
 
-CORBA::ValueBase::ValueBase ()
-  : is_truncatable_(0),
-    chunking_(0)
-{
-}
+CORBA::ValueBase::ValueBase () = default;
 
 CORBA::ValueBase::ValueBase (const ValueBase& val)
   : is_truncatable_ (val.is_truncatable_),
@@ -250,7 +244,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (
 
   if (!result || is_null_object)
     {
-      valuetype = 0;
+      valuetype = nullptr;
       return result;
     }
   if (is_indirected)
@@ -371,7 +365,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   Repository_Id_List &ids,
   CORBA::Boolean &is_chunked)
 {
-  valuetype = 0;
+  valuetype = nullptr;
 
   TAO_ORB_Core *orb_core = strm.orb_core ();
   if (!orb_core)
@@ -399,7 +393,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   for (size_t i = 0u; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
-      if (factory.in() != 0)
+  if (factory.in() != nullptr)
         {
           id = ids[i].c_str ();
           requires_truncation = (i != 0u);
@@ -408,7 +402,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
     }
 
   // Obtain the actual ValueType from the factory
-  if (factory.in() == 0 || (valuetype = factory->create_for_unmarshal ()) == 0)
+  if (factory.in() == nullptr || (valuetype = factory->create_for_unmarshal ()) == nullptr)
     {
       if (TAO_debug_level)
         {
@@ -894,7 +888,7 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
 
   VERIFY_MAP (TAO_OutputCDR, repo_id_map, Repo_Id_Map);
-  char* pos = 0;
+  char* pos = nullptr;
   if (strm.get_repo_id_map ()->get()->find (id, pos) == 0)
   {
     if (!strm.write_long (TAO_OBV_GIOP_Flags::Indirection_tag))
@@ -1005,7 +999,7 @@ TAO_ChunkInfo::end_chunk(TAO_OutputCDR &strm)
 CORBA::Boolean
 TAO_ChunkInfo::write_previous_chunk_size(TAO_OutputCDR &strm)
 {
-  if (this->chunk_size_pos_ != 0)
+  if (this->chunk_size_pos_ != nullptr)
     {
       // Calculate the chunk size.
       CORBA::Long const chunk_size =
@@ -1028,7 +1022,7 @@ TAO_ChunkInfo::write_previous_chunk_size(TAO_OutputCDR &strm)
         }
 
       // We finish writing the actual chunk size, now we need reset the state.
-      this->chunk_size_pos_ = 0;
+      this->chunk_size_pos_ = nullptr;
       this->length_to_chunk_octets_pos_ = 0;
     }
 
@@ -1044,7 +1038,7 @@ TAO_ChunkInfo::reserve_chunk_size(TAO_OutputCDR &strm)
   // calling end_chunk (). This could happen in the _tao_marshal_state()
   // in the most derived valuetype.
 
-  if (this->chunk_size_pos_ == 0)
+  if (this->chunk_size_pos_ == nullptr)
     {
       // Align the wr_ptr before we reserve the space for chunk size.
       strm.align_write_ptr (ACE_CDR::LONG_SIZE);
@@ -1120,7 +1114,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
       this->value_nesting_level_ = - tag;
       --this->value_nesting_level_;
 
-      this->chunk_octets_end_pos_ = 0;
+      this->chunk_octets_end_pos_ = nullptr;
 
       // Continue reading so that we can read the outmost endtag. This
       // would simplify the implementation in the derived valuetype.

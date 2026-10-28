@@ -15,7 +15,7 @@
 #include "ace/Task.h"
 #include "ami_test_i.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
@@ -24,7 +24,7 @@ int perform_work_flag = 1;
 int number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
-const char * in_str = "Let's talk AMI.";
+char const *in_str = "Let's talk AMI.";
 int parameter_corruption = 0;
 
 int
@@ -84,9 +84,13 @@ class Client : public ACE_Task_Base
 public:
   /// ctor
   Client (A::AMI_Test_ptr server, int niterations);
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
   // private:
   /// Var for the AMI_Test object.
@@ -107,7 +111,7 @@ public:
   };
 
   void foo (CORBA::Long result,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       if (result == 0)
         {
@@ -126,7 +130,7 @@ public:
       --number_of_replies;
     };
 
-   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
@@ -140,26 +144,26 @@ public:
         }
     };
 
-  void get_yadda (CORBA::Long result)
+  void get_yadda (CORBA::Long result) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *)
+  void get_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda ()
+  void set_yadda () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *)
+  void set_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
@@ -168,13 +172,13 @@ public:
   {
   };
 
-  void inout_arg_test (const char *)
+  void inout_arg_test (char const *) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Callback method <set_yadda_excep> called:\n"));
   }
 
-  void inout_arg_test_excep (::Messaging::ExceptionHolder *)
+  void inout_arg_test_excep (::Messaging::ExceptionHolder *) override
   {
   }
 };

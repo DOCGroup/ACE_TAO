@@ -129,6 +129,8 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   // Now generate the private data members of the union.
   *os << "private:" << be_idt_nl;
+  *os << "static unsigned long _tao_member_index ("
+      << bt->nested_type_name (node) << ");" << be_nl;
   *os << bt->nested_type_name (node) << " disc_;" << be_nl_2;
 
   // A user-provided constructor allows fixed structures with default member

@@ -78,7 +78,7 @@ public:
                       bool is_heap_allocated = false);
 
   /// Destructor
-  virtual ~TAO_Queued_Message ();
+  ~TAO_Queued_Message () override;
 
   /** @name Intrusive list manipulation
    *
@@ -227,6 +227,11 @@ protected:
   TAO_ORB_Core *orb_core_;
 
 private:
+  TAO_Queued_Message (TAO_Queued_Message const &) = delete;
+  TAO_Queued_Message &operator= (TAO_Queued_Message const &) = delete;
+  TAO_Queued_Message (TAO_Queued_Message &&) = delete;
+  TAO_Queued_Message &operator= (TAO_Queued_Message &&) = delete;
+
   /// Implement an intrusive double-linked list for the message queue
   TAO_Queued_Message *next_;
   TAO_Queued_Message *prev_;

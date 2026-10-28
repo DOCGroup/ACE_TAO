@@ -28,7 +28,7 @@ Test_Unbounded_String::~Test_Unbounded_String ()
   this->opname_ = 0;
 }
 
-const char *
+char const *
 Test_Unbounded_String::opname () const
 {
   return this->opname_;

@@ -13,22 +13,22 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 ImR_Adapter::ImR_Adapter ()
-  : default_servant_ (0)
+  : default_servant_ (nullptr)
 {
 }
 
 void
-ImR_Adapter::init (TAO_ServantBase * servant)
+ImR_Adapter::init (TAO_ServantBase *servant)
 {
   default_servant_ = servant;
 }
 
 CORBA::Boolean
 ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
-                              const char *name)
+                              char const *name)
 {
   ACE_ASSERT (! CORBA::is_nil(parent));
-  ACE_ASSERT (name != 0);
+  ACE_ASSERT (name != nullptr);
   CORBA::PolicyList policies (3);
 
   const char *exception_message = "Null Message";

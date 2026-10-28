@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Timer_Reactor : public TAO_Notify_Timer
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Reactor > Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Reactor >;
 
   /// Constructor
   TAO_Notify_Timer_Reactor ();
@@ -41,12 +41,12 @@ public:
   virtual ~TAO_Notify_Timer_Reactor ();
 
   /// Schedule a timer
-  virtual long schedule_timer (ACE_Event_Handler *handler,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval);
+  long schedule_timer (ACE_Event_Handler *handler,
+                       const ACE_Time_Value &delay_time,
+                       const ACE_Time_Value &interval) override;
 
   /// Cancel Timer
-  virtual int cancel_timer (long timer_id);
+  int cancel_timer (long timer_id) override;
 
 protected:
   /// The instance reactor that we use.

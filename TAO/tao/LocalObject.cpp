@@ -13,9 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::LocalObject::~LocalObject ()
-{
-}
+CORBA::LocalObject::~LocalObject () = default;
 
 // Quickly hash an object reference's representation data.  Used to
 // create hash tables.

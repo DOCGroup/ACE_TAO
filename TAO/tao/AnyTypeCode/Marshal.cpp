@@ -21,9 +21,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Marshal_Object::~TAO_Marshal_Object ()
-{
-}
+TAO_Marshal_Object::~TAO_Marshal_Object () = default;
 
 TAO::traverse_status
 TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
@@ -33,7 +31,6 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   switch (kind)
     {
     default:
-    case CORBA::tk_fixed:
     case CORBA::tk_native:
     case CORBA::tk_abstract_interface:
     case CORBA::tk_component:
@@ -57,6 +54,7 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     case CORBA::tk_longdouble:
     case CORBA::tk_wchar:
     case CORBA::tk_enum:
+    case CORBA::tk_fixed:
       {
         TAO_Marshal_Primitive marshal;
         return marshal.skip (tc, stream);
@@ -142,7 +140,6 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
   switch (kind)
     {
     default:
-    case CORBA::tk_fixed:
     case CORBA::tk_native:
     case CORBA::tk_abstract_interface:
     case CORBA::tk_component:
@@ -166,6 +163,7 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
     case CORBA::tk_longdouble:
     case CORBA::tk_wchar:
     case CORBA::tk_enum:
+    case CORBA::tk_fixed:
       {
         TAO_Marshal_Primitive marshal;
         return marshal.append (tc, src, dest);

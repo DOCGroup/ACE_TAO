@@ -9,7 +9,7 @@ EventSequenceConsumer_i::EventSequenceConsumer_i(CORBA::ORB_ptr orb)
 
 void
 EventSequenceConsumer_i::push_structured_events (
-  const CosNotification::EventBatch& events
+  CosNotification::EventBatch const & events
   )
 {
   std::cout << "events received " << std::endl;
@@ -37,8 +37,8 @@ EventSequenceConsumer_i::disconnect_sequence_push_consumer ()
 
 void
 EventSequenceConsumer_i::offer_change (
-   const CosNotification::EventTypeSeq &,
-   const CosNotification::EventTypeSeq &
+   CosNotification::EventTypeSeq const &,
+   CosNotification::EventTypeSeq const &
    )
 {
 }

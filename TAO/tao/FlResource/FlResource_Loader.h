@@ -45,6 +45,12 @@ namespace TAO
     FlResource_Loader ();
 
     virtual ~FlResource_Loader ();
+
+  private:
+    FlResource_Loader (FlResource_Loader const &) = delete;
+    FlResource_Loader &operator= (FlResource_Loader const &) = delete;
+    FlResource_Loader (FlResource_Loader &&) = delete;
+    FlResource_Loader &operator= (FlResource_Loader &&) = delete;
   };
 }
 

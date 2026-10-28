@@ -11,25 +11,25 @@
 
 #include "ace/Recursive_Thread_Mutex.h"
 
-static const int NUM_INVOCATIONS = 10;
-static const int MAX_TASKS = 20;
+static constexpr int NUM_INVOCATIONS = 10;
+static constexpr int MAX_TASKS = 20;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Test_Task ();
-  ~Test_Task ();
+  ~Test_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *args = 0);
-  virtual int close (u_long flags = 0);
+  int open (void *args = nullptr) override;
+  int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc ();
+  int svc () override;
 
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE fd,
-                            ACE_Reactor_Mask close_mask);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE fd,
+                            ACE_Reactor_Mask close_mask) override;
 
 private:
   int handled_;
@@ -153,7 +153,7 @@ worker (void *args)
       // ACE_DEBUG ((LM_DEBUG, "(%t) done with handle_events\n"));
     }
 
-  ACE_NOTREACHED(return 0);
+  ACE_NOTREACHED(return nullptr);
 }
 
 int

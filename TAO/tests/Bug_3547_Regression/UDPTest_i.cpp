@@ -1,7 +1,7 @@
 #include "UDPTest_i.h"
 #include <ace/Log_Msg.h>
 
-unsigned char buf[1000] = {0} ;
+unsigned char buf[1000] = {0};
 
 UDPTest_i::UDPTest_i () : received_send_ (false)
 {
@@ -11,9 +11,9 @@ UDPTest_i::~UDPTest_i ()
 {
 }
 
-void UDPTest_i::send( const ::UDPTestI::BufferT Msg )
+void UDPTest_i::send (::UDPTestI::BufferT const Msg)
 {
-    memcpy( buf, Msg, 1000 );
-    memset( buf, 0, 1000 );
-    received_send_ = true;
+  ACE_OS::memcpy (buf, Msg, 1000);
+  ACE_OS::memset (buf, 0, 1000);
+  received_send_ = true;
 }

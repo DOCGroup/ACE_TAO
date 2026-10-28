@@ -159,8 +159,7 @@ protected:
                              unsigned int length);
 };
 
-typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
-        JAWS_Synch_IO_Singleton;
+using JAWS_Synch_IO_Singleton = ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
 
 // This only works on asynch I/O-capable systems.
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
@@ -232,8 +231,7 @@ protected:
                              long act);
 };
 
-typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
-        JAWS_Asynch_IO_Singleton;
+using JAWS_Asynch_IO_Singleton = ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>;
 
 /**
  * @class JAWS_Asynch2_IO
@@ -248,8 +246,7 @@ public:
                        unsigned int size = 0);
 };
 
-typedef ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>
-        JAWS_Asynch2_IO_Singleton;
+using JAWS_Asynch2_IO_Singleton = ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>;
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 

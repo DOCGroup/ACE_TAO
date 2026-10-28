@@ -20,7 +20,7 @@ UpdateableServerInfo::UpdateableServerInfo (const Repository_Ptr& repo,
 {
   if (reset_start_count)
     {
-      needs_update_ = repo_.get() != 0;
+      needs_update_ = repo_.get () != nullptr;
       si_->active_info ()->start_count_ = 0;
     }
 }
@@ -86,7 +86,7 @@ UpdateableServerInfo::operator* () const
 const Server_Info_Ptr&
 UpdateableServerInfo::edit (bool active)
 {
-  needs_update_ = active && repo_.get() != 0;
+  needs_update_ = active && repo_.get () != nullptr;
   return si_;
 }
 

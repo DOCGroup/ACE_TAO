@@ -57,7 +57,12 @@ public:
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (int argc, ACE_TCHAR** argv);
+  int parse_args (int argc, ACE_TCHAR **argv);
+
+  Concurrency_Service (Concurrency_Service const &) = delete;
+  Concurrency_Service (Concurrency_Service &&) = delete;
+  Concurrency_Service & operator= (Concurrency_Service const &) = delete;
+  Concurrency_Service & operator= (Concurrency_Service &&) = delete;
 
   /**
    * Initialize the name server and register the concurency server
@@ -67,14 +72,14 @@ private:
    */
   int init_naming_service ();
 
-  /// Flag to tell wheter the naming service will be used.
-  int use_naming_service_;
+  /// Flag to tell whether the naming service will be used.
+  bool use_naming_service_ {true};
 
   /// The name of the file where we output the IOR.
-  const ACE_TCHAR *ior_file_name_;
+  ACE_TCHAR const *ior_file_name_ {};
 
   /// The name of a file where the process stores its pid.
-  const ACE_TCHAR *pid_file_name_;
+  ACE_TCHAR const *pid_file_name_ {};
 
   /// The ORB manager
   TAO_ORB_Manager orb_manager_;

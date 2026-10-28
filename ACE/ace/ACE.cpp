@@ -276,7 +276,7 @@ ACE::execname (const ACE_TCHAR *old_name)
   const ACE_TCHAR *suffix = ACE_OS::strrchr (old_name, ACE_TEXT ('.'));
   if (suffix == 0 || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
     {
-      ACE_TCHAR *new_name = 0;
+      ACE_TCHAR *new_name = nullptr;
 
       size_t size =
         ACE_OS::strlen (old_name)

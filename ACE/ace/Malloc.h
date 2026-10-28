@@ -34,7 +34,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
+using ACE_INT = ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 
 /******************************************************************
 

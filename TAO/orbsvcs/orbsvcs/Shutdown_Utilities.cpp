@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf)
+Service_Shutdown::Service_Shutdown (Shutdown_Functor &sf)
   : functor_(sf)
 {
   ACE_Sig_Set std_signals;
@@ -16,7 +16,7 @@ Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf)
   this->set_signals (std_signals);
 }
 
-Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf, ACE_Sig_Set& which_signals)
+Service_Shutdown::Service_Shutdown (Shutdown_Functor &sf, ACE_Sig_Set &which_signals)
   : functor_(sf)
 {
   this->set_signals (which_signals);
@@ -32,7 +32,7 @@ Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf, ACE_Sig_Set& which_sig
 // an ACE_Sig_Set as an argument and handled all this stuff itself.
 //
 void
-Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
+Service_Shutdown::set_signals (ACE_Sig_Set &which_signals)
 {
   // iterate over all the signals in which_signals and register them...
   bool did_register = false;
@@ -69,13 +69,13 @@ Service_Shutdown::~Service_Shutdown ()
     {
       if (this->registered_signals_.is_member (i))
         {
-          this->shutdown_.remove_handler(i);
+          this->shutdown_.remove_handler (i);
         }
     }
 }
 
 int
-Service_Shutdown::handle_signal (int signum, siginfo_t*, ucontext_t*)
+Service_Shutdown::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   this->functor_(signum);
   return 0;

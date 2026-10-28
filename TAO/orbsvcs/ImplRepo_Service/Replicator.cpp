@@ -14,7 +14,7 @@ UPN_i::UPN_i (Replicator &owner)
 
 void
 UPN_i::notify_update (CORBA::ULongLong seq_num,
-                      const ImplementationRepository::UpdateInfoSeq& info)
+                      ImplementationRepository::UpdateInfoSeq const& info)
 {
   bool missed = false;
   CORBA::ULongLong expected = ++this->owner_.replica_seq_num_;
@@ -68,7 +68,7 @@ Replicator::Replicator (Shared_Backing_Store &repo, const Options& opts)
     repo_ (repo),
     prev_update_ (),
     orb_ (),
-    reactor_ (0),
+    reactor_ (nullptr),
     lock_ (),
     notified_ (false),
     to_send_ (10),
@@ -100,8 +100,8 @@ Replicator::init_orb ()
     }
   else
     {
-      argv[6] = 0;
-      argv[7] = 0;
+      argv[6] = nullptr;
+      argv[7] = nullptr;
     }
   this->orb_ = CORBA::ORB_init (argc, argv, "replicator_orb");
   this->reactor_ = this->orb_->orb_core ()->reactor ();
@@ -133,7 +133,7 @@ Replicator::peer_available ()
 void
 Replicator::stop ()
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return;
     }
@@ -143,7 +143,7 @@ Replicator::stop ()
 int
 Replicator::svc ()
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return 0;
     }
@@ -191,7 +191,7 @@ Replicator::handle_exception (ACE_HANDLE )
               this->to_send_[l].action.state () != ImplementationRepository::AAM_UPDATE_FAILED)
             {
               payload[p++] = this->to_send_[l];
-              if (this->to_send_[l].action._d () != ImplementationRepository::access)
+              if (this->to_send_[l].action._d () == ImplementationRepository::access)
                 {
                   ACE_CString sid = this->to_send_[l].name.in();
                   this->prev_update_.bind (sid, this->to_send_[l].action.state ());
@@ -206,6 +206,7 @@ Replicator::handle_exception (ACE_HANDLE )
     }
   catch (const CORBA::Exception &)
     {
+      this->prev_update_.unbind_all ();
       this->peer_ =
         ImplementationRepository::UpdatePushNotification::_nil ();
     }
@@ -215,7 +216,7 @@ Replicator::handle_exception (ACE_HANDLE )
 void
 Replicator::send_access_state (const char *name, ImplementationRepository::AAM_Status state)
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return;
     }
@@ -252,7 +253,7 @@ Replicator::send_access_state (const char *name, ImplementationRepository::AAM_S
 void
 Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
 {
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     {
       return;
     }

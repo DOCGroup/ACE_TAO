@@ -20,7 +20,7 @@ namespace TAO
     CORBA::Policy_ptr
     ServantRetentionPolicy::copy ()
     {
-      ServantRetentionPolicy *copy = 0;
+      ServantRetentionPolicy *copy = nullptr;
       ACE_NEW_THROW_EX (copy,
                         ServantRetentionPolicy (this->value_),
                         CORBA::NO_MEMORY ());

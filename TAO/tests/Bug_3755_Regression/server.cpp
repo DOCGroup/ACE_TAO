@@ -14,7 +14,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:y:z:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -86,18 +86,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RTCORBA::PriorityMappingManager_var mappingMgr1 =
         RTCORBA::PriorityMappingManager::_narrow (pmMgrObj1.in ());
 
-      RTCORBA::PriorityMapping * priorityMapping1 = mappingMgr1->mapping ();
+      RTCORBA::PriorityMapping *priorityMapping1 = mappingMgr1->mapping ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Priority Manager & mapping interfaces resolved.\n"));
 
       // Write the mapping to a file
-      FILE *output_file = 0;
-      if (mapping_file1 != 0)
+      FILE *output_file = nullptr;
+      if (mapping_file1 != nullptr)
         {
           output_file = ACE_OS::fopen (mapping_file1, "w");
 
-          if (output_file == 0)
+          if (output_file == nullptr)
             {
               ACE_ERROR ((LM_ERROR,
                           "Cannot open output file for mapping 1\n"));
@@ -105,9 +105,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      short rtCorbaPriority1 = RTCORBA::minPriority - 1;
-      short nativePriority1 = 0;
-      bool status1 = false;
+      short rtCorbaPriority1 {RTCORBA::minPriority - 1};
+      short nativePriority1 {};
+      bool status1 {};
 
       ACE_DEBUG ((LM_DEBUG,
                   "Sending mapped priorities to %s...\n",
@@ -143,18 +143,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RTCORBA::PriorityMappingManager_var mappingMgr2 =
         RTCORBA::PriorityMappingManager::_narrow (pmMgrObj2.in ());
 
-      RTCORBA::PriorityMapping * priorityMapping2 = mappingMgr2->mapping ();
+      RTCORBA::PriorityMapping *priorityMapping2 = mappingMgr2->mapping ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Priority Manager & mapping interfaces resolved.\n"));
 
       // Write the mapping to a file
-      output_file = 0;
-      if (mapping_file2 != 0)
+      output_file = nullptr;
+      if (mapping_file2 != nullptr)
         {
           output_file = ACE_OS::fopen (mapping_file2, "w");
 
-          if (output_file == 0)
+          if (output_file == nullptr)
             {
               ACE_ERROR ((LM_ERROR,
                           "Cannot open output file for mapping 1\n"));
@@ -162,9 +162,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      short rtCorbaPriority2 = RTCORBA::minPriority - 1;
-      short nativePriority2 = 0;
-      bool status2 = false;
+      short rtCorbaPriority2 {RTCORBA::minPriority - 1};
+      short nativePriority2 {};
+      bool status2 {};
 
       ACE_DEBUG ((LM_DEBUG,
                   "Sending mapped priorities to %s...\n",
@@ -196,7 +196,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // END priority mapping demonstration
     }
-  catch (const CORBA::SystemException &sysEx)
+  catch (CORBA::SystemException const &sysEx)
     {
       sysEx._tao_print_exception ("Caught SystemException in main:\n");
       return 1;

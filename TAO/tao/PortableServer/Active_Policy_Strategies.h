@@ -53,24 +53,28 @@ namespace TAO
     {
     public:
       Active_Policy_Strategies () = default;
+      Active_Policy_Strategies (Active_Policy_Strategies const &) = delete;
+      Active_Policy_Strategies &operator= (Active_Policy_Strategies const &) = delete;
+      Active_Policy_Strategies (Active_Policy_Strategies &&) = delete;
+      Active_Policy_Strategies &operator= (Active_Policy_Strategies &&) = delete;
 
-      void update (Cached_Policies &policies, TAO_Root_POA* poa);
+      void update (Cached_Policies &policies, TAO_Root_POA *poa);
 
       void cleanup ();
 
-      ThreadStrategy *thread_strategy () const;
+      ThreadStrategy * thread_strategy () const;
 
-      RequestProcessingStrategy *request_processing_strategy () const;
+      RequestProcessingStrategy * request_processing_strategy () const;
 
-      IdAssignmentStrategy *id_assignment_strategy () const;
+      IdAssignmentStrategy * id_assignment_strategy () const;
 
-      IdUniquenessStrategy *id_uniqueness_strategy () const;
+      IdUniquenessStrategy * id_uniqueness_strategy () const;
 
-      LifespanStrategy *lifespan_strategy () const;
+      LifespanStrategy * lifespan_strategy () const;
 
-      ImplicitActivationStrategy *implicit_activation_strategy () const;
+      ImplicitActivationStrategy * implicit_activation_strategy () const;
 
-      ServantRetentionStrategy *servant_retention_strategy () const;
+      ServantRetentionStrategy * servant_retention_strategy () const;
 
     private:
       void create (::PortableServer::ThreadPolicyValue value);
@@ -79,7 +83,9 @@ namespace TAO
       void create (::PortableServer::ServantRetentionPolicyValue value);
       void create (::PortableServer::LifespanPolicyValue value);
       void create (::PortableServer::ImplicitActivationPolicyValue value);
-      void create (::PortableServer::RequestProcessingPolicyValue value, ::PortableServer::ServantRetentionPolicyValue srvalue);
+      void create (
+        ::PortableServer::RequestProcessingPolicyValue value,
+        ::PortableServer::ServantRetentionPolicyValue srvalue);
 
     private:
       std::unique_ptr<ThreadStrategy> thread_strategy_ {};
@@ -99,12 +105,18 @@ namespace TAO
     {
     public:
       Active_Policy_Strategies_Cleanup_Guard () = delete;
-      Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
+      explicit Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
       ~Active_Policy_Strategies_Cleanup_Guard ();
+      Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies_Cleanup_Guard const &) = delete;
+      Active_Policy_Strategies_Cleanup_Guard &operator= (
+        Active_Policy_Strategies_Cleanup_Guard const &) = delete;
+      Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies_Cleanup_Guard &&) = delete;
+      Active_Policy_Strategies_Cleanup_Guard &operator= (
+        Active_Policy_Strategies_Cleanup_Guard &&) = delete;
       Active_Policy_Strategies *_retn ();
 
     private:
-      Active_Policy_Strategies *ptr_;
+      Active_Policy_Strategies *ptr_ {};
     };
   }
 }

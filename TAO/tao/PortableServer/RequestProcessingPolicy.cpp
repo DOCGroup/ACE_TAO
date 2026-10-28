@@ -21,7 +21,7 @@ namespace TAO
     CORBA::Policy_ptr
     RequestProcessingPolicy::copy ()
     {
-      RequestProcessingPolicy *copy = 0;
+      RequestProcessingPolicy *copy = nullptr;
       ACE_NEW_THROW_EX (copy,
                         RequestProcessingPolicy (this->value_),
                         CORBA::NO_MEMORY ());

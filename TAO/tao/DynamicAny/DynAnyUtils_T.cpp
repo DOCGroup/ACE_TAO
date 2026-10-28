@@ -18,6 +18,7 @@
 #include "tao/DynamicAny/DynAny_i.h"
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynEnum_i.h"
+#include "tao/DynamicAny/DynFixed_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
@@ -52,7 +53,7 @@ namespace TAO
       {
         the_dynany->check_type (BasicTypeTraits<T>::tc_value);
         CORBA::Any &my_any = the_dynany->the_any ();
-        typedef typename TAO::BasicTypeTraits<T>::insert_type i_type;
+        using i_type = typename TAO::BasicTypeTraits<T>::insert_type;
         i_type insert_arg (val);
         my_any <<= insert_arg;
       }
@@ -75,8 +76,8 @@ namespace TAO
       }
     else
       {
-        typedef typename BasicTypeTraits<T>::return_type ret_type;
-        typedef typename BasicTypeTraits<T>::extract_type ext_type;
+        using ret_type = typename BasicTypeTraits<T>::return_type;
+        using ext_type = typename BasicTypeTraits<T>::extract_type;
         ret_type retval = ret_type ();
         ext_type extval (retval);
         const CORBA::Any &my_any = the_dynany->the_any ();
@@ -254,6 +255,11 @@ namespace TAO
               ANY_TC>::create_dyn_any_t (any_tc, allow_truncation);
 
         case CORBA::tk_fixed:
+          return
+            CreateDynAnyUtils<
+              TAO_DynFixed_i,
+              ANY_TC>::create_dyn_any_t (any_tc, allow_truncation);
+
         case CORBA::tk_abstract_interface:
         case CORBA::tk_component:
         case CORBA::tk_home:

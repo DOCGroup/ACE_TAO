@@ -44,16 +44,16 @@ class TAO_RTCORBA_Export TAO_RT_Current
 {
 public:
   /// Default constructor.
-  TAO_RT_Current (TAO_ORB_Core *orb_core);
+  explicit TAO_RT_Current (TAO_ORB_Core *orb_core);
 
-  virtual RTCORBA::Priority the_priority ();
+  RTCORBA::Priority the_priority () override;
 
-  virtual void the_priority (RTCORBA::Priority the_priority);
+  void the_priority (RTCORBA::Priority the_priority) override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_RT_Current ();
+  ~TAO_RT_Current () override;
 
 private:
   /// ORB Core that owns us.

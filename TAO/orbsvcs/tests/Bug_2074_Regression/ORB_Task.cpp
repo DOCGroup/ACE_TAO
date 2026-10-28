@@ -19,8 +19,8 @@ ORB_Task::svc ()
   try
   {
     CORBA::Object_var ncRef =
-        orb_->string_to_object(
-            "corbaloc:iiop:10.175.12.99:15025/NameService");
+        orb_->string_to_object (
+          "corbaloc:iiop:10.175.12.99:15025/NameService");
 
     CORBA::PolicyList policies;
 
@@ -29,28 +29,28 @@ ORB_Task::svc ()
     CORBA::Any timeoutAny;
     timeoutAny <<= timeout;
 
-    policies.length(1);
-    policies[0] = orb_->create_policy(
+    policies.length (1);
+    policies[0] = orb_->create_policy (
       Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, timeoutAny);
 
-    CORBA::Object_var object = ncRef->_set_policy_overrides(
+    CORBA::Object_var object = ncRef->_set_policy_overrides (
       policies, CORBA::SET_OVERRIDE );
 
-    policies[0]->destroy();
+    policies[0]->destroy ();
 
     CosNaming::NamingContext_var namingContext =
-      CosNaming::NamingContext::_narrow( object.in());
-    namingContext->_non_existent();
+      CosNaming::NamingContext::_narrow (object.in ());
+    namingContext->_non_existent ();
   }
-  catch ( const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
   {
     ACE_DEBUG ((LM_DEBUG, "Caught transient\n"));
   }
-  catch ( const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT const &)
   {
     ACE_DEBUG ((LM_DEBUG, "Caught timeout\n"));
   }
-  catch ( const CORBA::Exception& e )
+  catch (CORBA::Exception const & e)
   {
       e._tao_print_exception ("Exception caught");
   }

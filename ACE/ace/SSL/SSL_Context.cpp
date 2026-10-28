@@ -42,7 +42,7 @@ namespace
 #if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
-  ACE_SSL_Context::lock_type * ssl_locks = 0;
+  ACE_SSL_Context::lock_type * ssl_locks = nullptr;
 
   // @@ This should also be managed by a singleton.
 #endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
@@ -102,7 +102,7 @@ extern "C"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
-ACE_SSL_Context::lock_type * ACE_SSL_Context::locks_ = 0;
+ACE_SSL_Context::lock_type * ACE_SSL_Context::locks_ = nullptr;
 #endif  /* ACE_HAS_THREADS  && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
 ACE_SSL_Context::ACE_SSL_Context ()
@@ -232,11 +232,11 @@ ACE_SSL_Context::ssl_library_fini ()
       // Clean up the locking callbacks after everything else has been
       // cleaned up.
 #ifdef ACE_HAS_THREADS
-      ::CRYPTO_set_locking_callback (0);
-      ssl_locks = 0;
+      ::CRYPTO_set_locking_callback (nullptr);
+      ssl_locks = nullptr;
 
       delete [] this->locks_;
-      this->locks_ = 0;
+      this->locks_ = nullptr;
 #endif /* ACE_HAS_THREADS &&  */
 #endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
     }
@@ -258,7 +258,7 @@ ACE_SSL_Context::set_mode (int mode)
 #if OPENSSL_VERSION_NUMBER >= 0x10000002
   const SSL_METHOD *method = nullptr;
 #else
-  SSL_METHOD *method = 0;
+  SSL_METHOD *method = nullptr;
 #endif
 
   /* these openssl macros negotiate highest available SSL/TLS version */
@@ -451,7 +451,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // Use the default environment settings.
       ca_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
 #ifdef ACE_DEFAULT_SSL_CERT_FILE
-      if (ca_file == 0)
+      if (ca_file == nullptr)
         ca_file = ACE_DEFAULT_SSL_CERT_FILE;
 #endif
     }
@@ -461,7 +461,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // Use the default environment settings.
       ca_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
 #ifdef ACE_DEFAULT_SSL_CERT_DIR
-      if (ca_dir == 0)
+      if (ca_dir == nullptr)
         ca_dir = ACE_DEFAULT_SSL_CERT_DIR;
 #endif
     }

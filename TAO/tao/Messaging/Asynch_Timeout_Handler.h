@@ -40,9 +40,9 @@ class TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
 public:
-  TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
+  explicit TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
 
-  ~TAO_Asynch_Timeout_Handler () = default;
+  ~TAO_Asynch_Timeout_Handler () override = default;
 
   /// Schedule a timer
   long schedule_timer (TAO_Transport_Mux_Strategy *tms,
@@ -50,21 +50,27 @@ public:
                        const ACE_Time_Value &max_wait_time);
 
   /// Invoked by the reactor on timeout
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                      const void *act) override;
 
   /// Cancel this timer, remove it from the reactor
   virtual void cancel ();
 
 public:
   /// The transport mux strategy dispatching the reply
-  TAO_Transport_Mux_Strategy *tms_;
+  TAO_Transport_Mux_Strategy *tms_ {};
 
   /// Remember the ID of the request.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Our reactor
   ACE_Reactor *reactor_;
+
+private:
+  TAO_Asynch_Timeout_Handler (TAO_Asynch_Timeout_Handler const &) = delete;
+  TAO_Asynch_Timeout_Handler &operator= (TAO_Asynch_Timeout_Handler const &) = delete;
+  TAO_Asynch_Timeout_Handler (TAO_Asynch_Timeout_Handler &&) = delete;
+  TAO_Asynch_Timeout_Handler &operator= (TAO_Asynch_Timeout_Handler &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

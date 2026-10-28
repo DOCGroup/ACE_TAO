@@ -11,9 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl ()
-{
-}
+TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl () = default;
 
 CORBA::Boolean
 TAO_IFR_Client_Adapter_Impl::interfacedef_cdr_insert (
@@ -92,7 +90,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
 
   try
     {
-      _tao_call.invoke (0, 0);
+      _tao_call.invoke (nullptr, 0);
     }
   catch (const ::CORBA::OBJECT_NOT_EXIST&)
     {
@@ -121,7 +119,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
   for (CORBA::ULong i = 0; i < paramCount; ++i)
     {
       CORBA::Any value;
-      TAO::Unknown_IDL_Type *unk = 0;
+      TAO::Unknown_IDL_Type *unk = nullptr;
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (params[i].type.in ()));
       value.replace (unk);

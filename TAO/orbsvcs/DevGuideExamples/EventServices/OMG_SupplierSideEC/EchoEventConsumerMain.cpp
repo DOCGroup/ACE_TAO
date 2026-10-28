@@ -10,9 +10,9 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <iostream>
-const int EVENT_LIMIT = 10;
+constexpr int EVENT_LIMIT = 10;
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
   {

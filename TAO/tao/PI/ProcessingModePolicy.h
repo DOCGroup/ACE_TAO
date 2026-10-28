@@ -44,13 +44,13 @@ public:
   /// Constructor.
   TAO_ProcessingModePolicy (PortableInterceptor::ProcessingMode mode);
 
-  virtual PortableInterceptor::ProcessingMode processing_mode ();
+  PortableInterceptor::ProcessingMode processing_mode () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   /// The attribute

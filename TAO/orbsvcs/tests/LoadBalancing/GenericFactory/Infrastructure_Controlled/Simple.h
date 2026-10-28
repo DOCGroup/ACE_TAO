@@ -16,7 +16,7 @@ public:
   Simple ();
   /// Constructor
 
-  virtual char * get_string ();
+  char* get_string () override;
 };
 
 #if defined(_MSC_VER)

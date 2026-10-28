@@ -1,13 +1,13 @@
 #include "TestI.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -38,7 +38,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -53,9 +53,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Test_i *test_impl = new Test_i(orb.in());
+      Test_i *test_impl = new Test_i (orb.in ());
 
-      PortableServer::ServantBase_var owner_transfer(test_impl);
+      PortableServer::ServantBase_var owner_transfer (test_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (test_impl);
@@ -64,20 +64,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Test_var test = Test::_narrow (object.in ());
 
-      CORBA::String_var ior = orb->object_to_string (test.in());
+      CORBA::String_var ior = orb->object_to_string (test.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE* file = ACE_OS::fopen(ior_output_file, "w");
+      FILE *file = ACE_OS::fopen (ior_output_file, "w");
 
-      if (file == 0)
+      if (file == nullptr)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) could not open server.ior\n"),
                           1);
       }
 
-      ACE_OS::fprintf(file, "%s", ior.in ());
-      ACE_OS::fclose(file);
+      ACE_OS::fprintf (file, "%s", ior.in ());
+      ACE_OS::fclose (file);
 
       poa_manager->activate ();
 
@@ -89,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -13,12 +13,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_RT_Current::~TAO_RT_Current () = default;
+
 TAO_RT_Current::TAO_RT_Current (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core)
-{
-}
-
-TAO_RT_Current::~TAO_RT_Current ()
 {
 }
 

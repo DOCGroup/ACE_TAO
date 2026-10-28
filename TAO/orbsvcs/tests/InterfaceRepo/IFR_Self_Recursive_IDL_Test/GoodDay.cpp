@@ -9,7 +9,7 @@ GoodDay::GoodDay (CORBA::ORB_ptr orb)
   }
 }
 
-char *
+char*
 GoodDay::get_string ()
 {
   return CORBA::string_dup ("Hello there!");
@@ -22,9 +22,9 @@ GoodDay::shutdown ()
 }
 
 
-::Test::GoodDay::RoughWeek *
+::Test::GoodDay::RoughWeek*
 GoodDay::this_week ()
 {
   // Not actually used.
-  return 0;
+  return nullptr;
 }

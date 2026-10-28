@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PolicyFactory_Registry_Factory::~TAO_PolicyFactory_Registry_Factory ()
-{
-}
+TAO_PolicyFactory_Registry_Factory::~TAO_PolicyFactory_Registry_Factory () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

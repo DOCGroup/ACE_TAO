@@ -131,7 +131,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->shutdown();
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Supplier done.\n")));
   }
-  catch(...)
+  catch (const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception ("Supplier: ");
+    return 1;
+  }
+  catch (...)
   {
     std::cerr << "Supplier: Some exceptions was caught!" << std::endl;
     return 1;
@@ -140,4 +145,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

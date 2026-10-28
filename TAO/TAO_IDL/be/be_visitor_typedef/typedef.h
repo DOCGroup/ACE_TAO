@@ -12,6 +12,7 @@
 
 #include "be_array.h"
 #include "be_enum.h"
+#include "be_fixed.h"
 #include "be_interface.h"
 #include "be_interface_fwd.h"
 #include "be_module.h"
@@ -39,4 +40,3 @@
 #include "be_visitor_context.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
-

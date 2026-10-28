@@ -110,7 +110,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
               }
           }
 
-    char *qos_buf = 0;
+    char *qos_buf = nullptr;
     ACE_NEW_RETURN (qos_buf,
                     char [dwBufferLen],
                     -1);

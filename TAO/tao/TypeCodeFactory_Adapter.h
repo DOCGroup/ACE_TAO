@@ -35,10 +35,10 @@ namespace CORBA
   class UnionMemberSeq;
   class ValueMemberSeq;
 
-  typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
-  typedef TAO_Pseudo_Out_T<TypeCode> TypeCode_out;
+  using TypeCode_var = TAO_Pseudo_Var_T<TypeCode>;
+  using TypeCode_out = TAO_Pseudo_Out_T<TypeCode>;
 
-  typedef CORBA::Short ValueModifier;
+  using ValueModifier = CORBA::Short;
 }
 
 namespace TAO
@@ -64,7 +64,7 @@ namespace TAO
 class TAO_Export TAO_TypeCodeFactory_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_TypeCodeFactory_Adapter ();
+  ~TAO_TypeCodeFactory_Adapter () override;
 
   virtual CORBA::TypeCode_ptr create_struct_tc (
       const char *id,

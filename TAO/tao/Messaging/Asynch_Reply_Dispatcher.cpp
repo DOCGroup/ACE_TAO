@@ -18,7 +18,6 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
   :TAO_Asynch_Reply_Dispatcher_Base (orb_core, allocator)
   , reply_handler_stub_ (reply_handler_stub)
   , reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
-  , timeout_handler_ (0)
 {
 }
 
@@ -32,7 +31,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       // loose ownership of the handlers
       this->timeout_handler_->cancel ();
       this->timeout_handler_->remove_reference ();
-      this->timeout_handler_ = 0;
+      this->timeout_handler_ = nullptr;
       // AMI Timeout Handling End
     }
 
@@ -40,7 +39,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // since it does not handle the reply.
   // So we have to do that here in case f.i. the Exclusive TMS left the transport
   // busy after the send
-  if (this->transport_ != 0)
+  if (this->transport_ != nullptr)
     this->transport_->tms ()->idle_after_reply ();
 
   if (!params.input_cdr_)
@@ -55,7 +54,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
-  if (db == 0)
+  if (db == nullptr)
     {
       if (TAO_debug_level > 2)
         {
@@ -152,7 +151,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
           // loose ownership of the handlers
           this->timeout_handler_->cancel ();
           this->timeout_handler_->remove_reference ();
-          this->timeout_handler_ = 0;
+          this->timeout_handler_ = nullptr;
         }
 
       if (!this->try_dispatch_reply ())
@@ -201,14 +200,14 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
           // If we had registered timeout handlers just cancel them and
           // loose ownership of the handlers
           this->timeout_handler_->remove_reference ();
-          this->timeout_handler_ = 0;
+          this->timeout_handler_ = nullptr;
         }
 
       // With Asynch requests the invocation handler can't call idle_after_reply ()
       // since it does not handle the reply.
       // So we have to do that here in case f.i. the Exclusive TMS left the transport
       // busy after the send
-      if (this->transport_ != 0)
+      if (this->transport_ != nullptr)
         this->transport_->tms ()->idle_after_reply ();
 
       // This is okay here... Everything relies on our refcount being
@@ -253,7 +252,7 @@ long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
                                              const ACE_Time_Value &max_wait_time)
 {
-  if (this->timeout_handler_ == 0)
+  if (this->timeout_handler_ == nullptr)
     {
       // @@ Need to use the pool for this..
       ACE_NEW_THROW_EX (this->timeout_handler_,

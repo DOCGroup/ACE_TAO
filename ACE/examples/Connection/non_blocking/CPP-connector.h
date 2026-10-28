@@ -73,8 +73,7 @@ public:
   // Run the svc.
 
 private:
-  typedef ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
-          inherited;
+  using inherited = ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>;
 
   ACE_Synch_Options options_;
   // Options for the active connection factory.

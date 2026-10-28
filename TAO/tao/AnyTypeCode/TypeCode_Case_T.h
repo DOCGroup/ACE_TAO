@@ -95,7 +95,7 @@ namespace TAO
        * Constructor only used in the dynamically constructed @c union
        * @c TypeCode case.
        */
-      Case_T (DiscriminatorType member_label);
+      explicit Case_T (DiscriminatorType member_label);
 
       /**
        * @name @c TAO::TypeCode::Case Methods
@@ -106,11 +106,11 @@ namespace TAO
        * @see @c TAO::TypeCode::Case
        */
       //@{
-      Case<StringType, TypeCodeType> * clone () const;
-      virtual CORBA::Any * label () const;
-      virtual bool marshal_label (TAO_OutputCDR & cdr) const;
-      virtual bool equal_label (CORBA::ULong index,
-                                CORBA::TypeCode_ptr tc) const;
+      Case<StringType, TypeCodeType> * clone () const override;
+      CORBA::Any * label () const override;
+      bool marshal_label (TAO_OutputCDR & cdr) const override;
+      bool equal_label (CORBA::ULong index,
+                        CORBA::TypeCode_ptr tc) const override;
       //@}
 
     private:

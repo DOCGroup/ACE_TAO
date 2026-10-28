@@ -21,15 +21,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_SCIOP_Transport::~TAO_SCIOP_Transport () = default;
+
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SCIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
-{
-}
-
-TAO_SCIOP_Transport::~TAO_SCIOP_Transport ()
 {
 }
 
@@ -74,7 +72,7 @@ TAO_SCIOP_Transport::recv (char *buf,
       errno != ETIME)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::recv, ")
+                  ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%B]::recv, ")
                   ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
     }
@@ -115,7 +113,7 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
-                          0,
+                          nullptr,
                           message_semantics,
                           max_wait_time) == -1)
     return -1;
@@ -148,7 +146,7 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::send_message, ")
+                    ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%B]::send_message, ")
                     ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
       return -1;
@@ -230,7 +228,7 @@ TAO_SCIOP_Transport::get_listen_point (
     dynamic_cast<TAO_SCIOP_Acceptor *> (acceptor );
 
   // Get the array of endpoints serviced by TAO_SCIOP_Acceptor
-  const ACE_INET_Addr *endpoint_addr =
+  ACE_INET_Addr const *endpoint_addr =
     sciop_acceptor->endpoints ();
 
   // Get the endpoint count

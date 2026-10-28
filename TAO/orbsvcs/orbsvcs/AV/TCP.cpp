@@ -13,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_TCP_Transport::TAO_AV_TCP_Transport ()
-  :handler_ (0)
+  : handler_ (nullptr)
 {
 }
 
@@ -22,9 +22,7 @@ TAO_AV_TCP_Transport::TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler)
 {
 }
 
-TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport ()
-{
-}
+TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport () = default;
 
 int
 TAO_AV_TCP_Transport::open (ACE_Addr * /*address*/)
@@ -62,7 +60,7 @@ TAO_AV_TCP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   ssize_t nbytes = 0;
 
   for (const ACE_Message_Block *i = mblk;
-       i != 0;
+       i != nullptr;
        i = i->cont ())
     {
       // Make sure there is something to send!
@@ -157,9 +155,7 @@ TAO_AV_TCP_Factory::TAO_AV_TCP_Factory ()
 {
 }
 
-TAO_AV_TCP_Factory::~TAO_AV_TCP_Factory ()
-{
-}
+TAO_AV_TCP_Factory::~TAO_AV_TCP_Factory () = default;
 
 int
 TAO_AV_TCP_Factory::init (int /* argc */,
@@ -180,7 +176,7 @@ TAO_AV_Acceptor*
 TAO_AV_TCP_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_acceptor "));
-  TAO_AV_Acceptor *acceptor = 0;
+  TAO_AV_Acceptor *acceptor = nullptr;
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_TCP_Acceptor,
                   0);
@@ -191,7 +187,7 @@ TAO_AV_Connector*
 TAO_AV_TCP_Factory::make_connector ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_connector "));
-  TAO_AV_Connector *connector = 0;
+  TAO_AV_Connector *connector = nullptr;
   ACE_NEW_RETURN (connector,
                   TAO_AV_TCP_Connector,
                   0);
@@ -249,10 +245,7 @@ TAO_AV_TCP_Object::TAO_AV_TCP_Object (TAO_AV_Callback *callback,
   this->frame_.size (BUFSIZ);
 }
 
-TAO_AV_TCP_Object::~TAO_AV_TCP_Object ()
-{
-  // No-op
-}
+TAO_AV_TCP_Object::~TAO_AV_TCP_Object () = default;
 int
 TAO_AV_TCP_Object::destroy ()
 {
@@ -268,9 +261,7 @@ TAO_AV_TCP_Flow_Factory::TAO_AV_TCP_Flow_Factory ()
 {
 }
 
-TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory ()
-{
-}
+TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory () = default;
 
 int
 TAO_AV_TCP_Flow_Factory::init (int /* argc */,
@@ -293,13 +284,13 @@ TAO_AV_TCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Flow_Handler *handler,
                                                TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = 0;
+  TAO_AV_Callback *callback = nullptr;
   if (endpoint->get_callback (entry->flowname (), callback))
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
     }
 
-  TAO_AV_TCP_Object *object = 0;
+  TAO_AV_TCP_Object *object = nullptr;
   ACE_NEW_RETURN (object,
                   TAO_AV_TCP_Object (callback,
                                      transport),
@@ -370,7 +361,7 @@ TAO_AV_TCP_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::make_svc_handler\n"));
   //  TAO_AV_Callback *callback = 0;
-  if (this->endpoint_ != 0)
+  if (this->endpoint_ != nullptr)
     {
 //       this->endpoint_->get_callback (this->flowname_.c_str (),
 //                                      callback);
@@ -420,7 +411,7 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
   this->flowname_ = entry->flowname ();
   ACE_Addr *remote_addr = entry->address ();
   ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (remote_addr);
-  TAO_AV_TCP_Flow_Handler *handler = 0;
+  TAO_AV_TCP_Flow_Handler *handler = nullptr;
   int result = this->connector_.connector_connect (handler,
                                                    *inet_addr);
   if (result < 0)
@@ -488,7 +479,7 @@ TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO_AV_TCP_Acceptor::make_svc_handler\n"));
 
-  if (this->endpoint_ != 0)
+  if (this->endpoint_ != nullptr)
     {
       ACE_NEW_RETURN (tcp_handler,
                       TAO_AV_TCP_Flow_Handler,
@@ -576,7 +567,7 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   else
   this->flowname_ = entry->flowname ();
 
-  ACE_INET_Addr *address = 0;
+  ACE_INET_Addr *address = nullptr;
   ACE_NEW_RETURN (address,
                   ACE_INET_Addr ("0"),
                   -1);

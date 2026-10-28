@@ -33,7 +33,7 @@ bool debug = false;
 class Worker;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d"));
   int c;
@@ -61,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Command: public ACE_Message_Block
 {
 public:
-  virtual int execute (Worker*) = 0;
+  virtual int execute (Worker *) = 0;
 };
 
 
@@ -76,9 +76,9 @@ public:
     : shutdown_ (false)
   {}
 
-  virtual int svc ();
-  virtual int close (u_long = 0);
-  virtual int put (ACE_Message_Block * mblk, ACE_Time_Value * tv = 0);
+  int svc () override;
+  int close (u_long = 0) override;
+  int put (ACE_Message_Block *mblk, ACE_Time_Value *tv = nullptr) override;
   int process_cmd ();
   void shutdown (bool do_shutdown);
   bool shutdown ();
@@ -87,7 +87,7 @@ private:
   bool shutdown_;
 };
 
-ACE_TSS<Worker> *workers_p = 0;
+ACE_TSS<Worker> *workers_p = nullptr;
 #define workers (*workers_p)
 
 int Worker::svc ()
@@ -109,7 +109,7 @@ int Worker::svc ()
 int Worker::close (u_long)
 {
   // de-register this worker, otherwise the ACE_TSS will try to destroy it
-  workers.ts_object (0);
+  workers.ts_object (nullptr);
   return 0;
 }
 
@@ -120,8 +120,8 @@ int Worker::put (ACE_Message_Block * mblk, ACE_Time_Value * tv)
 
 int Worker::process_cmd ()
 {
-  ACE_Message_Block *mb = 0;
-  if (this->getq (mb, 0) == -1)
+  ACE_Message_Block *mb = nullptr;
+  if (this->getq (mb, nullptr) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error calling getq: $!\n")));
       // Strangely, message queues return this instead of ETIME
@@ -130,7 +130,7 @@ int Worker::process_cmd ()
       return -1;
     }
   Command* cmd = dynamic_cast <Command*> (mb);
-  ACE_ASSERT (cmd != 0);
+  ACE_ASSERT (cmd != nullptr);
   cmd->execute (this);
   cmd->release ();
   return 0;
@@ -151,15 +151,15 @@ class Test_Reactor: public ACE_TP_Reactor
 public:
   Test_Reactor (size_t max_number_of_handles,
                   bool restart = false,
-                  ACE_Sig_Handler *sh = 0,
-                  ACE_Timer_Queue *tq = 0,
+                  ACE_Sig_Handler *sh = nullptr,
+                  ACE_Timer_Queue *tq = nullptr,
                   bool mask_signals = true,
                   int s_queue = ACE_Select_Reactor_Token::FIFO)
-  : ACE_TP_Reactor(max_number_of_handles, restart, sh, tq, mask_signals, s_queue) {}
+    : ACE_TP_Reactor (max_number_of_handles, restart, sh, tq, mask_signals, s_queue) {}
 
 
   // This is the method that the Leader_Follower object calls.
-  virtual int handle_events (ACE_Time_Value * = 0)
+  int handle_events (ACE_Time_Value * = nullptr) override
   {
     if (TAO_debug_level > 10)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Test_Reactor::handle_events\n")));
@@ -187,7 +187,7 @@ public:
     return 0;
   };
 
-  virtual int handle_events (ACE_Time_Value &)
+  int handle_events (ACE_Time_Value &) override
   {
     return this->handle_events ();
   }
@@ -201,14 +201,14 @@ public:
   Test_Resource_Factory ()
   {}
 
-  virtual ACE_Reactor_Impl* allocate_reactor_impl () const
+  ACE_Reactor_Impl *allocate_reactor_impl () const override
   {
-    ACE_Reactor_Impl *impl = 0;
+    ACE_Reactor_Impl *impl = nullptr;
     ACE_NEW_RETURN (impl,
                     Test_Reactor (ACE::max_handles (),
                                     1,
-                                    (ACE_Sig_Handler*)0,
-                                    (ACE_Timer_Queue*)0,
+                                    nullptr,
+                                    nullptr,
                                     this->reactor_mask_signals_,
                                     ACE_Select_Reactor_Token::LIFO),
                     0);
@@ -248,23 +248,23 @@ public:
   }
 
 protected:
-  virtual bool successful_i () const
+  bool successful_i () const override
   {
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
   }
 
-  virtual bool error_detected_i () const
+  bool error_detected_i () const override
   {
     return (this->state_ == TAO_LF_Event::LFS_FAILURE
             || this->state_ == TAO_LF_Event::LFS_TIMEOUT
             || this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED);
   }
-  virtual void state_changed_i (LFS_STATE new_state)
+  void state_changed_i (LFS_STATE new_state) override
   {
     this->state_ = new_state;
   }
 
-  virtual bool is_state_final () const
+  bool is_state_final () const override
   {
     if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
         this->state_ == TAO_LF_Event::LFS_FAILURE)
@@ -281,51 +281,51 @@ public:
     : TAO_Transport (tag, orb_core)
   {}
 
-  virtual int send_message (TAO_OutputCDR &,
-                            TAO_Stub * = 0,
-                            TAO_ServerRequest * = 0,
+  int send_message (TAO_OutputCDR &,
+                    TAO_Stub * = nullptr,
+                    TAO_ServerRequest * = nullptr,
                             TAO_Message_Semantics  = TAO_Message_Semantics (),
-                            ACE_Time_Value * = 0)
+                    ACE_Time_Value * = nullptr) override
   {
     return 0;
   }
 
-  virtual ssize_t send (iovec *, int ,
-                        size_t &,
-                        const ACE_Time_Value * = 0)
+  ssize_t send (iovec *, int,
+                size_t &,
+                ACE_Time_Value const * = nullptr) override
   {
     return 0;
   }
 
-  virtual ssize_t recv (char *,
-                        size_t,
-                        const ACE_Time_Value * = 0)
+  ssize_t recv (char *,
+                size_t,
+                ACE_Time_Value const * = nullptr) override
   {
     return 0;
   }
 
-  virtual int messaging_init (CORBA::Octet,
-                              CORBA::Octet)
+  int messaging_init (CORBA::Octet,
+                      CORBA::Octet)
   {
     return 0;
   }
 
-  virtual ACE_Event_Handler * event_handler_i ()
+  ACE_Event_Handler *event_handler_i () override
   {
     return 0;
   }
 
 protected:
-  virtual TAO_Connection_Handler * connection_handler_i ()
+  TAO_Connection_Handler *connection_handler_i () override
   {
     return 0;
   }
 
-  virtual int send_request (TAO_Stub *,
+  int send_request (TAO_Stub *,
                             TAO_ORB_Core *,
                             TAO_OutputCDR &,
                             TAO_Message_Semantics,
-                            ACE_Time_Value *)
+                            ACE_Time_Value *) override
   {
     return 0;
   }

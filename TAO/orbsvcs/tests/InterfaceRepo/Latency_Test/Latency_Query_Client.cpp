@@ -6,18 +6,16 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 
-const CORBA::ULong DEFAULT_NUMCALLS = 20000;
+constexpr CORBA::ULong DEFAULT_NUMCALLS = 20000;
 
 Latency_Query_Client::Latency_Query_Client ()
   : debug_ (false),
-    do_dump_history_ (0),
+    do_dump_history_ (false),
     iterations_ (DEFAULT_NUMCALLS)
 {
 }
 
-Latency_Query_Client::~Latency_Query_Client ()
-{
-}
+Latency_Query_Client::~Latency_Query_Client () = default;
 
 int
 Latency_Query_Client::init (int argc,

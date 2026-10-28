@@ -24,7 +24,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Unbounded_Set<int> s4 (s3);
   ACE_ASSERT (s4.size () == 2);
 
-  int *ip = 0;
+  int *ip = nullptr;
 
   ACE_DEBUG ((LM_DEBUG, "dumping s1\n"));
   for (ACE_Unbounded_Set_Iterator<int> iter1 (s1);

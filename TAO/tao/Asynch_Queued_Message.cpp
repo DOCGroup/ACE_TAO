@@ -14,7 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
-  const ACE_Message_Block *contents,
+  ACE_Message_Block const *contents,
   TAO_ORB_Core *oc,
   ACE_Time_Value *timeout,
   ACE_Allocator *alloc,
@@ -32,7 +32,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   ACE_NEW (this->buffer_, char[this->size_]);
 
   size_t copy_offset = 0;
-  for (const ACE_Message_Block *i = contents;
+  for (ACE_Message_Block const *i = contents;
        i != nullptr;
        i = i->cont ())
     {
@@ -131,7 +131,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 
   TAO_Asynch_Queued_Message *qm = nullptr;
 
-  if (alloc)
+  if (alloc != nullptr)
     {
       ACE_NEW_MALLOC_RETURN (qm,
                              static_cast<TAO_Asynch_Queued_Message *> (
@@ -188,7 +188,7 @@ TAO_Asynch_Queued_Message::destroy ()
 }
 
 bool
-TAO_Asynch_Queued_Message::is_expired (const ACE_Time_Value &now) const
+TAO_Asynch_Queued_Message::is_expired (ACE_Time_Value const &now) const
 {
   if (this->abs_timeout_ > ACE_Time_Value::zero)
     {
@@ -202,7 +202,7 @@ TAO_Asynch_Queued_Message::is_expired (const ACE_Time_Value &now) const
 }
 
 void
-TAO_Asynch_Queued_Message::copy_if_necessary (const ACE_Message_Block*)
+TAO_Asynch_Queued_Message::copy_if_necessary (ACE_Message_Block const *)
 {
   // It's never necessary for asynchronously queued messages
 }

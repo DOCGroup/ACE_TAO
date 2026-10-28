@@ -236,11 +236,14 @@ Cubit_i::cube_union (const Cubit::oneof &values)
       break;
     case Cubit::e_3rd:
     default:
-      temp._d (values._d ()); // set the discriminant
-      // use the read/write accessor
-      temp.cm ().o  = values.cm ().o * values.cm ().o * values.cm ().o;
-      temp.cm ().s  = values.cm ().s * values.cm ().s * values.cm ().s;
-      temp.cm ().l  = values.cm ().l * values.cm ().l * values.cm ().l;
+      {
+        Cubit::Many cm;
+        cm.o = values.cm ().o * values.cm ().o * values.cm ().o;
+        cm.s = values.cm ().s * values.cm ().s * values.cm ().s;
+        cm.l = values.cm ().l * values.cm ().l * values.cm ().l;
+        temp.cm (cm);
+      }
+      break;
     }
   return temp;
 }

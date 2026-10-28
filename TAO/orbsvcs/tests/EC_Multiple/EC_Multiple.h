@@ -65,7 +65,7 @@ public:
   // Implement the callbacks for our consumer personality.
 
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
   // The methods in the skeleton.
 
   RtecEventComm::EventSourceID supplier_id () const;
@@ -121,8 +121,8 @@ public:
   void close ();
   // Disconnect from the EC.
 
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (const RtecEventComm::EventSet& events) override;
+  void disconnect_push_consumer () override;
   // The skeleton methods.
 
 private:

@@ -20,6 +20,8 @@ class TAO_RTScheduler_Export Client_Interceptor:
   public ::CORBA::LocalObject
 {
 public:
+  Client_Interceptor () = default;
+
   //  Client_Interceptor (RTScheduling::Current_ptr current);
   void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
@@ -36,6 +38,12 @@ public:
   void destroy () override;
 
   static const IOP::ServiceId SchedulingInfo;
+
+private:
+  Client_Interceptor (Client_Interceptor const &) = delete;
+  Client_Interceptor &operator= (Client_Interceptor const &) = delete;
+  Client_Interceptor (Client_Interceptor &&) = delete;
+  Client_Interceptor &operator= (Client_Interceptor &&) = delete;
 };
 
 class TAO_RTScheduler_Export Server_Interceptor :
@@ -62,6 +70,11 @@ public:
   static const IOP::ServiceId SchedulingInfo;
 
  private:
+  Server_Interceptor (Server_Interceptor const &) = delete;
+  Server_Interceptor &operator= (Server_Interceptor const &) = delete;
+  Server_Interceptor (Server_Interceptor &&) = delete;
+  Server_Interceptor &operator= (Server_Interceptor &&) = delete;
+
   TAO_RTScheduler_Current_var current_;
 };
 

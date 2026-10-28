@@ -14,7 +14,7 @@
 
 TAO_IMR_i::TAO_IMR_i ()
   : argc_ (0),
-    argv_ (0),
+    argv_ (nullptr),
     orb_ (),
     imr_ (ImplementationRepository::Administration::_nil ()),
     op_ ()
@@ -29,7 +29,7 @@ TAO_IMR_i::~TAO_IMR_i ()
 int
 TAO_IMR_i::run ()
 {
-  if (this->op_.get () == 0)
+  if (this->op_.get () == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR, "Unknown operation"));
       return TAO_IMR_Op::UNKNOWN;
@@ -106,7 +106,7 @@ TAO_IMR_i::parse_args ()
 
   // Check for unrecognized operation
 
-  if (this->op_.get () == 0)
+  if (this->op_.get () == nullptr)
     {
       ORBSVCS_ERROR((LM_ERROR, "Error: Unknown operation '%s'.\n", this->argv_[1]));
       this->print_usage ();
@@ -142,7 +142,7 @@ TAO_IMR_i::print_usage ()
 // Factory for operations
 
 TAO_IMR_Op *
-TAO_IMR_Op::make_op (const ACE_TCHAR *op_name)
+TAO_IMR_Op::make_op (ACE_TCHAR const *op_name)
 {
   if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("activate")) == 0)
     {
@@ -172,7 +172,7 @@ TAO_IMR_Op::make_op (const ACE_TCHAR *op_name)
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("update")) == 0)
     return new TAO_IMR_Op_Register (false);
 
-  return 0;
+  return nullptr;
 }
 
 
@@ -1349,7 +1349,7 @@ TAO_IMR_Op_Register::run ()
 
   ImplementationRepository::ServerInformation_var server_information;
   ImplementationRepository::StartupOptions  local;
-  ImplementationRepository::StartupOptions* options = 0;
+  ImplementationRepository::StartupOptions* options = nullptr;
 
   try
     {

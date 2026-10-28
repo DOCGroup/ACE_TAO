@@ -81,7 +81,7 @@ void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer ()
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
   ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
 
-  svc->replicate_request(update, 0);
+  svc->replicate_request(update, nullptr);
 }
 
 void TAO_FTEC_ProxyPushConsumer::get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state)

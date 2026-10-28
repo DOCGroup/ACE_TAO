@@ -33,7 +33,7 @@ public:
   ~be_visitor_map_ch () = default;
 
   /// visit map node.
-  virtual int visit_map (be_map *node);
+  int visit_map (be_map *node) override;
 };
 
 #endif /* _BE_VISITOR_MAP_MAP_CH_H_ */

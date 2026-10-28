@@ -188,8 +188,29 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     {
       if (node->gen_empty_default_label ())
         {
-          *os << "_tao_union._default ();" << be_nl
-              << "_tao_union._d (_tao_discriminant);" << be_nl;
+          bool true_branch = false;
+
+          for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+               !si.is_done ();
+               si.next ())
+            {
+              be_union_branch *branch =
+                dynamic_cast<be_union_branch*> (si.item ());
+
+              if (branch != nullptr
+                  && boolean_branch (branch) == BUB_TRUE)
+                {
+                  true_branch = true;
+                  break;
+                }
+            }
+
+          *os << "if (" << (true_branch ? "!" : "")
+              << "_tao_discriminant)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union._default ();" << be_nl
+              << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+              << "}" << be_uidt_nl;
         }
     }
   else

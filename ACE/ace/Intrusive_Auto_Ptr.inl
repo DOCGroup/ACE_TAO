@@ -46,7 +46,7 @@ ACE_Intrusive_Auto_Ptr<X>::release ()
   if (this->rep_ != 0)
     X::intrusive_remove_ref (this->rep_);
 
-  this->rep_ = 0;
+  this->rep_ = nullptr;
   return p;
 }
 
@@ -81,7 +81,7 @@ ACE_Intrusive_Auto_Ptr<X>::operator = (const ACE_Intrusive_Auto_Ptr<X> &rhs)
   if (rhs.rep_  == 0)
     {
       X::intrusive_remove_ref (this->rep_);
-      this->rep_ = 0;
+      this->rep_ = nullptr;
       return;
     }
 

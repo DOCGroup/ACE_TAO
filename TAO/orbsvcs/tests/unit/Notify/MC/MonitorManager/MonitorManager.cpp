@@ -41,4 +41,3 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
 
   return 0;
 }
-

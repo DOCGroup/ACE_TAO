@@ -41,10 +41,9 @@ class TAO_MProfile;
 class TAO_Protocol_Factory;
 class TAO_Protocol_Item;
 
-typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item *>
-        TAO_ProtocolFactorySetItor;
+using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item *>;
 
-typedef TAO_Acceptor** TAO_AcceptorSetIterator;
+using TAO_AcceptorSetIterator = TAO_Acceptor**;
 
 /**
  * @class TAO_Acceptor_Registry
@@ -89,8 +88,10 @@ public:
   TAO_AcceptorSetIterator end ();
 
 private:
-  TAO_Acceptor_Registry (const TAO_Acceptor_Registry &) = delete;
-  TAO_Acceptor_Registry &operator= (const TAO_Acceptor_Registry &) = delete;
+  TAO_Acceptor_Registry (TAO_Acceptor_Registry const &) = delete;
+  TAO_Acceptor_Registry &operator= (TAO_Acceptor_Registry const &) = delete;
+  TAO_Acceptor_Registry (TAO_Acceptor_Registry &&) = delete;
+  TAO_Acceptor_Registry &operator= (TAO_Acceptor_Registry &&) = delete;
 
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,

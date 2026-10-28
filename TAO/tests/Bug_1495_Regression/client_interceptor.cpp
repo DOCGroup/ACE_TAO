@@ -6,13 +6,9 @@
 #include "ace/Thread.h"
 
 Echo_Client_Request_Interceptor::
-Echo_Client_Request_Interceptor (const char *id)
+Echo_Client_Request_Interceptor (char const *id)
   : myname_ ("Echo_Client_Interceptor"),
     orb_id_ (CORBA::string_dup (id))
-{
-}
-
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 {
 }
 
@@ -38,7 +34,7 @@ void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-    ACE_UNUSED_ARG (ri);
+  ACE_UNUSED_ARG (ri);
 // No Op
 }
 
@@ -46,15 +42,15 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-    ACE_UNUSED_ARG (ri);
-    // No Op
+  ACE_UNUSED_ARG (ri);
+  // No Op
 }
 
 void
 Echo_Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
- ACE_UNUSED_ARG (ri);
+  ACE_UNUSED_ARG (ri);
 // no op
 }
 
@@ -62,8 +58,8 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-    // No op
-     ACE_UNUSED_ARG (ri);
+  // No op
+  ACE_UNUSED_ARG (ri);
 }
 
 

@@ -46,16 +46,16 @@ public:
   // CORBA::ORB::create_policy.
 
   /// Returns a copy of <this>.
-  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone () const;
+  TAO_FT_Heart_Beat_Enabled_Policy *clone () const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual CORBA::Boolean heartbeat_enabled_policy_value ();
+  CORBA::Boolean heartbeat_enabled_policy_value () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   /// indicates whether heartbeating is enabled or not.

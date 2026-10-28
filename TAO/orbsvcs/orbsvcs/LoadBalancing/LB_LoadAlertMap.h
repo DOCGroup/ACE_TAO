@@ -30,12 +30,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// LoadAlertInfo hash map typedef.
-typedef ACE_Hash_Map_Manager_Ex<
+using TAO_LB_LoadAlertMap = ACE_Hash_Map_Manager_Ex<
   PortableGroup::Location,
   TAO_LB_LoadAlertInfo,
   TAO_PG_Location_Hash,
   TAO_PG_Location_Equal_To,
-  ACE_Null_Mutex> TAO_LB_LoadAlertMap;
+  ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

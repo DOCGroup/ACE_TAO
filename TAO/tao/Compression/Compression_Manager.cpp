@@ -110,7 +110,7 @@ namespace TAO
   CompressionManager::get_factories ()
   {
     // todo
-    return 0;
+    return nullptr;
   }
 
 }

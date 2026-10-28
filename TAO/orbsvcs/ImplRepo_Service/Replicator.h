@@ -37,8 +37,8 @@ public:
 
   /// provide the implementation for being notified of a
   /// server or activator update
-  virtual void notify_update (CORBA::ULongLong seq_num,
-                              const ImplementationRepository::UpdateInfoSeq& info);
+  void notify_update (CORBA::ULongLong seq_num,
+                      ImplementationRepository::UpdateInfoSeq const& info) override;
 
   /// provide the implementation for registering a peer replica
   /// @param replica the peer replica
@@ -46,10 +46,10 @@ public:
   ///        as the replica's ImR IOR, passed back as fault
   ///        tolerant ImR IOR)
   /// @param seq_num current sequence number to return to replica
-  virtual void register_replica
+  void register_replica
   (ImplementationRepository::UpdatePushNotification_ptr replica,
    char*& ft_imr_ior,
-   CORBA::ULongLong_out seq_num);
+   CORBA::ULongLong_out seq_num) override;
 
 private:
   Replicator &owner_;
@@ -67,20 +67,20 @@ class Replicator : public ACE_Task_Base
 public:
   friend class UPN_i;
 
-  typedef ImplementationRepository::UpdatePushNotification_var Replica_var;
-  typedef ImplementationRepository::UpdatePushNotification_ptr Replica_ptr;
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+  using Replica_var = ImplementationRepository::UpdatePushNotification_var;
+  using Replica_ptr = ImplementationRepository::UpdatePushNotification_ptr;
+  using AAM_StatusMap = ACE_Hash_Map_Manager_Ex<ACE_CString,
     ImplementationRepository::AAM_Status,
     ACE_Hash<ACE_CString>,
     ACE_Equal_To<ACE_CString>,
-    ACE_Null_Mutex> AAM_StatusMap;
+    ACE_Null_Mutex>;
 
   Replicator (Shared_Backing_Store &repo, const Options& opts);
 
-  virtual ~Replicator();
+  ~Replicator() override;
 
-  virtual int svc ();
-  virtual int handle_exception (ACE_HANDLE );
+  int svc () override;
+  int handle_exception (ACE_HANDLE ) override;
 
   void stop ();
   void send_access_state (const char *name, ImplementationRepository::AAM_Status state);

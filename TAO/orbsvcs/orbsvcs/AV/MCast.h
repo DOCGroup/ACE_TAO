@@ -35,45 +35,45 @@ public:
 
   TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler);
 
-  virtual ~TAO_AV_UDP_MCast_Transport ();
+  ~TAO_AV_UDP_MCast_Transport () override;
 
-  virtual int open (ACE_Addr *address);
+  int open (ACE_Addr *address) override;
 
-  virtual int close ();
+  int close () override;
 
-  virtual int mtu ();
+  int mtu () override;
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ACE_Addr *get_peer_addr ();
-  virtual ACE_Addr *get_local_addr ();
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        ACE_Time_Value *s = 0);
+  ACE_Addr *get_peer_addr () override;
+  ACE_Addr *get_local_addr () override;
+  ssize_t send (ACE_Message_Block const *mblk,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Write the contents of the buffer of length len to the connection.
-  virtual ssize_t send (const char *buf,
-                        size_t len,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (char const *buf,
+                size_t len,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Write the contents of iovcnt iovec's to the connection.
-  virtual ssize_t send (const iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (iovec const *iov,
+                int iovcnt,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Read len bytes from into buf.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (char *buf,
+                size_t len,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Read len bytes from into buf using flags.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        int flags,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (char *buf,
+                size_t len,
+                int flags,
+                ACE_Time_Value *s = nullptr) override;
 
   ///  Read received data into the iovec buffers.
-  virtual ssize_t recv (iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (iovec *iov,
+                int iovcnt,
+                ACE_Time_Value *s = nullptr) override;
 protected:
   TAO_AV_UDP_MCast_Flow_Handler *handler_;
   ACE_INET_Addr peer_addr_;
@@ -90,12 +90,12 @@ class TAO_AV_UDP_MCast_Flow_Handler
 {
 public:
   TAO_AV_UDP_MCast_Flow_Handler ();
-  virtual ~TAO_AV_UDP_MCast_Flow_Handler ();
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  ~TAO_AV_UDP_MCast_Flow_Handler () override;
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
   ACE_SOCK_Dgram_Mcast *get_mcast_socket () const;
-  virtual ACE_Event_Handler* event_handler () { return this; }
+  ACE_Event_Handler *event_handler () override { return this; }
   void set_peer_addr (ACE_INET_Addr *peer_addr);
 protected:
   ACE_INET_Addr *peer_addr_;

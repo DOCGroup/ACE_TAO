@@ -22,7 +22,7 @@ INS_Locator::INS_Locator (ImR_Locator_i& loc)
 char *
 INS_Locator::locate (const char* object_key)
 {
-  ACE_ASSERT (object_key != 0);
+  ACE_ASSERT (object_key != nullptr);
   try
     {
       CORBA::String_var located =
@@ -41,14 +41,14 @@ void
 INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
                            const char* object_key)
 {
-  ACE_ASSERT (object_key != 0);
+  ACE_ASSERT (object_key != nullptr);
 
   Server_Info_Ptr si;
   ACE_CString key;
   ACE_CString full (object_key);
   if (this->imr_locator_.split_key (full, key, si))
     {
-      ImR_ResponseHandler *rh = 0;
+      ImR_ResponseHandler *rh = nullptr;
       ACE_NEW (rh, INS_Loc_ResponseHandler (key.c_str(), handler));
       this->imr_locator_.activate_server_by_info (si, rh);
     }

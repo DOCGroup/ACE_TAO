@@ -56,7 +56,7 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredentialsType creds_type ();
+      SecurityLevel3::CredentialsType creds_type () override;
       //@}
 
       /**
@@ -66,29 +66,29 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * context_id ();
+      char * context_id () override;
 
-      virtual SecurityLevel3::Principal * client_principal ();
+      SecurityLevel3::Principal * client_principal () override;
 
-      virtual SecurityLevel3::StatementList * client_supporting_statements ();
+      SecurityLevel3::StatementList * client_supporting_statements () override;
 
-      virtual SecurityLevel3::ResourceNameList * client_restricted_resources ();
+      SecurityLevel3::ResourceNameList * client_restricted_resources () override;
 
-      virtual SecurityLevel3::Principal * target_principal ();
+      SecurityLevel3::Principal * target_principal () override;
 
-      virtual SecurityLevel3::StatementList * target_supporting_statements ();
+      SecurityLevel3::StatementList * target_supporting_statements () override;
 
-      virtual SecurityLevel3::ResourceNameList * target_restricted_resources ();
+      SecurityLevel3::ResourceNameList * target_restricted_resources () override;
 
-      virtual SecurityLevel3::OwnCredentials_ptr parent_credentials ();
+      SecurityLevel3::OwnCredentials_ptr parent_credentials () override;
 
-      virtual CORBA::Boolean client_authentication ();
+      CORBA::Boolean client_authentication () override;
 
-      virtual CORBA::Boolean target_authentication ();
+      CORBA::Boolean target_authentication () override;
 
-      virtual CORBA::Boolean confidentiality ();
+      CORBA::Boolean confidentiality () override;
 
-      virtual CORBA::Boolean integrity ();
+      CORBA::Boolean integrity () override;
       //@}
 
     protected:

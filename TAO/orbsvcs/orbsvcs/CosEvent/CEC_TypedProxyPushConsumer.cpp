@@ -14,7 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
+using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 // Implementation skeleton constructor
 TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer

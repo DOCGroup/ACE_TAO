@@ -77,7 +77,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
 {
   TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 
-  if (acceptor != 0)
+  if (acceptor != nullptr)
     {
       // Extract the desired endpoint/protocol version if one
       // exists.

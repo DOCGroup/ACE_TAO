@@ -78,24 +78,24 @@ namespace TAO
        * PortableInterceptor::ServerRequestInterceptor interface.
        */
       //@{
-      virtual char * name ();
+      char * name () override;
 
-      virtual void destroy ();
+      void destroy () override;
 
-      virtual void receive_request_service_contexts (
-          PortableInterceptor::ServerRequestInfo_ptr ri);
+      void receive_request_service_contexts (
+          PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-      virtual void receive_request (
-          PortableInterceptor::ServerRequestInfo_ptr ri);
+      void receive_request (
+          PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-      virtual void send_reply (
-          PortableInterceptor::ServerRequestInfo_ptr ri);
+      void send_reply (
+          PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-      virtual void send_exception (
-          PortableInterceptor::ServerRequestInfo_ptr ri);
+      void send_exception (
+          PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-      virtual void send_other (
-          PortableInterceptor::ServerRequestInfo_ptr ri);
+      void send_other (
+          PortableInterceptor::ServerRequestInfo_ptr ri) override;
       //@}
 
     protected:
@@ -114,8 +114,10 @@ namespace TAO
        * assignment operator.
        */
       //@{
-      Server_Invocation_Interceptor (const Server_Invocation_Interceptor &);
-      void operator= (const Server_Invocation_Interceptor &);
+      Server_Invocation_Interceptor (Server_Invocation_Interceptor const &) = delete;
+      Server_Invocation_Interceptor (Server_Invocation_Interceptor &&) = delete;
+      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor const &) = delete;
+      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor &&) = delete;
       //@}
 
     private:

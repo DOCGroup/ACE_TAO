@@ -8,16 +8,10 @@
 #include "ace/Task.h"
 
 // Default Constructor.
-TAO_Naming_Service::TAO_Naming_Service ()
-  : time_ (0),
-    num_threads_ (1)
-{
-}
+TAO_Naming_Service::TAO_Naming_Service () = default;
 
 // Constructor taking command-line arguments.
-TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
-  : time_ (0),
-    num_threads_ (1)
+TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR * argv[])
 {
   this->init (argc, argv);
 }
@@ -25,7 +19,7 @@ TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
 
 // Initialize the state of the TAO_Naming_Service object
 int
-TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
+TAO_Naming_Service::init (int argc, ACE_TCHAR * argv[])
 {
   try
     {
@@ -50,7 +44,7 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
       if (result == -1)
         return result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_Naming_Service::init");
       return -1;
@@ -60,10 +54,10 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
+TAO_Naming_Service::parse_args (int & argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -122,7 +116,7 @@ public:
       time_(t)
   {}
 
-  int svc ()
+  int svc () override
   {
   if (!CORBA::is_nil (orb_.in ()))
     {
@@ -148,13 +142,13 @@ private:
 int
 TAO_Naming_Service::run ()
 {
-  ORB_Runner runner (this->orb_.in(), time_);
+  ORB_Runner runner (this->orb_.in (), this->time_);
   if (this->num_threads_ == 1)
-    return runner.svc();
+    return runner.svc ();
   else
     {
-      int grpid = runner.activate ( THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-                                    this->num_threads_);
+      int const grpid = runner.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                                         this->num_threads_);
       if (grpid == -1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
@@ -162,7 +156,7 @@ TAO_Naming_Service::run ()
                           ACE_TEXT ("thread acitvation")));
           return -1;
         }
-      runner.wait();
+      runner.wait ();
     }
   return 0;
 }
@@ -179,7 +173,7 @@ TAO_Naming_Service::shutdown ()
 int
 TAO_Naming_Service::fini ()
 {
-  this->my_naming_server_.fini();
+  this->my_naming_server_.fini ();
 
   try
   {
@@ -189,7 +183,7 @@ TAO_Naming_Service::fini ()
         this->orb_->destroy ();
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("TAO_Naming_Service::fini");
     return -1;
@@ -198,6 +192,4 @@ TAO_Naming_Service::fini ()
 }
 
 // Destructor.
-TAO_Naming_Service::~TAO_Naming_Service ()
-{
-}
+TAO_Naming_Service::~TAO_Naming_Service () = default;

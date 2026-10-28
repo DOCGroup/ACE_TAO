@@ -183,9 +183,9 @@ private:
   struct Mcast_Header;
   class Requests;
 
-  typedef ACE_Hash_Map_Manager<ACE_INET_Addr,
-                               Requests*,
-                               ACE_Null_Mutex> Request_Map;
+  using Request_Map = ACE_Hash_Map_Manager<ACE_INET_Addr,
+                                           Requests *,
+                                           ACE_Null_Mutex>;
 
 private:
   /// Returns 1 on success, 0 if <request_id> has already been

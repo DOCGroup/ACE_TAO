@@ -6,8 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Servant_State::~TP_Servant_State()
-{
-}
+TAO::CSD::TP_Servant_State::~TP_Servant_State () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

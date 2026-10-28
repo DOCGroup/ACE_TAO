@@ -23,7 +23,7 @@ public:
                  UTL_ScopedName *managed_component,
                  UTL_ScopedName *primary_key);
 
-  virtual ~FE_HomeHeader ();
+  ~FE_HomeHeader () override;
 
   // Data Accessors.
   AST_Home *base_home () const;

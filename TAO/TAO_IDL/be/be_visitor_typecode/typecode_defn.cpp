@@ -143,6 +143,19 @@ be_visitor_typecode_defn::gen_base_typecode_name (be_type * base)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
+  if (base->node_type () == AST_Decl::NT_fixed)
+    {
+      be_fixed * const fixed = dynamic_cast<be_fixed *> (base);
+
+      if (fixed == nullptr)
+        return -1;
+
+      os << "_tao_tc_fixed_"
+         << fixed->digits ()->ev ()->u.ulval << "_"
+         << fixed->scale ()->ev ()->u.ulval << "_ptr";
+      return 0;
+    }
+
   if (base->is_nested ()
       && base->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
@@ -580,6 +593,27 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl_2;
+
+  return 0;
+}
+
+int
+be_visitor_typecode_defn::visit_fixed (be_fixed * node)
+{
+  TAO_OutStream & os = *this->ctx_->stream ();
+  const ACE_CDR::ULong digits = node->digits ()->ev ()->u.ulval;
+  const ACE_CDR::ULong scale = node->scale ()->ev ()->u.ulval;
+
+  os << "#ifndef _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
+     << "#define _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
+     << "static TAO::TypeCode::Fixed<TAO::Null_RefCount_Policy>" << be_idt_nl
+     << "_tao_tc_fixed_" << digits << "_" << scale << " (" << be_idt_nl
+     << digits << "," << be_nl
+     << scale << ");" << be_uidt_nl
+     << "static ::CORBA::TypeCode_ptr const _tao_tc_fixed_"
+     << digits << "_" << scale << "_ptr = &_tao_tc_fixed_"
+     << digits << "_" << scale << ";" << be_nl
+     << "#endif /* _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD */" << be_nl_2;
 
   return 0;
 }

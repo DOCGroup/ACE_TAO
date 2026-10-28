@@ -38,15 +38,16 @@ class TAO_AV_Transport_Factory;
 class TAO_AV_Flow_Protocol_Item;
 class TAO_AV_Flow_Protocol_Factory;
 
-typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
-typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
+using TAO_AV_FlowSpecSet = ACE_Unbounded_Set<TAO_FlowSpec_Entry*>;
+using TAO_AV_FlowSpecSetItor = ACE_Unbounded_Set_Iterator<TAO_FlowSpec_Entry*>;
 
-typedef ACE_Unbounded_Set<TAO_AV_Transport_Item*> TAO_AV_TransportFactorySet;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*> TAO_AV_TransportFactorySetItor;
+using TAO_AV_TransportFactorySet = ACE_Unbounded_Set<TAO_AV_Transport_Item*>;
+using TAO_AV_TransportFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*>;
 
 // typedefs for containers containing the list of loaded Flow_Protocol factories.
-typedef ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item*> TAO_AV_Flow_ProtocolFactorySet;
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*> TAO_AV_Flow_ProtocolFactorySetItor;
+using TAO_AV_Flow_ProtocolFactorySet = ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item*>;
+using TAO_AV_Flow_ProtocolFactorySetItor =
+  ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*>;
 
 /**
  * @class TAO_AV_Core
@@ -91,6 +92,10 @@ public:
 
   /// Destructor.
   ~TAO_AV_Core ();
+  TAO_AV_Core (TAO_AV_Core const &) = delete;
+  TAO_AV_Core &operator= (TAO_AV_Core const &) = delete;
+  TAO_AV_Core (TAO_AV_Core &&) = delete;
+  TAO_AV_Core &operator= (TAO_AV_Core &&) = delete;
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa);
@@ -164,7 +169,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
 
-typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
+using TAO_AV_CORE = ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

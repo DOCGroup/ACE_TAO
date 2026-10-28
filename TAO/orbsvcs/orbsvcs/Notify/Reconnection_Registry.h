@@ -41,11 +41,12 @@ namespace TAO_Notify
     : public Topology_Object
   {
     /// The registry consists of a map from ReconnectionID to stringified IOR
-    typedef ACE_Hash_Map_Manager_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID,
-      ACE_CString,
-      ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>,
-      ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>,
-      ACE_SYNCH_NULL_MUTEX> Reconnection_Registry_Type;
+    using Reconnection_Registry_Type =
+      ACE_Hash_Map_Manager_Ex<NotifyExt::ReconnectionRegistry::ReconnectionID,
+                              ACE_CString,
+                              ACE_Hash<NotifyExt::ReconnectionRegistry::ReconnectionID>,
+                              ACE_Equal_To<NotifyExt::ReconnectionRegistry::ReconnectionID>,
+                              ACE_SYNCH_NULL_MUTEX>;
 
   public:
     /// Constructor

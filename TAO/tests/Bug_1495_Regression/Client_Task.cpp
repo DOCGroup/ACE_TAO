@@ -12,7 +12,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
 
-Client_Task::Client_Task (const ACE_TCHAR *input,
+Client_Task::Client_Task (ACE_TCHAR const *input,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr),

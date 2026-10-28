@@ -3,16 +3,6 @@
 #include "Test_Protocols_Hooks.h"
 #include "TestC.h"
 
-Test_Protocols_Hooks::Test_Protocols_Hooks ()
-  : failure_count_ (0)
-{
-}
-
-
-Test_Protocols_Hooks::~Test_Protocols_Hooks ()
-{
-}
-
 void
 Test_Protocols_Hooks::init_hooks (TAO_ORB_Core *)
 {

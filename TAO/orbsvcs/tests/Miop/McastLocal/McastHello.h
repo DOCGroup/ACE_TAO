@@ -15,15 +15,15 @@ public:
               int instance);
 
   // = The skeleton methods
-  virtual void send_forty_two (CORBA::Long forty_two);
+  void send_forty_two (CORBA::Long forty_two) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Return whether all test requests have been received successfully.
   CORBA::Boolean get_status ();
 
   // Silence the builds
-  void send_large_octet_array (const Test::Octets &);
+  void send_large_octet_array (Test::Octets const&) override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

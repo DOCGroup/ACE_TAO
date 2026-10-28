@@ -30,18 +30,13 @@ TAO::Any_Impl_T<T>::Any_Impl_T (_tao_destructor destructor,
 }
 
 template<typename T>
-TAO::Any_Impl_T<T>::~Any_Impl_T ()
-{
-}
-
-template<typename T>
 void
 TAO::Any_Impl_T<T>::insert (CORBA::Any & any,
                             _tao_destructor destructor,
                             CORBA::TypeCode_ptr tc,
                             T * const value)
 {
-  TAO::Any_Impl_T<T> *new_impl = 0;
+  TAO::Any_Impl_T<T> *new_impl = nullptr;
   ACE_NEW (new_impl,
            TAO::Any_Impl_T<T> (destructor,
                                tc,
@@ -56,7 +51,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                              CORBA::TypeCode_ptr tc,
                              T *& _tao_elem)
 {
-  _tao_elem = 0;
+  _tao_elem = nullptr;
 
   try
     {
@@ -75,7 +70,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
           TAO::Any_Impl_T<T> * const narrow_impl =
             dynamic_cast <TAO::Any_Impl_T<T> *> (impl);
 
-          if (narrow_impl == 0)
+          if (narrow_impl == nullptr)
             {
               return false;
             }
@@ -84,11 +79,11 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
           return true;
         }
 
-      TAO::Any_Impl_T<T> *replacement = 0;
+      TAO::Any_Impl_T<T> *replacement = nullptr;
       ACE_NEW_RETURN (replacement,
                       TAO::Any_Impl_T<T> (destructor,
                                           any_tc,
-                                          0),
+                                          nullptr),
                       false);
 
       std::unique_ptr<TAO::Any_Impl_T<T> > replacement_safety (replacement);
@@ -165,14 +160,14 @@ template<typename T>
 void
 TAO::Any_Impl_T<T>::free_value ()
 {
-  if (this->value_destructor_ != 0)
+  if (this->value_destructor_ != nullptr)
     {
       (*this->value_destructor_) (this->value_);
-      this->value_destructor_ = 0;
+      this->value_destructor_ = nullptr;
     }
 
   ::CORBA::release (this->type_);
-  this->value_ = 0;
+  this->value_ = nullptr;
 }
 
 template<typename T>

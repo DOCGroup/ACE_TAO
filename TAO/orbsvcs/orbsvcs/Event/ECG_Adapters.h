@@ -71,8 +71,8 @@ public:
                                RtecUDPAdmin::UDP_Address_out addr) = 0;
 };
 
-typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown,
-  ACE_Null_Mutex> TAO_ECG_Refcounted_Handler;
+using TAO_ECG_Refcounted_Handler =
+  ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown, ACE_Null_Mutex>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

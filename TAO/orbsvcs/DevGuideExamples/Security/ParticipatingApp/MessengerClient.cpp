@@ -34,7 +34,7 @@ static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 ---------------------------------------
 #endif
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://Messenger.ior");
+ACE_TCHAR const * ior = ACE_TEXT ("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -98,8 +98,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           want_protection);
 
     Security::EstablishTrust establish_trust;
-    establish_trust.trust_in_client = 0;
-    establish_trust.trust_in_target = 1;
+    establish_trust.trust_in_client = false;
+    establish_trust.trust_in_target = true;
 
     CORBA::Any want_trust;
     want_trust <<= establish_trust;
@@ -136,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception("Client: main block");
     return 1;

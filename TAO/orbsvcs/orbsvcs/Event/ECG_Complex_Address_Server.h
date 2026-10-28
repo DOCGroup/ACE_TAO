@@ -57,7 +57,7 @@ public:
          create (int is_source_mapping = 1);
 
   /// Destructor
-  virtual ~TAO_ECG_Complex_Address_Server ();
+  virtual ~TAO_ECG_Complex_Address_Server () override;
 
   /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.
@@ -65,9 +65,9 @@ public:
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr);
+                         RtecUDPAdmin::UDP_Addr_out addr) override;
   virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6);
+                            RtecUDPAdmin::UDP_Address_out addr6) override;
 
   /// Prints out complete content of the address server. Useful for
   /// debugging.
@@ -90,8 +90,8 @@ private:
   /// event type to mcast groups.
   int is_source_mapping_;
 
-  typedef ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr,
-    ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex> MAP;
+  using MAP = ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr,
+                                      ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;
 
   MAP mcast_mapping_;
 

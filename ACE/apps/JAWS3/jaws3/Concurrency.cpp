@@ -15,8 +15,7 @@
 #include "jaws3/Options.h"
 
 
-typedef ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>
-        JAWS_Empty_Message_Block;
+using JAWS_Empty_Message_Block = ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>;
 
 
 int

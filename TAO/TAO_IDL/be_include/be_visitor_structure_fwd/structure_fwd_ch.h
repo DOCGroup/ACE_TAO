@@ -25,9 +25,9 @@ class be_visitor_structure_fwd_ch : public be_visitor_decl
 public:
   be_visitor_structure_fwd_ch (be_visitor_context *ctx);
 
-  ~be_visitor_structure_fwd_ch ();
+  ~be_visitor_structure_fwd_ch () override;
 
-  virtual int visit_structure_fwd (be_structure_fwd *node);
+  int visit_structure_fwd (be_structure_fwd *node) override;
 };
 
 #endif /* _BE_INTERFACE_STRUCTURE_FWD_CH_H_ */

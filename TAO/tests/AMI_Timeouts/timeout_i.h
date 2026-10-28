@@ -21,10 +21,14 @@ public:
   Timeout_i (CORBA::ORB_ptr orb);
 
   ~Timeout_i () = default;
+  Timeout_i (Timeout_i const &) = delete;
+  Timeout_i &operator= (Timeout_i const &) = delete;
+  Timeout_i (Timeout_i &&) = delete;
+  Timeout_i &operator= (Timeout_i &&) = delete;
 
-  virtual void sendTimeToWait (CORBA::Long msec);
+  void sendTimeToWait (CORBA::Long msec) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -37,11 +41,14 @@ public:
   TimeoutHandler_i ();
 
   ~TimeoutHandler_i () = default;
+  TimeoutHandler_i (TimeoutHandler_i const &) = delete;
+  TimeoutHandler_i &operator= (TimeoutHandler_i const &) = delete;
+  TimeoutHandler_i (TimeoutHandler_i &&) = delete;
+  TimeoutHandler_i &operator= (TimeoutHandler_i &&) = delete;
 
-  virtual void sendTimeToWait ();
+  void sendTimeToWait () override;
 
-  virtual void sendTimeToWait_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+  void sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_holder) override;
 
   void reset_reply_counter ();
 

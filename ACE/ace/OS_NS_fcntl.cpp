@@ -59,7 +59,7 @@ ACE_OS::open (const char *filename,
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_POSIX_SEMANTICS))
     flags |= FILE_FLAG_POSIX_SEMANTICS;
 
-  ACE_MT (ACE_thread_mutex_t *ace_os_monitor_lock = 0;)
+  ACE_MT (ACE_thread_mutex_t *ace_os_monitor_lock = nullptr;)
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
     {
@@ -182,7 +182,7 @@ ACE_OS::open (const wchar_t *filename,
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_POSIX_SEMANTICS))
     flags |= FILE_FLAG_POSIX_SEMANTICS;
 
-  ACE_MT (ACE_thread_mutex_t *ace_os_monitor_lock = 0;)
+  ACE_MT (ACE_thread_mutex_t *ace_os_monitor_lock = nullptr;)
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
     {

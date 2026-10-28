@@ -49,10 +49,10 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   , public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Builder;
-  typedef ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr> Routing_Slip_Set;
+  using Routing_Slip_Set = ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr>;
 
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory > Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory >;
 
   /// Constructor
   TAO_Notify_EventChannelFactory ();
@@ -150,7 +150,7 @@ protected:
       CosNotifyChannelAdmin::ChannelID id);
 
 private:
-  typedef TAO_Notify_Container_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Container;
+  using TAO_Notify_EventChannel_Container = TAO_Notify_Container_T<TAO_Notify_EventChannel>;
 
   TAO_Notify_EventChannel_Container& ec_container();
 

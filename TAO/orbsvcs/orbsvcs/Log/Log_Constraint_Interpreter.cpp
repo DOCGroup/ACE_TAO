@@ -4,7 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
-    const char *constraints
+    char const * constraints
   )
 {
   if (ETCL_Interpreter::is_empty_string (constraints))
@@ -24,9 +24,7 @@ TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
     }
 }
 
-TAO_Log_Constraint_Interpreter::~TAO_Log_Constraint_Interpreter ()
-{
-}
+TAO_Log_Constraint_Interpreter::~TAO_Log_Constraint_Interpreter () = default;
 
 CORBA::Boolean
 TAO_Log_Constraint_Interpreter::evaluate (

@@ -10,7 +10,7 @@
 #define BACKING_STORE "queue.dat"
 #define QUEUE_NAME "queue.db"
 
-typedef ACE_Allocator_Adapter<ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> > ALLOCATOR;
+using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>>;
 
 ACE_Process_Mutex coordMutex("Coord-Mutex");
 
@@ -19,7 +19,7 @@ template <class T>
 class Unbounded_Queue : public ACE_Unbounded_Queue<T>
 {
 public:
-  typedef ACE_Unbounded_Queue<T> BASE;
+  using BASE = ACE_Unbounded_Queue<T>;
 
   Unbounded_Queue(ACE_Allocator* allocator)
     : ACE_Unbounded_Queue<T> (allocator)
@@ -47,11 +47,11 @@ public:
 
 #include "Record.h"
 
-typedef Unbounded_Queue<Record> QUEUE;
+using QUEUE = Unbounded_Queue<Record>;
 
 QUEUE* squeue(ALLOCATOR* shmem_allocator)
 {
-  void *queue = 0;
+  void *queue = nullptr;
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
@@ -65,8 +65,8 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
   queue = shmem_allocator->malloc (queue_size);
 
   // If allocation failed ...
-  if (queue == 0)
-    return 0;
+  if (queue == nullptr)
+    return nullptr;
 
   new (queue) QUEUE (shmem_allocator);
 
@@ -77,13 +77,13 @@ QUEUE* squeue(ALLOCATOR* shmem_allocator)
                   ACE_TEXT ("squeue bind\n")));
       shmem_allocator->remove();
 
-      return 0;
+      return nullptr;
     }
 
   return (QUEUE*)queue;
 }
 
-static ALLOCATOR * g_shmem_allocator = 0;
+static ALLOCATOR * g_shmem_allocator = nullptr;
 
 // Listing 4 code/ch17
 int processRecord (ALLOCATOR *shmem_allocator)
@@ -91,7 +91,7 @@ int processRecord (ALLOCATOR *shmem_allocator)
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, coordMutex, -1);
 
   QUEUE* queue = squeue (shmem_allocator);
-  if (queue == 0)
+  if (queue == nullptr)
     {
       delete shmem_allocator;
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -186,7 +186,7 @@ int sendRecord (int recordId,  ALLOCATOR *shmem_allocator)
 // Listing 2 code/ch17
 int handle_parent (ACE_TCHAR *cmdLine)
 {
-  ALLOCATOR *shmem_allocator = 0;
+  ALLOCATOR *shmem_allocator = nullptr;
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
@@ -203,7 +203,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
   const ACE_TCHAR *args[3];
   args[0] = cmdLine;
   args[1] = ACE_TEXT ("a");
-  args[2] = 0;
+  args[2] = nullptr;
   poptions.command_line (args);
   processa.spawn (poptions);
   processb.spawn (poptions);
@@ -225,7 +225,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
 // Listing 3 code/ch17
 int handle_child ()
 {
-  ALLOCATOR *shmem_allocator = 0;
+  ALLOCATOR *shmem_allocator = nullptr;
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);

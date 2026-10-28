@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Root_POA *
-TAO_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
+TAO_Default_Servant_Dispatcher::create_Root_POA (ACE_CString const &name,
                                                  PortableServer::POAManager_ptr poa_manager,
                                                  const TAO_POA_Policy_Set &policies,
                                                  ACE_Lock &lock,
@@ -20,7 +20,7 @@ TAO_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                     TAO_Root_POA (name,
                                   poa_manager,
                                   policies,
-                                  0,
+                                  nullptr,
                                   lock,
                                   thread_lock,
                                   orb_core,
@@ -37,7 +37,7 @@ TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_ServerRequest &req,
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
-  poa.network_priority_hook ()-> set_dscp_codepoint (req, poa);
+  poa.network_priority_hook ()->set_dscp_codepoint (req, poa);
 }
 
 void

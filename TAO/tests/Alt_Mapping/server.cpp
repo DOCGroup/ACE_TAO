@@ -17,7 +17,7 @@
 
 // Parses the command line arguments and returns an error status.
 static FILE *ior_output_file = 0;
-static const ACE_TCHAR *ior_output_filename = ACE_TEXT("test.ior");
+static ACE_TCHAR const *ior_output_filename = ACE_TEXT("test.ior");
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      const char *orb_name = "";
+      char const *orb_name = "";
       CORBA::ORB_var orb_ptr =
         CORBA::ORB_init (argc, argv, orb_name);
 
@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
 
-      if (ior_output_file == 0)
+      if (ior_output_file == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",

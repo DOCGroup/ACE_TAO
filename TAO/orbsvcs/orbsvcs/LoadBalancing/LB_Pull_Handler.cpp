@@ -6,8 +6,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_Pull_Handler::TAO_LB_Pull_Handler ()
-  : monitor_map_ (0),
-    load_manager_ (0)
 {
 }
 
@@ -21,8 +19,8 @@ TAO_LB_Pull_Handler::initialize (TAO_LB_MonitorMap * monitor_map,
 
 int
 TAO_LB_Pull_Handler::handle_timeout (
-  const ACE_Time_Value & /* current_time */,
-  const void * /* arg */)
+  ACE_Time_Value const & /* current_time */,
+  void const * /* arg */)
 {
   // @todo Fix the race condtions in this method.
 
@@ -40,7 +38,7 @@ TAO_LB_Pull_Handler::handle_timeout (
       //       operation at some point in the near future.
       for (TAO_LB_MonitorMap::iterator i = begin; i != end; ++i)
         {
-          const PortableGroup::Location & location = (*i).ext_id_;
+          PortableGroup::Location const & location = (*i).ext_id_;
           CosLoadBalancing::LoadMonitor_var & monitor = (*i).int_id_;
 
           // The load monitor reference should never be nil since the
@@ -58,7 +56,7 @@ TAO_LB_Pull_Handler::handle_timeout (
 //                       load_list[0].value));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       // Catch the exception and ignore it.
 

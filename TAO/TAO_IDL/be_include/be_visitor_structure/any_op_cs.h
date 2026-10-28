@@ -31,19 +31,19 @@ public:
   be_visitor_structure_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_structure_any_op_cs () = default;
+  ~be_visitor_structure_any_op_cs () override = default;
 
   /// visit structure
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit field
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 
   /// visit field
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
   /// visit field
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_ANY_OP_CS_H_ */

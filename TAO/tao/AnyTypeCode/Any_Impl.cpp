@@ -12,24 +12,21 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::Any_Impl::~Any_Impl () = default;
+
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc,
                          bool encoded)
   : value_destructor_ (destructor)
   , type_ (CORBA::TypeCode::_duplicate (tc))
   , encoded_ (encoded)
-  , refcount_ (1)
-{
-}
-
-TAO::Any_Impl::~Any_Impl ()
 {
 }
 
 CORBA::Boolean
 TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {
-  CORBA::ValueBase * vb = 0;
+  CORBA::ValueBase *vb = nullptr;
   if (this->to_value (vb) && vb)
     {
       // Since we ARE a value type, we need to

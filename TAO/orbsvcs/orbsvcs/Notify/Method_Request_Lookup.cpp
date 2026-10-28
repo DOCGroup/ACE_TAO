@@ -43,7 +43,7 @@ void
 TAO_Notify_Method_Request_Lookup::work (
   TAO_Notify_ProxySupplier* proxy_supplier)
 {
-  if (delivery_request_.get () == 0)
+  if (delivery_request_.get () == nullptr)
   {
     TAO_Notify_Method_Request_Dispatch_No_Copy request (*this, proxy_supplier, true);
     proxy_supplier->deliver (request);
@@ -79,13 +79,13 @@ int TAO_Notify_Method_Request_Lookup::execute_i ()
 
   TAO_Notify_Consumer_Map::ENTRY* entry = map.find (this->event_->type ());
 
-  TAO_Notify_ProxySupplier_Collection* consumers = 0;
+  TAO_Notify_ProxySupplier_Collection* consumers = nullptr;
 
-  if (entry != 0)
+  if (entry != nullptr)
   {
     consumers = entry->collection ();
 
-    if (consumers != 0)
+    if (consumers != nullptr)
       {
         consumers->for_each (this);
       }
@@ -96,7 +96,7 @@ int TAO_Notify_Method_Request_Lookup::execute_i ()
   // Get the default consumers
   consumers = map.broadcast_collection ();
 
-  if (consumers != 0)
+  if (consumers != nullptr)
     {
       consumers->for_each (this);
     }
@@ -112,7 +112,7 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
   TAO_InputCDR & cdr)
 {
   bool ok = true;
-  TAO_Notify_Method_Request_Lookup_Queueable * result = 0;
+  TAO_Notify_Method_Request_Lookup_Queueable * result = nullptr;
   CORBA::ULong count;
   if (cdr.read_ulong (count))
   {
@@ -135,7 +135,7 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
       TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (
         id_path,
         0);
-      if (proxy_consumer != 0)
+      if (proxy_consumer != nullptr)
       {
         ACE_NEW_NORETURN (result,
           TAO_Notify_Method_Request_Lookup_Queueable (delivery_request, proxy_consumer));

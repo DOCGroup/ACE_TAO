@@ -3,13 +3,18 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 class TestTask : public ACE_Task_Base
 {
 public:
   TestTask (int argc, ACE_TCHAR **argv);
-  virtual int svc ();
+  TestTask (TestTask const &) = delete;
+  TestTask (TestTask &&) = delete;
+  TestTask &operator= (TestTask const &) = delete;
+  TestTask &operator= (TestTask &&) = delete;
+
+  int svc () override;
 
   int parse_args (int argc, ACE_TCHAR **argv);
 
@@ -28,7 +33,7 @@ TestTask::TestTask(int argc, ACE_TCHAR **argv)
 
 void TestTask::end()
 {
-  orb_->shutdown(0);
+  orb_->shutdown(false);
   this->wait();
 }
 

@@ -37,71 +37,71 @@ namespace CORBA
    * Declarations of all CORBA primitive types.
    */
   //@{
-  typedef ACE_CDR::Boolean Boolean;
-  typedef Boolean &Boolean_out;
+  using Boolean = ACE_CDR::Boolean;
+  using Boolean_out = Boolean &;
 
-  typedef ACE_CDR::Octet Octet;
-  typedef Octet  &Octet_out;
+  using Octet = ACE_CDR::Octet;
+  using Octet_out = Octet &;
 
-  typedef ACE_CDR::Short Short;
-  typedef Short &Short_out;
+  using Short = ACE_CDR::Short;
+  using Short_out = Short &;
 
-  typedef ACE_CDR::UShort UShort;
-  typedef UShort &UShort_out;
+  using UShort = ACE_CDR::UShort;
+  using UShort_out = UShort &;
 
-  typedef ACE_CDR::Long Long;
-  typedef Long &Long_out;
+  using Long = ACE_CDR::Long;
+  using Long_out = Long &;
 
-  typedef ACE_CDR::ULong ULong;
-  typedef ULong &ULong_out;
+  using ULong = ACE_CDR::ULong;
+  using ULong_out = ULong &;
 
-  typedef ACE_CDR::LongLong LongLong;
-  typedef LongLong &LongLong_out;
+  using LongLong = ACE_CDR::LongLong;
+  using LongLong_out = LongLong &;
 
-  typedef ACE_CDR::ULongLong ULongLong;
-  typedef ULongLong &ULongLong_out;
+  using ULongLong = ACE_CDR::ULongLong;
+  using ULongLong_out = ULongLong &;
 
-  typedef ACE_CDR::Float Float;
-  typedef Float &Float_out;
+  using Float = ACE_CDR::Float;
+  using Float_out = Float &;
 
-  typedef ACE_CDR::Double Double;
-  typedef Double &Double_out;
+  using Double = ACE_CDR::Double;
+  using Double_out = Double &;
 
-  typedef ACE_CDR::LongDouble LongDouble;
-  typedef LongDouble &LongDouble_out;
+  using LongDouble = ACE_CDR::LongDouble;
+  using LongDouble_out = LongDouble &;
 
-  typedef ACE_CDR::Char Char;
-  typedef Char &Char_out;
+  using Char = ACE_CDR::Char;
+  using Char_out = Char &;
 
-  typedef ACE_CDR::WChar WChar;
-  typedef WChar &WChar_out;
+  using WChar = ACE_CDR::WChar;
+  using WChar_out = WChar &;
 
-  typedef ACE_CDR::Int16 Int16;
-  typedef Int16 &Int16_out;
+  using Int16 = ACE_CDR::Int16;
+  using Int16_out = Int16 &;
 
-  typedef ACE_CDR::UInt16 UInt16;
-  typedef UInt16 &UInt16_out;
+  using UInt16 = ACE_CDR::UInt16;
+  using UInt16_out = UInt16 &;
 
-  typedef ACE_CDR::Int32 Int32;
-  typedef Int32 &Int32_out;
+  using Int32 = ACE_CDR::Int32;
+  using Int32_out = Int32 &;
 
-  typedef ACE_CDR::UInt32 UInt32;
-  typedef UInt32 &UInt32_out;
+  using UInt32 = ACE_CDR::UInt32;
+  using UInt32_out = UInt32 &;
 
-  typedef ACE_CDR::Int64 Int64;
-  typedef Int64 &Int64_out;
+  using Int64 = ACE_CDR::Int64;
+  using Int64_out = Int64 &;
 
-  typedef ACE_CDR::UInt64 UInt64;
-  typedef UInt64 &UInt64_out;
+  using UInt64 = ACE_CDR::UInt64;
+  using UInt64_out = UInt64 &;
   //@}
 
-  typedef TAO::String_var<CORBA::Char> String_var;
-  typedef TAO::String_out<CORBA::Char> String_out;
-  typedef TAO::String_var<CORBA::WChar> WString_var;
-  typedef TAO::String_out<CORBA::WChar> WString_out;
+  using String_var = TAO::String_var<CORBA::Char>;
+  using String_out = TAO::String_out<CORBA::Char>;
+  using WString_var = TAO::String_var<CORBA::WChar>;
+  using WString_out = TAO::String_out<CORBA::WChar>;
 
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
   class Any;
 }

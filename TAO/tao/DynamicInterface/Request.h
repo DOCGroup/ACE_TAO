@@ -47,13 +47,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class NVList;
-  typedef NVList *NVList_ptr;
+  using NVList_ptr = NVList *;
 
   class Context;
-  typedef Context *Context_ptr;
+  using Context_ptr = Context *;
 
   class ContextList;
-  typedef ContextList *ContextList_ptr;
+  using ContextList_ptr = ContextList *;
 
   /**
    * @class Request
@@ -70,7 +70,7 @@ namespace CORBA
     CORBA::Object_ptr target () const;
 
     /// Return the operation name for the request.
-    const CORBA::Char *operation () const;
+    CORBA::Char const* operation () const;
 
     /// Return the arguments for the request.
     CORBA::NVList_ptr arguments ();
@@ -100,11 +100,11 @@ namespace CORBA
      */
     //@{
     CORBA::Any &add_in_arg ();
-    CORBA::Any &add_in_arg (const char* name);
+    CORBA::Any &add_in_arg (char const* name);
     CORBA::Any &add_inout_arg ();
-    CORBA::Any &add_inout_arg (const char* name);
+    CORBA::Any &add_inout_arg (char const* name);
     CORBA::Any &add_out_arg ();
-    CORBA::Any &add_out_arg (const char* name);
+    CORBA::Any &add_out_arg (char const* name);
     //@}
 
     /// Initialize the return type.
@@ -189,9 +189,9 @@ namespace CORBA
     CORBA::Boolean response_received ();
 
     // Useful for template programming.
-    typedef CORBA::Request_ptr _ptr_type;
-    typedef CORBA::Request_var _var_type;
-    typedef CORBA::Request_out _out_type;
+    using _ptr_type = CORBA::Request_ptr;
+    using _var_type = CORBA::Request_var;
+    using _out_type = CORBA::Request_out;
 
   private:
     friend class ::TAO_Dynamic_Adapter_Impl;
@@ -200,7 +200,7 @@ namespace CORBA
     // friend class.
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op,
+             CORBA::Char const* op,
              CORBA::NVList_ptr args,
              CORBA::NamedValue_ptr result,
              CORBA::Flags flags,
@@ -208,28 +208,28 @@ namespace CORBA
 
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op);
+             CORBA::Char const* op);
 
     ~Request ();
 
   private:
     /// Target object.
-    CORBA::Object_ptr target_;
+    CORBA::Object_ptr target_ {};
 
     /// Pointer to our ORB.
     CORBA::ORB_var orb_;
 
     /// Operation name.
-    const char * opname_;
+    char const* opname_ {};
 
     /// Parameter list.
-    CORBA::NVList_ptr args_;
+    CORBA::NVList_ptr args_ {};
 
     /// Result of the operation.
-    CORBA::NamedValue_ptr result_;
+    CORBA::NamedValue_ptr result_ {};
 
     /// Invocation flags.
-    CORBA::Flags flags_;
+    CORBA::Flags flags_ {};
 
     /// @deprecated  Holds exceptions.
     // CORBA::Environment env_;
@@ -238,25 +238,25 @@ namespace CORBA
     CORBA::ExceptionList_var exceptions_;
 
     /// List of the request's result's contexts.
-    CORBA::ContextList_ptr contexts_;
+    CORBA::ContextList_ptr contexts_ {};
 
     /// Context associated with this request.
-    CORBA::Context_ptr ctx_;
+    CORBA::Context_ptr ctx_ {};
 
     /// Reference counting.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
 
     /// Protect the response_received_.
     TAO_SYNCH_MUTEX lock_;
 
     /// If not zero then the NVList is not evaluated by default.
-    bool lazy_evaluation_;
+    bool lazy_evaluation_ {};
 
     /// Set to true upon completion of invoke() or handle_response().
-    CORBA::Boolean response_received_;
+    CORBA::Boolean response_received_ {};
 
     /// Can be reset by a gateway when passing along a request.
-    int byte_order_;
+    int byte_order_ {TAO_ENCAP_BYTE_ORDER};
 
     /// Stores user exception as a CDR stream when this request is
     /// used in a TAO gateway.

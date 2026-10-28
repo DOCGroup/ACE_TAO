@@ -36,12 +36,12 @@ namespace TAO
   }
 }
 
-typedef void (*TAO_Skeleton)(
+using TAO_Skeleton = void (*) (
     TAO_ServerRequest &,
     TAO::Portable_Server::Servant_Upcall *,
     TAO_ServantBase *);
 
-typedef void (*TAO_Collocated_Skeleton)(
+using TAO_Collocated_Skeleton = void (*) (
     TAO_Abstract_ServantBase *,
     TAO::Argument **);
 
@@ -79,14 +79,14 @@ namespace TAO
    */
   struct TAO_PortableServer_Export Operation_Skeletons
   {
-    Operation_Skeletons ();
+    Operation_Skeletons () = default;
 
     /// Remote skeleton pointer
-    TAO_Skeleton skel_ptr;
+    TAO_Skeleton skel_ptr {};
 
     /// Collocated skeleton pointers.
-    TAO_Skeleton thruPOA_skel_ptr;
-    TAO_Collocated_Skeleton direct_skel_ptr;
+    TAO_Skeleton thruPOA_skel_ptr {};
+    TAO_Collocated_Skeleton direct_skel_ptr {};
   };
 }
 
@@ -104,24 +104,24 @@ public:
    * in @a skelfunc.  Returns non-negative integer on success, or -1
    * on failure.
    */
-  virtual int find (const char *opname,
+  virtual int find (char const *opname,
                     TAO_Skeleton &skelfunc,
-                    const unsigned int length = 0) = 0;
+                    unsigned int const length = 0) = 0;
 
   /**
    * Uses @a opname to look up the collocated skeleton function and
    * pass it back in @a skelfunc.  Returns non-negative integer on
    * success, or -1 on failure.
    */
-  virtual int find (const char *opname,
+  virtual int find (char const *opname,
                     TAO_Collocated_Skeleton &skelfunc,
                     TAO::Collocation_Strategy s,
-                    const unsigned int length = 0) = 0;
+                    unsigned int const length = 0) = 0;
 
   /// Associate the skeleton @a skel_ptr with an operation named
   /// @a opname.  Returns -1 on failure, 0 on success, 1 on duplicate.
-  virtual int bind (const char *opname,
-                    const TAO::Operation_Skeletons skel_ptr) = 0;
+  virtual int bind (char const *opname,
+                    TAO::Operation_Skeletons const skel_ptr) = 0;
 
   virtual ~TAO_Operation_Table ();
 };

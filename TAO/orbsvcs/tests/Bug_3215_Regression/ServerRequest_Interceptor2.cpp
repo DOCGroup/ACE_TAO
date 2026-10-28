@@ -17,14 +17,12 @@
 int invocation_count = 0;
 
 TAO249_ServerRequest_Interceptor2::TAO249_ServerRequest_Interceptor2 ()
-: orb_ (0),
-  expired_ (0)
+: orb_ (nullptr),
+  expired_ (false)
 {
 }
 
-TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 ()
-{
-}
+TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 () = default;
 
 char *
 TAO249_ServerRequest_Interceptor2::name ()
@@ -86,7 +84,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
                              CORBA::COMPLETED_NO);
 
 
-  TimeBase::TimeT now = get_now ();
+  TimeBase::TimeT const now = get_now ();
 
   if (now > ftrsc.expiration_time)
     {
@@ -106,7 +104,7 @@ TAO249_ServerRequest_Interceptor2::receive_request (
           // A request has been recioved after the expiration time.
           // This could legitimately happen - it is only definitely a problem if
           // the client keeps on retrying after now. We set a flag so we can check for this.
-          expired_ = 1;
+          expired_ = true;
           ACE_DEBUG ((LM_DEBUG, "The expiration time has now passed !! The next exception must NOT prompt reinvocation.\n"));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), ftrsc.expiration_time));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
@@ -137,10 +135,10 @@ TAO249_ServerRequest_Interceptor2::receive_request (
 }
 
 TimeBase::TimeT
-TAO249_ServerRequest_Interceptor2::get_now ()
+TAO249_ServerRequest_Interceptor2::get_now () const
 {
   // 1582...
-  const TimeBase::TimeT timeOffset = ACE_UINT64_LITERAL (0x1B21DD213814000);
+  TimeBase::TimeT const timeOffset = ACE_UINT64_LITERAL (0x1B21DD213814000);
 
   // Now in posix
   ACE_Time_Value time_value = ACE_OS::gettimeofday ();

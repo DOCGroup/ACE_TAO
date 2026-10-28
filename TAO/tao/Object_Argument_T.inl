@@ -21,8 +21,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::In_Object_Clonable_Argument_T (S_ptr x)
-  : In_Object_Argument_T<S_ptr,Insert_Policy> (x),
-    is_clone_ (false)
+  : In_Object_Argument_T<S_ptr,Insert_Policy> (x)
 {}
 
 // ==========================================================================
@@ -73,8 +72,7 @@ template<typename S_ptr,
          typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::Ret_Object_Argument_T ()
-{}
+TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::Ret_Object_Argument_T () = default;
 
 template<typename S_ptr,
          typename S_var,

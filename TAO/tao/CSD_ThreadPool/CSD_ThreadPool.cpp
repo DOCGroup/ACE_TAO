@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_CSD_ThreadPool::init ()
 {
-  static int initialized = 0;
+  static int initialized {};
   if (initialized == 1)
     return 0;
   initialized = 1;

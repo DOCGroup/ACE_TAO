@@ -47,19 +47,28 @@ class TAO_Strategies_Export TAO_Optimized_Connection_Endpoint_Selector
 {
 public:
   /// Constructor.
-  TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value& tv);
+  explicit TAO_Optimized_Connection_Endpoint_Selector (ACE_Time_Value const &tv);
 
   /// Destructor.
-  virtual ~TAO_Optimized_Connection_Endpoint_Selector ();
+  ~TAO_Optimized_Connection_Endpoint_Selector () override;
 
   static void hook (TAO_ORB_Core *,
                     TAO_Stub *,
                     bool &has_timeout,
                     ACE_Time_Value &tv);
 
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *,
-                                ACE_Time_Value *max_wait_time);
+  void select_endpoint (TAO::Profile_Transport_Resolver *,
+                        ACE_Time_Value *max_wait_time) override;
 private:
+  TAO_Optimized_Connection_Endpoint_Selector (
+    TAO_Optimized_Connection_Endpoint_Selector const &) = delete;
+  TAO_Optimized_Connection_Endpoint_Selector &operator= (
+    TAO_Optimized_Connection_Endpoint_Selector const &) = delete;
+  TAO_Optimized_Connection_Endpoint_Selector (
+    TAO_Optimized_Connection_Endpoint_Selector &&) = delete;
+  TAO_Optimized_Connection_Endpoint_Selector &operator= (
+    TAO_Optimized_Connection_Endpoint_Selector &&) = delete;
+
   int check_profile (TAO_Profile *,
                      TAO::Profile_Transport_Resolver *);
 

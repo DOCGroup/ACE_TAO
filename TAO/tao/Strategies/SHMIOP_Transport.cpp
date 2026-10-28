@@ -16,15 +16,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport () = default;
+
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                                             TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SHMEM_PROFILE,
                    orb_core),
     connection_handler_ (handler)
-{
-}
-
-TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport ()
 {
 }
 
@@ -110,7 +108,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - SHMIOP_Transport[%d]::handle_input\n",
+                  "TAO (%P|%t) - SHMIOP_Transport[%B]::handle_input\n",
                   this->id ()));
     }
 
@@ -213,7 +211,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
             if (TAO_debug_level > 0)
               {
                 TAOLIB_ERROR ((LM_ERROR,
-                 "TAO (%P|%t) - SHMIOP_Transport[%d]::handle_input, "
+                 "TAO (%P|%t) - SHMIOP_Transport[%B]::handle_input, "
                  "error growing message buffer\n",
                  this->id () ));
               }
@@ -317,7 +315,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) closing transport %d after fault %p\n"),
+                    ACE_TEXT ("TAO (%P|%t) closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 

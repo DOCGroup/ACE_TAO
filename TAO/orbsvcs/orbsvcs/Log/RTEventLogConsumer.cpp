@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log)
+TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log)
   : log_ (log)
 {
 }
@@ -38,7 +38,7 @@ TAO_Rtec_LogConsumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events)
+TAO_Rtec_LogConsumer::push (RtecEventComm::EventSet const & events)
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);

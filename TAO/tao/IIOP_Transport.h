@@ -60,7 +60,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  virtual ~TAO_IIOP_Transport ();
+  ~TAO_IIOP_Transport () override;
 
   /** @name Overridden Template Methods
    *
@@ -68,21 +68,21 @@ protected:
    * details.
    */
   //@{
-  virtual ACE_Event_Handler * event_handler_i ();
+  ACE_Event_Handler * event_handler_i () override;
 
-  virtual ssize_t send (iovec *iov, int iovcnt,
-                        size_t &bytes_transferred,
-                        const ACE_Time_Value *timeout = nullptr);
+  ssize_t send (iovec *iov, int iovcnt,
+                size_t &bytes_transferred,
+                ACE_Time_Value const *timeout = nullptr) override;
 
 #if TAO_HAS_SENDFILE == 1
-  virtual ssize_t sendfile (TAO_MMAP_Allocator * allocator,
-                            iovec * iov,
-                            int iovcnt,
-                            size_t &bytes_transferred,
-                            TAO::Transport::Drain_Constraints const & dc);
+  ssize_t sendfile (TAO_MMAP_Allocator * allocator,
+                    iovec * iov,
+                    int iovcnt,
+                    size_t &bytes_transferred,
+                    TAO::Transport::Drain_Constraints const & dc) override;
 #endif  /* TAO_HAS_SENDFILE==1 */
 
-  virtual ssize_t recv (char *buf, size_t len, const ACE_Time_Value *s = nullptr);
+  ssize_t recv (char *buf, size_t len, ACE_Time_Value const *s = nullptr) override;
 
 public:
   /// Bridge method to call a similar method on the connection handler
@@ -93,26 +93,26 @@ public:
 
   /// @todo These methods IMHO should have more meaningful
   /// names. The names seem to indicate nothing.
-  virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core,
-                            TAO_OutputCDR &stream,
-                            TAO_Message_Semantics message_semantics,
-                            ACE_Time_Value *max_wait_time);
+  int send_request (TAO_Stub *stub,
+                    TAO_ORB_Core *orb_core,
+                    TAO_OutputCDR &stream,
+                    TAO_Message_Semantics message_semantics,
+                    ACE_Time_Value *max_wait_time) override;
 
-  virtual int send_message (TAO_OutputCDR &stream,
-                            TAO_Stub *stub = nullptr,
-                            TAO_ServerRequest *request = nullptr,
-                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
-                            ACE_Time_Value *max_time_wait = nullptr);
+  int send_message (TAO_OutputCDR &stream,
+                    TAO_Stub *stub = nullptr,
+                    TAO_ServerRequest *request = nullptr,
+                    TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
+                    ACE_Time_Value *max_time_wait = nullptr) override;
 
-  virtual int tear_listen_point_list (TAO_InputCDR &cdr);
+  int tear_listen_point_list (TAO_InputCDR &cdr) override;
 
-  virtual TAO_Connection_Handler * connection_handler_i ();
+  TAO_Connection_Handler * connection_handler_i () override;
   //@}
 
 private:
   /// Set the Bidirectional context info in the service context list
-  void set_bidir_context_info (TAO_Operation_Details &opdetails);
+  void set_bidir_context_info (TAO_Operation_Details &opdetails) override;
 
   /// Add the listen points in @a acceptor to the @a listen_point_list
   /// if this connection is in the same interface as that of the

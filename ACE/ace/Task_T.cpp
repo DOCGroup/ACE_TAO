@@ -56,7 +56,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ACE_Task (ACE_Thread_Manager *thr_man,
 
   if (mq == 0)
     {
-      typedef ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> QUEUE_TYPE;
+      using QUEUE_TYPE = ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW (mq,
                QUEUE_TYPE);
       this->delete_msg_queue_ = true;

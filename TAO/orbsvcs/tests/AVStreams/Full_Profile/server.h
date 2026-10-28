@@ -16,11 +16,11 @@ class FTP_Server_Callback
 {
 public:
   FTP_Server_Callback ();
-  virtual int handle_stop ();
-  virtual int receive_frame (ACE_Message_Block *frame,
-                             TAO_AV_frame_info *,
-                             const ACE_Addr &);
-  virtual int handle_end_stream ();
+  int handle_stop () override;
+  int receive_frame (ACE_Message_Block *frame,
+                     TAO_AV_frame_info *,
+                     ACE_Addr const &) override;
+  int handle_end_stream ();
 };
 
 class FTP_Server_FlowEndPoint
@@ -29,13 +29,17 @@ class FTP_Server_FlowEndPoint
 public:
   FTP_Server_FlowEndPoint ();
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 };
 
 class Server
 {
 public:
   Server ();
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
   int init (int argc,
             ACE_TCHAR *argv[]);
   int run ();
@@ -45,7 +49,7 @@ public:
   void orb (CORBA::ORB_ptr orb_in);
   PortableServer::POA_ptr poa ();
   void poa (PortableServer::POA_ptr poa_in);
-  const char *format ();
+  char const *format ();
 protected:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;
@@ -60,4 +64,4 @@ protected:
   AVStreams::FlowConsumer_var fep_b_obj_;
 };
 
-typedef ACE_Unmanaged_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;
+using FTP_SERVER = ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex>;

@@ -55,8 +55,8 @@ struct ACE_Export ACE_Sub_Barrier
   // = Initialization.
   ACE_Sub_Barrier (unsigned int count,
                    ACE_Thread_Mutex &lock,
-                   const ACE_TCHAR *name = 0,
-                   void *arg = 0);
+                   const ACE_TCHAR *name = nullptr,
+                   void *arg = nullptr);
 
   ~ACE_Sub_Barrier () = default;
 
@@ -95,8 +95,8 @@ class ACE_Export ACE_Barrier
 public:
   /// Initialize the barrier to synchronize @a count threads.
   ACE_Barrier (unsigned int count,
-               const ACE_TCHAR *name = 0,
-               void *arg = 0);
+               const ACE_TCHAR *name = nullptr,
+               void *arg = nullptr);
 
   /// Default destructor.
   ~ACE_Barrier () = default;
@@ -164,7 +164,7 @@ class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
 {
 public:
   /// Create a Thread_Barrier, passing in the optional @a name.
-  ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = 0);
+  ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = nullptr);
 
   /// Default destructor.
   ~ACE_Thread_Barrier () = default;

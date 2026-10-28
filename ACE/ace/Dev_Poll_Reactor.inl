@@ -63,7 +63,7 @@ ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard ()
 ACE_INLINE void
 ACE_Dev_Poll_Handler_Guard::release ()
 {
-  this->eh_ = 0;
+  this->eh_ = nullptr;
 }
 
 // ---------------------------------------------------------------------

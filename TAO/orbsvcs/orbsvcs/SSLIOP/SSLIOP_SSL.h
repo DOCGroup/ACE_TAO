@@ -45,7 +45,7 @@ namespace TAO
        */
       static ::SSL * _duplicate (::SSL * st)
       {
-        if (st != 0)
+        if (st != nullptr)
         {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
           ::SSL_up_ref(st);
@@ -73,7 +73,7 @@ namespace TAO
       }
     };
 
-    typedef OpenSSL_st_var< ::SSL > SSL_var;
+    using SSL_var = OpenSSL_st_var< ::SSL >;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

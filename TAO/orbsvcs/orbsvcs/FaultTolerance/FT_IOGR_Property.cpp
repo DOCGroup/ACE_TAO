@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
-    CORBA::Object_ptr &ior)
+    CORBA::Object_ptr& ior)
 {
   // We need to apply the property for every profile in the IOR
 
@@ -33,7 +33,7 @@ TAO_FT_IOGR_Property::set_property (
 
   // Make the output CDR stream
   TAO_OutputCDR cdr;
-  CORBA::Boolean retval = 0;
+  CORBA::Boolean retval = false;
   retval =
     cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
 
@@ -45,7 +45,7 @@ TAO_FT_IOGR_Property::set_property (
     this->encode_properties (cdr,
                              tagged_components);
 
-  if (retval == 0)
+  if (! retval)
     return retval;
 
   const IOP::TaggedComponent &tmp_tc = tagged_components;
@@ -71,10 +71,10 @@ CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
     CORBA::Object_ptr ior)
 {
-  if (this->get_primary_profile (ior) != 0)
-    return 1;
+  if (this->get_primary_profile (ior) != nullptr)
+    return true;
 
-  return 0;
+  return false;
 }
 
 
@@ -85,7 +85,7 @@ TAO_FT_IOGR_Property::get_primary (
   TAO_Profile *pfile =
     this->get_primary_profile (ior);
 
-  if (pfile == 0)
+  if (pfile == nullptr)
     throw TAO_IOP::NotFound ();
 
   // Search for the IOP::TAG_FT_PRIMARY in the tagged component of
@@ -98,7 +98,7 @@ TAO_FT_IOGR_Property::get_primary (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   // Make a stub Object
-  TAO_Stub *stub = 0;
+  TAO_Stub *stub = nullptr;
 
   // Make a MProfile object for the primary profile alone. So, the
   // size is 1
@@ -142,7 +142,7 @@ TAO_FT_IOGR_Property::get_primary (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
-    CORBA::Object_ptr &ior1,
+    CORBA::Object_ptr& ior1,
     CORBA::Object_ptr ior2)
 {
   // Check for primary in <ior2>
@@ -211,8 +211,8 @@ TAO_FT_IOGR_Property::set_primary (
   CORBA::Octet *buf =
     tagged_components.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *mb = cdr.begin ();
-       mb != 0;
+  for (ACE_Message_Block const* mb = cdr.begin ();
+       mb != nullptr;
        mb = mb->cont ())
     {
       ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
@@ -230,10 +230,10 @@ TAO_FT_IOGR_Property::set_primary (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::encode_properties (
-    TAO_OutputCDR &cdr,
-    IOP::TaggedComponent &tagged_components)
+    TAO_OutputCDR& cdr,
+    IOP::TaggedComponent& tagged_components)
 {
-  if (this->ft_group_tagged_component_ == 0)
+  if (this->ft_group_tagged_component_ == nullptr)
     {
       if (TAO_debug_level > 2)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -268,8 +268,8 @@ TAO_FT_IOGR_Property::encode_properties (
   CORBA::Octet *buf =
     tagged_components.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
+  for (ACE_Message_Block const* i = cdr.begin ();
+       i != nullptr;
        i = i->cont ())
     {
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
@@ -314,14 +314,14 @@ TAO_FT_IOGR_Property::get_primary_profile (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (
-    const CORBA::Object_ptr iogr,
-    FT::TagFTGroupTaggedComponent &fgtc) const
+    CORBA::Object_ptr const iogr,
+    FT::TagFTGroupTaggedComponent& fgtc) const
 {
   TAO_Stub *stub =
     iogr->_stubobj ();
 
-  if (stub == 0)
-    return 0;
+  if (stub == nullptr)
+    return false;
 
   // Get the MProfile
   TAO_MProfile &mprofile =
@@ -358,12 +358,12 @@ TAO_FT_IOGR_Property::get_tagged_component (
         }
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::remove_primary_tag (
-    CORBA::Object_ptr &iogr)
+    CORBA::Object_ptr& iogr)
 {
   // Get the MProfile
   TAO_MProfile &mprofile =
@@ -384,7 +384,7 @@ TAO_FT_IOGR_Property::remove_primary_tag (
           return 1;
         }
     }
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

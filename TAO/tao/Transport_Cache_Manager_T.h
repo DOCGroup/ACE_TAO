@@ -44,7 +44,14 @@ template <class ACE_COND_MUTEX> class TAO_Condition;
 
 namespace TAO
 {
-  typedef ACE_Unbounded_Set<TAO_Connection_Handler*> Connection_Handler_Set;
+  enum Connection_Role
+    {
+      TAO_UNSPECIFIED_ROLE = 0,
+      TAO_SERVER_ROLE = 1,
+      TAO_CLIENT_ROLE = 2
+    };
+
+  using Connection_Handler_Set = ACE_Unbounded_Set<TAO_Connection_Handler *>;
   /**
    * @brief The Transport Cache Manager for TAO
    *
@@ -60,9 +67,9 @@ namespace TAO
   class Transport_Cache_Manager_T
   {
   public:
-    typedef TT transport_type;
-    typedef TRDT transport_descriptor_type;
-    typedef PSTRAT purging_strategy;
+    using transport_type = TT;
+    using transport_descriptor_type = TRDT;
+    using purging_strategy = PSTRAT;
 
     /// results of a find
     enum Find_Result
@@ -73,24 +80,21 @@ namespace TAO
       CACHE_FOUND_AVAILABLE
     };
 
-    typedef Cache_ExtId_T <transport_descriptor_type> Cache_ExtId;
-    typedef Cache_IntId_T <transport_type> Cache_IntId;
+    using Cache_ExtId = Cache_ExtId_T<transport_descriptor_type>;
+    using Cache_IntId = Cache_IntId_T<transport_type>;
 
-    // Some useful typedef's
-    typedef ACE_Hash_Map_Manager_Ex <Cache_ExtId,
-                                     Cache_IntId,
-                                     ACE_Hash<Cache_ExtId>,
-                                     ACE_Equal_To<Cache_ExtId>,
-                                     ACE_Null_Mutex>
-    HASH_MAP;
+    // Some useful aliases.
+    using HASH_MAP = ACE_Hash_Map_Manager_Ex<Cache_ExtId,
+                                             Cache_IntId,
+                                             ACE_Hash<Cache_ExtId>,
+                                             ACE_Equal_To<Cache_ExtId>,
+                                             ACE_Null_Mutex>;
 
-    typedef typename HASH_MAP::iterator HASH_MAP_ITER;
+    using HASH_MAP_ITER = typename HASH_MAP::iterator;
 
-    typedef ACE_Hash_Map_Entry <Cache_ExtId,
-                                Cache_IntId>
-    HASH_MAP_ENTRY;
+    using HASH_MAP_ENTRY = ACE_Hash_Map_Entry<Cache_ExtId, Cache_IntId>;
 
-    typedef TAO_Condition<TAO_SYNCH_MUTEX> CONDITION;
+    using CONDITION = TAO_Condition<TAO_SYNCH_MUTEX>;
 
     // == Public methods
     /// Constructor
@@ -259,7 +263,7 @@ namespace TAO
     static int cpscmp(const void* a, const void* b);
 #endif
 
-    typedef HASH_MAP_ENTRY** DESCRIPTOR_SET;
+    using DESCRIPTOR_SET = HASH_MAP_ENTRY**;
 
     /// Sort the list of entries
     void sort_set (DESCRIPTOR_SET& entries, int size);

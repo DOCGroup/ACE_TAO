@@ -8,7 +8,8 @@
  *  @author   Chris Gill (cdgill@cs.wustl.edu) Based on the original
  *  Scheduling Service program by David Levine (levine@cs.wustl.edu) and
  *  Carlos O'Ryan (coryan@cs.wustl.edu)
- *  @author  and on the Naming Service program implementation by Marina   Spivak (marina@cs.wustl.edu) and Nagarajan Surendran   (naga@cs.wustl.edu)
+ *  @author  and on the Naming Service program implementation by Marina Spivak
+ *  (marina@cs.wustl.edu) and Nagarajan Surendran (naga@cs.wustl.edu)
  */
 //=============================================================================
 
@@ -40,10 +41,15 @@ public:
   TAO_Scheduling_Service ();
 
   /// Constructor taking the command-line arguments.
-  TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[]);
+  TAO_Scheduling_Service (int argc, ACE_TCHAR * argv[]);
+
+  TAO_Scheduling_Service (TAO_Scheduling_Service const &) = delete;
+  TAO_Scheduling_Service (TAO_Scheduling_Service &&) = delete;
+  TAO_Scheduling_Service &operator= (TAO_Scheduling_Service const &) = delete;
+  TAO_Scheduling_Service &operator= (TAO_Scheduling_Service &&) = delete;
 
   /// Initialize the Scheduling Service with the arguments.
-  int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR * argv[]);
 
   /// Run the TAO_Scheduling_Service.
   int run ();
@@ -52,21 +58,21 @@ public:
   ~TAO_Scheduling_Service ();
 
 private:
-  typedef ACE_Config_Scheduler CONFIG_SCHED_TYPE;
+  using CONFIG_SCHED_TYPE = ACE_Config_Scheduler;
 
-  typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy,
-                                 TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
+  using RECONFIG_SCHED_TYPE = TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy,
+                                                     TAO_SYNCH_MUTEX>;
 
   enum Scheduler_Type {CONFIG, RECONFIG};
 
   /// parses the arguments.
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, ACE_TCHAR * argv[]);
 
   /// The ORB manager.  This must be the first thing in the
   TAO_ORB_Manager orb_manager_;
 
   /// Scheduler instance.
-  POA_RtecScheduler::Scheduler *scheduler_impl_;
+  POA_RtecScheduler::Scheduler *scheduler_impl_ {};
 
   /// Name of the IOR output file.
   ACE_CString ior_file_name_;
@@ -75,13 +81,13 @@ private:
   ACE_CString pid_file_name_;
 
   /// Name used to register the service.
-  ACE_CString service_name_;
+  ACE_CString service_name_ {"ScheduleService"};
 
   /// Type of scheduler with which to instantiate the service.
-  Scheduler_Type scheduler_type_;
+  Scheduler_Type scheduler_type_ {CONFIG};
 
   /// A reference to the ORB, to shut it down properly.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* TAO_SCHEDULING_SERVICE_H */

@@ -13,12 +13,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
-  : poa_ (poa),
-    components_established_ (false)
-{
-}
-
-TAO_IORInfo::~TAO_IORInfo ()
+  : poa_ (poa)
 {
 }
 
@@ -43,7 +38,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type)
 }
 
 void
-TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component)
+TAO_IORInfo::add_ior_component (IOP::TaggedComponent const& component)
 {
   this->check_validity ();
 
@@ -56,7 +51,7 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component)
 
 void
 TAO_IORInfo::add_ior_component_to_profile (
-    const IOP::TaggedComponent &component,
+    IOP::TaggedComponent const& component,
     IOP::ProfileId profile_id)
 {
   this->check_validity ();
@@ -97,7 +92,7 @@ TAO_IORInfo::adapter_template ()
   PortableInterceptor::ObjectReferenceTemplate *adapter_template =
     this->poa_->get_adapter_template ();
 
-  if (adapter_template == 0)
+  if (adapter_template == nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
@@ -118,7 +113,7 @@ TAO_IORInfo::current_factory ()
   PortableInterceptor::ObjectReferenceFactory *adapter_factory =
     this->poa_->get_obj_ref_factory ();
 
-  if (adapter_factory == 0)
+  if (adapter_factory == nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
@@ -138,7 +133,7 @@ TAO_IORInfo::current_factory (
 void
 TAO_IORInfo::check_validity ()
 {
-  if (this->poa_ == 0)
+  if (this->poa_ == nullptr)
     {
       // Although not defined by the spec, duplicate the behavior used
       // by the ORBInitInfo object once CORBA::ORB_init() has been

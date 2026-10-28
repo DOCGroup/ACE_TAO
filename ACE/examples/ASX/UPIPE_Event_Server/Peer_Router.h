@@ -76,7 +76,7 @@ public:
   Peer_Router (ACE_Thread_Manager * = 0);
   ~Peer_Router ();
 
-  typedef Peer_Handler<Peer_Router<PEER_HANDLER, PEER_KEY>, PEER_KEY> HANDLER;
+  using HANDLER = Peer_Handler<Peer_Router<PEER_HANDLER, PEER_KEY>, PEER_KEY>;
 
   // Remove a PEER_HANDLER from the PEER_MAP.
   virtual int unbind_peer (PEER_KEY);

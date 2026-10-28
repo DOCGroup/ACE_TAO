@@ -39,10 +39,10 @@ namespace TAO
   {
   public:
     /// Constructor
-    Refcounted_ObjectKey (const ObjectKey &ref);
+    Refcounted_ObjectKey (ObjectKey const &ref);
 
     /// Accessor for the underlying ObjectKey.
-    const ObjectKey &object_key () const;
+    ObjectKey const &object_key () const;
 
   protected:
     friend class ObjectKey_Table;
@@ -58,11 +58,16 @@ namespace TAO
     CORBA::ULong decr_refcount ();
 
   private:
+    Refcounted_ObjectKey (Refcounted_ObjectKey const &) = delete;
+    Refcounted_ObjectKey &operator= (Refcounted_ObjectKey const &) = delete;
+    Refcounted_ObjectKey (Refcounted_ObjectKey &&) = delete;
+    Refcounted_ObjectKey &operator= (Refcounted_ObjectKey &&) = delete;
+
     /// The object key
     ObjectKey object_key_;
 
     /// The refcount on the object key..
-    CORBA::ULong refcount_;
+    CORBA::ULong refcount_ {};
   };
 }
 

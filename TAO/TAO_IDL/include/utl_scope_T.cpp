@@ -19,16 +19,16 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
       return 0;
     }
 
-  AST_Decl *predef = 0;
+  AST_Decl *predef = nullptr;
 
   // Already defined?
-  if ((predef = this->lookup_for_add (t)) != 0)
+  if ((predef = this->lookup_for_add (t)) != nullptr)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == DECL::NT)
         {
           DECL *fwd = dynamic_cast<DECL *> (predef);
-          if (fwd == 0)
+          if (fwd == nullptr)
             {
               return 0;
             }
@@ -110,10 +110,10 @@ template<typename FULL_DECL>
 typename FULL_DECL::FWD_TYPE *
 UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t)) != 0)
+  if ((d = this->lookup_for_add (t)) != nullptr)
     {
       AST_Decl::NodeType nt = d->node_type ();
 
@@ -126,7 +126,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
       if (nt == FULL_DECL::NT)
         {
           FULL_DECL *itf = dynamic_cast<FULL_DECL *> (d);
-          if (itf == 0)
+          if (itf == nullptr)
             {
               return 0;
             }

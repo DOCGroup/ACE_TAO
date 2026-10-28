@@ -14,19 +14,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
-  : reply_status_ (GIOP::NO_EXCEPTION)
-  , mesg_base_ (0)
-  , request_id_ (0)
-  , response_expected_ (false)
-  , transport_ (nullptr)
-  , orb_core_ (nullptr)
-  , argument_flag_ (1)
-  , rh_reply_status_ (TAO_RS_UNINITIALIZED)
-  , allocator_ (nullptr)
-{
-}
-
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
 {
   this->transport_->remove_reference ();
@@ -196,7 +183,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && (TAO_HAS_MINIMUM_POA == 0)
   const PortableServer::ForwardRequest *fr =
     PortableServer::ForwardRequest::_downcast (&ex);
-  if (fr != 0)
+  if (fr != nullptr)
     {
       reply_params.reply_status (GIOP::LOCATION_FORWARD);
       if (this->mesg_base_->generate_reply_header (this->_tao_out,

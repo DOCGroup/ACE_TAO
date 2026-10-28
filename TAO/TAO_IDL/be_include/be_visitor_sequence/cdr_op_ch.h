@@ -31,10 +31,10 @@ public:
   be_visitor_sequence_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_cdr_op_ch ();
+  ~be_visitor_sequence_cdr_op_ch () override;
 
   /// visit sequence
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_CDR_OP_CH_H_ */

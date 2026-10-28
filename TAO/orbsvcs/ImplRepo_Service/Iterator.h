@@ -29,12 +29,12 @@ public:
   ImR_AsyncIterator (CORBA::ULong start,
                       AsyncListManager *lister);
 
-  virtual void next_n
+  void next_n
   (ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_ptr _tao_rh,
-   CORBA::ULong how_many);
+   CORBA::ULong how_many) override;
 
-  virtual void destroy
-  (ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_ptr _tao_rh);
+  void destroy
+  (ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_ptr _tao_rh) override;
 
 private:
   CORBA::ULong count_;

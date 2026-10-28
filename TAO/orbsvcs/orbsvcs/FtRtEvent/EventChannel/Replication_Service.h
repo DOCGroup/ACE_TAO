@@ -33,20 +33,20 @@ namespace FTRTEC
     static Replication_Service* instance();
 
     Replication_Service();
-    ~Replication_Service();
+    ~Replication_Service () override;
 
-    virtual int init (int argc,
-      ACE_TCHAR* []);
+    int init (int argc,
+      ACE_TCHAR* []) override;
 
-    virtual void become_primary();
+    void become_primary() override;
 
     /**
      * Used for checking if the incoming replication message is out of sequence.
      */
     void check_validity();
 
-    typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-      (const FtRtecEventChannelAdmin::ObjectId&);
+    using RollbackOperation = void (FtRtecEventChannelAdmin::EventChannelFacade::*)
+      (FtRtecEventChannelAdmin::ObjectId const&);
 
    /**
     * Replicate a request.

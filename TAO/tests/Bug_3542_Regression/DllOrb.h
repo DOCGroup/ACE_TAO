@@ -14,15 +14,20 @@ class bug_3542_Export DllOrb : public ACE_Task_Base
 {
 public:
   DllOrb ();
-  virtual ~DllOrb ();
+  ~DllOrb () override;
+
+  DllOrb (DllOrb const &) = delete;
+  DllOrb (DllOrb &&) = delete;
+  DllOrb &operator= (DllOrb const &) = delete;
+  DllOrb &operator= (DllOrb &&) = delete;
 
   CORBA::ORB_ptr orb () const { return CORBA::ORB::_duplicate (mv_orb_.in ()); }
 
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR * argv[]) override;
 
-  virtual int fini ();
+  int fini () override;
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   std::unique_ptr<ACE_Thread_Barrier> ma_barrier_;

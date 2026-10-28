@@ -34,7 +34,7 @@ public:
   // sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
-                     const ACE_Addr &peer_address);
+                     ACE_Addr const &peer_address) override;
 
   // Called when the sender is done sending data and wants to close
   // down the connection.
@@ -56,23 +56,22 @@ public:
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
+                    TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
   int set_protocol_object (const char *flowname,
-                           TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object) override;
 
 protected:
   /// Application callback.
   Sender_Callback callback_;
 };
 
-typedef TAO_AV_Endpoint_Reactive_Strategy_A
+using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
           <Sender_StreamEndPoint,
            TAO_VDev,
-           AV_Null_MediaCtrl>
-        SENDER_ENDPOINT_STRATEGY;
+           AV_Null_MediaCtrl>;
 
 /**
  * @class Sender
@@ -87,6 +86,10 @@ class Sender
 public:
   /// Constructor
   Sender ();
+  Sender (Sender const &) = delete;
+  Sender &operator= (Sender const &) = delete;
+  Sender (Sender &&) = delete;
+  Sender &operator= (Sender &&) = delete;
 
   /// Method to initialize the various data components.
   int init (int argc,

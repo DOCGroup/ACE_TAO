@@ -60,7 +60,7 @@ public:
 
   /// Constructor that initializes an ACE_Intrusive_Auto_Ptr to
   /// the specified pointer value.
-  ACE_Intrusive_Auto_Ptr (X *p = 0, bool addref = true);
+  ACE_Intrusive_Auto_Ptr (X *p = nullptr, bool addref = true);
 
   /// Copy constructor binds the new ACE_Intrusive_Auto_Ptr to the
   /// representation object referenced by @a r.
@@ -92,7 +92,7 @@ public:
 
   /// Releases the current pointer value and then sets a new
   /// pointer value specified by @a p.
-  void reset (X *p = 0);
+  void reset (X *p = nullptr);
 
   /// Get the pointer value.
   X *get () const;

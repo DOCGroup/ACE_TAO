@@ -81,7 +81,7 @@ class TAO_Active_Object_Map;
 namespace PortableInterceptor
 {
   class IORInfo;
-  typedef IORInfo *IORInfo_ptr;
+  using IORInfo_ptr = IORInfo *;
 }
 
 namespace TAO
@@ -100,7 +100,7 @@ namespace TAO
 namespace PortableServer
 {
   class POAManager;
-  typedef POAManager *POAManager_ptr;
+  using POAManager_ptr = POAManager *;
 }
 
 /**
@@ -122,7 +122,7 @@ public:
   friend class TAO_RT_Collocation_Resolver;
   friend class TAO_IORInfo;
 
-  typedef ACE_CString String;
+  using String = ACE_CString;
 
   /// @note Temporarily for debugging, useful for debugging and status retrieval,
   /// could be removed with future rework of the AOM.
@@ -695,17 +695,17 @@ protected:
   CORBA::OctetSeq id_;
 
   /// Pointer to the object reference template adapter.
-  TAO::ORT_Adapter *ort_adapter_;
+  TAO::ORT_Adapter *ort_adapter_ {};
 
   /// Pointer to the object reference template adapter factory.
-  TAO::ORT_Adapter_Factory *ort_adapter_factory_;
+  TAO::ORT_Adapter_Factory *ort_adapter_factory_ {};
 
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;
 
   TAO::Portable_Server::Cached_Policies cached_policies_;
 
-  TAO_Network_Priority_Hook *network_priority_hook_;
+  TAO_Network_Priority_Hook *network_priority_hook_ {};
 
   TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
 
@@ -713,14 +713,12 @@ protected:
   PortableServer::AdapterActivator_var adapter_activator_;
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  typedef
-    ACE_Hash_Map_Manager_Ex<
+  using CHILDREN = ACE_Hash_Map_Manager_Ex<
         ACE_CString, TAO_Root_POA *,
         ACE_Hash<ACE_CString>,
         ACE_Equal_To<ACE_CString>,
         ACE_Null_Mutex
-      >
-    CHILDREN;
+      >;
 
   CHILDREN children_;
 
@@ -731,36 +729,36 @@ protected:
   /// The object adapter we belong to
   TAO_Object_Adapter *object_adapter_;
 
-  CORBA::Boolean cleanup_in_progress_;
+  CORBA::Boolean cleanup_in_progress_ {false};
 
-  CORBA::ULong outstanding_requests_;
+  CORBA::ULong outstanding_requests_ {};
 
   TAO_SYNCH_CONDITION outstanding_requests_condition_;
 
-  CORBA::Boolean wait_for_completion_pending_;
+  CORBA::Boolean wait_for_completion_pending_ {false};
 
-  CORBA::Boolean waiting_destruction_;
+  CORBA::Boolean waiting_destruction_ {false};
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  TAO_Acceptor_Filter_Factory * filter_factory_;
+  TAO_Acceptor_Filter_Factory * filter_factory_ {};
 #endif
 
 public:
     // @todo Temporarily for servant retention
-  CORBA::ULong caller_key_to_object_;
+  CORBA::ULong caller_key_to_object_ {};
 
-  PortableServer::Servant servant_for_key_to_object_;
+  PortableServer::Servant servant_for_key_to_object_ {};
 
   struct Key_To_Object_Params
   {
-    PortableServer::ObjectId_var *system_id_;
-    const char *type_id_;
-    TAO_ServantBase *servant_;
-    CORBA::Boolean collocated_;
-    CORBA::Short priority_;
-    bool indirect_;
+    PortableServer::ObjectId_var *system_id_ {};
+    const char *type_id_ {};
+    TAO_ServantBase *servant_ {};
+    CORBA::Boolean collocated_ {false};
+    CORBA::Short priority_ {TAO_INVALID_PRIORITY};
+    bool indirect_ {false};
 
     void set (PortableServer::ObjectId_var &system_id,
               const char *type_id,

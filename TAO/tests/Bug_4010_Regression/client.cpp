@@ -4,15 +4,16 @@
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-int iterations = 3;
-int timeout = 10;
-int process_result = 1;
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+int iterations {3};
+int timeout {10};
+int process_result {1};
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+int
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:t:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:t:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -21,10 +22,10 @@ ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:t:"));
         ior = get_opts.opt_arg ();
         break;
       case 'i':
-        iterations = ACE_OS::atoi(get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 't':
-        timeout = ACE_OS::atoi(get_opts.opt_arg ());
+        timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -45,30 +46,31 @@ ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:t:"));
 class PeriodicTask : public ACE_Event_Handler
 {
 public:
-  explicit PeriodicTask(CORBA::ORB_var orbIn)
-      : ACE_Event_Handler(),
-      orb(orbIn),
-      iterationsLeft(iterations),
-      successfulConnections(0)
+  explicit PeriodicTask (CORBA::ORB_var orb_in)
+    : orb (orb_in)
+    , iterations_left (iterations)
+    , successful_connections {}
   {
   }
+  PeriodicTask (PeriodicTask const &) = delete;
+  PeriodicTask (PeriodicTask &&) = delete;
+  PeriodicTask &operator= (PeriodicTask const &) = delete;
+  PeriodicTask &operator= (PeriodicTask &&) = delete;
 
-  virtual ~PeriodicTask()
-  {
-  }
+  ~PeriodicTask () override = default;
 
-  virtual int handle_timeout(const ACE_Time_Value &, const void *)
+  int handle_timeout (ACE_Time_Value const &, void const *) override
   {
-    --iterationsLeft;
+    --iterations_left;
 
     try
       {
         ACE_DEBUG ((LM_DEBUG,
                     "\n(%P|%t) - handling timeout with %d iterations left\n",
-                    iterationsLeft + 1));
-        CORBA::Object_var tmp = orb->string_to_object(ior);
+                    iterations_left + 1));
+        CORBA::Object_var tmp = orb->string_to_object (ior);
 
-        Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+        Test::Hello_var hello = Test::Hello::_narrow (tmp.in ());
 
         if (CORBA::is_nil (hello.in ()))
           {
@@ -80,25 +82,25 @@ public:
 
         CORBA::String_var the_string = hello->get_string ();
 
-        ++successfulConnections;
+        ++successful_connections;
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                     the_string.in ()));
-        ACE_OS::sleep(2);
+        ACE_OS::sleep (2);
         hello->shutdown ();
 
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - shutdown requested\n"));
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Exception caught:");
         process_result = 1;
-        orb->shutdown();
+        orb->shutdown ();
       }
 
-    if(successfulConnections == 2)
+    if (successful_connections == 2)
       {
         process_result = 0;
-        orb->shutdown();
+        orb->shutdown ();
       }
 
     return 0;
@@ -106,11 +108,9 @@ public:
 
 protected:
 private:
-  PeriodicTask(const PeriodicTask &);
-  PeriodicTask & operator=(const PeriodicTask &);
   CORBA::ORB_var orb;
-  int iterationsLeft;
-  int successfulConnections;
+  int iterations_left;
+  int successful_connections;
 };
 
 int
@@ -123,15 +123,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PeriodicTask periodicTask(orb);
+      PeriodicTask periodic_task (orb);
 
-      orb->orb_core()->reactor()->schedule_timer(&periodicTask, 0, ACE_Time_Value::zero, ACE_Time_Value(timeout));
+      orb->orb_core ()->reactor ()->schedule_timer (&periodic_task, nullptr,
+        ACE_Time_Value::zero, ACE_Time_Value (timeout));
 
-      orb->run();
+      orb->run ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

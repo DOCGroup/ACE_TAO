@@ -12,17 +12,21 @@ class Peer
 public:
   /// Constructor
   Peer (CORBA::ORB_ptr orb);
+  Peer (Peer const &) = delete;
+  Peer (Peer &&) = delete;
+  Peer &operator= (Peer const &) = delete;
+  Peer &operator= (Peer &&) = delete;
 
   /// Destructor
-  virtual ~Peer ();
+  ~Peer () override;
 
   // = The skeleton methods
-  virtual Test::Session_ptr create_session (Test::Session_Control_ptr control,
+  Test::Session_ptr create_session (Test::Session_Control_ptr control,
                                             CORBA::ULong payload_size,
                                             CORBA::ULong thread_count,
                                             CORBA::ULong message_count,
-                                            CORBA::ULong peer_count);
-  virtual void shutdown ();
+                                    CORBA::ULong peer_count) override;
+  void shutdown () override;
 
 private:
   /// Keep a pointer to the ORB to shutdown cleanly

@@ -30,7 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Method_Request_Queueable;
 class TAO_Notify_QoSProperties;
 
-typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Notify_Message_Queue;
+using TAO_Notify_Message_Queue = ACE_Message_Queue<ACE_NULL_SYNCH>;
 
 /**
  * @class TAO_Notify_Buffering_Strategy

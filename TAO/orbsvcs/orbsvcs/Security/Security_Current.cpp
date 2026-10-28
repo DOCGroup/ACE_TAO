@@ -29,7 +29,7 @@ TAO_Security_Current::get_attributes (
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
-  if (impl == 0)
+  if (impl == nullptr)
     throw CORBA::BAD_INV_ORDER ();
 
   return impl->get_attributes (attributes);
@@ -43,7 +43,7 @@ TAO_Security_Current::received_credentials ()
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
-  if (impl == 0)
+  if (impl == nullptr)
     throw CORBA::BAD_INV_ORDER ();
 
   return impl->received_credentials ();
@@ -57,7 +57,7 @@ TAO_Security_Current::init ()
   try
     {
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             this->orb_id_.in ());

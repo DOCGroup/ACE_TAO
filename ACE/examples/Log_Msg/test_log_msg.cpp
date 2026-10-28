@@ -120,7 +120,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "world",
                   i));
 
-      ACE_LOG_MSG->msg_ostream (0);
+      ACE_LOG_MSG->msg_ostream (nullptr);
 
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
@@ -194,7 +194,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       char *l_argv[2];
       l_argv[0] = badname;
-      l_argv[1] = 0;
+      l_argv[1] = nullptr;
 
       if (ACE_OS::execv (badname,
                          l_argv) == -1)

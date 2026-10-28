@@ -43,7 +43,7 @@ TAO_Notify_Proxy::activate (PortableServer::Servant servant,
 void
 TAO_Notify_Proxy::deactivate ()
 {
-  ACE_ASSERT (this->proxy_poa() != 0 );
+  ACE_ASSERT (this->proxy_poa() != nullptr );
   this->proxy_poa()->deactivate (this->id());
 }
 
@@ -113,7 +113,7 @@ TAO_Notify_Proxy::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
   //Inform Peers of qos changes.
   TAO_Notify_Peer* peer = this->peer ();
 
-  if (peer != 0)
+  if (peer != nullptr)
     peer->qos_changed (qos_properties);
 }
 
@@ -153,7 +153,7 @@ TAO_Notify_Proxy::save_attrs (TAO_Notify::NVPList& attrs)
 {
   TAO_Notify_Object::save_attrs(attrs);
   TAO_Notify_Peer * peer = this->peer();
-  if (peer != 0)
+  if (peer != nullptr)
   {
     attrs.push_back (TAO_Notify::NVP("PeerIOR", peer->get_ior()));
   }

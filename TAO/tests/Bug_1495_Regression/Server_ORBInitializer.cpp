@@ -4,6 +4,7 @@
 #include "server_interceptor.h"
 
 Server_ORBInitializer::Server_ORBInitializer ()
+  : server_interceptor_ (nullptr)
 {
 }
 
@@ -11,7 +12,7 @@ void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
 {
-        // No Op
+  // No Op
 }
 
 void

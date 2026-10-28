@@ -134,7 +134,7 @@ char *
 TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
                                            PortableServer::Servant servant)
 {
-  if (object_name == 0)
+  if (object_name == nullptr)
     TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\n(%P|%t) TAO_ORB_Manager::register: ")
                        ACE_TEXT ("object_name is null!")),

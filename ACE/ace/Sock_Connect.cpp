@@ -334,7 +334,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
   hostent hentry;
   ACE_HOSTENT_DATA buf;
 
-  char * ip_addr = 0;
+  char * ip_addr = nullptr;
   int ip_addr_size = 0;
   if (addr.get_type () == AF_INET)
     {
@@ -508,7 +508,7 @@ get_ip_interfaces_win32 (size_t &count,
   for (count = 0, i = 0; i < n_interfaces; ++i)
     {
       LPINTERFACE_INFO lpii;
-      struct sockaddr_in *addrp = 0;
+      struct sockaddr_in *addrp = nullptr;
 
       lpii = &info[i];
       if (!(lpii->iiFlags & IFF_UP))
@@ -674,7 +674,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   // what it returned, so increase the num_ifs by one.
   ++num_ifs;
 
-  struct IFREQ *ifs = 0;
+  struct IFREQ *ifs = nullptr;
   ACE_NEW_RETURN (ifs,
                   struct IFREQ[num_ifs],
                   -1);
@@ -781,7 +781,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   // Retrieve IPv6 local interfaces by scanning /proc/net/if_inet6 if
   // it exists.  If we cannot open it then ignore possible IPv6
   // interfaces, we did our best;-)
-  FILE* fp = 0;
+  FILE* fp = nullptr;
   char addr_p[8][5];
   char s_ipaddr[64];
   int scopeid;
@@ -948,9 +948,9 @@ return 0;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 # if defined (ACE_HAS_IPV6)
-  FILE* fp = 0;
+  FILE* fp = nullptr;
 
-  if ((fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"))) != 0)
+  if ((fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"))) != nullptr)
     {
       // Scan the lines according to the expected format but don't really read any input
       while (fscanf (fp, "%*32s %*02x %*02x %*02x %*02x %*8s\n") != EOF)
@@ -1001,7 +1001,7 @@ ip_check (int &ipvn_enabled, int pf)
       // will still permit the creation of a PF_INET6 socket, thus rendering the socket
       // creation test inconsistent. The recommended solution is to get the list of
       // endpoint addresses and see if any match the desired family.
-      ACE_INET_Addr *if_addrs = 0;
+      ACE_INET_Addr *if_addrs = nullptr;
       size_t if_cnt = 0;
 
       // assume enabled to avoid recursion during interface lookup.

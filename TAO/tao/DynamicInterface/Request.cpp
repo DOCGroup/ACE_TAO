@@ -46,7 +46,7 @@ CORBA::Request::_decr_refcount ()
 // DII Request class implementation
 CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::ORB_ptr orb,
-                         const CORBA::Char *op,
+                         CORBA::Char const* op,
                          CORBA::NVList_ptr args,
                          CORBA::NamedValue_ptr result,
                          CORBA::Flags flags,
@@ -58,17 +58,11 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     result_ (CORBA::NamedValue::_duplicate (result)),
     flags_ (flags),
     // env_ (env),
-    exceptions_ (CORBA::ExceptionList::_duplicate (exceptions)),
-    contexts_ (0),
-    ctx_ (CORBA::Context::_nil ()),
-    refcount_ (1),
-    lazy_evaluation_ (false),
-    response_received_ (false),
-    byte_order_ (TAO_ENCAP_BYTE_ORDER)
+    exceptions_ (CORBA::ExceptionList::_duplicate (exceptions))
 {
-  if (this->exceptions_.in () == 0)
+  if (this->exceptions_.in () == nullptr)
     {
-      CORBA::ExceptionList *tmp = 0;
+      CORBA::ExceptionList *tmp = nullptr;
       ACE_NEW (tmp,
                CORBA::ExceptionList);
 
@@ -78,20 +72,14 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
 
 CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::ORB_ptr orb,
-                         const CORBA::Char *op)
+                         CORBA::Char const* op)
   : target_ (CORBA::Object::_duplicate (obj)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     opname_ (CORBA::string_dup (op)),
-    flags_ (0),
-    // env_ (env),
-    contexts_ (0),
-    ctx_ (CORBA::Context::_nil ()),
-    refcount_ (1),
-    lazy_evaluation_ (false),
-    response_received_ (false),
-    byte_order_ (TAO_ENCAP_BYTE_ORDER)
+    flags_ (0)
+    // env_ (env)
 {
-  CORBA::ExceptionList *tmp = 0;
+  CORBA::ExceptionList *tmp = nullptr;
   ACE_NEW (tmp,
            CORBA::ExceptionList);
 
@@ -110,7 +98,7 @@ CORBA::Request::~Request ()
 
   ::CORBA::release (this->target_);
   ::CORBA::string_free ((char*) this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   ::CORBA::release (this->args_);
   ::CORBA::release (this->result_);
 }
@@ -355,7 +343,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
   switch (reply_status)
   {
     case GIOP::NO_EXCEPTION:
-      if (this->result_ != 0)
+      if (this->result_ != nullptr)
         {
           // We can be sure that the impl is a TAO::Unknown_IDL_Type.
           this->result_->value ()->impl ()->_tao_decode (incoming);

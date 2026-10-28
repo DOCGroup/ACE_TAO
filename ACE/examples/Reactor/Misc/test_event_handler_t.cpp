@@ -4,8 +4,8 @@
 class ACE_Test_Sig_Handler
 {
 public:
-  ACE_Test_Sig_Handler () {}
-  virtual ~ACE_Test_Sig_Handler () {}
+  ACE_Test_Sig_Handler () = default;
+  virtual ~ACE_Test_Sig_Handler () = default;
   virtual ACE_HANDLE get_handle () const { return 0; }
   virtual void set_handle (ACE_HANDLE) {}
   virtual int handle_async_io (ACE_HANDLE) { return 0; }
@@ -14,7 +14,7 @@ public:
   virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask) { return 0; }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int signal_handler (int /* signum */, siginfo_t * = 0, ucontext_t * = 0)
+  virtual int signal_handler (int /* signum */, siginfo_t * = nullptr, ucontext_t * = nullptr)
   {
     return 0;
   }
@@ -23,7 +23,7 @@ public:
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  typedef ACE_Event_Handler_T<ACE_Test_Sig_Handler> EH_SH;
+  using EH_SH = ACE_Event_Handler_T<ACE_Test_Sig_Handler>;
 
   // Tie the ACE_Event_Handler_T together with the methods from ACE_Test_Sig_Handler.
   EH_SH tied_sh (new ACE_Test_Sig_Handler, 1,

@@ -41,26 +41,31 @@ public:
   TAO_Set_Update_Interceptor ();
   // ctor.
 
-  virtual ~TAO_Set_Update_Interceptor ();
+  ~TAO_Set_Update_Interceptor () override = default;
   // dtor.
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  const char *myname_;
+  TAO_Set_Update_Interceptor (TAO_Set_Update_Interceptor const &) = delete;
+  TAO_Set_Update_Interceptor &operator= (TAO_Set_Update_Interceptor const &) = delete;
+  TAO_Set_Update_Interceptor (TAO_Set_Update_Interceptor &&) = delete;
+  TAO_Set_Update_Interceptor &operator= (TAO_Set_Update_Interceptor &&) = delete;
+
+  char const *myname_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

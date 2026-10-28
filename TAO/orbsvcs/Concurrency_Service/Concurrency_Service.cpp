@@ -24,9 +24,6 @@
 // Default Constructor.
 
 Concurrency_Service::Concurrency_Service ()
-  : use_naming_service_ (1),
-    ior_file_name_ (0),
-    pid_file_name_ (0)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
              ACE_TEXT("Concurrency_Service::Concurrency_Service ()\n")));
@@ -35,7 +32,7 @@ Concurrency_Service::Concurrency_Service ()
 // Constructor taking command-line arguments.
 
 Concurrency_Service::Concurrency_Service (int argc,
-                                          ACE_TCHAR** argv)
+                                          ACE_TCHAR **argv)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Concurrency_Service::Concurrency_Service (...)\n")));
@@ -43,13 +40,13 @@ Concurrency_Service::Concurrency_Service (int argc,
 }
 
 int
-Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
+Concurrency_Service::parse_args (int argc, ACE_TCHAR **argv)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               ACE_TEXT("Concurrency_Service::parse_args\n")));
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:p:s"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -58,13 +55,13 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
         ++TAO_debug_level;
         break;
       case 'o': // output the IOR to a file
-        this->ior_file_name_ = get_opts.opt_arg();
+        this->ior_file_name_ = get_opts.opt_arg ();
         break;
       case 'p':
-        this->pid_file_name_ = get_opts.opt_arg();
+        this->pid_file_name_ = get_opts.opt_arg ();
         break;
       case 's':
-        this->use_naming_service_ = 0;
+        this->use_naming_service_ = false;
         break;
       default:
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -93,7 +90,7 @@ Concurrency_Service::init (int argc,
   TAO_Daemon_Utility::check_for_daemon (argc, argv);
 
   // Copy command line parameter.
-  ACE_Argv_Type_Converter command_line(argc, argv);
+  ACE_Argv_Type_Converter command_line (argc, argv);
 
   if (this->orb_manager_.init_child_poa (command_line.get_argc(),
                                          command_line.get_TCHAR_argv(),
@@ -103,7 +100,7 @@ Concurrency_Service::init (int argc,
                        ACE_TEXT("init_child_poa")),
                       -1);
 
-  if (this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv())!=0)
+  if (this->parse_args (command_line.get_argc (), command_line.get_TCHAR_argv ()) != 0)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("Could not parse command line\n")),
                      -1);
@@ -113,10 +110,10 @@ Concurrency_Service::init (int argc,
               "The IOR is: <%C>\n",
               str.in ()));
 
-  if (this->ior_file_name_ != 0)
+  if (this->ior_file_name_ != nullptr)
     {
-      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
-      if (iorf == 0)
+      FILE *iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
+      if (iorf == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
@@ -128,10 +125,10 @@ Concurrency_Service::init (int argc,
       ACE_OS::fclose (iorf);
     }
 
-  if (this->pid_file_name_ != 0)
+  if (this->pid_file_name_ != nullptr)
     {
-      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
-      if (pidf != 0)
+      FILE *pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
+      if (pidf != nullptr)
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",
@@ -185,7 +182,7 @@ Concurrency_Service::run ()
   ORBSVCS_DEBUG ((LM_DEBUG,
               "Concurrency_Service::run (...)\n"));
 
-  int retval = this->orb_manager_.run ();
+  int const retval = this->orb_manager_.run ();
   if (retval == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                       "Concurrency_Service::run"),
@@ -211,7 +208,7 @@ ACE_TMAIN (int argc, ACE_TCHAR ** argv)
 
   try
     {
-      int r = concurrency_service.init (argc, argv);
+      int const r = concurrency_service.init (argc, argv);
 
       if (r == -1)
         return 1;

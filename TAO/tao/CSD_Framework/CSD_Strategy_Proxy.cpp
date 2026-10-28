@@ -9,6 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO::CSD::Strategy_Proxy::~Strategy_Proxy () = default;
+
 bool
 TAO::CSD::Strategy_Proxy::custom_strategy
                           (CSD_Framework::Strategy_ptr strategy)

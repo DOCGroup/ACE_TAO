@@ -92,7 +92,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       FILE *output_file=
         ACE_OS::fopen (ior_file_name.c_str(), "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
         "Cannot open output file for writing IOR: %s",
         ior_file_name.c_str()),

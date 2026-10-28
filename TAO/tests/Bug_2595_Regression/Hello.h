@@ -11,13 +11,17 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
-    virtual void op (
-        ::Test::Fls_out fstruct,
-        ::Test::Vls_out vstruct);
+  Hello (Hello const &) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello &&) = delete;
 
-  virtual void shutdown ();
+  void op (::Test::Fls_out fstruct,
+           ::Test::Vls_out vstruct) override;
+
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

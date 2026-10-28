@@ -22,7 +22,7 @@ TAO_DynValue_i::TAO_DynValue_i (CORBA::Boolean allow_truncation)
 }
 
 void
-TAO_DynValue_i::init (const CORBA::Any & any)
+TAO_DynValue_i::init (CORBA::Any const& any)
 {
   this->init_helper (any._tao_get_typecode ());
   this->from_any_helper (any);
@@ -141,7 +141,7 @@ TAO_DynValue_i::get_base_types (
 
 CORBA::TypeCode_ptr
 TAO_DynValue_i::get_correct_base_type (
-  const BaseTypesList_t &base_types,
+  BaseTypesList_t const& base_types,
   CORBA::ULong &index)
 {
   // We work backwards through the list of derived types,
@@ -161,7 +161,7 @@ TAO_DynValue_i::get_correct_base_type (
             ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::get_correct_base_type () ")
             ACE_TEXT ("BaseTypesList_t is not initialised\n")));
         }
-      return 0;
+      return nullptr;
     }
 
   while (base_types[--currentBase]->member_count () <= index)
@@ -175,7 +175,7 @@ TAO_DynValue_i::get_correct_base_type (
                 ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::get_correct_base_type () ")
                 ACE_TEXT ("BaseTypesList_t is not large enough\n")));
             }
-          return 0;
+          return nullptr;
         }
     }
 
@@ -186,16 +186,16 @@ TAO_DynValue_i::get_correct_base_type (
 
 CORBA::TypeCode_ptr
 TAO_DynValue_i::get_member_type (
-  const BaseTypesList_t &base_types,
+  BaseTypesList_t const& base_types,
   CORBA::ULong index)
 {
   CORBA::TypeCode_ptr const base = get_correct_base_type (base_types, index);
   return base->member_type (index);
 }
 
-const char *
+char const*
 TAO_DynValue_i::get_member_name (
-  const BaseTypesList_t &base_types,
+  BaseTypesList_t const& base_types,
   CORBA::ULong index)
 {
   CORBA::TypeCode_ptr const base = get_correct_base_type (base_types, index);
@@ -277,7 +277,7 @@ TAO_DynValue_i::get_members ()
     }
 
   // Create the return NameValuePairSeq
-  DynamicAny::NameValuePairSeq *members = 0;
+  DynamicAny::NameValuePairSeq *members = nullptr;
   ACE_NEW_THROW_EX (
     members,
     DynamicAny::NameValuePairSeq (this->component_count_),
@@ -303,7 +303,7 @@ TAO_DynValue_i::get_members ()
 
 void
 TAO_DynValue_i::set_members (
-  const DynamicAny::NameValuePairSeq &values)
+  DynamicAny::NameValuePairSeq const& values)
 {
   if (this->destroyed_)
     {
@@ -337,7 +337,7 @@ TAO_DynValue_i::set_members (
   for (i = 0u; i < length; ++i)
     {
       this->da_members_[i] = TAO::MakeDynAnyUtils::
-        make_dyn_any_t<const CORBA::Any&> (
+        make_dyn_any_t<CORBA::Any const&> (
           values[i].value._tao_get_typecode (),
           values[i].value,
           this->allow_truncation_);
@@ -355,7 +355,7 @@ TAO_DynValue_i::get_members_as_dyn_any ()
     }
 
   // Create the return NameDynAnyPairSeq
-  DynamicAny::NameDynAnyPairSeq *members = 0;
+  DynamicAny::NameDynAnyPairSeq *members = nullptr;
   ACE_NEW_THROW_EX (
     members,
     DynamicAny::NameDynAnyPairSeq (this->component_count_),
@@ -375,7 +375,7 @@ TAO_DynValue_i::get_members_as_dyn_any ()
       // A deep copy is made only by copy()
       // (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
-      this->set_flag (this->da_members_[i].in (), 0);
+      this->set_flag (this->da_members_[i].in (), false);
 
       safe_retval[i].value =
         DynamicAny::DynAny::_duplicate (
@@ -387,7 +387,7 @@ TAO_DynValue_i::get_members_as_dyn_any ()
 
 void
 TAO_DynValue_i::set_members_as_dyn_any (
-  const DynamicAny::NameDynAnyPairSeq & values)
+  DynamicAny::NameDynAnyPairSeq const& values)
 {
   if (this->destroyed_)
     {
@@ -426,7 +426,7 @@ TAO_DynValue_i::set_members_as_dyn_any (
 }
 
 void
-TAO_DynValue_i::from_any (const CORBA::Any &any)
+TAO_DynValue_i::from_any (CORBA::Any const& any)
 {
   if (this->destroyed_)
     {
@@ -461,7 +461,7 @@ TAO_DynValue_i::equal (DynamicAny::DynAny_ptr rhs)
   TAO_DynValue_i *rhs_v=
     dynamic_cast<TAO_DynValue_i *> (rhs);
 
-  if (!rhs_v || this->is_null () != rhs_v->is_null ())
+  if (rhs_v == nullptr || this->is_null () != rhs_v->is_null ())
     {
       return false;
     }
@@ -503,11 +503,11 @@ TAO_DynValue_i::destroy ()
            i < this->component_count_;
            ++i)
         {
-          this->set_flag (da_members_[i].in (), 1);
+          this->set_flag (da_members_[i].in (), true);
           this->da_members_[i]->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
@@ -525,7 +525,7 @@ TAO_DynValue_i::current_component ()
     }
 
   CORBA::ULong const index = static_cast <CORBA::ULong> (this->current_position_);
-  this->set_flag (this->da_members_[index].in (), 0);
+  this->set_flag (this->da_members_[index].in (), false);
 
   return DynamicAny::DynAny::_duplicate (
     this->da_members_[index].in () );
@@ -551,9 +551,9 @@ TAO_DynValue_i::insert_val (CORBA::ValueBase *value)
   // If the arg is 0 we can't do this kind of type
   // checking, and the call to _tao_marshal() below
   // will handle the null value correctly in any case.
-  if (value)
+  if (value != nullptr)
     {
-      const char
+      char const
         *value_id = value->_tao_obv_repository_id (),
         *my_id    = this->type_->id ();
 
@@ -638,7 +638,7 @@ TAO_DynValue_i::to_any ()
     unk,
     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
     CORBA::NO_MEMORY () );
-  CORBA::Any_ptr retval = 0;
+  CORBA::Any_ptr retval = nullptr;
   ACE_NEW_THROW_EX (
     retval,
     CORBA::Any,
@@ -652,19 +652,19 @@ TAO_DynValue_i::to_any ()
 // already been set-up, we are now just copying the any
 // value into our type.
 void
-TAO_DynValue_i::from_any_helper (const CORBA::Any & any)
+TAO_DynValue_i::from_any_helper (CORBA::Any const& any)
 {
   // Get the CDR stream of the Any, if there isn't one,
   // make one by marshalling the value into a new stream.
 
   TAO_OutputCDR out;
-  TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+  TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
   TAO::Any_Impl *impl = any.impl ();
   if (impl->encoded ())
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-      if (!unk)
+      if (unk == nullptr)
         {
           throw CORBA::INTERNAL ();
         }
@@ -698,7 +698,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
   if (!CORBA::ValueBase::_tao_write_special_value (
         out_cdr,
         reinterpret_cast <CORBA::ValueBase *>
-          (this->is_null_ ? 0 : this)))
+          (this->is_null_ ? nullptr : this)))
     {
       // OK since a special_value hasn't been written we are
       // NOT a NULL or indirect ValueType. We need to create
@@ -867,7 +867,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
                   // into an unknown and copy the stream over.
                   TAO::Unknown_IDL_Type
                     *unk= dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-                  if (!unk)
+                  if (unk == nullptr)
                     {
                       if (TAO_debug_level)
                         {
@@ -1075,7 +1075,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   // Work out if the encoded valuetype inside the any is
   // required to be truncated into our DynValue.
   CORBA::Boolean requires_truncation = false;
-  const char *const our_id = this->da_base_types_[0]->id ();
+  char const* const our_id = this->da_base_types_[0]->id ();
   CORBA::ULong i;
   for (i= 0u; i < num_ids; ++i)
     {
@@ -1202,7 +1202,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         {
           // Need to create an any for this field.
           TAO_InputCDR unk_in (strm);
-          TAO::Unknown_IDL_Type *unk= 0;
+          TAO::Unknown_IDL_Type *unk = nullptr;
           ACE_NEW_THROW_EX (
             unk,
             TAO::Unknown_IDL_Type (field_tc.in (), unk_in),
@@ -1214,7 +1214,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
           // This recursive step will call the correct
           // constructor based on the type of field_any.
           this->da_members_[currentMember] = TAO::MakeDynAnyUtils::
-            make_dyn_any_t<const CORBA::Any&> (
+            make_dyn_any_t<CORBA::Any const&> (
               field_any._tao_get_typecode (),
               field_any,
               this->allow_truncation_);

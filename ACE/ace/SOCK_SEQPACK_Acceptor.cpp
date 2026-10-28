@@ -348,7 +348,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
 
 #if defined (ACE_HAS_LKSCTP)
 
-              sockaddr_in *local_sockaddr = 0;
+              sockaddr_in *local_sockaddr = nullptr;
 
               // bind the primary first
               if (ACE_OS::bind (this->get_handle (),

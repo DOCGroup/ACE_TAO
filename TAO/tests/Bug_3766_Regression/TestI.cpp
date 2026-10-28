@@ -35,11 +35,6 @@ Test_i::Test_i (CORBA::ORB_ptr o)
   this->orb_ = CORBA::ORB::_duplicate (o);
 }
 
-// Implementation skeleton destructor
-Test_i::~Test_i ()
-{
-}
-
 void Test_i::do_something_FixedLength (
   ::FixedLengthInfo_out my_info)
 {

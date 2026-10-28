@@ -9,13 +9,19 @@ class StructuredEventSupplier_i :
 {
 public:
     // Constructor
-    StructuredEventSupplier_i(CORBA::ORB_ptr orb);
-    virtual void disconnect_structured_push_supplier ();
+    StructuredEventSupplier_i (CORBA::ORB_ptr orb);
+
+    StructuredEventSupplier_i (StructuredEventSupplier_i const &) = delete;
+    StructuredEventSupplier_i (StructuredEventSupplier_i &&) = delete;
+    StructuredEventSupplier_i &operator= (StructuredEventSupplier_i const &) = delete;
+    StructuredEventSupplier_i &operator= (StructuredEventSupplier_i &&) = delete;
+
+    void disconnect_structured_push_supplier () override;
 
 
-    virtual void subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+    void subscription_change (
+      CosNotification::EventTypeSeq const &added,
+      CosNotification::EventTypeSeq const &removed) override;
 
 private:
     CORBA::ORB_var orb_;

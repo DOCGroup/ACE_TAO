@@ -9,8 +9,8 @@
 #include "tao/PI/PI.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
-TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+TAO_IOP::TAO_IOR_Manipulation_var iorm = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,7 +39,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 CORBA::Object_ptr
-make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, CORBA::Object_ptr ref )
+make_iogr (char const *domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version,
+           CORBA::Object_ptr ref)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
   // Create the list
@@ -87,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      Server_ORBInitializer *temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);  // No exceptions yet!
@@ -135,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Hello *hello_impl = 0;
+      Hello *hello_impl = nullptr;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
@@ -166,8 +167,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (iogr.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -186,7 +187,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
                            "Exception caught:");

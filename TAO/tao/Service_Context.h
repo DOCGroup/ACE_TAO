@@ -138,8 +138,10 @@ private:
   int get_context_i (IOP::ServiceContext &context) const;
 
   // Prevent copying
-  TAO_Service_Context (const TAO_Service_Context &);
-  TAO_Service_Context &operator= (const TAO_Service_Context &);
+  TAO_Service_Context (TAO_Service_Context const &) = delete;
+  TAO_Service_Context &operator= (TAO_Service_Context const &) = delete;
+  TAO_Service_Context (TAO_Service_Context &&) = delete;
+  TAO_Service_Context &operator= (TAO_Service_Context &&) = delete;
 
 private:
   /// The ServiceContextList info.

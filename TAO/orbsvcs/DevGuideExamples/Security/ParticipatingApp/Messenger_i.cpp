@@ -18,8 +18,8 @@ Messenger_i::~Messenger_i ()
   }
 
 CORBA::Boolean Messenger_i::send_message (
-    const char * user_name,
-    const char * subject,
+    char const * user_name,
+    char const * subject,
     char *& message
   )
   {
@@ -36,7 +36,7 @@ CORBA::Boolean Messenger_i::send_message (
 
 
 void Messenger_i::shutdown (
-      const char * user_name
+      char const * user_name
     )
 {
   if ( ! (ssliop_current_->no_context()) )

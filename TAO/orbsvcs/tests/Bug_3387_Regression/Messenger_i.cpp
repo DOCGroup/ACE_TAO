@@ -75,13 +75,11 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 }
 
 
-Messenger_i::~Messenger_i ()
-{
-}
+Messenger_i::~Messenger_i () = default;
 
 CORBA::Boolean Messenger_i::send_message (
-    const char * user_name,
-    const char * subject,
+    char const *user_name,
+    char const *subject,
     char *& message)
 {
   ACE_OS::printf("Message from: %s\nSubject:      %s\nMessage:      %s\n",
@@ -109,15 +107,15 @@ CORBA::Boolean Messenger_i::send_message (
   // sequence<Property>: string name, any value
   event.filterable_data.length (3);
   event.filterable_data[0].name = CORBA::string_dup("Message from:");
-  event.filterable_data[0].value <<= (const char *)user_name;
+  event.filterable_data[0].value <<= user_name;
   event.filterable_data[1].name = CORBA::string_dup("Subject:");
-  event.filterable_data[1].value <<= (const char *)subject;
+  event.filterable_data[1].value <<= subject;
   event.filterable_data[2].name = CORBA::string_dup("Message:");
-  event.filterable_data[2].value <<= (const char *)message;
+  event.filterable_data[2].value <<= message;
 
   std::cout << "pushing " << std::endl;
   consumer_proxy_->push_structured_event(event);
 
-  return 1;
+  return true;
 }
 

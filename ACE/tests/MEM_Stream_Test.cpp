@@ -57,7 +57,7 @@
 #endif
 
 #if defined (TEST_CAN_USE_WFMO_REACTOR)
-static const int opt_wfmo_reactor = 1;
+static constexpr int opt_wfmo_reactor = 1;
 #endif /* TEST_CAN_USE_WFMO_REACTOR */
 
 static int opt_select_reactor = 1;

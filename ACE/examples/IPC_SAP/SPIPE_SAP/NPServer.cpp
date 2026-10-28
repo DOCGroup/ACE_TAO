@@ -33,7 +33,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
                   ACE_TEXT ("waiting for connection\n")));
 
       // Accept a client connection.
-      if (acceptor.accept (new_stream, 0) == -1)
+      if (acceptor.accept (new_stream, nullptr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("accept")),

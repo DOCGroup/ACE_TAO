@@ -36,19 +36,24 @@ public:
    * @param mt Specifies whether multithreaded ORB is used.
    */
   AMI_Primary_Replication_Strategy(bool mt);
-  virtual ~AMI_Primary_Replication_Strategy();
-  virtual void replicate_request(const FTRT::State& state,
+  ~AMI_Primary_Replication_Strategy() override;
+  void replicate_request(FTRT::State const& state,
                                    RollbackOperation rollback,
-                                   const FtRtecEventChannelAdmin::ObjectId& oid);
-  virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version);
-  virtual int  acquire_read ();
-  virtual int  acquire_write ();
-  virtual int  release ();
+                                   FtRtecEventChannelAdmin::ObjectId const& oid) override;
+  void add_member(FTRT::ManagerInfo const& info,
+                  CORBA::ULong object_group_ref_version) override;
+  int acquire_read () override;
+  int acquire_write () override;
+  int release () override;
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:
-  virtual int svc ();
+  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy const&) = delete;
+  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy&&) = delete;
+  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy const&) = delete;
+  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy&&) = delete;
+
+  int svc () override;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;

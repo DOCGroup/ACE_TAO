@@ -11,16 +11,16 @@ public:
   AST_ValueTypeFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_ValueTypeFwd ();
+  ~AST_ValueTypeFwd () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 };

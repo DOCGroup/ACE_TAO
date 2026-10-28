@@ -36,9 +36,9 @@ class TAO_PI_Export TAO_PICurrent_Loader
 {
 public:
   /// Creates a PICurrent and returns it.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv []);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv []) override;
 };
 
 

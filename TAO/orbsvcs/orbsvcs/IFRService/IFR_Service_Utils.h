@@ -85,13 +85,19 @@ protected:
   PortableServer::POA_ptr repo_poa_;
 
   /// Event handler that responds to multicast requests.
-  TAO_IOR_Multicast *ior_multicast_;
+  TAO_IOR_Multicast *ior_multicast_ {};
 
   /// Database for the IFR.
-  ACE_Configuration *config_;
+  ACE_Configuration *config_ {};
 
   /// Interface Repository's IOR.
   CORBA::String_var ifr_ior_;
+
+private:
+  TAO_IFR_Server (TAO_IFR_Server const &) = delete;
+  TAO_IFR_Server (TAO_IFR_Server &&) = delete;
+  TAO_IFR_Server &operator= (TAO_IFR_Server const &) = delete;
+  TAO_IFR_Server &operator= (TAO_IFR_Server &&) = delete;
 };
 
 class TAO_IFR_Service_Utils
@@ -101,7 +107,7 @@ public:
 
   ~TAO_IFR_Service_Utils ();
 
-  typedef int (*name_clash_checker)(const char *);
+  using name_clash_checker = int (*) (const char *);
 
   /// Convert the hex form of an 4-byte unsigned int to a string.
   static ACE_TCHAR *int_to_string (CORBA::ULong number);
@@ -217,6 +223,12 @@ public:
 
   /// Copy and octet sequence to a string..
   static char *oid_to_string (PortableServer::ObjectId &oid);
+
+private:
+  TAO_IFR_Service_Utils (TAO_IFR_Service_Utils const &) = delete;
+  TAO_IFR_Service_Utils (TAO_IFR_Service_Utils &&) = delete;
+  TAO_IFR_Service_Utils &operator= (TAO_IFR_Service_Utils const &) = delete;
+  TAO_IFR_Service_Utils &operator= (TAO_IFR_Service_Utils &&) = delete;
 
 public:
   /// To hold a key created by one method for another method to use.

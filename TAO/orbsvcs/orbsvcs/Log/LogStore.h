@@ -31,7 +31,7 @@ class TAO_Log_Serv_Export TAO_LogStore
 {
 public:
   // Destructor
-  virtual ~TAO_LogStore() {}
+  virtual ~TAO_LogStore() = default;
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
@@ -57,7 +57,7 @@ public:
   virtual void
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
-            const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
+            DsLogAdmin::CapacityAlarmThresholdList const * thresholds,
             DsLogAdmin::LogId_out id_out) = 0;
 
   /// @brief Create log
@@ -65,7 +65,7 @@ public:
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullActionType full_action,
                     CORBA::ULongLong max_size,
-                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds) = 0;
+                    DsLogAdmin::CapacityAlarmThresholdList const * thresholds) = 0;
 
   /// @brief Get log record store
   ///
@@ -73,15 +73,18 @@ public:
   ///
   /// @param id log id
   ///
-  virtual TAO_LogRecordStore*
+  virtual TAO_LogRecordStore *
     get_log_record_store (DsLogAdmin::LogId id) = 0;
 
 protected:
   // Constructor
-  TAO_LogStore() {}
-
+  TAO_LogStore() = default;
 
 private:
+  TAO_LogStore (TAO_LogStore const &) = delete;
+  TAO_LogStore (TAO_LogStore &&) = delete;
+  TAO_LogStore &operator= (TAO_LogStore const &) = delete;
+  TAO_LogStore &operator= (TAO_LogStore &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

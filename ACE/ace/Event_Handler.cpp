@@ -190,9 +190,7 @@ ACE_Event_Handler::remove_reference ()
     }
 }
 
-ACE_Event_Handler::Policy::~Policy ()
-{
-}
+ACE_Event_Handler::Policy::~Policy () = default;
 
 ACE_Event_Handler::Reference_Counting_Policy::Reference_Counting_Policy (Reference_Counting_Policy::Value value)
   : value_ (value)
@@ -231,7 +229,7 @@ ACE_Event_Handler::read_adapter (void *args)
   // cache the reactor pointer and use it here.
   r->notify ();
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int

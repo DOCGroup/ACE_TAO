@@ -35,13 +35,21 @@ class TAO_Strategies_Export TAO_NULL_Connection_Purging_Strategy: public TAO_Con
 {
 public:
   /// The constructor
-  TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
+  explicit TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
   /// Does nothing.
   void update_item (TAO_Transport& transport) override;
 
   /// Returns -1 to signify no maximum
   int cache_maximum () const override;
+
+private:
+  TAO_NULL_Connection_Purging_Strategy (TAO_NULL_Connection_Purging_Strategy const &) = delete;
+  TAO_NULL_Connection_Purging_Strategy &operator= (
+    TAO_NULL_Connection_Purging_Strategy const &) = delete;
+  TAO_NULL_Connection_Purging_Strategy (TAO_NULL_Connection_Purging_Strategy &&) = delete;
+  TAO_NULL_Connection_Purging_Strategy &operator= (
+    TAO_NULL_Connection_Purging_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

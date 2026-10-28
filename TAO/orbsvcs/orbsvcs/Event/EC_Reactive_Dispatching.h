@@ -42,8 +42,8 @@ public:
   TAO_EC_Reactive_Dispatching ();
 
   // = The EC_Dispatching methods.
-  virtual void activate ();
-  virtual void shutdown ();
+  virtual void activate () override;
+  virtual void shutdown () override;
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet &event,

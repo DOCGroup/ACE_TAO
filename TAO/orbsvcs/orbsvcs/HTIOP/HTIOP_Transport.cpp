@@ -77,7 +77,7 @@ TAO::HTIOP::Transport::recv (char *buf,
       errno != ETIME)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::recv_i, ")
+                  ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%B]::recv_i, ")
                   ACE_TEXT ("read failure - %m"),
                   this->id ()));
     }
@@ -110,7 +110,7 @@ TAO::HTIOP::Transport::register_handler ()
   if (TAO_debug_level > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::register_handler\n"),
+                  ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport[%B]::register_handler\n"),
                   this->id ()));
     }
 
@@ -187,7 +187,7 @@ TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::send_message, ")
+                      ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%B]::send_message, ")
                       ACE_TEXT (" write failure - %m\n"),
                       this->id ()));
         }
@@ -356,7 +356,7 @@ TAO_Connection_Handler *
 TAO::HTIOP::Transport::invalidate_event_handler_i ()
 {
   TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
+  this->connection_handler_ = nullptr;
   return eh;
 }
 

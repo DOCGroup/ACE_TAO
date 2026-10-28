@@ -10,19 +10,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_Config_Registry::~TAO_DTP_Config_Registry () = default;
+TAO_DTP_Config::~TAO_DTP_Config () = default;
+
 TAO_DTP_Config_Registry_Installer::TAO_DTP_Config_Registry_Installer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_DTP_Config_Registry);
 }
 
 
-TAO_DTP_Config_Registry::TAO_DTP_Config_Registry ()
-{
-}
-
-TAO_DTP_Config_Registry::~TAO_DTP_Config_Registry ()
-{
-}
+TAO_DTP_Config_Registry::TAO_DTP_Config_Registry () = default;
 
 int
 TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
@@ -53,20 +50,14 @@ TAO_DTP_Config_Registry::rebind (const ACE_CString& name,
 
 //-------------------------------------------------------------------------
 
-TAO_DTP_Config::TAO_DTP_Config ()
-{
-}
-
-TAO_DTP_Config::~TAO_DTP_Config ()
-{
-}
+TAO_DTP_Config::TAO_DTP_Config () = default;
 
 int
 TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 {
   TAO_DTP_Definition entry;
 
-  ACE_TCHAR *name = 0;
+  ACE_TCHAR *name = nullptr;
   bool overwrite = false;
 
   int curarg = 0;
@@ -204,12 +195,12 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
     ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
     (current, "DTP_Config_Registry", true);
 
-  if (registry == 0)
+  if (registry == nullptr)
     {
       current->process_directive (ace_svc_desc_TAO_DTP_Config_Registry);
       registry = ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
         (current, "DTP_Config_Registry", true);
-      if (registry == 0)
+      if (registry == nullptr)
         {
           if (TAO_debug_level > 0)
             {
@@ -242,7 +233,7 @@ TAO_DTP_Config::parse_long (int &curarg,
   if (result < 1)
     return result;
 
-  ACE_TCHAR *err = 0;
+  ACE_TCHAR *err = nullptr;
   value = ACE_OS::strtol (str, &err, 10);
   if (err && *err != 0)
     {

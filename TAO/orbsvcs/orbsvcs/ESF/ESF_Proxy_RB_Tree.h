@@ -27,11 +27,10 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree_Iterator
 {
 public:
-  typedef ACE_RB_Tree_Iterator<PROXY *,
-                               int,
-                               ACE_Less_Than<PROXY*>,
-                               ACE_Null_Mutex>
-    Implementation;
+  using Implementation = ACE_RB_Tree_Iterator<PROXY *,
+                                               int,
+                                               ACE_Less_Than<PROXY *>,
+                                               ACE_Null_Mutex>;
 
   TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
 
@@ -60,10 +59,10 @@ class TAO_ESF_Proxy_RB_Tree
 {
 public:
   /// A typedef for the underlying implementaiton class
-  typedef ACE_RB_Tree<PROXY*,int,ACE_Less_Than<PROXY*>,ACE_Null_Mutex> Implementation;
+  using Implementation = ACE_RB_Tree<PROXY *, int, ACE_Less_Than<PROXY *>, ACE_Null_Mutex>;
 
   /// A typedef for the underlying iterator
-  typedef TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> Iterator;
+  using Iterator = TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>;
 
   /// Constructor
   TAO_ESF_Proxy_RB_Tree ();

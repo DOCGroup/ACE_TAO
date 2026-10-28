@@ -26,18 +26,21 @@ public:
   Alt_Mapping_i (CORBA::ORB_ptr orb);
 
   ~Alt_Mapping_i ();
+  Alt_Mapping_i (Alt_Mapping_i const &) = delete;
+  Alt_Mapping_i &operator= (Alt_Mapping_i const &) = delete;
+  Alt_Mapping_i (Alt_Mapping_i &&) = delete;
+  Alt_Mapping_i &operator= (Alt_Mapping_i &&) = delete;
 
-  virtual std::string
-  test_unbounded_string (const std::string s1,
+  std::string test_unbounded_string (std::string const s1,
                          std::string &s2,
-                         std::string &s3);
+                         std::string &s3) override;
 
-  virtual Alt_Mapping::StructSeq test_struct_sequence (
-    const Alt_Mapping::StructSeq & s1,
+  Alt_Mapping::StructSeq test_struct_sequence (
+    Alt_Mapping::StructSeq const &s1,
     Alt_Mapping::StructSeq & s2,
-    Alt_Mapping::StructSeq & s3);
+    Alt_Mapping::StructSeq & s3) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

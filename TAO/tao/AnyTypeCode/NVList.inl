@@ -2,14 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-CORBA::NamedValue::NamedValue ()
-  : refcount_ (1),
-    flags_ (0),
-    name_ (0)
-{
-}
-
-ACE_INLINE
 const char *
 CORBA::NamedValue::name () const
 {
@@ -50,15 +42,6 @@ CORBA::NamedValue::_nil ()
 }
 
 // *************************************************************
-
-ACE_INLINE
-CORBA::NVList::NVList ()
-  : max_ (0),
-    refcount_ (1),
-    incoming_ (0),
-    incoming_flag_ (0)
-{
-}
 
 ACE_INLINE
 CORBA::ULong

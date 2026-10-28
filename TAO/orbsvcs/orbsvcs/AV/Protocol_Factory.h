@@ -35,6 +35,10 @@ public:
 
   /// Destructor
   virtual ~TAO_AV_Protocol_Object ();
+  TAO_AV_Protocol_Object (TAO_AV_Protocol_Object const &) = delete;
+  TAO_AV_Protocol_Object &operator= (TAO_AV_Protocol_Object const &) = delete;
+  TAO_AV_Protocol_Object (TAO_AV_Protocol_Object &&) = delete;
+  TAO_AV_Protocol_Object &operator= (TAO_AV_Protocol_Object &&) = delete;
 
   virtual int open (TAO_AV_Callback *callback,
                     TAO_AV_Transport *transport);
@@ -55,12 +59,12 @@ public:
 
   /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0) = 0;
+                          TAO_AV_frame_info *frame_info = nullptr) = 0;
 
   /// send a frame in iovecs.
   virtual int send_frame (const iovec *iov,
                           int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0) = 0;
+                          TAO_AV_frame_info *frame_info = nullptr) = 0;
 
   virtual int send_frame (const char *buf,
                           size_t len) = 0;
@@ -84,8 +88,12 @@ class TAO_AV_Export TAO_AV_Flow_Protocol_Factory : public ACE_Service_Object
 public:
   /// Initialization hook.
   TAO_AV_Flow_Protocol_Factory ();
-  virtual ~TAO_AV_Flow_Protocol_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  ~TAO_AV_Flow_Protocol_Factory () override;
+  TAO_AV_Flow_Protocol_Factory (TAO_AV_Flow_Protocol_Factory const &) = delete;
+  TAO_AV_Flow_Protocol_Factory &operator= (TAO_AV_Flow_Protocol_Factory const &) = delete;
+  TAO_AV_Flow_Protocol_Factory (TAO_AV_Flow_Protocol_Factory &&) = delete;
+  TAO_AV_Flow_Protocol_Factory &operator= (TAO_AV_Flow_Protocol_Factory &&) = delete;
+  int init (int argc, ACE_TCHAR *argv[]) override;
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                         TAO_Base_StreamEndPoint *endpoint,

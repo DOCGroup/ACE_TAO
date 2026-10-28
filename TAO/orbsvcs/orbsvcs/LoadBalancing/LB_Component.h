@@ -41,16 +41,16 @@ class TAO_LoadBalancing_Export TAO_LB_Component
 {
 public:
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR * argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
 protected:
   /// Register the LB_Component's ORBInitializer.
-  int register_orb_initializer (const CORBA::StringSeq & object_groups,
-                                const CORBA::StringSeq & repository_ids,
-                                const char * location);
+  int register_orb_initializer (CORBA::StringSeq const & object_groups,
+                                CORBA::StringSeq const & repository_ids,
+                                char const * location);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

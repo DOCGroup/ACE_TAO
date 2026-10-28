@@ -11,8 +11,7 @@ TAO::SL3::SecurityManager::SecurityManager (
 }
 
 TAO::SL3::SecurityManager::~SecurityManager ()
-{
-}
+= default;
 
 SecurityLevel3::CredentialsCurator_ptr
 TAO::SL3::SecurityManager::credentials_curator ()
@@ -23,7 +22,8 @@ TAO::SL3::SecurityManager::credentials_curator ()
 }
 
 SecurityLevel3::TargetCredentials_ptr
-TAO::SL3::SecurityManager::get_target_credentials (CORBA::Object_ptr /* the_object */)
+TAO::SL3::SecurityManager::get_target_credentials (
+    CORBA::Object_ptr /* the_object */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -31,7 +31,7 @@ TAO::SL3::SecurityManager::get_target_credentials (CORBA::Object_ptr /* the_obje
 SecurityLevel3::ContextEstablishmentPolicy_ptr
 TAO::SL3::SecurityManager::create_context_estab_policy (
     SecurityLevel3::CredsDirective creds_directive,
-    const SecurityLevel3::OwnCredentialsList & creds_list,
+    SecurityLevel3::OwnCredentialsList const & creds_list,
     SecurityLevel3::FeatureDirective use_client_auth,
     SecurityLevel3::FeatureDirective use_target_auth,
     SecurityLevel3::FeatureDirective use_confidentiality,
@@ -52,7 +52,7 @@ TAO::SL3::SecurityManager::create_context_estab_policy (
 
 SecurityLevel3::ObjectCredentialsPolicy_ptr
 TAO::SL3::SecurityManager::create_object_creds_policy (
-    const SecurityLevel3::OwnCredentialsList & creds_list)
+    SecurityLevel3::OwnCredentialsList const & creds_list)
 {
   SecurityLevel3::ObjectCredentialsPolicy_ptr policy;
   ACE_NEW_THROW_EX (policy,

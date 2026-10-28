@@ -46,8 +46,8 @@ public:
    * If no location is supplied the hostname or IP address is used by
    * default.
    */
-  TAO_LB_CPU_Load_Average_Monitor (const ACE_TCHAR * location_id = 0,
-                                   const ACE_TCHAR * location_kind = 0);
+  TAO_LB_CPU_Load_Average_Monitor (ACE_TCHAR const * location_id = nullptr,
+                                   ACE_TCHAR const * location_kind = nullptr);
 
   /**
    * @name CosLoadBalancing::LoadMonitor Methods
@@ -59,7 +59,7 @@ public:
   /**
    * The returned "Location" is a sequence of length 1.
    */
-  virtual CosLoadBalancing::Location * the_location ();
+  CosLoadBalancing::Location * the_location () override;
 
   /// Return the average CPU load at the location which this
   /// LoadMonitor resides.
@@ -68,7 +68,12 @@ public:
    *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
-  virtual CosLoadBalancing::LoadList * loads ();
+  CosLoadBalancing::LoadList * loads () override;
+
+  TAO_LB_CPU_Load_Average_Monitor (TAO_LB_CPU_Load_Average_Monitor const &) = delete;
+  TAO_LB_CPU_Load_Average_Monitor (TAO_LB_CPU_Load_Average_Monitor &&) = delete;
+  TAO_LB_CPU_Load_Average_Monitor & operator= (TAO_LB_CPU_Load_Average_Monitor const &) = delete;
+  TAO_LB_CPU_Load_Average_Monitor & operator= (TAO_LB_CPU_Load_Average_Monitor &&) = delete;
 
   //@}
 
@@ -78,7 +83,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_LB_CPU_Load_Average_Monitor ();
+  ~TAO_LB_CPU_Load_Average_Monitor () override;
 
 private:
   /// The name of the location at which this LoadMonitor resides.

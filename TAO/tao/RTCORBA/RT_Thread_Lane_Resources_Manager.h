@@ -41,47 +41,53 @@ class TAO_RTCORBA_Export TAO_RT_Thread_Lane_Resources_Manager :
 {
 public:
   /// Constructor.
-  TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_RT_Thread_Lane_Resources_Manager ();
+  ~TAO_RT_Thread_Lane_Resources_Manager () override;
 
   /// Finalize resources.
-  void finalize ();
+  void finalize () override;
 
   /// Open default resources.
-  int open_default_resources ();
+  int open_default_resources () override;
 
   /// Shutdown reactor.
-  void shutdown_reactor ();
+  void shutdown_reactor () override;
 
   /// Certain ORB policies such as dropping replies on shutdown
   /// would need cleanup of transports to wake threads up.
-  void close_all_transports ();
+  void close_all_transports () override;
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  int is_collocated (const TAO_MProfile &mprofile) override;
 
   /// @name Accessors
   // @{
-  TAO_Thread_Lane_Resources &lane_resources ();
+  TAO_Thread_Lane_Resources &lane_resources () override;
 
-  TAO_Thread_Lane_Resources &default_lane_resources ();
+  TAO_Thread_Lane_Resources &default_lane_resources () override;
 
   TAO_Thread_Pool_Manager &tp_manager ();
 
   // @}
 
 private:
-  void operator= (const TAO_RT_Thread_Lane_Resources_Manager &);
-  TAO_RT_Thread_Lane_Resources_Manager (const TAO_RT_Thread_Lane_Resources_Manager &);
+  TAO_RT_Thread_Lane_Resources_Manager &operator= (
+    TAO_RT_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_RT_Thread_Lane_Resources_Manager (
+    TAO_RT_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_RT_Thread_Lane_Resources_Manager &operator= (
+    TAO_RT_Thread_Lane_Resources_Manager &&) = delete;
+  TAO_RT_Thread_Lane_Resources_Manager (
+    TAO_RT_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
   /// Default lane resources.
-  TAO_Thread_Lane_Resources *default_lane_resources_;
+  TAO_Thread_Lane_Resources *default_lane_resources_ {};
 
   /// Thread Pool Manager.
-  TAO_Thread_Pool_Manager *tp_manager_;
+  TAO_Thread_Pool_Manager *tp_manager_ {};
 };
 
 /**
@@ -97,7 +103,8 @@ class TAO_RTCORBA_Export TAO_RT_Thread_Lane_Resources_Manager_Factory
 {
 public:
   /// Factory method.
-  TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core);
+  TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (
+    TAO_ORB_Core &core) override;
 };
 
 

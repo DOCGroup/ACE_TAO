@@ -4,8 +4,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i *log)
-: log_ (log)
+TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i * log)
+  : log_ (log)
 {
 }
 
@@ -23,7 +23,7 @@ TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-TAO_Event_LogConsumer::push (const CORBA::Any& data)
+TAO_Event_LogConsumer::push (CORBA::Any const & data)
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);

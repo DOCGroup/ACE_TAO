@@ -8,15 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()
-{
-}
-
-
-TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory()
-{
-}
-
+TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory () = default;
 
 int
 TAO::CSD::TP_Strategy_Factory::init (int argc,
@@ -24,7 +16,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 {
   ACE_TRACE ("TAO::CSD::TP_Strategy_Factory::init");
 
-  static int initialized = 0;
+  static int initialized {};
 
   // Only allow initialization once.
   if (initialized)
@@ -35,14 +27,14 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
       (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
 
-  if (repo == 0)
+  if (repo == nullptr)
     {
       TAO_CSD_ThreadPool::init ();
       repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
         (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
     }
 
-  if (repo == 0)
+  if (repo == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -73,13 +65,13 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 
           // Parse the parameter
           ACE_TCHAR *sep = ACE_OS::strchr (argv[curarg],':');
-          if (sep == 0)
+          if (sep == nullptr)
             {
               poa_name = ACE_TEXT_ALWAYS_CHAR (argv[curarg]);
             }
           else
             {
-              *sep = 0;
+              *sep = '\0';
               poa_name = ACE_TEXT_ALWAYS_CHAR (argv[curarg]);
               num_threads = ACE_OS::strtol (sep + 1, &sep, 10);
               if (*sep != 0 && *sep != ':')
@@ -97,7 +89,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             }
 
           // Create the ThreadPool strategy for each named poa.
-          TP_Strategy* strategy = 0;
+          TP_Strategy *strategy = nullptr;
           ACE_NEW_RETURN (strategy,
                           TP_Strategy (num_threads, serialize_servants),
                           -1);

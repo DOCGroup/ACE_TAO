@@ -16,16 +16,6 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::Case (
 }
 
 template <typename StringType, typename TypeCodeType>
-ACE_INLINE
-TAO::TypeCode::Case<StringType, TypeCodeType>::Case ()
-  : name_ ()
-  , type_ ()
-{
-  // Only used when StringType and TypeCodeType are CORBA::String_var
-  // and CORBA::TypeCode_var, respectively.
-}
-
-template <typename StringType, typename TypeCodeType>
 ACE_INLINE bool
 TAO::TypeCode::Case<StringType, TypeCodeType>::marshal (
   TAO_OutputCDR & cdr,

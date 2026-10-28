@@ -38,7 +38,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Thread_Pool *thread_pool =
     static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
 
-  if (thread_pool != 0 &&
+  if (thread_pool != nullptr &&
       thread_pool->with_lanes ())
     {
       //
@@ -74,9 +74,9 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph != nullptr)
     {
-      const char *priority_model = 0;
+      char const *priority_model = nullptr;
       RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
       // NOT_SPECIFIED PriorityModel processing.
@@ -94,7 +94,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
           // Attempt to extract client-propagated priority from the
           // ServiceContextList of the request.
-          const IOP::ServiceContext *context = 0;
+          IOP::ServiceContext const *context = nullptr;
 
           if (request_service_context.get_context (IOP::RTCorbaPriority,
                                                    &context) == 1)
@@ -136,7 +136,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       char thread_pool_id[BUFSIZ];
       if (TAO_debug_level > 0)
         {
-          if (thread_pool == 0)
+          if (thread_pool == nullptr)
             ACE_OS::strcpy (thread_pool_id,
                             "default thread pool");
           else
@@ -207,7 +207,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
               if (TAO_debug_level > 0)
                 {
-                  CORBA::Short native_priority = 0;
+                  CORBA::Short native_priority {};
                   tph->get_thread_native_priority (native_priority);
 
                   TAOLIB_DEBUG ((LM_DEBUG,
@@ -243,11 +243,11 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Network_Priority_Protocols_Hooks *nph =
     poa.orb_core ().get_network_priority_protocols_hooks ();
 
-  if (nph != 0)
+  if (nph != nullptr)
     {
       poa.network_priority_hook ()-> set_dscp_codepoint (req, poa);
     }
-  else if (tph != 0)
+  else if (tph != nullptr)
     {
       CORBA::Policy_var policy =
         poa.policies ().get_cached_policy (
@@ -269,7 +269,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
   TAO_Thread_Pool *thread_pool =
     static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
 
-  if (thread_pool == 0 || thread_pool->with_lanes ())
+  if (thread_pool == nullptr || thread_pool->with_lanes ())
     {
       //
       // We don't mess with the priority of threads in lanes or for
@@ -296,7 +296,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph != nullptr)
     {
       if (tph->get_thread_CORBA_and_native_priority (
             pre_invoke_state.original_CORBA_priority_,
@@ -333,7 +333,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
           // value.
           TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-          if (tph != 0)
+          if (tph != nullptr)
             {
               if (tph->restore_thread_CORBA_and_native_priority (
                        pre_invoke_state.original_CORBA_priority_,
@@ -362,7 +362,7 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                             TAO_ORB_Core &orb_core,
                                             TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa = 0;
+  TAO_RT_POA *poa = nullptr;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,

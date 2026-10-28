@@ -41,8 +41,8 @@ public:
     PortableServer::POA_ptr poa,
     const char *poa_id,
     TAO_Persistent_Context_Index *context_index,
-    HASH_MAP * map = 0,
-    ACE_UINT32 *counter = 0) override;
+    HASH_MAP *map = nullptr,
+    ACE_UINT32 *counter = nullptr) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

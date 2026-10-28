@@ -18,7 +18,7 @@ namespace TAO
   {
     try
       {
-        if (this->x_ !=0 && this->x_->value ()->impl ())
+        if (this->x_ != nullptr && this->x_->value ()->impl () != nullptr)
           {
             this->x_->value ()->impl ()->_tao_decode (cdr);
           }
@@ -88,7 +88,7 @@ namespace TAO
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        if (!this->x_->item (i)->value ())
+        if (this->x_->item (i)->value () == nullptr)
           return;
 
         (*lst)[i].argument.replace (this->x_->item (i)->value ()->impl ());

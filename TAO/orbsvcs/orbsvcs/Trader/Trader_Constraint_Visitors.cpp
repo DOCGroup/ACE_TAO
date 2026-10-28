@@ -29,7 +29,7 @@ visit_property (TAO_Property_Constraint* literal)
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      CORBA::Any *value = 0;
+      CORBA::Any* value = nullptr;
       // Retrieve the value of the property from the Property_Evaluator
       try
         {
@@ -40,7 +40,7 @@ visit_property (TAO_Property_Constraint* literal)
           return -1;
         }
 
-      if (value != 0)
+      if (value != nullptr)
         {
           this->queue_.enqueue_head (TAO_Literal_Constraint (value));
           return_value = 0;

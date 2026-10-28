@@ -37,10 +37,15 @@ namespace FTRTEC {
     Fault_Detector_Loader ();
 
     /// Destructor.
-    virtual ~Fault_Detector_Loader ();
+    ~Fault_Detector_Loader () override;
 
-    virtual int init (int argc,
-      ACE_TCHAR* []);
+    Fault_Detector_Loader(Fault_Detector_Loader const&) = delete;
+    Fault_Detector_Loader(Fault_Detector_Loader&&) = delete;
+    Fault_Detector_Loader& operator=(Fault_Detector_Loader const&) = delete;
+    Fault_Detector_Loader& operator=(Fault_Detector_Loader&&) = delete;
+
+    int init (int argc,
+      ACE_TCHAR* []) override;
     Fault_Detector* detector();
   private:
     std::unique_ptr<Fault_Detector> detector_;

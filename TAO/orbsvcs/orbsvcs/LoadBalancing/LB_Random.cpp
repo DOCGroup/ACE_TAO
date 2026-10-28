@@ -31,7 +31,7 @@ TAO_LB_Random::name ()
 CosLoadBalancing::Properties *
 TAO_LB_Random::get_properties ()
 {
-  CosLoadBalancing::Properties * props = 0;
+  CosLoadBalancing::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties,
                     CORBA::NO_MEMORY (
@@ -45,15 +45,15 @@ TAO_LB_Random::get_properties ()
 
 void
 TAO_LB_Random::push_loads (
-    const PortableGroup::Location & /* the_location */,
-    const CosLoadBalancing::LoadList & /* loads */)
+    PortableGroup::Location const & /* the_location */,
+    CosLoadBalancing::LoadList const & /* loads */)
 {
   throw CosLoadBalancing::StrategyNotAdaptive ();
 }
 
 CosLoadBalancing::LoadList *
 TAO_LB_Random::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                          const PortableGroup::Location & the_location)
+                          PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -94,9 +94,9 @@ CORBA::Object_ptr
 TAO_LB_Random::_tao_next_member (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager,
-    const PortableGroup::Locations & locations)
+    PortableGroup::Locations const & locations)
 {
-  const CORBA::ULong len = locations.length ();
+  CORBA::ULong const len = locations.length ();
   if (len == 0)
     throw CORBA::TRANSIENT ();
 

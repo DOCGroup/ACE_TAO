@@ -44,7 +44,7 @@ CORBA::NamedValue::~NamedValue ()
   if (this->name_)
     {
       CORBA::string_free (this->name_);
-      this->name_ = 0;
+      this->name_ = nullptr;
     }
   // the any will be destroyed by itself
 }
@@ -75,7 +75,7 @@ CORBA::NVList::~NVList ()
 
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      CORBA::NamedValue_ptr *nv = 0;
+      CORBA::NamedValue_ptr *nv = nullptr;
       (void) iter.next (nv);
       delete *nv;
     }
@@ -109,7 +109,7 @@ CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -137,7 +137,7 @@ CORBA::NVList::add_value (const char *name,
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -158,7 +158,7 @@ CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -185,7 +185,7 @@ CORBA::NVList::add_value_consume (char * name,
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -222,7 +222,7 @@ CORBA::NVList::add_element (CORBA::Flags flags)
   if (this->values_.enqueue_tail (nv) == -1)
     {
       delete nv;
-      return 0;
+      return nullptr;
     }
 
   ++this->max_;
@@ -240,7 +240,7 @@ CORBA::NVList::item (CORBA::ULong n)
       throw ::CORBA::Bounds ();
     }
 
-  CORBA::NamedValue_ptr *nv = 0;
+  CORBA::NamedValue_ptr *nv = nullptr;
 
   this->values_.get (nv, n);
   return *nv;
@@ -269,10 +269,10 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->incoming_ != 0)
+  if (this->incoming_ != nullptr)
     {
       delete this->incoming_;
-      this->incoming_ = 0;
+      this->incoming_ = nullptr;
     }
 
   ACE_NEW (this->incoming_, TAO_InputCDR (cdr));
@@ -286,7 +286,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
              ace_mon,
              this->lock_);
 
-  if (this->incoming_ != 0)
+  if (this->incoming_ != nullptr)
     {
       if (this->max_ == 0)
         {
@@ -304,7 +304,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
       for (i.first (); !i.done (); i.advance ())
         {
-          CORBA::NamedValue_ptr *item = 0;
+          CORBA::NamedValue_ptr *item = nullptr;
           (void) i.next (item);
 
           CORBA::NamedValue_ptr nv = *item;
@@ -316,9 +316,9 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
           if (TAO_debug_level > 3)
             {
-              const char* arg = nv->name ();
+              char const *arg = nv->name ();
 
-              if (arg == 0)
+              if (arg == nullptr)
                 {
                   arg = "(nil)";
                 }
@@ -334,7 +334,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
         }
 
       delete this->incoming_;
-      this->incoming_ = 0;
+      this->incoming_ = nullptr;
       return;
     }
 
@@ -346,7 +346,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item = 0;
+      CORBA::NamedValue_ptr *item = nullptr;
       (void) i.next (item);
 
       CORBA::NamedValue_ptr nv = *item;
@@ -374,7 +374,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item = 0;
+      CORBA::NamedValue_ptr *item = nullptr;
       (void) i.next (item);
 
       CORBA::NamedValue_ptr nv = *item;
@@ -408,7 +408,7 @@ CORBA::NVList::_tao_target_alignment ()
                     this->lock_,
                     ACE_CDR::MAX_ALIGNMENT);
 
-  if (this->incoming_ == 0)
+  if (this->incoming_ == nullptr)
     {
       return ACE_CDR::MAX_ALIGNMENT;
     }
@@ -429,10 +429,10 @@ CORBA::NVList::evaluate ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->incoming_ != 0)
+  if (this->incoming_ != nullptr)
     {
       std::unique_ptr<TAO_InputCDR> incoming (this->incoming_);
-      this->incoming_ = 0;
+      this->incoming_ = nullptr;
 
       this->_tao_decode (*(incoming.get ()), this->incoming_flag_);
     }
@@ -441,7 +441,7 @@ CORBA::NVList::evaluate ()
 CORBA::Boolean
 CORBA::NVList::_lazy_has_arguments () const
 {
-  if (this->incoming_ != 0)
+  if (this->incoming_ != nullptr)
     {
       return this->incoming_->length () <= 1 ? false : true;
     }

@@ -22,7 +22,7 @@ my_signal_function (int sig)
 class My_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_signal (int sig, siginfo_t *, ucontext_t *)
+  int handle_signal (int sig, siginfo_t *, ucontext_t *) override
   {
     // @@ Note that this code is not portable to all OS platforms
     // since it uses print statements within signal handler context.
@@ -38,8 +38,8 @@ public:
     return 0;
   }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "%s\n",

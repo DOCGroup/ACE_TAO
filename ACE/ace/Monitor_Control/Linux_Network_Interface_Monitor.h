@@ -57,7 +57,7 @@ namespace ACE
       void init ();
 
     private:
-      static const unsigned long MAX_INTERFACES = 10UL;
+      static constexpr unsigned long MAX_INTERFACES = 10UL;
       ACE_UINT64 value_array_[MAX_INTERFACES];
       ACE_UINT64 start_;
       ACE_CString scan_format_;

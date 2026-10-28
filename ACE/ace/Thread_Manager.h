@@ -392,7 +392,7 @@ public:
   friend class ACE_Thread_Descriptor;
 
 #if !defined (__GNUG__)
-  typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
+  using ACE_THR_MEMBER_FUNC = int (ACE_Thread_Manager::*) (ACE_Thread_Descriptor *, int);
 #endif /* !__GNUG__ */
 
   /// These are the various states a thread managed by the
@@ -522,15 +522,15 @@ public:
    * @retval   The group id of the spawned thread.
    */
   int spawn (ACE_THR_FUNC func,
-             void *arg = 0,
+             void *arg = nullptr,
              long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-             ACE_thread_t *t_id = 0,
-             ACE_hthread_t *t_handle = 0,
+             ACE_thread_t *t_id = nullptr,
+             ACE_hthread_t *t_handle = nullptr,
              long priority = ACE_DEFAULT_THREAD_PRIORITY,
              int grp_id = -1,
-             void *stack = 0,
+             void *stack = nullptr,
              size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
-             const char **thr_name = 0);
+             const char **thr_name = nullptr);
 
   /**
    * Spawn a specified number of threads, all of which execute @a func
@@ -599,11 +599,11 @@ public:
    */
   int spawn_n (size_t n,
                ACE_THR_FUNC func,
-               void *arg = 0,
+               void *arg = nullptr,
                long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
-               ACE_Task_Base *task = 0,
+               ACE_Task_Base *task = nullptr,
                ACE_hthread_t thread_handles[] = 0,
                void *stack[] = 0,
                size_t stack_size[] = 0,
@@ -689,7 +689,7 @@ public:
                void *stack[] = 0,
                size_t stack_size[] = 0,
                ACE_hthread_t thread_handles[] = 0,
-               ACE_Task_Base *task = 0,
+               ACE_Task_Base *task = nullptr,
                const char *thr_name[] = 0);
 
   /**
@@ -735,12 +735,12 @@ public:
    * as your object is being destroyed by the @c ACE_Object_Manager)
    * you can use @c wait_grp() instead.
    */
-  int wait (const ACE_Time_Value *timeout = 0,
+  int wait (const ACE_Time_Value *timeout = nullptr,
             bool abandon_detached_threads = false,
             bool use_absolute_time = true);
 
   /// Join a thread specified by @a tid.  Do not wait on a detached thread.
-  int join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status = 0);
+  int join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status = nullptr);
 
   /**
    * Block until there are no more threads running in a group.
@@ -1108,14 +1108,14 @@ protected:
   int spawn_i (ACE_THR_FUNC func,
                void *arg,
                long flags,
-               ACE_thread_t *t_id = 0,
-               ACE_hthread_t *t_handle = 0,
+               ACE_thread_t *t_id = nullptr,
+               ACE_hthread_t *t_handle = nullptr,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
-               void *stack = 0,
+               void *stack = nullptr,
                size_t stack_size = 0,
-               ACE_Task_Base *task = 0,
-               const char **thr_name = 0);
+               ACE_Task_Base *task = nullptr,
+               const char **thr_name = nullptr);
 
   /// Run the registered hooks when the thread exits.
   void run_thread_exit_hooks (int i);
@@ -1147,9 +1147,9 @@ protected:
   int append_thr (ACE_thread_t t_id, ACE_hthread_t,
                   ACE_UINT32,
                   int grp_id,
-                  ACE_Task_Base *task = 0,
+                  ACE_Task_Base *task = nullptr,
                   long flags = 0,
-                  ACE_Thread_Descriptor *td = 0);
+                  ACE_Thread_Descriptor *td = nullptr);
 
   /// Remove thread from the table.
   void remove_thr (ACE_Thread_Descriptor *td,
@@ -1264,7 +1264,7 @@ private:
 #if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 #define ACE_THREAD_MANAGER_SINGLETON_DEFINE \
         ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
-typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SINGLETON;
+using ACE_THREAD_MANAGER_SINGLETON = ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
 #endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -9,9 +9,9 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
-const ACE_TCHAR *service_name = ACE_TEXT("ScheduleService");
+ACE_TCHAR const* service_name = ACE_TEXT("ScheduleService");
 
-const char* format_string = " {%-12s, %d, %d, %d, %d, %8d, "
+char const* format_string = " {%-12s, %d, %d, %d, %d, %8d, "
   " static_cast<RtecScheduler::Criticality_t> (%d), "
   " static_cast<RtecScheduler::Importance_t> (%d), "
   " %d, %d, %3d, %d, %d, "

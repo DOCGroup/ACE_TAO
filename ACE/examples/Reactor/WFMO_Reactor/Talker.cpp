@@ -139,7 +139,7 @@
 #include "ace/OS_NS_unistd.h"
 
 
-typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
+using MT_TASK = ACE_Task<ACE_MT_SYNCH>;
 
 /**
  * @class Peer_Handler

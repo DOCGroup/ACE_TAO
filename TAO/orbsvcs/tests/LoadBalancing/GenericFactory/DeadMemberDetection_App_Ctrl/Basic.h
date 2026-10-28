@@ -23,19 +23,19 @@ public:
   Basic (CORBA::Object_ptr object_group,
          CosLoadBalancing::LoadManager_ptr lm,
          CORBA::ORB_ptr orb,
-         const char *loc,
+         char const* loc,
          int server_id);
 
   /// Default _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent ();
+  CORBA::Boolean _non_existent () override;
 
-  virtual char * get_string ();
+  char* get_string () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void remove_member ();
+  void remove_member () override;
 
-  virtual void exit ();
+  void exit () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

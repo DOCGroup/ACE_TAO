@@ -17,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
+using TAO_EC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* ec, int validate_connection)
   : event_channel_ (ec),
@@ -172,7 +172,8 @@ TAO_EC_ProxyPushSupplier::_decr_refcnt ()
   return 0;
 }
 
-typedef TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushSupplier> Destroy_Guard;
+using Destroy_Guard = TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel_Base,
+                                                   TAO_EC_ProxyPushSupplier>;
 
 int
 TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,

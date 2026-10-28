@@ -39,7 +39,7 @@ class TAO_RelativeRoundtripTimeoutPolicy
 {
 public:
   /// Constructor.
-  TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
+  explicit TAO_RelativeRoundtripTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
   /// Copy constructor.
   TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
@@ -59,19 +59,19 @@ public:
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone () const;
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry ();
+  TimeBase::TimeT relative_expiry () override;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
 
   /// Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 
 private:
   /// The attribute
@@ -98,7 +98,7 @@ class TAO_Messaging_Export TAO_Sync_Scope_Policy
 {
 public:
   /// Constructor.
-  TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
+  explicit TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
 
   /// Copy constructor.
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
@@ -119,18 +119,18 @@ public:
 
   // = The Messaging::SyncScopePolicy methods.
 
-  virtual Messaging::SyncScope synchronization ();
+  Messaging::SyncScope synchronization () override;
 
   void get_synchronization (Messaging::SyncScope &synchronization) const;
 
-  virtual CORBA::PolicyType policy_type ();
+  CORBA::PolicyType policy_type () override;
 
-  virtual CORBA::Policy_ptr copy ();
+  CORBA::Policy_ptr copy () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
   // Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
+  TAO_Cached_Policy_Type _tao_cached_type () const override;
 private:
   /// The attribute
   Messaging::SyncScope synchronization_;

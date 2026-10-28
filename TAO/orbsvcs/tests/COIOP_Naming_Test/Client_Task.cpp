@@ -50,7 +50,7 @@ Client_Task::svc ()
 
       hello->shutdown ();
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const & ex)
     {
       if (!this->result_)
         {
@@ -63,7 +63,7 @@ Client_Task::svc ()
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

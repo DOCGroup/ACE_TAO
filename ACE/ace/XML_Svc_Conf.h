@@ -43,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_XML_Svc_Conf
 {
 public:
-  typedef ACE_XML_Svc_Conf *(*Factory)();
+  using Factory = ACE_XML_Svc_Conf *(*) ();
 
   virtual ~ACE_XML_Svc_Conf () = 0;
 

@@ -40,7 +40,7 @@ TAO_Notify_ProxySupplier_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 {
-  typedef TAO_Notify_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier> SuperClass;
+  using SuperClass = TAO_Notify_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
   friend class TAO_Notify_Builder;
 
 public:

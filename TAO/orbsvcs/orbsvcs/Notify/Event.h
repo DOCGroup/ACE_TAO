@@ -39,7 +39,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Event
     : public TAO_Notify_Refcountable
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event> Ptr;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
 
   // Codes to distinguish marshaled events in persistent storage
   enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};

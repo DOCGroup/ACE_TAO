@@ -194,10 +194,10 @@ public:
     UTL_ScopedName *name,
     AST_Decl *other);
 
-  virtual ~AST_Decl ();
+  ~AST_Decl () override;
 
   // Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // If this decl has been found, some types need to be
   // moved onto their true definitions etc. Defaults to
@@ -488,6 +488,6 @@ private:
   // Non-top-level version of set_prefix_with_typeprefix.
 };
 
-typedef ACE_Vector<AST_Decl*> AST_Decls;
+using AST_Decls = ACE_Vector<AST_Decl*>;
 
 #endif           // _AST_DECL_AST_DECL_HH

@@ -86,7 +86,7 @@ public:
   };
 
   /// Constructor
-  ACE_Token (const ACE_TCHAR *name = 0, void * = 0);
+  ACE_Token (const ACE_TCHAR *name = nullptr, void * = 0);
 
   /// Destructor
   virtual ~ACE_Token ();
@@ -116,15 +116,15 @@ public:
    * does *not* call <sleep_hook>).
    */
   int acquire (void (*sleep_hook)(void *),
-               void *arg = 0,
-               ACE_Time_Value *timeout = 0);
+               void *arg = nullptr,
+               ACE_Time_Value *timeout = nullptr);
 
   /**
    * This behaves just like the previous <acquire> method, except that
    * it invokes the virtual function called <sleep_hook> that can be
    * overridden by a subclass of ACE_Token.
    */
-  int acquire (ACE_Time_Value *timeout = 0);
+  int acquire (ACE_Time_Value *timeout = nullptr);
 
   /**
    * This should be overridden by a subclass to define the appropriate
@@ -152,7 +152,7 @@ public:
    * @a timeout value is an absolute time.
    */
   int renew (int requeue_position = 0,
-             ACE_Time_Value *timeout = 0);
+             ACE_Time_Value *timeout = nullptr);
 
   /// Become interface-compliant with other lock mechanisms (implements
   /// a non-blocking <acquire>).
@@ -176,16 +176,16 @@ public:
   /// what's commonly expected for readers/writer locks.  See the class
   /// documentation above for more details.
   int acquire_read (void (*sleep_hook)(void *),
-                    void *arg = 0,
-                    ACE_Time_Value *timeout = 0);
+                    void *arg = nullptr,
+                    ACE_Time_Value *timeout = nullptr);
 
   /// Calls acquire().
   int acquire_write ();
 
   /// Calls acquire().
   int acquire_write (void (*sleep_hook)(void *),
-                     void *arg = 0,
-                     ACE_Time_Value *timeout = 0);
+                     void *arg = nullptr,
+                     ACE_Time_Value *timeout = nullptr);
 
   /// Lower priority try_acquire().
   int tryacquire_read ();

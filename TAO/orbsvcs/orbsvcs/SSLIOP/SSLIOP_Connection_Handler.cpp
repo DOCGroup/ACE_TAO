@@ -43,7 +43,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
 {
   this->current_ = TAO::SSLIOP::Util::current (orb_core);
 
-  TAO::SSLIOP::Transport* specific_transport = 0;
+  TAO::SSLIOP::Transport *specific_transport = nullptr;
   ACE_NEW (specific_transport,
           TAO::SSLIOP::Transport (this, orb_core));
 
@@ -92,7 +92,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph != nullptr)
     {
       try
         {

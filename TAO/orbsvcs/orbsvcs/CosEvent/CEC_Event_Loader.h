@@ -41,23 +41,23 @@ public:
   TAO_CEC_Event_Loader ();
 
   /// Destructor
-  ~TAO_CEC_Event_Loader () = default;
+  ~TAO_CEC_Event_Loader () override = default;
 
   //@{
   /**
    * @name Derived from ACE_Service_Object
    */
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
   //@}
 
   //@{
   /**
    * @name Derived from TAO_Object_Loader
    */
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv[]);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv[]) override;
   //@}
 
 protected:

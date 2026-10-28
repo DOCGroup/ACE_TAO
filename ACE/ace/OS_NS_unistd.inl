@@ -405,7 +405,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
   char *narrow_buf = new char[size];
-  char *result = 0;
+  char *result = nullptr;
   result = ACE_OS::getcwd (narrow_buf, size);
   ACE_Ascii_To_Wide wide_buf (result);
   delete [] narrow_buf;
@@ -567,7 +567,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
                                           ace_result_), int, -1);
 #else /* ACE_WIN32 */
   // Emulate using the char version
-  char *char_name = 0;
+  char *char_name = nullptr;
 
   ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
 

@@ -1338,7 +1338,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     {
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %u\n"),
+                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to transport %B\n"),
                     transport->id ()));
     }
 
@@ -1430,7 +1430,8 @@ TAO_GIOP_Message_Base::
                              nullptr,
                              ACE_Message_Block::DONT_DELETE,
                              nullptr);
-  ACE_Message_Block message_block(&data_block);
+  ACE_Message_Block message_block (&data_block,
+                                  ACE_Message_Block::DONT_DELETE);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   size_t bt;
@@ -1439,14 +1440,18 @@ TAO_GIOP_Message_Base::
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
-           ACE_TEXT ("(%P|%t) error closing connection %u, errno = %d\n"),
+           ACE_TEXT ("(%P|%t) error closing connection %B, errno = %d\n"),
            transport->id (), ACE_ERRNO_GET));
     }
 
+  size_t const transport_id = transport->id ();
   transport->close_connection ();
-  TAOLIB_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) shut down transport, handle %d\n"),
-      transport-> id ()));
+  if (TAO_debug_level > 4)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) shut down Transport[%B]\n"),
+          transport_id));
+    }
 }
 
 int

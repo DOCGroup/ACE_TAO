@@ -91,8 +91,8 @@ ACE_UTF16_Encoding_Converter::to_utf8 (const void* source,
                                        size_t target_size,
                                        bool strict)
 {
-  static const ACE_UINT32 byteMask = 0xBF;
-  static const ACE_UINT32 byteMark = 0x80;
+  static constexpr ACE_UINT32 byteMask = 0xBF;
+  static constexpr ACE_UINT32 byteMark = 0x80;
   Result result = CONVERSION_OK;
 
   ACE_Byte* targetEnd = target + target_size;

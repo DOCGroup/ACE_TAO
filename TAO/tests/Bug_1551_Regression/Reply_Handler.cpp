@@ -2,8 +2,8 @@
 
 Reply_Handler::Reply_Handler (
     Test::Hello_ptr hello, CORBA::ORB_ptr orb)
-  : counter_(1000)
-  , hello_(Test::Hello::_duplicate(hello))
+  : counter_ (1000)
+  , hello_ (Test::Hello::_duplicate (hello))
   , orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -11,23 +11,23 @@ Reply_Handler::Reply_Handler (
 void
 Reply_Handler::short_sleep ()
 {
-  check_counter();
+  this->check_counter ();
 
   Test::AMI_HelloHandler_var current =
-    _this();
+    this->_this ();
 
-  hello_->sendc_short_sleep(current.in());
+  this->hello_->sendc_short_sleep (current.in ());
 }
 
 void
 Reply_Handler::short_sleep_excep (
     ::Messaging::ExceptionHolder *ex)
 {
-  check_counter();
+  this->check_counter ();
 
   try
     {
-      if (ex)
+      if (ex != nullptr)
         {
           ex->raise_exception ();
         }
@@ -48,21 +48,21 @@ Reply_Handler::short_sleep_excep (
     }
 
   Test::AMI_HelloHandler_var current =
-    _this();
+    this->_this ();
 
-  hello_->sendc_short_sleep(current.in());
+  this->hello_->sendc_short_sleep (current.in ());
 }
 
-void Reply_Handler::
-check_counter()
+void
+Reply_Handler::check_counter ()
 {
-  long const count = --counter_;
-  if(count == 0)
-  {
-    // ACE_DEBUG((LM_DEBUG, "(%P|%t) Shut down client thread\n"));
-    orb_->shutdown(0);
-    return;
-  }
+  long const count = --this->counter_;
+  if (count == 0)
+    {
+      // ACE_DEBUG((LM_DEBUG, "(%P|%t) Shut down client thread\n"));
+      this->orb_->shutdown (false);
+      return;
+    }
 #if 0
   if(count % 100 == 0)
   {

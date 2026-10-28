@@ -8,7 +8,7 @@
 class HA_ThreadHook : public ACE_Thread_Hook
 {
 public:
-  virtual ACE_THR_FUNC_RETURN start (ACE_THR_FUNC func, void* arg)
+  ACE_THR_FUNC_RETURN start (ACE_THR_FUNC func, void* arg) override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("(%t) New Thread Spawned\n")));
 
@@ -27,14 +27,14 @@ public:
 void
 HA_ThreadHook::add_sec_context_thr(ACE_TSS<SecurityContext> &secCtx)
 {
-  secCtx->user = 0;
+  secCtx->user = nullptr;
 }
 
 
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
-  virtual int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
 

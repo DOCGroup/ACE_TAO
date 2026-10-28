@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 bool simulate_crashes = true;
 
@@ -27,7 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'n':
-        nthreads = ACE_OS::atoi(get_opts.opt_arg());
+        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -54,7 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // use, this introduces delay in the middle of the test's execution.
   // This leads to failures due to timing assumptions (timeouts, etc.)
   // within the test itself.
-  (void) ACE_High_Res_Timer::global_scale_factor();
+  (void) ACE_High_Res_Timer::global_scale_factor ();
 
   try
     {
@@ -62,7 +62,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -78,8 +78,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      PortableServer::ServantBase_var hello_impl(
-          new Hello(orb.in(), simulate_crashes));
+      PortableServer::ServantBase_var hello_impl (
+        new Hello (orb.in (), simulate_crashes));
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (hello_impl.in ());
@@ -93,8 +93,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -116,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      ACE_Thread_Manager::instance()->wait();
+      ACE_Thread_Manager::instance ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 

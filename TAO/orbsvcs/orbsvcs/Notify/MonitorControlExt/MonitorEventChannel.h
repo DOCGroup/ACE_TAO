@@ -124,9 +124,9 @@ private:
   friend class QueuedEvents;
   friend class OldestEvent;
 
-  typedef ACE_Hash_Map_Manager<CORBA::Long,
-                               ACE_CString,
-                               ACE_SYNCH_NULL_MUTEX> Map;
+  using Map = ACE_Hash_Map_Manager<CORBA::Long,
+                                   ACE_CString,
+                                   ACE_SYNCH_NULL_MUTEX>;
 
   size_t get_admins (Map& map,
                      const CosNotifyChannelAdmin::AdminIDSeq& ids,

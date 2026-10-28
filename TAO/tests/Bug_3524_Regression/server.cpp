@@ -3,10 +3,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c;
@@ -31,14 +31,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      ::Test::vtp_init *vtp_factory = 0;
+      ::Test::vtp_init *vtp_factory = nullptr;
       ACE_NEW_THROW_EX (vtp_factory,
                         ::Test::vtp_init,
                         CORBA::NO_MEMORY ());
@@ -66,7 +66,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      A_i *server_impl = 0;
+      A_i *server_impl = nullptr;
       ACE_NEW_RETURN (server_impl,
                       A_i (orb.in (), vtp_factory),
                       -1);
@@ -89,10 +89,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Cannot open output file ")
                                ACE_TEXT ("for writing IOR: %s"),
@@ -110,7 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
                            "Caught exception in server:");

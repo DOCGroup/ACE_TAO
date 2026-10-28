@@ -63,7 +63,7 @@ Input_Handler::schedule_timer (void *argument)
   long tid;
 
   th = new Reactor_Timer_Handler;
-  if (th != 0)
+  if (th != nullptr)
     {
       tid = this->reactor ()->schedule_timer (th,
                                               0,
@@ -158,7 +158,7 @@ Reactor_Timer_Queue_Test_Driver::display_menu ()
 int
 Reactor_Timer_Queue_Test_Driver::init ()
 {
-  typedef Command<Input_Handler, Input_Handler::ACTION> CMD;
+  using CMD = Command<Input_Handler, Input_Handler::ACTION>;
 
   // initialize <Command>s with their corresponding <Input_Handler>  methods.
   ACE_NEW_RETURN (schedule_cmd_,

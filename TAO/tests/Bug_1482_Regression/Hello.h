@@ -12,9 +12,13 @@ class Hello
 public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
+  Hello (Hello const &) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello &&) = delete;
 
   // = The skeleton methods
-  virtual CORBA::ULong next_prime ();
+  CORBA::ULong next_prime () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

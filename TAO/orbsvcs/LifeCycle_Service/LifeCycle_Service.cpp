@@ -17,7 +17,8 @@
 #include "ace/OS_main.h"
 
 Life_Cycle_Service_Server::Life_Cycle_Service_Server ()
-:   debug_level_ (1)
+  : life_Cycle_Service_i_ptr_ (nullptr),
+    debug_level_ (1)
 {
 }
 
@@ -39,7 +40,7 @@ Life_Cycle_Service_Server::~Life_Cycle_Service_Server ()
 
 int
 Life_Cycle_Service_Server::init (int argc,
-                                 ACE_TCHAR *argv[])
+                                 ACE_TCHAR * argv[])
 {
   int retval = 0;
 
@@ -142,7 +143,7 @@ Life_Cycle_Service_Server::run ()
 
 u_int
 Life_Cycle_Service_Server::parse_args (int argc,
-                                       ACE_TCHAR* argv[])
+                                       ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("?d:"));
   int opt;
@@ -176,7 +177,7 @@ Life_Cycle_Service_Server::parse_args (int argc,
 // function main
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR* argv [])
+ACE_TMAIN (int argc, ACE_TCHAR * argv [])
 {
   Life_Cycle_Service_Server life_Cycle_Service_Server;
 

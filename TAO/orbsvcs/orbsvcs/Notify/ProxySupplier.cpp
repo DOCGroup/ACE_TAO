@@ -27,7 +27,7 @@ TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
 void
 TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)
 {
-  ACE_ASSERT (consumer_admin != 0 && this->consumer_admin_.get() == 0);
+  ACE_ASSERT (consumer_admin != nullptr && this->consumer_admin_.get() == nullptr);
 
   TAO_Notify_Proxy::initialize (consumer_admin);
 
@@ -77,7 +77,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
       }
 
     // Adopt the consumer
-    if (this->consumer_.get() != 0)
+    if (this->consumer_.get() != nullptr)
       auto_consumer->assume_pending_events (*this->consumer_.get ());
     this->consumer_ = auto_consumer;
 
@@ -85,7 +85,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
   }
 
   // Inform QoS values.
-  ACE_ASSERT (this->consumer_.get() != 0);
+  ACE_ASSERT (this->consumer_.get() != nullptr);
   this->consumer_->qos_changed (this->qos_properties_);
 
   TAO_Notify_EventTypeSeq removed;
@@ -120,7 +120,7 @@ TAO_Notify_ProxySupplier::shutdown ()
 
   this->disconnect ();
 
-  if (this->consumer_.get() != 0)
+  if (this->consumer_.get() != nullptr)
   {
     this->consumer_->shutdown ();
   }

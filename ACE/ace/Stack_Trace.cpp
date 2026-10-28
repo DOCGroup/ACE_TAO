@@ -130,7 +130,7 @@ struct ACE_Stack_Trace_stackstate
 
 //@TODO: Replace with a TSS-based pointer to avoid problems in multithreaded environs,
 //       or use a mutex to serialize access to this.
-static ACE_Stack_Trace_stackstate* ACE_Stack_Trace_stateptr = 0;
+static ACE_Stack_Trace_stackstate* ACE_Stack_Trace_stateptr = nullptr;
 
 static void
 ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
@@ -263,9 +263,9 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           //An enhancement request has been filed under WIND00123307.
           const char *fnName = "(no symbols)";
 
-          static const int N_ARGS = 12;
+          static constexpr int N_ARGS = 12;
           ACE_VX_USR_ARG_T buf[N_ARGS];
-          ACE_VX_USR_ARG_T *pArgs = 0;
+          ACE_VX_USR_ARG_T *pArgs = nullptr;
           int numArgs =
             trcLibFuncs.lvlArgsGet (prevPc, prevFn, prevFp,
                                     buf, N_ARGS, &pArgs);
@@ -337,35 +337,34 @@ typedef struct _dbghelp_functions
   DWORD64 (WINAPI *SymGetModuleBase64) (HANDLE hProc, DWORD64 dwAddr);
   PVOID (WINAPI *SymFunctionTableAccess64) (HANDLE hProc, DWORD64 AddrBase);
 
-  typedef BOOL (WINAPI *SymFromAddr_t)
+  using SymFromAddr_t = BOOL (WINAPI *)
     (HANDLE hProc, DWORD64 Addr, PDWORD64 Disp, PSYMBOL_INFO Symbol);
   SymFromAddr_t SymFromAddr;
 
-  typedef BOOL (WINAPI *SymGetLineFromAddr64_t) (HANDLE hProc, DWORD64 dwAddr,
-                                                 PDWORD pdwDisplacement,
-                                                 PIMAGEHLP_LINE64 Line);
+  using SymGetLineFromAddr64_t = BOOL (WINAPI *) (HANDLE hProc, DWORD64 dwAddr,
+                                                   PDWORD pdwDisplacement,
+                                                   PIMAGEHLP_LINE64 Line);
   SymGetLineFromAddr64_t SymGetLineFromAddr64;
 
-  typedef DWORD (WINAPI *SymSetOptions_t) (DWORD SymOptions);
+  using SymSetOptions_t = DWORD (WINAPI *) (DWORD SymOptions);
   SymSetOptions_t SymSetOptions;
 
-  typedef DWORD (WINAPI *SymGetOptions_t) ();
+  using SymGetOptions_t = DWORD (WINAPI *) ();
   SymGetOptions_t SymGetOptions;
 
-  typedef BOOL (WINAPI *SymInitialize_t) (HANDLE hProc, PCTSTR UserSearchPath,
-                                          BOOL invasive);
+  using SymInitialize_t = BOOL (WINAPI *) (HANDLE hProc, PCTSTR UserSearchPath,
+                                            BOOL invasive);
   SymInitialize_t SymInitialize;
 
-  typedef BOOL
-  (WINAPI *StackWalk64_t) (DWORD MachineType, HANDLE hPRoc, HANDLE hThr,
-                           LPSTACKFRAME64 StackFrame, PVOID ContextRecord,
-                           PREAD_PROCESS_MEMORY_ROUTINE64 RMRoutine,
-                           PFUNCTION_TABLE_ACCESS_ROUTINE64 FTARoutine,
-                           PGET_MODULE_BASE_ROUTINE64 GMBRoutine,
-                           PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress);
+  using StackWalk64_t = BOOL (WINAPI *) (DWORD MachineType, HANDLE hPRoc, HANDLE hThr,
+                                         LPSTACKFRAME64 StackFrame, PVOID ContextRecord,
+                                         PREAD_PROCESS_MEMORY_ROUTINE64 RMRoutine,
+                                         PFUNCTION_TABLE_ACCESS_ROUTINE64 FTARoutine,
+                                         PGET_MODULE_BASE_ROUTINE64 GMBRoutine,
+                                         PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress);
   StackWalk64_t StackWalk64;
 
-  typedef BOOL (WINAPI *SymCleanup_t) (HANDLE hProc);
+  using SymCleanup_t = BOOL (WINAPI *) (HANDLE hProc);
   SymCleanup_t SymCleanup;
 } dbghelp_functions;
 

@@ -9,7 +9,7 @@ namespace TAO
 {
 ACE_INLINE
 Incoming_Message_Stack::Incoming_Message_Stack()
-: top_(0)
+: top_(nullptr)
 {
 }
 
@@ -17,7 +17,7 @@ ACE_INLINE
 Incoming_Message_Stack::~Incoming_Message_Stack()
 {
   // Delete all the nodes left behind
-  TAO_Queued_Data *del = 0;
+  TAO_Queued_Data * del = nullptr;
 
   while (this->pop (del) != -1)
     {
@@ -37,7 +37,7 @@ Incoming_Message_Stack::push(TAO_Queued_Data *data)
 ACE_INLINE int
 Incoming_Message_Stack::pop (TAO_Queued_Data* &data)
 {
-  if (this->top_ == 0)
+  if (this->top_ == nullptr)
     return -1;
 
   data = this->top_;
@@ -49,7 +49,7 @@ Incoming_Message_Stack::pop (TAO_Queued_Data* &data)
 ACE_INLINE int
 Incoming_Message_Stack::top (TAO_Queued_Data* &data) const
 {
-  if (this->top_ == 0)
+  if (this->top_ == nullptr)
     return -1;
 
   data = this->top_;

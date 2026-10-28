@@ -17,7 +17,7 @@
 #include "ace/Synch_Traits.h"
 #include "ami_test_i.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads = 1;
 int niterations = 2;
 int debug = 0;
@@ -77,7 +77,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
   // private:
   /// Var for the AMI_Test object.
@@ -93,11 +93,9 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler () : request_ (0)
-  {
-  };
+  Handler () = default;
 
-  void foo ()
+  void foo () override
     {
       int const reply = --number_of_replies;
 
@@ -109,9 +107,9 @@ public:
         }
       ACE_UNUSED_ARG (reply);
       ++request_;
-    };
+    }
 
-   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       int const reply = --number_of_replies;
       if (debug)
@@ -125,7 +123,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThing& ex)
+      catch (A::DidTheRightThing const &ex)
         {
           if (request_ != 0)
             {
@@ -137,7 +135,7 @@ public:
               ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
             }
         }
-      catch (const CORBA::UNKNOWN& ex)
+      catch (CORBA::UNKNOWN const &ex)
         {
           if (request_ != 1)
             {
@@ -150,20 +148,18 @@ public:
             }
         }
       ++request_;
-    };
+    }
 
-  ~Handler ()
-  {
-  };
+  ~Handler () = default;
 private:
-  int request_;
+  int request_ {};
 };
 
 // ReplyHandler.
 Handler handler;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -176,10 +172,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       A::AMI_Test_var server;
 
       AMI_Test_i * servant =
-        new AMI_Test_i(orb.in());
+        new AMI_Test_i (orb.in ());
       PortableServer::ServantBase_var safe (servant);
 
-      server = servant->_this();
+      server = servant->_this ();
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -192,7 +188,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Activate POA to handle the call back.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -231,23 +227,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       while (number_of_replies > 0)
         {
-          CORBA::Boolean pending = orb->work_pending();
+          CORBA::Boolean const pending = orb->work_pending ();
 
           if (pending)
             {
-              orb->perform_work();
+              orb->perform_work ();
             }
 
           // On some systems this loop must yield or else the other threads
           // will not get a chance to run.
-          ACE_OS::thr_yield();
+          ACE_OS::thr_yield ();
         }
 
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies.value ()));
+                      (nthreads * niterations) - number_of_replies.value ()));
         }
 
       client.thr_mgr ()->wait ();
@@ -255,11 +251,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       root_poa->destroy (true,  // ethernalize objects
-                         false); // wait for completion
+                         false);  // wait for completion
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -272,10 +268,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 Client::Client (A::AMI_Test_ptr server,
                 int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (niterations)
+  : ami_test_var_ (A::AMI_Test::_duplicate (server))
+  , niterations_ (niterations)
 {
-  the_handler_var_ = handler._this (/* */);
+  the_handler_var_ = handler._this ();
 }
 
 int
@@ -294,7 +290,7 @@ Client::svc ()
                       niterations));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
       invalid_exception = 1;

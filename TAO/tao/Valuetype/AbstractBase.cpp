@@ -16,15 +16,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::AbstractBase::AbstractBase ()
-  : is_objref_ (false)
-  , refcount_ (1)
-  , is_collocated_ (false)
-  , servant_ (nullptr)
-  , equivalent_obj_ (CORBA::Object::_nil ())
-{
-}
-
 CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
   : is_objref_ (rhs.is_objref_)
   , refcount_ (1)
@@ -165,7 +156,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
         {
           TAO_Stub *stubobj = abs->_stubobj ();
 
-          if (stubobj == 0)
+          if (stubobj == nullptr)
             {
               return false;
             }
@@ -272,7 +263,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           orb_core = strm.orb_core ();
 
-          if (orb_core == 0)
+          if (orb_core == nullptr)
             {
               orb_core = TAO_ORB_Core_instance ();
 
@@ -288,7 +279,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
             orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
 
           // We should throw an exception, if there were an appropriate one.
-          if (factory.in() == 0)
+          if (factory.in() == nullptr)
             {
               if (TAO_debug_level > 0)
                 {

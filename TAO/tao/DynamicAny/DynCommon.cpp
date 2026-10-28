@@ -8,6 +8,7 @@
 #include "tao/DynamicAny/DynAny_i.h"
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynEnum_i.h"
+#include "tao/DynamicAny/DynFixed_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
@@ -25,13 +26,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynCommon::TAO_DynCommon (CORBA::Boolean allow_truncation)
-  : ref_to_component_ (false)
-  , container_is_destroying_ (false)
-  , has_components_ (false)
-  , destroyed_ (false)
-  , current_position_ (-1)
-  , component_count_ (0)
-  , allow_truncation_ (allow_truncation)
+  : allow_truncation_ (allow_truncation)
 {
 }
 
@@ -226,7 +221,7 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value)
             }
 
           TAO_InputCDR in (cdr);
-          TAO::Unknown_IDL_Type *unk = 0;
+          TAO::Unknown_IDL_Type *unk = nullptr;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (this->type_.in (),
                                           in));
@@ -350,10 +345,10 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
           throw DynamicAny::DynAny::TypeMismatch ();
         }
 
-      // If the arg is 0 we can't do this kind of type checking,
+      // If the arg is nullptr we can't do this kind of type checking,
       // and the call to _tao_marshal() below will handle the
       // null value correctly.
-      if (value != 0)
+      if (value != nullptr)
         {
           const char *value_id = value->_tao_obv_repository_id ();
           const char *my_id =
@@ -382,7 +377,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
         }
 
       TAO_InputCDR in (out);
-      TAO::Unknown_IDL_Type *unk = 0;
+      TAO::Unknown_IDL_Type *unk = nullptr;
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (this->type_.in (), in));
       this->any_.replace (unk);
@@ -473,7 +468,7 @@ TAO_DynCommon::get_string ()
           throw DynamicAny::DynAny::TypeMismatch ();
         }
 
-      char *retval = 0;
+      char *retval = nullptr;
 
       CORBA::ULong const bound =
         unaliased_tc->length ();
@@ -612,7 +607,7 @@ TAO_DynCommon::get_wstring ()
       CORBA::TypeCode_var unaliased_tc =
         this->check_type_and_unalias (CORBA::_tc_wstring);
 
-      CORBA::WChar *retval = 0;
+      CORBA::WChar *retval = nullptr;
 
       CORBA::ULong bound =
         unaliased_tc->length ();
@@ -640,14 +635,14 @@ TAO_DynCommon::get_any ()
     }
   else
     {
-      const CORBA::Any *tmp = 0;
+      CORBA::Any const *tmp = nullptr;
 
       if ((this->any_ >>= tmp) == 0)
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
 
-      CORBA::Any *retval = 0;
+      CORBA::Any *retval = nullptr;
       ACE_NEW_RETURN (retval,
                       CORBA::Any (*tmp),
                       0);
@@ -702,7 +697,7 @@ TAO_DynCommon::get_val ()
       CORBA::ValueBase_var retval;
       TAO::Any_Impl *any_impl = this->any_.impl ();
 
-      if (any_impl == 0)
+      if (any_impl == nullptr)
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }
@@ -882,7 +877,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
             }
 
           TAO_InputCDR in (out);
-          TAO::Unknown_IDL_Type *unk = 0;
+          TAO::Unknown_IDL_Type *unk = nullptr;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (this->type_.in (), in));
           this->any_.replace (unk);
@@ -922,7 +917,7 @@ TAO_DynCommon::get_abstract ()
       CORBA::AbstractBase_var retval;
       TAO::Any_Impl *any_impl = this->any_.impl ();
 
-      if (any_impl == 0)
+      if (any_impl == nullptr)
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }
@@ -1151,6 +1146,10 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
       TAO::DynAnyFlagUtils<TAO_DynEnum_i>::set_flag_t (component,
                                                        destroying);
       break;
+    case CORBA::tk_fixed:
+      TAO::DynAnyFlagUtils<TAO_DynFixed_i>::set_flag_t (component,
+                                                        destroying);
+      break;
     case CORBA::tk_sequence:
       if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
         {
@@ -1179,8 +1178,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
       TAO::DynAnyFlagUtils<TAO_DynValueBox_i>::set_flag_t (component,
                                                            destroying);
       break;
-    case CORBA::tk_fixed:
-      throw ::CORBA::NO_IMPLEMENT ();
     default:
       TAO::DynAnyFlagUtils<TAO_DynAny_i>::set_flag_t (component,
                                                       destroying);

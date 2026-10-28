@@ -60,9 +60,9 @@ class TAO_PortableServer_Export TAO_ServantBase
 {
 public:
   /// Useful for template programming.
-  typedef CORBA::Object     _stub_type;
-  typedef CORBA::Object_ptr _stub_ptr_type;
-  typedef CORBA::Object_var _stub_var_type;
+  using _stub_type = CORBA::Object;
+  using _stub_ptr_type = CORBA::Object_ptr;
+  using _stub_var_type = CORBA::Object_var;
 
   /// Destructor.
   virtual ~TAO_ServantBase () = default;
@@ -202,7 +202,7 @@ protected:
 
 protected:
   /// Reference counter.
-  std::atomic<uint32_t> ref_count_;
+  std::atomic<uint32_t> ref_count_ {1};
 
   /// The operation table for this servant.  It is initialized by the
   /// most derived class.
@@ -218,7 +218,7 @@ public:
 
 namespace PortableServer
 {
-  typedef Servant_var<TAO_ServantBase> ServantBase_var;
+  using ServantBase_var = Servant_var<TAO_ServantBase>;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

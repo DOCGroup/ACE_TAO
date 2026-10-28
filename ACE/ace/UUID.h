@@ -40,7 +40,7 @@ namespace ACE_Utils
     static constexpr int NODE_ID_SIZE = 6;
 
     /// Type definition of the node.
-    typedef u_char Node_ID[NODE_ID_SIZE];
+    using Node_ID = u_char[NODE_ID_SIZE];
 
     /// Get the node id
     Node_ID & node_ID ();

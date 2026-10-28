@@ -13,8 +13,6 @@
 
 static const char prefix_[] = "sciop";
 
-const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char
@@ -32,8 +30,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (const ACE_INET_Addr &addr,
                  object_key,
                  version),
     endpoint_ (addr,
-               orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    count_ (1)
+               orb_core->orb_params ()->use_dotted_decimal_addresses ())
 {
 }
 
@@ -47,8 +44,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (const char* host,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (host, port, addr),
-    count_ (1)
+    endpoint_ (host, port, addr)
 {
 }
 
@@ -56,8 +52,7 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SCIOP_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_SCIOP_MAJOR, TAO_DEF_SCIOP_MINOR)),
-    endpoint_ (),
-    count_ (1)
+    endpoint_ ()
 {
 }
 
@@ -65,10 +60,10 @@ TAO_SCIOP_Profile::~TAO_SCIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = 0;
+  TAO_Endpoint *tmp = nullptr;
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
-       next != 0;
+       next != nullptr;
        next = tmp)
     {
       tmp = next->next ();
@@ -98,7 +93,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
   for (int i=endpointSeq.length() - 1; i > 0 ; i--)
     {
-      TAO_SCIOP_Endpoint *endpoint = 0;
+      TAO_SCIOP_Endpoint *endpoint = nullptr;
       ACE_NEW_RETURN (endpoint,
                       TAO_SCIOP_Endpoint (endpointSeq[i],
                                           this->endpoint_.port_,
@@ -138,7 +133,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
 
   const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
-  if (okd == 0 || okd == ior)
+  if (okd == nullptr || okd == ior)
     {
       // No object key delimiter or no hostname specified.
       throw ::CORBA::INV_OBJREF (
@@ -162,7 +157,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
                      EINVAL),
                    CORBA::COMPLETED_NO);
     }
-  else if (cp_pos != 0)
+  else if (cp_pos != nullptr)
     {
       // A port number or port name was specified.
       CORBA::ULong length_port = okd - cp_pos - 1;
@@ -236,13 +231,13 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   const TAO_SCIOP_Profile *op =
     dynamic_cast<const TAO_SCIOP_Profile *> (other_profile);
 
-  if (op == 0)
+  if (op == nullptr)
     return false;
 
   // Check endpoints equivalence.
   const TAO_SCIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_SCIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
@@ -260,7 +255,7 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max)
   // Get the hash value for all endpoints.
   CORBA::ULong hashval = 0;
   for (TAO_SCIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       hashval += endp->hash ();
@@ -492,7 +487,7 @@ TAO_SCIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_SCIOP_Endpoint *endpoint = 0;
+          TAO_SCIOP_Endpoint *endpoint = nullptr;
           ACE_NEW_RETURN (endpoint,
                           TAO_SCIOP_Endpoint (endpoints[i].host,
                                              endpoints[i].port,

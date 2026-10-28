@@ -19,18 +19,18 @@ template<typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
 class bounded_array_sequence
 {
 public:
-  typedef T_array * element_type;
-  typedef T_array value_type;
-  typedef T_array * T_slice_ptr;
-  typedef T_slice_ptr * const_value_type;
-  typedef value_type & subscript_type;
-  typedef value_type const & const_subscript_type;
-  typedef ::CORBA::ULong size_type;
+  using element_type = T_array *;
+  using value_type = T_array;
+  using T_slice_ptr = T_array *;
+  using const_value_type = T_slice_ptr *;
+  using subscript_type = value_type &;
+  using const_subscript_type = value_type const &;
+  using size_type = ::CORBA::ULong;
 
-  typedef details::bounded_array_allocation_traits<value_type,MAX,true> allocation_traits;
-  typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
-  typedef details::array_traits <forany> element_traits;
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
+  using allocation_traits = details::bounded_array_allocation_traits<value_type, MAX, true>;
+  using forany = TAO_Array_Forany_T<T_array, T_slice, T_tag>;
+  using element_traits = details::array_traits<forany>;
+  using implementation_type = details::generic_sequence<value_type, allocation_traits, element_traits>;
 
   inline bounded_array_sequence()
     : impl_()
@@ -94,9 +94,9 @@ namespace TAO
 {
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
   bool demarshal_sequence (stream &strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> &target) {
-    typedef typename TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> sequence;
-    typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
-    typedef TAO::Array_Traits<forany> array_traits;
+    using sequence = TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX>;
+    using forany = TAO_Array_Forany_T<T_array, T_slice, T_tag>;
+    using array_traits = TAO::Array_Traits<forany>;
 
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length))
@@ -130,9 +130,9 @@ namespace TAO
 
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & source) {
-    typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
-    typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
-    typedef TAO::Array_Traits<forany> array_traits;
+    using forany = TAO_Array_Forany_T<T_array, T_slice, T_tag>;
+    using fixed_array = TAO_FixedArray_Var_T<T_array, T_slice, T_tag>;
+    using array_traits = TAO::Array_Traits<forany>;
     ::CORBA::ULong const length = source.length ();
     if (length > source.maximum () || !(strm << length)) {
       return false;

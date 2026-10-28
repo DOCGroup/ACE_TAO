@@ -6,7 +6,7 @@
 #include "tao/SystemException.h"
 
 bool
-test_string_to_object (CORBA::ORB_ptr orb, const char* ior, CORBA::ULong minor)
+test_string_to_object (CORBA::ORB_ptr orb, char const *ior, CORBA::ULong minor)
 {
   bool succeed = false;
   try
@@ -16,7 +16,7 @@ test_string_to_object (CORBA::ORB_ptr orb, const char* ior, CORBA::ULong minor)
     }
   catch (const CORBA::BAD_PARAM& ex)
     {
-      if ((ex.minor() & 0xFFFU) == minor)
+      if ((ex.minor () & 0xFFFU) == minor)
         {
           succeed = true;
         }
@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s successful\n",
-                  argv[0]));
+                  argv [0]));
     }
   catch (const CORBA::Exception& ex)
     {

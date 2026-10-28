@@ -54,15 +54,15 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #if defined (ACE_LACKS_FORK)
 #  if defined (ACE_HAS_THREADS)
 #    include "ace/Thread_Mutex.h"
-     typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Thread_Mutex;
 #  else
 #    include "ace/Null_Mutex.h"
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Null_Mutex;
 #  endif /* ACE_HAS_THREADS */
 #else
 #  if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
 #    include "ace/Null_Mutex.h"
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Null_Mutex;
 #  else
 #    include "ace/Process_Mutex.h"
      using ACCEPTOR_LOCKING = ACE_Process_Mutex;

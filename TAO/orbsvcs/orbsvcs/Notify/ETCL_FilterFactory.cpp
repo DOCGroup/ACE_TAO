@@ -20,7 +20,7 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mtx_);
   FILTERMAP::ITERATOR iterator (this->filters_);
 
-  for (FILTERMAP::ENTRY *entry = 0;
+  for (FILTERMAP::ENTRY *entry = nullptr;
     iterator.next (entry) != 0;
     iterator.advance ())
   {
@@ -85,7 +85,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
     throw CosNotifyFilter::InvalidGrammar ();
 
   TAO_Notify_Object::ID id = filter_ids_.id ();
-  TAO_Notify_ETCL_Filter* filter = 0;
+  TAO_Notify_ETCL_Filter* filter = nullptr;
   return this->create_filter (constraint_grammar, id, filter);
 }
 
@@ -156,8 +156,8 @@ TAO_Notify_ETCL_FilterFactory::remove_filter (
   FILTERMAP::ITERATOR iterator (this->filters_);
 
   bool found = false;
-  TAO_Notify_ETCL_Filter* filter_servant = 0;
-  FILTERMAP::ENTRY *entry = 0;
+  TAO_Notify_ETCL_Filter* filter_servant = nullptr;
+  FILTERMAP::ENTRY *entry = nullptr;
   while ( !found && iterator.next (entry) != 0 ) {
     if (svt == entry->int_id_) {
       filter_servant = entry->int_id_;
@@ -195,7 +195,7 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& save
     int index = 0;
     FILTERMAP::ITERATOR iterator (this->filters_);
 
-    for (FILTERMAP::ENTRY *entry = 0;
+    for (FILTERMAP::ENTRY *entry = nullptr;
       iterator.next (entry) != 0;
       iterator.advance (), ++index)
     {
@@ -216,7 +216,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
   TAO_Notify::Topology_Object* result = this;
   if (type == "filter")
   {
-    const char* value = 0;
+    const char* value = nullptr;
     if (attrs.find ("FilterId", value))
     {
       TAO_Notify_Object::ID const id = ACE_OS::atoi (value);
@@ -228,7 +228,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
 
       filter_ids_.set_last_used (id);
 
-      TAO_Notify_ETCL_Filter* filter = 0;
+      TAO_Notify_ETCL_Filter* filter = nullptr;
       this->create_filter (0, id, filter);
       filter->load_attrs (attrs);
 
@@ -281,7 +281,7 @@ TAO_Notify_ETCL_FilterFactory::find_filter (const TAO_Notify_Object::ID& id)
                     this->mtx_,
                     CosNotifyFilter::Filter::_nil ());
 
-  TAO_Notify_ETCL_Filter* filter = 0;
+  TAO_Notify_ETCL_Filter* filter = nullptr;
   if (filters_.find (id, filter) == -1)
     return CosNotifyFilter::Filter::_nil ();
   else
@@ -306,7 +306,7 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
 
   FILTERMAP::ITERATOR iterator (this->filters_);
 
-  for (FILTERMAP::ENTRY *entry = 0;
+  for (FILTERMAP::ENTRY *entry = nullptr;
     iterator.next (entry) != 0;
     iterator.advance ())
   {

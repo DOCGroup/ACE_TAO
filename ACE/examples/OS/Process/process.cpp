@@ -39,8 +39,8 @@ const ACE_TCHAR *SLEEP_PATH = ACE_TEXT ("sleep");
 #endif /* ACE_WIN32 */
 
 static const ACE_TCHAR *executable = EXEC_NAME;
-static ACE_TCHAR *print_file = 0;
-static ACE_TCHAR *environment_string = 0;
+static ACE_TCHAR *print_file = nullptr;
+static ACE_TCHAR *environment_string = nullptr;
 static int get_env = 0;
 static int run_date = 0;
 static int run_ls = 0;
@@ -488,7 +488,7 @@ tokenize (ACE_TCHAR *buffer)
   for (const ACE_TCHAR *temp; ;)
     {
       temp = parser.next ();
-      if (temp == 0)
+      if (temp == nullptr)
         break;
       ACE_DEBUG ((LM_DEBUG, temp));
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
@@ -538,8 +538,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "ACE_PROCESS_TEST = %C.\n"
                   "ACE_PROCESS_TEST2 = %C.\n",
-                  value == 0 ? "no value" : value,
-                  value2 == 0 ? "no value" : value2));
+                  value == nullptr ? "no value" : value,
+                  value2 == nullptr ? "no value" : value2));
     }
 
   if (run_ls)
@@ -555,7 +555,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     win32_spawn_environment_process ();
 #endif /* ACE_WIN32 */
 
-  if (print_file != 0)
+  if (print_file != nullptr)
     test_more ();
 
   ACE_TCHAR buf1[30];

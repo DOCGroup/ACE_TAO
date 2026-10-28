@@ -14,9 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::TypeCode::~TypeCode ()
-{
-}
+CORBA::TypeCode::~TypeCode () = default;
 
 bool
 CORBA::TypeCode::tao_marshal_kind (TAO_OutputCDR & cdr) const
@@ -220,7 +218,7 @@ CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::Bounds::_alloc ()
 {
-  CORBA::Exception *retval = 0;
+  CORBA::Exception *retval = nullptr;
   ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, 0);
   return retval;
 }
@@ -274,7 +272,7 @@ CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::BadKind::_tao_duplicate () const
 {
-  CORBA::Exception *result = 0;
+  CORBA::Exception *result = nullptr;
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::BadKind (*this),
                   0);
@@ -316,7 +314,7 @@ TAO::TypeCode::marshal (TAO_OutputCDR & cdr,
   // marshaled.
 
   return
-    tc != 0
+    tc != nullptr
     && tc->tao_marshal_kind (cdr)
     && tc->tao_marshal (cdr, aligned_offset (offset) + sizeof (CORBA::ULong));
 }

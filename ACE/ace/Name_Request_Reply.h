@@ -77,7 +77,7 @@ public:
                     const ACE_UINT32 value_length,
                     const char type[],
                     const ACE_UINT32 type_length,
-                    ACE_Time_Value *timeout = 0); // Max time willing to wait for request.
+                    ACE_Time_Value *timeout = nullptr); // Max time willing to wait for request.
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a request is sent.

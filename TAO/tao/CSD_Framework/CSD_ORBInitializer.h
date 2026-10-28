@@ -39,9 +39,17 @@ class TAO_CSD_FW_Export TAO_CSD_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  TAO_CSD_ORBInitializer () = default;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+private:
+  TAO_CSD_ORBInitializer (TAO_CSD_ORBInitializer const &) = delete;
+  TAO_CSD_ORBInitializer &operator= (TAO_CSD_ORBInitializer const &) = delete;
+  TAO_CSD_ORBInitializer (TAO_CSD_ORBInitializer &&) = delete;
+  TAO_CSD_ORBInitializer &operator= (TAO_CSD_ORBInitializer &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

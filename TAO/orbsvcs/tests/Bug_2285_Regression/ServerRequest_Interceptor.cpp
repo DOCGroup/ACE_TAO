@@ -12,14 +12,12 @@
 #include "Hello.h"
 
 TAO249_ServerRequest_Interceptor::TAO249_ServerRequest_Interceptor ()
-: orb_ (0),
-  client_id_ (0)
+  : orb_ (nullptr)
+  , client_id_ (0)
 {
 }
 
-TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor ()
-{
-}
+TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor () = default;
 
 
 char *

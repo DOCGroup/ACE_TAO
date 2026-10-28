@@ -15,13 +15,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_POA_Loader::TAO_DTP_POA_Loader ()
-{
-}
+TAO_DTP_POA_Loader::~TAO_DTP_POA_Loader () = default;
 
-TAO_DTP_POA_Loader::~TAO_DTP_POA_Loader ()
-{
-}
+TAO_DTP_POA_Loader::TAO_DTP_POA_Loader () = default;
 
 int
 TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
@@ -45,7 +41,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
      thread pool settings are associated with each POA
   */
 
-  if (repo == 0)
+  if (repo == nullptr)
     {
       ACE_Service_Config::process_directive(
         ace_svc_desc_TAO_CSD_Strategy_Repository);
@@ -53,7 +49,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
         ("TAO_CSD_Strategy_Repository");
     }
 
-  if (repo == 0)
+  if (repo == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -119,11 +115,11 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 {
   ACE_CString poa_name;
   ACE_CString config_name;
-  TAO_DTP_POA_Strategy * strategy_container = 0;
+  TAO_DTP_POA_Strategy *strategy_container = nullptr;
 
   ACE_TCHAR *sep = ACE_OS::strchr (map, ':');
 
-  if (sep == 0)
+  if (sep == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -148,7 +144,7 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
                                       false), -1);
 
   sep = ACE_OS::strchr (map, ',');
-  while (sep != 0)
+  while (sep != nullptr)
     {
       *sep = 0;
       poa_name = ACE_TEXT_ALWAYS_CHAR (map);

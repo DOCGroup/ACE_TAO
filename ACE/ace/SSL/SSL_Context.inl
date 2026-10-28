@@ -32,12 +32,12 @@ ACE_SSL_Data_File::type () const
 ACE_INLINE void
 ACE_SSL_Context::check_context ()
 {
-  if (this->context_ == 0)
+  if (this->context_ == nullptr)
     {
       this->set_mode ();
     }
 
-  if (this->context_ != 0)
+  if (this->context_ != nullptr)
     {
       ::SSL_CTX_set_verify (this->context_, this->default_verify_mode (),
                             this->default_verify_callback ());

@@ -39,10 +39,10 @@ public:
            TimeBase::TimeT upper);
 
   /// Destructor.
-  ~TAO_TIO ();
+  ~TAO_TIO () override;
 
   /// This is the get method for the attribute time interval.
-  virtual TimeBase::IntervalT  time_interval ();
+  TimeBase::IntervalT time_interval () override;
 
   /**
    * This operation returns a value of type OverlapType depending on
@@ -52,8 +52,8 @@ public:
    * otherwise the out parameter contains the gap between the two
    * intervals.
    */
-  virtual CosTime::OverlapType spans (CosTime::UTO_ptr time,
-                                      CosTime::TIO_out overlap);
+  CosTime::OverlapType spans (CosTime::UTO_ptr time,
+                              CosTime::TIO_out overlap) override;
 
   /**
    * This operation returns a value of type OverlapType depending on
@@ -62,17 +62,22 @@ public:
    * parameter overlap contains the overlap interval, otherwise the
    * out parameter contains the gap between the two intervals.
    */
-  virtual CosTime::OverlapType overlaps (CosTime::TIO_ptr interval,
-                                         CosTime::TIO_out overlap);
+  CosTime::OverlapType overlaps (CosTime::TIO_ptr interval,
+                                 CosTime::TIO_out overlap) override;
 
   /**
    * Returns a UTO in which the inaccuracy interval is equal to the
    * time interval in the TIO and time value is the midpoint of the
    * interval.
    */
-  virtual CosTime::UTO_ptr time ();
+  CosTime::UTO_ptr time () override;
 
 private:
+  TAO_TIO (TAO_TIO const &) = delete;
+  TAO_TIO (TAO_TIO &&) = delete;
+  TAO_TIO &operator= (TAO_TIO const &) = delete;
+  TAO_TIO &operator= (TAO_TIO &&) = delete;
+
   /// This attribute returns an IntervalT structure with the values of
   /// its fields filled in with the corresponding values from the TIO.
   TimeBase::IntervalT attr_time_interval;

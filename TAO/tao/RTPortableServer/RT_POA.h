@@ -221,6 +221,12 @@ protected:
   int lane_required (TAO_Thread_Lane *lane,
                      TAO_PriorityBandedConnectionPolicy *priority_bands);
 
+private:
+  TAO_RT_POA (TAO_RT_POA const &) = delete;
+  TAO_RT_POA &operator= (TAO_RT_POA const &) = delete;
+  TAO_RT_POA (TAO_RT_POA &&) = delete;
+  TAO_RT_POA &operator= (TAO_RT_POA &&) = delete;
+
   TAO_Thread_Pool *thread_pool_ {};
 };
 

@@ -38,6 +38,11 @@ public:
   /// Destructor
   ~Ptest ();
 
+  Ptest (Ptest const&) = delete;
+  Ptest (Ptest&&) = delete;
+  Ptest& operator= (Ptest const&) = delete;
+  Ptest& operator= (Ptest&&) = delete;
+
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);

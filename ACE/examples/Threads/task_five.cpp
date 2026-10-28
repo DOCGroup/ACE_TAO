@@ -16,8 +16,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-static const int DEFAULT_TASKS = 100;
-static const int DEFAULT_ITERATIONS = 10;
+static constexpr int DEFAULT_TASKS = 100;
+static constexpr int DEFAULT_ITERATIONS = 10;
 
 // Default stack size
 static size_t default_stack_size =
@@ -33,12 +33,12 @@ class Test_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   Test_Task (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
-  ~Test_Task () {};
+  ~Test_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void * = 0);
-  int svc ();
-  int close (u_long);
+  int open (void * = nullptr) override;
+  int svc () override;
+  int close (u_long) override;
 
   ///FUZZ: enable check_for_lack_ACE_OS
   int shutdown ();
@@ -59,9 +59,9 @@ Test_Task::open (void *)
                          0,
                          ACE_DEFAULT_THREAD_PRIORITY,
                          -1,
-                         0,
-                         0,
-                         0,
+                         nullptr,
+                         nullptr,
+                         nullptr,
                          &default_stack_size);
 }
 

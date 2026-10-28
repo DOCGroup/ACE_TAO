@@ -25,17 +25,17 @@ class UpdateableHandler : public POA_FTRT::AMI_UpdateableHandler
 {
 public:
   UpdateableHandler(AMI_Primary_Replication_Strategy* strategy);
-  ~UpdateableHandler();
+  ~UpdateableHandler() override = default;
 
   FTRT::AMI_UpdateableHandler_ptr activate(
     Update_Manager* mgr, int id,
     PortableServer::ObjectId& oid);
-  typedef void (Update_Manager::*Handler)(int);
+  using Handler = void (Update_Manager::*) (int);
 
   void dispatch(Handler handler) ;
 
-  virtual void set_update ();
-  virtual void set_update_excep (::Messaging::ExceptionHolder * excep_holder);
+  void set_update () override;
+  void set_update_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
 private:
   AMI_Primary_Replication_Strategy* strategy_;

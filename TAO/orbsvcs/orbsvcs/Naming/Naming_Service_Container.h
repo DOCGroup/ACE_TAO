@@ -130,8 +130,8 @@ public:
   friend class ACE_Unbounded_List_Iterator<T>;
 
   // Trait definition.
-  typedef ACE_Unbounded_List_Iterator<T> ITERATOR;
-  typedef ACE_Unbounded_List_Iterator<T> iterator;
+  using ITERATOR = ACE_Unbounded_List_Iterator<T>;
+  using iterator = ACE_Unbounded_List_Iterator<T>;
 
   /// Constructor.  Use user specified allocation strategy
   /// if specified.

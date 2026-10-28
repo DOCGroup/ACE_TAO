@@ -70,7 +70,7 @@ class ACE_Export ACE_Str_Buf : public strbuf
 {
 public:
   /// Constructor.
-  ACE_Str_Buf (void *b = 0, int l = 0, int max = 0);
+  ACE_Str_Buf (void *b = nullptr, int l = 0, int max = 0);
 
   /// Constructor.
   ACE_Str_Buf (strbuf &);

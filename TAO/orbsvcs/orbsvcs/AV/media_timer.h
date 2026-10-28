@@ -49,12 +49,16 @@ class MediaTimer
  public:
   MediaTimer();
   virtual ~MediaTimer();
+  MediaTimer (MediaTimer const &) = delete;
+  MediaTimer &operator= (MediaTimer const &) = delete;
+  MediaTimer (MediaTimer &&) = delete;
+  MediaTimer &operator= (MediaTimer &&) = delete;
   static inline MediaTimer* instance() { return (instance_); }
   virtual time_t media_ts();
   virtual time_t ref_ts();
   inline ACE_UINT32 offset() const { return (offset_); }
  private:
-  static MediaTimer* instance_;
+  static MediaTimer *instance_;
  protected:
   ACE_UINT32 offset_;   /* random offset */
 };

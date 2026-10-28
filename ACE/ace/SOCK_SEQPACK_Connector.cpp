@@ -143,7 +143,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       local_sap.get_addresses(local_inet_addrs, num_addresses);
 
 #if defined (ACE_HAS_LKSCTP)
-      sockaddr_in *local_sockaddr = 0;
+      sockaddr_in *local_sockaddr = nullptr;
       sockaddr_in portst;
       int sn = sizeof(sockaddr);
 

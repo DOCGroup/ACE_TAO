@@ -32,7 +32,7 @@ TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val)
   if ((val >>= value) == 0)
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_FT_Request_Duration_Policy *tmp = 0;
+  TAO_FT_Request_Duration_Policy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_FT_Request_Duration_Policy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -44,7 +44,7 @@ TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val)
 TAO_FT_Request_Duration_Policy *
 TAO_FT_Request_Duration_Policy::clone () const
 {
-  TAO_FT_Request_Duration_Policy *copy = 0;
+  TAO_FT_Request_Duration_Policy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_FT_Request_Duration_Policy (*this),
                   0);
@@ -54,7 +54,7 @@ TAO_FT_Request_Duration_Policy::clone () const
 CORBA::Policy_ptr
 TAO_FT_Request_Duration_Policy::copy ()
 {
-  TAO_FT_Request_Duration_Policy* tmp = 0;
+  TAO_FT_Request_Duration_Policy* tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Request_Duration_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -106,7 +106,7 @@ TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val)
   if ((val >>= value) == 0)
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_FT_Heart_Beat_Policy *tmp = 0;
+  TAO_FT_Heart_Beat_Policy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_FT_Heart_Beat_Policy (value->heartbeat,
                                               value->heartbeat_interval,
@@ -128,7 +128,7 @@ TAO_FT_Heart_Beat_Policy::policy_type ()
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::copy ()
 {
-  TAO_FT_Heart_Beat_Policy * tmp = 0;
+  TAO_FT_Heart_Beat_Policy * tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -139,7 +139,7 @@ TAO_FT_Heart_Beat_Policy::copy ()
 TAO_FT_Heart_Beat_Policy *
 TAO_FT_Heart_Beat_Policy::clone () const
 {
-  TAO_FT_Heart_Beat_Policy *copy = 0;
+  TAO_FT_Heart_Beat_Policy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_FT_Heart_Beat_Policy (*this),
                   0);

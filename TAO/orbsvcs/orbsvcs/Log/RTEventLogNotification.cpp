@@ -21,9 +21,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTEventLogNotification::TAO_RTEventLogNotification (
-  RtecEventChannelAdmin::EventChannel_ptr ec)
+  RtecEventChannelAdmin::EventChannel_ptr event_channel)
   : TAO_LogNotification (),
-    event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
+    event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (event_channel))
 {
   obtainProxyConsumer ();
 }
@@ -63,7 +63,7 @@ TAO_RTEventLogNotification::obtainProxyConsumer ()
 }
 
 void
-TAO_RTEventLogNotification::send_notification (const CORBA::Any& any)
+TAO_RTEventLogNotification::send_notification (CORBA::Any const & any)
 {
   RtecEventComm::EventSet event (1);
   event.length (1);

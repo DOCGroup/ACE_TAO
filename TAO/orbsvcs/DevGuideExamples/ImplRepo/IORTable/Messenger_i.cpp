@@ -2,9 +2,9 @@
 #include <iostream>
 
 
-CORBA::Boolean Messenger_i::send_message(
-  const char * user_name,
-  const char * subject,
+CORBA::Boolean Messenger_i::send_message (
+  char const * user_name,
+  char const * subject,
   char *& message)
 {
   std::cout << "Message from: " << user_name << std::endl

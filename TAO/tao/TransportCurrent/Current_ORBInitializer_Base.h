@@ -38,18 +38,20 @@ namespace TAO
     {
     public:
       Current_ORBInitializer_Base (const ACE_TCHAR* id);
-      virtual ~Current_ORBInitializer_Base ();
+      ~Current_ORBInitializer_Base () override;
 
-      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr);
+      void pre_init (PortableInterceptor::ORBInitInfo_ptr) override;
 
-       virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+      void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
     protected:
         virtual TAO::Transport::Current_ptr
         make_current_instance (TAO_ORB_Core* core, size_t tss_slot_id) = 0;
     protected:
-      const ACE_TString id_;
-      Current_ORBInitializer_Base (const Current_ORBInitializer_Base &) = delete;
-      Current_ORBInitializer_Base &operator = (const Current_ORBInitializer_Base &) = delete;
+      ACE_TString const id_;
+      Current_ORBInitializer_Base (Current_ORBInitializer_Base const &) = delete;
+      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base const &) = delete;
+      Current_ORBInitializer_Base (Current_ORBInitializer_Base &&) = delete;
+      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base &&) = delete;
     };
   } /* namespace Transport */
 

@@ -25,9 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  Invocation_Adapter::~Invocation_Adapter ()
-  {
-  }
+  Invocation_Adapter::~Invocation_Adapter () = default;
 
   void
   Invocation_Adapter::invoke (const TAO::Exception_Data *ex_data,

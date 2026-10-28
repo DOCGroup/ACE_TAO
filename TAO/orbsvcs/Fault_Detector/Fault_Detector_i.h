@@ -117,9 +117,11 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    Fault_Detector_i ();
-    Fault_Detector_i (Fault_Detector_i & rhs);
-    Fault_Detector_i & operator = (const Fault_Detector_i & rhs);
+    Fault_Detector_i () = delete;
+    Fault_Detector_i (Fault_Detector_i const &) = delete;
+    Fault_Detector_i (Fault_Detector_i &&) = delete;
+    Fault_Detector_i & operator= (Fault_Detector_i const &) = delete;
+    Fault_Detector_i & operator= (Fault_Detector_i &&) = delete;
 
     ///////////////
     // Static data

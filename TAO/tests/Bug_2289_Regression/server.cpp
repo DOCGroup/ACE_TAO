@@ -5,8 +5,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/IORTable/IORTable.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
-const ACE_TCHAR *client_ior = ACE_TEXT("file://client.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("server.ior");
+ACE_TCHAR const *client_ior = ACE_TEXT("file://client.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -46,7 +46,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -62,12 +62,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      MyInterfaceImpl *test_impl = 0;
+      MyInterfaceImpl *test_impl = nullptr;
       ACE_NEW_RETURN (test_impl,
                       MyInterfaceImpl (orb.in ()),
                       1);
 
-      PortableServer::ServantBase_var owner_transfer(test_impl);
+      PortableServer::ServantBase_var owner_transfer (test_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (test_impl);
@@ -81,8 +81,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (test_ref.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file != 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file != nullptr)
         {
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);

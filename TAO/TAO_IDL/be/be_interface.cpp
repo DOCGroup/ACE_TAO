@@ -300,9 +300,9 @@ be_interface::compute_coll_names (int type,
       this->local_coll_name_ = nullptr;
     }
 
-  static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
-                                           "_tao_direct_collocated_"};
-  static const char *poa = "POA_";
+  static constexpr char const *collocated_names[] = {"_tao_thru_poa_collocated_",
+                                                      "_tao_direct_collocated_"};
+  static constexpr char const *poa = "POA_";
 
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"
@@ -767,8 +767,8 @@ be_interface::gen_var_out_seq_decls ()
     {
       *os << be_nl_2
           << "class AMI_" << lname << "Handler;" << be_nl
-          << "typedef AMI_" << lname << "Handler *AMI_"
-          << lname << "Handler_ptr;";
+          << "using AMI_" << lname << "Handler_ptr = AMI_"
+          << lname << "Handler *;";
      }
 
   if (be_global->ami4ccm_call_back ()
@@ -776,8 +776,8 @@ be_interface::gen_var_out_seq_decls ()
     {
       *os << be_nl_2
           << "class AMI4CCM_" << lname << "Handler;" << be_nl
-          << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
-          << lname << "Handler_ptr;";
+          << "using AMI4CCM_" << lname << "Handler_ptr = AMI4CCM_"
+          << lname << "Handler *;";
     }
 
   *os << be_nl_2

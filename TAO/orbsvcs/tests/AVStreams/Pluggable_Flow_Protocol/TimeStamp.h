@@ -16,21 +16,21 @@ class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
   TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
                              TAO_AV_Transport *transport);
 
-  virtual int handle_input ();
+  int handle_input () override;
 
   /// send a data frame.
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
+  int send_frame (ACE_Message_Block *frame,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (iovec const* iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
+  int send_frame (iovec const *iov,
+                  int iovcnt,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const char*buf,
-                          size_t len);
+  int send_frame (const char *buf,
+                  size_t len) override;
 
   /// end the stream.
-  virtual int destroy ();
+  int destroy () override;
 
  private:
   /// Pre-allocated memory to receive the data...
@@ -42,14 +42,14 @@ class TAO_TS_Export TimeStamp_Protocol_Factory : public TAO_AV_Flow_Protocol_Fac
  public:
   /// Initialization hook.
   TimeStamp_Protocol_Factory ();
-  virtual ~TimeStamp_Protocol_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *flow_string);
+  ~TimeStamp_Protocol_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int match_protocol (const char *flow_string) override;
   // Note : Some platforms still don't support Covariant returns
-  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                        TAO_Base_StreamEndPoint *endpoint,
-                                                        TAO_AV_Flow_Handler *handler,
-                                                        TAO_AV_Transport *transport);
+  TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                 TAO_Base_StreamEndPoint *endpoint,
+                                                 TAO_AV_Flow_Handler *handler,
+                                                 TAO_AV_Transport *transport) override;
 };
 
 ACE_STATIC_SVC_DECLARE (TimeStamp_Protocol_Factory)

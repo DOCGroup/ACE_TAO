@@ -12,27 +12,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_Task::~TAO_DTP_Task () = default;
+
 TAO_DTP_Task::TAO_DTP_Task ()
   : aw_lock_ (),
     queue_lock_ (),
     work_lock_ (),
     work_available_ (this->work_lock_),
-    active_workers_ (this->aw_lock_),
-    active_count_ (0),
-    accepting_requests_ (false),
-    shutdown_ (false),
-    check_queue_ (false),
-    opened_ (false),
-    num_queue_requests_ ((size_t)0),
-    init_pool_threads_ ((size_t)0),
-    min_pool_threads_ ((size_t)0),
-    max_pool_threads_ ((size_t)0),
-    max_request_queue_depth_ ((size_t)0),
-    thread_stack_size_ ((size_t)0)
-{
-}
-
-TAO_DTP_Task::~TAO_DTP_Task()
+    active_workers_ (this->aw_lock_)
 {
 }
 
@@ -126,7 +113,7 @@ TAO_DTP_Task::get_thread_idle_time ()
 }
 
 int
-TAO_DTP_Task::open (void* /* args */)
+TAO_DTP_Task::open (void * /* args */)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->aw_lock_, -1);
   // We can assume that we are in the proper state to handle this open()
@@ -400,7 +387,7 @@ TAO_DTP_Task::svc ()
                               0,
                               0,
                               0,
-                              this->thread_stack_size_ == 0 ? 0 :
+                              this->thread_stack_size_ == 0 ? nullptr :
                               &this->thread_stack_size_) != 0)
             {
               TAOLIB_ERROR ((LM_ERROR,
@@ -518,7 +505,7 @@ TAO_DTP_Task::set_max_request_queue_depth (size_t queue_depth)
 void
 TAO_DTP_Task::cancel_servant (PortableServer::Servant servant)
 {
-  if (servant == 0)
+  if (servant == nullptr)
     {
       if (TAO_debug_level > 0)
         {

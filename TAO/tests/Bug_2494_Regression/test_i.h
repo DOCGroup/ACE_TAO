@@ -12,13 +12,18 @@ class Simple_Server_i : public POA_Simple_Server
   //   Implements the Simple_Server interface in test.idl
   //
 public:
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
   // ctor
 
-  // = The Simple_Server methods.
-  char *test_method (const char *x);
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  void shutdown ();
+  // = The Simple_Server methods.
+  char *test_method (char const *x) override;
+
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

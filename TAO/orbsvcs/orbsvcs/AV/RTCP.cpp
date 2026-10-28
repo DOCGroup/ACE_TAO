@@ -147,12 +147,12 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
 
             for (int i=0; i<length; i++)
               {
-                RTCP_Channel_In *c = 0;
+                RTCP_Channel_In *c = nullptr;
 
                 // remove the channel from the list
                 this->inputs_.unbind(ssrc_list[i], c);
 
-                if (c != 0)
+                if (c != nullptr)
                   delete c;
               }
 
@@ -334,9 +334,7 @@ TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
 {
 }
 
-TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory ()
-{
-}
+TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory () = default;
 
 int
 TAO_AV_RTCP_Flow_Factory::match_protocol (const char *flow_string)
@@ -360,14 +358,14 @@ TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry * /*entry*/,
                                                 TAO_AV_Flow_Handler *handler,
                                                 TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *client_cb = 0;
-  TAO_AV_RTCP_Callback *rtcp_cb = 0;
+  TAO_AV_Callback *client_cb = nullptr;
+  TAO_AV_RTCP_Callback *rtcp_cb = nullptr;
 
   // TODO: need to handle a client callback at some point
 //  endpoint->get_control_callback (entry->flowname (),
 //                                  client_cb);
 
-  TAO_AV_Protocol_Object *object = 0;
+  TAO_AV_Protocol_Object *object = nullptr;
   ACE_NEW_RETURN (object,
                   TAO_AV_RTCP_Object (client_cb,
                                       rtcp_cb,
@@ -431,15 +429,14 @@ TAO_AV_RTCP_Object::send_frame (const char*,
 TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
                                         TAO_AV_RTCP_Callback *&rtcp_cb,
                                         TAO_AV_Transport *transport)
-  :TAO_AV_Protocol_Object (&rtcp_cb_, transport)
+  : TAO_AV_Protocol_Object (&rtcp_cb_, transport)
+  , client_cb_ (client_cb)
+  , ssrc_ (0)
 {
   rtcp_cb = &this->rtcp_cb_;
-  this->client_cb_ = client_cb;
 }
 
-TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object ()
-{
-}
+TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object () = default;
 
 int
 TAO_AV_RTCP_Object::destroy ()
@@ -547,7 +544,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   ACE_CString value = "";
   ACE_CString note = "";
   unsigned char sdes_type = 0;
-  RTCP_BYE_Packet *bye_packet = 0;  // only used for bye
+  RTCP_BYE_Packet *bye_packet = nullptr;  // only used for bye
   ACE_UINT32 ssrc_list[1];          // only used for bye
 
   // get an iterator for the incoming channels.
@@ -555,9 +552,9 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   iter = this->inputs_.begin();
 
   // first send an SR/RR
-  RR_Block *blocks = 0;
-  RR_Block *b_iter = 0;
-  RR_Block *b_ptr = 0;
+  RR_Block *blocks = nullptr;
+  RR_Block *b_iter = nullptr;
+  RR_Block *b_ptr = nullptr;
 
   while (iter != this->inputs_.end() )
     {
@@ -688,7 +685,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   // create the message block
   char *cp_ptr;
   char *sdes_ptr;
-  char *bye_ptr = 0;
+  char *bye_ptr = nullptr;
   ACE_UINT16 cp_length;
   ACE_UINT16 sdes_length;
   ACE_UINT16 bye_length = 0;

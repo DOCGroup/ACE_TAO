@@ -5,12 +5,12 @@
 #include "ace/OS_NS_string.h"
 
 // Static Singleton instance.
-Options *Options::instance_ = 0;
+Options *Options::instance_ = nullptr;
 
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == 0)
+  if (Options::instance_ == nullptr)
     Options::instance_ = new Options ();
 
   return Options::instance_;

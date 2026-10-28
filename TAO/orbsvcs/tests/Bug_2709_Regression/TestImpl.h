@@ -7,10 +7,15 @@ class TestImpl
 public:
   TestImpl (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual void myMethod ();
+  TestImpl (TestImpl const &) = delete;
+  TestImpl (TestImpl &&) = delete;
+  TestImpl &operator= (TestImpl const &) = delete;
+  TestImpl &operator= (TestImpl &&) = delete;
 
-  virtual void shutdown ();
+  // = The skeleton methods
+  void myMethod () override;
+
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

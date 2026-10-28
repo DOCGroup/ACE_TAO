@@ -53,40 +53,40 @@ public:
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address () const;
+  ACE_INET_Addr const &address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints ();
+  ACE_INET_Addr const *endpoints ();
 
-  typedef TAO_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR> TAO_SCIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_SCIOP_Connection_Handler> TAO_SCIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_SCIOP_Connection_Handler> TAO_SCIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR> TAO_SCIOP_ACCEPT_STRATEGY;
+  using TAO_SCIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
+  using TAO_SCIOP_CREATION_STRATEGY = TAO_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
+  using TAO_SCIOP_CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
+  using TAO_SCIOP_ACCEPT_STRATEGY = TAO_Accept_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_ACCEPTOR>;
 
   /**
    * The TAO_Acceptor methods, check the documentation in
    * Transport_Acceptor.h for details.
    */
-  virtual int open (TAO_ORB_Core *orb_core,
+  int open (TAO_ORB_Core *orb_core,
+            ACE_Reactor *reactor,
+            int version_major,
+            int version_minor,
+            char const *address,
+            char const *options = nullptr) override;
+  int open_default (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
-                    const char *address,
-                    const char *options = 0);
-  virtual int open_default (TAO_ORB_Core *orb_core,
-                            ACE_Reactor *reactor,
-                            int version_major,
-                            int version_minor,
-                            const char *options = 0);
-  virtual int close ();
-  virtual int create_profile (const TAO::ObjectKey &object_key,
-                              TAO_MProfile &mprofile,
-                              CORBA::Short priority);
-  virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count ();
+                    char const *options = nullptr) override;
+  int close () override;
+  int create_profile (TAO::ObjectKey const &object_key,
+                      TAO_MProfile &mprofile,
+                      CORBA::Short priority) override;
+  int is_collocated (TAO_Endpoint const *endpoint) override;
+  CORBA::ULong endpoint_count () override;
 
-  virtual int object_key (IOP::TaggedProfile &profile,
-                          TAO::ObjectKey &key);
+  int object_key (IOP::TaggedProfile &profile,
+                  TAO::ObjectKey &key) override;
 
   /**
    * Set the host name for the given addr.
@@ -98,7 +98,7 @@ public:
   int hostname (TAO_ORB_Core *orb_core,
                 ACE_INET_Addr &addr,
                 char *&host,
-                const char *specified_hostname = 0);
+                char const *specified_hostname = nullptr);
 
   /**
    * Set the host name for the given address using the dotted decimal
@@ -113,7 +113,7 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_Multihomed_INET_Addr &addr,
+  virtual int open_i (ACE_Multihomed_INET_Addr const &addr,
                       ACE_Reactor *reactor);
 
   /**
@@ -129,7 +129,7 @@ protected:
    * Split the string into hostnames separated by the plus character
    * ('+').
    */
-  int parse_multiple_hostnames (const char *hostnames,
+  int parse_multiple_hostnames (char const *hostnames,
                                 ACE_Array<ACE_CString> &hostnames_out);
 
   /**
@@ -142,7 +142,7 @@ protected:
    *                port but can't because you're behind a firewall and don't
    *                want to permit passage on all ephemeral ports)
    */
-  virtual int parse_options (const char *options);
+  virtual int parse_options (char const *options);
 
   /// Obtain tcp properties that must be used by this acceptor, i.e.,
   /// initialize <tcp_properties_>.
@@ -150,27 +150,27 @@ protected:
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profile (const TAO::ObjectKey &object_key,
+  int create_new_profile (TAO::ObjectKey const &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
-  int create_shared_profile (const TAO::ObjectKey &object_key,
+  int create_shared_profile (TAO::ObjectKey const &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_;
+  ACE_INET_Addr *addrs_ {};
 
   /**
    * The number of ports over which the acceptor should search (starting
    * at the port specified in each element of addrs_) for an available
    * port.  This is specified via the "portspan=" option to the endpoint.
    */
-  u_short port_span_;
+  u_short port_span_ {1};
 
   /**
    * Cache the information about the endpoints serviced by this
@@ -179,16 +179,16 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_;
+  char **hosts_ {};
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).
-  CORBA::ULong endpoint_count_;
+  CORBA::ULong endpoint_count_ {};
 
   /**
    * Override the hostname used in the ORBEndPoint.
    */
-  char *hostname_in_ior_;
+  char *hostname_in_ior_ {};
 
   /**
    * The GIOP version for this endpoint
@@ -198,16 +198,21 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
 private:
+  TAO_SCIOP_Acceptor (TAO_SCIOP_Acceptor const &) = delete;
+  TAO_SCIOP_Acceptor &operator= (TAO_SCIOP_Acceptor const &) = delete;
+  TAO_SCIOP_Acceptor (TAO_SCIOP_Acceptor &&) = delete;
+  TAO_SCIOP_Acceptor &operator= (TAO_SCIOP_Acceptor &&) = delete;
+
   /// the concrete acceptor, as a pointer to it's base class.
   TAO_SCIOP_BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_SCIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_;
+  TAO_SCIOP_CREATION_STRATEGY *creation_strategy_ {};
+  TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
+  TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

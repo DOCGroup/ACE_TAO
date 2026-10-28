@@ -29,19 +29,21 @@ public:
   be_visitor_union (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union ();
+  ~be_visitor_union () override;
 
   /// visit union. We provide code for this method in the derived class
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
   // =visit operations on syntactically valid elements in our scope
 
   /// visit union_branch
-  virtual int visit_union_branch (be_union_branch *node);
+  int visit_union_branch (be_union_branch *node) override;
 
   enum BoolUnionBranch { BUB_NONE, BUB_UNCONDITIONAL, BUB_TRUE, BUB_FALSE };
 
   static BoolUnionBranch boolean_branch (be_union_branch *b);
+
+  static int branch_index (be_union_branch *b);
 };
 
 #endif /* _BE_VISITOR_UNION_UNION_H_ */

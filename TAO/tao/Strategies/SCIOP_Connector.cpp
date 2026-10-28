@@ -22,14 +22,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_SCIOP_Connector::~TAO_SCIOP_Connector () = default;
+
 TAO_SCIOP_Connector::TAO_SCIOP_Connector ()
   : TAO_Connector (TAO_TAG_SCIOP_PROFILE),
     connect_strategy_ (),
     base_connector_ (0)
-{
-}
-
-TAO_SCIOP_Connector::~TAO_SCIOP_Connector ()
 {
 }
 
@@ -48,7 +46,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   /// Our connect creation strategy
-  TAO_SCIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+  TAO_SCIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SCIOP_CONNECT_CREATION_STRATEGY
@@ -57,7 +55,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   /// Our activation strategy
-  TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+  TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
@@ -83,7 +81,7 @@ TAO_SCIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_SCIOP_Endpoint *sciop_endpoint =
     this->remote_endpoint (endpoint);
 
-  if (sciop_endpoint == 0)
+  if (sciop_endpoint == nullptr)
     return -1;
 
    const ACE_INET_Addr &remote_address =
@@ -116,16 +114,16 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 {
   TAO_Endpoint *tao_endpoint = desc.endpoint ();
 
-  TAO_Transport *transport = 0;
+  TAO_Transport *transport = nullptr;
 
   // @@ ATL folks, is this while loop needed?
   // TAO_Default_Endpoint_Selector has this code already, i.e., the
   // loop.
-  while (tao_endpoint != 0)
+  while (tao_endpoint != nullptr)
     {
       TAO_SCIOP_Endpoint *sciop_endpoint = this->remote_endpoint (tao_endpoint);
 
-      if (sciop_endpoint != 0)
+      if (sciop_endpoint != nullptr)
         {
           transport =
             this->make_connection_i (r, desc, timeout, sciop_endpoint);
@@ -167,7 +165,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   // polling the reactor for connection completion. However, the side-effect
   // was to cause the connection to timeout immediately.
 
-  TAO_SCIOP_Connection_Handler *svc_handler = 0;
+  TAO_SCIOP_Connection_Handler *svc_handler = nullptr;
 
   // Connect.
   ACE_Multihomed_INET_Addr multihomed;
@@ -217,12 +215,12 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
        else
          {
            // Transport is not usable
-           transport = 0;
+           transport = nullptr;
          }
     }
 
   // In case of errors transport is zero
-  if (transport == 0)
+  if (transport == nullptr)
     {
       // Give users a clue to the problem.
       if (TAO_debug_level)
@@ -255,7 +253,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   if (TAO_debug_level > 2)
     TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
-                "new %C connection to <%C:%d> on Transport[%d]\n",
+                "new %C connection to <%C:%d> on Transport[%B]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 sciop_endpoint->host (), sciop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
@@ -302,7 +300,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - SCIOP_Connector [%d]::make_connection_i, "
+                    "TAO (%P|%t) - SCIOP_Connector [%B]::make_connection_i, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));
@@ -317,7 +315,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 TAO_Profile *
 TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_SCIOP_Profile (this->orb_core ()),
                   0);
@@ -326,7 +324,7 @@ TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;
@@ -340,7 +338,7 @@ TAO_SCIOP_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_SCIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -393,7 +391,7 @@ TAO_SCIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   TAO_SCIOP_Endpoint *sciop_endpoint =
     dynamic_cast<TAO_SCIOP_Endpoint *> (endpoint );
-  if (sciop_endpoint == 0)
+  if (sciop_endpoint == nullptr)
     return 0;
 
   return sciop_endpoint;

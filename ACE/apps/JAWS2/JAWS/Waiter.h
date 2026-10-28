@@ -14,11 +14,10 @@
 
 class JAWS_IO_Handler;
 
-typedef ACE_thread_t JAWS_Thread_ID;
+using JAWS_Thread_ID = ACE_thread_t;
 
-typedef JAWS_Assoc_Array<JAWS_Thread_ID, JAWS_IO_Handler *> JAWS_Waiter_Base;
-typedef JAWS_Assoc_Array_Iterator<JAWS_Thread_ID, JAWS_IO_Handler *>
-        JAWS_Waiter_Base_Iterator;
+using JAWS_Waiter_Base = JAWS_Assoc_Array<JAWS_Thread_ID, JAWS_IO_Handler *>;
+using JAWS_Waiter_Base_Iterator = JAWS_Assoc_Array_Iterator<JAWS_Thread_ID, JAWS_IO_Handler *>;
 
 class JAWS_Export JAWS_Waiter : public JAWS_Waiter_Base
 {
@@ -41,6 +40,6 @@ private:
   JAWS_Waiter_Base_Iterator iter_;
 };
 
-typedef ACE_Singleton<JAWS_Waiter, ACE_SYNCH_MUTEX> JAWS_Waiter_Singleton;
+using JAWS_Waiter_Singleton = ACE_Singleton<JAWS_Waiter, ACE_SYNCH_MUTEX>;
 
 #endif /* JAWS_WAITER_H */

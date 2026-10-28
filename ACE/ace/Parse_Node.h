@@ -169,7 +169,7 @@ private:
 class ACE_Static_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = 0);
+  ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = nullptr);
   ~ACE_Static_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -399,7 +399,7 @@ public:
   ACE_Function_Node (const ACE_TCHAR *pathname, const ACE_TCHAR *func_name);
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator *gobbler = 0) override;
+                        ACE_Service_Object_Exterminator *gobbler = nullptr) override;
   ~ACE_Function_Node () override;
 
   /// Dump the state of an object.

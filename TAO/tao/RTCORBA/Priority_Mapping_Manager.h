@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Priority_Mapping_Manager;
 class TAO_Priority_Mapping_Manager_var;
-typedef TAO_Priority_Mapping_Manager *TAO_Priority_Mapping_Manager_ptr;
+using TAO_Priority_Mapping_Manager_ptr = TAO_Priority_Mapping_Manager *;
 
 
 /**
@@ -44,7 +44,7 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager :
 {
 public:
   /// Constructor.
-  TAO_Priority_Mapping_Manager (RTCORBA::PriorityMapping * mapping);
+  explicit TAO_Priority_Mapping_Manager (RTCORBA::PriorityMapping * mapping);
 
   ///
   void mapping (RTCORBA::PriorityMapping * mapping);
@@ -53,8 +53,8 @@ public:
   RTCORBA::PriorityMapping *mapping ();
 
 public:
-  typedef TAO_Priority_Mapping_Manager_ptr _ptr_type;
-  typedef TAO_Priority_Mapping_Manager_var _var_type;
+  using _ptr_type = TAO_Priority_Mapping_Manager_ptr;
+  using _var_type = TAO_Priority_Mapping_Manager_var;
 
   // the static operations
   static TAO_Priority_Mapping_Manager_ptr _duplicate (TAO_Priority_Mapping_Manager_ptr obj);
@@ -65,16 +65,18 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Priority_Mapping_Manager ();
+  ~TAO_Priority_Mapping_Manager () override;
 
 private:
-  TAO_Priority_Mapping_Manager (const TAO_Priority_Mapping_Manager &);
-  void operator= (const TAO_Priority_Mapping_Manager &);
+  TAO_Priority_Mapping_Manager (TAO_Priority_Mapping_Manager const &) = delete;
+  TAO_Priority_Mapping_Manager &operator= (TAO_Priority_Mapping_Manager const &) = delete;
+  TAO_Priority_Mapping_Manager (TAO_Priority_Mapping_Manager &&) = delete;
+  TAO_Priority_Mapping_Manager &operator= (TAO_Priority_Mapping_Manager &&) = delete;
 
 private:
   TAO_Priority_Mapping *mapping_;

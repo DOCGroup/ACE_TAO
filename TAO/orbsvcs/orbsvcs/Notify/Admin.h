@@ -36,8 +36,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Admin : public TAO_Notify::Topology_Pare
 {
   friend class TAO_Notify_Builder;
 public:
-  typedef CosNotifyChannelAdmin::AdminIDSeq SEQ;
-  typedef CosNotifyChannelAdmin::AdminIDSeq_var SEQ_VAR;
+  using SEQ = CosNotifyChannelAdmin::AdminIDSeq;
+  using SEQ_VAR = CosNotifyChannelAdmin::AdminIDSeq_var;
 
   /// Constructor
   TAO_Notify_Admin ();
@@ -89,7 +89,7 @@ protected:
   void save_attrs (TAO_Notify::NVPList& attrs);
   virtual const char * get_admin_type_name () const = 0;
 
-  typedef TAO_Notify_Container_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Container;
+  using TAO_Notify_Proxy_Container = TAO_Notify_Container_T<TAO_Notify_Proxy>;
 
   TAO_Notify_Proxy_Container& proxy_container();
   /// = Data Members

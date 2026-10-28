@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_SFP_Fragment_Node
 {
 public:
-  TAO_SFP_Fragment_Node () : data_ (0) {}
+  TAO_SFP_Fragment_Node () : data_ (nullptr) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
   friend bool operator< (const TAO_SFP_Fragment_Node& left,
@@ -66,9 +66,11 @@ public:
   ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node> fragment_set_;
 };
 
-typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERATOR;
-typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> TAO_SFP_Fragment_Table;
-typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex> TAO_SFP_Fragment_Table_Map;
+using FRAGMENT_SET_ITERATOR = ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>;
+using TAO_SFP_Fragment_Table =
+  ACE_Hash_Map_Manager<CORBA::ULong, TAO_SFP_Fragment_Table_Entry *, ACE_Null_Mutex>;
+using TAO_SFP_Fragment_Table_Map =
+  ACE_Hash_Map_Manager<CORBA::ULong, TAO_SFP_Fragment_Table *, ACE_Null_Mutex>;
 
 /**
  * @class TAO_SFP_Frame_State
@@ -78,6 +80,10 @@ class TAO_AV_Export TAO_SFP_Frame_State
 {
 public:
   TAO_SFP_Frame_State ();
+  TAO_SFP_Frame_State (TAO_SFP_Frame_State const &) = delete;
+  TAO_SFP_Frame_State (TAO_SFP_Frame_State &&) = delete;
+  TAO_SFP_Frame_State &operator= (TAO_SFP_Frame_State const &) = delete;
+  TAO_SFP_Frame_State &operator= (TAO_SFP_Frame_State &&) = delete;
   CORBA::Boolean is_complete ();
 
   int reset ();
@@ -139,6 +145,10 @@ public:
   };
 
   TAO_SFP_Base ();
+  TAO_SFP_Base (TAO_SFP_Base const &) = delete;
+  TAO_SFP_Base (TAO_SFP_Base &&) = delete;
+  TAO_SFP_Base &operator= (TAO_SFP_Base const &) = delete;
+  TAO_SFP_Base &operator= (TAO_SFP_Base &&) = delete;
   static CORBA::Boolean start_frame (CORBA::Octet flags,
                                      flowProtocol::MsgType type,
                                      TAO_OutputCDR &msg);
@@ -161,7 +171,7 @@ public:
 
   static int send_message (TAO_AV_Transport *transport,
                            TAO_OutputCDR &stream,
-                           ACE_Message_Block *mb = 0);
+                           ACE_Message_Block *mb = nullptr);
   static int peek_message_type (TAO_AV_Transport *transport,
                                 flowProtocol::MsgType &type);
   static int read_start_message (TAO_AV_Transport *transport,
@@ -215,24 +225,28 @@ class TAO_AV_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
 public:
   TAO_SFP_Object (TAO_AV_Callback *callback,
                   TAO_AV_Transport *transport);
+  TAO_SFP_Object (TAO_SFP_Object const &) = delete;
+  TAO_SFP_Object (TAO_SFP_Object &&) = delete;
+  TAO_SFP_Object &operator= (TAO_SFP_Object const &) = delete;
+  TAO_SFP_Object &operator= (TAO_SFP_Object &&) = delete;
   // We should add a sfp options parameter.
 
-  virtual ~TAO_SFP_Object ();
+  ~TAO_SFP_Object () override;
   // Dtor
 
-  virtual int handle_input () = 0;
+  int handle_input () override = 0;
   virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
+                          TAO_AV_frame_info *frame_info = nullptr) override;
 
   virtual int send_frame (const iovec *iov,
                           int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
+                          TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const char*buf,
-                          size_t len);
+  int send_frame (const char *buf,
+                  size_t len) override;
 
-  virtual int destroy ();
-  virtual int set_policies (const TAO_AV_PolicyList &policies);
+  int destroy () override;
+  int set_policies (const TAO_AV_PolicyList &policies) override;
 
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
@@ -256,7 +270,7 @@ public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            const char *flow_options);
-  virtual int handle_input ();
+  int handle_input () override;
 protected:
   CORBA::ULong credit_sequence_num_;
 };
@@ -271,7 +285,7 @@ public:
   TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            ACE_CString& flow_options);
-  virtual int handle_input ();
+  int handle_input () override;
 };
 
 /**
@@ -282,14 +296,18 @@ class TAO_AV_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
   TAO_AV_SFP_Factory ();
-  virtual ~TAO_AV_SFP_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  TAO_AV_SFP_Factory (TAO_AV_SFP_Factory const &) = delete;
+  TAO_AV_SFP_Factory (TAO_AV_SFP_Factory &&) = delete;
+  TAO_AV_SFP_Factory &operator= (TAO_AV_SFP_Factory const &) = delete;
+  TAO_AV_SFP_Factory &operator= (TAO_AV_SFP_Factory &&) = delete;
+  ~TAO_AV_SFP_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialization hook.
-  virtual int match_protocol (const char *flow_string);
-  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                        TAO_Base_StreamEndPoint *endpoint,
-                                                        TAO_AV_Flow_Handler *handler,
-                                                        TAO_AV_Transport *transport);
+  int match_protocol (const char *flow_string) override;
+  TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                TAO_Base_StreamEndPoint *endpoint,
+                                                TAO_AV_Flow_Handler *handler,
+                                                TAO_AV_Transport *transport) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

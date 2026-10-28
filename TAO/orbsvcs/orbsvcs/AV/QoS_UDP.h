@@ -31,12 +31,12 @@ class TAO_AV_Export TAO_AV_UDP_QoS_Factory : public TAO_AV_Transport_Factory
 {
 public:
   TAO_AV_UDP_QoS_Factory ();
-  virtual ~TAO_AV_UDP_QoS_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  ~TAO_AV_UDP_QoS_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
   /// Initialization hook.
-  virtual int match_protocol (const char *protocol_string);
-  virtual TAO_AV_Acceptor *make_acceptor ();
-  virtual TAO_AV_Connector *make_connector ();
+  int match_protocol (const char *protocol_string) override;
+  TAO_AV_Acceptor *make_acceptor () override;
+  TAO_AV_Connector *make_connector () override;
 };
 
 class TAO_AV_UDP_QoS_Flow_Handler;
@@ -56,47 +56,47 @@ public:
 
   TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler *handler);
 
-  virtual  ~TAO_AV_UDP_QoS_Transport ();
+  ~TAO_AV_UDP_QoS_Transport () override;
 
-  virtual int open (ACE_Addr *addr);
+  int open (ACE_Addr *addr) override;
 
-  virtual int close ();
+  int close () override;
 
-  virtual int mtu ();
+  int mtu () override;
 
-  virtual ACE_Addr *get_peer_addr ();
+  ACE_Addr *get_peer_addr () override;
 
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (ACE_Message_Block const *mblk,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Write the contents of the buffer of length len to the connection.
-  virtual ssize_t send (const char *buf,
-                        size_t len,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (char const *buf,
+                size_t len,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Write the contents of iovcnt iovec's to the connection.
-  virtual ssize_t send (const iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0);
+  ssize_t send (iovec const *iov,
+                int iovcnt,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Read len bytes from into buf.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (char *buf,
+                size_t len,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Read len bytes from into buf using flags.
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        int flags,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (char *buf,
+                size_t len,
+                int flags,
+                ACE_Time_Value *s = nullptr) override;
 
   /// Read received data into the iovec buffers.
-  virtual ssize_t recv (iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0);
+  ssize_t recv (iovec *iov,
+                int iovcnt,
+                ACE_Time_Value *s = nullptr) override;
 protected:
   TAO_AV_UDP_QoS_Flow_Handler *handler_;
   ACE_Addr *addr_;
@@ -113,19 +113,19 @@ public:
    * Destructor
    */
   TAO_AV_UDP_QoS_Flow_Handler ();
-  ~TAO_AV_UDP_QoS_Flow_Handler ();
+  ~TAO_AV_UDP_QoS_Flow_Handler () override;
   int open (ACE_Addr &address);
-  virtual TAO_AV_Transport *transport ();
-  virtual int set_remote_address (ACE_Addr *address);
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  virtual int change_qos (AVStreams::QoS);
+  TAO_AV_Transport *transport ();
+  int set_remote_address (ACE_Addr *address) override;
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
+  int change_qos (AVStreams::QoS) override;
   /// Handles a QoS event. Right now, just
   /// prints a message.
-  virtual int handle_qos (ACE_HANDLE fd);
+  int handle_qos (ACE_HANDLE fd) override;
   ACE_SOCK_Dgram_Mcast_QoS *get_socket ();
-  virtual ACE_Event_Handler* event_handler () { return this; }
+  ACE_Event_Handler *event_handler () override { return this; }
   virtual ACE_QoS_Session* qos_session ();
   virtual void qos_session (ACE_QoS_Session *qos_session);
 
@@ -160,24 +160,24 @@ class TAO_AV_UDP_QoS_Acceptor
 {
 public:
   TAO_AV_UDP_QoS_Acceptor ();
-  virtual ~TAO_AV_UDP_QoS_Acceptor ();
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
+  ~TAO_AV_UDP_QoS_Acceptor () override;
+  int open (TAO_Base_StreamEndPoint *endpoint,
+            TAO_AV_Core *av_core,
+            TAO_FlowSpec_Entry *entry,
+            TAO_AV_Flow_Protocol_Factory *factory,
+            TAO_AV_Core::Flow_Component flow_comp =
+              TAO_AV_Core::TAO_AV_DATA) override;
+
+  int open_default (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
                     TAO_AV_Flow_Protocol_Factory *factory,
                     TAO_AV_Core::Flow_Component flow_comp =
-                        TAO_AV_Core::TAO_AV_DATA);
-
-  virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core,
-                            TAO_FlowSpec_Entry *entry,
-                            TAO_AV_Flow_Protocol_Factory *factory,
-                            TAO_AV_Core::Flow_Component flow_comp =
-                                TAO_AV_Core::TAO_AV_DATA);
+                      TAO_AV_Core::TAO_AV_DATA) override;
 
   virtual int open_i (ACE_INET_Addr *address);
 
-  virtual int close ();
+  int close () override;
 
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
 
@@ -196,17 +196,17 @@ class TAO_AV_UDP_QoS_Connector
 {
 public:
   TAO_AV_UDP_QoS_Connector ();
-  ~TAO_AV_UDP_QoS_Connector ();
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core,
-                    TAO_AV_Flow_Protocol_Factory *factory);
+  ~TAO_AV_UDP_QoS_Connector () override;
+  int open (TAO_Base_StreamEndPoint *endpoint,
+            TAO_AV_Core *av_core,
+            TAO_AV_Flow_Protocol_Factory *factory) override;
 
-  virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport,
-                       TAO_AV_Core::Flow_Component flow_comp =
-                           TAO_AV_Core::TAO_AV_DATA);
+  int connect (TAO_FlowSpec_Entry *entry,
+               TAO_AV_Transport *&transport,
+               TAO_AV_Core::Flow_Component flow_comp =
+                 TAO_AV_Core::TAO_AV_DATA) override;
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
-  virtual int close ();
+  int close () override;
 
   int translate (CosPropertyService::Properties &qos_params,
                  ACE_Flow_Spec *ace_flow_spec);
@@ -251,14 +251,14 @@ class TAO_AV_UDP_QoS_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
   TAO_AV_UDP_QoS_Flow_Factory ();
-  virtual ~TAO_AV_UDP_QoS_Flow_Factory ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  ~TAO_AV_UDP_QoS_Flow_Factory () override;
+  int init (int argc, ACE_TCHAR *argv[]) override;
   /// Initialization hook.
-  virtual int match_protocol (const char *flow_string);
-  TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
-                                                TAO_Base_StreamEndPoint *endpoint,
-                                                TAO_AV_Flow_Handler *handler,
-                                                TAO_AV_Transport *transport);
+  int match_protocol (char const *flow_string) override;
+  TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                 TAO_Base_StreamEndPoint *endpoint,
+                                                 TAO_AV_Flow_Handler *handler,
+                                                 TAO_AV_Transport *transport) override;
 };
 
 /// Helper class to create qos sessions,

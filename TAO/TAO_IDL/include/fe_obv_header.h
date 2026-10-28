@@ -17,7 +17,7 @@ public:
                 UTL_NameList *supports,
                 bool truncatable,
                 bool is_eventtype = false);
-  virtual ~FE_OBVHeader ();
+  ~FE_OBVHeader () override;
 
   // Data Accessors.
   AST_Type **supports () const;
@@ -26,7 +26,7 @@ public:
   AST_Type *supports_concrete () const;
   bool truncatable () const;
 
-  virtual void destroy ();
+  void destroy () override;
   // Destroy anything allocated for this class.
 
 protected:

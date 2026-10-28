@@ -47,11 +47,11 @@ namespace TAO
   {
   public:
     /// Constructor.
-    IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = 0);
+    IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = nullptr);
     IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
 
     /// Destructor.
-    ~IIOP_SSL_Connection_Handler ();
+    ~IIOP_SSL_Connection_Handler () override;
   };
 
   // ****************************************************************
@@ -82,6 +82,11 @@ namespace TAO
     /// Destructor that restores the previous TSS SSL state.
     ~Null_SSL_State_Guard ();
 
+    Null_SSL_State_Guard (Null_SSL_State_Guard const &) = delete;
+    Null_SSL_State_Guard (Null_SSL_State_Guard &&) = delete;
+    Null_SSL_State_Guard &operator= (Null_SSL_State_Guard const &) = delete;
+    Null_SSL_State_Guard &operator= (Null_SSL_State_Guard &&) = delete;
+
   private:
     /// The SSLIOP::Current implementation that was previously
     /// associated with the current thread and invocation.
@@ -89,7 +94,7 @@ namespace TAO
      * It is stored here until the invocation completes, after which
      * it placed back into TSS.
      */
-    TAO::SSLIOP::Current_Impl *previous_current_impl_;
+    TAO::SSLIOP::Current_Impl *previous_current_impl_ {};
 
     /// Reference to the SSLIOP::Current object.
     TAO::SSLIOP::Current_ptr current_;

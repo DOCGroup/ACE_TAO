@@ -51,9 +51,14 @@ public:
   /// Constructor
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
 
+  TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
+  TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
+  TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
+  TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
+
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
 private:
   /// The adapted object
@@ -80,13 +85,19 @@ public:
                                      TAO_CEC_EventChannel *event_channel,
                                      CORBA::ORB_ptr orb);
 
+  TAO_CEC_Reactive_Pulling_Strategy (TAO_CEC_Reactive_Pulling_Strategy const &) = delete;
+  TAO_CEC_Reactive_Pulling_Strategy (TAO_CEC_Reactive_Pulling_Strategy &&) = delete;
+  TAO_CEC_Reactive_Pulling_Strategy &operator= (
+      TAO_CEC_Reactive_Pulling_Strategy const &) = delete;
+  TAO_CEC_Reactive_Pulling_Strategy &operator= (TAO_CEC_Reactive_Pulling_Strategy &&) = delete;
+
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = The CEC_Pulling_Strategy methods.
-  virtual void activate ();
-  virtual void shutdown ();
+  void activate () override;
+  void shutdown () override;
 
 private:
   /// The Adapter for the reactor events
@@ -127,7 +138,12 @@ public:
   TAO_CEC_Pull_Event (TAO_CEC_ConsumerAdmin *consumer_admin,
                       TAO_CEC_SupplierControl *);
 
-  virtual void work (TAO_CEC_ProxyPullConsumer *consumer);
+  TAO_CEC_Pull_Event (TAO_CEC_Pull_Event const &) = delete;
+  TAO_CEC_Pull_Event (TAO_CEC_Pull_Event &&) = delete;
+  TAO_CEC_Pull_Event &operator= (TAO_CEC_Pull_Event const &) = delete;
+  TAO_CEC_Pull_Event &operator= (TAO_CEC_Pull_Event &&) = delete;
+
+  void work (TAO_CEC_ProxyPullConsumer *consumer) override;
 
 private:
   /// Used to propagate the events.

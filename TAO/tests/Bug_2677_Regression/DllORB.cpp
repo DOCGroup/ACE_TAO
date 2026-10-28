@@ -5,9 +5,9 @@
 #include "tao/TAO_Singleton_Manager.h"
 
 DllORB::DllORB ()
- : failPrePostInit_ (3),
-   mv_orb_ (),
-   mv_rootPOA_ ()
+  : failPrePostInit_ (3)
+  , mv_orb_ ()
+  , mv_rootPOA_ ()
 {
 }
 
@@ -35,8 +35,8 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           // (dangling) references to instances of objects created by this
           // module and destroyed by this object when it is dynamically
           // unloaded.
-          int register_with_object_manager = 0;
-          TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
+          int const register_with_object_manager = 0;
+          TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
           int result = p_tsm->init (register_with_object_manager);
 
           if (result == -1)
@@ -139,7 +139,7 @@ DllORB::fini ()
       // -----------------------------------------------------------------
       // Explicitly clean up singletons created by TAO before
       // unloading this module.
-      TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
+      TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
       int result = p_tsm->fini ();
       if (result == -1)
         {

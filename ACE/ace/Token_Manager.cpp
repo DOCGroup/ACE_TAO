@@ -25,7 +25,7 @@ ACE_Token_Manager::~ACE_Token_Manager ()
 
   COLLECTION::ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION::ENTRY *temp = nullptr;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -120,7 +120,7 @@ ACE_Token_Manager::check_deadlock (ACE_Token_Proxy *proxy)
   // Whether or not we detect deadlock, we have to unmark all tokens
   // for the next time.
   COLLECTION::ITERATOR iterator (collection_);
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION::ENTRY *temp = nullptr;
        iterator.next (temp) != 0;
        iterator.advance ())
       temp->int_id_->visit (0);
@@ -194,7 +194,7 @@ ACE_Tokens *
 ACE_Token_Manager::token_waiting_for (const ACE_TCHAR *client_id)
 {
   COLLECTION::ITERATOR iterator (collection_);
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION::ENTRY *temp = nullptr;
        iterator.next (temp) != 0;
        iterator.advance ())
     {

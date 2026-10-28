@@ -52,14 +52,19 @@ public:
   TAO_MIOP_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_MIOP_Resource_Factory ();
+  ~TAO_MIOP_Resource_Factory () override;
+
+  TAO_MIOP_Resource_Factory (TAO_MIOP_Resource_Factory const &) = delete;
+  TAO_MIOP_Resource_Factory (TAO_MIOP_Resource_Factory &&) = delete;
+  TAO_MIOP_Resource_Factory &operator= (TAO_MIOP_Resource_Factory const &) = delete;
+  TAO_MIOP_Resource_Factory &operator= (TAO_MIOP_Resource_Factory &&) = delete;
 
   /**
    * @name Service Configurator Hooks
    */
   //@{
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   //@}
 
   /**

@@ -96,7 +96,7 @@ Connection_Handler::svc ()
     (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
 
   // Zero-out the Reactor field so it isn't accessed later on.
-  this->reactor (0);
+  this->reactor (nullptr);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) exiting svc\n")));
   return 0;
@@ -173,8 +173,7 @@ Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
 // Define an Acceptor for the <Connection_Handler>.
 
-typedef ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR>
-        Connection_Acceptor;
+using Connection_Acceptor = ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

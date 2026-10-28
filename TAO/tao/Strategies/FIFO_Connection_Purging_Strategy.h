@@ -38,14 +38,22 @@ class TAO_Strategies_Export TAO_FIFO_Connection_Purging_Strategy:
 {
 public:
   /// The constructor
-  TAO_FIFO_Connection_Purging_Strategy (int cache_maximum);
+  explicit TAO_FIFO_Connection_Purging_Strategy (int cache_maximum);
 
   /// Called when accessing an item from the cache
   void update_item (TAO_Transport& transport) override;
 
 private:
-  /// The ordering information for each transport in the cache
-  unsigned long order_;
+  TAO_FIFO_Connection_Purging_Strategy (TAO_FIFO_Connection_Purging_Strategy const &) = delete;
+  TAO_FIFO_Connection_Purging_Strategy &operator= (
+    TAO_FIFO_Connection_Purging_Strategy const &) = delete;
+  TAO_FIFO_Connection_Purging_Strategy (TAO_FIFO_Connection_Purging_Strategy &&) = delete;
+  TAO_FIFO_Connection_Purging_Strategy &operator= (
+    TAO_FIFO_Connection_Purging_Strategy &&) = delete;
+
+  /// The ordering information for each transport in the cache.  Initialized
+  /// to 1 to ensure that a transport's purging order is only 0 initially.
+  unsigned long order_ {1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

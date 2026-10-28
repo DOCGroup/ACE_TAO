@@ -125,7 +125,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       // Skip the monitors not added by this test.
-      for (index = start_size; i < data.in ().length (); ++index)
+      for (index = start_size; index < data.in ().length (); ++index)
         {
           num = data[index].data_union.num ();
 
@@ -149,6 +149,11 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         }
 
       TAO_Singleton_Manager::instance ()->fini ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("NotificationServiceMonitor: ");
+      return 1;
     }
   catch (...)
     {

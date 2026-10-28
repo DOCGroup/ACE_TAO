@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_DiffServ_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value)
+    CORBA::Any const& value)
 {
   if (type == TAO::CLIENT_NETWORK_PRIORITY_TYPE)
     return TAO_Client_Network_Priority_Policy::create (value);

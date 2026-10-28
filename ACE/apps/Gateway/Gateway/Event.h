@@ -51,7 +51,7 @@
 
 // This is the unique supplier identifier that denotes a particular
 // <Connection_Handler> in the Gateway.
-typedef ACE_INT32 CONNECTION_ID;
+using CONNECTION_ID = ACE_INT32;
 
 enum
 {

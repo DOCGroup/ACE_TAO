@@ -254,7 +254,7 @@ ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_SString 
 // This allows one to use W or C String based on the Unicode
 // setting
 #if defined (ACE_USES_WCHAR)
-typedef ACE_WString ACE_TString;
+using ACE_TString = ACE_WString;
 #else /* ACE_USES_WCHAR */
 using ACE_TString = ACE_CString;
 #endif /* ACE_USES_WCHAR */

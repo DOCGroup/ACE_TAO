@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-static FILE *output_file = 0;
+static FILE *output_file = nullptr;
 // File handle of the file into which received data is written.
 
 static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
@@ -57,7 +57,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
     }
 
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
       size_t result =
@@ -86,7 +86,7 @@ Receiver_Callback::dump_samples (const char* file)
 
   FILE* stats_file = ACE_OS::fopen (file, "wb");
 
-  if (stats_file == 0)
+  if (stats_file == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Stats.dat cannot be opened\n"));
@@ -254,7 +254,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
                                    "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),

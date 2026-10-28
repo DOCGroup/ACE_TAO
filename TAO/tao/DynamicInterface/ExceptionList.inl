@@ -2,12 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-CORBA::ExceptionList::ExceptionList ()
-  : refcount_ (1)
-{
-}
-
-ACE_INLINE
 CORBA::ULong
 CORBA::ExceptionList::count ()
 {
@@ -25,7 +19,7 @@ ACE_INLINE
 CORBA::ExceptionList_ptr
 CORBA::ExceptionList::_duplicate (CORBA::ExceptionList_ptr x)
 {
-  if (x)
+  if (x != nullptr)
     {
       x->_incr_refcount ();
     }

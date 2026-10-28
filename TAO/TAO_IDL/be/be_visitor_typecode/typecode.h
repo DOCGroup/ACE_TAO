@@ -15,6 +15,7 @@
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_enum_val.h"
+#include "be_fixed.h"
 #include "be_exception.h"
 #include "be_field.h"
 #include "be_interface.h"
@@ -39,4 +40,3 @@
 #include "utl_identifier.h"
 
 #include "ast_union_label.h"
-

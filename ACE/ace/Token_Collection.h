@@ -63,7 +63,7 @@ public:
    * are sometimes useful for debugging.
    */
   ACE_Token_Collection (bool debug = false,
-                        const ACE_TCHAR *name = 0);
+                        const ACE_TCHAR *name = nullptr);
 
 // Collection Management operations
 
@@ -193,11 +193,10 @@ public:
   virtual const ACE_TCHAR *name () const;
 
 protected:
-  typedef ACE_Token_Name TOKEN_NAME;
+  using TOKEN_NAME = ACE_Token_Name;
 
   /// COLLECTION maintains a mapping from token names to ACE_Tokens*
-  typedef ACE_Map_Manager<TOKEN_NAME, ACE_Token_Proxy *, ACE_Null_Mutex>
-    COLLECTION;
+  using COLLECTION = ACE_Map_Manager<TOKEN_NAME, ACE_Token_Proxy *, ACE_Null_Mutex>;
 
   /// COLLECTION maintains a mapping from token names to ACE_Tokens*.
   COLLECTION collection_;

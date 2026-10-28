@@ -59,7 +59,7 @@ namespace ACE
               ACE_CString second_;
           };
 
-        typedef ACE_Ordered_MultiSet<NVPair> TNVMap;
+        using TNVMap = ACE_Ordered_MultiSet<NVPair>;
 
 
         /**

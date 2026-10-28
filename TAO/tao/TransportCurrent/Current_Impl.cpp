@@ -27,10 +27,7 @@ namespace TAO
     {
     }
 
-    /// dtor
-    Current_Impl::~Current_Impl ()
-    {
-    }
+    Current_Impl::~Current_Impl () = default;
 
     /// Obtains the current transport. Throws a NoContext exception
     /// if, there was no "current" transport selected on the current
@@ -41,7 +38,7 @@ namespace TAO
       Transport_Selection_Guard* topguard =
         Transport_Selection_Guard::current (this->core_, this->tss_slot_id_);
 
-      if (topguard == 0)
+      if (topguard == nullptr)
         throw NoContext();
 
       return topguard->get ();
@@ -57,14 +54,14 @@ namespace TAO
 
       const TAO_Transport* t = this->transport ();
 
-      return (t==0 || t->stats () == 0) ? &dummy_transport_stats : t->stats ();
+      return (t == nullptr || t->stats () == nullptr) ? &dummy_transport_stats : t->stats ();
     }
 
     CORBA::Long Current_Impl::id ()
     {
       const TAO_Transport* t = this->transport ();
 
-      return (t==0) ? 0 : static_cast<CORBA::Long> (t->id ());
+      return (t == nullptr) ? 0 : static_cast<CORBA::Long> (t->id ());
     }
 
     CounterT Current_Impl::bytes_sent ()
@@ -89,7 +86,7 @@ namespace TAO
 
     TimeBase::TimeT Current_Impl::open_since ()
     {
-      TimeBase::TimeT msecs = 0;
+      TimeBase::TimeT msecs {};
       transport_stats ()->opened_since ().msec (msecs);
       return msecs;
     }

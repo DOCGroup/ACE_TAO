@@ -58,10 +58,10 @@ namespace TAO
       /**
        * Constructor used when creating dynamic @c union @c TypeCodes.
        */
-      Case ();
+      Case () = default;
 
       /// Destructor.
-      virtual ~Case ();
+      virtual ~Case () = default;
 
       /// Cloning/copying operation.
       virtual Case * clone () const = 0;
@@ -144,7 +144,7 @@ namespace TAO
       TypeCodeType type_;
     };
 
-    typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
+    using Case_Dynamic = Case<CORBA::String_var, CORBA::TypeCode_var>;
   }  // End namespace TypeCode
 }  // End namespace TAO
 

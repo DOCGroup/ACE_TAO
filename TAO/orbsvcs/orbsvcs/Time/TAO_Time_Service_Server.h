@@ -39,30 +39,36 @@ public:
   TAO_Time_Service_Server ();
 
   /// Destructor.
-  ~TAO_Time_Service_Server ();
+  ~TAO_Time_Service_Server () override;
 
   /// This operation returns the current system time and an estimate of
   /// inaccuracy in a UTO.
-  virtual CosTime::UTO_ptr universal_time ();
+  CosTime::UTO_ptr universal_time () override;
 
   /**
    * This operation returns the current time in a UTO only if the time
    * can be guaranteed to have been obtained securely. Currently this operation
    * is not implemented and throws a CORBA::NO_IMPLEMENT exception, if called.
    */
-  virtual CosTime::UTO_ptr secure_universal_time ();
+  CosTime::UTO_ptr secure_universal_time () override;
 
   /// This creates a new UTO based on the given parameters.
-  virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
-                                               TimeBase::InaccuracyT inaccuracy,
-                                               TimeBase::TdfT tdf);
+  CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
+                                       TimeBase::InaccuracyT inaccuracy,
+                                       TimeBase::TdfT tdf) override;
 
   /// This creates a new UTO given a time in the UtcT form.
-  virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc);
+  CosTime::UTO_ptr uto_from_utc (TimeBase::UtcT const & utc) override;
 
   /// This creates a new TIO with the given parameters.
-  virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
-                                         TimeBase::TimeT upper);
+  CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
+                                 TimeBase::TimeT upper) override;
+
+private:
+  TAO_Time_Service_Server (TAO_Time_Service_Server const &) = delete;
+  TAO_Time_Service_Server (TAO_Time_Service_Server &&) = delete;
+  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server const &) = delete;
+  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

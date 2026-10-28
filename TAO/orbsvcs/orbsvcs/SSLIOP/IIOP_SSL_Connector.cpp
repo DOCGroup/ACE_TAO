@@ -36,7 +36,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   // Our connect creation strategy
-  CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY (orb_core->thr_mgr (),
@@ -44,7 +44,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   // Our activation strategy
-  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
 
   ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
@@ -74,7 +74,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_IIOP_Endpoint *iiop_endpoint =
     dynamic_cast<TAO_IIOP_Endpoint *> (endpoint);
 
-  if (iiop_endpoint == 0)
+  if (iiop_endpoint == nullptr)
     return -1;
 
   const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
@@ -111,8 +111,8 @@ TAO::IIOP_SSL_Connector::make_connection (
   TAO_IIOP_Endpoint *iiop_endpoint =
     dynamic_cast<TAO_IIOP_Endpoint *> (desc.endpoint ());
 
-  if (iiop_endpoint == 0)
-    return 0;
+  if (iiop_endpoint == nullptr)
+    return nullptr;
 
   const ACE_INET_Addr &remote_address =
     iiop_endpoint->object_addr ();
@@ -137,7 +137,7 @@ TAO::IIOP_SSL_Connector::make_connection (
     }
 
 
-  IIOP_SSL_Connection_Handler *svc_handler = 0;
+  IIOP_SSL_Connection_Handler *svc_handler = nullptr;
 
   // Connect.
   int result =
@@ -171,12 +171,12 @@ TAO::IIOP_SSL_Connector::make_connection (
       else
         {
           // Transport is not usable
-          transport = 0;
+          transport = nullptr;
         }
     }
 
   // In case of errors transport is zero
-  if (transport == 0)
+  if (transport == nullptr)
     {
       // Give users a clue to the problem.
       if (TAO_debug_level)
@@ -188,7 +188,7 @@ TAO::IIOP_SSL_Connector::make_connection (
                       "errno"));
         }
 
-      return 0;
+      return nullptr;
     }
 
   if (svc_handler->keep_waiting (this->orb_core ()->leader_follower ()))
@@ -201,7 +201,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (TAO_debug_level > 2)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
-                "new connection to <%s:%d> on Transport[%d]\n",
+                "new connection to <%s:%d> on Transport[%B]\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
 
@@ -224,7 +224,7 @@ TAO::IIOP_SSL_Connector::make_connection (
                       "could not add the new connection to cache\n"));
         }
 
-      return 0;
+      return nullptr;
     }
 
   if (transport->is_connected () &&
@@ -241,7 +241,7 @@ TAO::IIOP_SSL_Connector::make_connection (
 
       if (TAO_debug_level > 0)
         ORBSVCS_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - IIOP_SSL_Connector [%d]::make_connection, "
+                    "TAO (%P|%t) - IIOP_SSL_Connector [%B]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));

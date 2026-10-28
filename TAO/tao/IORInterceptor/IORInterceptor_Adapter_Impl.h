@@ -29,9 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor,
-                            IORInterceptor_Details>
-    IORInterceptor_List;
+  using IORInterceptor_List = Interceptor_List< ::PortableInterceptor::IORInterceptor,
+                                                IORInterceptor_Details>;
 }
 
 class TAO_Root_POA;
@@ -49,32 +48,39 @@ class TAO_IORInterceptor_Adapter_Impl
   : public TAO_IORInterceptor_Adapter
 {
 public:
-  virtual ~TAO_IORInterceptor_Adapter_Impl ();
+  TAO_IORInterceptor_Adapter_Impl () = default;
 
-  virtual void add_interceptor (
-      PortableInterceptor::IORInterceptor_ptr interceptor);
+  ~TAO_IORInterceptor_Adapter_Impl () override = default;
 
-  virtual void add_interceptor (
+  void add_interceptor (
+      PortableInterceptor::IORInterceptor_ptr interceptor) override;
+
+  void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies);
+      CORBA::PolicyList const& policies) override;
 
-  virtual void destroy_interceptors ();
+  void destroy_interceptors () override;
 
-  virtual void establish_components (TAO_Root_POA *poa );
+  void establish_components (TAO_Root_POA * poa) override;
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
-  virtual void components_established (PortableInterceptor::IORInfo_ptr info);
+  void components_established (PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void adapter_state_changed (
-      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
-      PortableInterceptor::AdapterState state);
+  void adapter_state_changed (
+      TAO::ObjectReferenceTemplate_Array const& array_obj_ref_template,
+      PortableInterceptor::AdapterState state) override;
 
-  virtual void adapter_manager_state_changed (
-      const char * id,
-      PortableInterceptor::AdapterState state);
+  void adapter_manager_state_changed (
+      char const* id,
+      PortableInterceptor::AdapterState state) override;
 
 private:
+  TAO_IORInterceptor_Adapter_Impl (TAO_IORInterceptor_Adapter_Impl const &) = delete;
+  TAO_IORInterceptor_Adapter_Impl &operator= (TAO_IORInterceptor_Adapter_Impl const &) = delete;
+  TAO_IORInterceptor_Adapter_Impl (TAO_IORInterceptor_Adapter_Impl &&) = delete;
+  TAO_IORInterceptor_Adapter_Impl &operator= (TAO_IORInterceptor_Adapter_Impl &&) = delete;
+
   /// List of IOR interceptors maintained
   TAO::IORInterceptor_List ior_interceptor_list_;
 };

@@ -46,6 +46,12 @@ namespace TAO
     TkResource_Loader ();
 
     virtual ~TkResource_Loader ();
+
+  private:
+    TkResource_Loader (TkResource_Loader const &) = delete;
+    TkResource_Loader &operator= (TkResource_Loader const &) = delete;
+    TkResource_Loader (TkResource_Loader &&) = delete;
+    TkResource_Loader &operator= (TkResource_Loader &&) = delete;
   };
 }
 

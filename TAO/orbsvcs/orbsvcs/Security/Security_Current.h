@@ -59,8 +59,8 @@ public:
   //@{
   /// Return the security attributes corresponding to the types in the
   /// given attribute type list associated with the current request.
-  virtual Security::AttributeList * get_attributes (
-      const Security::AttributeTypeList & attributes);
+  Security::AttributeList * get_attributes (
+      Security::AttributeTypeList const & attributes) override;
   //@}
 
   /**
@@ -72,7 +72,7 @@ public:
   //@{
   /// Return the Credentials received from the client associate with
   /// the current request.
-  virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials ();
+  SecurityLevel2::ReceivedCredentials_ptr received_credentials () override;
   //@}
 
   /// Return the TSS slot ID assigned to the "SecurityCurrent" object.
@@ -85,7 +85,7 @@ public:
 protected:
   /// Destructor
   /// Protected to force allocation on the heap.
-  ~TAO_Security_Current ();
+  ~TAO_Security_Current () override;
 
   /// Fully initialize this object.  This method is used predominantly
   /// to set the ORB core pointer.
@@ -105,7 +105,9 @@ protected:
 
 private:
   TAO_Security_Current (const TAO_Security_Current &) = delete;
+  TAO_Security_Current (TAO_Security_Current &&) = delete;
   void operator= (const TAO_Security_Current &) = delete;
+  void operator= (TAO_Security_Current &&) = delete;
 
 private:
   /// TSS slot assigned to this object.

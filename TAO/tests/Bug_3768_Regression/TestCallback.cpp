@@ -10,7 +10,7 @@ void
 TestCallback::start_threads_and_block ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - start_threads_and_block\n"));
-  work_.activate(THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,10);
+  work_.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 10);
   work_.wait (); // blocks forever as the worker threads never end
 }
 

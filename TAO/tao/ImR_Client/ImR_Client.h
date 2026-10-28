@@ -52,19 +52,24 @@ namespace TAO
       static int Initializer ();
 
       /// ImplRepo helper method, notify the ImplRepo on startup
-      virtual void imr_notify_startup (TAO_Root_POA* poa);
+      void imr_notify_startup (TAO_Root_POA *poa) override;
 
       /// ImplRepo helper method, notify the ImplRepo on shutdown
-      virtual void imr_notify_shutdown (TAO_Root_POA* poa);
+      void imr_notify_shutdown (TAO_Root_POA *poa) override;
 
       /// ImplRepo helper method, create an IMR-ified object for a
       /// key with a given type
-      virtual CORBA::Object_ptr imr_key_to_object(TAO_Root_POA* poa,
-                                                  const TAO::ObjectKey &key,
-                                                  const char *type_id) const;
+      CORBA::Object_ptr imr_key_to_object (TAO_Root_POA *poa,
+                                            const TAO::ObjectKey &key,
+                                            const char *type_id) const override;
     private:
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl &&) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl &&) = delete;
+
       /// Implementation Repository Server Object
-      ServerObject_i *server_object_;
+      ServerObject_i *server_object_ {};
     };
 
     static int

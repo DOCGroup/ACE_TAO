@@ -42,14 +42,14 @@ class Routing_Slip_Persistence_Manager;
 // referenced from this header
 
 /// A vector of Delivery Requests.  The body of a Routing_Slip.
-typedef ACE_Vector <Delivery_Request_Ptr> Delivery_Request_Vec;
+using Delivery_Request_Vec = ACE_Vector <Delivery_Request_Ptr>;
 
 /// A vector of Methods_.  Used during recovery.
-typedef ACE_Vector <TAO_Notify_Method_Request_Queueable *> Delivery_Method_Vec;
+using Delivery_Method_Vec = ACE_Vector <TAO_Notify_Method_Request_Queueable *>;
 
 class Routing_Slip;
 /// A reference-counted smart pointer to a Routing_Slip
-typedef ACE_Strong_Bound_Ptr<Routing_Slip, TAO_SYNCH_MUTEX> Routing_Slip_Ptr;
+using Routing_Slip_Ptr = ACE_Strong_Bound_Ptr<Routing_Slip, TAO_SYNCH_MUTEX>;
 
 class Routing_Slip_Persistence_Manager;
 
@@ -63,7 +63,7 @@ class Routing_Slip_Queue;
 class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
 {
 // FUZZ: disable check_for_ACE_Guard
-  typedef ACE_Guard< TAO_SYNCH_MUTEX > Routing_Slip_Guard;
+  using Routing_Slip_Guard = ACE_Guard< TAO_SYNCH_MUTEX >;
 // FUZZ: enable check_for_ACE_Guard
 public:
   /// "Factory" method for normal use.

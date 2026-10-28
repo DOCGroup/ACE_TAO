@@ -5,7 +5,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory ()
-  : ft_endpoint_selector_ (0)
 {
 }
 
@@ -18,7 +17,7 @@ TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory ()
 TAO_Invocation_Endpoint_Selector *
 TAO_FT_Endpoint_Selector_Factory::get_selector ()
 {
-    if (this->ft_endpoint_selector_ == 0)
+    if (this->ft_endpoint_selector_ == nullptr)
     {
       ACE_MT (ACE_GUARD_RETURN  (TAO_SYNCH_MUTEX,
                                  guard,
@@ -26,7 +25,7 @@ TAO_FT_Endpoint_Selector_Factory::get_selector ()
                                  0));
 
       // Double checked locking..
-      if (this->ft_endpoint_selector_ == 0)
+      if (this->ft_endpoint_selector_ == nullptr)
         {
           ACE_NEW_THROW_EX (ft_endpoint_selector_,
                             TAO_FT_Invocation_Endpoint_Selector (),

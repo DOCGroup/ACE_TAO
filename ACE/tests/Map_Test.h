@@ -25,7 +25,7 @@
 #include "ace/Containers.h"
 
 // Key data type.
-typedef ACE_Array<char> KEY;
+using KEY = ACE_Array<char>;
 
 /**
  * @class Key_Generator

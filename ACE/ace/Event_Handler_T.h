@@ -99,7 +99,7 @@ public:
   int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0) override;
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg = nullptr) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
 

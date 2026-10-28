@@ -5,7 +5,7 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("Messenger.ior");
+ACE_TCHAR const * ior_output_file = ACE_TEXT ("Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
   }
 
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const & ex) {
     std::cerr << "Caught a CORBA exception: " << ex << std::endl;
     return 1;
   }

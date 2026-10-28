@@ -35,52 +35,52 @@ class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
   /// Constructor
-  TAO_RT_Protocols_Hooks ();
+  TAO_RT_Protocols_Hooks () = default;
 
   /// Destructor
-  virtual ~TAO_RT_Protocols_Hooks ();
+  ~TAO_RT_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.
-  void init_hooks (TAO_ORB_Core *orb_core);
+  void init_hooks (TAO_ORB_Core *orb_core) override;
 
   CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
-                                              TAO_Stub *stub);
+                                              TAO_Stub *stub) override;
 
   CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
-                                              CORBA::Policy *policy);
+                                              CORBA::Policy *policy) override;
 
-  void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties);
+  void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties) override;
 
-  void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties);
+  void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties) override;
 
-  void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties);
+  void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties) override;
 
-  void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties);
+  void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties) override;
 
-  void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties);
+  void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties) override;
 
-  void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties);
+  void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties) override;
 
-  void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties);
+  void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties) override;
 
-  void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties);
+  void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties) override;
 
-  void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties);
+  void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties) override;
 
-  void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties);
+  void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties) override;
 
-  CORBA::Long get_dscp_codepoint ();
+  CORBA::Long get_dscp_codepoint () override;
 
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
                           &is_client_propagated,
-                          CORBA::Short &server_priority);
+                          CORBA::Short &server_priority) override;
 
   void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
                                        CORBA::Short priority,
                                        CORBA::Short &min_priority,
                                        CORBA::Short &max_priority,
-                                       bool &in_range);
+                                       bool &in_range) override;
 
   /**
    * Accessor and modifier to the current thread priority, used to
@@ -88,17 +88,17 @@ public:
    * some critical components.
    */
   //@{
-  int get_thread_CORBA_priority (CORBA::Short &priority);
+  int get_thread_CORBA_priority (CORBA::Short &priority) override;
 
-  int get_thread_native_priority (CORBA::Short &);
+  int get_thread_native_priority (CORBA::Short &) override;
 
-  int get_thread_CORBA_and_native_priority (CORBA::Short &, CORBA::Short &);
+  int get_thread_CORBA_and_native_priority (CORBA::Short &, CORBA::Short &) override;
 
-  int get_thread_implicit_CORBA_priority (CORBA::Short&);
+  int get_thread_implicit_CORBA_priority (CORBA::Short&) override;
 
-  int set_thread_CORBA_priority (CORBA::Short);
+  int set_thread_CORBA_priority (CORBA::Short) override;
 
-  int restore_thread_CORBA_and_native_priority (CORBA::Short, CORBA::Short);
+  int restore_thread_CORBA_and_native_priority (CORBA::Short, CORBA::Short) override;
   //@}
 
 protected:
@@ -136,7 +136,7 @@ protected:
                                        RTCORBA::ProtocolProperties_ptr protocol_properties);
 
 protected:
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
   // Save a reference to the priority mapping manager.
   TAO_Priority_Mapping_Manager_var mapping_manager_;

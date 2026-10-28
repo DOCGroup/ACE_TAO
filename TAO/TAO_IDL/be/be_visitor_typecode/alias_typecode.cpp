@@ -45,6 +45,28 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
 
   TAO_INSERT_COMMENT (&os);
 
+  if (base != nullptr && base->node_type () == AST_Decl::NT_fixed)
+    {
+      be_fixed * const fixed = dynamic_cast<be_fixed *> (base);
+
+      if (fixed == nullptr)
+        return -1;
+
+      const ACE_CDR::ULong digits = fixed->digits ()->ev ()->u.ulval;
+      const ACE_CDR::ULong scale = fixed->scale ()->ev ()->u.ulval;
+
+      os << "#ifndef _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
+         << "#define _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
+         << "static TAO::TypeCode::Fixed<TAO::Null_RefCount_Policy>" << be_idt_nl
+         << "_tao_tc_fixed_" << digits << "_" << scale << " (" << be_idt_nl
+         << digits << "," << be_nl
+         << scale << ");" << be_uidt_nl
+         << "static ::CORBA::TypeCode_ptr const _tao_tc_fixed_"
+         << digits << "_" << scale << "_ptr = &_tao_tc_fixed_"
+         << digits << "_" << scale << ";" << be_nl
+         << "#endif /* _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD */" << be_nl_2;
+    }
+
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
   // Generate typecode for the base type, being careful to avoid doing

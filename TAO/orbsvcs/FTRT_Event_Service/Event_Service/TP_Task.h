@@ -17,20 +17,29 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TP_Task : public ACE_Task_Base {
+class TP_Task : public ACE_Task_Base
+{
 public:
-  TP_Task(CORBA::ORB_var& orb)
-    : orb_(orb)
+  explicit TP_Task (CORBA::ORB_var &orb)
+    : orb_ (orb)
   {
   }
 
-  ~TP_Task(){}
-  virtual int svc() {
-    this->orb_->run();
+  ~TP_Task () override = default;
+
+  int svc () override
+  {
+    this->orb_->run ();
     return 0;
   }
+
 private:
-  CORBA::ORB_var& orb_;
+  TP_Task (TP_Task const &) = delete;
+  TP_Task &operator= (TP_Task const &) = delete;
+  TP_Task (TP_Task &&) = delete;
+  TP_Task &operator= (TP_Task &&) = delete;
+
+  CORBA::ORB_var &orb_;
 };
 
 #endif

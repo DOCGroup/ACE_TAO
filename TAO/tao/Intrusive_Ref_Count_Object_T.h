@@ -37,20 +37,22 @@ class TAO_Intrusive_Ref_Count_Object : public TAO_Intrusive_Ref_Count_Base <ACE_
 {
 public:
   /// take ownership of obj.
-  TAO_Intrusive_Ref_Count_Object (OBJ* obj);
-  virtual ~TAO_Intrusive_Ref_Count_Object ();
+  TAO_Intrusive_Ref_Count_Object (OBJ *obj);
+  ~TAO_Intrusive_Ref_Count_Object () override;
 
-  OBJ* get () const;
+  OBJ *get () const;
 
 private:
   // Prevent default constructor used.
-  TAO_Intrusive_Ref_Count_Object ();
+  TAO_Intrusive_Ref_Count_Object () = delete;
 
   // Prevent copying/assignment.
-  TAO_Intrusive_Ref_Count_Object (const TAO_Intrusive_Ref_Count_Object&);
-  TAO_Intrusive_Ref_Count_Object& operator= (const TAO_Intrusive_Ref_Count_Object&);
+  TAO_Intrusive_Ref_Count_Object (TAO_Intrusive_Ref_Count_Object const &) = delete;
+  TAO_Intrusive_Ref_Count_Object &operator= (TAO_Intrusive_Ref_Count_Object const &) = delete;
+  TAO_Intrusive_Ref_Count_Object (TAO_Intrusive_Ref_Count_Object &&) = delete;
+  TAO_Intrusive_Ref_Count_Object &operator= (TAO_Intrusive_Ref_Count_Object &&) = delete;
 
-  OBJ* obj_;
+  OBJ *obj_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

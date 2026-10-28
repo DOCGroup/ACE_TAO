@@ -135,7 +135,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     may_ping_ (may_ping),
     listeners_ (),
     lock_ (),
-    callback_ (0),
+    callback_ (nullptr),
     pid_ (pid)
 {
   if (ImR_Locator_i::debug () > 4)
@@ -148,10 +148,10 @@ LiveEntry::LiveEntry (LiveCheck *owner,
 
 LiveEntry::~LiveEntry ()
 {
-  if (this->callback_.in () != 0)
+  if (this->callback_.in () != nullptr)
     {
       PingReceiver *rec = dynamic_cast<PingReceiver *>(this->callback_.in());
-      if (rec != 0)
+      if (rec != nullptr)
         {
           rec->cancel ();
         }
@@ -161,7 +161,7 @@ LiveEntry::~LiveEntry ()
 void
 LiveEntry::release_callback ()
 {
-  this->callback_ = 0;
+  this->callback_ = nullptr;
 }
 
 void
@@ -503,7 +503,7 @@ PingReceiver::cancel ()
   if (ImR_Locator_i::debug () > 4)
     {
       const char *server = "not available";
-      if (this->entry_ != 0)
+      if (this->entry_ != nullptr)
         {
           server = this->entry_->server_name ();
         }
@@ -512,7 +512,7 @@ PingReceiver::cancel ()
                       server));
     }
 
-  this->entry_ = 0;
+  this->entry_ = nullptr;
   try
     {
       PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
@@ -532,7 +532,7 @@ PingReceiver::cancel ()
 void
 PingReceiver::ping ()
 {
-  if (this->entry_ != 0)
+  if (this->entry_ != nullptr)
     {
       if (ImR_Locator_i::debug () > 5)
         {
@@ -568,7 +568,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
         case TAO_POA_DISCARDING:
         case TAO_POA_HOLDING:
           {
-            if (this->entry_ != 0)
+            if (this->entry_ != nullptr)
               {
                 this->entry_->release_callback ();
                 this->entry_->status (LS_TRANSIENT);
@@ -577,7 +577,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
           }
         default: //case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
           {
-            if (this->entry_ != 0)
+            if (this->entry_ != nullptr)
               {
                 this->entry_->release_callback ();
                 this->entry_->status (LS_DEAD);
@@ -587,7 +587,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
     }
   catch (const CORBA::TIMEOUT &ex)
     {
-      if (this->entry_ != 0)
+      if (this->entry_ != nullptr)
         {
           this->entry_->release_callback ();
           if ((ex.minor () & TAO_MINOR_MASK) == TAO_TIMEOUT_CONNECT_MINOR_CODE)
@@ -602,7 +602,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
     }
   catch (const CORBA::Exception &)
     {
-      if (this->entry_ != 0)
+      if (this->entry_ != nullptr)
         {
           this->entry_->release_callback ();
           this->entry_->status (LS_DEAD);
@@ -814,7 +814,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
        ++pe)
     {
       LiveEntry *entry = *pe;
-      if (entry != 0)
+      if (entry != nullptr)
         {
           if (entry->validate_ping (this->want_timeout_, this->deferred_timeout_))
             {
@@ -836,9 +836,9 @@ bool
 LiveCheck::has_server (const char *server)
 {
   ACE_CString s (server);
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   int const result = entry_map_.find (s, entry);
-  return (result == 0 && entry != 0);
+  return (result == 0 && entry != nullptr);
 }
 
 void
@@ -859,12 +859,12 @@ LiveCheck::add_server (const char *server,
     return;
 
   ACE_CString s (server);
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   ACE_NEW (entry, LiveEntry (this, server, may_ping, ref, pid));
   int result = entry_map_.bind (s, entry);
   if (result != 0)
     {
-      LiveEntry *old = 0;
+      LiveEntry *old = nullptr;
       result = entry_map_.rebind (s, entry, old);
       if (old)
         {
@@ -884,9 +884,9 @@ LiveCheck::set_pid (const char *server, int pid)
                       server, pid));
     }
   ACE_CString s(server);
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   int const result = entry_map_.find (s, entry);
-  if (result != -1 && entry != 0)
+  if (result != -1 && entry != nullptr)
     {
       entry->set_pid (pid);
     }
@@ -911,9 +911,9 @@ LiveCheck::remove_server (const char *server, int pid)
                       server, pid));
     }
   ACE_CString s(server);
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   int const result = entry_map_.find (s, entry);
-  if (result != -1 && entry != 0 && entry->has_pid (pid))
+  if (result != -1 && entry != nullptr && entry->has_pid (pid))
     {
       if (!this->in_handle_timeout ())
         {
@@ -948,7 +948,7 @@ LiveCheck::remove_server (const char *server, int pid)
     {
       if (ImR_Locator_i::debug () > 0)
         {
-          if (entry == 0)
+          if (entry == nullptr)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
@@ -993,9 +993,9 @@ LiveCheck::remove_deferred_servers ()
               // match when the server has already been restarted between the
               // moment it got in the removed_entries_ stack and this point
               // where we remove it from the internal administration
-              LiveEntry *entry = 0;
+              LiveEntry *entry = nullptr;
               int const result = entry_map_.find (name_pid_pair.first, entry);
-              if (result != -1 && entry != 0)
+              if (result != -1 && entry != nullptr)
                 {
                   if (entry->pid () == name_pid_pair.second)
                     {
@@ -1069,7 +1069,7 @@ LiveCheck::add_per_client_listener (LiveListener *l,
   if (!this->running_)
     return false;
 
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   ACE_NEW_RETURN (entry, LiveEntry (this, l->server (), true, ref, 0), false);
 
   if (this->per_client_.insert_tail(entry) == 0)
@@ -1099,10 +1099,10 @@ LiveCheck::add_poll_listener (LiveListener *l)
   if (!this->running_)
     return false;
 
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   ACE_CString key (l->server());
   int const result = entry_map_.find (key, entry);
-  if (result == -1 || entry == 0)
+  if (result == -1 || entry == nullptr)
     {
       return false;
     }
@@ -1119,10 +1119,10 @@ LiveCheck::add_listener (LiveListener *l)
   if (!this->running_)
     return false;
 
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   ACE_CString key (l->server());
   int const result = entry_map_.find (key, entry);
-  if (result == -1 || entry == 0)
+  if (result == -1 || entry == nullptr)
     {
       return false;
     }
@@ -1137,10 +1137,10 @@ LiveCheck::remove_listener (LiveListener *l)
   if (!this->running_)
     return;
 
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   ACE_CString key (l->server());
   int const result = entry_map_.find (key, entry);
-  if (result != -1 && entry != 0)
+  if (result != -1 && entry != nullptr)
     {
       entry->remove_listener (l);
     }
@@ -1231,9 +1231,9 @@ LiveCheck::is_alive (const char *server)
     }
 
   ACE_CString s(server);
-  LiveEntry *entry = 0;
+  LiveEntry *entry = nullptr;
   int const result = entry_map_.find (s, entry);
-  if (result == 0 && entry != 0)
+  if (result == 0 && entry != nullptr)
     {
       return entry->status ();
     }

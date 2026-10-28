@@ -32,7 +32,7 @@ Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (
   // (rather than pointers to objects)
 }
 
-const char *
+char const *
 Test_Unbounded_Struct_Sequence::opname () const
 {
   return this->opname_;

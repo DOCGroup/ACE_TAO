@@ -24,20 +24,21 @@ class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
   /// ctor
-  AMI_Test_i (CORBA::ORB_ptr orb, CORBA::Long in_l = 0, const char * in_str = 0, bool check_params = false);
+  AMI_Test_i (CORBA::ORB_ptr orb, CORBA::Long in_l = 0, char const *in_str = nullptr,
+              bool check_params = false);
 
   // The AMI_Test methods.
   CORBA::Long foo (CORBA::Long_out out_l,
                    CORBA::Long in_l,
-                   const char* in_str);
+                   char const *in_str) override;
 
-  void shutdown ();
+  void shutdown () override;
 
-  CORBA::Long yadda ();
+  CORBA::Long yadda () override;
 
-  void yadda (CORBA::Long yadda);
+  void yadda (CORBA::Long yadda) override;
 
-  void inout_arg_test (char *& str);
+  void inout_arg_test (char *&str) override;
 
 private:
   CORBA::ORB_var orb_;

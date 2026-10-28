@@ -48,8 +48,8 @@ public:
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
-                      ACE_Thread_Manager *thr_mgr = 0,
-                      ACE_Thread_Descriptor *td = 0
+                      ACE_Thread_Manager *thr_mgr = nullptr,
+                      ACE_Thread_Descriptor *td = nullptr
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                       , ACE_SEH_EXCEPT_HANDLER selector = 0,
                       ACE_SEH_EXCEPT_HANDLER handler = 0

@@ -8,8 +8,8 @@
 class inventory_i : public POA_warehouse::inventory
 {
 public:
-  CORBA::Boolean getCDinfo (const char * artist,
-                            char *& title,
-                            CORBA::Float_out price);
+  CORBA::Boolean getCDinfo (char const* artist,
+                            char*& title,
+                            CORBA::Float_out price) override;
 };
 

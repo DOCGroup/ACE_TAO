@@ -3,9 +3,7 @@
 #include "Activator_ORB_Runner.h"
 #include "ace/Dynamic_Service.h"
 
-ImR_Activator_Loader::~ImR_Activator_Loader ()
-{
-}
+ImR_Activator_Loader::~ImR_Activator_Loader () = default;
 
 // For now, we will assume that it's sufficient to start
 // the service in its own thread. Later, if necessary, we
@@ -28,7 +26,7 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
         return -1;
 
       // Create a thread in which to run the service
-      ACE_ASSERT (this->runner_.get () == 0);
+      ACE_ASSERT (this->runner_.get () == nullptr);
       this->runner_= std::make_unique<ImR_Activator_ORB_Runner> (*this);
       this->runner_->activate ();
     }
@@ -42,7 +40,7 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
 int
 ImR_Activator_Loader::fini ()
 {
-  ACE_ASSERT (this->runner_.get() != 0);
+  ACE_ASSERT (this->runner_.get () != nullptr);
   try
     {
       int ret = this->service_.fini ();

@@ -51,6 +51,7 @@ public:
 
   /// visit a predefined type node
   int visit_predefined_type (be_predefined_type *node);
+  int visit_fixed (be_fixed *node);
 
   /// visit a sequence node
   int visit_sequence (be_sequence *node);

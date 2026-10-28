@@ -35,7 +35,7 @@ namespace CORBA
   class PolicyList;
 }
 
-typedef CORBA::ULong TAO_PHandle;
+using TAO_PHandle = CORBA::ULong;
 
 /**
  * @class TAO_MProfile

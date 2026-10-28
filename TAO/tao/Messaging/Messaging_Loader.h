@@ -29,17 +29,17 @@ class TAO_Messaging_Export TAO_Messaging_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_Messaging_Loader ();
+  TAO_Messaging_Loader () = default;
 
   /// Destructor.
-  virtual ~TAO_Messaging_Loader ();
+  ~TAO_Messaging_Loader () override;
 
   /// Initialize the Messaging loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   /// Set to true after init is called.
-  bool initialized_;
+  bool initialized_ {};
 };
 
 

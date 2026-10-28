@@ -149,7 +149,7 @@ TAO::TypeCode::Enum<StringType,
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
       TAO_ORB_Core::typecodefactory_adapter_name ());
 
-  if (adapter == 0)
+  if (adapter == nullptr)
     {
       throw ::CORBA::INTERNAL ();
     }

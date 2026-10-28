@@ -38,9 +38,9 @@ struct TAO_Active_Object_Map_Entry;
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
+  using Object_ptr = Object *;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
+  using Object_out = TAO_Pseudo_Out_T<Object>;
 }
 
 namespace TAO
@@ -80,13 +80,13 @@ namespace TAO
 
         /// Indicates whether the priority of the thread needs to be
         /// reset back to its original value.
-        State state_;
+        State state_ {NO_ACTION_REQUIRED};
 
         /// Original native priority of the thread.
-        CORBA::Short original_native_priority_;
+        CORBA::Short original_native_priority_ {};
 
         /// Original CORBA priority of the thread.
-        CORBA::Short original_CORBA_priority_;
+        CORBA::Short original_CORBA_priority_ {};
       };
 
       /// Constructor.
@@ -189,34 +189,34 @@ namespace TAO
       void upcall_cleanup ();
 
     protected:
-      TAO_Object_Adapter *object_adapter_;
+      TAO_Object_Adapter *object_adapter_ {};
 
-      ::TAO_Root_POA *poa_;
+      ::TAO_Root_POA *poa_ {};
 
-      PortableServer::Servant servant_;
+      PortableServer::Servant servant_ {};
 
-      State state_;
+      State state_ {INITIAL_STAGE};
 
       CORBA::Octet system_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
       PortableServer::ObjectId system_id_;
 
-      const PortableServer::ObjectId *user_id_;
+      PortableServer::ObjectId const *user_id_ {};
 
       POA_Current_Impl current_context_;
 
   #if (TAO_HAS_MINIMUM_POA == 0)
 
       /// Servant Locator's cookie
-      void* cookie_;
+      void *cookie_ {};
 
       /// Operation name for this current.
-      const char *operation_;
+      char const *operation_ {};
 
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       /// Pointer to the entry in the TAO_Active_Object_Map corresponding
       /// to the servant for this request.
-      TAO_Active_Object_Map_Entry *active_object_map_entry_;
+      TAO_Active_Object_Map_Entry *active_object_map_entry_ {};
 
       /// Preinvoke data for the upcall.
       Pre_Invoke_State pre_invoke_state_;

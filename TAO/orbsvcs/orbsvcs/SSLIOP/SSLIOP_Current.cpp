@@ -25,12 +25,12 @@ TAO::SSLIOP::Current::get_peer_certificate ()
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
-  if (impl == 0)
+  if (impl == nullptr)
     throw ::SSLIOP::Current::NoContext ();
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
-  ::SSLIOP::ASN_1_Cert *c = 0;
+  ::SSLIOP::ASN_1_Cert *c = nullptr;
   ACE_NEW_THROW_EX (c,
                     ::SSLIOP::ASN_1_Cert,
                     CORBA::NO_MEMORY (
@@ -55,12 +55,12 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
-  if (impl == 0)
+  if (impl == nullptr)
     throw SSLIOP::Current::NoContext ();
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
-  ::SSLIOP::SSL_Cert *c = 0;
+  ::SSLIOP::SSL_Cert *c = nullptr;
   ACE_NEW_THROW_EX (c,
                     ::SSLIOP::SSL_Cert,
                     CORBA::NO_MEMORY (
@@ -80,7 +80,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 CORBA::Boolean
 TAO::SSLIOP::Current::no_context ()
 {
-  return (this->implementation () == 0 ? true : false);
+  return (this->implementation () == nullptr ? true : false);
 }
 
 void

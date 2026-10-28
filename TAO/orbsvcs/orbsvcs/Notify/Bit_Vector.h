@@ -35,8 +35,8 @@ namespace TAO_Notify
 /// Should be promoted to the ACE level to make it generally usable.
 class TAO_Notify_Serv_Export Bit_Vector
 {
-  typedef ACE_UINT32 BASIC_UINT_TYPE;
-  typedef ACE_Vector<BASIC_UINT_TYPE> VECTOR_TYPE;
+  using BASIC_UINT_TYPE = ACE_UINT32;
+  using VECTOR_TYPE = ACE_Vector<BASIC_UINT_TYPE>;
   enum {
     BITS_PER_WORD = 32,
     BPW_LOG_2 = 5

@@ -32,6 +32,7 @@
 #include "be_string.h"
 #include "be_structure.h"
 #include "be_field.h"
+#include "be_fixed.h"
 #include "be_union.h"
 #include "be_union_branch.h"
 #include "be_typedef.h"
@@ -47,7 +48,8 @@
 be_visitor_arg_traits::be_visitor_arg_traits (const char *S,
                                               be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    S_ (ACE::strnew (S))
+    S_ (ACE::strnew (S)),
+    fixed_generated_ (false)
 {
 }
 
@@ -1158,6 +1160,35 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
     }
 
   this->ctx_->alias (nullptr);
+  return 0;
+}
+
+int
+be_visitor_arg_traits::visit_fixed (be_fixed *)
+{
+  if (this->fixed_generated_)
+    {
+      return 0;
+    }
+
+  TAO_OutStream * const os = this->ctx_->stream ();
+  TAO_INSERT_COMMENT (os);
+
+  // There is no untyped Any insertion for ACE_CDR::Fixed.  A fixed
+  // TypeCode carries the digits and scale, so generated types need their
+  // own Any operators before interceptor values can be represented.
+  *os << be_nl_2
+      << "template<>" << be_nl
+      << "class " << this->S_ << "Arg_Traits< ::ACE_CDR::Fixed>" << be_idt_nl
+      << ": public Basic_" << this->S_ << "Arg_Traits_T<" << be_idt_nl
+      << "::ACE_CDR::Fixed," << be_nl
+      << "TAO::Any_Insert_Policy_Noop" << be_uidt_nl
+      << ">" << be_uidt_nl
+      << "{" << be_nl
+      << "};";
+
+  this->fixed_generated_ = true;
+
   return 0;
 }
 

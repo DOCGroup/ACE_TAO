@@ -39,7 +39,7 @@ namespace ACE
         class Session_T : public ACE::HTTP::SessionBase
           {
             public:
-              typedef ACE::IOS::StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE> connection_type;
+              using connection_type = ACE::IOS::StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE>;
 
               Session_T (bool keep_alive = true
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
@@ -71,7 +71,7 @@ namespace ACE
               virtual std::iostream& sock_stream ();
 
             private:
-              typedef ACE::IOS::SSLSock_IOStreamBase<ACE_SYNCH_USE> sock_stream_type;
+              using sock_stream_type = ACE::IOS::SSLSock_IOStreamBase<ACE_SYNCH_USE>;
 
               connection_type* connection_;
               sock_stream_type* sock_stream_;
@@ -80,7 +80,7 @@ namespace ACE
 #endif
           };
 
-        typedef Session_T<ACE_NULL_SYNCH> Session;
+        using Session = Session_T<ACE_NULL_SYNCH>;
       }
   }
 

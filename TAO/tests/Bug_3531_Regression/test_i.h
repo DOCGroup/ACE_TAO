@@ -15,15 +15,20 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb);
   // ctor
 
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
+
   // = The Simple_Server methods.
-  char *test_method (Simple_Server_ptr objref);
+  char *test_method (Simple_Server_ptr objref) override;
 
-  virtual void client_done ();
+  void client_done () override;
 
-  void shutdown ();
+  void shutdown () override;
 
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
 
 private:
   CORBA::ORB_var orb_;

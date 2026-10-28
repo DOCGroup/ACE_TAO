@@ -45,17 +45,17 @@ namespace TAO
          * PortableInterceptor::Current interface.
          */
         //@{
-        virtual CORBA::Long id ();
+        CORBA::Long id () override;
 
-        virtual CounterT bytes_sent ();
+        CounterT bytes_sent () override;
 
-        virtual CounterT bytes_received ();
+        CounterT bytes_received () override;
 
-        virtual CounterT messages_sent ();
+        CounterT messages_sent () override;
 
-        virtual CounterT messages_received ();
+        CounterT messages_received () override;
 
-        virtual ::TimeBase::TimeT open_since ();
+        ::TimeBase::TimeT open_since () override;
         //@}
 
       protected:
@@ -76,11 +76,13 @@ namespace TAO
         /// reference counted, and should not be destroyed using
         /// delete() by anything other than the reference counting
         /// mechanism.
-        virtual ~Current_Impl ();
+        ~Current_Impl () override;
 
       private:
-        Current_Impl (const Current_Impl &) = delete;
-        void operator= (const Current_Impl &) = delete;
+        Current_Impl (Current_Impl const &) = delete;
+        void operator= (Current_Impl const &) = delete;
+        Current_Impl (Current_Impl &&) = delete;
+        void operator= (Current_Impl &&) = delete;
 
       private:
         // The ORB (core) that owes us.

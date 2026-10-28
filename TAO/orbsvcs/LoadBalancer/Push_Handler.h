@@ -38,19 +38,24 @@ class TAO_LB_Push_Handler : public ACE_Event_Handler
 public:
   /// Constructor
   TAO_LB_Push_Handler (CosLoadBalancing::LoadMonitor_ptr monitor,
-                       const PortableGroup::Location & location,
+                       PortableGroup::Location const & location,
                        CosLoadBalancing::LoadManager_ptr manager);
 
   /// Receive the timeout event.
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *arg) override;
 
 private:
+  TAO_LB_Push_Handler (TAO_LB_Push_Handler const &) = delete;
+  TAO_LB_Push_Handler (TAO_LB_Push_Handler &&) = delete;
+  TAO_LB_Push_Handler & operator= (TAO_LB_Push_Handler const &) = delete;
+  TAO_LB_Push_Handler & operator= (TAO_LB_Push_Handler &&) = delete;
+
   /// Reference to the LoadMonitor.
   CosLoadBalancing::LoadMonitor_var monitor_;
 
   /// Location where the LoadMonitor resides.
-  const PortableGroup::Location location_;
+  PortableGroup::Location const location_;
 
   /// Reference to the LoadManager.
   CosLoadBalancing::LoadManager_var manager_;

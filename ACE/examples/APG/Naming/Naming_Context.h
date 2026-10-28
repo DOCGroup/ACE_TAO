@@ -10,7 +10,7 @@
 class Naming_Context : public ACE_Naming_Context
 {
 public:
-  typedef ACE_Naming_Context inherited;
+  using inherited = ACE_Naming_Context;
 
   int rebind (const char *name_in,
               const char *value_in,

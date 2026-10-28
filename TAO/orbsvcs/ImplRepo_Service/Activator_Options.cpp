@@ -416,7 +416,7 @@ Activator_Options::debug () const
   return this->debug_;
 }
 
-const ACE_TString&
+ACE_TString const&
 Activator_Options::ior_filename () const
 {
   return this->ior_output_file_;
@@ -428,13 +428,13 @@ Activator_Options::service_command () const
   return this->service_command_;
 }
 
-const char*
+char const*
 Activator_Options::cmdline () const
 {
   return this->cmdline_.c_str ();
 }
 
-const ACE_CString&
+ACE_CString const&
 Activator_Options::name () const
 {
   return this->name_;

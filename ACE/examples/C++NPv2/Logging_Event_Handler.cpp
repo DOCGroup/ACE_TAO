@@ -20,7 +20,7 @@ int Logging_Event_Handler::open () {
   ACE_FILE_Connector connector;
   connector.connect (log_file_,
                      ACE_FILE_Addr (filename),
-                     0, // No timeout.
+                     nullptr, // No timeout.
                      ACE_Addr::sap_any, // Ignored.
                      0, // Don't try to reuse the addr.
                      O_RDWR|O_CREAT|O_APPEND,

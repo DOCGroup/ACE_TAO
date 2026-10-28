@@ -26,7 +26,7 @@ TAO::SL3::SecurityCurrent::client_credentials ()
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
-  if (impl == 0)
+  if (impl == nullptr)
     throw CORBA::BAD_INV_ORDER ();
 
   return impl->client_credentials ();
@@ -40,7 +40,7 @@ TAO::SL3::SecurityCurrent::request_is_local ()
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
-  if (impl == 0)
+  if (impl == nullptr)
     throw CORBA::BAD_INV_ORDER ();
 
   return impl->request_is_local ();

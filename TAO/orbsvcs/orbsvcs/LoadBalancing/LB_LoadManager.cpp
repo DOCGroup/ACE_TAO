@@ -27,8 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
                                         int ping_interval)
-  : reactor_ (0),
-    poa_ (),
+  : poa_ (),
     root_poa_ (),
     monitor_lock_ (),
     load_lock_ (),
@@ -167,7 +166,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
+  TAO_LB_LoadAlertMap::ENTRY * entry = nullptr;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -221,7 +220,7 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
+  TAO_LB_LoadAlertMap::ENTRY * entry = nullptr;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -304,7 +303,7 @@ TAO_LB_LoadManager::get_load_alert (
                     this->load_alert_lock_,
                     CosLoadBalancing::LoadAlert::_nil ());
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
+  TAO_LB_LoadAlertMap::ENTRY * entry = nullptr;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -404,7 +403,7 @@ TAO_LB_LoadManager::get_load_monitor (
                     this->monitor_lock_,
                     CosLoadBalancing::LoadMonitor::_nil ());
 
-  TAO_LB_MonitorMap::ENTRY * entry = 0;
+  TAO_LB_MonitorMap::ENTRY * entry = nullptr;
   if (this->monitor_map_.find (the_location, entry) == 0)
     {
       return
@@ -925,7 +924,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
 
       else if (property.nam == this->built_in_balancing_strategy_info_name_)
         {
-          const CosLoadBalancing::StrategyInfo * info = 0;
+          const CosLoadBalancing::StrategyInfo * info = nullptr;
 
           if (property.val >>= info)
             {

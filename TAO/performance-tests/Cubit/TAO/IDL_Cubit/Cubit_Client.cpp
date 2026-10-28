@@ -414,11 +414,11 @@ Cubit_Client::cube_union ()
 
       this->call_count_++;
 
-      u._d (Cubit::e_3rd);
-
-      u.cm ().l = 7;
-      u.cm ().s = 5;
-      u.cm ().o = 3;
+      Cubit::Many cm;
+      cm.l = 7;
+      cm.s = 5;
+      cm.o = 3;
+      u.cm (cm);
 
       // Cube another "union" which uses the default arm ... NOT tested yet
       {

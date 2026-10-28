@@ -41,11 +41,16 @@ namespace TAO
     XtResource_Factory (XtAppContext context);
 
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl ();
+    ACE_Reactor_Impl *reactor_impl () override;
 
   private:
+    XtResource_Factory (XtResource_Factory const &) = delete;
+    XtResource_Factory &operator= (XtResource_Factory const &) = delete;
+    XtResource_Factory (XtResource_Factory &&) = delete;
+    XtResource_Factory &operator= (XtResource_Factory &&) = delete;
+
     /// Reactor created by this factory.
-    ACE_XtReactor *reactor_impl_;
+    ACE_XtReactor *reactor_impl_ {};
 
     /// Xt context for XtReactor
     XtAppContext  context_;

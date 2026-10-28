@@ -573,6 +573,40 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
 }
 
 int
+be_visitor_field_cdr_op_cs::visit_fixed (be_fixed *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_field *f = dynamic_cast<be_field*> (this->ctx_->node ());
+
+  if (f == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_cs::"
+                         "visit_fixed - cannot retrieve field node\n"),
+                        -1);
+    }
+
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+      break;
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+      break;
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+      break;
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_cs::"
+                         "visit_fixed - bad sub state\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
 be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
 {
   // If the sequence is defined in this scope, generate its

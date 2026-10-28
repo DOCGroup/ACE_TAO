@@ -44,33 +44,33 @@ namespace TAO
      * are known so the stream may be handed off to either an existing
      * session, or to a newly created one.
      */
-    typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY2;
-    typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY2;
+    using CREATION_STRATEGY2 = TAO_Creation_Strategy<Connection_Handler>;
+    using CONCURRENCY_STRATEGY2 = TAO_Concurrency_Strategy<Connection_Handler>;
 
-    typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> COMPLETION_BASE;
+    using COMPLETION_BASE = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
     public:
-      Completion_Handler (ACE_Thread_Manager* t = 0);
+      Completion_Handler (ACE_Thread_Manager* t = nullptr);
       /// Constructor.
       Completion_Handler (TAO_ORB_Core *orb_core,
                           CORBA::Boolean = false);
 
       /// Destructor.
-      ~Completion_Handler ();
+      ~Completion_Handler () override;
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected. Argument is unused.
-      virtual int open (void *);
+      int open (void *) override;
 
       //@{
       /** @name Event Handler overloads
        */
-      virtual int handle_input (ACE_HANDLE);
+      int handle_input (ACE_HANDLE) override;
 
-      virtual int resume_handler ();
-      virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+      int resume_handler () override;
+      int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
       //@}
 
     private:

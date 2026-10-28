@@ -12,13 +12,17 @@ class BoundSequences
 public:
   /// Constructor
   BoundSequences (CORBA::ORB_ptr orb);
+  BoundSequences (BoundSequences const &) = delete;
+  BoundSequences (BoundSequences &&) = delete;
+  BoundSequences &operator= (BoundSequences const &) = delete;
+  BoundSequences &operator= (BoundSequences &&) = delete;
 
   // = The skeleton methods
-  virtual ::CORBA::ULong SendSequenceOf10Long (
+  ::CORBA::ULong SendSequenceOf10Long (
     ::CORBA::ULong LengthSent,
-    const ::Test::BoundSequences::SequenceOf10Long &inSeq);
+    ::Test::BoundSequences::SequenceOf10Long const &inSeq) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

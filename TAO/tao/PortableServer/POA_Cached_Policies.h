@@ -54,7 +54,7 @@ namespace TAO
         NO_NETWORK_PRIORITY
       };
 
-      Cached_Policies ();
+      Cached_Policies () = default;
 
       ~Cached_Policies () = default;
 
@@ -113,31 +113,33 @@ namespace TAO
 
     protected:
       /// Helper method to update a particular policy.
-      void update_policy (const CORBA::Policy_ptr policy);
+      void update_policy (CORBA::Policy_ptr const policy);
 
-      ::PortableServer::ThreadPolicyValue thread_;
+      ::PortableServer::ThreadPolicyValue thread_ {::PortableServer::ORB_CTRL_MODEL};
 
-      ::PortableServer::LifespanPolicyValue lifespan_;
+      ::PortableServer::LifespanPolicyValue lifespan_ {::PortableServer::TRANSIENT};
 
-      ::PortableServer::IdUniquenessPolicyValue id_uniqueness_;
+      ::PortableServer::IdUniquenessPolicyValue id_uniqueness_ {::PortableServer::UNIQUE_ID};
 
-      ::PortableServer::IdAssignmentPolicyValue id_assignment_;
+      ::PortableServer::IdAssignmentPolicyValue id_assignment_ {::PortableServer::SYSTEM_ID};
 
-      ::PortableServer::ImplicitActivationPolicyValue implicit_activation_;
+      ::PortableServer::ImplicitActivationPolicyValue implicit_activation_ {
+        ::PortableServer::NO_IMPLICIT_ACTIVATION};
 
-      ::PortableServer::ServantRetentionPolicyValue servant_retention_;
+      ::PortableServer::ServantRetentionPolicyValue servant_retention_ {::PortableServer::RETAIN};
 
-      ::PortableServer::RequestProcessingPolicyValue request_processing_;
+      ::PortableServer::RequestProcessingPolicyValue request_processing_ {
+        ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY};
 
-      PriorityModel priority_model_;
+      PriorityModel priority_model_ {NOT_SPECIFIED};
 
-      CORBA::Short server_priority_;
+      CORBA::Short server_priority_ {TAO_INVALID_PRIORITY};
 
-      NetworkPriorityModel network_priority_model_;
+      NetworkPriorityModel network_priority_model_ {NO_NETWORK_PRIORITY};
 
-      CORBA::Long request_diffserv_codepoint_;
+      CORBA::Long request_diffserv_codepoint_ {};
 
-      CORBA::Long reply_diffserv_codepoint_;
+      CORBA::Long reply_diffserv_codepoint_ {};
     };
   }
 }

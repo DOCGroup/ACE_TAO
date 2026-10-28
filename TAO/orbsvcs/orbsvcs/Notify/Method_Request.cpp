@@ -27,7 +27,7 @@ TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable(const T
 void
 TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
 {
-  ACE_ASSERT( event != 0 );
+  ACE_ASSERT( event != nullptr );
   // Set the parameters that affect queuing in the message queue.
   // The ACE_Message_Block priorities go from 0 (lowest) to ULONG_MAX
   // (highest), while the Notification Events go from -32767 (lowest,

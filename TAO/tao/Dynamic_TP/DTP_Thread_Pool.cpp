@@ -19,6 +19,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool () = default;
+
 TAO_DTP_New_Leader_Generator::TAO_DTP_New_Leader_Generator (
   TAO_DTP_Thread_Pool &p)
   : pool_ (p)
@@ -296,12 +298,12 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 
   // Default parameters.
   int default_grp_id = -1;
-  ACE_Task_Base *default_task = 0;
-  ACE_hthread_t *default_thread_handles = 0;
-  void **default_stack = 0;
+  ACE_Task_Base *default_task = nullptr;
+  ACE_hthread_t *default_thread_handles = nullptr;
+  void **default_stack = nullptr;
 
   // Setting stack size.
-  size_t *stack_size_array = 0;
+  size_t *stack_size_array = nullptr;
   ACE_NEW_RETURN (stack_size_array,
                   size_t[count],
                   -1);
@@ -376,11 +378,9 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
                                           TAO_DTP_Definition &def)
   : manager_ (manager),
     id_ (id),
-    shutdown_ (false),
     definition_ (def),
     threads_ (*this),
     waiter_ (*this),
-    active_count_ (0),
     new_thread_generator_ (*this),
     lock_ (),
     activation_lock_ (),
@@ -396,10 +396,6 @@ void
 TAO_DTP_Thread_Pool::open ()
 {
   // Nothing to do for now
-}
-
-TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool ()
-{
 }
 
 void
@@ -433,10 +429,7 @@ TAO_DTP_Thread_Pool::wait ()
       CORBA::COMPLETED_NO));
 
 TAO_DTP_Thread_Pool_Manager::TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core)
-  : orb_core_ (orb_core),
-    thread_pools_ (),
-    thread_pool_id_counter_ (1),
-    lock_ ()
+  : orb_core_ (orb_core)
 {
 }
 
@@ -470,7 +463,7 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool (TAO_DTP_Definition &def)
 void
 TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
 {
-  TAO_DTP_Thread_Pool *tao_thread_pool = 0;
+  TAO_DTP_Thread_Pool *tao_thread_pool = nullptr;
 
   // The guard is just for the map, don't do a wait inside the guard, because
   // during the wait other threads can try to access the thread pool manager
@@ -501,7 +494,7 @@ CORBA::ULong
 TAO_DTP_Thread_Pool_Manager::create_threadpool_i (TAO_DTP_Definition &def)
 {
   // Create the thread pool.
-  TAO_DTP_Thread_Pool *thread_pool = 0;
+  TAO_DTP_Thread_Pool *thread_pool = nullptr;
 
   ACE_NEW_THROW_EX (thread_pool,
                     TAO_DTP_Thread_Pool (*this,

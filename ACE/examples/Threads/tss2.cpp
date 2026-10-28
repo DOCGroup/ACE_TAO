@@ -96,7 +96,7 @@ Test_Task::svc (void *arg)
 
   delete (Test_Task *) arg;
 
-  return 0;
+  return nullptr;
 }
 
 int
@@ -113,7 +113,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   num_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : MAX_TASKS;
 
-  Test_Task **task_arr = 0;
+  Test_Task **task_arr = nullptr;
 
   ACE_NEW_RETURN (task_arr, Test_Task *[num_tasks], -1);
 

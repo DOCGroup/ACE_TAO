@@ -33,7 +33,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
                                       ACE_TEXT("count"),
                                       count);
 
-  ACE_TCHAR *stringified = 0;
+  ACE_TCHAR *stringified = nullptr;
   ACE_Configuration_Section_Key special_key;
   ACE_TString holder;
 
@@ -75,7 +75,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
                              length);
 
   CORBA::ULong arg_count = 0;
-  char *arg_path = 0;
+  char *arg_path = nullptr;
   ACE_Configuration_Section_Key initializer_key;
   ACE_Configuration_Section_Key params_key;
   ACE_Configuration_Section_Key arg_key;
@@ -176,7 +176,7 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
                              "count",
                              count);
   seq.length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_TString holder;
 
   for (CORBA::ULong i = 0; i < count; ++i)
@@ -216,7 +216,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
                              count);
   desc_seq.length (count);
   ACE_Configuration_Section_Key desc_key;
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_TString holder;
 
   for (CORBA::ULong i = 0; i < count; ++i)

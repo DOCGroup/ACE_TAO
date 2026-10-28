@@ -433,10 +433,10 @@ namespace ACE_Utils
     // If the size of FROM is less than the size of TO, "val" will
     // never be greater than the maximum "TO" value, so there is no
     // need to attempt to truncate.
-    typedef typename ACE::If_Then_Else<
+    using truncator = typename ACE::If_Then_Else<
       (sizeof (FROM) < sizeof (TO)),
       Noop_Truncator<FROM, TO>,
-      Truncator<FROM, TO> >::result_type truncator;
+      Truncator<FROM, TO> >::result_type;
 
     return truncator() (val);
   }

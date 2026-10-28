@@ -56,13 +56,13 @@ namespace TAO
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool & /*wait_occurred_restart_call*/)
     {
-      PortableServer::Servant servant = 0;
+      PortableServer::Servant servant = nullptr;
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
                                           poa_current_impl);
 
-      if (servant == 0)
+      if (servant == nullptr)
         {
           throw ::CORBA::OBJECT_NOT_EXIST (
             CORBA::OMGVMCID | 2,

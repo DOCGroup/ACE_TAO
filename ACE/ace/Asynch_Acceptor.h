@@ -109,7 +109,7 @@ public:
                     bool pass_addresses = false,
                     int backlog = ACE_DEFAULT_ASYNCH_BACKLOG,
                     int reuse_addr = 1,
-                    ACE_Proactor *proactor = 0,
+                    ACE_Proactor *proactor = nullptr,
                     bool validate_new_connection = false,
                     int reissue_accept = 1,
                     int number_of_initial_accepts = -1);
@@ -130,7 +130,7 @@ public:
    * You need only call this method if the @a reissue_accept argument
    * passed to @c open() was 0.
    */
-  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
+  virtual int accept (size_t bytes_to_read = 0, const void *act = nullptr);
 
   /**
    * Cancels all pending accepts operations issued by this object.

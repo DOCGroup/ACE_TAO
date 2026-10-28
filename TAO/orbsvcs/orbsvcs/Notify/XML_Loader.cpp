@@ -124,7 +124,7 @@ namespace TAO_Notify
   void
   XML_Loader::load (Topology_Object *root)
   {
-    ACE_ASSERT (root != 0);
+    ACE_ASSERT (root != nullptr);
     this->live_ = true;
 
     std::unique_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
@@ -147,7 +147,7 @@ namespace TAO_Notify
         object_stack_.push (root);
         parser.parse (&input);
         ACE_ASSERT (object_stack_.size () == 1);
-        Topology_Object* cur = 0;
+        Topology_Object* cur = nullptr;
         object_stack_.pop (cur);
       }
       catch (const ACEXML_Exception& ex)
@@ -171,12 +171,12 @@ namespace TAO_Notify
     const ACEXML_Char* name,
     ACEXML_Attributes* xml_attrs)
   {
-    ACE_ASSERT (name != 0);
-    ACE_ASSERT (xml_attrs != 0);
+    ACE_ASSERT (name != nullptr);
+    ACE_ASSERT (xml_attrs != nullptr);
     if (this->live_)
     {
       ACE_ASSERT (object_stack_.size () > 0);
-      Topology_Object* cur = 0;
+      Topology_Object* cur = nullptr;
       if (object_stack_.top (cur) == 0)
       {
         try
@@ -191,7 +191,7 @@ namespace TAO_Notify
 
           ACE_CString cname (ACE_TEXT_ALWAYS_CHAR(name));
           Topology_Object* next = cur->load_child (cname, id, attrs);
-          ACE_ASSERT(next != 0);
+          ACE_ASSERT(next != nullptr);
           object_stack_.push (next);
         }
         catch (const CORBA::Exception& ex)
@@ -217,7 +217,7 @@ namespace TAO_Notify
                       ACE_TEXT("(%P|%t) XML_Loader: End Element %s\n"),
                       name));
         }
-      Topology_Object* cur = 0;
+      Topology_Object* cur = nullptr;
       object_stack_.pop (cur);
     }
   }

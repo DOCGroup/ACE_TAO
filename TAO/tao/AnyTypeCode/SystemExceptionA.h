@@ -23,10 +23,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  using TypeCode_ptr = TypeCode *;
 
   class Any;
-  typedef Any *Any_ptr;
+  using Any_ptr = Any *;
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, \

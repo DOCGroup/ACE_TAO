@@ -37,21 +37,14 @@ CORBA::ServerRequest::_decr_refcount ()
 }
 
 CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
-  : lazy_evaluation_ (false),
-    ctx_ (CORBA::Context::_nil ()),
-    params_ (CORBA::NVList::_nil ()),
-    retval_ (0),
-    exception_ (0),
-    refcount_ (1),
-    orb_server_request_ (orb_server_request),
-    sent_gateway_exception_ (false)
+  : orb_server_request_ (orb_server_request)
 {
   this->orb_server_request_.is_dsi ();
 }
 
 CORBA::ServerRequest::~ServerRequest ()
 {
-  if (this->params_ != 0)
+  if (this->params_ != nullptr)
     {
       ::CORBA::release (this->params_);
     }
@@ -66,7 +59,7 @@ void
 CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
 {
   // arguments() must be called before either of these.
-  if (this->params_ != 0 || this->exception_ != 0)
+  if (this->params_ != nullptr || this->exception_ != nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
     }
@@ -78,7 +71,7 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
   {
     this->params_ = list;
 
-    if (this->orb_server_request_.operation_details ()->cac () != 0)
+    if (this->orb_server_request_.operation_details ()->cac () != nullptr)
       {
         TAO_OutputCDR output;
         this->orb_server_request_.operation_details ()->cac (
@@ -96,7 +89,7 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
 
     // in the case of a GIOP::LocateRequest there is no incoming CDR stream
     // so skip any attempt to decode arguments (now or later)
-    if (this->orb_server_request_.incoming () != 0)
+    if (this->orb_server_request_.incoming () != nullptr)
     {
       this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
                                         CORBA::ARG_IN | CORBA::ARG_INOUT,
@@ -113,11 +106,11 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
 // but not both of them.  Results can be reported (at most once)
 // only after the parameter list has been provided (maybe empty).
 void
-CORBA::ServerRequest::set_result (const CORBA::Any &value)
+CORBA::ServerRequest::set_result (CORBA::Any const& value)
 {
   // Setting a result when another result already exists or if an exception
   // exists or before the args have been processed is an error.
-  if (this->retval_ != 0 || this->exception_ != 0 || this->params_ == 0)
+  if (this->retval_ != nullptr || this->exception_ != nullptr || this->params_ == nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
     }
@@ -136,7 +129,7 @@ CORBA::ServerRequest::set_result (const CORBA::Any &value)
 
 // Store the exception value.
 void
-CORBA::ServerRequest::set_exception (const CORBA::Any &value)
+CORBA::ServerRequest::set_exception (CORBA::Any const& value)
 {
   CORBA::TypeCode_var tc = value.type ();
 
@@ -176,17 +169,17 @@ CORBA::ServerRequest::dsi_marshal ()
       {
         throw CORBA::UnknownUserException (*this->exception_);
       }
-    else if (this->orb_server_request_.operation_details ()->cac () != 0)
+    else if (this->orb_server_request_.operation_details ()->cac () != nullptr)
       {
         TAO_OutputCDR output;
         // marshal the return value if any
-        if (this->retval_ != 0)
+        if (this->retval_ != nullptr)
           {
             this->retval_->impl ()->marshal_value (output);
           }
 
         // marshal the "inout" and "out" parameters.
-        if (this->params_ != 0)
+        if (this->params_ != nullptr)
           {
             this->params_->_tao_encode (
                               output,
@@ -205,7 +198,7 @@ CORBA::ServerRequest::dsi_marshal ()
     if (this->orb_server_request_.reply_status () == GIOP::NO_EXCEPTION)
       {
         // In DSI, we can't rely on the skeleton to do this.
-        if (this->retval_ == 0 && this->params_ == 0)
+        if (this->retval_ == nullptr && this->params_ == nullptr)
           {
           this->orb_server_request_.argument_flag (false);
           }
@@ -213,14 +206,14 @@ CORBA::ServerRequest::dsi_marshal ()
         this->orb_server_request_.init_reply ();
 
         // Send the return value, if any.
-        if (this->retval_ != 0)
+        if (this->retval_ != nullptr)
           {
             this->retval_->impl ()->marshal_value (
                                         *this->orb_server_request_.outgoing ());
           }
 
         // Send the "inout" and "out" parameters.
-        if (this->params_ != 0)
+        if (this->params_ != nullptr)
           {
             this->params_->_tao_encode (
                               *this->orb_server_request_.outgoing (),

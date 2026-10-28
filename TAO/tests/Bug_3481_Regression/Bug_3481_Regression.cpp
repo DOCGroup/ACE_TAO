@@ -14,14 +14,16 @@ struct Foo_i : Foo
     --s_count_;
   }
 
-private:
-  Foo_i (const Foo_i &);
-  Foo_i operator= (const Foo_i &);
+  Foo_i (Foo_i const &) = delete;
+  Foo_i (Foo_i &&) = delete;
+  Foo_i &operator= (Foo_i const &) = delete;
+  Foo_i &operator= (Foo_i &&) = delete;
 };
 
 size_t Foo_i::s_count_ = 0;
 
-int ACE_TMAIN (int , ACE_TCHAR *[])
+int
+ACE_TMAIN (int, ACE_TCHAR * [])
 {
   {
     Foo_var f1 = new Foo_i;

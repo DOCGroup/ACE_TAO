@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRecord &rec)
+TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord const & rec)
   : property_lookup_ (property_lookup_size_)
 {
   CORBA::Any val_id;
@@ -176,7 +176,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                       TAO_OutputCDR cdr;
                       cdr.write_ulong ((CORBA::ULong) disc_val);
                       TAO_InputCDR in_cdr (cdr);
-                      TAO::Unknown_IDL_Type *unk = 0;
+                      TAO::Unknown_IDL_Type *unk = nullptr;
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (disc_tc.in (),
                                                              in_cdr),
@@ -217,7 +217,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                 CORBA::ULong count =
                   tc->member_count ();
 
-                const char *member_name = 0;
+                const char *member_name = nullptr;
                 CORBA::ULong i = 0;
 
                 for (i = 0; i < count; ++i)
@@ -369,21 +369,21 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
        false);
 
   if (this->property_lookup_.find (key, any) != 0
-      || any.impl () == 0)
+      || any.impl () == nullptr)
     {
       return -1;
     }
 
   ETCL_Constraint *comp = assoc->component ();
 
-  if (comp == 0)
+  if (comp == nullptr)
     {
       TAO_ETCL_Literal_Constraint result (&any);
       this->queue_.enqueue_head (result);
       return 0;
     }
 
-  CORBA::Any *any_ptr = 0;
+  CORBA::Any *any_ptr = nullptr;
   ACE_NEW_RETURN (any_ptr,
                   CORBA::Any (any),
                   -1);
@@ -546,7 +546,7 @@ TAO_Log_Constraint_Visitor::visit_component (
   ETCL_Constraint *nested = component->component ();
   int result = component->identifier ()->accept (this);
 
-  if (nested == 0 || result != 0)
+  if (nested == nullptr || result != 0)
     {
       return result;
     }
@@ -555,7 +555,7 @@ TAO_Log_Constraint_Visitor::visit_component (
       TAO_ETCL_Literal_Constraint id;
       this->queue_.dequeue_head (id);
 
-      CORBA::Any *any_ptr = 0;
+      CORBA::Any *any_ptr = nullptr;
       ACE_NEW_RETURN (any_ptr,
                       CORBA::Any,
                       -1);
@@ -1179,7 +1179,7 @@ TAO_Log_Constraint_Visitor::any_does_contain (
     const CORBA::Any *any,
     TAO_ETCL_Literal_Constraint &item)
 {
-  const CORBA::Any *result = 0;
+  const CORBA::Any *result = nullptr;
 
   *any >>= result;
 
@@ -1237,6 +1237,5 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
   return true;
 }
 
-const size_t TAO_Log_Constraint_Visitor::property_lookup_size_ = 31;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

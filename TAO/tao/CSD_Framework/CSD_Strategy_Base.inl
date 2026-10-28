@@ -4,12 +4,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::Strategy_Base::Strategy_Base()
-  : poa_activated_(false)
-{
-}
-
-ACE_INLINE
 void
 TAO::CSD::Strategy_Base::dispatch_request
                          (TAO_ServerRequest& server_request,
@@ -104,7 +98,7 @@ TAO::CSD::Strategy_Base::poa_deactivated_event()
       // Reset the poa to nil to decrement the reference count.
       // This will break the circular dependency of the deletion
       // of the CSD POA.
-      this->poa_ = 0;
+      this->poa_ = nullptr;
     }
 }
 

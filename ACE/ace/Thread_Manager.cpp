@@ -1133,7 +1133,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   int const result = OP (ptr, ARG); \
   ACE_Errno_Guard error (errno); \
   while (! this->thr_to_be_removed_.is_empty ()) { \
-    ACE_Thread_Descriptor * td = 0; \
+    ACE_Thread_Descriptor * td = nullptr; \
     this->thr_to_be_removed_.dequeue_head (td); \
     this->remove_thr (td, 1); \
   } \
@@ -1675,7 +1675,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
 
   // Just hold onto the guard while finding this thread's id and
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, ACE_THR_FUNC_RETURN_NULL));
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
@@ -1701,7 +1701,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
       // storage this call can return (don't ask...).
     }
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Wait for all the threads to exit.

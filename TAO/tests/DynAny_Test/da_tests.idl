@@ -20,6 +20,13 @@ module DynAnyTests
   typedef sequence<short> SeqShort;
   typedef sequence<boolean> SeqBoolean;
 
+  typedef fixed<10, 3> test_fixed;
+  typedef fixed<31, 0> test_max_fixed;
+  typedef fixed<31, 31> test_max_scale_fixed;
+  typedef fixed<3, 3> test_fraction_fixed;
+  typedef fixed<3, 0> test_small_fixed;
+  typedef sequence<test_fixed> test_fixed_sequence;
+
   const unsigned long DIM = 2;
   typedef long test_array [DIM];
 
@@ -53,6 +60,46 @@ module DynAnyTests
 
   typedef test_struct test_struct_alias;
   typedef test_union test_union_alias;
+
+  union test_multi_label_union switch (long) {
+    case 1:
+    case 2: string value;
+    default: long other;
+  };
+
+  union test_default_label_union switch (long) {
+    case 1:
+    default: long value;
+    case 2: short other;
+  };
+
+  union test_boolean_union switch (boolean) {
+    case TRUE: long true_value;
+    case FALSE: short false_value;
+  };
+
+  union test_char_union switch (char) {
+    case 'a':
+    case 'b': long value;
+    case 'c': short other;
+  };
+
+  enum discriminator_enum {
+    DE_FIRST,
+    DE_SECOND,
+    DE_THIRD
+  };
+
+  union test_enum_union switch (discriminator_enum) {
+    case DE_FIRST:
+    case DE_SECOND: long value;
+    case DE_THIRD: short other;
+  };
+
+  union test_enum_default_union switch (discriminator_enum) {
+    case DE_FIRST: long value;
+    default: short other;
+  };
 
   union test_implicit_def switch (boolean) {
     case TRUE :

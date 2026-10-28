@@ -79,7 +79,7 @@ ACE_UTF8_Encoding_Converter::encoded (const ACE_Byte* source,
     }
 
   // All characters are "valid" ASCII
-  ACE_UTF8_Encoding_Converter* converter = 0;
+  ACE_UTF8_Encoding_Converter* converter = nullptr;
   ACE_NEW_RETURN (converter,
                   ACE_UTF8_Encoding_Converter,
                   0);

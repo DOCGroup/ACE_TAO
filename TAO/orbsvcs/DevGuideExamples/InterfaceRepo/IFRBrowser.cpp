@@ -11,16 +11,16 @@
 
 #include <iostream>
 
-const char* programLabel = "IFR Browser";
+constexpr char const * programLabel = "IFR Browser";
 
-void listContents(const CORBA::ContainedSeq &repoContents);
-void listInterface(CORBA::InterfaceDef_ptr interfaceDef);
-void listOperation(CORBA::OperationDescription* operationDescr);
-void listParameter(CORBA::ParameterDescription* parameterDescr);
+void listContents (CORBA::ContainedSeq const & repoContents);
+void listInterface (CORBA::InterfaceDef_ptr interfaceDef);
+void listOperation (CORBA::OperationDescription const * operationDescr);
+void listParameter (CORBA::ParameterDescription const * parameterDescr);
 
-const char* decodeTypeCode(const CORBA::TypeCode_ptr typeCode);
-const char* decodeParameterMode(CORBA::ParameterMode mode);
-const char* decodeOperationMode(CORBA::OperationMode mode);
+char const * decodeTypeCode (CORBA::TypeCode_ptr typeCode);
+char const * decodeParameterMode (CORBA::ParameterMode mode);
+char const * decodeOperationMode (CORBA::OperationMode mode);
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -52,14 +52,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     std::cerr << "main() Caught CORBA::Exception : " << ex << std::endl;
   }
   return 1;
 }
 
-void listContents(const CORBA::ContainedSeq& repoContents)
+void listContents (CORBA::ContainedSeq const & repoContents)
 {
   //
   // List the contents of each element.
@@ -137,14 +137,14 @@ void listContents(const CORBA::ContainedSeq& repoContents)
   }
 }
 
-void listInterface(CORBA::InterfaceDef_ptr interfaceDef)
+void listInterface (CORBA::InterfaceDef_ptr interfaceDef)
 {
   CORBA::InterfaceDef::FullInterfaceDescription_var fullDescr =
     interfaceDef->describe_interface();
 
-  const char* interfaceName =
+  char const * interfaceName =
     fullDescr->name;
-  const char* interfaceRepoId =
+  char const * interfaceRepoId =
     fullDescr->id;
 
   ACE_DEBUG((LM_INFO,
@@ -178,15 +178,15 @@ void listInterface(CORBA::InterfaceDef_ptr interfaceDef)
   ACE_DEBUG((LM_INFO, "\n\t}\n"));
 }
 
-void listOperation(CORBA::OperationDescription* operationDescr)
+void listOperation (CORBA::OperationDescription const * operationDescr)
 {
-  const char* operationName =
+  char const * operationName =
     operationDescr->name;
-  const char* operationRepoId =
+  char const * operationRepoId =
     operationDescr->id;
-  const char* operationResult =
+  char const * operationResult =
     decodeTypeCode(operationDescr->result.in());
-  const char* operationMode =
+  char const * operationMode =
     decodeOperationMode(operationDescr->mode);
 
   ACE_DEBUG((LM_INFO,
@@ -197,7 +197,7 @@ void listOperation(CORBA::OperationDescription* operationDescr)
     operationMode
     ));
 
-  CORBA::ParDescriptionSeq* params = &(operationDescr->parameters);
+  CORBA::ParDescriptionSeq const * params = &(operationDescr->parameters);
   CORBA::ULong paramsCount = params->length();
   if (paramsCount > 0)
   {
@@ -218,11 +218,11 @@ void listOperation(CORBA::OperationDescription* operationDescr)
   }
 }
 
-void listParameter(CORBA::ParameterDescription *parameterDescr)
+void listParameter (CORBA::ParameterDescription const * parameterDescr)
 {
-  const char *typCode =
+  char const * typCode =
     decodeTypeCode(parameterDescr->type.in());
-  const char *paramMode =
+  char const * paramMode =
     decodeParameterMode(parameterDescr->mode);
   ACE_DEBUG((LM_INFO,
     ACE_TEXT("%s %s %s"),
@@ -232,9 +232,9 @@ void listParameter(CORBA::ParameterDescription *parameterDescr)
     ));
 }
 
-const char* decodeTypeCode(const CORBA::TypeCode_ptr typeCode)
+char const * decodeTypeCode (CORBA::TypeCode_ptr typeCode)
 {
-  const char* code = "";
+  char const * code = "";
   if (typeCode->equivalent(CORBA::_tc_void)) {
     code = "void";
   } else if (typeCode->equivalent(CORBA::_tc_boolean)) {
@@ -245,9 +245,9 @@ const char* decodeTypeCode(const CORBA::TypeCode_ptr typeCode)
   return code;
 }
 
-const char* decodeParameterMode(CORBA::ParameterMode mode)
+char const * decodeParameterMode (CORBA::ParameterMode mode)
 {
-  const char* paramMode;
+  char const * paramMode;
   switch(mode)
   {
   case CORBA::PARAM_IN:
@@ -271,7 +271,7 @@ const char* decodeParameterMode(CORBA::ParameterMode mode)
   return paramMode;
 }
 
-const char* decodeOperationMode(CORBA::OperationMode mode)
+char const * decodeOperationMode (CORBA::OperationMode mode)
 {
   return (mode == CORBA::OP_NORMAL) ? "synchronous" : "asynchronous";
 }

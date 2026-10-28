@@ -37,7 +37,7 @@ namespace ACE
           : public ACE::IOS::BufferedStreamBuffer
           {
             public:
-              typedef StreamPolicyBase<StreamBuffer>  policy_type;
+              using policy_type = StreamPolicyBase<StreamBuffer>;
 
               StreamBuffer (std::iostream& stream, policy_type* policy = 0);
               virtual ~StreamBuffer ();

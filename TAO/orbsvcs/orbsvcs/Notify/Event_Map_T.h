@@ -33,7 +33,7 @@ template <class PROXY, class ACE_LOCK>
 class TAO_Notify_Event_Map_T
 {
 public:
-  typedef  TAO_Notify_Event_Map_Entry_T<PROXY> ENTRY;
+  using ENTRY = TAO_Notify_Event_Map_Entry_T<PROXY>;
 
   /// Constructor
   TAO_Notify_Event_Map_T ();

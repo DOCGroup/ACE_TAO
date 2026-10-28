@@ -25,20 +25,20 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin
-                             , CosNotifyChannelAdmin::ConsumerAdmin
-                             , CosNotifyChannelAdmin::ConsumerAdmin_ptr
-                             , CosNotifyChannelAdmin::AdminNotFound>
-TAO_Notify_ConsumerAdmin_Find_Worker;
+using TAO_Notify_ConsumerAdmin_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin,
+                           CosNotifyChannelAdmin::ConsumerAdmin,
+                           CosNotifyChannelAdmin::ConsumerAdmin_ptr,
+                           CosNotifyChannelAdmin::AdminNotFound>;
 
-typedef TAO_Notify_Find_Worker_T<TAO_Notify_SupplierAdmin
-                             , CosNotifyChannelAdmin::SupplierAdmin
-                             , CosNotifyChannelAdmin::SupplierAdmin_ptr
-                             , CosNotifyChannelAdmin::AdminNotFound>
-TAO_Notify_SupplierAdmin_Find_Worker;
+using TAO_Notify_SupplierAdmin_Find_Worker =
+  TAO_Notify_Find_Worker_T<TAO_Notify_SupplierAdmin,
+                           CosNotifyChannelAdmin::SupplierAdmin,
+                           CosNotifyChannelAdmin::SupplierAdmin_ptr,
+                           CosNotifyChannelAdmin::AdminNotFound>;
 
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Seq_Worker;
-typedef TAO_Notify_Seq_Worker_T<TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Seq_Worker;
+using TAO_Notify_ConsumerAdmin_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_ConsumerAdmin>;
+using TAO_Notify_SupplierAdmin_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_SupplierAdmin>;
 
 TAO_Notify_EventChannel::TAO_Notify_EventChannel ()
   : ecf_ (nullptr)
@@ -58,7 +58,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            , const CosNotification::QoSProperties & initial_qos
                            , const CosNotification::AdminProperties & initial_admin)
 {
-  ACE_ASSERT (this->ca_container_.get() == 0);
+  ACE_ASSERT (this->ca_container_.get() == nullptr);
 
   // this-> on the following line confuses VC6
   initialize (ecf);
@@ -66,7 +66,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
   this->ecf_.reset (ecf);
 
   // Init ca_container_
-  TAO_Notify_ConsumerAdmin_Container* ca_container = 0;
+  TAO_Notify_ConsumerAdmin_Container* ca_container = nullptr;
   ACE_NEW_THROW_EX (ca_container,
                     TAO_Notify_ConsumerAdmin_Container (),
                     CORBA::INTERNAL ());
@@ -75,7 +75,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
   this->ca_container().init ();
 
   // Init ca_container_
-  TAO_Notify_SupplierAdmin_Container* sa_container = 0;
+  TAO_Notify_SupplierAdmin_Container* sa_container = nullptr;
   ACE_NEW_THROW_EX (sa_container,
                     TAO_Notify_SupplierAdmin_Container (),
                     CORBA::INTERNAL ());
@@ -84,14 +84,14 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
   this->sa_container().init ();
 
   // Set the admin properties.
-  TAO_Notify_AdminProperties* admin_properties = 0;
+  TAO_Notify_AdminProperties* admin_properties = nullptr;
   ACE_NEW_THROW_EX (admin_properties,
                     TAO_Notify_AdminProperties (),
                     CORBA::NO_MEMORY ());
   this->set_admin_properties (admin_properties);
 
   // create the event manager. @@ use factory
-  TAO_Notify_Event_Manager* event_manager = 0;
+  TAO_Notify_Event_Manager* event_manager = nullptr;
   ACE_NEW_THROW_EX (event_manager,
                     TAO_Notify_Event_Manager (),
                     CORBA::INTERNAL ());
@@ -125,15 +125,15 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 void
 TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 {
-  ACE_ASSERT (this->ecf_.get() == 0);
+  ACE_ASSERT (this->ecf_.get() == nullptr);
   // this-> on the following line confuses VC6
   initialize (parent);
 
   this->ecf_.reset (dynamic_cast <TAO_Notify_EventChannelFactory*>(parent));
-  ACE_ASSERT (this->ecf_.get() !=0);
+  ACE_ASSERT (this->ecf_.get() != nullptr);
 
   // Init ca_container_
-  TAO_Notify_ConsumerAdmin_Container* ca_container = 0;
+  TAO_Notify_ConsumerAdmin_Container* ca_container = nullptr;
   ACE_NEW_THROW_EX (ca_container,
                     TAO_Notify_ConsumerAdmin_Container (),
                     CORBA::INTERNAL ());
@@ -141,7 +141,7 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 
   this->ca_container().init ();
 
-  TAO_Notify_SupplierAdmin_Container* sa_container = 0;
+  TAO_Notify_SupplierAdmin_Container* sa_container = nullptr;
   // Init ca_container_
   ACE_NEW_THROW_EX (sa_container,
                     TAO_Notify_SupplierAdmin_Container (),
@@ -151,14 +151,14 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
   this->sa_container().init ();
 
   // Set the admin properties.
-  TAO_Notify_AdminProperties* admin_properties = 0;
+  TAO_Notify_AdminProperties* admin_properties = nullptr;
   ACE_NEW_THROW_EX (admin_properties,
                     TAO_Notify_AdminProperties (),
                     CORBA::NO_MEMORY ());
   this->set_admin_properties (admin_properties);
 
   // create the event manager. @@ use factory
-  TAO_Notify_Event_Manager* event_manager = 0;
+  TAO_Notify_Event_Manager* event_manager = nullptr;
   ACE_NEW_THROW_EX (event_manager,
                     TAO_Notify_Event_Manager (),
                     CORBA::INTERNAL ());
@@ -287,8 +287,8 @@ TAO_Notify_EventChannel::default_consumer_admin ()
             this->poa()->reference_to_servant (
               this->default_consumer_admin_.in ());
           TAO_Notify_Admin * pAdmin = dynamic_cast <TAO_Notify_Admin *> (admin_servant);
-          ACE_ASSERT (pAdmin != 0); // if this assert triggers, we have mixed implementations?
-          if (pAdmin != 0)
+          ACE_ASSERT (pAdmin != nullptr); // if this assert triggers, we have mixed implementations?
+          if (pAdmin != nullptr)
             {
               pAdmin->set_default (true);
             }
@@ -313,8 +313,8 @@ TAO_Notify_EventChannel::default_supplier_admin ()
             this->poa()->poa()->reference_to_servant (
               this->default_supplier_admin_.in ());
           TAO_Notify_Admin * pAdmin = dynamic_cast <TAO_Notify_Admin *> (admin_servant);
-          ACE_ASSERT (pAdmin != 0); // if this assert triggers, we have mixed implementations?
-          if (pAdmin != 0)
+          ACE_ASSERT (pAdmin != nullptr); // if this assert triggers, we have mixed implementations?
+          if (pAdmin != nullptr)
             {
               pAdmin->set_default (true);
             }
@@ -557,14 +557,14 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
 TAO_Notify_ProxyConsumer *
 TAO_Notify_EventChannel::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position)
 {
-  TAO_Notify_ProxyConsumer * result = 0;
+  TAO_Notify_ProxyConsumer * result = nullptr;
   size_t path_size = id_path.size ();
   if (position < path_size)
   {
     TAO_Notify_SupplierAdmin_Find_Worker find_worker;
     TAO_Notify_SupplierAdmin * admin = find_worker.find (id_path[position], this->sa_container());
     ++position;
-    if (admin != 0)
+    if (admin != nullptr)
     {
       result = admin->find_proxy_consumer (id_path, position);
     }
@@ -575,14 +575,14 @@ TAO_Notify_EventChannel::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_
 TAO_Notify_ProxySupplier *
 TAO_Notify_EventChannel::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position)
 {
-  TAO_Notify_ProxySupplier * result = 0;
+  TAO_Notify_ProxySupplier * result = nullptr;
   size_t path_size = id_path.size ();
   if (position < path_size)
   {
     TAO_Notify_ConsumerAdmin_Find_Worker find_worker;
     TAO_Notify_ConsumerAdmin * admin = find_worker.find (id_path[position], this->ca_container());
     ++position;
-    if (admin != 0)
+    if (admin != nullptr)
     {
       result = admin->find_proxy_supplier (id_path, position);
     }
@@ -604,14 +604,14 @@ TAO_Notify_EventChannel::reconnect ()
 TAO_Notify_EventChannel::TAO_Notify_ConsumerAdmin_Container&
 TAO_Notify_EventChannel::ca_container()
 {
-  ACE_ASSERT( this->ca_container_.get() != 0 );
+  ACE_ASSERT( this->ca_container_.get() != nullptr );
   return *ca_container_;
 }
 
 TAO_Notify_EventChannel::TAO_Notify_SupplierAdmin_Container&
 TAO_Notify_EventChannel::sa_container()
 {
-  ACE_ASSERT( this->sa_container_.get() != 0 );
+  ACE_ASSERT( this->sa_container_.get() != nullptr );
   return *sa_container_;
 }
 

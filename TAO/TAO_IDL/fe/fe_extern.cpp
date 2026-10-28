@@ -79,7 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern int tao_yyparse ();
 
 #ifdef USE_MCPP_BUFFER_LEXING
-char *tao_preproc_buffer = 0;
+char *tao_preproc_buffer = nullptr;
 int tao_preproc_buffer_length = 0;
 int tao_preproc_buffer_pos = 0;
 #else

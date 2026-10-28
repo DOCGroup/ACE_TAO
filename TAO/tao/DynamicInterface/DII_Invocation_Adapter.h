@@ -84,41 +84,43 @@ namespace TAO
     DII_Invocation_Adapter (CORBA::Object *target,
                             Argument **args,
                             int arg_number,
-                            const char *operation,
+                            char const* operation,
                             size_t op_len,
                             CORBA::ExceptionList *exception,
                             CORBA::Request *r,
                             Invocation_Mode mode = TAO_DII_INVOCATION);
 
-    virtual ~DII_Invocation_Adapter ();
+    ~DII_Invocation_Adapter () override;
 
     /// Invoke the target
-    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+    void invoke (TAO::Exception_Data const* ex, unsigned long ex_count) override;
 
   protected:
-    virtual Invocation_Status invoke_twoway (
+    Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state = 0);
+        Invocation_Retry_State *retry_state = nullptr) override;
 
-    virtual Invocation_Status invoke_collocated_i (
+    Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat);
+        Collocation_Strategy strat) override;
 
   private:
-    CORBA::ExceptionList *exception_list_;
+    CORBA::ExceptionList *exception_list_ {};
 
-    CORBA::Request *request_;
+    CORBA::Request *request_ {};
 
-    TAO::Exception_Data *ex_data_;
+    TAO::Exception_Data *ex_data_ {};
   private:
     DII_Invocation_Adapter () = delete;
-    DII_Invocation_Adapter (const DII_Invocation_Adapter &) = delete;
-    DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &) = delete;
+    DII_Invocation_Adapter (DII_Invocation_Adapter const &) = delete;
+    DII_Invocation_Adapter &operator= (DII_Invocation_Adapter const &) = delete;
+    DII_Invocation_Adapter (DII_Invocation_Adapter &&) = delete;
+    DII_Invocation_Adapter &operator= (DII_Invocation_Adapter &&) = delete;
   };
 
   /**
@@ -134,7 +136,7 @@ namespace TAO
         CORBA::Object *target,
         Argument **args,
         int arg_number,
-        const char *operation,
+        char const* operation,
         size_t op_len,
         int collocation_opportunity,
         TAO_ORB_Core *oc,
@@ -142,24 +144,29 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);
 
     /// Invoke the target
-    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+    void invoke (TAO::Exception_Data const* ex, unsigned long ex_count) override;
 
   protected:
-    virtual Invocation_Status invoke_twoway (
+    Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state = 0);
+        Invocation_Retry_State *retry_state = nullptr) override;
 
-    virtual Invocation_Status invoke_collocated_i (
+    Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat);
+        Collocation_Strategy strat) override;
 
   private:
-    CORBA::Request *request_;
+    DII_Deferred_Invocation_Adapter (DII_Deferred_Invocation_Adapter const &) = delete;
+    DII_Deferred_Invocation_Adapter &operator= (DII_Deferred_Invocation_Adapter const &) = delete;
+    DII_Deferred_Invocation_Adapter (DII_Deferred_Invocation_Adapter &&) = delete;
+    DII_Deferred_Invocation_Adapter &operator= (DII_Deferred_Invocation_Adapter &&) = delete;
+
+    CORBA::Request *request_ {};
 
     /// Reply dispatcher for the current Invocation.
     /// Use special autopointer like holder to prevent leaking memory from
@@ -184,16 +191,22 @@ namespace TAO
        CORBA::Object *target,
        Argument **args,
        int arg_number,
-       const char *operation,
+       char const* operation,
        int op_len,
        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
   protected:
-    virtual Invocation_Status invoke_collocated_i (
+    Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat);
+        Collocation_Strategy strat) override;
+
+  private:
+    DII_Oneway_Invocation_Adapter (DII_Oneway_Invocation_Adapter const &) = delete;
+    DII_Oneway_Invocation_Adapter &operator= (DII_Oneway_Invocation_Adapter const &) = delete;
+    DII_Oneway_Invocation_Adapter (DII_Oneway_Invocation_Adapter &&) = delete;
+    DII_Oneway_Invocation_Adapter &operator= (DII_Oneway_Invocation_Adapter &&) = delete;
   };
 } // End namespace TAO
 

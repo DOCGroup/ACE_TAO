@@ -42,8 +42,8 @@ public:
   T * operator-> ();
   const T * operator-> () const;
 
-  typedef const T &   _in_type;
-  typedef       T &   _inout_type;
+  using _in_type = T const &;
+  using _inout_type = T &;
 
   // Common mapping for fixed and variable size types.
   _in_type      in () const;
@@ -84,8 +84,8 @@ public:
   operator T & ();
   operator T & () const;
 
-  typedef T &   _out_type;
-  typedef T     _retn_type;
+  using _out_type = T &;
+  using _retn_type = T;
 
   // Mapping for fixed size types.
   _out_type     out ();
@@ -113,8 +113,8 @@ public:
   operator T & ();
   operator T & () const;
 
-  typedef T *&  _out_type;
-  typedef T *   _retn_type;
+  using _out_type = T *&;
+  using _retn_type = T *;
 
   // Mapping for variable size types.
   _out_type     out ();
@@ -131,7 +131,7 @@ template<typename T>
 class TAO_Out_T
 {
 public:
-  typedef typename T::_var_type T_var;
+  using T_var = typename T::_var_type;
 
   TAO_Out_T (T *&);
   TAO_Out_T (T_var &);

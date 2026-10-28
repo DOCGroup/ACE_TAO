@@ -28,11 +28,13 @@ namespace TAO
   {
     namespace IIOP
     {
+      Current_Loader::~Current_Loader () = default;
+
       /// Initializes object when dynamic linking occurs.
       int
       Current_Loader::init (int, ACE_TCHAR *[])
       {
-        PortableInterceptor::ORBInitializer_ptr tmp = 0;
+        PortableInterceptor::ORBInitializer_ptr tmp = nullptr;
         ACE_NEW_THROW_EX (tmp,
                           Current_ORBInitializer<IIOP_Current_Impl> (ACE_TEXT ("TAO::Transport::IIOP::Current")),
                           CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
@@ -46,13 +48,6 @@ namespace TAO
         return 0;
       }
 
-      Current_Loader::Current_Loader ()
-      {
-      }
-
-      Current_Loader::~Current_Loader ()
-      {
-      }
     }
   }
 }

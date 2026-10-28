@@ -9,23 +9,18 @@
 #include "ace/os_include/os_netdb.h"
 
 // Constructor.
-Server_i::Server_i ()
-  : ior_output_file_ (0)
-{
-}
+Server_i::Server_i () = default;
 
 // Destructor.
-Server_i::~Server_i ()
-{
-}
+Server_i::~Server_i () = default;
 
 // Parse the command-line arguments and set options.
 int
 Server_i::parse_args (int argc,
-                      ACE_TCHAR* argv[])
+                      ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,7 +32,7 @@ Server_i::parse_args (int argc,
         this->ior_output_file_ =
           ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a"));
 
-        if (this->ior_output_file_ == 0)
+        if (this->ior_output_file_ == nullptr)
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
@@ -119,7 +114,7 @@ Server_i::create_server ()
           ACE_OS::fclose (this->ior_output_file_);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception in Server_i::create_server ()"));
@@ -146,14 +141,14 @@ Server_i::register_server ()
           CosNaming::NamingContext_var server_context =
             this->naming_client_->bind_new_context(server_context_name);
         }
-      catch (const CosNaming::NamingContext::AlreadyBound& )
+      catch (CosNaming::NamingContext::AlreadyBound const &)
         {
           // OK, naming context already exists.
         }
 
       char host_name[MAXHOSTNAMELEN];
       char server_mc_name[MAXHOSTNAMELEN];
-      ACE_OS::hostname (host_name,MAXHOSTNAMELEN);
+      ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
       CosNaming::Name server_name (server_context_name);
 
@@ -172,7 +167,7 @@ Server_i::register_server ()
                   ACE_TEXT("Binding ServerContext -> %C\n"),
                   server_name[1].id.in ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("(%P|%t) Exception from Register Server ()\n"));
@@ -188,20 +183,20 @@ Server_i::register_server ()
 
 int
 Server_i::init (int argc,
-                ACE_TCHAR *argv[])
+                ACE_TCHAR * argv[])
 {
   try
     {
       // Make a copy of command line parameter.
-      ACE_Argv_Type_Converter command(argc, argv);
+      ACE_Argv_Type_Converter command (argc, argv);
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
 
-      int retval = this->orb_manager_.init_child_poa (
-                      command.get_argc(),
-                      command.get_TCHAR_argv(),
-                      "time_server");
+      int const retval =
+        this->orb_manager_.init_child_poa (command.get_argc (),
+                                           command.get_TCHAR_argv (),
+                                           "time_server");
 
       if (retval == -1)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -212,7 +207,7 @@ Server_i::init (int argc,
       // Activate the POA Manager.
       this->orb_manager_.activate_poa_manager ();
 
-      int result = this->parse_args (command.get_argc(), command.get_TCHAR_argv());
+      int const result = this->parse_args (command.get_argc (), command.get_TCHAR_argv ());
 
       if (result != 0)
         return result;
@@ -229,7 +224,7 @@ Server_i::init (int argc,
       // Register the server object with the Naming Service.
       this->register_server ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT("Exception:"));
       return -1;
@@ -244,7 +239,7 @@ Server_i::init (int argc,
 int
 Server_i::run ()
 {
-  int retval = this->orb_manager_.run ();
+  int const retval = this->orb_manager_.run ();
 
   if (retval == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,

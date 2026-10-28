@@ -8,13 +8,19 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker(CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb))
+  Worker (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
 
-  int svc()
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
+  int svc () override
   {
-    orb_->run();
+    orb_->run ();
     return 0;
   }
 
@@ -29,11 +35,15 @@ class TestCallback
 public:
   /// Constructor
   TestCallback (CORBA::ORB_ptr orb);
+  TestCallback (TestCallback const &) = delete;
+  TestCallback (TestCallback &&) = delete;
+  TestCallback &operator= (TestCallback const &) = delete;
+  TestCallback &operator= (TestCallback &&) = delete;
 
   // = The skeleton methods
-  virtual void start_threads_and_block ();
-  virtual void test_call ();
-  virtual void shutdown ();
+  void start_threads_and_block () override;
+  void test_call () override;
+  void shutdown () override;
 
 private:
   Worker work_;

@@ -35,7 +35,7 @@ namespace TAO
   namespace CSD
   {
     /// Typedef for the number of threads.
-    typedef unsigned long Thread_Counter;
+    using Thread_Counter = unsigned long;
 
     /**
      * @class TP_Task
@@ -79,31 +79,36 @@ namespace TAO
       TP_Task();
 
       /// Virtual Destructor.
-      virtual ~TP_Task();
+      ~TP_Task() override;
 
       /// Put a request object on to the request queue.
       /// Returns true if successful, false otherwise (it has been "rejected").
       bool add_request(TP_Request* request);
 
       /// Activate the worker threads
-      virtual int open(void* args = 0);
+      int open(void* args = nullptr) override;
 
       /// The "mainline" executed by each worker thread.
-      virtual int svc();
+      int svc() override;
 
       /// Multi-purpose: argument value is used to differentiate purpose.
       ///
       /// 0) Invoked by each worker thread after its invocation of the
       ///    svc() method has completed (ie, returned).
       /// 1) Invoked by the strategy object to shutdown all worker threads.
-      virtual int close(u_long flag = 0);
+      int close(u_long flag = 0) override;
 
       /// Cancel all requests that are targeted for the provided servant.
       void cancel_servant (PortableServer::Servant servant);
 
     private:
-      typedef TAO_SYNCH_MUTEX         LockType;
-      typedef TAO_Condition<LockType> ConditionType;
+      TP_Task (TP_Task const &) = delete;
+      TP_Task &operator= (TP_Task const &) = delete;
+      TP_Task (TP_Task &&) = delete;
+      TP_Task &operator= (TP_Task &&) = delete;
+
+      using LockType = TAO_SYNCH_MUTEX;
+      using ConditionType = TAO_Condition<LockType>;
 
       /// Lock to protect the "state" (all of the data members) of this object.
       LockType lock_;
@@ -123,25 +128,25 @@ namespace TAO
 
       /// Flag used to indicate when this task will (or will not) accept
       /// requests via the the add_request() method.
-      bool accepting_requests_;
+      bool accepting_requests_ {};
 
       /// Flag used to initiate a shutdown request to all worker threads.
-      bool shutdown_initiated_;
+      bool shutdown_initiated_ {};
 
       /// Complete shutdown needed to be deferred because the thread calling
       /// close(1) was also one of the ThreadPool threads
-      bool deferred_shutdown_initiated_;
+      bool deferred_shutdown_initiated_ {};
 
       /// Flag used to avoid multiple open() calls.
-      bool opened_;
+      bool opened_ {};
 
       /// The number of currently active worker threads.
-      Thread_Counter num_threads_;
+      Thread_Counter num_threads_ {};
 
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TP_Queue queue_;
 
-      typedef ACE_Vector <ACE_thread_t> Thread_Ids;
+      using Thread_Ids = ACE_Vector <ACE_thread_t>;
 
       /// The list of ids for the threads launched by this task.
       Thread_Ids activated_threads_;

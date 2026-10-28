@@ -28,8 +28,7 @@ namespace TAO
   namespace CSD
   {
     class TP_Remote_Request;
-    typedef TAO_Intrusive_Ref_Count_Handle<TP_Remote_Request>
-                                             TP_Remote_Request_Handle;
+    using TP_Remote_Request_Handle = TAO_Intrusive_Ref_Count_Handle<TP_Remote_Request>;
 
     /**
      * @class TP_Remote_Request
@@ -67,20 +66,20 @@ namespace TAO
                         TP_Servant_State*               servant_state);
 
       /// Virtual Destructor.
-      virtual ~TP_Remote_Request();
+      ~TP_Remote_Request() override;
 
 
     protected:
       /// Prepare this TP_Remote_Request object to be placed into the
       /// request queue.  This will cause the underlying TAO_ServerRequest
       /// object to be cloned.
-      virtual void prepare_for_queue_i();
+      void prepare_for_queue_i() override;
 
       /// Dispatch the request to the servant.
-      virtual void dispatch_i();
+      void dispatch_i() override;
 
       /// Cancel the request.
-      virtual void cancel_i();
+      void cancel_i() override;
     };
   }
 }

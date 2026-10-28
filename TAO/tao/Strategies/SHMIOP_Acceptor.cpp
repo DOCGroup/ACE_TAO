@@ -18,13 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SHMEM_PROFILE),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
-    base_acceptor_ (this),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0),
-    mmap_file_prefix_ (0),
-    mmap_size_ (1024 * 1024)
+    base_acceptor_ (this)
 {
 }
 
@@ -68,7 +62,7 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       && mprofile.grow (count + 1) == -1)
     return -1;
 
-  TAO_SHMIOP_Profile *pfile = 0;
+  TAO_SHMIOP_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->host_.c_str (),
                                       this->address_.get_port_number (),
@@ -82,7 +76,7 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   if (mprofile.give_profile (pfile) == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
       return -1;
     }
 
@@ -106,8 +100,8 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             TAO_MProfile &mprofile,
                                             CORBA::Short priority)
 {
-  TAO_Profile *pfile = 0;
-  TAO_SHMIOP_Profile *shmiop_profile = 0;
+  TAO_Profile *pfile = nullptr;
+  TAO_SHMIOP_Profile *shmiop_profile = nullptr;
 
   // First see if <mprofile> already contains a SHMIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -120,7 +114,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       }
     }
 
-  if (shmiop_profile == 0)
+  if (shmiop_profile == nullptr)
     {
       // If <mprofile> doesn't contain SHMIOP_Profile, we need to create
       // one.
@@ -130,7 +124,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     {
       // A SHMIOP_Profile already exists - just add our endpoint to it.
 
-      TAO_SHMIOP_Endpoint *endpoint = 0;
+      TAO_SHMIOP_Endpoint *endpoint = nullptr;
       ACE_NEW_RETURN (endpoint,
                       TAO_SHMIOP_Endpoint (this->host_.c_str (),
                                            this->address_.get_port_number (),
@@ -150,7 +144,7 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
     dynamic_cast <const TAO_SHMIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
+  if (endp == nullptr)
     return 0;
 
   if (endp->port () != this->address_.get_port_number ())
@@ -279,7 +273,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
       // address back
       const char *tmp = this->address_.get_remote_addr().get_host_addr ();
 
-      if (tmp == 0)
+      if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
             TAOLIB_ERROR ((LM_ERROR,
@@ -400,7 +394,7 @@ TAO_SHMIOP_Acceptor::endpoint_count ()
 int
 TAO_SHMIOP_Acceptor::parse_options (const char *str)
 {
-  if (str == 0)
+  if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
 
   // Use an option format similar to the one used for CGI scripts in

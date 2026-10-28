@@ -15,15 +15,19 @@ public:
    * @param session_count Number of session objects in the experiment.
    */
   Session_Control (CORBA::ULong session_count);
+  Session_Control (Session_Control const &) = delete;
+  Session_Control (Session_Control &&) = delete;
+  Session_Control &operator= (Session_Control const &) = delete;
+  Session_Control &operator= (Session_Control &&) = delete;
 
   /// Destructor
-  virtual ~Session_Control ();
+  ~Session_Control () override;
 
   /// Return 1 when all sessions have finished
   int all_sessions_finished () const;
 
   // = The skeleton methods
-  virtual void session_finished (CORBA::Boolean success);
+  void session_finished (CORBA::Boolean success) override;
 
 private:
   /// Synchronize the internal state

@@ -12,7 +12,7 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
 
   if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
-      const SecurityLevel3::ContextEstablishmentPolicyArgument * arg = 0;
+      SecurityLevel3::ContextEstablishmentPolicyArgument const * arg = nullptr;
       if (!(value >>= arg))
         throw CORBA::INTERNAL ();
 
@@ -28,7 +28,7 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
     }
   else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
     {
-      const SecurityLevel3::ObjectCredentialsPolicyArgument * creds = 0;
+      SecurityLevel3::ObjectCredentialsPolicyArgument const * creds = nullptr;
       if (!(value >>= creds))
         throw CORBA::INTERNAL ();
 

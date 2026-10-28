@@ -15,6 +15,8 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/PortableServer/Basic_SArguments.h"
+#include "tao/PortableServer/Special_Basic_SArguments.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
@@ -65,6 +67,52 @@ test_std_string_bounds ()
 
 static int n = 4096;
 static int nloops = 100;
+
+template<typename Holder>
+static int
+test_boolean_holder ()
+{
+  Holder holder;
+  if (holder.arg ())
+    ACE_ERROR_RETURN ((LM_ERROR, "Default Boolean holder is not false\n"), 1);
+
+  TAO_OutputCDR output;
+  if (!holder.marshal (output))
+    ACE_ERROR_RETURN ((LM_ERROR, "Boolean holder marshal failed\n"), 1);
+
+  TAO_InputCDR input (output);
+  CORBA::Octet octet;
+  if (!input.read_octet (octet) || octet != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Default Boolean was not encoded as octet 0\n"), 1);
+
+  CORBA::Boolean value = true;
+  TAO_InputCDR round_trip (output);
+  if (!round_trip.read_boolean (value) || value)
+    ACE_ERROR_RETURN ((LM_ERROR, "Default Boolean round-trip failed\n"), 1);
+
+  return 0;
+}
+
+static int
+test_sargument_initialization ()
+{
+  typedef TAO::SArg_Traits<ACE_InputCDR::to_boolean> Boolean_Traits;
+  typedef TAO::SArg_Traits<CORBA::Long> Long_Traits;
+
+  Boolean_Traits::ret_val boolean_ret;
+  Boolean_Traits::out_arg_val boolean_out;
+  Long_Traits::ret_val long_ret;
+  Long_Traits::out_arg_val long_out;
+
+  if (boolean_ret.arg () || boolean_out.arg () || long_ret.arg () != 0 || long_out.arg () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Default skeleton argument holder is not value-initialized\n"), 1);
+
+  if (test_boolean_holder<Boolean_Traits::ret_val> () != 0 ||
+      test_boolean_holder<Boolean_Traits::out_arg_val> () != 0)
+    return 1;
+
+  return 0;
+}
 
 struct CDR_Test_Types
 {
@@ -253,6 +301,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (test_std_string_bounds () != 0)
+        return 1;
+
+      if (test_sargument_initialization () != 0)
         return 1;
 
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:"));

@@ -51,50 +51,53 @@ public:
   TAO_SCIOP_Connector ();
 
   /// Destructor.
-  ~TAO_SCIOP_Connector ();
+  ~TAO_SCIOP_Connector () override;
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
-  int open (TAO_ORB_Core *orb_core);
-  int close ();
-  TAO_Profile *create_profile (TAO_InputCDR& cdr);
+  int open (TAO_ORB_Core *orb_core) override;
+  int close () override;
+  TAO_Profile *create_profile (TAO_InputCDR &cdr) override;
 
-  virtual int check_prefix (const char *endpoint);
+  int check_prefix (char const *endpoint) override;
 
-  virtual char object_key_delimiter () const;
+  char object_key_delimiter () const override;
 
 public:
-  typedef TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>
-          TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY;
+  using TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY =
+    TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
 
-  typedef TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>
-          TAO_SCIOP_CONNECT_CREATION_STRATEGY;
+  using TAO_SCIOP_CONNECT_CREATION_STRATEGY =
+    TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
 
-  typedef ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler,
-                               ACE_SOCK_SEQPACK_CONNECTOR>
-          TAO_SCIOP_CONNECT_STRATEGY;
+  using TAO_SCIOP_CONNECT_STRATEGY = ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler,
+                                                           ACE_SOCK_SEQPACK_CONNECTOR>;
 
-  typedef ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler,
-                                 ACE_SOCK_SEQPACK_CONNECTOR>
-          TAO_SCIOP_BASE_CONNECTOR;
+  using TAO_SCIOP_BASE_CONNECTOR = ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler,
+                                                           ACE_SOCK_SEQPACK_CONNECTOR>;
 
 protected:
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
-  int set_validate_endpoint (TAO_Endpoint *ep);
+  int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
+                                  ACE_Time_Value *timeout = nullptr) override;
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
-  virtual TAO_Profile *make_profile ();
+  TAO_Profile *make_profile () override;
 
   /// Cancel the passed cvs handler from the connector
-  int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+  int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;
 
 private:
+  TAO_SCIOP_Connector (TAO_SCIOP_Connector const &) = delete;
+  TAO_SCIOP_Connector &operator= (TAO_SCIOP_Connector const &) = delete;
+  TAO_SCIOP_Connector (TAO_SCIOP_Connector &&) = delete;
+  TAO_SCIOP_Connector &operator= (TAO_SCIOP_Connector &&) = delete;
+
   /// Return the remote endpoint, a helper function
   TAO_SCIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 

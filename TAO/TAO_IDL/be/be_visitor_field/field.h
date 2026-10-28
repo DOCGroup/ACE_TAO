@@ -23,6 +23,7 @@
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_predefined_type.h"
+#include "be_fixed.h"
 #include "be_sequence.h"
 #include "be_map.h"
 #include "be_string.h"

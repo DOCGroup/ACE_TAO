@@ -74,7 +74,7 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
                       PortableGroup::Value (property.val),
                       CORBA::NO_MEMORY ());
 
-    const PortableGroup::Value * replaced_value = 0;
+    const PortableGroup::Value * replaced_value = nullptr;
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
     {
       if (0 != replaced_value)
@@ -144,7 +144,7 @@ void TAO::PG_Property_Set::set_property (
     value_copy, PortableGroup::Value (value),
     CORBA::NO_MEMORY ());
 
-  const PortableGroup::Value * replaced_value = 0;
+  const PortableGroup::Value * replaced_value = nullptr;
   int rebind_result = this->values_.rebind (name, value_copy, replaced_value);
   if (1 == rebind_result)
     { // Existing value was replaced
@@ -195,7 +195,7 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
 void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-  if (0 != this->defaults_)
+  if (this->defaults_ != nullptr)
   {
     this->defaults_->merge_properties (merged_values);
   }
@@ -218,7 +218,7 @@ int TAO::PG_Property_Set::find (
   int found = (0 == this->values_.find (key, pValue));
   if (! found)
   {
-    if (0 != this->defaults_)
+    if (this->defaults_ != nullptr)
     {
       found = this->defaults_->find (key, pValue);
     }

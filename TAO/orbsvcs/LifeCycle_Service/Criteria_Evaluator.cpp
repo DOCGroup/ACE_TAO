@@ -14,19 +14,17 @@
 #include "ace/OS_NS_string.h"
 
 
-Criteria_Evaluator::Criteria_Evaluator (const CosLifeCycle::Criteria &criteria)
+Criteria_Evaluator::Criteria_Evaluator (CosLifeCycle::Criteria const & criteria)
 : criteria_ (criteria)
 {
 }
 
-Criteria_Evaluator::~Criteria_Evaluator ()
-{
-}
+Criteria_Evaluator::~Criteria_Evaluator () = default;
 
-const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
+LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const *
 Criteria_Evaluator::getInitialization ()
 {
-  const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr {};
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const * sequence_ptr {};
 
   CORBA::Any_ptr any_ptr =
     this->getCriteriaMember ("initialization");
@@ -43,11 +41,11 @@ Criteria_Evaluator::getInitialization ()
 char *
 Criteria_Evaluator::getFilter ()
 {
-  const char* string;
+  char const * string;
   CORBA::Any value;
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
-  if (any_ptr == 0)
+  if (any_ptr == nullptr)
     throw LifeCycleService::Criteria_Evaluator::NotAvailable(
       "No filter member found.\n");
   *any_ptr >>= string;
@@ -55,13 +53,13 @@ Criteria_Evaluator::getFilter ()
 }
 
 CORBA::Any *
-Criteria_Evaluator::getCriteriaMember (const char *member_name)
+Criteria_Evaluator::getCriteriaMember (char const * member_name)
 {
   if (!ACE_OS::strcmp(member_name, "initialization")
       && !ACE_OS::strcmp(member_name, "filter")
       && !ACE_OS::strcmp(member_name, "logical location")
       && !ACE_OS::strcmp(member_name, "preferences"))
-    return 0;
+    return nullptr;
 
   for (u_int i = 0;
        i < criteria_.length();
@@ -78,5 +76,5 @@ Criteria_Evaluator::getCriteriaMember (const char *member_name)
         return value_ptr;
       }
 
-  return 0;
+  return nullptr;
 }

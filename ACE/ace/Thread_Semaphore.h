@@ -39,7 +39,7 @@ public:
   /// Initialize the semaphore, with an initial value of @a count,
   /// maximum value of @a max, and unlocked by default.
   ACE_Thread_Semaphore (unsigned int count = 1, // By default make this unlocked.
-                        const ACE_TCHAR *name = 0,
+                        const ACE_TCHAR *name = nullptr,
                         void * = 0,
                         int max = 0x7FFFFFFF);
 

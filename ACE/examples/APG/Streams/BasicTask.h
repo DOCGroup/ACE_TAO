@@ -9,7 +9,7 @@
 class BasicTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  typedef ACE_Task<ACE_MT_SYNCH> inherited;
+  using inherited = ACE_Task<ACE_MT_SYNCH>;
 
   BasicTask () : inherited()
   { }

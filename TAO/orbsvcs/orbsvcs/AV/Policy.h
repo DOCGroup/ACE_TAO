@@ -98,7 +98,7 @@ protected:
   int value_;
 };
 
-typedef TAO::unbounded_value_sequence<TAO_AV_Policy*> TAO_AV_PolicyList;
+using TAO_AV_PolicyList = TAO::unbounded_value_sequence<TAO_AV_Policy*>;
 
 class TAO_AV_Protocol_Object;
 class TAO_AV_Transport;
@@ -115,6 +115,10 @@ class TAO_AV_Export TAO_AV_Callback
 public:
   TAO_AV_Callback ();
   virtual ~TAO_AV_Callback ();
+  TAO_AV_Callback (TAO_AV_Callback const &) = delete;
+  TAO_AV_Callback &operator= (TAO_AV_Callback const &) = delete;
+  TAO_AV_Callback (TAO_AV_Callback &&) = delete;
+  TAO_AV_Callback &operator= (TAO_AV_Callback &&) = delete;
 
   /// Called for opening the callback.
   int open (TAO_AV_Protocol_Object *object,
@@ -132,7 +136,7 @@ public:
   virtual int schedule_timer ();
 
   virtual int receive_frame (ACE_Message_Block *frame,
-                             TAO_AV_frame_info *frame_info = 0,
+                             TAO_AV_frame_info *frame_info = nullptr,
                              const ACE_Addr &address = ACE_Addr::sap_any);
 
   // Called when a frame arrives for a FlowConsumer.

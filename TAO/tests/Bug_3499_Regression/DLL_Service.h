@@ -24,7 +24,7 @@ public:
 #define ACE_DLL_SERVICE_IMPL(classname, symbol) \
   ACE_DLL_Service * symbol () \
   { \
-    classname * service = 0; \
+    classname * service = nullptr; \
     ACE_NEW_RETURN (service, classname (), 0); \
     return service; \
   }

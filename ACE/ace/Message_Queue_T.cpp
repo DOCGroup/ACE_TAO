@@ -1426,7 +1426,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i (ACE_Message_B
     return this->enqueue_head_i (new_item);
   else
     {
-      ACE_Message_Block *temp = 0;
+      ACE_Message_Block *temp = nullptr;
 
       // Figure out where the new item goes relative to its priority.
       // We start looking from the smallest deadline to the highest
@@ -1662,7 +1662,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i");
 
   // Find the last message enqueued with the lowest deadline time
-  ACE_Message_Block* chosen = 0;
+  ACE_Message_Block* chosen = nullptr;
   ACE_Time_Value deadline = ACE_Time_Value::max_time;
   for (ACE_Message_Block *temp = this->head_; temp != 0; temp = temp->next ())
     if (temp->msg_deadline_time () < deadline)
@@ -2917,8 +2917,8 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_static_message_que
                                                                        size_t lwm,
                                                                        ACE_Notification_Strategy *ns)
 {
-  typedef ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> QUEUE_TYPE;
-  QUEUE_TYPE *tmp = 0;
+  using QUEUE_TYPE = ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
+  QUEUE_TYPE *tmp = nullptr;
 
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (hwm, lwm, ns),
@@ -2947,8 +2947,8 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_deadline_message_q
                                                  dynamic_priority_offset),
                   0);
 
-  typedef ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> QUEUE_TYPE;
-  QUEUE_TYPE *tmp = 0;
+  using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
+  QUEUE_TYPE *tmp = nullptr;
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*adms, hwm, lwm, ns),
                   0);
@@ -2977,8 +2977,8 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_laxity_message_que
                                                dynamic_priority_offset),
                   0);
 
-  typedef ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> QUEUE_TYPE;
-  QUEUE_TYPE *tmp = 0;
+  using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
+  QUEUE_TYPE *tmp = nullptr;
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*alms, hwm, lwm, ns),
                   0);
@@ -2997,7 +2997,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_Vx_message_queue (
                                                                    size_t max_message_length,
                                                                    ACE_Notification_Strategy *ns)
 {
-  ACE_Message_Queue_Vx *tmp = 0;
+  ACE_Message_Queue_Vx *tmp = nullptr;
 
   ACE_NEW_RETURN (tmp,
                   ACE_Message_Queue_Vx (max_messages, max_message_length, ns),
@@ -3012,7 +3012,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Message_Queue_NT *
 ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_NT_message_queue (size_t max_threads)
 {
-  ACE_Message_Queue_NT *tmp = 0;
+  ACE_Message_Queue_NT *tmp = nullptr;
 
   ACE_NEW_RETURN (tmp,
                   ACE_Message_Queue_NT (max_threads),

@@ -7,17 +7,15 @@
 #include "testS.h"
 
 Server_Request_Interceptor::Server_Request_Interceptor ()
-    : request_forwarded_ (0)
+  : request_forwarded_ (0)
 {
 }
 
-Server_Request_Interceptor::~Server_Request_Interceptor ()
-{
-}
+Server_Request_Interceptor::~Server_Request_Interceptor () = default;
 
 void
 Server_Request_Interceptor::forward_reference (
-  const char* iorstr)
+  char const * iorstr)
 {
   this->iorstr_ = CORBA::string_dup (iorstr);
 }

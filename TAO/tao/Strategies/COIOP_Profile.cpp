@@ -16,8 +16,6 @@ static const char the_prefix[] = "niop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO_COIOP_Profile::object_key_delimiter_ = '/';
-
 char
 TAO_COIOP_Profile::object_key_delimiter () const
 {
@@ -32,8 +30,7 @@ TAO_COIOP_Profile::TAO_COIOP_Profile (const ACE_Utils::UUID& uuid,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (uuid),
-    count_ (1)
+    endpoint_ (uuid)
 {
 }
 
@@ -41,8 +38,7 @@ TAO_COIOP_Profile::TAO_COIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_COIOP_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    count_ (1)
+    endpoint_ ()
 {
 }
 
@@ -50,10 +46,10 @@ TAO_COIOP_Profile::~TAO_COIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = 0;
+  TAO_Endpoint *tmp = nullptr;
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
-       next != 0;
+       next != nullptr;
        next = tmp)
     {
       tmp = next->next ();
@@ -100,7 +96,7 @@ TAO_COIOP_Profile::parse_string_i (const char *ior)
   const char *okd =
     std::strchr (ior, this->object_key_delimiter_);
 
-  if (okd == 0 || okd == ior)
+  if (okd == nullptr || okd == ior)
     {
       // No object key delimiter or no hostname specified.
       throw ::CORBA::INV_OBJREF (
@@ -138,7 +134,7 @@ TAO_COIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   // Check endpoints equivalence.
   const TAO_COIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_COIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
@@ -156,7 +152,7 @@ TAO_COIOP_Profile::hash (CORBA::ULong max)
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
   for (TAO_COIOP_Endpoint *endp = &this->endpoint_;
-       endp != 0;
+       endp != nullptr;
        endp = endp->next_)
     {
       hashval += endp->hash ();
@@ -313,7 +309,7 @@ TAO_COIOP_Profile::encode_endpoints ()
     tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
-       iterator != 0;
+       iterator != nullptr;
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
@@ -370,7 +366,7 @@ TAO_COIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_COIOP_Endpoint *endpoint = 0;
+          TAO_COIOP_Endpoint *endpoint = nullptr;
           CORBA::String_var strvar = CORBA::string_dup (endpoints[i].uuid);
           ACE_Utils::UUID uuid1 (strvar.in());
           ACE_NEW_RETURN (endpoint,

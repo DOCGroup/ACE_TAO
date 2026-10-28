@@ -10,27 +10,24 @@
 #include "DllOrb.h"
 #include "bug_3251_export.h"
 
-class bug_3251_Export PersistentPoa:  public ACE_Service_Object
+class bug_3251_Export PersistentPoa : public ACE_Service_Object
 {
-  // public types and methods
-  public:
-    PersistentPoa ();
+public:
+  PersistentPoa () = default;
 
-    ~PersistentPoa () noexcept;
+  ~PersistentPoa () noexcept override;
 
-  // protected types and methods
-  protected:
-    virtual int init (int argc, ACE_TCHAR *argv[]);
+protected:
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-    virtual int fini ();
+  int fini () override;
 
-  // private methods and instance variables
-  private:
-    std::string                    m_poaName;
-    CORBA::ORB_var                 mv_orb;
-    PortableServer::POA_var        mv_rootPOA;
-    PortableServer::POA_var        mv_thisPOA;
-    PortableServer::POAManager_var mv_poaManager;
+private:
+  std::string                    m_poaName;
+  CORBA::ORB_var                 mv_orb;
+  PortableServer::POA_var        mv_rootPOA;
+  PortableServer::POA_var        mv_thisPOA;
+  PortableServer::POAManager_var mv_poaManager;
 }; /* end of class PersistentPoa */
 
 ACE_FACTORY_DECLARE (bug_3251, PersistentPoa)

@@ -37,8 +37,8 @@ public:
     {
     }
 
-  virtual void handle_time_out (const ACE_Time_Value &tv,
-                                const void *arg)
+  void handle_time_out (const ACE_Time_Value &tv,
+                                const void *arg) override
     {
       // Print out when timeouts occur.
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
@@ -61,7 +61,7 @@ private:
 class Worker : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-  int svc ()
+  int svc () override
     {
       // Handle events for 13 seconds.
       ACE_Time_Value run_time (13);

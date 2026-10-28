@@ -18,7 +18,7 @@ int Client::open (void *p)
   this->msg_queue ()->notification_strategy (&this->notifier_);
   this->iterations_ = 0;
   return this->reactor ()->schedule_timer
-    (this, 0, ACE_Time_Value::zero, iter_delay);
+    (this, nullptr, ACE_Time_Value::zero, iter_delay);
 }
 // Listing 2
 
@@ -53,7 +53,7 @@ int Client::handle_timeout(const ACE_Time_Value &, const void *)
       return 0;
     }
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb, ACE_Message_Block (128), -1);
   int nbytes = ACE_OS::sprintf
     (mb->wr_ptr (), "Iteration %d\n", this->iterations_);
@@ -67,7 +67,7 @@ int Client::handle_timeout(const ACE_Time_Value &, const void *)
 // Listing 5 code/ch07
 int Client::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_Time_Value nowait (ACE_OS::gettimeofday ());
   while (-1 != this->getq (mb, &nowait))
     {

@@ -85,6 +85,11 @@ class TAO_IDL_FE_Export UTL_List
 public:
   UTL_List (UTL_List *c);
 
+  UTL_List (UTL_List const &) = delete;
+  UTL_List (UTL_List &&) = delete;
+  UTL_List &operator= (UTL_List const &) = delete;
+  UTL_List &operator= (UTL_List &&) = delete;
+
   virtual ~UTL_List ();
 
   // Smash last cdr pointer in "this" with l.
@@ -122,7 +127,7 @@ class TAO_IDL_FE_Export UTL_ListActiveIterator
 public:
   UTL_ListActiveIterator (UTL_List *s);
 
-  virtual ~UTL_ListActiveIterator () {}
+  virtual ~UTL_ListActiveIterator () = default;
 
   // Get next list.
   virtual void next ();

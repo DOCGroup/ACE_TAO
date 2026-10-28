@@ -35,9 +35,9 @@ class TAO_ClientRequestInfo;
 namespace PortableInterceptor
 {
   class ClientRequestInterceptor;
-  typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
+  using ClientRequestInterceptor_ptr = ClientRequestInterceptor *;
 
-  typedef CORBA::Short ReplyStatus;
+  using ReplyStatus = CORBA::Short;
 }
 
 namespace CORBA

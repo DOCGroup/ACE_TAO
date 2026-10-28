@@ -6,9 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Custom_Synch_Request::~TP_Custom_Synch_Request()
-{
-}
+TAO::CSD::TP_Custom_Synch_Request::~TP_Custom_Synch_Request () = default;
 
 
 void

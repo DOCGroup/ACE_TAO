@@ -4,5 +4,5 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  return do_main (argc, argv, 0);
+  return do_main (argc, argv, nullptr);
 }

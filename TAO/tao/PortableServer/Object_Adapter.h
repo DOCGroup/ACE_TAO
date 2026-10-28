@@ -75,9 +75,9 @@ class TAO_PortableServer_Export TAO_Object_Adapter
 public:
   friend class TAO_Root_POA;
 
-  typedef PortableServer::ObjectId poa_name;
-  typedef PortableServer::ObjectId_var poa_name_var;
-  typedef PortableServer::ObjectId_out poa_name_out;
+  using poa_name = PortableServer::ObjectId;
+  using poa_name_var = PortableServer::ObjectId_var;
+  using poa_name_out = PortableServer::ObjectId_out;
 
   /// Constructor.
   TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
@@ -148,19 +148,19 @@ public:
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open ();
-  virtual void close (int wait_for_completion);
-  virtual void check_close (int wait_for_completion);
-  virtual int priority () const;
-  virtual int dispatch (TAO::ObjectKey &key,
-                        TAO_ServerRequest &request,
-                        CORBA::Object_out forward_to);
-  virtual const char *name () const;
-  virtual CORBA::Object_ptr root ();
-  virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
-                                                      const TAO_MProfile &);
+  void open () override;
+  void close (int wait_for_completion) override;
+  void check_close (int wait_for_completion) override;
+  int priority () const override;
+  int dispatch (TAO::ObjectKey &key,
+                TAO_ServerRequest &request,
+                CORBA::Object_out forward_to) override;
+  char const *name () const override;
+  CORBA::Object_ptr root () override;
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *,
+                                              TAO_MProfile const &) override;
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
+  CORBA::Long initialize_collocated_object (TAO_Stub *) override;
 
 protected:
   int locate_servant_i (const TAO::ObjectKey &key);
@@ -255,10 +255,10 @@ public:
                                const poa_name &system_name) override;
 
   protected:
-    typedef ACE_Active_Map_Manager_Adapter<
-    poa_name,
+    using persistent_poa_system_map = ACE_Active_Map_Manager_Adapter<
+      poa_name,
       TAO_Root_POA *,
-      TAO_Preserve_Original_Key_Adapter> persistent_poa_system_map;
+      TAO_Preserve_Original_Key_Adapter>;
 
     persistent_poa_system_map persistent_poa_system_map_;
   };
@@ -293,66 +293,66 @@ public:
   friend class No_Hint_Strategy;
 
 protected:
-  Hint_Strategy *hint_strategy_;
+  Hint_Strategy *hint_strategy_ {};
 
   /// Base class of the id map.
-  typedef ACE_Map<
-  poa_name,
-    TAO_Root_POA *> transient_poa_map;
+  using transient_poa_map = ACE_Map<
+    poa_name,
+    TAO_Root_POA *>;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id hash map.
-  typedef ACE_Hash_Map_Manager_Ex_Adapter<
-  poa_name,
+  using transient_poa_hash_map = ACE_Hash_Map_Manager_Ex_Adapter<
+    poa_name,
     TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<poa_name>,
-    TAO_Incremental_Key_Generator> transient_poa_hash_map;
+    TAO_Incremental_Key_Generator>;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id linear map.
-  typedef ACE_Map_Manager_Adapter<
-  poa_name,
+  using transient_poa_linear_map = ACE_Map_Manager_Adapter<
+    poa_name,
     TAO_Root_POA *,
-    TAO_Incremental_Key_Generator> transient_poa_linear_map;
+    TAO_Incremental_Key_Generator>;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id active map.
-  typedef ACE_Active_Map_Manager_Adapter<
-  poa_name,
+  using transient_poa_active_map = ACE_Active_Map_Manager_Adapter<
+    poa_name,
     TAO_Root_POA *,
-    TAO_Ignore_Original_Key_Adapter> transient_poa_active_map;
+    TAO_Ignore_Original_Key_Adapter>;
 
   /// Base class of the name map.
-  typedef ACE_Map<
-  poa_name,
-    TAO_Root_POA *> persistent_poa_name_map;
+  using persistent_poa_name_map = ACE_Map<
+    poa_name,
+    TAO_Root_POA *>;
 
   /// Id hash map.
-  typedef ACE_Hash_Map_Manager_Ex_Adapter<
-  poa_name,
+  using persistent_poa_name_hash_map = ACE_Hash_Map_Manager_Ex_Adapter<
+    poa_name,
     TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
-    ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_hash_map;
+    ACE_Noop_Key_Generator<poa_name> >;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id linear map.
-  typedef ACE_Map_Manager_Adapter<
-  poa_name,
+  using persistent_poa_name_linear_map = ACE_Map_Manager_Adapter<
+    poa_name,
     TAO_Root_POA *,
-    ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_linear_map;
+    ACE_Noop_Key_Generator<poa_name> >;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Strategy for dispatching a request to a servant.
-  TAO_Servant_Dispatcher *servant_dispatcher_;
+  TAO_Servant_Dispatcher *servant_dispatcher_ {};
 
   /// Persistent POA map
-  persistent_poa_name_map *persistent_poa_name_map_;
+  persistent_poa_name_map *persistent_poa_name_map_ {};
 
   /// Transient POA map
-  transient_poa_map *transient_poa_map_;
+  transient_poa_map *transient_poa_map_ {};
 
 protected:
   static CORBA::ULong transient_poa_name_size_;
@@ -406,9 +406,9 @@ public:
   class iteratable_poa_name
   {
   public:
-    typedef poa_name_iterator iterator;
+    using iterator = poa_name_iterator;
 
-    iteratable_poa_name (const poa_name &folded_name);
+    explicit iteratable_poa_name (const poa_name &folded_name);
 
     iterator begin () const;
     iterator end () const;
@@ -439,20 +439,20 @@ private:
 
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress_;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress_ {};
 
   /// Current nesting level of non_servant_upcalls.
-  unsigned int non_servant_upcall_nesting_level_;
+  unsigned int non_servant_upcall_nesting_level_ {};
 
   /// Id of thread making the non-servant upcall.
   ACE_thread_t non_servant_upcall_thread_;
 
   /// The Root POA
-  TAO_Root_POA *root_;
+  TAO_Root_POA *root_ {};
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// The POAManager factory.
-  TAO_POAManager_Factory *poa_manager_factory_;
+  TAO_POAManager_Factory *poa_manager_factory_ {};
 #else
   /// The POAManager object reference.
   PortableServer::POAManager_var the_poa_manager_;

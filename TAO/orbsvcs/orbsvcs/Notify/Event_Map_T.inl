@@ -18,11 +18,10 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_Notify_EventType& event
       // The event_type that we have doesn't hash directly to a particular
       // entry.  So, we need to iterate through the map and see if any of
       // the event type keys are equivalent to event_type.
-      typedef ACE_Hash_Map_Iterator_Ex <TAO_Notify_EventType, ENTRY*,
-                                        ACE_Hash<TAO_Notify_EventType>,
-                                        ACE_Equal_To<TAO_Notify_EventType>,
-                                        ACE_SYNCH_NULL_MUTEX>
-              Iterator_Type;
+      using Iterator_Type = ACE_Hash_Map_Iterator_Ex <TAO_Notify_EventType, ENTRY*,
+                                                       ACE_Hash<TAO_Notify_EventType>,
+                                                       ACE_Equal_To<TAO_Notify_EventType>,
+                                                       ACE_SYNCH_NULL_MUTEX>;
       Iterator_Type end = this->map_.end ();
       for(Iterator_Type i = this->map_.begin (); i != end; ++i)
         {

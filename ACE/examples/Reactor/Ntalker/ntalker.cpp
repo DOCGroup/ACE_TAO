@@ -14,7 +14,7 @@
 // Network interface to subscribe to.  This is hardware specific.  use
 // netstat(1M) to find whether your interface is le0 or ie0
 
-static const ACE_TCHAR *INTERFACE = 0;
+static const ACE_TCHAR *INTERFACE = nullptr;
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
@@ -29,14 +29,14 @@ public:
            ACE_Reactor & );
   // Constructor.
 
-  ~Handler ();
+  ~Handler () override;
   // Destructor.
 
   // Event demuxer hooks.
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
-  virtual ACE_HANDLE get_handle () const;
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask) override;
+  ACE_HANDLE get_handle () const override;
 
 private:
   ACE_SOCK_Dgram_Mcast mcast_;

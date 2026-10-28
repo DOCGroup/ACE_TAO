@@ -101,14 +101,14 @@ public:
   using FreeList = ACE_Free_List<Node>;
 
   /// Default constructor
-  ACE_Timer_Wheel_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = nullptr,
+  ACE_Timer_Wheel_T (FUNCTOR* upcall_functor = nullptr, FreeList* freelist = nullptr,
                      TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Constructor with opportunities to set the wheelsize and resolution
   ACE_Timer_Wheel_T (u_int spoke_count,
                      u_int resolution,
                      size_t prealloc = 0,
-                     FUNCTOR* upcall_functor = 0,
+                     FUNCTOR* upcall_functor = nullptr,
                      FreeList* freelist = nullptr,
                      TIME_POLICY const & time_policy = TIME_POLICY());
 

@@ -41,7 +41,7 @@ TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
 class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>
 {
-  typedef TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier> SuperClass;
+  using SuperClass = TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>;
   friend class TAO_Notify_Builder;
 
 public:

@@ -712,19 +712,15 @@ TAO_EC_Default_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*
   delete x;
 }
 
-// These typedefs workaround a SunCC 4.2 bug
-typedef
-    TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator
-    TAO_EC_Consumer_List_Iterator;
-typedef
-    TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>::Iterator
-    TAO_EC_Consumer_RB_Tree_Iterator;
-typedef
-    TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator
-    TAO_EC_Supplier_List_Iterator;
-typedef
-    TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>::Iterator
-    TAO_EC_Supplier_RB_Tree_Iterator;
+// These aliases work around a SunCC 4.2 bug.
+using TAO_EC_Consumer_List_Iterator =
+  TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator;
+using TAO_EC_Consumer_RB_Tree_Iterator =
+  TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushConsumer>::Iterator;
+using TAO_EC_Supplier_List_Iterator =
+  TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator;
+using TAO_EC_Supplier_RB_Tree_Iterator =
+  TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>::Iterator;
 
 
 TAO_EC_ProxyPushConsumer_Collection*

@@ -10,10 +10,6 @@ ProxyConsumerStateWorker::ProxyConsumerStateWorker (
 {
 }
 
-ProxyConsumerStateWorker::~ProxyConsumerStateWorker()
-{
-}
-
 void ProxyConsumerStateWorker::set_size(size_t size)
 {
   consumerStates_.length(size);

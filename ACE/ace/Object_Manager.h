@@ -269,7 +269,7 @@ public:
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param,
-                      const char* name = 0);
+                      const char* name = nullptr);
 
   static int remove_at_exit (void *object);
 

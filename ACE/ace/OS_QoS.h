@@ -26,7 +26,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined (ACE_HAS_WINSOCK2_GQOS)
-typedef SERVICETYPE ACE_SERVICE_TYPE;
+using ACE_SERVICE_TYPE = SERVICETYPE;
 #else
 using ACE_SERVICE_TYPE = unsigned long;
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
@@ -318,10 +318,10 @@ public:
    * the socket group, if applicable.  The_@a flags indicate if we're a
    * sender, receiver, or both.
    */
-  ACE_QoS_Params (iovec *caller_data = 0,
-                  iovec *callee_data = 0,
-                  ACE_QoS *socket_qos = 0,
-                  ACE_QoS *group_socket_qos = 0,
+  ACE_QoS_Params (iovec *caller_data = nullptr,
+                  iovec *callee_data = nullptr,
+                  ACE_QoS *socket_qos = nullptr,
+                  ACE_QoS *group_socket_qos = nullptr,
                   unsigned long flags = 0);
 
   /// Get caller data.

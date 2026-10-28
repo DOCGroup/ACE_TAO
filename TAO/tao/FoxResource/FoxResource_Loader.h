@@ -48,6 +48,12 @@ namespace TAO
     FoxResource_Loader (FXApp *app);
 
     virtual ~FoxResource_Loader ();
+
+  private:
+    FoxResource_Loader (FoxResource_Loader const &) = delete;
+    FoxResource_Loader &operator= (FoxResource_Loader const &) = delete;
+    FoxResource_Loader (FoxResource_Loader &&) = delete;
+    FoxResource_Loader &operator= (FoxResource_Loader &&) = delete;
   };
 }
 

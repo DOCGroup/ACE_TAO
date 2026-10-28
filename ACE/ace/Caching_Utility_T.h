@@ -45,7 +45,7 @@ public:
   using CLEANUP_STRATEGY = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
-  ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+  ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
                             bool delete_cleanup_strategy = false);
 
   /// Destructor.
@@ -98,7 +98,7 @@ public:
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
-  ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+  ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
                                           bool delete_cleanup_strategy = false);
 
   /// Destructor.
@@ -153,7 +153,7 @@ public:
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
-  ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
                                                      bool delete_cleanup_strategy = false);
 
   /// Destructor.
@@ -214,7 +214,7 @@ public:
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
-  ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+  ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
                                bool delete_cleanup_strategy = false);
 
   ACE_Handler_Caching_Utility (const ACE_Handler_Caching_Utility &) = delete;
@@ -272,7 +272,7 @@ public:
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
   /// Constructor.
-  ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
+  ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
                             bool delete_cleanup_strategy = false);
 
   ACE_Null_Caching_Utility (const ACE_Null_Caching_Utility &) = delete;

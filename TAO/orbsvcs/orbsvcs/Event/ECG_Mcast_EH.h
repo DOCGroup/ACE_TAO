@@ -63,11 +63,11 @@ public:
    * used for the \a recv argument.
    */
   TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
-                    const ACE_TCHAR *net_if = 0,
+                    ACE_TCHAR const *net_if = nullptr,
                     CORBA::ULong buf_sz = 0);
 
   /// Destructor.
-  virtual ~TAO_ECG_Mcast_EH ();
+  virtual ~TAO_ECG_Mcast_EH () override;
 
   /**
    * Register for changes in the EC subscription list.
@@ -88,12 +88,12 @@ public:
    * multicast groups, close the sockets and deregister from the
    * reactor.
    */
-  virtual int shutdown ();
+  virtual int shutdown () override;
   //@}
 
   /// Reactor callback.  Notify receiver_ that a dgram corresponding
   /// to \a fd is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_input (ACE_HANDLE fd) override;
 
 private:
   /**
@@ -140,7 +140,7 @@ private:
   void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
 
 
-  typedef ACE_Unbounded_Set<ACE_INET_Addr> Address_Set;
+  using Address_Set = ACE_Unbounded_Set<ACE_INET_Addr>;
 
   /// Helpers for updating multicast subscriptions based on changes in
   /// consumer subscriptions.
@@ -217,11 +217,12 @@ private:
   /// The NIC used to subscribe for multicast traffic.
   ACE_TCHAR *net_if_;
 
-  typedef struct {
+  struct Subscription
+  {
     ACE_INET_Addr mcast_addr;
     ACE_SOCK_Dgram_Mcast* dgram;
-  } Subscription;
-  typedef ACE_Array_Base<Subscription> Subscriptions;
+  };
+  using Subscriptions = ACE_Array_Base<Subscription>;
 
   /// List of multicast addresses we subscribe to and dgrams we use.
   /*

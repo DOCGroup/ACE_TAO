@@ -12,7 +12,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynEnum_i::TAO_DynEnum_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
-  , value_ (0u)
 {
 }
 
@@ -28,7 +27,7 @@ TAO_DynEnum_i::init_common ()
 }
 
 void
-TAO_DynEnum_i::init (const CORBA::Any &any)
+TAO_DynEnum_i::init (CORBA::Any const& any)
 {
   CORBA::TypeCode_var tc = any.type ();
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
@@ -47,7 +46,7 @@ TAO_DynEnum_i::init (const CORBA::Any &any)
       TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-      if (!unk)
+      if (unk == nullptr)
         throw CORBA::INTERNAL ();
 
       // We don't want unk's rd_ptr to move, in case we are shared by
@@ -90,7 +89,7 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
-      return 0;
+      return nullptr;
     }
 
   return dynamic_cast<TAO_DynEnum_i *> (_tao_objref);
@@ -103,20 +102,20 @@ TAO_DynEnum_i::get_as_string ()
 {
   CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  const char *retval = ct.in ()->member_name (this->value_);
+  char const* retval = ct.in ()->member_name (this->value_);
 
   return CORBA::string_dup (retval);
 }
 
 void
-TAO_DynEnum_i::set_as_string (const char *value_as_string)
+TAO_DynEnum_i::set_as_string (char const* value_as_string)
 {
   CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::ULong count = ct.in ()->member_count ();
 
   CORBA::ULong i;
-  const char *temp = 0;
+  char const* temp = nullptr;
 
   for (i = 0; i < count; ++i)
     {
@@ -163,7 +162,7 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
 // ****************************************************************
 
 void
-TAO_DynEnum_i::from_any (const CORBA::Any& any)
+TAO_DynEnum_i::from_any (CORBA::Any const& any)
 {
   CORBA::TypeCode_var tc = any.type ();
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
@@ -178,7 +177,7 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any)
           TAO::Unknown_IDL_Type * const unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-          if (!unk)
+          if (unk == nullptr)
             throw CORBA::INTERNAL ();
 
           // We don't want unk's rd_ptr to move, in case we are shared by
@@ -213,7 +212,7 @@ TAO_DynEnum_i::to_any ()
                     CORBA::NO_MEMORY ());
 
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type *unk = 0;
+  TAO::Unknown_IDL_Type *unk = nullptr;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -245,7 +244,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
       TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-      if (!unk)
+      if (unk == nullptr)
         throw CORBA::INTERNAL ();
 
       // We don't want unk's rd_ptr to move, in case we are shared by

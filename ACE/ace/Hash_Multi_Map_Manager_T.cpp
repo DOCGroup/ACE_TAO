@@ -171,7 +171,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cl
       this->table_allocator_->free (this->table_);
 
       // Should be done last...
-      this->table_ = 0;
+      this->table_ = nullptr;
     }
 
   return 0;

@@ -13,7 +13,7 @@ FTP_Client_Callback::handle_end_stream ()
 }
 
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint ()
-  : callback_ (0)
+  : callback_ (nullptr)
 {
 }
 
@@ -172,7 +172,7 @@ Client::Client ()
   :endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa (),this),
    client_mmdevice_ (&endpoint_strategy_),
    address_ (ACE_OS::strdup ("224.9.9.2:12345")),
-   fp_ (0),
+   fp_ (nullptr),
    protocol_ (ACE_OS::strdup ("UDP"))
 {
 }

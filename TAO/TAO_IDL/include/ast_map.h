@@ -81,9 +81,9 @@ public:
            bool local,
            bool abstract);
 
-  virtual ~AST_Map () = default;
+  ~AST_Map () override = default;
 
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
@@ -110,20 +110,20 @@ public:
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, map,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key () const;
+  bool legal_for_primary_key () const override;
 
   // Is the element type a forward declared struct or union
   // that hasn't yet been fully defined?
-  virtual bool is_defined ();
+  bool is_defined () override;
 
   // Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 

@@ -11,10 +11,6 @@ UpdateableHandler::UpdateableHandler(AMI_Primary_Replication_Strategy* strategy)
 {
 }
 
-UpdateableHandler::~UpdateableHandler()
-{
-}
-
 FTRT::AMI_UpdateableHandler_ptr UpdateableHandler::activate(
   Update_Manager* mgr, int id,
   PortableServer::ObjectId& object_id)

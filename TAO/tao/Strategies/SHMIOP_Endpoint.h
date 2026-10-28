@@ -48,27 +48,27 @@ public:
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
-  TAO_SHMIOP_Endpoint (const char *host,
+  TAO_SHMIOP_Endpoint (char const *host,
                        CORBA::UShort port,
-                       const ACE_INET_Addr &addr,
+                       ACE_INET_Addr const &addr,
                        CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Constructor.
-  TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
+  TAO_SHMIOP_Endpoint (ACE_MEM_Addr const &addr,
                        int use_dotted_decimal_addresses);
 
   /// Constructor. -- More of a extension of the previous one. One of
   /// them need to go. We will decide about that as time goes by.
-  TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
+  TAO_SHMIOP_Endpoint (ACE_INET_Addr const &addr,
                        int use_dotted_decimal_addresses);
 
   /// Constructor.  This constructor is used when decoding endpoints.
-  TAO_SHMIOP_Endpoint (const char *host,
+  TAO_SHMIOP_Endpoint (char const *host,
                        CORBA::UShort port,
                        CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_SHMIOP_Endpoint ();
+  ~TAO_SHMIOP_Endpoint () override;
 
   /**
    * @name TAO_Endpoint Methods
@@ -77,30 +77,30 @@ public:
    */
   //@{
   /// Return a copy of @c this
-  virtual TAO_Endpoint *next ();
-  virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate ();
+  TAO_Endpoint *next () override;
+  int addr_to_string (char *buffer, size_t length) override;
+  TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
-  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
   /// Return a hash value for this object.
-  CORBA::ULong hash ();
+  CORBA::ULong hash () override;
   //@}
 
   // = SHMIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_INET_Addr &object_addr () const;
+  ACE_INET_Addr const &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host () const;
+  char const *host () const;
 
   /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
-  const char *host (const char *h);
+  char const *host (char const *h);
 
   /// Return the port number.
   CORBA::UShort port () const;
@@ -109,26 +109,31 @@ public:
   CORBA::UShort port (CORBA::UShort p);
 
 private:
+  TAO_SHMIOP_Endpoint (TAO_SHMIOP_Endpoint const &) = delete;
+  TAO_SHMIOP_Endpoint &operator= (TAO_SHMIOP_Endpoint const &) = delete;
+  TAO_SHMIOP_Endpoint (TAO_SHMIOP_Endpoint &&) = delete;
+  TAO_SHMIOP_Endpoint &operator= (TAO_SHMIOP_Endpoint &&) = delete;
+
   /// Helper method for setting INET_Addr.
-  int set (const ACE_INET_Addr &addr,
+  int set (ACE_INET_Addr const &addr,
            int use_dotted_decimal_addresses);
 
   /// String representing the host name.
   CORBA::String_var host_;
 
   /// TCP port number.
-  CORBA::UShort port_;
+  CORBA::UShort port_ {};
 
   /// Cached instance of <ACE_INET_Addr> for use in making
   /// invocations, etc.
   ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  int object_addr_set_;
+  int object_addr_set_ {};
 
   /// SHMIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_SHMIOP_Endpoint *next_;
+  TAO_SHMIOP_Endpoint *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

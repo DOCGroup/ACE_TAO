@@ -33,7 +33,7 @@ CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions_i (
   )
 {
-  CORBA::ExcDescriptionSeq *retval = 0;
+  CORBA::ExcDescriptionSeq *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   CORBA::ExcDescriptionSeq,
                   0);
@@ -81,7 +81,7 @@ CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::set_exceptions_i (
   )
 {
-  CORBA::ExcDescriptionSeq *retval = 0;
+  CORBA::ExcDescriptionSeq *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   CORBA::ExcDescriptionSeq,
                   0);
@@ -129,7 +129,7 @@ CORBA::ExtAttributeDescription *
 TAO_ExtAttributeDef_i::describe_attribute_i (
   )
 {
-  CORBA::ExtAttributeDescription *retval = 0;
+  CORBA::ExtAttributeDescription *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   CORBA::ExtAttributeDescription,
                   0);
@@ -190,7 +190,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                                              "count",
                                              count);
   exceptions.length (count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_TString holder;
   ACE_Configuration_Section_Key except_key;
 
@@ -244,7 +244,7 @@ TAO_ExtAttributeDef_i::exceptions (const char *sub_section,
   this->repo_->config ()->set_integer_value (new_key,
                                              "count",
                                              count);
-  char *stringified = 0;
+  char *stringified = nullptr;
   ACE_TString path;
 
   for (CORBA::ULong i = 0; i < count; ++i)

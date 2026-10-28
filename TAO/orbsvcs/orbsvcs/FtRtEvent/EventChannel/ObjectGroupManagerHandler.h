@@ -20,22 +20,29 @@ class ObjectGroupManagerHandler
 {
 public:
   ObjectGroupManagerHandler(ACE_Auto_Event& evt, int num_backups);
-  virtual void start (CORBA::Boolean ami_return_val,
-                      const FTRT::Location & the_location);
+  ~ObjectGroupManagerHandler() override = default;
 
-  virtual void start_excep (::Messaging::ExceptionHolder * excep_holder);
+  ObjectGroupManagerHandler(ObjectGroupManagerHandler const&) = delete;
+  ObjectGroupManagerHandler(ObjectGroupManagerHandler&&) = delete;
+  ObjectGroupManagerHandler& operator=(ObjectGroupManagerHandler const&) = delete;
+  ObjectGroupManagerHandler& operator=(ObjectGroupManagerHandler&&) = delete;
 
-  virtual void create_group ();
+  void start (CORBA::Boolean ami_return_val,
+              const FTRT::Location & the_location) override;
 
-  virtual void create_group_excep (::Messaging::ExceptionHolder * excep_holder);
+  void start_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  virtual void add_member ();
+  void create_group () override;
 
-  virtual void add_member_excep (::Messaging::ExceptionHolder * excep_holder);
+  void create_group_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
-  virtual void set_state ();
+  void add_member () override;
 
-  virtual void set_state_excep (::Messaging::ExceptionHolder * excep_holder);
+  void add_member_excep (::Messaging::ExceptionHolder * excep_holder) override;
+
+  void set_state () override;
+
+  void set_state_excep (::Messaging::ExceptionHolder * excep_holder) override;
 private:
   ACE_Auto_Event& evt_;
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> num_backups_;

@@ -46,7 +46,7 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
                                          ACE_Equal_To<ACEXML_String>,
                                          ACE_Null_Mutex> ACEXML_NS_CONTEXT_REVERSE_ITER;
 
-typedef ACE_Unbounded_Queue<const ACEXML_Char *> ACEXML_STR_LIST;
+using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
 
 /**
  * @class ACEXML_Namespace_Context_Stack

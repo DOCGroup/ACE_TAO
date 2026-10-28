@@ -13,7 +13,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize the static naming manager
-TAO_FT_Naming_Manager *TAO_FT_Persistent_Naming_Context::naming_manager_impl_ = 0;
+TAO_FT_Naming_Manager *TAO_FT_Persistent_Naming_Context::naming_manager_impl_ = nullptr;
 
 TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (
   PortableServer::POA_ptr poa,

@@ -36,7 +36,7 @@ class TAO_DynamicAny_Export TAO_DynValueBox_i
 {
 public:
   /// Constructor.
-  TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynValueBox_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
   ~TAO_DynValueBox_i () = default;
@@ -45,45 +45,47 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any);
+  void init (CORBA::Any const& any);
 
   // = LocalObject methods.
   static TAO_DynValueBox_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynValueBox.
-  virtual CORBA::Any * get_boxed_value ();
+  CORBA::Any * get_boxed_value () override;
 
-  virtual void set_boxed_value (const CORBA::Any & boxed);
+  void set_boxed_value (CORBA::Any const& boxed) override;
 
-  virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any ();
+  DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any () override;
 
-  virtual void set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed);
+  void set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed) override;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
-  virtual void from_any (const CORBA::Any & value);
+  void from_any (CORBA::Any const& value) override;
 
-  virtual CORBA::Any * to_any ();
+  CORBA::Any * to_any () override;
 
-  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
+  CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual DynamicAny::DynAny_ptr current_component ();
+  DynamicAny::DynAny_ptr current_component () override;
 
   // = DynValueCommon needed to be provided here
-  virtual void set_to_value ();
+  void set_to_value () override;
 
 private:
   /// Check if the typecode is acceptable.
-  void check_typecode (CORBA::TypeCode_ptr tc);
+  void check_typecode (CORBA::TypeCode_ptr tc) override;
 
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
-  void set_from_any (const CORBA::Any &any);
+  void set_from_any (CORBA::Any const& any);
 
   // = Use copy() or assign() instead of these.
-  TAO_DynValueBox_i (const TAO_DynValueBox_i &src) = delete;
-  TAO_DynValueBox_i &operator= (const TAO_DynValueBox_i &src) = delete;
+  TAO_DynValueBox_i (TAO_DynValueBox_i const &src) = delete;
+  TAO_DynValueBox_i &operator= (TAO_DynValueBox_i const &src) = delete;
+  TAO_DynValueBox_i (TAO_DynValueBox_i &&) = delete;
+  TAO_DynValueBox_i &operator= (TAO_DynValueBox_i &&) = delete;
 
   /// The boxed component of DynValueBox is another DynAny.
   DynamicAny::DynAny_var boxed_;

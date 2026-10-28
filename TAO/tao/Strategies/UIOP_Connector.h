@@ -53,7 +53,7 @@ public:
   TAO_UIOP_Connector ();
 
   /// Destructor
-  ~TAO_UIOP_Connector ();
+  ~TAO_UIOP_Connector () override;
 
   /**
    * @name The TAO_Connector Methods
@@ -61,35 +61,33 @@ public:
    * Please check the documentation in Transport_Connector.h for details.
    */
   //@{
-  int open (TAO_ORB_Core *orb_core);
-  int close ();
+  int open (TAO_ORB_Core *orb_core) override;
+  int close () override;
 
-  TAO_Profile *create_profile (TAO_InputCDR& cdr);
+  TAO_Profile *create_profile (TAO_InputCDR &cdr) override;
 
-  virtual int check_prefix (const char *endpoint);
+  int check_prefix (char const *endpoint) override;
 
-  virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len);
+  TAO_Profile *corbaloc_scan (char const *str, size_t &len) override;
 
-  virtual char object_key_delimiter () const;
+  char object_key_delimiter () const override;
 
   /// Cancel the passed cvs handler from the connector
-  virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+  int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;
   //@}
 
 public:
-  typedef TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
-          TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY;
+  using TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY =
+    TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
 
-  typedef TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>
-          TAO_UIOP_CONNECT_CREATION_STRATEGY;
+  using TAO_UIOP_CONNECT_CREATION_STRATEGY =
+    TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>;
 
-  typedef ACE_Connect_Strategy<TAO_UIOP_Connection_Handler,
-                               ACE_LSOCK_CONNECTOR>
-          TAO_UIOP_CONNECT_STRATEGY;
+  using TAO_UIOP_CONNECT_STRATEGY =
+    ACE_Connect_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
 
-  typedef ACE_Strategy_Connector<TAO_UIOP_Connection_Handler,
-                                 ACE_LSOCK_CONNECTOR>
-          TAO_UIOP_BASE_CONNECTOR;
+  using TAO_UIOP_BASE_CONNECTOR =
+    ACE_Strategy_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
 
 protected:
   /**
@@ -98,17 +96,22 @@ protected:
    * Please check the documentation in Transport_Connector.h.
    */
   //@{
-  int set_validate_endpoint (TAO_Endpoint *endpoint);
+  int set_validate_endpoint (TAO_Endpoint *endpoint) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
+                                  ACE_Time_Value *timeout = nullptr) override;
 
-  virtual TAO_Profile *make_profile ();
+  TAO_Profile *make_profile () override;
 
   //@}
 
 private:
+  TAO_UIOP_Connector (TAO_UIOP_Connector const &) = delete;
+  TAO_UIOP_Connector &operator= (TAO_UIOP_Connector const &) = delete;
+  TAO_UIOP_Connector (TAO_UIOP_Connector &&) = delete;
+  TAO_UIOP_Connector &operator= (TAO_UIOP_Connector &&) = delete;
+
   /// Return the remote endpoint, a helper function
   TAO_UIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 

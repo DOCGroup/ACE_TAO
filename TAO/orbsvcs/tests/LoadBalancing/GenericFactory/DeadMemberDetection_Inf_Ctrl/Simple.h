@@ -18,11 +18,11 @@ public:
   /// Constructor
 
   /// Default _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent ();
+  CORBA::Boolean _non_existent () override;
 
-  virtual char * get_string ();
+  char* get_string () override;
 
-  virtual void exit ();
+  void exit () override;
 
 private:
   int server_id_;

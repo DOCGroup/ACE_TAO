@@ -244,7 +244,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       if (opts.ior_filename ().length () > 0)
         {
           FILE* fp = ACE_OS::fopen (opts.ior_filename ().c_str (), "w");
-          if (fp == 0)
+          if (fp == nullptr)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                      "(%P|%t) ImR Activator: Could not open file <%s>\n", opts.ior_filename ().c_str ()), -1);

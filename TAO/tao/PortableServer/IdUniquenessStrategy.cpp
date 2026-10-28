@@ -14,9 +14,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdUniquenessStrategy::IdUniquenessStrategy ()
-    {
-    }
+    IdUniquenessStrategy::IdUniquenessStrategy () = default;
   } /* namespace Portable_Server */
 } /* namespace TAO */
 

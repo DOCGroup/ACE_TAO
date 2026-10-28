@@ -53,7 +53,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
     {
       CORBA::Policy_var policy = CORBA::Policy::_nil ();
 
-      if (stub == 0)
+      if (stub == nullptr)
         {
           policy =
             orb_core->get_cached_policy_including_current (
@@ -109,7 +109,7 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val)
   if ((val >>= value) == 0)
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ConnectionTimeoutPolicy *tmp = 0;
+  TAO_ConnectionTimeoutPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ConnectionTimeoutPolicy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -121,7 +121,7 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val)
 TAO_ConnectionTimeoutPolicy *
 TAO_ConnectionTimeoutPolicy::clone () const
 {
-  TAO_ConnectionTimeoutPolicy *copy = 0;
+  TAO_ConnectionTimeoutPolicy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_ConnectionTimeoutPolicy (*this),
                   0);
@@ -133,7 +133,7 @@ TAO_ConnectionTimeoutPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
-  TAO_ConnectionTimeoutPolicy* tmp = 0;
+  TAO_ConnectionTimeoutPolicy* tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ConnectionTimeoutPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,

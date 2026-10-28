@@ -40,16 +40,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Property_Evaluator
 {
 public:
-  TAO_Property_Evaluator(const CosTrading::PropertySeq& properties,
-                         CORBA::Boolean supports_dp = 1);
+  TAO_Property_Evaluator (CosTrading::PropertySeq const& properties,
+                          CORBA::Boolean supports_dp = true);
 
   /**
    * Construct an instance of TAO_Property_Evaluator that operates on
    * an @a offer where the support for dynamic properties is dictated
    * by <supports_dynamic_properties>.
    */
-  TAO_Property_Evaluator(CosTrading::Offer& offer,
-                         CORBA::Boolean supports_dp = 1);
+  TAO_Property_Evaluator (CosTrading::Offer& offer,
+                          CORBA::Boolean supports_dp = true);
 
   /// Clean up dynamic properties.
   virtual ~TAO_Property_Evaluator ();
@@ -81,8 +81,8 @@ public:
   CORBA::TypeCode_ptr property_type (int index);
 
 protected:
-  typedef CosTradingDynamic::DynamicProp DP_Struct;
-  typedef CosTradingDynamic::DynamicPropEval DP_Eval;
+  using DP_Struct = CosTradingDynamic::DynamicProp;
+  using DP_Eval = CosTradingDynamic::DynamicPropEval;
 
   /// The offer from which the TAO_Property_Evaluator extracts property
   /// information.
@@ -101,8 +101,10 @@ protected:
   CORBA::Any** dp_cache_;
 
 private:
-  TAO_Property_Evaluator (const TAO_Property_Evaluator&) = delete;
-  TAO_Property_Evaluator& operator= (const TAO_Property_Evaluator&) = delete;
+  TAO_Property_Evaluator (TAO_Property_Evaluator const&) = delete;
+  TAO_Property_Evaluator& operator= (TAO_Property_Evaluator const&) = delete;
+  TAO_Property_Evaluator (TAO_Property_Evaluator&&) = delete;
+  TAO_Property_Evaluator& operator= (TAO_Property_Evaluator&&) = delete;
 };
 
 /**
@@ -120,17 +122,16 @@ private:
 class TAO_Trading_Serv_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
 public:
-  TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
- ,
-                                  CORBA::Boolean supports_dp = 1);
+  TAO_Property_Evaluator_By_Name (CosTrading::PropertySeq const& properties,
+                                  CORBA::Boolean supports_dp = true);
 
   /**
    * Construct an instance of TAO_Property_Evaluator that operates on
    * an <offer> where the support for dynamic properties is dictated
    * by <supports_dynamic_properties>.
    */
-  TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
-                                 CORBA::Boolean supports_dp = 1);
+  TAO_Property_Evaluator_By_Name (CosTrading::Offer& offer,
+                                  CORBA::Boolean supports_dp = true);
 
   /**
    * Returns 1 if the property whose name is <property_name> is
@@ -156,8 +157,10 @@ public:
   const CosTrading::Property* get_property (const char* property_name);
 
 private:
-  TAO_Property_Evaluator_By_Name (const TAO_Property_Evaluator_By_Name&);
-  TAO_Property_Evaluator_By_Name& operator= (const TAO_Property_Evaluator_By_Name&);
+  TAO_Property_Evaluator_By_Name (TAO_Property_Evaluator_By_Name const&) = delete;
+  TAO_Property_Evaluator_By_Name& operator= (TAO_Property_Evaluator_By_Name const&) = delete;
+  TAO_Property_Evaluator_By_Name (TAO_Property_Evaluator_By_Name&&) = delete;
+  TAO_Property_Evaluator_By_Name& operator= (TAO_Property_Evaluator_By_Name&&) = delete;
 
   /// The instance of the above mapping for the offer provided in the
   /// constructor.
@@ -174,15 +177,15 @@ class TAO_Trading_Serv_Export TAO_Dynamic_Property
   : public virtual POA_CosTradingDynamic::DynamicPropEval
 {
 public:
-  TAO_Dynamic_Property () {}
-  virtual ~TAO_Dynamic_Property ();
+  TAO_Dynamic_Property () = default;
+  ~TAO_Dynamic_Property () override;
 
   void destroy ();
 
   /// Dynamic property evaluation call-back method.
-  virtual CORBA::Any* evalDP(const char* name,
-                             CORBA::TypeCode_ptr returned_type,
-                             const CORBA::Any& extra_info) = 0;
+  CORBA::Any* evalDP (char const* name,
+                      CORBA::TypeCode_ptr returned_type,
+                      CORBA::Any const& extra_info) override = 0;
 
   /// Method to construct a dynamic property structure suitable for
   /// exporting in a CosTrading::PropertyStruct to the Trading Service.
@@ -431,8 +434,10 @@ private:
   /// Reconcile a Boolean property with its debault.
   CORBA::Boolean boolean_prop (POLICY_TYPE pol) const;
 
-  TAO_Policies (const TAO_Policies&);
-  TAO_Policies& operator= (const TAO_Policies&);
+  TAO_Policies (TAO_Policies const&) = delete;
+  TAO_Policies& operator= (TAO_Policies const&) = delete;
+  TAO_Policies (TAO_Policies&&) = delete;
+  TAO_Policies& operator= (TAO_Policies&&) = delete;
 
   /// The policies indexable from the enumerated type.
   CosTrading::Policy* policies_[TAO_NUM_POLICIES];
@@ -504,8 +509,10 @@ public:
   const CosTrading::PolicySeq& policy_seq () const;
 
 private:
-  TAO_Policy_Creator (const TAO_Policy_Creator&);
-  TAO_Policy_Creator& operator= (const TAO_Policy_Creator&);
+  TAO_Policy_Creator (TAO_Policy_Creator const&) = delete;
+  TAO_Policy_Creator& operator= (TAO_Policy_Creator const&) = delete;
+  TAO_Policy_Creator (TAO_Policy_Creator&&) = delete;
+  TAO_Policy_Creator& operator= (TAO_Policy_Creator&&) = delete;
 
   /// Method to prepare the next slot in the policies_ sequence for
   /// policy insertion.
@@ -555,18 +562,19 @@ public:
   void affect_change (const CosTrading::PropertySeq& modifies);
 
 private:
-  TAO_Offer_Modifier (const TAO_Offer_Modifier&);
-  TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);
+  TAO_Offer_Modifier (TAO_Offer_Modifier const&) = delete;
+  TAO_Offer_Modifier& operator= (TAO_Offer_Modifier const&) = delete;
+  TAO_Offer_Modifier (TAO_Offer_Modifier&&) = delete;
+  TAO_Offer_Modifier& operator= (TAO_Offer_Modifier&&) = delete;
 
-  typedef ACE_Hash_Map_Manager_Ex <CORBA::String_var,
-                                   CosTrading::Property *,
-                                   ACE_Hash<CORBA::String_var>,
-                                   ACE_Equal_To<CORBA::String_var>,
-                                   ACE_Null_Mutex>
-          Property_Table;
+  using Property_Table = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
+                                                  CosTrading::Property*,
+                                                  ACE_Hash<CORBA::String_var>,
+                                                  ACE_Equal_To<CORBA::String_var>,
+                                                  ACE_Null_Mutex>;
 
   /// The type of the offer.
-  const char *type_;
+  char const* type_;
 
   /// The map of properties in the offer.
   Property_Table props_;
@@ -650,8 +658,10 @@ public:
   CORBA::ULong match_card_remaining () const;
 
 private:
-  TAO_Offer_Filter (const TAO_Offer_Filter&);
-  TAO_Offer_Filter& operator= (const TAO_Offer_Filter&);
+  TAO_Offer_Filter (TAO_Offer_Filter const&) = delete;
+  TAO_Offer_Filter& operator= (TAO_Offer_Filter const&) = delete;
+  TAO_Offer_Filter (TAO_Offer_Filter&&) = delete;
+  TAO_Offer_Filter& operator= (TAO_Offer_Filter&&) = delete;
 
   /// The set of the name of modifiable properties.
   TAO_String_Set not_mod_props_;
@@ -678,16 +688,16 @@ private:
 class TAO_Property_Filter
 {
 public:
-  typedef CosTrading::Lookup::SpecifiedProps SPECIFIED_PROPS;
+  using SPECIFIED_PROPS = CosTrading::Lookup::SpecifiedProps;
 
   /// An accomplice to g++'s insane lust for copy constructors.
   TAO_Property_Filter () : policy_ (CosTrading::Lookup::all) {}
 
   /// Verify that the specified properties are correct.
-  TAO_Property_Filter (const SPECIFIED_PROPS& desired_props);
+  TAO_Property_Filter (SPECIFIED_PROPS const& desired_props);
 
-  TAO_Property_Filter (const TAO_Property_Filter&) = default;
-  TAO_Property_Filter& operator= (const TAO_Property_Filter&) = default;
+  TAO_Property_Filter (TAO_Property_Filter const&) = default;
+  TAO_Property_Filter& operator= (TAO_Property_Filter const&) = default;
 
   /// Copy the desired properties from the source offer to the
   /// destination offer.
@@ -695,7 +705,7 @@ public:
                      CosTrading::Offer& destination);
 
 private:
-  typedef ACE_Unbounded_Queue< CosTrading::Property* > Prop_Queue;
+  using Prop_Queue = ACE_Unbounded_Queue<CosTrading::Property*>;
 
   TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;

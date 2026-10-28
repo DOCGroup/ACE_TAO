@@ -26,17 +26,22 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class FT_EventService : private TAO_FTEC_Become_Primary_Listener
 {
 public:
-  FT_EventService();
-  ~FT_EventService();
+  FT_EventService ();
+  ~FT_EventService () override;
 
-  int run(int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
 
 private:
   int parse_args (int argc, ACE_TCHAR* argv []);
-  void setup_scheduler(CosNaming::NamingContext_ptr naming_context);
-  int report_factory(CORBA::ORB_ptr orb,
-                   FtRtecEventChannelAdmin::EventChannel_ptr ec);
-  virtual void become_primary();
+  void setup_scheduler (CosNaming::NamingContext_ptr naming_context);
+  int report_factory (CORBA::ORB_ptr orb,
+                      FtRtecEventChannelAdmin::EventChannel_ptr ec);
+  void become_primary () override;
+
+  FT_EventService (FT_EventService const &) = delete;
+  FT_EventService &operator= (FT_EventService const &) = delete;
+  FT_EventService (FT_EventService &&) = delete;
+  FT_EventService &operator= (FT_EventService &&) = delete;
 
   int global_scheduler_;
   // Should we use a global scheduler or a local one?

@@ -267,6 +267,23 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
   return 0;
 }
 
+int be_visitor_args_arglist::visit_fixed (be_fixed *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  const char * const type = this->type_name (node);
+
+  if (this->direction () == AST_Argument::dir_IN)
+    {
+      *os << "const " << type << " &";
+    }
+  else
+    {
+      *os << type << " &";
+    }
+
+  return 0;
+}
+
 int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 {
   // There seems to be one case where the two conditions below

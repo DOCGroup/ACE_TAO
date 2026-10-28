@@ -40,11 +40,11 @@ public:
   TAO_Advanced_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Advanced_Resource_Factory ();
+  ~TAO_Advanced_Resource_Factory () override;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR* argv[]);
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Type of lock used for the allocators
   enum Allocator_Lock_Type
@@ -85,22 +85,22 @@ public:
    * @name Resource Retrieval
    */
   //@{
-  virtual int init_protocol_factories ();
-  virtual ACE_Allocator* input_cdr_dblock_allocator ();
-  virtual ACE_Allocator* input_cdr_buffer_allocator ();
-  virtual ACE_Allocator* input_cdr_msgblock_allocator ();
-  virtual ACE_Allocator* amh_response_handler_allocator ();
-  virtual ACE_Allocator* ami_response_handler_allocator ();
-  virtual int input_cdr_allocator_type_locked ();
-  virtual TAO_ProtocolFactorySet *get_protocol_factories ();
+  int init_protocol_factories () override;
+  ACE_Allocator* input_cdr_dblock_allocator () override;
+  ACE_Allocator* input_cdr_buffer_allocator () override;
+  ACE_Allocator* input_cdr_msgblock_allocator () override;
+  ACE_Allocator* amh_response_handler_allocator () override;
+  ACE_Allocator* ami_response_handler_allocator () override;
+  int input_cdr_allocator_type_locked () override;
+  TAO_ProtocolFactorySet *get_protocol_factories () override;
   //@}
 
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy ();
-  virtual TAO_LF_Strategy *create_lf_strategy ();
+  TAO_Connection_Purging_Strategy *create_purging_strategy () override;
+  TAO_LF_Strategy *create_lf_strategy () override;
 
 protected:
   /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
+  ACE_Reactor_Impl *allocate_reactor_impl () const override;
 
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);
@@ -126,7 +126,13 @@ protected:
   /// Type of lock used by AMI response handler allocator.
   Allocator_Lock_Type ami_response_handler_allocator_lock_type_;
 
-  virtual int load_default_protocols ();
+  int load_default_protocols () override;
+
+private:
+  TAO_Advanced_Resource_Factory (TAO_Advanced_Resource_Factory const &) = delete;
+  TAO_Advanced_Resource_Factory &operator= (TAO_Advanced_Resource_Factory const &) = delete;
+  TAO_Advanced_Resource_Factory (TAO_Advanced_Resource_Factory &&) = delete;
+  TAO_Advanced_Resource_Factory &operator= (TAO_Advanced_Resource_Factory &&) = delete;
 };
 
 static TAO_Resource_Factory_Changer TAO_changer;

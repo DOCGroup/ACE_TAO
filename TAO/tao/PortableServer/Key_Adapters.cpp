@@ -7,15 +7,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator ()
-  : counter_ (0)
-{
-}
-
 int
 TAO_Incremental_Key_Generator::operator() (PortableServer::ObjectId &id)
 {
-  const size_t cntr_size = sizeof this->counter_;
+  size_t const cntr_size = sizeof this->counter_;
   // Resize to accommodate the counter.
   id.length (cntr_size);
 
@@ -31,17 +26,17 @@ TAO_Incremental_Key_Generator::operator() (PortableServer::ObjectId &id)
 ////////////////////////////////////////////////////////////////////////////////
 
 u_long
-TAO_ObjectId_Hash::operator () (const PortableServer::ObjectId &id) const
+TAO_ObjectId_Hash::operator () (PortableServer::ObjectId const &id) const
 {
-  return ACE::hash_pjw ((const char *) id.get_buffer (),
+  return ACE::hash_pjw (reinterpret_cast<char const *> (id.get_buffer ()),
                         id.length ());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int
-TAO_Ignore_Original_Key_Adapter::encode (const PortableServer::ObjectId &,
-                                         const ACE_Active_Map_Manager_Key &active_key,
+TAO_Ignore_Original_Key_Adapter::encode (PortableServer::ObjectId const &,
+                                         ACE_Active_Map_Manager_Key const &active_key,
                                          PortableServer::ObjectId &modified_key)
 {
   // Size of active key.
@@ -58,7 +53,7 @@ TAO_Ignore_Original_Key_Adapter::encode (const PortableServer::ObjectId &,
 }
 
 int
-TAO_Ignore_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
+TAO_Ignore_Original_Key_Adapter::decode (PortableServer::ObjectId const &modified_key,
                                          ACE_Active_Map_Manager_Key &active_key)
 {
   // Read off value of index and generation.
@@ -69,7 +64,7 @@ TAO_Ignore_Original_Key_Adapter::decode (const PortableServer::ObjectId &modifie
 }
 
 int
-TAO_Ignore_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
+TAO_Ignore_Original_Key_Adapter::decode (PortableServer::ObjectId const &modified_key,
                                          PortableServer::ObjectId &original_key)
 {
   // Smartly copy all the data; <original_key does not own the data>.
@@ -86,8 +81,8 @@ TAO_Ignore_Original_Key_Adapter::decode (const PortableServer::ObjectId &modifie
 ////////////////////////////////////////////////////////////////////////////////
 
 int
-TAO_Preserve_Original_Key_Adapter::encode (const PortableServer::ObjectId &original_key,
-                                           const ACE_Active_Map_Manager_Key &active_key,
+TAO_Preserve_Original_Key_Adapter::encode (PortableServer::ObjectId const &original_key,
+                                           ACE_Active_Map_Manager_Key const &active_key,
                                            PortableServer::ObjectId &modified_key)
 {
   // Size of active key.
@@ -110,7 +105,7 @@ TAO_Preserve_Original_Key_Adapter::encode (const PortableServer::ObjectId &origi
 }
 
 int
-TAO_Preserve_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
+TAO_Preserve_Original_Key_Adapter::decode (PortableServer::ObjectId const &modified_key,
                                            ACE_Active_Map_Manager_Key &active_key)
 {
   // Read off value of index and generation.
@@ -121,7 +116,7 @@ TAO_Preserve_Original_Key_Adapter::decode (const PortableServer::ObjectId &modif
 }
 
 int
-TAO_Preserve_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
+TAO_Preserve_Original_Key_Adapter::decode (PortableServer::ObjectId const &modified_key,
                                            PortableServer::ObjectId &original_key)
 {
   // Size of active key.

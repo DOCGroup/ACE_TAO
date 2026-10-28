@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "tao/PortableServer/StrategyFactory.h"
-#include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -8,9 +7,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    StrategyFactory::~StrategyFactory ()
-    {
-    }
+    StrategyFactory::~StrategyFactory () = default;
   } /* namespace Portable_Server */
 } /* namespace TAO */
 

@@ -40,33 +40,35 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 
     // Extract the byte-order and use helper methods to
     // disambiguate octet, booleans, and chars.
-    ACE_CDR::Boolean byte_order;
-    cdr >> ACE_InputCDR::to_boolean (byte_order);
+    ACE_CDR::Boolean byte_order {};
+    if (cdr >> ACE_InputCDR::to_boolean (byte_order))
+      {
+        // Set the byte-order on the stream...
+        cdr.reset_byte_order (byte_order);
 
-    // Set the byte-order on the stream...
-    cdr.reset_byte_order (byte_order);
+        // Extract the length.
+        ACE_CDR::ULong length {};
+        if (cdr >> length)
+          {
+            // Ensure there's sufficient room for log record payload.
+            ACE_CDR::grow (payload, 8 + ACE_CDR::MAX_ALIGNMENT + length);
 
-    // Extract the length
-    ACE_CDR::ULong length;
-    cdr >> length;
-
-    // Ensure there's sufficient room for log record payload.
-    ACE_CDR::grow (payload, 8 + ACE_CDR::MAX_ALIGNMENT + length);
-
-    // Use <recv_n> to obtain the contents.
-    if (logging_peer_.recv_n (payload->wr_ptr (), length) > 0) {
-      payload->wr_ptr (length);   // Reflect additional bytes
-      // Chain the payload to mblk via the contination field.
-      mblk->cont (payload);
-      return length;
-    }
+            // Use <recv_n> to obtain the contents.
+            if (logging_peer_.recv_n (payload->wr_ptr (), length) > 0) {
+              payload->wr_ptr (length);   // Reflect additional bytes
+              // Chain the payload to mblk via the continuation field.
+              mblk->cont (payload);
+              return length;
+            }
+          }
+      }
   }
   // Error cases end up here, so we need to release the memory to
   // prevent a leak.
   payload->release ();
-  payload = 0;
+  payload = nullptr;
   mblk->release ();
-  mblk = 0;
+  mblk = nullptr;
   return -1;
 }
 
@@ -84,17 +86,23 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
     {
       // Build a CDR stream from the log record data.
       ACE_InputCDR cdr (mblk->cont ());
-      ACE_CDR::Boolean byte_order;
-      ACE_CDR::ULong length;
+      ACE_CDR::Boolean byte_order {};
       // Extract the byte-order and length, ending up at the start
       // of the log record itself. Use the byte order to properly
       // set the CDR stream for extracting the contents.
-      cdr >> ACE_InputCDR::to_boolean (byte_order);
-      cdr.reset_byte_order (byte_order);
-      cdr >> length;
-      ACE_Log_Record log_record;
-      cdr >> log_record;  // Finally extract the <ACE_log_record>.
-      log_record.print (mblk->rd_ptr (), 1, cerr);
+      if (cdr >> ACE_InputCDR::to_boolean (byte_order))
+        {
+          cdr.reset_byte_order (byte_order);
+          ACE_CDR::ULong length {};
+          if (cdr >> length)
+            {
+              ACE_Log_Record log_record;
+              if (cdr >> log_record)
+                {
+                  log_record.print (mblk->rd_ptr (), 1, cerr);
+                }
+            }
+        }
     }
 
   return ACE_Utils::truncate_cast<int> (mblk->total_length ());
@@ -103,7 +111,7 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
 
 int Logging_Handler::log_record ()
 {
-  ACE_Message_Block *mblk = 0;
+  ACE_Message_Block *mblk = nullptr;
   if (recv_log_record (mblk) == -1)
     return -1;
   else {

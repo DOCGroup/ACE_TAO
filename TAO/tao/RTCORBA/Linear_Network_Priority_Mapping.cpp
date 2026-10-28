@@ -32,7 +32,7 @@
 #define IPDSFIELD_CE_MASK       0x01
 #define IPDSFIELD_DSCP_EF       0x2E
 
-static int const dscp[] =
+constexpr int dscp[] =
 {
   IPDSFIELD_DSCP_DEFAULT ,
   IPDSFIELD_DSCP_CS1     ,

@@ -83,7 +83,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
          supplieradmin_proxy_id);
 
   StructuredEventSupplier_i *servant =
-    new StructuredEventSupplier_i(orb_.in());
+    new StructuredEventSupplier_i (orb_.in ());
 
   CORBA::Object_var poa_obj = orb_->resolve_initial_references ("RootPOA");
   PortableServer::POA_var poa = PortableServer::POA::_narrow (poa_obj.in ());
@@ -110,8 +110,8 @@ Messenger_i::~Messenger_i ()
 }
 
 CORBA::Boolean Messenger_i::send_message (
-    const char * user_name,
-    const char * subject,
+    char const * user_name,
+    char const * subject,
     char *& message)
 {
   ACE_OS::printf("Message from: %s\nSubject:      %s\nMessage:      %s\n",
@@ -124,29 +124,29 @@ CORBA::Boolean Messenger_i::send_message (
   CosNotification::StructuredEvent event;
 
   event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup("OCI_TAO");
+    CORBA::string_dup ("OCI_TAO");
   // string
   event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup("examples");
+    CORBA::string_dup ("examples");
   // string
   event.header.fixed_header.event_name =
-    CORBA::string_dup("myevent");
+    CORBA::string_dup ("myevent");
 
   // OptionalHeaderFields
   // PropertySeq
 
   // sequence<Property>: string name, any value
   event.filterable_data.length (3);
-  event.filterable_data[0].name = CORBA::string_dup("Message from:");
-  event.filterable_data[0].value <<= (const char *)user_name;
-  event.filterable_data[1].name = CORBA::string_dup("Subject:");
-  event.filterable_data[1].value <<= (const char *)subject;
-  event.filterable_data[2].name = CORBA::string_dup("Message:");
-  event.filterable_data[2].value <<= (const char *)message;
+  event.filterable_data[0].name = CORBA::string_dup ("Message from:");
+  event.filterable_data[0].value <<= user_name;
+  event.filterable_data[1].name = CORBA::string_dup ("Subject:");
+  event.filterable_data[1].value <<= subject;
+  event.filterable_data[2].name = CORBA::string_dup ("Message:");
+  event.filterable_data[2].value <<= message;
 
   std::cout << "pushing " << std::endl;
   current_->the_priority(HIGH_PRIORITY);
-  consumer_proxy_->push_structured_event(event);
+  consumer_proxy_->push_structured_event (event);
 
   return 1;
 }

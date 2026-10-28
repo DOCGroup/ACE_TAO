@@ -4,12 +4,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ACE_INLINE
-  ServerRequestDetails::ServerRequestDetails ()
-    : processing_mode_(PortableInterceptor::LOCAL_AND_REMOTE)
-  {
-  }
-
-  ACE_INLINE
   bool
   ServerRequestDetails::should_be_processed (bool is_remote_request) const
   {

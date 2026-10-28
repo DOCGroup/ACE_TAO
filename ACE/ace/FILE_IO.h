@@ -60,8 +60,8 @@ public:
   /// cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,
-                  const ACE_Time_Value *timeout = 0,
-                  size_t *bytes_transferred = 0);
+                  const ACE_Time_Value *timeout = nullptr,
+                  size_t *bytes_transferred = nullptr);
 
   /// Recv n bytes, keep trying until n are received.
   ssize_t recv_n (void *buf, size_t n) const;

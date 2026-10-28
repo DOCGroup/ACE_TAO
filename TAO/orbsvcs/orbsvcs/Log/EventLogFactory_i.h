@@ -56,7 +56,7 @@ public:
   TAO_EventLogFactory_i ();
 
   /// Destructor.
-  ~TAO_EventLogFactory_i ();
+  ~TAO_EventLogFactory_i () override;
 
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
@@ -71,15 +71,15 @@ public:
   DsEventLogAdmin::EventLog_ptr create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id);
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
+        DsLogAdmin::LogId_out id) override;
 
   /// Same as create (), but allows clients to specify the id.
   DsEventLogAdmin::EventLog_ptr create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds);
+        DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
@@ -87,25 +87,30 @@ public:
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
 
 protected:
-  virtual CORBA::RepositoryId create_repositoryid ();
+  CORBA::RepositoryId create_repositoryid () override;
 
-  virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id);
+  PortableServer::ServantBase * create_log_servant (DsLogAdmin::LogId id) override;
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.
-  TAO_CEC_EventChannel *impl;
+  TAO_CEC_EventChannel * impl;
 
   /// The object used for log generated events.
-  TAO_EventLogNotification* notifier_;
+  TAO_EventLogNotification * notifier_;
 
   /// EventChannel used to obtain the ConsumerAdmin.
   CosEventChannelAdmin::EventChannel_var event_channel_;
 
   /// The ConsumerAdmin that the EventLogFactory supports.
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
+
+private:
+  TAO_EventLogFactory_i (TAO_EventLogFactory_i const &) = delete;
+  TAO_EventLogFactory_i (TAO_EventLogFactory_i &&) = delete;
+  TAO_EventLogFactory_i & operator= (TAO_EventLogFactory_i const &) = delete;
+  TAO_EventLogFactory_i & operator= (TAO_EventLogFactory_i &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

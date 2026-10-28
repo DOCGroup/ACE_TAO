@@ -14,9 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
-  : orb_core_ (orb_core),
-    tss_slot_ (0), // Call initialize() before use.
-    slot_count_ (0) // Call initialize() before use.
+  : orb_core_ (orb_core)
 {
 }
 

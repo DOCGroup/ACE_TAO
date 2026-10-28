@@ -69,7 +69,7 @@ ACE_thread_key_t *log_msg_tss_key ()
 
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #else
-static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup = 0;
+static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup = nullptr;
 class ACE_Msg_Log_Cleanup: public ACE_Cleanup_Adapter<ACE_Log_Msg>
 {
 public:
@@ -1312,7 +1312,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     else
                       {
                         errno = ACE::map_errno (this->errnum ());
-                        ACE_TCHAR *lpMsgBuf = 0;
+                        ACE_TCHAR *lpMsgBuf = nullptr;
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -1515,7 +1515,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     else
                       {
                         errno = ACE::map_errno (this->errnum ());
-                        ACE_TCHAR *lpMsgBuf = 0;
+                        ACE_TCHAR *lpMsgBuf = nullptr;
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,

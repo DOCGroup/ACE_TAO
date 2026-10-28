@@ -282,7 +282,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       error = true;
     }
 
-  HANDLER *new_handler = 0;
+  HANDLER *new_handler = nullptr;
   if (!error)
     {
       // The Template method
@@ -386,8 +386,8 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
 
   ACE_Message_Block &message_block = result.message_block ();
 
-  sockaddr *local_addr = 0;
-  sockaddr *remote_addr = 0;
+  sockaddr *local_addr = nullptr;
+  sockaddr *remote_addr = nullptr;
   int local_size = 0;
   int remote_size = 0;
   // This matches setup in accept().
@@ -439,7 +439,7 @@ template <class HANDLER> HANDLER *
 ACE_Asynch_Acceptor<HANDLER>::make_handler ()
 {
   // Default behavior
-  HANDLER *handler = 0;
+  HANDLER *handler = nullptr;
   ACE_NEW_RETURN (handler,
                   HANDLER,
                   0);

@@ -35,18 +35,23 @@ public:
    * @param mt Specifies whether multithreaded ORB is used.
    */
   AMI_Replication_Strategy(bool mt);
-  ~AMI_Replication_Strategy();
-  virtual void replicate_request(const FTRT::State& state,
+  ~AMI_Replication_Strategy() override;
+  void replicate_request(FTRT::State const& state,
     RollbackOperation rollback,
-    const FtRtecEventChannelAdmin::ObjectId& oid);
-  virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version);
-  virtual Replication_Strategy* make_primary_strategy();
+    FtRtecEventChannelAdmin::ObjectId const& oid) override;
+  void add_member(FTRT::ManagerInfo const& info,
+                  CORBA::ULong object_group_ref_version) override;
+  Replication_Strategy* make_primary_strategy() override;
 
-  virtual int  acquire_read ();
-  virtual int  acquire_write ();
-  virtual int  release ();
+  int acquire_read () override;
+  int acquire_write () override;
+  int release () override;
 private:
+  AMI_Replication_Strategy(AMI_Replication_Strategy const&) = delete;
+  AMI_Replication_Strategy(AMI_Replication_Strategy&&) = delete;
+  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy const&) = delete;
+  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy&&) = delete;
+
   bool mt_;
 };
 

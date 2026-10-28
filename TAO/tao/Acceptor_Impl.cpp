@@ -167,7 +167,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
       if (TAO_debug_level > 0)
          {
-           const ACE_TCHAR *error_message = nullptr;
+           ACE_TCHAR const *error_message = nullptr;
            if (f->activate_server_connections ())
              error_message = ACE_TEXT("could not activate new connection");
            else
@@ -195,7 +195,7 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::TAO_Accept_Strategy (TAO_
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
                                                              bool restart)
 {
   return ACCEPT_STRATEGY_BASE::open (local_addr, restart);

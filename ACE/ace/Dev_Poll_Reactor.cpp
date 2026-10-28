@@ -841,9 +841,9 @@ ACE_Dev_Poll_Reactor::close ()
 #else
 
   delete [] this->dp_fds_;
-  this->dp_fds_ = 0;
-  this->start_pfds_ = 0;
-  this->end_pfds_ = 0;
+  this->dp_fds_ = nullptr;
+  this->start_pfds_ = nullptr;
+  this->end_pfds_ = nullptr;
 
 #endif  /* ACE_HAS_EVENT_POLL */
 
@@ -1443,7 +1443,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
 
      struct epoll_event epev;
      ACE_OS::memset (&epev, 0, sizeof (epev));
-     static const int op = EPOLL_CTL_ADD;
+     static constexpr int op = EPOLL_CTL_ADD;
 
      epev.data.fd = handle;
      epev.events  = this->reactor_mask_to_poll_event (mask);
@@ -1783,7 +1783,7 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
 
   struct epoll_event epev;
   ACE_OS::memset (&epev, 0, sizeof (epev));
-  static const int op = EPOLL_CTL_DEL;
+  static constexpr int op = EPOLL_CTL_DEL;
 
   epev.events  = 0;
   epev.data.fd = handle;

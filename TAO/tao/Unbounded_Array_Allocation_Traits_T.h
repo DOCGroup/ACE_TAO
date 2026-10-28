@@ -20,7 +20,7 @@ namespace details
 template<typename T, bool dummy>
 struct unbounded_array_allocation_traits
 {
-  typedef T value_type;
+  using value_type = T;
 
   inline static CORBA::ULong default_maximum()
   {

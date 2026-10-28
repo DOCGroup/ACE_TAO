@@ -46,7 +46,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   // Our connect creation strategy
-  CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY
@@ -55,7 +55,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   // Our activation strategy
-  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
 
   ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
@@ -92,13 +92,13 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
-    return 0;
+    return nullptr;
 
   TAO_SSLIOP_Endpoint *ssl_endpoint =
     dynamic_cast<TAO_SSLIOP_Endpoint *> (endpoint);
 
-  if (ssl_endpoint == 0)
-    return 0;
+  if (ssl_endpoint == nullptr)
+    return nullptr;
 
   // @@ TODO:  The EstablishTrust policy should be evaluated once per
   //           connection, not once per invocation.  This should
@@ -199,15 +199,15 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 TAO_Profile *
 TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile = nullptr;
   ACE_NEW_RETURN (pfile,
                   TAO_SSLIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   if (pfile->decode (cdr) == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;
@@ -221,10 +221,10 @@ TAO::SSLIOP::Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (this->orb_core (),
-                                          0), // SSL component
+                                          nullptr), // SSL component
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
@@ -243,7 +243,7 @@ TAO::SSLIOP::Connector::make_secure_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (this->orb_core (),
                                           1), // SSL component
@@ -268,13 +268,13 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
    else
    {
        if (this->TAO_IIOP_Connector::check_prefix (endpoint) != 0)
-         return 0;
+         return nullptr;
    }
 
    // Determine the (first in a list of possibly > 1) endpoint address
    const char *comma_pos = ACE_OS::strchr (endpoint,',');
    const char *slash_pos = ACE_OS::strchr (endpoint,'/');
-   if (comma_pos == 0 && slash_pos == 0)
+   if (comma_pos == nullptr && slash_pos == nullptr)
    {
        if (TAO_debug_level)
        {
@@ -285,7 +285,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
        }
        len = ACE_OS::strlen (endpoint);
    }
-   else if (comma_pos == 0 || comma_pos > slash_pos)
+   else if (comma_pos == nullptr || comma_pos > slash_pos)
    {
        // The endpoint address does not extend past the first '/' or ','
        len = slash_pos - endpoint;
@@ -296,7 +296,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
    }
 
    //Create the corresponding profile
-   TAO_Profile *ptmp = 0;
+   TAO_Profile *ptmp = nullptr;
    if (ssl_only)
      {
        ptmp = this->make_secure_profile ();
@@ -439,12 +439,12 @@ TAO::SSLIOP::Connector::ssliop_connect (
                       ACE_TEXT ("failure.\n")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   int result = 0;
-  TAO::SSLIOP::Connection_Handler *svc_handler = 0;
-  TAO_Transport *transport = 0;
+  TAO::SSLIOP::Connection_Handler *svc_handler = nullptr;
+  TAO_Transport *transport = nullptr;
 
   // Before we can check the cache to find an existing connection, we
   // need to make sure the ssl_endpoint is fully initialized with the
@@ -467,7 +467,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                         ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
                         ACE_TEXT ("service handler.\n")));
 
-          return 0;
+          return nullptr;
         }
 
       ACE_Event_Handler_var
@@ -498,7 +498,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       if (TAO_debug_level > 2)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
-                    ACE_TEXT ("got existing transport[%d]\n"),
+                    ACE_TEXT ("got existing transport[%B]\n"),
                     transport->id ()));
 
       // When the transport is not connected wait for completion
@@ -538,7 +538,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
           // ACE_Strategy_Connector (the "base_connector_").  This is
           // thread-safe and reentrant, hence no synchronization is
           // necessary.
-          if (svc_handler == 0 &&
+          if (svc_handler == nullptr &&
               this->base_connector_.creation_strategy ()->make_svc_handler (
                    svc_handler) != 0)
             {
@@ -547,7 +547,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                             ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
                             ACE_TEXT ("service handler.\n")));
 
-              return 0;
+              return nullptr;
             }
 
           ACE_Event_Handler_var
@@ -574,7 +574,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
           else
             verify_mode = ACE_SSL_Context::instance ()->default_verify_mode ();
 
-          ::SSL_set_verify (svc_handler->peer ().ssl (), verify_mode, 0);
+          ::SSL_set_verify (svc_handler->peer ().ssl (), verify_mode, nullptr);
 
           // The "eNULL" cipher disables encryption but still uses a
           // secure hash (e.g. SHA1 or MD5) to ensure integrity.  (Try the
@@ -643,12 +643,12 @@ TAO::SSLIOP::Connector::ssliop_connect (
               else
                 {
                   // Transport is not usable
-                  transport = 0;
+                  transport = nullptr;
                 }
             }
 
           // In case of errors transport is zero
-          if (transport == 0)
+          if (transport == nullptr)
             {
               // Give users a clue to the problem.
               if (TAO_debug_level)
@@ -664,7 +664,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                               ACE_TEXT ("errno")));
                 }
 
-              return 0;
+              return nullptr;
             }
 
           TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
@@ -694,7 +694,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                               "hostname verification failed\n"));
                 }
 
-              return 0;
+              return nullptr;
             }
 
 
@@ -703,7 +703,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
           if (TAO_debug_level > 2)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, "
-                        "new SSL connection to port %d on transport[%d]\n",
+                        "new SSL connection to port %d on transport[%B]\n",
                         remote_address.get_port_number (),
                         svc_handler->peer ().get_handle ()));
 
@@ -726,7 +726,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                               "could not add the new connection to cache\n"));
                 }
 
-              return 0;
+              return nullptr;
             }
 
           // fix for bug 2654
@@ -734,7 +734,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
             {
               svc_handler->cancel_pending_connection ();
               transport->purge_entry();
-              return 0;
+              return nullptr;
             }
 
           if (transport->is_connected () &&
@@ -751,12 +751,12 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
               if (TAO_debug_level > 0)
                 ORBSVCS_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - SSLIOP_Connector [%d]::ssliop_connect, "
+                            "TAO (%P|%t) - SSLIOP_Connector [%B]::ssliop_connect, "
                             "could not register the transport "
                             "in the reactor.\n",
                             transport->id ()));
 
-              return 0;
+              return nullptr;
             }
 
           svc_handler_auto_ptr.release ();
@@ -807,11 +807,11 @@ TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
                 return TAO::SSLIOP::OwnCredentials::_nil ();
 
               TAO::SSLIOP::EVP_PKEY_var evp = ssliop_credentials->evp ();
-              if (evp.in () != 0
+              if (evp.in () != nullptr
                   && ::SSL_use_PrivateKey (ssl, evp.in ()) != 1)
                 {
                   // Invalidate the certificate we just set.
-                  (void) ::SSL_use_certificate (ssl, 0);
+                  (void) ::SSL_use_certificate (ssl, nullptr);
                   return TAO::SSLIOP::OwnCredentials::_nil ();
                 }
             }

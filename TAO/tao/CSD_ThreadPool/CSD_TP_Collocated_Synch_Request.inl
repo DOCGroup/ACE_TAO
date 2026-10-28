@@ -16,8 +16,7 @@ TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
                      operation,
                      servant,
                      servant_state,
-                     server_request),
-    exception_(0)
+                     server_request)
 {
 }
 
@@ -31,14 +30,14 @@ TAO::CSD::TP_Collocated_Synch_Request::wait()
   if (dispatched)
     {
       // Check to see if the dispatching caused an exception to be raised.
-      if (this->exception_ != 0)
+      if (this->exception_ != nullptr)
         {
           // An exception was raised during the actual dispatching to
           // the servant.  We need to raise the exception to our caller,
           // which is the thread that made the collocated request in the
           // first place.
           CORBA::Exception* ex = this->exception_;
-          this->exception_ = 0;
+          this->exception_ = nullptr;
 
           std::unique_ptr<CORBA::Exception> ex_holder(ex);
           ex->_raise ();

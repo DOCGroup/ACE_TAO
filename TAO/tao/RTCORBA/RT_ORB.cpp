@@ -14,12 +14,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_RT_ORB::~TAO_RT_ORB () = default;
+TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager () = default;
+
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
                         TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan,
                         ACE_Time_Value const &dynamic_thread_time)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (0),
     lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time)
 {
@@ -34,10 +36,6 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
 
   this->tp_manager_ =
     &rt_thread_lane_resources_manager->tp_manager ();
-}
-
-TAO_RT_ORB::~TAO_RT_ORB ()
-{
 }
 
 RTCORBA::Mutex_ptr
@@ -68,18 +66,10 @@ TAO_RT_ORB::open_named_mutex (const char *name)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager ()
-{
-}
-
-TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager ()
-{
-}
-
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_mutex ()
 {
-  TAO_RT_Mutex *mutex = 0;
+  TAO_RT_Mutex *mutex = nullptr;
   ACE_NEW_THROW_EX (mutex,
                     TAO_RT_Mutex (),
                     CORBA::NO_MEMORY (
@@ -103,7 +93,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
   // If this mutex is named, then we need to remove it from our table.
   // Otherwise, we don't have to do anything.
   const char *name = tao_mutex->name ();
-  if (name != 0)
+  if (name != nullptr)
     {
       // The following should be atomic.
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
@@ -208,7 +198,7 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Boolean no_delay,
                                             CORBA::Boolean enable_network_priority)
 {
-  TAO_TCP_Protocol_Properties *tmp = 0;
+  TAO_TCP_Protocol_Properties *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_TCP_Protocol_Properties (send_buffer_size,
                                         recv_buffer_size,
@@ -227,7 +217,7 @@ TAO_RT_ORB::create_unix_domain_protocol_properties (
                                                     CORBA::Long send_buffer_size,
                                                     CORBA::Long recv_buffer_size)
 {
-  TAO_UnixDomain_Protocol_Properties *tmp = 0;
+  TAO_UnixDomain_Protocol_Properties *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_UnixDomain_Protocol_Properties (
                                                send_buffer_size,
@@ -249,7 +239,7 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                       const char *mmap_filename,
                                                       const char *mmap_lockname)
 {
-  TAO_SharedMemory_Protocol_Properties *tmp = 0;
+  TAO_SharedMemory_Protocol_Properties *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_SharedMemory_Protocol_Properties (send_buffer_size,
                                                           recv_buffer_size,
@@ -271,7 +261,7 @@ TAO_RT_ORB::create_user_datagram_protocol_properties (
                                                       CORBA::Long recv_buffer_size,
                                                       CORBA::Boolean enable_network_priority)
 {
-  TAO_UserDatagram_Protocol_Properties *tmp = 0;
+  TAO_UserDatagram_Protocol_Properties *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_UserDatagram_Protocol_Properties (
                                                  send_buffer_size,
@@ -292,7 +282,7 @@ TAO_RT_ORB::create_stream_control_protocol_properties (
                                                        CORBA::Boolean no_delay,
                                                        CORBA::Boolean enable_network_priority)
 {
-  TAO_StreamControl_Protocol_Properties *tmp = 0;
+  TAO_StreamControl_Protocol_Properties *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_StreamControl_Protocol_Properties (
                                                   send_buffer_size,
@@ -355,7 +345,7 @@ RTCORBA::PriorityModelPolicy_ptr
 TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
                                           RTCORBA::Priority server_priority)
 {
-  TAO_PriorityModelPolicy *tmp = 0;
+  TAO_PriorityModelPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (priority_model, server_priority),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -367,7 +357,7 @@ TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
 RTCORBA::ThreadpoolPolicy_ptr
 TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool)
 {
-  TAO_ThreadpoolPolicy *tmp = 0;
+  TAO_ThreadpoolPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (threadpool),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -380,7 +370,7 @@ RTCORBA::PriorityBandedConnectionPolicy_ptr
 TAO_RT_ORB::create_priority_banded_connection_policy (const
                                                       RTCORBA::PriorityBands & priority_bands)
 {
-  TAO_PriorityBandedConnectionPolicy *tmp = 0;
+  TAO_PriorityBandedConnectionPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (priority_bands),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -392,7 +382,7 @@ TAO_RT_ORB::create_priority_banded_connection_policy (const
 RTCORBA::PrivateConnectionPolicy_ptr
 TAO_RT_ORB::create_private_connection_policy ()
 {
-  TAO_PrivateConnectionPolicy *tmp = 0;
+  TAO_PrivateConnectionPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -404,7 +394,7 @@ TAO_RT_ORB::create_private_connection_policy ()
 RTCORBA::ServerProtocolPolicy_ptr
 TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protocols)
 {
-  TAO_ServerProtocolPolicy *tmp = 0;
+  TAO_ServerProtocolPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (protocols),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -416,7 +406,7 @@ TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protoco
 RTCORBA::ClientProtocolPolicy_ptr
 TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protocols)
 {
-  TAO_ClientProtocolPolicy *tmp = 0;
+  TAO_ClientProtocolPolicy *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (protocols),
                     CORBA::NO_MEMORY (TAO::VMCID,

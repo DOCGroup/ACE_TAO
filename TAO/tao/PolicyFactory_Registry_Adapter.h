@@ -26,10 +26,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //-- Forward Declarations--
 namespace CORBA
 {
-  typedef ULong PolicyType;
+  using PolicyType = ULong;
 
   class Policy;
-  typedef Policy *Policy_ptr;
+  using Policy_ptr = Policy *;
 
   class Any;
 }
@@ -37,7 +37,7 @@ namespace CORBA
 namespace PortableInterceptor
 {
   class PolicyFactory;
-  typedef PolicyFactory *PolicyFactory_ptr;
+  using PolicyFactory_ptr = PolicyFactory *;
 }
 
 namespace TAO
@@ -65,7 +65,7 @@ namespace TAO
     /// Construct a policy of the given type with the information
     /// contained in the CORBA::Any @a value.
     virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                             const CORBA::Any &value) = 0;
+                                             CORBA::Any const &value) = 0;
 
     /// Create an empty policy, usually to be filled in later by
     /// demarshaling.
@@ -73,7 +73,7 @@ namespace TAO
 
     /// Check if a @c PolicyFactory corresponding to the given type,
     /// exists.
-    virtual bool factory_exists (CORBA::PolicyType & type) const = 0;
+    virtual bool factory_exists (CORBA::PolicyType &type) const = 0;
   };
 }
 

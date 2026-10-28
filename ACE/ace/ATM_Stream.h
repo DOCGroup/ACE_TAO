@@ -26,12 +26,12 @@
 #if defined (ACE_WIN32)
 #include "ace/SOCK_Stream.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ACE_SOCK_Stream ATM_Stream;
+using ATM_Stream = ACE_SOCK_Stream;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #include "ace/TLI_Stream.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ACE_TLI_Stream ATM_Stream;
+using ATM_Stream = ACE_TLI_Stream;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif
 
@@ -71,7 +71,7 @@ public:
   /// Recv an n byte buffer from the connected transport mechanism.
   ssize_t recv (void *buf,
                 size_t n,
-                int *flags = 0) const;
+                int *flags = nullptr) const;
 
   /// Send exactly n bytes to the connected transport mechanism.
   ssize_t send_n (const void *buf,
@@ -79,7 +79,7 @@ public:
                   int flags) const;
 
   // = Meta-type info
-  typedef ACE_ATM_Addr PEER_ADDR;
+  using PEER_ADDR = ACE_ATM_Addr;
 
   /// Dump the state of an object.
   void dump () const;

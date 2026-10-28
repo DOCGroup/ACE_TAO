@@ -108,7 +108,7 @@ namespace ACE_OS {
    * problems
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  int atexit (ACE_EXIT_HOOK func, const char* name = 0);
+  int atexit (ACE_EXIT_HOOK func, const char* name = nullptr);
 
   /*
    * Convert string to integer

@@ -54,7 +54,7 @@ ACE_INLINE u_int usec2ntp(u_int usec)
 /*
  * Number of seconds between 1-Jan-1900 and 1-Jan-1970
  */
-const ACE_UINT32 GETTIMEOFDAY_TO_NTP_OFFSET = 2208988800U;
+constexpr ACE_UINT32 GETTIMEOFDAY_TO_NTP_OFFSET = 2208988800U;
 
 /*
  * Return a 64-bit ntp timestamp (UTC time relative to Jan 1, 1970).

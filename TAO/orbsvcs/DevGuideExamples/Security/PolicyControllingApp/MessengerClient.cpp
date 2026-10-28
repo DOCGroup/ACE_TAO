@@ -75,7 +75,7 @@
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 //
 
-const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
+ACE_TCHAR const * ior = ACE_TEXT("file://Messenger.ior");
 
 int which = 0;
 
@@ -142,14 +142,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       qop = Security::SecQOPNoProtection;
       //qop = Security::SecQOPIntegrity;
 
-      establish_trust.trust_in_client = 0;
+      establish_trust.trust_in_client = false;
       establish_trust.trust_in_target = 1;
     }
     else
     {
       qop = Security::SecQOPIntegrityAndConfidentiality;
 
-      establish_trust.trust_in_client = 0;
+      establish_trust.trust_in_client = false;
       establish_trust.trust_in_target = 1;
     }
 
@@ -181,7 +181,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              "New Directive",
                              message.inout() );
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const & ex) {
     ex._tao_print_exception("Client: main block");
     return 1;
   }

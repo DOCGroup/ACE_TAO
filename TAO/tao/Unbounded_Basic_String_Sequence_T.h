@@ -21,21 +21,21 @@ template<typename charT>
 class unbounded_basic_string_sequence
 {
 public:
-  typedef charT character_type;
-  typedef character_type * value_type;
-  typedef character_type const * const_value_type;
-  typedef ::CORBA::ULong size_type;
+  using character_type = charT;
+  using value_type = character_type *;
+  using const_value_type = character_type const *;
+  using size_type = ::CORBA::ULong;
 
-  typedef details::string_traits<character_type,true> element_traits;
-  typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;
+  using element_traits = details::string_traits<character_type, true>;
+  using allocation_traits = details::unbounded_reference_allocation_traits<value_type, element_traits, true>;
 
-  typedef details::string_sequence_element<element_traits> element_type;
-  typedef details::string_const_sequence_element<element_traits> const_element_type;
+  using element_type = details::string_sequence_element<element_traits>;
+  using const_element_type = details::string_const_sequence_element<element_traits>;
 
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
+  using implementation_type = details::generic_sequence<value_type, allocation_traits, element_traits>;
 
-  typedef element_type subscript_type;
-  typedef const_value_type const_subscript_type;
+  using subscript_type = element_type;
+  using const_subscript_type = const_value_type;
 
 
   // @copydoc TAO::details::generic_sequence::generic_sequence()

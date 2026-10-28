@@ -41,12 +41,18 @@ namespace TAO
     {
       public:
         /// Constructor.
-        TP_Strategy_Factory();
+        TP_Strategy_Factory() = default;
 
         /// Virtual Destructor.
-        virtual ~TP_Strategy_Factory();
+        ~TP_Strategy_Factory() override;
 
-        int init (int argc, ACE_TCHAR* argv[]);
+        int init (int argc, ACE_TCHAR* argv[]) override;
+
+      private:
+        TP_Strategy_Factory (TP_Strategy_Factory const &) = delete;
+        TP_Strategy_Factory &operator= (TP_Strategy_Factory const &) = delete;
+        TP_Strategy_Factory (TP_Strategy_Factory &&) = delete;
+        TP_Strategy_Factory &operator= (TP_Strategy_Factory &&) = delete;
     };
   }
 }

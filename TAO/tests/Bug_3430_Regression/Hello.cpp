@@ -6,7 +6,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 void
-Hello::method(Test::Hello_out r)
+Hello::method (Test::Hello_out r)
 {
   Test::Hello_var v;
   r = v;

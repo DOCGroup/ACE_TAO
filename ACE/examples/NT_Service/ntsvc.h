@@ -47,7 +47,7 @@ public:
                               const void *arg = 0);
 
 private:
-  typedef ACE_NT_Service inherited;
+  using inherited = ACE_NT_Service;
 
 private:
   int stop_;
@@ -58,7 +58,7 @@ private:
 // multiple threads.  The first reference to it at runtime creates it,
 // and the ACE_Object_Manager deletes it at run-down.
 
-typedef ACE_Singleton<Service, ACE_Mutex> SERVICE;
+using SERVICE = ACE_Singleton<Service, ACE_Mutex>;
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 

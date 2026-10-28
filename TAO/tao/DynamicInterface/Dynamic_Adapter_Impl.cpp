@@ -6,19 +6,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl ()
-{
-}
-
-TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl ()
-{
-}
+TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl () = default;
 
 void
 TAO_Dynamic_Adapter_Impl::create_request (
     CORBA::Object_ptr obj,
     CORBA::ORB_ptr orb,
-    const char *operation,
+    char const* operation,
     CORBA::NVList_ptr arg_list,
     CORBA::NamedValue_ptr result,
     CORBA::ExceptionList_ptr exceptions,
@@ -46,7 +40,7 @@ TAO_Dynamic_Adapter_Impl::create_request (
 CORBA::Request_ptr
 TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                    CORBA::ORB_ptr orb,
-                                   const char *operation)
+                                   char const* operation)
 {
   CORBA::Request_ptr req = CORBA::Request::_nil ();
   ACE_NEW_THROW_EX (req,
@@ -68,13 +62,13 @@ TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
 CORBA::Boolean
 TAO_Dynamic_Adapter_Impl::context_is_nil (CORBA::Context_ptr ctx)
 {
-  return ctx == 0;
+  return ctx == nullptr;
 }
 
 void
 TAO_Dynamic_Adapter_Impl::context_release (CORBA::Context_ptr ctx)
 {
-  if (ctx != 0)
+  if (ctx != nullptr)
     {
       ctx->_decr_refcount ();
     }
@@ -83,13 +77,13 @@ TAO_Dynamic_Adapter_Impl::context_release (CORBA::Context_ptr ctx)
 CORBA::Boolean
 TAO_Dynamic_Adapter_Impl::request_is_nil (CORBA::Request_ptr req)
 {
-  return req == 0;
+  return req == nullptr;
 }
 
 void
 TAO_Dynamic_Adapter_Impl::request_release (CORBA::Request_ptr req)
 {
-  if (req)
+  if (req != nullptr)
     {
       req->_decr_refcount ();
     }
@@ -98,13 +92,13 @@ TAO_Dynamic_Adapter_Impl::request_release (CORBA::Request_ptr req)
 CORBA::Boolean
 TAO_Dynamic_Adapter_Impl::server_request_is_nil (CORBA::ServerRequest_ptr req)
 {
-  return req == 0;
+  return req == nullptr;
 }
 
 void
 TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 {
-  if (req)
+  if (req != nullptr)
     {
       req->_decr_refcount ();
     }

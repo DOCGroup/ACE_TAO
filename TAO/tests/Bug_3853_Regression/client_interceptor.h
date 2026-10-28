@@ -23,28 +23,32 @@ class Echo_Client_Request_Interceptor
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Client_Request_Interceptor ();
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
   // ctor.
 
-  virtual ~Echo_Client_Request_Interceptor () = default;
+  ~Echo_Client_Request_Interceptor () override = default;
   // dtor.
 
-  virtual char * name ();
+  char *name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  const char *myname_;
+  char const *myname_;
 };
 
 #if defined(_MSC_VER)

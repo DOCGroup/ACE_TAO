@@ -26,16 +26,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks ()
-  : orb_core_ (0)
-  , current_ ()
-{
-}
-
-
-TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks ()
-{
-}
+TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks () = default;
 
 void
 TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)
@@ -81,7 +72,7 @@ TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
   TAO_ServerProtocolPolicy *server_protocols =
     dynamic_cast<TAO_ServerProtocolPolicy *> (server_protocol_policy.in ());
 
-  if (server_protocols == 0)
+  if (server_protocols == nullptr)
     return RTCORBA::ProtocolProperties::_nil ();
 
   // TAO_ServerProtocolPolicy
@@ -116,7 +107,7 @@ TAO_RT_Protocols_Hooks::client_protocol_properties (IOP::ProfileId protocol_tag,
   TAO_ClientProtocolPolicy *client_protocols =
     dynamic_cast<TAO_ClientProtocolPolicy *> (client_protocol_policy.in ());
 
-  if (client_protocols == 0)
+  if (client_protocols == nullptr)
     return RTCORBA::ProtocolProperties::_nil ();
 
   // TAO_ClientProtocolPolicy

@@ -20,14 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Descriptor::TAO_Codeset_Descriptor ()
-  :ncs_ (0),
-   max_bytes_ (1),
-   num_translators_ (0),
-   trans_base_(0)
-{
-}
-
 TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
 {
   Translator_Node *temp = trans_base_;
@@ -49,7 +41,7 @@ TAO_Codeset_Descriptor::ncs (const ACE_TCHAR *name)
   if (ACE_Codeset_Registry::locale_to_registry
       (ACE_TEXT_ALWAYS_CHAR(name), n) == 0)
     {
-      char **endPtr = 0;
+      char **endPtr = nullptr;
       n = static_cast<ACE_CDR::ULong> (
             ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(name), endPtr, 0));
     }
@@ -95,14 +87,14 @@ void
 TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
 {
   Translator_Node *temp = trans_base_;
-  if (this->trans_base_ == 0)
+  if (this->trans_base_ == nullptr)
     {
       ACE_NEW (this->trans_base_, Translator_Node);
       temp = trans_base_;
     }
   else
     {
-      while (temp->next_ != 0)
+      while (temp->next_ != nullptr)
         temp = temp->next_;
       ACE_NEW (temp->next_, Translator_Node);
       temp = temp->next_;
@@ -111,8 +103,8 @@ TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
     {
       this->num_translators_ ++;
       temp->name_ = ACE_OS::strdup (name);
-      temp->translator_factory_ = 0;
-      temp->next_ = 0;
+      temp->translator_factory_ = nullptr;
+      temp->next_ = nullptr;
     }
 }
 

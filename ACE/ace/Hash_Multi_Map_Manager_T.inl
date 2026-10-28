@@ -88,7 +88,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
                                                                                       const INT_ID &int_id)
 {
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *temp = 0;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *temp = nullptr;
 
   return this->bind_i (ext_id, int_id, temp);
 }
@@ -504,7 +504,7 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> &
 ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator* () const
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator*");
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = 0;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = nullptr;
 
   int result = this->next (retv);
 
@@ -519,7 +519,7 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *
 ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator-> () const
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator->");
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = 0;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = nullptr;
 
   int result = this->next (retv);
 
@@ -602,7 +602,7 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> &
 ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator* () const
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator*");
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = 0;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = nullptr;
 
   int result = this->next (retv);
 
@@ -617,7 +617,7 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *
 ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator-> () const
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator->");
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = 0;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *retv = nullptr;
 
   int result = this->next (retv);
 

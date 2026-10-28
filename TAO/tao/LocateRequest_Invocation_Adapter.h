@@ -29,8 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  using Object_ptr = Object *;
+  using Object_var = TAO_Pseudo_Var_T<Object>;
 }
 
 class TAO_Stub;
@@ -65,6 +65,11 @@ namespace TAO
     CORBA::PolicyList *get_inconsistent_policies ();
 
   private:
+    LocateRequest_Invocation_Adapter (LocateRequest_Invocation_Adapter const &) = delete;
+    LocateRequest_Invocation_Adapter &operator= (LocateRequest_Invocation_Adapter const &) = delete;
+    LocateRequest_Invocation_Adapter (LocateRequest_Invocation_Adapter &&) = delete;
+    LocateRequest_Invocation_Adapter &operator= (LocateRequest_Invocation_Adapter &&) = delete;
+
     bool get_timeout (ACE_Time_Value &val);
 
     /// Helper method that takes care of setting the profiles within

@@ -87,7 +87,7 @@ protected:
   /// @param filename the filename to read the contents from
   /// @param open_file the already open FILE stream for the
   ///        filename
-  int load_file (const ACE_TString& filename, FILE* open_file = 0);
+  int load_file (const ACE_TString& filename, FILE* open_file = nullptr);
 
   /// load the contents of a file into the repo using the provided
   /// ACEXML_DefaultHandler
@@ -100,7 +100,7 @@ protected:
   static int load_file (const ACE_TString& filename,
                         ACEXML_DefaultHandler& xml_handler,
                         unsigned int debug,
-                        FILE* open_file = 0);
+                        FILE* open_file = nullptr);
 
   /// persist the server
   /// @param fp the FILE stream to persist the server contents to

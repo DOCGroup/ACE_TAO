@@ -32,7 +32,7 @@ template <class T>
 class Alt_Mapping_Client
 {
 public:
-  typedef T TEST_OBJECT;
+  using TEST_OBJECT = T;
 
   // = Constructor and destructor.
   Alt_Mapping_Client (CORBA::ORB_ptr orb,

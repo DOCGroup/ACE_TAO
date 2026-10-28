@@ -38,7 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
   : public TAO_Notify_PropertySeq
 {
 public:
-  typedef ACE_Strong_Bound_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX> Ptr;
+  using Ptr = ACE_Strong_Bound_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX>;
   /// Constructor
   TAO_Notify_AdminProperties ();
 

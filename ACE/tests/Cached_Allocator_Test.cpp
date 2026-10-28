@@ -69,7 +69,7 @@ speed_test (ACE_UINT32 loops)
   return 0;
 }
 
-typedef char MEMBLOCK[8];
+using MEMBLOCK = char[8];
 using STATIC_ALLOCATOR = ACE_Cached_Allocator<MEMBLOCK, ACE_MT_SYNCH::NULL_MUTEX>;
 
 static int

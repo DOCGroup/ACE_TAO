@@ -28,7 +28,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
     std::cout << "Reply was : " << message.in() << std::endl;
 
     return 0;
-  } catch(const CORBA::Exception& ex) {
+  } catch (CORBA::Exception const & ex) {
     std::cerr << "Client main() Caught Exception: " << ex << std::endl;
   }
   return 1;

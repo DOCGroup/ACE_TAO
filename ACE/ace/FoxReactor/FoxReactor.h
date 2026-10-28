@@ -39,7 +39,7 @@ class ACE_FoxReactor_Export ACE_FoxReactor : public FXObject, public ACE_Select_
 {
   FXDECLARE(ACE_FoxReactor)
 public:
-  ACE_FoxReactor (FXApp* a=0,
+  ACE_FoxReactor (FXApp* a=nullptr,
                  size_t size = DEFAULT_SIZE,
                  bool restart = false,
                  ACE_Sig_Handler * = 0);
@@ -57,7 +57,7 @@ public:
   virtual int cancel_timer (ACE_Event_Handler *handler,
                             int dont_call_handle_close = 1);
   virtual int cancel_timer (long timer_id,
-                            const void **arg = 0,
+                            const void **arg = nullptr,
                             int dont_call_handle_close = 1);
 
   // = Integrate with the Fox callback function mechanism.
