@@ -3,9 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Service::~TAO_Notify_Service ()
-{
-}
+TAO_Notify_Service::~TAO_Notify_Service () = default;
 
 TAO_Notify_Service*
 TAO_Notify_Service::load_default ()

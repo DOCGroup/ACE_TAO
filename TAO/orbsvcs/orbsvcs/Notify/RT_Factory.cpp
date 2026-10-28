@@ -7,9 +7,7 @@ TAO_Notify_RT_Factory::TAO_Notify_RT_Factory ()
 {
 }
 
-TAO_Notify_RT_Factory::~TAO_Notify_RT_Factory ()
-{
-}
+TAO_Notify_RT_Factory::~TAO_Notify_RT_Factory () = default;
 
 void
 TAO_Notify_RT_Factory::create (TAO_Notify_StructuredProxyPushSupplier*& proxy)

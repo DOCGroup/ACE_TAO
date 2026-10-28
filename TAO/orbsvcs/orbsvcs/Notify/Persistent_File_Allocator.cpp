@@ -13,9 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-Persistent_Callback::~Persistent_Callback()
-{
-}
+Persistent_Callback::~Persistent_Callback() = default;
 
 Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
   const size_t block_size)

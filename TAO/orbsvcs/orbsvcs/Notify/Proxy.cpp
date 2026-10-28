@@ -19,9 +19,7 @@ TAO_Notify_Proxy::TAO_Notify_Proxy ()
 {
 }
 
-TAO_Notify_Proxy::~TAO_Notify_Proxy ()
-{
-}
+TAO_Notify_Proxy::~TAO_Notify_Proxy () = default;
 
 CORBA::Object_ptr
 TAO_Notify_Proxy::activate (PortableServer::Servant servant)

@@ -20,9 +20,7 @@ TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier ()
 {
 }
 
-TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
-{
-}
+TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier () = default;
 
 void
 TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)

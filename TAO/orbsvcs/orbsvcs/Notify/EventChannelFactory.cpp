@@ -47,9 +47,7 @@ TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory ()
 {
 }
 
-TAO_Notify_EventChannelFactory::~TAO_Notify_EventChannelFactory ()
-{
-}
+TAO_Notify_EventChannelFactory::~TAO_Notify_EventChannelFactory () = default;
 
 void
 TAO_Notify_EventChannelFactory::destroy ()

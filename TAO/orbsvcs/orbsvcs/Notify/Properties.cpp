@@ -34,9 +34,7 @@ TAO_Notify_Properties::TAO_Notify_Properties ()
     ORBSVCS_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
 }
 
-TAO_Notify_Properties::~TAO_Notify_Properties ()
-{
-}
+TAO_Notify_Properties::~TAO_Notify_Properties () = default;
 
 TAO_Notify_Properties *
 TAO_Notify_Properties::instance ()

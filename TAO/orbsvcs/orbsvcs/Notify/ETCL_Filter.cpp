@@ -16,9 +16,7 @@ TAO_Notify_Constraint_Expr::TAO_Notify_Constraint_Expr ()
 }
 
 
-TAO_Notify_Constraint_Expr::~TAO_Notify_Constraint_Expr ()
-{
-}
+TAO_Notify_Constraint_Expr::~TAO_Notify_Constraint_Expr () = default;
 
 
 void

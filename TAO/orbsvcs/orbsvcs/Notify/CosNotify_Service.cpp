@@ -17,9 +17,7 @@ TAO_CosNotify_Service::TAO_CosNotify_Service ()
 {
 }
 
-TAO_CosNotify_Service::~TAO_CosNotify_Service ()
-{
-}
+TAO_CosNotify_Service::~TAO_CosNotify_Service () = default;
 
 int
 TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])

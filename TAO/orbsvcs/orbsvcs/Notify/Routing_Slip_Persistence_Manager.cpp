@@ -269,9 +269,7 @@ Routing_Slip_Persistence_Manager::Block_Header::Block_Header(Header_Type type)
   , data_size(0)
 {
 }
-Routing_Slip_Persistence_Manager::Block_Header::~Block_Header ()
-{
-}
+Routing_Slip_Persistence_Manager::Block_Header::~Block_Header () = default;
 
 size_t
 Routing_Slip_Persistence_Manager::Block_Header::extract_header(

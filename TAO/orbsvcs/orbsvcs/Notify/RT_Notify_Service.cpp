@@ -13,9 +13,7 @@ TAO_RT_Notify_Service::TAO_RT_Notify_Service ()
 {
 }
 
-TAO_RT_Notify_Service::~TAO_RT_Notify_Service ()
-{
-}
+TAO_RT_Notify_Service::~TAO_RT_Notify_Service () = default;
 
 void
 TAO_RT_Notify_Service::init_service (CORBA::ORB_ptr orb)

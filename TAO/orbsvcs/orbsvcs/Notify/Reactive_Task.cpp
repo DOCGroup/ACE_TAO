@@ -13,9 +13,7 @@ TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task ()
 {
 }
 
-TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task ()
-{
-}
+TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task () = default;
 
 void
 TAO_Notify_Reactive_Task::init ()

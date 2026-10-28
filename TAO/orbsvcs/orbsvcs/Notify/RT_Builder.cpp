@@ -13,9 +13,7 @@ TAO_Notify_RT_Builder::TAO_Notify_RT_Builder ()
 {
 }
 
-TAO_Notify_RT_Builder::~TAO_Notify_RT_Builder ()
-{
-}
+TAO_Notify_RT_Builder::~TAO_Notify_RT_Builder () = default;
 
 void
 TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object

@@ -31,9 +31,7 @@ TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer ()
 {
 }
 
-TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer ()
-{
-}
+TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer () = default;
 
 TAO_Notify_Peer*
 TAO_Notify_ProxyConsumer::peer ()
