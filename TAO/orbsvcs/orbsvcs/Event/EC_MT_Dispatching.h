@@ -78,7 +78,7 @@ private:
 
   /// If activation at the requested priority fails then we fallback on
   /// the defaults for thread activation.
-  int force_activate_;
+  bool force_activate_ {};
 
   /// The dispatching task
   TAO_EC_Dispatching_Task task_;
@@ -87,7 +87,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// Are the threads running?
-  int active_;
+  bool active_ {};
 
   /// Service Object information
   // TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;

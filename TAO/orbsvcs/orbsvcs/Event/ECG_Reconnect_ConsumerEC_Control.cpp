@@ -16,8 +16,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::
     timeout_ (timeout),
     adapter_ (this),
     gateway_ (gateway),
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    is_consumer_ec_connected_ (1)
+    orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
     , timer_id_ (-1)
 #endif /* TAO_HAS_CORBA_MESSAGING != 0*/
@@ -50,7 +49,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::reconnect ()
 {
   try
     {
-      is_consumer_ec_connected_ = 1;
+      is_consumer_ec_connected_ = true;
 
       gateway_->reconnect_consumer_ec();
     }
@@ -65,7 +64,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::query_eventchannel ()
 {
   try
     {
-      if (is_consumer_ec_connected_ == 1)
+      if (is_consumer_ec_connected_)
         {
           CORBA::Boolean disconnected;
           CORBA::Boolean non_existent =
@@ -206,7 +205,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::event_channel_not_exist (
       //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists\n"));
-      is_consumer_ec_connected_ = 0;
+      is_consumer_ec_connected_ = false;
 
       gateway->suspend_supplier_ec ();
 
@@ -240,7 +239,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::system_exception (
       //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists system except\n"));
-      is_consumer_ec_connected_ = 0;
+      is_consumer_ec_connected_ = false;
 
       gateway->suspend_supplier_ec ();
 

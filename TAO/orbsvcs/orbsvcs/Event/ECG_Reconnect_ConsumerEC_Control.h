@@ -128,7 +128,7 @@ private:
   ACE_Reactor *reactor_;
 
   /// Do we have a connection to the consumer ec
-  int is_consumer_ec_connected_;
+  bool is_consumer_ec_connected_ {true};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// The timer id

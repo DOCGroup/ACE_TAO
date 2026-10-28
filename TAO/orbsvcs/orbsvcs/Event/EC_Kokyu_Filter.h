@@ -95,7 +95,7 @@ private:
   RtecScheduler::handle_t rt_info_;
 
   /// Has the Scheduler been updated?
-  int rt_info_computed_;
+  bool rt_info_computed_ {};
 
   /// Our operation name
   ACE_CString name_;

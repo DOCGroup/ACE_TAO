@@ -15,7 +15,6 @@ TAO_EC_Sched_Filter::
                          RtecScheduler::Info_Type_t info_type)
 
   :  rt_info_ (rt_info),
-     rt_info_computed_ (0),
      name_ (name),
      scheduler_ (RtecScheduler::Scheduler::_duplicate (scheduler)),
      body_ (body),
@@ -239,7 +238,7 @@ TAO_EC_Sched_Filter::init_rt_info ()
               info->entry_point.in ()));
 #endif /* 0 */
 
-  this->rt_info_computed_ = 1;
+  this->rt_info_computed_ = true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -166,19 +166,19 @@ protected:
    * push() the modification is stored, if multiple update_consumer messages
    * arrive only the last one is executed.
    */
-  int update_posted_;
+  bool update_posted_ {};
   RtecEventChannelAdmin::ConsumerQOS c_qos_;
 
   /**
    * We have a cleanup outstanding and must wait doing cleanup until all pushes
    * are ready.
    */
-  int cleanup_posted_;
+  bool cleanup_posted_ {};
 
   /**
    * Is the supplier ec suspended?
    */
-  int supplier_ec_suspended_;
+  bool supplier_ec_suspended_ {};
 
   /// The event channel acting as supplier for this gateway so we can reconnect
   /// when the list changes.

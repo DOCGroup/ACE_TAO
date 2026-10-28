@@ -87,7 +87,7 @@ private:
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
 
-  int lanes_setup_;
+  bool lanes_setup_ {};
   int disp_sched_policy_;
   int disp_sched_scope_;
 };

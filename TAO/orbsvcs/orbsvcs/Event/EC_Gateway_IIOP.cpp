@@ -13,9 +13,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
   :  busy_count_ (0),
-     update_posted_ (0),
-     cleanup_posted_ (0),
-     supplier_ec_suspended_ (0),
      supplier_info_ (0),
      consumer_info_ (0),
      consumer_ (this),
@@ -105,7 +102,7 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies ()
   // In case we are still pushing, don't cleanup the proxies
   if (this->busy_count_ != 0)
     {
-      this->cleanup_posted_ = 1;
+      this->cleanup_posted_ = true;
       return;
     }
 
@@ -175,7 +172,7 @@ TAO_EC_Gateway_IIOP::reconnect_consumer_ec()
 
   if (this->busy_count_ != 0)
     {
-      this->update_posted_ = 1;
+      this->update_posted_ = true;
       return;
     }
 
@@ -195,7 +192,7 @@ TAO_EC_Gateway_IIOP::update_consumer (
 
   if (this->busy_count_ != 0)
     {
-      this->update_posted_ = 1;
+      this->update_posted_ = true;
       return;
     }
 
@@ -493,15 +490,15 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
 
     this->busy_count_--;
 
-    if (this->busy_count_ == 0 && this->cleanup_posted_ != 0)
+    if (this->busy_count_ == 0 && this->cleanup_posted_)
       {
-        this->cleanup_posted_ = 0;
+        this->cleanup_posted_ = false;
         this->cleanup_consumer_proxies_i ();
       }
 
-    if (this->busy_count_ == 0 && this->update_posted_ != 0)
+    if (this->busy_count_ == 0 && this->update_posted_)
       {
-        this->update_posted_ = 0;
+        this->update_posted_ = false;
         this->update_consumer_i (this->c_qos_);
       }
   }
@@ -635,22 +632,22 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
 void
 TAO_EC_Gateway_IIOP::suspend_supplier_ec ()
 {
-  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 0)
+  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && !this->supplier_ec_suspended_)
     {
       this->supplier_proxy_->suspend_connection ();
 
-      supplier_ec_suspended_ = 1;
+      this->supplier_ec_suspended_ = true;
     }
 }
 
 void
 TAO_EC_Gateway_IIOP::resume_supplier_ec ()
 {
-  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 1)
+  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && this->supplier_ec_suspended_)
     {
       this->supplier_proxy_->resume_connection ();
 
-      supplier_ec_suspended_ = 0;
+      this->supplier_ec_suspended_ = false;
     }
 }
 
