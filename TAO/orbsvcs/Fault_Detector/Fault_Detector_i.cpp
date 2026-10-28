@@ -50,7 +50,6 @@ TAO::Fault_Detector_i::Fault_Detector_i (
   , object_type_(object_type)
   , group_id_(group_id)
   , sleep_(0)           // initially not signaled
-  , quit_requested_ (0)
 {
   this->notifier_ = FT::FaultNotifier::_duplicate(notifier);
   this->monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
@@ -67,7 +66,7 @@ TAO::Fault_Detector_i::~Fault_Detector_i () = default;
 
 void TAO::Fault_Detector_i::request_quit()
 {
-  this->quit_requested_ = 1;
+  this->quit_requested_.store (true);
   // wake up the thread
   this->sleep_.signal ();
 }
@@ -82,7 +81,7 @@ void TAO::Fault_Detector_i::start(ACE_Thread_Manager & threadManager)
 
 void TAO::Fault_Detector_i::run()
 {
-  while ( ! this->quit_requested_ )
+  while (!this->quit_requested_.load ())
   {
     try
     {
@@ -99,7 +98,7 @@ void TAO::Fault_Detector_i::run()
           id_
           ));
         notify();
-        this->quit_requested_ = 1;
+        this->quit_requested_.store (true);
       }
     }
     catch (CORBA::Exception const &) // todo refine this
@@ -108,7 +107,7 @@ void TAO::Fault_Detector_i::run()
         "FaultDetector FAULT: exception.\n"
         ));
       notify();
-      this->quit_requested_ = 1;
+      this->quit_requested_.store (true);
     }
   }
   // warning:  The following call will delete
