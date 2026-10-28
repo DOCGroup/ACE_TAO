@@ -49,7 +49,7 @@ class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_
 {
 public:
   /// Constructor
-  TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
+  explicit TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
 
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
@@ -80,8 +80,8 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_P
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
-                                     const ACE_Time_Value &relative_timeout,
+  TAO_CEC_Reactive_Pulling_Strategy (ACE_Time_Value const &rate,
+                                     ACE_Time_Value const &relative_timeout,
                                      TAO_CEC_EventChannel *event_channel,
                                      CORBA::ORB_ptr orb);
 
@@ -92,8 +92,8 @@ public:
   TAO_CEC_Reactive_Pulling_Strategy &operator= (TAO_CEC_Reactive_Pulling_Strategy &&) = delete;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
-                       const void* arg);
+  void handle_timeout (ACE_Time_Value const &tv,
+                       void const *arg);
 
   // = The CEC_Pulling_Strategy methods.
   void activate () override;

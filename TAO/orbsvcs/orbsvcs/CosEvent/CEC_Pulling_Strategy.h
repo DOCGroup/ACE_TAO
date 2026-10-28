@@ -38,6 +38,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy
 {
 public:
+  TAO_CEC_Pulling_Strategy () = default;
+
+  TAO_CEC_Pulling_Strategy (TAO_CEC_Pulling_Strategy const &) = delete;
+  TAO_CEC_Pulling_Strategy (TAO_CEC_Pulling_Strategy &&) = delete;
+  TAO_CEC_Pulling_Strategy &operator= (TAO_CEC_Pulling_Strategy const &) = delete;
+  TAO_CEC_Pulling_Strategy &operator= (TAO_CEC_Pulling_Strategy &&) = delete;
+
   /// destructor...
   virtual ~TAO_CEC_Pulling_Strategy ();
 
