@@ -10,10 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-Timer_Helper::Timer_Helper ()
-  : clerk_ (nullptr)
-{
-}
+Timer_Helper::Timer_Helper () = default;
 
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk * clerk)
   : clerk_ (clerk)

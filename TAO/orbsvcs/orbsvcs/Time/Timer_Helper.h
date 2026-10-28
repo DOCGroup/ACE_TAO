@@ -68,7 +68,7 @@ protected:
   Timer_Helper &operator= (Timer_Helper &&) = delete;
 
   /// Clerk's instance that this class helps to update time.
-  TAO_Time_Service_Clerk *clerk_;
+  TAO_Time_Service_Clerk *clerk_ {};
 
   /// The set of server IORs.
   using IORS = ACE_Array_Base<CosTime::TimeService_var>;

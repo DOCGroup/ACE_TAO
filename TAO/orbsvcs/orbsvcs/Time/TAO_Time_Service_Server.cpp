@@ -11,9 +11,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
-TAO_Time_Service_Server::TAO_Time_Service_Server ()
-{
-}
+TAO_Time_Service_Server::TAO_Time_Service_Server () = default;
 
 // Destructor.
 TAO_Time_Service_Server::~TAO_Time_Service_Server ()
