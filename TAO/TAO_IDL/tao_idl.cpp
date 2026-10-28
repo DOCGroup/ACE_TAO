@@ -91,9 +91,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern const ACE_TCHAR *DRV_arglist[];
 extern unsigned long DRV_argcount;
 
-char *DRV_files[NFILES];
-long DRV_nfiles = 0;
-long DRV_file_index = -1;
+std::vector<std::string> DRV_files;
 
 void
 DRV_version ()
@@ -115,10 +113,9 @@ DRV_init (int &argc, ACE_TCHAR *argv[])
   // Initialize front end.
   FE_init ();
 
-  // Initialize driver private data. DRV_nfiles will be updated
+  // Initialize driver private data. DRV_files will be updated
   // by DRV_parse_args().
-  DRV_nfiles = 0;
-  DRV_file_index = 0;
+  DRV_files.clear ();
 
 #if defined (TAO_IDL_PREPROCESSOR)
   idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
@@ -160,13 +157,6 @@ DRV_cleanup ()
   idl_global->fini ();
   delete idl_global;
   idl_global = nullptr;
-
-  for (DRV_file_index = 0;
-       DRV_file_index < DRV_nfiles;
-       ++DRV_file_index)
-    {
-      ACE::strdelete (DRV_files[DRV_file_index]);
-    }
 
   for (unsigned long i = 0; i < DRV_argcount; ++i)
     {
@@ -382,7 +372,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       FE_populate ();
 
       // Does various things in various backends.
-      BE_post_init (DRV_files, DRV_nfiles);
+      BE_post_init (DRV_files);
 
       // Dump Builtin IDL AST
       if (idl_global->just_dump_builtins_)
@@ -400,7 +390,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // If there are no input files, and we are not using the
       // directory recursion option, there's no sense going any further.
-      if (0 == DRV_nfiles && !idl_global->recursion_start ())
+      if (DRV_files.empty () && !idl_global->recursion_start ())
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: No input files\n")));
@@ -416,19 +406,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (idl_global->big_file_name (), "w");
         }
 
-      for (DRV_file_index = 0;
-           DRV_file_index < DRV_nfiles;
-           ++DRV_file_index)
+      for (std::size_t i = 0; i < DRV_files.size (); ++i)
         {
           if (idl_global->multi_file_input ())
             {
               ACE_OS::fprintf (output_file,
                                "#include \"%s\"\n",
-                               DRV_files[DRV_file_index]);
+                               DRV_files[i].c_str ());
             }
           else
             {
-              DRV_drive (DRV_files[DRV_file_index]);
+              DRV_drive (DRV_files[i].c_str ());
             }
         }
 

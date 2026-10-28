@@ -65,13 +65,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _BE_EXTERN_BE_EXTERN_HH
 #define _BE_EXTERN_BE_EXTERN_HH
 
+#include <string>
+#include <vector>
+
 #include "TAO_IDL_BE_Export.h"
 #include "be_global.h"
 
 extern TAO_IDL_BE_Export BE_GlobalData *be_global;
 
 extern TAO_IDL_BE_Export int BE_init (int &, ACE_TCHAR*[]);
-extern TAO_IDL_BE_Export void BE_post_init (char *[], long);
+extern TAO_IDL_BE_Export void BE_post_init (std::vector<std::string> const &);
 extern TAO_IDL_BE_Export void BE_version ();
 extern TAO_IDL_BE_Export void BE_produce ();
 extern TAO_IDL_BE_Export void BE_cleanup ();

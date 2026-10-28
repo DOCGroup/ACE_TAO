@@ -24,7 +24,7 @@ BE_init (int &, ACE_TCHAR *[])
 }
 
 TAO_IDL_BE_Export void
-BE_post_init (char *[], long)
+BE_post_init (std::vector<std::string> const &)
 {
 }
 

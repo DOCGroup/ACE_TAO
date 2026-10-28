@@ -81,21 +81,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/os_include/os_ctype.h"
 #include "ace/Lib_Find.h"
 
-extern long DRV_nfiles;
-extern char *DRV_files[];
-
 void process_long_option(long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
 DRV_push_file (char const *s)
 {
-  // If filenames come from the command line, there is no
-  // need to duplicate the string, but some backends have
-  // an option to recurse over a directory and add all
-  // IDL files found. In this latter case we have to
-  // duplicate the file name string.
-  DRV_files[DRV_nfiles++] = ACE::strnew (s);
+  DRV_files.emplace_back (s);
 }
 
 // Prepare a CPP argument

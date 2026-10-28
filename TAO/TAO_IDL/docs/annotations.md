@@ -199,7 +199,7 @@ To use it without defining it in every IDL file, we need to embed it into
 `BE_post_init()`.
 
 ```C++
-void BE_post_init (char *[], long)
+void BE_post_init (std::vector<std::string> const &)
 {
   // ...
   if (idl_global->idl_version_ > IDL_VERSION_3)
@@ -240,7 +240,7 @@ int BE_init (int &, ACE_TCHAR *[])
   // ...
 }
 
-void BE_post_init (char *[], long)
+void BE_post_init (std::vector<std::string> const &)
 {
   // Same as above ...
 }
@@ -264,7 +264,7 @@ int BE_init (int &, ACE_TCHAR *[])
   // ...
 }
 
-void BE_post_init (char *[], long)
+void BE_post_init (std::vector<std::string> const &)
 {
   // ...
 #ifdef TAO_IDL_HAS_ANNOTATIONS

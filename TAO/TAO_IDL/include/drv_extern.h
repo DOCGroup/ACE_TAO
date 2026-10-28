@@ -65,7 +65,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _DRV_EXTERN_DRV_EXTERN_HH
 #define _DRV_EXTERN_DRV_EXTERN_HH
 
+#include <string>
+#include <vector>
+
 // External functions for the IDL compiler driver program.
+extern std::vector<std::string> DRV_files;
+
 extern void DRV_parse_args (long, char **);
 extern void DRV_usage ();
 extern void DRV_pre_proc (char const * myfile);
