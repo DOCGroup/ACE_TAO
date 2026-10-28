@@ -56,7 +56,7 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
   /// destructor...
   ~TAO_CEC_ProxyPullSupplier () override;
@@ -148,9 +148,8 @@ private:
   /// The consumer without any policies applied
   CosEventComm::PullConsumer_var nopolicy_consumer_;
 
-  /// If the flag is not zero then we are connected, notice that the
-  /// consumer can be nil.
-  int connected_;
+  /// Whether the proxy is connected. The consumer can be nil.
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;

@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_CEC_TypedEventChannel::
-TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attr,
+TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attr,
                            TAO_CEC_Factory* factory,
                            int own_factory)
   : typed_supplier_poa_ (PortableServer::POA::_duplicate (attr.typed_supplier_poa)),
@@ -27,18 +27,17 @@ TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attr,
     orb_ (CORBA::ORB::_duplicate (attr.orb)),
     interface_repository_ (CORBA::Repository::_duplicate (attr.interface_repository)),
     factory_ (factory),
-    own_factory_ (own_factory),
+    own_factory_ (own_factory != 0),
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks),
-    destroy_on_shutdown_ (attr.destroy_on_shutdown),
-    destroyed_ (0)
+    destroy_on_shutdown_ (attr.destroy_on_shutdown != 0)
 {
   if (this->factory_ == 0)
     {
       this->factory_ =
         ACE_Dynamic_Service<TAO_CEC_Factory>::instance ("CEC_Factory");
-      this->own_factory_ = 0;
+      this->own_factory_ = false;
       ACE_ASSERT (this->factory_ != 0);
     }
 
@@ -536,7 +535,7 @@ TAO_CEC_TypedEventChannel::destroy ()
 {
   if (!destroyed_)
     {
-      destroyed_ = 1;
+      destroyed_ = true;
       this->shutdown ();
     }
 }

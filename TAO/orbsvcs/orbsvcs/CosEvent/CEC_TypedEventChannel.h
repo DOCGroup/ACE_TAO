@@ -295,7 +295,7 @@ private:
   TAO_CEC_Factory *factory_;
 
   /// Flag that indicates if we own the factory.
-  int own_factory_;
+  bool own_factory_;
 
   /// The dispatching "module"
   TAO_CEC_Dispatching *dispatching_;
@@ -307,19 +307,19 @@ private:
   TAO_CEC_TypedSupplierAdmin *typed_supplier_admin_;
 
   /// Consumer reconnection flags
-  int consumer_reconnect_;
+  bool consumer_reconnect_;
 
   /// Supplier reconnection flags
-  int supplier_reconnect_;
+  bool supplier_reconnect_;
 
-  /// If not zero we send callbacks when a proxy is disconnected
-  int disconnect_callbacks_;
+  /// If enabled, we send callbacks when a proxy is disconnected.
+  bool disconnect_callbacks_;
 
-  /// If not zero the event channel is destroyed on shutdown
-  int destroy_on_shutdown_;
+  /// If enabled, the event channel is destroyed on shutdown.
+  bool destroy_on_shutdown_;
 
-  /// Set if the event channel has been destroyed
-  int destroyed_;
+  /// Set when the event channel has been destroyed.
+  bool destroyed_ {};
 
   /// Strategies to disconnect misbehaving or destroyed consumers and
   /// suppliers

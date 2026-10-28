@@ -89,7 +89,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       const ACE_TCHAR *service_name = ACE_TEXT("CosEventService");
       ACE_TCHAR const *ior_file = nullptr;
       ACE_TCHAR const *pid_file = nullptr;
-      this->bind_to_naming_service_ = 1;
+      this->bind_to_naming_service_ = true;
       int use_rebind = 0;
       int disconnect_callbacks = 0;
 
@@ -117,7 +117,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               break;
 
             case 'x':
-              this->bind_to_naming_service_ = 0;
+              this->bind_to_naming_service_ = false;
               break;
 
             case 'r':
@@ -184,8 +184,6 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       // ****************************************************************
 
       // Control the event loop
-      this->terminate_flag_ = 0;
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       if (!typed_ec)
         {

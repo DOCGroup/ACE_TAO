@@ -13,11 +13,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier
-(TAO_CEC_EventChannel* ec, const ACE_Time_Value &timeout)
+(TAO_CEC_EventChannel* ec, ACE_Time_Value const &timeout)
   : event_channel_ (ec),
     timeout_ (timeout),
     refcount_ (1),
-    connected_ (0),
     wait_not_empty_ (queue_lock_)
 {
   this->lock_ =
@@ -193,7 +192,7 @@ TAO_CEC_ProxyPullSupplier::cleanup_i ()
 {
   this->consumer_ =
     CosEventComm::PullConsumer::_nil ();
-  this->connected_ = 0;
+  this->connected_ = false;
 }
 
 CORBA::ULong
@@ -237,7 +236,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
         this->cleanup_i ();
 
         this->consumer_ = apply_policy (pull_consumer);
-        this->connected_ = 1;
+        this->connected_ = true;
 
         TAO_CEC_Unlock reverse_lock (*this->lock_);
 
@@ -253,7 +252,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
       }
 
     this->consumer_ = apply_policy (pull_consumer);
-    this->connected_ = 1;
+    this->connected_ = true;
   }
 
   // Notify the event channel...

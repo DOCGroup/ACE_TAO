@@ -40,7 +40,7 @@ public:
   /// Constructor
   TAO_CEC_TypedProxyPushConsumer (
       TAO_CEC_TypedEventChannel* typed_event_channel,
-      const ACE_Time_Value &timeout);
+      ACE_Time_Value const &timeout);
 
   /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer () override;
@@ -130,9 +130,8 @@ private:
   /// The DSI Portable Server OID
   PortableServer::ObjectId_var oid_;
 
-  /// If the flag is not zero then we are connected, notice that the
-  /// supplier can be nil.
-  int connected_;
+  /// Whether the proxy is connected. The supplier can be nil.
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -186,9 +185,8 @@ private:
   /// The proxy whose lifetime is controlled by the reference count
   TAO_CEC_TypedProxyPushConsumer *proxy_;
 
-  /// This flag is set to 1 if the reference count was successfully
-  /// acquired.
-  int locked_;
+  /// Whether the reference count was successfully acquired.
+  bool locked_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

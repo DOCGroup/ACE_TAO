@@ -18,11 +18,10 @@ using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 // Implementation skeleton constructor
 TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
-(TAO_CEC_TypedEventChannel* ec, const ACE_Time_Value &timeout)
+(TAO_CEC_TypedEventChannel* ec, ACE_Time_Value const &timeout)
   : typed_event_channel_ (ec),
     timeout_ (timeout),
-    refcount_ (1),
-    connected_ (0)
+    refcount_ (1)
 {
   this->lock_ = this->typed_event_channel_->create_consumer_lock ();
 
@@ -146,7 +145,7 @@ TAO_CEC_TypedProxyPushConsumer::shutdown ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     supplier = this->typed_supplier_._retn ();
-    this->connected_ = 0;
+    this->connected_ = false;
   }
 
   this->deactivate ();
@@ -170,7 +169,7 @@ TAO_CEC_TypedProxyPushConsumer::cleanup_i ()
 {
   this->typed_supplier_ =
     CosEventComm::PushSupplier::_nil ();
-  this->connected_ = 0;
+  this->connected_ = false;
 }
 
 CORBA::ULong
@@ -232,7 +231,7 @@ TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
           return;
       }
     this->typed_supplier_ = apply_policy (push_supplier);
-    this->connected_ = 1;
+    this->connected_ = true;
   }
 
   // Notify the event channel...
@@ -362,7 +361,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
      refcount_ (refcount),
      typed_event_channel_ (ec),
      proxy_ (proxy),
-     locked_ (0)
+     locked_ (false)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   // If the guard fails there is not much we can do, raising an
@@ -375,7 +374,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
   if (!proxy->is_connected_i ())
     return;
 
-  this->locked_ = 1;
+  this->locked_ = true;
   ++this->refcount_;
 }
 

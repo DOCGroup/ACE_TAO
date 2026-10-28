@@ -14,13 +14,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_EventChannel::
-TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attr,
+TAO_CEC_EventChannel (TAO_CEC_EventChannel_Attributes const &attr,
                       TAO_CEC_Factory* factory,
                       int own_factory)
   : supplier_poa_ (PortableServer::POA::_duplicate (attr.supplier_poa)),
     consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
     factory_ (factory),
-    own_factory_ (own_factory),
+    own_factory_ (own_factory != 0),
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks)
@@ -29,7 +29,7 @@ TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attr,
     {
       this->factory_ =
         ACE_Dynamic_Service<TAO_CEC_Factory>::instance ("CEC_Factory");
-      this->own_factory_ = 0;
+      this->own_factory_ = false;
       ACE_ASSERT (this->factory_ != 0);
     }
 
