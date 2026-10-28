@@ -49,13 +49,13 @@ TAO_Naming_Server::TAO_Naming_Server (size_t bsize)
     context_index_ (nullptr),
     persistence_dir_ (nullptr),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    use_storable_context_ (0),
+    use_storable_context_ (false),
     use_servant_activator_ (false),
     servant_activator_ (nullptr),
 #endif /* CORBA_E_MICRO */
-    use_redundancy_(0),
+    use_redundancy_ (false),
     round_trip_timeout_ (0),
-    use_round_trip_timeout_ (0)
+    use_round_trip_timeout_ (false)
 {
   ACE_NEW (iors_, IOR_Bundle[bsize]);
 }
@@ -86,9 +86,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     use_servant_activator_ (false),
     servant_activator_ (nullptr),
 #endif /* CORBA_E_MICRO */
-    use_redundancy_(0),
+    use_redundancy_ (false),
     round_trip_timeout_ (0),
-    use_round_trip_timeout_ (0)
+    use_round_trip_timeout_ (false)
 {
   ACE_NEW (iors_, IOR_Bundle[bsize]);
   if (this->init (orb,
@@ -243,20 +243,20 @@ TAO_Naming_Server::parse_args (int argc,
         break;
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       case 'r':
-        this->use_redundancy_ = 1;
-        this->use_storable_context_ = 1;
+        this->use_redundancy_ = true;
+        this->use_storable_context_ = true;
         this->persistence_dir_ = get_opts.opt_arg ();
         r_opt_used = true;
         break;
       case 'u':
-        this->use_storable_context_ = 1;
+        this->use_storable_context_ = true;
         this->persistence_dir_ = get_opts.opt_arg ();
         u_opt_used = true;
         break;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 #endif /* !CORBA_E_MICRO */
       case 'z':
-        this->use_round_trip_timeout_ = 1;
+        this->use_round_trip_timeout_ = true;
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':

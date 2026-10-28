@@ -503,13 +503,13 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       case 'r':
-        this->use_redundancy_ = 1;
-        this->use_storable_context_ = 1;
+        this->use_redundancy_ = true;
+        this->use_storable_context_ = true;
         this->persistence_dir_ = get_opts.opt_arg ();
         r_opt_used = true;
         break;
       case 'u':
-        this->use_storable_context_ = 1;
+        this->use_storable_context_ = true;
         this->persistence_dir_ = get_opts.opt_arg ();
         u_opt_used = true;
         break;
@@ -522,7 +522,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 #endif /* !CORBA_E_MICRO */
       case 'z':
-        this->use_round_trip_timeout_ = 1;
+        this->use_round_trip_timeout_ = true;
         this->round_trip_timeout_ =
           (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;

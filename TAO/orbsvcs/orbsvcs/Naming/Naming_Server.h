@@ -246,12 +246,12 @@ protected:
   void *base_address_;
 
   /// If not zero use flat file persistence
-  int use_storable_context_;
+  bool use_storable_context_;
 
   /**
    * If not zero use servant activator that uses flat file persistence.
    */
-  int use_servant_activator_;
+  bool use_servant_activator_;
 
   /**
    * Need to retain the servant activator between calls to
@@ -263,11 +263,11 @@ protected:
   /**
    * If not zero support redundant naming servers.
    */
-  int use_redundancy_;
+  bool use_redundancy_;
 
   /// If not zero use round trip timeout policy set to value specified
   int round_trip_timeout_;
-  int use_round_trip_timeout_;
+  bool use_round_trip_timeout_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
