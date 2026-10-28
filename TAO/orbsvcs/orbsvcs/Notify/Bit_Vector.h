@@ -62,9 +62,9 @@ private:
 
 private:
   VECTOR_TYPE bitvec_;
-  size_t size_;
-  size_t first_set_bit_;
-  size_t first_cleared_bit_;
+  size_t size_ {};
+  size_t first_set_bit_ {};
+  size_t first_cleared_bit_ {};
 };
 }
 

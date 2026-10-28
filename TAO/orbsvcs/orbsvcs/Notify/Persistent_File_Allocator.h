@@ -53,7 +53,7 @@ public:
 class TAO_Notify_Serv_Export Persistent_Storage_Block
 {
 public:
-  /// The constructor.  Initializes the callback to NULL.
+  /// The constructor.  Initializes the callback to nullptr.
   Persistent_Storage_Block(
     const size_t block_number,
     const size_t block_size);
@@ -96,7 +96,7 @@ public:
 
 private:
   /// Our raw data.
-  unsigned char* data_;
+  unsigned char* data_ {};
   /// The block number corresponding to our data.
   size_t block_number_;
   /// Are we a no-op with just a callback?
