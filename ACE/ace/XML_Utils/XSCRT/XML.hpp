@@ -63,7 +63,7 @@ namespace XSCRT
       {
         if (this != std::addressof (s))
         {
-          XMLCh *p (copy (s.s_));
+          XMLCh *const p (copy (s.s_));
           release ();
           s_ = p;
           xerces_allocated_ = false;
@@ -311,7 +311,7 @@ namespace XSCRT
       Element (string_ const &name, Element &parent)
         : name_ (name)
       {
-        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *const doc (parent.dom_element ()->getOwnerDocument ());
 
         e_ = doc->createElement (string (name).c_str ());
 
@@ -324,9 +324,9 @@ namespace XSCRT
         : name_ (name)
         , namespace__ (ns)
       {
-        string_ prefix (ns_prefix (ns, parent));
+        string_ const prefix (ns_prefix (ns, parent));
 
-        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *const doc (parent.dom_element ()->getOwnerDocument ());
 
         e_ = doc->createElementNS (string (ns).c_str (),
                                    string (prefix.empty () ? name : prefix + string_ (1, ':') + name).c_str ());
@@ -374,7 +374,7 @@ namespace XSCRT
     public:
       string_ operator[] (string_ const &s) const
       {
-        XMLCh const *value = ce_->getAttribute (string (s).c_str ());
+        XMLCh const *const value (ce_->getAttribute (string (s).c_str ()));
 
         return transcode<C> (value, nullptr);
       }
@@ -426,7 +426,7 @@ namespace XSCRT
         : name_ (name)
         , value_ ()
       {
-        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *const doc (parent.dom_element ()->getOwnerDocument ());
 
         a_ = doc->createAttribute (string (name).c_str ());
 
@@ -441,9 +441,9 @@ namespace XSCRT
         : name_ (name)
         , value_ ()
       {
-        string_ prefix (ns_prefix (ns, parent));
+        string_ const prefix (ns_prefix (ns, parent));
 
-        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *const doc (parent.dom_element ()->getOwnerDocument ());
 
         a_ = doc->createAttributeNS (string (ns).c_str (),
                                      string (prefix.empty () ? name : prefix + string_ (1, ':') + name).c_str ());
@@ -523,9 +523,9 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> ns_name (Element<C> const &e, std::basic_string<C> const &n)
     {
-      std::basic_string<C> wp (prefix (n));
+      std::basic_string<C> const wp (prefix (n));
 
-      XMLCh const *xns = e.dom_element ()->lookupNamespaceURI (wp.empty () ? nullptr : string (wp).c_str ());
+      XMLCh const *const xns (e.dom_element ()->lookupNamespaceURI (wp.empty () ? nullptr : string (wp).c_str ()));
 
       std::basic_string<C> ns (xns ? transcode<C> (xns, nullptr) : std::basic_string<C> ());
 
@@ -535,8 +535,8 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> fq_name (Element<C> const &e, std::basic_string<C> const &n)
     {
-      std::basic_string<C> ns (ns_name (e, n));
-      std::basic_string<C> un (uq_name (n));
+      std::basic_string<C> const ns (ns_name (e, n));
+      std::basic_string<C> const un (uq_name (n));
 
       return ns.empty () ? un : (ns + C ('#') + un);
     }
@@ -548,9 +548,9 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> ns_prefix (std::basic_string<C> const &ns, Element<C> const &e)
     {
-      string xns (ns);
+      string const xns (ns);
 
-      XMLCh const *p (e.dom_element ()->lookupPrefix (xns.c_str ()));
+      XMLCh const *const p (e.dom_element ()->lookupPrefix (xns.c_str ()));
 
       if (p == nullptr)
       {

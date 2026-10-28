@@ -35,10 +35,12 @@ namespace XML
 
   XStr &XStr::operator= (const XStr &rhs)
   {
-    if (std::addressof (rhs) == this)
-      return *this;
-    XStr temp (rhs);
-    std::swap (this->_wstr, temp._wstr);
+    if (std::addressof (rhs) != this)
+    {
+      XStr temp (rhs);
+      std::swap (this->_wstr, temp._wstr);
+    }
+
     return *this;
   }
 
@@ -62,14 +64,14 @@ namespace XML
     if (tail == nullptr)
       return false;
 
-    XMLSize_t iTailLen = XMLString::stringLen (tail);
-    XMLSize_t iWorkLen = _wstr == nullptr ? 0 : XMLString::stringLen (_wstr);
+    XMLSize_t const iTailLen (XMLString::stringLen (tail));
+    XMLSize_t const iWorkLen (_wstr == nullptr ? 0 : XMLString::stringLen (_wstr));
 
-    XMLSize_t bytes = (iWorkLen + iTailLen + 1) * sizeof (XMLCh);
-    void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
-    XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
+    XMLSize_t const bytes ((iWorkLen + iTailLen + 1) * sizeof (XMLCh));
+    void *const tmp (XMLPlatformUtils::fgMemoryManager->allocate (bytes));
+    XMLCh *const result (reinterpret_cast<XMLCh *> (tmp));
 
-    bool bOK = result != nullptr;
+    bool const bOK (result != nullptr);
     if (bOK)
     {
       XMLCh *target = result;
@@ -90,9 +92,9 @@ namespace XML
     bool bOK = head <= tail && head >= begin () && tail <= end ();
     if (bOK)
     {
-      XMLSize_t bytes = (size () - (tail - head) + 1) * sizeof (XMLCh);
-      void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
-      XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
+      XMLSize_t const bytes ((size () - (tail - head) + 1) * sizeof (XMLCh));
+      void *const tmp (XMLPlatformUtils::fgMemoryManager->allocate (bytes));
+      XMLCh *const result (reinterpret_cast<XMLCh *> (tmp));
 
       XMLCh *target = result;
       bOK = target != nullptr;
@@ -133,7 +135,7 @@ namespace XML
 
   XMLCh *XStr::release ()
   {
-    XMLCh *tmp = _wstr;
+    XMLCh *const tmp (_wstr);
     this->_wstr = nullptr;
     return tmp;
   }

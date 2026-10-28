@@ -9,7 +9,7 @@ namespace XMLSchema
     using XSCRT::TypeId;
     using XSCRT::ExtendedTypeInfo;
 
-    TypeId id (typeid (T));
+    TypeId const id (typeid (T));
     ExtendedTypeInfo info (id);
 
     info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (Base));
@@ -26,7 +26,7 @@ namespace XMLSchema
     // XSCRT::Type
     //
     {
-      TypeId id (typeid (XSCRT::Type));
+      TypeId const id (typeid (XSCRT::Type));
       map.insert (std::make_pair (id, ExtendedTypeInfo (id)));
     }
 
@@ -61,7 +61,7 @@ namespace XMLSchema
     // IDREF_Base
     //
     {
-      TypeId id (typeid (IDREF_Base));
+      TypeId const id (typeid (IDREF_Base));
       ExtendedTypeInfo info (id);
 
       info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (XSCRT::Type));
@@ -72,7 +72,7 @@ namespace XMLSchema
     // IDREF
     //
     {
-      TypeId id (typeid (IDREF<C>));
+      TypeId const id (typeid (IDREF<C>));
       ExtendedTypeInfo info (id);
 
       info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (IDREF_Base));

@@ -80,7 +80,7 @@ namespace XML
     }
     catch (const XMLException &e)
     {
-      char *message = XMLString::transcode (e.getMessage ());
+      char *const message (XMLString::transcode (e.getMessage ()));
       std::unique_ptr<char[]> cleanup_message (message);
       impl_ = nullptr;
       if (runtime_started)
@@ -206,19 +206,19 @@ namespace XML
     }
     catch (const DOMException &e)
     {
-      const unsigned int maxChars = 2047;
+      const unsigned int maxChars (2047);
       XMLCh errText[maxChars + 1];
 
       if (DOMImplementation::loadDOMExceptionMsg (e.code, errText, maxChars))
       {
-        char *message = XMLString::transcode (errText);
+        char *const message (XMLString::transcode (errText));
         std::unique_ptr<char[]> cleanup_message (message);
       }
       return nullptr;
     }
     catch (const XMLException &e)
     {
-      char *message = XMLString::transcode (e.getMessage ());
+      char *const message (XMLString::transcode (e.getMessage ()));
       std::unique_ptr<char[]> cleanup_message (message);
       throw std::runtime_error (message != nullptr ? message : "Xerces XML parsing failed");
     }
@@ -258,7 +258,7 @@ namespace XML
     }
     catch (const XMLException &e)
     {
-      char *message = XMLString::transcode (e.getMessage ());
+      char *const message (XMLString::transcode (e.getMessage ()));
       std::unique_ptr<char[]> cleanup_message (message);
       throw;
     }
@@ -316,7 +316,7 @@ namespace XML
         impl_->createLSSerializer ());
       if (!serializer)
         return false;
-      XERCES_CPP_NAMESPACE::DOMConfiguration *ser_config (serializer->getDomConfig ());
+      XERCES_CPP_NAMESPACE::DOMConfiguration *const ser_config (serializer->getDomConfig ());
       std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSOutput, OutputReleaser> output (impl_->createLSOutput ());
       if (!output)
         return false;
@@ -335,10 +335,10 @@ namespace XML
     }
     catch (const xercesc::XMLException &e)
     {
-      char *message = XMLString::transcode (e.getMessage ());
+      char *const message (XMLString::transcode (e.getMessage ()));
       std::unique_ptr<char[]> cleanup_message (message);
 
-      char *name = XMLString::transcode (e.getType ());
+      char *const name (XMLString::transcode (e.getType ()));
       std::unique_ptr<char[]> cleanup_name (name);
 
       ACELIB_ERROR ((LM_ERROR,

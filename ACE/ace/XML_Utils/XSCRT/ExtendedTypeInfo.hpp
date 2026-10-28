@@ -119,7 +119,7 @@ namespace XSCRT
   template <>
   inline ExtendedTypeInfo const &extended_type_info<TypeId> (TypeId const &tid)
   {
-    ExtendedTypeInfoMap::const_iterator i (extended_type_info_map ().find (tid));
+    ExtendedTypeInfoMap::const_iterator const i (extended_type_info_map ().find (tid));
 
     if (i == extended_type_info_map ().end ())
       throw NotAvailable ();

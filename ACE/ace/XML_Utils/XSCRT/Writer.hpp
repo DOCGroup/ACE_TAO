@@ -44,7 +44,7 @@ namespace XSCRT
     }
 
   public:
-    XML::Attribute<C> *attr_ ()
+    XML::Attribute<C> *attr_ () const
     {
       return attr__;
     }

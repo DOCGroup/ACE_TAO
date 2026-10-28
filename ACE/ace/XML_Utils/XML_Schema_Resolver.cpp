@@ -39,7 +39,7 @@ namespace XML
     ACE_Env_Value<ACE_TString> path_env (variable, ACE_TEXT (""));
 
     XStr xpath (static_cast<ACE_TString> (path_env).c_str ());
-    XStr xrelpath (relpath);
+    XStr const xrelpath (relpath);
 
     if (!xpath.append (xrelpath))
       throw std::bad_alloc ();
@@ -55,7 +55,7 @@ namespace XML
       if (!path.append (systemId))
         continue;
 
-      FileHandle file (XMLPlatformUtils::openFile (path));
+      FileHandle const file (XMLPlatformUtils::openFile (path));
 
       if (file != nullptr)
       {

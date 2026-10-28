@@ -5,9 +5,7 @@
 #include "XercesString.h"
 
 #include <xercesc/framework/LocalFileInputSource.hpp>
-#include <xercesc/framework/Wrapper4InputSource.hpp>
 
-using xercesc::Wrapper4InputSource;
 using xercesc::LocalFileInputSource;
 
 namespace XML
@@ -34,7 +32,7 @@ namespace XML
       return nullptr;
 
     // Ownership of these objects is given to other people.
-    return /*new Wrapper4InputSource*/ (new LocalFileInputSource (path.begin ()));
+    return new LocalFileInputSource (path.begin ());
   }
 }
 
