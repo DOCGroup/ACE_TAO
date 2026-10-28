@@ -304,9 +304,7 @@ RTCP_Channel_Out::RTCP_Channel_Out()
 {
 }
 
-RTCP_Channel_Out::~RTCP_Channel_Out()
-{
-}
+RTCP_Channel_Out::~RTCP_Channel_Out() = default;
 
 void
 RTCP_Channel_Out::updateStatistics (RTP_Packet *data_packet)

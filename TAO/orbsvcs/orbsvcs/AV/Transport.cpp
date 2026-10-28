@@ -467,9 +467,7 @@ TAO_AV_Transport::TAO_AV_Transport ()
 }
 
 // Virtual destructor.
-TAO_AV_Transport::~TAO_AV_Transport ()
-{
-}
+TAO_AV_Transport::~TAO_AV_Transport () = default;
 
 ACE_Addr*
 TAO_AV_Transport::get_local_addr ()
@@ -630,27 +628,21 @@ TAO_AV_Connector::TAO_AV_Connector ()
 {
 }
 
-TAO_AV_Connector::~TAO_AV_Connector ()
-{
-}
+TAO_AV_Connector::~TAO_AV_Connector () = default;
 
 // TAO_AV_Acceptor
 TAO_AV_Acceptor::TAO_AV_Acceptor ()
 {
 }
 
-TAO_AV_Acceptor::~TAO_AV_Acceptor ()
-{
-}
+TAO_AV_Acceptor::~TAO_AV_Acceptor () = default;
 
 TAO_AV_Transport_Factory::TAO_AV_Transport_Factory ()
  : ref_count (0)
 {
 }
 
-TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory ()
-{
-}
+TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory () = default;
 
 int
 TAO_AV_Transport_Factory::init (int /* argc */,

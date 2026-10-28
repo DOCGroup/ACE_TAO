@@ -28,9 +28,7 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->chd_.length_ = ACE_NTOHS(*(ACE_UINT16*)&buffer[2]);
 }
 
-RTCP_Packet::~RTCP_Packet()
-{
-}
+RTCP_Packet::~RTCP_Packet() = default;
 
 void
 RTCP_Packet::get_packet_data(char **buffer, ACE_UINT16 &length)

@@ -352,9 +352,7 @@ TAO_AV_TCP_Connector::TAO_AV_TCP_Connector ()
 {
 }
 
-TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector ()
-{
-}
+TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector () = default;
 
 int
 TAO_AV_TCP_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
@@ -468,9 +466,7 @@ TAO_AV_TCP_Acceptor::TAO_AV_TCP_Acceptor ()
 {
 }
 
-TAO_AV_TCP_Acceptor::~TAO_AV_TCP_Acceptor ()
-{
-}
+TAO_AV_TCP_Acceptor::~TAO_AV_TCP_Acceptor () = default;
 
 int
 TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)

@@ -504,9 +504,7 @@ TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
   this->output_.cname(cname);
 }
 
-TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback ()
-{
-}
+TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback () = default;
 
 void
 TAO_AV_RTCP_Callback::schedule (int ms)

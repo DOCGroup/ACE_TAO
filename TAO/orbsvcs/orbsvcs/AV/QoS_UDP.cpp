@@ -41,9 +41,7 @@ TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper ()
 {
 }
 
-TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper ()
-{
-}
+TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper () = default;
 
 int
 TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
@@ -562,9 +560,7 @@ TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler 
 {
 }
 
-TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport ()
-{
-}
+TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport () = default;
 
 int
 TAO_AV_UDP_QoS_Transport::set_remote_address (const ACE_INET_Addr &address)
@@ -776,9 +772,7 @@ TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor ()
 {
 }
 
-TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor ()
-{
-}
+TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor () = default;
 
 int
 TAO_AV_UDP_QoS_Acceptor::activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler)
@@ -1072,9 +1066,7 @@ TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector ()
 {
 }
 
-TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector ()
-{
-}
+TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector () = default;
 
 int
 TAO_AV_UDP_QoS_Connector::open (TAO_Base_StreamEndPoint *endpoint,
@@ -1385,9 +1377,7 @@ TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory ()
                 "TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory ()
-{
-}
+TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory () = default;
 
 int
 TAO_AV_UDP_QoS_Factory::match_protocol (const char *protocol_string)
@@ -1447,9 +1437,7 @@ TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory ()
                 "TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory\n"));
 }
 
-TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory ()
-{
-}
+TAO_AV_UDP_QoS_Flow_Factory::~TAO_AV_UDP_QoS_Flow_Factory () = default;
 
 int
 TAO_AV_UDP_QoS_Flow_Factory::init (int /* argc */,

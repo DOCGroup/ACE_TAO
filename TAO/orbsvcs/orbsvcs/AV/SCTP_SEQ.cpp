@@ -24,9 +24,7 @@ TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handl
 {
 }
 
-TAO_AV_SCTP_SEQ_Transport::~TAO_AV_SCTP_SEQ_Transport ()
-{
-}
+TAO_AV_SCTP_SEQ_Transport::~TAO_AV_SCTP_SEQ_Transport () = default;
 
 int
 TAO_AV_SCTP_SEQ_Transport::open (ACE_Addr * /*address*/)
@@ -225,9 +223,7 @@ TAO_AV_SCTP_SEQ_Acceptor::TAO_AV_SCTP_SEQ_Acceptor ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Acceptor::~TAO_AV_SCTP_SEQ_Acceptor ()
-{
-}
+TAO_AV_SCTP_SEQ_Acceptor::~TAO_AV_SCTP_SEQ_Acceptor () = default;
 
 int
 TAO_AV_SCTP_SEQ_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
@@ -408,9 +404,7 @@ TAO_AV_SCTP_SEQ_Connector::TAO_AV_SCTP_SEQ_Connector ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector ()
-{
-}
+TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector () = default;
 
 int
 TAO_AV_SCTP_SEQ_Connector::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
@@ -580,9 +574,7 @@ TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory ()
-{
-}
+TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory () = default;
 
 
 int
@@ -851,9 +843,7 @@ TAO_AV_SCTP_SEQ_Flow_Factory::TAO_AV_SCTP_SEQ_Flow_Factory ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory ()
-{
-}
+TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory () = default;
 
 int
 TAO_AV_SCTP_SEQ_Flow_Factory::init (int /* argc */,

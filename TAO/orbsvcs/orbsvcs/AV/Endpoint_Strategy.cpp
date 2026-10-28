@@ -27,9 +27,7 @@ TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy ()
 }
 
 // Destructor.
-TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy ()
-{
-}
+TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy () = default;
 
 // The base class defines the "failure" case, so that unless the
 // subclasses override this, the call will fail. This is done so that
@@ -71,9 +69,7 @@ TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_
 }
 
 // Destructor.
-TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy ()
-{
-}
+TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy () = default;
 
 // Spawns the process, and waits for it to finish booting.
 // Then uses bind_to_naming_service, get_stream_endpoint, and get_vdev
@@ -240,9 +236,7 @@ TAO_AV_Endpoint_Process_Strategy_A::TAO_AV_Endpoint_Process_Strategy_A (ACE_Proc
 }
 
 // Destructor
-TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A ()
-{
-}
+TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A () = default;
 
 // the "A" type endpoint creator
 int
@@ -316,9 +310,7 @@ TAO_AV_Endpoint_Process_Strategy_B::TAO_AV_Endpoint_Process_Strategy_B (ACE_Proc
 }
 
 // Destructor
-TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B ()
-{
-}
+TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B () = default;
 
 // Creates and returns a "B" type endpoint
 int

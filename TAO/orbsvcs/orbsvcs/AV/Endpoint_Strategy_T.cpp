@@ -201,16 +201,14 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
 
 //Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  TAO_AV_Endpoint_Reactive_Strategy_A () = default;
 
 
 // Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_A ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  ~TAO_AV_Endpoint_Reactive_Strategy_A () = default;
 
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
@@ -269,15 +267,13 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
 // Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  TAO_AV_Endpoint_Reactive_Strategy_B () = default;
 
 // Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_B ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  ~TAO_AV_Endpoint_Reactive_Strategy_B () = default;
 
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
@@ -705,9 +701,7 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 }
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_A ()
-{
-}
+TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_A () = default;
 
 // ----------------------------------------------------------------------
 // TAO_AV_Child_Process_B
@@ -731,9 +725,7 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 }
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_B ()
-{
-}
+TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_B () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

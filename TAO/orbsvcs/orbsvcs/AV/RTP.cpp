@@ -175,9 +175,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       }
 }
 
-RTP_Packet::~RTP_Packet()
-{
-}
+RTP_Packet::~RTP_Packet() = default;
 
 ACE_UINT16
 RTP_Packet::packet_size()

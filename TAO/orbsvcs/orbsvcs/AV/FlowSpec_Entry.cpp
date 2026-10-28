@@ -525,9 +525,7 @@ TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
 {
 }
 
-TAO_Forward_FlowSpec_Entry::~TAO_Forward_FlowSpec_Entry ()
-{
-}
+TAO_Forward_FlowSpec_Entry::~TAO_Forward_FlowSpec_Entry () = default;
 
 int
 TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
@@ -855,9 +853,7 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
 {
 }
 
-TAO_Reverse_FlowSpec_Entry::~TAO_Reverse_FlowSpec_Entry ()
-{
-}
+TAO_Reverse_FlowSpec_Entry::~TAO_Reverse_FlowSpec_Entry () = default;
 
 TAO_FlowSpec_Entry::Role
 TAO_Reverse_FlowSpec_Entry::role ()

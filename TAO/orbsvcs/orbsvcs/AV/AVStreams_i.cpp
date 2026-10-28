@@ -52,9 +52,7 @@ AV_Null_MediaCtrl::AV_Null_MediaCtrl ()
 {
 }
 
-AV_Null_MediaCtrl::~AV_Null_MediaCtrl ()
-{
-}
+AV_Null_MediaCtrl::~AV_Null_MediaCtrl () = default;
 
 
 // ----------------------------------------------------------------------
@@ -288,9 +286,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
   }
 }
 
-TAO_Basic_StreamCtrl::~TAO_Basic_StreamCtrl ()
-{
-}
+TAO_Basic_StreamCtrl::~TAO_Basic_StreamCtrl () = default;
 
 // ----------------------------------------------------------------------
 // TAO_Negotiator
@@ -1428,9 +1424,7 @@ TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint ()
 {
 }
 
-TAO_Base_StreamEndPoint::~TAO_Base_StreamEndPoint ()
-{
-}
+TAO_Base_StreamEndPoint::~TAO_Base_StreamEndPoint () = default;
 
 int
 TAO_Base_StreamEndPoint::handle_close ()
@@ -2616,9 +2610,7 @@ TAO_StreamEndPoint_A::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr /* the_ep
   throw AVStreams::notSupported ();
 }
 
-TAO_StreamEndPoint_A::~TAO_StreamEndPoint_A ()
-{
-}
+TAO_StreamEndPoint_A::~TAO_StreamEndPoint_A () = default;
 
 // ----------------------------------------------------------------------
 // TAO_StreamEndPoint_B
@@ -2746,9 +2738,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
   return 1;
 }
 
-TAO_StreamEndPoint_B::~TAO_StreamEndPoint_B ()
-{
-}
+TAO_StreamEndPoint_B::~TAO_StreamEndPoint_B () = default;
 
 // ----------------------------------------------------------------------
 // TAO_VDev
@@ -2922,9 +2912,7 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
   return 1;
 }
 
-TAO_VDev::~TAO_VDev ()
-{
-}
+TAO_VDev::~TAO_VDev () = default;
 
 // ----------------------------------------------------------------------
 // TAO_MMDevice
