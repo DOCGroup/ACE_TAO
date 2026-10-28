@@ -40,7 +40,7 @@ public:
   TAO_Notify_Constraint_Interpreter ();
 
   /// Destructor
-  virtual ~TAO_Notify_Constraint_Interpreter ();
+  ~TAO_Notify_Constraint_Interpreter () override;
 
   TAO_Notify_Constraint_Interpreter (const TAO_Notify_Constraint_Interpreter&) = delete;
   TAO_Notify_Constraint_Interpreter (TAO_Notify_Constraint_Interpreter&&) = delete;
