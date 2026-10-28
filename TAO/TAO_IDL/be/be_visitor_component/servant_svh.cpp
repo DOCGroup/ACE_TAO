@@ -12,6 +12,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
@@ -152,7 +154,7 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
       return 0;
     }
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->provides_type ()->full_name ();
@@ -189,7 +191,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
       return 0;
     }
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix +=node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->uses_type ()->full_name ();

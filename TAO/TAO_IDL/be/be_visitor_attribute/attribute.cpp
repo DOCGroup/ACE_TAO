@@ -11,6 +11,8 @@
 
 #include "attribute.h"
 
+#include <string>
+
 // Attribute gets mapped to one or possibly two operations based on whether
 // it is readonly or not. The two operations "get" and "set" the value of the
 // attribute.
@@ -52,7 +54,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   UTL_Scope *s = node->defined_in ();
   AST_Decl *d = ScopeAsDecl (s);
-  ACE_CString op_name (this->ctx_->port_prefix ());
+  std::string op_name (this->ctx_->port_prefix ());
   op_name += node->local_name ()->get_string ();
   Identifier *op_id = nullptr;
   ACE_NEW_RETURN (op_id,

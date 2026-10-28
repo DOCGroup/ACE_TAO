@@ -23,6 +23,8 @@
 
 #include "be_codegen.h"
 
+#include <string>
+
 class TAO_OutStream;
 class be_decl;
 class be_interface;
@@ -127,7 +129,7 @@ public:
   void interface (be_interface *);
 
   /// Accessor for the member.
-  ACE_CString &port_prefix ();
+  std::string &port_prefix ();
 
   /// return the export macro currently in force
   const char *export_macro () const;
@@ -170,7 +172,7 @@ private:
   be_interface *interface_ {};
 
   /// Used in enough visitors to put it here.
-  ACE_CString port_prefix_;
+  std::string port_prefix_;
 };
 
 #if defined (interface)

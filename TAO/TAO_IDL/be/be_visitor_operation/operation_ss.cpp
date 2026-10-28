@@ -11,6 +11,8 @@
 
 #include "operation.h"
 
+#include <string>
+
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
@@ -136,10 +138,10 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                         -1);
     }
 
-  ACE_CString upcall_command_name =
-    this->ctx_->port_prefix ()
-    + ACE_CString (node->local_name ()->get_string ()) + "_"
-    + ACE_CString (intf->local_name ());
+  std::string upcall_command_name (this->ctx_->port_prefix ());
+  upcall_command_name += node->local_name ()->get_string ();
+  upcall_command_name += '_';
+  upcall_command_name += intf->local_name ();
 
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())

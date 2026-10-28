@@ -12,6 +12,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_context_svts::be_visitor_context_svts (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
@@ -94,7 +96,7 @@ be_visitor_context_svts::visit_connector (be_connector *node)
 int
 be_visitor_context_svts::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 

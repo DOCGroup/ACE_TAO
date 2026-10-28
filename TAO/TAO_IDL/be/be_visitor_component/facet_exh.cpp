@@ -11,6 +11,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_facet_exh::be_visitor_facet_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -33,7 +35,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   const char *iname =
     impl->original_local_name ()->get_string ();
 
-  ACE_CString lname_str (this->ctx_->port_prefix ());
+  std::string lname_str (this->ctx_->port_prefix ());
   lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 

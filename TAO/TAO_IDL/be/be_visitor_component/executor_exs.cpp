@@ -11,6 +11,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_executor_exs::be_visitor_executor_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -323,7 +325,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
 int
 be_visitor_executor_exs::visit_provides (be_provides *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
@@ -336,7 +338,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   const char *sname = sname_str.c_str ();
   const char *global = (sname_str == "" ? "" : "::");
 
-  ACE_CString lname_str (this->ctx_->port_prefix ());
+  std::string lname_str (this->ctx_->port_prefix ());
   lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 

@@ -14,6 +14,8 @@
 
 #include "be_visitor_decl.h"
 
+#include <string>
+
 class TAO_OutStream;
 
 /**
@@ -48,7 +50,7 @@ public:
   void attr_name (const char *name);
 
 private:
-  ACE_CString attr_name_string_;
+  std::string attr_name_string_;
 };
 
 #endif /* BE_VISITOR_ATTR_RETURN_H */

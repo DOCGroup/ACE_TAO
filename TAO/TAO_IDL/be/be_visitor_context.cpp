@@ -10,6 +10,8 @@
 //=============================================================================
 
 #include "be_visitor_context.h"
+
+#include <string>
 #include "be_extern.h"
 #include "be_helper.h"
 
@@ -215,7 +217,7 @@ be_visitor_context::interface () const
   return this->interface_;
 }
 
-ACE_CString &
+std::string &
 be_visitor_context::port_prefix ()
 {
   return this->port_prefix_;

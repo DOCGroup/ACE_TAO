@@ -12,6 +12,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_context_ex_idl::be_visitor_context_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -88,7 +90,7 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
   os_ << be_nl
       << "::";
 
-  ACE_CString port_name (this->ctx_->port_prefix ());
+  std::string port_name (this->ctx_->port_prefix ());
   port_name += node->local_name ()->get_string ();
   const char *lname = port_name.c_str ();
 
