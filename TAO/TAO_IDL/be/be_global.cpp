@@ -30,6 +30,8 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <string_view>
+
 TAO_IDL_BE_Export BE_GlobalData *be_global = nullptr;
 
 const char *const BE_GlobalData::core_versioned_ns_begin =
@@ -55,6 +57,19 @@ namespace
   char const *optional_string_c_str (std::optional<std::string> const &value)
   {
     return value ? value->c_str () : nullptr;
+  }
+
+  bool has_pidl_extension (char const *file_name)
+  {
+    if (file_name == nullptr)
+      {
+        return false;
+      }
+
+    std::string_view const file_name_view (file_name);
+    return file_name_view.size () >= 5
+      && (file_name_view.substr (file_name_view.size () - 5) == ".pidl"
+          || file_name_view.substr (file_name_view.size () - 5) == ".PIDL");
   }
 }
 
@@ -217,9 +232,7 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
                                   bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
-  ACE_CString fn (idl_file_name->get_string ());
-  ACE_CString fn_ext = fn.substr (fn.length () - 5);
-  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+  bool orb_file = has_pidl_extension (idl_file_name->get_string ());
 
   if (!orb_file && !be_global->gen_custom_ending ()
       && FE_Utils::validate_orb_include (idl_file_name))
@@ -255,9 +268,7 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
                                   bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
-  ACE_CString fn (idl_file_name->get_string ());
-  ACE_CString fn_ext = fn.substr (fn.length () - 5);
-  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+  bool orb_file = has_pidl_extension (idl_file_name->get_string ());
 
   if (!orb_file && !be_global->gen_custom_ending ()
       && FE_Utils::validate_orb_include (idl_file_name))
@@ -279,9 +290,7 @@ BE_GlobalData::be_get_svnt_template_hdr (UTL_String *idl_file_name,
                                         bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
-  ACE_CString fn (idl_file_name->get_string ());
-  ACE_CString fn_ext = fn.substr (fn.length () - 5);
-  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+  bool orb_file = has_pidl_extension (idl_file_name->get_string ());
 
   if (!orb_file && !be_global->gen_custom_ending ()
       && FE_Utils::validate_orb_include (idl_file_name))
@@ -1005,7 +1014,7 @@ BE_GlobalData::versioning_begin () const
 void
 BE_GlobalData::versioning_include (const char * s)
 {
-  this->versioning_include_ = s;
+  this->versioning_include_ = s != nullptr ? s : "";
 }
 
 const char *
@@ -1024,9 +1033,9 @@ void
 BE_GlobalData::versioning_end (const char * s)
 {
   this->versioning_end_ =
-    ACE_CString ("\n\n")
-    + ACE_CString (s)
-    + ACE_CString ("\n\n");
+    std::string ("\n\n")
+    + (s != nullptr ? s : "")
+    + "\n\n";
 
   this->core_versioning_begin_ =
     this->versioning_end_ + // Yes, "end".
@@ -1040,9 +1049,9 @@ void
 BE_GlobalData::versioning_begin (const char * s)
 {
   this->versioning_begin_ =
-    ACE_CString ("\n\n")
-    + ACE_CString (s)
-    + ACE_CString ("\n\n");
+    std::string ("\n\n")
+    + (s != nullptr ? s : "")
+    + "\n\n";
 
   this->core_versioning_end_ =
     core_versioned_ns_end
@@ -1826,7 +1835,7 @@ BE_GlobalData::lookup_strategy () const
 void
 BE_GlobalData::dds_impl (char const * const val)
 {
-  ACE_CString tmp (val, nullptr, false);
+  std::string_view const tmp (val != nullptr ? val : "");
 
   if (tmp == "ndds")
     {
@@ -2518,7 +2527,7 @@ BE_GlobalData::tab_size (unsigned long val)
   this->tab_size_ = val;
 }
 
-ACE_CString
+std::string
 BE_GlobalData::spawn_options ()
 {
   return idl_global->idl_flags ().c_str ();
@@ -2750,7 +2759,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-            ACE_CString tmp (av[i + 1], nullptr, false);
+            std::string tmp (av[i + 1]);
 #if defined (ACE_WIN32)
             // WIN32's CreateProcess needs the full executable name
             // when the gperf path is modified, but not for the default
@@ -2758,7 +2767,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // executable name at all.
             tmp += "\\ace_gperf.exe";
 #endif
-            idl_global->gperf_path (tmp.fast_rep ());
+            idl_global->gperf_path (tmp.c_str ());
             ++i;
           }
         else

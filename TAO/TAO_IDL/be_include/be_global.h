@@ -19,7 +19,6 @@
 #include "TAO_IDL_BE_Export.h"
 
 #include "ace/Unbounded_Queue.h"
-#include "ace/SString.h"
 
 class be_interface;
 class be_valuetype;
@@ -943,7 +942,7 @@ public:
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
-  ACE_CString spawn_options ();
+  std::string spawn_options ();
 
   /**
    * Parse an argument that the frontend did not recognize.
@@ -990,26 +989,26 @@ private:
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
-  ACE_CString core_versioning_begin_;
+  std::string core_versioning_begin_;
 
   /// Text that closes a "versioned" namespace for core TAO and
   /// orbsvcs related code.
-  ACE_CString core_versioning_end_;
+  std::string core_versioning_end_;
 
   /// Text that opens a "versioned" namespace for CORBA::Any operators
-  ACE_CString anyops_versioning_begin_;
+  std::string anyops_versioning_begin_;
 
   /// Text that closes a "versioned" namespace for CORBA::Any operators
-  ACE_CString anyops_versioning_end_;
+  std::string anyops_versioning_end_;
 
   /// Text that opens a "versioned" namespace.
-  ACE_CString versioning_begin_;
+  std::string versioning_begin_;
 
   /// Text that closes a "versioned" namespace.
-  ACE_CString versioning_end_;
+  std::string versioning_end_;
 
   /// Include for versioned namespace include
-  ACE_CString versioning_include_;
+  std::string versioning_include_;
 
   /// Client's header file name ending. Default is "C.h".
   Optional_String client_hdr_ending_;
