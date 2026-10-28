@@ -26,10 +26,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer ()
-  : supplier_admin_ (0)
-{
-}
+TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer () = default;
 
 TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer () = default;
 

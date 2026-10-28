@@ -177,7 +177,7 @@ private:
   /// Smart pointer to this object
   /// Provides continuity between smart pointers and "Routing_Slip::this"
   /// Also lets the Routing_Slip manage its own minimum lifetime.
-  Routing_Slip_Ptr this_ptr_;
+  Routing_Slip_Ptr this_ptr_ {};
 
   // The event being delivered.
   TAO_Notify_Event::Ptr event_;

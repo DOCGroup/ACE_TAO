@@ -15,10 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier ()
-  : consumer_admin_ (0)
-{
-}
+TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier () = default;
 
 TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier () = default;
 

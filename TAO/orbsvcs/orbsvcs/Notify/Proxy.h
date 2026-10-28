@@ -113,7 +113,7 @@ protected:
   TAO_Notify_EventTypeSeq subscribed_types_;
 
   /// True if updates have been turned off.
-  CORBA::Boolean updates_off_;
+  CORBA::Boolean updates_off_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

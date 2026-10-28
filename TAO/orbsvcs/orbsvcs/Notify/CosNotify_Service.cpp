@@ -97,7 +97,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           arg_shifter.consume_arg ();
 
-          properties->updates (0);
+          properties->updates (false);
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllocateTaskperProxy")) == 0)
         {

@@ -14,10 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Proxy::TAO_Notify_Proxy ()
-  : updates_off_ (0)
-{
-}
+TAO_Notify_Proxy::TAO_Notify_Proxy () = default;
 
 TAO_Notify_Proxy::~TAO_Notify_Proxy () = default;
 
@@ -60,7 +57,7 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
 {
   // return if the updates for this proxy are turned off or
   // if all the updates in the channel are switched off.
-  if (this->updates_off_ == 1 || TAO_Notify_PROPERTIES::instance()->updates () == 0)
+  if (this->updates_off_ || !TAO_Notify_PROPERTIES::instance()->updates ())
     return;
 
   TAO_Notify_Method_Request_Updates_No_Copy request (added, removed, this);
@@ -95,11 +92,11 @@ TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, cons
   if (mode == CosNotifyChannelAdmin::NONE_NOW_UPDATES_ON ||
       mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON)
     {
-      this->updates_off_ = 0;
+      this->updates_off_ = false;
     }
   else
     {
-      this->updates_off_ = 1;
+      this->updates_off_ = true;
     }
 
   return event_type_seq._retn ();

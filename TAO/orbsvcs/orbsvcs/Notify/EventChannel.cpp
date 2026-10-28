@@ -227,8 +227,8 @@ TAO_Notify_EventChannel::destroy ()
   this->sa_container ().destroy ();
   this->ca_container ().destroy ();
 
-  this->sa_container_.reset( 0 );
-  this->ca_container_.reset( 0 );
+  this->sa_container_.reset (nullptr);
+  this->ca_container_.reset (nullptr);
 
   this->default_filter_factory_ = CosNotifyFilter::FilterFactory::_nil();
 

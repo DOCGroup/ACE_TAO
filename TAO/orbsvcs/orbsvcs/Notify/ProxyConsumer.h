@@ -84,7 +84,7 @@ private:
 
   ///= Data Members.
   /// The SA parent.
-  TAO_Notify_SupplierAdmin::Ptr supplier_admin_;
+  TAO_Notify_SupplierAdmin::Ptr supplier_admin_ {};
 
   /// The Supplier that we're connect to.
   std::unique_ptr<TAO_Notify_Supplier> supplier_;

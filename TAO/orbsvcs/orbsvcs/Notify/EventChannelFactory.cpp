@@ -61,7 +61,7 @@ TAO_Notify_EventChannelFactory::destroy ()
   properties->orb (CORBA::ORB::_nil ());
   properties->default_poa (PortableServer::POA::_nil ());
 
-  ec_container_.reset( 0 );
+  ec_container_.reset (nullptr);
 }
 
 void
