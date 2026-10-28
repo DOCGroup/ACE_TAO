@@ -125,13 +125,14 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
       return 0;
     }
 
-  ACE_CString lname (node_lname->get_string ());
+  std::string lname (node_lname->get_string ());
 
   // Skip the *Explict and *Implicit interfaces added for a home.
-  if (lname.substr (lname.length () - 6) == "plicit")
+  if (lname.size () >= 6 && lname.compare (lname.size () - 6, 6, "plicit") == 0)
     {
       UTL_Scope *s = node->defined_in ();
-      Identifier local_id (lname.substr (0, lname.length () - 8).c_str ());
+      std::string const local_name (lname.substr (0, lname.size () - 8));
+      Identifier local_id (local_name.c_str ());
       AST_Decl *d = s->lookup_by_name_local (&local_id, false);
       local_id.destroy ();
 
@@ -256,7 +257,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
   idl_global->scopes ().push (s);
 
   // Create the reply handler name.
-  ACE_CString reply_handler_local_name;
+  std::string reply_handler_local_name;
 
   this->generate_name (reply_handler_local_name,
                        "AMI_",
@@ -408,10 +409,10 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   // Create the new name
   // Prepend "sendc_" to the name of the operation
-  ACE_CString original_op_name (
+  std::string original_op_name (
     node->name ()->last_component ()->get_string ());
-  ACE_CString new_op_name =
-    ACE_CString ("sendc_") + original_op_name;
+  std::string new_op_name ("sendc_");
+  new_op_name += original_op_name;
 
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
@@ -440,7 +441,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   be_interface *parent = dynamic_cast<be_interface*> (s);
 
   // Add the pre- and suffix
-  ACE_CString handler_local_name;
+  std::string handler_local_name;
 
   this->generate_name (
     handler_local_name,
@@ -565,7 +566,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
 
-  ACE_CString original_op_name (
+  std::string original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
 
@@ -736,10 +737,11 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
 
   // Create the new name
   // Append _excep to the name of the operation
-  ACE_CString original_op_name (
+  std::string original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
-  ACE_CString new_op_name = original_op_name + ACE_CString ("_excep");
+  std::string new_op_name (original_op_name);
+  new_op_name += "_excep";
 
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (reply_handler->name ()->copy ());
@@ -882,10 +884,10 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
 // Helper methods
 
 int
-be_visitor_ami_pre_proc::generate_name (ACE_CString &destination,
-                                        const char *prefix,
-                                        const char *middle_name,
-                                        const char *suffix)
+be_visitor_ami_pre_proc::generate_name (std::string &destination,
+                                        char const *prefix,
+                                        char const *middle_name,
+                                        char const *suffix)
 {
   destination = prefix;
   destination += middle_name;
@@ -896,10 +898,11 @@ be_visitor_ami_pre_proc::generate_name (ACE_CString &destination,
 be_operation *
 be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
+  std::string original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
-  ACE_CString new_op_name = ACE_CString ("get_") + original_op_name;
+  std::string new_op_name ("get_");
+  new_op_name += original_op_name;
 
   UTL_ScopedName *get_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
@@ -933,10 +936,11 @@ be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
 be_operation *
 be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
+  std::string original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
-  ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
+  std::string new_op_name ("set_");
+  new_op_name += original_op_name;
 
   UTL_ScopedName *set_name =
     static_cast<UTL_ScopedName *> (node->name ()-> copy ());
@@ -1018,9 +1022,9 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
                       AST_Type *[n_rh_parents],
                       nullptr);
 
-      ACE_CString prefix ("AMI_");
+      std::string prefix ("AMI_");
 
-      ACE_CString suffix ("Handler");
+      std::string suffix ("Handler");
       long index = 0;
 
       for (long j = 0; j < n_parents; ++j)
@@ -1032,8 +1036,9 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
               continue;
             }
 
-          ACE_CString rh_local_name =
-            prefix + parent->local_name ()->get_string () + suffix;
+          std::string rh_local_name (prefix);
+          rh_local_name += parent->local_name ()->get_string ();
+          rh_local_name += suffix;
 
           UTL_ScopedName *rh_parent_name =
             static_cast<UTL_ScopedName *> (parent->name ()->copy ());
