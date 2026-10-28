@@ -20,7 +20,7 @@ class EventChannels
 {
 public:
   EventChannels (TAO_MonitorEventChannelFactory* ecf,
-                 const ACE_CString& name,
+                 ACE_CString const &name,
                  Monitor_Control_Types::Information_Type type,
                  bool active)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannelFactory> (ecf,
@@ -53,7 +53,7 @@ private:
 // ******************************************************************
 
 TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
-  const char* name)
+  char const *name)
   : name_ (name)
 {
   if (name != nullptr)
@@ -164,10 +164,10 @@ TAO_MonitorEventChannelFactory::~TAO_MonitorEventChannelFactory ()
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_MonitorEventChannelFactory::create_named_channel (
-   const CosNotification::QoSProperties& initial_qos,
-   const CosNotification::AdminProperties& initial_admin,
+   CosNotification::QoSProperties const &initial_qos,
+   CosNotification::AdminProperties const &initial_admin,
    CosNotifyChannelAdmin::ChannelID_out id,
-   const char* name)
+   char const *name)
 {
   if (ACE_OS::strlen (name) == 0)
     {
@@ -216,8 +216,8 @@ TAO_MonitorEventChannelFactory::create_named_channel (
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_MonitorEventChannelFactory::create_channel (
-  const CosNotification::QoSProperties& initial_qos,
-  const CosNotification::AdminProperties& initial_admin,
+  CosNotification::QoSProperties const &initial_qos,
+  CosNotification::AdminProperties const &initial_admin,
   CosNotifyChannelAdmin::ChannelID_out id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
@@ -411,10 +411,9 @@ TAO_MonitorEventChannelFactory::get_ecs (
 
 TAO_MonitorEventChannelFactory::Unbinder::Unbinder (
   TAO_MonitorEventChannelFactory::Map& map,
-  const ACE_CString& name)
+  ACE_CString const &name)
   : map_ (map),
-     name_ (name),
-     released_ (false)
+     name_ (name)
 {
 }
 
