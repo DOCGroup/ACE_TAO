@@ -315,8 +315,8 @@ TAO_AV_UDP_Transport::recv (iovec *iov,
 //------------------------------------------------------------
 
 TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor ()
-  : address_ (0),
-    control_inet_address_ (0)
+  : address_ (nullptr),
+    control_inet_address_ (nullptr)
 {
 }
 
@@ -561,7 +561,7 @@ TAO_AV_UDP_Acceptor::close ()
 // TAO_AV_UDP_Connector
 //------------------------------------------------------------
 TAO_AV_UDP_Connector::TAO_AV_UDP_Connector ()
-  : control_inet_address_ (0)
+  : control_inet_address_ (nullptr)
   , delete_control_inet_address_ (false)
 {
 }

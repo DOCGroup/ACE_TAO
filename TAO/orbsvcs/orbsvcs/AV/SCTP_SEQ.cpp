@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport ()
-  :handler_ (0)
+  :handler_ (nullptr)
 {
 }
 
