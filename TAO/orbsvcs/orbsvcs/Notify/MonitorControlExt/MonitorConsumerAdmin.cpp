@@ -18,7 +18,7 @@ class ConsumerAdminControl : public TAO_NS_Control
 {
 public:
   ConsumerAdminControl (TAO_MonitorEventChannel* ec,
-                        const ACE_CString& name,
+                        ACE_CString const &name,
                         CosNotifyChannelAdmin::AdminID id)
     : TAO_NS_Control (name.c_str ()),
       ec_ (ec),
@@ -26,7 +26,7 @@ public:
   {
   }
 
-  bool execute (const char* command) override
+  bool execute (char const *command) override
   {
     if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMERADMIN) == 0)
       {
@@ -51,14 +51,6 @@ private:
   CosNotifyChannelAdmin::AdminID id_;
 };
 
-TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin ()
-  : stat_name_ (),
-    control_name_ (),
-    queue_size_ (nullptr),
-    overflows_ (nullptr)
-{
-}
-
 TAO_MonitorConsumerAdmin::~TAO_MonitorConsumerAdmin ()
 {
   this->remove ();
@@ -71,7 +63,7 @@ TAO_MonitorConsumerAdmin::~TAO_MonitorConsumerAdmin ()
 void
 TAO_MonitorConsumerAdmin::register_stats_controls (
   TAO_MonitorEventChannel* mec,
-  const ACE_CString& base)
+  ACE_CString const &base)
 {
   // Set up the statistic name, create it and register it
   this->stat_name_ = base + "/";
@@ -126,7 +118,7 @@ CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_MonitorConsumerAdmin::obtain_named_notification_push_supplier (
   CosNotifyChannelAdmin::ClientType ctype,
   CosNotifyChannelAdmin::ProxyID_out proxy_id,
-  const char * name)
+  char const *name)
 {
   // First, make sure we can get down to the real ec type.
   TAO_MonitorEventChannel* ec =
@@ -213,8 +205,8 @@ TAO_MonitorConsumerAdmin::get_ec () const
   return ec;
 }
 
-const ACE_CString &
-TAO_MonitorConsumerAdmin::stat_name ()const
+ACE_CString const &
+TAO_MonitorConsumerAdmin::stat_name () const
 {
   return stat_name_;
 }

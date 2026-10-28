@@ -23,7 +23,7 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorSupplierAdmin:
 {
 public:
   /// Construct a monitor supplier admin
-  TAO_MonitorSupplierAdmin ();
+  TAO_MonitorSupplierAdmin () = default;
 
   /// Remove the statistics for this event channel
   ~TAO_MonitorSupplierAdmin () override;
@@ -35,13 +35,13 @@ public:
 
   /// Register our statistic and control objects
   void register_stats_controls (TAO_MonitorEventChannel* mec,
-                                const ACE_CString& name);
+                                ACE_CString const &name);
 
   CosNotifyChannelAdmin::ProxyConsumer_ptr
     obtain_named_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
         CosNotifyChannelAdmin::ProxyID_out proxy_id,
-        const char * name) override;
+        char const *name) override;
 
   CosNotifyChannelAdmin::ProxyConsumer_ptr
     obtain_notification_push_consumer (

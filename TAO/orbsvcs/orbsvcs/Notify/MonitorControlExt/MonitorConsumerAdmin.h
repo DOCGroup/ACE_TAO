@@ -40,7 +40,7 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorConsumerAdmin
 {
 public:
   /// Construct a monitor supplier admin.
-  TAO_MonitorConsumerAdmin ();
+  TAO_MonitorConsumerAdmin () = default;
 
   /// Remove the statistics for this event channel.
   ~TAO_MonitorConsumerAdmin () override;
@@ -52,13 +52,13 @@ public:
 
   /// Register our statistic and control objects.
   void register_stats_controls (TAO_MonitorEventChannel* mec,
-                                const ACE_CString& name);
+                                ACE_CString const &name);
 
   CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_named_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id,
-    const char * name) override;
+    char const *name) override;
 
   CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier (
@@ -68,7 +68,7 @@ public:
 
   TAO_MonitorEventChannel* get_ec () const;
 
-  const ACE_CString & stat_name () const;
+  ACE_CString const &stat_name () const;
 
 
   /// Receive the queue count and store the approximated queue size in
@@ -86,8 +86,8 @@ private:
   ACE_CString queue_size_stat_name_;
   ACE_CString overflow_stat_name_;
   ACE_CString control_name_;
-  Monitor_Base * queue_size_;
-  Monitor_Base * overflows_;
+  Monitor_Base *queue_size_ {};
+  Monitor_Base *overflows_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
