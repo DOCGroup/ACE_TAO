@@ -32,17 +32,24 @@ class TAO_Notify_MC_Ext_Export TAO_MC_Default_Factory:
                                  public TAO_Notify_Default_Factory
 {
 public:
+  TAO_MC_Default_Factory () = default;
+
+  TAO_MC_Default_Factory (TAO_MC_Default_Factory const &) = delete;
+  TAO_MC_Default_Factory (TAO_MC_Default_Factory &&) = delete;
+  TAO_MC_Default_Factory &operator= (TAO_MC_Default_Factory const &) = delete;
+  TAO_MC_Default_Factory &operator= (TAO_MC_Default_Factory &&) = delete;
+
   /// Instruct the compiler that we want the create
   /// methods from the base class as well
   using TAO_Notify_Default_Factory::create;
 
   /// Create the channel factory.
   void create (TAO_Notify_EventChannelFactory*& factory,
-               const char* name) override;
+               char const *name) override;
 
   /// Create the event channel
   void create (TAO_Notify_EventChannel*& ec,
-               const char* name) override;
+               char const *name) override;
 
   /// Create the supplier admin
   void create (TAO_Notify_SupplierAdmin*& admin) override;
