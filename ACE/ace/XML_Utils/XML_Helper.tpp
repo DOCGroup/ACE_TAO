@@ -26,7 +26,6 @@ namespace XML
   using xercesc::DOMDocumentType;
   using xercesc::XercesDOMParser;
 
-  // TODO this is stub implementation
   template <typename Resolver, typename Error>
   XML_Helper<Resolver, Error>::XML_Helper (Resolver *resolver, Error *eh)
     : resolver_ (resolver),
