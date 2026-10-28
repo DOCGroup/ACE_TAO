@@ -94,7 +94,7 @@ struct TAO_IDL_FE_Export FE_Utils
                       char const *& directory);
 
   static bool
-  is_include_file_found (ACE_CString & inc_file,
+  is_include_file_found (std::string &inc_file,
                          UTL_String * idl_file_name);
 
   /// Validate the included idl files, somefiles might have been

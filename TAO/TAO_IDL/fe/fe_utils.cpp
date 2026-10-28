@@ -513,8 +513,7 @@ FE_Utils::open_included_file (char const * filename,
                               char const *& directory)
 {
   FILE * f = nullptr;
-  ACE_CString const the_file (ACE_CString ('/')
-                              + ACE_CString (filename));
+  std::string const the_file = std::string ("/") + filename;
 
   for (IDL_GlobalData::Unbounded_Paths_Queue_Iterator i (
          idl_global->include_paths ());
@@ -526,8 +525,8 @@ FE_Utils::open_included_file (char const * filename,
 
       if (path_info->path_ != nullptr)
         {
-          ACE_CString const complete_filename (ACE_CString (path_info->path_)
-                                               + the_file);
+          std::string const complete_filename =
+            std::string (path_info->path_) + the_file;
 
           f = ACE_OS::fopen (complete_filename.c_str (), "r");
 
@@ -540,7 +539,7 @@ FE_Utils::open_included_file (char const * filename,
 }
 
 bool
-FE_Utils::is_include_file_found (ACE_CString & inc_file,
+FE_Utils::is_include_file_found (std::string &inc_file,
                                  UTL_String * idl_file_name)
 {
   char abspath[MAXPATHLEN] = "";
@@ -548,14 +547,11 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
 
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
-  char const *tmp_inc_file = inc_file.c_str ();
-
-  if (tmp_inc_file
-      && FE_Utils::hasspace (tmp_inc_file)
-      && tmp_inc_file[0] == '\"')
+  if (FE_Utils::hasspace (inc_file.c_str ())
+      && !inc_file.empty ()
+      && inc_file[0] == '\"')
     {
-      inc_file =
-        inc_file.substr (1, inc_file.length () - 2);
+      inc_file = inc_file.substr (1, inc_file.length () - 2);
     }
 
   inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
@@ -655,12 +651,12 @@ FE_Utils::validate_included_idl_files ()
                         iter.advance ())
                 {
                   iter.next (path_info);
-                  ACE_CString pre_partial (path_info->path_);
+                  std::string pre_partial (
+                    path_info->path_ != nullptr ? path_info->path_ : "");
 
                   // If the include path has literal "s (because of an include
                   // of a Windows path with spaces), we must remove them here.
-                  if (pre_partial.c_str () &&
-                      2u < pre_partial.length () &&
+                  if (2u < pre_partial.length () &&
                       '"' == pre_partial [0] &&
                       '"' == pre_partial [pre_partial.length () - 1u])
                     {
@@ -743,8 +739,9 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
   {
     // Check in the current folder.
     char abspath[MAXPATHLEN] = "";
-    ACE_CString cwd_path = ACE_OS::getcwd (abspath,
-                                           sizeof (abspath) / sizeof (char));
+    char *cwd = ACE_OS::getcwd (abspath,
+                                sizeof (abspath) / sizeof (char));
+    std::string cwd_path (cwd != nullptr ? cwd : "");
     if (FE_Utils::is_include_file_found (cwd_path, idl_file_name))
       {
         ACE_OS::strcpy (foundpath, cwd_path.c_str ());
@@ -759,7 +756,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
       IDL_GlobalData::Include_Path_Info *path_info = nullptr;
       iter.next (path_info);
 
-      ACE_CString partial = path_info->path_;
+      std::string partial (path_info->path_ != nullptr ? path_info->path_ : "");
 
       // We don't need to check anything if the file is already
       // found and the folder where are currently checking is
