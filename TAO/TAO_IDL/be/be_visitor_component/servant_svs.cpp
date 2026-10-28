@@ -12,6 +12,7 @@
 #include "component.h"
 
 #include <string>
+#include <string_view>
 
 be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -27,10 +28,10 @@ be_visitor_servant_svs::visit_component (be_component *node)
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = node->local_name ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
+  char const * const lname = node->local_name ();
+  char const * const global = (sname_str.empty () ? "" : "::");
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   bool const is_connector = (nt == AST_Decl::NT_connector);
@@ -267,15 +268,15 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   AST_Type *obj = node->provides_type ();
   const char *obj_name = obj->full_name ();
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
 
   // Avoid '_cxx_' prefix.
   const char *lname =
     obj->original_local_name ()->get_string ();
 
-  const char *global = (sname_str == "" ? "" : "::");
-  const char *prefix_connector = (sname_str == "" ? "" : "_");
+  char const * const global = (sname_str.empty () ? "" : "::");
+  char const * const prefix_connector = (sname_str.empty () ? "" : "_");
 
   if (!be_global->gen_lwccm ())
     {
@@ -498,10 +499,10 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   const char *port_name = node->local_name ()->get_string ();
 
   const char *comp_lname = node_->local_name ();
-  ACE_CString comp_sname_str (
+  std::string const comp_sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *comp_sname = comp_sname_str.c_str ();
-  const char *global = (comp_sname_str == "" ? "" : "::");
+  char const * const comp_sname = comp_sname_str.c_str ();
+  char const * const global = (comp_sname_str.empty () ? "" : "::");
 
   const char *lname = obj->local_name ()->get_string ();
   const char *fname = obj->full_name ();
@@ -623,8 +624,9 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "obj_id.c_str ()," << be_nl
       << "\"";
 
-      ACE_CString work (obj->repoID ());
-      ACE_CString result (work.substr (0, work.rfind (':')));
+      char const * const repo_id = obj->repoID ();
+      std::string_view const work (repo_id != nullptr ? repo_id : "");
+      std::string result (work.substr (0, work.rfind (':')));
       result += "Consumer:1.0";
 
       os_ << result.c_str ();
@@ -651,10 +653,9 @@ be_visitor_servant_svs::gen_provides_top ()
       return;
     }
 
-  ACE_CString comp_sname_str (
+  std::string const comp_sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *global = (comp_sname_str == "" ? "" : "::");
-  ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
+  char const * const global = (comp_sname_str.empty () ? "" : "::");
 
   os_ << be_nl_2
       << "/// CIAO-specific." << be_nl
@@ -669,9 +670,9 @@ be_visitor_servant_svs::gen_provides_top ()
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt << be_nl_2;
 
-  os_ << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+  os_ << "::" << comp_sname_str << global << "CCM_" << node_->original_local_name ()
       << "_var executor = " << be_idt_nl
-      << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+      << "::" << comp_sname_str << global << "CCM_" << node_->original_local_name ()
       << "::_duplicate (this->executor_.in ());" << be_uidt << be_nl_2;
 
   os_ << "if (::CORBA::is_nil (executor.in ()))"
@@ -1291,10 +1292,10 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
 
   os_ << be_nl_2;
 
-  ACE_CString sname_str (comp_->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (comp_->full_name ());
+  char const * const sname = sname_str.c_str ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  char const * const global = (sname_str.empty () ? "" : "::");
 
   if (!is_multiple)
     {
