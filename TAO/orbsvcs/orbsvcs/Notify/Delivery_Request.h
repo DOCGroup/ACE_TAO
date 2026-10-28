@@ -117,7 +117,7 @@ private:
 private:
   Routing_Slip_Ptr routing_slip_;
   size_t request_id_;
-  ACE_CDR::Octet delivery_type_;
+  ACE_CDR::Octet delivery_type_ {};
   IdVec destination_id_;
 };
 } // namespace

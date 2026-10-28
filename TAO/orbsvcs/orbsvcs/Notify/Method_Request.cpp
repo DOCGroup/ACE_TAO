@@ -13,9 +13,7 @@ TAO_Notify_Method_Request_Queueable::copy ()
   return this;
 }
 
-TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable()
-{
-}
+TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable () = default;
 
 TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event)
 {

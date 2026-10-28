@@ -62,7 +62,7 @@ protected:
   int execute_i ();
 
   ///= TAO_ESF_Worker method
-  virtual void work (TAO_Notify_ProxySupplier* proxy_supplier);
+  void work (TAO_Notify_ProxySupplier* proxy_supplier) override;
 
 protected:
   /// The Proxy

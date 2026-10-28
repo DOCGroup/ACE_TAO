@@ -60,7 +60,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
   if (this->proxy_supplier_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
 
-  if (this->filtering_ == 1)
+  if (this->filtering_)
     {
       TAO_Notify_Admin& parent = this->proxy_supplier_->consumer_admin ();
       CORBA::Boolean const val = this->proxy_supplier_->check_filters (this->event_,
