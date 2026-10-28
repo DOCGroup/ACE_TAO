@@ -194,82 +194,95 @@ UTL_String::get_canonical_rep (std::string &str)
 //////////////////////////////////////////////////////////////////////
 
 UTL_String::UTL_String ()
-  : copy_taken (false),
-    p_str      (nullptr),
-    c_str      (nullptr)
+  : string_ (),
+    has_string_ (false)
 {
 }
 
 UTL_String::UTL_String (char const* str, bool take_copy)
-  : copy_taken (str != nullptr ? take_copy : false),
-    p_str      (this->copy_taken ? ACE::strnew (str)
-                                 : const_cast<char *>(str)),
-    c_str      (nullptr)
+  : string_ (str != nullptr ? str : ""),
+    has_string_ (str != nullptr)
 {
+  if (this->has_string_ && take_copy)
+    {
+      this->owned_string_.emplace (str);
+      this->string_ = *this->owned_string_;
+    }
 }
 
 UTL_String::UTL_String (UTL_String *s, bool force_copy)
-  : copy_taken (force_copy ? true : s->copy_taken),
-    p_str      (this->copy_taken ? ACE::strnew (s->p_str)
-                                 : const_cast<char *> (s->p_str)),
-    c_str      (nullptr)
+  : string_ (s->string_),
+    has_string_ (s->has_string_)
 {
+  if (this->has_string_ && (force_copy || s->owned_string_))
+    {
+      this->owned_string_.emplace (s->string_);
+      this->string_ = *this->owned_string_;
+    }
 }
 
-UTL_String::~UTL_String ()
+UTL_String::~UTL_String () = default;
+
+char *
+UTL_String::get_string () const
 {
-  delete [] this->c_str;
-  if (copy_taken)
-    {
-      ACE::strdelete (this->p_str);
-    }
+  return this->has_string_ ? const_cast<char *> (this->string_.data ()) : nullptr;
+}
+
+std::string_view
+UTL_String::get_string_view () const
+{
+  return this->has_string_ ? this->string_ : std::string_view ();
+}
+
+bool
+UTL_String::has_string () const
+{
+  return this->has_string_;
 }
 
 void
 UTL_String::destroy ()
 {
-  delete [] this->c_str;
-  this->c_str = nullptr;
-  if (this->copy_taken)
-    {
-       ACE::strdelete (this->p_str);
-       this->copy_taken = false;
-    }
-  this->p_str = nullptr;
+  this->canonical_string_.reset ();
+  this->owned_string_.reset ();
+  this->string_ = std::string_view ();
+  this->has_string_ = false;
 }
 
 // Compare two UTL_String *.
 bool
 UTL_String::compare (UTL_String *s)
 {
-  return (this->p_str != nullptr && s != nullptr && s->get_string () != nullptr &&
-          compare (this->p_str, s->get_string ()));
+  return (this->has_string_ && s != nullptr && s->has_string () &&
+          compare (this->string_.data (), s->string_.data ()));
 }
 
 bool
 UTL_String::compare_quiet (UTL_String *s)
 {
-  return (this->p_str != nullptr && s != nullptr && s->get_string () != nullptr &&
-          compare_quiet (this->p_str, s->get_string ()));
+  return (this->has_string_ && s != nullptr && s->has_string () &&
+          compare_quiet (this->string_.data (), s->string_.data ()));
 }
 
 // Get the canonical representation from a String.
 char *
 UTL_String::get_canonical_rep ()
 {
-  if (this->c_str == nullptr && this->p_str != nullptr)
+  if (!this->canonical_string_ && this->has_string_)
     {
-      get_canonical_rep (
-        this->p_str,
-        this->c_str = new char [ACE_OS::strlen (this->p_str)+1]);
+      this->canonical_string_.emplace (this->string_);
+      get_canonical_rep (*this->canonical_string_);
     }
 
-  return this->c_str;
+  return this->canonical_string_
+    ? const_cast<char *> (this->canonical_string_->data ())
+    : nullptr;
 }
 
 // AST Dumping.
 void
 UTL_String::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << this->p_str;
+  o << (this->has_string_ ? this->string_.data () : "");
 }

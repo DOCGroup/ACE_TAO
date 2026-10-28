@@ -65,7 +65,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _STRING_STRING_HH
 #define _STRING_STRING_HH
 
+#include <optional>
 #include <string>
+#include <string_view>
 
 #include "TAO_IDL_FE_Export.h"
 
@@ -100,8 +102,14 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
-  char *get_string () const {return this->p_str;}
+  char *get_string () const;
   // Get contents of utl_string.
+
+  std::string_view get_string_view () const;
+  // Get contents of utl_string, or an empty view when there is no string.
+
+  bool has_string () const;
+  // Check whether this string has a value, including an empty string.
 
   char *get_canonical_rep ();
   // Get canonical representation. This is (implemented as) the all upper
@@ -140,14 +148,10 @@ public:
 
 private:
   // Data
-  bool copy_taken;
-  // If delete needs to be called on destroy/delete
-
-  char *p_str;
-  // Storage for characters.
-
-  char *c_str;
-  // Storage for canonicalized string.
+  std::optional<std::string> owned_string_;
+  std::string_view string_;
+  bool has_string_ {};
+  std::optional<std::string> canonical_string_;
 };
 
 #endif           // _STRING_STRING_HH
