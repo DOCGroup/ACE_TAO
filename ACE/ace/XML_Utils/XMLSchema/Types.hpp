@@ -30,7 +30,6 @@ namespace XMLSchema
   using unsignedLong = XSCRT::FundamentalType<ACE_UINT64>;
 
   //@@ It would be nice to use some arbitrary-length integer class.
-  //
   using decimal = long_;
   using integer = decimal;
   using nonPositiveInteger = integer;

@@ -42,12 +42,35 @@ namespace XML
   }
 
   template <typename Resolver, typename Error>
+  void XML_Helper<Resolver, Error>::cleanup_parser (bool runtime_started)
+  {
+    impl_ = nullptr;
+    if (runtime_started)
+      xercesc::XMLPlatformUtils::Terminate ();
+
+    if (release_resolver_)
+    {
+      delete resolver_;
+      resolver_ = nullptr;
+      release_resolver_ = false;
+    }
+
+    if (release_e_handler_)
+    {
+      delete e_handler_;
+      e_handler_ = nullptr;
+      release_e_handler_ = false;
+    }
+  }
+
+  template <typename Resolver, typename Error>
   void XML_Helper<Resolver, Error>::init_parser ()
   {
     if (this->initialized_)
       return;
 
     bool runtime_started (false);
+
     try
     {
       if (!resolver_)
@@ -80,41 +103,13 @@ namespace XML
       std::unique_ptr<char[]> cleanup_message (message);
       ACELIB_ERROR ((LM_ERROR, "Caught Xerces exception while initializing XML parser: %C\n",
                      message != nullptr ? message : "Unable to transcode Xerces exception"));
-      impl_ = nullptr;
-      if (runtime_started)
-        xercesc::XMLPlatformUtils::Terminate ();
-      if (release_resolver_)
-      {
-        delete resolver_;
-        resolver_ = nullptr;
-        release_resolver_ = false;
-      }
-      if (release_e_handler_)
-      {
-        delete e_handler_;
-        e_handler_ = nullptr;
-        release_e_handler_ = false;
-      }
+      this->cleanup_parser (runtime_started);
       throw;
     }
     catch (...)
     {
       ACELIB_DEBUG ((LM_DEBUG, "Caught an unknown exception while initializing XML parser\n"));
-      impl_ = nullptr;
-      if (runtime_started)
-        xercesc::XMLPlatformUtils::Terminate ();
-      if (release_resolver_)
-      {
-        delete resolver_;
-        resolver_ = nullptr;
-        release_resolver_ = false;
-      }
-      if (release_e_handler_)
-      {
-        delete e_handler_;
-        e_handler_ = nullptr;
-        release_e_handler_ = false;
-      }
+      this->cleanup_parser (runtime_started);
       throw;
     }
   }

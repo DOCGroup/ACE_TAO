@@ -26,9 +26,6 @@ namespace XSCRT
     template <typename C>
     XMLCh *transcode (std::basic_string<C> const &s);
 
-    //
-    //
-    //
     class string
     {
     public:

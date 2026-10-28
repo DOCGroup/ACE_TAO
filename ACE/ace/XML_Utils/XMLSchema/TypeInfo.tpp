@@ -18,7 +18,6 @@ namespace XMLSchema
   inline TypeInfoInitializer<C>::TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &map)
   {
     // XSCRT::Type
-    //
     {
       XSCRT::TypeId const id (typeid (XSCRT::Type));
       map.insert (std::make_pair (id, XSCRT::ExtendedTypeInfo (id)));
@@ -53,7 +52,6 @@ namespace XMLSchema
     add_info<ID<C>, NCName<C>> (map, nullptr);
 
     // IDREF_Base
-    //
     {
       XSCRT::TypeId const id (typeid (IDREF_Base));
       XSCRT::ExtendedTypeInfo info (id);
@@ -64,7 +62,6 @@ namespace XMLSchema
     }
 
     // IDREF
-    //
     {
       XSCRT::TypeId const id (typeid (IDREF<C>));
       XSCRT::ExtendedTypeInfo info (id);

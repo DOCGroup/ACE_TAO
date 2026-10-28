@@ -10,9 +10,6 @@
 
 namespace XSCRT
 {
-  //
-  //
-  //
   class TypeId
   {
   public:

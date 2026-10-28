@@ -21,7 +21,6 @@ namespace XSCRT
 
   protected:
     // This c-tor should never be called.
-    //
     Writer ()
     {
       abort ();

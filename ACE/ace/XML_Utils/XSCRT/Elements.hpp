@@ -111,7 +111,6 @@ namespace XSCRT
         return;
 
       // Revoke registrations from our old container.
-      //
       if (container_ != nullptr && map_.get ())
       {
         for (Map_::value_type const &entry : *map_)
@@ -124,7 +123,6 @@ namespace XSCRT
       }
 
       // Copy registrations to our new container.
-      //
       if (c != nullptr && map_)
       {
         for (Map_::value_type const &entry : *map_)

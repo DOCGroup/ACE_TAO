@@ -22,7 +22,6 @@ namespace XMLSchema
   using unsignedLong = XSCRT::FundamentalType<unsigned long long>;
 
   //@@ It would be nice to use some arbitrary-length integer class.
-  //
   using decimal = long_;
   using integer = decimal;
   using nonPositiveInteger = integer;
@@ -480,7 +479,6 @@ namespace XMLSchema
 }
 
 // Traversal
-//
 
 #include "ace/XML_Utils/XSCRT/Traversal.hpp"
 
@@ -532,7 +530,6 @@ namespace XMLSchema
 }
 
 // ExtendedTypeInfo for XML Schema types
-//
 
 #include "ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp"
 

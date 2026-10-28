@@ -78,6 +78,8 @@ namespace XML
     void init_parser ();
 
   private:
+    void cleanup_parser (bool runtime_started);
+
     bool initialized_{};
     XERCES_CPP_NAMESPACE::DOMImplementation *impl_{};
     mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_{};
