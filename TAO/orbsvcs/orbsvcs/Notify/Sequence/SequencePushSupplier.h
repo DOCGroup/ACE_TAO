@@ -36,17 +36,22 @@ public:
   /// Destructor
   ~TAO_Notify_SequencePushSupplier () override = default;
 
+  TAO_Notify_SequencePushSupplier (TAO_Notify_SequencePushSupplier const &) = delete;
+  TAO_Notify_SequencePushSupplier (TAO_Notify_SequencePushSupplier &&) = delete;
+  TAO_Notify_SequencePushSupplier &operator= (TAO_Notify_SequencePushSupplier const &) = delete;
+  TAO_Notify_SequencePushSupplier &operator= (TAO_Notify_SequencePushSupplier &&) = delete;
+
   /// Init
   void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier);
 
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release ();
+  void release () override;
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior () const;
+  ACE_CString get_ior () const override;
 
 protected:
-  virtual CORBA::Object_ptr get_supplier ();
+  CORBA::Object_ptr get_supplier () override;
 
  /// The Supplier
   CosNotifyComm::SequencePushSupplier_var push_supplier_;

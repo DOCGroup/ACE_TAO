@@ -50,26 +50,29 @@ public:
   /// Destructor
   ~TAO_Notify_SequenceProxyPushSupplier () override = default;
 
+  TAO_Notify_SequenceProxyPushSupplier (TAO_Notify_SequenceProxyPushSupplier const &) = delete;
+  TAO_Notify_SequenceProxyPushSupplier (TAO_Notify_SequenceProxyPushSupplier &&) = delete;
+  TAO_Notify_SequenceProxyPushSupplier &operator= (TAO_Notify_SequenceProxyPushSupplier const &) = delete;
+  TAO_Notify_SequenceProxyPushSupplier &operator= (TAO_Notify_SequenceProxyPushSupplier &&) = delete;
 
-  virtual const char * get_proxy_type_name () const;
 
-  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
-  virtual void validate ();
+  char const * get_proxy_type_name () const override;
+
+  void load_attrs (TAO_Notify::NVPList const &attrs) override;
+  void validate () override;
 
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
   /// = Servant methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType ();
+  CosNotifyChannelAdmin::ProxyType MyType () override;
 
-  virtual void connect_sequence_push_consumer (
-    CosNotifyComm::SequencePushConsumer_ptr push_consumer
-  );
+  void connect_sequence_push_consumer (
+    CosNotifyComm::SequencePushConsumer_ptr push_consumer) override;
 
-  virtual void disconnect_sequence_push_supplier (
-  );
+  void disconnect_sequence_push_supplier () override;
 
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release ();
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
