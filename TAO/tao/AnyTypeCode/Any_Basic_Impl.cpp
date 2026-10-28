@@ -235,7 +235,7 @@ namespace TAO
       case CORBA::tk_wchar:
         return cdr >> CORBA::Any::to_wchar (this->u_.wc);
       default:
-        return 0;
+        return false;
     }
   }
 
