@@ -49,9 +49,9 @@ namespace XML
 
   XMLCh *Environment_Resolver::operator() (const XMLCh *const, const XMLCh *const systemId) const
   {
-    for (std::vector<XStr>::const_iterator i = this->paths_.begin (); i != this->paths_.end (); ++i)
+    for (XStr const &path_prefix : this->paths_)
     {
-      XStr path (*i);
+      XStr path (path_prefix);
       if (!path.append (systemId))
         continue;
 
