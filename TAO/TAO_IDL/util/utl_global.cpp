@@ -863,8 +863,7 @@ IDL_GlobalData::destroy ()
   delete [] this->included_idl_files_;
   this->included_idl_files_ = nullptr;
 
-  ACE::strdelete (this->recursion_start_);
-  this->recursion_start_ = nullptr;
+  this->recursion_start_.reset ();
 
   // Reset the member of the CORBA module containing the basic types
   // to point to itself, since all the other CORBA modules (if any)
@@ -1540,30 +1539,30 @@ IDL_GlobalData::check_primary_keys ()
     }
 }
 
-char const *
+std::optional<std::string_view>
 IDL_GlobalData::recursion_start () const
 {
-  return this->recursion_start_;
+  if (!this->recursion_start_)
+    {
+      return std::nullopt;
+    }
+
+  return std::string_view (*this->recursion_start_);
 }
 
 void
-IDL_GlobalData::recursion_start (char const *val)
+IDL_GlobalData::recursion_start (std::string_view val)
 {
-  ACE::strdelete (this->recursion_start_);
-
   /// Strip off any trailing slashes (not needed
   /// for further processing).
-  ACE_CString tmp (val);
-  ACE_CString::size_type len = tmp.length ();
-  ACE_TCHAR c = tmp[len - 1];
+  std::string path (val);
 
-  while (c == '\\' || c == '/')
+  while (path.size () > 1 && (path.back () == '\\' || path.back () == '/'))
     {
-      tmp = tmp.substr (0, --len);
-      c = tmp[len - 1];
+      path.pop_back ();
     }
 
-  this->recursion_start_ = ACE::strnew (tmp.c_str ());
+  this->recursion_start_ = path;
 }
 
 bool

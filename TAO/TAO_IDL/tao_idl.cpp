@@ -400,7 +400,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // If there are no input files, and we are not using the
       // directory recursion option, there's no sense going any further.
-      if (0 == DRV_nfiles && nullptr == idl_global->recursion_start ())
+      if (0 == DRV_nfiles && !idl_global->recursion_start ())
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: No input files\n")));

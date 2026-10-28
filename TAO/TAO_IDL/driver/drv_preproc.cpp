@@ -64,6 +64,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
+#include <optional>
+#include <string_view>
 
 #include "idl_defines.h"
 #include "global_extern.h"
@@ -746,11 +748,14 @@ DRV_cpp_post_init ()
   // If first arg is non-zero, adds an include path and filename
   // for every IDL file found in all subdirectories. This is a
   // no-op for most backends.
-  if (DRV_sweep_dirs (idl_global->recursion_start (), "") == -1)
+  std::optional<std::string_view> const recursion_start =
+    idl_global->recursion_start ();
+
+  if (recursion_start && DRV_sweep_dirs (recursion_start->data (), "") == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "DRV_cpp_post_init: DRV_sweep_dirs (%C) failed\n",
-                  idl_global->recursion_start ()));
+                  recursion_start->data ()));
 
       throw Bailout ();
     }

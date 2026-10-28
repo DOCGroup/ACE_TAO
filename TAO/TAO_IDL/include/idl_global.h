@@ -65,6 +65,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_IDL_GLOBAL_HH
 #define _IDL_IDL_GLOBAL_HH
 
+#include <optional>
 #include <string>
 #include <string_view>
 
@@ -636,8 +637,8 @@ public:
   // be sure that all forward declared stucts or unions that
   // might be used in such a valuetype are fully defined.
 
-  char const *recursion_start () const;
-  void recursion_start (char const *val);
+  std::optional<std::string_view> recursion_start () const;
+  void recursion_start (std::string_view val);
   // Accessors for the member.
 
   bool multi_file_input () const;
@@ -1007,7 +1008,7 @@ private:
   ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
   // List of valuetypes used as a primary key.
 
-  char *recursion_start_ {};
+  std::optional<std::string> recursion_start_;
   // Path to directory subtree we are iterating/recursing over.
   // Not used by all backends.
 
