@@ -189,6 +189,7 @@ namespace XML
 
         this->parser_->setEntityResolver (resolver_);
 
+        e_handler_->resetErrors ();
         this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
 
         if (e_handler_ && e_handler_->getErrors ())
@@ -215,7 +216,9 @@ namespace XML
       {
         char* message = XMLString::transcode (e.getMessage());
         std::unique_ptr<char[]> cleanup_message (message);
-        throw 0;
+        throw std::runtime_error (message != nullptr
+                                  ? message
+                                  : "Xerces XML parsing failed");
       }
     catch (...)
       {
@@ -235,6 +238,8 @@ namespace XML
 
     try
       {
+        this->parser_.reset (nullptr);
+
         if (release_resolver_)
           {
             delete resolver_;
@@ -247,7 +252,6 @@ namespace XML
             e_handler_ = nullptr;
           }
 
-        this->parser_.reset (nullptr);
         this->impl_ = nullptr;
         xercesc::XMLPlatformUtils::Terminate();
       }

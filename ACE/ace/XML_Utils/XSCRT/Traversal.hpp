@@ -4,6 +4,7 @@
 #define XSCRT_TRAVERSAL_HPP
 
 #include <map>
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -39,7 +40,7 @@ namespace XSCRT
       map (TypeId id, TraverserBase<B>& t)
       {
         Traversers& traversers = traversal_map_[id];
-        traversers.push_back (&t);
+        traversers.push_back (std::addressof (t));
       }
 
     public:

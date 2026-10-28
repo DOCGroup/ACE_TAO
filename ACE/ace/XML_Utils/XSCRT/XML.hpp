@@ -6,6 +6,10 @@
 
 #include <string>
 #include <algorithm>
+#include <cstdint>
+#include <memory>
+#include <new>
+#include <stdexcept>
 #include <type_traits>
 #include <utility>
 
@@ -57,7 +61,7 @@ namespace XSCRT
 
       string& operator= (string const& s)
       {
-        if (this != &s)
+        if (this != std::addressof (s))
         {
           XMLCh* p (copy (s.s_));
           release ();
@@ -69,7 +73,7 @@ namespace XSCRT
 
       string& operator= (string&& s) noexcept
       {
-        if (this != &s)
+        if (this != std::addressof (s))
         {
           release ();
           s_ = s.s_;
@@ -103,7 +107,7 @@ namespace XSCRT
       void release () noexcept
       {
         if (xerces_allocated_)
-          xercesc::XMLString::release (&s_);
+          xercesc::XMLString::release (std::addressof (s_));
         else
           delete[] s_;
         s_ = nullptr;
@@ -122,10 +126,12 @@ namespace XSCRT
       if (s == nullptr) return std::basic_string<char> ();
 
       char* buf = xercesc::XMLString::transcode (s);
+      if (buf == nullptr)
+        throw std::bad_alloc ();
 
       std::basic_string<char> r (buf);
 
-      xercesc::XMLString::release (&buf);
+      xercesc::XMLString::release (std::addressof (buf));
 
       return r;
     }
@@ -137,16 +143,39 @@ namespace XSCRT
     {
       if (s == nullptr) return std::basic_string<wchar_t> ();
 
-      // std::wcerr << s << std::endl;
+      std::basic_string<wchar_t> result;
+      std::size_t const length (xercesc::XMLString::stringLen (s));
+      result.reserve (length);
 
-      std::basic_string<wchar_t> r (xercesc::XMLString::stringLen (s), L'0');
-
-      for (std::size_t i (0); *s != XMLCh (0); ++s, ++i)
+      for (std::size_t i (0); i < length; ++i)
       {
-        r[i] = *s;
+        std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
+
+        if (code_point >= 0xD800 && code_point <= 0xDBFF)
+        {
+          if (++i == length)
+            throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+
+          std::uint32_t const low (static_cast<std::uint32_t> (s[i]));
+          if (low < 0xDC00 || low > 0xDFFF)
+            throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+
+          code_point = 0x10000 + ((code_point - 0xD800) << 10) + (low - 0xDC00);
+        }
+        else if (code_point >= 0xDC00 && code_point <= 0xDFFF)
+          throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+
+        if (sizeof (wchar_t) == 2 && code_point > 0xFFFF)
+        {
+          code_point -= 0x10000;
+          result.push_back (static_cast<wchar_t> (0xD800 + (code_point >> 10)));
+          result.push_back (static_cast<wchar_t> (0xDC00 + (code_point & 0x3FF)));
+        }
+        else
+          result.push_back (static_cast<wchar_t> (code_point));
       }
 
-      return r;
+      return result;
     }
 
     template <>
@@ -162,13 +191,60 @@ namespace XSCRT
     XMLCh*
     transcode (std::basic_string<wchar_t> const& s)
     {
-      std::size_t const length (s.length ());
-      XMLCh* const result (new XMLCh[length + 1]);
-      std::transform (s.begin (), s.end (), result,
-                      [] (wchar_t c) { return static_cast<XMLCh> (c); });
-      result[length] = XMLCh {};
+      std::unique_ptr<XMLCh[]> result (new XMLCh[s.length () * 2 + 1]);
+      std::size_t out (0);
 
-      return result;
+      for (std::size_t i (0); i < s.length (); ++i)
+      {
+        std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
+
+        if (sizeof (wchar_t) == 2)
+        {
+          if (code_point >= 0xD800 && code_point <= 0xDBFF)
+          {
+            if (++i == s.length ())
+            {
+              throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+            }
+
+            std::uint32_t const low (static_cast<std::uint32_t> (s[i]));
+            if (low < 0xDC00 || low > 0xDFFF)
+            {
+              throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+            }
+
+            result[out++] = static_cast<XMLCh> (code_point);
+            result[out++] = static_cast<XMLCh> (low);
+            continue;
+          }
+          if (code_point >= 0xDC00 && code_point <= 0xDFFF)
+          {
+            throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+          }
+        }
+        else if (code_point >= 0xD800 && code_point <= 0xDFFF)
+        {
+          throw std::invalid_argument ("Invalid Unicode code point");
+        }
+
+        if (code_point > 0x10FFFF)
+        {
+          throw std::invalid_argument ("Invalid Unicode code point");
+        }
+
+        if (code_point > 0xFFFF)
+        {
+          code_point -= 0x10000;
+          result[out++] = static_cast<XMLCh> (0xD800 + (code_point >> 10));
+          result[out++] = static_cast<XMLCh> (0xDC00 + (code_point & 0x3FF));
+        }
+        else
+          result[out++] = static_cast<XMLCh> (code_point);
+      }
+
+      result[out] = XMLCh {};
+
+      return result.release ();
     }
 
 
@@ -192,6 +268,18 @@ namespace XSCRT
 
     template <>
     struct dom_traits<xercesc::DOMAttr *>
+    {
+      static const xercesc::DOMNode::NodeType node_type = xercesc::DOMNode::ATTRIBUTE_NODE;
+    };
+
+    template <>
+    struct dom_traits<xercesc::DOMElement const*>
+    {
+      static const xercesc::DOMNode::NodeType node_type = xercesc::DOMNode::ELEMENT_NODE;
+    };
+
+    template <>
+    struct dom_traits<xercesc::DOMAttr const*>
     {
       static const xercesc::DOMNode::NodeType node_type = xercesc::DOMNode::ATTRIBUTE_NODE;
     };
@@ -279,7 +367,13 @@ namespace XSCRT
       Element<C>
       parent () const
       {
-        return dom_cast <xercesc::DOMElement const*>(ce_->getParentNode ());
+        xercesc::DOMElement const* const parent (
+          dom_cast <xercesc::DOMElement const*> (ce_->getParentNode ()));
+
+        if (parent == nullptr)
+          throw std::out_of_range ("DOM element has no element parent");
+
+        return Element<C> (parent);
       }
 
     public:
@@ -318,6 +412,9 @@ namespace XSCRT
       xercesc::DOMElement*
       dom_element ()
       {
+        if (e_ == nullptr)
+          throw std::logic_error ("DOM element is read-only");
+
         return e_;
       }
 
@@ -409,6 +506,9 @@ namespace XSCRT
       void
       value (string_ const& v)
       {
+        if (a_ == nullptr)
+          throw std::logic_error ("DOM attribute is read-only");
+
         value_ = v;
         a_->setValue (string (v).c_str ());
       }
@@ -423,6 +523,9 @@ namespace XSCRT
       xercesc::DOMAttr*
       dom_attribute ()
       {
+        if (a_ == nullptr)
+          throw std::logic_error ("DOM attribute is read-only");
+
         return a_;
       }
 

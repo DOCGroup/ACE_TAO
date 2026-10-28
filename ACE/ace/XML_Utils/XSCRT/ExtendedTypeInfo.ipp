@@ -20,7 +20,7 @@ namespace XSCRT
   inline
   TypeId::
   TypeId (std::type_info const& tid)
-      : tid_ (&tid)
+      : tid_ (std::addressof (tid))
   {
   }
 
@@ -59,9 +59,7 @@ namespace XSCRT
   ExtendedTypeInfo const& ExtendedTypeInfo::BaseInfo::
   type_info () const
   {
-    if (ti_ == nullptr) ti_ = &(extended_type_info (tid_));
-
-    return *ti_;
+    return extended_type_info (tid_);
   }
 
 

@@ -9,6 +9,7 @@
 #include "ace/SString.h"
 
 #include <iostream>
+#include <new>
 
 namespace XML
 {
@@ -22,7 +23,9 @@ namespace XML
                               const XMLCh *const systemId) const
   {
     XStr path (path_);
-    path.append (systemId);
+    if (!path.append (systemId))
+      return nullptr;
+
     return path.release ();
   }
 
@@ -44,7 +47,8 @@ namespace XML
     XStr xpath (static_cast<ACE_TString>(path_env).c_str());
     XStr xrelpath (relpath);
 
-    xpath.append (xrelpath);
+    if (!xpath.append (xrelpath))
+      throw std::bad_alloc ();
 
     paths_.push_back (xpath);
   }
@@ -58,7 +62,8 @@ namespace XML
           ++i)
       {
         XStr path (*i);
-        path.append(systemId);
+        if (!path.append (systemId))
+          continue;
 
         FileHandle file (XMLPlatformUtils::openFile (path));
 

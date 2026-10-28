@@ -4,6 +4,7 @@
 #define XSCRT_ELEMENTS_HPP
 
 #include <map>
+#include <memory>
 #include <string>
 #include <sstream>
 #include <stdexcept>
@@ -164,9 +165,9 @@ namespace XSCRT
         map_ = std::unique_ptr<Map_> (new Map_);
       }
 
-      if (!map_->insert (std::pair<IdentityProvider const*, Type*> (&id, t)).second)
+      if (!map_->insert (std::pair<IdentityProvider const*, Type*> (std::addressof (id), t)).second)
       {
-        throw 1;
+        throw std::logic_error ("XML ID is already registered");
       }
 
       if (container () != this) container ()->register_id (id, t);
@@ -177,7 +178,7 @@ namespace XSCRT
     {
       if (map_.get ())
       {
-        Map_::iterator it (map_->find (&id));
+        Map_::iterator it (map_->find (std::addressof (id)));
 
         if (it != map_->end ())
         {
@@ -189,7 +190,7 @@ namespace XSCRT
         }
       }
 
-      throw 1;
+      throw std::logic_error ("XML ID is not registered");
     }
 
     Type*
@@ -197,7 +198,7 @@ namespace XSCRT
     {
       if (map_.get ())
       {
-        Map_::const_iterator it (map_->find (&id));
+        Map_::const_iterator it (map_->find (std::addressof (id)));
 
         if (it != map_->end ())
         {

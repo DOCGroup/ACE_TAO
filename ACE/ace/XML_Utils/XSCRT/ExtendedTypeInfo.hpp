@@ -4,6 +4,7 @@
 #define XSCRT_EXTENDED_TYPE_INFO_HPP
 
 #include <map>
+#include <memory>
 #include <vector>
 #include <typeinfo>
 
@@ -76,7 +77,6 @@ namespace XSCRT
 
     private:
       TypeId tid_;
-      mutable ExtendedTypeInfo const* ti_ {};
       bool virtual_base_;
       Access::Value access_;
     };

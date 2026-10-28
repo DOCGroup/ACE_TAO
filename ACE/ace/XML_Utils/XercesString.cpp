@@ -1,5 +1,6 @@
 #include <ostream>
 #include <algorithm>
+#include <memory>
 
 #include "XercesString.h"
 #include "xercesc/util/PlatformUtils.hpp"
@@ -36,7 +37,7 @@ namespace XML
 
   XStr& XStr::operator= (const XStr& rhs)
   {
-    if (&rhs == this)
+    if (std::addressof (rhs) == this)
       return *this;
     XStr temp (rhs);
     std::swap (this->_wstr, temp._wstr);
@@ -55,13 +56,16 @@ namespace XML
 
   const XMLCh* XStr::end () const
   {
-    return _wstr + size();
+    return _wstr == nullptr ? nullptr : _wstr + size ();
   }
 
   bool XStr::append(const XMLCh *tail)
   {
+    if (tail == nullptr)
+      return false;
+
     XMLSize_t iTailLen = XMLString::stringLen(tail);
-    XMLSize_t iWorkLen = XMLString::stringLen(_wstr);
+    XMLSize_t iWorkLen = _wstr == nullptr ? 0 : XMLString::stringLen(_wstr);
 
     XMLSize_t bytes = (iWorkLen + iTailLen + 1) * sizeof (XMLCh);
     void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
@@ -71,12 +75,13 @@ namespace XML
     if (bOK)
       {
         XMLCh *target = result;
-        XMLString::moveChars(target, _wstr, iWorkLen);
+        if (iWorkLen != 0)
+          XMLString::moveChars(target, _wstr, iWorkLen);
         target += iWorkLen;
         XMLString::moveChars(target, tail, iTailLen);
         target += iTailLen;
         *target++ = 0;
-        XMLString::release(&_wstr);
+        XMLString::release (std::addressof (_wstr));
         _wstr = result;
       }
     return bOK;
@@ -101,7 +106,7 @@ namespace XML
             cursor = tail;
             while ( cursor != end() ) *target++ = *cursor++;
             *target ++ = 0;
-            XMLString::release(&_wstr);
+            XMLString::release (std::addressof (_wstr));
             _wstr = result;
           }
       }
@@ -110,6 +115,9 @@ namespace XML
 
   int XStr::size () const
   {
+    if (_wstr == nullptr)
+      return 0;
+
     return ACE_Utils::truncate_cast<int> (XMLString::stringLen(_wstr));
   }
 
@@ -134,7 +142,7 @@ namespace XML
   XStr::reset ()
   {
     if (_wstr)
-      XMLString::release(&_wstr);
+      XMLString::release (std::addressof (_wstr));
     _wstr = nullptr;
   }
 
@@ -156,7 +164,7 @@ namespace XML
 
     o << s;
 
-    XMLString::release (&s); // idiots?
+    XMLString::release (std::addressof (s)); // idiots?
     return o;
   }
 
