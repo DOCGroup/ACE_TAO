@@ -76,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
+#include <string_view>
+
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
   : COMMON_Base (),
@@ -286,8 +288,9 @@ AST_Type::nested_name (const char* local_name,
     || ((this->node_type () == AST_Decl::NT_pre_defined
         && ACE_OS::strcmp (this->flat_name (), "CORBA_TypeCode") == 0));
 
-  ACE_CString fname (this->full_name ());
-  bool corba_type = fname.find ("CORBA::") == 0;
+  char const *name_text = this->full_name ();
+  std::string_view const fname (name_text != nullptr ? name_text : "");
+  bool const corba_type = fname.find ("CORBA::") == 0;
 
   if (in_root && corba_type)
     {

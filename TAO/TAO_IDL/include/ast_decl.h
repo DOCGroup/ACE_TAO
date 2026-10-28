@@ -66,6 +66,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_DECL_AST_DECL_HH
 #define _AST_DECL_AST_DECL_HH
 
+#include <string>
+
 #include "utl_scoped_name.h"
 #include "ast_annotation_appls.h"
 
@@ -223,8 +225,8 @@ public:
   long line ();
   void set_line (long l);
 
-  ACE_CString & file_name ();
-  void set_file_name (ACE_CString s);
+  std::string const& file_name () const;
+  void set_file_name (std::string s);
 
   UTL_ScopedName *name ();
 
@@ -444,7 +446,7 @@ private:
   long pd_line;
   // Line defined in.
 
-  ACE_CString pd_file_name;
+  std::string pd_file_name;
   // What file defined in.
 
   UTL_ScopedName *pd_name {};

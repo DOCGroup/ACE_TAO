@@ -24,6 +24,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <string_view>
+
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {
@@ -182,29 +184,32 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
 }
 
 UTL_ScopedName *
-FE_Utils::string_to_scoped_name (char const *s)
+FE_Utils::string_to_scoped_name (std::string_view str)
 {
   UTL_ScopedName *retval = nullptr;
-  ACE_CString str (s);
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
 
-  while (! str.empty ())
+  while (!str.empty ())
     {
       // Skip a leading double colon.
-      if (str.find (':') == 0)
+      if (str[0] == ':' && str.size () > 1 && str[1] == ':')
         {
-          str = str.substr (2);
+          str.remove_prefix (2);
+        }
+      else if (str[0] == ':')
+        {
+          str.remove_prefix (1);
         }
 
       // Find the next double colon (if any) and get the next
       // name segment.
-      ACE_CString::size_type pos = str.find (':');
-      ACE_CString lname (str.substr (0, pos));
+      size_t const pos = str.find (':');
+      std::string_view const lname = str.substr (0, pos);
 
       // Construct a UTL_ScopedName segment.
       ACE_NEW_RETURN (id,
-                      Identifier (lname.c_str ()),
+                      Identifier (lname),
                       nullptr);
 
       ACE_NEW_RETURN (sn,
@@ -223,7 +228,12 @@ FE_Utils::string_to_scoped_name (char const *s)
         }
 
       // Update the working string.
-      str = str.substr (pos);
+      if (pos == std::string_view::npos)
+        {
+          break;
+        }
+
+      str.remove_prefix (pos);
     }
 
   return retval;

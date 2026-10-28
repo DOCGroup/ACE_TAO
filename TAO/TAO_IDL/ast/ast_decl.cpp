@@ -85,6 +85,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <ace/streams.h>
 #include <ace/OS_NS_stdio.h>
 
+#include <string>
+#include <string_view>
+
 COMMON_Base::COMMON_Base (bool local,
                           bool abstract)
   : is_local_ (local),
@@ -908,9 +911,7 @@ AST_Decl::dump (ACE_OSTREAM_TYPE &o)
 void
 AST_Decl::dump_i (ACE_OSTREAM_TYPE &o, const char *s) const
 {
-  // Have to use ACE_CString here to avoid ambiguous overload error, see
-  // SString.h for an the overloaded operator << () methods.
-  o << ACE_CString(s);
+  o << std::string (s ? s : "");
 }
 
 int
@@ -1019,13 +1020,13 @@ AST_Decl::version (char *value)
       // is as well.
       if (this->repoID_)
         {
-          ACE_CString tmp (this->repoID_);
-          ACE_CString::size_type const pos = tmp.rfind (':');
-          if (pos != ACE_CString::npos)
+          std::string tmp (this->repoID_);
+          std::string::size_type const pos = tmp.rfind (':');
+          if (pos != std::string::npos)
             {
-              tmp = tmp.substr (0, pos + 1) + value;
+              tmp = tmp.substr (0, pos + 1) + std::string (value);
               delete [] this->repoID_;
-              this->repoID_ = ACE::strnew (tmp.fast_rep ());
+              this->repoID_ = ACE::strnew (tmp.c_str ());
             }
         }
     }
@@ -1191,14 +1192,14 @@ AST_Decl::set_line (long l)
   this->pd_line = l;
 }
 
-ACE_CString &
-AST_Decl::file_name ()
+std::string const&
+AST_Decl::file_name () const
 {
   return this->pd_file_name;
 }
 
 void
-AST_Decl::set_file_name (ACE_CString s)
+AST_Decl::set_file_name (std::string s)
 {
   this->pd_file_name = s;
 }
@@ -1225,17 +1226,14 @@ AST_Decl::compute_name (const char *prefix,
 
   // Prepare prefix_<local_name>_suffix string.
 
-  ACE_CString suffix_str (suffix);
-  ACE_CString local_str (this->local_name ()->get_string ());
-
-  ACE_CString result_local_str (prefix);
-  result_local_str += local_str;
-  result_local_str += suffix_str;
+  std::string result_local_str (prefix);
+  result_local_str.append (this->local_name ()->get_string_view ());
+  result_local_str.append (suffix);
 
   // Identifier for the resulting local name.
   Identifier *result_local_id = nullptr;
   ACE_NEW_RETURN (result_local_id,
-                  Identifier (result_local_str.c_str ()),
+                  Identifier (result_local_str),
                   nullptr);
 
   // UTL_Scoped name for the resulting local name.
@@ -1352,18 +1350,14 @@ AST_Decl::compute_local_name (const char *prefix,
     }
 
   // Init the result with prefix.
-  ACE_CString result_str (prefix);
-
-  // Put local.
-  result_str += ACE_CString (this->local_name ()->get_string ());
-
-  // Put suffix.
-  result_str += ACE_CString (suffix);
+  std::string result_str (prefix);
+  result_str.append (this->local_name ()->get_string_view ());
+  result_str.append (suffix);
 
   // Identifier for the resulting local name.
   Identifier *result_id = nullptr;
   ACE_NEW_RETURN (result_id,
-                  Identifier (result_str.c_str ()),
+                  Identifier (result_str),
                   nullptr);
 
   return result_id;
@@ -1378,18 +1372,13 @@ void
 AST_Decl::original_local_name (Identifier *local_name)
 {
   // Remove _cxx_ if it is present.
-  if (ACE_OS::strstr (local_name->get_string (), "_cxx_")
-        == local_name->get_string ())
+  std::string_view const name (local_name->get_string_view ());
+  static constexpr std::string_view cxx_prefix ("_cxx_");
+  if (name.substr (0, cxx_prefix.size ()) == cxx_prefix)
     {
-      // AACE_CString class is good to do this stuff.
-      ACE_CString name_str (local_name->get_string ());
-
-      // Remove _cxx_.
-      name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
-
       // Assign to the Identifier variable.
       ACE_NEW (this->pd_original_local_name,
-               Identifier (name_str.c_str ()));
+               Identifier (name.substr (cxx_prefix.size ())));
     }
   else
     {
