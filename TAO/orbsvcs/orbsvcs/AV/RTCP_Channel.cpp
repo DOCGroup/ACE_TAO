@@ -32,7 +32,7 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
   ACE_UINT32 arrival;
   int transit, d;
 
-  this->active_ = 0;
+  this->active_ = false;
 
   // determine if the source has been declared valid
   if (update_seq(dataPkt->sn ()) == 0)
@@ -44,7 +44,7 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
       // store the initial timestamp
       this->init_time_stamp_ = dataPkt->ts ();
       this->init_local_time_ = ACE_OS::gettimeofday ();
-      this->first_data_packet_ = 0;
+      this->first_data_packet_ = false;
     }
 
   // Get the current time.
@@ -95,7 +95,7 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
   this->jitter_ += (1./16.)*((double)d - this->jitter_);
 
   // Indicate that data has been received since the last report.
-  this->data_since_last_report_ = 1;
+  this->data_since_last_report_ = true;
 
   // Store the payload type.
   this->payload_type_ = dataPkt->pt ();
@@ -235,7 +235,7 @@ RTCP_Channel_In::getRRBlock()
 
       // make the source inactive if significant time has passed since last report
       if (this->no_data_counter_ == 32)
-        this->active_ = 0;
+        this->active_ = false;
 
       return 0;
     }
@@ -294,17 +294,13 @@ RTCP_Channel_In::getRRBlock()
   local_block_ptr->dlsr_ = now32 - this->last_sr_time_;
 
   // indicate that no data has been received since the last report
-  this->data_since_last_report_ = 0;
+  this->data_since_last_report_ = false;
 
   return local_block_ptr;
 }
 
 RTCP_Channel_Out::RTCP_Channel_Out()
-  :cname_ ("cname"),
-   active_ (0),
-   timestamp_ (0),
-   packets_sent_ (0),
-   octets_sent_ (0)
+  :cname_ ("cname")
 {
 }
 
@@ -316,7 +312,7 @@ void
 RTCP_Channel_Out::updateStatistics (RTP_Packet *data_packet)
 {
   // indicate that this source is active
-  this->active_ = 1;
+  this->active_ = true;
 
   // Update various counters.
   this->octets_sent_ += data_packet->payload_size();

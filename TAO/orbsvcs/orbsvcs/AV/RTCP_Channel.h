@@ -109,7 +109,7 @@ private:
 
   // Used for jitter calculations
   /// Flag to indicate the first data packet received.
-  char first_data_packet_ {1};
+  bool first_data_packet_ {true};
 
   /// The first timestamp received.
   ACE_UINT32 init_time_stamp_ {};
@@ -134,7 +134,7 @@ private:
   ACE_UINT32 last_sr_time_ {};
 
   /// Flag to indicate whether or not the source is active.
-  int active_ {};
+  bool active_ {};
 
   /// This is a counter to indicate the number of reporting intervals that have
   /// passed since data has been received.  After 32, declare the source inactive.
@@ -142,7 +142,7 @@ private:
 
   /// This flag indicates that data has been received since the last report was
   /// sent.
-  char data_since_last_report_ {};
+  bool data_since_last_report_ {};
 
   /// The RTP payload type.
   int payload_type_ {};
@@ -200,19 +200,19 @@ private:
   ACE_CString cname_;
 
   /// Flag to indicate whether or not this channel is active.
-  char active_;
+  bool active_ {};
 
   /// The sequence number of the last RTP packet sent.
-  unsigned int seq_num_;
+  unsigned int seq_num_ {};
 
   /// The timestamp of the last RTP packet sent.
-  unsigned int timestamp_;
+  unsigned int timestamp_ {};
 
   /// The total number of packets sent.
-  unsigned int packets_sent_;
+  unsigned int packets_sent_ {};
 
   /// The total numbef of octets sent.
-  unsigned int octets_sent_;
+  unsigned int octets_sent_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
