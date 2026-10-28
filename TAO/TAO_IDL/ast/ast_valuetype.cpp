@@ -76,10 +76,6 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     }
 }
 
-AST_ValueType::~AST_ValueType ()
-{
-}
-
 bool
 AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
@@ -111,8 +107,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
         AST_Type** recursable_type = nullptr;
         list.get (recursable_type, 0);
         // Check if we are the possibly recursive type being tested
-        if (!ACE_OS::strcmp (this->full_name (),
-                                 (*recursable_type)->full_name ()))
+        if (this->full_name () == (*recursable_type)->full_name ())
         {
           // match, so we're recursive
           idl_global->recursive_type_seen_ = true;
@@ -189,8 +184,9 @@ AST_ValueType::redefine (AST_Interface *from)
 
   if (vt == nullptr)
     {
-      idl_global->err ()->redef_error (from->local_name ()->get_string (),
-                                       this->local_name ()->get_string ());
+      idl_global->err ()->redef_error (
+        from->local_name ()->get_string_view_or_empty ().data (),
+        this->local_name ()->get_string_view_or_empty ().data ());
       return;
     }
 
@@ -292,7 +288,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
                 {
                   ACE_ERROR ((LM_ERROR,
                               "warning in %C line %d: ",
-                              idl_global->filename ()->get_string (),
+                              idl_global->filename ()->get_string_view_or_empty ().data (),
                               idl_global->lineno ()));
 
                   e->dump (*ACE_DEFAULT_LOG_STREAM);

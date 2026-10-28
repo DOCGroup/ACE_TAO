@@ -18,10 +18,6 @@ be_visitor_connector_ami_exs::be_visitor_connector_ami_exs (
 {
 }
 
-be_visitor_connector_ami_exs::~be_visitor_connector_ami_exs ()
-{
-}
-
 int
 be_visitor_connector_ami_exs::visit_connector (be_connector *node)
 {

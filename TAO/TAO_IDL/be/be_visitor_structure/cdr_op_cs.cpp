@@ -17,10 +17,6 @@ be_visitor_structure_cdr_op_cs::be_visitor_structure_cdr_op_cs (
 {
 }
 
-be_visitor_structure_cdr_op_cs::~be_visitor_structure_cdr_op_cs ()
-{
-}
-
 int
 be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 {
@@ -52,12 +48,12 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  const bool empty = node->nfields () == 0;
-  const char *const strm = empty ? "" : "strm";
-  const char *const tao_aggregate = empty ? "" : "_tao_aggregate";
+  bool const empty = node->nfields () == 0;
+  std::string_view const strm = empty ? "" : "strm";
+  std::string_view const tao_aggregate = empty ? "" : "_tao_aggregate";
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &" << strm << "," << be_nl
-      << "const " << node->name () << " &" << tao_aggregate << ")" << be_uidt
+      << node->name () << " const &" << tao_aggregate << ")" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 

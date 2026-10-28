@@ -12,11 +12,11 @@
 
 #include "typecode.h"
 
+#include <string_view>
+
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
-  , is_recursive_ (false)
-  , is_nested_ (false)
 {
 }
 
@@ -56,7 +56,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
   // as this was no nested visit mark this typecode as recursive
   this->is_recursive_ = in_recursion;
 
-  static bool const is_exception = false;
+  constexpr bool is_exception = false;
   return this->visit (node, is_exception);
 }
 
@@ -70,7 +70,7 @@ TAO::be_visitor_struct_typecode::visit_exception (be_exception * node)
 
   // No need to check for recursion since exceptions are never
   // recursive.
-  static bool const is_exception = true;
+  constexpr bool is_exception = true;
   return this->visit (node, is_exception);
 }
 
@@ -92,9 +92,8 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                         -1);
     }
 
-  ACE_CString const tao_fields ("_tao_fields_");
-  ACE_CString const fields_name (tao_fields
-                                 + node->flat_name ());
+  std::string fields_name ("_tao_fields_");
+  fields_name += node->flat_name ();
 
   // Generate array containing struct field characteristics.
   os << "static TAO::TypeCode::Struct_Field<" << be_idt_nl
@@ -105,12 +104,12 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
     {
       // Should only be possible for user exceptions with no fields.
       os << " * const" << be_idt_nl
-         << fields_name.c_str () << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
+         << fields_name << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
     }
   else
     {
       os << be_idt_nl
-         << fields_name.c_str () << "[] =" << be_idt_nl
+         << fields_name << "[] =" << be_idt_nl
          << "{" << be_idt_nl;
 
       if (this->visit_members (node) != 0)
@@ -122,9 +121,9 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
          << "};" << be_uidt << be_uidt << be_uidt << be_nl_2;
     }
 
-  static char const StringType[]      = "char const *";
-  static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
-  static char const MemberArrayType[] = "TAO::TypeCode::Struct_Field";
+  static constexpr std::string_view StringType = "char const *";
+  static constexpr std::string_view TypeCodeType = "::CORBA::TypeCode_ptr const *";
+  static constexpr std::string_view MemberArrayType = "TAO::TypeCode::Struct_Field";
 
   // Generate the TypeCode instantiation.
   os << "static ";

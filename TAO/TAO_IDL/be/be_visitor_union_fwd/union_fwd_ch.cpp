@@ -18,10 +18,6 @@ be_visitor_union_fwd_ch::be_visitor_union_fwd_ch (
 {
 }
 
-be_visitor_union_fwd_ch::~be_visitor_union_fwd_ch ()
-{
-}
-
 // Visit the interface_fwd_ch node and its scope.
 int
 be_visitor_union_fwd_ch::visit_union_fwd (be_union_fwd *node)

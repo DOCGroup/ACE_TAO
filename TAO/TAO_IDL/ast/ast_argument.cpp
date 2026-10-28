@@ -76,10 +76,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "global_extern.h"
 
+#include <string_view>
+
 // Static functions.
 
 // Convert an enum Direction value to a char *.
-static const char *
+static std::string_view
 direction_to_string (AST_Argument::Direction d)
 {
   switch (d)
@@ -92,7 +94,7 @@ direction_to_string (AST_Argument::Direction d)
       return "inout";
     }
 
-  return nullptr;
+  return {};
 }
 
 AST_Decl::NodeType const
@@ -112,10 +114,6 @@ AST_Argument::AST_Argument (Direction d,
     {
       idl_global->err ()->not_a_type (ft);
     }
-}
-
-AST_Argument::~AST_Argument ()
-{
 }
 
 // Dump this AST_Argument node to the ostream o.
@@ -140,7 +138,7 @@ AST_Argument::destroy ()
 }
 
 AST_Argument::Direction
-AST_Argument::direction ()
+AST_Argument::direction () const
 {
   return this->pd_direction;
 }

@@ -90,6 +90,12 @@ UTL_ExceptList::head ()
   return this->pd_car_data;
 }
 
+AST_Type const *
+UTL_ExceptList::head () const
+{
+  return this->pd_car_data;
+}
+
 // The two methods below make direct calls on the
 // cdr list (we have been made a friend of the base
 // class UTL_List's private member). This is so we
@@ -117,7 +123,7 @@ UTL_ExceptList::copy ()
 
   if (this->tail () != nullptr)
     {
-      retval->nconc ((UTL_ExceptList *) this->tail ()->copy ());
+      retval->nconc (static_cast<UTL_ExceptList *> (this->tail ()->copy ()));
     }
 
   return retval;
@@ -130,13 +136,13 @@ UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator (UTL_ExceptList *s)
 
 // Get current item.
 AST_Type *
-UTL_ExceptlistActiveIterator::item ()
+UTL_ExceptlistActiveIterator::item () const
 {
   if (source == nullptr)
     {
       return nullptr;
     }
 
-  return ((UTL_ExceptList *) source)->head ();
+  return static_cast<UTL_ExceptList *> (source)->head ();
 }
 

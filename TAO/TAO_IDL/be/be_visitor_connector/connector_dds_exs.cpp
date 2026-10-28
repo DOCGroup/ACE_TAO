@@ -24,10 +24,6 @@ be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_dds_exs::~be_visitor_connector_dds_exs ()
-{
-}
-
 int
 be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 {

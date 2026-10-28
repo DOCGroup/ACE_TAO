@@ -17,10 +17,6 @@ be_visitor_amh_rh_interface_ss::be_visitor_amh_rh_interface_ss (
 {
 }
 
-be_visitor_amh_rh_interface_ss::~be_visitor_amh_rh_interface_ss ()
-{
-}
-
 int
 be_visitor_amh_rh_interface_ss::visit_operation (be_operation *node)
 {
@@ -37,32 +33,6 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // @@ Mayur, the exact same code is duplicated in amh_rh_sh.cpp,
-  //    need to fix that...
-  // Generate the skeleton class name, use the AMH-node name as a
-  // basis, this is AMH_<InterfaceName>ResponseHandler...
-  ACE_CString rh_skel_prefix =  "TAO_";
-
-  char *buf;
-  node->compute_full_name (rh_skel_prefix.c_str(), "", buf);
-  ACE_CString rh_skel_full_scope_name ("POA_");
-  rh_skel_full_scope_name += buf;
-  // buf was allocated by ACE_OS::strdup, so we need to use free instead
-  // of delete.
-  ACE_OS::free (buf);
-
-  ACE_CString rh_skel_class_name_prefix (rh_skel_prefix.c_str ());
-
-  if (!node->is_nested ())
-    {
-      // ...or the "POA_TAO_" prefix if we are in the global
-      // namespace....
-      rh_skel_class_name_prefix = "POA_TAO_";
-    }
-
-  ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
-  rh_skel_class_name += node->local_name ();
 
   TAO_INSERT_COMMENT (os);
 

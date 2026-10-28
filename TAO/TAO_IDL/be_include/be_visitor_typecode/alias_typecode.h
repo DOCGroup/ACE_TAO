@@ -13,6 +13,8 @@
 #ifndef TAO_BE_VISITOR_ALIAS_TYPECODE_H
 #define TAO_BE_VISITOR_ALIAS_TYPECODE_H
 
+#include <string_view>
+
 namespace TAO
 {
   /**
@@ -27,7 +29,12 @@ namespace TAO
   {
   public:
     /// Constructor.
-    be_visitor_alias_typecode (be_visitor_context * ctx);
+    explicit be_visitor_alias_typecode (be_visitor_context * ctx);
+
+    be_visitor_alias_typecode (be_visitor_alias_typecode const &) = delete;
+    be_visitor_alias_typecode (be_visitor_alias_typecode &&) = delete;
+    be_visitor_alias_typecode &operator= (be_visitor_alias_typecode const &) = delete;
+    be_visitor_alias_typecode &operator= (be_visitor_alias_typecode &&) = delete;
 
     /// Visit a typedef.
     /**
@@ -37,15 +44,15 @@ namespace TAO
      *       rest of the legacy method names and their call sites are
      *       updated accordingly.
      */
-    virtual int visit_typedef (be_typedef * node);
+    int visit_typedef (be_typedef * node) override;
 
     /// Visit a valuebox.
-    virtual int visit_valuebox (be_valuebox * node);
+    int visit_valuebox (be_valuebox * node) override;
 
   private:
     int common (be_type * node,
                 be_type * base,
-                const char * tctype);
+                std::string_view tctype);
   };
 }
 

@@ -19,10 +19,6 @@ be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
 {
 }
 
-be_visitor_valuetype_marshal_cs::~be_visitor_valuetype_marshal_cs ()
-{
-}
-
 int
 be_visitor_valuetype_marshal_cs::marshal_state (be_valuetype *node)
 {

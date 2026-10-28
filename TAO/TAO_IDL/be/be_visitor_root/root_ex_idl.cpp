@@ -17,10 +17,6 @@ be_visitor_root_ex_idl::be_visitor_root_ex_idl (
 {
 }
 
-be_visitor_root_ex_idl::~be_visitor_root_ex_idl ()
-{
-}
-
 int
 be_visitor_root_ex_idl::visit_root (be_root *node)
 {

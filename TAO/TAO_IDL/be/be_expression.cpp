@@ -70,7 +70,7 @@ be_expression::be_expression (UTL_String *s)
 {
 }
 
-be_expression::be_expression (char *s)
+be_expression::be_expression (std::string_view s)
   : AST_Expression (s)
 {
 }

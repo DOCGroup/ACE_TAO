@@ -84,6 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+#include <string_view>
+
 AST_Expression::ExprType
 AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
 {
@@ -143,8 +145,7 @@ AST_Expression::AST_Expression (UTL_ScopedName *nm)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nm),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -167,8 +168,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   AST_Param_Holder *ph = v->param_holder_;
   this->fill_definition_details ();
@@ -183,7 +183,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
               AST_ExprValue);
 
       ACE_NEW (this->pd_ev->u.strval,
-               UTL_String (v->pd_ev->u.strval, true));
+               UTL_String (v->pd_ev->u.strval));
 
       this->pd_ev->et = EV_string;
     }
@@ -234,8 +234,7 @@ AST_Expression::AST_Expression (ExprComb c,
     pd_v1 (ev1),
     pd_v2 (ev2),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 }
@@ -247,8 +246,7 @@ AST_Expression::AST_Expression (ACE_CDR::Short sv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -266,8 +264,7 @@ AST_Expression::AST_Expression (ACE_CDR::UShort usv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -285,8 +282,7 @@ AST_Expression::AST_Expression (ACE_CDR::Long lv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -304,8 +300,7 @@ AST_Expression::AST_Expression (ACE_CDR::LongLong llv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -323,8 +318,7 @@ AST_Expression::AST_Expression (ACE_CDR::Boolean b)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -342,8 +336,7 @@ AST_Expression::AST_Expression (ACE_CDR::ULong ulv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -361,8 +354,7 @@ AST_Expression::AST_Expression (ACE_CDR::ULongLong ulv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -381,8 +373,7 @@ AST_Expression::AST_Expression (ACE_CDR::ULong ulv,
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -400,8 +391,7 @@ AST_Expression::AST_Expression (ACE_CDR::Float fv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -419,8 +409,7 @@ AST_Expression::AST_Expression (ACE_CDR::Double dv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -438,8 +427,7 @@ AST_Expression::AST_Expression (ACE_CDR::Char cv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -457,8 +445,7 @@ AST_Expression::AST_Expression (ACE_OutputCDR::from_wchar wcv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -476,8 +463,7 @@ AST_Expression::AST_Expression (ACE_CDR::Octet ov)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -495,8 +481,7 @@ AST_Expression::AST_Expression (UTL_String *sv)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -505,21 +490,20 @@ AST_Expression::AST_Expression (UTL_String *sv)
 
   UTL_String *new_str = nullptr;
   ACE_NEW (new_str,
-           UTL_String (sv, true));
+           UTL_String (sv));
 
   this->pd_ev->u.strval = new_str;
   this->pd_ev->et = EV_string;
 }
 
 // An AST_Expression denoting a wide string.
-AST_Expression::AST_Expression (char *sv)
+AST_Expression::AST_Expression (std::string_view sv)
   : pd_ec (EC_none),
     pd_ev (nullptr),
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -527,7 +511,7 @@ AST_Expression::AST_Expression (char *sv)
            AST_ExprValue);
 
   this->pd_ev->et = EV_wstring;
-  this->pd_ev->u.wstrval = ACE::strnew (sv);
+  this->pd_ev->u.wstrval = ACE::strndup (sv.data (), sv.size ());
 }
 
 AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
@@ -536,8 +520,7 @@ AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
     pd_v1 (nullptr),
     pd_v2 (nullptr),
     pd_n (nullptr),
-    tdef (nullptr),
-    param_holder_ (nullptr)
+    tdef (nullptr)
 {
   this->fill_definition_details ();
 
@@ -551,12 +534,6 @@ AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
 AST_Expression::~AST_Expression ()
 {
   destroy ();
-}
-
-AST_Expression::AST_ExprValue::AST_ExprValue ()
-{
-  this->u.ulval = 0UL;
-  this->et = AST_Expression::EV_none;
 }
 
 // Static operations.
@@ -1072,43 +1049,43 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
       switch (ev->et)
         {
         case AST_Expression::EV_short:
-          tmp.bval = (ev->u.sval == 0) ? false : true;
+          tmp.bval = ev->u.sval != 0;
           break;
         case AST_Expression::EV_ushort:
-          tmp.bval = (ev->u.usval == 0) ? false : true;
+          tmp.bval = ev->u.usval != 0;
           break;
         case AST_Expression::EV_long:
-          tmp.bval = (ev->u.lval == 0) ? false : true;
+          tmp.bval = ev->u.lval != 0;
           break;
         case AST_Expression::EV_ulong:
-          tmp.bval = (ev->u.ulval == 0) ? false : true;
+          tmp.bval = ev->u.ulval != 0;
           break;
         case AST_Expression::EV_longlong:
-          tmp.bval = (ev->u.llval == 0) ? false : true;
+          tmp.bval = ev->u.llval != 0;
           break;
         case AST_Expression::EV_ulonglong:
-          tmp.bval = (ev->u.ullval == 0) ? false : true;
+          tmp.bval = ev->u.ullval != 0;
           break;
         case AST_Expression::EV_float:
-          tmp.bval = ACE::is_equal (ev->u.fval, 0.0f) ? false : true;
+          tmp.bval = !ACE::is_equal (ev->u.fval, 0.0f);
           break;
         case AST_Expression::EV_double:
-          tmp.bval = ACE::is_equal (ev->u.dval, 0.0) ? false : true;
+          tmp.bval = !ACE::is_equal (ev->u.dval, 0.0);
           break;
         case AST_Expression::EV_char:
-          tmp.bval = (ev->u.cval == 0) ? false : true;
+          tmp.bval = ev->u.cval != 0;
           break;
         case AST_Expression::EV_wchar:
-          tmp.bval = (ev->u.wcval == 0) ? false : true;
+          tmp.bval = ev->u.wcval != 0;
           break;
         case AST_Expression::EV_octet:
-          tmp.bval = (ev->u.oval == 0) ? false : true;
+          tmp.bval = ev->u.oval != 0;
           break;
         case AST_Expression::EV_int8:
-          tmp.bval = ev->u.int8val ? true : false;
+          tmp.bval = ev->u.int8val != 0;
           break;
         case AST_Expression::EV_uint8:
-          tmp.bval = ev->u.uint8val ? true : false;
+          tmp.bval = ev->u.uint8val != 0;
           break;
         default:
          return nullptr;
@@ -2631,8 +2608,8 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_bool:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_string:
-      return !ACE_OS::strcmp (pd_ev->u.strval->get_string (),
-        vc->ev ()->u.strval->get_string ());
+      return pd_ev->u.strval->get_string_view_or_empty ()
+        == vc->ev ()->u.strval->get_string_view_or_empty ();
     case EV_wstring:
       return !ACE_OS::strcmp (pd_ev->u.wstrval, vc->ev ()->u.wstrval);
     case EV_longlong:
@@ -2945,7 +2922,7 @@ AST_Expression::destroy ()
 // Data accessors.
 
 UTL_Scope *
-AST_Expression::defined_in ()
+AST_Expression::defined_in () const
 {
   return this->pd_defined_in;
 }
@@ -2957,7 +2934,7 @@ AST_Expression::set_defined_in (UTL_Scope *d)
 }
 
 long
-AST_Expression::line ()
+AST_Expression::line () const
 {
   return this->pd_line;
 }
@@ -2969,7 +2946,7 @@ AST_Expression::set_line (long l)
 }
 
 UTL_String *
-AST_Expression::file_name ()
+AST_Expression::file_name () const
 {
   return this->pd_file_name;
 }
@@ -2981,13 +2958,13 @@ AST_Expression::set_file_name (UTL_String *f)
 }
 
 AST_Expression::ExprComb
-AST_Expression::ec ()
+AST_Expression::ec () const
 {
   return this->pd_ec;
 }
 
 AST_Expression::AST_ExprValue   *
-AST_Expression::ev ()
+AST_Expression::ev () const
 {
   return this->pd_ev;
 }
@@ -3000,7 +2977,7 @@ AST_Expression::set_ev (AST_Expression::AST_ExprValue *new_ev)
 }
 
 AST_Expression *
-AST_Expression::v1 ()
+AST_Expression::v1 () const
 {
   return this->pd_v1;
 }
@@ -3012,7 +2989,7 @@ AST_Expression::set_v1 (AST_Expression *e)
 }
 
 AST_Expression *
-AST_Expression::v2 ()
+AST_Expression::v2 () const
 {
   return this->pd_v2;
 }
@@ -3024,7 +3001,7 @@ AST_Expression::set_v2 (AST_Expression *e)
 }
 
 UTL_ScopedName *
-AST_Expression::n ()
+AST_Expression::n () const
 {
   return this->pd_n;
 }
@@ -3035,7 +3012,7 @@ AST_Expression::set_n (UTL_ScopedName *new_n)
   this->pd_n = new_n;
 }
 
-const char *
+std::string_view
 AST_Expression::exprtype_to_string (ExprType t)
 {
   switch (t) {
@@ -3091,7 +3068,7 @@ AST_Expression::exprtype_to_string (ExprType t)
 }
 
 AST_Enum *
-AST_Expression::enum_parent ()
+AST_Expression::enum_parent () const
 {
   return enum_parent_;
 }

@@ -92,12 +92,7 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
               n),
     AST_Field (AST_Decl::NT_typedef,
                bt,
-               n),
-    has_cached_annotations_ (false)
-{
-}
-
-AST_Typedef::~AST_Typedef ()
+               n)
 {
 }
 

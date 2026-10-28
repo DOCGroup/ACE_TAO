@@ -23,9 +23,7 @@ be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
 {
 }
 
-be_visitor_decl::~be_visitor_decl ()
-{
-}
+be_visitor_decl::~be_visitor_decl () = default;
 
 be_visitor_context *
 be_visitor_decl::ctx ()

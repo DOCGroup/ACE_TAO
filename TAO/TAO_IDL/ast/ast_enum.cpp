@@ -84,15 +84,9 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
               n),
     AST_ConcreteType (AST_Decl::NT_enum,
                       n),
-    UTL_Scope (AST_Decl::NT_enum),
-    pd_enum_counter (0),
-    member_count_ (-1)
+    UTL_Scope (AST_Decl::NT_enum)
 {
   this->size_type (AST_Type::FIXED);
-}
-
-AST_Enum::~AST_Enum ()
-{
 }
 
 // Return the member count.

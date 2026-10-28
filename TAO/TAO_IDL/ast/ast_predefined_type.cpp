@@ -77,7 +77,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
+
+#include <string>
 
 AST_Decl::NodeType const
 AST_PredefinedType::NT = AST_Decl::NT_pre_defined;
@@ -102,7 +104,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
   if (t == AST_PredefinedType::PT_void)
     {
       ACE_NEW (id,
-               Identifier (n->last_component ()->get_string ()));
+               Identifier (n->last_component ()->get_string_view_or_empty ()));
 
       ACE_NEW (new_name,
                UTL_ScopedName (id,
@@ -191,7 +193,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
           break;
         case AST_PredefinedType::PT_pseudo:
           ACE_NEW (id,
-                   Identifier (n->last_component ()->get_string ()));
+                   Identifier (n->last_component ()->get_string_view_or_empty ()));
           break;
         case AST_PredefinedType::PT_uint8:
           ACE_NEW (id, Identifier ("UInt8"));
@@ -214,25 +216,13 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
 
   // The repo id computation in the AST_Decl constructor can't
   // be easily modified to work for predefined types.
-  ACE_CString repo_id = ACE_CString ("IDL:omg.org/CORBA/")
-                        + id->get_string ()
-                        + ":"
-                        + this->version ();
-  delete [] this->repoID_;
-  size_t len = repo_id.length ();
-  ACE_NEW (this->repoID_,
-           char[len + 1]);
-  this->repoID_[0] = '\0';
-  ACE_OS::sprintf (this->repoID_,
-                   "%s",
-                   repo_id.c_str ());
-  this->repoID_[len] = '\0';
+  std::string repo_id ("IDL:omg.org/CORBA/");
+  repo_id += id->get_string_view_or_empty ();
+  repo_id += ':';
+  repo_id += this->version ();
+  this->repoID (repo_id);
 
   this->set_name (new_name);
-}
-
-AST_PredefinedType::~AST_PredefinedType ()
-{
 }
 
 // Redefinition of inherited virtual operations.
@@ -278,7 +268,7 @@ AST_PredefinedType::destroy ()
 // Data accessors.
 
 AST_PredefinedType::PredefinedType
-AST_PredefinedType::pt ()
+AST_PredefinedType::pt () const
 {
   return this->pd_pt;
 }

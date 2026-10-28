@@ -158,10 +158,6 @@ be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
 {
 }
 
-be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci ()
-{
-}
-
 int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {

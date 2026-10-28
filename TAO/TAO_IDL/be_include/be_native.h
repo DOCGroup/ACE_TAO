@@ -28,9 +28,14 @@ class be_native : public virtual AST_Native,
                   public virtual be_exception
 {
 public:
-  be_native (UTL_ScopedName *n);
+  be_native (be_native const &) = delete;
+  be_native (be_native &&) = delete;
+  be_native &operator= (be_native const &) = delete;
+  be_native &operator= (be_native &&) = delete;
 
-  virtual ~be_native () {}
+  explicit be_native (UTL_ScopedName *n);
+
+  ~be_native () override = default;
 
   /// Generate the typecode description.
   virtual int gen_typecode ();
@@ -39,10 +44,10 @@ public:
   virtual long tc_size ();
 
   /// Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif /* BE_NATIVE_H */

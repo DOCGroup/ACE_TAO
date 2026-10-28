@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Unbounded_Queue.h"
 
+#include <string>
+
 // Class for all IDL types
 //
 // This is useful wherever any IDL type defining construct can appear
@@ -76,6 +78,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
 {
 public:
+  AST_Type (AST_Type const &) = delete;
+  AST_Type (AST_Type &&) = delete;
+  AST_Type &operator= (AST_Type const &) = delete;
+  AST_Type &operator= (AST_Type &&) = delete;
   /// Indicates if we are fixed size or variable. Most useful for structs,
   /// unions, and arrays.
   enum SIZE_TYPE
@@ -105,24 +111,25 @@ public:
   // Accessors/mutators for the private members.
 
   // Accessor for protected member.
-  bool has_constructor ();
+  bool has_constructor () const;
 
   // Mutator for protected member.
   void has_constructor (bool value);
 
-  bool ifr_added ();
+  bool ifr_added () const;
   void ifr_added (bool val);
 
-  bool ifr_fwd_added ();
+  bool ifr_fwd_added () const;
   void ifr_fwd_added (bool val);
 
   // Type name of a node used when generating declarations.
-  const char *nested_type_name (AST_Decl *d,
-                                const char *suffix = nullptr,
-                                const char *prefix = nullptr);
+  std::string nested_type_name (AST_Decl *d,
+                                std::string_view suffix = {},
+                                std::string_view prefix = {}) const;
 
   // Utility function to make sure we are using the unaliased type.
   AST_Type *unaliased_type ();
+  AST_Type const *unaliased_type () const;
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
@@ -140,37 +147,35 @@ protected:
   virtual int compute_size_type ();
 
   // Type name of a node used when generating declarations.
-  const char *nested_name (const char *local_name,
-                           const char *full_name,
+  std::string nested_name (std::string_view local_name,
+                           std::string_view full_name,
                            AST_Decl *use_scope,
-                           const char *suffix,
-                           const char *prefix);
+                           std::string_view suffix,
+                           std::string_view prefix) const;
 
-  bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
+  bool match_names (AST_Type *t,
+                    ACE_Unbounded_Queue<AST_Type *> const &list) const;
 
 protected:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
-  bool ifr_added_;
+  bool ifr_added_ {};
 
   // Has this node been forward declared in this IDL file?
-  bool ifr_fwd_added_;
+  bool ifr_fwd_added_ {};
 
   // Whether we are fixed or variable size (by default fixed).
-  SIZE_TYPE size_type_;
+  SIZE_TYPE size_type_ {SIZE_UNKNOWN};
 
   // Attribute that helps a union determine whether a member
   // should be included by value or by reference.
-  bool has_constructor_;
-
-  // For the corresponding method.
-  char *nested_type_name_;
+  bool has_constructor_ {};
 
   // Storage once the value has been computed.
-  long in_recursion_;
+  long in_recursion_ {-1};
 
   // Node-specific flag to abort recursion in legal_for_primary_key().
-  mutable bool recursing_in_legal_pk_;
+  mutable bool recursing_in_legal_pk_ {};
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

@@ -23,10 +23,6 @@ be_visitor_valuetype_marshal_ch::be_visitor_valuetype_marshal_ch (
 {
 }
 
-be_visitor_valuetype_marshal_ch::~be_visitor_valuetype_marshal_ch ()
-{
-}
-
 int
 be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
 {

@@ -27,13 +27,17 @@ class be_visitor_amh_interface_ch : public be_visitor_interface
 {
 public:
   /// constructor
-  be_visitor_amh_interface_ch (be_visitor_context *ctx);
+  explicit be_visitor_amh_interface_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_amh_interface_ch ();
+  ~be_visitor_amh_interface_ch () override = default;
+  be_visitor_amh_interface_ch (be_visitor_amh_interface_ch const &) = delete;
+  be_visitor_amh_interface_ch (be_visitor_amh_interface_ch &&) = delete;
+  be_visitor_amh_interface_ch &operator= (be_visitor_amh_interface_ch const &) = delete;
+  be_visitor_amh_interface_ch &operator= (be_visitor_amh_interface_ch &&) = delete;
 
   /// set the right context and make a visitor
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 };
 
 #endif /* _BE_INTERFACE_AMH_INTERFACE_CH_H_ */

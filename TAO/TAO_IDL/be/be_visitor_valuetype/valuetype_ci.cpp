@@ -16,12 +16,7 @@
 // **************************************************
 
 be_visitor_valuetype_ci::be_visitor_valuetype_ci (be_visitor_context *ctx)
-  : be_visitor_valuetype (ctx),
-    opt_accessor_ (false)
-{
-}
-
-be_visitor_valuetype_ci::~be_visitor_valuetype_ci ()
+  : be_visitor_valuetype (ctx)
 {
 }
 
@@ -62,7 +57,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
     }
 
 
-  *os << "ACE_INLINE const char*" << be_nl
+  *os << "ACE_INLINE char const *" << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       <<  "{" << be_idt_nl
       <<     "return \"" << node->repoID () << "\";" << be_uidt_nl

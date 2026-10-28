@@ -21,14 +21,18 @@ class be_visitor_executor_exh
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_executor_exh (be_visitor_context *ctx);
+  explicit be_visitor_executor_exh (be_visitor_context *ctx);
 
-  ~be_visitor_executor_exh ();
+  ~be_visitor_executor_exh () override = default;
+  be_visitor_executor_exh (be_visitor_executor_exh const &) = delete;
+  be_visitor_executor_exh (be_visitor_executor_exh &&) = delete;
+  be_visitor_executor_exh &operator= (be_visitor_executor_exh const &) = delete;
+  be_visitor_executor_exh &operator= (be_visitor_executor_exh &&) = delete;
 
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_consumes (be_consumes *node);
+  int visit_attribute (be_attribute *node) override;
+  int visit_component (be_component *node) override;
+  int visit_provides (be_provides *node) override;
+  int visit_consumes (be_consumes *node) override;
 private:
   // const char *comment_start_border_;
   // const char *comment_end_border_;
@@ -43,12 +47,12 @@ class Exec_Attr_Decl_Generator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  Exec_Attr_Decl_Generator (
+  explicit Exec_Attr_Decl_Generator (
     be_visitor_scope * visitor);
 
-  virtual int emit (be_interface * derived_interface,
-                    TAO_OutStream * os,
-                    be_interface * base_interface);
+  int emit (be_interface * derived_interface,
+            TAO_OutStream * os,
+            be_interface * base_interface) override;
 
 private:
   be_visitor_scope * visitor_;

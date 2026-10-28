@@ -16,8 +16,7 @@ AST_Annotation_Member::AST_Annotation_Member (
   AST_Expression::ExprType expr_type, AST_Type *type, UTL_ScopedName *name)
   : AST_Decl (NT, name),
     AST_Field (type, name, vis_NA),
-    expr_type_ (expr_type),
-    value_ (nullptr)
+    expr_type_ (expr_type)
 {
 }
 
@@ -26,8 +25,7 @@ AST_Annotation_Member::AST_Annotation_Member (
   AST_Expression::ExprType expr_type, AST_Type *type, UTL_ScopedName *name)
   : AST_Decl (nt, name),
     AST_Field (nt, type, name, vis_NA),
-    expr_type_ (expr_type),
-    value_ (nullptr)
+    expr_type_ (expr_type)
 {
 }
 
@@ -77,7 +75,7 @@ AST_Annotation_Member::dump (ACE_OSTREAM_TYPE &o)
 }
 
 AST_Expression *
-AST_Annotation_Member::value ()
+AST_Annotation_Member::value () const
 {
   return value_;
 }
@@ -95,13 +93,13 @@ AST_Annotation_Member::value (AST_Expression *value)
 }
 
 AST_Expression::ExprType
-AST_Annotation_Member::expr_type ()
+AST_Annotation_Member::expr_type () const
 {
   return expr_type_;
 }
 
 bool
-AST_Annotation_Member::invalid_value ()
+AST_Annotation_Member::invalid_value () const
 {
   return !value () || !value ()->ev ();
 }

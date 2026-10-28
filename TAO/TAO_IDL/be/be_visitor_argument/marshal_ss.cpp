@@ -12,6 +12,8 @@
 
 #include "argument.h"
 
+#include <string_view>
+
 // ************************************************************************
 // Visitor to generate code for passing argument to the marshal/demarshal
 // routines
@@ -20,11 +22,6 @@
 be_visitor_args_marshal_ss::
 be_visitor_args_marshal_ss (be_visitor_context *ctx)
   : be_visitor_args (ctx)
-{
-}
-
-be_visitor_args_marshal_ss::
-~be_visitor_args_marshal_ss ()
 {
 }
 
@@ -131,7 +128,8 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  const char *lname = arg->local_name ()->get_string ();
+  std::string_view const lname =
+    arg->local_name ()->get_string_view_or_empty ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -174,7 +172,8 @@ int be_visitor_args_marshal_ss::visit_enum (be_enum *)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  const char *lname = arg->local_name ()->get_string ();
+  std::string_view const lname =
+    arg->local_name ()->get_string_view_or_empty ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -270,7 +269,8 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  const char *lname = arg->local_name ()->get_string ();
+  std::string_view const lname =
+    arg->local_name ()->get_string_view_or_empty ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -315,7 +315,8 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  const char *lname = arg->local_name ()->get_string ();
+  std::string_view const lname =
+    arg->local_name ()->get_string_view_or_empty ();
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
   bool wide =
     (node->width () != static_cast<long> (sizeof (char)));
@@ -461,7 +462,8 @@ be_visitor_args_marshal_ss::emit_common ()
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  const char *lname = arg->local_name ()->get_string ();
+  std::string_view const lname =
+    arg->local_name ()->get_string_view_or_empty ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -506,7 +508,8 @@ be_visitor_args_marshal_ss::emit_common2 (be_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  const char *lname = arg->local_name ()->get_string ();
+  std::string_view const lname =
+    arg->local_name ()->get_string_view_or_empty ();
   AST_Type::SIZE_TYPE st = node->size_type ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)

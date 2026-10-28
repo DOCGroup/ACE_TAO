@@ -22,10 +22,6 @@ be_visitor_connector_ami_exh::be_visitor_connector_ami_exh (
   this->export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_ami_exh::~be_visitor_connector_ami_exh ()
-{
-}
-
 int
 be_visitor_connector_ami_exh::visit_connector (be_connector *node)
 {
@@ -79,7 +75,7 @@ void
 be_visitor_connector_ami_exh::gen_entrypoint ()
 {
   os_ << be_nl_2
-      << "extern \"C\" " << this->export_macro_.c_str ()
+      << "extern \"C\" " << this->export_macro_
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_"
       << ScopeAsDecl (this->node_->defined_in ())->flat_name ()

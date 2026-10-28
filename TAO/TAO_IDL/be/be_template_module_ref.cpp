@@ -24,9 +24,7 @@ be_template_module_ref::be_template_module_ref (
 {
 }
 
-be_template_module_ref::~be_template_module_ref ()
-{
-}
+be_template_module_ref::~be_template_module_ref () = default;
 
 void
 be_template_module_ref::destroy ()

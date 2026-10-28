@@ -11,19 +11,12 @@
 
 #include "home.h"
 
+#include <string_view>
+
 be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
-    comment_start_border_ ("/**"),
-    comment_end_border_ (" */"),
-    your_code_here_ ("/* Your code here. */"),
     export_macro_ (be_global->exec_export_macro ())
-{
-}
-
-be_visitor_home_exs::~be_visitor_home_exs ()
 {
 }
 
@@ -80,14 +73,14 @@ int
 be_visitor_home_exs::visit_factory (be_factory *node)
 {
   AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const sname = scope->full_name ();
+  std::string_view const lname =
+    comp_->local_name ()->get_string_view_or_empty ();
+  std::string_view const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
-      << node_->original_local_name ()->get_string ()
+      << node_->original_local_name ()->get_string_view_or_empty ()
       << "_exec_i::" << node->local_name ();
 
   be_visitor_operation_arglist visitor (this->ctx_);
@@ -116,8 +109,8 @@ int
 be_visitor_home_exs::gen_exec_class ()
 {
   // No '_cxx_' prefix.
-  const char *lname =
-    node_->original_local_name ()->get_string ();
+  std::string_view const lname =
+    node_->original_local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl
       << comment_start_border_ << be_nl
@@ -196,7 +189,7 @@ be_visitor_home_exs::gen_exec_class ()
       << be_uidt_nl << be_nl
       << "ACE_NEW_THROW_EX (" << be_idt_nl
       << "retval," << be_nl
-      << comp_->original_local_name ()->get_string ()
+      << comp_->original_local_name ()->get_string_view_or_empty ()
       << "_exec_i," << be_nl
       << "::CORBA::NO_MEMORY ());"
       << be_uidt_nl << be_nl
@@ -210,7 +203,7 @@ void
 be_visitor_home_exs::gen_entrypoint ()
 {
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
       << "_Impl ()" << be_nl
@@ -220,14 +213,14 @@ be_visitor_home_exs::gen_entrypoint ()
       << be_uidt_nl << be_nl
       << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
-      << node_->original_local_name ()->get_string ()
+      << node_->original_local_name ()->get_string_view_or_empty ()
       << "_exec_i);" << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }
 
 Home_Exec_Op_Attr_Generator::Home_Exec_Op_Attr_Generator (
-    be_visitor_scope * visitor)
+    be_visitor_scope *visitor)
   : visitor_ (visitor)
 {
 }

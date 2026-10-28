@@ -16,9 +16,7 @@ be_visitor_exception_ctor::be_visitor_exception_ctor (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception_ctor::~be_visitor_exception_ctor ()
-{
-}
+be_visitor_exception_ctor::~be_visitor_exception_ctor () = default;
 
 int
 be_visitor_exception_ctor::post_process (be_decl *bd)

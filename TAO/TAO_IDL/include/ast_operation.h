@@ -88,22 +88,26 @@ public:
                  UTL_ScopedName *n,
                  bool local,
                  bool abstract);
+  AST_Operation (AST_Operation const &) = delete;
+  AST_Operation (AST_Operation &&) = delete;
+  AST_Operation &operator= (AST_Operation const &) = delete;
+  AST_Operation &operator= (AST_Operation &&) = delete;
 
-  ~AST_Operation () override;
+  ~AST_Operation () override = default;
 
   // Data Accessors.
 
-  AST_Type *return_type ();
+  AST_Type *return_type () const;
 
-  Flags flags ();
+  Flags flags () const;
 
-  UTL_StrList *context ();
+  UTL_StrList *context () const;
 
-  UTL_ExceptList *exceptions ();
+  UTL_ExceptList *exceptions () const;
 
   // Public operations.
 
-  bool void_return_type ();
+  bool void_return_type () const;
   /// Returns 1 if the operation has a void return type.
 
   /// Return the number of arguments
@@ -160,13 +164,13 @@ protected:
   UTL_ExceptList *pd_exceptions;
   // Exceptions raised
 
-  int argument_count_;
+  int argument_count_ {-1};
   // Number of arguments.
 
-  bool has_in_arguments_;
+  bool has_in_arguments_ {};
   // True if any arguments are IN or INOUT
 
-  int has_native_;
+  int has_native_ {};
   // Is any argument of type native.
 
   // Operations.

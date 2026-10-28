@@ -13,7 +13,11 @@ public:
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
 
-  ~AST_Extended_Port () override;
+  ~AST_Extended_Port () override = default;
+  AST_Extended_Port (AST_Extended_Port const &) = delete;
+  AST_Extended_Port (AST_Extended_Port &&) = delete;
+  AST_Extended_Port &operator= (AST_Extended_Port const &) = delete;
+  AST_Extended_Port &operator= (AST_Extended_Port &&) = delete;
 
   AST_PortType *port_type () const;
 

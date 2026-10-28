@@ -78,9 +78,14 @@ class UTL_Indenter
   // =DESCRIPTION
   //  useful in generating indented output
 public:
-  UTL_Indenter ();
+  UTL_Indenter () = default;
 
-  ~UTL_Indenter () {}
+  ~UTL_Indenter () = default;
+
+  UTL_Indenter (UTL_Indenter const &) = delete;
+  UTL_Indenter (UTL_Indenter &&) = delete;
+  UTL_Indenter &operator= (UTL_Indenter const &) = delete;
+  UTL_Indenter &operator= (UTL_Indenter &&) = delete;
 
   void reset ();
   // Reset indentation level to 0.
@@ -99,7 +104,7 @@ public:
 
 private:
   // How far to indent.
-  long pd_indent_level;
+  long pd_indent_level {};
 };
 
 #endif           // _UTL_INDENTER_UTL_INDENTER_HH

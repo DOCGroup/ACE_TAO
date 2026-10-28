@@ -26,9 +26,7 @@ be_null_return_emitter::be_null_return_emitter (
 {
 }
 
-be_null_return_emitter::~be_null_return_emitter ()
-{
-}
+be_null_return_emitter::~be_null_return_emitter () = default;
 
 int
 be_null_return_emitter::emit (be_type *node)

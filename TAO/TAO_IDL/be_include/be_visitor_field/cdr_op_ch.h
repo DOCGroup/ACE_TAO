@@ -24,8 +24,13 @@
 class be_visitor_field_cdr_op_ch : public be_visitor_decl
 {
 public:
-  be_visitor_field_cdr_op_ch (be_visitor_context *ctx);
-  ~be_visitor_field_cdr_op_ch () override;
+  explicit be_visitor_field_cdr_op_ch (be_visitor_context *ctx);
+  ~be_visitor_field_cdr_op_ch () override = default;
+
+  be_visitor_field_cdr_op_ch (const be_visitor_field_cdr_op_ch &) = delete;
+  be_visitor_field_cdr_op_ch (be_visitor_field_cdr_op_ch &&) = delete;
+  be_visitor_field_cdr_op_ch &operator= (const be_visitor_field_cdr_op_ch &) = delete;
+  be_visitor_field_cdr_op_ch &operator= (be_visitor_field_cdr_op_ch &&) = delete;
 
   int visit_field (be_field *node) override;
 

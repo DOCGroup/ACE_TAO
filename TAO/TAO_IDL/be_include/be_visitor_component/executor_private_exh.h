@@ -22,16 +22,20 @@ class be_visitor_executor_private_exh
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_executor_private_exh (be_visitor_context *ctx);
+  explicit be_visitor_executor_private_exh (be_visitor_context *ctx);
 
-  ~be_visitor_executor_private_exh ();
+  ~be_visitor_executor_private_exh () override = default;
+  be_visitor_executor_private_exh (be_visitor_executor_private_exh const &) = delete;
+  be_visitor_executor_private_exh (be_visitor_executor_private_exh &&) = delete;
+  be_visitor_executor_private_exh &operator= (be_visitor_executor_private_exh const &) = delete;
+  be_visitor_executor_private_exh &operator= (be_visitor_executor_private_exh &&) = delete;
 
-  virtual int visit_provides (be_provides *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_provides (be_provides *node) override;
+  int visit_attribute (be_attribute *node) override;
   virtual void set_flags (bool do_provides, bool do_attribute);
 private:
-  bool do_provides_;
-  bool do_attribute_;
+  bool do_provides_ {true};
+  bool do_attribute_ {true};
 };
 
 #endif /* _BE_COMPONENT_EXECUTOR_PRIVATE_EXH_H_ */

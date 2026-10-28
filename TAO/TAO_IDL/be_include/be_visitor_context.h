@@ -23,6 +23,9 @@
 
 #include "be_codegen.h"
 
+#include <string>
+#include <string_view>
+
 class TAO_OutStream;
 class be_decl;
 class be_interface;
@@ -127,50 +130,52 @@ public:
   void interface (be_interface *);
 
   /// Accessor for the member.
-  ACE_CString &port_prefix ();
+  std::string_view port_prefix () const;
+  void port_prefix (std::string_view prefix);
+  void append_port_prefix (std::string_view suffix);
 
   /// return the export macro currently in force
-  const char *export_macro () const;
+  std::string_view export_macro () const;
 
   /// if anyop export macro is empty, check stub.
-  const char *non_null_export_macro () const;
+  std::string_view non_null_export_macro () const;
 
 private:
   /// code generation state
-  TAO_CodeGen::CG_STATE state_;
+  TAO_CodeGen::CG_STATE state_ {TAO_CodeGen::TAO_INITIAL};
 
   /// code generation state
-  TAO_CodeGen::CG_SUB_STATE sub_state_;
+  TAO_CodeGen::CG_SUB_STATE sub_state_ {TAO_CodeGen::TAO_SUB_STATE_UNKNOWN};
 
   /// current output stream
-  TAO_OutStream *os_;
+  TAO_OutStream *os_ {};
 
   /// current scope in which code is generated
-  be_scope *scope_;
+  be_scope *scope_ {};
 
   /// current node
-  be_decl *node_;
+  be_decl *node_ {};
 
   /// aliased node used as a scoped name to define IDL types.
-  be_typedef *alias_;
+  be_typedef *alias_ {};
 
   /// typedef node
-  be_typedef *tdef_;
+  be_typedef *tdef_ {};
 
   /// attribute node stored here while generating its code
-  be_attribute *attr_;
+  be_attribute *attr_ {};
 
   /// is it the special ctor for exceptions?
-  bool exception_;
+  bool exception_ {};
 
   /// whether scope should generate a comma after every element
-  bool comma_;
+  bool comma_ {};
 
   /// See the method declaration above.
-  be_interface *interface_;
+  be_interface *interface_ {};
 
   /// Used in enough visitors to put it here.
-  ACE_CString port_prefix_;
+  std::string port_prefix_;
 };
 
 #if defined (interface)

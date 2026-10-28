@@ -32,18 +32,18 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  std::string_view macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
   *os << be_global->anyops_versioning_begin () << be_nl;
 
-  *os << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
-      << " &); // copying version" << be_nl;
+  *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
+      << " const &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
-      << node->name () << " *&);";
+  *os << macro << " ::CORBA::Boolean operator>>= (::CORBA::Any const &, ::"
+      << node->name () << " const *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;
 

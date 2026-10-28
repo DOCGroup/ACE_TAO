@@ -69,18 +69,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/iosfwd.h"
 
+#include <optional>
+#include <string>
+#include <string_view>
+
 class TAO_IDL_FE_Export Identifier
 {
 public:
-  Identifier ();
+  Identifier () = default;
   // Default Constructor.
 
-  Identifier (const char *s);
+  explicit Identifier (std::string_view s);
   // Constructor.
 
-  Identifier (const Identifier &other);
+  Identifier (Identifier const &other);
 
-  virtual ~Identifier ();
+  virtual ~Identifier () = default;
   // Destructor.
 
   // Operations
@@ -90,24 +94,26 @@ public:
    */
   ///{
   char *get_string ();
-  const char *get_string () const;
+  char const *get_string () const;
+  std::optional<std::string_view> get_string_view () const;
+  std::string_view get_string_view_or_empty () const;
   ///}
 
-  void replace_string (const char *s);
+  void replace_string (std::string_view s);
   // Replace the underlying string and free the old one.
 
-  void preprocess_and_replace_string (const char *s);
+  void preprocess_and_replace_string (std::string_view s);
 
-  bool compare (Identifier *other);
+  bool compare (Identifier const *other) const;
   // Compare with other Identifier.
 
-  bool case_compare (Identifier *other);
+  bool case_compare (Identifier const *other) const;
   // Also check for case-only difference.
 
-  bool case_compare_quiet (Identifier *other);
+  bool case_compare_quiet (Identifier const *other) const;
   // Like the above but suppressing error or warning I/O
 
-  Identifier *copy ();
+  Identifier *copy () const;
   // Create a deep copy.
 
   bool escaped () const;
@@ -119,16 +125,16 @@ public:
   virtual void destroy ();
   // Cleanup function.
 
-  bool operator== (const Identifier &other) const;
+  bool operator== (Identifier const &other) const;
 
-  Identifier &operator= (const Identifier &other);
+  Identifier &operator= (Identifier const &other);
 
 private:
   // Storage for data.
-  char *pv_string;
+  std::optional<std::string> string_;
 
   // Did the IDL string have a leading underscore?
-  bool escaped_;
+  bool escaped_ {};
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH

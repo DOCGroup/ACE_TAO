@@ -16,6 +16,8 @@
 #ifndef _BE_COMPONENT_AMI_RH_EXH_H_
 #define _BE_COMPONENT_AMI_RH_EXH_H_
 
+#include <string_view>
+
 class be_visitor_context;
 
 /**
@@ -30,16 +32,20 @@ class be_visitor_component_ami_rh_exh
   : public be_visitor_component_ami_rh_ex_base
 {
 public:
-  be_visitor_component_ami_rh_exh (be_visitor_context *ctx);
-  ~be_visitor_component_ami_rh_exh ();
+  explicit be_visitor_component_ami_rh_exh (be_visitor_context *ctx);
+  ~be_visitor_component_ami_rh_exh () override = default;
+  be_visitor_component_ami_rh_exh (be_visitor_component_ami_rh_exh const &) = delete;
+  be_visitor_component_ami_rh_exh (be_visitor_component_ami_rh_exh &&) = delete;
+  be_visitor_component_ami_rh_exh &operator= (be_visitor_component_ami_rh_exh const &) = delete;
+  be_visitor_component_ami_rh_exh &operator= (be_visitor_component_ami_rh_exh &&) = delete;
 
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_attribute (be_attribute *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_argument (be_argument *node);
+  int visit_uses (be_uses *node) override;
+  int visit_attribute (be_attribute *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_argument (be_argument *node) override;
 
 private:
-  ACE_CString export_macro_;
+  std::string_view export_macro_;
 };
 
 #endif /* _BE_COMPONENT_AMI_RH_EXH_H_ */

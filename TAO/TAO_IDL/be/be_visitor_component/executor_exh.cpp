@@ -11,6 +11,9 @@
 
 #include "component.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -22,10 +25,6 @@ be_visitor_executor_exh::be_visitor_executor_exh (
   // classes generating servant code. So we can just override
   // all that here.
   export_macro_ = be_global->exec_export_macro ();
-}
-
-be_visitor_executor_exh::~be_visitor_executor_exh ()
-{
 }
 
 int
@@ -54,14 +53,13 @@ be_visitor_executor_exh::visit_component (be_component *node)
     }
   this->node_ = node;
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string_view const sname = scope->full_name ();
 
   // No _cxx_ prefix.
-  const char *lname =
-    node->original_local_name ()->get_string ();
+  std::string_view const lname =
+    node->original_local_name ()->get_string_view_or_empty ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "/// Component Executor Implementation Class: "
@@ -132,18 +130,16 @@ be_visitor_executor_exh::visit_component (be_component *node)
   //    << "Component. */" << be_nl
       << "//@{";
 
-  const char *container_type = be_global->ciao_container_type ();
-
   os_ << be_nl_2
       << "/// Setter for container context for this component" << be_nl
       << "/// @param[in] ctx - Container context" << be_nl
       << "virtual void set_"
-      << tao_cg->downcase (container_type)
+      << tao_cg->downcase (be_global->ciao_container_type ())
       << "_context ("
       << "::Components::" << be_global->ciao_container_type ()
       << "Context_ptr ctx);";
 
-  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
+  if (be_global->ciao_container_type () == "Session")
     {
       os_ << be_nl_2
           << "/// Component state change method to configuration_complete state" << be_nl
@@ -281,21 +277,20 @@ be_visitor_executor_exh::visit_component (be_component *node)
 int
 be_visitor_executor_exh::visit_provides (be_provides *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   be_type *impl = node->provides_type ();
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string_view const sname = scope->full_name ();
 
   // No '_cxx_' prefix.
-  const char *lname =
-    impl->original_local_name ()->get_string ();
+  std::string_view const lname =
+    impl->original_local_name ()->get_string_view_or_empty ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "/// Factory method and getter for " << port_name << " facet" << be_nl
@@ -310,11 +305,11 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 int
 be_visitor_executor_exh::visit_consumes (be_consumes *node)
 {
-  const char *obj_name =
+  std::string_view const obj_name =
     node->consumes_type ()->full_name ();
 
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "virtual void" << be_nl

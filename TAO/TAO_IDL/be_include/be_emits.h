@@ -16,16 +16,16 @@ public:
   be_emits (UTL_ScopedName *n,
             AST_Type *emits_type);
 
-  virtual ~be_emits ();
+  ~be_emits () override;
 
   // Non-virtual override of frontend method.
   be_eventtype *emits_type () const;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif // BE_EMITS_H

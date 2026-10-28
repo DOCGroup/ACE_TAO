@@ -18,10 +18,6 @@ be_visitor_interface_svts::be_visitor_interface_svts (
 {
 }
 
-be_visitor_interface_svts::~be_visitor_interface_svts ()
-{
-}
-
 int
 be_visitor_interface_svts::visit_interface (be_interface *node)
 {

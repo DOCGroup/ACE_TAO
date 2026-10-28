@@ -9,10 +9,14 @@ class AST_Union;
 class TAO_IDL_FE_Export AST_UnionFwd : public virtual AST_StructureFwd
 {
 public:
+  AST_UnionFwd (AST_UnionFwd const &) = delete;
+  AST_UnionFwd (AST_UnionFwd &&) = delete;
+  AST_UnionFwd &operator= (AST_UnionFwd const &) = delete;
+  AST_UnionFwd &operator= (AST_UnionFwd &&) = delete;
   AST_UnionFwd (AST_Union *dummy,
                 UTL_ScopedName *n);
 
-  ~AST_UnionFwd () override;
+  ~AST_UnionFwd () override = default;
 
   // Cleanup function.
   void destroy () override;

@@ -19,7 +19,3 @@ be_visitor_valuetype_init_ci::be_visitor_valuetype_init_ci (
 {
 }
 
-be_visitor_valuetype_init_ci::~be_visitor_valuetype_init_ci ()
-{
-}
-

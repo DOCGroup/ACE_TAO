@@ -12,6 +12,8 @@
 
 #include "connector.h"
 
+#include <string_view>
+
 #include "ast_structure.h"
 #include "ast_typedef.h"
 #include "ast_template_module.h"
@@ -25,16 +27,7 @@
 
 be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    t_inst_ (nullptr),
-    t_ref_ (nullptr),
-    t_params_ (nullptr),
-    base_tname_ (nullptr)
-{
-}
-
-be_visitor_connector_dds_ex_base::~be_visitor_connector_dds_ex_base (
-  )
+  : be_visitor_component_scope (ctx)
 {
 }
 
@@ -83,9 +76,8 @@ be_visitor_connector_dds_ex_base::is_dds_type (
           base = base->base_connector ();
         }
 
-      const char* lname = base->local_name ()->get_string ();
-
-      if (ACE_OS::strcmp (lname, "DDS_Base") == 0)
+      if (base->local_name ()->get_string_view_or_empty ()
+          == "DDS_Base")
         {
           AST_Structure *s = dynamic_cast<AST_Structure*> (d);
 
@@ -189,7 +181,8 @@ be_visitor_connector_dds_ex_base::match_template_args ()
        ! i.is_done ();
        i.next ())
     {
-      const char *ref_name = i.item ()->get_string ();
+      std::string_view const ref_name =
+        i.item ()->get_string_view_or_empty ();
       size_t slot = 0;
 
       for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR ci (
@@ -200,7 +193,7 @@ be_visitor_connector_dds_ex_base::match_template_args ()
           FE_Utils::T_Param_Info *t_param = nullptr;
           ci.next (t_param);
 
-          if (t_param->name_ == ref_name)
+          if (std::string_view (t_param->name_) == ref_name)
             {
               AST_Decl **d = nullptr;
               this->t_inst_->template_args ()->get (d, slot);

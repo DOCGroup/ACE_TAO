@@ -20,10 +20,6 @@ be_visitor_structure_ci::be_visitor_structure_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_ci::~be_visitor_structure_ci ()
-{
-}
-
 // visit the Structure node and its scope
 int be_visitor_structure_ci::visit_structure (be_structure *node)
 {

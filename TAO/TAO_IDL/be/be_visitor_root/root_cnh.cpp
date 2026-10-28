@@ -17,10 +17,6 @@ be_visitor_root_cnh::be_visitor_root_cnh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_cnh::~be_visitor_root_cnh ()
-{
-}
-
 int
 be_visitor_root_cnh::visit_root (be_root *node)
 {

@@ -54,15 +54,8 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
       ast_visitor_context *ctx,
       bool ref_only)
   : ast_visitor (),
-    tmi_ (nullptr),
     ctx_ (ctx),
-    for_eventtype_ (false),
-    for_finder_ (false),
     ref_only_ (ref_only)
-{
-}
-
-ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst ()
 {
 }
 
@@ -151,7 +144,7 @@ ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
-                  Identifier (node->local_name ()->get_string ()),
+                  Identifier (node->local_name ()->get_string_view_or_empty ()),
                   -1);
 
   UTL_ScopedName *local_name = nullptr;
@@ -437,7 +430,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
-                  Identifier (node->local_name ()->get_string ()),
+                  Identifier (node->local_name ()->get_string_view_or_empty ()),
                   -1);
 
   UTL_ScopedName *local_name = nullptr;
@@ -793,7 +786,7 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
-                  Identifier (node->local_name ()->get_string ()),
+                  Identifier (node->local_name ()->get_string_view_or_empty ()),
                   -1);
 
   UTL_ScopedName *local_name = nullptr;
@@ -890,7 +883,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
-                  Identifier (node->local_name ()->get_string ()),
+                  Identifier (node->local_name ()->get_string_view_or_empty ()),
                   -1);
 
   UTL_ScopedName *local_name = nullptr;
@@ -981,7 +974,7 @@ ast_visitor_tmpl_module_inst::visit_operation (AST_Operation *node)
     dynamic_cast<AST_Type*> (
       this->reify_type (node->return_type ()));
 
-  Identifier id (node->local_name ()->get_string ());
+  Identifier id (node->local_name ()->get_string_view_or_empty ());
   UTL_ScopedName sn (&id, nullptr);
 
   AST_Operation *added_op =
@@ -1168,7 +1161,7 @@ ast_visitor_tmpl_module_inst::visit_field (AST_Field *node)
 int
 ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
 {
-  Identifier id (node->local_name ()->get_string ());
+  Identifier id (node->local_name ()->get_string_view_or_empty ());
   UTL_ScopedName sn (&id, nullptr);
 
   AST_Factory *added_factory = nullptr;

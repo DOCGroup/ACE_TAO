@@ -34,9 +34,7 @@ be_union_fwd::be_union_fwd (AST_Union *dummy,
 {
 }
 
-be_union_fwd::~be_union_fwd ()
-{
-}
+be_union_fwd::~be_union_fwd () = default;
 
 void
 be_union_fwd::destroy ()

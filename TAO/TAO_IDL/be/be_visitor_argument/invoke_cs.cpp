@@ -21,11 +21,6 @@ be_visitor_args_invoke_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args_invoke_cs::
-~be_visitor_args_invoke_cs ()
-{
-}
-
 int be_visitor_args_invoke_cs::visit_argument (be_argument *node)
 {
   this->ctx_->node (node);

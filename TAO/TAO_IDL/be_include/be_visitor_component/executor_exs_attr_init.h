@@ -23,17 +23,21 @@ class be_visitor_executor_exs_attr_init
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_executor_exs_attr_init (be_visitor_context *ctx);
-  ~be_visitor_executor_exs_attr_init ();
+  explicit be_visitor_executor_exs_attr_init (be_visitor_context *ctx);
+  ~be_visitor_executor_exs_attr_init () override = default;
+  be_visitor_executor_exs_attr_init (be_visitor_executor_exs_attr_init const &) = delete;
+  be_visitor_executor_exs_attr_init (be_visitor_executor_exs_attr_init &&) = delete;
+  be_visitor_executor_exs_attr_init &operator= (be_visitor_executor_exs_attr_init const &) = delete;
+  be_visitor_executor_exs_attr_init &operator= (be_visitor_executor_exs_attr_init &&) = delete;
 
-  virtual int visit_attribute (be_attribute *node);
+  int visit_attribute (be_attribute *node) override;
 
-  virtual int pre_process (be_decl *);
+  int pre_process (be_decl *) override;
 
   bool attr_generated () const;
 
 private:
-  bool semicolon_generated_;
+  bool semicolon_generated_ {};
 };
 
 #endif /* _BE_COMPONENT_EXECUTOR_EXS_ATTR_INIT_H_ */

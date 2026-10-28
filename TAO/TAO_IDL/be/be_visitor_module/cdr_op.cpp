@@ -17,10 +17,6 @@ be_visitor_module_cdr_op::be_visitor_module_cdr_op (be_visitor_context *ctx)
 {
 }
 
-be_visitor_module_cdr_op::~be_visitor_module_cdr_op ()
-{
-}
-
 int
 be_visitor_module_cdr_op::visit_module (be_module *node)
 {

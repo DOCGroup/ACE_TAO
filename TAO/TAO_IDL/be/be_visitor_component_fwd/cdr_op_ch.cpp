@@ -18,10 +18,6 @@ be_visitor_component_fwd_cdr_op_ch::be_visitor_component_fwd_cdr_op_ch (
 {
 }
 
-be_visitor_component_fwd_cdr_op_ch::~be_visitor_component_fwd_cdr_op_ch ()
-{
-}
-
 int
 be_visitor_component_fwd_cdr_op_ch::visit_component_fwd (be_component_fwd *node)
 {

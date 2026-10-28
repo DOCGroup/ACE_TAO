@@ -24,11 +24,6 @@ be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (
 {
 }
 
-// Destructor.
-be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch ()
-{
-}
-
 // Visit the union_branch node.
 int
 be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)

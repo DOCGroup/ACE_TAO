@@ -80,13 +80,17 @@ public:
                 bool local,
                 bool abstract);
 
-  ~AST_Sequence () override;
+  ~AST_Sequence () override = default;
+  AST_Sequence (AST_Sequence const &) = delete;
+  AST_Sequence (AST_Sequence &&) = delete;
+  AST_Sequence &operator= (AST_Sequence const &) = delete;
+  AST_Sequence &operator= (AST_Sequence &&) = delete;
 
   bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
-  AST_Expression *max_size ();
+  AST_Expression *max_size () const;
 
   AST_Type *base_type () const;
 
@@ -124,7 +128,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &base_type_annotations ();
-  void base_type_annotations (const AST_Annotation_Appls &annotations);
+  void base_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 private:
@@ -135,10 +139,10 @@ private:
   AST_Type *pd_base_type;
   // Sequence base type.
 
-  bool unbounded_;
+  bool unbounded_ {true};
   // Whether we are bounded or unbounded.
 
-  bool owns_base_type_;
+  bool owns_base_type_ {};
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.
 

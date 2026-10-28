@@ -20,11 +20,15 @@ class be_visitor_facet_exh
   : public be_visitor_component_scope
 {
 public:
-  be_visitor_facet_exh (be_visitor_context *ctx);
+  explicit be_visitor_facet_exh (be_visitor_context *ctx);
 
-  ~be_visitor_facet_exh ();
+  ~be_visitor_facet_exh () override = default;
+  be_visitor_facet_exh (be_visitor_facet_exh const &) = delete;
+  be_visitor_facet_exh (be_visitor_facet_exh &&) = delete;
+  be_visitor_facet_exh &operator= (be_visitor_facet_exh const &) = delete;
+  be_visitor_facet_exh &operator= (be_visitor_facet_exh &&) = delete;
 
-  virtual int visit_provides (be_provides *node);
+  int visit_provides (be_provides *node) override;
 
   static int method_helper (be_interface *derived,
                             be_interface *node,

@@ -22,9 +22,7 @@ be_visitor_attr_init::be_visitor_attr_init (
 {
 }
 
-be_visitor_attr_init::~be_visitor_attr_init ()
-{
-}
+be_visitor_attr_init::~be_visitor_attr_init () = default;
 
 int
 be_visitor_attr_init::visit_array (be_array *)
@@ -141,10 +139,9 @@ be_visitor_attr_init::visit_union (be_union *)
 }
 
 int
-be_visitor_attr_init::visit_valuebox (be_valuebox *node)
+be_visitor_attr_init::visit_valuebox (be_valuebox *)
 {
-  os_ << "static_cast< ::" << node->full_name ()
-      << " *> (0)";
+  os_ << "nullptr";
 
   return 0;
 }

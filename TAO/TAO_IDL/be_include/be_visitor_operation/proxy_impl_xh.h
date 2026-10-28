@@ -25,13 +25,17 @@ class be_visitor_operation_proxy_impl_xh : public be_visitor_operation
 {
 public:
   /// constructor
-  be_visitor_operation_proxy_impl_xh (be_visitor_context *ctx);
+  explicit be_visitor_operation_proxy_impl_xh (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_proxy_impl_xh ();
+  ~be_visitor_operation_proxy_impl_xh () override = default;
+  be_visitor_operation_proxy_impl_xh (be_visitor_operation_proxy_impl_xh const &) = delete;
+  be_visitor_operation_proxy_impl_xh (be_visitor_operation_proxy_impl_xh &&) = delete;
+  be_visitor_operation_proxy_impl_xh &operator= (be_visitor_operation_proxy_impl_xh const &) = delete;
+  be_visitor_operation_proxy_impl_xh &operator= (be_visitor_operation_proxy_impl_xh &&) = delete;
 
   /// visit operation.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_PROXY_IMPL_XH_H_ */

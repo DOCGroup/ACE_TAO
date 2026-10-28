@@ -24,12 +24,16 @@
 class be_visitor_interface_any_op_cs : public be_visitor_interface
 {
 public:
-  be_visitor_interface_any_op_cs (be_visitor_context *ctx);
-  ~be_visitor_interface_any_op_cs ();
+  explicit be_visitor_interface_any_op_cs (be_visitor_context *ctx);
+  ~be_visitor_interface_any_op_cs () override = default;
+  be_visitor_interface_any_op_cs (be_visitor_interface_any_op_cs const &) = delete;
+  be_visitor_interface_any_op_cs (be_visitor_interface_any_op_cs &&) = delete;
+  be_visitor_interface_any_op_cs &operator= (be_visitor_interface_any_op_cs const &) = delete;
+  be_visitor_interface_any_op_cs &operator= (be_visitor_interface_any_op_cs &&) = delete;
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_interface (be_interface *node) override;
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 };
 
 #endif /* _BE_INTERFACE_ANY_OP_CS_H_ */

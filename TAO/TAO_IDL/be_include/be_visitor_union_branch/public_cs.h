@@ -27,20 +27,25 @@
 class be_visitor_union_branch_public_cs : public be_visitor_decl
 {
 public:
-  be_visitor_union_branch_public_cs (be_visitor_context *ctx);
-  ~be_visitor_union_branch_public_cs ();
+  explicit be_visitor_union_branch_public_cs (be_visitor_context *ctx);
+  ~be_visitor_union_branch_public_cs () override = default;
 
-  virtual int visit_union_branch (be_union_branch *node);
+  be_visitor_union_branch_public_cs (be_visitor_union_branch_public_cs const &) = delete;
+  be_visitor_union_branch_public_cs (be_visitor_union_branch_public_cs &&) = delete;
+  be_visitor_union_branch_public_cs &operator= (be_visitor_union_branch_public_cs const &) = delete;
+  be_visitor_union_branch_public_cs &operator= (be_visitor_union_branch_public_cs &&) = delete;
 
-  virtual int visit_array (be_array *node);
-  virtual int visit_enum (be_enum *node);
-  virtual int visit_sequence (be_sequence *node);
-  virtual int visit_map (be_map *node);
-  virtual int visit_string (be_string *node);
-  virtual int visit_structure (be_structure *node);
-  virtual int visit_structure_fwd (be_structure_fwd *node);
-  virtual int visit_union (be_union *node);
-  virtual int visit_union_fwd (be_union_fwd *node);
+  int visit_union_branch (be_union_branch *node) override;
+
+  int visit_array (be_array *node) override;
+  int visit_enum (be_enum *node) override;
+  int visit_sequence (be_sequence *node) override;
+  int visit_map (be_map *node) override;
+  int visit_string (be_string *node) override;
+  int visit_structure (be_structure *node) override;
+  int visit_structure_fwd (be_structure_fwd *node) override;
+  int visit_union (be_union *node) override;
+  int visit_union_fwd (be_union_fwd *node) override;
 
 private:
   int visit_seq_map_common (be_type *node);

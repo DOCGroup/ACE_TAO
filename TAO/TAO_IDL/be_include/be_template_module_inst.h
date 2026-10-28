@@ -13,13 +13,13 @@ public:
                            AST_Template_Module *ref,
                            FE_Utils::T_ARGLIST *template_args);
 
-  virtual ~be_template_module_inst ();
+  ~be_template_module_inst () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif           // BE_TEMPLATE_MODULE_INST_H

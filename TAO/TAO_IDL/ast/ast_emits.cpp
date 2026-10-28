@@ -15,10 +15,6 @@ AST_Emits::AST_Emits (UTL_ScopedName *n,
 {
 }
 
-AST_Emits::~AST_Emits ()
-{
-}
-
 AST_Type *
 AST_Emits::emits_type () const
 {

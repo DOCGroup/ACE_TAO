@@ -96,15 +96,10 @@ AST_Array::AST_Array (UTL_ScopedName *n,
     AST_ConcreteType (AST_Decl::NT_array,
                       n),
     pd_n_dims (nd),
-    pd_base_type (nullptr),
-    owns_base_type_ (false)
+    pd_base_type (nullptr)
 {
   this->pd_dims = this->compute_dims (ds,
                                       nd);
-}
-
-AST_Array::~AST_Array ()
-{
 }
 
 // Private operations.
@@ -201,13 +196,13 @@ AST_Array::compute_size_type ()
 
 // Data accessors.
 ACE_CDR::ULong
-AST_Array::n_dims ()
+AST_Array::n_dims () const
 {
   return this->pd_n_dims;
 }
 
 AST_Expression **
-AST_Array::dims ()
+AST_Array::dims () const
 {
   return this->pd_dims;
 }

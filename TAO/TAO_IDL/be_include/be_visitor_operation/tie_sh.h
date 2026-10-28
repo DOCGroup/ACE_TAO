@@ -29,13 +29,17 @@ class be_visitor_operation_tie_sh : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_operation_tie_sh (be_visitor_context *ctx);
+  explicit be_visitor_operation_tie_sh (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_tie_sh ();
+  ~be_visitor_operation_tie_sh () override = default;
+  be_visitor_operation_tie_sh (be_visitor_operation_tie_sh const &) = delete;
+  be_visitor_operation_tie_sh (be_visitor_operation_tie_sh &&) = delete;
+  be_visitor_operation_tie_sh &operator= (be_visitor_operation_tie_sh const &) = delete;
+  be_visitor_operation_tie_sh &operator= (be_visitor_operation_tie_sh &&) = delete;
 
   /// set the right context and make a visitor
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_TIE_SH_H_ */

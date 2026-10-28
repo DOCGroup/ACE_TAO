@@ -17,10 +17,6 @@ be_visitor_interface_smart_proxy_ch::be_visitor_interface_smart_proxy_ch (
 {
 }
 
-be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch ()
-{
-}
-
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -45,13 +41,13 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory (int permanent = 1);"
       << be_nl
-      <<"// <permanent> signifies that the proxy factory will remain" <<be_nl
-      <<"// registered with the Proxy Factory Adapter until the program"<<be_nl
-      <<"// terminates. That is, it will be a one-shot factory for the "<<be_nl
-      <<"// interface.  If this value is set to 0, then the factory will"<<be_nl
-      <<"// be unregistered after the first invocation providing the "<<be_nl
-      << "// flexibility of having a different smart proxy per object "<<be_nl
-      <<"// instead of per interface."<<be_nl<< be_nl
+      << "// <permanent> signifies that the proxy factory will remain" << be_nl
+      << "// registered with the Proxy Factory Adapter until the program" << be_nl
+      << "// terminates. That is, it will be a one-shot factory for the" << be_nl
+      << "// interface.  If this value is set to 0, then the factory will" << be_nl
+      << "// be unregistered after the first invocation providing the" << be_nl
+      << "// flexibility of having a different smart proxy per object" << be_nl
+      << "// instead of per interface." << be_nl << be_nl
       << "virtual ~TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory ();" << be_nl_2
       << "virtual "<< node->local_name ()

@@ -18,10 +18,6 @@ be_visitor_sequence_any_op_ch::be_visitor_sequence_any_op_ch (
 {
 }
 
-be_visitor_sequence_any_op_ch::~be_visitor_sequence_any_op_ch ()
-{
-}
-
 int
 be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 {
@@ -39,7 +35,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  std::string_view macro = this->ctx_->export_macro ();
 
   *os << be_nl_2;
 
@@ -47,7 +43,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   *os << be_nl_2;
 
-  ACE_CString name;
+  std::string name;
 
   bool alt = be_global->alt_mapping ();
 
@@ -70,24 +66,24 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   // Generate the Any <<= and >>= operators.
   *os << macro
       << " void"
-      << " operator<<= (::CORBA::Any &, const ::"
-      << name.c_str ()
-      << " &); // copying version" << be_nl;
+      << " operator<<= (::CORBA::Any &, ::"
+      << name
+      << " const &); // copying version" << be_nl;
 
   if (!alt)
     {
       *os << macro
           << " void"
           << " operator<<= (::CORBA::Any &, ::"
-          << name.c_str ()
+          << name
           << "*); // noncopying version" << be_nl;
     }
 
   *os << macro
       << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, const ::"
-      << name.c_str ()
-      << " *&);";
+      << " operator>>= (::CORBA::Any const &, ::"
+      << name
+      << " const *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;
 

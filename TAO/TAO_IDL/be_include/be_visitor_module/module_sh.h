@@ -26,10 +26,15 @@ class be_visitor_module_sh : public be_visitor_module
 {
 public:
   /// constructor
-  be_visitor_module_sh (be_visitor_context *ctx);
+  explicit be_visitor_module_sh (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_module_sh () override;
+  ~be_visitor_module_sh () override = default;
+
+  be_visitor_module_sh (const be_visitor_module_sh &) = delete;
+  be_visitor_module_sh (be_visitor_module_sh &&) = delete;
+  be_visitor_module_sh &operator= (const be_visitor_module_sh &) = delete;
+  be_visitor_module_sh &operator= (be_visitor_module_sh &&) = delete;
 
   /// visit module. We provide code for this method in the derived class
   int visit_module (be_module *node) override;

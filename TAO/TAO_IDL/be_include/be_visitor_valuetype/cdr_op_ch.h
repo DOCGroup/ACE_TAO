@@ -27,13 +27,17 @@ class be_visitor_valuetype_cdr_op_ch : public be_visitor_valuetype
 {
 public:
   /// constructor
-  be_visitor_valuetype_cdr_op_ch (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_cdr_op_ch ();
+  ~be_visitor_valuetype_cdr_op_ch () override = default;
+  be_visitor_valuetype_cdr_op_ch (be_visitor_valuetype_cdr_op_ch const &) = delete;
+  be_visitor_valuetype_cdr_op_ch (be_visitor_valuetype_cdr_op_ch &&) = delete;
+  be_visitor_valuetype_cdr_op_ch &operator= (be_visitor_valuetype_cdr_op_ch const &) = delete;
+  be_visitor_valuetype_cdr_op_ch &operator= (be_visitor_valuetype_cdr_op_ch &&) = delete;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_CDR_OP_CH_H_ */

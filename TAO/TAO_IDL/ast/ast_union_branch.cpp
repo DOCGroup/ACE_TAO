@@ -94,10 +94,6 @@ AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
 {
 }
 
-AST_UnionBranch::~AST_UnionBranch ()
-{
-}
-
 // Redefinition of inherited virtual operations.
 
 // Dump this AST_UnionBranch node to the ostream o.
@@ -140,6 +136,12 @@ AST_UnionBranch::destroy ()
 }
 
 UTL_LabelList *
+AST_UnionBranch::labels ()
+{
+  return this->pd_ll;
+}
+
+UTL_LabelList const *
 AST_UnionBranch::labels () const
 {
   return this->pd_ll;
@@ -165,8 +167,26 @@ AST_UnionBranch::label (unsigned long index)
   return nullptr;
 }
 
+AST_UnionLabel const *
+AST_UnionBranch::label (unsigned long index) const
+{
+  UTL_LabelList const *labels = this->pd_ll;
+
+  for (unsigned long i = 0; labels != nullptr; ++i)
+    {
+      if (i == index)
+        {
+          return labels->head ();
+        }
+
+      labels = static_cast<UTL_LabelList const *> (labels->tail ());
+    }
+
+  return nullptr;
+}
+
 unsigned long
-AST_UnionBranch::label_list_length ()
+AST_UnionBranch::label_list_length () const
 {
   if (this->pd_ll)
     {

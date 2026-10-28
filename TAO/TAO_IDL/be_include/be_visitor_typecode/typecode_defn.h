@@ -19,7 +19,7 @@
 #include "be_visitor_decl.h"
 #include "be_visitor_scope.h"
 
-const unsigned long TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;
+constexpr unsigned long TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;
 
 class AST_Structure;
 class be_interface_fwd;
@@ -34,28 +34,33 @@ class be_interface_fwd;
 class be_visitor_typecode_defn : public be_visitor_scope
 {
 public:
-  be_visitor_typecode_defn (be_visitor_context *ctx);
-  ~be_visitor_typecode_defn ();
+  explicit be_visitor_typecode_defn (be_visitor_context *ctx);
+  ~be_visitor_typecode_defn () override;
 
-  virtual int visit_array (be_array *node);
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_interface_fwd (be_interface_fwd *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_sequence (be_sequence *node);
-  virtual int visit_string (be_string *node);
-  virtual int visit_fixed (be_fixed *node);
-  virtual int visit_structure (be_structure *node);
-  virtual int visit_typedef (be_typedef *node);
-  virtual int visit_union (be_union *node);
-  virtual int visit_valuetype (be_valuetype * node);
-  virtual int visit_eventtype (be_eventtype * node);
+  be_visitor_typecode_defn (be_visitor_typecode_defn const &) = delete;
+  be_visitor_typecode_defn (be_visitor_typecode_defn &&) = delete;
+  be_visitor_typecode_defn &operator= (be_visitor_typecode_defn const &) = delete;
+  be_visitor_typecode_defn &operator= (be_visitor_typecode_defn &&) = delete;
+
+  int visit_array (be_array *node) override;
+  int visit_interface (be_interface *node) override;
+  int visit_interface_fwd (be_interface_fwd *node) override;
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_sequence (be_sequence *node) override;
+  int visit_string (be_string *node) override;
+  int visit_fixed (be_fixed *node) override;
+  int visit_structure (be_structure *node) override;
+  int visit_typedef (be_typedef *node) override;
+  int visit_union (be_union *node) override;
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
   /// Processing for scopes.
 
   /// do any processing after every element except the last one of the scope is
   /// processed
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 
   // Data structure for handling recursive and repeated typecodes.
 
@@ -104,7 +109,7 @@ protected:
   ACE_Unbounded_Queue <QNode*> tc_queue_;
 
   /// @c true if we are detecting recursion.
-  bool recursion_detect_;
+  bool recursion_detect_ {};
 
 private:
   //
@@ -114,10 +119,10 @@ private:
   // ACE_CDR::Long computed_tc_size_;
 
   /// the encap length of the node under consideration
-  ACE_CDR::Long computed_encap_len_;
+  ACE_CDR::Long computed_encap_len_ {};
 
   /// the encap length of the scope of the node under consideration
-  ACE_CDR::Long computed_scope_encap_len_;
+  ACE_CDR::Long computed_scope_encap_len_ {};
 
   // the following are used for recursive and repeated typecodes
 
@@ -128,11 +133,11 @@ private:
   ACE_Unbounded_Queue <QNode*> compute_queue_;
 
   /// stores scope lens during computation
-  ACE_CDR::Long scope_stack_ [TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE];
+  ACE_CDR::Long scope_stack_ [TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE] {};
 
   // scope related routines
 
-  unsigned long index_;
+  unsigned long index_ {};
 
   int push (ACE_CDR::Long);
 
@@ -141,10 +146,10 @@ private:
 protected:
   // queue related routines
 
-  const QNode *queue_insert (ACE_Unbounded_Queue <QNode*> &,
+  QNode const *queue_insert (ACE_Unbounded_Queue <QNode*> &,
                              be_type *node, ACE_CDR::Long offset);
 
-  const QNode *queue_lookup (ACE_Unbounded_Queue <QNode*> &, be_type *node);
+  QNode const *queue_lookup (ACE_Unbounded_Queue <QNode*> &, be_type *node);
 
   void queue_reset (ACE_Unbounded_Queue <QNode*> &);
 };

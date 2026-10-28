@@ -12,6 +12,9 @@
 
 #include "array.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_array_ch::be_visitor_array_ch (be_visitor_context *ctx)
   : be_visitor_array (ctx)
 {
@@ -142,20 +145,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // Now define the slice type and other required operations
   *os << "using ";
 
-  char anon_p [2];
-  ACE_OS::memset (anon_p,
-                  '\0',
-                  2);
-
-  if (this->ctx_->tdef () != nullptr)
-    {
-      anon_p[0] = '\0';
-    }
-  else
-    {
-      ACE_OS::sprintf (anon_p,
-                       "_");
-    }
+  std::string_view const anon_p = this->ctx_->tdef () != nullptr ? "" : "_";
 
   *os << anon_p << node->local_name () << "_slice = ";
 
@@ -191,7 +181,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       if (node->size_type () == AST_Type::VARIABLE)
         {
           *os << be_nl_2
-              << "using " << node->local_name () << "_var = " << be_idt_nl
+              << "using " << node->local_name () << "_var =" << be_idt_nl
               << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
               << node->local_name () << "_slice," << be_nl
@@ -199,7 +189,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
               << ">;" << be_uidt;
 
           *os << be_nl_2
-              << "using " << node->local_name () << "_out = " << be_idt_nl
+              << "using " << node->local_name () << "_out =" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
               << node->local_name () << "_var," << be_nl
@@ -210,7 +200,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       else
         {
           *os << be_nl_2
-              << "using " << node->local_name () << "_var = " << be_idt_nl
+              << "using " << node->local_name () << "_var =" << be_idt_nl
               << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
               << node->local_name () << "," << be_nl
               << node->local_name () << "_slice," << be_nl
@@ -234,7 +224,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   // The _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
-  ACE_CString storage_class;
+  std::string storage_class;
+  std::string const export_macro (be_global->stub_export_macro ());
 
   if (node->is_nested ())
     {
@@ -245,31 +236,31 @@ int be_visitor_array_ch::visit_array (be_array *node)
       else
         {
           storage_class = "extern ";
-          storage_class = storage_class + be_global->stub_export_macro ();
-          storage_class = storage_class + " ";
+          storage_class += export_macro;
+          storage_class += " ";
         }
     }
   else
     {
-      storage_class = be_global->stub_export_macro ();
-      storage_class = storage_class + " ";
+      storage_class = export_macro;
+      storage_class += " ";
     }
 
   if (td != nullptr)
     {
       // Typedefed array.
-      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice")
+      *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *" << node->nested_type_name (scope, "_alloc") << " ();"
           << be_nl_2;
-      *os << storage_class.c_str() << "void "
+      *os << storage_class << "void "
           << node->nested_type_name (scope, "_free")
           << " (" << node->nested_type_name (scope, "_slice")
           << " *_tao_slice);" << be_nl_2;
-      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice")
+      *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *" << node->nested_type_name (scope, "_dup")
           << " (const " << node->nested_type_name (scope, "_slice")
           << " *_tao_slice);" << be_nl_2;
-      *os << storage_class.c_str() << "void "
+      *os << storage_class << "void "
           << node->nested_type_name (scope, "_copy")
           << " (" << node->nested_type_name (scope, "_slice") << " *_tao_to, const "
           << node->nested_type_name (scope, "_slice") << " *_tao_from);";
@@ -277,18 +268,18 @@ int be_visitor_array_ch::visit_array (be_array *node)
   else
     {
       // Anonymous array.
-      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice", "_")
+      *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *" << node->nested_type_name (scope, "_alloc", "_")
           << " ();" << be_nl_2;
-      *os << storage_class.c_str() << "void "
+      *os << storage_class << "void "
           << node->nested_type_name (scope, "_free", "_")
           << " (" << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_slice);" << be_nl_2;
-      *os << storage_class.c_str() << node->nested_type_name (scope, "_slice", "_")
+      *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *" << node->nested_type_name (scope, "_dup", "_")
           << " (const " << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_slice);" << be_nl_2;
-      *os << storage_class.c_str() << "void "
+      *os << storage_class << "void "
           << node->nested_type_name (scope, "_copy", "_")
           << " (" << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_to, const " << node->nested_type_name (scope, "_slice", "_")

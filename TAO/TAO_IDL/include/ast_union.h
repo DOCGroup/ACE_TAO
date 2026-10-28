@@ -78,12 +78,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Union : public virtual AST_Structure
 {
 public:
+  AST_Union (AST_Union const &) = delete;
+  AST_Union (AST_Union &&) = delete;
+  AST_Union &operator= (AST_Union const &) = delete;
+  AST_Union &operator= (AST_Union &&) = delete;
   AST_Union (AST_ConcreteType *disc_type,
              UTL_ScopedName *n,
              bool local,
              bool abstract);
 
-  ~AST_Union () override;
+  ~AST_Union () override = default;
 
   // This also calls the base class version.
   void redefine (AST_Structure *from) override;
@@ -94,8 +98,9 @@ public:
   // Data Accessors.
 
   AST_ConcreteType *disc_type ();
+  AST_ConcreteType const *disc_type () const;
 
-  AST_Expression::ExprType udisc_type ();
+  AST_Expression::ExprType udisc_type () const;
 
   struct DefaultValue
   {
@@ -111,8 +116,8 @@ public:
       ACE_CDR::ULong enum_val;
       ACE_CDR::LongLong longlong_val;
       ACE_CDR::ULongLong ulonglong_val;
-    } u;
-    long computed_;
+    } u {};
+    long computed_ {-2};
     // computed == -1 => error condition
     //          == 0 => does not exist because all cases have been covered
     //          == 1 => already computed
@@ -138,14 +143,15 @@ public:
    */
   ///{
   AST_Annotation_Appls &disc_annotations ();
-  void disc_annotations (const AST_Annotation_Appls &annotations);
+  AST_Annotation_Appls const &disc_annotations () const;
+  void disc_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 protected:
   int compute_size_type () override;
   // Compute the size type if it is unknown.
 
-  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
+  AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b) override;
   // Moved out of private section so it can be called from subclass.
 
 private:
@@ -196,7 +202,7 @@ private:
   DefaultValue default_value_;
   // Default value (if any).
 
-  int default_index_;
+  int default_index_ {-2};
   // Default label index (zero based indexing).
 
   /**

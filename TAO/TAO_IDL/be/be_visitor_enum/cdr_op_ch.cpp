@@ -16,10 +16,6 @@ be_visitor_enum_cdr_op_ch::be_visitor_enum_cdr_op_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_enum_cdr_op_ch::~be_visitor_enum_cdr_op_ch ()
-{
-}
-
 int
 be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
 {

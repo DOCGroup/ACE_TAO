@@ -22,6 +22,8 @@
 #include "idl_defines.h"
 #include "global_extern.h"
 
+#include <string_view>
+
 be_structure::be_structure (UTL_ScopedName *n,
                             bool local,
                             bool abstract)
@@ -127,13 +129,13 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
       *os << be_nl
           << "     << ";
 
-      ACE_CString instance_name ("_tao_aggregate.");
-      instance_name += f->local_name ()->get_string ();
+      std::string instance_name ("_tao_aggregate.");
+      instance_name += f->local_name ()->get_string_view_or_empty ();
       AST_Decl::NodeType nt = f->field_type ()->node_type ();
       bool member_use_underscore =
         nt == AST_Decl::NT_array || nt == AST_Decl::NT_sequence;
       f->gen_member_ostream_operator (os,
-                                      instance_name.c_str (),
+                                      instance_name,
                                       member_use_underscore,
                                       false);
     }

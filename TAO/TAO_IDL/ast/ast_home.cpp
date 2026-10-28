@@ -38,8 +38,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                    false),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
-    pd_primary_key (primary_key),
-    owns_primary_key_ (false)
+    pd_primary_key (primary_key)
 {
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
@@ -54,10 +53,6 @@ AST_Home::AST_Home (UTL_ScopedName *n,
       // If we are here, it's a param holder and we must destroy it.
       this->owns_primary_key_ = true;
     }
-}
-
-AST_Home::~AST_Home ()
-{
 }
 
 AST_Decl *
@@ -181,7 +176,7 @@ AST_Home::transfer_scope_elements (AST_Interface *dst)
 
       Identifier *local_id = nullptr;
       ACE_NEW (local_id,
-               Identifier (d->local_name ()->get_string ()));
+               Identifier (d->local_name ()->get_string_view_or_empty ()));
       UTL_ScopedName *last_segment = nullptr;
       ACE_NEW (last_segment,
                UTL_ScopedName (local_id,

@@ -1,13 +1,7 @@
 #include "ast_visitor.h"
 #include "ace/config-all.h"
 
-ast_visitor::ast_visitor ()
-{
-}
-
-ast_visitor::~ast_visitor ()
-{
-}
+ast_visitor::ast_visitor () = default;
 
 int ast_visitor::visit_fixed (AST_Fixed *)
 {

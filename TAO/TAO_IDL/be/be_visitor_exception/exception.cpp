@@ -17,10 +17,6 @@ be_visitor_exception::be_visitor_exception (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception::~be_visitor_exception ()
-{
-}
-
 // Visit the Exception node and its scope.
 int
 be_visitor_exception::visit_exception (be_exception *)

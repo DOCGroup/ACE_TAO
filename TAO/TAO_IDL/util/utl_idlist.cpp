@@ -73,7 +73,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_idlist.h"
 #include "utl_identifier.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <optional>
+#include <string_view>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -81,7 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Constructor
 UTL_IdList::UTL_IdList (Identifier *s,
                         UTL_IdList *cdr)
-  : UTL_List ((UTL_List *) cdr),
+  : UTL_List (static_cast<UTL_List *> (cdr)),
     pd_car_data (s)
 {
 }
@@ -100,7 +102,7 @@ UTL_IdList::copy ()
 
   if (this->tail () != nullptr)
     {
-      retval->nconc ((UTL_IdList *) this->tail ()->copy ());
+      retval->nconc (static_cast<UTL_IdList *> (this->tail ()->copy ()));
     }
 
   return retval;
@@ -109,6 +111,12 @@ UTL_IdList::copy ()
 // Get list item.
 Identifier *
 UTL_IdList::head ()
+{
+  return this->pd_car_data;
+}
+
+Identifier const *
+UTL_IdList::head () const
 {
   return this->pd_car_data;
 }
@@ -122,73 +130,107 @@ UTL_IdList::last_component ()
       return this->head ();
     }
 
-  return ((UTL_IdList *) this->tail ())->last_component ();
+  return static_cast<UTL_IdList *> (this->tail ())->last_component ();
+}
+
+Identifier const *
+UTL_IdList::last_component () const
+{
+  if (this->tail () == nullptr)
+    {
+      return this->head ();
+    }
+
+  return static_cast<UTL_IdList const *> (this->tail ())->last_component ();
 }
 
 // Get first item of this list holding a non-empty string.
 Identifier *
 UTL_IdList::first_component ()
 {
-  if (ACE_OS::strlen (this->pd_car_data->get_string ()) > 0)
+  if (!this->pd_car_data->get_string_view_or_empty ().empty ())
     {
       return this->pd_car_data;
     }
 
-  return ((UTL_IdList *) this->tail ())->first_component ();
+  return static_cast<UTL_IdList *> (this->tail ())->first_component ();
+}
+
+Identifier const *
+UTL_IdList::first_component () const
+{
+  if (!this->pd_car_data->get_string_view_or_empty ().empty ())
+    {
+      return this->pd_car_data;
+    }
+
+  return static_cast<UTL_IdList const *> (this->tail ())->first_component ();
 }
 
 int
-UTL_IdList::compare (UTL_IdList *other)
+UTL_IdList::compare (UTL_IdList const *other) const
 {
-  long this_length = this->length ();
+  ACE_CDR::Long this_length = 0;
+  UTL_IdList const *this_list = this;
+  while (this_list != nullptr)
+    {
+      ++this_length;
+      this_list = static_cast<UTL_IdList const *> (this_list->tail ());
+    }
 
   // Strip away any leading empty segments.
 
-  if (ACE_OS::strlen (this->pd_car_data->get_string ()) == 0)
+  if (this->pd_car_data->get_string_view_or_empty ().empty ())
     {
-      UTL_List *this_tail = this->tail ();
+      UTL_List const *this_tail = this->tail ();
 
       if (this_tail == nullptr)
         {
           return 1;
         }
 
-      return ((UTL_IdList *) this_tail)->compare (other);
+      return static_cast<UTL_IdList const *> (this_tail)->compare (other);
     }
 
-  if (ACE_OS::strlen (other->pd_car_data->get_string ()) == 0)
+  if (other->pd_car_data->get_string_view_or_empty ().empty ())
     {
-      UTL_List *other_tail = other->tail ();
+      UTL_List const *other_tail = other->tail ();
 
       if (other_tail == nullptr)
         {
           return 1;
         }
 
-      return this->compare ((UTL_IdList *) other->tail ());
+      return this->compare (static_cast<UTL_IdList const *> (other->tail ()));
     }
 
-  if (this_length != other->length ())
+  ACE_CDR::Long other_length = 0;
+  UTL_IdList const *other_list = other;
+  while (other_list != nullptr)
+    {
+      ++other_length;
+      other_list = static_cast<UTL_IdList const *> (other_list->tail ());
+    }
+
+  if (this_length != other_length)
     {
       return 1;
    }
 
-  Identifier *this_id = nullptr;
-  Identifier *other_id = nullptr;
-
-  for (UTL_IdListActiveIterator this_iter (this), other_iter (other);
-       !this_iter.is_done ();
-       this_iter.next (), other_iter.next ())
+  this_list = this;
+  other_list = other;
+  while (this_list != nullptr)
     {
-      this_id = this_iter.item ();
-      other_id = other_iter.item ();
+      Identifier const *this_id = this_list->head ();
+      Identifier const *other_id = other_list->head ();
 
-      if (ACE_OS::strcmp (this_id->get_string (),
-                          other_id->get_string ())
-            != 0)
+      if (this_id->get_string_view_or_empty () != other_id->get_string_view_or_empty ())
         {
           return 1;
         }
+
+      this_list = static_cast<UTL_IdList const *> (this_list->tail ());
+      other_list = static_cast<UTL_IdList const *> (other_list->tail ());
     }
 
   return 0;
@@ -214,13 +256,14 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      if (i.item ()->get_string ())
+      std::optional<std::string_view> const item = i.item ()->get_string_view ();
+      if (item)
         {
           i.item ()->dump (o);
 
           if (first)
             {
-              if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+              if (*item != "::")
                 {
                   first = false;
                 }
@@ -262,18 +305,18 @@ UTL_IdListActiveIterator::UTL_IdListActiveIterator (UTL_IdList *s)
 
 // Get current item.
 Identifier *
-UTL_IdListActiveIterator::item ()
+UTL_IdListActiveIterator::item () const
 {
     if (this->source == nullptr)
       {
         return nullptr;
       }
 
-    return ((UTL_IdList *) source)->head ();
+    return static_cast<UTL_IdList *> (source)->head ();
 }
 
-char *
-UTL_IdList::get_string_copy ()
+std::string
+UTL_IdList::get_string_copy () const
 {
   /*
    * Absolute Names have "::" as the first item in the idlist, so delimiters
@@ -281,46 +324,25 @@ UTL_IdList::get_string_copy ()
    */
   size_t delimiter_start = is_absolute () ? 1 : 0;
 
-  // Get buffer of the correct size
+  std::string result;
   size_t n = 0;
-  size_t size = 1;
-  for (UTL_IdListActiveIterator i (this);
-       !i.is_done ();
-       i.next ())
+  UTL_IdList const *item_list = this;
+  while (item_list != nullptr)
     {
       if (n > delimiter_start)
         {
-          size += 2; // For delimiter
+          result.append ("::");
         }
-      const char *item = i.item ()->get_string ();
-      size += ACE_OS::strlen (item);
+      result.append (item_list->head ()->get_string_view_or_empty ());
       n++;
-    }
-  char *buffer = new char[size];
-  buffer[0] = '\0';
-
-  // Fill buffer
-  n = 0;
-  for (UTL_IdListActiveIterator i (this);
-       !i.is_done ();
-       i.next ())
-    {
-      if (n > delimiter_start)
-        {
-          ACE_OS::strcat (buffer, "::");
-        }
-      const char *item = i.item ()->get_string ();
-      ACE_OS::strcat (buffer, item);
-      n++;
+      item_list = static_cast<UTL_IdList const *> (item_list->tail ());
     }
 
-  buffer[size - 1] = '\0';
-
-  return buffer;
+  return result;
 }
 
 bool
-UTL_IdList::is_absolute ()
+UTL_IdList::is_absolute () const
 {
-  return !ACE_OS::strcmp (first_component ()->get_string (), "::");
+  return first_component ()->get_string_view_or_empty () == "::";
 }

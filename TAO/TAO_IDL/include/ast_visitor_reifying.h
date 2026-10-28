@@ -40,9 +40,13 @@ class ast_visitor_context;
 class ast_visitor_reifying : public ast_visitor
 {
 public:
-  ast_visitor_reifying (ast_visitor_context *ctx);
+  explicit ast_visitor_reifying (ast_visitor_context *ctx);
+  ast_visitor_reifying (ast_visitor_reifying const &) = delete;
+  ast_visitor_reifying (ast_visitor_reifying &&) = delete;
+  ast_visitor_reifying &operator= (ast_visitor_reifying const &) = delete;
+  ast_visitor_reifying &operator= (ast_visitor_reifying &&) = delete;
 
-  ~ast_visitor_reifying () override;
+  ~ast_visitor_reifying () override = default;
 
   AST_Decl *reified_node () const;
 
@@ -111,7 +115,7 @@ private:
 
 private:
   ast_visitor_context *ctx_;
-  AST_Decl *reified_node_;
+  AST_Decl *reified_node_ {};
 };
 
 #endif // TAO_AST_VISITOR_REIFYING_H

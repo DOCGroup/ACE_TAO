@@ -9,10 +9,14 @@ class AST_EventType;
 class TAO_IDL_FE_Export AST_Emits : public virtual AST_Field
 {
 public:
+  AST_Emits (AST_Emits const &) = delete;
+  AST_Emits (AST_Emits &&) = delete;
+  AST_Emits &operator= (AST_Emits const &) = delete;
+  AST_Emits &operator= (AST_Emits &&) = delete;
   AST_Emits (UTL_ScopedName *n,
              AST_Type *emits_type);
 
-  ~AST_Emits () override;
+  ~AST_Emits () override = default;
 
   // Data Accessor.
   AST_Type *emits_type () const;

@@ -27,11 +27,15 @@ class be_visitor_connector_dds_exs
   //
   //
 public:
-  be_visitor_connector_dds_exs (be_visitor_context *ctx);
+  explicit be_visitor_connector_dds_exs (be_visitor_context *ctx);
 
-  ~be_visitor_connector_dds_exs ();
+  ~be_visitor_connector_dds_exs () override = default;
+  be_visitor_connector_dds_exs (be_visitor_connector_dds_exs const &) = delete;
+  be_visitor_connector_dds_exs (be_visitor_connector_dds_exs &&) = delete;
+  be_visitor_connector_dds_exs &operator= (be_visitor_connector_dds_exs const &) = delete;
+  be_visitor_connector_dds_exs &operator= (be_visitor_connector_dds_exs &&) = delete;
 
-  virtual int visit_connector (be_connector *node);
+  int visit_connector (be_connector *node) override;
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EXS_H_ */

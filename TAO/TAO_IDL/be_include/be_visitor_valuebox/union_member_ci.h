@@ -16,6 +16,8 @@
 #ifndef _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_
 #define _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_valuebox_union_member_ci
  *
@@ -28,10 +30,15 @@ class be_visitor_valuebox_union_member_ci : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_valuebox_union_member_ci (be_visitor_context *ctx);
+  explicit be_visitor_valuebox_union_member_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_union_member_ci () override;
+  ~be_visitor_valuebox_union_member_ci () override = default;
+
+  be_visitor_valuebox_union_member_ci (be_visitor_valuebox_union_member_ci const &) = delete;
+  be_visitor_valuebox_union_member_ci (be_visitor_valuebox_union_member_ci &&) = delete;
+  be_visitor_valuebox_union_member_ci &operator= (be_visitor_valuebox_union_member_ci const &) = delete;
+  be_visitor_valuebox_union_member_ci &operator= (be_visitor_valuebox_union_member_ci &&) = delete;
 
   /// visit the field node
   virtual int visit_union_member (be_union_branch *node);
@@ -75,17 +82,17 @@ public:
 private:
   void emit_member_set (be_decl *field,
                         be_type *field_type,
-                        const char *const_arg,
-                        const char *arg_modifier);
+                        std::string_view const_arg,
+                        std::string_view arg_modifier) const;
 
   void emit_member_get (be_decl *field,
                         be_type *field_type,
-                        const char *const_prefix,
-                        const char *type_suffix,
-                        const char *const_method);
+                        std::string_view const_prefix,
+                        std::string_view type_suffix,
+                        std::string_view const_method) const;
 
 private:
-  be_valuebox *vb_node_;
+  be_valuebox *vb_node_ {};
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_ */

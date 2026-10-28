@@ -59,23 +59,13 @@ be_component::be_component (UTL_ScopedName *n,
                   supports_flat,
                   n_supports_flat,
                   false,
-                  false),
-    n_provides_ (0UL),
-    n_remote_provides_ (0UL),
-    n_uses_ (0UL),
-    n_remote_uses_ (0UL),
-    has_uses_multiple_ (false),
-    n_publishes_ (0UL),
-    n_consumes_ (0UL),
-    n_emits_ (0UL)
+                  false)
 {
   this->size_type (AST_Type::VARIABLE);
   this->has_constructor (true);
 }
 
-be_component::~be_component ()
-{
-}
+be_component::~be_component () = default;
 
 be_component *
 be_component::base_component () const

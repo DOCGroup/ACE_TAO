@@ -18,10 +18,6 @@ AST_Uses::AST_Uses (UTL_ScopedName *n,
 {
 }
 
-AST_Uses::~AST_Uses ()
-{
-}
-
 AST_Type *
 AST_Uses::uses_type () const
 {

@@ -11,16 +11,14 @@
 
 #include "valuetype.h"
 
+#include <string>
+
 // ************************************************************
 // Valuetype visitor for server header.
 // ************************************************************
 
 be_visitor_valuetype_sh::be_visitor_valuetype_sh (be_visitor_context *ctx)
   : be_visitor_valuetype (ctx)
-{
-}
-
-be_visitor_valuetype_sh::~be_visitor_valuetype_sh ()
 {
 }
 
@@ -44,7 +42,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os  = this->ctx_->stream ();
 
   os->indent ();
-  ACE_CString class_name;
+  std::string class_name;
 
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())
@@ -55,17 +53,17 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
     }
   else
     {
-      class_name +=  node->local_name ();
+      class_name += node->local_name ();
     }
 
   TAO_INSERT_COMMENT (os);
 
   // Generate the skeleton class name.
-  *os << "class " << class_name.c_str () << ";" << be_nl;
+  *os << "class " << class_name << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "using " << class_name.c_str () << "_ptr = "
-      << class_name.c_str () << " *;" << be_nl;
+  *os << "using " << class_name << "_ptr = "
+      << class_name << " *;" << be_nl;
 
   // Forward class declaration.
   *os << "// Forward Classes Declaration" << be_nl;
@@ -79,7 +77,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
 
   // Now generate the class definition.
   *os << "class " << be_global->skel_export_macro ()
-      << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
+      << " " << class_name << be_idt_nl << ": " << be_idt;
 
   *os << "public virtual " << "POA_"
       << concrete->name () << ",";
@@ -89,14 +87,14 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << class_name.c_str () << " ();" << be_uidt_nl << be_nl
+      << class_name << " ();" << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
-  *os << "virtual ~" << class_name.c_str () << " ();" << be_nl << be_uidt_nl;
+  *os << "virtual ~" << class_name << " ();" << be_nl << be_uidt_nl;
 
   // No copy constructor for locality constraint interface.
   *os << "private:" << be_idt_nl
-      << class_name.c_str () << " (const " << class_name.c_str ()
+      << class_name << " (const " << class_name
       << "& rhs);" << be_uidt_nl;
 
 

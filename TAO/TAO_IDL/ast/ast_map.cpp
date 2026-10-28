@@ -107,10 +107,7 @@ AST_Map::AST_Map (AST_Expression *ms,
                       n),
     pd_max_size (ms),
     key_pd_type (key_bt),
-    value_pd_type (val_bt),
-    unbounded_ (true),
-    owns_key_type_ (false),
-    owns_value_type_ (false)
+    value_pd_type (val_bt)
 {
   FE_Utils::tmpl_mod_ref_check (this, key_bt);
 
@@ -231,10 +228,8 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   bool recursion_found = false;
   AST_Type** recursable_type = nullptr;
   list.get (recursable_type, 0);
-  if (!std::strcmp (key_type->full_name (),
-                  (*recursable_type)->full_name ())
-      || !std::strcmp(val_type->full_name (),
-                  (*recursable_type)->full_name ()))
+  if (key_type->full_name () == (*recursable_type)->full_name ()
+      || val_type->full_name () == (*recursable_type)->full_name ())
     {
       // They match.
       recursion_found = true;

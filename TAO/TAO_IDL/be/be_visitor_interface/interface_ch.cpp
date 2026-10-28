@@ -11,12 +11,10 @@
 
 #include "interface.h"
 
+#include <string_view>
+
 be_visitor_interface_ch::be_visitor_interface_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
-{
-}
-
-be_visitor_interface_ch::~be_visitor_interface_ch ()
 {
 }
 
@@ -164,7 +162,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "(TAO_OutputCDR &cdr);";
 
   // If we are generating CORBA Policy we need to add some more methods
-  if (ACE_OS::strcmp (node->full_name (), "CORBA::Policy") == 0)
+  if (node->full_name () == "CORBA::Policy")
     {
       *os << be_nl
           << "virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &);" << be_nl
@@ -321,8 +319,8 @@ be_visitor_interface_ch::visit_connector (be_connector *node)
 int
 be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string_view_or_empty ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -343,15 +341,15 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 
 int
 be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string_view_or_empty ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -372,7 +370,7 @@ be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 
@@ -420,7 +418,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
 }
 
 bool
-be_visitor_interface_ch::gen_xxx_narrow (const char *nar,
+be_visitor_interface_ch::gen_xxx_narrow (std::string_view nar,
                                          be_interface *node,
                                          TAO_OutStream *os)
 {

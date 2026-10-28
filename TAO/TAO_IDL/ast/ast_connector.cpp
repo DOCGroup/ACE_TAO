@@ -38,10 +38,6 @@ AST_Connector::AST_Connector (
     }
 }
 
-AST_Connector::~AST_Connector ()
-{
-}
-
 AST_Connector *
 AST_Connector::base_connector () const
 {

@@ -79,12 +79,7 @@ AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
     AST_Constant (AST_Expression::EV_ulong,
                   AST_Decl::NT_enum_val,
                   new AST_Expression (v),
-                  n),
-    enum_parent_ (nullptr)
-{
-}
-
-AST_EnumVal::~AST_EnumVal ()
+                  n)
 {
 }
 
@@ -104,7 +99,7 @@ AST_EnumVal::ast_accept (ast_visitor *visitor)
 }
 
 AST_Enum *
-AST_EnumVal::enum_parent ()
+AST_EnumVal::enum_parent () const
 {
   return enum_parent_;
 }

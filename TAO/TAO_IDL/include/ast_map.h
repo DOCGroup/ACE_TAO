@@ -82,6 +82,10 @@ public:
            bool abstract);
 
   ~AST_Map () override = default;
+  AST_Map (AST_Map const &) = delete;
+  AST_Map (AST_Map &&) = delete;
+  AST_Map &operator= (AST_Map const &) = delete;
+  AST_Map &operator= (AST_Map &&) = delete;
 
   bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
@@ -132,7 +136,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &key_type_annotations ();
-  void key_type_annotations (const AST_Annotation_Appls &annotations);
+  void key_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
   /**
@@ -140,7 +144,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &value_type_annotations ();
-  void value_type_annotations (const AST_Annotation_Appls &annotations);
+  void value_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 private:
@@ -158,13 +162,13 @@ private:
   **/
   AST_Type *value_pd_type;
 
-  bool unbounded_;
+  bool unbounded_ {true};
   // Whether we are bounded or unbounded.
 
-  bool owns_key_type_;
+  bool owns_key_type_ {};
   // If our key type is anonymous array or map, we're
   // responsible for destroying it.
-  bool owns_value_type_;
+  bool owns_value_type_ {};
   // If our value type is anonymous array or map, we're
   // responsible for destroying it.
 

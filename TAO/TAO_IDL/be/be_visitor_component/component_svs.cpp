@@ -11,6 +11,8 @@
 
 #include "component.h"
 
+#include <string_view>
+
 be_visitor_component_svs::be_visitor_component_svs (be_visitor_context *ctx)
   : be_visitor_component (ctx),
     os_ (*ctx->stream ()),
@@ -24,10 +26,6 @@ be_visitor_component_svs::be_visitor_component_svs (be_visitor_context *ctx)
     {
       export_macro_ = be_global->skel_export_macro ();
     }
-}
-
-be_visitor_component_svs::~be_visitor_component_svs ()
-{
 }
 
 int
@@ -83,14 +81,14 @@ be_visitor_component_svs::visit_connector (be_connector *node)
 void
 be_visitor_component_svs::gen_entrypoint (AST_Component *node)
 {
-  ACE_CString sname_str (
-    ScopeAsDecl (node->defined_in ())->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = node->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const sname =
+    ScopeAsDecl (node->defined_in ())->full_name ();
+  std::string_view const lname =
+    node->local_name ()->get_string_view_or_empty ();
+  std::string_view const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node->flat_name ()
       << "_Servant (" << be_idt_nl
@@ -103,7 +101,7 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
+      << "::PortableServer::Servant retval = nullptr;" << be_nl
       << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "ACE_NEW_NORETURN (retval," << be_nl

@@ -23,8 +23,12 @@
 class be_visitor_exception_ctor_assign : public be_visitor_scope
 {
 public:
-  be_visitor_exception_ctor_assign (be_visitor_context *ctx);
-  ~be_visitor_exception_ctor_assign () override;
+  explicit be_visitor_exception_ctor_assign (be_visitor_context *ctx);
+  ~be_visitor_exception_ctor_assign () override = default;
+  be_visitor_exception_ctor_assign (be_visitor_exception_ctor_assign const &) = delete;
+  be_visitor_exception_ctor_assign (be_visitor_exception_ctor_assign &&) = delete;
+  be_visitor_exception_ctor_assign &operator= (be_visitor_exception_ctor_assign const &) = delete;
+  be_visitor_exception_ctor_assign &operator= (be_visitor_exception_ctor_assign &&) = delete;
 
   int visit_exception (be_exception *node) override;
   int visit_field (be_field *node) override;

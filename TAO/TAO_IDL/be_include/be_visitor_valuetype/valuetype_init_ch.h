@@ -28,16 +28,20 @@ class be_visitor_valuetype_init_ch : public be_visitor_valuetype_init
 {
 public:
   /// constructor
-  be_visitor_valuetype_init_ch (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_init_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_init_ch ();
+  ~be_visitor_valuetype_init_ch () override = default;
+  be_visitor_valuetype_init_ch (be_visitor_valuetype_init_ch const &) = delete;
+  be_visitor_valuetype_init_ch (be_visitor_valuetype_init_ch &&) = delete;
+  be_visitor_valuetype_init_ch &operator= (be_visitor_valuetype_init_ch const &) = delete;
+  be_visitor_valuetype_init_ch &operator= (be_visitor_valuetype_init_ch &&) = delete;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
   /// visit a factory
-  virtual int visit_factory (be_factory *node);
+  int visit_factory (be_factory *node) override;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_INIT_CH_H_ */

@@ -14,10 +14,6 @@ AST_Fixed::AST_Fixed (UTL_ScopedName *name,
 {
 }
 
-AST_Fixed::~AST_Fixed ()
-{
-}
-
 void AST_Fixed::dump (ACE_OSTREAM_TYPE &os)
 {
   dump_i (os, "fixed<");
@@ -45,12 +41,12 @@ int AST_Fixed::ast_accept (ast_visitor *visitor)
   return visitor->visit_fixed (this);
 }
 
-AST_Expression *AST_Fixed::digits ()
+AST_Expression *AST_Fixed::digits () const
 {
   return pd_digits;
 }
 
-AST_Expression *AST_Fixed::scale ()
+AST_Expression *AST_Fixed::scale () const
 {
   return pd_scale;
 }

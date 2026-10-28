@@ -105,10 +105,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
     pd_return_type (rt),
     pd_flags (fl),
     pd_context (nullptr),
-    pd_exceptions (nullptr),
-    argument_count_ (-1),
-    has_in_arguments_ (false),
-    has_native_ (0)
+    pd_exceptions (nullptr)
 {
   AST_PredefinedType *pdt = nullptr;
 
@@ -133,14 +130,10 @@ AST_Operation::AST_Operation (AST_Type *rt,
     }
 }
 
-AST_Operation::~AST_Operation ()
-{
-}
-
 // Public operations.
 
 bool
-AST_Operation::void_return_type ()
+AST_Operation::void_return_type () const
 {
   AST_Type* type = this->return_type ();
 
@@ -349,7 +342,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
                   && nt != AST_Decl::NT_type)
                 {
                   idl_global->err ()->mismatched_template_param (
-                    ph->info ()->name_.c_str ());
+                    ph->info ()->name_);
                 }
 
               break;
@@ -372,9 +365,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_native:
             {
               // This is the only use case for this node type.
-              int compare =
-                ACE_OS::strcmp (d->local_name ()->get_string (),
-                                "UserExceptionBase");
+              int compare = d->local_name ()->get_string_view_or_empty () == "UserExceptionBase" ? 0 : 1;
 
               if (compare != 0)
                 {
@@ -512,7 +503,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
         {
           s = si.item ();
           si.next ();
-          this->dump_i (o, s->get_string ());
+          this->dump_i (o, s->get_string_view_or_empty ());
 
           if (!si.is_done())
             {
@@ -533,25 +524,25 @@ AST_Operation::ast_accept (ast_visitor *visitor)
 // Data accessors
 
 AST_Type *
-AST_Operation::return_type ()
+AST_Operation::return_type () const
 {
   return this->pd_return_type;
 }
 
 AST_Operation::Flags
-AST_Operation::flags ()
+AST_Operation::flags () const
 {
   return this->pd_flags;
 }
 
 UTL_StrList *
-AST_Operation::context ()
+AST_Operation::context () const
 {
   return this->pd_context;
 }
 
 UTL_ExceptList *
-AST_Operation::exceptions ()
+AST_Operation::exceptions () const
 {
   return this->pd_exceptions;
 }

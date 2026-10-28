@@ -84,7 +84,7 @@ public:
   UTL_StrList (UTL_String *s,
                UTL_StrList *cdr);
 
-  ~UTL_StrList () override;
+  ~UTL_StrList () override = default;
 
   // AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -97,12 +97,14 @@ public:
 
   // Get list element
   UTL_String *head ();
+  UTL_String const *head () const;
 
   // Set the list element
   void set_head (UTL_String *);
 
   // Get last element in this list
   UTL_String *last_component ();
+  UTL_String const *last_component () const;
 
 private:
   // The list item
@@ -114,10 +116,10 @@ class TAO_IDL_FE_Export UTL_StrlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
-  UTL_StrlistActiveIterator(UTL_StrList *s);
+  explicit UTL_StrlistActiveIterator (UTL_StrList *s);
 
   // Get current item.
-  UTL_String *item ();
+  UTL_String *item () const;
 };
 
 #endif           // _UTL_STRLIST_UTL_STRLIST_HH

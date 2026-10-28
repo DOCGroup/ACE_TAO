@@ -17,10 +17,6 @@ be_visitor_component_fwd_ch::be_visitor_component_fwd_ch (
 {
 }
 
-be_visitor_component_fwd_ch::~be_visitor_component_fwd_ch ()
-{
-}
-
 // Visit the component_fwd_ch node and its scope.
 int
 be_visitor_component_fwd_ch::visit_component_fwd (be_component_fwd *node)
