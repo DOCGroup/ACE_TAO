@@ -21,7 +21,7 @@ TAO_Notify_Constraint_Expr::~TAO_Notify_Constraint_Expr () = default;
 
 void
 TAO_Notify_Constraint_Expr::save_persistent (
-  TAO_Notify::Topology_Saver& saver)
+  TAO_Notify::Topology_Saver &saver)
 {
   CosNotification::EventTypeSeq& event_types = this->constr_expr.event_types;
   CORBA::ULong len = event_types.length ();
@@ -40,7 +40,7 @@ TAO_Notify_Constraint_Expr::save_persistent (
 
 void
 TAO_Notify_Constraint_Expr::load_attrs(
-  const TAO_Notify::NVPList& attrs)
+  TAO_Notify::NVPList const &attrs)
 {
   TAO_Notify_Object::load_attrs (attrs);
   const char* expr = nullptr;
@@ -53,9 +53,9 @@ TAO_Notify_Constraint_Expr::load_attrs(
 
 TAO_Notify::Topology_Object*
 TAO_Notify_Constraint_Expr::load_child (
-  const ACE_CString &type,
+  ACE_CString const &type,
   CORBA::Long id,
-  const TAO_Notify::NVPList& attrs)
+  TAO_Notify::NVPList const &attrs)
 {
   ACE_UNUSED_ARG (id);
   TAO_Notify::Topology_Object* result = this;
@@ -511,7 +511,7 @@ TAO_Notify_ETCL_Filter::get_callbacks ()
 
 
 void
-TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver& saver)
+TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver &saver)
 {
   TAO_Notify::NVPList attrs;
   bool changed = true;
@@ -553,7 +553,7 @@ TAO_Notify_ETCL_Filter::release ()
 
 
 void
-TAO_Notify_ETCL_Filter::load_attrs(const TAO_Notify::NVPList& attrs)
+TAO_Notify_ETCL_Filter::load_attrs(TAO_Notify::NVPList const &attrs)
 {
   const char* value = nullptr;
   TAO_Notify_Object::load_attrs (attrs);
@@ -569,8 +569,8 @@ TAO_Notify_ETCL_Filter::load_attrs(const TAO_Notify::NVPList& attrs)
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
-  CORBA::Long, const TAO_Notify::NVPList& attrs)
+TAO_Notify_ETCL_Filter::load_child (ACE_CString const &type,
+  CORBA::Long, TAO_Notify::NVPList const &attrs)
 {
   TAO_Notify::Topology_Object* result = this;
   if (type == "constraint")
