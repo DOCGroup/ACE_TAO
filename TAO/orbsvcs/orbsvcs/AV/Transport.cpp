@@ -30,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 TAO_AV_Transport_Item::TAO_AV_Transport_Item (const ACE_CString &name)
   : name_ (name)
-  , factory_ (nullptr)
 {
 }
 
@@ -39,7 +38,6 @@ TAO_AV_Transport_Item::TAO_AV_Transport_Item (const ACE_CString &name)
 //------------------------------------------------------------
 TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (const ACE_CString &name)
   : name_ (name)
-  , factory_ (nullptr)
 {
 }
 
@@ -462,9 +460,7 @@ TAO_AV_Acceptor_Registry::close_all ()
 // TAO_AV_Transport
 //----------------------------------------------------------------------
 
-TAO_AV_Transport::TAO_AV_Transport ()
-{
-}
+TAO_AV_Transport::TAO_AV_Transport () = default;
 
 // Virtual destructor.
 TAO_AV_Transport::~TAO_AV_Transport () = default;
@@ -480,13 +476,7 @@ TAO_AV_Transport::get_local_addr ()
 //----------------------------------------------------------------------
 
 //TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (TAO_AV_Callback *callback)
-TAO_AV_Flow_Handler::TAO_AV_Flow_Handler ()
-  :transport_ (nullptr),
-   callback_ (nullptr),
-   protocol_object_ (nullptr),
-   timer_id_ (-1)
-{
-}
+TAO_AV_Flow_Handler::TAO_AV_Flow_Handler () = default;
 
 TAO_AV_Flow_Handler::~TAO_AV_Flow_Handler()
 {
@@ -624,23 +614,16 @@ TAO_AV_Flow_Handler::callback (TAO_AV_Callback *callback)
 }
 
 // TAO_AV_Connector
-TAO_AV_Connector::TAO_AV_Connector ()
-{
-}
+TAO_AV_Connector::TAO_AV_Connector () = default;
 
 TAO_AV_Connector::~TAO_AV_Connector () = default;
 
 // TAO_AV_Acceptor
-TAO_AV_Acceptor::TAO_AV_Acceptor ()
-{
-}
+TAO_AV_Acceptor::TAO_AV_Acceptor () = default;
 
 TAO_AV_Acceptor::~TAO_AV_Acceptor () = default;
 
-TAO_AV_Transport_Factory::TAO_AV_Transport_Factory ()
- : ref_count (0)
-{
-}
+TAO_AV_Transport_Factory::TAO_AV_Transport_Factory () = default;
 
 TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory () = default;
 

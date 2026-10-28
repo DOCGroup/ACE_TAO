@@ -12,10 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_TCP_Transport
 //------------------------------------------------------------
 
-TAO_AV_TCP_Transport::TAO_AV_TCP_Transport ()
-  : handler_ (nullptr)
-{
-}
+TAO_AV_TCP_Transport::TAO_AV_TCP_Transport () = default;
 
 TAO_AV_TCP_Transport::TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler)
   :handler_ (handler)

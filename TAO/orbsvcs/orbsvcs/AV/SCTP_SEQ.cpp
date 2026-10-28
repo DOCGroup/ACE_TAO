@@ -14,10 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_SCTP_SEQ_Transport
 //------------------------------------------------------------
 
-TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport ()
-  :handler_ (nullptr)
-{
-}
+TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport () = default;
 
 TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handler *handler)
   :handler_ (handler)

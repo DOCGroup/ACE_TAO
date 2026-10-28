@@ -66,7 +66,7 @@ private:
   ACE_CString name_;
 
   /// Pointer to factory object.
-  TAO_AV_Transport_Factory *factory_;
+  TAO_AV_Transport_Factory *factory_ {};
 };
 
 class TAO_AV_Flow_Protocol_Factory;
@@ -101,7 +101,7 @@ private:
   ACE_CString name_;
 
   /// pointer to factory object.
-  TAO_AV_Flow_Protocol_Factory *factory_;
+  TAO_AV_Flow_Protocol_Factory *factory_ {};
 };
 
 /**
@@ -149,12 +149,12 @@ public:
   virtual int change_qos (AVStreams::QoS);
 
 protected:
-  TAO_AV_Transport *transport_;
-  TAO_AV_Callback *callback_;
-  TAO_AV_Protocol_Object *protocol_object_;
-  long timer_id_;
-  ACE_Reactor *reactor_;
-  void *timeout_arg_;
+  TAO_AV_Transport *transport_ {};
+  TAO_AV_Callback *callback_ {};
+  TAO_AV_Protocol_Object *protocol_object_ {};
+  long timer_id_ {-1};
+  ACE_Reactor *reactor_ {};
+  void *timeout_arg_ {};
 };
 
 //  Transports
@@ -246,8 +246,8 @@ public:
   virtual int close () = 0;
 protected:
   ACE_CString flowname_;
-  TAO_AV_Core *av_core_;
-  ACE_Addr *address_;
+  TAO_AV_Core *av_core_ {};
+  ACE_Addr *address_ {};
 };
 
 /**
@@ -359,7 +359,7 @@ public:
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();
   virtual TAO_AV_Connector *make_connector ();
-  int ref_count;
+  int ref_count {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

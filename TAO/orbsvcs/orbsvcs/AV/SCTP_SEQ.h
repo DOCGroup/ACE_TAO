@@ -109,8 +109,8 @@ public:
   TAO_AV_SCTP_SEQ_Flow_Handler *handler () { return this->handler_; }
 
 protected:
-  TAO_AV_SCTP_SEQ_Flow_Handler *handler_;
-  ACE_Addr *addr_;
+  TAO_AV_SCTP_SEQ_Flow_Handler *handler_ {};
+  ACE_Addr *addr_ {};
   ACE_INET_Addr peer_addr_;
 };
 
@@ -133,7 +133,7 @@ public:
   int change_qos (AVStreams::QoS) override;
 
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
 };
 
 class TAO_AV_SCTP_SEQ_Acceptor;
@@ -150,9 +150,9 @@ class TAO_AV_SCTP_SEQ_Base_Acceptor  :public ACE_Acceptor <TAO_AV_SCTP_SEQ_Flow_
                              TAO_FlowSpec_Entry *entry);
   int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler) override;
  protected:
-  TAO_AV_SCTP_SEQ_Acceptor *acceptor_;
-  ACE_Reactor *reactor_;
-  TAO_FlowSpec_Entry *entry_;
+  TAO_AV_SCTP_SEQ_Acceptor *acceptor_ {};
+  ACE_Reactor *reactor_ {};
+  TAO_FlowSpec_Entry *entry_ {};
 };
 
 /**
@@ -183,11 +183,11 @@ public:
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 
 protected:
-  ACE_INET_Addr *address_;
+  ACE_INET_Addr *address_ {};
   TAO_AV_SCTP_SEQ_Base_Acceptor acceptor_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 class TAO_AV_SCTP_SEQ_Connector;
@@ -206,8 +206,8 @@ public:
                          const ACE_Multihomed_INET_Addr &local_addr);
   int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler) override;
 protected:
-  TAO_AV_SCTP_SEQ_Connector *connector_;
-  ACE_Reactor *reactor_;
+  TAO_AV_SCTP_SEQ_Connector *connector_ {};
+  ACE_Reactor *reactor_ {};
 };
 
 /**
@@ -231,11 +231,11 @@ public:
   int close () override;
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
   TAO_AV_SCTP_SEQ_Base_Connector connector_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 /**

@@ -74,9 +74,9 @@ public:
   virtual int destroy () = 0;
   TAO_AV_Transport *transport ();
 protected:
-  TAO_AV_Transport *transport_;
+  TAO_AV_Transport *transport_ {};
   TAO_AV_PolicyList policy_list_;
-  TAO_AV_Callback *callback_;
+  TAO_AV_Callback *callback_ {};
 };
 
 /**
@@ -100,7 +100,7 @@ public:
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
   virtual const char *control_flow_factory ();
-  int ref_count;
+  int ref_count {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

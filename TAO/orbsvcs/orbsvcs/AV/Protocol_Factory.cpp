@@ -9,10 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_AV_Flow_Protocol_Factory
-TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory ()
- : ref_count (0)
-{
-}
+TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory () = default;
 
 TAO_AV_Flow_Protocol_Factory::~TAO_AV_Flow_Protocol_Factory () = default;
 
@@ -47,11 +44,7 @@ TAO_AV_Flow_Protocol_Factory::control_flow_factory ()
 //----------------------------------------------------------------------
 // TAO_AV_Protocol_Object
 //----------------------------------------------------------------------
-TAO_AV_Protocol_Object::TAO_AV_Protocol_Object ()
-  :transport_ (nullptr),
-   callback_ (nullptr)
-{
-}
+TAO_AV_Protocol_Object::TAO_AV_Protocol_Object () = default;
 
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
                                                 TAO_AV_Transport *transport)

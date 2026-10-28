@@ -549,14 +549,10 @@ TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
 // TAO_AV_UDP_Transport
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport ()
-  :handler_ (nullptr)
-{
-}
+TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport () = default;
 
 TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler *handler)
-  :handler_ (handler),
-   addr_ (nullptr)
+  :handler_ (handler)
 {
 }
 

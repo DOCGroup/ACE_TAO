@@ -92,7 +92,7 @@ public:
                 int iovcnt,
                 ACE_Time_Value *s = nullptr) override;
 protected:
-  TAO_AV_TCP_Flow_Handler *handler_;
+  TAO_AV_TCP_Flow_Handler *handler_ {};
 };
 
 /**
@@ -112,7 +112,7 @@ public:
   int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
   ACE_Event_Handler *event_handler () override { return this; }
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
 };
 
 class TAO_AV_TCP_Acceptor;
@@ -130,9 +130,9 @@ public:
                     TAO_FlowSpec_Entry *entry);
   int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler) override;
 protected:
-  TAO_AV_TCP_Acceptor *acceptor_;
-  ACE_Reactor *reactor_;
-  TAO_FlowSpec_Entry *entry_;
+  TAO_AV_TCP_Acceptor *acceptor_ {};
+  ACE_Reactor *reactor_ {};
+  TAO_FlowSpec_Entry *entry_ {};
 };
 
 /**
@@ -163,9 +163,9 @@ public:
   virtual int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler);
 protected:
   TAO_AV_TCP_Base_Acceptor acceptor_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 class TAO_AV_TCP_Connector;
@@ -184,8 +184,8 @@ public:
                          const ACE_INET_Addr &remote_addr);
   int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler) override;
 protected:
-  TAO_AV_TCP_Connector *connector_;
-  ACE_Reactor *reactor_;
+  TAO_AV_TCP_Connector *connector_ {};
+  ACE_Reactor *reactor_ {};
 };
 
 /**
@@ -209,11 +209,11 @@ public:
   int close () override;
   virtual int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler);
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
   TAO_AV_TCP_Base_Connector connector_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 /**
