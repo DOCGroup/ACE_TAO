@@ -46,8 +46,13 @@ public:
   /// Constructor
   TAO_Notify_ThreadPool_Task ();
 
+  TAO_Notify_ThreadPool_Task (TAO_Notify_ThreadPool_Task const &) = delete;
+  TAO_Notify_ThreadPool_Task (TAO_Notify_ThreadPool_Task &&) = delete;
+  TAO_Notify_ThreadPool_Task &operator= (TAO_Notify_ThreadPool_Task const &) = delete;
+  TAO_Notify_ThreadPool_Task &operator= (TAO_Notify_ThreadPool_Task &&) = delete;
+
   /// Destructor
-  virtual ~TAO_Notify_ThreadPool_Task ();
+  ~TAO_Notify_ThreadPool_Task () override;
 
   /// Call the base class init
   int init (int argc, ACE_TCHAR **argv) override;
@@ -85,7 +90,7 @@ private:
   std::unique_ptr<TAO_Notify_Buffering_Strategy> buffering_strategy_;
 
   /// Shutdown
-  bool shutdown_;
+  bool shutdown_ = false;
 
   /// The Queue based timer.
   TAO_Notify_Timer_Queue::Ptr timer_;

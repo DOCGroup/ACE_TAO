@@ -53,12 +53,12 @@ namespace TAO_Notify
     explicit Routing_Slip_Queue (size_t allowed = 1);
 
     /// Destructor.
-    ~Routing_Slip_Queue ();
+    ~Routing_Slip_Queue () = default;
 
-    Routing_Slip_Queue (const Routing_Slip_Queue&) = delete;
-    Routing_Slip_Queue (Routing_Slip_Queue&&) = delete;
-    Routing_Slip_Queue& operator= (const Routing_Slip_Queue&) = delete;
-    Routing_Slip_Queue& operator= (Routing_Slip_Queue&&) = delete;
+    Routing_Slip_Queue (Routing_Slip_Queue const &) = delete;
+    Routing_Slip_Queue (Routing_Slip_Queue &&) = delete;
+    Routing_Slip_Queue &operator= (Routing_Slip_Queue const &) = delete;
+    Routing_Slip_Queue &operator= (Routing_Slip_Queue &&) = delete;
 
     /**
      * \brief Add a routing slip to the tail of the queue and dispatch if necessary.
@@ -84,7 +84,7 @@ namespace TAO_Notify
     size_t allowed_;
     /// Protection for internal information
     TAO_SYNCH_MUTEX internals_;
-    size_t active_;
+    size_t active_ {};
     Queue queue_;
   };
 } // namespace

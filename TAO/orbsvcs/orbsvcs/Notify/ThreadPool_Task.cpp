@@ -11,14 +11,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task ()
-: shutdown_ (false)
-{
-}
+TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task () = default;
 
-TAO_Notify_ThreadPool_Task::~TAO_Notify_ThreadPool_Task ()
-{
-}
+TAO_Notify_ThreadPool_Task::~TAO_Notify_ThreadPool_Task () = default;
 
 int
 TAO_Notify_ThreadPool_Task::init (int argc, ACE_TCHAR **argv)

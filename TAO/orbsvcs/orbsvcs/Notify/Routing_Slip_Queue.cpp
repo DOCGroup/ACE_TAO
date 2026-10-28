@@ -15,11 +15,6 @@ namespace TAO_Notify
 {
   Routing_Slip_Queue::Routing_Slip_Queue (size_t allowed)
     : allowed_ (allowed)
-    , active_ (0)
-  {
-  }
-
-  Routing_Slip_Queue::~Routing_Slip_Queue ()
   {
   }
 
