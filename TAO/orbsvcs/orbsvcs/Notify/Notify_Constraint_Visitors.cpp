@@ -117,7 +117,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (CosNotification::Structure
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
 {
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   this->queue_.reset ();
 
   // Evaluate the constraint in root_;
@@ -355,7 +355,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
     CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
     DynamicAny::DynAny_var member;
-    CORBA::Boolean success = 0;
+    CORBA::Boolean success = false;
     CORBA::ULong slot = (CORBA::ULong) *pos->integer ();
 
     switch (kind)
@@ -491,7 +491,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
     CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
     DynamicAny::DynAny_var member;
-    CORBA::Boolean success = 0;
+    CORBA::Boolean success = false;
     CORBA::ULong slot = (CORBA::ULong) *array->integer ();
 
     switch (kind)
@@ -800,7 +800,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
   if (component->accept (this) == 0)
     {
       const char *value = nullptr;
-      CORBA::Boolean result = 0;
+      CORBA::Boolean result = false;
 
       // For the two cases below, we don't want the item at the top of
       // the queue, because it's the result of a hash table
@@ -1152,7 +1152,7 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
                 return return_value;
               }
 
-              CORBA::Boolean result = 0;
+              CORBA::Boolean result = false;
 
               switch (kind)
               {
