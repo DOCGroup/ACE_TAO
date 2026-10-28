@@ -19,25 +19,25 @@ namespace XSCRT
     {
     }
 
-    explicit OptionalArg (T const& value) noexcept
-        : value_ (std::addressof (value))
+    explicit OptionalArg (T const &value) noexcept
+      : value_ (std::addressof (value))
     {
     }
 
-    OptionalArg (T const&&) = delete;
+    OptionalArg (T const &&) = delete;
 
     explicit operator bool () const noexcept
     {
       return value_ != nullptr;
     }
 
-    T const& operator* () const noexcept
+    T const &operator* () const noexcept
     {
       return *value_;
     }
 
   private:
-    T const* value_ {};
+    T const *value_{};
   };
 }
 

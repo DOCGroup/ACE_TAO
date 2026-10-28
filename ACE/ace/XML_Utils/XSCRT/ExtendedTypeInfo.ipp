@@ -9,7 +9,7 @@
  *  int to bool.
  */
 #ifdef _MSC_VER
-# pragma warning( disable: 4800 )
+#  pragma warning(disable : 4800)
 #endif
 
 namespace XSCRT
@@ -17,107 +17,77 @@ namespace XSCRT
   // TypeId
   //
   //
-  inline
-  TypeId::
-  TypeId (std::type_info const& tid)
-      : tid_ (std::addressof (tid))
+  inline TypeId::TypeId (std::type_info const &tid)
+    : tid_ (std::addressof (tid))
   {
   }
 
-  inline
-  bool TypeId::
-  operator == (TypeId const& other) const
+  inline bool TypeId::operator== (TypeId const &other) const
   {
     return *tid_ == *other.tid_;
   }
 
-  inline
-  bool TypeId::
-  operator != (TypeId const& other) const
+  inline bool TypeId::operator!= (TypeId const &other) const
   {
     return *tid_ != *other.tid_;
   }
 
-  inline
-  bool TypeId::
-  operator < (TypeId const& other) const
+  inline bool TypeId::operator<(TypeId const &other) const
   {
     return tid_->before (*other.tid_);
   }
 
   // ExtendedTypeInfo::BaseInfo
-  inline
-  ExtendedTypeInfo::BaseInfo::
-  BaseInfo (Access::Value access, bool virtual_base, TypeId const& tid)
-      : tid_ (tid),
-        virtual_base_ (virtual_base),
-        access_ (access)
+  inline ExtendedTypeInfo::BaseInfo::BaseInfo (Access::Value access, bool virtual_base, TypeId const &tid)
+    : tid_ (tid)
+    , virtual_base_ (virtual_base)
+    , access_ (access)
   {
   }
 
-  inline
-  ExtendedTypeInfo const& ExtendedTypeInfo::BaseInfo::
-  type_info () const
+  inline ExtendedTypeInfo const &ExtendedTypeInfo::BaseInfo::type_info () const
   {
     return extended_type_info (tid_);
   }
 
-
-  inline
-  ExtendedTypeInfo::Access::Value ExtendedTypeInfo::BaseInfo::
-  access () const
+  inline ExtendedTypeInfo::Access::Value ExtendedTypeInfo::BaseInfo::access () const
   {
     return access_;
   }
 
-  inline
-  bool ExtendedTypeInfo::BaseInfo::
-  virtual_base () const
+  inline bool ExtendedTypeInfo::BaseInfo::virtual_base () const
   {
     return virtual_base_;
   }
 
   // ExtendedTypeInfo
-  inline
-  ExtendedTypeInfo::
-  ExtendedTypeInfo (TypeId const& tid)
-      : tid_ (tid)
+  inline ExtendedTypeInfo::ExtendedTypeInfo (TypeId const &tid)
+    : tid_ (tid)
   {
   }
 
-  inline
-  TypeId ExtendedTypeInfo::
-  type_id () const
+  inline TypeId ExtendedTypeInfo::type_id () const
   {
     return tid_;
   }
 
-  inline
-  ExtendedTypeInfo::BaseIterator ExtendedTypeInfo::
-  begin_base () const
+  inline ExtendedTypeInfo::BaseIterator ExtendedTypeInfo::begin_base () const
   {
     return base_.begin ();
   }
 
-
-  inline
-  ExtendedTypeInfo::BaseIterator ExtendedTypeInfo::
-  end_base () const
+  inline ExtendedTypeInfo::BaseIterator ExtendedTypeInfo::end_base () const
   {
     return base_.end ();
   }
 
-  inline
-  void ExtendedTypeInfo::
-  add_base (Access::Value access, bool virtual_base, TypeId const& tid)
+  inline void ExtendedTypeInfo::add_base (Access::Value access, bool virtual_base, TypeId const &tid)
   {
     base_.push_back (BaseInfo (access, virtual_base, tid));
   }
 
   // ExtendedTypeInfoMap
-  inline
-  ExtendedTypeInfoMap&
-  extended_type_info_map ()
+  inline ExtendedTypeInfoMap &extended_type_info_map ()
   {
     static ExtendedTypeInfoMap extended_type_info_map_;
 

@@ -5,8 +5,8 @@
 
 #include <map>
 #include <memory>
-#include <vector>
 #include <typeinfo>
+#include <vector>
 
 namespace XSCRT
 {
@@ -16,20 +16,17 @@ namespace XSCRT
   class TypeId
   {
   public:
-    template<typename T>
-    TypeId (T const& t);
+    template <typename T>
+    TypeId (T const &t);
 
-    TypeId (std::type_info const& tid);
+    TypeId (std::type_info const &tid);
 
   public:
-    bool
-    operator == (TypeId const& other) const;
+    bool operator== (TypeId const &other) const;
 
-    bool
-    operator != (TypeId const& other) const;
+    bool operator!= (TypeId const &other) const;
 
-    bool
-    operator < (TypeId const& other) const;
+    bool operator<(TypeId const &other) const;
 
     /*
     friend std::ostream&
@@ -37,14 +34,13 @@ namespace XSCRT
     */
 
   public:
-    char const*
-    name () const
+    char const *name () const
     {
       return tid_->name ();
     }
 
   private:
-    std::type_info const* tid_;
+    std::type_info const *tid_;
   };
 
   class ExtendedTypeInfo
@@ -63,17 +59,14 @@ namespace XSCRT
     class BaseInfo
     {
     public:
-      BaseInfo (Access::Value access, bool virtual_base, TypeId const& tid);
+      BaseInfo (Access::Value access, bool virtual_base, TypeId const &tid);
 
     public:
-      ExtendedTypeInfo const&
-      type_info () const;
+      ExtendedTypeInfo const &type_info () const;
 
-      Access::Value
-      access () const;
+      Access::Value access () const;
 
-      bool
-      virtual_base () const;
+      bool virtual_base () const;
 
     private:
       TypeId tid_;
@@ -82,78 +75,60 @@ namespace XSCRT
     };
 
   private:
-    typedef
-    std::vector<BaseInfo>
-    BaseInfoList;
+    typedef std::vector<BaseInfo> BaseInfoList;
 
   public:
-    typedef
-    BaseInfoList::const_iterator
-    BaseIterator;
+    typedef BaseInfoList::const_iterator BaseIterator;
 
   public:
-    ExtendedTypeInfo (TypeId const& tid);
+    ExtendedTypeInfo (TypeId const &tid);
 
-    TypeId
-    type_id () const;
+    TypeId type_id () const;
 
-    BaseIterator
-    begin_base () const;
+    BaseIterator begin_base () const;
 
-    BaseIterator
-    end_base () const;
+    BaseIterator end_base () const;
 
-    void
-    add_base (Access::Value access, bool virtual_base, TypeId const& tid);
+    void add_base (Access::Value access, bool virtual_base, TypeId const &tid);
 
   private:
     TypeId tid_;
-    BaseInfoList base_ {};
+    BaseInfoList base_{};
   };
 
-  typedef
-  std::map<TypeId, ExtendedTypeInfo>
-  ExtendedTypeInfoMap;
+  typedef std::map<TypeId, ExtendedTypeInfo> ExtendedTypeInfoMap;
 
+  ExtendedTypeInfoMap &extended_type_info_map ();
 
-  ExtendedTypeInfoMap&
-  extended_type_info_map ();
+  class NotAvailable
+  {
+  };
 
-
-  class NotAvailable {};
-
-
-  template<typename T>
-  ExtendedTypeInfo const&
-  extended_type_info (T const& t)
+  template <typename T>
+  ExtendedTypeInfo const &extended_type_info (T const &t)
   {
     return extended_type_info (typeid (t));
   }
 
-  template<typename T>
-  ExtendedTypeInfo const&
-  extended_type_info ()
+  template <typename T>
+  ExtendedTypeInfo const &extended_type_info ()
   {
     return extended_type_info (typeid (T));
   }
 
   template <>
-  inline
-  ExtendedTypeInfo const&
-  extended_type_info<TypeId> (TypeId const& tid)
+  inline ExtendedTypeInfo const &extended_type_info<TypeId> (TypeId const &tid)
   {
-    ExtendedTypeInfoMap::const_iterator i (
-      extended_type_info_map ().find (tid));
+    ExtendedTypeInfoMap::const_iterator i (extended_type_info_map ().find (tid));
 
-    if (i == extended_type_info_map ().end ()) throw NotAvailable ();
+    if (i == extended_type_info_map ().end ())
+      throw NotAvailable ();
 
     return i->second;
   }
 
   template <>
-  inline
-  ExtendedTypeInfo const&
-  extended_type_info<std::type_info> (std::type_info const& tid)
+  inline ExtendedTypeInfo const &extended_type_info<std::type_info> (std::type_info const &tid)
   {
     return extended_type_info (TypeId (tid));
   }
@@ -161,4 +136,4 @@ namespace XSCRT
 
 #include <ace/XML_Utils/XSCRT/ExtendedTypeInfo.ipp>
 
-#endif  // XSCRT_EXTENDED_TYPE_INFO_HPP
+#endif // XSCRT_EXTENDED_TYPE_INFO_HPP

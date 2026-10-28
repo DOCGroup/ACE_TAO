@@ -10,28 +10,24 @@
 using xercesc::Wrapper4InputSource;
 using xercesc::LocalFileInputSource;
 
-
 namespace XML
 {
-  template<typename Resolver>
+  template <typename Resolver>
   XML_Schema_Resolver<Resolver>::XML_Schema_Resolver (Resolver &res)
     : resolver_ (res)
   {
   }
 
-  template<typename Resolver>
-  Resolver &
-  XML_Schema_Resolver<Resolver>::get_resolver (void)
+  template <typename Resolver>
+  Resolver &XML_Schema_Resolver<Resolver>::get_resolver (void)
   {
     return resolver_;
   }
 
   /// This function is called by the Xerces infrastructure to
   /// actually resolve the location of a schema.
-  template<typename Resolver>
-  InputSource *
-  XML_Schema_Resolver<Resolver>::resolveEntity (const XMLCh *const publicId,
-                                                  const XMLCh *const systemId)
+  template <typename Resolver>
+  InputSource *XML_Schema_Resolver<Resolver>::resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId)
   {
     XStr path = resolver_ (publicId, systemId);
     if (path.begin () == nullptr)

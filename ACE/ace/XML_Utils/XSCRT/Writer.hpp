@@ -14,7 +14,7 @@ namespace XSCRT
   class Writer
   {
   public:
-    Writer (XML::Element<C>& e)
+    Writer (XML::Element<C> &e)
     {
       push_ (e);
     }
@@ -28,48 +28,42 @@ namespace XSCRT
     }
 
   public:
-    void
-    push_ (XML::Element<C> const& e)
+    void push_ (XML::Element<C> const &e)
     {
       stack_.push (e);
     }
 
-    void
-    pop_ ()
+    void pop_ ()
     {
       stack_.pop ();
     }
 
-    XML::Element<C>&
-    top_ ()
+    XML::Element<C> &top_ ()
     {
       return stack_.top ();
     }
 
   public:
-    XML::Attribute<C>*
-    attr_ ()
+    XML::Attribute<C> *attr_ ()
     {
       return attr__;
     }
 
-    void
-    attr_ (XML::Attribute<C>* a)
+    void attr_ (XML::Attribute<C> *a)
     {
       attr__ = a;
     }
 
   private:
-    std::stack<XML::Element<C> > stack_;
+    std::stack<XML::Element<C>> stack_;
 
-    XML::Attribute<C>* attr__ {};
+    XML::Attribute<C> *attr__{};
 
   private:
-    Writer (Writer const&);
+    Writer (Writer const &);
 
-    void
-    operator= (Writer const&);
+    void operator= (Writer const &);
   };
 }
 
-#endif  // XSCRT_WRITER_HPP
+#endif // XSCRT_WRITER_HPP

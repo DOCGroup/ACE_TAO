@@ -3,34 +3,32 @@
 #ifndef XSCRT_ELEMENTS_HPP
 #define XSCRT_ELEMENTS_HPP
 
+#include "ace/ace_wchar.h"
+#include <limits>
 #include <map>
 #include <memory>
-#include <string>
 #include <sstream>
 #include <stdexcept>
-#include <limits>
-#include "ace/ace_wchar.h"
+#include <string>
 // #include <iostream> //@@ tmp
 
-#include <ace/XML_Utils/XSCRT/Parser.hpp>
 #include "ace/Refcounted_Auto_Ptr.h"
+#include <ace/XML_Utils/XSCRT/Parser.hpp>
 
 namespace XSCRT
 {
   namespace Details
   {
     template <typename C, typename X>
-    X parse_numeric (std::basic_string<C> const& value)
+    X parse_numeric (std::basic_string<C> const &value)
     {
       std::basic_istringstream<C> stream (value);
       stream >> std::ws;
       bool const negative (stream.peek () == stream.widen ('-'));
-      X result {};
+      X result{};
       if (!(stream >> result))
         throw std::invalid_argument ("Invalid XML numeric value");
-      if (std::numeric_limits<X>::is_integer &&
-          !std::numeric_limits<X>::is_signed &&
-          negative && result != 0)
+      if (std::numeric_limits<X>::is_integer && !std::numeric_limits<X>::is_signed && negative && result != 0)
         throw std::invalid_argument ("Invalid XML numeric value");
       stream >> std::ws;
       if (!stream.eof ())
@@ -41,12 +39,10 @@ namespace XSCRT
 
   struct IdentityProvider
   {
-    virtual bool
-    before (IdentityProvider const&) const = 0;
+    virtual bool before (IdentityProvider const &) const = 0;
 
     virtual ~IdentityProvider (void)
     {
-
     }
   };
 
@@ -59,70 +55,67 @@ namespace XSCRT
     Type () = default;
 
     template <typename C>
-    Type (XML::Element<C> const&)
+    Type (XML::Element<C> const &)
     {
     }
 
     template <typename C>
-    Type (XML::Attribute<C> const&)
+    Type (XML::Attribute<C> const &)
     {
     }
 
-    Type (Type const&)
+    Type (Type const &)
     {
     }
 
-    Type&
-    operator= (Type const&)
+    Type &operator= (Type const &)
     {
       //@@ I don't need this.
-      //if (map_.get ()) map_->clear (); // Flush the map.
+      // if (map_.get ()) map_->clear (); // Flush the map.
       return *this;
     }
 
   public:
-    Type const*
-    container () const
+    Type const *container () const
     {
       return container_ ? container_ : this;
     }
 
-    Type*
-    container ()
+    Type *container ()
     {
       return container_ ? container_ : this;
     }
 
-    Type const*
-    root () const
+    Type const *root () const
     {
-      Type const* r = container ();
+      Type const *r = container ();
 
-      Type const* c = r->container ();
+      Type const *c = r->container ();
 
-      for (; c != r; c = c->container ()) r = c;
+      for (; c != r; c = c->container ())
+        r = c;
 
       return r;
     }
 
-    Type*
-    root ()
+    Type *root ()
     {
-      Type* r = container ();
+      Type *r = container ();
 
-      for (Type* c = r->container (); c != r; c = c->container ()) r = c;
+      for (Type *c = r->container (); c != r; c = c->container ())
+        r = c;
 
       return r;
     }
 
     //@@
-    //protected:
+    // protected:
 
   public:
-    virtual void
-    container (Type* c)
+    virtual void container (Type *c)
     {
-      if (container_ == c) return;
+      if (container_ == c)
+        return;
 
       // Revoke registrations from our old container.
       //
@@ -130,8 +123,8 @@ namespace XSCRT
       {
         for (Map_::iterator i (map_->begin ()); i != map_->end (); ++i)
         {
-          //std::wcerr << "revoking " << i->second
-          //           << " to " << container_ << std::endl;
+          // std::wcerr << "revoking " << i->second
+          //            << " to " << container_ << std::endl;
 
           container_->unregister_id (*(i->first));
         }
@@ -143,38 +136,37 @@ namespace XSCRT
       {
         for (Map_::iterator i (map_->begin ()); i != map_->end (); ++i)
         {
-          //std::wcerr << "copying " << i->second
-          //           << " to " << c << std::endl;
+          // std::wcerr << "copying " << i->second
+          //            << " to " << c << std::endl;
 
           c->register_id (*(i->first), i->second);
         }
       }
 
-      container_  = c;
+      container_ = c;
     }
 
     //@@
-    //protected:
+    // protected:
 
   public:
-    void
-    register_id (IdentityProvider const& id, Type* t)
+    void register_id (IdentityProvider const &id, Type *t)
     {
       if (!map_)
       {
         map_ = std::unique_ptr<Map_> (new Map_);
       }
 
-      if (!map_->insert (std::pair<IdentityProvider const*, Type*> (std::addressof (id), t)).second)
+      if (!map_->insert (std::pair<IdentityProvider const *, Type *> (std::addressof (id), t)).second)
       {
         throw std::logic_error ("XML ID is already registered");
       }
 
-      if (container () != this) container ()->register_id (id, t);
+      if (container () != this)
+        container ()->register_id (id, t);
     }
 
-    void
-    unregister_id (IdentityProvider const& id)
+    void unregister_id (IdentityProvider const &id)
     {
       if (map_.get ())
       {
@@ -184,7 +176,8 @@ namespace XSCRT
         {
           map_->erase (it);
 
-          if (container () != this) container ()->unregister_id (id);
+          if (container () != this)
+            container ()->unregister_id (id);
 
           return;
         }
@@ -193,8 +186,7 @@ namespace XSCRT
       throw std::logic_error ("XML ID is not registered");
     }
 
-    Type*
-    lookup_id (IdentityProvider const& id) const
+    Type *lookup_id (IdentityProvider const &id) const
     {
       if (map_.get ())
       {
@@ -210,11 +202,11 @@ namespace XSCRT
     }
 
     /// Get and set methods for the idref_map_ data member
-    Type* get_idref (const char* name)
+    Type *get_idref (const char *name)
     {
-      std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_CHAR_TO_TCHAR(name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = this->idref_map_.find(name_string);
-      if (i != idref_map_.end())
+      std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_CHAR_TO_TCHAR (name));
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::iterator i = this->idref_map_.find (name_string);
+      if (i != idref_map_.end ())
       {
         return i->second;
       }
@@ -224,10 +216,10 @@ namespace XSCRT
       }
     }
 
-    Type* get_idref (const std::basic_string<ACE_TCHAR>& name)
+    Type *get_idref (const std::basic_string<ACE_TCHAR> &name)
     {
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = this->idref_map_.find(name);
-      if (i != idref_map_.end())
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::iterator i = this->idref_map_.find (name);
+      if (i != idref_map_.end ())
       {
         return i->second;
       }
@@ -237,11 +229,11 @@ namespace XSCRT
       }
     }
 
-    Type* get_idref (const wchar_t *name)
+    Type *get_idref (const wchar_t *name)
     {
-      std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_WCHAR_TO_TCHAR(name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = this->idref_map_.find(name_string);
-      if (i != idref_map_.end())
+      std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_WCHAR_TO_TCHAR (name));
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::iterator i = this->idref_map_.find (name_string);
+      if (i != idref_map_.end ())
       {
         return i->second;
       }
@@ -251,31 +243,28 @@ namespace XSCRT
       }
     }
 
-    void set_idref (const std::basic_string<ACE_TCHAR>& name, Type* new_idref)
+    void set_idref (const std::basic_string<ACE_TCHAR> &name, Type *new_idref)
     {
-      this->idref_map_.insert(std::pair<std::basic_string<ACE_TCHAR>,Type*>(name, new_idref));
+      this->idref_map_.insert (std::pair<std::basic_string<ACE_TCHAR>, Type *> (name, new_idref));
     }
 
   private:
     // Data member to handle unbounded IDREF attributes and elements
-    std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*> idref_map_ {};
+    std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *> idref_map_{};
 
-    Type* container_ {};
+    Type *container_{};
 
     struct IdentityComparator
     {
-      bool operator () (IdentityProvider const* x,
-                        IdentityProvider const* y) const
+      bool operator() (IdentityProvider const *x, IdentityProvider const *y) const
       {
         return x->before (*y);
       }
     };
 
-    typedef
-    std::map<IdentityProvider const*, Type*, IdentityComparator>
-    Map_;
+    typedef std::map<IdentityProvider const *, Type *, IdentityComparator> Map_;
 
-    std::unique_ptr<Map_> map_ {};
+    std::unique_ptr<Map_> map_{};
   };
 
   // Fundamental types template.
@@ -288,78 +277,69 @@ namespace XSCRT
 
     FundamentalType () = default;
 
-    template<typename C>
-    FundamentalType (XML::Element<C> const& e)
-        : x_ (Details::parse_numeric<C, X> (e.value ()))
+    template <typename C>
+    FundamentalType (XML::Element<C> const &e)
+      : x_ (Details::parse_numeric<C, X> (e.value ()))
     {
     }
 
-    template<typename C>
-    FundamentalType (XML::Attribute<C> const& a)
-        : x_ (Details::parse_numeric<C, X> (a.value ()))
+    template <typename C>
+    FundamentalType (XML::Attribute<C> const &a)
+      : x_ (Details::parse_numeric<C, X> (a.value ()))
     {
     }
 
-    FundamentalType (X const& x)
-        : x_ (x)
+    FundamentalType (X const &x)
+      : x_ (x)
     {
     }
 
-    FundamentalType&
-    operator= (X const& x)
+    FundamentalType &operator= (X const &x)
     {
       x_ = x;
       return *this;
     }
 
   public:
-    operator X const& () const
+    operator X const & () const
     {
       return x_;
     }
 
-    operator X& ()
+    operator X & ()
     {
       return x_;
     }
 
   protected:
-    X x_ {};
+    X x_{};
   };
 
   // Specialization for `signed char'
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<signed char>::
-  FundamentalType (XML::Element<C> const& e)
+  template <>
+  template <typename C>
+  inline FundamentalType<signed char>::FundamentalType (XML::Element<C> const &e)
   {
     short const t (Details::parse_numeric<C, short> (e.value ()));
-    if (t < std::numeric_limits<signed char>::min () ||
-        t > std::numeric_limits<signed char>::max ())
+    if (t < std::numeric_limits<signed char>::min () || t > std::numeric_limits<signed char>::max ())
       throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
 
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<signed char>::
-  FundamentalType (XML::Attribute<C> const& a)
+  template <>
+  template <typename C>
+  inline FundamentalType<signed char>::FundamentalType (XML::Attribute<C> const &a)
   {
     short const t (Details::parse_numeric<C, short> (a.value ()));
-    if (t < std::numeric_limits<signed char>::min () ||
-        t > std::numeric_limits<signed char>::max ())
+    if (t < std::numeric_limits<signed char>::min () || t > std::numeric_limits<signed char>::max ())
       throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
 
   // Specialization for `unsigned char'
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<unsigned char>::
-  FundamentalType (XML::Element<C> const& e)
+  template <>
+  template <typename C>
+  inline FundamentalType<unsigned char>::FundamentalType (XML::Element<C> const &e)
   {
     unsigned short const t (Details::parse_numeric<C, unsigned short> (e.value ()));
     if (t > std::numeric_limits<unsigned char>::max ())
@@ -367,11 +347,9 @@ namespace XSCRT
     x_ = static_cast<unsigned char> (t);
   }
 
-  template<>
-  template<typename C>
-  inline
-  FundamentalType<unsigned char>::
-  FundamentalType (XML::Attribute<C> const& a)
+  template <>
+  template <typename C>
+  inline FundamentalType<unsigned char>::FundamentalType (XML::Attribute<C> const &a)
   {
     unsigned short const t (Details::parse_numeric<C, unsigned short> (a.value ()));
     if (t > std::numeric_limits<unsigned char>::max ())
@@ -380,42 +358,34 @@ namespace XSCRT
   }
 
   // Specialization for bool.
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Element<char> const& e)
+  template <>
+  template <>
+  inline FundamentalType<bool>::FundamentalType (XML::Element<char> const &e)
   {
     x_ = (e.value () == "true") || (e.value () == "1");
   }
 
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Element<wchar_t> const& e)
+  template <>
+  template <>
+  inline FundamentalType<bool>::FundamentalType (XML::Element<wchar_t> const &e)
   {
     x_ = (e.value () == L"true") || (e.value () == L"1");
   }
 
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Attribute<char> const& a)
+  template <>
+  template <>
+  inline FundamentalType<bool>::FundamentalType (XML::Attribute<char> const &a)
   {
     x_ = (a.value () == "true") || (a.value () == "1");
   }
 
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Attribute<wchar_t> const& a)
+  template <>
+  template <>
+  inline FundamentalType<bool>::FundamentalType (XML::Attribute<wchar_t> const &a)
   {
     x_ = (a.value () == L"true") || (a.value () == L"1");
   }
 
 }
 
-#endif  // XSCRT_ELEMENTS_HPP
+#endif // XSCRT_ELEMENTS_HPP

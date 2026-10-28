@@ -14,16 +14,16 @@ namespace XSCRT
 {
   namespace Traversal
   {
-    template<typename B>
+    template <typename B>
     class TraverserBase
     {
     protected:
       virtual ~TraverserBase () = default;
 
     public:
-      virtual void trampoline (B& n) = 0;
+      virtual void trampoline (B &n) = 0;
 
-      virtual void trampoline (B const& n) = 0;
+      virtual void trampoline (B const &n) = 0;
     };
 
     template <typename B>
@@ -32,30 +32,27 @@ namespace XSCRT
     public:
       virtual ~DispatcherBase () = default;
 
-      virtual void dispatch (B& n);
+      virtual void dispatch (B &n);
 
-      virtual void dispatch (B const& n);
+      virtual void dispatch (B const &n);
 
-      void
-      map (TypeId id, TraverserBase<B>& t)
+      void map (TypeId id, TraverserBase<B> &t)
       {
-        Traversers& traversers = traversal_map_[id];
+        Traversers &traversers = traversal_map_[id];
         traversers.push_back (std::addressof (t));
       }
 
     public:
-      typedef std::vector<TraverserBase<B>*> Traversers;
+      typedef std::vector<TraverserBase<B> *> Traversers;
       typedef std::map<TypeId, Traversers> TraversalMap;
       typedef typename TraversalMap::const_iterator Iterator;
 
-      Iterator
-      begin () const
+      Iterator begin () const
       {
         return traversal_map_.begin ();
       }
 
-      Iterator
-      end () const
+      Iterator end () const
       {
         return traversal_map_.end ();
       }
@@ -63,9 +60,7 @@ namespace XSCRT
     private:
       struct TypeInfoComparator
       {
-        bool
-        operator () (ExtendedTypeInfo const& x,
-                     ExtendedTypeInfo const& y) const
+        bool operator() (ExtendedTypeInfo const &x, ExtendedTypeInfo const &y) const
         {
           return x.type_id () < y.type_id ();
         }
@@ -74,16 +69,12 @@ namespace XSCRT
       typedef std::map<ExtendedTypeInfo, unsigned long, TypeInfoComparator> LevelMap;
       typedef std::set<ExtendedTypeInfo, TypeInfoComparator> TypeInfoSet;
 
-      static unsigned long
-      compute_levels (ExtendedTypeInfo const& ti,
-                      unsigned long cur,
-                      LevelMap& map);
+      static unsigned long compute_levels (ExtendedTypeInfo const &ti, unsigned long cur, LevelMap &map);
 
-      static void
-      flatten_tree (ExtendedTypeInfo const& ti, TypeInfoSet& set);
+      static void flatten_tree (ExtendedTypeInfo const &ti, TypeInfoSet &set);
 
     private:
-      TraversalMap traversal_map_ {};
+      TraversalMap traversal_map_{};
     };
 
     template <typename B>
@@ -91,19 +82,15 @@ namespace XSCRT
     {
     public:
       Dispatcher ()
-          : merge_ (true)
+        : merge_ (true)
       {
       }
 
-      void
-      traverser (DispatcherBase<B>& d)
+      void traverser (DispatcherBase<B> &d)
       {
-        for (typename DispatcherBase<B>::Iterator
-               i (d.begin ()), end (d.end ());
-             i != end; ++i)
+        for (typename DispatcherBase<B>::Iterator i (d.begin ()), end (d.end ()); i != end; ++i)
         {
-          for (typename DispatcherBase<B>::Traversers::const_iterator
-                 t (i->second.begin ()), end (i->second.end ());
+          for (typename DispatcherBase<B>::Traversers::const_iterator t (i->second.begin ()), end (i->second.end ());
                t != end; ++t)
           {
             dispatcher_.map (i->first, **t);
@@ -112,15 +99,13 @@ namespace XSCRT
       }
 
     public:
-      virtual void
-      dispatch (B& n)
+      virtual void dispatch (B &n)
       {
         merge ();
         dispatcher_.dispatch (n);
       }
 
-      virtual void
-      dispatch (B const& n)
+      virtual void dispatch (B const &n)
       {
         merge ();
         dispatcher_.dispatch (n);
@@ -130,16 +115,14 @@ namespace XSCRT
       using DispatcherBase<B>::end;
 
     private:
-      void
-      merge ()
+      void merge ()
       {
         if (merge_)
         {
-          for (typename DispatcherBase<B>::Iterator
-                 i (begin ()), e (end ()); i != e; ++i)
+          for (typename DispatcherBase<B>::Iterator i (begin ()), e (end ()); i != e; ++i)
           {
-            for (typename DispatcherBase<B>::Traversers::const_iterator
-                   t (i->second.begin ()), e (i->second.end ()); t != e; ++t)
+            for (typename DispatcherBase<B>::Traversers::const_iterator t (i->second.begin ()), e (i->second.end ());
+                 t != e; ++t)
             {
               dispatcher_.map (i->first, **t);
             }
@@ -151,24 +134,26 @@ namespace XSCRT
 
     protected:
       template <typename X, typename A, typename I>
-      void
-      iterate_and_dispatch (I begin, I end, X& x, void (X::*next)(A&), A& a)
+      void iterate_and_dispatch (I begin, I end, X &x, void (X::*next) (A &), A &a)
       {
         for (; begin != end;)
         {
           dispatch (*begin);
 
-          if (++begin != end) (x.*next) (a);
+          if (++begin != end)
+            (x.*next) (a);
         }
       }
 
     private:
       bool merge_;
-      DispatcherBase<B> dispatcher_ {};
+      DispatcherBase<B> dispatcher_{};
     };
 
     template <typename T, typename B>
-    struct Traverser : TraverserBase<B>, virtual Dispatcher<B>
+    struct Traverser
+      : TraverserBase<B>
+      , virtual Dispatcher<B>
     {
       typedef T Type;
 
@@ -177,29 +162,25 @@ namespace XSCRT
         DispatcherBase<B>::map (typeid (Type), *this);
       }
 
-      virtual void
-      traverse (Type&)
+      virtual void traverse (Type &)
       {
         abort ();
       }
 
-      virtual void
-      traverse (Type const&)
+      virtual void traverse (Type const &)
       {
         abort ();
       }
 
     protected:
-      virtual void
-      trampoline (B& n)
+      virtual void trampoline (B &n)
       {
-        traverse (dynamic_cast<Type&> (n));
+        traverse (dynamic_cast<Type &> (n));
       }
 
-      virtual void
-      trampoline (B const& n)
+      virtual void trampoline (B const &n)
       {
-        traverse (dynamic_cast<Type const&> (n));
+        traverse (dynamic_cast<Type const &> (n));
       }
     };
   }
@@ -207,4 +188,4 @@ namespace XSCRT
 
 #include <ace/XML_Utils/XSCRT/Traversal.tpp>
 
-#endif  // XSCRT_TRAVERSAL_HPP
+#endif // XSCRT_TRAVERSAL_HPP

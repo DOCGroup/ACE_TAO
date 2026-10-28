@@ -4,12 +4,12 @@
 #ifndef XSCRT_XML_HPP
 #define XSCRT_XML_HPP
 
-#include <string>
 #include <algorithm>
 #include <cstdint>
 #include <memory>
 #include <new>
 #include <stdexcept>
+#include <string>
 #include <type_traits>
 #include <utility>
 
@@ -21,49 +21,49 @@ namespace XSCRT
   namespace XML
   {
     template <typename C>
-    std::basic_string<C>
-    transcode (XMLCh const* s, C*);
+    std::basic_string<C> transcode (XMLCh const *s, C *);
 
     template <typename C>
-    XMLCh*
-    transcode (std::basic_string<C> const& s);
+    XMLCh *transcode (std::basic_string<C> const &s);
 
     //
     //
     //
     class string
     {
-    public :
+    public:
       template <typename C>
-      string (std::basic_string<C> const& s)
-          : s_ (XSCRT::XML::transcode<C> (s)),
-            xerces_allocated_ (std::is_same<C, char>::value)
+      string (std::basic_string<C> const &s)
+        : s_ (XSCRT::XML::transcode<C> (s))
+        , xerces_allocated_ (std::is_same<C, char>::value)
       {
       }
 
       template <typename C>
-      string (C const* s)
-          : s_ (XSCRT::XML::transcode<C> (s)),
-            xerces_allocated_ (std::is_same<C, char>::value)
+      string (C const *s)
+        : s_ (XSCRT::XML::transcode<C> (s))
+        , xerces_allocated_ (std::is_same<C, char>::value)
       {
       }
 
-      string (string const& s)
-          : s_ (copy (s.s_)), xerces_allocated_ (false)
+      string (string const &s)
+        : s_ (copy (s.s_))
+        , xerces_allocated_ (false)
       {
       }
 
-      string (string&& s) noexcept
-          : s_ (s.s_), xerces_allocated_ (s.xerces_allocated_)
+      string (string &&s) noexcept
+        : s_ (s.s_)
+        , xerces_allocated_ (s.xerces_allocated_)
       {
         s.s_ = nullptr;
       }
 
-      string& operator= (string const& s)
+      string &operator= (string const &s)
       {
         if (this != std::addressof (s))
         {
-          XMLCh* p (copy (s.s_));
+          XMLCh *p (copy (s.s_));
           release ();
           s_ = p;
           xerces_allocated_ = false;
@@ -71,7 +71,7 @@ namespace XSCRT
         return *this;
       }
 
-      string& operator= (string&& s) noexcept
+      string &operator= (string &&s) noexcept
       {
         if (this != std::addressof (s))
         {
@@ -88,18 +88,18 @@ namespace XSCRT
         release ();
       }
 
-      XMLCh const*
-      c_str () const
+      XMLCh const *c_str () const
       {
         return s_;
       }
 
-    private :
-      static XMLCh* copy (XMLCh const* s)
+    private:
+      static XMLCh *copy (XMLCh const *s)
       {
-        if (s == nullptr) return nullptr;
+        if (s == nullptr)
+          return nullptr;
         std::size_t const n (xercesc::XMLString::stringLen (s));
-        XMLCh* const r (new XMLCh[n + 1]);
+        XMLCh *const r (new XMLCh[n + 1]);
         std::copy (s, s + n + 1, r);
         return r;
       }
@@ -113,19 +113,17 @@ namespace XSCRT
         s_ = nullptr;
       }
 
-      XMLCh* s_ {};
-      bool xerces_allocated_ {};
+      XMLCh *s_{};
+      bool xerces_allocated_{};
     };
 
-
     template <>
-    inline
-    std::basic_string<char>
-    transcode<char> (XMLCh const* s, char*)
+    inline std::basic_string<char> transcode<char> (XMLCh const *s, char *)
     {
-      if (s == nullptr) return std::basic_string<char> ();
+      if (s == nullptr)
+        return std::basic_string<char> ();
 
-      char* buf = xercesc::XMLString::transcode (s);
+      char *buf = xercesc::XMLString::transcode (s);
       if (buf == nullptr)
         throw std::bad_alloc ();
 
@@ -137,11 +135,10 @@ namespace XSCRT
     }
 
     template <>
-    inline
-    std::basic_string<wchar_t>
-    transcode<wchar_t> (XMLCh const* s, wchar_t*)
+    inline std::basic_string<wchar_t> transcode<wchar_t> (XMLCh const *s, wchar_t *)
     {
-      if (s == nullptr) return std::basic_string<wchar_t> ();
+      if (s == nullptr)
+        return std::basic_string<wchar_t> ();
 
       std::basic_string<wchar_t> result;
       std::size_t const length (xercesc::XMLString::stringLen (s));
@@ -179,17 +176,13 @@ namespace XSCRT
     }
 
     template <>
-    inline
-    XMLCh*
-    transcode (std::basic_string<char> const& s)
+    inline XMLCh *transcode (std::basic_string<char> const &s)
     {
       return xercesc::XMLString::transcode (s.c_str ());
     }
 
     template <>
-    inline
-    XMLCh*
-    transcode (std::basic_string<wchar_t> const& s)
+    inline XMLCh *transcode (std::basic_string<wchar_t> const &s)
     {
       std::unique_ptr<XMLCh[]> result (new XMLCh[s.length () * 2 + 1]);
       std::size_t out (0);
@@ -242,22 +235,21 @@ namespace XSCRT
           result[out++] = static_cast<XMLCh> (code_point);
       }
 
-      result[out] = XMLCh {};
+      result[out] = XMLCh{};
 
       return result.release ();
     }
-
 
     template <typename C>
     class Element;
 
     template <typename C>
-    std::basic_string<C>
-    ns_prefix (std::basic_string<C> const& ns, Element<C> const& e);
+    std::basic_string<C> ns_prefix (std::basic_string<C> const &ns, Element<C> const &e);
 
     // Casting helpers, made necessary by the Xerces project's braindead
     // avoidance of RTTI.
-    template <typename DERIVED> struct dom_traits;
+    template <typename DERIVED>
+    struct dom_traits;
 
     // Specializations for different node types
     template <>
@@ -273,13 +265,13 @@ namespace XSCRT
     };
 
     template <>
-    struct dom_traits<xercesc::DOMElement const*>
+    struct dom_traits<xercesc::DOMElement const *>
     {
       static const xercesc::DOMNode::NodeType node_type = xercesc::DOMNode::ELEMENT_NODE;
     };
 
     template <>
-    struct dom_traits<xercesc::DOMAttr const*>
+    struct dom_traits<xercesc::DOMAttr const *>
     {
       static const xercesc::DOMNode::NodeType node_type = xercesc::DOMNode::ATTRIBUTE_NODE;
     };
@@ -288,11 +280,10 @@ namespace XSCRT
     DERIVED_PTR dom_cast (xercesc::DOMNode *node)
     {
       DERIVED_PTR elem = nullptr;
-      if ((node != nullptr) &&
-          (node->getNodeType () == dom_traits<DERIVED_PTR>::node_type))
-        {
-          elem = reinterpret_cast <DERIVED_PTR> (node);
-        }
+      if ((node != nullptr) && (node->getNodeType () == dom_traits<DERIVED_PTR>::node_type))
+      {
+        elem = reinterpret_cast<DERIVED_PTR> (node);
+      }
       return elem;
     }
 
@@ -302,26 +293,25 @@ namespace XSCRT
       typedef std::basic_string<C> string_;
 
     public:
-      Element (xercesc::DOMElement const* e)
-          : ce_ (e),
-            name_ (transcode<C> (e->getLocalName (), nullptr)),
-            namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
+      Element (xercesc::DOMElement const *e)
+        : ce_ (e)
+        , name_ (transcode<C> (e->getLocalName (), nullptr))
+        , namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
       {
       }
 
-      Element (xercesc::DOMElement* e)
-          : e_ (e),
-            ce_ (e),
-            name_ (transcode<C> (e->getLocalName (), nullptr)),
-            namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
+      Element (xercesc::DOMElement *e)
+        : e_ (e)
+        , ce_ (e)
+        , name_ (transcode<C> (e->getLocalName (), nullptr))
+        , namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
       {
       }
 
-      Element (string_ const& name, Element& parent)
-          : name_ (name)
+      Element (string_ const &name, Element &parent)
+        : name_ (name)
       {
-        xercesc::DOMDocument* doc (
-          parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
 
         e_ = doc->createElement (string (name).c_str ());
 
@@ -330,20 +320,16 @@ namespace XSCRT
         ce_ = e_;
       }
 
-      Element (string_ const& name, string_ const& ns, Element& parent)
-          : name_ (name),
-            namespace__ (ns)
+      Element (string_ const &name, string_ const &ns, Element &parent)
+        : name_ (name)
+        , namespace__ (ns)
       {
         string_ prefix (ns_prefix (ns, parent));
 
-        xercesc::DOMDocument* doc (
-          parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
 
-        e_ = doc->createElementNS (
-          string (ns).c_str (),
-          string (prefix.empty ()
-                ? name
-                : prefix + string_ (1, ':') + name).c_str ());
+        e_ = doc->createElementNS (string (ns).c_str (),
+                                   string (prefix.empty () ? name : prefix + string_ (1, ':') + name).c_str ());
 
         parent.dom_element ()->appendChild (e_);
 
@@ -351,24 +337,20 @@ namespace XSCRT
       }
 
     public:
-      string_
-      name () const
+      string_ name () const
       {
         return name_;
       }
 
-      string_
-      namespace_ () const
+      string_ namespace_ () const
       {
         return namespace__;
       }
 
     public:
-      Element<C>
-      parent () const
+      Element<C> parent () const
       {
-        xercesc::DOMElement const* const parent (
-          dom_cast <xercesc::DOMElement const*> (ce_->getParentNode ()));
+        xercesc::DOMElement const *const parent (dom_cast<xercesc::DOMElement const *> (ce_->getParentNode ()));
 
         if (parent == nullptr)
           throw std::out_of_range ("DOM element has no element parent");
@@ -377,40 +359,33 @@ namespace XSCRT
       }
 
     public:
-      string_
-      value () const
+      string_ value () const
       {
         return XML::transcode<C> (dom_element ()->getTextContent (), nullptr);
       }
 
-      void
-      value (string_ const& v)
+      void value (string_ const &v)
       {
-        xercesc::DOMText* text (
-          dom_element ()->getOwnerDocument ()->createTextNode(
-            string (v).c_str ()));
+        xercesc::DOMText *text (dom_element ()->getOwnerDocument ()->createTextNode (string (v).c_str ()));
 
         dom_element ()->appendChild (text);
       }
 
     public:
-      string_
-      operator[] (string_ const& s) const
+      string_ operator[] (string_ const &s) const
       {
-        XMLCh const* value = ce_->getAttribute (string (s).c_str ());
+        XMLCh const *value = ce_->getAttribute (string (s).c_str ());
 
         return transcode<C> (value, nullptr);
       }
 
     public:
-      xercesc::DOMElement const*
-      dom_element () const
+      xercesc::DOMElement const *dom_element () const
       {
         return ce_;
       }
 
-      xercesc::DOMElement*
-      dom_element ()
+      xercesc::DOMElement *dom_element ()
       {
         if (e_ == nullptr)
           throw std::logic_error ("DOM element is read-only");
@@ -419,13 +394,12 @@ namespace XSCRT
       }
 
     private:
-      xercesc::DOMElement* e_ {};
-      xercesc::DOMElement const* ce_ {};
+      xercesc::DOMElement *e_{};
+      xercesc::DOMElement const *ce_{};
 
       string_ name_;
-      string_ namespace__ {};
+      string_ namespace__{};
     };
-
 
     template <typename C>
     class Attribute
@@ -433,29 +407,26 @@ namespace XSCRT
       typedef std::basic_string<C> string_;
 
     public:
-      Attribute (xercesc::DOMAttr const* a)
-          : ca_ (a),
-            name_ (transcode<C> (a->getLocalName (), nullptr)),
-            value_ (transcode<C> (a->getValue (), nullptr))
+      Attribute (xercesc::DOMAttr const *a)
+        : ca_ (a)
+        , name_ (transcode<C> (a->getLocalName (), nullptr))
+        , value_ (transcode<C> (a->getValue (), nullptr))
       {
       }
 
-      Attribute (xercesc::DOMAttr* a)
-          : a_ (a),
-            ca_ (a),
-            name_ (transcode<C> (a->getLocalName (), nullptr)),
-            value_ (transcode<C> (a->getValue (), nullptr))
+      Attribute (xercesc::DOMAttr *a)
+        : a_ (a)
+        , ca_ (a)
+        , name_ (transcode<C> (a->getLocalName (), nullptr))
+        , value_ (transcode<C> (a->getValue (), nullptr))
       {
       }
 
-      Attribute (string_ const& name,
-                 string_ const& v,
-                 Element<C>& parent)
-          : name_ (name),
-            value_ ()
+      Attribute (string_ const &name, string_ const &v, Element<C> &parent)
+        : name_ (name)
+        , value_ ()
       {
-        xercesc::DOMDocument* doc (
-          parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
 
         a_ = doc->createAttribute (string (name).c_str ());
 
@@ -466,23 +437,16 @@ namespace XSCRT
         ca_ = a_;
       }
 
-      Attribute (string_ const& name,
-                 string_ const& ns,
-                 string_ const& v,
-                 Element<C>& parent)
-          : name_ (name),
-            value_ ()
+      Attribute (string_ const &name, string_ const &ns, string_ const &v, Element<C> &parent)
+        : name_ (name)
+        , value_ ()
       {
         string_ prefix (ns_prefix (ns, parent));
 
-        xercesc::DOMDocument* doc (
-          parent.dom_element ()->getOwnerDocument ());
+        xercesc::DOMDocument *doc (parent.dom_element ()->getOwnerDocument ());
 
-        a_ = doc->createAttributeNS (
-          string (ns).c_str (),
-          string (prefix.empty ()
-                ? name
-                : prefix + string_ (1, ':') + name).c_str ());
+        a_ = doc->createAttributeNS (string (ns).c_str (),
+                                     string (prefix.empty () ? name : prefix + string_ (1, ':') + name).c_str ());
 
         value (v);
 
@@ -491,20 +455,17 @@ namespace XSCRT
         ca_ = a_;
       }
 
-      string_
-      name () const
+      string_ name () const
       {
         return name_;
       }
 
-      string_
-      value () const
+      string_ value () const
       {
         return value_;
       }
 
-      void
-      value (string_ const& v)
+      void value (string_ const &v)
       {
         if (a_ == nullptr)
           throw std::logic_error ("DOM attribute is read-only");
@@ -514,14 +475,12 @@ namespace XSCRT
       }
 
     public:
-      xercesc::DOMAttr const*
-      dom_attribute () const
+      xercesc::DOMAttr const *dom_attribute () const
       {
         return ca_;
       }
 
-      xercesc::DOMAttr*
-      dom_attribute ()
+      xercesc::DOMAttr *dom_attribute ()
       {
         if (a_ == nullptr)
           throw std::logic_error ("DOM attribute is read-only");
@@ -530,58 +489,51 @@ namespace XSCRT
       }
 
     private:
-
     private:
-      xercesc::DOMAttr* a_ {};
-      xercesc::DOMAttr const* ca_ {};
+      xercesc::DOMAttr *a_{};
+      xercesc::DOMAttr const *ca_{};
 
       string_ name_;
       string_ value_;
     };
 
     template <typename C>
-    std::basic_string<C>
-    prefix (std::basic_string<C> const& n)
+    std::basic_string<C> prefix (std::basic_string<C> const &n)
     {
       std::size_t i (0);
-      while (i < n.length () && n[i] != ':') ++i;
+      while (i < n.length () && n[i] != ':')
+        ++i;
 
-      //std::wcerr << "prefix " << n << " "
-      //           << std::wstring (n, i == n.length () ? i : 0, i) << std::endl;
+      // std::wcerr << "prefix " << n << " "
+      //            << std::wstring (n, i == n.length () ? i : 0, i) << std::endl;
 
       return std::basic_string<C> (n, i == n.length () ? i : 0, i);
     }
 
     template <typename C>
-    std::basic_string<C>
-    uq_name (std::basic_string<C> const& n)
+    std::basic_string<C> uq_name (std::basic_string<C> const &n)
     {
       std::size_t i (0);
-      while (i < n.length () && n[i] != ':') ++i;
+      while (i < n.length () && n[i] != ':')
+        ++i;
 
       return std::basic_string<C> (n.c_str () + (i == n.length () ? 0 : i + 1));
     }
 
     template <typename C>
-    std::basic_string<C>
-    ns_name (Element<C> const& e, std::basic_string<C> const& n)
+    std::basic_string<C> ns_name (Element<C> const &e, std::basic_string<C> const &n)
     {
       std::basic_string<C> wp (prefix (n));
 
-      XMLCh const* xns = e.dom_element ()->lookupNamespaceURI (
-        wp.empty () ? nullptr : string (wp).c_str ());
+      XMLCh const *xns = e.dom_element ()->lookupNamespaceURI (wp.empty () ? nullptr : string (wp).c_str ());
 
-
-      std::basic_string<C> ns (
-        xns ? transcode<C> (xns, nullptr) : std::basic_string<C> ());
+      std::basic_string<C> ns (xns ? transcode<C> (xns, nullptr) : std::basic_string<C> ());
 
       return ns;
-
     }
 
     template <typename C>
-    std::basic_string<C>
-    fq_name (Element<C> const& e, std::basic_string<C> const& n)
+    std::basic_string<C> fq_name (Element<C> const &e, std::basic_string<C> const &n)
     {
       std::basic_string<C> ns (ns_name (e, n));
       std::basic_string<C> un (uq_name (n));
@@ -589,15 +541,16 @@ namespace XSCRT
       return ns.empty () ? un : (ns + C ('#') + un);
     }
 
-    class no_prefix {};
+    class no_prefix
+    {
+    };
 
     template <typename C>
-    std::basic_string<C>
-    ns_prefix (std::basic_string<C> const& ns, Element<C> const& e)
+    std::basic_string<C> ns_prefix (std::basic_string<C> const &ns, Element<C> const &e)
     {
       string xns (ns);
 
-      XMLCh const* p (e.dom_element ()->lookupPrefix (xns.c_str ()));
+      XMLCh const *p (e.dom_element ()->lookupPrefix (xns.c_str ()));
 
       if (p == nullptr)
       {
@@ -618,4 +571,4 @@ namespace XSCRT
   }
 }
 
-#endif  // XSCRT_XML_HPP
+#endif // XSCRT_XML_HPP

@@ -3,9 +3,8 @@
 
 namespace XMLSchema
 {
-  template<typename T, typename Base = XSCRT::Type>
-  void
-  add_info (XSCRT::ExtendedTypeInfoMap& map, T*)
+  template <typename T, typename Base = XSCRT::Type>
+  void add_info (XSCRT::ExtendedTypeInfoMap &map, T *)
   {
     using XSCRT::TypeId;
     using XSCRT::ExtendedTypeInfo;
@@ -13,18 +12,13 @@ namespace XMLSchema
     TypeId id (typeid (T));
     ExtendedTypeInfo info (id);
 
-    info.add_base (ExtendedTypeInfo::Access::public_,
-                   false,
-                   typeid (Base));
+    info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (Base));
 
     map.insert (std::make_pair (id, info));
   }
 
-
   template <typename C>
-  inline
-  TypeInfoInitializer<C>::
-  TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap& map)
+  inline TypeInfoInitializer<C>::TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &map)
   {
     using XSCRT::TypeId;
     using XSCRT::ExtendedTypeInfo;
@@ -53,7 +47,7 @@ namespace XMLSchema
     add_info<float_> (map, nullptr);
     add_info<double_> (map, nullptr);
 
-    add_info<string<C> > (map, nullptr);
+    add_info<string<C>> (map, nullptr);
 
     add_info<normalizedString<C>, string<C>> (map, nullptr);
     add_info<token<C>, normalizedString<C>> (map, nullptr);
@@ -70,9 +64,7 @@ namespace XMLSchema
       TypeId id (typeid (IDREF_Base));
       ExtendedTypeInfo info (id);
 
-      info.add_base (ExtendedTypeInfo::Access::public_,
-                     false,
-                     typeid (XSCRT::Type));
+      info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (XSCRT::Type));
 
       map.insert (std::make_pair (id, info));
     }
@@ -83,9 +75,7 @@ namespace XMLSchema
       TypeId id (typeid (IDREF<C>));
       ExtendedTypeInfo info (id);
 
-      info.add_base (ExtendedTypeInfo::Access::public_,
-                     false,
-                     typeid (IDREF_Base));
+      info.add_base (ExtendedTypeInfo::Access::public_, false, typeid (IDREF_Base));
 
       map.insert (std::make_pair (id, info));
     }
