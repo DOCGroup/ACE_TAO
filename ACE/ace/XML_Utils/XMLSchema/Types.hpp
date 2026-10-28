@@ -7,11 +7,10 @@
 #include <string>
 
 #include "ace/Basic_Types.h"
-/**
- * @@ HACK: VC7
- *
- * Disabled the warning about using this in the base member initialization section.
- * Our use in this file is fine.
+/*
+ * MSVC warning C4355 is triggered by ID's member initializer passing `this`
+ * to IdentityProvider. IdentityProvider stores the reference without using
+ * the ID while it is being constructed.
  */
 #ifdef _MSC_VER
 #  pragma warning(disable : 4355)
@@ -429,22 +428,25 @@ namespace XMLSchema
         //            << " as '" << *this
         //            << "' on " << container () << std::endl;
         NCName<C>::container ()->register_id (id_provider_, NCName<C>::container ());
+        registered_ = true;
       }
     }
 
     void unregister_id ()
     {
-      if (NCName<C>::container () != this && !empty ())
+      if (registered_)
       {
         // std::wcerr << "un-registering " << container ()
         //            << " as '" << *this
         //            << "' on " << container () << std::endl;
         NCName<C>::container ()->unregister_id (id_provider_);
+        registered_ = false;
       }
     }
 
   private:
     IdentityProvider<C> id_provider_;
+    bool registered_{};
   };
 
   struct IDREF_Base : public XSCRT::Type

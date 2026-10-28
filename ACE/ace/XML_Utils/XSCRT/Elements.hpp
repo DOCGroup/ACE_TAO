@@ -10,7 +10,6 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-// #include <iostream> //@@ tmp
 
 #include <ace/XML_Utils/XSCRT/Parser.hpp>
 
@@ -105,9 +104,6 @@ namespace XSCRT
       return r;
     }
 
-    //@@
-    // protected:
-
   public:
     virtual void container (Type *c)
     {
@@ -142,9 +138,6 @@ namespace XSCRT
 
       container_ = c;
     }
-
-    //@@
-    // protected:
 
   public:
     void register_id (IdentityProvider const &id, Type *t)

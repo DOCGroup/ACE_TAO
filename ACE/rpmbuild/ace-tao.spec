@@ -1128,7 +1128,7 @@ cat mmraw.list |\
         sort -u > allhdrs.list
 
 # Add missing headers.
-ls ace/*{.h,.inl,.cpp} >> allhdrs.list
+ls ace/*{.h,.inl,.cpp,.hpp} | grep -v '/config-' >> allhdrs.list
 %if 0%{?_with_tao:1}%{?_without_tao:0}
 ls TAO/tao/*{.h,.inl,_T.cpp} >> allhdrs.list
 ls TAO/tao/*/*{.h,.inl,.cpp} >> allhdrs.list

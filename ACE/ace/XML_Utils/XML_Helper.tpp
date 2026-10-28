@@ -365,14 +365,18 @@ namespace XML
 
       char *const name (XMLString::transcode (e.getType ()));
       std::unique_ptr<char[]> cleanup_name (name);
+      char const *const source_file (e.getSrcFile ());
 
       ACELIB_ERROR ((LM_ERROR,
                      "Caught exception while serializing DOM to file.\n"
                      "Name: %C\n"
                      "Message: %C\n"
                      "SrcFile: %C\n"
-                     "SrcLine: %C\n",
-                     name, message, e.getSrcFile (), e.getSrcLine ()));
+                     "SrcLine: %Q\n",
+                     name != nullptr ? name : "",
+                     message != nullptr ? message : "",
+                     source_file != nullptr ? source_file : "",
+                     static_cast<ACE_UINT64> (e.getSrcLine ())));
       return false;
     }
   }

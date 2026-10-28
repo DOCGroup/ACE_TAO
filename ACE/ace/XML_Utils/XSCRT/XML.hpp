@@ -128,11 +128,13 @@ namespace XSCRT
       if (buf == nullptr)
         throw std::bad_alloc ();
 
-      std::basic_string<char> r (buf);
+      auto const release = [] (char *value)
+      {
+        xercesc::XMLString::release (std::addressof (value));
+      };
+      std::unique_ptr<char, decltype (release)> buffer (buf, release);
 
-      xercesc::XMLString::release (std::addressof (buf));
-
-      return r;
+      return std::basic_string<char> (buffer.get ());
     }
 
     template <>

@@ -4,9 +4,8 @@
 #define XSCRT_XMLSCHEMA_HPP
 
 #include <string>
-// #include <iostream> //@@ tmp
 
-#include "ace/XML_Utils/XMLSchema/XSCRT/Elements.hpp"
+#include "ace/XML_Utils/XSCRT/Elements.hpp"
 
 namespace XMLSchema
 {
@@ -375,22 +374,25 @@ namespace XMLSchema
         //            << " as '" << *this
         //            << "' on " << container () << std::endl;
         container ()->register_id (id_provider_, container ());
+        registered_ = true;
       }
     }
 
     void unregister_id ()
     {
-      if (container () != this && !empty ())
+      if (registered_)
       {
         // std::wcerr << "un-registering " << container ()
         //            << " as '" << *this
         //            << "' on " << container () << std::endl;
         container ()->unregister_id (id_provider_);
+        registered_ = false;
       }
     }
 
   private:
     IdentityProvider<C> id_provider_;
+    bool registered_{};
   };
 
   struct IDREF_Base : public XSCRT::Type
@@ -543,7 +545,6 @@ namespace XMLSchema
   };
 }
 
-#include "ace/XML_Utils/XSCRT/XMLSchema.ipp"
-#include "ace/XML_Utils/XSCRT/XMLSchema.tpp"
+#include "ace/XML_Utils/XMLSchema/TypeInfo.tpp"
 
 #endif // XSCRT_XMLSCHEMA_HPP
