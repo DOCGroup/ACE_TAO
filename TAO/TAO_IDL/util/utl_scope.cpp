@@ -62,6 +62,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
+#include <string>
 #include <string_view>
 
 #include "utl_scope.h"
@@ -228,22 +229,21 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
       return 0;
     }
 
-  // Convert the identifier string into a
-  // canonical (uppercase) form as a ACE_CString
-  char *tmp = e->get_string ();
-  ACE_CString ext_id (tmp);
+  // Convert the identifier string into canonical (uppercase) form.
+  std::string ext_id (e->get_string_view ());
   UTL_String::get_canonical_rep (ext_id);
+  ACE_CString const keyword (ext_id.c_str ());
 
-  if (!idl_global->idl_keywords ().find (ext_id))
+  if (!idl_global->idl_keywords ().find (keyword))
     {
       if (idl_global->case_diff_error ())
         {
-          idl_global->err ()->idl_keyword_error (tmp);
+          idl_global->err ()->idl_keyword_error (e->get_string ());
 
           return -1;
         }
 
-      idl_global->err ()->idl_keyword_warning (tmp);
+      idl_global->err ()->idl_keyword_warning (e->get_string ());
     }
 
   return 0;

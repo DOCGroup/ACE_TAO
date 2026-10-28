@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _STRING_STRING_HH
 #define _STRING_STRING_HH
 
+#include <string>
+
 #include "TAO_IDL_FE_Export.h"
 
 #include "ace/iosfwd.h"
@@ -129,6 +131,10 @@ public:
   // case corresponding string.
 
   static void get_canonical_rep (ACE_CString &cstr);
+  // Get canonical representation. This is (implemented as) the all upper
+  // case corresponding string.
+
+  static void get_canonical_rep (std::string &str);
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string.
 

@@ -182,6 +182,15 @@ UTL_String::get_canonical_rep (ACE_CString &cstr)
   get_canonical_rep (&cstr [0], &cstr [0]);
 }
 
+void
+UTL_String::get_canonical_rep (std::string &str)
+{
+  for (char &ch : str)
+    {
+      ch = static_cast<char> (ACE_OS::ace_toupper (ch));
+    }
+}
+
 //////////////////////////////////////////////////////////////////////
 
 UTL_String::UTL_String ()
