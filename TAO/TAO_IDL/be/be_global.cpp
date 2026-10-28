@@ -37,39 +37,60 @@ const char *const BE_GlobalData::core_versioned_ns_begin =
 const char *const BE_GlobalData::core_versioned_ns_end =
   "\nTAO_END_VERSIONED_NAMESPACE_DECL\n";
 
+namespace
+{
+  void set_optional_string (std::optional<std::string> &target,
+                            char const *value)
+  {
+    if (value != nullptr)
+      {
+        target = value;
+      }
+    else
+      {
+        target.reset ();
+      }
+  }
+
+  char const *optional_string_c_str (std::optional<std::string> const &value)
+  {
+    return value ? value->c_str () : nullptr;
+  }
+}
+
 BE_GlobalData::BE_GlobalData ()
   : core_versioning_begin_ (core_versioned_ns_begin),
     core_versioning_end_ (core_versioned_ns_end),
     anyops_versioning_begin_ (core_versioning_begin_ + "namespace CORBA {\n"),
     anyops_versioning_end_ ("\n}" + core_versioning_end_),
-    client_hdr_ending_ (ACE::strnew ("C.h")),
-    client_stub_ending_ (ACE::strnew ("C.cpp")),
-    client_inline_ending_ (ACE::strnew ("C.inl")),
-    server_hdr_ending_ (ACE::strnew ("S.h")),
-    implementation_hdr_ending_ (ACE::strnew ("I.h")),
-    implementation_skel_ending_ (ACE::strnew ("I.cpp")),
-    impl_class_prefix_ (ACE::strnew ("")),
-    impl_class_suffix_ (ACE::strnew ("_i")),
-    server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
-    server_skeleton_ending_ (ACE::strnew ("S.cpp")),
-    server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
-    anyop_hdr_ending_ (ACE::strnew ("A.h")),
-    anyop_src_ending_ (ACE::strnew ("A.cpp")),
-    ciao_svnt_hdr_template_ending_ (ACE::strnew ("_svnt_T.h")),
-    ciao_svnt_src_template_ending_ (ACE::strnew ("_svnt_T.cpp")),
-    ciao_svnt_hdr_ending_ (ACE::strnew ("_svnt.h")),
-    ciao_svnt_src_ending_ (ACE::strnew ("_svnt.cpp")),
-    ciao_exec_hdr_ending_ (ACE::strnew ("_exec.h")),
-    ciao_exec_src_ending_ (ACE::strnew ("_exec.cpp")),
-    ciao_exec_stub_hdr_ending_ (ACE::strnew ("EC.h")),
-    ciao_exec_idl_ending_ (ACE::strnew ("E.idl")),
-    ciao_conn_hdr_ending_ (ACE::strnew ("_conn.h")),
-    ciao_conn_src_ending_ (ACE::strnew ("_conn.cpp")),
-    dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
-    ciao_ami_conn_idl_ending_ (ACE::strnew ("A.idl")),
-    ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
-    ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
-    ciao_container_type_ (ACE::strnew ("Session"))
+    client_hdr_ending_ ("C.h"),
+    client_stub_ending_ ("C.cpp"),
+    client_inline_ending_ ("C.inl"),
+    server_hdr_ending_ ("S.h"),
+    implementation_hdr_ending_ ("I.h"),
+    implementation_skel_ending_ ("I.cpp"),
+    impl_class_prefix_ (""),
+    impl_class_suffix_ ("_i"),
+    server_template_hdr_ending_ ("S_T.h"),
+    server_skeleton_ending_ ("S.cpp"),
+    server_template_skeleton_ending_ ("S_T.cpp"),
+    anyop_hdr_ending_ ("A.h"),
+    anyop_src_ending_ ("A.cpp"),
+    ciao_svnt_hdr_template_ending_ ("_svnt_T.h"),
+    ciao_svnt_src_template_ending_ ("_svnt_T.cpp"),
+    ciao_svnt_hdr_ending_ ("_svnt.h"),
+    ciao_svnt_src_ending_ ("_svnt.cpp"),
+    ciao_exec_hdr_ending_ ("_exec.h"),
+    ciao_exec_src_ending_ ("_exec.cpp"),
+    ciao_exec_stub_hdr_ending_ ("EC.h"),
+    ciao_exec_idl_ending_ ("E.idl"),
+    ciao_conn_hdr_ending_ ("_conn.h"),
+    ciao_conn_src_ending_ ("_conn.cpp"),
+    dds_typesupport_hdr_ending_ ("Support.h"),
+    ciao_ami_conn_idl_ending_ ("A.idl"),
+    ciao_ami_conn_impl_hdr_ending_ ("_conn_i.h"),
+    ciao_ami_conn_impl_src_ending_ ("_conn_i.cpp"),
+    ciao_container_type_ ("Session")
 {
 }
 
@@ -720,304 +741,259 @@ BE_GlobalData::be_get_ciao_ami_conn_impl_src_fname (
 const char*
 BE_GlobalData::skel_export_macro () const
 {
-  if (this->skel_export_macro_ == nullptr)
-    {
-      return "";
-    }
-
-  return this->skel_export_macro_;
+  char const *value = optional_string_c_str (this->skel_export_macro_);
+  return value == nullptr ? "" : value;
 }
 
 void
 BE_GlobalData::skel_export_macro (const char *s)
 {
-  ACE::strdelete (this->skel_export_macro_);
-  this->skel_export_macro_ = ACE::strnew (s);
+  set_optional_string (this->skel_export_macro_, s);
 }
 
 const char*
 BE_GlobalData::skel_export_include () const
 {
-  return this->skel_export_include_;
+  return optional_string_c_str (this->skel_export_include_);
 }
 
 void
 BE_GlobalData::skel_export_include (const char *s)
 {
-  ACE::strdelete (this->skel_export_include_);
-  this->skel_export_include_ = ACE::strnew (s);
+  set_optional_string (this->skel_export_include_, s);
 }
 
 const char*
 BE_GlobalData::skel_export_file () const
 {
-  return this->skel_export_file_;
+  return optional_string_c_str (this->skel_export_file_);
 }
 
 void
 BE_GlobalData::skel_export_file (const char *s)
 {
-  ACE::strdelete (this->skel_export_file_);
-  this->skel_export_file_ = ACE::strnew (s);
+  set_optional_string (this->skel_export_file_, s);
 }
 
 const char*
 BE_GlobalData::stub_export_macro () const
 {
-  if (this->stub_export_macro_ == nullptr)
-    {
-      return "";
-    }
-
-  return this->stub_export_macro_;
+  char const *value = optional_string_c_str (this->stub_export_macro_);
+  return value == nullptr ? "" : value;
 }
 
 void
 BE_GlobalData::stub_export_macro (const char *s)
 {
-  ACE::strdelete (this->stub_export_macro_);
-  this->stub_export_macro_ = ACE::strnew (s);
+  set_optional_string (this->stub_export_macro_, s);
 }
 
 const char*
 BE_GlobalData::stub_export_include () const
 {
-  return this->stub_export_include_;
+  return optional_string_c_str (this->stub_export_include_);
 }
 
 void
 BE_GlobalData::stub_export_include (const char *s)
 {
-  ACE::strdelete (this->stub_export_include_);
-  this->stub_export_include_ = ACE::strnew (s);
+  set_optional_string (this->stub_export_include_, s);
 }
 
 const char*
 BE_GlobalData::stub_export_file () const
 {
-  return this->stub_export_file_;
+  return optional_string_c_str (this->stub_export_file_);
 }
 
 void
 BE_GlobalData::stub_export_file (const char *s)
 {
-  ACE::strdelete (this->stub_export_file_);
-  this->stub_export_file_ = ACE::strnew (s);
+  set_optional_string (this->stub_export_file_, s);
 }
 
 const char*
 BE_GlobalData::anyop_export_macro () const
 {
-  if (this->anyop_export_macro_ == nullptr)
-    {
-      return "";
-    }
-
-  return this->anyop_export_macro_;
+  char const *value = optional_string_c_str (this->anyop_export_macro_);
+  return value == nullptr ? "" : value;
 }
 
 void
 BE_GlobalData::anyop_export_macro (const char *s)
 {
-  ACE::strdelete (this->anyop_export_macro_);
-  this->anyop_export_macro_ = ACE::strnew (s);
+  set_optional_string (this->anyop_export_macro_, s);
 }
 
 const char*
 BE_GlobalData::anyop_export_include () const
 {
-  return this->anyop_export_include_;
+  return optional_string_c_str (this->anyop_export_include_);
 }
 
 void
 BE_GlobalData::anyop_export_include (const char *s)
 {
-  ACE::strdelete (this->anyop_export_include_);
-  this->anyop_export_include_ = ACE::strnew (s);
+  set_optional_string (this->anyop_export_include_, s);
 }
 
 const char*
 BE_GlobalData::exec_export_macro () const
 {
-  if (this->exec_export_macro_ == nullptr)
-    {
-      return "";
-    }
-
-  return this->exec_export_macro_;
+  char const *value = optional_string_c_str (this->exec_export_macro_);
+  return value == nullptr ? "" : value;
 }
 
 void
 BE_GlobalData::exec_export_macro (const char *s)
 {
-  ACE::strdelete (this->exec_export_macro_);
-  this->exec_export_macro_ = ACE::strnew (s);
+  set_optional_string (this->exec_export_macro_, s);
 }
 
 const char*
 BE_GlobalData::exec_export_include () const
 {
-  return this->exec_export_include_;
+  return optional_string_c_str (this->exec_export_include_);
 }
 
 void
 BE_GlobalData::exec_export_include (const char *s)
 {
-  ACE::strdelete (this->exec_export_include_);
-  this->exec_export_include_ = ACE::strnew (s);
+  set_optional_string (this->exec_export_include_, s);
 }
 
 const char*
 BE_GlobalData::svnt_export_macro () const
 {
-  if (this->svnt_export_macro_ == nullptr)
-    {
-      return "";
-    }
-
-  return this->svnt_export_macro_;
+  char const *value = optional_string_c_str (this->svnt_export_macro_);
+  return value == nullptr ? "" : value;
 }
 
 void
 BE_GlobalData::svnt_export_macro (const char *s)
 {
-  ACE::strdelete (this->svnt_export_macro_);
-  this->svnt_export_macro_ = ACE::strnew (s);
+  set_optional_string (this->svnt_export_macro_, s);
 }
 
 const char*
 BE_GlobalData::svnt_export_include () const
 {
-  return this->svnt_export_include_;
+  return optional_string_c_str (this->svnt_export_include_);
 }
 
 void
 BE_GlobalData::svnt_export_include (const char *s)
 {
-  ACE::strdelete (this->svnt_export_include_);
-  this->svnt_export_include_ = ACE::strnew (s);
+  set_optional_string (this->svnt_export_include_, s);
 }
 
 const char*
 BE_GlobalData::conn_export_macro () const
 {
-  if (this->conn_export_macro_ == nullptr)
-    {
-      return "";
-    }
-
-  return this->conn_export_macro_;
+  char const *value = optional_string_c_str (this->conn_export_macro_);
+  return value == nullptr ? "" : value;
 }
 
 void
 BE_GlobalData::conn_export_macro (const char *s)
 {
-  ACE::strdelete (this->conn_export_macro_);
-  this->conn_export_macro_ = ACE::strnew (s);
+  set_optional_string (this->conn_export_macro_, s);
 }
 
 const char*
 BE_GlobalData::conn_export_include () const
 {
-  return this->conn_export_include_;
+  return optional_string_c_str (this->conn_export_include_);
 }
 
 void
 BE_GlobalData::conn_export_include (const char *s)
 {
-  ACE::strdelete (this->conn_export_include_);
-  this->conn_export_include_ = ACE::strnew (s);
+  set_optional_string (this->conn_export_include_, s);
 }
 
 const char*
 BE_GlobalData::pch_include () const
 {
-  return this->pch_include_;
+  return optional_string_c_str (this->pch_include_);
 }
 
 void
 BE_GlobalData::pch_include (const char *s)
 {
-  ACE::strdelete (this->pch_include_);
-  this->pch_include_ = ACE::strnew (s);
+  set_optional_string (this->pch_include_, s);
 }
 
 const char*
 BE_GlobalData::pre_include () const
 {
-  return this->pre_include_;
+  return optional_string_c_str (this->pre_include_);
 }
 
 void
 BE_GlobalData::pre_include (const char *s)
 {
-  ACE::strdelete (this->pre_include_);
-  this->pre_include_ = ACE::strnew (s);
+  set_optional_string (this->pre_include_, s);
 }
 
 const char*
 BE_GlobalData::post_include () const
 {
-  return this->post_include_;
+  return optional_string_c_str (this->post_include_);
 }
 
 void
 BE_GlobalData::post_include (const char *s)
 {
-  ACE::strdelete (this->post_include_);
-  this->post_include_ = ACE::strnew (s);
+  set_optional_string (this->post_include_, s);
 }
 
 const char*
 BE_GlobalData::include_guard () const
 {
-  return this->include_guard_;
+  return optional_string_c_str (this->include_guard_);
 }
 
 void
 BE_GlobalData::include_guard (const char *s)
 {
-  ACE::strdelete (this->include_guard_);
-  this->include_guard_ = ACE::strnew (s);
+  set_optional_string (this->include_guard_, s);
 }
 
 const char*
 BE_GlobalData::safe_include () const
 {
-  return this->safe_include_;
+  return optional_string_c_str (this->safe_include_);
 }
 
 void
 BE_GlobalData::safe_include (const char *s)
 {
-  ACE::strdelete (this->safe_include_);
-  this->safe_include_ = ACE::strnew (s);
+  set_optional_string (this->safe_include_, s);
 }
 
 const char*
 BE_GlobalData::unique_include () const
 {
-  return this->unique_include_;
+  return optional_string_c_str (this->unique_include_);
 }
 
 void
 BE_GlobalData::unique_include (const char *s)
 {
-  ACE::strdelete (this->unique_include_);
-  this->unique_include_ = ACE::strnew (s);
+  set_optional_string (this->unique_include_, s);
 }
 
 const char*
 BE_GlobalData::stripped_filename () const
 {
-  return this->stripped_filename_;
+  return optional_string_c_str (this->stripped_filename_);
 }
 
 void
 BE_GlobalData::stripped_filename (const char *s)
 {
-  ACE::strdelete (this->stripped_filename_);
-  this->stripped_filename_ = ACE::strnew (s);
+  set_optional_string (this->stripped_filename_, s);
 }
 
 const char *
@@ -1104,153 +1080,141 @@ BE_GlobalData::anyops_versioning_end () const
 void
 BE_GlobalData::client_hdr_ending (const char* s)
 {
-  ACE::strdelete (client_hdr_ending_);
-  this->client_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->client_hdr_ending_, s);
 }
 
 // Get the client_hdr_ending.
 const char*
 BE_GlobalData::client_hdr_ending () const
 {
-  return this->client_hdr_ending_;
+  return optional_string_c_str (this->client_hdr_ending_);
 }
 
 void
 BE_GlobalData::client_inline_ending  (const char* s)
 {
-  ACE::strdelete (client_inline_ending_);
-  this->client_inline_ending_ = ACE::strnew (s);
+  set_optional_string (this->client_inline_ending_, s);
 }
 
 const char*
 BE_GlobalData::client_inline_ending () const
 {
-  return this->client_inline_ending_;
+  return optional_string_c_str (this->client_inline_ending_);
 }
 
 // Set the client_stub_ending.
 void
 BE_GlobalData::client_stub_ending (const char* s)
 {
-  ACE::strdelete (this->client_stub_ending_);
-  this->client_stub_ending_ = ACE::strnew (s);
+  set_optional_string (this->client_stub_ending_, s);
 }
 
 const char*
 BE_GlobalData::client_stub_ending () const
 {
-  return this->client_stub_ending_;
+  return optional_string_c_str (this->client_stub_ending_);
 }
 
 void
 BE_GlobalData::server_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->server_hdr_ending_);
-  this->server_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->server_hdr_ending_, s);
 }
 
 const char*
 BE_GlobalData::server_hdr_ending () const
 {
-  return this->server_hdr_ending_;
+  return optional_string_c_str (this->server_hdr_ending_);
 }
 
 void
 BE_GlobalData::implementation_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->implementation_hdr_ending_);
-  this->implementation_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->implementation_hdr_ending_, s);
 }
 
 void
 BE_GlobalData::implementation_skel_ending (const char* s)
 {
-  ACE::strdelete (this->implementation_skel_ending_);
-  this->implementation_skel_ending_ = ACE::strnew (s);
+  set_optional_string (this->implementation_skel_ending_, s);
 }
 
 void
 BE_GlobalData::impl_class_prefix (const char* s)
 {
-  ACE::strdelete (this->impl_class_prefix_);
-  this->impl_class_prefix_ = ACE::strnew (s);
+  set_optional_string (this->impl_class_prefix_, s);
 }
 
 void
 BE_GlobalData::impl_class_suffix (const char* s)
 {
-  ACE::strdelete (this->impl_class_suffix_);
-  this->impl_class_suffix_ = ACE::strnew (s);
+  set_optional_string (this->impl_class_suffix_, s);
 }
 
 const char*
 BE_GlobalData::impl_class_prefix () const
 {
-  return this->impl_class_prefix_;
+  return optional_string_c_str (this->impl_class_prefix_);
 }
 
 const char*
 BE_GlobalData::implementation_hdr_ending () const
 {
-  return this->implementation_hdr_ending_;
+  return optional_string_c_str (this->implementation_hdr_ending_);
 }
 
 const char*
 BE_GlobalData::impl_class_suffix () const
 {
-  return this->impl_class_suffix_;
+  return optional_string_c_str (this->impl_class_suffix_);
 }
 
 const char*
 BE_GlobalData::implementation_skel_ending () const
 {
-  return this->implementation_skel_ending_;
+  return optional_string_c_str (this->implementation_skel_ending_);
 }
 
 void
 BE_GlobalData::server_template_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->server_template_hdr_ending_);
-  this->server_template_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->server_template_hdr_ending_, s);
 }
 
 const char*
 BE_GlobalData::server_template_hdr_ending () const
 {
-  return this->server_template_hdr_ending_;
+  return optional_string_c_str (this->server_template_hdr_ending_);
 }
 
 void
 BE_GlobalData::server_skeleton_ending (const char* s)
 {
-  ACE::strdelete (this->server_skeleton_ending_);
-  this->server_skeleton_ending_ = ACE::strnew (s);
+  set_optional_string (this->server_skeleton_ending_, s);
 }
 
 const char*
 BE_GlobalData::server_skeleton_ending () const
 {
-  return this->server_skeleton_ending_;
+  return optional_string_c_str (this->server_skeleton_ending_);
 }
 
 void
 BE_GlobalData::server_template_skeleton_ending (const char* s)
 {
-  ACE::strdelete (this->server_template_skeleton_ending_);
-  this->server_template_skeleton_ending_ = ACE::strnew (s);
+  set_optional_string (this->server_template_skeleton_ending_, s);
 }
 
 const char*
 BE_GlobalData::server_template_skeleton_ending () const
 {
-  return this->server_template_skeleton_ending_;
+  return optional_string_c_str (this->server_template_skeleton_ending_);
 }
 
 void
 BE_GlobalData::anyop_header_ending (const char* s)
 {
-  ACE::strdelete (this->anyop_hdr_ending_);
-  this->anyop_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->anyop_hdr_ending_, s);
 }
 
 void
@@ -1305,228 +1269,211 @@ BE_GlobalData::gen_static_desc_operations (bool val)
 const char*
 BE_GlobalData::anyop_header_ending () const
 {
-  return this->anyop_hdr_ending_;
+  return optional_string_c_str (this->anyop_hdr_ending_);
 }
 
 void
 BE_GlobalData::anyop_source_ending (const char* s)
 {
-  ACE::strdelete (this->anyop_src_ending_);
-  this->anyop_src_ending_ = ACE::strnew (s);
+  set_optional_string (this->anyop_src_ending_, s);
 }
 
 const char*
 BE_GlobalData::anyop_source_ending () const
 {
-  return this->anyop_src_ending_;
+  return optional_string_c_str (this->anyop_src_ending_);
 }
 
 void
 BE_GlobalData::ciao_svnt_header_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_svnt_hdr_ending_);
-  this->ciao_svnt_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_svnt_hdr_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_svnt_header_ending () const
 {
-  return this->ciao_svnt_hdr_ending_;
+  return optional_string_c_str (this->ciao_svnt_hdr_ending_);
 }
 
 void
 BE_GlobalData::ciao_svnt_source_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_svnt_src_ending_);
-  this->ciao_svnt_src_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_svnt_src_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_svnt_source_ending () const
 {
-  return this->ciao_svnt_src_ending_;
+  return optional_string_c_str (this->ciao_svnt_src_ending_);
 }
 
 void
 BE_GlobalData::ciao_svnt_header_template_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_svnt_hdr_template_ending_);
-  this->ciao_svnt_hdr_template_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_svnt_hdr_template_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_svnt_header_template_ending () const
 {
-  return this->ciao_svnt_hdr_template_ending_;
+  return optional_string_c_str (this->ciao_svnt_hdr_template_ending_);
 }
 
 void
 BE_GlobalData::ciao_svnt_source_template_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_svnt_src_template_ending_);
-  this->ciao_svnt_src_template_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_svnt_src_template_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_svnt_source_template_ending () const
 {
-  return this->ciao_svnt_src_template_ending_;
+  return optional_string_c_str (this->ciao_svnt_src_template_ending_);
 }
 
 void
 BE_GlobalData::ciao_exec_header_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_exec_hdr_ending_);
-  this->ciao_exec_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_exec_hdr_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_exec_header_ending () const
 {
-  return this->ciao_exec_hdr_ending_;
+  return optional_string_c_str (this->ciao_exec_hdr_ending_);
 }
 
 void
 BE_GlobalData::ciao_exec_source_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_exec_src_ending_);
-  this->ciao_exec_src_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_exec_src_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_exec_source_ending () const
 {
-  return this->ciao_exec_src_ending_;
+  return optional_string_c_str (this->ciao_exec_src_ending_);
 }
 
 void
 BE_GlobalData::ciao_exec_stub_header_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
-  this->ciao_exec_stub_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_exec_stub_hdr_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_exec_stub_header_ending () const
 {
-  return this->ciao_exec_stub_hdr_ending_;
+  return optional_string_c_str (this->ciao_exec_stub_hdr_ending_);
 }
 
 void
 BE_GlobalData::ciao_exec_idl_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_exec_idl_ending_);
-  this->ciao_exec_idl_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_exec_idl_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_exec_idl_ending () const
 {
-  return this->ciao_exec_idl_ending_;
+  return optional_string_c_str (this->ciao_exec_idl_ending_);
 }
 
 void
 BE_GlobalData::ciao_conn_header_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_conn_hdr_ending_);
-  this->ciao_conn_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_conn_hdr_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_conn_header_ending () const
 {
-  return this->ciao_conn_hdr_ending_;
+  return optional_string_c_str (this->ciao_conn_hdr_ending_);
 }
 
 void
 BE_GlobalData::ciao_conn_source_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_conn_src_ending_);
-  this->ciao_conn_src_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_conn_src_ending_, s);
 }
 
 const char*
 BE_GlobalData::ciao_conn_source_ending () const
 {
-  return this->ciao_conn_src_ending_;
+  return optional_string_c_str (this->ciao_conn_src_ending_);
 }
 
 void
 BE_GlobalData::dds_typesupport_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->dds_typesupport_hdr_ending_);
-  this->dds_typesupport_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->dds_typesupport_hdr_ending_, s);
 }
 
 const char*
 BE_GlobalData::dds_typesupport_hdr_ending () const
 {
-  return this->dds_typesupport_hdr_ending_;
+  return optional_string_c_str (this->dds_typesupport_hdr_ending_);
 }
 
 void
 BE_GlobalData::ciao_ami_conn_idl_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_ami_conn_idl_ending_);
-  this->ciao_ami_conn_idl_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_ami_conn_idl_ending_, s);
 }
 
 const char *
 BE_GlobalData::ciao_ami_conn_idl_ending () const
 {
-  return this->ciao_ami_conn_idl_ending_;
+  return optional_string_c_str (this->ciao_ami_conn_idl_ending_);
 }
 
 void
 BE_GlobalData::ciao_ami_conn_impl_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
-  this->ciao_ami_conn_impl_hdr_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_ami_conn_impl_hdr_ending_, s);
 }
 
 const char *
 BE_GlobalData::ciao_ami_conn_impl_hdr_ending () const
 {
-  return this->ciao_ami_conn_impl_hdr_ending_;
+  return optional_string_c_str (this->ciao_ami_conn_impl_hdr_ending_);
 }
 
 void
 BE_GlobalData::ciao_ami_conn_impl_src_ending (const char* s)
 {
-  ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
-  this->ciao_ami_conn_impl_src_ending_ = ACE::strnew (s);
+  set_optional_string (this->ciao_ami_conn_impl_src_ending_, s);
 }
 
 const char *
 BE_GlobalData::ciao_ami_conn_impl_src_ending () const
 {
-  return this->ciao_ami_conn_impl_src_ending_;
+  return optional_string_c_str (this->ciao_ami_conn_impl_src_ending_);
 }
 
 void
 BE_GlobalData::ciao_container_type (const char* s)
 {
-  ACE::strdelete (this->ciao_container_type_);
-  this->ciao_container_type_ = ACE::strnew (s);
+  set_optional_string (this->ciao_container_type_, s);
 }
 
 const char *
 BE_GlobalData::ciao_container_type () const
 {
-  return this->ciao_container_type_;
+  return optional_string_c_str (this->ciao_container_type_);
 }
 
 void
 BE_GlobalData::output_dir (const char* s)
 {
-  ACE::strdelete (this->output_dir_);
-  this->output_dir_ = ACE::strnew (s);
+  set_optional_string (this->output_dir_, s);
 }
 
 const char*
 BE_GlobalData::output_dir () const
 {
-  return this->output_dir_;
+  return optional_string_c_str (this->output_dir_);
 }
 bool
 BE_GlobalData::overwrite_not_exec () const
@@ -1543,53 +1490,49 @@ BE_GlobalData::overwrite_not_exec (bool val)
 void
 BE_GlobalData::skel_output_dir (const char* s)
 {
-  ACE::strdelete (this->skel_output_dir_);
-  this->skel_output_dir_ = ACE::strnew (s);
+  set_optional_string (this->skel_output_dir_, s);
 }
 
 const char*
 BE_GlobalData::skel_output_dir () const
 {
-  return this->skel_output_dir_;
+  return optional_string_c_str (this->skel_output_dir_);
 }
 
 void
 BE_GlobalData::stub_include_dir (const char* s)
 {
-  ACE::strdelete (this->stub_include_dir_);
-  this->stub_include_dir_ = ACE::strnew (s);
+  set_optional_string (this->stub_include_dir_, s);
 }
 
 const char*
 BE_GlobalData::stub_include_dir () const
 {
-  return this->stub_include_dir_;
+  return optional_string_c_str (this->stub_include_dir_);
 }
 
 void
 BE_GlobalData::anyop_output_dir (const char* s)
 {
-  ACE::strdelete (this->anyop_output_dir_);
-  this->anyop_output_dir_ = ACE::strnew (s);
+  set_optional_string (this->anyop_output_dir_, s);
 }
 
 const char*
 BE_GlobalData::anyop_output_dir () const
 {
-  return this->anyop_output_dir_;
+  return optional_string_c_str (this->anyop_output_dir_);
 }
 
 void
 BE_GlobalData::exec_output_dir (const char* s)
 {
-  ACE::strdelete (this->exec_output_dir_);
-  this->exec_output_dir_ = ACE::strnew (s);
+  set_optional_string (this->exec_output_dir_, s);
 }
 
 const char*
 BE_GlobalData::exec_output_dir () const
 {
-  return this->exec_output_dir_;
+  return optional_string_c_str (this->exec_output_dir_);
 }
 void
 BE_GlobalData::any_support (bool val)
@@ -1920,167 +1863,67 @@ BE_GlobalData::dds_impl () const
 void
 BE_GlobalData::destroy ()
 {
-  ACE::strdelete (this->skel_export_macro_);
-  this->skel_export_macro_ = nullptr;
+  Optional_String *strings[] = {
+    &this->skel_export_macro_,
+    &this->skel_export_include_,
+    &this->skel_export_file_,
+    &this->stub_export_macro_,
+    &this->stub_export_include_,
+    &this->stub_export_file_,
+    &this->anyop_export_macro_,
+    &this->anyop_export_include_,
+    &this->exec_export_macro_,
+    &this->exec_export_include_,
+    &this->svnt_export_macro_,
+    &this->svnt_export_include_,
+    &this->conn_export_macro_,
+    &this->conn_export_include_,
+    &this->pch_include_,
+    &this->pre_include_,
+    &this->post_include_,
+    &this->include_guard_,
+    &this->safe_include_,
+    &this->unique_include_,
+    &this->stripped_filename_,
+    &this->client_hdr_ending_,
+    &this->client_stub_ending_,
+    &this->client_inline_ending_,
+    &this->server_hdr_ending_,
+    &this->implementation_hdr_ending_,
+    &this->implementation_skel_ending_,
+    &this->impl_class_prefix_,
+    &this->impl_class_suffix_,
+    &this->server_template_hdr_ending_,
+    &this->server_skeleton_ending_,
+    &this->server_template_skeleton_ending_,
+    &this->anyop_hdr_ending_,
+    &this->anyop_src_ending_,
+    &this->ciao_svnt_hdr_template_ending_,
+    &this->ciao_svnt_src_template_ending_,
+    &this->ciao_svnt_hdr_ending_,
+    &this->ciao_svnt_src_ending_,
+    &this->ciao_exec_hdr_ending_,
+    &this->ciao_exec_src_ending_,
+    &this->ciao_exec_stub_hdr_ending_,
+    &this->ciao_exec_idl_ending_,
+    &this->ciao_conn_hdr_ending_,
+    &this->ciao_conn_src_ending_,
+    &this->dds_typesupport_hdr_ending_,
+    &this->ciao_ami_conn_idl_ending_,
+    &this->ciao_ami_conn_impl_hdr_ending_,
+    &this->ciao_ami_conn_impl_src_ending_,
+    &this->ciao_container_type_,
+    &this->output_dir_,
+    &this->stub_include_dir_,
+    &this->skel_output_dir_,
+    &this->anyop_output_dir_,
+    &this->exec_output_dir_
+  };
 
-  ACE::strdelete (this->skel_export_include_);
-  this->skel_export_include_ = nullptr;
-
-  ACE::strdelete (this->skel_export_file_);
-  this->skel_export_file_ = nullptr;
-
-  ACE::strdelete (this->stub_export_macro_);
-  this->stub_export_macro_ = nullptr;
-
-  ACE::strdelete (this->stub_export_include_);
-  this->stub_export_include_ = nullptr;
-
-  ACE::strdelete (this->stub_export_file_);
-  this->stub_export_file_ = nullptr;
-
-  ACE::strdelete (this->anyop_export_macro_);
-  this->anyop_export_macro_ = nullptr;
-
-  ACE::strdelete (this->anyop_export_include_);
-  this->anyop_export_include_ = nullptr;
-
-  ACE::strdelete (this->exec_export_macro_);
-  this->exec_export_macro_ = nullptr;
-
-  ACE::strdelete (this->exec_export_include_);
-  this->exec_export_include_ = nullptr;
-
-  ACE::strdelete (this->svnt_export_macro_);
-  this->svnt_export_macro_ = nullptr;
-
-  ACE::strdelete (this->svnt_export_include_);
-  this->svnt_export_include_ = nullptr;
-
-  ACE::strdelete (this->conn_export_macro_);
-  this->conn_export_macro_ = nullptr;
-
-  ACE::strdelete (this->conn_export_include_);
-  this->conn_export_include_ = nullptr;
-
-  ACE::strdelete (this->pch_include_);
-  this->pch_include_ = nullptr;
-
-  ACE::strdelete (this->pre_include_);
-  this->pre_include_ = nullptr;
-
-  ACE::strdelete (this->post_include_);
-  this->post_include_ = nullptr;
-
-  ACE::strdelete (this->include_guard_);
-  this->include_guard_ = nullptr;
-
-  ACE::strdelete (this->safe_include_);
-  this->safe_include_ = nullptr;
-
-  ACE::strdelete (this->unique_include_);
-  this->unique_include_ = nullptr;
-
-  ACE::strdelete (this->stripped_filename_);
-  this->stripped_filename_ = nullptr;
-
-  ACE::strdelete (this->client_hdr_ending_);
-  this->client_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->client_stub_ending_);
-  this->client_stub_ending_ = nullptr;
-
-  ACE::strdelete (this->client_inline_ending_);
-  this->client_inline_ending_ = nullptr;
-
-  ACE::strdelete (this->server_hdr_ending_);
-  this->server_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->implementation_hdr_ending_);
-  this->implementation_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->implementation_skel_ending_);
-  this->implementation_skel_ending_ = nullptr;
-
-  ACE::strdelete (this->impl_class_prefix_);
-  this->impl_class_prefix_ = nullptr;
-
-  ACE::strdelete (this->impl_class_suffix_);
-  this->impl_class_suffix_ = nullptr;
-
-  ACE::strdelete (this->server_template_hdr_ending_);
-  this->server_template_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->server_skeleton_ending_);
-  this->server_skeleton_ending_ = nullptr;
-
-  ACE::strdelete (this->server_template_skeleton_ending_);
-  this->server_template_skeleton_ending_ = nullptr;
-
-  ACE::strdelete (this->anyop_hdr_ending_);
-  this->anyop_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->anyop_src_ending_);
-  this->anyop_src_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_svnt_hdr_ending_);
-  this->ciao_svnt_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_svnt_src_ending_);
-  this->ciao_svnt_src_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_svnt_hdr_template_ending_);
-  this->ciao_svnt_hdr_template_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_svnt_src_template_ending_);
-  this->ciao_svnt_src_template_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_exec_hdr_ending_);
-  this->ciao_exec_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_exec_src_ending_);
-  this->ciao_exec_src_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
-  this->ciao_exec_stub_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_exec_idl_ending_);
-  this->ciao_exec_idl_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_conn_hdr_ending_);
-  this->ciao_conn_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_conn_src_ending_);
-  this->ciao_conn_src_ending_ = nullptr;
-
-  ACE::strdelete (this->dds_typesupport_hdr_ending_);
-  this->dds_typesupport_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_ami_conn_idl_ending_);
-  this->ciao_ami_conn_idl_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
-  this->ciao_ami_conn_impl_hdr_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
-  this->ciao_ami_conn_impl_src_ending_ = nullptr;
-
-  ACE::strdelete (this->ciao_container_type_);
-  this->ciao_container_type_ = nullptr;
-
-  ACE::strdelete (this->output_dir_);
-  this->output_dir_ = nullptr;
-
-  ACE::strdelete (this->stub_include_dir_);
-  this->stub_include_dir_ = nullptr;
-
-  ACE::strdelete (this->skel_output_dir_);
-  this->skel_output_dir_ = nullptr;
-
-  ACE::strdelete (this->anyop_output_dir_);
-  this->anyop_output_dir_ = nullptr;
-
-  ACE::strdelete (this->exec_output_dir_);
-  this->exec_output_dir_ = nullptr;
+  for (Optional_String *string : strings)
+    {
+      string->reset ();
+    }
 
   if (nullptr != this->messaging_)
     {

@@ -13,6 +13,9 @@
 #ifndef _BE_GLOBAL_H
 #define _BE_GLOBAL_H
 
+#include <optional>
+#include <string>
+
 #include "TAO_IDL_BE_Export.h"
 
 #include "ace/Unbounded_Queue.h"
@@ -948,6 +951,8 @@ public:
   void parse_args (long &i, char **av);
 
 private:
+  using Optional_String = std::optional<std::string>;
+
   /**
    * To switch between changing or non-changing standard include
    * files (e.g. tao/corba.h)  so that #include statements can be
@@ -956,32 +961,32 @@ private:
   size_t changing_standard_include_files_ {1};
 
   // Macros and includes used to export classes from generated code.
-  char *skel_export_macro_ {};
-  char *skel_export_include_ {};
-  char *skel_export_file_ {};
-  char *stub_export_macro_ {};
-  char *stub_export_include_ {};
-  char *stub_export_file_ {};
+  Optional_String skel_export_macro_;
+  Optional_String skel_export_include_;
+  Optional_String skel_export_file_;
+  Optional_String stub_export_macro_;
+  Optional_String stub_export_include_;
+  Optional_String stub_export_file_;
 
   // Macro and include used on ORB .pidl files generating to the
   // AnyTypeCode library.
-  char *anyop_export_macro_ {};
-  char *anyop_export_include_ {};
+  Optional_String anyop_export_macro_;
+  Optional_String anyop_export_include_;
 
-  char *exec_export_macro_ {};
-  char *exec_export_include_ {};
-  char *svnt_export_macro_ {};
-  char *svnt_export_include_ {};
-  char *conn_export_macro_ {};
-  char *conn_export_include_ {};
+  Optional_String exec_export_macro_;
+  Optional_String exec_export_include_;
+  Optional_String svnt_export_macro_;
+  Optional_String svnt_export_include_;
+  Optional_String conn_export_macro_;
+  Optional_String conn_export_include_;
 
-  char *pch_include_ {};
-  char *pre_include_ {};
-  char *post_include_ {};
-  char *include_guard_ {};
-  char *safe_include_ {};
-  char *unique_include_ {};
-  char *stripped_filename_ {};
+  Optional_String pch_include_;
+  Optional_String pre_include_;
+  Optional_String post_include_;
+  Optional_String include_guard_;
+  Optional_String safe_include_;
+  Optional_String unique_include_;
+  Optional_String stripped_filename_;
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
@@ -1007,126 +1012,126 @@ private:
   ACE_CString versioning_include_;
 
   /// Client's header file name ending. Default is "C.h".
-  char* client_hdr_ending_;
+  Optional_String client_hdr_ending_;
 
   /// Client's stub's file name ending. Default is "C.cpp".
-  char* client_stub_ending_;
+  Optional_String client_stub_ending_;
 
   /// Client's inline file name ending. Default is "C.i".
-  char* client_inline_ending_;
+  Optional_String client_inline_ending_;
 
   /// Server's hdr file name ending. Default is "S.h".
-  char* server_hdr_ending_;
+  Optional_String server_hdr_ending_;
 
   /// Implementation's hdr file name ending. Default is "I.h".
-  char* implementation_hdr_ending_;
+  Optional_String implementation_hdr_ending_;
 
   // Implementation's skeleton file name ending. Default is "I.cpp".
-  char* implementation_skel_ending_;
+  Optional_String implementation_skel_ending_;
 
   /// Implementaion class prefix
-  char* impl_class_prefix_;
+  Optional_String impl_class_prefix_;
 
   /// Implementation class suffix
-  char* impl_class_suffix_;
+  Optional_String impl_class_suffix_;
 
   /// Server's template hdr file name ending. Default is "S_T.h".
-  char* server_template_hdr_ending_;
+  Optional_String server_template_hdr_ending_;
 
   /// Server's skeleton file name ending. Default is "S.cpp".
-  char* server_skeleton_ending_;
+  Optional_String server_skeleton_ending_;
 
   /// Server's template skeleton file name ending. Default is
   /// "S_T.cpp".
-  char* server_template_skeleton_ending_;
+  Optional_String server_template_skeleton_ending_;
 
   /// Anyop header file name ending. Default is "A.h".
-  char* anyop_hdr_ending_;
+  Optional_String anyop_hdr_ending_;
 
   /// Anyop source file name ending. Default is "A.cpp".
-  char* anyop_src_ending_;
+  Optional_String anyop_src_ending_;
 
   /// CIAO servant template header file name ending. Default is "_svnt_T.h".
-  char* ciao_svnt_hdr_template_ending_;
+  Optional_String ciao_svnt_hdr_template_ending_;
 
   /// CIAO servant template source file name ending. Default is "_svnt_T.cpp".
-  char* ciao_svnt_src_template_ending_;
+  Optional_String ciao_svnt_src_template_ending_;
 
   /// CIAO servant header file name ending. Default is "_svnt.h".
-  char* ciao_svnt_hdr_ending_;
+  Optional_String ciao_svnt_hdr_ending_;
 
   /// CIAO servant source file name ending. Default is "_svnt.cpp".
-  char* ciao_svnt_src_ending_;
+  Optional_String ciao_svnt_src_ending_;
 
   /// CIAO executor impl header file name ending. Default is "_exec.h".
-  char* ciao_exec_hdr_ending_;
+  Optional_String ciao_exec_hdr_ending_;
 
   /// CIAO executor impl source file name ending. Default is "_exec.cpp".
-  char* ciao_exec_src_ending_;
+  Optional_String ciao_exec_src_ending_;
 
   /// CIAO executor stub header file name ending. Default is "EC.h".
-  char* ciao_exec_stub_hdr_ending_;
+  Optional_String ciao_exec_stub_hdr_ending_;
 
   /// CIAO executor IDL file name ending. Default is "E.idl".
-  char* ciao_exec_idl_ending_;
+  Optional_String ciao_exec_idl_ending_;
 
   /// CIAO connector impl header file name ending. Default is "_conn.h".
-  char* ciao_conn_hdr_ending_;
+  Optional_String ciao_conn_hdr_ending_;
 
   /// CIAO connector impl source file name ending. Default is "_conn.cpp".
-  char* ciao_conn_src_ending_;
+  Optional_String ciao_conn_src_ending_;
 
   /// DDS TypeSupport header file name ending. Default is "Support.h".
-  char* dds_typesupport_hdr_ending_;
+  Optional_String dds_typesupport_hdr_ending_;
 
   /// CIAO AMI connector IDL file name ending. Default is "A.idl".
-  char* ciao_ami_conn_idl_ending_;
+  Optional_String ciao_ami_conn_idl_ending_;
 
   /// CIAO AMI reply handler impl header file name ending.
   /// Default is "A_impl.h".
-  char* ciao_ami_conn_impl_hdr_ending_;
+  Optional_String ciao_ami_conn_impl_hdr_ending_;
 
   /// CIAO AMI reply handler impl source file name ending.
   /// Default is "A_impl.cpp".
-  char* ciao_ami_conn_impl_src_ending_;
+  Optional_String ciao_ami_conn_impl_src_ending_;
 
   /// CIAO container type
   /// Default is "Session".
-  char* ciao_container_type_;
+  Optional_String ciao_container_type_;
 
   /**
    * Directory where all the IDL-Compiler-Generated files are to be
    * kept. Default value is 0 for this string which means the current
    * directory from which the <tao_idl> is called.
    */
-  char *output_dir_ {};
+  Optional_String output_dir_;
 
   /**
    * Path for all *C.* includes. Default value is 0, in which case
    * the local directory or $TAO_ROOT/tao is used.
    */
-  char *stub_include_dir_ {};
+  Optional_String stub_include_dir_;
 
   /**
    * Directory where all the *S.* files are to be
    * kept. Default value is 0 for this string which means the
    * value for output_dir_ is used.
    */
-  char *skel_output_dir_ {};
+  Optional_String skel_output_dir_;
 
   /**
    * Directory where all the *A.* files are to be
    * kept. Default value is 0 for this string which means the
    * value for output_dir_ is used.
    */
-  char *anyop_output_dir_ {};
+  Optional_String anyop_output_dir_;
 
   /**
     * Directory where all the *exec.* files are to be
     * kept. Default value is 0 for this string which means the
     * value for output_dir_ is used.
     */
-  char *exec_output_dir_ {};
+  Optional_String exec_output_dir_;
 
 
   /// do we support Any operators?
