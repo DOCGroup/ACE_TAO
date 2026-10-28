@@ -162,10 +162,10 @@ private:
   CosNotifyChannelAdmin::EventChannelFactory_var channel_factory_;
 
   /// Change-in-progress detector to avoid duplicates
-  short topology_save_seq_;
-  TAO_Notify::Topology_Factory* topology_factory_;
+  short topology_save_seq_ {};
+  TAO_Notify::Topology_Factory* topology_factory_ {};
   TAO_Notify::Reconnection_Registry reconnect_registry_;
-  bool loading_topology_;
+  bool loading_topology_ {};
 
   Routing_Slip_Set routing_slip_restart_set_;
 

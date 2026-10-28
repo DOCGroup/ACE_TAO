@@ -46,10 +46,7 @@ using TAO_Notify_EventChannel_Find_Worker =
 using TAO_Notify_EventChannel_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel>;
 
 TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory ()
-  : topology_save_seq_ (0)
-  , topology_factory_(0)
-  , reconnect_registry_(*this)
-  , loading_topology_ (false)
+  : reconnect_registry_ (*this)
 {
 }
 
