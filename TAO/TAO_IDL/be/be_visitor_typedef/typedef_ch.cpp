@@ -195,7 +195,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 
       // The _alloc, _dup, copy, and free methods
 
-      // Since the function nested_type_name() contains a static buffer,
+      // Since the function nested_type_name() contains an internal buffer,
       // we can have only one call to it from any instantiation per stream
       // output statement.
 
@@ -205,7 +205,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       // associated array memory management function must be static.
       char const *const static_decl = tdef_scope ? "" : "static ";
 
-      char const *td_name = tdef->nested_type_name (tdef_scope);
+      std::string td_name (tdef->nested_type_name (tdef_scope));
 
       // If the array and the typedef are both declared inside
       // an interface or valuetype, for example, nested_type_name()
@@ -216,7 +216,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       // name for each, which is ok.
       if (tdef->defined_in () == node->defined_in ())
         {
-          td_name = tdef->local_name ()->get_string ();
+          td_name = tdef->local_name ()->get_string_view ();
         }
 
       // _alloc

@@ -14,6 +14,8 @@
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
 
+#include <string>
+
 #include "ace/CDR_Base.h"
 #include "ace/SString.h"
 
@@ -187,6 +189,7 @@ public:
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (char ch);
   TAO_OutStream &operator<< (const ACE_CString &str);
+  TAO_OutStream &operator<< (std::string const& str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);

@@ -14,6 +14,8 @@
 #ifndef BE_TYPE_H
 #define BE_TYPE_H
 
+#include <string>
+
 #include "be_decl.h"
 #include "ast_type.h"
 
@@ -39,9 +41,9 @@ public:
 
   /// Type name of a node used when generating declarations for smart
   /// proxies.
-  virtual const char *nested_sp_type_name (be_decl *use_scope,
-                                           const char *suffix = nullptr,
-                                           const char *prefix = nullptr);
+  virtual std::string const& nested_sp_type_name (be_decl *use_scope,
+                                                  const char *suffix = nullptr,
+                                                  const char *prefix = nullptr);
 
   /// Compute the value of the member.
   void gen_fwd_helper_name ();

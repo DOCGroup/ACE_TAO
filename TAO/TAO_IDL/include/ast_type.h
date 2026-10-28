@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_TYPE_AST_TYPE_HH
 #define _AST_TYPE_AST_TYPE_HH
 
+#include <string>
+
 #include "ast_decl.h"
 
 #include "ace/Unbounded_Queue.h"
@@ -117,9 +119,9 @@ public:
   void ifr_fwd_added (bool val);
 
   // Type name of a node used when generating declarations.
-  char const *nested_type_name (AST_Decl *d,
-                                char const *suffix = nullptr,
-                                char const *prefix = nullptr);
+  std::string const& nested_type_name (AST_Decl *d,
+                                       char const *suffix = nullptr,
+                                       char const *prefix = nullptr);
 
   // Utility function to make sure we are using the unaliased type.
   AST_Type *unaliased_type ();
@@ -140,11 +142,11 @@ protected:
   virtual int compute_size_type ();
 
   // Type name of a node used when generating declarations.
-  char const *nested_name (char const *local_name,
-                           char const *full_name,
-                           AST_Decl *use_scope,
-                           char const *suffix,
-                           char const *prefix);
+  std::string const& nested_name (char const *local_name,
+                                  char const *full_name,
+                                  AST_Decl *use_scope,
+                                  char const *suffix,
+                                  char const *prefix);
 
   bool match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list);
 
@@ -164,7 +166,7 @@ protected:
   bool has_constructor_ {};
 
   // For the corresponding method.
-  char *nested_type_name_ {};
+  std::string nested_type_name_;
 
   // Storage once the value has been computed.
   long in_recursion_ {-1};

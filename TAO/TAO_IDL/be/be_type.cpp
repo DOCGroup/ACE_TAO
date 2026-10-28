@@ -133,7 +133,7 @@ be_type::tc_name ()
 //
 // We can use the flat_name() method for the local_name parm but have
 // to construct the full name ourselves.
-const char *
+std::string const&
 be_type::nested_sp_type_name (be_decl *use_scope,
                               const char *suffix,
                               const char *prefix)
