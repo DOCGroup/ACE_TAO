@@ -62,7 +62,7 @@ TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor ()
 }
 
 int
-TAO_Notify_Constraint_Visitor::bind_structured_event (const CosNotification::StructuredEvent &s_event)
+TAO_Notify_Constraint_Visitor::bind_structured_event (CosNotification::StructuredEvent const &s_event)
 {
   // The two sequences contained in a structured event are
   // copied into hash tables so iteration is done only once.
