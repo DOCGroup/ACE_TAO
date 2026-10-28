@@ -24,7 +24,7 @@ namespace XML
   class XML_Utils_Export XStr
   {
   public:
-    XStr() : _wstr(nullptr) { };
+    XStr () = default;
 
 // On unicode windows, ACE_TCHAR == XMLCh
 #if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)
@@ -62,7 +62,7 @@ namespace XML
     /// Release the held string and free its memory.
     void reset ();
   private:
-    XMLCh* _wstr; // Internal representation
+    XMLCh* _wstr {}; // Internal representation
   };
 
   XML_Utils_Export bool operator== (const XStr& lhs, const XStr& rhs);
