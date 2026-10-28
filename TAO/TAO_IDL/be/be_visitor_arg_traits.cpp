@@ -599,7 +599,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   AST_Decl *op = ScopeAsDecl (node->defined_in ());
   AST_Decl *intf = ScopeAsDecl (op->defined_in ());
-  ACE_CString arg_flat_name (intf->flat_name ());
+  std::string arg_flat_name (intf->flat_name ());
   arg_flat_name += '_';
   arg_flat_name += op->local_name ()->get_string ();
   arg_flat_name += '_';

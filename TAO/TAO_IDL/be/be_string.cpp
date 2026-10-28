@@ -18,6 +18,8 @@
 #include "utl_identifier.h"
 #include "global_extern.h"
 
+#include <string>
+
 be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName * n,
                       AST_Expression * v,
@@ -133,9 +135,8 @@ be_string::compute_tc_name ()
                UTL_ScopedName (tao_id,
                                nullptr));
 
-      ACE_CString local_tc_name =
-        ACE_CString ("tc_")
-        + ACE_CString (this->flat_name ());
+      std::string local_tc_name ("tc_");
+      local_tc_name += this->flat_name ();
 
       Identifier * typecode_scope = nullptr;
       ACE_NEW (typecode_scope,
