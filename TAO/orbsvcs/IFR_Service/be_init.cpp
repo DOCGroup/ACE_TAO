@@ -116,7 +116,7 @@ BE_init (int &argc, ACE_TCHAR *argv[])
 }
 
 TAO_IFR_BE_Export void
-BE_post_init (char *[], long)
+BE_post_init (std::vector<std::string> const &)
 {
 }
 
