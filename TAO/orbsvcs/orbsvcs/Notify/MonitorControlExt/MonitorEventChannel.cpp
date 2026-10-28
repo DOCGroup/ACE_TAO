@@ -290,7 +290,7 @@ private:
 // TAO_MonitorEventChannel Methods
 // ******************************************************************
 
-TAO_MonitorEventChannel::TAO_MonitorEventChannel (const char* name)
+TAO_MonitorEventChannel::TAO_MonitorEventChannel (char const *name)
   : name_ (name)
 {
   this->add_stats ();
@@ -317,14 +317,14 @@ TAO_MonitorEventChannel::~TAO_MonitorEventChannel ()
     }
 }
 
-const ACE_CString&
+ACE_CString const &
 TAO_MonitorEventChannel::name () const
 {
   return this->name_;
 }
 
 bool
-TAO_MonitorEventChannel::register_statistic (const ACE_CString& name,
+TAO_MonitorEventChannel::register_statistic (ACE_CString const &name,
                                              Monitor_Base* stat)
 {
   // Add the statistic to the registry and
@@ -342,7 +342,7 @@ TAO_MonitorEventChannel::register_statistic (const ACE_CString& name,
 }
 
 bool
-TAO_MonitorEventChannel::unregister_statistic (const ACE_CString& name)
+TAO_MonitorEventChannel::unregister_statistic (ACE_CString const &name)
 {
   // Remove the statistic from the registry and if it's successful
   // remove the name from the statistic names list.
@@ -361,7 +361,7 @@ TAO_MonitorEventChannel::unregister_statistic (const ACE_CString& name)
 void
 TAO_MonitorEventChannel::map_supplier_proxy (
   CosNotifyChannelAdmin::ProxyID id,
-  const ACE_CString& name)
+  ACE_CString const &name)
 {
   if (name.length () == 0)
     {
@@ -410,7 +410,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
 void
 TAO_MonitorEventChannel::map_consumer_proxy (
   CosNotifyChannelAdmin::ProxyID id,
-  const ACE_CString& name)
+  ACE_CString const &name)
 {
   if (name.length () == 0)
     {
@@ -524,7 +524,7 @@ TAO_MonitorEventChannel::remove_supplieradmin (
 }
 
 void
-TAO_MonitorEventChannel::add_stats (const char* name)
+TAO_MonitorEventChannel::add_stats (char const *name)
 {
   if (name != nullptr && this->name_.length () == 0)
     {
@@ -854,7 +854,7 @@ CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_MonitorEventChannel::named_new_for_consumers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id,
-  const char* name)
+  char const *name)
 {
   if (name != nullptr && name[0] == 0)
     {
@@ -921,7 +921,7 @@ CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_MonitorEventChannel::named_new_for_suppliers (
   CosNotifyChannelAdmin::InterFilterGroupOperator op,
   CosNotifyChannelAdmin::AdminID_out id,
-  const char* name)
+  char const *name)
 {
   if (name != nullptr && name[0] == 0)
     {
@@ -1136,7 +1136,7 @@ TAO_MonitorEventChannel::get_supplieradmins (
 size_t
 TAO_MonitorEventChannel::get_admins (
   TAO_MonitorEventChannel::Map& map,
-  const CosNotifyChannelAdmin::AdminIDSeq& admin_ids,
+  CosNotifyChannelAdmin::AdminIDSeq const &admin_ids,
   Monitor_Control_Types::NameList* names)
 {
   size_t count = 0;
@@ -1334,8 +1334,8 @@ TAO_MonitorEventChannel::get_oldest_event ()
 
 bool
 TAO_MonitorEventChannel::is_duplicate_name (
-  const TAO_MonitorEventChannel::Map& map,
-  const ACE_CString& name) const
+  TAO_MonitorEventChannel::Map const &map,
+  ACE_CString const &name) const
 {
   Map::const_iterator itr (map);
   Map::value_type* entry = nullptr;
@@ -1356,7 +1356,7 @@ TAO_MonitorEventChannel::is_duplicate_name (
 void
 TAO_MonitorEventChannel::remove_list_name (
   Monitor_Control_Types::NameList& list,
-  const ACE_CString& name)
+  ACE_CString const &name)
 {
   size_t size = list.size ();
 
