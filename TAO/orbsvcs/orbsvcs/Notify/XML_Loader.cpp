@@ -49,14 +49,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  XML_Loader::XML_Loader ()
-    : live_ (false)
-  {
-  }
+  XML_Loader::XML_Loader () = default;
 
-  XML_Loader::~XML_Loader ()
-  {
-  }
+  XML_Loader::~XML_Loader () = default;
 
   bool
   XML_Loader::open (const ACE_TString & base_name)

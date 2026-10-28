@@ -15,18 +15,10 @@ namespace TAO_Notify
 {
   const char TOPOLOGY_ID_NAME[] = "TopologyID";
 
-  XML_Topology_Factory::XML_Topology_Factory()
-    : save_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
-    , load_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
-    , backup_count_ (2)
-    , timestamp_ (true)
-  {
-  }
+  XML_Topology_Factory::XML_Topology_Factory () = default;
 
   // virtual
-  XML_Topology_Factory::~XML_Topology_Factory ()
-  {
-  }
+  XML_Topology_Factory::~XML_Topology_Factory () = default;
 
   // virtual
   Topology_Saver*
@@ -34,7 +26,7 @@ namespace TAO_Notify
   {
     XML_Saver *saver = nullptr;
 
-    ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), 0);
+    ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), nullptr);
 
     if (! saver->open ( this->save_base_path_.c_str (), this->backup_count_))
     {

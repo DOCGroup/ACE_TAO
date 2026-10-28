@@ -38,7 +38,12 @@ public:
   /// The constructor.
   XML_Loader ();
 
-  virtual ~XML_Loader ();
+  ~XML_Loader () override;
+
+  XML_Loader (XML_Loader const &) = delete;
+  XML_Loader (XML_Loader &&) = delete;
+  XML_Loader &operator= (XML_Loader const &) = delete;
+  XML_Loader &operator= (XML_Loader &&) = delete;
 
   /// Open a file and perform preliminary validation to determine whether
   /// the file is complete and valid.
@@ -47,20 +52,20 @@ public:
   ///////////////////////////////////
   // Override Topology_Loader methods
   // see Topology_Loader.h for documentation
-  virtual void load (Topology_Object *root);
+  void load (Topology_Object *root) override;
 
 
   /////////////////////////////////////////
   // Override ACEXML_DefaultHandler methods
 
-  virtual void startElement (const ACEXML_Char* namespaceURI,
-    const ACEXML_Char* localName,
-    const ACEXML_Char* qName,
-    ACEXML_Attributes* atts);
+  void startElement (ACEXML_Char const *namespaceURI,
+    ACEXML_Char const *localName,
+    ACEXML_Char const *qName,
+    ACEXML_Attributes *atts) override;
 
-  virtual void endElement (const ACEXML_Char*,
-    const ACEXML_Char*,
-    const ACEXML_Char* name);
+  void endElement (ACEXML_Char const *,
+    ACEXML_Char const *,
+    ACEXML_Char const *name) override;
 
 private:
   /// The name of the file from which data is read.
@@ -69,7 +74,7 @@ private:
   using TopoStack = ACE_Unbounded_Stack<Topology_Object *>;
   TopoStack object_stack_;
   /// If false, then we're just checking syntax of topology file.
-  bool live_;
+  bool live_ = false;
 };
 } // namespace TAO_Notify
 

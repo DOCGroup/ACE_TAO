@@ -67,10 +67,10 @@ namespace TAO_Notify
     int fini () override;
 
    private:
-    ACE_TString save_base_path_;
-    ACE_TString load_base_path_;
-    size_t backup_count_;
-    bool timestamp_;
+    ACE_TString save_base_path_ = ACE_TEXT("./Notification_Service_Topology");
+    ACE_TString load_base_path_ = ACE_TEXT("./Notification_Service_Topology");
+    size_t backup_count_ = 2;
+    bool timestamp_ = true;
   };
 } // namespace TAO_Notify
 

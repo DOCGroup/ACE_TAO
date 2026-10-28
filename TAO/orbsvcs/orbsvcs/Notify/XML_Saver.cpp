@@ -15,10 +15,7 @@ namespace TAO_Notify
   extern const char TOPOLOGY_ID_NAME[];
 
   XML_Saver::XML_Saver(bool timestamp)
-    : output_ (nullptr)
-    , close_out_ (false)
-    , backup_count_ (1)
-    , timestamp_ (timestamp)
+    : timestamp_ (timestamp)
   {
   }
 
