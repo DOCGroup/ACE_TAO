@@ -90,7 +90,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// Are the threads running?
-  int active_;
+  bool active_ {};
 
   /// The flag which allows or not to wait the message queue threads completion
   bool const wait_for_shutdown_thread_completion_;

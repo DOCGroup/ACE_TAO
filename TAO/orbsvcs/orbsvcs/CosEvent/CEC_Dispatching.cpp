@@ -4,8 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Dispatching::~TAO_CEC_Dispatching ()
-{
-}
+= default;
 
 // ****************************************************************
 
@@ -24,30 +23,30 @@ TAO_CEC_Reactive_Dispatching::shutdown ()
 }
 
 void
-TAO_CEC_Reactive_Dispatching::push (TAO_CEC_ProxyPushSupplier* proxy,
-                                    const CORBA::Any& event)
+TAO_CEC_Reactive_Dispatching::push (TAO_CEC_ProxyPushSupplier *proxy,
+                                    CORBA::Any const &event)
 {
   proxy->reactive_push_to_consumer (event);
 }
 
 void
-TAO_CEC_Reactive_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                           CORBA::Any& event)
+TAO_CEC_Reactive_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
+                                           CORBA::Any &event)
 {
   proxy->reactive_push_to_consumer (event);
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 void
-TAO_CEC_Reactive_Dispatching::invoke (TAO_CEC_ProxyPushSupplier* proxy,
-                                      const TAO_CEC_TypedEvent& typed_event)
+TAO_CEC_Reactive_Dispatching::invoke (TAO_CEC_ProxyPushSupplier *proxy,
+                                      TAO_CEC_TypedEvent const &typed_event)
 {
   proxy->reactive_invoke_to_consumer (typed_event);
 }
 
 void
-TAO_CEC_Reactive_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                             TAO_CEC_TypedEvent& typed_event)
+TAO_CEC_Reactive_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
+                                             TAO_CEC_TypedEvent &typed_event)
 {
   proxy->reactive_invoke_to_consumer (typed_event);
 }
