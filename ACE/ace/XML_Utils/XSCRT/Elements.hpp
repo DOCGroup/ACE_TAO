@@ -97,8 +97,6 @@ namespace XSCRT
     {
       Type const* r = container ();
 
-      //@@ VC6 can't handle this inside the loop.
-      //
       Type const* c = r->container ();
 
       for (; c != r; c = c->container ()) r = c;

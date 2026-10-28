@@ -5,14 +5,12 @@ namespace XSCRT
 {
   namespace Traversal
   {
-    //@@ merge after dropping VC6
     template <typename B>
     void DispatcherBase<B>::
     dispatch (B& n)
     {
       LevelMap levels;
 
-      //@@ VC6
       ExtendedTypeInfo const& ti = extended_type_info (n);
 
       unsigned long max = compute_levels (ti, 0, levels);
@@ -26,46 +24,24 @@ namespace XSCRT
       {
         TypeInfoSet dispatched;
 
-        for (typename LevelMap::const_iterator
-               i (levels.begin ()), e (levels.end ());
-             i != e; ++i)
+        for (auto const& [type_info, level] : levels)
         {
-          if (i->second == l)
-          {
-            typename TraversalMap::const_iterator v (
-              traversal_map_.find (i->first.type_id ()));
+          if (level != l)
+            continue;
 
-            if (v != traversal_map_.end ())
-            {
-              //wcerr << "dispatching traversers for "
-              //      << typeid (n).name () << " as "
-              //      << i->first.type_id ().name () << endl;
+          auto const v (traversal_map_.find (type_info.type_id ()));
+          if (v == traversal_map_.end ())
+            continue;
 
-              //@@ VC6
-              Traversers const& traversers  = v->second;
-              for (typename Traversers::const_iterator
-                     ti (traversers.begin ()), te (traversers.end ());
-                   ti != te; ++ti)
-              {
-                (*ti)->trampoline (n);
-              }
+          for (TraverserBase<B>* traverser : v->second)
+            traverser->trampoline (n);
 
-              flatten_tree (i->first, dispatched);
-            }
-          }
+          flatten_tree (type_info, dispatched);
         }
 
         // Remove traversed types from the level map.
-        //
-    //@@ VC6
-        {
-          for (typename TypeInfoSet::const_iterator i = dispatched.begin ();
-               i != dispatched.end ();
-               ++i)
-          {
-            levels.erase (*i);
-          }
-    }
+        for (ExtendedTypeInfo const& type_info : dispatched)
+          levels.erase (type_info);
       }
     }
 
@@ -75,7 +51,6 @@ namespace XSCRT
     {
       LevelMap levels;
 
-      //@@ VC6
       ExtendedTypeInfo const& ti = extended_type_info (n);
 
       unsigned long max = compute_levels (ti, 0, levels);
@@ -91,46 +66,24 @@ namespace XSCRT
       {
         TypeInfoSet dispatched;
 
-        for (typename LevelMap::const_iterator
-               i (levels.begin ()), e (levels.end ());
-             i != e; ++i)
+        for (auto const& [type_info, level] : levels)
         {
-          if (i->second == l)
-          {
-            typename TraversalMap::const_iterator v (
-              traversal_map_.find (i->first.type_id ()));
+          if (level != l)
+            continue;
 
-            if (v != traversal_map_.end ())
-            {
-              //wcerr << "dispatching traversers for "
-              //      << typeid (n).name () << " as "
-              //      << i->first.type_id ().name () << endl;
+          auto const v (traversal_map_.find (type_info.type_id ()));
+          if (v == traversal_map_.end ())
+            continue;
 
-              //@@ VC6
-              Traversers const& traversers  = v->second;
-              for (typename Traversers::const_iterator
-                     ti (traversers.begin ()), te (traversers.end ());
-                   ti != te; ++ti)
-              {
-                (*ti)->trampoline (n);
-              }
+          for (TraverserBase<B>* traverser : v->second)
+            traverser->trampoline (n);
 
-              flatten_tree (i->first, dispatched);
-            }
-          }
+          flatten_tree (type_info, dispatched);
         }
 
         // Remove traversed types from the level map.
-        //
-    //@@ VC6
-        {
-          for (typename TypeInfoSet::const_iterator i = dispatched.begin ();
-               i != dispatched.end ();
-               ++i)
-          {
-            levels.erase (*i);
-          }
-    }
+        for (ExtendedTypeInfo const& type_info : dispatched)
+          levels.erase (type_info);
       }
     }
 

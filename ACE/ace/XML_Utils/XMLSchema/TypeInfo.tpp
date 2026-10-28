@@ -3,7 +3,6 @@
 
 namespace XMLSchema
 {
-  //@@ VC6
   template<typename T, typename Base = XSCRT::Type>
   void
   add_info (XSCRT::ExtendedTypeInfoMap& map, T*)
@@ -36,8 +35,6 @@ namespace XMLSchema
       TypeId id (typeid (XSCRT::Type));
       map.insert (std::make_pair (id, ExtendedTypeInfo (id)));
     }
-
-    //@@ VC6
 
     add_info<byte> (map, 0);
     add_info<unsignedByte> (map, 0);

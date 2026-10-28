@@ -19,7 +19,6 @@ namespace XSCRT
     protected:
       virtual ~TraverserBase () = default;
 
-      //@@ VC6
     public:
       virtual void trampoline (B& n) = 0;
 
@@ -39,7 +38,6 @@ namespace XSCRT
       void
       map (TypeId id, TraverserBase<B>& t)
       {
-        //@@ VC6
         Traversers& traversers = traversal_map_[id];
         traversers.push_back (&t);
       }

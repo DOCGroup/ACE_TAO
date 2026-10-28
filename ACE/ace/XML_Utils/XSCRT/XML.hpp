@@ -16,8 +16,6 @@ namespace XSCRT
 {
   namespace XML
   {
-    //@@ VC6
-    //
     template <typename C>
     std::basic_string<C>
     transcode (XMLCh const* s, C*);
@@ -164,24 +162,13 @@ namespace XSCRT
     XMLCh*
     transcode (std::basic_string<wchar_t> const& s)
     {
-      //@@ VC6
-      std::size_t l = s.length ();
+      std::size_t const length (s.length ());
+      XMLCh* const result (new XMLCh[length + 1]);
+      std::transform (s.begin (), s.end (), result,
+                      [] (wchar_t c) { return static_cast<XMLCh> (c); });
+      result[length] = XMLCh {};
 
-      //@@ VC6
-      XMLCh* r = new XMLCh[l + 1];
-      XMLCh* ir = r;
-
-      for (std::size_t i (0); i < l; ++ir, ++i)
-      {
-        *ir = static_cast<XMLCh>(s[i]);
-        //std::wcerr << s[i] << "->" << *ir << std::endl;
-      }
-
-      *ir = XMLCh (0);
-
-      // std::wcerr << r << std::endl;
-
-      return r;
+      return result;
     }
 
 
@@ -321,7 +308,6 @@ namespace XSCRT
       string_
       operator[] (string_ const& s) const
       {
-        //@@ VC6
         XMLCh const* value = ce_->getAttribute (string (s).c_str ());
 
         return transcode<C> (value, 0);
@@ -489,7 +475,6 @@ namespace XSCRT
     {
       std::basic_string<C> wp (prefix (n));
 
-      //@@ VC6
       XMLCh const* xns = e.dom_element ()->lookupNamespaceURI (
         wp.empty () ? 0 : string (wp).c_str ());
 

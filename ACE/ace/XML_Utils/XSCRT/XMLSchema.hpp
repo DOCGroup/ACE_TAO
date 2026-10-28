@@ -49,9 +49,6 @@ namespace XMLSchema
     typedef basic_string<C> Base__ ;
 
   public:
-    //@@ VC6 does not inject XSCRT::Type into the scope so I have
-    //   to qualify it all the time.
-    //
     string () = default;
 
     string (XSCRT::XML::Element<C> const& e)

@@ -45,8 +45,6 @@ namespace XMLSchema
   typedef XSCRT::FundamentalType<float> float_;
   typedef XSCRT::FundamentalType<double> double_;
 
-  // Just to make GCC 3.3 and other broken compilers shutup.
-  //
   using std::basic_string;
 
 
@@ -57,8 +55,6 @@ namespace XMLSchema
     typedef basic_string<C> Base__ ;
 
   public:
-    //@@ VC6 does not inject XSCRT::Type into the scope so I have
-    //   to qualify it all the time.
     string () = default;
 
     string (XSCRT::XML::Element<C> const& e)
@@ -597,10 +593,6 @@ namespace XMLSchema
   public:
     // Trait for marshaling string
     typedef C CDR_Type__;
-
-    //@@ VC6 does not inject XSCRT::Type into the scope so I have
-    //   to qualify it all the time.
-    //
 
     anyURI (void)
     {

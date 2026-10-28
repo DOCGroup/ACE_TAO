@@ -137,9 +137,6 @@ namespace XSCRT
     return extended_type_info (typeid (T));
   }
 
-  //@@ Had to use function template specialization because VC6
-  //   cannot handle simply overloaded functions.
-  //
   template <>
   inline
   ExtendedTypeInfo const&
