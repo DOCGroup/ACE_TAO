@@ -166,18 +166,18 @@ TAO_Notify_EventChannelFactory::shutdown ()
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannelFactory::create_named_channel (
-    const CosNotification::QoSProperties& initial_qos,
-    const CosNotification::AdminProperties& initial_admin,
+    CosNotification::QoSProperties const &initial_qos,
+    CosNotification::AdminProperties const &initial_admin,
     CosNotifyChannelAdmin::ChannelID_out id,
-    const char*)
+    char const *)
 {
   return this->create_channel (initial_qos, initial_admin, id);
 }
 
 
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
-    const CosNotification::QoSProperties & initial_qos,
-    const CosNotification::AdminProperties & initial_admin,
+    CosNotification::QoSProperties const &initial_qos,
+    CosNotification::AdminProperties const &initial_admin,
     CosNotifyChannelAdmin::ChannelID_out id
   )
 {
@@ -362,10 +362,9 @@ TAO_Notify_EventChannelFactory::change_to_parent ()
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
+TAO_Notify_EventChannelFactory::load_child (ACE_CString const &type,
                                         CORBA::Long id,
-                                        const TAO_Notify::
-                                        NVPList& attrs)
+                                        TAO_Notify::NVPList const &attrs)
 {
   // ignore anything but our valid children (ie channel)
   TAO_Notify::Topology_Object * result = this;
