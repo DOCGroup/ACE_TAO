@@ -205,9 +205,9 @@ protected:
   int set_protocol ();
 
   /// Addr information for the carrier protocol.
-  ACE_Addr *address_;
+  ACE_Addr *address_ {};
   bool clean_up_address_ {};     // added to clean up a memory leak
-  ACE_Addr *control_address_;
+  ACE_Addr *control_address_ {};
   bool clean_up_control_address_ {}; // added to clean up a memory leak
 
   /// Fwd Addr in string format i.e hostname:port.
@@ -220,7 +220,7 @@ protected:
   ACE_CString format_;
 
   /// Direction of this flow.
-  Direction direction_;
+  Direction direction_ {TAO_AV_INVALID};
 
   /// string representation of the direction.
   ACE_CString direction_str_;
@@ -229,7 +229,7 @@ protected:
   ACE_CString flowname_;
 
   /// name of the protocol used.
-  TAO_AV_Core::Protocol protocol_;
+  TAO_AV_Core::Protocol protocol_ {TAO_AV_Core::TAO_AV_NOPROTOCOL};
 
   /// carrier protocol string.
   ACE_CString carrier_protocol_;
@@ -244,21 +244,21 @@ protected:
 
   bool is_multicast_ {};
   bool delete_peer_addr_ {};
-  ACE_Addr *peer_addr_;
-  char** local_sec_addr_;
-  int num_local_sec_addrs_;
-  char** peer_sec_addr_;
-  int num_peer_sec_addrs_;
-  ACE_Addr *peer_control_addr_;
-  ACE_Addr *local_addr_;
-  ACE_Addr *local_control_addr_;
-  TAO_AV_Transport *transport_;
-  TAO_AV_Transport *control_transport_;
-  TAO_AV_Flow_Handler *handler_;
-  TAO_AV_Flow_Handler *control_handler_;
-  TAO_AV_Protocol_Object *protocol_object_;
-  TAO_AV_Protocol_Object *control_protocol_object_;
-  Role role_;
+  ACE_Addr *peer_addr_ {};
+  char** local_sec_addr_ {};
+  int num_local_sec_addrs_ {};
+  char** peer_sec_addr_ {};
+  int num_peer_sec_addrs_ {};
+  ACE_Addr *peer_control_addr_ {};
+  ACE_Addr *local_addr_ {};
+  ACE_Addr *local_control_addr_ {};
+  TAO_AV_Transport *transport_ {};
+  TAO_AV_Transport *control_transport_ {};
+  TAO_AV_Flow_Handler *handler_ {};
+  TAO_AV_Flow_Handler *control_handler_ {};
+  TAO_AV_Protocol_Object *protocol_object_ {};
+  TAO_AV_Protocol_Object *control_protocol_object_ {};
+  Role role_ {TAO_AV_INVALID_ROLE};
 };
 
 /**

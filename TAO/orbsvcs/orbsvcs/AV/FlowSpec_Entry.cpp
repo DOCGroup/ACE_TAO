@@ -18,35 +18,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // constructor.
-TAO_FlowSpec_Entry::TAO_FlowSpec_Entry ()
-  :address_ (nullptr),
-   control_address_ (nullptr),
-   address_str_ (),
-   format_ (),
-   direction_ (TAO_AV_INVALID),
-   direction_str_ (),
-   flowname_ (),
-   protocol_ (TAO_AV_Core::TAO_AV_NOPROTOCOL),
-   carrier_protocol_ (),
-   flow_protocol_ (),
-   entry_ (),
-   peer_addr_ (nullptr),
-   local_sec_addr_ (nullptr),
-   num_local_sec_addrs_ (0),
-   peer_sec_addr_ (nullptr),
-   num_peer_sec_addrs_ (0),
-   peer_control_addr_ (nullptr),
-   local_addr_ (nullptr),
-   local_control_addr_ (nullptr),
-   transport_ (nullptr),
-   control_transport_ (nullptr),
-   handler_ (nullptr),
-   control_handler_ (nullptr),
-   protocol_object_ (nullptr),
-   control_protocol_object_ (nullptr),
-   role_ (TAO_AV_INVALID_ROLE)
-{
-}
+TAO_FlowSpec_Entry::TAO_FlowSpec_Entry () = default;
 
 // constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
@@ -65,22 +37,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    flowname_ ( flowname ),
    carrier_protocol_ ( carrier_protocol ),
    flow_protocol_ ( flow_protocol ),
-   entry_ (),
-   peer_addr_ (nullptr),
-   local_sec_addr_ (nullptr),
-   num_local_sec_addrs_ (0),
-   peer_sec_addr_ (nullptr),
-   num_peer_sec_addrs_ (0),
-   peer_control_addr_ (nullptr),
-   local_addr_ (nullptr),
-   local_control_addr_ (nullptr),
-   transport_ (nullptr),
-   control_transport_ (nullptr),
-   handler_ (nullptr),
-   control_handler_ (nullptr),
-   protocol_object_ (nullptr),
-   control_protocol_object_ (nullptr),
-   role_ (TAO_AV_INVALID_ROLE)
+   entry_ ()
 {
   this->set_protocol ();
   this->set_direction (direction);
@@ -92,30 +49,13 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *format_name,
                                         const char *flow_protocol,
                                         const char *address)
-  :address_ (nullptr),
-   control_address_ (nullptr),
-   address_str_ ( address ),
+  :address_str_ ( address ),
    format_ ( format_name ),
    direction_str_ (), // This is initialized in the call to set_direction()
    flowname_ ( flowname ),
    carrier_protocol_ (),
    flow_protocol_ ( flow_protocol ),
-   entry_ (),
-   peer_addr_ (nullptr),
-   local_sec_addr_ (nullptr),
-   num_local_sec_addrs_ (0),
-   peer_sec_addr_ (nullptr),
-   num_peer_sec_addrs_ (0),
-   peer_control_addr_ (nullptr),
-   local_addr_ (nullptr),
-   local_control_addr_ (nullptr),
-   transport_ (nullptr),
-   control_transport_ (nullptr),
-   handler_ (nullptr),
-   control_handler_ (nullptr),
-   protocol_object_ (nullptr),
-   control_protocol_object_ (nullptr),
-   role_ (TAO_AV_INVALID_ROLE)
+   entry_ ()
 {
   this->parse_flow_protocol_string (this->flow_protocol_.c_str() );
   this->parse_address (this->address_str_.c_str(), TAO_AV_Core::TAO_AV_DATA);
