@@ -44,28 +44,33 @@ public:
   TAO_Notify_ConsumerAdmin ();
 
   /// Destructor
-  virtual ~TAO_Notify_ConsumerAdmin ();
+  ~TAO_Notify_ConsumerAdmin () override;
+
+  TAO_Notify_ConsumerAdmin (TAO_Notify_ConsumerAdmin const &) = delete;
+  TAO_Notify_ConsumerAdmin (TAO_Notify_ConsumerAdmin &&) = delete;
+  TAO_Notify_ConsumerAdmin &operator= (TAO_Notify_ConsumerAdmin const &) = delete;
+  TAO_Notify_ConsumerAdmin &operator= (TAO_Notify_ConsumerAdmin &&) = delete;
 
   /// Init
   void init (TAO_Notify_EventChannel *ec);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  void _add_ref () override;
+  void _remove_ref () override;
 
-  virtual const char * get_admin_type_name () const;
+  char const * get_admin_type_name () const override;
 
-  virtual TAO_Notify::Topology_Object* load_child (
-    const ACE_CString &type,
+  TAO_Notify::Topology_Object* load_child (
+    ACE_CString const &type,
     CORBA::Long id,
-    const TAO_Notify::NVPList& attrs);
+    TAO_Notify::NVPList const &attrs) override;
 
   TAO_Notify_ProxySupplier * find_proxy_supplier (
       TAO_Notify::IdVec & id_path,
       size_t position);
 
   /// TAO_Notify_Container_T requires a destroy method
-  virtual void destroy ();
+  void destroy () override;
 
 protected:
   TAO_Notify::Topology_Object *load_proxy (
@@ -74,67 +79,68 @@ protected:
     const TAO_Notify::NVPList& attrs);
 
   /// = NotifyExt::ConsumerAdmin methods
-  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                               CosNotifyChannelAdmin::ProxyID_out proxy_id,
-                                              const CosNotification::QoSProperties & initial_qos);
+                                              CosNotification::QoSProperties const &initial_qos) override;
 
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
-  virtual CosNotifyChannelAdmin::AdminID MyID ();
+  CosNotifyChannelAdmin::AdminID MyID () override;
 
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel ();
+  ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel () override;
 
-  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator ();
+  ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator () override;
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr priority_filter ();
+  ::CosNotifyFilter::MappingFilter_ptr priority_filter () override;
 
-  virtual void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter);
+  void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter) override;
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter ();
+  ::CosNotifyFilter::MappingFilter_ptr lifetime_filter () override;
 
-  virtual void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter);
+  void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers ();
+  ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers () override;
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers ();
+  ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers () override;
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (CosNotifyChannelAdmin::ProxyID proxy_id);
+  ::CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
+    CosNotifyChannelAdmin::ProxyID proxy_id) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
+  ::CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_pull_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                     CosNotifyChannelAdmin::ProxyID_out proxy_id);
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
+  ::CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                     CosNotifyChannelAdmin::ProxyID_out proxy_id);
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
-  virtual ::CosNotification::QoSProperties * get_qos ();
+  ::CosNotification::QoSProperties * get_qos () override;
 
-  virtual void set_qos (const CosNotification::QoSProperties & qos);
+  void set_qos (CosNotification::QoSProperties const &qos) override;
 
-  virtual void validate_qos (const CosNotification::QoSProperties & required_qos,
-                             CosNotification::NamedPropertyRangeSeq_out available_qos);
+  void validate_qos (CosNotification::QoSProperties const &required_qos,
+                     CosNotification::NamedPropertyRangeSeq_out available_qos) override;
 
-  virtual void subscription_change (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed);
+  void subscription_change (CosNotification::EventTypeSeq const &added,
+                            CosNotification::EventTypeSeq const &removed) override;
 
-  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
+  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter) override;
 
-  virtual void remove_filter (CosNotifyFilter::FilterID filter);
+  void remove_filter (CosNotifyFilter::FilterID filter) override;
 
-  virtual ::CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
+  ::CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter) override;
 
-  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters ();
+  ::CosNotifyFilter::FilterIDSeq * get_all_filters () override;
 
-  virtual void remove_all_filters ();
+  void remove_all_filters () override;
 
-  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
+  ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
-  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
+  ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
 private:
   /// Release this object.
-  virtual void release ();
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
