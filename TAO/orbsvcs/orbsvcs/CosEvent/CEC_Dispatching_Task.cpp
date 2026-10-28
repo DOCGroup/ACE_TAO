@@ -108,8 +108,7 @@ TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
 // ****************************************************************
 
 TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command ()
-{
-}
+= default;
 
 // ****************************************************************
 
