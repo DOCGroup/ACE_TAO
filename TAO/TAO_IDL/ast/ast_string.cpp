@@ -145,7 +145,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
                    (wide == 1 ? "" : "W"),
                    boundbuf);
 
-  this->flat_name_ = ACE::strnew (namebuf);
+  this->flat_name_ = namebuf;
 }
 
 AST_String::~AST_String () = default;

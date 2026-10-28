@@ -66,6 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_DECL_AST_DECL_HH
 #define _AST_DECL_AST_DECL_HH
 
+#include <optional>
 #include <string>
 
 #include "utl_scoped_name.h"
@@ -397,10 +398,10 @@ protected:
   // be_predefined_type' constructor and can be called
   // from be_decl.
 
-  char *repoID_ {};
+  std::optional<std::string> repoID_;
   // Repository ID.
 
-  char *flat_name_ {};
+  std::optional<std::string> flat_name_;
   // Flattened fully scoped name.
 
   int contains_wstring_ {-1};
@@ -457,13 +458,13 @@ private:
   Identifier *pd_original_local_name {};
   // _cxx_ removed if any.
 
-  char *full_name_ {};
+  std::optional<std::string> full_name_;
   // Our full scoped name.
 
-  char *prefix_ {};
+  std::optional<std::string> prefix_;
   // The repository ID prefix.
 
-  char *version_ {};
+  std::optional<std::string> version_;
   // Set by #pragma version.
 
   bool anonymous_;

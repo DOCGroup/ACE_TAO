@@ -259,8 +259,7 @@ be_predefined_type::compute_repoID ()
   switch (this->pt ())
     {
     case AST_PredefinedType::PT_object:
-      ACE::strdelete (this->repoID_);
-      this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
+      this->repoID_ = "IDL:omg.org/CORBA/Object:1.0";
       break;
     default:
       AST_Decl::compute_repoID ();

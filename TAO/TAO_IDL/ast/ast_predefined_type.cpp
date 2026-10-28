@@ -220,8 +220,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
   repo_id.append (id->get_string_view ());
   repo_id += ':';
   repo_id += this->version ();
-  delete [] this->repoID_;
-  this->repoID_ = ACE::strnew (repo_id.c_str ());
+  this->repoID_ = repo_id;
 
   this->set_name (new_name);
 }
