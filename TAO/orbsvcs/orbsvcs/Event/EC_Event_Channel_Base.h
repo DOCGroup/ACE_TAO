@@ -330,15 +330,16 @@ protected:
   /// Mutex to protect the internal state
   TAO_SYNCH_MUTEX mutex_;
 
-  /// Flag to track the status of the event channel
-  enum {
-    EC_S_IDLE
-    , EC_S_ACTIVATING
-    , EC_S_ACTIVE
-    , EC_S_DESTROYING
-    , EC_S_DESTROYED
+  /// Track the lifecycle status of the event channel.
+  enum class Status
+  {
+    idle,
+    activating,
+    active,
+    destroying,
+    destroyed
   };
-  int status_;
+  Status status_ {Status::idle};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
