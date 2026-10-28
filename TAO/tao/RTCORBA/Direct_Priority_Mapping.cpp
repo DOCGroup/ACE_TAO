@@ -7,8 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Direct_Priority_Mapping::~TAO_Direct_Priority_Mapping () = default;
-
 TAO_Direct_Priority_Mapping::TAO_Direct_Priority_Mapping (long)
 {
 }

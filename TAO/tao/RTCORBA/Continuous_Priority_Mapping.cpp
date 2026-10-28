@@ -6,8 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping () = default;
-
 TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
   :  policy_ (policy)
    , min_ (ACE_Sched_Params::priority_min (this->policy_))
