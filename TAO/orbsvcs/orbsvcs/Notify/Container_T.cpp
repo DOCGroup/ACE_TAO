@@ -23,10 +23,7 @@ TAO_Notify_Container_T<TYPE>::Destroyer::work (TYPE* type)
 }
 
 template<class TYPE>
-TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T ()
-  : collection_ (0)
-{
-}
+TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T () = default;
 
 template<class TYPE>
 TAO_Notify_Container_T<TYPE>::~TAO_Notify_Container_T ()
