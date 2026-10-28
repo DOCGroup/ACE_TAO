@@ -215,8 +215,7 @@ namespace XSCRT
 
     public:
       Element (xercesc::DOMElement const* e)
-          : e_ (nullptr),
-            ce_ (e),
+          : ce_ (e),
             name_ (transcode<C> (e->getLocalName (), nullptr)),
             namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
       {
@@ -231,9 +230,7 @@ namespace XSCRT
       }
 
       Element (string_ const& name, Element& parent)
-          : e_ (nullptr),
-            ce_ (nullptr),
-            name_ (name)
+          : name_ (name)
       {
         xercesc::DOMDocument* doc (
           parent.dom_element ()->getOwnerDocument ());
@@ -246,9 +243,7 @@ namespace XSCRT
       }
 
       Element (string_ const& name, string_ const& ns, Element& parent)
-          : e_ (nullptr),
-            ce_ (nullptr),
-            name_ (name),
+          : name_ (name),
             namespace__ (ns)
       {
         string_ prefix (ns_prefix (ns, parent));
@@ -327,8 +322,8 @@ namespace XSCRT
       }
 
     private:
-      xercesc::DOMElement* e_;
-      xercesc::DOMElement const* ce_;
+      xercesc::DOMElement* e_ {};
+      xercesc::DOMElement const* ce_ {};
 
       string_ name_;
       string_ namespace__;
@@ -342,8 +337,7 @@ namespace XSCRT
 
     public:
       Attribute (xercesc::DOMAttr const* a)
-          : a_ (nullptr),
-            ca_ (a),
+          : ca_ (a),
             name_ (transcode<C> (a->getLocalName (), nullptr)),
             value_ (transcode<C> (a->getValue (), nullptr))
       {
@@ -360,9 +354,7 @@ namespace XSCRT
       Attribute (string_ const& name,
                  string_ const& v,
                  Element<C>& parent)
-          : a_ (nullptr),
-            ca_ (nullptr),
-            name_ (name),
+          : name_ (name),
             value_ ()
       {
         xercesc::DOMDocument* doc (
@@ -381,9 +373,7 @@ namespace XSCRT
                  string_ const& ns,
                  string_ const& v,
                  Element<C>& parent)
-          : a_ (nullptr),
-            ca_ (nullptr),
-            name_ (name),
+          : name_ (name),
             value_ ()
       {
         string_ prefix (ns_prefix (ns, parent));
@@ -439,8 +429,8 @@ namespace XSCRT
     private:
 
     private:
-      xercesc::DOMAttr* a_;
-      xercesc::DOMAttr const* ca_;
+      xercesc::DOMAttr* a_ {};
+      xercesc::DOMAttr const* ca_ {};
 
       string_ name_;
       string_ value_;

@@ -76,7 +76,7 @@ namespace XSCRT
 
     private:
       TypeId tid_;
-      mutable ExtendedTypeInfo const* ti_;
+      mutable ExtendedTypeInfo const* ti_ {};
       bool virtual_base_;
       Access::Value access_;
     };

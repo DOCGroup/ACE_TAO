@@ -14,9 +14,8 @@ namespace XML
 // On unicode windows, ACE_TCHAR == XMLCh
 #if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)
   XStr::XStr (const ACE_TCHAR* str)
-    : _wstr(nullptr)
+    : _wstr (XMLString::transcode (ACE_TEXT_ALWAYS_CHAR (str)))
   {
-    _wstr = XMLString::transcode(ACE_TEXT_ALWAYS_CHAR (str));
   }
 #endif
 
@@ -26,15 +25,13 @@ namespace XML
   }
 
   XStr::XStr (const XMLCh* wstr)
-    : _wstr(nullptr)
+    : _wstr (XMLString::replicate (wstr))
   {
-    _wstr = XMLString::replicate(wstr);
   }
 
   XStr::XStr (const XStr &right)
-    : _wstr(nullptr)
+    : _wstr (XMLString::replicate (right._wstr))
   {
-    _wstr = XMLString::replicate(right._wstr);
   }
 
   XStr& XStr::operator= (const XStr& rhs)

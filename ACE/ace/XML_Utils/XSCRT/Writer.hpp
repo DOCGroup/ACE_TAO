@@ -15,7 +15,6 @@ namespace XSCRT
   {
   public:
     Writer (XML::Element<C>& e)
-        : attr__ (nullptr)
     {
       push_ (e);
     }
@@ -63,7 +62,7 @@ namespace XSCRT
   private:
     std::stack<XML::Element<C> > stack_;
 
-    XML::Attribute<C>* attr__;
+    XML::Attribute<C>* attr__ {};
 
   private:
     Writer (Writer const&);

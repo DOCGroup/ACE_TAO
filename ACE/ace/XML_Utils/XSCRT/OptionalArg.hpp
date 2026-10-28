@@ -16,7 +16,6 @@ namespace XSCRT
   {
   public:
     OptionalArg (std::nullopt_t) noexcept
-        : value_ (nullptr)
     {
     }
 

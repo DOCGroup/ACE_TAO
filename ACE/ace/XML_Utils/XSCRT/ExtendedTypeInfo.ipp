@@ -50,7 +50,6 @@ namespace XSCRT
   ExtendedTypeInfo::BaseInfo::
   BaseInfo (Access::Value access, bool virtual_base, TypeId const& tid)
       : tid_ (tid),
-        ti_ (nullptr),
         virtual_base_ (virtual_base),
         access_ (access)
   {
