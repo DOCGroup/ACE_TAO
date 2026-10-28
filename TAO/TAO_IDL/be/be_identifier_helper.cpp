@@ -7,9 +7,9 @@
 #include "fe_private.h"
 #include "global_extern.h"
 
-ACE_CString IdentifierHelper::tmp_retval_;
+#include "ace/SString.h"
 
-const char *
+std::string
 IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
 {
   AST_PredefinedType *pdt = nullptr;
@@ -68,10 +68,11 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
         return "";
         break;
       default:
-        IdentifierHelper::tmp_retval_ = "::";
-        IdentifierHelper::tmp_retval_ +=
-          IdentifierHelper::orig_sn (t->name ()).c_str ();
-        return IdentifierHelper::tmp_retval_.c_str ();
+        {
+          std::string retval ("::");
+          retval += IdentifierHelper::orig_sn (t->name ());
+          return retval;
+        }
     }
 }
 
@@ -112,10 +113,10 @@ IdentifierHelper::original_local_name (Identifier * local_name)
   return id;
 }
 
-ACE_CString
+std::string
 IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
 {
-  ACE_CString retval;
+  std::string retval;
   bool first = true;
   bool second = false;
   Identifier *id = nullptr;
@@ -139,10 +140,14 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
       i.next ();
 
       // Append the identifier.
-      retval +=
-        for_idl
-          ? IdentifierHelper::try_escape (id).c_str ()
-          : id->get_string ();
+      if (for_idl)
+        {
+          retval += IdentifierHelper::try_escape (id);
+        }
+      else
+        {
+          retval += id->get_string ();
+        }
 
        if (first)
         {
@@ -177,10 +182,10 @@ IdentifierHelper::is_idl_keyword (Identifier * local_name)
   return !idl_global->idl_keywords ().find (ext_id);
 }
 
-ACE_CString
+std::string
 IdentifierHelper::try_escape (Identifier * local_name)
 {
-  ACE_CString s_local_name (local_name->get_string ());
+  std::string s_local_name (local_name->get_string ());
 
   if (IdentifierHelper::is_idl_keyword (local_name))
     {

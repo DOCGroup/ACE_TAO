@@ -239,12 +239,12 @@ be_visitor_home_ex_idl::gen_explicit ()
     }
   else
     {
-      ACE_CString sname_str =
+      std::string sname_str =
         IdentifierHelper::orig_sn (
           ScopeAsDecl (base->defined_in ())->name ());
 
       char const *sname = sname_str.c_str ();
-      char const *global = (sname_str == "" ? "" : "::");
+      char const *global = (sname_str.empty () ? "" : "::");
 
       os_ << global << sname << "::CCM_"
           << IdentifierHelper::try_escape (base->local_name ()).c_str ()
@@ -269,7 +269,7 @@ be_visitor_home_ex_idl::gen_explicit ()
 void
 be_visitor_home_ex_idl::gen_derived ()
 {
-  ACE_CString lname_str =
+  std::string lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
   char const *lname = lname_str.c_str ();
 
@@ -316,7 +316,7 @@ be_visitor_home_ex_idl::gen_exception_list (
            ;)
         {
           AST_Type *ex = ei.item ();
-          ACE_CString ex_name =
+          std::string ex_name =
             IdentifierHelper::orig_sn (ex->name ());
 
           if (init_op)
@@ -353,15 +353,15 @@ be_visitor_home_ex_idl::gen_home_executor ()
   AST_Component *comp = node_->managed_component ();
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
 
-  ACE_CString sname_str =
+  std::string sname_str =
     IdentifierHelper::orig_sn (scope->name ());
   char const *sname = sname_str.c_str ();
 
-  ACE_CString lname_str =
+  std::string lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
   char const *lname = lname_str.c_str ();
 
-  char const *global = (sname_str == "" ? "" : "::");
+  char const *global = (sname_str.empty () ? "" : "::");
 
   os_ << be_nl_2
       << "module CIAO_" << comp->flat_name () << "_Impl" << be_nl

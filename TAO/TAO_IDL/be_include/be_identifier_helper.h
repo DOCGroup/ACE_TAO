@@ -16,12 +16,13 @@
 
 #include "utl_scoped_name.h"
 
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "TAO_IDL_BE_Export.h"
-#include "ace/SString.h"
 
 class Identifier;
 class be_type;
@@ -35,7 +36,7 @@ class be_visitor;
  */
 struct TAO_IDL_BE_Export IdentifierHelper
 {
-  static const char *
+  static std::string
   type_name (be_type *t, be_visitor *visitor);
 
   static Identifier *
@@ -43,7 +44,7 @@ struct TAO_IDL_BE_Export IdentifierHelper
 
   // Removes '_cxx_ from segments of a scoped name, and optionally
   // de-escape the last segment, if it's to be appended to.
-  static ACE_CString
+  static std::string
   orig_sn (UTL_ScopedName * scoped_name, bool for_idl = true);
 
   // Detects case-insensitive match with IDL keyword.
@@ -52,10 +53,8 @@ struct TAO_IDL_BE_Export IdentifierHelper
 
   // Preserves the 'escape' (leading underscore) in a
   // generated identifier if necessary.
-  static ACE_CString
+  static std::string
   try_escape (Identifier * local_name);
-
-  static ACE_CString tmp_retval_;
 };
 
 #endif /* BE_IDENTIFIER_HELPER_H */
