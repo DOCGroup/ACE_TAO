@@ -444,10 +444,10 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* CORBA_E_MICRO */
 
   // Make sure only one naming context persistence option is specified
-  int f_opt_used = 0;
-  int u_opt_used = 0;
-  int r_opt_used = 0;
-  int v_opt_used = 0;
+  bool f_opt_used = false;
+  bool u_opt_used = false;
+  bool r_opt_used = false;
+  bool v_opt_used = false;
 
   // TODO: remove unsupported options with FT Naming Server
   while ((c = get_opts ()) != -1)
@@ -500,24 +500,24 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case 'f':
         this->persistence_dir_ = get_opts.opt_arg ();
-        f_opt_used = 1;
+        f_opt_used = true;
         break;
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       case 'r':
         this->use_redundancy_ = 1;
         this->use_storable_context_ = 1;
         this->persistence_dir_ = get_opts.opt_arg ();
-        r_opt_used = 1;
+        r_opt_used = true;
         break;
       case 'u':
         this->use_storable_context_ = 1;
         this->persistence_dir_ = get_opts.opt_arg ();
-        u_opt_used = 1;
+        u_opt_used = true;
         break;
       case 'v':
         this->use_object_group_persistence_ = 1;
         this->object_group_dir_ = get_opts.opt_arg ();
-        v_opt_used = 1;
+        v_opt_used = true;
         break;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -591,7 +591,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
       }
 
 
-  if (f_opt_used + u_opt_used + r_opt_used > 1)
+  if ((f_opt_used && (u_opt_used || r_opt_used)) || (u_opt_used && r_opt_used))
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ERROR: Only one persistence option ")
                        ACE_TEXT ("can be provided.\n\n")),
