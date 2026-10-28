@@ -3,6 +3,7 @@
 #ifndef XSCRT_TRAVERSAL_HPP
 #define XSCRT_TRAVERSAL_HPP
 
+#include <cstddef>
 #include <map>
 #include <memory>
 #include <set>
@@ -66,10 +67,10 @@ namespace XSCRT
         }
       };
 
-      typedef std::map<ExtendedTypeInfo, unsigned long, TypeInfoComparator> LevelMap;
+      typedef std::map<ExtendedTypeInfo, std::size_t, TypeInfoComparator> LevelMap;
       typedef std::set<ExtendedTypeInfo, TypeInfoComparator> TypeInfoSet;
 
-      static unsigned long compute_levels (ExtendedTypeInfo const &ti, unsigned long cur, LevelMap &map);
+      static std::size_t compute_levels (ExtendedTypeInfo const &ti, std::size_t cur, LevelMap &map);
 
       static void flatten_tree (ExtendedTypeInfo const &ti, TypeInfoSet &set);
 
@@ -81,31 +82,27 @@ namespace XSCRT
     class Dispatcher : public virtual DispatcherBase<B>
     {
     public:
-      Dispatcher ()
-        : merge_ (true)
-      {
-      }
+      Dispatcher () = default;
 
       void traverser (DispatcherBase<B> &d)
       {
-        for (typename DispatcherBase<B>::Iterator i (d.begin ()), end (d.end ()); i != end; ++i)
+        for (auto const &entry : d)
         {
-          for (typename DispatcherBase<B>::Traversers::const_iterator t (i->second.begin ()), end (i->second.end ());
-               t != end; ++t)
+          for (TraverserBase<B> *traverser : entry.second)
           {
-            dispatcher_.map (i->first, **t);
+            dispatcher_.map (entry.first, *traverser);
           }
         }
       }
 
     public:
-      virtual void dispatch (B &n)
+      void dispatch (B &n) override
       {
         merge ();
         dispatcher_.dispatch (n);
       }
 
-      virtual void dispatch (B const &n)
+      void dispatch (B const &n) override
       {
         merge ();
         dispatcher_.dispatch (n);
@@ -119,12 +116,11 @@ namespace XSCRT
       {
         if (merge_)
         {
-          for (typename DispatcherBase<B>::Iterator i (begin ()), e (end ()); i != e; ++i)
+          for (auto const &entry : *this)
           {
-            for (typename DispatcherBase<B>::Traversers::const_iterator t (i->second.begin ()), e (i->second.end ());
-                 t != e; ++t)
+            for (TraverserBase<B> *traverser : entry.second)
             {
-              dispatcher_.map (i->first, **t);
+              dispatcher_.map (entry.first, *traverser);
             }
           }
 
@@ -146,7 +142,7 @@ namespace XSCRT
       }
 
     private:
-      bool merge_;
+      bool merge_{true};
       DispatcherBase<B> dispatcher_{};
     };
 
@@ -173,12 +169,12 @@ namespace XSCRT
       }
 
     protected:
-      virtual void trampoline (B &n)
+      void trampoline (B &n) override
       {
         traverse (dynamic_cast<Type &> (n));
       }
 
-      virtual void trampoline (B const &n)
+      void trampoline (B const &n) override
       {
         traverse (dynamic_cast<Type const &> (n));
       }

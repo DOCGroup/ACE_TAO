@@ -20,7 +20,7 @@ namespace XMLSchema
     struct FundamentalType : Traversal::Traverser<T>,
                              virtual XSCRT::Writer<C>
     {
-      FundamentalType (XSCRT::XML::Element<C>& e)
+      explicit FundamentalType (XSCRT::XML::Element<C>& e)
           : XSCRT::Writer<C> (e)
       {
       }
@@ -28,8 +28,8 @@ namespace XMLSchema
       using XSCRT::Writer<C>::top_;
       using XSCRT::Writer<C>::attr_;
 
-      virtual void
-      traverse (T const& o)
+      void
+      traverse (T const& o) override
       {
         using namespace XSCRT::XML;
 
@@ -48,8 +48,8 @@ namespace XMLSchema
       }
 
     protected:
-      virtual void
-      traverse (T &t)
+      void
+      traverse (T &t) override
       {
         Traversal::Traverser<T>::traverse (t);
       }
@@ -62,7 +62,7 @@ namespace XMLSchema
       Traversal::Traverser<XSCRT::FundamentalType<bool> >,
       virtual XSCRT::Writer<C>
     {
-      FundamentalType (XSCRT::XML::Element<C> &e)
+      explicit FundamentalType (XSCRT::XML::Element<C> &e)
         : XSCRT::Writer<C> (e)
       {
       }
@@ -70,8 +70,8 @@ namespace XMLSchema
       using XSCRT::Writer<C>::top_;
       using XSCRT::Writer<C>::attr_;
 
-      virtual void
-      traverse (XSCRT::FundamentalType<bool> const &o)
+      void
+      traverse (XSCRT::FundamentalType<bool> const &o) override
       {
         using namespace XSCRT::XML;
 
@@ -97,8 +97,8 @@ namespace XMLSchema
       }
 
     protected:
-      virtual void
-      traverse (XSCRT::FundamentalType<bool> &t)
+      void
+      traverse (XSCRT::FundamentalType<bool> &t) override
       {
         Traversal::Traverser<XSCRT::FundamentalType<bool> >::traverse (t);
       }
@@ -111,14 +111,14 @@ namespace XMLSchema
     struct IDREF : Traversal::Traverser<XMLSchema::IDREF<C> >,
                    virtual XSCRT::Writer<C>
     {
-      IDREF (XSCRT::XML::Element<C>& e)
+      explicit IDREF (XSCRT::XML::Element<C>& e)
           : XSCRT::Writer<C> (e)
       {
       }
 
-      virtual void
+      void
       traverse (
-        typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type const& o)
+        typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type const& o) override
       {
         using namespace XSCRT::XML;
 
@@ -134,8 +134,8 @@ namespace XMLSchema
 
     protected:
 
-      virtual void
-      traverse (typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type &o)
+      void
+      traverse (typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type &o) override
       {
         Traversal::Traverser<XMLSchema::IDREF<C> >::traverse (o);
       }

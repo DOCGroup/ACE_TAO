@@ -14,7 +14,7 @@ namespace XSCRT
   class Parser
   {
   public:
-    Parser (XML::Element<C> const &e)
+    explicit Parser (XML::Element<C> const &e)
       : e_ (e.dom_element ()->getChildNodes ())
       , a_ (e.dom_element ()->getAttributes ())
     {
@@ -57,9 +57,10 @@ namespace XSCRT
     XMLSize_t ai_{};
 
   private:
-    Parser (Parser const &);
-
-    void operator= (Parser const &);
+    Parser (Parser const &) = delete;
+    Parser &operator= (Parser const &) = delete;
+    Parser (Parser &&) = delete;
+    Parser &operator= (Parser &&) = delete;
   };
 }
 

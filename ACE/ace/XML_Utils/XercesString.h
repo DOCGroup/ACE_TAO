@@ -8,7 +8,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <iosfwd>
-
 #ifdef __BORLANDC__
 using std::memcpy;
 #endif
@@ -36,8 +35,10 @@ namespace XML
     XStr (const XMLCh *wstr);
 
     XStr (const XStr &copy);
+    XStr (XStr &&other) noexcept;
 
     XStr &operator= (const XStr &rhs);
+    XStr &operator= (XStr &&rhs) noexcept;
 
     ~XStr ();
 

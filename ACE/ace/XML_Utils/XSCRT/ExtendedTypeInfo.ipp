@@ -86,6 +86,11 @@ namespace XSCRT
     base_.push_back (BaseInfo (access, virtual_base, tid));
   }
 
+  inline void ExtendedTypeInfo::add_base (Access::Value access, bool virtual_base, std::type_info const &tid)
+  {
+    add_base (access, virtual_base, TypeId (tid));
+  }
+
   // ExtendedTypeInfoMap
   inline ExtendedTypeInfoMap &extended_type_info_map ()
   {

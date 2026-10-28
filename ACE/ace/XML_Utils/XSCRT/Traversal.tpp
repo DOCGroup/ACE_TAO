@@ -12,13 +12,13 @@ namespace XSCRT
 
       ExtendedTypeInfo const &ti = extended_type_info (n);
 
-      unsigned long max = compute_levels (ti, 0, levels);
+      std::size_t const max (compute_levels (ti, 0, levels));
 
       // wcerr << "starting dispatch process for "
       //       << typeid (n).name () << " with "
       //       << max << " levels" << endl;
 
-      for (unsigned long l = 0; l < max + 1; ++l)
+      for (std::size_t l{}; l <= max; ++l)
       {
         TypeInfoSet dispatched;
 
@@ -50,7 +50,7 @@ namespace XSCRT
 
       ExtendedTypeInfo const &ti = extended_type_info (n);
 
-      unsigned long max = compute_levels (ti, 0, levels);
+      std::size_t const max (compute_levels (ti, 0, levels));
 
       // wcerr << "starting dispatch process for "
       //       << typeid (n).name () << " with "
@@ -58,7 +58,7 @@ namespace XSCRT
 
       // wcerr << "using " << &traversal_map_ << " traversal map" << endl;
 
-      for (unsigned long l = 0; l < max + 1; ++l)
+      for (std::size_t l{}; l <= max; ++l)
       {
         TypeInfoSet dispatched;
 
@@ -84,16 +84,16 @@ namespace XSCRT
     }
 
     template <typename B>
-    unsigned long DispatcherBase<B>::compute_levels (ExtendedTypeInfo const &ti, unsigned long cur, LevelMap &map)
+    std::size_t DispatcherBase<B>::compute_levels (ExtendedTypeInfo const &ti, std::size_t cur, LevelMap &map)
     {
-      unsigned long ret = cur;
+      std::size_t ret (cur);
 
       if (map.find (ti) == map.end () || map[ti] < cur)
         map[ti] = cur;
 
       for (ExtendedTypeInfo::BaseIterator i = ti.begin_base (); i != ti.end_base (); i++)
       {
-        unsigned long t = compute_levels (i->type_info (), cur + 1, map);
+        std::size_t const t (compute_levels (i->type_info (), cur + 1, map));
         if (t > ret)
           ret = t;
       }

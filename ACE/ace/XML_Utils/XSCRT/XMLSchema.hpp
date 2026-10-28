@@ -36,27 +36,23 @@ namespace XMLSchema
   typedef XSCRT::FundamentalType<float> float_;
   typedef XSCRT::FundamentalType<double> double_;
 
-  // Just to make GCC 3.3 and other broken compilers shutup.
-  //
-  using std::basic_string;
-
   template <typename C>
   class string
     : public XSCRT::Type
-    , public basic_string<C>
+    , public std::basic_string<C>
   {
   protected:
-    typedef basic_string<C> Base__;
+    typedef std::basic_string<C> Base__;
 
   public:
     string () = default;
 
-    string (XSCRT::XML::Element<C> const &e)
+    explicit string (XSCRT::XML::Element<C> const &e)
       : Base__ (e.value ())
     {
     }
 
-    string (XSCRT::XML::Attribute<C> const &a)
+    explicit string (XSCRT::XML::Attribute<C> const &a)
       : Base__ (a.value ())
     {
     }
@@ -82,12 +78,12 @@ namespace XMLSchema
   public:
     normalizedString () = default;
 
-    normalizedString (XSCRT::XML::Element<C> const &e)
+    explicit normalizedString (XSCRT::XML::Element<C> const &e)
       : string<C> (e)
     {
     }
 
-    normalizedString (XSCRT::XML::Attribute<C> const &a)
+    explicit normalizedString (XSCRT::XML::Attribute<C> const &a)
       : string<C> (a)
     {
     }
@@ -113,12 +109,12 @@ namespace XMLSchema
   public:
     token () = default;
 
-    token (XSCRT::XML::Element<C> const &e)
+    explicit token (XSCRT::XML::Element<C> const &e)
       : normalizedString<C> (e)
     {
     }
 
-    token (XSCRT::XML::Attribute<C> const &a)
+    explicit token (XSCRT::XML::Attribute<C> const &a)
       : normalizedString<C> (a)
     {
     }
@@ -144,12 +140,12 @@ namespace XMLSchema
   public:
     NMTOKEN () = default;
 
-    NMTOKEN (XSCRT::XML::Element<C> const &e)
+    explicit NMTOKEN (XSCRT::XML::Element<C> const &e)
       : token<C> (e)
     {
     }
 
-    NMTOKEN (XSCRT::XML::Attribute<C> const &a)
+    explicit NMTOKEN (XSCRT::XML::Attribute<C> const &a)
       : token<C> (a)
     {
     }
@@ -175,12 +171,12 @@ namespace XMLSchema
   public:
     Name () = default;
 
-    Name (XSCRT::XML::Element<C> const &e)
+    explicit Name (XSCRT::XML::Element<C> const &e)
       : token<C> (e)
     {
     }
 
-    Name (XSCRT::XML::Attribute<C> const &a)
+    explicit Name (XSCRT::XML::Attribute<C> const &a)
       : token<C> (a)
     {
     }
@@ -206,12 +202,12 @@ namespace XMLSchema
   public:
     NCName () = default;
 
-    NCName (XSCRT::XML::Element<C> const &e)
+    explicit NCName (XSCRT::XML::Element<C> const &e)
       : Name<C> (e)
     {
     }
 
-    NCName (XSCRT::XML::Attribute<C> const &a)
+    explicit NCName (XSCRT::XML::Attribute<C> const &a)
       : Name<C> (a)
     {
     }
@@ -237,12 +233,12 @@ namespace XMLSchema
   public:
     QName () = default;
 
-    QName (XSCRT::XML::Element<C> const &e)
+    explicit QName (XSCRT::XML::Element<C> const &e)
       : Name<C> (e)
     {
     }
 
-    QName (XSCRT::XML::Attribute<C> const &a)
+    explicit QName (XSCRT::XML::Attribute<C> const &a)
       : Name<C> (a)
     {
     }
@@ -262,12 +258,12 @@ namespace XMLSchema
   template <typename C>
   struct IdentityProvider : XSCRT::IdentityProvider
   {
-    IdentityProvider (NCName<C> const &id)
+    explicit IdentityProvider (NCName<C> const &id)
       : id_ (id)
     {
     }
 
-    virtual bool before (XSCRT::IdentityProvider const &y) const
+    bool before (XSCRT::IdentityProvider const &y) const override
     {
       return id_ < dynamic_cast<IdentityProvider const &> (y).id_;
     }
@@ -275,10 +271,11 @@ namespace XMLSchema
   private:
     NCName<C> const &id_;
 
-  private:
-    IdentityProvider (IdentityProvider const &);
+    IdentityProvider (IdentityProvider const &) = delete;
+    IdentityProvider (IdentityProvider &&) = delete;
 
-    IdentityProvider &operator= (IdentityProvider const &);
+    IdentityProvider &operator= (IdentityProvider const &) = delete;
+    IdentityProvider &operator= (IdentityProvider &&) = delete;
   };
 
   template <typename C>
@@ -288,7 +285,7 @@ namespace XMLSchema
     typedef typename NCName<C>::Base__ Base__;
 
   public:
-    ~ID ()
+    ~ID () override
     {
       unregister_id ();
     }
@@ -298,13 +295,13 @@ namespace XMLSchema
     {
     }
 
-    ID (XSCRT::XML::Element<C> const &e)
+    explicit ID (XSCRT::XML::Element<C> const &e)
       : NCName<C> (e)
       , id_provider_ (*this)
     {
     }
 
-    ID (XSCRT::XML::Attribute<C> const &a)
+    explicit ID (XSCRT::XML::Attribute<C> const &a)
       : NCName<C> (a)
       , id_provider_ (*this)
     {
@@ -347,7 +344,7 @@ namespace XMLSchema
   public:
     using NCName<C>::container;
 
-    virtual void container (XSCRT::Type *c)
+    void container (XSCRT::Type *c) override
     {
       unregister_id ();
 
@@ -400,13 +397,13 @@ namespace XMLSchema
     {
     }
 
-    IDREF (XSCRT::XML::Element<C> const &e)
+    explicit IDREF (XSCRT::XML::Element<C> const &e)
       : id_ (e)
       , id_provider_ (id_)
     {
     }
 
-    IDREF (XSCRT::XML::Attribute<C> const &a)
+    explicit IDREF (XSCRT::XML::Attribute<C> const &a)
       : id_ (a)
       , id_provider_ (id_)
     {
@@ -418,7 +415,7 @@ namespace XMLSchema
     {
     }
 
-    IDREF (basic_string<C> const &id)
+    IDREF (std::basic_string<C> const &id)
       : id_ (id)
       , id_provider_ (id_)
     {
@@ -430,7 +427,7 @@ namespace XMLSchema
       return *this;
     }
 
-    IDREF &operator= (basic_string<C> const &x)
+    IDREF &operator= (std::basic_string<C> const &x)
     {
       id_ = x;
       return *this;
@@ -447,7 +444,7 @@ namespace XMLSchema
       return *(get ());
     }
 
-    virtual XSCRT::Type *get () const
+    XSCRT::Type *get () const override
     {
       if (!id_.empty () && container () != this)
       {
@@ -459,13 +456,9 @@ namespace XMLSchema
       }
     }
 
-    // conversion to bool
-    //
-    typedef XSCRT::Type *(IDREF::*bool_convertable) () const;
-
-    operator bool_convertable () const
+    explicit operator bool () const
     {
-      return get () ? &IDREF::operator-> : nullptr;
+      return get () != nullptr;
     }
 
   private:
@@ -490,7 +483,7 @@ namespace XMLSchema
     {
       typedef T Type;
 
-      virtual void traverse (XMLSchema::IDREF_Base &r)
+      void traverse (XMLSchema::IDREF_Base &r) override
       {
         if (r.get ())
           dispatch (*(r.get ()));
@@ -536,7 +529,7 @@ namespace XMLSchema
   template <typename C>
   struct TypeInfoInitializer
   {
-    TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &);
+    explicit TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &);
   };
 }
 

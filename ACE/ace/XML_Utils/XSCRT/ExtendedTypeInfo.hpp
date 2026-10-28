@@ -17,9 +17,9 @@ namespace XSCRT
   {
   public:
     template <typename T>
-    TypeId (T const &t);
+    explicit TypeId (T const &t);
 
-    TypeId (std::type_info const &tid);
+    explicit TypeId (std::type_info const &tid);
 
   public:
     bool operator== (TypeId const &other) const;
@@ -81,7 +81,7 @@ namespace XSCRT
     typedef BaseInfoList::const_iterator BaseIterator;
 
   public:
-    ExtendedTypeInfo (TypeId const &tid);
+    explicit ExtendedTypeInfo (TypeId const &tid);
 
     TypeId type_id () const;
 
@@ -90,6 +90,8 @@ namespace XSCRT
     BaseIterator end_base () const;
 
     void add_base (Access::Value access, bool virtual_base, TypeId const &tid);
+
+    void add_base (Access::Value access, bool virtual_base, std::type_info const &tid);
 
   private:
     TypeId tid_;

@@ -43,9 +43,14 @@ namespace XML
   class XML_Helper
   {
   public:
-    XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
+    explicit XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
 
     ~XML_Helper () noexcept;
+
+    XML_Helper (XML_Helper const &) = delete;
+    XML_Helper &operator= (XML_Helper const &) = delete;
+    XML_Helper (XML_Helper &&) = delete;
+    XML_Helper &operator= (XML_Helper &&) = delete;
 
     /// Create a DOM tree
     XERCES_CPP_NAMESPACE::DOMDocument *create_dom (const ACE_TCHAR *uri) const;

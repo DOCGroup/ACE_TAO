@@ -33,14 +33,14 @@ namespace XSCRT
     {
     public:
       template <typename C>
-      string (std::basic_string<C> const &s)
+      explicit string (std::basic_string<C> const &s)
         : s_ (XSCRT::XML::transcode<C> (s))
         , xerces_allocated_ (std::is_same<C, char>::value)
       {
       }
 
       template <typename C>
-      string (C const *s)
+      explicit string (C const *s)
         : s_ (XSCRT::XML::transcode<C> (s))
         , xerces_allocated_ (std::is_same<C, char>::value)
       {
@@ -48,7 +48,6 @@ namespace XSCRT
 
       string (string const &s)
         : s_ (copy (s.s_))
-        , xerces_allocated_ (false)
       {
       }
 
@@ -57,6 +56,7 @@ namespace XSCRT
         , xerces_allocated_ (s.xerces_allocated_)
       {
         s.s_ = nullptr;
+        s.xerces_allocated_ = false;
       }
 
       string &operator= (string const &s)
@@ -79,6 +79,7 @@ namespace XSCRT
           s_ = s.s_;
           xerces_allocated_ = s.xerces_allocated_;
           s.s_ = nullptr;
+          s.xerces_allocated_ = false;
         }
         return *this;
       }
@@ -144,7 +145,7 @@ namespace XSCRT
       std::size_t const length (xercesc::XMLString::stringLen (s));
       result.reserve (length);
 
-      for (std::size_t i (0); i < length; ++i)
+      for (std::size_t i{}; i < length; ++i)
       {
         std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
 
@@ -185,9 +186,9 @@ namespace XSCRT
     inline XMLCh *transcode (std::basic_string<wchar_t> const &s)
     {
       std::unique_ptr<XMLCh[]> result (new XMLCh[s.length () * 2 + 1]);
-      std::size_t out (0);
+      std::size_t out{};
 
-      for (std::size_t i (0); i < s.length (); ++i)
+      for (std::size_t i{}; i < s.length (); ++i)
       {
         std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
 
@@ -279,7 +280,7 @@ namespace XSCRT
     template <typename DERIVED_PTR>
     DERIVED_PTR dom_cast (xercesc::DOMNode *node)
     {
-      DERIVED_PTR elem = nullptr;
+      DERIVED_PTR elem{};
       if ((node != nullptr) && (node->getNodeType () == dom_traits<DERIVED_PTR>::node_type))
       {
         elem = reinterpret_cast<DERIVED_PTR> (node);
@@ -293,14 +294,14 @@ namespace XSCRT
       typedef std::basic_string<C> string_;
 
     public:
-      Element (xercesc::DOMElement const *e)
+      explicit Element (xercesc::DOMElement const *e)
         : ce_ (e)
         , name_ (transcode<C> (e->getLocalName (), nullptr))
         , namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
       {
       }
 
-      Element (xercesc::DOMElement *e)
+      explicit Element (xercesc::DOMElement *e)
         : e_ (e)
         , ce_ (e)
         , name_ (transcode<C> (e->getLocalName (), nullptr))
@@ -407,14 +408,14 @@ namespace XSCRT
       typedef std::basic_string<C> string_;
 
     public:
-      Attribute (xercesc::DOMAttr const *a)
+      explicit Attribute (xercesc::DOMAttr const *a)
         : ca_ (a)
         , name_ (transcode<C> (a->getLocalName (), nullptr))
         , value_ (transcode<C> (a->getValue (), nullptr))
       {
       }
 
-      Attribute (xercesc::DOMAttr *a)
+      explicit Attribute (xercesc::DOMAttr *a)
         : a_ (a)
         , ca_ (a)
         , name_ (transcode<C> (a->getLocalName (), nullptr))
@@ -489,7 +490,6 @@ namespace XSCRT
       }
 
     private:
-    private:
       xercesc::DOMAttr *a_{};
       xercesc::DOMAttr const *ca_{};
 
@@ -500,7 +500,7 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> prefix (std::basic_string<C> const &n)
     {
-      std::size_t i (0);
+      std::size_t i{};
       while (i < n.length () && n[i] != ':')
         ++i;
 
@@ -513,7 +513,7 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> uq_name (std::basic_string<C> const &n)
     {
-      std::size_t i (0);
+      std::size_t i{};
       while (i < n.length () && n[i] != ':')
         ++i;
 

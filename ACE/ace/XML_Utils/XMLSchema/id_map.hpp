@@ -58,7 +58,7 @@ class ID_Map
       explicit Unresolved_IDREF(const std::basic_string<ACE_TCHAR> &a_message) : message(a_message)
       {}
       ~Unresolved_IDREF(){}
-      std::basic_string<ACE_TCHAR> get_message ( void )
+      std::basic_string<ACE_TCHAR> get_message ()
       {
         return message;
       }
@@ -117,23 +117,20 @@ class ID_Map
   //Note: The pointer is of type "XSCRT::Type*"
   void resolve_idref ()
   {
-    // Declare iterators to navigate the maps
-    for (ID_Map::idref_iterator idref_iter = this->idref_map_.begin();
-          idref_iter != this->idref_map_.end();
-          ++idref_iter)
+    for (IDREF_MAP::value_type const &idref_entry : this->idref_map_)
     {
       //Find the ID that matches the IDREF element
-      ID_Map::id_iterator id_iter = this->id_map_.find(idref_iter->first);
+      ID_Map::id_iterator id_iter = this->id_map_.find(idref_entry.first);
       if (id_iter != this->id_map_.end())
       {
         // Add the IDREF identifier and the reference to the
         // identified object
         std::basic_string<ACE_TCHAR> temp_id = id_iter->first;
-        idref_iter->second->set_idref(temp_id, id_iter->second);
+        idref_entry.second->set_idref(temp_id, id_iter->second);
       }
       else
       {
-        throw Unresolved_IDREF(idref_iter->first);
+        throw Unresolved_IDREF(idref_entry.first);
       }
     }
   }

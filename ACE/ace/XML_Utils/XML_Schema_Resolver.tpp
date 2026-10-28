@@ -17,7 +17,7 @@ namespace XML
   }
 
   template <typename Resolver>
-  Resolver &XML_Schema_Resolver<Resolver>::get_resolver (void)
+  Resolver &XML_Schema_Resolver<Resolver>::get_resolver ()
   {
     return resolver_;
   }
@@ -27,7 +27,7 @@ namespace XML
   template <typename Resolver>
   InputSource *XML_Schema_Resolver<Resolver>::resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId)
   {
-    XStr path = resolver_ (publicId, systemId);
+    XStr path (resolver_ (publicId, systemId));
     if (path.begin () == nullptr)
       return nullptr;
 

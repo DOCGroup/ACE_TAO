@@ -14,7 +14,7 @@ namespace XSCRT
   class Writer
   {
   public:
-    Writer (XML::Element<C> &e)
+    explicit Writer (XML::Element<C> &e)
     {
       push_ (e);
     }
@@ -60,9 +60,10 @@ namespace XSCRT
     XML::Attribute<C> *attr__{};
 
   private:
-    Writer (Writer const &);
-
-    void operator= (Writer const &);
+    Writer (Writer const &) = delete;
+    Writer &operator= (Writer const &) = delete;
+    Writer (Writer &&) = delete;
+    Writer &operator= (Writer &&) = delete;
   };
 }
 

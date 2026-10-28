@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <memory>
 #include <ostream>
+#include <utility>
 
 #include "XercesString.h"
 #include "xercesc/util/PlatformUtils.hpp"
@@ -33,12 +34,28 @@ namespace XML
   {
   }
 
+  XStr::XStr (XStr &&other) noexcept
+    : _wstr (std::exchange (other._wstr, nullptr))
+  {
+  }
+
   XStr &XStr::operator= (const XStr &rhs)
   {
     if (std::addressof (rhs) != this)
     {
       XStr temp (rhs);
       std::swap (this->_wstr, temp._wstr);
+    }
+
+    return *this;
+  }
+
+  XStr &XStr::operator= (XStr &&rhs) noexcept
+  {
+    if (this != std::addressof (rhs))
+    {
+      reset ();
+      _wstr = std::exchange (rhs._wstr, nullptr);
     }
 
     return *this;
@@ -154,7 +171,7 @@ namespace XML
 
   bool operator!= (const XStr &lhs, const XStr &rhs)
   {
-    return !operator== (lhs, rhs);
+    return !(lhs == rhs);
   }
 
   std::ostream &operator<< (std::ostream &o, XStr const &str)

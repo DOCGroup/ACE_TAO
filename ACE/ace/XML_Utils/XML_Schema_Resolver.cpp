@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <new>
+#include <utility>
 
 namespace XML
 {
@@ -44,7 +45,7 @@ namespace XML
     if (!xpath.append (xrelpath))
       throw std::bad_alloc ();
 
-    paths_.push_back (xpath);
+    paths_.push_back (std::move (xpath));
   }
 
   XMLCh *Environment_Resolver::operator() (const XMLCh *const, const XMLCh *const systemId) const

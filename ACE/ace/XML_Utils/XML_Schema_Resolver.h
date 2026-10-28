@@ -40,16 +40,19 @@ namespace XML
   public:
     XML_Schema_Resolver () = default;
 
-    XML_Schema_Resolver (Resolver &resolver);
+    explicit XML_Schema_Resolver (Resolver &resolver);
 
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
-    virtual InputSource *resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId);
+    InputSource *resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId) override;
 
     Resolver &get_resolver ();
 
   private:
-    XML_Schema_Resolver (XML_Schema_Resolver<Resolver> &);
+    XML_Schema_Resolver (XML_Schema_Resolver const &) = delete;
+    XML_Schema_Resolver &operator= (XML_Schema_Resolver const &) = delete;
+    XML_Schema_Resolver (XML_Schema_Resolver &&) = delete;
+    XML_Schema_Resolver &operator= (XML_Schema_Resolver &&) = delete;
 
     Resolver resolver_{};
   };
@@ -72,7 +75,7 @@ namespace XML
    */
   struct Basic_Resolver
   {
-    Basic_Resolver (const ACE_TCHAR *path);
+    explicit Basic_Resolver (const ACE_TCHAR *path);
 
     XMLCh *operator() (const XMLCh *const publicId, const XMLCh *const systemId) const;
     XStr path_;

@@ -12,7 +12,6 @@
 #include <string>
 // #include <iostream> //@@ tmp
 
-#include "ace/Refcounted_Auto_Ptr.h"
 #include <ace/XML_Utils/XSCRT/Parser.hpp>
 
 namespace XSCRT
@@ -41,9 +40,7 @@ namespace XSCRT
   {
     virtual bool before (IdentityProvider const &) const = 0;
 
-    virtual ~IdentityProvider (void)
-    {
-    }
+    virtual ~IdentityProvider () = default;
   };
 
   class Type
@@ -55,23 +52,23 @@ namespace XSCRT
     Type () = default;
 
     template <typename C>
-    Type (XML::Element<C> const &)
+    explicit Type (XML::Element<C> const &)
     {
     }
 
     template <typename C>
-    Type (XML::Attribute<C> const &)
+    explicit Type (XML::Attribute<C> const &)
     {
     }
 
+    // A copy gets fresh runtime bookkeeping; parent and ID registrations stay with their owner.
     Type (Type const &)
     {
     }
 
+    // Assignment preserves the destination's runtime bookkeeping.
     Type &operator= (Type const &)
     {
-      //@@ I don't need this.
-      // if (map_.get ()) map_->clear (); // Flush the map.
       return *this;
     }
 
@@ -121,12 +118,12 @@ namespace XSCRT
       //
       if (container_ != nullptr && map_.get ())
       {
-        for (Map_::iterator i (map_->begin ()); i != map_->end (); ++i)
+        for (Map_::value_type const &entry : *map_)
         {
-          // std::wcerr << "revoking " << i->second
+          // std::wcerr << "revoking " << entry.second
           //            << " to " << container_ << std::endl;
 
-          container_->unregister_id (*(i->first));
+          container_->unregister_id (*entry.first);
         }
       }
 
@@ -134,12 +131,12 @@ namespace XSCRT
       //
       if (c != nullptr && map_)
       {
-        for (Map_::iterator i (map_->begin ()); i != map_->end (); ++i)
+        for (Map_::value_type const &entry : *map_)
         {
-          // std::wcerr << "copying " << i->second
+          // std::wcerr << "copying " << entry.second
           //            << " to " << c << std::endl;
 
-          c->register_id (*(i->first), i->second);
+          c->register_id (*entry.first, entry.second);
         }
       }
 
@@ -280,13 +277,13 @@ namespace XSCRT
     FundamentalType () = default;
 
     template <typename C>
-    FundamentalType (XML::Element<C> const &e)
+    explicit FundamentalType (XML::Element<C> const &e)
       : x_ (Details::parse_numeric<C, X> (e.value ()))
     {
     }
 
     template <typename C>
-    FundamentalType (XML::Attribute<C> const &a)
+    explicit FundamentalType (XML::Attribute<C> const &a)
       : x_ (Details::parse_numeric<C, X> (a.value ()))
     {
     }
