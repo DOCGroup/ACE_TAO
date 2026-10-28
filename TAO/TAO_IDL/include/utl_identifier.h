@@ -65,6 +65,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 #define _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 
+#include <optional>
+#include <string>
+#include <string_view>
+
 #include "TAO_IDL_FE_Export.h"
 
 #include "ace/iosfwd.h"
@@ -75,7 +79,7 @@ public:
   Identifier () = default;
   // Default Constructor.
 
-  explicit Identifier (char const * s);
+  explicit Identifier (std::string_view s);
   // Constructor.
 
   Identifier (Identifier const &other);
@@ -91,12 +95,13 @@ public:
   ///{
   char *get_string ();
   char const *get_string () const;
+  std::string_view get_string_view () const;
   ///}
 
-  void replace_string (char const * s);
-  // Replace the underlying string and free the old one.
+  void replace_string (std::string_view s);
+  // Replace the underlying string.
 
-  void preprocess_and_replace_string (char const * s);
+  void preprocess_and_replace_string (std::string_view s);
 
   bool compare (Identifier *other);
   // Compare with other Identifier.
@@ -125,7 +130,7 @@ public:
 
 private:
   // Storage for data.
-  char *pv_string {};
+  std::optional<std::string> pv_string_;
 
   // Did the IDL string have a leading underscore?
   bool escaped_ {};

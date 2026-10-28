@@ -62,6 +62,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
+#include <string_view>
+
 #include "utl_scope.h"
 #include "utl_identifier.h"
 #include "utl_err.h"
@@ -2037,8 +2039,8 @@ UTL_Scope::is_global_name (Identifier *i)
       return false;
     }
 
-  ACE_CString cmp (i->get_string (), nullptr, false);
-  return (cmp == "" || cmp == "::");
+  std::string_view const name = i->get_string_view ();
+  return name.empty () || name == "::";
 }
 
 AST_Decl *
