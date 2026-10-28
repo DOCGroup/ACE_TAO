@@ -39,23 +39,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Server::TAO_Naming_Server (size_t bsize)
-  : ior_multicast_ (nullptr),
-    pid_file_name_ (nullptr),
-    iors_ (nullptr),
-    bundle_size_ (bsize),
-    context_size_ (ACE_DEFAULT_MAP_SIZE),
-    multicast_ (0),
-#if !defined (CORBA_E_MICRO)
-    context_index_ (nullptr),
-    persistence_dir_ (nullptr),
-    base_address_ (TAO_NAMING_BASE_ADDR),
-    use_storable_context_ (false),
-    use_servant_activator_ (false),
-    servant_activator_ (nullptr),
-#endif /* CORBA_E_MICRO */
-    use_redundancy_ (false),
-    round_trip_timeout_ (0),
-    use_round_trip_timeout_ (false)
+  : bundle_size_ (bsize)
 {
   ACE_NEW (iors_, IOR_Bundle[bsize]);
 }
@@ -72,23 +56,10 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       int round_trip_timeout,
                                       int use_round_trip_timeout,
                                       size_t bsize)
-  : ior_multicast_ (nullptr),
-    pid_file_name_ (nullptr),
-    iors_ (nullptr),
-    bundle_size_ (bsize),
-    context_size_ (ACE_DEFAULT_MAP_SIZE),
-    multicast_ (0),
+  : bundle_size_ (bsize)
 #if !defined (CORBA_E_MICRO)
-    context_index_ (nullptr),
-    persistence_dir_ (nullptr),
-    base_address_ (TAO_NAMING_BASE_ADDR),
-    use_storable_context_ (use_storable_context),
-    use_servant_activator_ (false),
-    servant_activator_ (nullptr),
+  , use_storable_context_ (use_storable_context)
 #endif /* CORBA_E_MICRO */
-    use_redundancy_ (false),
-    round_trip_timeout_ (0),
-    use_round_trip_timeout_ (false)
 {
   ACE_NEW (iors_, IOR_Bundle[bsize]);
   if (this->init (orb,

@@ -196,7 +196,7 @@ protected:
     persistent_naming_context_factory ();
 
   /// The ior_multicast event handler.
-  TAO_IOR_Multicast *ior_multicast_;
+  TAO_IOR_Multicast *ior_multicast_ {};
 
   /// The ORB
   CORBA::ORB_var orb_;
@@ -208,12 +208,12 @@ protected:
   PortableServer::POA_var ns_poa_;
 
   /// File to output the process id.
-  const ACE_TCHAR *pid_file_name_;
+  const ACE_TCHAR *pid_file_name_ {};
 
   /// Although this class only manages the root context info
   /// the FT class adds primary/backup IORs for the root context
   /// as well as IORs for LB groups as well.
-  IOR_Bundle *iors_;
+  IOR_Bundle *iors_ {};
   size_t bundle_size_;
   IOR_Bundle *bundle_at (size_t ndx);
   const IOR_Bundle *bundle_at (size_t ndx) const;
@@ -224,10 +224,10 @@ protected:
    * created under the given context will use the same size for their
    * initial hash table allocations.
    */
-  size_t context_size_;
+  size_t context_size_ {ACE_DEFAULT_MAP_SIZE};
 
   /// If not zero multicast is enabled.
-  int multicast_;
+  int multicast_ {};
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -235,39 +235,39 @@ protected:
    * the Naming Service when local persistent Naming Service is
    * desired.
    */
-  TAO_Persistent_Context_Index *context_index_;
+  TAO_Persistent_Context_Index *context_index_ {};
 
   /// Path to the file to be used to store/read in Naming Service
   /// persistent state.
-  const ACE_TCHAR *persistence_dir_;
+  const ACE_TCHAR *persistence_dir_ {};
 
   /// Address to be used for memory mapping Naming Service state file,
   /// identified by the <persistence_file_name_>.
-  void *base_address_;
+  void *base_address_ {TAO_NAMING_BASE_ADDR};
 
   /// If not zero use flat file persistence
-  bool use_storable_context_;
+  bool use_storable_context_ {};
 
   /**
    * If not zero use servant activator that uses flat file persistence.
    */
-  bool use_servant_activator_;
+  bool use_servant_activator_ {};
 
   /**
    * Need to retain the servant activator between calls to
    * init_with_orb() and init_new_naming().
    */
-  TAO_Storable_Naming_Context_Activator *servant_activator_;
+  TAO_Storable_Naming_Context_Activator *servant_activator_ {};
 #endif /* !CORBA_E_MICRO */
 
   /**
    * If not zero support redundant naming servers.
    */
-  bool use_redundancy_;
+  bool use_redundancy_ {};
 
   /// If not zero use round trip timeout policy set to value specified
-  int round_trip_timeout_;
-  bool use_round_trip_timeout_;
+  int round_trip_timeout_ {};
+  bool use_round_trip_timeout_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
