@@ -40,8 +40,8 @@ namespace XML
                                                   const XMLCh *const systemId)
   {
     XStr path = resolver_ (publicId, systemId);
-    if (path.begin () == 0)
-      return 0;
+    if (path.begin () == nullptr)
+      return nullptr;
 
     // Ownership of these objects is given to other people.
     return /*new Wrapper4InputSource*/ (new LocalFileInputSource (path.begin ()));

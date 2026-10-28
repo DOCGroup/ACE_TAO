@@ -138,7 +138,7 @@ namespace XSCRT
 
       // Copy registrations to our new container.
       //
-      if (c != 0 && map_.get ())
+      if (c != nullptr && map_)
       {
         for (Map_::iterator i (map_->begin ()); i != map_->end (); ++i)
         {
@@ -159,7 +159,7 @@ namespace XSCRT
     void
     register_id (IdentityProvider const& id, Type* t)
     {
-      if (map_.get () == 0)
+      if (!map_)
       {
         map_ = std::unique_ptr<Map_> (new Map_);
       }
@@ -205,7 +205,7 @@ namespace XSCRT
         }
       }
 
-      return 0;
+      return nullptr;
     }
 
     /// Get and set methods for the idref_map_ data member
@@ -219,7 +219,7 @@ namespace XSCRT
       }
       else
       {
-        return 0;
+        return nullptr;
       }
     }
 
@@ -232,7 +232,7 @@ namespace XSCRT
       }
       else
       {
-        return 0;
+        return nullptr;
       }
     }
 
@@ -246,7 +246,7 @@ namespace XSCRT
       }
       else
       {
-        return 0;
+        return nullptr;
       }
     }
 

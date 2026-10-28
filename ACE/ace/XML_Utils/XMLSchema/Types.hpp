@@ -548,7 +548,7 @@ namespace XMLSchema
       }
       else
       {
-        return 0;
+        return nullptr;
       }
     }
 
@@ -561,7 +561,7 @@ namespace XMLSchema
       }
       else
       {
-        return 0;
+        return nullptr;
       }
     }
 
@@ -571,7 +571,7 @@ namespace XMLSchema
 
     operator bool_convertable () const
     {
-      return get () ? &IDREF::true_ : 0;
+      return get () ? &IDREF::true_ : nullptr;
     }
 
   private:

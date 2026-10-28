@@ -119,7 +119,7 @@ namespace XSCRT
     std::basic_string<char>
     transcode<char> (XMLCh const* s, char*)
     {
-      if (s == 0) return std::basic_string<char> ();
+      if (s == nullptr) return std::basic_string<char> ();
 
       char* buf = xercesc::XMLString::transcode (s);
 
@@ -135,7 +135,7 @@ namespace XSCRT
     std::basic_string<wchar_t>
     transcode<wchar_t> (XMLCh const* s, wchar_t*)
     {
-      if (s == 0) return std::basic_string<wchar_t> ();
+      if (s == nullptr) return std::basic_string<wchar_t> ();
 
       // std::wcerr << s << std::endl;
 
@@ -199,8 +199,8 @@ namespace XSCRT
     template <typename DERIVED_PTR>
     DERIVED_PTR dom_cast (xercesc::DOMNode *node)
     {
-      DERIVED_PTR elem = 0;
-      if ((node != 0) &&
+      DERIVED_PTR elem = nullptr;
+      if ((node != nullptr) &&
           (node->getNodeType () == dom_traits<DERIVED_PTR>::node_type))
         {
           elem = reinterpret_cast <DERIVED_PTR> (node);
@@ -215,24 +215,24 @@ namespace XSCRT
 
     public:
       Element (xercesc::DOMElement const* e)
-          : e_ (0),
+          : e_ (nullptr),
             ce_ (e),
-            name_ (transcode<C> (e->getLocalName (), 0)),
-            namespace__ (transcode<C> (e->getNamespaceURI (), 0))
+            name_ (transcode<C> (e->getLocalName (), nullptr)),
+            namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
       {
       }
 
       Element (xercesc::DOMElement* e)
           : e_ (e),
             ce_ (e),
-            name_ (transcode<C> (e->getLocalName (), 0)),
-            namespace__ (transcode<C> (e->getNamespaceURI (), 0))
+            name_ (transcode<C> (e->getLocalName (), nullptr)),
+            namespace__ (transcode<C> (e->getNamespaceURI (), nullptr))
       {
       }
 
       Element (string_ const& name, Element& parent)
-          : e_ (0),
-            ce_ (0),
+          : e_ (nullptr),
+            ce_ (nullptr),
             name_ (name)
       {
         xercesc::DOMDocument* doc (
@@ -246,8 +246,8 @@ namespace XSCRT
       }
 
       Element (string_ const& name, string_ const& ns, Element& parent)
-          : e_ (0),
-            ce_ (0),
+          : e_ (nullptr),
+            ce_ (nullptr),
             name_ (name),
             namespace__ (ns)
       {
@@ -291,7 +291,7 @@ namespace XSCRT
       string_
       value () const
       {
-        return XML::transcode<C> (dom_element ()->getTextContent (), 0);
+        return XML::transcode<C> (dom_element ()->getTextContent (), nullptr);
       }
 
       void
@@ -310,7 +310,7 @@ namespace XSCRT
       {
         XMLCh const* value = ce_->getAttribute (string (s).c_str ());
 
-        return transcode<C> (value, 0);
+        return transcode<C> (value, nullptr);
       }
 
     public:
@@ -342,26 +342,26 @@ namespace XSCRT
 
     public:
       Attribute (xercesc::DOMAttr const* a)
-          : a_ (0),
+          : a_ (nullptr),
             ca_ (a),
-            name_ (transcode<C> (a->getLocalName (), 0)),
-            value_ (transcode<C> (a->getValue (), 0))
+            name_ (transcode<C> (a->getLocalName (), nullptr)),
+            value_ (transcode<C> (a->getValue (), nullptr))
       {
       }
 
       Attribute (xercesc::DOMAttr* a)
           : a_ (a),
             ca_ (a),
-            name_ (transcode<C> (a->getLocalName (), 0)),
-            value_ (transcode<C> (a->getValue (), 0))
+            name_ (transcode<C> (a->getLocalName (), nullptr)),
+            value_ (transcode<C> (a->getValue (), nullptr))
       {
       }
 
       Attribute (string_ const& name,
                  string_ const& v,
                  Element<C>& parent)
-          : a_ (0),
-            ca_ (0),
+          : a_ (nullptr),
+            ca_ (nullptr),
             name_ (name),
             value_ ()
       {
@@ -381,8 +381,8 @@ namespace XSCRT
                  string_ const& ns,
                  string_ const& v,
                  Element<C>& parent)
-          : a_ (0),
-            ca_ (0),
+          : a_ (nullptr),
+            ca_ (nullptr),
             name_ (name),
             value_ ()
       {
@@ -476,11 +476,11 @@ namespace XSCRT
       std::basic_string<C> wp (prefix (n));
 
       XMLCh const* xns = e.dom_element ()->lookupNamespaceURI (
-        wp.empty () ? 0 : string (wp).c_str ());
+        wp.empty () ? nullptr : string (wp).c_str ());
 
 
       std::basic_string<C> ns (
-        xns ? transcode<C> (xns, 0) : std::basic_string<C> ());
+        xns ? transcode<C> (xns, nullptr) : std::basic_string<C> ());
 
       return ns;
 
@@ -506,7 +506,7 @@ namespace XSCRT
 
       XMLCh const* p (e.dom_element ()->lookupPrefix (xns.c_str ()));
 
-      if (p == 0)
+      if (p == nullptr)
       {
         bool const r (e.dom_element ()->isDefaultNamespace (xns.c_str ()));
 
@@ -520,7 +520,7 @@ namespace XSCRT
         }
       }
 
-      return transcode<C> (p, 0);
+      return transcode<C> (p, nullptr);
     }
   }
 }

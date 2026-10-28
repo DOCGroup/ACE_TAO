@@ -62,12 +62,12 @@ namespace XML
 
         FileHandle file (XMLPlatformUtils::openFile (path));
 
-        if (file != 0)
+        if (file != nullptr)
           {
             XMLPlatformUtils::closeFile (file);
             return path.release ();
           }
       }
-    return 0;
+    return nullptr;
   }
 }

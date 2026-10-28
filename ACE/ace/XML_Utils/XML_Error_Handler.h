@@ -45,7 +45,7 @@ namespace XML
     XML_Error_Handler (XML_Error_Handler&&) = delete;
     XML_Error_Handler& operator= (XML_Error_Handler&&) = delete;
   protected:
-    bool errors_ { false };
+    bool errors_ {};
   };
 }
 

@@ -140,15 +140,15 @@ namespace XML
   XML_Helper<Resolver, Error>::create_dom (const ACE_TCHAR *url) const
   {
 
-    if (url == 0)
-      return 0;
+    if (url == nullptr)
+      return nullptr;
 
     if (!initialized_ || impl_ == nullptr)
       throw std::logic_error ("XML_Helper is not initialized");
 
     try
       {
-        if (this->parser_.get () == 0)
+        if (!this->parser_)
           this->parser_.reset ((new xercesc::XercesDOMParser ()));
 
         // Perform Namespace processing.
@@ -192,7 +192,7 @@ namespace XML
         this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
 
         if (e_handler_ && e_handler_->getErrors ())
-          return 0;
+          return nullptr;
 
         return this->parser_->getDocument ();
       }
@@ -208,7 +208,7 @@ namespace XML
             char* message = XMLString::transcode (errText);
             std::unique_ptr<char[]> cleanup_message (message);
           }
-        return 0;
+        return nullptr;
 
       }
     catch (const XMLException& e)
@@ -223,7 +223,7 @@ namespace XML
         throw;
       }
 
-    return 0;
+    return nullptr;
   }
 
   template <typename Resolver, typename Error>
@@ -238,13 +238,13 @@ namespace XML
         if (release_resolver_)
           {
             delete resolver_;
-            resolver_ = 0;
+            resolver_ = nullptr;
           }
 
         if (release_e_handler_)
           {
             delete e_handler_;
-            e_handler_ = 0;
+            e_handler_ = nullptr;
           }
 
         this->parser_.reset (nullptr);
