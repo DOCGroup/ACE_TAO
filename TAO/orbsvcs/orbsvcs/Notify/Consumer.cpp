@@ -74,7 +74,7 @@ TAO_Notify_Consumer::proxy ()
 }
 
 void
-TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_Consumer::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   this->max_batch_size_ = qos_properties.maximum_batch_size ();
 }

@@ -103,7 +103,7 @@ TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, cons
 }
 
 void
-TAO_Notify_Proxy::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_Proxy::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   //Inform Peers of qos changes.
   TAO_Notify_Peer* peer = this->peer ();
@@ -155,8 +155,8 @@ TAO_Notify_Proxy::save_attrs (TAO_Notify::NVPList& attrs)
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs)
+TAO_Notify_Proxy::load_child (ACE_CString const &type, CORBA::Long id,
+  TAO_Notify::NVPList const &attrs)
 {
   ACE_UNUSED_ARG (id);
   ACE_UNUSED_ARG (attrs);

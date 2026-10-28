@@ -41,7 +41,12 @@ public:
   TAO_Notify_ProxyConsumer ();
 
   /// Destructor
-  virtual ~TAO_Notify_ProxyConsumer ();
+  ~TAO_Notify_ProxyConsumer () override;
+
+  TAO_Notify_ProxyConsumer (TAO_Notify_ProxyConsumer const &) = delete;
+  TAO_Notify_ProxyConsumer (TAO_Notify_ProxyConsumer &&) = delete;
+  TAO_Notify_ProxyConsumer &operator= (TAO_Notify_ProxyConsumer const &) = delete;
+  TAO_Notify_ProxyConsumer &operator= (TAO_Notify_ProxyConsumer &&) = delete;
 
   /// init: overrides Topology_Object method
   virtual void init (TAO_Notify::Topology_Parent * topology_parent);
@@ -53,10 +58,10 @@ public:
   void disconnect ();
 
   /// Shutdown  (TAO_Notify_Container_T method)
-  virtual int shutdown ();
+  int shutdown () override;
 
   /// Destroy this object.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Return true if connected
   bool is_connected () const;
@@ -90,7 +95,7 @@ private:
   std::unique_ptr<TAO_Notify_Supplier> supplier_;
 
   /// Access our Peer.
-  virtual TAO_Notify_Peer* peer ();
+  TAO_Notify_Peer* peer () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

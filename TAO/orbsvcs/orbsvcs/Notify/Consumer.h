@@ -72,7 +72,7 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   TAO_Notify_ProxySupplier* proxy_supplier ();
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy ();
+  TAO_Notify_Proxy* proxy () override;
 
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Event * request);
@@ -102,14 +102,14 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   void resume ();
 
   /// Shutdown the consumer
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// On reconnect we need to move events from the old consumer
   /// to the new one
   virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) = 0;
 
   /// Override, Peer::qos_changed
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  void qos_changed (TAO_Notify_QoSProperties const &qos_properties) override;
 
   /// Take the pending queue from the rhs, cancel it's timer and
   /// schedule our timer.  The caller should have locked the proxy lock
@@ -166,8 +166,8 @@ protected:
   TAO_SYNCH_MUTEX* proxy_lock ();
 
 protected:
-  virtual int handle_timeout (const ACE_Time_Value& current_time,
-                              const void* act = nullptr);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
 
 
   /// Schedule timer

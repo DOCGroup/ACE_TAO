@@ -145,7 +145,7 @@ TAO_Notify_ProxySupplier::deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & 
 }
 
 void
-TAO_Notify_ProxySupplier::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_ProxySupplier::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   TAO_Notify_Proxy::qos_changed (qos_properties);
 }
