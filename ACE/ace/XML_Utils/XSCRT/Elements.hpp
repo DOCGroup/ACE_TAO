@@ -132,6 +132,8 @@ namespace XSCRT
       if (container_ == c)
         return;
 
+      Map_::size_type registered{};
+
       // Revoke registrations from our old container.
       if (container_ != nullptr && map_.get ())
       {
@@ -147,12 +149,30 @@ namespace XSCRT
       // Copy registrations to our new container.
       if (c != nullptr && map_)
       {
-        for (Map_::value_type const &entry : *map_)
+        try
         {
-          // std::wcerr << "copying " << entry.second
-          //            << " to " << c << std::endl;
+          for (Map_::value_type const &entry : *map_)
+          {
+            // std::wcerr << "copying " << entry.second
+            //            << " to " << c << std::endl;
 
-          c->register_id (*entry.first, entry.second);
+            c->register_id (*entry.first, entry.second);
+            ++registered;
+          }
+        }
+        catch (...)
+        {
+          Map_::const_iterator entry (map_->begin ());
+          for (Map_::size_type i{}; i < registered; ++i, ++entry)
+            c->unregister_id (*entry->first);
+
+          if (container_ != nullptr)
+          {
+            for (Map_::value_type const &old_entry : *map_)
+              container_->register_id (*old_entry.first, old_entry.second);
+          }
+
+          throw;
         }
       }
 
