@@ -54,7 +54,7 @@ public:
    * server maps based on event header source or event header type.
    */
   static PortableServer::Servant_var<TAO_ECG_Complex_Address_Server>
-         create (int is_source_mapping = 1);
+         create (bool is_source_mapping = true);
 
   /// Destructor
   virtual ~TAO_ECG_Complex_Address_Server () override = default;
@@ -79,7 +79,7 @@ protected:
   /// method.
   /// <is_source_mapping> flag indicates whether this
   /// server maps based on event header source or event header type.
-  explicit TAO_ECG_Complex_Address_Server (int is_source_mapping = 1);
+  explicit TAO_ECG_Complex_Address_Server (bool is_source_mapping = true);
 
 private:
   /// Helper.  Given key and mcast address in string form, add them to
@@ -88,7 +88,7 @@ private:
 
   /// Flag indicating whether this address server maps event source or
   /// event type to mcast groups.
-  int is_source_mapping_;
+  bool is_source_mapping_;
 
   using MAP = ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr,
                                       ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;

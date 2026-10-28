@@ -105,7 +105,7 @@ public:
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
-  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
+  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = false);
 
   ~TAO_ECG_UDP_Sender () override = default;
 

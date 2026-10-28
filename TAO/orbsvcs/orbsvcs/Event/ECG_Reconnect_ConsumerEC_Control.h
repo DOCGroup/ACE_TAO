@@ -41,11 +41,12 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Reconnect_ConsumerEC_Control_Adapter
 {
 public:
   /// Constructor
-  TAO_ECG_Reconnect_ConsumerEC_Control_Adapter (TAO_ECG_Reconnect_ConsumerEC_Control *adaptee);
+  explicit TAO_ECG_Reconnect_ConsumerEC_Control_Adapter (
+    TAO_ECG_Reconnect_ConsumerEC_Control *adaptee);
 
   // = Documented in ACE_Event_Handler.
   virtual int handle_timeout (const ACE_Time_Value &tv,
-                              void const *arg = nullptr);
+                              void const *arg = nullptr) override;
 
 private:
   /// The adapted object

@@ -274,7 +274,8 @@ class TAO_EC_Accumulate_Supplier_Headers :
 {
 public:
   /// Constructor
-  TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  explicit TAO_EC_Accumulate_Supplier_Headers (
+    TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
   virtual void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
@@ -289,7 +290,8 @@ class TAO_EC_Accumulate_Consumer_Headers :
 {
 public:
   /// Constructor
-  TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  explicit TAO_EC_Accumulate_Consumer_Headers (
+    TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
   virtual void work (TAO_EC_ProxyPushConsumer *consumer) override;
 

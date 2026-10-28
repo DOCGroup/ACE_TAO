@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
-                                              int is_source_mapping)
+                                              bool is_source_mapping)
   : is_source_mapping_ (is_source_mapping)
 {
 }

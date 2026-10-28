@@ -374,7 +374,7 @@ TAO_ECG_Mcast_Gateway::init_address_server ()
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_SOURCE)
     {
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
-        TAO_ECG_Complex_Address_Server::create (1);
+        TAO_ECG_Complex_Address_Server::create (true);
       if (!impl.in ())
         return nullptr;
 
@@ -388,7 +388,7 @@ TAO_ECG_Mcast_Gateway::init_address_server ()
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_TYPE)
     {
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
-        TAO_ECG_Complex_Address_Server::create (0);
+        TAO_ECG_Complex_Address_Server::create (false);
       if (!impl.in ())
         return nullptr;
 
