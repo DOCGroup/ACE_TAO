@@ -13,14 +13,11 @@ TAO_Notify_AdminProperties::TAO_Notify_AdminProperties ()
   , max_consumers_ (CosNotification::MaxConsumers, 0)
   , max_suppliers_ (CosNotification::MaxSuppliers, 0)
   , reject_new_events_ (CosNotification::RejectNewEvents, 0)
-  , global_queue_length_ (0)
   , global_queue_not_full_ (global_queue_lock_)
 {
 }
 
-TAO_Notify_AdminProperties::~TAO_Notify_AdminProperties ()
-{
-}
+TAO_Notify_AdminProperties::~TAO_Notify_AdminProperties () = default;
 
 int
 TAO_Notify_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
@@ -74,15 +71,15 @@ TAO_Notify_AdminProperties::init ()
 CORBA::Boolean
 TAO_Notify_AdminProperties::queue_full ()
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, 1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, true);
 
   if (this->max_global_queue_length () == 0)
-    return 0;
+    return false;
   else
     if (this->global_queue_length_ >= this->max_global_queue_length ().value ())
-      return 1;
+      return true;
 
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
