@@ -433,9 +433,9 @@ private:
 
   bool is_system_file (const char * idl_name) const;
 
-  void gen_export_file (const char *filename,
-                        const char *macro,
-                        const char *msg,
+  void gen_export_file (char const *filename,
+                        char const *macro,
+                        char const *msg,
                         bool for_skel = false);
 
   void make_rand_extension (char * const t);
