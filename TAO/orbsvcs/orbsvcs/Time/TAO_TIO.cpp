@@ -125,7 +125,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
           overlap = tio->_this ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
     }

@@ -160,7 +160,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
                             CORBA::NO_MEMORY ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();
@@ -193,7 +193,7 @@ TAO_UTO::interval ()
                                  upper),
                         CORBA::NO_MEMORY ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();

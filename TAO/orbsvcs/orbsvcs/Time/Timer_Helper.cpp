@@ -104,7 +104,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
         static_cast<ACE_UINT32> (10000000) +
         static_cast<CORBA::ULongLong> (timeofday.usec () * 10);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception ("Exception in handle_timeout()\n");

@@ -54,7 +54,7 @@ public:
   ~Timer_Helper () override;
 
   /// Constructor that sets the clerk.
-  Timer_Helper (TAO_Time_Service_Clerk * clerk);
+  explicit Timer_Helper (TAO_Time_Service_Clerk * clerk);
 
   /// This method is called periodically by the Reactor to update the
   /// clerk's time.
