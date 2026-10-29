@@ -95,7 +95,7 @@ private:
 class TAO_CEC_Propagate_Typed_Event : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
-  TAO_CEC_Propagate_Typed_Event (const TAO_CEC_TypedEvent& typed_event,
+  TAO_CEC_Propagate_Typed_Event (TAO_CEC_TypedEvent const &typed_event,
                                  TAO_CEC_TypedEventChannel*);
 
   TAO_CEC_Propagate_Typed_Event (TAO_CEC_Propagate_Typed_Event const &) = delete;
@@ -108,7 +108,7 @@ public:
 
 private:
   /// The typed event
-  const TAO_CEC_TypedEvent typed_event_;
+  TAO_CEC_TypedEvent const typed_event_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
