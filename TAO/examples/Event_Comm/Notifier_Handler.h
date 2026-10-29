@@ -35,13 +35,18 @@ public:
   Notifier_Handler () = default;
 
   /// Destructor.
-  virtual ~Notifier_Handler () = default;
+  ~Notifier_Handler () = default;
+
+  Notifier_Handler (Notifier_Handler const &) = delete;
+  Notifier_Handler &operator= (Notifier_Handler const &) = delete;
+  Notifier_Handler (Notifier_Handler &&) = delete;
+  Notifier_Handler &operator= (Notifier_Handler &&) = delete;
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, ACE_TCHAR *argv[], ShutdownCallback* _shutdowncallback);
+  int init (int argc, ACE_TCHAR *argv[], ShutdownCallback *shutdown_callback);
 
   // = Accessors.
-  Event_Comm::Notifier *notifier ();
+  Event_Comm::Notifier *notifier () const;
   void notifier (Event_Comm::Notifier *);
 
   /// runs the ORB.
@@ -54,21 +59,21 @@ public:
   void shutdown ();
 
   /// returns the ORB's reactor.
-  ACE_Reactor *reactor ();
+  ACE_Reactor *reactor () const;
 
 private:
   /// Remember our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Pointer to an <Event_Comm::Notifier> object.
-  Event_Comm::Notifier *notifier_;
+  Event_Comm::Notifier *notifier_ {};
 
   /// An instance of the name client used for resolving the factory
   /// objects.
  TAO_Naming_Client naming_client_;
 
   /// The handler to shutdown the app.
-  ShutdownCallback *shutdowncallback;
+  ShutdownCallback *shutdowncallback_ {};
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"

@@ -3,21 +3,14 @@
 
 #include "tao/ORB_Core.h"
 
-Consumer_Input_Handler::Consumer_Input_Handler ()
-  : receiver_handler_ (0),
-    consumer_initiated_shutdown_ (0)
-{
-  // No-Op.
-}
-
-int
-Consumer_Input_Handler::consumer_initiated_shutdown ()
+bool
+Consumer_Input_Handler::consumer_initiated_shutdown () const
 {
   return this->consumer_initiated_shutdown_;
 }
 
 void
-Consumer_Input_Handler::consumer_initiated_shutdown (int c)
+Consumer_Input_Handler::consumer_initiated_shutdown (bool c)
 {
   this->consumer_initiated_shutdown_ = c;
 }
@@ -43,11 +36,11 @@ Consumer_Input_Handler::close ()
           // Gracefully shutdown the Receiver by removing it from the
           // Notifier's internal map.
 
-          if (notifier != 0)
+          if (notifier != nullptr)
             notifier->unsubscribe (receiver,
                                    "");
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Consumer_Input_Handler::handle_close\n");
         }
@@ -107,12 +100,12 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
   Event_Comm::Notifier *notifier =
     this->receiver_handler_->notifier ();
 
-  ACE_ASSERT (notifier != 0);
+  ACE_ASSERT (notifier != nullptr);
 
   if (ACE_OS::strncmp (buf, "quit", 4) == 0)
     {
       // Consumer wants to shutdown.
-      this->consumer_initiated_shutdown (1);
+      this->consumer_initiated_shutdown (true);
 
       // Tell the main event loop to shutdown.
        this->receiver_handler_->shutdown ();
@@ -127,7 +120,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
 
           notifier->push (event);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Unexpected exception\n");
         }

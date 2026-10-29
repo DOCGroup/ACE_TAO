@@ -36,16 +36,21 @@ class Supplier_Input_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Supplier_Input_Handler ();
+  Supplier_Input_Handler () = default;
 
   /// Destructor.
-  ~Supplier_Input_Handler ();
+  ~Supplier_Input_Handler () override;
+
+  Supplier_Input_Handler (Supplier_Input_Handler const &) = delete;
+  Supplier_Input_Handler &operator= (Supplier_Input_Handler const &) = delete;
+  Supplier_Input_Handler (Supplier_Input_Handler &&) = delete;
+  Supplier_Input_Handler &operator= (Supplier_Input_Handler &&) = delete;
 
   /// Initialization.
   int initialize (Notifier_Handler *);
 
   /// Frame input events and notify <Consumers>.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Close down the handler.
   int close ();
@@ -53,7 +58,7 @@ public:
 protected:
   /// Pointer to a <Notifier_Handler> that's used to inform Consumers
   /// that events of interest have occurred.
-    Notifier_Handler *notifier_;
+  Notifier_Handler *notifier_ {};
 };
 
 #endif /* SUPPLIER_INPUT_HANDLER_H */

@@ -20,16 +20,21 @@ class Notifier : public ACE_Event_Handler
   Notifier (int argc, ACE_TCHAR *argv[]);
 
   /// Destructor.
-  ~Notifier ();
+  ~Notifier () override;
+
+  Notifier (Notifier const &) = delete;
+  Notifier &operator= (Notifier const &) = delete;
+  Notifier (Notifier &&) = delete;
+  Notifier &operator= (Notifier &&) = delete;
 
   /// Execute the notifier.
   void run ();
 
  private:
   /// Handle signals that shut us down.
-  virtual int handle_signal (int signum,
-                             siginfo_t *,
-                             ucontext_t *);
+  int handle_signal (int signum,
+                     siginfo_t *,
+                     ucontext_t *) override;
 
   /// The notifier server.
   Notifier_Server ns_;
