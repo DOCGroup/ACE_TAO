@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Filter::
-    TAO_EC_Sched_Filter (const char* name,
+    TAO_EC_Sched_Filter (char const *name,
                          RtecScheduler::handle_t rt_info,
                          RtecScheduler::Scheduler_ptr scheduler,
                          TAO_EC_Filter* body,
@@ -49,7 +49,7 @@ TAO_EC_Sched_Filter::size () const
 }
 
 int
-TAO_EC_Sched_Filter::filter (const RtecEventComm::EventSet &event,
+TAO_EC_Sched_Filter::filter (RtecEventComm::EventSet const &event,
                              TAO_EC_QOS_Info& qos_info)
 {
   return this->body_->filter (event, qos_info);
@@ -91,7 +91,7 @@ TAO_EC_Sched_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info)
 }
 
 void
-TAO_EC_Sched_Filter::push (const RtecEventComm::EventSet &event,
+TAO_EC_Sched_Filter::push (RtecEventComm::EventSet const &event,
                            TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != 0)
@@ -127,14 +127,14 @@ TAO_EC_Sched_Filter::max_event_size () const
 }
 
 int
-TAO_EC_Sched_Filter::can_match (const RtecEventComm::EventHeader& header) const
+TAO_EC_Sched_Filter::can_match (RtecEventComm::EventHeader const &header) const
 {
   return this->body_->can_match (header);
 }
 
 int
-TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
-                                       const TAO_EC_QOS_Info &qos_info)
+TAO_EC_Sched_Filter::add_dependencies (RtecEventComm::EventHeader const &header,
+                                       TAO_EC_QOS_Info const &qos_info)
 {
   this->init_rt_info ();
 

@@ -56,7 +56,7 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
     {
       this->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Ignore exceptions
     }
@@ -69,12 +69,12 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier)
 
   if (this->consumer_ != nullptr)
     {
-      const RtecEventChannelAdmin::SupplierQOS& pub =
+      RtecEventChannelAdmin::SupplierQOS const &pub =
         this->consumer_->publications_i ();
 
       for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
         {
-          const RtecEventComm::Event& event =
+          RtecEventComm::Event const &event =
             pub.publications[j].event;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
@@ -105,12 +105,12 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier)
 
   if (this->consumer_ != nullptr)
     {
-      const RtecEventChannelAdmin::SupplierQOS& pub =
+      RtecEventChannelAdmin::SupplierQOS const &pub =
         this->consumer_->publications_i ();
 
       for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
         {
-          const RtecEventComm::Event& event =
+          RtecEventComm::Event const &event =
             pub.publications[j].event;
 
           //      ORBSVCS_DEBUG ((LM_DEBUG, "Trying %d:%d in %x\n",
@@ -140,7 +140,7 @@ TAO_EC_Per_Supplier_Filter::shutdown ()
 }
 
 void
-TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
+TAO_EC_Per_Supplier_Filter::push (RtecEventComm::EventSet const &event,
                                   TAO_EC_ProxyPushConsumer *consumer)
 {
   TAO_EC_Scheduling_Strategy* scheduling_strategy =
@@ -152,7 +152,7 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
 
 void
 TAO_EC_Per_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &event,
-                                                  const TAO_EC_QOS_Info &event_info)
+                                                  TAO_EC_QOS_Info const &event_info)
 {
   TAO_EC_Filter_Worker worker (event, event_info);
   this->collection_->for_each (&worker);

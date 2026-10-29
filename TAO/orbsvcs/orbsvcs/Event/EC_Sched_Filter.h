@@ -47,7 +47,7 @@ public:
    * It assumes ownership of the <body>, makes a copy of the other
    * parameters
    */
-  TAO_EC_Sched_Filter (const char* name,
+  TAO_EC_Sched_Filter (char const *name,
                        RtecScheduler::handle_t rt_info,
                        RtecScheduler::Scheduler_ptr scheduler,
                        TAO_EC_Filter* body,
@@ -56,27 +56,27 @@ public:
                        RtecScheduler::Info_Type_t info_type);
 
   /// Destructor
-  virtual ~TAO_EC_Sched_Filter () override;
+  ~TAO_EC_Sched_Filter () override;
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual ChildrenIterator begin () const override;
-  virtual ChildrenIterator end () const override;
-  virtual int size () const override;
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info) override;
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info) override;
-  virtual void push (const RtecEventComm::EventSet& event,
+  ChildrenIterator begin () const override;
+  ChildrenIterator end () const override;
+  int size () const override;
+  int filter (RtecEventComm::EventSet const &event,
+              TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info) override;
-  virtual void clear () override;
-  virtual CORBA::ULong max_event_size () const override;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info) override;
-  virtual void get_qos_info (TAO_EC_QOS_Info& qos_info) override;
+  void push (RtecEventComm::EventSet const &event,
+             TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet& event,
+                    TAO_EC_QOS_Info& qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (RtecEventComm::EventHeader const &header) const override;
+  int add_dependencies (RtecEventComm::EventHeader const &header,
+                        TAO_EC_QOS_Info const &qos_info) override;
+  void get_qos_info (TAO_EC_QOS_Info& qos_info) override;
 
 private:
   TAO_EC_Sched_Filter (TAO_EC_Sched_Filter const &) = delete;
