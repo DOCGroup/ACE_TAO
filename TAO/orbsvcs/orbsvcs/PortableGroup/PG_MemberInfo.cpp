@@ -4,7 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_PG_MemberInfo::operator== (const TAO_PG_MemberInfo & rhs) const
+TAO_PG_MemberInfo::operator== (TAO_PG_MemberInfo const & rhs) const
 {
   // For the purposes of the member info set, only the location is
   // important.
