@@ -246,7 +246,7 @@ TAO::SSLIOP::Connector::make_secure_profile ()
   TAO_Profile *profile = nullptr;
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (this->orb_core (),
-                                          1), // SSL component
+                                          true), // SSL component
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,

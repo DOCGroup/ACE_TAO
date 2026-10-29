@@ -67,9 +67,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
                           ::SSLIOP::SSL const * ssl_component);
 
-      /// Profile constructor. ssl_only != 0 will force secure
-      /// connections, pnly.
-      explicit TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only = 0);
+      /// Profile constructor. When ssl_only is true, only secure
+      /// connections are used.
+      explicit TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, bool ssl_only = false);
 
 
       // = Please see Profile.h for the documentation of these methods.

@@ -45,10 +45,10 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only)
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, bool ssl_only)
   : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (nullptr, nullptr),
-    ssl_only_ (ssl_only != 0)
+    ssl_only_ (ssl_only)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
