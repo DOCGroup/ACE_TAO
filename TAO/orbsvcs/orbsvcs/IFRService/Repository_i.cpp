@@ -45,7 +45,7 @@ TAO_Repository_i::destroy ()
 }
 
 CORBA::Contained_ptr
-TAO_Repository_i::lookup_id (const char *search_id)
+TAO_Repository_i::lookup_id (char const *search_id)
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::Contained::_nil ());
 
@@ -53,7 +53,7 @@ TAO_Repository_i::lookup_id (const char *search_id)
 }
 
 CORBA::Contained_ptr
-TAO_Repository_i::lookup_id_i (const char *search_id)
+TAO_Repository_i::lookup_id_i (char const *search_id)
 {
   if (ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
       || ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
@@ -988,7 +988,7 @@ TAO_Repository_i::sequences_key () const
   return this->sequences_key_;
 }
 
-const char *
+char const *
 TAO_Repository_i::extension () const
 {
   return this->extension_.in ();
@@ -1000,7 +1000,7 @@ TAO_Repository_i::lock () const
   return *this->lock_;
 }
 
-const char * TAO_Repository_i::TAO_IFR_primitive_kinds[] =
+char const *TAO_Repository_i::TAO_IFR_primitive_kinds[] =
   {
     "pk_null",
     "pk_void",
@@ -1026,7 +1026,7 @@ const char * TAO_Repository_i::TAO_IFR_primitive_kinds[] =
     "pk_value_base"
   };
 
-const char *
+char const *
 TAO_Repository_i::pkind_to_string (CORBA::PrimitiveKind pkind) const
 {
   return TAO_Repository_i::TAO_IFR_primitive_kinds[pkind];

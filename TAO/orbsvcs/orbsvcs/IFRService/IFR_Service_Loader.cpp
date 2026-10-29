@@ -38,7 +38,7 @@ TAO_IFR_Service_Loader::init (int argc,
       CORBA::Object_var object =
         this->create_object (orb.in (), argc, argv);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Should we log this???
       return -1;
