@@ -1,7 +1,7 @@
 #include "AnyC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -44,7 +44,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create and register factories.
 
-      OBV_AnyTest::VA_init *va_factory = 0;
+      OBV_AnyTest::VA_init *va_factory = nullptr;
       ACE_NEW_RETURN (va_factory,
                       OBV_AnyTest::VA_init,
                       1); // supplied by mapping
@@ -54,7 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       va_factory->_remove_ref (); // release ownership
 
 
-      OBV_AnyTest::VB_init *vb_factory = 0;
+      OBV_AnyTest::VB_init *vb_factory = nullptr;
       ACE_NEW_RETURN (vb_factory,
                       OBV_AnyTest::VB_init,
                       1); // supplied by mapping
@@ -69,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (va1.inout (), OBV_OBV_AnyTest::VA, 1);
       ACE_NEW_RETURN (va2.inout (), OBV_OBV_AnyTest::VA, 1);
 
-      const CORBA::ULong magic = 3145;
+      CORBA::ULong const magic = 3145;
 
       va1->id (magic);
       va2->id (magic);
@@ -79,10 +79,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Test both copying and non-copying version of operator<<=
       a1 <<= va1.in ();
 
-      OBV_AnyTest::VA *pva = va2._retn();
+      OBV_AnyTest::VA *pva = va2._retn ();
       a2 <<= &pva;
 
-      OBV_AnyTest::VA* dst = 0;
+      OBV_AnyTest::VA *dst = nullptr;
 
       if (!(a1 >>= dst) || dst->id () != magic)
         {
@@ -112,8 +112,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              "(%P|%t) client - base extraction test failed.\n"),
                             1);
         }
-      dst = OBV_AnyTest::VA::_downcast(target.in());
-      if (dst == 0 || dst->id() != magic)
+      dst = OBV_AnyTest::VA::_downcast (target.in ());
+      if (dst == nullptr || dst->id () != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - base extraction test failed.\n"),
@@ -124,23 +124,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Now do remote test
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       OBV_AnyTest::Test_var test =
-        OBV_AnyTest::Test::_narrow(tmp.in ());
+        OBV_AnyTest::Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
-      {
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Nil OBV_AnyTest::Test reference <%s>\n",
-                         ior),
-                        1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil OBV_AnyTest::Test reference <%s>\n",
+                             ior),
+                            1);
+        }
 
 
       // STEP 1.
       CORBA::Any_var result = test->get_something (
-          0);
+          false);
 
       if (!(result.inout () >>= dst) || dst->id () != magic)
         {
@@ -150,9 +150,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // STEP 2.
-      OBV_AnyTest::VB* dst_vb = 0;
+      OBV_AnyTest::VB *dst_vb = nullptr;
       result = test->get_something (
-          1);
+          true);
 
       if (!(result.inout () >>= dst_vb) || dst_vb->id () != magic)
         {
@@ -181,7 +181,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // STEP 4. get a VB, but extract to a VA*.
       result = test->get_something (
-          1);
+          true);
 
       if (!(result.inout () >>= CORBA::Any::to_value(target.out())))
         {
@@ -189,8 +189,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              "(%P|%t) client - test 4 extraction failed.\n"),
                             1);
         }
-      dst_va = OBV_AnyTest::VA::_downcast(target._retn());
-      if (dst_va == 0 || dst_va->id() != magic)
+      dst_va = OBV_AnyTest::VA::_downcast (target._retn ());
+      if (dst_va == nullptr || dst_va->id () != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client -  test 4 failed.\n"),
@@ -204,7 +204,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
       return 1;
