@@ -562,7 +562,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
     }
 
   inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
-  inc_file += idl_file_name->get_string_view_or_empty ();
+  inc_file += idl_file_name->get_string_view ().value ();
   full_path =
     ACE_OS::realpath (inc_file.c_str (), abspath);
 
@@ -626,7 +626,7 @@ FE_Utils::validate_included_idl_files ()
 
   for (size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
-      std::string const post_tmp (post_preproc_includes [i]->get_string_view_or_empty ());
+      std::string const post_tmp (post_preproc_includes [i]->get_string_view ().value ());
       full_path = ACE_OS::realpath (post_tmp.c_str (), post_abspath);
 
       if (full_path)

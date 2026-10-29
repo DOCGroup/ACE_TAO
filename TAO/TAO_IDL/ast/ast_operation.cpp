@@ -505,7 +505,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
         {
           s = si.item ();
           si.next ();
-          this->dump_i (o, s->get_string_view_or_empty ());
+          this->dump_i (o, s->get_string_view ().value ());
 
           if (!si.is_done())
             {
