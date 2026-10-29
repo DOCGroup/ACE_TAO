@@ -33,9 +33,9 @@ class Quoter_i: public POA_Stock::Quoter
 public:
   /// Constructor (use_LifeCycle_Service is true if the LifeCycle_Service should be used
   /// instead of the Quoter Generic_Factory
-  Quoter_i (char const *obj_name = "",
-            bool use_LifeCycle_Service = false,
-            PortableServer::POA_ptr poa_ptr = nullptr);
+  explicit Quoter_i (char const *obj_name = "",
+                     bool use_LifeCycle_Service = false,
+                     PortableServer::POA_ptr poa_ptr = nullptr);
 
   /// Destructor
   ~Quoter_i () override = default;
