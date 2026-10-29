@@ -19,7 +19,7 @@
 
 
 // Name of file contains ior.
-static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
+static ACE_TCHAR const *IOR = ACE_TEXT ("file://ior");
 
 // Default iterations.
 static CORBA::ULong iterations = 20;
@@ -41,7 +41,7 @@ static long interval = 1000;
 
 // Flag indicates whether to shutdown remote server or not upon client
 // shutdown.
-static int shutdown_server = 0;
+static bool shutdown_server = false;
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
@@ -81,7 +81,7 @@ parse_args (int argc, ACE_TCHAR **argv)
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server = true;
         break;
 
       case '?':
@@ -101,7 +101,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == 0)
+  if (IOR == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
 
@@ -303,7 +303,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // queues before main() ends.
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
