@@ -56,10 +56,10 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tagged_component,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      const TAO::PG_Property_Set_var & type_properties,
+      PortableGroup::TagGroupTaggedComponent const &tagged_component,
+      char const *type_id,
+      PortableGroup::Criteria const &the_criteria,
+      TAO::PG_Property_Set_var const &type_properties,
       TAO::Storable_Factory & storable_factory);
 
     /**
@@ -133,7 +133,7 @@ namespace TAO
   private:
     /////////////////////////
     // Forbidden methods
-    PG_Object_Group_Storable ();
+    PG_Object_Group_Storable () = delete;
     PG_Object_Group_Storable (PG_Object_Group_Storable const &) = delete;
     PG_Object_Group_Storable (PG_Object_Group_Storable &&) = delete;
     PG_Object_Group_Storable &operator= (PG_Object_Group_Storable const &) = delete;
@@ -143,7 +143,7 @@ namespace TAO
     bool group_previously_stored_;
     PortableGroup::ObjectGroupId group_id_previously_stored_;
 
-    TAO::Storable_Base * create_stream (const char * mode);
+    TAO::Storable_Base * create_stream (char const *mode);
 
     void read (TAO::Storable_Base & stream);
 
