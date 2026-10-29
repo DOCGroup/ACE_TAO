@@ -18,23 +18,28 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (const ACE_TCHAR *input,
+  Client_Task (ACE_TCHAR const *input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
+  Client_Task (Client_Task const&) = delete;
+  Client_Task (Client_Task&&) = delete;
+  Client_Task& operator= (Client_Task const&) = delete;
+  Client_Task& operator= (Client_Task&&) = delete;
+
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
   void dump_node (BaseNode *bn, int indent);
 
   void dump_tree (TreeController *tc);
 
-  int is_equal_tree (TreeController * tree1, TreeController * tree2);
+  bool is_equal_tree (TreeController *tree1, TreeController *tree2);
 
-  int is_equal_node (BaseNode * node1, BaseNode * node2);
+  bool is_equal_node (BaseNode *node1, BaseNode *node2);
 
 private:
-  const ACE_TCHAR *input_;
+  ACE_TCHAR const *input_ {};
 
   CORBA::ORB_var corb_;
 };
