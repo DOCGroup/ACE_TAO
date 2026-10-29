@@ -47,10 +47,10 @@ class TAO_PG_Group_Guard
 {
 public:
   /// Constructor.
-  TAO_PG_Group_Guard (TAO_PG_GenericFactory & generic_factory,
-                      TAO_PG_Factory_Set & factory_set,
-                      TAO_PG_ObjectGroupManager & group_manager,
-                      const PortableServer::ObjectId & oid);
+  TAO_PG_Group_Guard (TAO_PG_GenericFactory &generic_factory,
+                      TAO_PG_Factory_Set &factory_set,
+                      TAO_PG_ObjectGroupManager &group_manager,
+                      PortableServer::ObjectId const &oid);
 
   /// Destructor.
   ~TAO_PG_Group_Guard ();

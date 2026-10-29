@@ -48,14 +48,14 @@ namespace TAO
     CORBA::Octet *buf =
       tagged_components.component_data.get_buffer ();
 
-    for (const ACE_Message_Block *i = cdr.begin ();
+    for (ACE_Message_Block const *i = cdr.begin ();
          i != nullptr;
          i = i->cont ())
       {
         ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
         buf += i->length ();
       }
-    const IOP::TaggedComponent &tmp_tc = tagged_components;
+    IOP::TaggedComponent const &tmp_tc = tagged_components;
 
     // Get the profile count.
     CORBA::ULong count =
@@ -100,14 +100,15 @@ namespace TAO
          i++)
       {
         // Get the Tagged Components
-        const TAO_Tagged_Components &pfile_tagged =
+        TAO_Tagged_Components const &pfile_tagged =
           mprofile.get_profile (i)->tagged_components ();
 
         // Look for the primary
         if (pfile_tagged.get_component (tc) == 1)
           {
-            TAO_InputCDR cdr (reinterpret_cast<const char*> (tc.component_data.get_buffer ()),
-                            tc.component_data.length ());
+            TAO_InputCDR cdr (
+              reinterpret_cast<char const *> (tc.component_data.get_buffer ()),
+              tc.component_data.length ());
 
             CORBA::Boolean byte_order;
 

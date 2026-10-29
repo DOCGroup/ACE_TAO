@@ -586,7 +586,7 @@ TAO_UIPMC_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_UIPMC_Profile::prefix ()
 {
   return ::the_prefix;
