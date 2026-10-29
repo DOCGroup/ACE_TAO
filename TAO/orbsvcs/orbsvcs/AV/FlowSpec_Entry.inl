@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::set_direction (const char *direction)
+TAO_FlowSpec_Entry::set_direction (char const *direction)
 {
   this->direction_str_ = direction;
   if (direction == 0)
@@ -22,7 +22,7 @@ TAO_FlowSpec_Entry::set_direction (const char *direction)
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
+TAO_FlowSpec_Entry::parse_flow_protocol_string (char const *flow_string)
 {
   if (flow_string == nullptr)
     return 0;
@@ -45,14 +45,14 @@ TAO_FlowSpec_Entry::direction ()
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::direction_str () const
 {
   return this->direction_str_.c_str();
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::flow_protocol_str () const
 {
   return this->flow_protocol_.c_str();
@@ -60,7 +60,7 @@ TAO_FlowSpec_Entry::flow_protocol_str () const
 
 ACE_INLINE
 void
-TAO_FlowSpec_Entry::flow_protocol_str (const char *str)
+TAO_FlowSpec_Entry::flow_protocol_str (char const *str)
 {
   this->flow_protocol_ = CORBA::string_dup (str);
 }
@@ -73,7 +73,7 @@ TAO_FlowSpec_Entry::carrier_protocol ()
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::carrier_protocol_str () const
 {
   return this->carrier_protocol_.c_str();
@@ -112,21 +112,21 @@ TAO_FlowSpec_Entry::control_address (ACE_Addr *addr)
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::address_str () const
 {
   return this->address_str_.c_str();
 }
 
 ACE_INLINE
-const char*
+char const *
 TAO_FlowSpec_Entry::format () const
 {
   return this->format_.c_str();
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::flowname () const
 {
   return this->flowname_.c_str();

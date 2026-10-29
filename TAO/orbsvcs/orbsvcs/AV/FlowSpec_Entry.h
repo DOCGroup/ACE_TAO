@@ -28,7 +28,7 @@ class TAO_AV_Export TAO_Tokenizer
 {
 public:
   /// constructor.
-  TAO_Tokenizer (const char *string,char delimiter);
+  TAO_Tokenizer (char const *string,char delimiter);
 
   /// destructor.
   ~TAO_Tokenizer ();
@@ -38,7 +38,7 @@ public:
   TAO_Tokenizer &operator= (TAO_Tokenizer &&) = delete;
 
   /// parses the string and tokenizes it.
-  int parse (const char *string,char delimiter);
+  int parse (char const *string,char delimiter);
 
   /// Returns the next token.
   char *token ();
@@ -46,7 +46,7 @@ public:
   /// Number of tokens.
   int num_tokens ();
 
-  const char *operator [] (size_t index) const;
+  char const *operator [] (size_t index) const;
 
 protected:
   ACE_Array<char*> token_array_;
@@ -86,20 +86,20 @@ public:
   TAO_FlowSpec_Entry ();
 
   /// constructor to construct an entry from the arguments.
-  TAO_FlowSpec_Entry (const char *flowname,
-                      const char *direction,
-                      const char *format_name,
-                      const char *flow_protocol,
-                      const char *carrier_protocol,
+  TAO_FlowSpec_Entry (char const *flowname,
+                      char const *direction,
+                      char const *format_name,
+                      char const *flow_protocol,
+                      char const *carrier_protocol,
                       ACE_Addr *fwd_address,
                       //ACE_Addr *peer_address,
                       ACE_Addr *control_address = nullptr);
 
-  TAO_FlowSpec_Entry (const char *flowname,
-                      const char *direction,
-                      const char *format_name,
-                      const char *flow_protocol,
-                      const char *fwd_address);
+  TAO_FlowSpec_Entry (char const *flowname,
+                      char const *direction,
+                      char const *format_name,
+                      char const *flow_protocol,
+                      char const *fwd_address);
                       //const char *peer_address);
 
   /// construct the entry from a string specified by the flowSpec grammar.
@@ -118,13 +118,13 @@ public:
   virtual Role role () = 0;
   void role (Role role);
   /// accessor to string version of direction .
-  const char * direction_str () const;
+  char const * direction_str () const;
 
   /// accessor to the flow protocol string.
-  const char *flow_protocol_str () const;
+  char const *flow_protocol_str () const;
 
   /// set the flow protocol string.
-  void flow_protocol_str (const char *flow_protocol_str);
+  void flow_protocol_str (char const *flow_protocol_str);
 
   /// accessor to address of the carrier protocol.
   //ACE_Addr *fwd_address ();
@@ -134,23 +134,23 @@ public:
   void control_address (ACE_Addr *address);
 
   /// Address in string format i. hostname:port.
-  const char *address_str () const;
+  char const *address_str () const;
   //  const char * peer_address_str () const;
 
   /// accessor to carrier protocol i.e TCP,UDP,RTP/UDP.
   TAO_AV_Core::Protocol carrier_protocol ();
 
   /// accessor to string version of carrier protocol.
-  const char * carrier_protocol_str () const;
+  char const * carrier_protocol_str () const;
 
   /// accessor to format to be used for this flow.
-  const char *format () const;
+  char const *format () const;
 
   /// accessor to name of this flow.
-  const char *flowname () const;
+  char const *flowname () const;
 
   /// converts the entry to a string.
-  virtual const char *entry_to_string () = 0;
+  virtual char const *entry_to_string () = 0;
 
   int set_peer_addr (ACE_Addr *peer_addr);
   ACE_Addr *get_peer_addr ();
@@ -188,7 +188,7 @@ public:
   void control_protocol_object (TAO_AV_Protocol_Object *object);
 
   /// sets the address for this flow.
-  int parse_address (const char *format_string,
+  int parse_address (char const *format_string,
                      TAO_AV_Core::Flow_Component flow_component);
 
   /// returns true for a multicast address.
@@ -196,10 +196,10 @@ public:
 
 protected:
   /// parses the flow protocol string with tokens separated by :
-  int parse_flow_protocol_string (const char *flow_options_string);
+  int parse_flow_protocol_string (char const *flow_options_string);
 
   /// sets the direction flag.
-  int set_direction (const char *direction_string);
+  int set_direction (char const *direction_string);
 
   /// sets the protocol_ enum from the carrier_protocol_ string.
   int set_protocol ();
@@ -279,19 +279,19 @@ public:
   TAO_Forward_FlowSpec_Entry ();
 
   /// constructor to construct an entry from the arguments.
-  TAO_Forward_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *carrier_protocol,
+  TAO_Forward_FlowSpec_Entry (char const *flowname,
+                              char const *direction,
+                              char const *format_name,
+                              char const *flow_protocol,
+                              char const *carrier_protocol,
                               ACE_Addr *address,
                               ACE_Addr *control_address = nullptr);
 
-  TAO_Forward_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *address);
+  TAO_Forward_FlowSpec_Entry (char const *flowname,
+                              char const *direction,
+                              char const *format_name,
+                              char const *flow_protocol,
+                              char const *address);
 
   ~TAO_Forward_FlowSpec_Entry () override;
   TAO_Forward_FlowSpec_Entry (TAO_Forward_FlowSpec_Entry const &) = delete;
@@ -326,20 +326,20 @@ public:
   TAO_Reverse_FlowSpec_Entry ();
 
   // constructor to construct an entry from the arguments.
-  TAO_Reverse_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *carrier_protocol,
+  TAO_Reverse_FlowSpec_Entry (char const *flowname,
+                              char const *direction,
+                              char const *format_name,
+                              char const *flow_protocol,
+                              char const *carrier_protocol,
                               ACE_Addr *address,
                               ACE_Addr *control_address = nullptr);
 
   // Takes the address in protocol=endpoint form.
-  TAO_Reverse_FlowSpec_Entry (const char *flowname,
-                              const char *direction,
-                              const char *format_name,
-                              const char *flow_protocol,
-                              const char *address);
+  TAO_Reverse_FlowSpec_Entry (char const *flowname,
+                              char const *direction,
+                              char const *format_name,
+                              char const *flow_protocol,
+                              char const *address);
 
   ~TAO_Reverse_FlowSpec_Entry () override;
   TAO_Reverse_FlowSpec_Entry (TAO_Reverse_FlowSpec_Entry const &) = delete;
