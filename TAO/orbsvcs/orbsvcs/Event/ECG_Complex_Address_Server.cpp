@@ -16,19 +16,19 @@ TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
 }
 
 int
-TAO_ECG_Complex_Address_Server::init (const char *arg)
+TAO_ECG_Complex_Address_Server::init (char const *arg)
 {
   ACE_CString key_string;
   ACE_CString mcast_string;
 
   // Our position in parsing initialization string.
-  const char * data = arg;
+  char const *data = arg;
 
   // Parse initialization string until we reach the end.
   while (*data != '\0')
     {
       // Extract lookup value (it is followed by '@').
-      const char * location = nullptr;
+      char const *location = nullptr;
       location = ACE_OS::strchr (data, '@');
       if (!location)
         {
@@ -70,8 +70,8 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
 }
 
 int
-TAO_ECG_Complex_Address_Server::add_entry (const char * key,
-                                           const char * mcast_addr)
+TAO_ECG_Complex_Address_Server::add_entry (char const *key,
+                                           char const *mcast_addr)
 {
   // Check whether this is the default mcast address.
   if (ACE_OS::strlen (key) == 1
@@ -118,7 +118,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
 
 void
 TAO_ECG_Complex_Address_Server::get_addr (
-                         const RtecEventComm::EventHeader& header,
+                         RtecEventComm::EventHeader const &header,
                          RtecUDPAdmin::UDP_Addr_out addr)
 {
   CORBA::Long key;
@@ -151,7 +151,7 @@ TAO_ECG_Complex_Address_Server::get_addr (
 
 void
 TAO_ECG_Complex_Address_Server::get_address (
-                         const RtecEventComm::EventHeader& header,
+                         RtecEventComm::EventHeader const &header,
                          RtecUDPAdmin::UDP_Address_out addr)
 {
   CORBA::Long key;

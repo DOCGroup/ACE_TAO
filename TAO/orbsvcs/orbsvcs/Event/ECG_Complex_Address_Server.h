@@ -57,17 +57,17 @@ public:
          create (bool is_source_mapping = true);
 
   /// Destructor
-  virtual ~TAO_ECG_Complex_Address_Server () override = default;
+  ~TAO_ECG_Complex_Address_Server () override = default;
 
   /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.
-  int init (const char *arg);
+  int init (char const *arg);
 
   // = The RtecUDPAdmin::AddrServer methods
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr) override;
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6) override;
+  void get_addr (RtecEventComm::EventHeader const &header,
+                 RtecUDPAdmin::UDP_Addr_out addr) override;
+  void get_address (RtecEventComm::EventHeader const &header,
+                    RtecUDPAdmin::UDP_Address_out addr6) override;
 
   /// Prints out complete content of the address server. Useful for
   /// debugging.
@@ -84,7 +84,7 @@ protected:
 private:
   /// Helper.  Given key and mcast address in string form, add them to
   /// the mapping.
-  int add_entry (const char * key, const char * mcast_addr);
+  int add_entry (char const *key, char const *mcast_addr);
 
   /// Flag indicating whether this address server maps event source or
   /// event type to mcast groups.

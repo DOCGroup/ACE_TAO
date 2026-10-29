@@ -139,7 +139,7 @@ public:
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
-  void connect (const RtecEventChannelAdmin::SupplierQOS& pub);
+  void connect (RtecEventChannelAdmin::SupplierQOS const &pub);
 
   /// Set the handler we must notify when shutdown occurs.  (This is
   /// the handler that alerts us when data is available on udp/mcast socket.)
@@ -160,18 +160,18 @@ public:
   /// Accessor.
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
   /// if nil Address Server was specified in init ().
-  void get_addr (const RtecEventComm::EventHeader& header,
+  void get_addr (RtecEventComm::EventHeader const &header,
                  RtecUDPAdmin::UDP_Addr_out addr);
 
   /// Call the RtecUDPAdmin::AddrServer::get_address.  Throws exception
   /// if nil Address Server was specified in init ().
-  void get_address (const RtecEventComm::EventHeader& header,
+  void get_address (RtecEventComm::EventHeader const &header,
                     RtecUDPAdmin::UDP_Address_out addr);
 
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier () override;
+  void disconnect_push_supplier () override;
 
   /// TAO_ECG_Dgram_Handler method.
   /**
@@ -180,7 +180,7 @@ public:
    * Data is read from the socket, and, if complete message is
    * received, the event is pushed to the local Event Channel.
    */
-  virtual int handle_input (ACE_SOCK_Dgram& dgram) override;
+  int handle_input (ACE_SOCK_Dgram& dgram) override;
 
 protected:
   /// Constructor (protected).  Clients can create new
@@ -191,10 +191,10 @@ private:
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::SupplierQOS& pub);
+  void new_connect (RtecEventChannelAdmin::SupplierQOS const &pub);
 
   // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::SupplierQOS& pub);
+  void reconnect (RtecEventChannelAdmin::SupplierQOS const &pub);
   //@}
 
   /// Event Channel to which we act as a supplier.

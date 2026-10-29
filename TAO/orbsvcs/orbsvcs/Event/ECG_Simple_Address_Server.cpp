@@ -7,14 +7,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_ECG_Simple_Address_Server::init (const char *mcast_addr)
+TAO_ECG_Simple_Address_Server::init (char const *mcast_addr)
 {
   return this->addr_.set (mcast_addr);
 }
 
 void
 TAO_ECG_Simple_Address_Server::get_addr (
-    const RtecEventComm::EventHeader& /*header*/,
+    RtecEventComm::EventHeader const &/*header*/,
     RtecUDPAdmin::UDP_Addr_out addr)
 {
 #if defined (ACE_HAS_IPV6)
@@ -29,7 +29,7 @@ TAO_ECG_Simple_Address_Server::get_addr (
 
 
 void
-TAO_ECG_Simple_Address_Server::get_address (const RtecEventComm::EventHeader& ,
+TAO_ECG_Simple_Address_Server::get_address (RtecEventComm::EventHeader const &,
                                             RtecUDPAdmin::UDP_Address_out addr)
 {
 #if defined (ACE_HAS_IPV6)
