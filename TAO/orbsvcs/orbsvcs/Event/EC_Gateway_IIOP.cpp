@@ -181,7 +181,7 @@ TAO_EC_Gateway_IIOP::reconnect_consumer_ec()
 
 void
 TAO_EC_Gateway_IIOP::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
+    RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
   if (c_qos.dependencies.length () == 0)
     return;
@@ -228,7 +228,7 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i ()
 
 void
 TAO_EC_Gateway_IIOP::update_consumer_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
+    RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
   this->close_i ();
 
@@ -243,7 +243,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
 void
 TAO_EC_Gateway_IIOP::open_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
+    RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
   // = Connect as a supplier to the consumer EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
@@ -260,7 +260,7 @@ TAO_EC_Gateway_IIOP::open_i (
       sub.dependencies[i].rt_info = this->supplier_info_;
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = nullptr;
-      const RtecEventComm::EventHeader &h =
+      RtecEventComm::EventHeader const &h =
         sub.dependencies[i].event.header;
 
       RtecEventComm::EventSourceID sid = h.source;
@@ -315,7 +315,7 @@ TAO_EC_Gateway_IIOP::open_i (
           RtecEventComm::EventSourceID sid = (*j).ext_id_;
           for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
             {
-              const RtecEventComm::EventHeader& h =
+              RtecEventComm::EventHeader const &h =
                 sub.dependencies[k].event.header;
               if (h.source != sid
                   || (ACE_ES_EVENT_ANY < h.type
@@ -352,7 +352,7 @@ TAO_EC_Gateway_IIOP::open_i (
   int c = 0;
   for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
     {
-      const RtecEventComm::EventHeader& h =
+      RtecEventComm::EventHeader const &h =
         sub.dependencies[k].event.header;
       RtecEventComm::EventSourceID sid = h.source;
 
@@ -411,7 +411,7 @@ TAO_EC_Gateway_IIOP::open_i (
 
 void
 TAO_EC_Gateway_IIOP::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&)
+    RtecEventChannelAdmin::SupplierQOS const &)
 {
   // Do nothing...
 }
@@ -433,7 +433,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_supplier ()
 }
 
 void
-TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
+TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
 {
   // ORBSVCS_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) -\n"));
 
@@ -507,7 +507,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
 void
 TAO_EC_Gateway_IIOP::push_to_consumer (
     RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event)
+    RtecEventComm::EventSet const &event)
 {
   try
     {

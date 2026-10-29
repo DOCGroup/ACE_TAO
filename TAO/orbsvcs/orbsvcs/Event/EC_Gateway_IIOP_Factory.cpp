@@ -51,7 +51,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPConsumerECControl")) == 0)
         {
@@ -59,7 +59,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->consumer_ec_control_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
@@ -78,7 +78,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->consumer_ec_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -90,7 +90,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_ec_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
@@ -115,7 +115,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->use_ttl_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -127,7 +127,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->use_consumer_proxy_map_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -148,8 +148,8 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 void
-TAO_EC_Gateway_IIOP_Factory::unsupported_option_value (const ACE_TCHAR * option_name,
-                                                       const ACE_TCHAR * option_value)
+TAO_EC_Gateway_IIOP_Factory::unsupported_option_value (ACE_TCHAR const *option_name,
+                                                       ACE_TCHAR const *option_value)
 {
   ORBSVCS_ERROR ((LM_ERROR,
               "EC_Gateway_IIOP_Factory -"
