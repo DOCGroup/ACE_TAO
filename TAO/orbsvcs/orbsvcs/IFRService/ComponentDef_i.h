@@ -70,9 +70,9 @@ public:
 
   CORBA::InterfaceDefSeq *supported_interfaces_i ();
 
-  virtual void supported_interfaces (const CORBA::InterfaceDefSeq &supported_interfaces);
+  virtual void supported_interfaces (CORBA::InterfaceDefSeq const &supported_interfaces);
 
-  void supported_interfaces_i (const CORBA::InterfaceDefSeq &supported_interfaces);
+  void supported_interfaces_i (CORBA::InterfaceDefSeq const &supported_interfaces);
 
   virtual CORBA::ComponentIR::ComponentDef_ptr base_component ();
 
@@ -83,70 +83,70 @@ public:
   void base_component_i (CORBA::ComponentIR::ComponentDef_ptr base_component);
 
   virtual CORBA::ComponentIR::ProvidesDef_ptr create_provides (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::InterfaceDef_ptr interface_type);
 
   CORBA::ComponentIR::ProvidesDef_ptr create_provides_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::InterfaceDef_ptr interface_type);
 
   virtual CORBA::ComponentIR::UsesDef_ptr create_uses (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple);
 
   CORBA::ComponentIR::UsesDef_ptr create_uses_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple);
 
   virtual CORBA::ComponentIR::EmitsDef_ptr create_emits (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ValueDef_ptr value);
 
   CORBA::ComponentIR::EmitsDef_ptr create_emits_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ValueDef_ptr value);
 
   virtual CORBA::ComponentIR::PublishesDef_ptr create_publishes (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ValueDef_ptr value);
 
   CORBA::ComponentIR::PublishesDef_ptr create_publishes_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ValueDef_ptr value);
 
   virtual CORBA::ComponentIR::ConsumesDef_ptr create_consumes (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ValueDef_ptr value);
 
   CORBA::ComponentIR::ConsumesDef_ptr create_consumes_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ValueDef_ptr value);
 
   /// Called from TAO_IFR_Service_Utils::name_exists() when we
   /// are a base component.
-  static int name_clash (const char *name);
+  static int name_clash (char const *name);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

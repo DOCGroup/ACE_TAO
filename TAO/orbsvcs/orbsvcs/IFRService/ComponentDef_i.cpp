@@ -361,7 +361,7 @@ TAO_ComponentDef_i::supported_interfaces_i ()
 
 void
 TAO_ComponentDef_i::supported_interfaces (
-    const CORBA::InterfaceDefSeq &supported_interfaces
+    CORBA::InterfaceDefSeq const &supported_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD;
@@ -373,7 +373,7 @@ TAO_ComponentDef_i::supported_interfaces (
 
 void
 TAO_ComponentDef_i::supported_interfaces_i (
-    const CORBA::InterfaceDefSeq &supported_interfaces
+    CORBA::InterfaceDefSeq const &supported_interfaces
   )
 {
   // Remove the old supported interfaces.
@@ -473,7 +473,7 @@ TAO_ComponentDef_i::base_component_i (
       return;
     }
 
-  const char *base_path =
+  char const *base_path =
     TAO_IFR_Service_Utils::reference_to_path (base_component);
 
   // Get the servant's key into the temporary key holder, because
@@ -499,9 +499,9 @@ TAO_ComponentDef_i::base_component_i (
 
 CORBA::ComponentIR::ProvidesDef_ptr
 TAO_ComponentDef_i::create_provides (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::InterfaceDef_ptr interface_type
   )
 {
@@ -517,9 +517,9 @@ TAO_ComponentDef_i::create_provides (
 
 CORBA::ComponentIR::ProvidesDef_ptr
 TAO_ComponentDef_i::create_provides_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::InterfaceDef_ptr interface_type
   )
 {
@@ -538,9 +538,9 @@ TAO_ComponentDef_i::create_provides_i (
 }
 
 CORBA::ComponentIR::UsesDef_ptr
-TAO_ComponentDef_i::create_uses (const char *id,
-                                 const char *name,
-                                 const char *version,
+TAO_ComponentDef_i::create_uses (char const *id,
+                                 char const *name,
+                                 char const *version,
                                  CORBA::InterfaceDef_ptr interface_type,
                                  CORBA::Boolean is_multiple)
 {
@@ -556,9 +556,9 @@ TAO_ComponentDef_i::create_uses (const char *id,
 }
 
 CORBA::ComponentIR::UsesDef_ptr
-TAO_ComponentDef_i::create_uses_i (const char *id,
-                                   const char *name,
-                                   const char *version,
+TAO_ComponentDef_i::create_uses_i (char const *id,
+                                   char const *name,
+                                   char const *version,
                                    CORBA::InterfaceDef_ptr interface_type,
                                    CORBA::Boolean is_multiple)
 {
@@ -577,9 +577,9 @@ TAO_ComponentDef_i::create_uses_i (const char *id,
 }
 
 CORBA::ComponentIR::EmitsDef_ptr
-TAO_ComponentDef_i::create_emits (const char *id,
-                                  const char *name,
-                                  const char *version,
+TAO_ComponentDef_i::create_emits (char const *id,
+                                  char const *name,
+                                  char const *version,
                                   CORBA::ValueDef_ptr value)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EmitsDef::_nil ());
@@ -593,9 +593,9 @@ TAO_ComponentDef_i::create_emits (const char *id,
 }
 
 CORBA::ComponentIR::EmitsDef_ptr
-TAO_ComponentDef_i::create_emits_i (const char *id,
-                                    const char *name,
-                                    const char *version,
+TAO_ComponentDef_i::create_emits_i (char const *id,
+                                    char const *name,
+                                    char const *version,
                                     CORBA::ValueDef_ptr value)
 {
   return
@@ -613,9 +613,9 @@ TAO_ComponentDef_i::create_emits_i (const char *id,
 }
 
 CORBA::ComponentIR::PublishesDef_ptr
-TAO_ComponentDef_i::create_publishes (const char *id,
-                                      const char *name,
-                                      const char *version,
+TAO_ComponentDef_i::create_publishes (char const *id,
+                                      char const *name,
+                                      char const *version,
                                       CORBA::ValueDef_ptr value)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::PublishesDef::_nil ());
@@ -629,9 +629,9 @@ TAO_ComponentDef_i::create_publishes (const char *id,
 }
 
 CORBA::ComponentIR::PublishesDef_ptr
-TAO_ComponentDef_i::create_publishes_i (const char *id,
-                                        const char *name,
-                                        const char *version,
+TAO_ComponentDef_i::create_publishes_i (char const *id,
+                                        char const *name,
+                                        char const *version,
                                         CORBA::ValueDef_ptr value)
 {
   return
@@ -649,9 +649,9 @@ TAO_ComponentDef_i::create_publishes_i (const char *id,
 }
 
 CORBA::ComponentIR::ConsumesDef_ptr
-TAO_ComponentDef_i::create_consumes (const char *id,
-                                     const char *name,
-                                     const char *version,
+TAO_ComponentDef_i::create_consumes (char const *id,
+                                     char const *name,
+                                     char const *version,
                                      CORBA::ValueDef_ptr value)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ConsumesDef::_nil ());
@@ -665,9 +665,9 @@ TAO_ComponentDef_i::create_consumes (const char *id,
 }
 
 CORBA::ComponentIR::ConsumesDef_ptr
-TAO_ComponentDef_i::create_consumes_i (const char *id,
-                                       const char *name,
-                                       const char *version,
+TAO_ComponentDef_i::create_consumes_i (char const *id,
+                                       char const *name,
+                                       char const *version,
                                        CORBA::ValueDef_ptr value)
 {
   return
@@ -685,7 +685,7 @@ TAO_ComponentDef_i::create_consumes_i (const char *id,
 }
 
 int
-TAO_ComponentDef_i::name_clash (const char *name)
+TAO_ComponentDef_i::name_clash (char const *name)
 {
   try
     {
@@ -695,7 +695,7 @@ TAO_ComponentDef_i::name_clash (const char *name)
                                           TAO_IFR_Service_Utils::repo_,
                                           CORBA::dk_Component);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return 1;
     }
