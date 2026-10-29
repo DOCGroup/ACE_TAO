@@ -12,12 +12,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Log Compaction Interval
-const ACE_Time_Value
-TAO_Log_i::log_compaction_interval_ = ACE_Time_Value(60);
+ACE_Time_Value const
+TAO_Log_i::log_compaction_interval_ = ACE_Time_Value (60);
 
 // Log Flush Interval
-const ACE_Time_Value
-TAO_Log_i::log_flush_interval_ = ACE_Time_Value(5 * 60);
+ACE_Time_Value const
+TAO_Log_i::log_flush_interval_ = ACE_Time_Value (5 * 60);
 
 
 TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,

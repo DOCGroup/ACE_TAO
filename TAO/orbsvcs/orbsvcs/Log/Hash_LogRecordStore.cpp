@@ -238,8 +238,7 @@ TAO_Hash_LogRecordStore::purge_old_records ()
 
 void
 TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
-                const DsLogAdmin::NVList
-                &attr_list)
+                                              DsLogAdmin::NVList const &attr_list)
 {
   // TODO: validate attributes here.
 

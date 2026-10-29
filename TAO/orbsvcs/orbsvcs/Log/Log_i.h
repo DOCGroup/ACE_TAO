@@ -290,13 +290,13 @@ protected:
   TAO_Log_Compaction_Handler  log_compaction_handler_;
 
   /// Log Compaction Interval
-  static const ACE_Time_Value log_compaction_interval_;
+  static ACE_Time_Value const log_compaction_interval_;
 
   /// Log Flush Handler
   TAO_Log_Flush_Handler   log_flush_handler_;
 
   /// Log Flush Interval
-  static const ACE_Time_Value log_flush_interval_;
+  static ACE_Time_Value const log_flush_interval_;
 
 private:
   TAO_Log_i (TAO_Log_i const &) = delete;
