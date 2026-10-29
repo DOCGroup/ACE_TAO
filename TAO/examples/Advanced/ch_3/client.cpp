@@ -24,10 +24,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Check arguments
-      if  (argc != 2)
+      if (argc != 2)
         {
           cerr << "Usage: client IOR_string" << endl;
-          throw 0;
+          return 1;
         }
 
       // Initialize orb
@@ -35,41 +35,41 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Destringify argv[1]
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
-      if  (CORBA::is_nil (obj.in ()))
+      if (CORBA::is_nil (obj.in ()))
         {
           cerr << "Nil Time reference" << endl;
-          throw 0;
+          return 1;
         }
 
       // Narrow
       Time_var tm = Time::_narrow (obj.in ());
 
-      if  (CORBA::is_nil (tm.in ()))
+      if (CORBA::is_nil (tm.in ()))
         {
           cerr << "Argument is not a Time reference" << endl;
-          throw 0;
+          return 1;
         }
 
-       {
-       cout << "Validating connection"<<endl;
-       CORBA::PolicyList_var pols;
-       tm->_validate_connection (pols.out ());
-       cout << "Succesfull " <<endl;
-       }
+      {
+        cout << "Validating connection" << endl;
+        CORBA::PolicyList_var pols;
+        tm->_validate_connection (pols.out ());
+        cout << "Succesfull " << endl;
+      }
       // Get time
-      TimeOfDay tod = tm->get_gmt ();
+      TimeOfDay const tod = tm->get_gmt ();
       cout << "Time in Greenwich is "
            << setw (2) << setfill ('0') << tod.hour << ":"
            << setw (2) << setfill ('0') << tod.minute << ":"
            << setw (2) << setfill ('0') << tod.second << endl;
     }
-  catch  (const CORBA::Exception &x)
+  catch (CORBA::Exception const& x)
     {
       x._tao_print_exception ("Who is the culprit\n");
       cerr << "Uncaught CORBA exception" << endl;
       return 1;
     }
-  catch  (...)
+  catch (...)
     {
       return 1;
     }
