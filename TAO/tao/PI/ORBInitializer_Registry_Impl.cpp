@@ -16,8 +16,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ORBInitializer_Registry::ORBInitializer_Registry () = default;
-
 int
 TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
 {
@@ -49,7 +47,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
 
       this->register_orb_initializer (orb_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
         {

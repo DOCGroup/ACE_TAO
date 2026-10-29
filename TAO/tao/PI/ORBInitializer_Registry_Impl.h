@@ -43,7 +43,7 @@ namespace TAO
     : public ORBInitializer_Registry_Adapter
   {
   public:
-    ORBInitializer_Registry ();
+    ORBInitializer_Registry () = default;
 
     /// Added to provide registration for the several static service
     /// objects, brought in with this ORBInitializer_Registry
@@ -82,9 +82,9 @@ namespace TAO
   private:
     // Prevent copying
     ORBInitializer_Registry (ORBInitializer_Registry const &) = delete;
-    void operator= (ORBInitializer_Registry const &) = delete;
+    ORBInitializer_Registry &operator= (ORBInitializer_Registry const &) = delete;
     ORBInitializer_Registry (ORBInitializer_Registry &&) = delete;
-    void operator= (ORBInitializer_Registry &&) = delete;
+    ORBInitializer_Registry &operator= (ORBInitializer_Registry &&) = delete;
 
   private:
     TAO_SYNCH_RECURSIVE_MUTEX lock_;
