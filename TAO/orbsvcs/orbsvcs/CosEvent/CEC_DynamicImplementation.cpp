@@ -111,11 +111,11 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                   object_id));
     }
 
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   if (ACE_OS::strcmp (value, this->repository_id_) == 0
       || ACE_OS::strcmp (value, object_id) == 0)
     {
-      result = 1;
+      result = true;
     }
   else
     {
@@ -131,7 +131,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
 
           if (ACE_OS::strcmp (value, this->typed_event_channel_->base_interfaces (base) ) == 0)
             {
-              result = 1;
+              result = true;
             }
         }
     }

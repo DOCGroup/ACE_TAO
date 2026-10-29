@@ -133,7 +133,7 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
 void
 TAO_CEC_ProxyPullSupplier::push (CORBA::Any const &event)
 {
-  if (this->is_connected () == 0)
+  if (!this->is_connected ())
     return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
@@ -147,10 +147,10 @@ TAO_CEC_ProxyPullSupplier::push (CORBA::Any const &event)
 CORBA::Any *
 TAO_CEC_ProxyPullSupplier::pull ()
 {
-  if (this->is_connected () == 0)
+  if (!this->is_connected ())
     throw CosEventComm::Disconnected ();
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
   while (this->queue_.is_empty ())
     {
       this->wait_not_empty_.wait ();
@@ -166,11 +166,11 @@ TAO_CEC_ProxyPullSupplier::pull ()
 CORBA::Any *
 TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 {
-  has_event = 0;
-  if (this->is_connected () == 0)
+  has_event = false;
+  if (!this->is_connected ())
     throw CosEventComm::Disconnected ();
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
   CORBA::Any any;
   if (this->queue_.is_empty ())
     {
@@ -182,7 +182,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
     {
       throw CORBA::INTERNAL ();
     }
-  has_event = 1;
+  has_event = true;
   return new CORBA::Any (any);
 }
 

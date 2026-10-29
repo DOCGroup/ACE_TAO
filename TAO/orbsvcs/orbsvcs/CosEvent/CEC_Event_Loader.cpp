@@ -90,14 +90,14 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       ACE_TCHAR const *ior_file = nullptr;
       ACE_TCHAR const *pid_file = nullptr;
       this->bind_to_naming_service_ = true;
-      int use_rebind = 0;
-      int disconnect_callbacks = 0;
+      bool use_rebind = false;
+      bool disconnect_callbacks = false;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       // Flag to create a typed event channel
-      int typed_ec = 0;
+      bool typed_ec = false;
       // Flag to destroy the event channel on shutdown
-      int destroy = 0;
+      bool destroy = false;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
       while ((opt = get_opt ()) != EOF)
@@ -121,20 +121,20 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               break;
 
             case 'r':
-              use_rebind = 1;
+              use_rebind = true;
               break;
 
             case 'b':
-              disconnect_callbacks = 1;
+              disconnect_callbacks = true;
               break;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
             case 't':
-              typed_ec = 1;
+              typed_ec = true;
               break;
 
             case 'd':
-              destroy = 1;
+              destroy = true;
               break;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -315,9 +315,9 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                                                                              poa.in (),
                                                                              orb,
                                                                              interface_repository.in ());
-          if (destroy == 1)
+          if (destroy)
             {
-              this->typed_attributes_->destroy_on_shutdown = 1;
+              this->typed_attributes_->destroy_on_shutdown = true;
             }
 
           this->typed_attributes_->disconnect_callbacks = disconnect_callbacks;

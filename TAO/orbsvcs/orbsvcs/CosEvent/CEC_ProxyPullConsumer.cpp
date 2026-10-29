@@ -79,7 +79,7 @@ CORBA::Any*
 TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
     CORBA::Boolean_out has_event)
 {
-  has_event = 0;
+  has_event = false;
   CosEventComm::PullSupplier_var supplier;
   {
     ACE_GUARD_THROW_EX (
@@ -88,7 +88,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
-      return 0; // ACE_THROW (CosEventComm::Disconnected ());????
+      return nullptr; // ACE_THROW (CosEventComm::Disconnected ());????
 
     supplier =
       CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
@@ -134,7 +134,7 @@ TAO_CEC_ProxyPullConsumer::pull_from_supplier ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
-      return 0; // ACE_THROW (CosEventComm::Disconnected ());????
+      return nullptr; // ACE_THROW (CosEventComm::Disconnected ());????
 
     supplier =
       CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
