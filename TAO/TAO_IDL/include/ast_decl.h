@@ -231,7 +231,7 @@ public:
   long line () const;
   void set_line (long l);
 
-  std::string_view file_name () const;
+  std::string const& file_name () const;
   void set_file_name (std::string_view s);
 
   UTL_ScopedName *name () const;
@@ -250,13 +250,13 @@ public:
                                   std::string_view sufix) const;
   // Apply prefix and suffix to the local name and return.
 
-  virtual std::string_view full_name () const;
+  virtual std::string const& full_name () const;
   // Return the stringified full name.
 
-  virtual std::string_view flat_name () const;
+  virtual std::string const& flat_name () const;
   // Return the flattened full scoped name.
 
-  std::string_view repoID () const;
+  std::string const& repoID () const;
   void repoID (std::string_view value);
   void clear_repoID ();
   // Accessors for the repository ID.
@@ -265,7 +265,7 @@ public:
   void prefix (std::string_view value);
   // Accessors for the repository ID prefix.
 
-  std::string_view version () const;
+  std::string const& version () const;
   void version (std::string_view value);
   void version (char *value);
   // Accessors for the version_ member.

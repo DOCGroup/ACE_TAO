@@ -519,7 +519,7 @@ AST_Decl::compute_repoID () const
 
 // Public operations.
 
-std::string_view
+std::string const&
 AST_Decl::flat_name () const
 {
   if (!this->flat_name_)
@@ -527,7 +527,7 @@ AST_Decl::flat_name () const
       this->compute_flat_name ();
     }
 
-  return this->flat_name_ ? std::string_view (*this->flat_name_) : std::string_view {};
+  return this->flat_name_.value ();
 }
 
 // Compute stringified flattened fully scoped name.
@@ -775,7 +775,7 @@ AST_Decl::ast_accept (ast_visitor *visitor)
 
 // Data accessors.
 
-std::string_view
+std::string const&
 AST_Decl::full_name () const
 {
   if (!this->full_name_)
@@ -783,10 +783,10 @@ AST_Decl::full_name () const
       this->compute_full_name ();
     }
 
-  return this->full_name_ ? std::string_view (*this->full_name_) : std::string_view {};
+  return this->full_name_.value ();
 }
 
-std::string_view
+std::string const&
 AST_Decl::repoID () const
 {
   if (this->pd_node_type == NT_root)
@@ -799,7 +799,7 @@ AST_Decl::repoID () const
       this->compute_repoID ();
     }
 
-  return this->repoID_ ? std::string_view (*this->repoID_) : std::string_view {};
+  return this->repoID_.value ();
 }
 
 void
@@ -826,7 +826,7 @@ AST_Decl::prefix (std::string_view value)
   this->prefix_ = value;
 }
 
-std::string_view
+std::string const&
 AST_Decl::version () const
 {
   if (!this->version_)
@@ -859,7 +859,7 @@ AST_Decl::version () const
         }
     }
 
-  return this->version_ ? std::string_view (*this->version_) : std::string_view {};
+  return this->version_.value ();
 }
 
 void
@@ -1055,7 +1055,7 @@ AST_Decl::set_line (long l)
   this->pd_line = l;
 }
 
-std::string_view
+std::string const&
 AST_Decl::file_name () const
 {
   return this->pd_file_name;
