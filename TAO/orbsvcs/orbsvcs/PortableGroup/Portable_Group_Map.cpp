@@ -31,7 +31,7 @@ TAO_Portable_Group_Map::~TAO_Portable_Group_Map ()
 void
 TAO_Portable_Group_Map::add_groupid_objectkey_pair (
     PortableGroup::TagGroupTaggedComponent *group_id,
-    const TAO::ObjectKey &key)
+    TAO::ObjectKey const &key)
 {
   ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX,
                    guard,
@@ -67,7 +67,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
       new_entry->next = nullptr;
 
       // Add the
-      int result =
+      int const result =
         this->map_.bind (group_id, new_entry);
 
       if (result != 0)
@@ -82,8 +82,9 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
 }
 
 void
-TAO_Portable_Group_Map::remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* /*group_id*/,
-                                                       const TAO::ObjectKey &/*key*/)
+TAO_Portable_Group_Map::remove_groupid_objectkey_pair (
+  PortableGroup::TagGroupTaggedComponent const * /*group_id*/,
+  TAO::ObjectKey const & /*key*/)
 {
 }
 
@@ -104,10 +105,10 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
       // Save the read pointer in the message block since
       // every time we dispatch the request, we need to
       // reset it so that the request demarshals correctly.
-      TAO_InputCDR *tao_in = request.incoming ();
-      ACE_Message_Block *msgblk =
+      TAO_InputCDR * const tao_in = request.incoming ();
+      ACE_Message_Block * const msgblk =
           const_cast<ACE_Message_Block *> (tao_in->start ());
-      char *read_ptr = msgblk->rd_ptr ();
+      char * const read_ptr = msgblk->rd_ptr ();
 
       // Iterate through the list of ObjectKeys.
       while (entry)
@@ -124,14 +125,14 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
 }
 
 u_long
-TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id) const
+TAO_GroupId_Hash::operator () (PortableGroup::TagGroupTaggedComponent const *id) const
 {
   u_long hash =
-    ACE::hash_pjw ((const char *) id->group_domain_id,
-                   ACE_OS::strlen ((const char *) id->group_domain_id));
+    ACE::hash_pjw (static_cast<char const *> (id->group_domain_id),
+                   ACE_OS::strlen (static_cast<char const *> (id->group_domain_id)));
 
-  // Truncate the object_group_id in half for the has.
-  hash += (u_long) (id->object_group_id / 1);
+  // Mix the object_group_id into the hash.
+  hash += static_cast<u_long> (id->object_group_id);
   hash += id->object_group_ref_version;
 
   return hash;
@@ -139,8 +140,8 @@ TAO_GroupId_Hash::operator () (const PortableGroup::TagGroupTaggedComponent *id)
 
 int
 TAO_GroupId_Equal_To::operator () (
-  const PortableGroup::TagGroupTaggedComponent *lhs,
-  const PortableGroup::TagGroupTaggedComponent *rhs) const
+  PortableGroup::TagGroupTaggedComponent const *lhs,
+  PortableGroup::TagGroupTaggedComponent const *rhs) const
 {
   return
     ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0
