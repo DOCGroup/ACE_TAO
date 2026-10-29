@@ -45,7 +45,7 @@ class TAO_AV_Export TAO_AV_Transport_Item
 public:
   /// Creator method, the Transport name can only be set when the
   /// object is created.
-  TAO_AV_Transport_Item (const ACE_CString &name);
+  TAO_AV_Transport_Item (ACE_CString const &name);
   TAO_AV_Transport_Item (TAO_AV_Transport_Item const &) = delete;
   TAO_AV_Transport_Item &operator= (TAO_AV_Transport_Item const &) = delete;
   TAO_AV_Transport_Item (TAO_AV_Transport_Item &&) = delete;
@@ -53,7 +53,7 @@ public:
 
   /// Return a reference to the character representation of the Transport
   /// factories name.
-  const ACE_CString &name ();
+  ACE_CString const &name ();
 
   /// Return a pointer to the Transport factory.
   TAO_AV_Transport_Factory *factory ();
@@ -80,7 +80,7 @@ class TAO_AV_Export TAO_AV_Flow_Protocol_Item
 public:
   /// creator method, the Flow_Protocol name can only be set when the
   /// object is created.
-  TAO_AV_Flow_Protocol_Item (const ACE_CString &name);
+  TAO_AV_Flow_Protocol_Item (ACE_CString const &name);
   TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item const &) = delete;
   TAO_AV_Flow_Protocol_Item &operator= (TAO_AV_Flow_Protocol_Item const &) = delete;
   TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item &&) = delete;
@@ -88,7 +88,7 @@ public:
 
   /// return a reference to the character representation of the Flow_Protocol
   /// factories name.
-  const ACE_CString &name ();
+  ACE_CString const &name ();
 
   /// return a pointer to the Flow_Protocol factory.
   TAO_AV_Flow_Protocol_Factory *factory ();
@@ -242,7 +242,7 @@ public:
                             TAO_AV_Flow_Protocol_Factory *factory,
                             TAO_AV_Core::Flow_Component flow_comp) = 0;
 
-  const char *flowname ();
+  char const *flowname ();
   virtual int close () = 0;
 protected:
   ACE_CString flowname_;
@@ -263,7 +263,7 @@ public:
   TAO_AV_Connector &operator= (TAO_AV_Connector const &) = delete;
   TAO_AV_Connector (TAO_AV_Connector &&) = delete;
   TAO_AV_Connector &operator= (TAO_AV_Connector &&) = delete;
-  const char *flowname ();
+  char const *flowname ();
 
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
@@ -356,7 +356,7 @@ public:
   TAO_AV_Transport_Factory (TAO_AV_Transport_Factory &&) = delete;
   TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory &&) = delete;
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *protocol_string);
+  virtual int match_protocol (char const *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();
   virtual TAO_AV_Connector *make_connector ();
   int ref_count {};

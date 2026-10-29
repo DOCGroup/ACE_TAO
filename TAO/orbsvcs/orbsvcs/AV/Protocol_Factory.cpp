@@ -21,7 +21,7 @@ TAO_AV_Flow_Protocol_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_Flow_Protocol_Factory::match_protocol (const char * /* protocol_string */)
+TAO_AV_Flow_Protocol_Factory::match_protocol (char const * /* protocol_string */)
 {
   return 0;
 }
@@ -35,7 +35,7 @@ TAO_AV_Flow_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry * /* entr
   return nullptr;
 }
 
-const char *
+char const *
 TAO_AV_Flow_Protocol_Factory::control_flow_factory ()
 {
   return nullptr;
@@ -77,7 +77,7 @@ TAO_AV_Protocol_Object::stop ()
 }
 
 int
-TAO_AV_Protocol_Object::set_policies (const TAO_AV_PolicyList &policy_list)
+TAO_AV_Protocol_Object::set_policies (TAO_AV_PolicyList const &policy_list)
 {
   this->policy_list_ = policy_list;
   return 0;
@@ -109,7 +109,7 @@ TAO_AV_Protocol_Object::control_object (TAO_AV_Protocol_Object * /* object */)
 
 int
 TAO_AV_Protocol_Object::handle_control_input (ACE_Message_Block *,
-                                              const ACE_Addr &)
+                                              ACE_Addr const &)
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Protocol_Object::handle_control_input\n"));

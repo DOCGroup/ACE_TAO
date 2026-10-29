@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
-TAO_AV_Transport_Item::TAO_AV_Transport_Item (const ACE_CString &name)
+TAO_AV_Transport_Item::TAO_AV_Transport_Item (ACE_CString const &name)
   : name_ (name)
 {
 }
@@ -36,7 +36,7 @@ TAO_AV_Transport_Item::TAO_AV_Transport_Item (const ACE_CString &name)
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
-TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (const ACE_CString &name)
+TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (ACE_CString const &name)
   : name_ (name)
 {
 }
@@ -62,8 +62,8 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
     {
       TAO_FlowSpec_Entry *entry = (*flow_spec);
       ACE_Addr *address = entry->address ();
-      const char *flow_protocol = entry->flow_protocol_str ();
-      const char *transport_protocol = entry->carrier_protocol_str ();
+      char const *flow_protocol = entry->flow_protocol_str ();
+      char const *transport_protocol = entry->carrier_protocol_str ();
 
       if (ACE_OS::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
@@ -227,8 +227,8 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
     {
       TAO_FlowSpec_Entry *entry = (*flow_spec);
       ACE_Addr *address = entry->address ();
-      const char *flow_protocol = entry->flow_protocol_str ();
-      const char *transport_protocol = entry->carrier_protocol_str ();
+      char const *flow_protocol = entry->flow_protocol_str ();
+      char const *transport_protocol = entry->carrier_protocol_str ();
 
       if (ACE_OS::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
@@ -324,8 +324,8 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   // No endpoints were specified, we let each protocol pick its own
   // default...
 
-  const char *flow_protocol = entry->flow_protocol_str ();
-  const char *transport_protocol = entry->carrier_protocol_str ();
+  char const *flow_protocol = entry->flow_protocol_str ();
+  char const *transport_protocol = entry->carrier_protocol_str ();
 
   if (ACE_OS::strcmp (flow_protocol,"") == 0)
     flow_protocol = transport_protocol;
@@ -378,7 +378,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   this->acceptors_.insert (acceptor);
 
-  const char *control_flow_factory_name = flow_factory->control_flow_factory ();
+  char const *control_flow_factory_name = flow_factory->control_flow_factory ();
 
   if (control_flow_factory_name != nullptr)
     {
@@ -560,7 +560,7 @@ TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)
 }
 
 int
-TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value & /*tv*/,
+TAO_AV_Flow_Handler::handle_timeout (ACE_Time_Value const & /*tv*/,
                                      const void * /*arg*/)
 {
   int result = this->callback_->handle_timeout (this->timeout_arg_);
@@ -635,7 +635,7 @@ TAO_AV_Transport_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_Transport_Factory::match_protocol (const char * /* protocol_string */)
+TAO_AV_Transport_Factory::match_protocol (char const * /* protocol_string */)
 {
   return 0;
 }

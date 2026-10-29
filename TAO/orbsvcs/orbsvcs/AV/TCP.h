@@ -32,7 +32,7 @@ public:
   TAO_AV_TCP_Factory ();
   ~TAO_AV_TCP_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *protocol_string) override;
+  int match_protocol (char const *protocol_string) override;
   TAO_AV_Acceptor *make_acceptor () override;
   TAO_AV_Connector *make_connector () override;
 };
@@ -126,7 +126,7 @@ class TAO_AV_TCP_Base_Acceptor : public ACE_Acceptor <TAO_AV_TCP_Flow_Handler,AC
 public:
   virtual int acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
                     ACE_Reactor *reactor,
-                    const ACE_INET_Addr &local_addr,
+                    ACE_INET_Addr const &local_addr,
                     TAO_FlowSpec_Entry *entry);
   int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler) override;
 protected:
@@ -181,7 +181,7 @@ public:
   int connector_open (TAO_AV_TCP_Connector *connector,
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
-                         const ACE_INET_Addr &remote_addr);
+                         ACE_INET_Addr const &remote_addr);
   int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler) override;
 protected:
   TAO_AV_TCP_Connector *connector_ {};

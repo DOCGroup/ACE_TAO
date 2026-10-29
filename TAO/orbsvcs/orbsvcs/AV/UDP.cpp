@@ -48,7 +48,7 @@ TAO_AV_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
+TAO_AV_UDP_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
                                          const void *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
@@ -168,7 +168,7 @@ TAO_AV_UDP_Transport::TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler)
 TAO_AV_UDP_Transport::~TAO_AV_UDP_Transport () = default;
 
 int
-TAO_AV_UDP_Transport::set_remote_address (const ACE_INET_Addr &address)
+TAO_AV_UDP_Transport::set_remote_address (ACE_INET_Addr const &address)
 {
   this->peer_addr_ = address;
   return 0;
@@ -258,7 +258,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
 }
 
 ssize_t
-TAO_AV_UDP_Transport::send (const char *buf,
+TAO_AV_UDP_Transport::send (char const *buf,
                             size_t len,
                             ACE_Time_Value *)
 {
@@ -907,7 +907,7 @@ TAO_AV_UDP_Factory::TAO_AV_UDP_Factory ()
 TAO_AV_UDP_Factory::~TAO_AV_UDP_Factory () = default;
 
 int
-TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
+TAO_AV_UDP_Factory::match_protocol (char const *protocol_string)
 {
   if (ACE_OS::strcasecmp (protocol_string,"UDP") == 0)
     return 1;
@@ -1031,7 +1031,7 @@ TAO_AV_UDP_Flow_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_UDP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_UDP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"UDP") == 0)
     return 1;

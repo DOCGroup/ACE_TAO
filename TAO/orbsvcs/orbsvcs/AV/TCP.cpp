@@ -101,7 +101,7 @@ TAO_AV_TCP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
 }
 
 ssize_t
-TAO_AV_TCP_Transport::send (const char *buf,
+TAO_AV_TCP_Transport::send (char const *buf,
                             size_t len,
                             ACE_Time_Value *)
 {
@@ -162,7 +162,7 @@ TAO_AV_TCP_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_TCP_Factory::match_protocol (const char *protocol_string)
+TAO_AV_TCP_Factory::match_protocol (char const *protocol_string)
 {
   if (ACE_OS::strcasecmp (protocol_string,"TCP") == 0)
     return 1;
@@ -268,7 +268,7 @@ TAO_AV_TCP_Flow_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_TCP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_TCP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"TCP") == 0)
     return 1;
@@ -332,7 +332,7 @@ TAO_AV_TCP_Base_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handl
 
 int
 TAO_AV_TCP_Base_Connector::connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
-                                              const ACE_INET_Addr &remote_addr)
+                                              ACE_INET_Addr const &remote_addr)
 {
   int const result =
     ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>::connect (handler,
@@ -429,7 +429,7 @@ TAO_AV_TCP_Connector::close ()
 int
 TAO_AV_TCP_Base_Acceptor::acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
                                 ACE_Reactor *reactor,
-                                const ACE_INET_Addr &local_addr,
+                                ACE_INET_Addr const &local_addr,
                                 TAO_FlowSpec_Entry *entry)
 {
   this->acceptor_ = acceptor;
@@ -683,7 +683,7 @@ TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
+TAO_AV_TCP_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
                                                const void *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
