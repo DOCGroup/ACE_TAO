@@ -28,13 +28,13 @@ namespace FTRTEC {
   int
   Fault_Detector_Loader::init (int argc, ACE_TCHAR* argv[])
   {
-    static int initialized = 0;
+    static bool initialized {};
 
     // Only allow initialization once.
     if (initialized)
       return 0;
 
-    initialized = 1;
+    initialized = true;
 
     Fault_Detector* detector = nullptr;
 
