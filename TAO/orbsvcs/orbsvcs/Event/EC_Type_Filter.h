@@ -36,23 +36,23 @@ class TAO_RTEvent_Serv_Export TAO_EC_Type_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor.
-  explicit TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header);
+  explicit TAO_EC_Type_Filter (RtecEventComm::EventHeader const &header);
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info) override;
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info) override;
-  virtual void push (const RtecEventComm::EventSet& event,
+  int filter (RtecEventComm::EventSet const &event,
+              TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info) override;
-  virtual void clear () override;
-  virtual CORBA::ULong max_event_size () const override;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info) override;
+  void push (RtecEventComm::EventSet const &event,
+             TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet& event,
+                    TAO_EC_QOS_Info& qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (RtecEventComm::EventHeader const &header) const override;
+  int add_dependencies (RtecEventComm::EventHeader const &header,
+                        TAO_EC_QOS_Info const &qos_info) override;
 
 private:
   TAO_EC_Type_Filter (TAO_EC_Type_Filter const &) = delete;
@@ -61,7 +61,7 @@ private:
   TAO_EC_Type_Filter& operator= (TAO_EC_Type_Filter &&) = delete;
 
   /// Filter an EventSet that contains more than one event.
-  int filter_set (const RtecEventComm::EventSet& event,
+  int filter_set (RtecEventComm::EventSet const &event,
                   TAO_EC_QOS_Info& qos_info);
 
 private:
