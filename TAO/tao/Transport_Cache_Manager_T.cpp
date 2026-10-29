@@ -641,7 +641,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE);
 
-    if (result && entry.int_id_.transport () != 0)
+    if (result && entry.int_id_.transport () != nullptr)
     {
       // if it's not connected, it's not available
       result = entry.int_id_.is_connected ();
@@ -690,7 +690,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);
 
-    if (!result && entry.int_id_.transport () != 0)
+    if (!result && entry.int_id_.transport () != nullptr)
       {
         // if we're not connected, that counts, too.
         // Can this happen?  Not sure <wilsond@ociweb.com>
@@ -882,8 +882,8 @@ namespace TAO
     int current_size = 0;
     int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
-    // set sorted_set to 0.  This signifies nothing to purge.
-    sorted_set = 0;
+    // Set sorted_set to nullptr. This signifies nothing to purge.
+    sorted_set = nullptr;
 
     // Do we need to worry about cache purging?
     if (cache_maximum >= 0)
