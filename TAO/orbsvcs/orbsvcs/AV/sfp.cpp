@@ -18,15 +18,6 @@ const char TAO_SFP_Base::TAO_SFP_START_MAGIC_NUMBER[] = "=STA";
 const char TAO_SFP_Base::TAO_SFP_CREDIT_MAGIC_NUMBER[] = "=CRE";
 const char TAO_SFP_Base::TAO_SFP_STARTREPLY_MAGIC_NUMBER[] = "=STR";
 
-// SFP version 1.0
-const unsigned char TAO_SFP_Base::TAO_SFP_MAJOR_VERSION = 1;
-const unsigned char TAO_SFP_Base::TAO_SFP_MINOR_VERSION = 0;
-
-// lengths of various SFP headers
-const unsigned char TAO_SFP_Base::TAO_SFP_FRAME_HEADER_LEN = 12;
-const unsigned char TAO_SFP_Base::TAO_SFP_MESSAGE_SIZE_OFFSET = 8;
-const unsigned char TAO_SFP_Base::TAO_SFP_FRAGMENT_SIZE_OFFSET = 16;
-
 u_int TAO_SFP_Base::frame_header_len;
 u_int TAO_SFP_Base::start_reply_len;
 u_int TAO_SFP_Base::start_len;

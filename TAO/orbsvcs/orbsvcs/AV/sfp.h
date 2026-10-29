@@ -118,13 +118,13 @@ public:
   static const char TAO_SFP_STARTREPLY_MAGIC_NUMBER[];
 
   // SFP version 1.0
-  static const unsigned char TAO_SFP_MAJOR_VERSION;
-  static const unsigned char TAO_SFP_MINOR_VERSION;
+  static constexpr unsigned char TAO_SFP_MAJOR_VERSION = 1;
+  static constexpr unsigned char TAO_SFP_MINOR_VERSION = 0;
 
   // lengths of various SFP headers
-  static const unsigned char TAO_SFP_FRAME_HEADER_LEN;
-  static const unsigned char TAO_SFP_MESSAGE_SIZE_OFFSET;
-  static const unsigned char TAO_SFP_FRAGMENT_SIZE_OFFSET;
+  static constexpr unsigned char TAO_SFP_FRAME_HEADER_LEN = 12;
+  static constexpr unsigned char TAO_SFP_MESSAGE_SIZE_OFFSET = 8;
+  static constexpr unsigned char TAO_SFP_FRAGMENT_SIZE_OFFSET = 16;
   static u_int frame_header_len;
   static u_int start_reply_len;
   static u_int start_len;
