@@ -46,7 +46,7 @@ public:
            TimeBase::TdfT tdf);
 
   /// Destructor.
-  ~TAO_UTO () override;
+  ~TAO_UTO () override = default;
 
   /// For the readonly attribute <time>.
   TimeBase::TimeT time () override;

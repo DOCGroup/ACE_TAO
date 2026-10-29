@@ -22,11 +22,6 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   this->attr_utc_time_.tdf = tdf;
 }
 
-// Destructor.
-
-TAO_UTO::~TAO_UTO ()
-= default;
-
 // Get Method for the readonly attribute time.
 
 TimeBase::TimeT

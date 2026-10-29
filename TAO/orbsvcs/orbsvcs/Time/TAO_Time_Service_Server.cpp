@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/TAO_UTO.h"
 #include "orbsvcs/Time/TAO_TIO.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
@@ -9,13 +8,6 @@
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Constructor.
-TAO_Time_Service_Server::TAO_Time_Service_Server () = default;
-
-// Destructor.
-TAO_Time_Service_Server::~TAO_Time_Service_Server ()
-= default;
 
 // This method returns the current system time and an estimate of
 // inaccuracy in a UTO.

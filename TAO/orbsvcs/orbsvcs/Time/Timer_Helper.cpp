@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 
@@ -10,15 +9,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-Timer_Helper::Timer_Helper () = default;
-
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk * clerk)
   : clerk_ (clerk)
 {
 }
-
-Timer_Helper::~Timer_Helper ()
-= default;
 
 int
 Timer_Helper::handle_timeout (ACE_Time_Value const &,
@@ -95,7 +89,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
       else
         clerk_->inaccuracy (0);
 
-      const ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
+      ACE_Time_Value const timeofday = ACE_OS::gettimeofday ();
 
       // Record the current time in a timestamp to know when global
       // updation of time was done.

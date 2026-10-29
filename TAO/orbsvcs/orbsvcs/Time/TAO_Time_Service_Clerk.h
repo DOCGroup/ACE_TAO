@@ -49,7 +49,7 @@ public:
                           IORS const & server);
 
   /// Destructor.
-  ~TAO_Time_Service_Clerk () override;
+  ~TAO_Time_Service_Clerk () override = default;
 
   /// This operation returns the global time and an estimate of
   /// inaccuracy in a UTO.
@@ -76,22 +76,22 @@ public:
                                  TimeBase::TimeT upper) override;
 
   /// Return the globally synchronized time.
-  CORBA::ULongLong get_time ();
+  CORBA::ULongLong get_time () const;
 
   /// Returns the time displacement factor.
-  CORBA::Short time_displacement_factor ();
+  CORBA::Short time_displacement_factor () const;
 
   /// Set the TDF.
   void time_displacement_factor (CORBA::Short);
 
   /// Get method for inaccuracy.
-  TimeBase::InaccuracyT inaccuracy ();
+  TimeBase::InaccuracyT inaccuracy () const;
 
   /// Set method for inaccuracy.
   void inaccuracy (TimeBase::InaccuracyT inaccuracy);
 
   /// Clerk's notion of time.
-  CORBA::ULongLong time_;
+  CORBA::ULongLong time_ {};
 
 private:
   TAO_Time_Service_Clerk (TAO_Time_Service_Clerk const &) = delete;
@@ -100,16 +100,16 @@ private:
   TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk &&) = delete;
 
   /// Time displacement factor in minutes.
-  CORBA::Short time_displacement_factor_;
+  CORBA::Short time_displacement_factor_ {};
 
   /// Inaccuracy in the time.
-  TimeBase::InaccuracyT inaccuracy_;
+  TimeBase::InaccuracyT inaccuracy_ {};
 
   /// Set of server Time Server IORs.
   IORS server_;
 
   /// Time when last global synchronization was done.
-  CORBA::ULongLong update_timestamp_;
+  CORBA::ULongLong update_timestamp_ {};
 
   /**
    * This is a friend class that inherits from the Event Handler
