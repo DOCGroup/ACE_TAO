@@ -2278,8 +2278,8 @@ TAO_Container_i::update_refs (const char *path,
       if (pos != ACE_TString::npos)
         {
           // If we're just changing the path after doing a 'move',
-          // we don't want to change the name, so we've passed in 0.
-          if (name != 0)
+          // we don't want to change the name, so we've passed in nullptr.
+          if (name != nullptr)
             {
               this->repo_->config ()->set_string_value (ref_key,
                                                         "name",
@@ -2301,7 +2301,7 @@ TAO_Container_i::update_refs (const char *path,
     }
 
   // If we're just changing the path after doing a 'move', we're done.
-  if (name == 0)
+  if (name == nullptr)
     {
       return;
     }

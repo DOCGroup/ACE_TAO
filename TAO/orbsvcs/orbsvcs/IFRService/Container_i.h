@@ -298,7 +298,7 @@ public:
   /// Used with structs, unions and exceptions.
   void update_refs (
       const char *path,
-      const char *name = 0
+      char const *name = nullptr
     );
 
 protected:
