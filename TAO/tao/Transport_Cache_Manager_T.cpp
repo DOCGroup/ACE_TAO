@@ -743,10 +743,10 @@ namespace TAO
       DESCRIPTOR_SET sorted_set = nullptr;
       int const sorted_size = this->fill_set_i (sorted_set);
 
-      // Only call close_entries () if sorted_set != 0.  It takes
+      // Only call close_entries () if sorted_set != nullptr.  It takes
       // control of sorted_set and cleans up any allocated memory.  If
-      // sorted_set == 0, then there is nothing to de-allocate.
-      if (sorted_set != 0)
+      // sorted_set == nullptr, then there is nothing to de-allocate.
+      if (sorted_set != nullptr)
         {
           // BEGIN FORMER close_entries
           // Calculate the number of entries to purge, when we have
