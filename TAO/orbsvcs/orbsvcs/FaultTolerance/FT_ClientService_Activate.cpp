@@ -23,7 +23,7 @@ TAO_FT_ClientService_Activate::activate_services (TAO_ORB_Core *orb_core)
   // Construct service callback object
   ACE_NEW_RETURN (ft_service_callback,
                   TAO_FT_Service_Callbacks (orb_core),
-                  0);
+                  nullptr);
 
 
   return ft_service_callback;
@@ -33,7 +33,7 @@ TAO_FT_ClientService_Activate::activate_services (TAO_ORB_Core *orb_core)
 int
 TAO_FT_ClientService_Activate::Initializer ()
 {
-  if (initialized == false)
+  if (!initialized)
     {
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_FT_ClientService_Activate);

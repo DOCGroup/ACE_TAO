@@ -29,7 +29,7 @@ CORBA::Policy_ptr
 TAO_FT_Request_Duration_Policy::create (CORBA::Any const &val)
 {
   TimeBase::TimeT value;
-  if ((val >>= value) == 0)
+  if (!(val >>= value))
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_FT_Request_Duration_Policy *tmp = nullptr;
@@ -47,7 +47,7 @@ TAO_FT_Request_Duration_Policy::clone () const
   TAO_FT_Request_Duration_Policy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_FT_Request_Duration_Policy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -103,7 +103,7 @@ CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::create (CORBA::Any const &val)
 {
   FT::HeartbeatPolicyValue const *value {};
-  if ((val >>= value) == 0)
+  if (!(val >>= value))
     throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_FT_Heart_Beat_Policy *tmp = nullptr;
@@ -142,7 +142,7 @@ TAO_FT_Heart_Beat_Policy::clone () const
   TAO_FT_Heart_Beat_Policy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_FT_Heart_Beat_Policy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 

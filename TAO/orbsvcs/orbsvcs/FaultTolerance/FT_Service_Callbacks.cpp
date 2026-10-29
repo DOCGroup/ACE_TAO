@@ -106,8 +106,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* const this_p
           CORBA::Boolean this_byte_order {};
           CORBA::Boolean that_byte_order {};
 
-          if ((this_cdr >> ACE_InputCDR::to_boolean (this_byte_order)) == 0 ||
-              (that_cdr >> ACE_InputCDR::to_boolean (that_byte_order)) == 0)
+          if (!(this_cdr >> ACE_InputCDR::to_boolean (this_byte_order)) ||
+              !(that_cdr >> ACE_InputCDR::to_boolean (that_byte_order)))
             {
               // Have tags but full of garbage - not equivalent
               return TAO_Service_Callbacks::NOT_EQUIVALENT;
@@ -166,10 +166,10 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile * const p, CORBA::ULong const max
                     tc.component_data.length ());
 
   CORBA::Boolean byte_order {};
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-  {
-    return 0;
-  }
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+    {
+      return 0;
+    }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
@@ -303,11 +303,11 @@ TAO_FT_Service_Callbacks::restart_policy_check (
               TAO_InputCDR cdr (reinterpret_cast <char const *> (service_list[i].context_data.get_buffer ()),
                                 service_list[i].context_data.length ());
               CORBA::Boolean byte_order {};
-              if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+              if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
                 return false;
               cdr.reset_byte_order (static_cast <int> (byte_order));
               FT::FTRequestServiceContext ftsrc;
-              if ((cdr >> ftsrc) == 0)
+              if (!(cdr >> ftsrc))
                 return false;
 
               return (ftsrc.expiration_time > now ());

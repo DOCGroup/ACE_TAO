@@ -238,7 +238,7 @@ TAO_FT_IOGR_Property::encode_properties (
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO-FT (%P|%t) - The group tagged component ",
                            "is null\n"),
-                          0);
+                          false);
     }
 
   // the version info
@@ -345,12 +345,12 @@ TAO_FT_IOGR_Property::get_tagged_component (
                             tc.component_data.length ());
           CORBA::Boolean byte_order {};
 
-          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+          if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
             throw CORBA::MARSHAL ();
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
-          if ((cdr >> fgtc) != 1)
+          if (!(cdr >> fgtc))
             throw CORBA::MARSHAL ();
 
           return true;
