@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <optional>
 #include <string>
+#include <string_view>
 
 #include "utl_scoped_name.h"
 #include "ast_annotation_appls.h"
@@ -75,10 +76,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
-
-#include <optional>
-#include <string>
-#include <string_view>
 
 class Identifier;
 class UTL_Scope;

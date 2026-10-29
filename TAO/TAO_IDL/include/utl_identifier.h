@@ -73,10 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/iosfwd.h"
 
-#include <optional>
-#include <string>
-#include <string_view>
-
 class TAO_IDL_FE_Export Identifier
 {
 public:

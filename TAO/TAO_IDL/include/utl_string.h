@@ -75,10 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
   /* Basic_Types.h are needed in QNX for size_t type. */
 #include "ace/Basic_Types.h"
 
-#include <optional>
-#include <string>
-#include <string_view>
-
 class TAO_IDL_FE_Export UTL_String
 {
   // =TITLE
