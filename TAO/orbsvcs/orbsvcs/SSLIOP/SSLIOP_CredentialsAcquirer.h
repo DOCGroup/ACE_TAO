@@ -36,8 +36,8 @@
 /// Forward declarations for OpenSSL data structures.
 extern "C"
 {
-  typedef struct x509_st X509;
-  typedef struct evp_pkey_st EVP_PKEY;
+  using X509 = struct x509_st;
+  using EVP_PKEY = struct evp_pkey_st;
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

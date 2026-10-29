@@ -233,8 +233,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
 TAO::SSLIOP::Protocol_Factory::Protocol_Factory ()
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      qop_ (::Security::SecQOPIntegrityAndConfidentiality),
-     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT),
-     check_host_ (false)
+     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT)
 {
 }
 

@@ -114,7 +114,7 @@ namespace TAO
        */
       ACE_Time_Value timeout_;
 
-      bool check_host_;
+      bool check_host_ {};
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
