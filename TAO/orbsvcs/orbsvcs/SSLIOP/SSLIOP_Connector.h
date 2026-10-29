@@ -127,7 +127,7 @@ namespace TAO
 
       /// if true, do a match between the host name we connected to and what is
       /// in the server's certificate.
-      bool check_host_;
+      bool const check_host_;
 
       /// Our connect strategy
       CONNECT_STRATEGY connect_strategy_;

@@ -131,7 +131,7 @@ namespace TAO
       ::Security::QOP qop_;
 
       /// Are we handling collocated calls
-      bool collocated_;
+      bool const collocated_;
 
       /// SecurityLevel2 security manager reference
       SecurityLevel2::SecurityManager_var sec2manager_;
