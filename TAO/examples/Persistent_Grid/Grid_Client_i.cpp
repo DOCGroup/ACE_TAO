@@ -4,24 +4,6 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
-Grid_Client_i::Grid_Client_i ()
-  : height_ (0),
-    width_ (0),
-    setx_ (0),
-    sety_ (0),
-    value_ (0)
-
-{
-  //no-op
-}
-
-//Destructor.
-Grid_Client_i::~Grid_Client_i ()
-{
-  //no-op
-}
-
 int
 Grid_Client_i::parse_args (int argc,
                            ACE_TCHAR *argv[])
@@ -44,17 +26,17 @@ Grid_Client_i::parse_args (int argc,
         break;
       }
 
-  if (width_ == 0 )
+  if (width_ == 0)
     width_ = Grid::DEFAULT_SIZE;
-  if (height_ == 0 )
+  if (height_ == 0)
     height_ = Grid::DEFAULT_SIZE;
-  if (value_ == 0 )
+  if (value_ == 0)
     value_ = Grid::DEFAULT_VALUE;
   return 0;
 }
 
 int
-Grid_Client_i::run (const char *name,
+Grid_Client_i::run (char const *name,
                     int argc,
                     ACE_TCHAR *argv[])
 {
@@ -93,17 +75,18 @@ Grid_Client_i::run (const char *name,
                   "(%P|%t) Setting a value for the grid\n"));
 
 
-      if (client.shutdown () == 1) {
-        client->shutdown ();
-      }
+      if (client.shutdown ())
+        {
+          client->shutdown ();
+        }
 
     }
-  catch (const CORBA::UserException& range_ex)
+  catch (CORBA::UserException const& range_ex)
     {
       range_ex._tao_print_exception ("\tFrom get and set grid");
       return -1;
     }
-  catch (const CORBA::SystemException& memex)
+  catch (CORBA::SystemException const& memex)
     {
       memex._tao_print_exception ("Cannot make grid as Memory exhausted");
       return -1;

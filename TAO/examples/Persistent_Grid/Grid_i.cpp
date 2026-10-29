@@ -1,31 +1,19 @@
 // -*- C++ -*-
 #include "Grid_i.h"
 
-// Default constructor.
-
-Grid_i::Grid_i ()
-  : width_ (0),
-    height_ (0),
-    array_ (0)
-{
-  //no-op
-}
-
 //  Constructor.
 
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
                 pool_t *mem_pool)
   : width_ (x),
-    height_ (y),
-    array_ (0),
-    pool_t_ (0)
+    height_ (y)
 {
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
   // memory and assign it to array_
 
-  void *tmp_array (0);
+  void *tmp_array {};
 
   if (mem_pool->find ("Array", tmp_array) != -1)
     {
@@ -38,7 +26,7 @@ Grid_i::Grid_i (CORBA::Short x,
                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
       //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
 
-      if (array_ != 0)
+      if (array_ != nullptr)
         {
           for (int ctr = 0; ctr < y; ctr++)
             {
@@ -54,12 +42,6 @@ Grid_i::Grid_i (CORBA::Short x,
         }
     }
 
-}
-
-// Default destructor.
-
-Grid_i::~Grid_i ()
-{
 }
 
 //  Set a value in the grid.
@@ -140,15 +122,6 @@ Grid_i::set_pool (pool_t *pool)
 {
   this->pool_t_ = pool;
 }
-// Constructor
-
-Grid_Factory_i::Grid_Factory_i ()
-  : orb_ (0),
-    pool_name_ (0),
-    pool_t_ (0)
-{
-}
-
 // Destructor
 
 Grid_Factory_i::~Grid_Factory_i ()
@@ -220,7 +193,7 @@ Grid_Factory_i::shutdown ()
 void
 Grid_Factory_i::cleanup ()
 {
-  const char *name = "Array";
+  char const *name = "Array";
 
   if (this->pool_t_->unbind (name) == -1)
     ACE_DEBUG ((LM_DEBUG,
@@ -228,7 +201,7 @@ Grid_Factory_i::cleanup ()
 }
 
 void
-Grid_Factory_i::pool_name (const ACE_TCHAR *name)
+Grid_Factory_i::pool_name (ACE_TCHAR const *name)
 {
   this->pool_name_ = ACE_OS::strdup (name);
 }
