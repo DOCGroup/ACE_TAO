@@ -16,9 +16,7 @@ namespace TAO
     TAO_ORB_Core::set_gui_resource_factory( tmp );
   }
 
-  TkResource_Loader::~TkResource_Loader ()
-  {
-  }
+  TkResource_Loader::~TkResource_Loader () = default;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
