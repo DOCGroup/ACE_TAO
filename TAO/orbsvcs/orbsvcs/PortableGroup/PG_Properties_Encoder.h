@@ -46,14 +46,14 @@ namespace TAO_PG
     public:
       ACE_CString name_;
       PortableGroup::Value value_;
-      NamedValue ();
-      NamedValue (const ACE_CString & name, const PortableGroup::Value & value);
-      NamedValue (const NamedValue & rhs);
-      NamedValue & operator = (const NamedValue & rhs);
+      NamedValue () = default;
+      NamedValue (ACE_CString const & name, PortableGroup::Value const & value);
+      NamedValue (NamedValue const & rhs);
+      NamedValue & operator = (NamedValue const & rhs);
       /// Meaningless method to keep ACE_Vector happy
-      bool operator == (const NamedValue &rhs) const;
+      bool operator == (NamedValue const & rhs) const;
       /// Meaningless method to keep ACE_Vector happy
-      bool operator != (const NamedValue &rhs) const;
+      bool operator != (NamedValue const & rhs) const;
     };
     using NamedValueVec = ACE_Vector<NamedValue, 10>;
 
@@ -61,7 +61,7 @@ namespace TAO_PG
     /**
      * Construct an empty set of properties.
      */
-    Properties_Encoder ();
+    Properties_Encoder () = default;
 
     /// standard destructor
     ~Properties_Encoder () = default;
@@ -69,7 +69,7 @@ namespace TAO_PG
     /**
      * add a name/value property to the Properties_Encoder.
      */
-    void add (const char * name, const PortableGroup::Value & value);
+    void add (char const * name, PortableGroup::Value const & value);
 
     /**
      * Encode all properties in this Properties_Encoder into a PortableGroup::Properties.

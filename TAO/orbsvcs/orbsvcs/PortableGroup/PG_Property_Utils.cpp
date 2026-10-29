@@ -4,14 +4,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_PG::get_property_value (const PortableGroup::Name & property_name,
-                            const PortableGroup::Properties & properties,
+TAO_PG::get_property_value (PortableGroup::Name const & property_name,
+                            PortableGroup::Properties const & properties,
                             PortableGroup::Value & property_value)
 {
-  const CORBA::ULong len = properties.length ();
+  CORBA::ULong const len = properties.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      const PortableGroup::Property & property = properties[i];
+      PortableGroup::Property const & property = properties[i];
       if (property.nam == property_name)
         {
           property_value = property.val;
@@ -24,16 +24,16 @@ TAO_PG::get_property_value (const PortableGroup::Name & property_name,
 
 void
 TAO_PG::override_properties (
-  const PortableGroup::Properties & overrides,
-  PortableGroup::Properties &properties)
+  PortableGroup::Properties const & overrides,
+  PortableGroup::Properties & properties)
 {
-  const CORBA::ULong num_overrides = overrides.length ();
+  CORBA::ULong const num_overrides = overrides.length ();
   if (num_overrides == 0)
     return;
 
-  const CORBA::ULong old_length = properties.length ();
+  CORBA::ULong const old_length = properties.length ();
 
-  const CORBA::ULong new_length =
+  CORBA::ULong const new_length =
     (num_overrides > old_length ? num_overrides : old_length);
 
   // Increase the length wholesale as much as possible.  The idea is
@@ -47,7 +47,7 @@ TAO_PG::override_properties (
   //    an operation.
   for (CORBA::ULong i = 0; i < num_overrides; ++i)
     {
-      const PortableGroup::Property &override = overrides[i];
+      PortableGroup::Property const & override = overrides[i];
 
       CORBA::ULong j = 0;
       for ( ; j < old_length; ++j)
@@ -68,7 +68,7 @@ TAO_PG::override_properties (
           //    the properties list.  Depending on the size of each
           //    list, such an operation may be just as slow as this
           //    operation.
-          const CORBA::ULong current_length = properties.length ();
+          CORBA::ULong const current_length = properties.length ();
           properties.length (current_length + 1);
           properties[current_length] = override;
         }
