@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
                                                 int thread_creation_flags,
                                                 int thread_priority,
-                                                int force_activate,
+                                                bool force_activate,
                                                 bool shutdown_completion)
   :  nthreads_ (nthreads),
      thread_creation_flags_ (thread_creation_flags),
@@ -32,7 +32,7 @@ TAO_CEC_MT_Dispatching::activate ()
                             1,
                             this->thread_priority_) == -1)
     {
-      if (this->force_activate_ != 0)
+      if (this->force_activate_)
         {
           if (this->task_.activate (THR_BOUND, this->nthreads_) == -1)
             ORBSVCS_ERROR ((LM_ERROR,

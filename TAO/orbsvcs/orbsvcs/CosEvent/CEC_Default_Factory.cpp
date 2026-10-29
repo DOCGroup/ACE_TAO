@@ -60,9 +60,9 @@ TAO_CEC_Default_Factory::init_svcs ()
 int
 TAO_CEC_Default_Factory::parse_collection_arg (ACE_TCHAR* opt)
 {
-  int collection_type = 0;
-  int synch_type = 0;
-  int iteration_type = 0;
+  int collection_type {};
+  int synch_type {};
+  int iteration_type {};
 
   ACE_TCHAR* aux = nullptr;
   for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
@@ -497,7 +497,7 @@ TAO_CEC_Default_Factory::create_pulling_strategy (TAO_CEC_EventChannel *ec)
 {
   if (this->pulling_strategy_ == 0)
     {
-      int argc = 0;
+      int argc {};
       ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
@@ -1293,7 +1293,7 @@ TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_EventChannel* ec)
     return new TAO_CEC_ConsumerControl ();
   else
     {
-      int argc = 0;
+      int argc {};
       ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
@@ -1315,7 +1315,7 @@ TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_TypedEventChannel* ec)
     return new TAO_CEC_ConsumerControl ();
   else
     {
-      int argc = 0;
+      int argc {};
       ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
@@ -1343,7 +1343,7 @@ TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_EventChannel* ec)
     return new TAO_CEC_SupplierControl ();
   else
     {
-      int argc = 0;
+      int argc {};
       ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
@@ -1365,7 +1365,7 @@ TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_TypedEventChannel* ec)
     return new TAO_CEC_SupplierControl ();
   else
     {
-      int argc = 0;
+      int argc {};
       ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
@@ -1390,7 +1390,7 @@ CORBA::Policy_ptr TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
 (ACE_Time_Value const &timeout)
 {
   //get the existing orb
-  int fake_argc = 0;
+  int fake_argc {};
   ACE_TCHAR **fake_argv = nullptr;
   CORBA::ORB_var orb = CORBA::ORB_init (fake_argc, fake_argv, this->orbid_);
 

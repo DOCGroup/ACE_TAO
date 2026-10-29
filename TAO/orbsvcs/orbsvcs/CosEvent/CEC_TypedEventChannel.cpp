@@ -31,7 +31,7 @@ TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attr,
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks),
-    destroy_on_shutdown_ (attr.destroy_on_shutdown != 0)
+    destroy_on_shutdown_ (attr.destroy_on_shutdown)
 {
   if (this->factory_ == nullptr)
     {

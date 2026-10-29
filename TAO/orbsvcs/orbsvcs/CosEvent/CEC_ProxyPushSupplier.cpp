@@ -341,7 +341,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
           if (this->is_connected_i ())
             {
-              if (this->typed_event_channel_->consumer_reconnect () == 0)
+              if (!this->typed_event_channel_->consumer_reconnect ())
                 throw CosEventChannelAdmin::AlreadyConnected ();
 
               // Re-connections are allowed....
@@ -391,7 +391,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
     if (this->is_connected_i ())
       {
-        if (this->event_channel_->consumer_reconnect () == 0)
+        if (!this->event_channel_->consumer_reconnect ())
           throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed....

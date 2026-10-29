@@ -63,8 +63,8 @@ public:
   // the user should be able to set any values she wants.
 
   /// Can consumers or suppliers invoke connect_push_* multiple times?
-  int consumer_reconnect;
-  int supplier_reconnect;
+  bool consumer_reconnect;
+  bool supplier_reconnect;
 
   /**
    * If not zero the event channel will send disconnect callbacks when
@@ -75,7 +75,7 @@ public:
    * It is a matter of debate what the spec requires for the regular
    * event service.
    */
-  int disconnect_callbacks;
+  bool disconnect_callbacks;
 
 private:
   /// Only the EC can read the private fields.
@@ -123,7 +123,7 @@ public:
    */
   TAO_CEC_EventChannel (TAO_CEC_EventChannel_Attributes const &attributes,
                         TAO_CEC_Factory *factory = nullptr,
-                        int own_factory = 0);
+                        bool own_factory = false);
 
   /// destructor
   ~TAO_CEC_EventChannel () override;
@@ -220,14 +220,14 @@ public:
   // at construction time.
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect () const;
+  bool consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect () const;
+  bool supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks () const;
+  bool disconnect_callbacks () const;
 
   // = The CosEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
@@ -264,16 +264,16 @@ private:
   bool own_factory_;
 
   /// The dispatching "module"
-  TAO_CEC_Dispatching *dispatching_;
+  TAO_CEC_Dispatching *dispatching_ {};
 
   /// The pulling strategy
-  TAO_CEC_Pulling_Strategy *pulling_strategy_;
+  TAO_CEC_Pulling_Strategy *pulling_strategy_ {};
 
   /// The ConsumerAdmin implementation
-  TAO_CEC_ConsumerAdmin *consumer_admin_;
+  TAO_CEC_ConsumerAdmin *consumer_admin_ {};
 
   /// The SupplierAdmin implementation
-  TAO_CEC_SupplierAdmin *supplier_admin_;
+  TAO_CEC_SupplierAdmin *supplier_admin_ {};
 
   /// Consumer/Supplier reconnection flags
   bool consumer_reconnect_;
@@ -284,8 +284,8 @@ private:
 
   /// Strategies to disconnect misbehaving or destroyed consumers and
   /// suppliers
-  TAO_CEC_ConsumerControl *consumer_control_;
-  TAO_CEC_SupplierControl *supplier_control_;
+  TAO_CEC_ConsumerControl *consumer_control_ {};
+  TAO_CEC_SupplierControl *supplier_control_ {};
 
   ServantRetryMap retry_map_;
 };

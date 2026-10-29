@@ -70,8 +70,8 @@ public:
   // the user should be able to set any values she wants.
 
   /// Can consumers or suppliers invoke connect_push_* multiple times?
-  int consumer_reconnect;
-  int supplier_reconnect;
+  bool consumer_reconnect;
+  bool supplier_reconnect;
 
   /**
    * It not zero the event channel will send disconnect callbacks when
@@ -82,13 +82,13 @@ public:
    * It is a matter of debate what the spec requires for the regular
    * event service.
    */
-  int disconnect_callbacks;
+  bool disconnect_callbacks;
 
   /**
    * If not zero the event channel will deactive its Impl and call
    * orb->shutdown(0), when destroy is invoked.
    */
-  int destroy_on_shutdown;
+  bool destroy_on_shutdown;
 
 private:
   /// Only the EC can read the private fields.
@@ -204,14 +204,14 @@ public:
   virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect () const;
+  bool consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect () const;
+  bool supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks () const;
+  bool disconnect_callbacks () const;
 
   // Hash map which will operate as a IFR cache for the Supported Interface's operations and parameters
   using InterfaceDescription = ACE_Hash_Map_Manager_Ex<char const *,
@@ -298,13 +298,13 @@ private:
   bool own_factory_;
 
   /// The dispatching "module"
-  TAO_CEC_Dispatching *dispatching_;
+  TAO_CEC_Dispatching *dispatching_ {};
 
   /// The ConsumerAdmin implementation
-  TAO_CEC_TypedConsumerAdmin *typed_consumer_admin_;
+  TAO_CEC_TypedConsumerAdmin *typed_consumer_admin_ {};
 
   /// The SupplierAdmin implementation
-  TAO_CEC_TypedSupplierAdmin *typed_supplier_admin_;
+  TAO_CEC_TypedSupplierAdmin *typed_supplier_admin_ {};
 
   /// Consumer reconnection flags
   bool consumer_reconnect_;
@@ -323,10 +323,10 @@ private:
 
   /// Strategies to disconnect misbehaving or destroyed consumers and
   /// suppliers
-  TAO_CEC_ConsumerControl *consumer_control_;
+  TAO_CEC_ConsumerControl *consumer_control_ {};
   ServantRetryMap retry_map_;
 
-  TAO_CEC_SupplierControl *supplier_control_;
+  TAO_CEC_SupplierControl *supplier_control_ {};
 
   /// The uses_interface_ for the TypedConsumerAdmin.
   ACE_CString uses_interface_;

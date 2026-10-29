@@ -43,7 +43,7 @@ public:
   TAO_CEC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
                          int thread_priority,
-                         int force_activate,
+                         bool force_activate,
                          bool shutdown_completion);
 
   TAO_CEC_MT_Dispatching (TAO_CEC_MT_Dispatching const &) = delete;
@@ -81,7 +81,7 @@ private:
 
   /// If activation at the requested priority fails then we fallback on
   /// the defaults for thread activation.
-  int const force_activate_;
+  bool const force_activate_;
 
   /// The dispatching task
   TAO_CEC_Dispatching_Task task_;

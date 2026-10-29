@@ -205,7 +205,7 @@ TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
 
     if (this->is_connected_i ())
       {
-        if (this->typed_event_channel_->supplier_reconnect () == 0)
+        if (!this->typed_event_channel_->supplier_reconnect ())
           throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed, go ahead and disconnect the

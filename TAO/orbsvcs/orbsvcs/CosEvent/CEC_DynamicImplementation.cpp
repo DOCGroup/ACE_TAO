@@ -29,7 +29,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
       TAO_CEC_Operation_Params *oper_params =
         this->typed_event_channel_->find_from_ifr_cache (request->operation () );
 
-      if (oper_params == 0)
+      if (oper_params == nullptr)
         {
           if (TAO_debug_level >= 10)
             {

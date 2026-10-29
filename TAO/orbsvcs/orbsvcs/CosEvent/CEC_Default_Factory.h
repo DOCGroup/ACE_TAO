@@ -153,7 +153,7 @@ private:
   int dispatching_threads_;
   int dispatching_threads_flags_;
   int dispatching_threads_priority_;
-  int dispatching_threads_force_active_;
+  bool dispatching_threads_force_active_;
 
   /// How often (in microseconds) are the pull suppliers polled by the
   /// reactive pulling strategy.

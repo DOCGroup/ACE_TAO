@@ -16,21 +16,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_CEC_EventChannel::
 TAO_CEC_EventChannel (TAO_CEC_EventChannel_Attributes const &attr,
                       TAO_CEC_Factory* factory,
-                      int own_factory)
+                      bool own_factory)
   : supplier_poa_ (PortableServer::POA::_duplicate (attr.supplier_poa)),
     consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
     factory_ (factory),
-    own_factory_ (own_factory != 0),
+    own_factory_ (own_factory),
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks)
 {
-  if (this->factory_ == 0)
+  if (this->factory_ == nullptr)
     {
       this->factory_ =
         ACE_Dynamic_Service<TAO_CEC_Factory>::instance ("CEC_Factory");
       this->own_factory_ = false;
-      ACE_ASSERT (this->factory_ != 0);
+      ACE_ASSERT (this->factory_ != nullptr);
     }
 
   this->dispatching_ =
@@ -50,20 +50,20 @@ TAO_CEC_EventChannel (TAO_CEC_EventChannel_Attributes const &attr,
 TAO_CEC_EventChannel::~TAO_CEC_EventChannel ()
 {
   this->factory_->destroy_dispatching (this->dispatching_);
-  this->dispatching_ = 0;
+  this->dispatching_ = nullptr;
 
   this->factory_->destroy_pulling_strategy (this->pulling_strategy_);
-  this->pulling_strategy_ = 0;
+  this->pulling_strategy_ = nullptr;
 
   this->factory_->destroy_consumer_admin (this->consumer_admin_);
-  this->consumer_admin_ = 0;
+  this->consumer_admin_ = nullptr;
   this->factory_->destroy_supplier_admin (this->supplier_admin_);
-  this->supplier_admin_ = 0;
+  this->supplier_admin_ = nullptr;
 
   this->factory_->destroy_consumer_control (this->consumer_control_);
-  this->consumer_control_ = 0;
+  this->consumer_control_ = nullptr;
   this->factory_->destroy_supplier_control (this->supplier_control_);
-  this->supplier_control_ = 0;
+  this->supplier_control_ = nullptr;
 
   if (this->own_factory_)
     delete this->factory_;
