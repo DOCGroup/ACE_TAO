@@ -14,14 +14,14 @@ namespace XMLSchema
     struct IDREF :
     XSCRT::Traversal::Traverser<XMLSchema::IDREF_Base, XSCRT::Type>
     {
-      virtual void
-      traverse (XMLSchema::IDREF_Base& r)
+      void
+      traverse (XMLSchema::IDREF_Base& r) override
       {
         if (r.get ()) dispatch (*(r.get ()));
       }
 
-      virtual void
-      traverse (XMLSchema::IDREF_Base const& r)
+      void
+      traverse (XMLSchema::IDREF_Base const& r) override
       {
         if (r.get ()) dispatch (*(r.get ()));
       }

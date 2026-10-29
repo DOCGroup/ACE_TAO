@@ -10,7 +10,7 @@ namespace XMLSchema
   template <typename C>
   struct TypeInfoInitializer
   {
-    TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap&);
+    explicit TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap&);
   };
 }
 

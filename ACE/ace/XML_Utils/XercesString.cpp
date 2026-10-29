@@ -1,48 +1,60 @@
-#include <ostream>
 #include <algorithm>
+#include <memory>
+#include <ostream>
+#include <utility>
 
 #include "XercesString.h"
 #include "xercesc/util/PlatformUtils.hpp"
 
-#include "ace/Truncate.h"
-
-using xercesc::XMLString;
-using xercesc::XMLPlatformUtils;
-
 namespace XML
 {
 // On unicode windows, ACE_TCHAR == XMLCh
-#if !defined (_MSC_VER) || !defined (ACE_USES_WCHAR)
-  XStr::XStr (const ACE_TCHAR* str)
-    : _wstr(nullptr)
+#if !defined(_MSC_VER) || !defined(ACE_USES_WCHAR)
+  XStr::XStr (const ACE_TCHAR *str)
+    : _wstr (xercesc::XMLString::transcode (ACE_TEXT_ALWAYS_CHAR (str)))
   {
-    _wstr = XMLString::transcode(ACE_TEXT_ALWAYS_CHAR (str));
   }
 #endif
 
   XStr::XStr (XMLCh *wstr)
-    : _wstr(wstr)
+    : _wstr (wstr)
   {
   }
 
-  XStr::XStr (const XMLCh* wstr)
-    : _wstr(nullptr)
+  XStr::XStr (const XMLCh *wstr)
+    : _wstr (xercesc::XMLString::replicate (wstr))
   {
-    _wstr = XMLString::replicate(wstr);
   }
 
   XStr::XStr (const XStr &right)
-    : _wstr(nullptr)
+    : _wstr (xercesc::XMLString::replicate (right._wstr))
   {
-    _wstr = XMLString::replicate(right._wstr);
   }
 
-  XStr& XStr::operator= (const XStr& rhs)
+  XStr::XStr (XStr &&other) noexcept
+    : _wstr (std::exchange (other._wstr, nullptr))
   {
-    if (&rhs == this)
-      return *this;
-    XStr temp (rhs);
-    std::swap (this->_wstr, temp._wstr);
+  }
+
+  XStr &XStr::operator= (const XStr &rhs)
+  {
+    if (std::addressof (rhs) != this)
+    {
+      XStr temp (rhs);
+      std::swap (this->_wstr, temp._wstr);
+    }
+
+    return *this;
+  }
+
+  XStr &XStr::operator= (XStr &&rhs) noexcept
+  {
+    if (this != std::addressof (rhs))
+    {
+      reset ();
+      _wstr = std::exchange (rhs._wstr, nullptr);
+    }
+
     return *this;
   }
 
@@ -51,115 +63,121 @@ namespace XML
     this->reset ();
   }
 
-  const XMLCh* XStr::begin () const
+  const XMLCh *XStr::begin () const
   {
     return _wstr;
   }
 
-  const XMLCh* XStr::end () const
+  const XMLCh *XStr::end () const
   {
-    return _wstr + size();
+    return _wstr == nullptr ? nullptr : _wstr + size ();
   }
 
-  bool XStr::append(const XMLCh *tail)
+  bool XStr::append (const XMLCh *tail)
   {
-    XMLSize_t iTailLen = XMLString::stringLen(tail);
-    XMLSize_t iWorkLen = XMLString::stringLen(_wstr);
+    if (tail == nullptr)
+      return false;
 
-    XMLSize_t bytes = (iWorkLen + iTailLen + 1) * sizeof (XMLCh);
-    void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
-    XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
+    XMLSize_t const iTailLen (xercesc::XMLString::stringLen (tail));
+    XMLSize_t const iWorkLen (_wstr == nullptr ? 0 : xercesc::XMLString::stringLen (_wstr));
 
-    bool bOK = result != nullptr;
+    XMLSize_t const bytes ((iWorkLen + iTailLen + 1) * sizeof (XMLCh));
+    void *const tmp (xercesc::XMLPlatformUtils::fgMemoryManager->allocate (bytes));
+    XMLCh *const result (reinterpret_cast<XMLCh *> (tmp));
+
+    bool const bOK (result != nullptr);
     if (bOK)
+    {
+      XMLCh *target = result;
+      if (iWorkLen != 0)
+        xercesc::XMLString::moveChars (target, _wstr, iWorkLen);
+      target += iWorkLen;
+      xercesc::XMLString::moveChars (target, tail, iTailLen);
+      target += iTailLen;
+      *target++ = 0;
+      xercesc::XMLString::release (std::addressof (_wstr));
+      _wstr = result;
+    }
+    return bOK;
+  }
+
+  bool XStr::erase (const XMLCh *head, const XMLCh *tail)
+  {
+    bool bOK = head <= tail && head >= begin () && tail <= end ();
+    if (bOK)
+    {
+      XMLSize_t const bytes ((size () - (tail - head) + 1) * sizeof (XMLCh));
+      void *const tmp (xercesc::XMLPlatformUtils::fgMemoryManager->allocate (bytes));
+      XMLCh *const result (reinterpret_cast<XMLCh *> (tmp));
+
+      XMLCh *target = result;
+      bOK = target != nullptr;
+      if (bOK)
       {
-        XMLCh *target = result;
-        XMLString::moveChars(target, _wstr, iWorkLen);
-        target += iWorkLen;
-        XMLString::moveChars(target, tail, iTailLen);
-        target += iTailLen;
+        const XMLCh *cursor = begin ();
+
+        while (cursor != head)
+          *target++ = *cursor++;
+        cursor = tail;
+        while (cursor != end ())
+          *target++ = *cursor++;
         *target++ = 0;
-        XMLString::release(&_wstr);
+        xercesc::XMLString::release (std::addressof (_wstr));
         _wstr = result;
       }
+    }
     return bOK;
   }
 
-  bool XStr::erase(const XMLCh *head, const XMLCh *tail)
+  XMLSize_t XStr::size () const
   {
-    bool bOK = head <= tail && head >= begin() && tail <= end();
-    if (bOK)
-      {
-        XMLSize_t bytes = (size() - (tail - head) + 1 ) * sizeof (XMLCh);
-        void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
-        XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
+    if (_wstr == nullptr)
+      return XMLSize_t{};
 
-        XMLCh *target = result;
-        bOK = target != nullptr;
-        if (bOK)
-          {
-            const XMLCh *cursor = begin();
-
-            while (cursor != head) *target++ = *cursor++;
-            cursor = tail;
-            while ( cursor != end() ) *target++ = *cursor++;
-            *target ++ = 0;
-            XMLString::release(&_wstr);
-            _wstr = result;
-          }
-      }
-    return bOK;
+    return xercesc::XMLString::stringLen (_wstr);
   }
 
-  int XStr::size () const
-  {
-    return ACE_Utils::truncate_cast<int> (XMLString::stringLen(_wstr));
-  }
-
-  XMLCh XStr::operator [] (const int i)
+  XMLCh XStr::operator[] (XMLSize_t i)
   {
     return _wstr[i];
   }
 
-  XMLCh XStr::operator [] (const int i) const
+  XMLCh XStr::operator[] (XMLSize_t i) const
   {
     return _wstr[i];
   }
 
-  XMLCh * XStr::release ()
+  XMLCh *XStr::release ()
   {
-    XMLCh* tmp = _wstr;
+    XMLCh *const tmp (_wstr);
     this->_wstr = nullptr;
     return tmp;
   }
 
-  void
-  XStr::reset ()
+  void XStr::reset ()
   {
     if (_wstr)
-      XMLString::release(&_wstr);
+      xercesc::XMLString::release (std::addressof (_wstr));
     _wstr = nullptr;
   }
 
-  bool operator== (const XStr& lhs, const XStr& rhs)
+  bool operator== (const XStr &lhs, const XStr &rhs)
   {
-    return XMLString::compareIString (lhs,rhs) == 0;
+    return xercesc::XMLString::compareIString (lhs, rhs) == 0;
   }
 
-  bool operator!= (const XStr& lhs, const XStr& rhs)
+  bool operator!= (const XStr &lhs, const XStr &rhs)
   {
-    return !operator==(lhs, rhs);
+    return !(lhs == rhs);
   }
 
-
-  std::ostream&
-  operator<< (std::ostream& o, XStr const& str)
+  std::ostream &operator<< (std::ostream &o, XStr const &str)
   {
-    char* s = XMLString::transcode (str);
+    char *s = xercesc::XMLString::transcode (str);
 
     o << s;
 
-    XMLString::release (&s); // idiots?
+    xercesc::XMLString::release (std::addressof (s)); // idiots?
     return o;
   }
 

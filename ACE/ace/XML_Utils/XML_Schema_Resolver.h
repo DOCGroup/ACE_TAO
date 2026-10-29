@@ -9,18 +9,16 @@
 #define ACE_XML_SCHEMA_RESOLVER_H
 #include /**/ "ace/pre.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+#if !defined(ACE_LACKS_PRAGMA_ONCE)
+#  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "XML_Utils_Export.h"
 #include "XercesString.h"
 
-#include <xercesc/sax/EntityResolver.hpp>
-#include <vector>
 #include <string>
-
-using namespace xercesc;
+#include <vector>
+#include <xercesc/sax/EntityResolver.hpp>
 
 namespace XML
 {
@@ -28,74 +26,72 @@ namespace XML
   struct NoOp_Resolver;
 
   /**
-    * @class XML_Schema_Resolver
-    * @brief Resolves schema locations
-    *
-    * Template argument Resolver should be a functor with an operation
-    * const ACE_TCHAR * operator () (...arguments from resolveEntity...)
-    */
+   * @class XML_Schema_Resolver
+   * @brief Resolves schema locations
+   *
+   * Template argument Resolver should be a functor with an operation
+   * const ACE_TCHAR * operator () (...arguments from resolveEntity...)
+   */
   template <typename Resolver = NoOp_Resolver>
-  class XML_Schema_Resolver
-    : public virtual EntityResolver
+  class XML_Schema_Resolver : public virtual xercesc::EntityResolver
   {
   public:
-    XML_Schema_Resolver ();
+    XML_Schema_Resolver () = default;
 
-    XML_Schema_Resolver (Resolver &resolver);
+    explicit XML_Schema_Resolver (Resolver &resolver);
 
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
-    virtual InputSource * resolveEntity (const XMLCh *const publicId,
-                                         const XMLCh *const systemId);
+    xercesc::InputSource *resolveEntity (const XMLCh *const publicId, const XMLCh *const systemId) override;
 
     Resolver &get_resolver ();
 
   private:
-    XML_Schema_Resolver (XML_Schema_Resolver<Resolver> &);
+    XML_Schema_Resolver (XML_Schema_Resolver const &) = delete;
+    XML_Schema_Resolver &operator= (XML_Schema_Resolver const &) = delete;
+    XML_Schema_Resolver (XML_Schema_Resolver &&) = delete;
+    XML_Schema_Resolver &operator= (XML_Schema_Resolver &&) = delete;
 
-    Resolver resolver_;
+    Resolver resolver_{};
   };
 
   /**
-    * @class NoOp_Resolver
-    * @brief Resolver that does nothing.
-    */
+   * @class NoOp_Resolver
+   * @brief Resolver that does nothing.
+   */
   struct NoOp_Resolver
   {
-    const XMLCh* operator() (const XMLCh *const,
-                              const XMLCh *const systemId) const
-    { return systemId; };
+    const XMLCh *operator() (const XMLCh *const, const XMLCh *const systemId) const
+    {
+      return systemId;
+    }
   };
 
   /**
-    * @class Basic_Resolver
-    * @brief Resolves a schema location from a fixed path.
-    */
+   * @class Basic_Resolver
+   * @brief Resolves a schema location from a fixed path.
+   */
   struct Basic_Resolver
   {
-    Basic_Resolver (const ACE_TCHAR *path);
+    explicit Basic_Resolver (const ACE_TCHAR *path);
 
-    XMLCh* operator() (const XMLCh *const publicId,
-                       const XMLCh *const systemId) const;
+    XMLCh *operator() (const XMLCh *const publicId, const XMLCh *const systemId) const;
     XStr path_;
   };
 
   /**
-    * @class Environment_Resolver
-    * @brief Resolves a schema location from a path from an environment variable.
-    */
+   * @class Environment_Resolver
+   * @brief Resolves a schema location from a path from an environment variable.
+   */
   struct XML_Utils_Export Environment_Resolver
   {
     Environment_Resolver () = default;
 
-    Environment_Resolver (const ACE_TCHAR *variable,
-                          const ACE_TCHAR *path);
+    Environment_Resolver (const ACE_TCHAR *variable, const ACE_TCHAR *path);
 
-    void add_path (const ACE_TCHAR *variable,
-                   const ACE_TCHAR *path);
+    void add_path (const ACE_TCHAR *variable, const ACE_TCHAR *path);
 
-    XMLCh* operator() (const XMLCh *const publicId,
-                       const XMLCh *const systemId) const;
+    XMLCh *operator() (const XMLCh *const publicId, const XMLCh *const systemId) const;
 
     std::vector<XStr> paths_;
   };

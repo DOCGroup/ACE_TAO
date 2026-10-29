@@ -3,94 +3,72 @@
 
 namespace XMLSchema
 {
-  //@@ VC6
-  template<typename T>
-  void
-  add_info (XSCRT::ExtendedTypeInfoMap& map, T*)
+  template <typename T, typename Base = XSCRT::Type>
+  void add_info (XSCRT::ExtendedTypeInfoMap &map, T *)
   {
-    using XSCRT::TypeId;
-    using XSCRT::ExtendedTypeInfo;
+    XSCRT::TypeId const id (typeid (T));
+    XSCRT::ExtendedTypeInfo info (id);
 
-    TypeId id (typeid (T));
-    ExtendedTypeInfo info (id);
+    info.add_base (XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (Base));
 
-    info.add_base (ExtendedTypeInfo::Access::public_,
-                   false,
-                   typeid (XSCRT::Type));
-
-    map.insert (std::make_pair (id, info));
+    map.try_emplace (id, info);
   }
 
-
   template <typename C>
-  inline
-  TypeInfoInitializer<C>::
-  TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap& map)
+  inline TypeInfoInitializer<C>::TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &map)
   {
-    using XSCRT::TypeId;
-    using XSCRT::ExtendedTypeInfo;
-
     // XSCRT::Type
-    //
     {
-      TypeId id (typeid (XSCRT::Type));
-      map.insert (std::make_pair (id, ExtendedTypeInfo (id)));
+      XSCRT::TypeId const id (typeid (XSCRT::Type));
+      map.try_emplace (id, id);
     }
 
-    //@@ VC6
+    add_info<byte> (map, nullptr);
+    add_info<unsignedByte> (map, nullptr);
 
-    add_info<byte> (map, 0);
-    add_info<unsignedByte> (map, 0);
+    add_info<short_> (map, nullptr);
+    add_info<unsignedShort> (map, nullptr);
 
-    add_info<short_> (map, 0);
-    add_info<unsignedShort> (map, 0);
+    add_info<int_> (map, nullptr);
+    add_info<unsignedInt> (map, nullptr);
 
-    add_info<int_> (map, 0);
-    add_info<unsignedInt> (map, 0);
+    add_info<long_> (map, nullptr);
+    add_info<unsignedLong> (map, nullptr);
 
-    add_info<long_> (map, 0);
-    add_info<unsignedLong> (map, 0);
+    add_info<boolean> (map, nullptr);
 
-    add_info<boolean> (map, 0);
+    add_info<float_> (map, nullptr);
+    add_info<double_> (map, nullptr);
 
-    add_info<float_> (map, 0);
-    add_info<double_> (map, 0);
+    add_info<string<C>> (map, nullptr);
 
-    add_info<string<C> > (map, 0);
+    add_info<normalizedString<C>, string<C>> (map, nullptr);
+    add_info<token<C>, normalizedString<C>> (map, nullptr);
+    add_info<NMTOKEN<C>, token<C>> (map, nullptr);
+    add_info<Name<C>, token<C>> (map, nullptr);
+    add_info<NCName<C>, Name<C>> (map, nullptr);
+    add_info<QName<C>, Name<C>> (map, nullptr);
 
-    add_info<normalizedString<C> > (map, 0);
-    add_info<token<C> > (map, 0);
-    add_info<NMTOKEN<C> > (map, 0);
-    add_info<Name<C> > (map, 0);
-    add_info<NCName<C> > (map, 0);
-    add_info<QName<C> > (map, 0);
-
-    add_info<ID<C> > (map, 0);
+    add_info<ID<C>, NCName<C>> (map, nullptr);
 
     // IDREF_Base
-    //
     {
-      TypeId id (typeid (IDREF_Base));
-      ExtendedTypeInfo info (id);
+      XSCRT::TypeId const id (typeid (IDREF_Base));
+      XSCRT::ExtendedTypeInfo info (id);
 
-      info.add_base (ExtendedTypeInfo::Access::public_,
-                     false,
-                     typeid (XSCRT::Type));
+      info.add_base (XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (XSCRT::Type));
 
-      map.insert (std::make_pair (id, info));
+      map.try_emplace (id, info);
     }
 
     // IDREF
-    //
     {
-      TypeId id (typeid (IDREF<C>));
-      ExtendedTypeInfo info (id);
+      XSCRT::TypeId const id (typeid (IDREF<C>));
+      XSCRT::ExtendedTypeInfo info (id);
 
-      info.add_base (ExtendedTypeInfo::Access::public_,
-                     false,
-                     typeid (IDREF_Base));
+      info.add_base (XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (IDREF_Base));
 
-      map.insert (std::make_pair (id, info));
+      map.try_emplace (id, info);
     }
   }
 }
