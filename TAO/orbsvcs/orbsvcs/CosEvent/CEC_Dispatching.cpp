@@ -8,9 +8,7 @@ TAO_CEC_Dispatching::~TAO_CEC_Dispatching ()
 
 // ****************************************************************
 
-TAO_CEC_Reactive_Dispatching::TAO_CEC_Reactive_Dispatching ()
-{
-}
+TAO_CEC_Reactive_Dispatching::TAO_CEC_Reactive_Dispatching () = default;
 
 void
 TAO_CEC_Reactive_Dispatching::activate ()
