@@ -61,7 +61,7 @@ template<typename T_strseq>
 class TAO_IFR_Strseq_Utils
 {
 public:
-  static void fill_string_seq (const char *section_name,
+  static void fill_string_seq (char const *section_name,
                                ACE_Configuration *config,
                                ACE_Configuration_Section_Key &key,
                                T_strseq &seq);
@@ -74,7 +74,7 @@ public:
   static void port_descriptions (T_desc_seq &desc_seq,
                                  ACE_Configuration *config,
                                  ACE_Configuration_Section_Key &key,
-                                 const char *sub_section);
+                                 char const *sub_section);
 
   static void get_is_multiple (T_desc_seq &desc_seq,
                                ACE_Configuration *config,
@@ -90,10 +90,10 @@ template<typename T>
 class TAO_Port_Utils
 {
 public:
-  static T *create_entry (const char *id,
-                          const char *name,
-                          const char *version,
-                          const char *sub_section,
+  static T *create_entry (char const *id,
+                          char const *name,
+                          char const *version,
+                          char const *sub_section,
                           CORBA::Container_ptr port_base_type,
                           CORBA::Boolean is_multiple,
                           TAO_Repository_i *repo,
