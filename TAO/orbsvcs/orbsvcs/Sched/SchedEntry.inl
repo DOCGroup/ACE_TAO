@@ -298,14 +298,8 @@ Dispatch_Entry::original_dispatch ()
 // Class Dispatch_Entry_Link //
 ///////////////////////////////
 
-ACE_INLINE
-Dispatch_Entry_Link::~Dispatch_Entry_Link ()
-{
-}
-  // dtor
-
 ACE_INLINE bool
-Dispatch_Entry_Link::operator < (const Dispatch_Entry_Link &d) const
+Dispatch_Entry_Link::operator < (Dispatch_Entry_Link const &d) const
 {
   return (this->dispatch_entry_ < d.dispatch_entry_);
 }
@@ -403,7 +397,7 @@ TimeLine_Entry::prev (TimeLine_Entry *t)
 
 
 ACE_INLINE bool
-TimeLine_Entry::operator < (const TimeLine_Entry &t) const
+TimeLine_Entry::operator < (TimeLine_Entry const &t) const
 {
   return (start_ < t.start_) ? true : false;
 }
@@ -415,7 +409,7 @@ TimeLine_Entry::operator < (const TimeLine_Entry &t) const
 ///////////////////////////////
 
 
-ACE_INLINE TimeLine_Entry_Link::TimeLine_Entry_Link  (TimeLine_Entry &t)
+ACE_INLINE TimeLine_Entry_Link::TimeLine_Entry_Link (TimeLine_Entry &t)
   : entry_ (t)
 {
 }
@@ -429,7 +423,7 @@ TimeLine_Entry_Link::entry () const
   // accessor for the underlying entry
 
 ACE_INLINE bool
-TimeLine_Entry_Link::operator < (const TimeLine_Entry_Link &l) const
+TimeLine_Entry_Link::operator < (TimeLine_Entry_Link const &l) const
 {
   return (entry_ < l.entry_);
 }

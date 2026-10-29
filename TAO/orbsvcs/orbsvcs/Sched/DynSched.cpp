@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //////////////////////
 
 // compare the DFS finish times of two task entries, order higher time *first*
-extern "C" int compare_entry_finish_times (const void *first, const void *second)
+extern "C" int compare_entry_finish_times (void const *first, void const *second)
 {
   // sort blank entries to the end
   if (! first)
@@ -38,10 +38,10 @@ extern "C" int compare_entry_finish_times (const void *first, const void *second
     return -1;
   }
 
-  const Task_Entry *first_entry =
-          * static_cast<const Task_Entry *const *> (first);
-  const Task_Entry *second_entry =
-          * static_cast<const Task_Entry *const *> (second);
+  Task_Entry const *first_entry =
+          * static_cast<Task_Entry const * const *> (first);
+  Task_Entry const *second_entry =
+          * static_cast<Task_Entry const * const *> (second);
 
   // sort blank entries to the end
   if (! first_entry)
@@ -69,7 +69,7 @@ extern "C" int compare_entry_finish_times (const void *first, const void *second
 // class ACE_DynScheduler member functions //
 //////////////////////////////////////////
 
-const char *
+char const *
 ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
 {
   switch (status)
@@ -213,8 +213,8 @@ ACE_DynScheduler::~ACE_DynScheduler ()
 void
 ACE_DynScheduler::init (const OS_Priority minimum_priority,
                      const OS_Priority maximum_priority,
-                     const char *runtime_filename,
-                     const char *rt_info_filename,
+                     char const *runtime_filename,
+                     char const *rt_info_filename,
                      char const *timeline_filename)
 {
   minimum_priority_ = minimum_priority;
@@ -464,7 +464,7 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
 
 
 int
-ACE_DynScheduler::dispatch_configuration (const Preemption_Priority & p_priority,
+ACE_DynScheduler::dispatch_configuration (Preemption_Priority const & p_priority,
                                           OS_Priority & priority,
                                           Dispatching_Type & d_type)
 {
@@ -1874,7 +1874,7 @@ ACE_DynScheduler::create_timeline ()
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::output_dispatch_priorities (const char *filename)
+ACE_DynScheduler::output_dispatch_priorities (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
@@ -1968,7 +1968,7 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::output_dispatch_timeline (const char *filename)
+ACE_DynScheduler::output_dispatch_timeline (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
@@ -2095,7 +2095,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
   // this prints the entire set of timeline outputs to the specified file
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::output_preemption_timeline (const char *filename)
+ACE_DynScheduler::output_preemption_timeline (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
@@ -2185,7 +2185,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::output_viewer_timeline (const char *filename)
+ACE_DynScheduler::output_viewer_timeline (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
@@ -2304,7 +2304,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
+ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 {
   status_t status = SUCCEEDED;
   FILE *file = nullptr;

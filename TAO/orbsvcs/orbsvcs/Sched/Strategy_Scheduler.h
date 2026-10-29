@@ -38,22 +38,22 @@ class TAO_RTSched_Export ACE_Strategy_Scheduler : public ACE_DynScheduler
 // public interface
 public:
     /// = Constructor.
-  ACE_Strategy_Scheduler (ACE_Scheduler_Strategy &strategy);
+  explicit ACE_Strategy_Scheduler (ACE_Scheduler_Strategy &strategy);
 
     /// = Virtual destructor.
-  ~ACE_Strategy_Scheduler () override;
+  ~ACE_Strategy_Scheduler () override = default;
 
     /// = Assigns priorities to the sorted dispatch schedule,
     ///   according to the strategy's priority comparison operator.
   status_t assign_priorities (
     Dispatch_Entry **dispatches, u_int count,
-    ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set);
+    ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set) override;
 
     /// = Assigns dynamic and static sub-priorities to the sorted dispatch
     ///   schedule, according to the strategy's subpriority comparisons.
   status_t assign_subpriorities (
     Dispatch_Entry **dispatches, u_int count,
-    ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set);
+    ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set) override;
 
     /// = Determine the minimum critical priority number.
   Preemption_Priority minimum_critical_priority () override;
@@ -116,10 +116,11 @@ class TAO_RTSched_Export ACE_Scheduler_Strategy
 {
 public:
   /// = Constructor.
-  ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+  explicit ACE_Scheduler_Strategy (
+    ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
   /// Destructor.
-  virtual ~ACE_Scheduler_Strategy ();
+  virtual ~ACE_Scheduler_Strategy () = default;
 
     /**
      * = Compares two dispatch entries in strategy specific high to low
@@ -127,8 +128,8 @@ public:
      *   in the order, 0 if they are equivalent, or 1 if the second
      *   Dispatch_Entry is greater in the order.
      */
-  virtual int priority_comp (const Dispatch_Entry &first_entry,
-                             const Dispatch_Entry &second_entry) = 0;
+  virtual int priority_comp (Dispatch_Entry const &first_entry,
+                             Dispatch_Entry const &second_entry) = 0;
 
     /// = Sorts the dispatch entry link pointer array according to
     ///   the specific sort order defined by the strategy.
@@ -144,8 +145,8 @@ public:
      *   is greater in the order, 0 if they are equivalent, or 1 if the
      *   second Dispatch_Entry is greater in the order.
      */
-  virtual int dynamic_subpriority_comp (const Dispatch_Entry &first_entry,
-                                        const Dispatch_Entry &second_entry) = 0;
+  virtual int dynamic_subpriority_comp (Dispatch_Entry const &first_entry,
+                                        Dispatch_Entry const &second_entry) = 0;
 
     /// = Returns a dynamic subpriority value
     ///   for the given timeline entry at the current time.
@@ -157,12 +158,12 @@ public:
      * (descending), and then on the dependency topological sort finishing
      * time (ascending).
      */
-  virtual int static_subpriority_comp (const Dispatch_Entry &first_entry,
-                                       const Dispatch_Entry &second_entry);
+  virtual int static_subpriority_comp (Dispatch_Entry const &first_entry,
+                                       Dispatch_Entry const &second_entry);
 
     /// = Provide the dispatching queue type for the given dispatch entry.
   virtual ACE_DynScheduler::Dispatching_Type
-    dispatch_type (const Dispatch_Entry &entry) = 0;
+    dispatch_type (Dispatch_Entry const &entry) = 0;
 
 protected:
     /**
@@ -176,8 +177,8 @@ protected:
      *   derived classes provide  definitions of the methods on which the
      *   sort_comp Template Method relies.
      */
-  int sort_comp (const Dispatch_Entry &first_entry,
-                 const Dispatch_Entry &second_entry);
+  int sort_comp (Dispatch_Entry const &first_entry,
+                 Dispatch_Entry const &second_entry);
 
     /// = The minimum critical priority number for the strategy.
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority_;
@@ -196,10 +197,11 @@ class TAO_RTSched_Export ACE_MUF_Scheduler_Strategy : public ACE_Scheduler_Strat
 {
 public:
     /// = Constructor.
-  ACE_MUF_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+  explicit ACE_MUF_Scheduler_Strategy (
+    ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
   /// = Virtual destructor.
-  ~ACE_MUF_Scheduler_Strategy () override;
+  ~ACE_MUF_Scheduler_Strategy () override = default;
 
     /// = Returns an instance of the strategy.
   static ACE_MUF_Scheduler_Strategy *instance ();
@@ -268,10 +270,11 @@ class TAO_RTSched_Export ACE_RMS_Scheduler_Strategy : public ACE_Scheduler_Strat
 {
 public:
     /// = Constructor.
-  ACE_RMS_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+  explicit ACE_RMS_Scheduler_Strategy (
+    ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
     /// = Virtual destructor.
-  ~ACE_RMS_Scheduler_Strategy () override;
+  ~ACE_RMS_Scheduler_Strategy () override = default;
 
     /// Returns an instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance ();
@@ -332,10 +335,11 @@ class TAO_RTSched_Export ACE_MLF_Scheduler_Strategy : public ACE_Scheduler_Strat
 {
 public:
     /// = Constructor.
-  ACE_MLF_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+  explicit ACE_MLF_Scheduler_Strategy (
+    ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
     /// = Virtual destructor.
-  ~ACE_MLF_Scheduler_Strategy () override;
+  ~ACE_MLF_Scheduler_Strategy () override = default;
 
     /// = Returns an instance of the strategy.
   static ACE_MLF_Scheduler_Strategy *instance ();
@@ -397,14 +401,15 @@ class TAO_RTSched_Export ACE_EDF_Scheduler_Strategy : public ACE_Scheduler_Strat
 {
 public:
     /// = Default constructor.
-  ACE_EDF_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+  explicit ACE_EDF_Scheduler_Strategy (
+    ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
     /// = Virtual destructor.
-  ~ACE_EDF_Scheduler_Strategy () override;
+  ~ACE_EDF_Scheduler_Strategy () override = default;
 
-  ACE_EDF_Scheduler_Strategy (const ACE_EDF_Scheduler_Strategy &) = delete;
+  ACE_EDF_Scheduler_Strategy (ACE_EDF_Scheduler_Strategy const &) = delete;
   ACE_EDF_Scheduler_Strategy (ACE_EDF_Scheduler_Strategy &&) = delete;
-  ACE_EDF_Scheduler_Strategy &operator= (const ACE_EDF_Scheduler_Strategy &) = delete;
+  ACE_EDF_Scheduler_Strategy &operator= (ACE_EDF_Scheduler_Strategy const &) = delete;
   ACE_EDF_Scheduler_Strategy &operator= (ACE_EDF_Scheduler_Strategy &&) = delete;
 
     /// = Returns an instance of the strategy.
@@ -412,8 +417,8 @@ public:
 
     /// = Returns 0, as all dispatch entries are of equivalent
     ///   priority under EDF.
-  int priority_comp (const Dispatch_Entry &first_entry,
-                     const Dispatch_Entry &second_entry) override;
+  int priority_comp (Dispatch_Entry const &first_entry,
+                     Dispatch_Entry const &second_entry) override;
 
     /// = Sorts the dispatch entry link pointer array
     ///   in ascending deadline (period) order.
@@ -422,7 +427,7 @@ public:
 
   /// = Provide the dispatching queue type for the given dispatch entry.
   ACE_DynScheduler::Dispatching_Type
-    dispatch_type (const Dispatch_Entry &entry) override;
+    dispatch_type (Dispatch_Entry const &entry) override;
 
 protected:
     /**
@@ -442,8 +447,8 @@ protected:
      *   equivalent, or 1 if the second Dispatch_Entry is greater in the order.
      */
   int dynamic_subpriority_comp
-    (const Dispatch_Entry &first_entry,
-     const Dispatch_Entry &second_entry) override;
+    (Dispatch_Entry const &first_entry,
+     Dispatch_Entry const &second_entry) override;
 
 private:
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().
@@ -466,14 +471,15 @@ class TAO_RTSched_Export ACE_Criticality_Scheduler_Strategy : public ACE_Schedul
 {
 public:
     /// = Constructor.
-  ACE_Criticality_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+  explicit ACE_Criticality_Scheduler_Strategy (
+    ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
     /// = Virtual destructor.
-  ~ACE_Criticality_Scheduler_Strategy () override;
+  ~ACE_Criticality_Scheduler_Strategy () override = default;
 
-  ACE_Criticality_Scheduler_Strategy (const ACE_Criticality_Scheduler_Strategy &) = delete;
+  ACE_Criticality_Scheduler_Strategy (ACE_Criticality_Scheduler_Strategy const &) = delete;
   ACE_Criticality_Scheduler_Strategy (ACE_Criticality_Scheduler_Strategy &&) = delete;
-  ACE_Criticality_Scheduler_Strategy &operator= (const ACE_Criticality_Scheduler_Strategy &) = delete;
+  ACE_Criticality_Scheduler_Strategy &operator= (ACE_Criticality_Scheduler_Strategy const &) = delete;
   ACE_Criticality_Scheduler_Strategy &operator= (ACE_Criticality_Scheduler_Strategy &&) = delete;
 
     /// = Returns an instance of the strategy.
@@ -484,8 +490,8 @@ public:
      *   first Dispatch_Entry is greater in the order, 0 if they're equivalent,
      *   or 1 if the second Dispatch_Entry is greater in the order.
      */
-  int priority_comp (const Dispatch_Entry &first_entry,
-                     const Dispatch_Entry &second_entry) override;
+  int priority_comp (Dispatch_Entry const &first_entry,
+                     Dispatch_Entry const &second_entry) override;
 
     /// = Sort the dispatch entry link pointer array in descending
     ///   criticality order.
@@ -497,7 +503,7 @@ public:
 
   /// Provide the dispatching queue type for the given dispatch entry.
   ACE_DynScheduler::Dispatching_Type
-    dispatch_type (const Dispatch_Entry &entry) override;
+    dispatch_type (Dispatch_Entry const &entry) override;
 
 protected:
     /// = Just returns 0: all operations have
@@ -508,8 +514,8 @@ protected:
     /// = All dispatches in a given priority level have the same dynamic
     ///   subpriority under this strategy: just returns 0.
   int dynamic_subpriority_comp
-    (const Dispatch_Entry &first_entry,
-     const Dispatch_Entry &second_entry) override;
+    (Dispatch_Entry const &first_entry,
+     Dispatch_Entry const &second_entry) override;
 
 private:
     /// = Comparison function to pass to qsort: calls instance ()->sort_comp ().

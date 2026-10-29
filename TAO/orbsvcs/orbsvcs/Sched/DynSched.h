@@ -65,7 +65,7 @@ public:
   using Thread_Map_Iterator = ACE_Map_Iterator<ACE_CString, RT_Info *, ACE_Null_Mutex>;
 
   /// Objects are named by unique strings.
-  using Object_Name = const char *;
+  using Object_Name = char const *;
 
   enum status_t {
     // The following are used both by the runtime Scheduler and during
@@ -113,7 +113,7 @@ public:
 
   // = Utility function for outputting the textual
   //   representation of a status_t value.
-  static const char * status_message (status_t status);
+  static char const * status_message (status_t status);
 
   // = Utility function for creating an entry for determining
   //   the severity of an anomaly detected during scheduling.
@@ -201,7 +201,7 @@ public:
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
 
   /// this prints the entire set of timeline outputs to the specified file
-  status_t output_timeline (const char *filename, const char *heading);
+  status_t output_timeline (char const *filename, char const *heading);
 
 
   // = Access a thread priority.
@@ -255,7 +255,7 @@ public:
   u_long max_dispatch_id () const;
 
   /// provide the thread priority and queue type for the given priority level
-  virtual int dispatch_configuration (const Preemption_Priority &p_priority,
+  virtual int dispatch_configuration (Preemption_Priority const &p_priority,
                                       OS_Priority& priority,
                                       Dispatching_Type & d_type);
 
@@ -402,19 +402,19 @@ private:
   status_t create_timeline ();
 
   /// this prints a dispatch timeline to the specified file
-  status_t output_dispatch_timeline (const char *filename);
+  status_t output_dispatch_timeline (char const *filename);
   status_t output_dispatch_timeline (FILE *file);
 
   /// this prints a preemption timeline to the specified file
-  status_t output_preemption_timeline (const char *filename);
+  status_t output_preemption_timeline (char const *filename);
   status_t output_preemption_timeline (FILE *file);
 
   /// this prints a scheduling viewer timeline to the specified file
-  status_t output_viewer_timeline (const char *filename);
+  status_t output_viewer_timeline (char const *filename);
   status_t output_viewer_timeline (FILE *file);
 
   /// this prints the scheduling parameters and assigned priorities to the specified file
-  status_t output_dispatch_priorities (const char *filename);
+  status_t output_dispatch_priorities (char const *filename);
   status_t output_dispatch_priorities (FILE *file);
 
   // = Set up the task entry data structures
@@ -463,9 +463,9 @@ private:
   status_t calculate_utilization_params ();
 
   // the following functions are not implememented
-  ACE_DynScheduler (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler (ACE_DynScheduler const &) = delete;
   ACE_DynScheduler (ACE_DynScheduler &&) = delete;
-  ACE_DynScheduler &operator= (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler &operator= (ACE_DynScheduler const &) = delete;
   ACE_DynScheduler &operator= (ACE_DynScheduler &&) = delete;
 
   //////////////////////////

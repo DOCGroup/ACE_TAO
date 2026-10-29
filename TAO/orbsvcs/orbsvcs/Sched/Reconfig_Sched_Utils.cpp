@@ -205,17 +205,6 @@ TAO_RT_Info_Tuple::operator < (TAO_RT_Info_Tuple const &t) const
 TAO_Reconfig_Scheduler_Entry::
 TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
   : actual_rt_info_ (&rt_info),
-    fwd_dfs_status_ (NOT_VISITED),
-    rev_dfs_status_ (NOT_VISITED),
-    fwd_discovered_ (-1),
-    rev_discovered_ (-1),
-    fwd_finished_ (-1),
-    rev_finished_ (-1),
-    aggregate_exec_time_ (0),
-    orig_tuple_period_sum_ (0),
-    prop_tuple_period_sum_ (0),
-    orig_tuple_count_ (0),
-    prop_tuple_count_ (0),
     enabled_ (rt_info.enabled)
   //    effective_exec_multiplier_ (0),  //WSOA merge commented out
   //  effective_period_ (0)              //WSOA merge commented out
@@ -681,20 +670,11 @@ effective_exec_multiplier (CORBA::Long l)
 
 ///////////////////////////
 
-TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor ()
-{
-}
+TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor () = default;
 
 ///////////////////////////
 // TAO_RSE_Reset_Visitor //
 ///////////////////////////
-
-// Constructor.
-
-TAO_RSE_Reset_Visitor::TAO_RSE_Reset_Visitor ()
-{
-}
-
 
 // Resets the fields in the entry to pre-DFS traversal states.
 // Returns 0 on success and -1 on error.
@@ -886,19 +866,16 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
 
 ////////////////////////////////////////////
 
-TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor ()
-{
-}
+TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor () = default;
 
 ////////////////////////////////////////////
 // class TAO_Reconfig_Sched_Strategy_Base //
 ////////////////////////////////////////////
 
-
 // Ordering function to compare the DFS finish times of
 // two RT_Info_Tuples
 int
-TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (const void *first, const void *second)
+TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (void const *first, void const *second)
 {
   // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -923,13 +900,13 @@ TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (const void *first, co
 // two task entries, so qsort orders these in topological
 // order, with the higher times *first*
 int
-TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times (const void *first, const void *second)
+TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times (void const *first, void const *second)
 {
-  const TAO_Reconfig_Scheduler_Entry *first_entry =
-    * reinterpret_cast<const TAO_Reconfig_Scheduler_Entry *const *> (first);
+  TAO_Reconfig_Scheduler_Entry const *first_entry =
+    * reinterpret_cast<TAO_Reconfig_Scheduler_Entry const * const *> (first);
 
-  const TAO_Reconfig_Scheduler_Entry *second_entry =
-    * reinterpret_cast<const TAO_Reconfig_Scheduler_Entry *const *> (second);
+  TAO_Reconfig_Scheduler_Entry const *second_entry =
+    * reinterpret_cast<TAO_Reconfig_Scheduler_Entry const * const *> (second);
 
   // sort blank entries to the end
   if (! first_entry)
@@ -1048,7 +1025,7 @@ TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (TAO_Reconfig_Scheduler_En
 // second one is higher.
 
 int
-TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
+TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void const *t)
 {
   // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -1100,8 +1077,8 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
 // the second one is higher.
 
 int
-TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
-                                                            const void *t)
+TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
+                                                            void const *t)
 {
     // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -1247,7 +1224,7 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
 // second one is higher.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
+TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void const *t)
 {
   // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -1302,8 +1279,8 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
 // the second one is higher.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
-                                                               const void *t)
+TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
+                                                               void const *t)
 {
     // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -1471,7 +1448,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
 // second one is higher.
 
 int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
+TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void const *t)
 {
   // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -1526,8 +1503,8 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const v
 // the second one is higher.
 
 int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
-                                                               const void *t)
+TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
+                                                               void const *t)
 {
   // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.

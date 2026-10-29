@@ -31,7 +31,7 @@ class TAO_RTSched_Export Scheduler_Generic : public ACE_Scheduler
 {
 public:
   Scheduler_Generic ();
-  ~Scheduler_Generic () override;
+  ~Scheduler_Generic () override = default;
 
   // = Initialize the scheduler.
   void init (int minimum_priority,

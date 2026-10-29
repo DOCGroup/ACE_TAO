@@ -66,13 +66,6 @@ Scheduler_Generic::Scheduler_Generic () :
   config_info_.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
 }
 
-
-Scheduler_Generic::~Scheduler_Generic ()
-{
-  reset ();
-}
-
-
 void
 Scheduler_Generic::reset ()
 {

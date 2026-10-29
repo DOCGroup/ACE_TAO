@@ -50,9 +50,9 @@ public:
                                               ACE_LOCK>;
 
   /// Type of tree used for O(log n) lookup of RT_Infos by their names.
-  using RT_INFO_TREE = ACE_RB_Tree<const char *,
+  using RT_INFO_TREE = ACE_RB_Tree<char const *,
                                   TAO_RT_Info_Ex *,
-                                  ACE_Less_Than<const char *>,
+                                  ACE_Less_Than<char const *>,
                                   ACE_LOCK>;
 
   /// Type of map used for O(1) lookup of Config_Infos by their priorities.
@@ -76,8 +76,8 @@ public:
 
   /// Default constructor.
   TAO_Reconfig_Scheduler (bool enforce_schedule_stability = false,
-                          const CORBA::Double & critical_utilization_threshold = 1.0,
-                          const CORBA::Double & noncritical_utilization_threshold = 1.1);
+                          CORBA::Double const & critical_utilization_threshold = 1.0,
+                          CORBA::Double const & noncritical_utilization_threshold = 1.1);
 
   /// Constructor. Initialize the scheduler from POD_Config_Info, POD_RT_Info,
   /// and POD_Dependency arrays, plus schedule stability flags.
@@ -89,15 +89,15 @@ public:
                           ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
                           u_long stability_flags,
                           bool enforce_schedule_stability = false,
-                          const CORBA::Double & critical_utilization_threshold = 1.0,
-                          const CORBA::Double & noncritical_utilization_threshold = 1.1);
+                          CORBA::Double const & critical_utilization_threshold = 1.0,
+                          CORBA::Double const & noncritical_utilization_threshold = 1.1);
 
   /// Destructor.
   ~TAO_Reconfig_Scheduler () override;
 
-  TAO_Reconfig_Scheduler (const TAO_Reconfig_Scheduler &) = delete;
+  TAO_Reconfig_Scheduler (TAO_Reconfig_Scheduler const &) = delete;
   TAO_Reconfig_Scheduler (TAO_Reconfig_Scheduler &&) = delete;
-  TAO_Reconfig_Scheduler &operator= (const TAO_Reconfig_Scheduler &) = delete;
+  TAO_Reconfig_Scheduler &operator= (TAO_Reconfig_Scheduler const &) = delete;
   TAO_Reconfig_Scheduler &operator= (TAO_Reconfig_Scheduler &&) = delete;
 
   /// Initializes the scheduler with the passed information.
@@ -118,11 +118,11 @@ public:
    * RT_Info is returned.  If the RT_Info already exists, an exception
    * is thrown.
    */
-  RtecScheduler::handle_t create (const char * entry_point) override;
+  RtecScheduler::handle_t create (char const * entry_point) override;
 
   /// Lookup a handle for an RT_Info, and return its handle, or an error
   /// value if it's not present.
-  RtecScheduler::handle_t lookup (const char * entry_point) override;
+  RtecScheduler::handle_t lookup (char const * entry_point) override;
 
   /// Return a pointer to the RT_Info corresponding to the passed handle.
   RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle) override;
@@ -153,11 +153,11 @@ public:
 
   /// Set characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are added in the case of existing and/or multiple definitions.
-  void set_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void set_seq (RtecScheduler::RT_Info_Set const & infos) override;
 
   /// Reset characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are replaced in the case of existing and/or multiple definitions.
-  void reset_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void reset_seq (RtecScheduler::RT_Info_Set const & infos) override;
 
   /**
    * Replace all RT_Infos, resetting characteristics of the RT_Infos
@@ -165,7 +165,7 @@ public:
    * reset to their uninitialized values, i.e., the same they have
    * just after the create call.
    */
-  void replace_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void replace_seq (RtecScheduler::RT_Info_Set const & infos) override;
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its handle.
@@ -176,7 +176,7 @@ public:
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its entry point name.
-  void entry_point_priority (const char * entry_point,
+  void entry_point_priority (char const * entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority) override;
@@ -201,14 +201,14 @@ public:
                                             RtecScheduler::Dependency_Enabled_Type_t enabled) override;
 
   /// This method sets the enable state of a sequence of dependencies.
-  void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies) override;
+  void set_dependency_enable_state_seq (RtecScheduler::Dependency_Set const & dependencies) override;
 
   /// This method enables or disables an RT_Info.
   void set_rt_info_enable_state (RtecScheduler::handle_t handle,
                                  RtecScheduler::RT_Info_Enabled_Type_t enabled) override;
 
   /// This method enables or disables a sequence of RT_Infos.
-  void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set) override;
+  void set_rt_info_enable_state_seq (RtecScheduler::RT_Info_Enable_State_Pair_Set const & pair_set) override;
 
   /**
    * If information has been added or changed since the last stable
@@ -303,13 +303,13 @@ public:
   CORBA::Double noncritical_utilization_threshold ();
 
   /// Mutator for noncritical task utilization threshold.
-  void noncritical_utilization_threshold (const CORBA::Double &);
+  void noncritical_utilization_threshold (CORBA::Double const &);
 
   /// Accessor for critical task utilization threshold.
   CORBA::Double critical_utilization_threshold ();
 
   /// Mutator for critical task utilization threshold.
-  void critical_utilization_threshold (const CORBA::Double &);
+  void critical_utilization_threshold (CORBA::Double const &);
 
 protected:
   // @@ TO DO: use a memento to save and restore scheduler state without
@@ -352,7 +352,7 @@ protected:
    * exists, then if the ignore_duplicates flag is set, the handle
    * is simply returned; otherwise, an exception is thrown.
    */
-  TAO_RT_Info_Ex * create_i (const char * entry_point,
+  TAO_RT_Info_Ex * create_i (char const * entry_point,
                              RtecScheduler::handle_t handle,
                              int ignore_duplicates);
 
@@ -370,7 +370,7 @@ protected:
 
   /// Internal method to look up a handle for an RT_Info, and return
   /// its handle, or an exception if it's not present.
-  virtual RtecScheduler::handle_t lookup_i (const char * entry_point);
+  virtual RtecScheduler::handle_t lookup_i (char const * entry_point);
 
   /// Internal method to return the priority and subpriority
   /// values assigned to an RT_Info, based on its handle.

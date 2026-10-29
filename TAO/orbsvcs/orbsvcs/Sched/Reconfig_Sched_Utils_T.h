@@ -90,7 +90,7 @@ protected:
    */
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
-                                  const RtecScheduler::Dependency_Info &di);
+                                  RtecScheduler::Dependency_Info const &di);
 
   /// Performs an action on the entry after visiting all of
   /// its successors.  Returns 0 on success and -1 on error.
@@ -140,7 +140,7 @@ protected:
   /// visiting it.  Returns 0 on success and -1 on error.
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 
   /**
    * Marks entry as forward finished and sets its forward DFS finish
@@ -219,7 +219,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 
   /**
    * Sets the entry's reverse finish time and marks it as finished in
@@ -266,7 +266,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 };
 
 
@@ -323,7 +323,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 
 private:
   /// Number of nodes with unresolved local dependencies.
@@ -409,8 +409,8 @@ class TAO_Tuple_Admission_Visitor :
 {
 public:
   /// Constructor.
-  TAO_Tuple_Admission_Visitor (const CORBA::Double & critical_utilization_threshold,
-                               const CORBA::Double & noncritical_utilization_threshold);
+  TAO_Tuple_Admission_Visitor (CORBA::Double const & critical_utilization_threshold,
+                               CORBA::Double const & noncritical_utilization_threshold);
 
   /**
    * Visit an RT_Info tuple.  This method determines the utilization by
@@ -484,7 +484,7 @@ protected:
    */
   int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                           TAO_Reconfig_Scheduler_Entry &successor,
-                          const RtecScheduler::Dependency_Info &di) override;
+                          RtecScheduler::Dependency_Info const &di) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -207,7 +207,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
                     TAO_Reconfig_Scheduler_Entry & /* successor */,
-                    const RtecScheduler::Dependency_Info & /* di */)
+                    RtecScheduler::Dependency_Info const & /* di */)
 {
   // Default behavior: just return success.
   return 0;
@@ -284,7 +284,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
                     TAO_Reconfig_Scheduler_Entry & successor,
-                    const RtecScheduler::Dependency_Info & /* di */)
+                    RtecScheduler::Dependency_Info const & /* di */)
 {
   // Enabled operations we reached via a dependency and that do not
   // specify a period are not thread delineators.
@@ -426,7 +426,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info & /* di */)
+                    RtecScheduler::Dependency_Info const & /* di */)
 {
   if  (successor.enabled_state () !=
          RtecScheduler::RT_INFO_DISABLED
@@ -483,7 +483,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Reverse_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info & /* di */)
+                    RtecScheduler::Dependency_Info const & /* di */)
 {
   // @TODO - check for conjunction nodes here and perform conjunctive
   // function on existing rate tuples.  Idea: treat conjunctive tuples
@@ -674,7 +674,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info & /* di */)
+                    RtecScheduler::Dependency_Info const & /* di */)
 {
   if (successor.enabled_state () == RtecScheduler::RT_INFO_DISABLED)
     {
@@ -887,8 +887,8 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::finish ()
 
 template <class RECONFIG_SCHED_STRATEGY>
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::
-TAO_Tuple_Admission_Visitor (const CORBA::Double & critical_utilization_threshold,
-                               const CORBA::Double & noncritical_utilization_threshold)
+TAO_Tuple_Admission_Visitor (CORBA::Double const & critical_utilization_threshold,
+                               CORBA::Double const & noncritical_utilization_threshold)
   : critical_utilization_ (0.0),
     noncritical_utilization_ (0.0),
     total_critical_utilization_ (0.0),
@@ -1034,7 +1034,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Criticality_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info & /* di */)
+                    RtecScheduler::Dependency_Info const & /* di */)
 {
 #ifdef SCHEDULER_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG,

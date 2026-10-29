@@ -117,10 +117,15 @@ public:
   enum Tuple_Type {ORIGINAL = 0x01UL, PROPAGATED = 0x02UL};
 
   /// Constructor.
-  TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info);
+  explicit TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info);
 
   /// Destructor.
   ~TAO_Reconfig_Scheduler_Entry ();
+
+  TAO_Reconfig_Scheduler_Entry (TAO_Reconfig_Scheduler_Entry const &) = delete;
+  TAO_Reconfig_Scheduler_Entry (TAO_Reconfig_Scheduler_Entry &&) = delete;
+  TAO_Reconfig_Scheduler_Entry &operator= (TAO_Reconfig_Scheduler_Entry const &) = delete;
+  TAO_Reconfig_Scheduler_Entry &operator= (TAO_Reconfig_Scheduler_Entry &&) = delete;
 
   /// Removes all tuples from the entry.
   void remove_tuples (u_long tuple_flags = ORIGINAL | PROPAGATED);
@@ -316,22 +321,22 @@ private:
   TAO_RT_Info_Ex *actual_rt_info_;
 
   /// Forward depth-first-search status of the entry.
-  DFS_Status fwd_dfs_status_;
+  DFS_Status fwd_dfs_status_ {NOT_VISITED};
 
   /// Reverse depth-first-search status of the entry.
-  DFS_Status rev_dfs_status_;
+  DFS_Status rev_dfs_status_ {NOT_VISITED};
 
   /// Forward depth-first-search discovery order of the entry.
-  long fwd_discovered_;
+  long fwd_discovered_ {-1};
 
   /// Reverse depth-first-search discovery order of the entry.
-  long rev_discovered_;
+  long rev_discovered_ {-1};
 
   /// Forward depth-first-search completion order of the entry.
-  long fwd_finished_;
+  long fwd_finished_ {-1};
 
   /// Reverse depth-first-search completion order of the entry.
-  long rev_finished_;
+  long rev_finished_ {-1};
 
   /// Flag identifying threads in the call graph.
   bool is_thread_delineator_ {};
@@ -346,25 +351,25 @@ private:
 
   /// Effective execution time for corresponding RT_Info and its
   /// disjunctively executed dependants.
-  RtecScheduler::Time aggregate_exec_time_;
+  RtecScheduler::Time aggregate_exec_time_ {};
 
   /// Sum of periods for tuples directly associated with the entry.  It
   /// can be used to compute the mean rate for the entry.
-  RtecScheduler::Period_t orig_tuple_period_sum_;
+  RtecScheduler::Period_t orig_tuple_period_sum_ {};
 
   /**
    * The sum of periods for tuples propagated via dependencies on
    * other entries.  It can be used to compute the mean rate for the
    * entry.
    */
-  RtecScheduler::Period_t prop_tuple_period_sum_;
+  RtecScheduler::Period_t prop_tuple_period_sum_ {};
 
   /// The number of tuples directly associated with the entry.
-  u_int orig_tuple_count_;
+  u_int orig_tuple_count_ {};
 
   /// The number of tuples propagated via dependencies on other
   /// entries.
-  u_int prop_tuple_count_;
+  u_int prop_tuple_count_ {};
 
   /// The set of tuples directly associated with the entry.
   TUPLE_SET orig_tuple_subset_;
@@ -419,7 +424,7 @@ class TAO_RTSched_Export TAO_RSE_Reset_Visitor :
 {
 public:
   /// Constructor.
-  TAO_RSE_Reset_Visitor ();
+  TAO_RSE_Reset_Visitor () = default;
 
   /// Destructor.
   ~TAO_RSE_Reset_Visitor () override = default;
@@ -461,14 +466,14 @@ class TAO_RTSched_Export TAO_Reconfig_Sched_Strategy_Base
 public:
   /// Ordering function to compare the DFS finish times of
   /// two RT_Info_Tuples
-  static int comp_tuple_finish_times (const void *first, const void *second);
+  static int comp_tuple_finish_times (void const *first, void const *second);
 
   /**
    * Ordering function to compare the DFS finish times of
    * two task entries, so qsort orders these in topological
    * order, with the higher times *first*.
    */
-  static int comp_entry_finish_times (const void *first, const void *second);
+  static int comp_entry_finish_times (void const *first, void const *second);
 
   /// Determines whether or not an entry is critical, based on
   /// operation characteristics.  returns 1 if critical, 0 if not
@@ -507,7 +512,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_priority_comp (const void *, const void *);
+  static int total_priority_comp (void const *, void const *);
 
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
@@ -515,7 +520,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_admission_comp (const void *, const void *);
+  static int total_admission_comp (void const *, void const *);
 
   /// Compares two entries by priority alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.
@@ -563,7 +568,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_priority_comp (const void *, const void *);
+  static int total_priority_comp (void const *, void const *);
 
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
@@ -571,7 +576,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_admission_comp (const void *, const void *);
+  static int total_admission_comp (void const *, void const *);
 
   /// Compares two entries by criticality alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.
@@ -634,7 +639,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_priority_comp (const void *, const void *);
+  static int total_priority_comp (void const *, void const *);
 
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
@@ -642,7 +647,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_admission_comp (const void *, const void *);
+  static int total_admission_comp (void const *, void const *);
 
   /// Compares two entries by criticality alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.

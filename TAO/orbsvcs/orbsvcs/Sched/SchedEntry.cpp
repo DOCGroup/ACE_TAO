@@ -17,23 +17,15 @@
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-Task_Entry::Task_Entry ()
-  : effective_period_(0),
-    dfs_status_ (NOT_VISITED),
-    discovered_ (-1),
-    finished_ (-1),
-    calls_ (),
-    callers_ ()
-{
-}
 
 Task_Entry::~Task_Entry ()
 {
   // Zero out the task entry ACT in the corresponding rt_info
-  rt_info_->volatile_token = 0;
+  if (rt_info_ != nullptr)
+    {
+      rt_info_->volatile_token = 0;
+    }
 
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter(calls_);
   Task_Entry_Link **link = nullptr;
@@ -644,7 +636,7 @@ Dispatch_Entry::Dispatch_Entry (Time arrival,
   dispatch_id_ = next_id_++;
 }
 
-Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
+Dispatch_Entry::Dispatch_Entry (Dispatch_Entry const &d)
   : priority_ (d.priority_),
     OS_priority_ (d.OS_priority_),
     dynamic_subpriority_ (d.dynamic_subpriority_),
@@ -659,7 +651,7 @@ Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
 }
 
 bool
-Dispatch_Entry::operator < (const Dispatch_Entry &d) const
+Dispatch_Entry::operator < (Dispatch_Entry const &d) const
 {
   // for positioning in the ordered dispatch multiset
 
@@ -700,7 +692,7 @@ Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry &d)
 
 // copy ctor
 
-Dispatch_Entry_Link::Dispatch_Entry_Link (const Dispatch_Entry_Link &d)
+Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry_Link const &d)
   : dispatch_entry_ (d.dispatch_entry_)
 {
 }

@@ -55,16 +55,16 @@ public:
   using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
     /// Constructor.
-  Dispatch_Entry_Link (Dispatch_Entry &d);
+  explicit Dispatch_Entry_Link (Dispatch_Entry &d);
 
     /// Copy constructor.
-  Dispatch_Entry_Link (const Dispatch_Entry_Link &d);
+  Dispatch_Entry_Link (Dispatch_Entry_Link const &d);
 
     /// Destructor.
-  ~Dispatch_Entry_Link ();
+  ~Dispatch_Entry_Link () = default;
 
     /// Less than comparison operator.
-  bool operator < (const Dispatch_Entry_Link &d) const;
+  bool operator < (Dispatch_Entry_Link const &d) const;
 
     /// Accessor for reference to the dispatch entry.
   Dispatch_Entry &dispatch_entry () const;
@@ -107,10 +107,15 @@ public:
                            UNRECOGNIZED_INFO_TYPE};
 
   // Constructor.
-  Task_Entry ();
+  Task_Entry () = default;
 
   // Destructor.
   ~Task_Entry ();
+
+  Task_Entry (Task_Entry const &) = delete;
+  Task_Entry (Task_Entry &&) = delete;
+  Task_Entry &operator= (Task_Entry const &) = delete;
+  Task_Entry &operator= (Task_Entry &&) = delete;
 
   // Merges dispatches according to info type, update
   // relevant scheduling characteristics for this entry.
@@ -245,19 +250,19 @@ private:
   RT_Info *rt_info_ {};
 
   // The effective period for the task entry.
-  u_long effective_period_;
+  u_long effective_period_ {};
 
   // The set of arrivals in the entry's effective period.
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> dispatches_;
 
   // Depth-first-search status of the entry.
-  DFS_Status dfs_status_;
+  DFS_Status dfs_status_ {NOT_VISITED};
 
   // Depth-first-search discovery order of the entry.
-  long discovered_;
+  long discovered_ {-1};
 
   // Depth-first-search completion order of the entry.
-  long finished_;
+  long finished_ {-1};
 
   // Flag identifying threads in the call graph.
   bool is_thread_delineator_ {};
@@ -355,10 +360,10 @@ public:
                   Preemption_Priority priority,
                   OS_Priority os_priority,
                   Task_Entry &task_entry,
-                  Dispatch_Entry *original_dispatch = 0);
+                  Dispatch_Entry *original_dispatch = nullptr);
 
   // copy ctor
-  Dispatch_Entry (const Dispatch_Entry &d);
+  Dispatch_Entry (Dispatch_Entry const &d);
 
   // id accessor
   Dispatch_Id dispatch_id () const;
@@ -391,7 +396,7 @@ public:
   // LT comparator
   //  TBD - make this a global comparison operator
   //  instead of a class member function
-  bool operator < (const Dispatch_Entry &d) const;
+  bool operator < (Dispatch_Entry const &d) const;
 
   // accessor for pointer to original dispatch
   Dispatch_Entry *original_dispatch ();
@@ -559,8 +564,8 @@ public:
                   Time stop,
                   Time arrival,
                   Time deadline,
-                  TimeLine_Entry *next = 0,
-                  TimeLine_Entry *prev = 0);
+                  TimeLine_Entry *next = nullptr,
+                  TimeLine_Entry *prev = nullptr);
 
   // dispatch entry accessor
   Dispatch_Entry &dispatch_entry () const;
@@ -577,7 +582,7 @@ public:
   TimeLine_Entry *prev () const;
   void prev (TimeLine_Entry *);
 
-  bool operator < (const TimeLine_Entry&) const;
+  bool operator < (TimeLine_Entry const &) const;
 
 private:
   // the dispatch entry to which the time slice corresponds
@@ -609,13 +614,13 @@ public:
   using Dependency_Type = RtecScheduler::Dependency_Type_t;
 
   /// ctor
-  TimeLine_Entry_Link  (TimeLine_Entry &t);
+  explicit TimeLine_Entry_Link (TimeLine_Entry &t);
 
   /// accessor for the underlying entry
   TimeLine_Entry &entry () const;
 
   /// comparison operator
-  bool operator < (const TimeLine_Entry_Link&) const;
+  bool operator < (TimeLine_Entry_Link const &) const;
 
 private:
   /// the underlying entry
