@@ -1016,7 +1016,7 @@ DRV_copy_input (FILE *fin,
   std::string_view const filename_view (orig_filename);
   escaped_filename.reserve (filename_view.size ());
 
-  for (char const *s = orig_filename; *s != 0; ++s)
+  for (char const path_character : filename_view)
     {
       if (path_character == '\\')
         {
