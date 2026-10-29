@@ -53,11 +53,11 @@ namespace TAO
   {
     using ValueMap = ACE_Hash_Map_Manager<
       ACE_CString,
-      const PortableGroup::Value *,
+      PortableGroup::Value const *,
       ACE_SYNCH_NULL_MUTEX>;
     using ValueMapIterator = ACE_Hash_Map_Iterator<
       ACE_CString,
-      const PortableGroup::Value *,
+      PortableGroup::Value const *,
       ACE_SYNCH_NULL_MUTEX>;
 
   public:
@@ -77,8 +77,8 @@ namespace TAO
      * @param property_set the properties to be decoded
      * @param defaults a propert set decoder that supplies default values.
      */
-    PG_Property_Set (const PortableGroup::Properties & property_set,
-                     const PG_Property_Set_var & defaults);
+    PG_Property_Set (PortableGroup::Properties const & property_set,
+                     PG_Property_Set_var const & defaults);
 
     /**
      * constructor with defaults, but no properties (yet)
@@ -93,13 +93,13 @@ namespace TAO
      * general purpose find. returns a pointer to an Any
      *  if templated methods were available:
      *    template <typename TYPE >
-     *    int find (const ACE_CString & key, TYPE & value) const;
+     *    int find (ACE_CString const & key, TYPE & value) const;
      *    instead, see global function below
      * @param key the (simple) name of the property
      * @param pValue an out parameter to receive a pointer to the Any containing the value
      * @returns boolean true if found
      */
-    int find (const ACE_CString & key, const PortableGroup::Value *& pValue) const;
+    int find (ACE_CString const & key, PortableGroup::Value const *& pValue) const;
 
 
     /**
@@ -107,7 +107,7 @@ namespace TAO
      * Duplicate values replace previous values.
      * @param property_set the properties to be decoded
      */
-    void decode (const PortableGroup::Properties & property_set);
+    void decode (PortableGroup::Properties const & property_set);
 
     /**
      * Clear properties
@@ -115,14 +115,14 @@ namespace TAO
      */
     void clear ();
 
-    void remove (const PortableGroup::Properties & property_set);
+    void remove (PortableGroup::Properties const & property_set);
 
     /**
      * set or replace a single property
      */
     void set_property (
-      const char * name,
-      const PortableGroup::Value & value);
+      char const * name,
+      PortableGroup::Value const & value);
 
 
     /**
@@ -133,7 +133,7 @@ namespace TAO
      * them across a CORBA interface, it is much more efficient to use the find interface.
      *
      */
-    void export_properties(PortableGroup::Properties & property_set) const;
+    void export_properties (PortableGroup::Properties & property_set) const;
 
     /////////////////////////
     // Implementation Methods
@@ -165,7 +165,7 @@ namespace TAO
      * a parent to another property decoder that provides default values
      * these can be chained indefinitely.
      */
-    PG_Property_Set_var defaults_;
+    PG_Property_Set_var defaults_ {};
   };
 
 
