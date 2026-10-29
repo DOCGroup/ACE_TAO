@@ -242,10 +242,10 @@ AST_Decl::destroy ()
     }
 
   this->full_name_.clear ();
-  this->repoID_.reset ();
+  this->repoID_.clear ();
   this->prefix_.clear ();
   this->version_.clear ();
-  this->flat_name_.reset ();
+  this->flat_name_.clear ();
 
   delete annotation_appls_;
   annotation_appls_ = nullptr;
@@ -341,7 +341,7 @@ AST_Decl::set_prefix_with_typeprefix_r (std::string_view value,
         }
     }
 
-  this->repoID_.reset ();
+  this->repoID_.clear ();
   this->prefix (value);
   this->prefix_scope_ = appeared_in;
 
@@ -429,7 +429,7 @@ AST_Decl::compute_full_name ()
 void
 AST_Decl::compute_repoID () const
 {
-  if (this->repoID_)
+  if (!this->repoID_.empty () || this->pd_node_type == NT_root)
     {
       return;
     }
@@ -527,63 +527,60 @@ AST_Decl::compute_repoID () const
 std::string const&
 AST_Decl::flat_name () const
 {
-  if (!this->flat_name_)
+  if (this->flat_name_.empty ())
     {
       this->compute_flat_name ();
     }
 
-  return this->flat_name_.value ();
+  return this->flat_name_;
 }
 
 // Compute stringified flattened fully scoped name.
 void
 AST_Decl::compute_flat_name () const
 {
-  if (!this->flat_name_)
+  std::string flat_name;
+  bool first = true;
+  bool second = false;
+
+  for (UTL_IdListActiveIterator j (this->name ());
+       !j.is_done ();
+       j.next ())
     {
-      std::string flat_name;
-      bool first = true;
-      bool second = false;
-
-      for (UTL_IdListActiveIterator j (this->name ());
-           !j.is_done ();
-           j.next ())
+      if (!first)
         {
-          if (!first)
-            {
-              flat_name += '_';
-            }
-          else if (second)
-            {
-              first = second = false;
-            }
-
-          // Print the identifier, leaving out
-          // _cxx_ prefix, if any.
-          Identifier *tmp = j.item ()->copy ();
-          FE_Utils::original_local_name (tmp);
-          std::string_view const item_name (tmp->get_string_view ());
-          flat_name.append (item_name);
-
-          if (first)
-            {
-              if (!item_name.empty ())
-                {
-                  // Does not start with a "".
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
-            }
-
-          tmp->destroy ();
-          delete tmp;
+          flat_name += '_';
+        }
+      else if (second)
+        {
+          first = second = false;
         }
 
-      this->flat_name_ = flat_name;
+      // Print the identifier, leaving out
+      // _cxx_ prefix, if any.
+      Identifier *tmp = j.item ()->copy ();
+      FE_Utils::original_local_name (tmp);
+      std::string_view const item_name (tmp->get_string_view ());
+      flat_name.append (item_name);
+
+      if (first)
+        {
+          if (!item_name.empty ())
+            {
+              // Does not start with a "".
+              first = false;
+            }
+          else
+            {
+              second = true;
+            }
+        }
+
+      tmp->destroy ();
+      delete tmp;
     }
+
+  this->flat_name_ = flat_name;
 }
 
 std::string_view
@@ -789,17 +786,9 @@ AST_Decl::full_name () const
 std::string const&
 AST_Decl::repoID () const
 {
-  if (this->pd_node_type == NT_root)
-    {
-      this->repoID_ = std::string ();
-    }
+  this->compute_repoID ();
 
-  if (!this->repoID_)
-    {
-      this->compute_repoID ();
-    }
-
-  return this->repoID_.value ();
+  return this->repoID_;
 }
 
 void
@@ -811,7 +800,7 @@ AST_Decl::repoID (std::string_view value)
 void
 AST_Decl::clear_repoID ()
 {
-  this->repoID_.reset ();
+  this->repoID_.clear ();
 }
 
 std::string const&
@@ -874,9 +863,9 @@ AST_Decl::version (std::string_view value)
 
       // Repo id is now computed eagerly, so a version set must update
       // is as well.
-      if (this->repoID_)
+      if (!this->repoID_.empty ())
         {
-          std::string tmp (*this->repoID_);
+          std::string tmp (this->repoID_);
           std::string::size_type const pos = tmp.rfind (':');
           if (pos != std::string::npos)
             {
@@ -972,7 +961,7 @@ AST_Decl::set_id_with_typeid (std::string_view value)
       return;
     }
 
-  this->repoID_.reset ();
+  this->repoID_.clear ();
   this->repoID (value);
   this->typeid_set_ = true;
 }
@@ -1170,8 +1159,8 @@ AST_Decl::set_name (UTL_ScopedName *n)
       this->original_local_name (n->last_component ());
 
       // The flattened name and repo ID will be recomputed on demand.
-      this->flat_name_.reset ();
-      this->repoID_.reset ();
+      this->flat_name_.clear ();
+      this->repoID_.clear ();
     }
 }
 

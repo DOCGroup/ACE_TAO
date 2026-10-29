@@ -405,10 +405,10 @@ protected:
   // be_predefined_type' constructor and can be called
   // from be_decl.
 
-  mutable std::optional<std::string> repoID_;
+  mutable std::string repoID_;
   // Repository ID.
 
-  mutable std::optional<std::string> flat_name_;
+  mutable std::string flat_name_;
   // Flattened fully scoped name.
 
   int contains_wstring_ {-1};
