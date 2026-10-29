@@ -169,7 +169,13 @@ private:
 
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
-  static bool const compatible_[number_of_lock_modes][number_of_lock_modes];
+  inline static constexpr bool compatible_[number_of_lock_modes][number_of_lock_modes] = {
+    {true, true, true, true, false},
+    {true, true, true, false, false},
+    {true, true, false, false, false},
+    {true, false, false, true, false},
+    {false, false, false, false, false}
+  };
 
   /// Lock to ensure that race conditions does not occur.
   TAO_SYNCH_MUTEX mlock_;

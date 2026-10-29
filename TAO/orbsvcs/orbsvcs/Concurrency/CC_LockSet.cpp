@@ -21,7 +21,7 @@ CC_LockSet::CC_LockSet ()
     {
       this->Init ();
     }
-  catch (CORBA::Exception const &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_LockSet::CC_LockSet ()");
     }
@@ -35,7 +35,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr )
     {
       this->Init ();
     }
-  catch (CORBA::Exception const &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_LockSet::CC_LockSet (...)");
     }
@@ -269,15 +269,5 @@ CC_LockSet::dump () const
               lock_[CC_IW],
               lock_[CC_W]));
 }
-
-bool const
-CC_LockSet::compatible_[number_of_lock_modes][number_of_lock_modes] =
-  {
-    {true, true, true, true, false},
-    {true, true, true, false, false},
-    {true, true, false, false, false},
-    {true, false, false, true, false},
-    {false, false, false, false, false}
-  };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

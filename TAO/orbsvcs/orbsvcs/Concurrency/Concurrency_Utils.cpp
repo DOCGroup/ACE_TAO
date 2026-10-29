@@ -57,7 +57,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
                   "listening as object <%s>\n",
                   str.in ()));
     }
-  catch (CORBA::Exception const &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Concurrency Service");
       return CORBA::Object::_nil ();
@@ -76,7 +76,7 @@ TAO_Concurrency_Server::fini ()
 
       this->poa_->deactivate_object (id.in ());
     }
-  catch (CORBA::Exception const &ex)
+  catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level > 0)
         {

@@ -73,7 +73,7 @@ public:
   void set_mode (CosConcurrencyControl::lock_mode mode);
 
   /// Returns true if this lock is compatible with the other lock.
-  CORBA::Boolean Compatible (CC_Lock const &other) const;
+  CORBA::Boolean Compatible (CC_Lock const & other) const;
 
   /// Returns true is this lock is compatible with the referenced mode.
   CORBA::Boolean Compatible (CosConcurrencyControl::lock_mode mode) const;
@@ -100,7 +100,13 @@ private:
 
   /// Defines the compatibility of the locks.
   static constexpr int number_of_lock_modes = 5;
-  static CORBA::Boolean compatible_[number_of_lock_modes][number_of_lock_modes];
+  inline static constexpr CORBA::Boolean compatible_[number_of_lock_modes][number_of_lock_modes] = {
+    {true, false, true, true, false},
+    {false, false, false, false, false},
+    {true, false, false, true, false},
+    {true, false, true, true, true},
+    {false, false, false, true, true}
+  };
 };
 
 /**

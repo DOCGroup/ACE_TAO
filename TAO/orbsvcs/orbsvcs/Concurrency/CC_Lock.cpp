@@ -45,7 +45,7 @@ CC_Lock::try_lock ()
               "lock_held_: %i, ",
               lock_held_));
 
-  int success = 0;//semaphore_.tryacquire ();
+  int const success {}; //semaphore_.tryacquire ()
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "success: %i\n", success));
@@ -75,7 +75,7 @@ CC_Lock::unlock ()
   if (lock_held_ == 0)
     throw CosConcurrencyControl::LockNotHeld ();
 
-  int success = 0; //semaphore_.release ();
+  int const success {}; //semaphore_.release ()
 
   if (success == -1)
     throw CORBA::INTERNAL ();
@@ -110,7 +110,7 @@ CC_Lock::set_mode (CosConcurrencyControl::lock_mode mode)
 }
 
 CORBA::Boolean
-CC_Lock::Compatible (CC_Lock const &other) const
+CC_Lock::Compatible (CC_Lock const & other) const
 {
   return this->Compatible (other.mode_);
 }
@@ -163,13 +163,6 @@ CC_Lock::dump () const
 //        IR     X
 //        IW  X  X  X
 //
-CORBA::Boolean CC_Lock::compatible_[number_of_lock_modes][number_of_lock_modes] = {
-  {true, false, true, true, false},
-  {false, false, false, false, false},
-  {true, false, false, true, false},
-  {true, false, true, true, true},
-  {false, false, false, true, true}};
-
 // CC_LockModeterator
 
 void CC_LockModeIterator::First ()
