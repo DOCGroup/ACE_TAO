@@ -9,7 +9,6 @@
 
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Concurrency/CC_LockSet.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -52,14 +51,10 @@ CC_LockSet::Init ()
     throw CORBA::INTERNAL ();
 }
 
-// Destructor
-
-CC_LockSet::~CC_LockSet () = default;
-
 // Returns true if the requested lock mode is compatible with the
 // modes held. False otherwise.
 
-bool CC_LockSet::compatible (CC_LockModeEnum mr)
+bool CC_LockSet::compatible (CC_LockModeEnum mr) const
 {
   for (size_t i = CC_IR; i <= CC_W; i++)
     if (this->lock_[i] > 0)
@@ -76,7 +71,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode)
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
 
-  CC_LockModeEnum lm = lmconvert (mode);
+  CC_LockModeEnum const lm = lmconvert (mode);
 
   // Check to see if the requested mode is compatible with the modes
   // held so far. If not put the request on hold.
@@ -93,7 +88,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode)
 CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode)
 {
-  CC_LockModeEnum lm = lmconvert (mode);
+  CC_LockModeEnum const lm = lmconvert (mode);
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_LockSet::try_lock\n"));
@@ -132,7 +127,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_LockSet::unlock\n"));
 
-  CC_LockModeEnum lm = lmconvert (mode);
+  CC_LockModeEnum const lm = lmconvert (mode);
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mlock_);
 
@@ -173,8 +168,8 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_LockSet::change_mode\n"));
-  CC_LockModeEnum lm_held = lmconvert (held_mode);
-  CC_LockModeEnum lm_new = lmconvert (new_mode);
+  CC_LockModeEnum const lm_held = lmconvert (held_mode);
+  CC_LockModeEnum const lm_new = lmconvert (new_mode);
 
   if (!this->lock_held (lm_held)) // This lock is not held
     throw CosConcurrencyControl::LockNotHeld();
@@ -263,7 +258,7 @@ CC_LockSet::lock_held (CC_LockModeEnum lm)
 }
 
 void
-CC_LockSet::dump ()
+CC_LockSet::dump () const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
@@ -276,7 +271,7 @@ CC_LockSet::dump ()
 }
 
 bool const
-CC_LockSet::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] =
+CC_LockSet::compatible_[number_of_lock_modes][number_of_lock_modes] =
   {
     {true, true, true, true, false},
     {true, true, true, false, false},

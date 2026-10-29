@@ -15,9 +15,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Default constructor
-TAO_Concurrency_Server::TAO_Concurrency_Server () = default;
-
 // Constructor which takes an ORB and POA.
 TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_ptr orb,
                                                 PortableServer::POA_ptr poa)
@@ -93,11 +90,9 @@ TAO_Concurrency_Server::fini ()
 }
 
 CC_LockSetFactory *
-TAO_Concurrency_Server::GetLockSetFactory()
+TAO_Concurrency_Server::GetLockSetFactory ()
 {
   return &this->lock_set_factory_;
 }
-
-TAO_Concurrency_Server::~TAO_Concurrency_Server () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

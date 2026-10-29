@@ -25,11 +25,6 @@
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/Concurrency/concurrency_serv_export.h"
 
-/// This constant defines the number of lock modes. There is really no
-/// way to set this constant dynamically because the nuber of lock
-/// modes are not stated as part of the IDL.
-#define NUMBER_OF_LOCK_MODES 5
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -48,13 +43,13 @@ class TAO_Concurrency_Serv_Export CC_Lock
 {
 public:
   /// Creates the lock with mode = intention_read (weakest)
-  CC_Lock ();
+  CC_Lock () = default;
 
   /// Creates the lock with the desired mode
   explicit CC_Lock (CosConcurrencyControl::lock_mode mode);
 
   /// Deletes the lock
-  ~CC_Lock ();
+  ~CC_Lock () = default;
 
   CC_Lock (CC_Lock const &) = delete;
   CC_Lock &operator = (CC_Lock const &) = delete;
@@ -78,22 +73,22 @@ public:
   void set_mode (CosConcurrencyControl::lock_mode mode);
 
   /// Returns true if this lock is compatible with the other lock.
-  CORBA::Boolean Compatible (CC_Lock const &other);
+  CORBA::Boolean Compatible (CC_Lock const &other) const;
 
   /// Returns true is this lock is compatible with the referenced mode.
-  CORBA::Boolean Compatible (CosConcurrencyControl::lock_mode mode);
+  CORBA::Boolean Compatible (CosConcurrencyControl::lock_mode mode) const;
 
   /// Returns the mode of the lock.
-  CosConcurrencyControl::lock_mode GetMode ();
+  CosConcurrencyControl::lock_mode GetMode () const;
 
   /// Returns the number of times this lock have been locked
-  int GetLocksHeld();
+  int GetLocksHeld () const;
 
   /// Decrements the number of locks held in this mode. Used by change_mode.
   void DecLocksHeld();
 
   /// Dumps the state of the object to stdout
-  void dump();
+  void dump () const;
 
 protected:
   /// Holds the lock's mode.
@@ -104,7 +99,8 @@ private:
   int lock_held_ {};
 
   /// Defines the compatibility of the locks.
-  static CORBA::Boolean compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
+  static constexpr int number_of_lock_modes = 5;
+  static CORBA::Boolean compatible_[number_of_lock_modes][number_of_lock_modes];
 };
 
 /**
@@ -121,10 +117,10 @@ class TAO_Concurrency_Serv_Export CC_LockModeIterator
 {
 public:
   /// Default constructor
-  CC_LockModeIterator();
+  CC_LockModeIterator () = default;
 
   /// Destructor
-  ~CC_LockModeIterator();
+  ~CC_LockModeIterator () = default;
 
   /// Reset the iterator to the first element
   void First();
@@ -134,10 +130,10 @@ public:
   void Next();
 
   /// Returns true if the iterator has reached the last element
-  CORBA::Boolean IsDone();
+  CORBA::Boolean IsDone () const;
 
   /// Get the current element
-  CosConcurrencyControl::lock_mode GetLockMode();
+  CosConcurrencyControl::lock_mode GetLockMode () const;
 
 private:
   CosConcurrencyControl::lock_mode current_ {CosConcurrencyControl::intention_read};

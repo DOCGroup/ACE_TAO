@@ -39,7 +39,7 @@ class TAO_Concurrency_Serv_Export TAO_Concurrency_Server
 {
 public:
   ///Default constructor.
-  TAO_Concurrency_Server ();
+  TAO_Concurrency_Server () = default;
 
   /// Takes the POA under which to register the Concurrency Service
   /// implementation object.
@@ -47,7 +47,7 @@ public:
                           PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~TAO_Concurrency_Server ();
+  ~TAO_Concurrency_Server () = default;
 
   TAO_Concurrency_Server (TAO_Concurrency_Server const &) = delete;
   TAO_Concurrency_Server &operator = (TAO_Concurrency_Server const &) = delete;

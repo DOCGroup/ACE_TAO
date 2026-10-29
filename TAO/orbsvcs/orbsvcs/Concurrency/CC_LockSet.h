@@ -48,11 +48,6 @@
 #undef lock_held
 #endif /* lock_held */
 
-/// This constant defines the number of lock modes. There is really no
-/// way to set this constant dynamically because the nuber of lock
-/// modes are not stated as part of the IDL.
-#define NUMBER_OF_LOCK_MODES 5
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Enummeration representing the lock modes. The incoming request is
@@ -83,7 +78,7 @@ public:
   explicit CC_LockSet (CosConcurrencyControl::LockSet_ptr related);
 
   /// Destructor.
-  ~CC_LockSet () override;
+  ~CC_LockSet () override = default;
 
   CC_LockSet (CC_LockSet const &) = delete;
   CC_LockSet &operator = (CC_LockSet const &) = delete;
@@ -107,19 +102,19 @@ public:
 
   // = Debugging methods
   /// Dump the state of the object to stdout
-  void dump ();
+  void dump () const;
 
 private:
   /// Converts the CORBA specification's lock mode to the internal
   /// representation
-  CC_LockModeEnum lmconvert (CosConcurrencyControl::lock_mode mode);
+  static CC_LockModeEnum lmconvert (CosConcurrencyControl::lock_mode mode);
 
   /// Initiatlizes the lock set array and acquires the initial
   /// semaphore.
   void Init ();
 
   /// Returns true if the held lock and the requested lock are compatible
-  bool compatible (CC_LockModeEnum mr);
+  bool compatible (CC_LockModeEnum mr) const;
 
   // The _i functions below ensures atomical access the the state data
   // for the lock set. The functions acquires a thread lock in order
@@ -150,7 +145,8 @@ private:
 
   /// An array of lock counters that counts how many locks of that type
   /// that the lock set holds.
-  int lock_[NUMBER_OF_LOCK_MODES] {};
+  static constexpr int number_of_lock_modes = 5;
+  int lock_[number_of_lock_modes] {};
 
   // ACE_Thread_Semaphore semaphore_;
   /**
@@ -173,7 +169,7 @@ private:
 
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
-  static bool const compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
+  static bool const compatible_[number_of_lock_modes][number_of_lock_modes];
 
   /// Lock to ensure that race conditions does not occur.
   TAO_SYNCH_MUTEX mlock_;

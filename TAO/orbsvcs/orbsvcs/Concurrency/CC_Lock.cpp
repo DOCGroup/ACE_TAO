@@ -20,14 +20,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CC_Lock::CC_Lock () = default;
-
 CC_Lock::CC_Lock (CosConcurrencyControl::lock_mode mode)
   : mode_ (mode)
 {
 }
-
-CC_Lock::~CC_Lock () = default;
 
 void
 CC_Lock::lock ()
@@ -114,25 +110,25 @@ CC_Lock::set_mode (CosConcurrencyControl::lock_mode mode)
 }
 
 CORBA::Boolean
-CC_Lock::Compatible (CC_Lock const &other)
+CC_Lock::Compatible (CC_Lock const &other) const
 {
   return this->Compatible (other.mode_);
 }
 
 CORBA::Boolean
-CC_Lock::Compatible (CosConcurrencyControl::lock_mode mode)
+CC_Lock::Compatible (CosConcurrencyControl::lock_mode mode) const
 {
   return compatible_[this->mode_][mode];
 }
 
 CosConcurrencyControl::lock_mode
-CC_Lock::GetMode ()
+CC_Lock::GetMode () const
 {
   return mode_;
 }
 
 int
-CC_Lock::GetLocksHeld ()
+CC_Lock::GetLocksHeld () const
 {
   return this->lock_held_;
 }
@@ -144,7 +140,7 @@ CC_Lock::DecLocksHeld ()
 }
 
 void
-CC_Lock::dump ()
+CC_Lock::dump () const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "mode_ %i, lock_held_: %i\n",
@@ -167,7 +163,7 @@ CC_Lock::dump ()
 //        IR     X
 //        IW  X  X  X
 //
-CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] = {
+CORBA::Boolean CC_Lock::compatible_[number_of_lock_modes][number_of_lock_modes] = {
   {true, false, true, true, false},
   {false, false, false, false, false},
   {true, false, false, true, false},
@@ -176,9 +172,6 @@ CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] 
 
 // CC_LockModeterator
 
-CC_LockModeIterator::CC_LockModeIterator () = default;
-
-CC_LockModeIterator::~CC_LockModeIterator () = default;
 void CC_LockModeIterator::First ()
 {
   current_ = CosConcurrencyControl::intention_read;
@@ -208,13 +201,13 @@ void CC_LockModeIterator::Next ()
 }
 
 CORBA::Boolean
-CC_LockModeIterator::IsDone ()
+CC_LockModeIterator::IsDone () const
 {
   return current_ == CosConcurrencyControl::write;
 }
 
 CosConcurrencyControl::lock_mode
-CC_LockModeIterator::GetLockMode ()
+CC_LockModeIterator::GetLockMode () const
 {
   return current_;
 }

@@ -17,10 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Concurrency_Loader::TAO_Concurrency_Loader () = default;
-
-TAO_Concurrency_Loader::~TAO_Concurrency_Loader () = default;
-
 int
 TAO_Concurrency_Loader::init (int argc, ACE_TCHAR *argv[])
 {
