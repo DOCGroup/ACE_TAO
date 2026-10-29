@@ -103,12 +103,11 @@ AST_Typedef::~AST_Typedef () = default;
 AST_Type *
 AST_Typedef::primitive_base_type () const
 {
-  AST_Type *d = const_cast<AST_Typedef *> (this);
-  AST_Typedef *temp = nullptr;
+  AST_Type *d = this->base_type ();
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
-      temp = dynamic_cast<AST_Typedef*> (d);
+      AST_Typedef *temp = dynamic_cast<AST_Typedef*> (d);
       d = dynamic_cast<AST_Type*> (temp->base_type ());
     }
 
