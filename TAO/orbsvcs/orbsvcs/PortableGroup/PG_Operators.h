@@ -30,16 +30,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * Used for checking equality of PortableGroup::Location and
  * PortableGroup::Property variables.
  */
-bool TAO_PortableGroup_Export operator== (const CosNaming::Name & lhs,
-                                          const CosNaming::Name & rhs);
+bool TAO_PortableGroup_Export operator== (CosNaming::Name const &lhs,
+                                          CosNaming::Name const &rhs);
 
 /// Global CosNaming::Name inequality operator.
 /**
  * This simple implementation simply negates the result of the
  * equality operator.
  */
-bool TAO_PortableGroup_Export operator!= (const CosNaming::Name & lhs,
-                                          const CosNaming::Name & rhs);
+bool TAO_PortableGroup_Export operator!= (CosNaming::Name const &lhs,
+                                          CosNaming::Name const &rhs);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
