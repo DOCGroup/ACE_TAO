@@ -12,15 +12,15 @@
 #define ACE_XML_HELPER_H
 #include /**/ "ace/pre.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
+#if !defined(ACE_LACKS_PRAGMA_ONCE)
+#  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "XML_Error_Handler.h"
 #include "XML_Schema_Resolver.h"
 
-#include "xercesc/util/XercesDefs.hpp"
 #include "xercesc/parsers/XercesDOMParser.hpp"
+#include "xercesc/util/XercesDefs.hpp"
 
 #include <memory>
 
@@ -35,36 +35,34 @@ namespace XERCES_CPP_NAMESPACE
 namespace XML
 {
   /**
-    * @class XML_Helper
-    *
-    * @brief Helper class for some routine XML stuff.
-    */
-  template <typename Resolver = XML_Schema_Resolver <>,
-            typename Error_Handler = XML_Error_Handler>
+   * @class XML_Helper
+   *
+   * @brief Helper class for some routine XML stuff.
+   */
+  template <typename Resolver = XML_Schema_Resolver<>, typename Error_Handler = XML_Error_Handler>
   class XML_Helper
   {
   public:
-    XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
+    explicit XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
 
-    ~XML_Helper ();
+    ~XML_Helper () noexcept;
+
+    XML_Helper (XML_Helper const &) = delete;
+    XML_Helper &operator= (XML_Helper const &) = delete;
+    XML_Helper (XML_Helper &&) = delete;
+    XML_Helper &operator= (XML_Helper &&) = delete;
 
     /// Create a DOM tree
-    XERCES_CPP_NAMESPACE::DOMDocument *
-    create_dom (const ACE_TCHAR *uri) const;
+    XERCES_CPP_NAMESPACE::DOMDocument *create_dom (const ACE_TCHAR *uri) const;
 
-    XERCES_CPP_NAMESPACE::DOMDocument *
-    create_dom (const ACE_TCHAR *root,
-                const ACE_TCHAR *ns,
-                XERCES_CPP_NAMESPACE::DOMDocumentType * doctype = nullptr) const;
+    XERCES_CPP_NAMESPACE::DOMDocument *create_dom (const ACE_TCHAR *root, const ACE_TCHAR *ns,
+                                                   XERCES_CPP_NAMESPACE::DOMDocumentType *doctype = nullptr) const;
 
-    XERCES_CPP_NAMESPACE::DOMDocumentType *
-    create_doctype (const ACE_TCHAR *qn,
-                    const ACE_TCHAR *pid,
-                    const ACE_TCHAR *sid) const;
+    XERCES_CPP_NAMESPACE::DOMDocumentType *create_doctype (const ACE_TCHAR *qn, const ACE_TCHAR *pid,
+                                                           const ACE_TCHAR *sid) const;
 
     /// Writes out a DOMDocument to an XML file
-    bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
-                    const ACE_TCHAR *file) const;
+    bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc, const ACE_TCHAR *file) const;
 
     bool is_initialized () const;
 
@@ -80,18 +78,20 @@ namespace XML
     void init_parser ();
 
   private:
-    bool initialized_ { false };
-    XERCES_CPP_NAMESPACE::DOMImplementation *impl_ {};
-    mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_;
+    void cleanup_parser (bool runtime_started);
 
-    Resolver *resolver_;
-    bool release_resolver_ { false };
-    Error_Handler *e_handler_;
-    bool release_e_handler_ { false };
+    bool initialized_{};
+    XERCES_CPP_NAMESPACE::DOMImplementation *impl_{};
+    mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_{};
+
+    Resolver *resolver_{};
+    bool release_resolver_{};
+    Error_Handler *e_handler_{};
+    bool release_e_handler_{};
   };
 }
 
 #include "XML_Helper.tpp"
 
 #include /**/ "ace/post.h"
-#endif/*ACE_XML_HELPER_H*/
+#endif /*ACE_XML_HELPER_H*/

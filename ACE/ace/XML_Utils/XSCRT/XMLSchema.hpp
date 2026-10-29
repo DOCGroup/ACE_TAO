@@ -4,271 +4,259 @@
 #define XSCRT_XMLSCHEMA_HPP
 
 #include <string>
-// #include <iostream> //@@ tmp
 
-#include "ace/XML_Utils/XMLSchema/XSCRT/Elements.hpp"
+#include "ace/XML_Utils/XSCRT/Elements.hpp"
 
+/* MSVC warning C4355 is triggered by ID's member initializer passing `this`
+ * to IdentityProvider. IdentityProvider stores the reference without using
+ * the ID while it is being constructed.
+ */
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable : 4355)
+#endif
 namespace XMLSchema
 {
-  typedef XSCRT::FundamentalType<signed char> byte;
-  typedef XSCRT::FundamentalType<unsigned char> unsignedByte;
+  using byte = XSCRT::FundamentalType<signed char>;
+  using unsignedByte = XSCRT::FundamentalType<unsigned char>;
 
-  typedef XSCRT::FundamentalType<short> short_;
-  typedef XSCRT::FundamentalType<unsigned short> unsignedShort;
+  using short_ = XSCRT::FundamentalType<short>;
+  using unsignedShort = XSCRT::FundamentalType<unsigned short>;
 
-  typedef XSCRT::FundamentalType<int> int_;
-  typedef XSCRT::FundamentalType<unsigned int> unsignedInt;
+  using int_ = XSCRT::FundamentalType<int>;
+  using unsignedInt = XSCRT::FundamentalType<unsigned int>;
 
-  typedef XSCRT::FundamentalType<long long> long_;
-  typedef XSCRT::FundamentalType<unsigned long long> unsignedLong;
+  using long_ = XSCRT::FundamentalType<long long>;
+  using unsignedLong = XSCRT::FundamentalType<unsigned long long>;
 
   //@@ It would be nice to use some arbitrary-length integer class.
-  //
-  typedef long_ decimal;
-  typedef decimal integer;
-  typedef integer nonPositiveInteger;
-  typedef integer nonNegativeInteger;
-  typedef nonNegativeInteger positiveInteger;
-  typedef nonPositiveInteger negativeInteger;
+  using decimal = long_;
+  using integer = decimal;
+  using nonPositiveInteger = integer;
+  using nonNegativeInteger = integer;
+  using positiveInteger = nonNegativeInteger;
+  using negativeInteger = nonPositiveInteger;
 
+  using boolean = XSCRT::FundamentalType<bool>;
 
-  typedef XSCRT::FundamentalType<bool> boolean;
-
-  typedef XSCRT::FundamentalType<float> float_;
-  typedef XSCRT::FundamentalType<double> double_;
-
-  // Just to make GCC 3.3 and other broken compilers shutup.
-  //
-  using std::basic_string;
-
+  using float_ = XSCRT::FundamentalType<float>;
+  using double_ = XSCRT::FundamentalType<double>;
 
   template <typename C>
-  class string : public XSCRT::Type, public basic_string<C>
+  class string
+    : public XSCRT::Type
+    , public std::basic_string<C>
   {
   protected:
-    typedef basic_string<C> Base__ ;
+    using Base__ = std::basic_string<C>;
 
   public:
-    //@@ VC6 does not inject XSCRT::Type into the scope so I have
-    //   to qualify it all the time.
-    //
     string () = default;
 
-    string (XSCRT::XML::Element<C> const& e)
-        : Base__ (e.value ())
+    explicit string (XSCRT::XML::Element<C> const &e)
+      : Base__ (e.value ())
     {
     }
 
-    string (XSCRT::XML::Attribute<C> const& a)
-        : Base__ (a.value ())
+    explicit string (XSCRT::XML::Attribute<C> const &a)
+      : Base__ (a.value ())
     {
     }
 
-    string (Base__ const& x)
-        : Base__ (x)
+    string (Base__ const &x)
+      : Base__ (x)
     {
     }
 
-    string&
-    operator= (Base__ const& x)
+    string &operator= (Base__ const &x)
     {
-      static_cast<Base__&> (*this) = x;
+      static_cast<Base__ &> (*this) = x;
       return *this;
     }
   };
-
 
   template <typename C>
   class normalizedString : public string<C>
   {
   protected:
-    typedef typename string<C>::Base__ Base__;
+    using Base__ = typename string<C>::Base__;
 
   public:
     normalizedString () = default;
 
-    normalizedString (XSCRT::XML::Element<C> const& e)
-        : string<C> (e)
+    explicit normalizedString (XSCRT::XML::Element<C> const &e)
+      : string<C> (e)
     {
     }
 
-    normalizedString (XSCRT::XML::Attribute<C> const& a)
-        : string<C> (a)
+    explicit normalizedString (XSCRT::XML::Attribute<C> const &a)
+      : string<C> (a)
     {
     }
 
-    normalizedString (Base__ const& x)
-        : string<C> (x)
+    normalizedString (Base__ const &x)
+      : string<C> (x)
     {
     }
 
-    normalizedString&
-    operator= (Base__ const& x)
+    normalizedString &operator= (Base__ const &x)
     {
-      static_cast<Base__&> (*this) = x;
+      static_cast<Base__ &> (*this) = x;
       return *this;
     }
   };
-
 
   template <typename C>
   class token : public normalizedString<C>
   {
   protected:
-    typedef typename normalizedString<C>::Base__ Base__;
+    using Base__ = typename normalizedString<C>::Base__;
 
   public:
     token () = default;
 
-    token (XSCRT::XML::Element<C> const& e)
-        : normalizedString<C> (e)
+    explicit token (XSCRT::XML::Element<C> const &e)
+      : normalizedString<C> (e)
     {
     }
 
-    token (XSCRT::XML::Attribute<C> const& a)
-        : normalizedString<C> (a)
+    explicit token (XSCRT::XML::Attribute<C> const &a)
+      : normalizedString<C> (a)
     {
     }
 
-    token (Base__ const& x)
-        : normalizedString<C> (x)
+    token (Base__ const &x)
+      : normalizedString<C> (x)
     {
     }
 
-    token&
-    operator= (Base__ const& x)
+    token &operator= (Base__ const &x)
     {
-      static_cast<Base__&> (*this) = x;
+      static_cast<Base__ &> (*this) = x;
       return *this;
     }
   };
-
 
   template <typename C>
   class NMTOKEN : public token<C>
   {
   protected:
-    typedef typename token<C>::Base__ Base__;
+    using Base__ = typename token<C>::Base__;
 
   public:
     NMTOKEN () = default;
 
-    NMTOKEN (XSCRT::XML::Element<C> const& e)
-        : token<C> (e)
+    explicit NMTOKEN (XSCRT::XML::Element<C> const &e)
+      : token<C> (e)
     {
     }
 
-    NMTOKEN (XSCRT::XML::Attribute<C> const& a)
-        : token<C> (a)
+    explicit NMTOKEN (XSCRT::XML::Attribute<C> const &a)
+      : token<C> (a)
     {
     }
 
-    NMTOKEN (Base__ const& x)
-        : token<C> (x)
+    NMTOKEN (Base__ const &x)
+      : token<C> (x)
     {
     }
 
-    NMTOKEN&
-    operator= (Base__ const& x)
+    NMTOKEN &operator= (Base__ const &x)
     {
-      static_cast<Base__&> (*this) = x;
+      static_cast<Base__ &> (*this) = x;
       return *this;
     }
   };
 
   template <typename C>
-  class Name: public token<C>
+  class Name : public token<C>
   {
   protected:
-    typedef typename token<C>::Base__ Base__;
+    using Base__ = typename token<C>::Base__;
 
   public:
-    Name() = default;
+    Name () = default;
 
-    Name(XSCRT::XML::Element<C> const& e)
-        : token<C> (e)
+    explicit Name (XSCRT::XML::Element<C> const &e)
+      : token<C> (e)
     {
     }
 
-    Name(XSCRT::XML::Attribute<C> const& a)
-        : token<C> (a)
+    explicit Name (XSCRT::XML::Attribute<C> const &a)
+      : token<C> (a)
     {
     }
 
-    Name(Base__ const& x)
-        : token<C> (x)
+    Name (Base__ const &x)
+      : token<C> (x)
     {
     }
 
-    Name&
-    operator= (Base__ const& x)
+    Name &operator= (Base__ const &x)
     {
-      static_cast<Base__&> (*this) = x;
-      return *this;
-    }
-  };
-
-
-  template <typename C>
-  class NCName: public Name<C>
-  {
-  protected:
-    typedef typename Name<C>::Base__ Base__;
-
-  public:
-    NCName() = default;
-
-    NCName(XSCRT::XML::Element<C> const& e)
-        : Name<C> (e)
-    {
-    }
-
-    NCName(XSCRT::XML::Attribute<C> const& a)
-        : Name<C> (a)
-    {
-    }
-
-    NCName(Base__ const& x)
-        : Name<C> (x)
-    {
-    }
-
-    NCName&
-    operator= (Base__ const& x)
-    {
-      static_cast<Base__&> (*this) = x;
+      static_cast<Base__ &> (*this) = x;
       return *this;
     }
   };
 
   template <typename C>
-  class QName: public Name<C>
+  class NCName : public Name<C>
   {
   protected:
-    typedef typename Name<C>::Base__ Base__;
+    using Base__ = typename Name<C>::Base__;
 
   public:
-    QName() = default;
+    NCName () = default;
 
-    QName(XSCRT::XML::Element<C> const& e)
-        : Name<C> (e)
+    explicit NCName (XSCRT::XML::Element<C> const &e)
+      : Name<C> (e)
     {
     }
 
-    QName(XSCRT::XML::Attribute<C> const& a)
-        : Name<C> (a)
+    explicit NCName (XSCRT::XML::Attribute<C> const &a)
+      : Name<C> (a)
     {
     }
 
-    QName(Base__ const& x)
-        : Name<C> (x)
+    NCName (Base__ const &x)
+      : Name<C> (x)
     {
     }
 
-    QName&
-    operator= (Base__ const& x)
+    NCName &operator= (Base__ const &x)
     {
-      static_cast<Base__&> (*this) = x;
+      static_cast<Base__ &> (*this) = x;
+      return *this;
+    }
+  };
+
+  template <typename C>
+  class QName : public Name<C>
+  {
+  protected:
+    using Base__ = typename Name<C>::Base__;
+
+  public:
+    QName () = default;
+
+    explicit QName (XSCRT::XML::Element<C> const &e)
+      : Name<C> (e)
+    {
+    }
+
+    explicit QName (XSCRT::XML::Attribute<C> const &a)
+      : Name<C> (a)
+    {
+    }
+
+    QName (Base__ const &x)
+      : Name<C> (x)
+    {
+    }
+
+    QName &operator= (Base__ const &x)
+    {
+      static_cast<Base__ &> (*this) = x;
       return *this;
     }
   };
@@ -276,138 +264,160 @@ namespace XMLSchema
   template <typename C>
   struct IdentityProvider : XSCRT::IdentityProvider
   {
-    IdentityProvider (NCName<C> const& id)
-        : id_ (id)
+    explicit IdentityProvider (NCName<C> const &id)
+      : id_ (id)
     {
     }
 
-    virtual bool
-    before (XSCRT::IdentityProvider const& y) const
+    bool before (XSCRT::IdentityProvider const &y) const override
     {
-      return id_ < dynamic_cast<IdentityProvider const&> (y).id_;
+      return id_ < dynamic_cast<IdentityProvider const &> (y).id_;
     }
 
   private:
-    NCName<C> const& id_;
+    NCName<C> const &id_;
 
-  private:
-    IdentityProvider (IdentityProvider const&);
+    IdentityProvider (IdentityProvider const &) = delete;
+    IdentityProvider (IdentityProvider &&) = delete;
 
-    IdentityProvider&
-    operator= (IdentityProvider const&);
+    IdentityProvider &operator= (IdentityProvider const &) = delete;
+    IdentityProvider &operator= (IdentityProvider &&) = delete;
   };
-
 
   template <typename C>
   class ID : public NCName<C>
   {
   protected:
-    typedef typename NCName<C>::Base__ Base__;
+    using Base__ = typename NCName<C>::Base__;
 
   public:
-    ~ID()
+    ~ID () override
     {
       unregister_id ();
     }
 
     ID ()
-        : id_provider_ (*this)
+      : id_provider_ (*this)
     {
     }
 
-    ID (XSCRT::XML::Element<C> const& e)
-        : NCName<C> (e), id_provider_ (*this)
+    explicit ID (XSCRT::XML::Element<C> const &e)
+      : NCName<C> (e)
+      , id_provider_ (*this)
     {
     }
 
-    ID (XSCRT::XML::Attribute<C> const& a)
-        : NCName<C> (a), id_provider_ (*this)
+    explicit ID (XSCRT::XML::Attribute<C> const &a)
+      : NCName<C> (a)
+      , id_provider_ (*this)
     {
     }
 
-    ID (ID const& x)
-        :  NCName<C> (x), id_provider_ (*this)
+    ID (ID const &x)
+      : NCName<C> (x)
+      , id_provider_ (*this)
     {
     }
 
-    ID (Base__ const& x)
-        :  NCName<C> (x), id_provider_ (*this)
+    ID (Base__ const &x)
+      : NCName<C> (x)
+      , id_provider_ (*this)
     {
     }
 
-    ID&
-    operator= (Base__ const& x)
+    ID &operator= (Base__ const &x)
     {
-      unregister_id ();
-
-      static_cast<NCName<C>&>(*this) = x;
-
-      register_id ();
-
+      assign_id_ (x);
       return *this;
     }
 
-    ID&
-    operator= (ID const& x)
+    ID &operator= (ID const &x)
     {
-      unregister_id ();
-
-      static_cast<NCName<C>&>(*this) = static_cast<NCName<C> const&>(x);
-
-      register_id ();
-
+      if (this != std::addressof (x))
+        assign_id_ (static_cast<Base__ const &> (x));
       return *this;
     }
 
   public:
     using NCName<C>::container;
 
-    virtual void
-    container (XSCRT::Type* c)
+    void container (XSCRT::Type *c) override
     {
+      XSCRT::Type *const previous_container (NCName<C>::container ());
       unregister_id ();
 
-      NCName<C>::container (c);
-
-      register_id ();
+      try
+      {
+        NCName<C>::container (c);
+        register_id ();
+      }
+      catch (...)
+      {
+        NCName<C>::container (previous_container == this ? nullptr : previous_container);
+        register_id ();
+        throw;
+      }
     }
 
   private:
     using NCName<C>::empty;
     using NCName<C>::root;
 
-    void
-    register_id ()
+    void assign_id_ (Base__ const &value)
     {
-      if (container () != this && !empty ())
+      Base__ next (value);
+
+      unregister_id ();
+      static_cast<Base__ &> (*this).swap (next);
+
+      try
       {
-        //std::wcerr << "registering " << container ()
-        //           << " as '" << *this
-        //           << "' on " << container () << std::endl;
-        container ()->register_id (id_provider_, container ());
+        register_id ();
+      }
+      catch (...)
+      {
+        static_cast<Base__ &> (*this).swap (next);
+        register_id ();
+        throw;
       }
     }
 
-    void
-    unregister_id ()
+    void register_id ()
     {
       if (container () != this && !empty ())
       {
-        //std::wcerr << "un-registering " << container ()
-        //           << " as '" << *this
-        //           << "' on " << container () << std::endl;
+        // std::wcerr << "registering " << container ()
+        //            << " as '" << *this
+        //            << "' on " << container () << std::endl;
+        container ()->register_id (id_provider_, container ());
+        registered_ = true;
+      }
+    }
+
+    void unregister_id ()
+    {
+      if (registered_)
+      {
+        // std::wcerr << "un-registering " << container ()
+        //            << " as '" << *this
+        //            << "' on " << container () << std::endl;
         container ()->unregister_id (id_provider_);
+        registered_ = false;
       }
     }
 
   private:
     IdentityProvider<C> id_provider_;
+    bool registered_{};
   };
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
   struct IDREF_Base : public XSCRT::Type
   {
-    virtual XSCRT::Type*
-    get () const = 0;
+    virtual XSCRT::Type *get () const = 0;
   };
 
   template <typename C>
@@ -415,59 +425,58 @@ namespace XMLSchema
   {
   public:
     IDREF ()
-        : id_provider_ (id_)
+      : id_provider_ (id_)
     {
     }
 
-    IDREF (XSCRT::XML::Element<C> const& e)
-        : id_ (e), id_provider_ (id_)
+    explicit IDREF (XSCRT::XML::Element<C> const &e)
+      : id_ (e)
+      , id_provider_ (id_)
     {
     }
 
-    IDREF (XSCRT::XML::Attribute<C> const& a)
-        : id_ (a), id_provider_ (id_)
+    explicit IDREF (XSCRT::XML::Attribute<C> const &a)
+      : id_ (a)
+      , id_provider_ (id_)
     {
     }
 
-    IDREF (IDREF const& x)
-        : id_ (x.id_), id_provider_ (id_)
+    IDREF (IDREF const &x)
+      : id_ (x.id_)
+      , id_provider_ (id_)
     {
     }
 
-    IDREF (basic_string<C> const& id)
-        : id_ (id), id_provider_ (id_)
+    IDREF (std::basic_string<C> const &id)
+      : id_ (id)
+      , id_provider_ (id_)
     {
     }
 
-    IDREF&
-    operator= (IDREF const& x)
+    IDREF &operator= (IDREF const &x)
     {
       id_ = x.id_;
       return *this;
     }
 
-    IDREF&
-    operator= (basic_string<C> const& x)
+    IDREF &operator= (std::basic_string<C> const &x)
     {
       id_ = x;
       return *this;
     }
 
   public:
-    XSCRT::Type*
-    operator-> () const
+    XSCRT::Type *operator->() const
     {
       return get ();
     }
 
-    XSCRT::Type&
-    operator* () const
+    XSCRT::Type &operator* () const
     {
       return *(get ());
     }
 
-    virtual XSCRT::Type*
-    get () const
+    XSCRT::Type *get () const override
     {
       if (!id_.empty () && container () != this)
       {
@@ -475,17 +484,13 @@ namespace XMLSchema
       }
       else
       {
-        return 0;
+        return nullptr;
       }
     }
 
-    // conversion to bool
-    //
-    typedef XSCRT::Type* (IDREF::*bool_convertable)() const;
-
-    operator bool_convertable () const
+    explicit operator bool () const
     {
-      return get () ? &IDREF::operator-> : 0;
+      return get () != nullptr;
     }
 
   private:
@@ -495,7 +500,6 @@ namespace XMLSchema
 }
 
 // Traversal
-//
 
 #include "ace/XML_Utils/XSCRT/Traversal.hpp"
 
@@ -504,52 +508,49 @@ namespace XMLSchema
   namespace Traversal
   {
     template <typename T>
-    struct Traverser : XSCRT::Traversal::Traverser<T, XSCRT::Type>,
-                       XSCRT::Traversal::Traverser<IDREF_Base, XSCRT::Type>
+    struct Traverser
+      : XSCRT::Traversal::Traverser<T, XSCRT::Type>
+      , XSCRT::Traversal::Traverser<IDREF_Base, XSCRT::Type>
     {
-      typedef
-      T
-      Type;
+      using Type = T;
 
-      virtual void
-      traverse (XMLSchema::IDREF_Base& r)
+      void traverse (XMLSchema::IDREF_Base &r) override
       {
-        if (r.get ()) dispatch (*(r.get ()));
+        if (r.get ())
+          dispatch (*(r.get ()));
       }
     };
 
-    typedef Traverser<byte> byte;
-    typedef Traverser<unsignedByte> unsignedByte;
+    using byte = Traverser<byte>;
+    using unsignedByte = Traverser<unsignedByte>;
 
-    typedef Traverser<short_> short_;
-    typedef Traverser<unsignedShort> unsignedShort;
+    using short_ = Traverser<short_>;
+    using unsignedShort = Traverser<unsignedShort>;
 
-    typedef Traverser<int_> int_;
-    typedef Traverser<unsignedInt> unsignedInt;
+    using int_ = Traverser<int_>;
+    using unsignedInt = Traverser<unsignedInt>;
 
-    typedef Traverser<long_> long_;
-    typedef Traverser<unsignedLong> unsignedLong;
+    using long_ = Traverser<long_>;
+    using unsignedLong = Traverser<unsignedLong>;
 
-    typedef Traverser<boolean> boolean;
+    using boolean = Traverser<boolean>;
 
-    typedef Traverser<float_> float_;
-    typedef Traverser<double_> double_;
+    using float_ = Traverser<float_>;
+    using double_ = Traverser<double_>;
 
     template <typename C>
-    struct string : Traverser<XMLSchema::string<C> >
+    struct string : Traverser<XMLSchema::string<C>>
     {
     };
 
     template <typename C>
-    struct ID : Traverser<XMLSchema::ID<C> >
+    struct ID : Traverser<XMLSchema::ID<C>>
     {
     };
   }
 }
 
-
 // ExtendedTypeInfo for XML Schema types
-//
 
 #include "ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp"
 
@@ -558,11 +559,10 @@ namespace XMLSchema
   template <typename C>
   struct TypeInfoInitializer
   {
-    TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap&);
+    explicit TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &);
   };
 }
 
-#include "ace/XML_Utils/XSCRT/XMLSchema.ipp"
-#include "ace/XML_Utils/XSCRT/XMLSchema.tpp"
+#include "ace/XML_Utils/XMLSchema/TypeInfo.tpp"
 
-#endif  // XSCRT_XMLSCHEMA_HPP
+#endif // XSCRT_XMLSCHEMA_HPP

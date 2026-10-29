@@ -1088,13 +1088,13 @@ BASEHDR=`find \
     ACEXML/common \
     ACEXML/parser/parser \
     Kokyu \
-    -name '*.h' -not -name 'config-*'`
+    \( -name '*.h' -o -name '*.hpp' \) -not -name 'config-*'`
 %if 0%{?_with_tao:1}%{?_without_tao:0}
 TAO_MM_OPTS="-I TAO -I TAO/orbsvcs -I TAO/orbsvcs/orbsvcs"
 BASEHDR="$BASEHDR `find \
     TAO/tao \
     TAO/orbsvcs/orbsvcs \
-    -name '*.h' -not -name 'config-*'`"
+    \( -name '*.h' -o -name '*.hpp' \) -not -name 'config-*'`"
 %endif
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
@@ -1128,12 +1128,12 @@ cat mmraw.list |\
         sort -u > allhdrs.list
 
 # Add missing headers.
-ls ace/*{.h,.inl,.cpp} >> allhdrs.list
+ls ace/*{.h,.inl,.cpp,.hpp} | grep -v '/config-' >> allhdrs.list
 %if 0%{?_with_tao:1}%{?_without_tao:0}
-ls TAO/tao/*{.h,.inl,_T.cpp} >> allhdrs.list
-ls TAO/tao/*/*{.h,.inl,.cpp} >> allhdrs.list
-ls TAO/orbsvcs/orbsvcs/*{.idl,.h,.inl,_T.cpp} >> allhdrs.list
-ls TAO/orbsvcs/orbsvcs/*/*{.h,.inl,_T.cpp} >> allhdrs.list
+ls TAO/tao/*{.h,.hpp,.inl,_T.cpp} >> allhdrs.list
+ls TAO/tao/*/*{.h,.hpp,.inl,.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/*{.idl,.h,.hpp,.inl,_T.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/*/*{.h,.hpp,.inl,_T.cpp} >> allhdrs.list
 ls TAO/orbsvcs/orbsvcs/ESF/*.cpp >> allhdrs.list
 %endif
 
