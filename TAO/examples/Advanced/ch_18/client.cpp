@@ -10,94 +10,93 @@
 //=============================================================================
 
 
-#include "CCSC.h"        // ORB-specific
-#include "assert.h"
-#include <orbsvcs/CosNamingC.h>
-#include <ace/streams.h>
-// ----------------------------------------------------------------
+#include <cassert>
+#include <iostream>
 
-using namespace std;
+#include "CCSC.h"        // ORB-specific
+#include "orbsvcs/CosNamingC.h"
+// ----------------------------------------------------------------
 
 template<class T>
 typename T::_ptr_type
-resolve_init(CORBA::ORB_ptr orb, const char * id)
+resolve_init (CORBA::ORB_ptr orb, char const *id)
 {
     CORBA::Object_var obj;
     try {
-        obj = orb->resolve_initial_references(id);
+        obj = orb->resolve_initial_references (id);
     }
-    catch (const CORBA::ORB::InvalidName &) {
+    catch (CORBA::ORB::InvalidName const&) {
         throw;
     }
-    catch (const CORBA::Exception & e) {
+    catch (CORBA::Exception const& e) {
         std::cerr << "Cannot get initial reference for "
              << id << ": "
              << e
              << std::endl;
-        throw 0;
+        throw CORBA::INITIALIZE ();
     }
-    assert(!CORBA::is_nil(obj.in()));
+    assert (!CORBA::is_nil (obj.in ()));
 
     typename T::_var_type ref;
     try {
-        ref = T::_narrow(obj.in());
+        ref = T::_narrow (obj.in ());
     }
-    catch (const CORBA::Exception & e) {
+    catch (CORBA::Exception const& e) {
         std::cerr << "Cannot narrow reference for "
              << id << ": "
              << e
              << std::endl;
-        throw 0;
+        throw CORBA::INITIALIZE ();
     }
-    if (CORBA::is_nil(ref.in())) {
+    if (CORBA::is_nil (ref.in ())) {
         std::cerr << "Incorrect type of reference for "
              << id << std::endl;
-        throw 0;
+        throw CORBA::INITIALIZE ();
     }
-    return ref._retn();
+    return ref._retn ();
 }
 
 //----------------------------------------------------------------
 
 template<class T>
 typename T::_ptr_type
-resolve_name(
-    CosNaming::NamingContext_ptr    nc,
-    const CosNaming::Name &         name)
+resolve_name (
+    CosNaming::NamingContext_ptr nc,
+    CosNaming::Name const& name)
 {
     CORBA::Object_var obj;
     try {
-        obj = nc->resolve(name);
+        obj = nc->resolve (name);
     }
-    catch (const CosNaming::NamingContext::NotFound &) {
+    catch (CosNaming::NamingContext::NotFound const&) {
         throw;
     }
-    catch (const CORBA::Exception & e) {
+    catch (CORBA::Exception const& e) {
         std::cerr << "Cannot resolve binding: "
                   << e
                   << std::endl;
-        throw 0;
+        throw CORBA::INITIALIZE ();
     }
-    if (CORBA::is_nil(obj.in())) {
+    if (CORBA::is_nil (obj.in ())) {
         std::cerr << "Nil binding in Naming Service" << std::endl;
-        throw 0;
+        throw CORBA::INITIALIZE ();
     }
 
     typename T::_var_type ref;
     try {
-        ref = T::_narrow(obj.in());
+        ref = T::_narrow (obj.in ());
     }
-    catch (const CORBA::Exception & e) {
+    catch (CORBA::Exception const& e) {
         std::cerr << "Cannot narrow reference: "
                   << e
                   << std::endl;
-        throw 0;
+        throw CORBA::INITIALIZE ();
     }
-    if (CORBA::is_nil(ref.in())) {
+    if (CORBA::is_nil (ref.in ())) {
         std::cerr << "Reference has incorrect type" << std::endl;
-        throw 0;
+        throw CORBA::INITIALIZE ();
     }
-    return ref._retn();
+    return ref._retn ();
 }
 
 //----------------------------------------------------------------
@@ -107,14 +106,14 @@ resolve_name(
 
 #if 0   // This inserter is not be needed for TAO.
 
-static ostream &
-operator<<(ostream & os, const CORBA::Exception & e)
+static std::ostream &
+operator<< (std::ostream& os, CORBA::Exception const& e)
 {
     CORBA::Any tmp;
     tmp <<= e;
 
-    CORBA::TypeCode_var tc = tmp.type();
-    const char * p = tc->name();
+    CORBA::TypeCode_var tc = tmp.type ();
+    char const *p = tc->name ();
     if (*p != '\0')
         os << p;
     else
@@ -132,7 +131,7 @@ operator<<(ostream & os, const CORBA::Exception & e)
 #if !defined (GEN_OSTREAM_OPS)
 
 static std::ostream &
-operator<<(std::ostream &os, CCS::Thermometer_ptr t)
+operator<< (std::ostream& os, CCS::Thermometer_ptr t)
 {
     // Check for nil.
     if (CORBA::is_nil(t)) {
@@ -164,7 +163,7 @@ operator<<(std::ostream &os, CCS::Thermometer_ptr t)
 // Show the information in a BtData struct.
 
 static std::ostream &
-operator<<(std::ostream &os, const CCS::Thermostat::BtData &btd)
+operator<< (std::ostream& os, CCS::Thermostat::BtData const& btd)
 {
     os << "CCS::Thermostat::BtData details:" << std::endl;
     os << "\trequested    : " << btd.requested << std::endl;
@@ -180,7 +179,7 @@ operator<<(std::ostream &os, const CCS::Thermostat::BtData &btd)
 // show the details of each record.
 
 static std::ostream &
-operator<<(std::ostream &os, const CCS::Controller::EChange &ec)
+operator<< (std::ostream& os, CCS::Controller::EChange const& ec)
 {
     for (CORBA::ULong i = 0; i < ec.errors.length(); i++) {
         os << "Change failed:" << std::endl;
@@ -197,12 +196,12 @@ operator<<(std::ostream &os, const CCS::Controller::EChange &ec)
 // Change the temperature of a thermostat.
 
 static void
-set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
+set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 {
     if (CORBA::is_nil(tmstat))  // Don't call via nil reference
         return;
 
-    CCS::AssetType anum = tmstat->asset_num();
+    CCS::AssetType const anum = tmstat->asset_num ();
     try {
         std::cout << "Setting thermostat " << anum
              << " to " << new_temp << " degrees." << std::endl;
@@ -211,7 +210,7 @@ set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
              << old_nominal << std::endl;
         std::cout << "New nominal temperature is: "
              << tmstat->get_nominal() << std::endl;
-    } catch (const CCS::Thermostat::BadTemp &bt) {
+    } catch (CCS::Thermostat::BadTemp const& bt) {
         std::cerr << "Setting of nominal temperature failed." << std::endl;
         std::cerr << bt.details << std::endl;             // Overloaded <<
     }
@@ -220,42 +219,40 @@ set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 //----------------------------------------------------------------
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-    CORBA::ULong i = 0;
-
     try {
         // Initialize the ORB
-        CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
         // Check arguments
         if (argc != 1) {
             std::cerr << "Usage: client" << std::endl;
-            throw 0;
+            return 1;
         }
 
         // Get reference to initial naming context.
         CosNaming::NamingContext_var inc
-            = resolve_init<CosNaming::NamingContext>(orb.in(), "NameService");
+            = resolve_init<CosNaming::NamingContext> (orb.in (), "NameService");
 
         // Look for controller in the Naming Service.
         CosNaming::Name n;
-        n.length(2);
-        n[0].id = CORBA::string_dup("CCS");
-        n[1].id = CORBA::string_dup("Controller");
+        n.length (2);
+        n[0].id = CORBA::string_dup ("CCS");
+        n[1].id = CORBA::string_dup ("Controller");
         CCS::Controller_var ctrl;
         try {
-            ctrl = resolve_name<CCS::Controller>(inc.in(), n);
-        } catch (const CosNaming::NamingContext::NotFound &) {
+            ctrl = resolve_name<CCS::Controller> (inc.in (), n);
+        } catch (CosNaming::NamingContext::NotFound const&) {
             std::cerr << "No controller in Naming Service" << std::endl;
-            throw 0;
+            return 1;
         }
 
         // Get list of devices
         CCS::Controller::ThermometerSeq_var list = ctrl->list();
 
         // Show number of devices.
-        CORBA::ULong len = list->length();
+        CORBA::ULong len = list->length ();
         std::cout << "Controller has " << len << " device";
         if (len != 1)
             std::cout << "s";
@@ -274,7 +271,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         list = ctrl->list();
         // Show details for each device.
-        for ( i = 0; i < list->length(); i++)
+        for (CORBA::ULong i = 0; i < list->length (); ++i)
           {
             CCS::Thermometer_ptr ti = list[i];
             std::cout << ti;
@@ -282,22 +279,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::cout << std::endl;
 
         // Change the location of first device in the list
-        CCS::AssetType anum = list[0u]->asset_num();
+        CCS::AssetType const anum = list[0]->asset_num ();
         std::cout << "Changing location of device "
              << anum << "." << std::endl;
-        list[0u]->location("Earth");
+        list[0]->location ("Earth");
         // Check that the location was updated
         std::cout << "New details for device "
              << anum << " are:" << std::endl;
-        CCS::Thermometer_ptr tx = list[0u];
+        CCS::Thermometer_ptr tx = list[0];
         std::cout << tx << std::endl;
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;
-        for (   i = 0;
-                i < list->length() && CORBA::is_nil(tmstat.in());
-                i++) {
-            tmstat = CCS::Thermostat::_narrow(list[i]);
+        for (CORBA::ULong i = 0; i < list->length () && CORBA::is_nil (tmstat.in ()); ++i) {
+            tmstat = CCS::Thermostat::_narrow (list[i]);
         }
 
         // Check that we found a thermostat on the list.
@@ -306,12 +301,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         } else {
             // Set temperature of thermostat to
             // 50 degrees (should work).
-            set_temp(tmstat.inout(), 50);
+            set_temp (tmstat.inout (), 50);
             std::cout << std::endl;
 
             // Set temperature of thermostat to
             // -10 degrees (should fail).
-            set_temp(tmstat.inout(), -10);
+            set_temp (tmstat.inout (), -10);
         }
 
         // Look for device in Rooms Earth and HAL. This must
@@ -319,13 +314,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // the location of the first device to Room Earth.
         std::cout << "Looking for devices in Earth and HAL." << std::endl;
         CCS::Controller::SearchSeq ss;
-        ss.length(2);
-        ss[0].key.loc(CORBA::string_dup("Earth"));
-        ss[1].key.loc(CORBA::string_dup("HAL"));
-        ctrl->find(ss);
+        ss.length (2);
+        ss[0].key.loc (CORBA::string_dup ("Earth"));
+        ss[1].key.loc (CORBA::string_dup ("HAL"));
+        ctrl->find (ss);
 
         // Show the devices found in that room.
-        for ( i = 0; i < ss.length(); i++)
+        for (CORBA::ULong i = 0; i < ss.length (); ++i)
             std::cout << ss[i].device.in();          // Overloaded <<
         std::cout << std::endl;
 
@@ -334,22 +329,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // containing only thermostats.
         std::cout << "Increasing thermostats by 40 degrees." << std::endl;
         CCS::Controller::ThermostatSeq tss;
-        for ( i = 0; i < list->length(); i++) {
-            tmstat = CCS::Thermostat::_narrow(list[i]);
+        for (CORBA::ULong i = 0; i < list->length (); ++i) {
+            tmstat = CCS::Thermostat::_narrow (list[i]);
             if (CORBA::is_nil(tmstat.in()))
                 continue;                   // Skip thermometers
-            len = tss.length();
-            tss.length(len + 1);
+            len = tss.length ();
+            tss.length (len + 1);
             tss[len] = tmstat;
         }
 
         // Try to change all thermostats.
         try {
-            ctrl->change(tss, 40);
-        } catch (const CCS::Controller::EChange &ec) {
+            ctrl->change (tss, 40);
+        } catch (CCS::Controller::EChange const& ec) {
             std::cerr << ec;                     // Overloaded <<
         }
-    } catch (const CORBA::Exception & e) {
+    } catch (CORBA::Exception const& e) {
         std::cerr << "Uncaught CORBA exception: "
                   << e
                   << std::endl;
