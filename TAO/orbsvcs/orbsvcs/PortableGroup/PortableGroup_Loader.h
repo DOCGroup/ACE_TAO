@@ -42,13 +42,19 @@ class TAO_PortableGroup_Export TAO_PortableGroup_Loader
 {
 public:
   /// Constructor.
-  TAO_PortableGroup_Loader ();
+  TAO_PortableGroup_Loader () = default;
 
   /// Initialize the PortableGroup loader hooks.
   int init (int argc, ACE_TCHAR *[]) override;
 
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
+
+private:
+  TAO_PortableGroup_Loader (TAO_PortableGroup_Loader const &) = delete;
+  TAO_PortableGroup_Loader (TAO_PortableGroup_Loader &&) = delete;
+  TAO_PortableGroup_Loader & operator= (TAO_PortableGroup_Loader const &) = delete;
+  TAO_PortableGroup_Loader & operator= (TAO_PortableGroup_Loader &&) = delete;
 };
 
 static int
