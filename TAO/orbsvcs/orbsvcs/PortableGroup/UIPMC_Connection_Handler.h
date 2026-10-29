@@ -78,8 +78,8 @@ public:
   int handle_input (ACE_HANDLE) override;
   int handle_output (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
   int open (void *) override;
   //@}
 
@@ -91,13 +91,13 @@ public:
   int set_dscp_codepoint (CORBA::Long dscp_codepoint) override;
 
   // UIPMC Additions - Begin
-  const ACE_INET_Addr &addr () const;
+  ACE_INET_Addr const &addr () const;
 
-  void addr (const ACE_INET_Addr &addr);
+  void addr (ACE_INET_Addr const &addr);
 
-  const ACE_INET_Addr &local_addr () const;
+  ACE_INET_Addr const &local_addr () const;
 
-  void local_addr (const ACE_INET_Addr &addr);
+  void local_addr (ACE_INET_Addr const &addr);
 
   u_long send_hi_water_mark () const;
   // UIPMC Additions - End
@@ -118,7 +118,7 @@ protected:
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
-  int handle_write_ready (const ACE_Time_Value *timeout) override;
+  int handle_write_ready (ACE_Time_Value const *timeout) override;
   //@}
 
   // helper function used by the set_dscp_codepoint () methods to
@@ -126,12 +126,17 @@ protected:
   int set_tos (int tos);
 
 private:
+  TAO_UIPMC_Connection_Handler (TAO_UIPMC_Connection_Handler const &) = delete;
+  TAO_UIPMC_Connection_Handler (TAO_UIPMC_Connection_Handler &&) = delete;
+  TAO_UIPMC_Connection_Handler & operator= (TAO_UIPMC_Connection_Handler const &) = delete;
+  TAO_UIPMC_Connection_Handler & operator= (TAO_UIPMC_Connection_Handler &&) = delete;
+
   /// Stores the type of service value.
   int dscp_codepoint_;
 
   /// How much data can be sent without delays. It defaults to the size
   /// of the socket buffer.
-  u_long send_hi_water_mark_;
+  u_long send_hi_water_mark_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
