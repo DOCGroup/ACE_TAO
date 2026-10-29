@@ -83,7 +83,7 @@ class TAO_AV_Export TAO_AV_RTCP_Sdes_Policy : public TAO_AV_Policy
 public:
   TAO_AV_RTCP_Sdes_Policy ();
   TAO_AV_RTCP_Sdes &value ();
-  void value (const TAO_AV_RTCP_Sdes& sdes_val);
+  void value (TAO_AV_RTCP_Sdes const &sdes_val);
 protected:
   TAO_AV_RTCP_Sdes sdes_;
 };
@@ -137,13 +137,13 @@ public:
 
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info = nullptr,
-                             const ACE_Addr &address = ACE_Addr::sap_any);
+                             ACE_Addr const &address = ACE_Addr::sap_any);
 
   // Called when a frame arrives for a FlowConsumer.
 
   /// address from which the frame was received.
   virtual int receive_control_frame (ACE_Message_Block *frame,
-                                     const ACE_Addr &address = ACE_Addr::sap_any);
+                                     ACE_Addr const &address = ACE_Addr::sap_any);
 
   /// Called during Streamctrl->destroy i.e tear_down  of the stream
   virtual int handle_destroy ();

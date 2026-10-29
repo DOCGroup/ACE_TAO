@@ -39,7 +39,7 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
+TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
                                                const void *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
@@ -157,7 +157,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
 }
 
 ssize_t
-TAO_AV_UDP_MCast_Transport::send (const char *buf,
+TAO_AV_UDP_MCast_Transport::send (char const *buf,
                                   size_t len,
                                   ACE_Time_Value *)
 {
