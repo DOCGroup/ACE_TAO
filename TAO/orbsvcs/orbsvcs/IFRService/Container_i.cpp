@@ -1350,9 +1350,9 @@ TAO_Container_i::create_value_i (
 }
 
 CORBA::ValueBoxDef_ptr
-TAO_Container_i::create_value_box (const char *id,
-                                   const char *name,
-                                   const char *version,
+TAO_Container_i::create_value_box (char const *id,
+                                   char const *name,
+                                   char const *version,
                                    CORBA::IDLType_ptr original_type_def)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueBoxDef::_nil ());
@@ -1366,9 +1366,9 @@ TAO_Container_i::create_value_box (const char *id,
 }
 
 CORBA::ValueBoxDef_ptr
-TAO_Container_i::create_value_box_i (const char *id,
-                                     const char *name,
-                                     const char *version,
+TAO_Container_i::create_value_box_i (char const *id,
+                                     char const *name,
+                                     char const *version,
                                      CORBA::IDLType_ptr original_type_def
  )
 {
@@ -1404,10 +1404,10 @@ TAO_Container_i::create_value_box_i (const char *id,
 }
 
 CORBA::ExceptionDef_ptr
-TAO_Container_i::create_exception (const char *id,
-                                   const char *name,
-                                   const char *version,
-                                   const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_exception (char const *id,
+                                   char const *name,
+                                   char const *version,
+                                   CORBA::StructMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExceptionDef::_nil ());
 
@@ -1420,10 +1420,10 @@ TAO_Container_i::create_exception (const char *id,
 }
 
 CORBA::ExceptionDef_ptr
-TAO_Container_i::create_exception_i (const char *id,
-                                     const char *name,
-                                     const char *version,
-                                     const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_exception_i (char const *id,
+                                     char const *name,
+                                     char const *version,
+                                     CORBA::StructMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;

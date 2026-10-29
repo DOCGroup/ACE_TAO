@@ -208,28 +208,28 @@ public:
       CORBA::InitializerSeq const &initializers);
 
   virtual CORBA::ValueBoxDef_ptr create_value_box (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type_def);
 
   CORBA::ValueBoxDef_ptr create_value_box_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type_def);
 
   virtual CORBA::ExceptionDef_ptr create_exception (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   CORBA::ExceptionDef_ptr create_exception_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   virtual CORBA::NativeDef_ptr create_native (
       const char *id,
