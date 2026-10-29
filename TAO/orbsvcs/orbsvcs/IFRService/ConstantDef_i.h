@@ -69,9 +69,9 @@ public:
 
   CORBA::Any *value_i ();
 
-  virtual void value (const CORBA::Any &value);
+  virtual void value (CORBA::Any const &value);
 
-  void value_i (const CORBA::Any &value);
+  void value_i (CORBA::Any const &value);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

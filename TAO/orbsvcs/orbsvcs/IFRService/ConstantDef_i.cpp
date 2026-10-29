@@ -186,7 +186,7 @@ TAO_ConstantDef_i::value_i ()
 }
 
 void
-TAO_ConstantDef_i::value (const CORBA::Any &value)
+TAO_ConstantDef_i::value (CORBA::Any const &value)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -196,7 +196,7 @@ TAO_ConstantDef_i::value (const CORBA::Any &value)
 }
 
 void
-TAO_ConstantDef_i::value_i (const CORBA::Any &value)
+TAO_ConstantDef_i::value_i (CORBA::Any const &value)
 {
   CORBA::TypeCode_var my_tc =
     this->type_i ();
