@@ -58,7 +58,7 @@ private:
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;
   PortableServer::POAManager_var mgr_;
-  bool running_;
+  bool running_ {};
   UpdateableHandler handler_;
   ACE_SYNCH_RW_MUTEX* mutex_;
 };

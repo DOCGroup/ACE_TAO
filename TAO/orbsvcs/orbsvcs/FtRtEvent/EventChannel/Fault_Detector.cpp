@@ -29,7 +29,7 @@ const FTRT::Location& Fault_Detector::my_location() const
 }
 
 namespace {
-  Fault_Detector* detector;
+  Fault_Detector* detector {};
 }
 
 Fault_Detector* Fault_Detector::instance()

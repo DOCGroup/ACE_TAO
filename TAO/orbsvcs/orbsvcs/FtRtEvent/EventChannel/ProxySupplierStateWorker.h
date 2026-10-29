@@ -36,7 +36,7 @@ public:
   void set_size(size_t size) override;
   void work(TAO_EC_ProxyPushSupplier* object) override;
 private:
-  int index_;
+  int index_ {};
   FtRtecEventChannelAdmin::ProxySupplierStates& supplierStates_;
 };
 

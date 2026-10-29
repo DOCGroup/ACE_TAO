@@ -59,7 +59,7 @@ protected:
 
   FTRT::Location location_;
   ReactorTask reactor_task_;
-  TAO_FTEC_Fault_Listener* listener_;
+  TAO_FTEC_Fault_Listener* listener_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
