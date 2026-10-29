@@ -113,6 +113,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 #define TAO_IDL_HAS_PARSE_ARGS_EXIT
 
+/**
+ * This signals that the TAO IDL front end provides its modern C++ string API:
+ * UTL_IdList::get_string_copy () returns std::string, and UTL_String provides
+ * std::string_view accessors. Include this header and test this macro when a
+ * backend also supports older TAO IDL versions, where get_string_copy ()
+ * returns an owning char * that must be released with delete [].
+ */
+#define TAO_IDL_HAS_STD_STRING_API
+
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.
 
