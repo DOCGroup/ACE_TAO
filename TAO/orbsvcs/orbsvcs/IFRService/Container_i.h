@@ -108,56 +108,56 @@ public:
       const char *version);
 
   virtual CORBA::ConstantDef_ptr create_constant (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
-      const CORBA::Any & value);
+      CORBA::Any const &value);
 
   CORBA::ConstantDef_ptr create_constant_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
-      const CORBA::Any & value);
+      CORBA::Any const &value);
 
   virtual CORBA::StructDef_ptr create_struct (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   CORBA::StructDef_ptr create_struct_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   virtual CORBA::UnionDef_ptr create_union (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members);
+      CORBA::UnionMemberSeq const &members);
 
   CORBA::UnionDef_ptr create_union_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members);
+      CORBA::UnionMemberSeq const &members);
 
   virtual CORBA::EnumDef_ptr create_enum (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::EnumMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::EnumMemberSeq const &members);
 
   CORBA::EnumDef_ptr create_enum_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::EnumMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::EnumMemberSeq const &members);
 
   virtual CORBA::AliasDef_ptr create_alias (
       const char *id,

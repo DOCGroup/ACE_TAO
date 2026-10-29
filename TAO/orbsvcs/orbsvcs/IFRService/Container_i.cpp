@@ -767,11 +767,11 @@ TAO_Container_i::create_module_i (const char *id,
 }
 
 CORBA::ConstantDef_ptr
-TAO_Container_i::create_constant (const char *id,
-                                  const char *name,
-                                  const char *version,
+TAO_Container_i::create_constant (char const *id,
+                                  char const *name,
+                                  char const *version,
                                   CORBA::IDLType_ptr type,
-                                  const CORBA::Any &value)
+                                  CORBA::Any const &value)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ConstantDef::_nil ());
 
@@ -785,11 +785,11 @@ TAO_Container_i::create_constant (const char *id,
 }
 
 CORBA::ConstantDef_ptr
-TAO_Container_i::create_constant_i (const char *id,
-                                    const char *name,
-                                    const char *version,
+TAO_Container_i::create_constant_i (char const *id,
+                                    char const *name,
+                                    char const *version,
                                     CORBA::IDLType_ptr type,
-                                    const CORBA::Any &value)
+                                    CORBA::Any const &value)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -870,10 +870,10 @@ TAO_Container_i::create_constant_i (const char *id,
 }
 
 CORBA::StructDef_ptr
-TAO_Container_i::create_struct (const char *id,
-                                const char *name,
-                                const char *version,
-                                const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_struct (char const *id,
+                                char const *name,
+                                char const *version,
+                                CORBA::StructMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::StructDef::_nil ());
 
@@ -886,10 +886,10 @@ TAO_Container_i::create_struct (const char *id,
 }
 
 CORBA::StructDef_ptr
-TAO_Container_i::create_struct_i (const char *id,
-                                  const char *name,
-                                  const char *version,
-                                  const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_struct_i (char const *id,
+                                  char const *name,
+                                  char const *version,
+                                  CORBA::StructMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -962,11 +962,11 @@ TAO_Container_i::create_struct_i (const char *id,
 }
 
 CORBA::UnionDef_ptr
-TAO_Container_i::create_union (const char *id,
-                               const char *name,
-                               const char *version,
+TAO_Container_i::create_union (char const *id,
+                               char const *name,
+                               char const *version,
                                CORBA::IDLType_ptr discriminator_type,
-                               const CORBA::UnionMemberSeq &members)
+                               CORBA::UnionMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::UnionDef::_nil ());
 
@@ -980,11 +980,11 @@ TAO_Container_i::create_union (const char *id,
 }
 
 CORBA::UnionDef_ptr
-TAO_Container_i::create_union_i (const char *id,
-                                 const char *name,
-                                 const char *version,
+TAO_Container_i::create_union_i (char const *id,
+                                 char const *name,
+                                 char const *version,
                                  CORBA::IDLType_ptr discriminator_type,
-                                 const CORBA::UnionMemberSeq &members)
+                                 CORBA::UnionMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1074,10 +1074,10 @@ TAO_Container_i::create_union_i (const char *id,
 }
 
 CORBA::EnumDef_ptr
-TAO_Container_i::create_enum (const char *id,
-                              const char *name,
-                              const char *version,
-                              const CORBA::EnumMemberSeq &members)
+TAO_Container_i::create_enum (char const *id,
+                              char const *name,
+                              char const *version,
+                              CORBA::EnumMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::EnumDef::_nil ());
 
@@ -1090,10 +1090,10 @@ TAO_Container_i::create_enum (const char *id,
 }
 
 CORBA::EnumDef_ptr
-TAO_Container_i::create_enum_i (const char *id,
-                                const char *name,
-                                const char *version,
-                                const CORBA::EnumMemberSeq &members)
+TAO_Container_i::create_enum_i (char const *id,
+                                char const *name,
+                                char const *version,
+                                CORBA::EnumMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
