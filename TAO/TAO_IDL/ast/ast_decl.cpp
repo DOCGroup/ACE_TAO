@@ -147,13 +147,17 @@ AST_Decl::AST_Decl (NodeType nt,
 {
   // If this is the root node, the filename won't have been set yet.
   UTL_String *fn = idl_global->filename ();
-  this->pd_file_name = fn != nullptr ? std::string_view (fn->str ()) : std::string_view {};
+  if (fn != nullptr)
+    {
+      this->pd_file_name = fn->get_string ();
+    }
 
   this->compute_full_name (n);
+  this->compute_full_name ();
 
   char *prefix = nullptr;
   idl_global->pragma_prefixes ().top (prefix);
-  this->prefix_ = prefix ? prefix : "";
+  this->prefix_ = prefix != nullptr ? prefix : "";
 
   if (n)
     {
@@ -182,9 +186,13 @@ AST_Decl::AST_Decl (
 {
   // If this is the root node, the filename won't have been set yet.
   UTL_String *fn = idl_global->filename ();
-  this->pd_file_name = fn != nullptr ? std::string_view (fn->str ()) : std::string_view {};
+  if (fn != nullptr)
+    {
+      this->pd_file_name = fn->get_string ();
+    }
 
   this->compute_full_name (name);
+  this->compute_full_name ();
 
   char *prefix = nullptr;
   idl_global->pragma_prefixes ().top (prefix);
@@ -233,10 +241,10 @@ AST_Decl::destroy ()
       this->last_referenced_as_ = nullptr;
     }
 
-  this->full_name_.reset ();
+  this->full_name_.clear ();
   this->repoID_.reset ();
-  this->prefix_.reset ();
-  this->version_.reset ();
+  this->prefix_.clear ();
+  this->version_.clear ();
   this->flat_name_.reset ();
 
   delete annotation_appls_;
@@ -379,45 +387,42 @@ AST_Decl::set_prefix_with_typeprefix_r (std::string_view value,
 
 // Compute stringified fully scoped name.
 void
-AST_Decl::compute_full_name () const
+AST_Decl::compute_full_name ()
 {
-  if (!this->full_name_)
+  std::string name;
+  bool first = true;
+  bool second = false;
+
+  for (UTL_IdListActiveIterator i (this->pd_name);
+       !i.is_done ();
+       i.next ())
     {
-      std::string name;
-      bool first = true;
-      bool second = false;
-
-      for (UTL_IdListActiveIterator i (this->pd_name);
-           !i.is_done ();
-           i.next ())
+      if (!first)
         {
-          if (!first)
-            {
-              name += "::";
-            }
-          else if (second)
-            {
-              first = second = false;
-            }
-
-          std::string_view const identifier (i.item ()->get_string_view ());
-          name.append (identifier);
-          if (first)
-            {
-              if (!identifier.empty ())
-                {
-                  // Does not start with a "".
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
-            }
+          name += "::";
+        }
+      else if (second)
+        {
+          first = second = false;
         }
 
-      this->full_name_ = name;
+      std::string_view const identifier (i.item ()->get_string_view ());
+      name.append (identifier);
+      if (first)
+        {
+          if (!identifier.empty ())
+            {
+              // Does not start with a "".
+              first = false;
+            }
+          else
+            {
+              second = true;
+            }
+        }
     }
+
+  this->full_name_ = name;
 }
 
 // Compute stringified repository ID.
@@ -431,7 +436,7 @@ AST_Decl::compute_repoID () const
 
   bool first = true;
   bool second = false;
-  std::string_view prefix = this->prefix_ ? *this->prefix_ : std::string_view {};
+  std::string_view prefix = this->prefix_;
   UTL_Scope *scope = this->defined_in ();
 
   // If our prefix is empty, we check to see if an ancestor has one.
@@ -449,14 +454,14 @@ AST_Decl::compute_repoID () const
     }
 
   // in the first loop compute the total length
-  std::string_view version = this->version_ ? *this->version_ : std::string_view {};
+  std::string_view version = this->version_;
   scope = this->defined_in ();
 
   // If our version has not been set, we use the parent's, if any.
   while (version.empty () && scope)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-      version = parent->version_ ? *parent->version_ : std::string_view {};
+      version = parent->version_;
       scope = parent->defined_in ();
     }
 
@@ -778,12 +783,7 @@ AST_Decl::ast_accept (ast_visitor *visitor)
 std::string const&
 AST_Decl::full_name () const
 {
-  if (!this->full_name_)
-    {
-      this->compute_full_name ();
-    }
-
-  return this->full_name_.value ();
+  return this->full_name_;
 }
 
 std::string const&
@@ -814,10 +814,10 @@ AST_Decl::clear_repoID ()
   this->repoID_.reset ();
 }
 
-std::string_view
+std::string const&
 AST_Decl::prefix () const
 {
-  return this->prefix_ ? std::string_view (*this->prefix_) : std::string_view {};
+  return this->prefix_;
 }
 
 void
@@ -829,7 +829,7 @@ AST_Decl::prefix (std::string_view value)
 std::string const&
 AST_Decl::version () const
 {
-  if (!this->version_)
+  if (this->version_.empty ())
     {
       // Calling the method will compute if necessary.
       std::string_view const repo_id = this->repoID ();
@@ -859,14 +859,14 @@ AST_Decl::version () const
         }
     }
 
-  return this->version_.value ();
+  return this->version_;
 }
 
 void
 AST_Decl::version (std::string_view value)
 {
   // Previous #pragma version or #pragma id make this illegal.
-  if ((!this->version_ || *this->version_ == value)
+  if ((this->version_.empty () || this->version_ == value)
       && !this->typeid_set_)
     {
       std::string const new_version (value);
@@ -1062,7 +1062,7 @@ AST_Decl::file_name () const
 }
 
 void
-AST_Decl::set_file_name (std::string_view s)
+AST_Decl::set_file_name (std::string const& s)
 {
   this->pd_file_name = s;
 }
@@ -1148,6 +1148,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
     }
 
   this->pd_name = n;
+  this->compute_full_name ();
 
   if (n)
     {
@@ -1168,9 +1169,8 @@ AST_Decl::set_name (UTL_ScopedName *n)
 
       this->original_local_name (n->last_component ());
 
-      // These will be recomputed on demand.
+      // The flattened name and repo ID will be recomputed on demand.
       this->flat_name_.reset ();
-      this->full_name_.reset ();
       this->repoID_.reset ();
     }
 }

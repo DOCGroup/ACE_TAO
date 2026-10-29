@@ -232,7 +232,7 @@ public:
   void set_line (long l);
 
   std::string const& file_name () const;
-  void set_file_name (std::string_view s);
+  void set_file_name (std::string const& s);
 
   UTL_ScopedName *name () const;
 
@@ -261,7 +261,7 @@ public:
   void clear_repoID ();
   // Accessors for the repository ID.
 
-  std::string_view prefix () const;
+  std::string const& prefix () const;
   void prefix (std::string_view value);
   // Accessors for the repository ID prefix.
 
@@ -419,7 +419,7 @@ protected:
   void compute_repoID () const;
   // Computes the repoID.
 
-  void compute_full_name () const;
+  void compute_full_name ();
   // Computes the stringified scoped name.
 
   void compute_flat_name () const;
@@ -465,13 +465,13 @@ private:
   Identifier *pd_original_local_name {};
   // _cxx_ removed if any.
 
-  mutable std::optional<std::string> full_name_;
+  std::string full_name_;
   // Our full scoped name.
 
-  std::optional<std::string> prefix_;
+  std::string prefix_;
   // The repository ID prefix.
 
-  mutable std::optional<std::string> version_;
+  mutable std::string version_;
   // Set by #pragma version.
 
   bool anonymous_;
