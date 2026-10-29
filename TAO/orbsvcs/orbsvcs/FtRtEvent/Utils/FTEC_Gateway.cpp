@@ -262,7 +262,7 @@ void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handl
 }
 
 void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
-                        const RtecEventComm::EventSet & data)
+                        RtecEventComm::EventSet const &data)
 {
   const PortableServer::ObjectId_var object_id =
     impl_->poa->reference_to_id(proxy_consumer);
@@ -361,7 +361,7 @@ FTEC_Gateway_ProxyPushSupplier::~FTEC_Gateway_ProxyPushSupplier()
 // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
 void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   RtecEventComm::PushConsumer_ptr push_consumer,
-  const RtecEventChannelAdmin::ConsumerQOS &qos)
+  RtecEventChannelAdmin::ConsumerQOS const &qos)
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
@@ -402,7 +402,7 @@ FTEC_Gateway_ProxyPushConsumer::~FTEC_Gateway_ProxyPushConsumer()
 
 // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 
-void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data)
+void FTEC_Gateway_ProxyPushConsumer::push (RtecEventComm::EventSet const &data)
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
@@ -420,7 +420,7 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data)
 
 void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
   RtecEventComm::PushSupplier_ptr push_supplier,
-  const RtecEventChannelAdmin::SupplierQOS& qos)
+  RtecEventChannelAdmin::SupplierQOS const &qos)
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos);

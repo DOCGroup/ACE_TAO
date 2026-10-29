@@ -47,7 +47,7 @@ namespace TAO_FTRTEC
       void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
       void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
-                const RtecEventComm::EventSet & data);
+                RtecEventComm::EventSet const &data);
   private:
       FTEC_Gateway (FTEC_Gateway const &) = delete;
       FTEC_Gateway &operator= (FTEC_Gateway const &) = delete;

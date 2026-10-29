@@ -24,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<class T>
 typename T::_ptr_type
 resolve_init (CORBA::ORB_ptr orb,
-              const char *id)
+              char const *id)
 {
     typename T::_var_type ref;
     CORBA::Object_var     obj;
@@ -58,7 +58,7 @@ resolve_init (CORBA::ORB_ptr orb,
 template<class T>
 typename T::_ptr_type
 resolve (CosNaming::NamingContext_ptr context,
-         const CosNaming::Name &id)
+         CosNaming::Name const &id)
 {
     CORBA::Object_var obj;
     obj = context->resolve(id);
