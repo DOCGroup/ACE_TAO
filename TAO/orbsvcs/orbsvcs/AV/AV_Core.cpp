@@ -548,7 +548,7 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
 
 TAO_FlowSpec_Entry *
 TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
-                                  const char *flowname)
+                                  char const *flowname)
 {
   TAO_AV_FlowSpecSetItor end = flow_spec_set.end ();
   TAO_AV_FlowSpecSetItor begin = flow_spec_set.begin ();
@@ -559,11 +559,11 @@ TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
       if (ACE_OS::strcmp ((*begin)->flowname (),flowname) == 0)
         return (*begin);
     }
-  return 0;
+  return nullptr;
 }
 
 TAO_AV_Acceptor*
-TAO_AV_Core::get_acceptor (const char *flowname)
+TAO_AV_Core::get_acceptor (char const *flowname)
 {
   try
     {
@@ -578,15 +578,15 @@ TAO_AV_Core::get_acceptor (const char *flowname)
             return *acceptor;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_AV_Core::get_acceptor");
     }
-  return 0;
+  return nullptr;
 }
 
 int
-TAO_AV_Core::remove_acceptor (const char *flowname)
+TAO_AV_Core::remove_acceptor (char const *flowname)
 {
   try
     {
@@ -604,7 +604,7 @@ TAO_AV_Core::remove_acceptor (const char *flowname)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_AV_Core::get_acceptor");
     }
@@ -612,7 +612,7 @@ TAO_AV_Core::remove_acceptor (const char *flowname)
 }
 
 TAO_AV_Connector*
-TAO_AV_Core::get_connector (const char *flowname)
+TAO_AV_Core::get_connector (char const *flowname)
 {
   TAO_AV_ConnectorSetItor connector =
     this->connector_registry_->begin ();
@@ -624,11 +624,11 @@ TAO_AV_Core::get_connector (const char *flowname)
       if (ACE_OS::strcmp ((*connector)->flowname (),flowname) == 0)
         return *connector;
     }
-  return 0;
+  return nullptr;
 }
 
 int
-TAO_AV_Core::remove_connector (const char *flowname)
+TAO_AV_Core::remove_connector (char const *flowname)
 {
   TAO_AV_ConnectorSetItor connector =
     this->connector_registry_->begin ();
@@ -647,7 +647,7 @@ TAO_AV_Core::remove_connector (const char *flowname)
 }
 
 TAO_AV_Flow_Protocol_Factory *
-TAO_AV_Core::get_flow_protocol_factory(const char *flow_protocol)
+TAO_AV_Core::get_flow_protocol_factory(char const *flow_protocol)
 {
   if (flow_protocol == nullptr)
     return nullptr;
@@ -669,7 +669,7 @@ TAO_AV_Core::get_flow_protocol_factory(const char *flow_protocol)
 }
 
 TAO_AV_Transport_Factory *
-TAO_AV_Core::get_transport_factory(const char *transport_protocol)
+TAO_AV_Core::get_transport_factory(char const *transport_protocol)
 {
   if (transport_protocol == nullptr)
     return nullptr;
@@ -692,8 +692,8 @@ TAO_AV_Core::get_transport_factory(const char *transport_protocol)
 int
 TAO_AV_Core::load_default_transport_factories ()
 {
-  const char *udp_factory_str = "UDP_Factory";
-  const char *tcp_factory_str = "TCP_Factory";
+  char const *udp_factory_str = "UDP_Factory";
+  char const *tcp_factory_str = "TCP_Factory";
 
   TAO_AV_Transport_Factory *udp_factory = nullptr;
   TAO_AV_Transport_Item *udp_item = nullptr;
@@ -744,7 +744,7 @@ TAO_AV_Core::load_default_transport_factories ()
   this->transport_factories_.insert (tcp_item);
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
-  const char *udp_qos_factory_str = "UDP_QoS_Factory";
+  char const *udp_qos_factory_str = "UDP_QoS_Factory";
 
   TAO_AV_Transport_Factory *udp_qos_factory = nullptr;
   TAO_AV_Transport_Item *udp_qos_item = nullptr;
@@ -775,7 +775,7 @@ TAO_AV_Core::load_default_transport_factories ()
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
 #if defined ACE_HAS_SCTP
-  const char *sctp_seq_factory_str = "SCTP_SEQ_Factory";
+  char const *sctp_seq_factory_str = "SCTP_SEQ_Factory";
 
   TAO_AV_Transport_Factory *sctp_seq_factory = nullptr;
   TAO_AV_Transport_Item *sctp_seq_item = nullptr;
@@ -826,7 +826,7 @@ TAO_AV_Core::init_transport_factories ()
     {
       for (; factory != end; factory++)
         {
-          const ACE_CString &name = (*factory)->name ();
+          ACE_CString const &name = (*factory)->name ();
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         "%s\n",
@@ -859,11 +859,11 @@ TAO_AV_Core::init_transport_factories ()
 int
 TAO_AV_Core::load_default_flow_protocol_factories ()
 {
-  const char *udp_flow = "UDP_Flow_Factory";
-  const char *tcp_flow = "TCP_Flow_Factory";
-  const char *rtp_flow = "RTP_Flow_Factory";
-  const char *rtcp_flow = "RTCP_Flow_Factory";
-  const char *sfp_flow = "SFP_Flow_Factory";
+  char const *udp_flow = "UDP_Flow_Factory";
+  char const *tcp_flow = "TCP_Flow_Factory";
+  char const *rtp_flow = "RTP_Flow_Factory";
+  char const *rtcp_flow = "RTCP_Flow_Factory";
+  char const *sfp_flow = "SFP_Flow_Factory";
 
   TAO_AV_Flow_Protocol_Factory *udp_flow_factory = nullptr;
   TAO_AV_Flow_Protocol_Item *udp_item = nullptr;
@@ -891,7 +891,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-  const char *udp_qos_flow = "UDP_QoS_Flow_Factory";
+  char const *udp_qos_flow = "UDP_QoS_Flow_Factory";
   TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = nullptr;
   TAO_AV_Flow_Protocol_Item *udp_qos_flow_item = nullptr;
 
@@ -920,7 +920,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
 #if defined ACE_HAS_SCTP
 
-  const char *sctp_seq_flow = "SCTP_SEQ_Flow_Factory";
+  char const *sctp_seq_flow = "SCTP_SEQ_Flow_Factory";
   TAO_AV_Flow_Protocol_Factory *sctp_seq_flow_factory = nullptr;
   TAO_AV_Flow_Protocol_Item *sctp_seq_flow_item = nullptr;
 
@@ -1063,7 +1063,7 @@ TAO_AV_Core::init_flow_protocol_factories ()
     {
       for (; factory != end; factory++)
         {
-          const ACE_CString &name = (*factory)->name ();
+          ACE_CString const &name = (*factory)->name ();
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         "%s\n",
@@ -1110,7 +1110,7 @@ TAO_AV_Core::deactivate_servant (PortableServer::Servant servant)
 
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("deactivate_servant");
       return -1;
@@ -1120,7 +1120,7 @@ TAO_AV_Core::deactivate_servant (PortableServer::Servant servant)
 
 /* static */
 char *
-TAO_AV_Core::get_flowname (const char *flow_spec_entry_str)
+TAO_AV_Core::get_flowname (char const *flow_spec_entry_str)
 {
   ACE_CString flow_spec_entry (flow_spec_entry_str);
   ACE_CString::size_type slash_pos = flow_spec_entry.find ('\\');
@@ -1133,7 +1133,7 @@ TAO_AV_Core::get_flowname (const char *flow_spec_entry_str)
 }
 
 ACE_CString
-TAO_AV_Core::get_control_flowname(const char *flowname)
+TAO_AV_Core::get_control_flowname(char const *flowname)
 {
   ACE_CString control_flowname;
   control_flowname = "c_";
