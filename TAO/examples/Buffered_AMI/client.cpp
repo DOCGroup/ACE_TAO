@@ -112,11 +112,11 @@ parse_args (int argc, ACE_TCHAR **argv)
         break;
 
       case 'a':
-        invoke_ami_style = ACE_OS::atoi (get_opts.opt_arg ());
+        invoke_ami_style = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'b':
-        setup_buffering = ACE_OS::atoi (get_opts.opt_arg ());
+        setup_buffering = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'i':
