@@ -49,10 +49,10 @@ public:
   using _slice_type = T_slice;
   using _tag_type = TAG;
 
-  TAO_Array_Forany_T ();
+  TAO_Array_Forany_T () = default;
   TAO_Array_Forany_T (_slice_type *, CORBA::Boolean nocopy = false);
   TAO_Array_Forany_T (TAO_Array_Forany_T<T,T_slice,TAG> const &);
-  ~TAO_Array_Forany_T ();
+  ~TAO_Array_Forany_T () = default;
 
   static void _tao_any_destructor (void *);
 
@@ -82,8 +82,8 @@ public:
   static _slice_type * tao_alloc ();
 private:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;
-  _slice_type * ptr_;
-  CORBA::Boolean nocopy_;
+  _slice_type *ptr_ {};
+  CORBA::Boolean nocopy_ {};
 };
 
 /**
