@@ -128,7 +128,7 @@ CORBA::Object::marshal (TAO_OutputCDR &cdr)
 }
 
 /*static*/ CORBA::Boolean
-CORBA::Object::marshal (const CORBA::Object_ptr x, TAO_OutputCDR &cdr)
+CORBA::Object::marshal (CORBA::Object_ptr x, TAO_OutputCDR &cdr)
 {
   if (x == nullptr)
     {
@@ -146,7 +146,7 @@ CORBA::Object::marshal (const CORBA::Object_ptr x, TAO_OutputCDR &cdr)
 
 /*static*/ std::ostream &
 CORBA::Object::_tao_stream (std::ostream &strm,
-                            const CORBA::Object_ptr _tao_objref)
+                            CORBA::Object_ptr _tao_objref)
 {
   return _tao_objref->_tao_stream_v (strm);
 }
@@ -167,7 +167,7 @@ CORBA::Object::can_convert_to_ior () const
 }
 
 char*
-CORBA::Object::convert_to_ior (bool, const char*) const
+CORBA::Object::convert_to_ior (bool, char const *) const
 {
   return nullptr;
 }
@@ -188,7 +188,7 @@ CORBA::Object::_servant () const
 // logical type ID is passed as a parameter.
 
 CORBA::Boolean
-CORBA::Object::_is_a (const char *type_id)
+CORBA::Object::_is_a (char const *type_id)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
@@ -226,7 +226,7 @@ CORBA::Object::_is_a (const char *type_id)
   return this->proxy_broker ()->_is_a (this, type_id);
 }
 
-const char*
+char const *
 CORBA::Object::_interface_repository_id () const
 {
   return "IDL:omg.org/CORBA/Object:1.0";
@@ -277,7 +277,7 @@ CORBA::Object::_hash (CORBA::ULong maximum)
       // of CORBA::ULong since we need to first cast to an integer
       // large enough to hold an address to avoid compile-time
       // warnings on some 64-bit platforms.
-      const CORBA::ULong hash =
+      CORBA::ULong const hash =
         static_cast<CORBA::ULong> (reinterpret_cast<ptrdiff_t> (this));
 
       return hash % maximum;
@@ -357,7 +357,7 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 CORBA::Object::_create_request (CORBA::Context_ptr ctx,
-                                const char *operation,
+                                char const *operation,
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,
@@ -399,7 +399,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 CORBA::Object::_create_request (CORBA::Context_ptr ctx,
-                                const char *operation,
+                                char const *operation,
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::ExceptionList_ptr exceptions,
@@ -442,7 +442,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
 
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 CORBA::Request_ptr
-CORBA::Object::_request (const char *operation)
+CORBA::Object::_request (char const *operation)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
   if (this->protocol_proxy_)
@@ -483,7 +483,7 @@ CORBA::Object::_non_existent ()
     {
       retval = this->proxy_broker ()->_non_existent (this);
     }
-  catch (const ::CORBA::OBJECT_NOT_EXIST&)
+  catch (::CORBA::OBJECT_NOT_EXIST const &)
     {
       retval = true;
     }
@@ -561,7 +561,7 @@ CORBA::Object::_get_cached_policy (TAO_Cached_Policy_Type type)
 
 CORBA::Object_ptr
 CORBA::Object::_set_policy_overrides (
-  const CORBA::PolicyList & policies,
+  CORBA::PolicyList const &policies,
   CORBA::SetOverrideType set_add)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
@@ -604,7 +604,7 @@ CORBA::Object::_set_policy_overrides (
 }
 
 CORBA::PolicyList *
-CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
+CORBA::Object::_get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
   if (this->protocol_proxy_)
@@ -641,7 +641,7 @@ CORBA::Object::_validate_connection (
     {
       tao_call.invoke ();
     }
-  catch (const ::CORBA::INV_POLICY&)
+  catch (::CORBA::INV_POLICY const &)
     {
       inconsistent_policies = tao_call.get_inconsistent_policies ();
       retval = false;
@@ -699,7 +699,7 @@ CORBA::Object::proxy_broker () const
  ****************************************************************/
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
+operator<< (TAO_OutputCDR& cdr, CORBA::Object const *x)
 {
   if (x == nullptr)
     {
@@ -806,7 +806,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
       objdata = orb_core->create_stub (obj->ior_->type_id.in (), mp);
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception (
@@ -930,7 +930,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
           objdata = orb_core2->create_stub (type_hint.in (), mp);
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             ex._tao_print_exception (
@@ -1026,7 +1026,7 @@ namespace TAO
   }
 
   CORBA::Boolean
-  Objref_Traits<CORBA::Object>::marshal (const CORBA::Object_ptr p,
+  Objref_Traits<CORBA::Object>::marshal (CORBA::Object_ptr p,
                                          TAO_OutputCDR & cdr)
   {
     return ::CORBA::Object::marshal (p, cdr);
