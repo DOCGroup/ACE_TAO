@@ -25,41 +25,43 @@ class Test_impl : public POA_OBV_TruncatableTest::Test
 {
 public:
   /// ctor
-  Test_impl (CORBA::ORB_ptr orb);
+  explicit Test_impl (CORBA::ORB_ptr orb);
 
-  virtual void op1 (
-        const char * id,
-        ::OBV_TruncatableTest::BaseValue * iv,
-        ::OBV_TruncatableTest::BaseValue_out ov,
-        char *& desc);
+  Test_impl (Test_impl const&) = delete;
+  Test_impl (Test_impl&&) = delete;
+  Test_impl& operator= (Test_impl const&) = delete;
+  Test_impl& operator= (Test_impl&&) = delete;
 
-  virtual void op2 (
-        ::OBV_TruncatableTest::TValue1 * iv,
-        const char * id,
-        ::OBV_TruncatableTest::TValue1_out ov,
-        char *& desc);
+  void op1 (char const *id,
+            ::OBV_TruncatableTest::BaseValue *iv,
+            ::OBV_TruncatableTest::BaseValue_out ov,
+            char *&desc) override;
 
-  virtual void op3 (
-        const char * id,
-        ::OBV_TruncatableTest::TValue4 * iv,
-        ::OBV_TruncatableTest::TValue4_out ov,
-        char *& desc);
+  void op2 (::OBV_TruncatableTest::TValue1 *iv,
+            char const *id,
+            ::OBV_TruncatableTest::TValue1_out ov,
+            char *&desc) override;
 
-  virtual ::OBV_TruncatableTest::BaseValue * op4 (
-      const char * id,
-      ::OBV_TruncatableTest::TValue1 * iv1,
+  void op3 (char const *id,
+            ::OBV_TruncatableTest::TValue4 *iv,
+            ::OBV_TruncatableTest::TValue4_out ov,
+            char *&desc) override;
+
+  ::OBV_TruncatableTest::BaseValue *op4 (
+      char const *id,
+      ::OBV_TruncatableTest::TValue1 *iv1,
       ::CORBA::Short x,
-      ::OBV_TruncatableTest::TValue4 * iv2,
-      ::OBV_TruncatableTest::TValue4 * iv3,
-      ::OBV_TruncatableTest::TValue1 * iv4,
-      char *& desc);
+      ::OBV_TruncatableTest::TValue4 *iv2,
+      ::OBV_TruncatableTest::TValue4 *iv3,
+      ::OBV_TruncatableTest::TValue1 *iv4,
+      char *&desc) override;
 
-  virtual void op5 (const CORBA::Any& val,
-                    const char * id,
-                    ::OBV_TruncatableTest::TValue1_out ov,
-                    char *& desc);
+  void op5 (CORBA::Any const &val,
+            char const *id,
+            ::OBV_TruncatableTest::TValue1_out ov,
+            char *&desc) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB
