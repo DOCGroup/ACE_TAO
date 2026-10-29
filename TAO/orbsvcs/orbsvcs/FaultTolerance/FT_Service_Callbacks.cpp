@@ -25,28 +25,28 @@ CORBA::Boolean
 TAO_FT_Service_Callbacks::select_profile (TAO_MProfile const& mprofile,
     TAO_Profile *&pfile)
 {
-  CORBA::ULong const sz = mprofile.size ();
+  CORBA::ULong const size = mprofile.size ();
 
   // Iterate through the list in a circular fashion. Stop one before
   // the list instead of trying the same thing again.
   for (CORBA::ULong i = 0;
-       i != sz;
+       i != size;
        ++i)
     {
-      TAO_Profile const* curr_pfile = mprofile.get_profile (i);
+      TAO_Profile const* const current_profile = mprofile.get_profile (i);
 
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = IOP::TAG_FT_PRIMARY;
 
       // Get the tagged component from the  profile
       TAO_Tagged_Components const& pfile_tagged =
-        curr_pfile->tagged_components ();
+        current_profile->tagged_components ();
 
       // Search for the TaggedComponent that we want
       if (pfile_tagged.get_component (tagged_component) == 1)
       {
         // We have found a primary IOR
-        pfile = const_cast<TAO_Profile *>(curr_pfile);
+        pfile = const_cast<TAO_Profile *> (current_profile);
         return true;
       }
     }
@@ -55,27 +55,25 @@ TAO_FT_Service_Callbacks::select_profile (TAO_MProfile const& mprofile,
 }
 
 CORBA::Boolean
-TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
+TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr const obj)
 {
   // Get the count
-  CORBA::ULong count = obj->_stubobj ()->base_profiles ().profile_count ();
+  CORBA::ULong const count = obj->_stubobj ()->base_profiles ().profile_count ();
 
   // If the profile count is zero then return true
   if (count == 0)
     return true;
-  else
-    {
-      // else if each of the profile is nil
-      for (CORBA::ULong cnt = 0;
-           cnt < count;
-           cnt++)
-        {
-          TAO_Profile *pfile =
-            obj->_stubobj ()->base_profiles ().get_profile (cnt);
 
-          if (pfile != nullptr)
-            return false;
-        }
+  // Otherwise, check whether any profile is not nil.
+  for (CORBA::ULong cnt = 0;
+       cnt < count;
+       ++cnt)
+    {
+      TAO_Profile * const profile =
+        obj->_stubobj ()->base_profiles ().get_profile (cnt);
+
+      if (profile != nullptr)
+        return false;
     }
 
   // If it reaches here then it should be nill
@@ -83,8 +81,8 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 }
 
 TAO_Service_Callbacks::Profile_Equivalence
-TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* this_p,
-                                                 TAO_Profile const* that_p)
+TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* const this_p,
+                                                 TAO_Profile const* const that_p)
 {
   TAO_Tagged_Components const& this_comp =
     this_p->tagged_components ();
@@ -105,8 +103,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* this_p,
           TAO_InputCDR that_cdr (reinterpret_cast<char const *> (that_tc.component_data.get_buffer ()),
                              that_tc.component_data.length ());
 
-          CORBA::Boolean this_byte_order;
-          CORBA::Boolean that_byte_order;
+          CORBA::Boolean this_byte_order {};
+          CORBA::Boolean that_byte_order {};
 
           if ((this_cdr >> ACE_InputCDR::to_boolean (this_byte_order)) == 0 ||
               (that_cdr >> ACE_InputCDR::to_boolean (that_byte_order)) == 0)
@@ -150,7 +148,7 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* this_p,
 }
 
 CORBA::ULong
-TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p, CORBA::ULong max)
+TAO_FT_Service_Callbacks::hash_ft (TAO_Profile * const p, CORBA::ULong const max)
 {
   // At this point we assume that all the checks for other things
   // within the profiles have been satisfied
@@ -167,7 +165,7 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p, CORBA::ULong max)
   TAO_InputCDR cdr (reinterpret_cast<char const *> (tc.component_data.get_buffer ()),
                     tc.component_data.length ());
 
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
   {
     return 0;
@@ -196,7 +194,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
 
-  TAO_Stub const* stub = obj->_stubobj ();
+  TAO_Stub const* const stub = obj->_stubobj ();
   // check for forward_profiles, branching to speed up operation on base_profiles
   if (stub->forward_profiles ())
     {
@@ -211,7 +209,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
           ? *(stub->forward_profiles())
           : stub->base_profiles();
 
-      if (mprofile.profile_count() == 0)
+      if (mprofile.profile_count () == 0)
         // releasing lock
         return false;
 
@@ -230,9 +228,9 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
     }
   else /* operate on constant basic_profiles */
     {
-      TAO_MProfile const& mprofile = stub->base_profiles();
+      TAO_MProfile const& mprofile = stub->base_profiles ();
 
-      if (mprofile.profile_count() == 0)
+      if (mprofile.profile_count () == 0)
         return false;
 
       // assuming group-attributes are set for all profiles, check only the first profile
@@ -281,8 +279,8 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
 
 CORBA::Boolean
 TAO_FT_Service_Callbacks::restart_policy_check (
-    IOP::ServiceContextList& service_list,
-    TAO_Profile const* profile)
+    IOP::ServiceContextList const& service_list,
+    TAO_Profile const* const profile) const
 {
   // Check whether the IOP::FT_REQUEST exists within the service
   // context list and FT::FT_GROUP exists within the profile that we
@@ -296,7 +294,7 @@ TAO_FT_Service_Callbacks::restart_policy_check (
       // Look for the FT_REQUEST context id
       for (CORBA::ULong i = 0;
            i < service_list.length ();
-           i++)
+           ++i)
         {
           if (service_list[i].context_id == IOP::FT_REQUEST)
             {
@@ -304,7 +302,7 @@ TAO_FT_Service_Callbacks::restart_policy_check (
               // here rather than just the contexts, but lemons -> lemonade I guess.
               TAO_InputCDR cdr (reinterpret_cast <char const *> (service_list[i].context_data.get_buffer ()),
                                 service_list[i].context_data.length ());
-              CORBA::Boolean byte_order;
+              CORBA::Boolean byte_order {};
               if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
                 return false;
               cdr.reset_byte_order (static_cast <int> (byte_order));
@@ -325,9 +323,9 @@ TimeBase::TimeT
 TAO_FT_Service_Callbacks::now ()
 {
   // Grab the localtime on the machine where this is running
-  ACE_Time_Value time_val = ACE_OS::gettimeofday ();
-  TimeBase::TimeT sec_part  = ((TimeBase::TimeT)time_val.sec ()) * 10000000;
-  TimeBase::TimeT usec_part = ((TimeBase::TimeT)time_val.usec ()) * 10;
+  ACE_Time_Value const time_val = ACE_OS::gettimeofday ();
+  TimeBase::TimeT const sec_part = ((TimeBase::TimeT)time_val.sec ()) * 10000000;
+  TimeBase::TimeT const usec_part = ((TimeBase::TimeT)time_val.usec ()) * 10;
 
   // Add the offset to convert from posix time.
   return (sec_part + usec_part + ACE_UINT64_LITERAL (0x1B21DD213814000));
