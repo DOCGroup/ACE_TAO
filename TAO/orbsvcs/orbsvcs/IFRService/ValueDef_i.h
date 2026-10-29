@@ -72,17 +72,17 @@ public:
 
   CORBA::InterfaceDefSeq *supported_interfaces_i ();
 
-  virtual void supported_interfaces (const CORBA::InterfaceDefSeq & supported_interfaces);
+  virtual void supported_interfaces (CORBA::InterfaceDefSeq const &supported_interfaces);
 
-  void supported_interfaces_i (const CORBA::InterfaceDefSeq & supported_interfaces);
+  void supported_interfaces_i (CORBA::InterfaceDefSeq const &supported_interfaces);
 
   virtual CORBA::InitializerSeq *initializers ();
 
   CORBA::InitializerSeq *initializers_i ();
 
-  virtual void initializers (const CORBA::InitializerSeq & initializers);
+  virtual void initializers (CORBA::InitializerSeq const &initializers);
 
-  void initializers_i (const CORBA::InitializerSeq & initializers);
+  void initializers_i (CORBA::InitializerSeq const &initializers);
 
   virtual CORBA::ValueDef_ptr base_value ();
 
@@ -96,9 +96,9 @@ public:
 
   CORBA::ValueDefSeq *abstract_base_values_i ();
 
-  virtual void abstract_base_values (const CORBA::ValueDefSeq & abstract_base_values);
+  virtual void abstract_base_values (CORBA::ValueDefSeq const &abstract_base_values);
 
-  void abstract_base_values_i (const CORBA::ValueDefSeq & abstract_base_values    );
+  void abstract_base_values_i (CORBA::ValueDefSeq const &abstract_base_values);
 
   virtual CORBA::Boolean is_abstract ();
 
@@ -124,65 +124,65 @@ public:
 
   void is_truncatable_i (CORBA::Boolean is_truncatable);
 
-  virtual CORBA::Boolean is_a (const char *id);
+  virtual CORBA::Boolean is_a (char const *id);
 
-  CORBA::Boolean is_a_i (const char *id);
+  CORBA::Boolean is_a_i (char const *id);
 
   virtual CORBA::ValueDef::FullValueDescription *describe_value ();
 
   CORBA::ValueDef::FullValueDescription *describe_value_i ();
 
   virtual CORBA::ValueMemberDef_ptr create_value_member (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::Visibility access);
 
   CORBA::ValueMemberDef_ptr create_value_member_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::Visibility access);
 
   virtual CORBA::AttributeDef_ptr create_attribute (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode);
 
   CORBA::AttributeDef_ptr create_attribute_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode);
 
   virtual CORBA::OperationDef_ptr create_operation (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts);
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions,
+      CORBA::ContextIdSeq const &contexts);
 
   CORBA::OperationDef_ptr create_operation_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts);
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions,
+      CORBA::ContextIdSeq const &contexts);
 
   /// Called from TAO_IFR_Service_Utils::name_exists() when we
   /// are a base valuetype.
-  static int name_clash (const char *name);
+  static int name_clash (char const *name);
 
   void fill_value_description (CORBA::ValueDescription &desc);
 
