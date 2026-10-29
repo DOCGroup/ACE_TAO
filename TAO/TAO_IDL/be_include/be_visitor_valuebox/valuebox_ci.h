@@ -70,7 +70,7 @@ public:
 
 private:
   int emit_for_predef_enum (be_type *node,
-                            char const *type_suffix,
+                            std::string_view type_suffix,
                             bool is_any);
 
   void emit_default_constructor () const;
@@ -78,7 +78,7 @@ private:
   void emit_default_constructor_alloc (be_decl *node) const;
 
   void emit_constructor_one_arg (be_decl *node,
-                                char const *type_suffix);
+                                std::string_view type_suffix);
 
   void emit_constructor_one_arg_alloc (be_decl *node) const;
 
@@ -87,13 +87,13 @@ private:
   void emit_copy_constructor_alloc (be_decl *node) const;
 
   void emit_assignment (be_decl *node,
-                        char const *type_suffix);
+                        std::string_view type_suffix);
 
   void emit_assignment_alloc (be_decl *node) const;
 
   void emit_accessor_modifier (be_decl *node) const;
 
-  void emit_boxed_access (be_decl *node, char const *out_ref_modifier);
+  void emit_boxed_access (be_decl *node, std::string_view out_ref_modifier);
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CI_H_ */

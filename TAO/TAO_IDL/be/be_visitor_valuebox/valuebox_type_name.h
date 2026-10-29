@@ -46,14 +46,14 @@ namespace
     return type_name;
   }
 
-  void
+  inline void
   emit_valuebox_type_name (TAO_OutStream *os,
                            std::string_view prefix,
                            UTL_IdList *name,
                            std::string_view suffix)
   {
     std::string const name_string = name->get_string_copy ();
-    *os << valuebox_type_name (prefix, name_string, suffix).c_str ();
+    *os << valuebox_type_name (prefix, name_string, suffix);
   }
 }
 

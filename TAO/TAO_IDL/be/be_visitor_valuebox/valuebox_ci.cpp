@@ -283,7 +283,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public constructor with one const argument of underlying type
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ("
-      << valuebox_type_name ("const ", node->full_name ()).c_str ()
+      << valuebox_type_name ("const ", node->full_name ())
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
@@ -301,7 +301,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public assignment operator with one argument of type const char *
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
       << vb_node->name () << "::operator= ("
-      << valuebox_type_name ("const ", node->full_name ()).c_str ()
+      << valuebox_type_name ("const ", node->full_name ())
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_nl
@@ -321,7 +321,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Accessor function takes no arguments and returns a const char *
   *os << "ACE_INLINE "
-      << valuebox_type_name ("const ", node->full_name ()).c_str () << be_nl
+      << valuebox_type_name ("const ", node->full_name ()) << be_nl
       << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -338,7 +338,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Modifier function with one argument of type const char *
   *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::_value ("
-      << valuebox_type_name ("const ", node->full_name ()).c_str ()
+      << valuebox_type_name ("const ", node->full_name ())
       << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
@@ -354,7 +354,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Access to the boxed value for method signatures
   *os << "ACE_INLINE "
-      << valuebox_type_name ("const ", node->full_name ()).c_str () << be_nl
+      << valuebox_type_name ("const ", node->full_name ()) << be_nl
       << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -563,7 +563,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
 int
 be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
-                                              char const *type_suffix,
+                                              std::string_view type_suffix,
                                               bool is_any)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -668,7 +668,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node) const
 
 void
 be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
-                                                  char const *type_suffix)
+                                                  std::string_view type_suffix)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -752,7 +752,7 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
 
 void
 be_visitor_valuebox_ci::emit_assignment (be_decl *node,
-                                         char const *type_suffix)
+                                         std::string_view type_suffix)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -830,7 +830,7 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node) const
 
 void
 be_visitor_valuebox_ci::emit_boxed_access (be_decl *node,
-                                           char const *out_ref_modifier)
+                                           std::string_view out_ref_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
