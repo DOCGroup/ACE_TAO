@@ -133,7 +133,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
       std::string comp_sname_str (
         ScopeAsDecl (comp_->defined_in ())->full_name ());
       char const *comp_sname = comp_sname_str.c_str ();
-      char const *comp_lname = comp_->local_name ()->get_string ();
+      std::string_view const comp_lname = comp_->local_name ()->get_string_view_or_empty ();
       char const *global = (comp_sname_str == "" ? "" : "::");
 
       std::string_view const sname =
@@ -208,10 +208,9 @@ be_visitor_home_svs::gen_servant_class ()
   char const *sname = sname_str.c_str ();
 
   // Avoid '_cxx_' prefix.
-  char const *lname =
-    node_->original_local_name ()->get_string ();
+  std::string_view const lname = node_->original_local_name ()->get_string_view_or_empty ();
 
-  char const *clname = comp_->local_name ()->get_string ();
+  std::string_view const clname = comp_->local_name ()->get_string_view_or_empty ();
   char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl
@@ -384,8 +383,7 @@ be_visitor_home_svs::gen_entrypoint ()
   char const *sname = sname_str.c_str ();
 
   // Avoid _cxx_ prefix.
-  char const *lname =
-    node_->original_local_name ()->get_string ();
+  std::string_view const lname = node_->original_local_name ()->get_string_view_or_empty ();
 
   char const *global = (sname_str == "" ? "" : "::");
 

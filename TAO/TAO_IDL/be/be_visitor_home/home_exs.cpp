@@ -77,7 +77,7 @@ be_visitor_home_exs::visit_factory (be_factory *node)
   AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
   std::string sname_str (scope->full_name ());
   char const *sname = sname_str.c_str ();
-  char const *lname = comp_->local_name ()->get_string ();
+  std::string_view const lname = comp_->local_name ()->get_string_view_or_empty ();
   char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
@@ -111,8 +111,7 @@ int
 be_visitor_home_exs::gen_exec_class ()
 {
   // No '_cxx_' prefix.
-  char const *lname =
-    node_->original_local_name ()->get_string ();
+  std::string_view const lname = node_->original_local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl
       << comment_start_border_ << be_nl
