@@ -48,7 +48,7 @@ namespace TAO
   {
   public:
     /// Constructor.
-    PICurrent_Impl (TAO_ORB_Core *orb_core= nullptr,
+    explicit PICurrent_Impl (TAO_ORB_Core *orb_core= nullptr,
                     size_t tss_slot= 0,
                     PICurrent_Impl *pop= nullptr);
     /// Destructor.
@@ -60,7 +60,7 @@ namespace TAO
 
     /// Set information in the slot table at the given SlotId.
     void set_slot (PortableInterceptor::SlotId identifier,
-                   const CORBA::Any & data);
+                   CORBA::Any const &data);
 
     /// Logically/Lazy (shallow) copy the given object's slot table.
     void take_lazy_copy (PICurrent_Impl *p);
@@ -92,33 +92,33 @@ namespace TAO
      * @return Logically copied slot table if available, otherwise
      *         underlying slot table.
      */
-    Table & current_slot_table ();
+    Table &current_slot_table ();
 
     PICurrent_Impl (PICurrent_Impl const &) = delete;
-    void operator= (PICurrent_Impl const &) = delete;
+    PICurrent_Impl &operator= (PICurrent_Impl const &) = delete;
     PICurrent_Impl (PICurrent_Impl &&) = delete;
-    void operator= (PICurrent_Impl &&) = delete;
+    PICurrent_Impl &operator= (PICurrent_Impl &&) = delete;
 
   private:
     /// Allow for stack of PICurrent_Impl as required.
     TAO_ORB_Core   *orb_core_;
     size_t         tss_slot_;
     PICurrent_Impl *pop_;
-    PICurrent_Impl *push_;
+    PICurrent_Impl *push_ {};
 
     /// Array of CORBA::Anys that is the underlying "slot table."
     Table slot_table_;
 
     /// Access to logical copy from a PICurrent_Impl in another
     /// scope, i.e. either the request scope or the thread scope.
-    PICurrent_Impl *lazy_copy_;
+    PICurrent_Impl *lazy_copy_ {};
 
     /// PICurrent_Impl object that will be notified of this object's
     /// impending destruction or change to its slot_table_. This is
     /// the PICurrent_Impl that has access to our slot_table_ via its
     /// lazy_copy_ pointer. As necessary this allows that object's
     /// convert_from_lazy_to_real_copy() to be called.
-    PICurrent_Impl *impending_change_callback_;
+    PICurrent_Impl *impending_change_callback_ {};
   };
 }
 

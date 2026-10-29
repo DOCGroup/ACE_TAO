@@ -87,12 +87,12 @@ public:
    * resolve_initial_references() that may be called in the
    * ORBInitializer::post_init() call.
    */
-  void register_initial_reference (const char * id, CORBA::Object_ptr obj) override;
+  void register_initial_reference (char const *id, CORBA::Object_ptr obj) override;
 
   /// Obtain a reference to an object that may not yet be available
   /// via the usual CORBA::ORB::resolve_initial_references() mechanism
   /// since the ORB may not be fully initialized yet.
-  CORBA::Object_ptr resolve_initial_references (const char * id) override;
+  CORBA::Object_ptr resolve_initial_references (char const *id) override;
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized.
@@ -113,19 +113,19 @@ public:
   /// being initialized, along with a list of policies.
   void add_client_request_interceptor_with_policy (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
   /// Register a server request interceptor with the ORB currently
   /// being initialized, along with a list of policies.
   void add_server_request_interceptor_with_policy (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
   /// Register an IOR interceptor with the ORB currently being
   /// initialized, along with a list of policies.
   void add_ior_interceptor_with_policy (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
@@ -205,7 +205,7 @@ public:
     }
   //@}
 
-  const char* _interface_repository_id () const override;
+  char const *_interface_repository_id () const override;
 
 protected:
   /// Destructor is protected to enforce proper memory management
@@ -219,9 +219,9 @@ protected:
 
 private:
   TAO_ORBInitInfo (TAO_ORBInitInfo const &) = delete;
-  void operator= (TAO_ORBInitInfo const &) = delete;
+  TAO_ORBInitInfo &operator= (TAO_ORBInitInfo const &) = delete;
   TAO_ORBInitInfo (TAO_ORBInitInfo &&) = delete;
-  void operator= (TAO_ORBInitInfo &&) = delete;
+  TAO_ORBInitInfo &operator= (TAO_ORBInitInfo &&) = delete;
 
 private:
   /// Reference to the ORB Core.

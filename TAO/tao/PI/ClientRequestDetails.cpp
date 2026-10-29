@@ -12,12 +12,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   void
-  ClientRequestDetails::apply_policies (const CORBA::PolicyList &policies)
+  ClientRequestDetails::apply_policies (CORBA::PolicyList const &policies)
   {
     // Flag to check for duplicate ProcessingModePolicy objects in the list.
     bool processing_mode_applied = false;
 
-    const CORBA::ULong plen = policies.length ();
+    CORBA::ULong const plen = policies.length ();
 
     for (CORBA::ULong i = 0; i < plen; ++i)
       {
@@ -30,7 +30,7 @@ namespace TAO
           }
 
         // Obtain the PolicyType from the current Policy object.
-        const CORBA::PolicyType policy_type =
+        CORBA::PolicyType const policy_type =
           policy->policy_type ();
 
         if (policy_type == PortableInterceptor::PROCESSING_MODE_POLICY_TYPE)

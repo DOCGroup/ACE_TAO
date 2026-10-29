@@ -51,7 +51,7 @@ namespace TAO
   public:
     ClientRequestDetails ();
 
-    void apply_policies (const CORBA::PolicyList& policies);
+    void apply_policies (CORBA::PolicyList const &policies);
 
     /// Returns true if the ProcessingMode setting permits the "firing"
     /// of the associated client request interceptor based upon the
