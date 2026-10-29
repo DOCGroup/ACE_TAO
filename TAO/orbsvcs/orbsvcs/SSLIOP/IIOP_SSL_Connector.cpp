@@ -242,7 +242,7 @@ TAO::IIOP_SSL_Connector::make_connection (
                     "in the reactor.\n",
                     transport->id ()));
 
-      return 0;
+      return nullptr;
     }
 
   svc_handler_auto_ptr.release ();
