@@ -19,10 +19,6 @@ Fault_Detector::ReactorTask::svc ()
 }
 
 
-Fault_Detector::~Fault_Detector()
-{
-}
-
 const FTRT::Location& Fault_Detector::my_location() const
 {
   return location_;

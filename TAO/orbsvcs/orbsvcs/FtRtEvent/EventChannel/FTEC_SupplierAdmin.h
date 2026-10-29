@@ -56,7 +56,7 @@ public:
   explicit TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  ~TAO_FTEC_SupplierAdmin () override;
+  ~TAO_FTEC_SupplierAdmin () override = default;
 
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...

@@ -11,12 +11,6 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::Fault_Detector_T()
 }
 
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
-Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::~Fault_Detector_T()
-{
-}
-
-
-template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 int
 Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
 {

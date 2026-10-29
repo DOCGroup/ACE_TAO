@@ -15,11 +15,6 @@ TAO_FTEC_SupplierAdmin::TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base *ec)
 {
 }
 
-TAO_FTEC_SupplierAdmin::~TAO_FTEC_SupplierAdmin()
-{
-}
-
-
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_FTEC_SupplierAdmin::obtain_push_consumer ()
 {

@@ -28,7 +28,7 @@ class Replication_Strategy
 {
 public:
   Replication_Strategy();
-  virtual ~Replication_Strategy();
+  virtual ~Replication_Strategy() = default;
 
   Replication_Strategy(Replication_Strategy const&) = delete;
   Replication_Strategy(Replication_Strategy&&) = delete;

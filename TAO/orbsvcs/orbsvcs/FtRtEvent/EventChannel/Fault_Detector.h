@@ -28,7 +28,7 @@ class Fault_Detector
 {
 public:
   Fault_Detector() = default;
-  virtual ~Fault_Detector();
+  virtual ~Fault_Detector() = default;
 
   static Fault_Detector* instance();
 

@@ -10,10 +10,6 @@ AMI_Replication_Strategy::AMI_Replication_Strategy(bool mt)
 {
 }
 
-AMI_Replication_Strategy::~AMI_Replication_Strategy()
-{
-}
-
 void
 AMI_Replication_Strategy::replicate_request(
   const FTRT::State& state,

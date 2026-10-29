@@ -34,7 +34,7 @@ class TAO_FTEC_Event_Channel_Impl : public TAO_EC_Event_Channel_Base
 public:
   explicit TAO_FTEC_Event_Channel_Impl(TAO_EC_Event_Channel_Attributes const &attributes);
 
-  ~TAO_FTEC_Event_Channel_Impl() override;
+  ~TAO_FTEC_Event_Channel_Impl() override = default;
 
   TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl const&) = delete;
   TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl&&) = delete;

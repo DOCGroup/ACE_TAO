@@ -72,7 +72,7 @@ class SCTP_Fault_Detector : public Fault_Detector_T<
           SCTP_ConnectionDetectHandler >
 {
 public:
-    ~SCTP_Fault_Detector() override;
+    ~SCTP_Fault_Detector() override = default;
 private:
     int parse_conf(int argc, ACE_TCHAR** argv) override;
 };
