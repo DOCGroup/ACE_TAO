@@ -147,7 +147,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
       // Enum union label expressions don't get evaluated upon
       // creation, to evaluate them later, we have only the
       // string name to look up the enum value with.
-      UTL_ScopedName *v_n = const_cast<AST_Expression *> (v)->n ();
+      UTL_ScopedName *v_n = v->n ();
 
       if (v_n != nullptr)
         {
