@@ -95,7 +95,7 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::X509_var.
        */
-      ::X509 *x509 ();
+      ::X509 *x509 () const;
       //@}
 
       /// Return a pointer to the underlying private key.
@@ -105,7 +105,7 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::EVP_PKEY_var.
        */
-      ::EVP_PKEY *evp ();
+      ::EVP_PKEY *evp () const;
       //@}
 
       bool operator== (SSLIOP_Credentials const &rhs);
