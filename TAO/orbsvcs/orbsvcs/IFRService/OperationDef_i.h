@@ -71,9 +71,9 @@ public:
 
   CORBA::ParDescriptionSeq *params_i ();
 
-  virtual void params (const CORBA::ParDescriptionSeq &params);
+  virtual void params (CORBA::ParDescriptionSeq const &params);
 
-  void params_i (const CORBA::ParDescriptionSeq &params);
+  void params_i (CORBA::ParDescriptionSeq const &params);
 
   virtual CORBA::OperationMode mode ();
 
@@ -87,17 +87,17 @@ public:
 
   CORBA::ContextIdSeq *contexts_i ();
 
-  virtual void contexts (const CORBA::ContextIdSeq &contexts);
+  virtual void contexts (CORBA::ContextIdSeq const &contexts);
 
-  void contexts_i (const CORBA::ContextIdSeq &contexts);
+  void contexts_i (CORBA::ContextIdSeq const &contexts);
 
   virtual CORBA::ExceptionDefSeq *exceptions ();
 
   CORBA::ExceptionDefSeq *exceptions_i ();
 
-  virtual void exceptions (const CORBA::ExceptionDefSeq &exceptions);
+  virtual void exceptions (CORBA::ExceptionDefSeq const &exceptions);
 
-  void exceptions_i (const CORBA::ExceptionDefSeq &exceptions);
+  void exceptions_i (CORBA::ExceptionDefSeq const &exceptions);
 
   // Common code for containers to call in
   // making descriptions.

@@ -245,7 +245,7 @@ TAO_OperationDef_i::params_i ()
 }
 
 void
-TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params)
+TAO_OperationDef_i::params (CORBA::ParDescriptionSeq const &params)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -255,7 +255,7 @@ TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params)
 }
 
 void
-TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params)
+TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "params",
@@ -409,7 +409,7 @@ TAO_OperationDef_i::contexts_i ()
 }
 
 void
-TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts)
+TAO_OperationDef_i::contexts (CORBA::ContextIdSeq const &contexts)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -419,7 +419,7 @@ TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts)
 }
 
 void
-TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
+TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "contexts",
@@ -521,7 +521,7 @@ TAO_OperationDef_i::exceptions_i ( )
 }
 
 void
-TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions)
+TAO_OperationDef_i::exceptions (CORBA::ExceptionDefSeq const &exceptions)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -531,7 +531,7 @@ TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions)
 }
 
 void
-TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions)
+TAO_OperationDef_i::exceptions_i (CORBA::ExceptionDefSeq const &exceptions)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "excepts",
