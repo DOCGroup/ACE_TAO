@@ -92,8 +92,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
 
-#include <optional>
-
 // Storage for preprocessor args.
 constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
@@ -119,7 +117,7 @@ static constexpr bool copy_input_file = true;
 
 // Lines can be 1024 chars long intially -
 // it will expand as required.
-#define LINEBUF_SIZE 1024
+constexpr size_t LINEBUF_SIZE = 1024;
 std::string drv_line;
 
 static void
