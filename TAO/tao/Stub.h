@@ -70,11 +70,11 @@ public:
 
   virtual CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
-  virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
+  virtual TAO_Stub *set_policy_overrides (CORBA::PolicyList const &policies,
                                           CORBA::SetOverrideType set_add);
 
   virtual CORBA::PolicyList *get_policy_overrides (
-    const CORBA::PolicyTypeSeq & types);
+    CORBA::PolicyTypeSeq const &types);
 #endif
 
   /// Return the queueing strategy to be used in by the transport.
@@ -99,8 +99,8 @@ public:
   // Our Constructors ...
 
   /// Construct from a repository ID and a list of profiles.
-  TAO_Stub (const char *repository_id,
-            const TAO_MProfile &profiles,
+  TAO_Stub (char const *repository_id,
+            TAO_MProfile const &profiles,
             TAO_ORB_Core *orb_core);
 
   // = Memory management.
@@ -109,7 +109,7 @@ public:
 
   /// Return the Profile lock. This lock can be used at places where
   /// profiles need to be edited.
-  const TAO_SYNCH_MUTEX& profile_lock () const;
+  TAO_SYNCH_MUTEX const &profile_lock () const;
 
   /// Manage the base (non-forwarded) profiles.
   /// Returns a pointer to the profile_in_use object.  This object
@@ -117,7 +117,7 @@ public:
   TAO_Profile *profile_in_use ();
 
   /// Return the ObjectKey
-  const TAO::ObjectKey &object_key () const;
+  TAO::ObjectKey const &object_key () const;
 
   /**
    * Copy of the profile list, user must free memory when done.
@@ -127,13 +127,13 @@ public:
   TAO_MProfile *make_profiles ();
 
   /// Obtain a reference to the basic profile set.
-  const TAO_MProfile& base_profiles () const;
+  TAO_MProfile const &base_profiles () const;
 
   /// Obtain a reference to the basic profile set.
   TAO_MProfile& base_profiles ();
 
   /// Obtain a pointer to the forwarded profile set
-  const TAO_MProfile *forward_profiles () const;
+  TAO_MProfile const *forward_profiles () const;
 
   /// Obtain a pointer to the forwarded profile set
   TAO_MProfile *forward_profiles ();
@@ -177,7 +177,7 @@ public:
 
   /// Initialize the base_profiles_ and set profile_in_use_ to
   /// reference the first profile.
-  TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
+  TAO_Profile *base_profiles (TAO_MProfile const &mprofiles);
 
   /**
    * THREAD SAFE.
@@ -192,8 +192,8 @@ public:
    * Updates the profile in use to be the first profile of
    * the newly set forward target.
    */
-  void add_forward_profiles (const TAO_MProfile &mprofiles,
-                             const CORBA::Boolean permanent_forward = false);
+  void add_forward_profiles (TAO_MProfile const &mprofiles,
+                             CORBA::Boolean permanent_forward = false);
 
   /**
    * THREAD SAFE
@@ -302,10 +302,10 @@ private:
   int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
 
 private:
-  TAO_Stub (const TAO_Stub &) = delete;
+  TAO_Stub (TAO_Stub const &) = delete;
   TAO_Stub (TAO_Stub &&) = delete;
-  TAO_Stub &operator = (const TAO_Stub &) = delete;
-  TAO_Stub &operator = (TAO_Stub &&) = delete;
+  TAO_Stub &operator= (TAO_Stub const &) = delete;
+  TAO_Stub &operator= (TAO_Stub &&) = delete;
 
 protected:
   /// Automatically manage the ORB_Core reference count
