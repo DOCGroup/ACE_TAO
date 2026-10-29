@@ -106,7 +106,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECDispatching")) == 0)
         {
@@ -114,7 +114,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->dispatching_ = false;
@@ -140,7 +140,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->dispatching_threads_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -152,7 +152,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+              ACE_TCHAR const *current_arg = arg_shifter.get_current ();
               ACE_TCHAR *opt = ACE_OS::strdup (current_arg);
               this->consumer_collection_ = this->parse_collection_arg (opt);
               ACE_OS::free (opt);
@@ -166,7 +166,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR *current_arg = arg_shifter.get_current();
+              ACE_TCHAR const *current_arg = arg_shifter.get_current();
               ACE_TCHAR* opt = ACE_OS::strdup(current_arg);
               this->supplier_collection_ =
                 this->parse_collection_arg (opt);
@@ -181,7 +181,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->consumer_lock_ = 0;
@@ -211,7 +211,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->supplier_lock_ = 0;
@@ -241,7 +241,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->reactive_pulling_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -266,7 +266,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->consumer_control_ = false;
@@ -292,7 +292,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->supplier_control_ = false;
@@ -318,7 +318,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("false")) == 0)
                 {
                   this->wait_for_shutdown_thread_completion_ = false;
@@ -344,7 +344,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->consumer_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -356,7 +356,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->supplier_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -369,7 +369,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
                           unsigned long timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
@@ -383,7 +383,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
                           unsigned long timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
               this->supplier_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
@@ -396,7 +396,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               unsigned long timeout = ACE_OS::strtoul (opt, nullptr, 10);
               this->consumer_timeout_.usec (timeout);
               arg_shifter.consume_arg ();
@@ -409,7 +409,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               unsigned long timeout = ACE_OS::strtoul (opt, nullptr, 10);
               this->supplier_timeout_.usec (timeout);
               arg_shifter.consume_arg ();
@@ -422,7 +422,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->proxy_disconnect_retries_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -1387,7 +1387,7 @@ TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
 }
 
 CORBA::Policy_ptr TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
-(const ACE_Time_Value &timeout)
+(ACE_Time_Value const &timeout)
 {
   //get the existing orb
   int fake_argc = 0;
