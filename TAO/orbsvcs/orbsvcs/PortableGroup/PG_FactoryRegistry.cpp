@@ -39,17 +39,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       ));                             \
   return /* value goes here */
 
-TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
-  : identity_(name)
-  , orb_ (0)
-  , poa_ (0)
-  , object_id_ (0)
-  , this_obj_ (0)
-  , ns_name_("")
-  , naming_context_(0)
+TAO::PG_FactoryRegistry::PG_FactoryRegistry (char const *name)
+  : identity_ (name)
+  , orb_ (nullptr)
+  , poa_ (nullptr)
+  , object_id_ (nullptr)
+  , this_obj_ (nullptr)
+  , naming_context_ (nullptr)
   , this_name_(1)
-  , quit_state_(LIVE)
-  , linger_(0)
 {
 }
 
@@ -58,10 +55,10 @@ TAO::PG_FactoryRegistry::~PG_FactoryRegistry () = default;
 //////////////////////////////////////////////////////
 // PG_FactoryRegistry public, non-CORBA methods
 
-int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR * argv[])
+int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:q"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
   {
@@ -101,21 +98,21 @@ int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR * argv[])
   return 0;
 }
 
-const char * TAO::PG_FactoryRegistry::identity () const
+char const *TAO::PG_FactoryRegistry::identity () const
 {
   return this->identity_.c_str();
 }
 
 void TAO::PG_FactoryRegistry::_remove_ref ()
 {
-  this->quit_state_ = GONE;
+  this->quit_state_ = Quit_State::gone;
 }
 
-int TAO::PG_FactoryRegistry::idle (int & result)
+int TAO::PG_FactoryRegistry::idle (int &result)
 {
   result = 0;
-  int quit = 0;
-  if (this->quit_state_ == GONE)
+  bool quit {};
+  if (this->quit_state_ == Quit_State::gone)
   {
     if (linger_ < 2)
     {
@@ -123,10 +120,10 @@ int TAO::PG_FactoryRegistry::idle (int & result)
     }
     else
     {
-      quit = 1;
+      quit = true;
     }
   }
-  return quit;
+  return quit ? 1 : 0;
 }
 
 
@@ -168,7 +165,7 @@ void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr 
 
 int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
 {
-  int result = 0;
+  int result {};
 
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
@@ -265,15 +262,15 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
   typedef sequence<FactoryInfo> FactoryInfos;
 */
 
-TAO::PG_FactoryRegistry::RoleInfo::RoleInfo(size_t estimated_number_entries)
-  : infos_(static_cast<CORBA::ULong> (estimated_number_entries))
+TAO::PG_FactoryRegistry::RoleInfo::RoleInfo (size_t const estimated_number_entries)
+  : infos_ (static_cast<CORBA::ULong> (estimated_number_entries))
 {
 }
 
 void TAO::PG_FactoryRegistry::register_factory (
-    const char * role,
-    const char * type_id,
-    const PortableGroup::FactoryInfo & factory_info)
+    char const *role,
+    char const *type_id,
+    PortableGroup::FactoryInfo const &factory_info)
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::register_factory);
 
@@ -304,16 +301,16 @@ void TAO::PG_FactoryRegistry::register_factory (
     }
 
   PortableGroup::FactoryInfos & infos = role_info->infos_;
-  CORBA::ULong length = infos.length();
+  CORBA::ULong const length = infos.length();
   for (CORBA::ULong nInfo = 0u; nInfo < length; ++nInfo)
     {
-      PortableGroup::FactoryInfo & info = infos[nInfo];
+      PortableGroup::FactoryInfo const &info = infos[nInfo];
       if (info.the_location == factory_info.the_location)
         {
           ORBSVCS_ERROR(( LM_ERROR,
                       "%s: Attempt to register duplicate location %s for role: %s\n" ,
                       this->identity_.c_str(),
-                      static_cast<const char *> (info.the_location[0].id),
+                      static_cast<char const *> (info.the_location[0].id),
           role));
       throw PortableGroup::MemberAlreadyPresent();
     }
@@ -332,15 +329,15 @@ void TAO::PG_FactoryRegistry::register_factory (
       this->identity_.c_str(),
       static_cast<int> (length + 1),
       role,
-      static_cast<const char *> (factory_info.the_location[0].id)
+      static_cast<char const *> (factory_info.the_location[0].id)
     ));
 
   METHOD_RETURN(TAO::PG_FactoryRegistry::register_factory);
 }
 
 void TAO::PG_FactoryRegistry::unregister_factory (
-    const char * role,
-    const PortableGroup::Location & location)
+    char const *role,
+    PortableGroup::Location const &location)
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory);
 
@@ -348,20 +345,20 @@ void TAO::PG_FactoryRegistry::unregister_factory (
   if (this->registry_.find(role, role_info) == 0)
   {
     PortableGroup::FactoryInfos & infos = role_info->infos_;
-    int found = 0;
-    CORBA::ULong length = infos.length();
+    bool found {};
+    CORBA::ULong const length = infos.length();
     for (CORBA::ULong nInfo = 0u; !found && nInfo < length; ++nInfo)
     {
-      PortableGroup::FactoryInfo & info = infos[nInfo];
+      PortableGroup::FactoryInfo const &info = infos[nInfo];
       if (info.the_location == location)
       {
-        found = 1;
+        found = true;
 
         ORBSVCS_ERROR(( LM_INFO,
           "%s: Unregistering  factory %s@%s\n",
             this->identity_.c_str(),
             role,
-            static_cast<const char *> (location[0].id)
+            static_cast<char const *> (location[0].id)
           ));
         if (length > 1)
         {
@@ -410,7 +407,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
   //////////////////////
   // request complete
   // check quit-on-idle
-  if (registry_.current_size() == 0 && quit_state_ == LIVE)
+  if (registry_.current_size() == 0 && quit_state_ == Quit_State::live)
   {
     ORBSVCS_ERROR(( LM_INFO,
       "%s is idle\n",
@@ -419,7 +416,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
     if (quit_on_idle_)
     {
         this->poa_->deactivate_object (this->object_id_.in ());
-        quit_state_ = DEACTIVATED;
+        quit_state_ = Quit_State::deactivated;
     }
   }
 
@@ -427,7 +424,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
 }
 
 void TAO::PG_FactoryRegistry::unregister_factory_by_role (
-    const char * role
+    char const *role
   )
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_role);
@@ -455,7 +452,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
   /////////////////////
   // Function complete
   // check quit options
-  if (registry_.current_size() == 0 && quit_state_ == LIVE)
+  if (registry_.current_size() == 0 && quit_state_ == Quit_State::live)
   {
     ORBSVCS_ERROR(( LM_INFO,
       "%s is idle\n",
@@ -464,7 +461,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
     if (quit_on_idle_)
     {
         this->poa_->deactivate_object (this->object_id_.in ());
-        quit_state_ = DEACTIVATED;
+        quit_state_ = Quit_State::deactivated;
     }
   }
 
@@ -472,7 +469,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
 }
 
 void TAO::PG_FactoryRegistry::unregister_factory_by_location (
-    const PortableGroup::Location & location)
+    PortableGroup::Location const &location)
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_location);
 
@@ -485,18 +482,18 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
        it != this->registry_.end();
        ++it)
   {
-    RegistryType_Entry & entry = *it;
-    ACE_CString & role = entry.ext_id_;
+    RegistryType_Entry const &entry = *it;
+    ACE_CString const &role = entry.ext_id_;
     RoleInfo * role_info =  entry.int_id_;
 
     PortableGroup::FactoryInfos & infos = role_info->infos_;
     // ORBSVCS_ERROR((LM_INFO,  "unregister_factory_by_location: Checking role %s\n", role.c_str()  ));
 
-    int found = 0;
-    CORBA::ULong length = infos.length();
+    bool found {};
+    CORBA::ULong const length = infos.length();
     for (CORBA::ULong nInfo = 0u; !found && nInfo < length; ++nInfo)
     {
-      PortableGroup::FactoryInfo & info = infos[nInfo];
+      PortableGroup::FactoryInfo const &info = infos[nInfo];
       if (info.the_location == location)
       {
         ORBSVCS_ERROR((LM_INFO,
@@ -504,9 +501,9 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
           this->identity_.c_str(),
           static_cast<int> (nInfo),
           role.c_str(),
-          static_cast<const char *> (location[0].id)
+          static_cast<char const *> (location[0].id)
           ));
-        found = 1;
+        found = true;
         if (length > 1)
         {
           while (nInfo + 1 < length)
@@ -550,7 +547,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
       this->identity_.c_str(),
       emptyRoles[nRole].c_str()
       ));
-    RoleInfo * role_info;
+    RoleInfo *role_info {};
     if (this->registry_.unbind(emptyRoles[nRole], role_info) == 0)
     {
       delete role_info;
@@ -565,7 +562,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   }
   //////////////////////////
   // If all types are gone...
-  if (registry_.current_size() == 0 && quit_state_ == LIVE)
+  if (registry_.current_size() == 0 && quit_state_ == Quit_State::live)
   {
     ORBSVCS_ERROR(( LM_INFO,
       "%s is idle\n",
@@ -574,7 +571,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     if (quit_on_idle_)
     {
         this->poa_->deactivate_object (this->object_id_.in ());
-        quit_state_ = DEACTIVATED;
+        quit_state_ = Quit_State::deactivated;
     }
   }
 
@@ -582,7 +579,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 }
 
 ::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_role (
-    const char * role,
+    char const *role,
     CORBA::String_out type_id)
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_role);
@@ -612,7 +609,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 }
 
 ::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_location (
-    const PortableGroup::Location & location
+    PortableGroup::Location const &location
   )
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_location);
@@ -624,26 +621,26 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO));
 
 
-  size_t result_length = 0;
+  size_t result_length {};
 
   // iterate through the registery
   for (RegistryType_Iterator it = this->registry_.begin();
        it != this->registry_.end();
        ++it)
   {
-    RegistryType_Entry & entry = *it;
+    RegistryType_Entry const &entry = *it;
     RoleInfo * role_info = entry.int_id_;
 
-    PortableGroup::FactoryInfos & found_infos = role_info->infos_;
+    PortableGroup::FactoryInfos const &found_infos = role_info->infos_;
     // iterate through the entry for this type
-    int found = 0;
-    CORBA::ULong length = found_infos.length();
+    bool found {};
+    CORBA::ULong const length = found_infos.length();
     for (CORBA::ULong nInfo = 0u; !found && nInfo < length; ++nInfo)
     {
-      PortableGroup::FactoryInfo & info = found_infos[nInfo];
+      PortableGroup::FactoryInfo const &info = found_infos[nInfo];
       if (info.the_location == location)
       {
-        found = 1;
+        found = true;
         result_length += 1;
         result->length (static_cast<CORBA::ULong> (result_length));
         (*result)[static_cast<CORBA::ULong> (result_length-1u)] = info;
@@ -657,11 +654,12 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 //////////////////////////////
 // Implementation methods
 
-int TAO::PG_FactoryRegistry::write_ior_file(const ACE_TCHAR * outputFile, const char * ior)
+int TAO::PG_FactoryRegistry::write_ior_file (ACE_TCHAR const *outputFile,
+                                             char const *ior)
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (outputFile, "w");
-  if (out)
+  FILE * const out = ACE_OS::fopen (outputFile, "w");
+  if (out != nullptr)
   {
     ACE_OS::fprintf (out, "%s", ior);
     ACE_OS::fclose (out);
