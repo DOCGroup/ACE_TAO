@@ -31,7 +31,7 @@ class TAO_Notify_Serv_Export TAO_Notify_PushSupplier : public TAO_Notify_Supplie
 {
 public:
   /// Constructor
-  TAO_Notify_PushSupplier (TAO_Notify_ProxyConsumer* proxy);
+  explicit TAO_Notify_PushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
   ~TAO_Notify_PushSupplier () override = default;
