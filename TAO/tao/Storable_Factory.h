@@ -35,8 +35,8 @@ namespace TAO
 
     // Factory Methods
 
-    virtual Storable_Base *create_stream(const ACE_CString & file,
-                                         const char * mode,
+    virtual Storable_Base *create_stream (ACE_CString const &file,
+                                         char const *mode,
                                          bool use_backup =
                                          Storable_Base::use_backup_default) = 0;
   };

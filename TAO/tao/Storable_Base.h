@@ -99,7 +99,7 @@ namespace TAO
     /// Returns 0 on success, otherwise EOF
     virtual int sync () = 0;
 
-    virtual Storable_Base& operator << (const ACE_CString&) = 0;
+    virtual Storable_Base& operator << (ACE_CString const &) = 0;
     virtual Storable_Base& operator >> (ACE_CString&) = 0;
     virtual Storable_Base& operator << (ACE_UINT32 ) = 0;
     virtual Storable_Base& operator >> (ACE_UINT32 &) = 0;
@@ -110,9 +110,9 @@ namespace TAO
     virtual Storable_Base& operator << (ACE_INT64 ) = 0;
     virtual Storable_Base& operator >> (ACE_INT64 &) = 0;
 
-    virtual Storable_Base& operator << (const TAO_OutputCDR & cdr) = 0;
+    virtual Storable_Base& operator << (TAO_OutputCDR const &cdr) = 0;
 
-    virtual size_t write (size_t size, const char * bytes) = 0;
+    virtual size_t write (size_t size, char const *bytes) = 0;
 
     virtual size_t read (size_t size, char * bytes) = 0;
 
@@ -128,7 +128,7 @@ namespace TAO
     bool retry_on_ebadf_;
 
   private:
-    Storable_State state_;
+    Storable_State state_ {goodbit};
   };
 
   /// Base class for exceptions thrown when encountering
@@ -136,11 +136,11 @@ namespace TAO
   class TAO_Export Storable_Exception
   {
   public:
-    Storable_Exception (const ACE_CString & file_name);
+    Storable_Exception (ACE_CString const &file_name);
 
     virtual ~Storable_Exception ();
 
-    const ACE_CString & get_file_name () const;
+    ACE_CString const & get_file_name () const;
 
   private:
     ACE_CString file_name_;
@@ -152,7 +152,7 @@ namespace TAO
   {
   public:
     Storable_Read_Exception (Storable_Base::Storable_State state,
-                             const ACE_CString & file_name);
+                             ACE_CString const &file_name);
 
     Storable_Base::Storable_State get_state () const;
 
@@ -166,7 +166,7 @@ namespace TAO
   {
   public:
     Storable_Write_Exception (Storable_Base::Storable_State state,
-                              const ACE_CString & file_name);
+                              ACE_CString const &file_name);
 
     Storable_Base::Storable_State get_state () const;
 

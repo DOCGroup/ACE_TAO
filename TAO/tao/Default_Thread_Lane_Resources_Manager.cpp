@@ -77,9 +77,7 @@ TAO_Default_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mp
 // -------------------------------------------------------
 
 TAO_Default_Thread_Lane_Resources_Manager_Factory::
-~TAO_Default_Thread_Lane_Resources_Manager_Factory ()
-{
-}
+~TAO_Default_Thread_Lane_Resources_Manager_Factory () = default;
 
 TAO_Thread_Lane_Resources_Manager *
 TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (TAO_ORB_Core &core)
