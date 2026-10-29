@@ -103,7 +103,7 @@ be_visitor_operation_rettype::visit_predefined_type (
       *os << bt->name ();
 
       // If it's not TCKind, it's either Object, TypeCode or ValueBase.
-      if (bt->local_name ()->get_string_view () != "TCKind")
+      if (bt->local_name ()->get_string () != "TCKind")
         {
           *os << "_ptr";
         }

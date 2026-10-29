@@ -52,7 +52,7 @@ be_visitor_component_ami_rh_ex_base::init ()
   std::string_view const smart_scope = global ? "" : "::";
 
   std::string base ("AMI4CCM_");
-  base += this->iface_->original_local_name ()->get_string_view ();
+  base += this->iface_->original_local_name ()->get_string ();
   base += "ReplyHandler";
 
   this->base_class_name_ = std::string (scope->full_name ());
@@ -62,7 +62,7 @@ be_visitor_component_ami_rh_ex_base::init ()
 
   this->class_name_ = base;
   this->class_name_ += '_';
-  this->class_name_ += this->port_->original_local_name ()->get_string_view ();
+  this->class_name_ += this->port_->original_local_name ()->get_string ();
   this->class_name_ += "_i";
 }
 
@@ -80,7 +80,7 @@ be_visitor_component_ami_rh_ex_base::gen_excep_op (
       os_ << this->class_name_ << "::";
     }
 
-  os_ << prefix << node->local_name ()->get_string_view ()
+  os_ << prefix << node->local_name ()->get_string ()
       << "_excep (" << be_idt_nl
       << "::CCM_AMI::ExceptionHolder_ptr "
       << (for_defn ? "/* " : "") << "excep_holder"
@@ -108,7 +108,7 @@ be_visitor_component_ami_rh_ex_base::gen_attr_op (
       os_ << this->class_name_ << "::";
     }
 
-  os_ << "get_" << node->local_name ()->get_string_view ()
+  os_ << "get_" << node->local_name ()->get_string ()
       << " (" << be_idt_nl;
 
   be_argument arg (AST_Argument::dir_IN,
@@ -149,7 +149,7 @@ be_visitor_component_ami_rh_ex_base::gen_attr_op (
           os_ << this->class_name_ << "::";
         }
 
-      os_ << "set_" << node->local_name ()->get_string_view ()
+      os_ << "set_" << node->local_name ()->get_string ()
           << " ()" << (for_defn ? "" : ";");
 
       this->gen_op_body ();

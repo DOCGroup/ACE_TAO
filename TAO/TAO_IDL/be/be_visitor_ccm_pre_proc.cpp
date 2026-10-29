@@ -201,7 +201,7 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
       AST_Operation *provides_op = nullptr;
       UTL_ScopedName *op_name =
         this->create_scoped_name (prefix,
-                                  node->local_name ()->get_string_view (),
+                                  node->local_name ()->get_string (),
                                   {},
                                   comp_);
       ACE_NEW_RETURN (provides_op,
@@ -519,7 +519,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix,
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -575,7 +575,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix,
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -614,7 +614,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix,
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -647,7 +647,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix,
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
 
@@ -703,7 +703,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix,
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -753,7 +753,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
 
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix,
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
 
@@ -762,7 +762,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
   // sequence was originally created with the port prefix (if
   // any) in its name, so we must use it here.
   std::string connections_string (this->ctx_->port_prefix ());
-  connections_string += node->local_name ()->get_string_view ();
+  connections_string += node->local_name ()->get_string ();
   connections_string += "Connections";
   Identifier connections_id (connections_string);
   UTL_ScopedName connections_name (&connections_id,
@@ -846,7 +846,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("subscribe_",
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -922,7 +922,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("unsubscribe_",
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -971,7 +971,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("connect_",
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -1046,7 +1046,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("disconnect_",
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -1096,7 +1096,7 @@ be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
 
   UTL_ScopedName *op_name =
     this->create_scoped_name ("get_consumer_",
-                              node->local_name ()->get_string_view (),
+                              node->local_name ()->get_string (),
                               {},
                               comp_);
   be_operation *op = nullptr;
@@ -1547,7 +1547,7 @@ AST_Interface *
 be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
 {
   AST_Type *impl = node->field_type ();
-  std::string rettype_string (impl->local_name ()->get_string_view ());
+  std::string rettype_string (impl->local_name ()->get_string ());
   rettype_string += "Consumer";
   Identifier rettype_id (rettype_string);
   AST_Decl *d =
@@ -1789,7 +1789,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
   else
     {
-      std::string new_local (node->base_home ()->local_name ()->get_string_view ());
+      std::string new_local (node->base_home ()->local_name ()->get_string ());
       new_local += "Explicit";
       UTL_ScopedName *parent_name =
         static_cast<UTL_ScopedName *> (node->base_home ()->name ()->copy ());
@@ -1921,7 +1921,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
       /// contents, so it's ok that it's empty.
 
       std::string uname ("sendc_");
-      uname += u->local_name ()->get_string_view ();
+      uname += u->local_name ()->get_string ();
       Identifier utmp_id (uname);
       UTL_ScopedName utmp_sn (&utmp_id, nullptr);
 

@@ -106,7 +106,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
   if (t == AST_PredefinedType::PT_void)
     {
       ACE_NEW (id,
-               Identifier (n->last_component ()->get_string_view ()));
+               Identifier (n->last_component ()->get_string ()));
 
       ACE_NEW (new_name,
                UTL_ScopedName (id,
@@ -195,7 +195,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
           break;
         case AST_PredefinedType::PT_pseudo:
           ACE_NEW (id,
-                   Identifier (n->last_component ()->get_string_view ()));
+                   Identifier (n->last_component ()->get_string ()));
           break;
         case AST_PredefinedType::PT_uint8:
           ACE_NEW (id, Identifier ("UInt8"));
@@ -219,7 +219,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
   // The repo id computation in the AST_Decl constructor can't
   // be easily modified to work for predefined types.
   std::string repo_id ("IDL:omg.org/CORBA/");
-  repo_id.append (id->get_string_view ());
+  repo_id.append (id->get_string ());
   repo_id += ':';
   repo_id += this->version ();
   this->repoID_ = repo_id;

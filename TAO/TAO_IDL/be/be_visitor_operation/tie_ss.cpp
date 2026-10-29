@@ -74,7 +74,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
           AST_Argument *arg =
             dynamic_cast<AST_Argument*> (si.item ());
 
-          if (arg->local_name ()->get_string_view ()
+          if (arg->local_name ()->get_string ()
               == std::string_view (template_name))
             {
               // clash !

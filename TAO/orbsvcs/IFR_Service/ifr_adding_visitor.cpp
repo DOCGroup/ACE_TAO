@@ -1110,7 +1110,7 @@ ifr_adding_visitor::visit_provides (AST_Provides *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  std::string const local_name (node->local_name ()->get_string_view ());
+  std::string const local_name (node->local_name ()->get_string ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::ProvidesDef_var new_def =
@@ -1137,7 +1137,7 @@ ifr_adding_visitor::visit_uses (AST_Uses *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  std::string const local_name (node->local_name ()->get_string_view ());
+  std::string const local_name (node->local_name ()->get_string ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::UsesDef_var new_def =
@@ -1165,7 +1165,7 @@ ifr_adding_visitor::visit_publishes (AST_Publishes *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  std::string const local_name (node->local_name ()->get_string_view ());
+  std::string const local_name (node->local_name ()->get_string ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::PublishesDef_var new_def =
@@ -1192,7 +1192,7 @@ ifr_adding_visitor::visit_emits (AST_Emits *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  std::string const local_name (node->local_name ()->get_string_view ());
+  std::string const local_name (node->local_name ()->get_string ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::EmitsDef_var new_def =
@@ -1219,7 +1219,7 @@ ifr_adding_visitor::visit_consumes (AST_Consumes *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  std::string const local_name (node->local_name ()->get_string_view ());
+  std::string const local_name (node->local_name ()->get_string ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::ConsumesDef_var new_def =
@@ -2601,7 +2601,7 @@ ifr_adding_visitor::predefined_type_to_pkind (AST_PredefinedType *node)
       return CORBA::pk_value_base;
     case AST_PredefinedType::PT_pseudo:
       {
-        if (node->local_name ()->get_string_view () == "Principal")
+        if (node->local_name ()->get_string () == "Principal")
           {
             return CORBA::pk_Principal;
           }

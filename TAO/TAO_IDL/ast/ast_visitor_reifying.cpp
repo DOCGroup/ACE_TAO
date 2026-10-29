@@ -645,7 +645,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
       /// referenced template module parameter, while the local
       /// name will be that of the corresponding alias param
       /// name, which is what we want.
-      if (name == node->local_name ()->get_string_view ())
+      if (name == node->local_name ()->get_string ())
         {
           AST_Decl **ret_ptr = nullptr;
 
@@ -674,7 +674,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                      ACE_TEXT ("ast_visitor_reifying::")
                      ACE_TEXT ("visit_param_holder() - no match for ")
                      ACE_TEXT ("template param %C in %C\n"),
-                     node->local_name ()->get_string_view ().data (),
+                     node->local_name ()->get_string ().data (),
                      ScopeAsDecl (idl_global->scopes ().top ())->full_name ()),
                     -1);
 }
@@ -715,7 +715,7 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
     {
       if (dynamic_cast<AST_Template_Module*> (tmp) != nullptr)
         {
-          std::string_view const head (tmp->local_name ()->get_string_view ());
+          std::string_view const head (tmp->local_name ()->get_string ());
 
           size_t const start = name.find (head) + 2;
 

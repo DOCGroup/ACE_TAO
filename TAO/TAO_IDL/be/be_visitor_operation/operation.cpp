@@ -233,7 +233,7 @@ be_visitor_operation::gen_stub_operation_body (
         }
     }
 
-  opname += node->original_local_name ()->get_string_view ();
+  opname += node->original_local_name ()->get_string ();
 
   /// Some compilers can't resolve the stream operator overload.
   std::string::size_type const len = opname.length ();

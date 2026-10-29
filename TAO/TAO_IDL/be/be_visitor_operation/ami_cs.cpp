@@ -76,7 +76,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // Generate the scope::operation name.
   *os << parent->full_name ()
       << "::" << this->ctx_->port_prefix ()
-      << node->local_name ()->get_string_view ();
+      << node->local_name ()->get_string ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -176,7 +176,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
     }
 
   std::string_view const base =
-    node->local_name ()->get_string_view ();
+    node->local_name ()->get_string ();
 
   /// The sendc_* operation makes the invocation with the
   /// original operation name.

@@ -71,7 +71,7 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 
   be_visitor_attr_return ar_visitor (this->ctx_);
   ar_visitor.attr_name (
-    node->original_local_name ()->get_string_view ());
+    node->original_local_name ()->get_string ());
 
   if (ft->accept (&ar_visitor) == -1)
     {
@@ -113,7 +113,7 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 
   be_visitor_attr_assign as_visitor (this->ctx_);
   as_visitor.attr_name (
-    node->original_local_name ()->get_string_view ());
+    node->original_local_name ()->get_string ());
 
   if (ft->accept (&as_visitor) == -1)
     {
@@ -328,12 +328,12 @@ int
 be_visitor_executor_exs::visit_provides (be_provides *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view ();
+  prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
   be_type *obj = node->provides_type ();
   std::string_view const iname =
-    obj->original_local_name ()->get_string_view ();
+    obj->original_local_name ()->get_string ();
 
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   std::string const sname_str (scope->full_name ());
@@ -341,7 +341,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   char const * const global = (sname_str.empty () ? "" : "::");
 
   std::string lname_str (this->ctx_->port_prefix ());
-  lname_str += node->original_local_name ()->get_string_view ();
+  lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 
   os_ << be_nl_2
@@ -377,7 +377,7 @@ be_visitor_executor_exs::visit_consumes (be_consumes *node)
 {
   be_eventtype *obj = node->consumes_type ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view ();
+    node->local_name ()->get_string ();
 
   os_ << be_nl_2
       << "void" << be_nl

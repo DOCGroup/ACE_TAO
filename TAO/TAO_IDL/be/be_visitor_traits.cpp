@@ -419,7 +419,7 @@ be_visitor_traits::visit_array (be_array *node)
           name_holder += "_";
         }
 
-      name_holder += node->local_name ()->get_string_view ();
+      name_holder += node->local_name ()->get_string ();
     }
   else
     {

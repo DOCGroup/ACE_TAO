@@ -123,7 +123,7 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
            * make sure that the member has a default value.
            */
           Param *param = find_param (
-            member->local_name ()->get_string_view ());
+            member->local_name ()->get_string ());
           if (param)
             {
               new_member->value (new AST_Expression (param->expr, member->expr_type()));
@@ -200,7 +200,7 @@ AST_Annotation_Appl::find_param (std::string_view name) const
           Param **param = nullptr;
           it.next (param);
           if ((*param) && (*param)->id
-              && (*param)->id->get_string_view () == name)
+              && (*param)->id->get_string () == name)
             {
               return (*param);
             }

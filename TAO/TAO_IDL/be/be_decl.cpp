@@ -63,7 +63,7 @@ be_decl::compute_full_name (std::string_view prefix,
 
       // Prefix.
       // Local name.
-      result_str.append (this->local_name ()->get_string_view ());
+      result_str.append (this->local_name ()->get_string ());
 
       // Suffix.
       result_str.append (suffix);
@@ -97,7 +97,7 @@ be_decl::compute_full_name (std::string_view prefix,
       result_str.append (prefix);
 
       // Local name.
-      result_str.append (this->local_name ()->get_string_view ());
+      result_str.append (this->local_name ()->get_string ());
 
       // Suffix.
       result_str.append (suffix);
@@ -119,7 +119,7 @@ be_decl::compute_flat_name (std::string_view prefix,
 
       // Prefix.
       // Local name. Leave out _cxx_ prefix, if any.
-      result_str.append (this->original_local_name ()->get_string_view ());
+      result_str.append (this->original_local_name ()->get_string ());
 
       // Suffix.
       result_str.append (suffix);
@@ -152,7 +152,7 @@ be_decl::compute_flat_name (std::string_view prefix,
       result_str.append (prefix);
 
       // Local name. Leave out _cxx_ prefix, if any.
-      result_str.append (this->original_local_name ()->get_string_view ());
+      result_str.append (this->original_local_name ()->get_string ());
 
       // Suffix.
       result_str.append (suffix);

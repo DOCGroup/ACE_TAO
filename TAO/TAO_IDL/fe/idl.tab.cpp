@@ -4396,7 +4396,7 @@ yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((yyvsp[0].idval));
 
-          if (ACE_OS::strcmp ((yyvsp[0].idval)->get_string (),
+          if (ACE_OS::strcmp ((yyvsp[0].idval)->get_string ().c_str (),
                               "TypeCode") == 0
               && !idl_global->in_main_file ())
             {
@@ -9090,7 +9090,7 @@ yyreduce:
                     // Nothing else but CORBA::Object can have
                     // this identifier.
                     compare =
-                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                      ACE_OS::strcmp (d->local_name ()->get_string ().c_str (),
                                       "Object");
 
                     // Simple provides port must use IDL interface
@@ -9221,7 +9221,7 @@ yyreduce:
                     // Nothing else but CORBA::Object can have
                     // this identifier.
                     compare =
-                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                      ACE_OS::strcmp (d->local_name ()->get_string ().c_str (),
                                       "Object");
 
                     // Simple provides port must use IDL interface

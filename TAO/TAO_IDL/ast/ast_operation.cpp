@@ -367,7 +367,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_native:
             {
               // This is the only use case for this node type.
-              int compare = d->local_name ()->get_string_view () == "UserExceptionBase" ? 0 : 1;
+              int compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
 
               if (compare != 0)
                 {

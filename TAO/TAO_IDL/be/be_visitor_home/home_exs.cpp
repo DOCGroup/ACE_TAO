@@ -77,12 +77,12 @@ be_visitor_home_exs::visit_factory (be_factory *node)
   AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
   std::string sname_str (scope->full_name ());
   char const *sname = sname_str.c_str ();
-  std::string_view const lname = comp_->local_name ()->get_string_view ();
+  std::string_view const lname = comp_->local_name ()->get_string ();
   char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
-      << node_->original_local_name ()->get_string_view ()
+      << node_->original_local_name ()->get_string ()
       << "_exec_i::" << node->local_name ();
 
   be_visitor_operation_arglist visitor (this->ctx_);
@@ -111,7 +111,7 @@ int
 be_visitor_home_exs::gen_exec_class ()
 {
   // No '_cxx_' prefix.
-  std::string_view const lname = node_->original_local_name ()->get_string_view ();
+  std::string_view const lname = node_->original_local_name ()->get_string ();
 
   os_ << be_nl
       << comment_start_border_ << be_nl
@@ -190,7 +190,7 @@ be_visitor_home_exs::gen_exec_class ()
       << be_uidt_nl << be_nl
       << "ACE_NEW_THROW_EX (" << be_idt_nl
       << "retval," << be_nl
-      << comp_->original_local_name ()->get_string_view ()
+      << comp_->original_local_name ()->get_string ()
       << "_exec_i," << be_nl
       << "::CORBA::NO_MEMORY ());"
       << be_uidt_nl << be_nl
@@ -214,7 +214,7 @@ be_visitor_home_exs::gen_entrypoint ()
       << be_uidt_nl << be_nl
       << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
-      << node_->original_local_name ()->get_string_view ()
+      << node_->original_local_name ()->get_string ()
       << "_exec_i);" << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";

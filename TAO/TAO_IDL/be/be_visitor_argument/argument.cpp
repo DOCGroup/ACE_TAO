@@ -136,7 +136,7 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string_view const lname =
-    arg->local_name ()->get_string_view ();
+    arg->local_name ()->get_string ();
 
   switch (pt)
   {

@@ -99,7 +99,7 @@ int
 be_visitor_home_exh::gen_exec_class ()
 {
   // We don't want a '_cxx_' prefix here.
-  std::string_view const lname = node_->original_local_name ()->get_string_view ();
+  std::string_view const lname = node_->original_local_name ()->get_string ();
 
   os_ << be_nl
       << "/**" << be_nl

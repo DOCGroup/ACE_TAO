@@ -112,7 +112,7 @@ be_visitor_dds_ts_idl::gen_datawriter (be_type *node)
 {
   TAO_OutStream &los (*this->os_ptr_);
   std::string_view const lname =
-    node->local_name ()->get_string_view ();
+    node->local_name ()->get_string ();
 
   los << be_nl
       << "local interface " << lname
@@ -184,7 +184,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
 {
   TAO_OutStream &los (*this->os_ptr_);
   std::string_view const lname =
-    node->local_name ()->get_string_view ();
+    node->local_name ()->get_string ();
 
   los << be_nl_2
       << "local interface " << lname

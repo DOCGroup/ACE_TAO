@@ -55,7 +55,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   UTL_Scope *s = node->defined_in ();
   AST_Decl *d = ScopeAsDecl (s);
   std::string op_name (this->ctx_->port_prefix ());
-  op_name += node->local_name ()->get_string_view ();
+  op_name += node->local_name ()->get_string ();
   Identifier *op_id = nullptr;
   ACE_NEW_RETURN (op_id,
                   Identifier (op_name),

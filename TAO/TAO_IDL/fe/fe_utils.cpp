@@ -274,7 +274,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
       struct_name += '_';
     }
 
-  struct_name += u->local_name ()->get_string_view ();
+  struct_name += u->local_name ()->get_string ();
   struct_name += "Connection";
   Identifier struct_id (struct_name);
   UTL_ScopedName sn (&struct_id, nullptr);
@@ -764,7 +764,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
 void
 FE_Utils::original_local_name (Identifier *local_name)
 {
-  std::string_view const lname (local_name->get_string_view ());
+  std::string_view const lname (local_name->get_string ());
 
   // Remove _cxx_ if:
   // 1. it occurs and

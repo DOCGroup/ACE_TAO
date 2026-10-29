@@ -43,7 +43,7 @@ be_util::gen_nested_namespace_begin (TAO_OutStream *os,
        i.next ())
     {
       std::string_view const item_name =
-        i.item ()->get_string_view ();
+        i.item ()->get_string ();
 
       if (!item_name.empty ())
         {
@@ -71,7 +71,7 @@ be_util::gen_nested_namespace_end (TAO_OutStream *os,
        !i.is_done ();
        i.next ())
     {
-      if (!i.item ()->get_string_view ().empty ())
+      if (!i.item ()->get_string ().empty ())
         {
           // Leave the outermost root scope.
           *os << be_uidt_nl << "}";

@@ -139,7 +139,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
     }
 
   std::string upcall_command_name (this->ctx_->port_prefix ());
-  upcall_command_name += node->local_name ()->get_string_view ();
+  upcall_command_name += node->local_name ()->get_string ();
   upcall_command_name += '_';
   upcall_command_name += intf->local_name ();
 

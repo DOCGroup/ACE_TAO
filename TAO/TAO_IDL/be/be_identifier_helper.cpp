@@ -81,7 +81,7 @@ IdentifierHelper::original_local_name (Identifier const *local_name)
 {
   Identifier * id = nullptr;
   std::string_view const lname =
-    local_name->get_string_view ();
+    local_name->get_string ();
 
   // Remove _cxx_ if:
   // 1. it occurs and
@@ -148,12 +148,12 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
         }
       else
         {
-          retval += id->get_string_view ();
+          retval += id->get_string ();
         }
 
        if (first)
         {
-          if (!id->get_string_view ().empty ())
+          if (!id->get_string ().empty ())
             {
               // Does not start with a "".
               first = false;
@@ -176,7 +176,7 @@ bool
 IdentifierHelper::is_idl_keyword (Identifier const *local_name)
 {
   std::string_view const name =
-    local_name->get_string_view ();
+    local_name->get_string ();
   std::string const ext_id = UTL_String::get_canonical_rep (name);
 
   return idl_global->idl_keywords ().find (ext_id)
@@ -186,7 +186,7 @@ IdentifierHelper::is_idl_keyword (Identifier const *local_name)
 std::string
 IdentifierHelper::try_escape (Identifier * local_name)
 {
-  std::string_view const s_local_name = local_name->get_string_view ();
+  std::string_view const s_local_name = local_name->get_string ();
 
   if (IdentifierHelper::is_idl_keyword (local_name))
     {

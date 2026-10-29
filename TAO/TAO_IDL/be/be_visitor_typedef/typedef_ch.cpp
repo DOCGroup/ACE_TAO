@@ -217,7 +217,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       // name for each, which is ok.
       if (tdef->defined_in () == node->defined_in ())
         {
-          td_name = tdef->local_name ()->get_string_view ();
+          td_name = tdef->local_name ()->get_string ();
         }
 
       // _alloc

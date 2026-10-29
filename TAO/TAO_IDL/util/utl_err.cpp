@@ -1222,7 +1222,7 @@ UTL_Error::enum_val_expected (AST_Union *u,
                               AST_UnionLabel *l)
 {
   idl_error_header (EIDL_ENUM_VAL_EXPECTED, u);
-  std::string const union_name (u->local_name ()->get_string_view ());
+  std::string const union_name (u->local_name ()->get_string ());
   ACE_ERROR ((LM_ERROR,
               " union %C, ",
               union_name.c_str ()));
@@ -1242,8 +1242,8 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
                                     UTL_ScopedName *n)
 {
   idl_error_header (EIDL_ENUM_VAL_NOT_FOUND, u);
-  std::string const union_name (u->local_name ()->get_string_view ());
-  std::string const enum_name (e->local_name ()->get_string_view ());
+  std::string const union_name (u->local_name ()->get_string ());
+  std::string const enum_name (e->local_name ()->get_string ());
   ACE_ERROR ((LM_ERROR,
               " union %C,  enum %C,  enumerator ",
               union_name.c_str (),
@@ -1326,7 +1326,7 @@ UTL_Error::ambiguous (UTL_Scope *s,
 {
   idl_error_header (EIDL_AMBIGUOUS, d);
   std::string const scope_name (
-    (ScopeAsDecl (s))->local_name ()->get_string_view ());
+    (ScopeAsDecl (s))->local_name ()->get_string ());
   ACE_ERROR ((LM_ERROR,
               " scope: %C,  collision: ",
               scope_name.c_str ()));

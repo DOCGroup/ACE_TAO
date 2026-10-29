@@ -188,7 +188,7 @@ be_visitor_connector_dds_exh::visit_mirror_port (
   be_mirror_port *node)
 {
   os_ << be_nl
-      << "struct " << node->local_name ()->get_string_view ()
+      << "struct " << node->local_name ()->get_string ()
       << "_traits" << be_nl
       << "{" << be_idt;
 
@@ -263,7 +263,7 @@ be_visitor_connector_dds_exh::visit_attribute (
     }
 
   os_ << be_nl
-      << "using " << node->local_name ()->get_string_view ()
+      << "using " << node->local_name ()->get_string ()
       << "_type = "
       << node->field_type ()->full_name () << ";";
 
@@ -401,7 +401,7 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
       std::string_view const lname = iface->local_name ();
 
       os_ << be_nl
-          << "using " << port_elem->local_name ()->get_string_view () << "_type = ::"
+          << "using " << port_elem->local_name ()->get_string () << "_type = ::"
           << scope->name () << smart_scope << (!for_facet ? "" : "CCM_")
           << lname << ";";
 

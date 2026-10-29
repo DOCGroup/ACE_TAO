@@ -138,7 +138,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
-          fname += node->local_name ()->get_string_view ();
+          fname += node->local_name ()->get_string ();
         }
       else
         {

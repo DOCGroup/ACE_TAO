@@ -406,7 +406,7 @@ AST_Decl::compute_full_name ()
           first = second = false;
         }
 
-      std::string_view const identifier (i.item ()->get_string_view ());
+      std::string_view const identifier (i.item ()->get_string ());
       name.append (identifier);
       if (first)
         {
@@ -486,7 +486,7 @@ AST_Decl::compute_repoID () const
           first = second = false;
         }
 
-      std::string_view identifier (j.item ()->get_string_view ());
+      std::string_view identifier (j.item ()->get_string ());
       bool const identifier_empty = identifier.empty ();
       static constexpr std::string_view cxx_prefix ("_cxx_");
       if (identifier.substr (0, cxx_prefix.size ()) == cxx_prefix)
@@ -560,7 +560,7 @@ AST_Decl::compute_flat_name () const
       // _cxx_ prefix, if any.
       Identifier *tmp = j.item ()->copy ();
       FE_Utils::original_local_name (tmp);
-      std::string_view const item_name (tmp->get_string_view ());
+      std::string_view const item_name (tmp->get_string ());
       flat_name.append (item_name);
 
       if (first)
@@ -1074,7 +1074,7 @@ AST_Decl::compute_name (std::string_view prefix,
   // Prepare prefix_<local_name>_suffix string.
 
   std::string result_local_str (prefix);
-  result_local_str.append (this->local_name ()->get_string_view ());
+  result_local_str.append (this->local_name ()->get_string ());
   result_local_str.append (suffix);
 
   // Identifier for the resulting local name.
@@ -1188,7 +1188,7 @@ AST_Decl::compute_local_name (std::string_view prefix,
 {
   // Init the result with prefix.
   std::string result_str (prefix);
-  result_str.append (this->local_name ()->get_string_view ());
+  result_str.append (this->local_name ()->get_string ());
   result_str.append (suffix);
 
   // Identifier for the resulting local name.
@@ -1209,7 +1209,7 @@ void
 AST_Decl::original_local_name (Identifier *local_name)
 {
   // Remove _cxx_ if it is present.
-  std::string_view const name (local_name->get_string_view ());
+  std::string_view const name (local_name->get_string ());
   static constexpr std::string_view cxx_prefix ("_cxx_");
   if (name.substr (0, cxx_prefix.size ()) == cxx_prefix)
     {

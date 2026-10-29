@@ -86,29 +86,22 @@ Identifier::~Identifier () = default;
 
 // Operations.
 
-char *
+std::string&
 Identifier::get_string ()
 {
-  return this->pv_string_ ? this->pv_string_->data () : nullptr;
+  return this->pv_string_;
 }
 
-char const *
+std::string const&
 Identifier::get_string () const
 {
-  return this->pv_string_ ? this->pv_string_->c_str () : nullptr;
-}
-
-std::string_view
-Identifier::get_string_view () const
-{
-  return this->pv_string_ ? std::string_view (*this->pv_string_) : std::string_view {};
+  return this->pv_string_;
 }
 
 void
 Identifier::replace_string (std::string_view s)
 {
-  std::string replacement (s);
-  this->pv_string_ = replacement;
+  this->pv_string_ = s;
 }
 
 void
@@ -165,39 +158,36 @@ Identifier::preprocess_and_replace_string (std::string_view s)
 bool
 Identifier::compare (Identifier const *o) const
 {
-  if (o == nullptr ||
-      !o->pv_string_ ||
-      !this->pv_string_ ||
-      this->escaped_ ^ o->escaped_)
+  if (o == nullptr || this->escaped_ ^ o->escaped_)
     {
       return false;
     }
 
-  return *this->pv_string_ == *o->pv_string_;
+  return this->pv_string_ == o->pv_string_;
 }
 
 // Report the appropriate error if the two identifiers differ only in case.
 bool
 Identifier::case_compare (Identifier const *o) const
 {
-  if (o == nullptr || !this->pv_string_ || !o->pv_string_)
+  if (o == nullptr)
     {
       return false;
     }
 
-  return UTL_String::compare (this->get_string_view (), o->get_string_view ());
+  return UTL_String::compare (this->get_string (), o->get_string ());
 }
 
 // Report no error if the two identifiers differ only in case.
 bool
 Identifier::case_compare_quiet (Identifier const *o) const
 {
-  if (o == nullptr || !this->pv_string_ || !o->pv_string_)
+  if (o == nullptr)
     {
       return false;
     }
 
-  return UTL_String::compare_quiet (this->get_string_view (), o->get_string_view ());
+  return UTL_String::compare_quiet (this->get_string (), o->get_string ());
 }
 
 Identifier *
@@ -221,17 +211,12 @@ Identifier::escaped () const
 void
 Identifier::dump (ACE_OSTREAM_TYPE &o)
 {
-  if (!this->pv_string_)
-    {
-      return;
-    }
-
   /*
    * Annotation ids are prefixed with '@' to effectively create an alternative
    * namespace for them. This hides that hack from dumping.
    */
-  char const *value = this->pv_string_->c_str ();
-  o << (!this->pv_string_->empty () && (*this->pv_string_)[0] == '@'
+  char const *value = this->pv_string_.c_str ();
+  o << (!this->pv_string_.empty () && this->pv_string_[0] == '@'
         ? value + 1
         : value);
 }
@@ -244,8 +229,7 @@ Identifier::destroy ()
 bool
 Identifier::operator== (Identifier const &other) const
 {
-  return this->pv_string_ && other.pv_string_
-    && *this->pv_string_ == *other.pv_string_;
+  return this->pv_string_ == other.pv_string_;
 }
 
 Identifier &

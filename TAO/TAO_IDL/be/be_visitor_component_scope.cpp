@@ -57,7 +57,7 @@ be_visitor_component_scope::visit_extended_port (
   /// Depends on nested ports not being allowed.
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
-      this->ctx_->port_prefix (node->local_name ()->get_string_view ());
+      this->ctx_->port_prefix (node->local_name ()->get_string ());
       this->ctx_->append_port_prefix ("_");
     }
 
@@ -90,7 +90,7 @@ be_visitor_component_scope::visit_mirror_port (
   /// Depends on nested ports not being allowed.
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
-      this->ctx_->port_prefix (node->local_name ()->get_string_view ());
+      this->ctx_->port_prefix (node->local_name ()->get_string ());
       this->ctx_->append_port_prefix ("_");
     }
 

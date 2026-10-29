@@ -117,7 +117,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
                  dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
-          fname += bt->local_name ()->get_string_view ();
+          fname += bt->local_name ()->get_string ();
         }
       else
         {

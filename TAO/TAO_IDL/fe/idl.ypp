@@ -1786,7 +1786,7 @@ interface_forward :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1);
 
-          if (ACE_OS::strcmp ($1->get_string (),
+          if (ACE_OS::strcmp ($1->get_string ().c_str (),
                               "TypeCode") == 0
               && !idl_global->in_main_file ())
             {
@@ -5803,7 +5803,7 @@ provides_decl : IDL_PROVIDES interface_type id
                     // Nothing else but CORBA::Object can have
                     // this identifier.
                     compare =
-                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                      ACE_OS::strcmp (d->local_name ()->get_string ().c_str (),
                                       "Object");
 
                     // Simple provides port must use IDL interface
@@ -5927,7 +5927,7 @@ uses_decl : uses_opt_multiple interface_type id
                     // Nothing else but CORBA::Object can have
                     // this identifier.
                     compare =
-                      ACE_OS::strcmp (d->local_name ()->get_string (),
+                      ACE_OS::strcmp (d->local_name ()->get_string ().c_str (),
                                       "Object");
 
                     // Simple provides port must use IDL interface

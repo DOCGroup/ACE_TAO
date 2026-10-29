@@ -102,7 +102,7 @@ be_visitor_component_ami_rh_exh::visit_operation (
 
   os_ << be_nl_2
       << "virtual void" << be_nl
-      << node->local_name ()->get_string_view () << " (";
+      << node->local_name ()->get_string () << " (";
 
   int count =
     node->count_arguments_with_direction (

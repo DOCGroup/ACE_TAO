@@ -32,7 +32,7 @@ be_visitor_executor_ex_idl::visit_component (
 
   os_ << be_nl
       << "local interface CCM_"
-      << node->original_local_name ()->get_string_view ()
+      << node->original_local_name ()->get_string ()
       << be_idt_nl
       << ": ";
 
@@ -50,7 +50,7 @@ be_visitor_executor_ex_idl::visit_component (
       char const * const global = (sname_str.empty () ? "" : "::");
 
       os_ << global << sname_str << "::CCM_"
-          << base->original_local_name ()->get_string_view ();
+          << base->original_local_name ()->get_string ();
     }
 
   this->gen_supported ();
@@ -172,12 +172,12 @@ be_visitor_executor_ex_idl::visit_provides (
   char const * const sname = sname_str.c_str ();
 
   std::string_view const lname =
-    impl->original_local_name ()->get_string_view ();
+    impl->original_local_name ()->get_string ();
 
   char const * const global = (sname_str.empty () ? "" : "::");
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view ();
+  prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
   os_ << be_nl
@@ -194,7 +194,7 @@ be_visitor_executor_ex_idl::visit_consumes (
   be_eventtype *impl = node->consumes_type ();
 
   os_ << be_nl
-      << "void push_" << node->local_name ()->get_string_view ()
+      << "void push_" << node->local_name ()->get_string ()
       << " (in ::"
       << IdentifierHelper::orig_sn (impl->name ())
       << " e);";

@@ -610,7 +610,7 @@ AST_Structure::operator[] (std::string_view name)
     {
       AST_Decl *field = si.item ();
       std::string_view const field_name =
-        field->local_name ()->get_string_view ();
+        field->local_name ()->get_string ();
       if (name == field_name)
         {
           return field;

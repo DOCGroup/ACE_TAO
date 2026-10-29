@@ -131,7 +131,7 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string_view const lname =
-    arg->local_name ()->get_string_view ();
+    arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -175,7 +175,7 @@ int be_visitor_args_marshal_ss::visit_enum (be_enum *)
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string_view const lname =
-    arg->local_name ()->get_string_view ();
+    arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -272,7 +272,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string_view const lname =
-    arg->local_name ()->get_string_view ();
+    arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -318,7 +318,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string_view const lname =
-    arg->local_name ()->get_string_view ();
+    arg->local_name ()->get_string ();
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
   bool wide =
     (node->width () != static_cast<long> (sizeof (char)));
@@ -465,7 +465,7 @@ be_visitor_args_marshal_ss::emit_common ()
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string_view const lname =
-    arg->local_name ()->get_string_view ();
+    arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -511,7 +511,7 @@ be_visitor_args_marshal_ss::emit_common2 (be_type *node)
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string_view const lname =
-    arg->local_name ()->get_string_view ();
+    arg->local_name ()->get_string ();
   AST_Type::SIZE_TYPE st = node->size_type ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)

@@ -65,7 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 #define _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 
-#include <optional>
 #include <string>
 #include <string_view>
 
@@ -93,9 +92,8 @@ public:
    * Get the underlying string.
    */
   ///{
-  char *get_string ();
-  char const *get_string () const;
-  std::string_view get_string_view () const;
+  std::string& get_string ();
+  std::string const& get_string () const;
   ///}
 
   void replace_string (std::string_view s);
@@ -130,7 +128,7 @@ public:
 
 private:
   // Storage for data.
-  std::optional<std::string> pv_string_;
+  std::string pv_string_;
 
   // Did the IDL string have a leading underscore?
   bool escaped_ {};

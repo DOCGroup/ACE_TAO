@@ -792,7 +792,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       *os << (index++ != 0 ? "," : "") << be_nl;
 
       std::string arg_name ("_tao_init_");
-      arg_name += f->local_name ()->get_string_view ();
+      arg_name += f->local_name ()->get_string ();
       Identifier id {std::string_view (arg_name)};
       UTL_ScopedName sn (&id, nullptr);
       be_type *ft = dynamic_cast<be_type*> (f->field_type ());
