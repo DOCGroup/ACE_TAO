@@ -1016,14 +1016,14 @@ DRV_copy_input (FILE *fin,
   std::string_view const filename_view (orig_filename);
   escaped_filename.reserve (filename_view.size ());
 
-  for (char const path_character : filename_view)
+  for (char const current_character : filename_view)
     {
-      if (path_character == '\\')
+      if (current_character == '\\')
         {
           escaped_filename.push_back ('\\');
         }
 
-      escaped_filename.push_back (path_character);
+      escaped_filename.push_back (current_character);
     }
 
   ACE_OS::fprintf (f,
