@@ -49,7 +49,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       size_t context_size,
                                       ACE_Time_Value *timeout,
                                       bool resolve_for_existing_naming_service,
-                                      const ACE_TCHAR *persistence_location,
+                                      ACE_TCHAR const *persistence_location,
                                       void *base_addr,
                                       int enable_multicast,
                                       int use_storable_context,
@@ -84,7 +84,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          size_t context_size,
                          ACE_Time_Value *timeout,
                          bool resolve_for_existing_naming_service,
-                         const ACE_TCHAR *persistence_location,
+                         ACE_TCHAR const *persistence_location,
                          void *base_addr,
                          int enable_multicast,
                          int use_storable_context,
@@ -121,7 +121,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
               return 0;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("TAO_Naming_Server::init");
         }
@@ -234,7 +234,7 @@ TAO_Naming_Server::parse_args (int argc,
         ACE_FALLTHROUGH;
       default:
 #if !defined (ACE_NLOGGING)
-        const ACE_TCHAR *reqNonMinCorba=
+        ACE_TCHAR const *reqNonMinCorba=
 #if !defined (CORBA_E_MICRO)
           ACE_TEXT ("-f <persistence_file_name> ")
 #endif /* CORBA_E_MICRO */
@@ -396,7 +396,7 @@ TAO_Naming_Server::init_with_orb (int argc,
       if (result == -1)
         return result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_Naming_Server::init_with_orb");
@@ -427,7 +427,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 int
 TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
-                                    const ACE_TCHAR *persistence_location,
+                                    ACE_TCHAR const *persistence_location,
                                     void *base_addr,
                                     size_t context_size,
                                     int enable_multicast,
@@ -507,7 +507,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                   persFactory.get (),
                                                   use_redundancy_));
           }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const &ex)
           {
             // The activator already took over the factories so we need to release the auto_ptr
             if (this->use_servant_activator_)
@@ -627,7 +627,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (port == 0)
             {
               // Check environment var. for multicast port.
-              const char *port_number =
+              char const *port_number =
                 ACE_OS::getenv ("NameServicePort");
 
               if (port_number != nullptr)
@@ -711,7 +711,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   ACE_UNUSED_ARG (round_trip_timeout);
 #endif /* TAO_HAS_CORBA_MESSAGING */
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_Naming_Server::init_new_naming");
@@ -757,7 +757,7 @@ TAO_Naming_Server::fini ()
       if (!CORBA::is_nil (this->ns_poa_.in ()))
         this->ns_poa_->destroy (1, 1);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore
     }
@@ -775,7 +775,7 @@ TAO_Naming_Server::fini ()
         }
 
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore
     }
@@ -788,7 +788,7 @@ TAO_Naming_Server::fini ()
 #endif /* CORBA_E_MICRO */
 
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore
     }
@@ -853,12 +853,12 @@ TAO_Naming_Server::bundle_at(size_t ndx)
         ACE_TEXT("index %d out of range\n"),
         ndx));
       }
-    return 0;
+    return nullptr;
     }
   return &iors_[ndx];
   }
 
-const TAO_Naming_Server::IOR_Bundle *
+TAO_Naming_Server::IOR_Bundle const *
 TAO_Naming_Server::bundle_at(size_t ndx) const
   {
   if (ndx >= this->bundle_size_)
@@ -870,7 +870,7 @@ TAO_Naming_Server::bundle_at(size_t ndx) const
         ACE_TEXT("index %d out of range\n"),
         ndx));
       }
-    return 0;
+    return nullptr;
     }
   return &iors_[ndx];
   }
@@ -879,7 +879,7 @@ TAO_Naming_Server::bundle_at(size_t ndx) const
 int
 TAO_Naming_Server::write(size_t ndx) const
 {
-  const IOR_Bundle *b = bundle_at(ndx);
+  IOR_Bundle const *b = bundle_at(ndx);
   if (b == nullptr)
     return -1;
 

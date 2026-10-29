@@ -56,7 +56,7 @@ TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
                              command_line.get_argc(),
                              command_line.get_TCHAR_argv ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Should we log this???
       return -1;

@@ -32,7 +32,7 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout)
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_Naming_Client::init");
       return -1;

@@ -86,7 +86,7 @@ public:
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
                      ACE_Time_Value *timeout = nullptr,
                      bool resolve_for_existing_naming_service = true,
-                     const ACE_TCHAR *persistence_location = nullptr,
+                     ACE_TCHAR const *persistence_location = nullptr,
                      void *base_addr = TAO_NAMING_BASE_ADDR,
                      int enable_multicast = 1,
                      int use_storable_context = 0,
@@ -113,7 +113,7 @@ public:
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
             ACE_Time_Value *timeout = nullptr,
             bool resolve_for_existing_naming_service = true,
-            const ACE_TCHAR *persistence_location = nullptr,
+            ACE_TCHAR const *persistence_location = nullptr,
             void *base_addr = TAO_NAMING_BASE_ADDR,
             int enable_multicast = 1,
             int use_storable_context = 0,
@@ -168,7 +168,7 @@ protected:
    */
   virtual int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
-                       const ACE_TCHAR *persistence_location,
+                       ACE_TCHAR const *persistence_location,
                        void *base_addr,
                        size_t context_size,
                        int enable_multicast,
@@ -180,8 +180,8 @@ protected:
   virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Write the provided ior_string to the file. Return 0 if success.
-  int write_ior_to_file (const char* ior_string,
-                         const char* file_name);
+  int write_ior_to_file (char const *ior_string,
+                         char const *file_name);
 
   /* Factory method to create a naming context factory for use with
    * the -u and -r options.
@@ -208,7 +208,7 @@ protected:
   PortableServer::POA_var ns_poa_;
 
   /// File to output the process id.
-  const ACE_TCHAR *pid_file_name_ {};
+  ACE_TCHAR const *pid_file_name_ {};
 
   /// Although this class only manages the root context info
   /// the FT class adds primary/backup IORs for the root context
@@ -216,7 +216,7 @@ protected:
   IOR_Bundle *iors_ {};
   size_t bundle_size_;
   IOR_Bundle *bundle_at (size_t ndx);
-  const IOR_Bundle *bundle_at (size_t ndx) const;
+  IOR_Bundle const *bundle_at (size_t ndx) const;
 
   /**
    * Size of the hash_table allocated upon the creation of the Naming
@@ -239,7 +239,7 @@ protected:
 
   /// Path to the file to be used to store/read in Naming Service
   /// persistent state.
-  const ACE_TCHAR *persistence_dir_ {};
+  ACE_TCHAR const *persistence_dir_ {};
 
   /// Address to be used for memory mapping Naming Service state file,
   /// identified by the <persistence_file_name_>.
