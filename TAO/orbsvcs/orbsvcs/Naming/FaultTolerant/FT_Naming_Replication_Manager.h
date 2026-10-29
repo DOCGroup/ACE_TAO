@@ -81,7 +81,7 @@ public:
   int handle_exception (ACE_HANDLE) override;
 
   void stop ();
-  void send_context_update (const ACE_CString &ctx,
+  void send_context_update (ACE_CString const &ctx,
                             FT_Naming::ChangeType update);
   void send_objgrp_update (PortableGroup::ObjectGroupId id,
                            FT_Naming::ChangeType update);
