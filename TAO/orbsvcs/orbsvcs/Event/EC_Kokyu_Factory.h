@@ -41,20 +41,20 @@ public:
   static int init_svcs ();
 
   /// destructor...
-  virtual ~TAO_EC_Kokyu_Factory () override = default;
+  ~TAO_EC_Kokyu_Factory () override = default;
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]) override;
-  virtual int fini () override;
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
 
   // = The EC_Factory methods
-  virtual TAO_EC_Dispatching*
+  TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
-  virtual TAO_EC_Filter_Builder*
+  TAO_EC_Filter_Builder*
       create_filter_builder (TAO_EC_Event_Channel_Base*) override;
-  virtual TAO_EC_Timeout_Generator*
+  TAO_EC_Timeout_Generator*
       create_timeout_generator (TAO_EC_Event_Channel_Base*) override;
-  virtual TAO_EC_Scheduling_Strategy*
+  TAO_EC_Scheduling_Strategy*
       create_scheduling_strategy (TAO_EC_Event_Channel_Base*) override;
 
 private:
