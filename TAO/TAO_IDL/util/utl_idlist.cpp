@@ -256,7 +256,7 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      std::string_view const item = i.item ()->get_string ();
+      std::string const& item = i.item ()->get_string ();
       i.item ()->dump (o);
 
       if (first)

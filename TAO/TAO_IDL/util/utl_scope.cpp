@@ -923,7 +923,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     }
 
   bool *seen = nullptr;
-  std::string_view const name = e->get_string ();
+  std::string const& name = e->get_string ();
   bool mixed_case = false;
   UTL_Scope *start_scope = idl_global->corba_module ();
 
@@ -1523,7 +1523,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     }
 
   Identifier *decl_name = e->local_name ();
-  std::string_view const decl_string = decl_name->get_string ();
+  std::string const& decl_string = decl_name->get_string ();
   AST_Decl::NodeType new_nt = e->node_type ();
 
   // First, make sure there's no clash between e, that was
@@ -1536,7 +1536,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     {
       // A local declaration doesn't use a scoped name.
       Identifier *ref_name = (*tmp)->local_name ();
-      std::string_view const ref_string = ref_name->get_string ();
+      std::string const& ref_string = ref_name->get_string ();
 
       // If the names compare exactly, it's a redefini8tion
       // error, unless they're both modules (which can be
@@ -1862,7 +1862,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
       return nullptr;
     }
 
-  std::string_view const name = e->first_component ()->get_string ();
+  std::string const& name = e->first_component ()->get_string ();
   FE_Utils::T_Param_Info *param = nullptr;
   unsigned long index = 0;
 
@@ -2039,7 +2039,7 @@ UTL_Scope::is_global_name (Identifier const *i) const
       return false;
     }
 
-  std::string_view const name = i->get_string ();
+  std::string const& name = i->get_string ();
   return name.empty () || name == "::";
 }
 

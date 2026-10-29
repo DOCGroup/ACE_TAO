@@ -128,7 +128,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
       return 0;
     }
 
-  std::string_view const lname = node_lname->get_string ();
+  std::string const& lname = node_lname->get_string ();
 
   // Skip the *Explict and *Implicit interfaces added for a home.
   if (lname.size () >= 6 && lname.compare (lname.size () - 6, 6, "plicit") == 0)
@@ -567,7 +567,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
 
-  std::string_view const original_op_name =
+  std::string const& original_op_name =
     node->name ()->last_component ()->get_string ();
 
   UTL_ScopedName *op_name =
@@ -737,7 +737,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
 
   // Create the new name
   // Append _excep to the name of the operation
-  std::string_view const original_op_name =
+  std::string const& original_op_name =
     node->name ()->last_component ()->get_string ();
   std::string new_op_name (original_op_name);
   new_op_name += "_excep";

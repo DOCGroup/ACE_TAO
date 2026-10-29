@@ -58,7 +58,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
   std::string_view const sname = sname_str;
 
   // No _cxx_ prefix.
-  std::string_view const lname =
+  std::string const& lname =
     node->original_local_name ()->get_string ();
 
   std::string_view const global = sname_str.empty () ? "" : "::";
@@ -290,7 +290,7 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
   std::string_view const sname = sname_str;
 
   // No '_cxx_' prefix.
-  std::string_view const lname =
+  std::string const& lname =
     impl->original_local_name ()->get_string ();
 
   std::string_view const global = sname_str.empty () ? "" : "::";
@@ -311,7 +311,7 @@ be_visitor_executor_exh::visit_consumes (be_consumes *node)
   std::string_view const obj_name =
     node->consumes_type ()->full_name ();
 
-  std::string_view const port_name =
+  std::string const& port_name =
     node->local_name ()->get_string ();
 
   os_ << be_nl_2

@@ -42,7 +42,7 @@ be_util::gen_nested_namespace_begin (TAO_OutStream *os,
        !i.is_done ();
        i.next ())
     {
-      std::string_view const item_name =
+      std::string const& item_name =
         i.item ()->get_string ();
 
       if (!item_name.empty ())

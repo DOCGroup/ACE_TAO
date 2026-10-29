@@ -214,15 +214,15 @@ public:
   void syntax_error (IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced identifiers
-  void redef_error (std::string_view n, std::string_view t);
+  void redef_error (std::string const& n, std::string const& t);
 
   // Report a name being used with different spellings
-  void name_case_error (std::string_view n,
-                        std::string_view t);
+  void name_case_error (std::string const& n,
+                        std::string const& t);
 
   // Same as above, but doesn't increment the error count.
-  void name_case_warning (std::string_view n,
-                          std::string_view t);
+  void name_case_warning (std::string const& n,
+                          std::string const& t);
 
   // Differs from spelling of IDL keyword only by case.
   void idl_keyword_error (std::string_view n);

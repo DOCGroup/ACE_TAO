@@ -715,7 +715,7 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
     {
       if (dynamic_cast<AST_Template_Module*> (tmp) != nullptr)
         {
-          std::string_view const head (tmp->local_name ()->get_string ());
+          std::string const& head (tmp->local_name ()->get_string ());
 
           size_t const start = name.find (head) + 2;
 

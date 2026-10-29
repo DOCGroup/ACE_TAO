@@ -34,7 +34,7 @@ be_visitor_context_svth::visit_component (be_component *node)
   std::string_view const sname = sname_str;
 
   // No '_cxx_' prefix.
-  std::string_view const lname =
+  std::string const& lname =
     node->original_local_name ()->get_string ();
 
   std::string_view const global = sname_str.empty () ? "" : "::";
@@ -51,7 +51,7 @@ be_visitor_context_svth::visit_component (be_component *node)
   AST_Component * base = node->base_component ();
   if (base)
     {
-      std::string_view const lbase_name =
+      std::string const& lbase_name =
         base->original_local_name ()->get_string ();
 
       os_ << ": public " << global << "CIAO_" << base->flat_name ()
@@ -217,7 +217,7 @@ int
 be_visitor_context_svth::visit_publishes (be_publishes *node)
 {
   std::string_view const obj_name = node->publishes_type ()->full_name ();
-  std::string_view const port_name =
+  std::string const& port_name =
     node->local_name ()->get_string ();
 
   os_ << be_uidt_nl << be_nl
@@ -256,7 +256,7 @@ int
 be_visitor_context_svth::visit_emits (be_emits *node)
 {
   std::string_view const obj_name = node->emits_type ()->full_name ();
-  std::string_view const port_name =
+  std::string const& port_name =
     node->local_name ()->get_string ();
 
   os_ << be_uidt_nl << be_nl

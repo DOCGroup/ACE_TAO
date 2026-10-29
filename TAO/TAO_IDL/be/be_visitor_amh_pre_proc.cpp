@@ -412,7 +412,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
 
-  std::string_view const original_op_name =
+  std::string const& original_op_name =
     node->name ()->last_component ()->get_string ();
 
   UTL_ScopedName *op_name =

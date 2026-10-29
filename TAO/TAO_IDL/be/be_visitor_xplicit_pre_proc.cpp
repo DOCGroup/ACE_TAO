@@ -958,7 +958,7 @@ be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
     {
       if (dynamic_cast<be_home*> (tmp) != nullptr)
         {
-          std::string_view const head = tmp->local_name ()->get_string ();
+          std::string const& head = tmp->local_name ()->get_string ();
 
           std::size_t const head_start = name.find (head);
           if (head_start == std::string_view::npos)

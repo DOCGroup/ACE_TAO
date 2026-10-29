@@ -176,7 +176,7 @@ be_interface::compute_full_skel_name (std::string_view prefix) const
         }
 
       // Print the identifier.
-      std::string_view const item_name =
+      std::string const& item_name =
         j.item ()->get_string ();
       skel_name += item_name;
 
@@ -226,7 +226,7 @@ be_interface::compute_coll_names (int type) const
   for (UTL_IdListActiveIterator j (this->name ());
        !j.is_done ();)
     {
-      std::string_view const item =
+      std::string const& item =
         j.item ()->get_string ();
 
       // Increase right away, so we can test for the final component
@@ -2573,7 +2573,7 @@ be_interface::flat_client_enclosing_scope () const
   if (!this->flat_client_scope_computed_)
     {
       std::string_view const full_name = this->flat_name ();
-      std::string_view const name =
+      std::string const& name =
         this->original_local_name ()->get_string ();
 
       size_t offset = name.size ();

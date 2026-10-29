@@ -174,7 +174,7 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   UTL_ScopeActiveIterator i (this->node_, UTL_Scope::IK_decls);
   AST_Decl *d = i.item ();
 
-  std::string_view const loc_name =
+  std::string const& loc_name =
     node->local_name ()->get_string ();
   std::string_view const exec_ext =
     loc_name.find ("sync") != std::string_view::npos ? "1" : "0";

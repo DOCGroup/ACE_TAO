@@ -332,7 +332,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   const char *port_name = prefix.c_str ();
 
   be_type *obj = node->provides_type ();
-  std::string_view const iname =
+  std::string const& iname =
     obj->original_local_name ()->get_string ();
 
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
@@ -376,7 +376,7 @@ int
 be_visitor_executor_exs::visit_consumes (be_consumes *node)
 {
   be_eventtype *obj = node->consumes_type ();
-  std::string_view const port_name =
+  std::string const& port_name =
     node->local_name ()->get_string ();
 
   os_ << be_nl_2

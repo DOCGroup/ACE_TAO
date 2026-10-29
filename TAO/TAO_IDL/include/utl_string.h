@@ -144,10 +144,10 @@ public:
   // Caseless string compare returns true if match, mixed_case is
   // true if match only true due to ignoring case differences.
 
-  static bool compare (std::string_view lhs, std::string_view rhs);
+  static bool compare (std::string const& lhs, std::string const& rhs);
   // Compare two const char * (like the UTL_String compare)
 
-  static bool compare_quiet (std::string_view lhs, std::string_view rhs);
+  static bool compare_quiet (std::string const& lhs, std::string const& rhs);
   // Like the above but without error or warning message output.
 
   static std::string get_canonical_rep (std::string_view str);

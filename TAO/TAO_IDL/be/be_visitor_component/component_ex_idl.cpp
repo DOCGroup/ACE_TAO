@@ -63,7 +63,7 @@ be_visitor_component_ex_idl::visit_component (
     IdentifierHelper::orig_sn (scope->name ()).c_str ());
   char const * const sname = sname_str.c_str ();
 
-  std::string_view const lname =
+  std::string const& lname =
     node->original_local_name ()->get_string ();
 
   std::string_view const global = sname_str.empty () ? "" : "::";

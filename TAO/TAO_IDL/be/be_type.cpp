@@ -170,7 +170,7 @@ be_type::gen_fwd_helper_name ()
            i.next ())
         {
           segment = i.item ();
-          std::string_view const name =
+          std::string const& name =
             segment->get_string ();
 
           if (name.empty ())

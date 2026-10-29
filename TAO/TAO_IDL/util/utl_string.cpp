@@ -109,7 +109,7 @@ UTL_String::strcmp_caseless (
 
 // Compare two strings.
 bool
-UTL_String::compare (std::string_view lhs, std::string_view rhs)
+UTL_String::compare (std::string const& lhs, std::string const& rhs)
 {
   bool result= false;
   bool mixed=  false;
@@ -138,7 +138,7 @@ UTL_String::compare (std::string_view lhs, std::string_view rhs)
 
 // Like the above but without error or warning message output.
 bool
-UTL_String::compare_quiet (std::string_view lhs, std::string_view rhs)
+UTL_String::compare_quiet (std::string const& lhs, std::string const& rhs)
 {
   bool result= false;
   bool mixed=  false;

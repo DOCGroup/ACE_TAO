@@ -51,7 +51,7 @@ be_visitor_context_svts::visit_component (be_component *node)
   AST_Component * base = node->base_component ();
   if (base)
     {
-      std::string_view const lbase_name =
+      std::string const& lbase_name =
         base->original_local_name ()->get_string ();
 
       os_ << global << "CIAO_" << base->flat_name ()
@@ -119,9 +119,9 @@ int
 be_visitor_context_svts::visit_publishes (be_publishes *node)
 {
   AST_Type *obj = node->publishes_type ();
-  std::string_view const port_name = node->local_name ()->get_string ();
+  std::string const& port_name = node->local_name ()->get_string ();
   std::string_view const fname = obj->full_name ();
-  std::string_view const lname = obj->local_name ()->get_string ();
+  std::string const& lname = obj->local_name ()->get_string ();
   std::string const sname_str (
     ScopeAsDecl (obj->defined_in ())->full_name ());
 
@@ -254,11 +254,11 @@ int
 be_visitor_context_svts::visit_emits (be_emits *node)
 {
   AST_Type *obj = node->emits_type ();
-  std::string_view const port_name =
+  std::string const& port_name =
     node->local_name ()->get_string ();
 
   std::string_view const fname = obj->full_name ();
-  std::string_view const lname =
+  std::string const& lname =
     obj->local_name ()->get_string ();
 
   os_ << be_nl_2

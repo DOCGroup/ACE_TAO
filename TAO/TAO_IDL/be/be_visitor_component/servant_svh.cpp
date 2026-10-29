@@ -32,7 +32,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
   char const * const sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
-  std::string_view const lname =
+  std::string const& lname =
     node_->original_local_name ()->get_string ();
 
   char const * const global = (sname_str.empty () ? "" : "::");
@@ -242,7 +242,7 @@ be_visitor_servant_svh::visit_publishes (be_publishes *node)
   if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
       std::string_view const obj_name = node->publishes_type ()->full_name ();
-      std::string_view const port_name =
+      std::string const& port_name =
         node->local_name ()->get_string ();
 
       os_ << be_uidt_nl << be_nl
@@ -266,7 +266,7 @@ be_visitor_servant_svh::visit_emits (be_emits *node)
    if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
       std::string_view const obj_name = node->emits_type ()->full_name ();
-      std::string_view const port_name =
+      std::string const& port_name =
         node->local_name ()->get_string ();
 
       os_ << be_nl_2
@@ -287,7 +287,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
   if(!be_global->gen_noeventccm ())
     {
       std::string_view const obj_name = node->consumes_type ()->full_name ();
-      std::string_view const port_name =
+      std::string const& port_name =
         node->local_name ()->get_string ();
 
       std::string holder (obj_name);

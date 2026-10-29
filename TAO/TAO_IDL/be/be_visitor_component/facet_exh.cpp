@@ -34,7 +34,7 @@ int
 be_visitor_facet_exh::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
-  std::string_view const iname =
+  std::string const& iname =
     impl->original_local_name ()->get_string ();
 
   std::string lname_str (this->ctx_->port_prefix ());

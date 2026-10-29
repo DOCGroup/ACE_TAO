@@ -341,8 +341,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
           if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
             {
-              idl_global->err ()->redef_error (i->full_name ().data (),
-                                               d->full_name ().data ());
+              idl_global->err ()->redef_error (i->full_name (),
+                                               d->full_name ());
               return;
             }
         }

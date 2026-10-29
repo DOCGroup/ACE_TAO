@@ -764,7 +764,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
 void
 FE_Utils::original_local_name (Identifier *local_name)
 {
-  std::string_view const lname (local_name->get_string ());
+  std::string const& lname (local_name->get_string ());
 
   // Remove _cxx_ if:
   // 1. it occurs and

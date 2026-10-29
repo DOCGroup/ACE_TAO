@@ -79,7 +79,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   /// that we use for building related names)
   /// and 'sendc' interface, respectively.
   /// First, we strip off the "_Connector" suffix.
-  std::string_view const connector_name =
+  std::string const& connector_name =
     scope->local_name ()->get_string ();
   std::string_view const half_stripped_name =
     connector_name.substr (0, connector_name.find ("_Connector"));
