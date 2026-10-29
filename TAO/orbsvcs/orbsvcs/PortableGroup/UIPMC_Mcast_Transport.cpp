@@ -50,12 +50,12 @@ TAO_UIPMC_Mcast_Transport::cleanup_packets (bool expired_only)
 {
   if (expired_only)
     {
-      TAO_MIOP_Resource_Factory *factory =
+      TAO_MIOP_Resource_Factory * const factory =
         ACE_Dynamic_Service<TAO_MIOP_Resource_Factory>::instance (
           this->orb_core_->configuration(),
           ACE_TEXT ("MIOP_Resource_Factory"));
 
-      TAO_PG::Fragments_Cleanup_Strategy *cleanup_strategy =
+      TAO_PG::Fragments_Cleanup_Strategy * const cleanup_strategy =
         factory->fragments_cleanup_strategy ();
 
       cleanup_strategy->cleanup (this->incomplete_);
@@ -110,13 +110,23 @@ ssize_t TAO_UIPMC_Mcast_Transport::recv (char *, size_t, ACE_Time_Value const *)
   return -1;
 }
 
-int TAO_UIPMC_Mcast_Transport::send_request (TAO_Stub *, TAO_ORB_Core *, TAO_OutputCDR &, TAO_Message_Semantics, ACE_Time_Value *)
+int
+TAO_UIPMC_Mcast_Transport::send_request (TAO_Stub *,
+                                        TAO_ORB_Core *,
+                                        TAO_OutputCDR &,
+                                        TAO_Message_Semantics,
+                                        ACE_Time_Value *)
 {
   // Shouldn't ever be called on the server side.
   return -1;
 }
 
-int TAO_UIPMC_Mcast_Transport::send_message (TAO_OutputCDR &, TAO_Stub *, TAO_ServerRequest *, TAO_Message_Semantics, ACE_Time_Value *)
+int
+TAO_UIPMC_Mcast_Transport::send_message (TAO_OutputCDR &,
+                                         TAO_Stub *,
+                                         TAO_ServerRequest *,
+                                         TAO_Message_Semantics,
+                                         ACE_Time_Value *)
 {
   // Shouldn't ever be called on the server side.
   return -1;
@@ -138,7 +148,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
 
   // There is nothing left in the socket buffer.
   if (n <= 0)
-    return 0;
+    return nullptr;
 
   // Make sure that we at least have a MIOP header.
   if (static_cast<size_t> (n) < MIOP_MIN_HEADER_SIZE)
@@ -153,7 +163,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
                       n));
         }
 
-      return 0;
+      return nullptr;
     }
 
   // Use CDR for reading fields from MIOP packet header.
@@ -161,7 +171,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
   TAO_InputCDR miop_hdr (buf, n);
 
   // Check for MIOP magic bytes.
-  CORBA::Octet miop_magic_recv[sizeof miop_magic];
+  CORBA::Octet miop_magic_recv[sizeof miop_magic] {};
   miop_hdr.read_octet_array (miop_magic_recv, sizeof miop_magic_recv);
   if (miop_magic_recv[0] != miop_magic [0] ||
       miop_magic_recv[1] != miop_magic [1] ||
@@ -177,11 +187,11 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
                       this->id ()));
         }
 
-      return 0;
+      return nullptr;
     }
 
   // Check MIOP version.
-  CORBA::Octet miop_version;
+  CORBA::Octet miop_version {};
   miop_hdr.read_octet (miop_version);
   if (miop_version !=
       ((TAO_DEF_MIOP_MAJOR & 0xf) << 4) + (TAO_DEF_MIOP_MINOR & 0xf))
@@ -197,10 +207,10 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
                       miop_version & 0xf));
         }
 
-      return 0;
+      return nullptr;
     }
 
-  CORBA::Octet miop_flags;
+  CORBA::Octet miop_flags {};
   miop_hdr.read_octet (miop_flags);
 
   // Retrieve the stop packet marker.
@@ -216,10 +226,10 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
   miop_hdr.read_ulong (packet_number);
 
   // We don't use number_of_packets since it's optional in the spec.
-  CORBA::ULong number_of_packets;
+  CORBA::ULong number_of_packets {};
   miop_hdr.read_ulong (number_of_packets);
 
-  CORBA::ULong id_length;
+  CORBA::ULong id_length {};
   miop_hdr.read_ulong (id_length);
 
   if (id_length > static_cast<CORBA::ULong> (MIOP_MAX_ID_LENGTH) ||
@@ -234,7 +244,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
                       this->id ()));
         }
 
-      return 0;
+      return nullptr;
     }
 
   ssize_t const miop_header_size =
@@ -250,7 +260,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
                       this->id ()));
         }
 
-      return 0;
+      return nullptr;
     }
 
   id_hash = ACE::hash_pjw (&buf[MIOP_ID_CONTENT_OFFSET], id_length);
@@ -273,11 +283,11 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
 TAO_PG::UIPMC_Recv_Packet *
 TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 {
-  const TAO_MIOP_Resource_Factory *const factory =
+  TAO_MIOP_Resource_Factory const * const factory =
     ACE_Dynamic_Service<TAO_MIOP_Resource_Factory>::instance (
       this->orb_core_->configuration(),
       ACE_TEXT ("MIOP_Resource_Factory"));
-  const bool eager_dequeue= factory->enable_eager_dequeue ();
+  bool const eager_dequeue = factory->enable_eager_dequeue ();
 
   // Only one thread will do recv at the same time.
   // FUZZ: disable check_for_ACE_Guard
@@ -288,7 +298,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
       // The buffer on the stack which will be used to hold the input
       // messages.
       char buf [MIOP_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
-      char *aligned_buf = ACE_ptr_align_binary (buf, ACE_CDR::MAX_ALIGNMENT);
+      char * const aligned_buf = ACE_ptr_align_binary (buf, ACE_CDR::MAX_ALIGNMENT);
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
       (void) ACE_OS::memset (buf, '\0', sizeof buf);
@@ -300,12 +310,12 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
           TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard guard (this);
 
           ACE_INET_Addr from_addr;
-          CORBA::UShort packet_length;
-          CORBA::ULong packet_number = 0;
-          bool stop_packet = false;
-          u_long id_hash;
+          CORBA::UShort packet_length {};
+          CORBA::ULong packet_number {};
+          bool stop_packet {};
+          u_long id_hash {};
 
-          char *start_data =
+          char * const start_data =
             this->recv_packet (aligned_buf, MIOP_MAX_DGRAM_SIZE, from_addr,
                                packet_length, packet_number, stop_packet, id_hash);
 
@@ -424,10 +434,10 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
   // Ok we have received as many packets as we could, now if we have
   // any completed packets queued up, return the first to the caller.
   if (this->complete_.is_empty ())
-    return 0;
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, complete_guard, this->complete_lock_, 0);
+    return nullptr;
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, complete_guard, this->complete_lock_, nullptr);
   if (this->complete_.is_empty ())
-    return 0; // Another thread got here first, not a problem.
+    return nullptr; // Another thread got here first, not a problem.
 
   TAO_PG::UIPMC_Recv_Packet *packet = nullptr;
   if (this->complete_.dequeue_head (packet) == -1)
@@ -436,7 +446,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                   ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%B]::recv_all, ")
                   ACE_TEXT ("unable to dequeue completed message\n"),
                   this->id ()));
-      return 0;
+      return nullptr;
     }
 
   if (TAO_debug_level >= 9)
@@ -534,7 +544,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
 
       // Make a node of the message block.
       TAO_Queued_Data qd (&message_block);
-      size_t mesg_length = 0;
+      size_t mesg_length {};
 
       // Parse the incoming message for validity. The check needs to be
       // performed by the messaging objects.

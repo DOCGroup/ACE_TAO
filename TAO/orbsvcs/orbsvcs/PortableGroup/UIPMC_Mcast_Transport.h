@@ -105,6 +105,11 @@ public:
   //@}
 
 private:
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport &&) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport &&) = delete;
+
   /// Receive a UDP message and extract all necessary info from the MIOP
   /// header. If everything is fine return a pointer to the first byte of
   /// the non-MIOP data.
