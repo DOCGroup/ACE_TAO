@@ -45,13 +45,13 @@ public:
                   ACE_TCHAR *argv[]);
 
   /// Return the file where the IOR of the server object is stored.
-  const char *ior_output_file () const;
+  char const *ior_output_file () const;
 
   /// Is the Interface Repository persistent?
   int persistent () const;
 
   /// Return the default filename for persistent IFR.
-  const char *persistent_file () const;
+  char const *persistent_file () const;
 
   /// Are we using a WIN32 registry as the backing store?
   int using_registry () const;

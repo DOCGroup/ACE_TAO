@@ -85,7 +85,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-const char *
+char const *
 Options::ior_output_file () const
 {
   return this->ior_output_file_;
@@ -97,7 +97,7 @@ Options::persistent () const
   return this->persistent_;
 }
 
-const char *
+char const *
 Options::persistent_file () const
 {
   return this->persistent_file_;

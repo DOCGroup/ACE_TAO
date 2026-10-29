@@ -79,10 +79,10 @@ protected:
   CORBA::ORB_var orb_;
 
   /// Root POA reference.
-  PortableServer::POA_ptr root_poa_;
+  PortableServer::POA_ptr root_poa_ {};
 
   /// The Repository's POA reference.
-  PortableServer::POA_ptr repo_poa_;
+  PortableServer::POA_ptr repo_poa_ {};
 
   /// Event handler that responds to multicast requests.
   TAO_IOR_Multicast *ior_multicast_ {};
