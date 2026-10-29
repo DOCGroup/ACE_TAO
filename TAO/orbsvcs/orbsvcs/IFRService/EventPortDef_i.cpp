@@ -65,7 +65,7 @@ TAO_EventPortDef_i::event_i (
       return;
     }
 
-  const char *tmp =
+  char const *tmp =
     TAO_IFR_Service_Utils::reference_to_path (event);
 
   ACE_Configuration_Section_Key new_key;
@@ -86,7 +86,7 @@ TAO_EventPortDef_i::event_i (
 
 CORBA::Boolean
 TAO_EventPortDef_i::is_a (
-    const char *event_id
+    char const *event_id
   )
 {
   TAO_IFR_READ_GUARD_RETURN (false);
@@ -98,7 +98,7 @@ TAO_EventPortDef_i::is_a (
 
 CORBA::Boolean
 TAO_EventPortDef_i::is_a_i (
-    const char *event_id
+    char const *event_id
   )
 {
   ACE_TString holder;

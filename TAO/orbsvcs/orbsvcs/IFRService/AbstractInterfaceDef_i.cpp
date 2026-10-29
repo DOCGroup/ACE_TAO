@@ -21,7 +21,7 @@ TAO_AbstractInterfaceDef_i::def_kind ()
 }
 
 CORBA::Boolean
-TAO_AbstractInterfaceDef_i::is_a (const char *interface_id)
+TAO_AbstractInterfaceDef_i::is_a (char const *interface_id)
 {
   TAO_IFR_READ_GUARD_RETURN (false);
 
@@ -31,7 +31,7 @@ TAO_AbstractInterfaceDef_i::is_a (const char *interface_id)
 }
 
 CORBA::Boolean
-TAO_AbstractInterfaceDef_i::is_a_i (const char *interface_id)
+TAO_AbstractInterfaceDef_i::is_a_i (char const *interface_id)
 {
   if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0)
     {

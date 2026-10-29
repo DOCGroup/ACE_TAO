@@ -47,11 +47,11 @@ public:
     ) override;
 
   CORBA::Boolean is_a (
-      const char *interface_id
+      char const *interface_id
     ) override;
 
   CORBA::Boolean is_a_i (
-      const char *interface_id
+      char const *interface_id
     );
 };
 
