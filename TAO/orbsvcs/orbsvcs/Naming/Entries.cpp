@@ -23,7 +23,7 @@ TAO_IntId::TAO_IntId (CORBA::Object_ptr obj,
   ref_ = CORBA::Object::_duplicate (obj);
 }
 
-TAO_IntId::TAO_IntId (const TAO_IntId &rhs)
+TAO_IntId::TAO_IntId (TAO_IntId const &rhs)
 {
   type_ = rhs.type_;
   ref_ = CORBA::Object::_duplicate (rhs.ref_);
@@ -35,7 +35,7 @@ TAO_IntId::~TAO_IntId ()
 }
 
 void
-TAO_IntId::operator= (const TAO_IntId &rhs)
+TAO_IntId::operator= (TAO_IntId const &rhs)
 {
   // check for self assignment.
   if (&rhs == this)
@@ -53,14 +53,14 @@ TAO_ExtId::TAO_ExtId ()
 {
 }
 
-TAO_ExtId::TAO_ExtId (const char *id,
-                    const char *kind)
+TAO_ExtId::TAO_ExtId (char const *id,
+                    char const *kind)
   : kind_ (kind),
     id_ (id)
 {
 }
 
-TAO_ExtId::TAO_ExtId (const TAO_ExtId &rhs)
+TAO_ExtId::TAO_ExtId (TAO_ExtId const &rhs)
 {
   id_ = rhs.id_;
   kind_ = rhs.kind_;
@@ -70,20 +70,20 @@ TAO_ExtId::~TAO_ExtId ()
 {
 }
 
-const char *
+char const *
 TAO_ExtId::id ()
 {
   return id_.fast_rep ();
 }
 
-const char *
+char const *
 TAO_ExtId::kind ()
 {
   return kind_.fast_rep ();
 }
 
 void
-TAO_ExtId::operator= (const TAO_ExtId &rhs)
+TAO_ExtId::operator= (TAO_ExtId const &rhs)
 {
   // Check for self assignment.
   if (&rhs == this)
@@ -94,13 +94,13 @@ TAO_ExtId::operator= (const TAO_ExtId &rhs)
 }
 
 bool
-TAO_ExtId::operator== (const TAO_ExtId &rhs) const
+TAO_ExtId::operator== (TAO_ExtId const &rhs) const
 {
   return id_ == rhs.id_ && kind_ == rhs.kind_;
 }
 
 bool
-TAO_ExtId::operator!= (const TAO_ExtId &rhs) const
+TAO_ExtId::operator!= (TAO_ExtId const &rhs) const
 {
   return id_ != rhs.id_ || kind_ != rhs.kind_;
 }
