@@ -98,7 +98,7 @@ TAO_EnumDef_i::members_i ()
 }
 
 void
-TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
+TAO_EnumDef_i::members (CORBA::EnumMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -108,7 +108,7 @@ TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
 }
 
 void
-TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members)
+TAO_EnumDef_i::members_i (CORBA::EnumMemberSeq const &members)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "members",

@@ -54,9 +54,9 @@ public:
 
   CORBA::EnumMemberSeq *members_i ();
 
-  virtual void members (const CORBA::EnumMemberSeq &members);
+  virtual void members (CORBA::EnumMemberSeq const &members);
 
-  void members_i (const CORBA::EnumMemberSeq &members);
+  void members_i (CORBA::EnumMemberSeq const &members);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

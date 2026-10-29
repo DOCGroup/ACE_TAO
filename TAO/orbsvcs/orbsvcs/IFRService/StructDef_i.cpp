@@ -224,7 +224,7 @@ TAO_StructDef_i::members_i ()
 }
 
 void
-TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
+TAO_StructDef_i::members (CORBA::StructMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -234,7 +234,7 @@ TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
 }
 
 void
-TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members)
+TAO_StructDef_i::members_i (CORBA::StructMemberSeq const &members)
 {
   // Destroy our old refs.
   TAO_Container_i::destroy_references_i ();
