@@ -723,9 +723,9 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
 }
 
 CORBA::ModuleDef_ptr
-TAO_Container_i::create_module (const char *id,
-                                const char *name,
-                                const char *version)
+TAO_Container_i::create_module (char const *id,
+                                char const *name,
+                                char const *version)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ModuleDef::_nil ());
 
@@ -737,9 +737,9 @@ TAO_Container_i::create_module (const char *id,
 }
 
 CORBA::ModuleDef_ptr
-TAO_Container_i::create_module_i (const char *id,
-                                  const char *name,
-                                  const char *version)
+TAO_Container_i::create_module_i (char const *id,
+                                  char const *name,
+                                  char const *version)
 {
   // new_key is not needed when creating a module, but it is needed
   // by most of the other creation methods, so a blank one gets passed in.
@@ -1484,9 +1484,9 @@ TAO_Container_i::create_exception_i (char const *id,
 }
 
 CORBA::NativeDef_ptr
-TAO_Container_i::create_native (const char *id,
-                                const char *name,
-                                const char *version)
+TAO_Container_i::create_native (char const *id,
+                                char const *name,
+                                char const *version)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::NativeDef::_nil ());
 
@@ -1498,9 +1498,9 @@ TAO_Container_i::create_native (const char *id,
 }
 
 CORBA::NativeDef_ptr
-TAO_Container_i::create_native_i (const char *id,
-                                  const char *name,
-                                  const char *version)
+TAO_Container_i::create_native_i (char const *id,
+                                  char const *name,
+                                  char const *version)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;

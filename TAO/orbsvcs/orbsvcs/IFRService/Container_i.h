@@ -98,14 +98,14 @@ public:
       CORBA::Long max_returned_objs);
 
   virtual CORBA::ModuleDef_ptr create_module (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   CORBA::ModuleDef_ptr create_module_i (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   virtual CORBA::ConstantDef_ptr create_constant (
       char const *id,
@@ -232,14 +232,14 @@ public:
       CORBA::StructMemberSeq const &members);
 
   virtual CORBA::NativeDef_ptr create_native (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   CORBA::NativeDef_ptr create_native_i (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   virtual CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
       const char *id,
