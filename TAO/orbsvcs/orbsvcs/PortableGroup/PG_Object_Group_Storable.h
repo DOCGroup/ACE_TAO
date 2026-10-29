@@ -150,15 +150,15 @@ namespace TAO
     void write (TAO::Storable_Base & stream);
 
     TAO::Storable_Factory & storable_factory_;
-    time_t last_changed_;
+    time_t last_changed_ {};
 
   protected:
-    bool loaded_from_stream_;
+    bool loaded_from_stream_ {};
 
-    bool destroyed_;
+    bool destroyed_ {};
 
     /// To set when state written out.
-    bool write_occurred_;
+    bool write_occurred_ {};
 
     /**
      * Signals that this context was updated.

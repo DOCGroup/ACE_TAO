@@ -237,14 +237,10 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   , group_previously_stored_(false)
   , group_id_previously_stored_(0)
   , storable_factory_ (storable_factory)
-  , last_changed_ (0)
-  , loaded_from_stream_ (false)
-  , destroyed_ (false)
-  , write_occurred_ (false)
 {
   // Create a temporary stream simply to check if a readable
   // version already exists.
-  bool stream_exists = false;
+  bool stream_exists {};
   {
     std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
@@ -275,14 +271,10 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   , group_previously_stored_(true)
   , group_id_previously_stored_(group_id)
   , storable_factory_ (storable_factory)
-  , last_changed_ (0)
-  , loaded_from_stream_ (false)
-  , destroyed_ (false)
-  , write_occurred_ (false)
 {
   // Create a temporary stream to simply to check if a readable
   // version already exists.
-  bool stream_exists = false;
+  bool stream_exists {};
   {
     std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
