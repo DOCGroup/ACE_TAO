@@ -41,21 +41,26 @@ class Iterator_Handler
   friend class Iterator_Handler_Friend;
 
 public:
+  Iterator_Handler (Iterator_Handler const&) = delete;
+  Iterator_Handler (Iterator_Handler&&) = delete;
+  Iterator_Handler& operator= (Iterator_Handler const&) = delete;
+  Iterator_Handler& operator= (Iterator_Handler&&) = delete;
+
   /// Constructor that creates a content iterator corresponding to the
   /// name of the file being retrieved from the web server.
   Iterator_Handler ();
 
-  virtual void next_chunk (CORBA::Boolean pending_data,
-                   const Web_Server::Chunk_Type & chunk);
+  void next_chunk (CORBA::Boolean pending_data,
+                   Web_Server::Chunk_Type const& chunk) override;
 
-  virtual void next_chunk_excep (
-      ::Messaging::ExceptionHolder *)
+  void next_chunk_excep (
+      ::Messaging::ExceptionHolder *) override
     {}
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void destroy_excep (
-      ::Messaging::ExceptionHolder *)
+  void destroy_excep (
+      ::Messaging::ExceptionHolder *) override
     {}
 
   /**
@@ -65,16 +70,16 @@ public:
    * retrieval completes.
    */
   void run (int *request_count,
-            const char *pathname,
+            char const *pathname,
             Web_Server::Iterator_Factory_ptr factory);
 
 private:
   /// Destructor (private to ensure that Iterator_Handler is allocated
   /// on the heap).
-  ~Iterator_Handler ();
+  ~Iterator_Handler () override;
 
   /// Initialize the Content Iterator used to retrieve the file.
-  void initialize_content_iterator (const char *pathname,
+  void initialize_content_iterator (char const *pathname,
                                     Web_Server::Iterator_Factory_ptr factory);
 
   /// Deactivate this reply handler.
@@ -105,7 +110,7 @@ private:
 
   /// The offset from the beginning of the file, the next chunk of data
   /// should be read from.
-  CORBA::ULong offset_;
+  CORBA::ULong offset_ {};
 
   /// Reference to this Reply Handler's self.
   Web_Server::AMI_Content_IteratorHandler_var ami_handler_;
@@ -115,7 +120,7 @@ private:
    * the pointer itself) of the<pending_data> parameter will be
    * decremented when file retrieval has completed.
    */
-  int *request_count_;
+  int *request_count_ {};
 };
 
 #endif  /* ITERATOR_HAHNDLER_H */

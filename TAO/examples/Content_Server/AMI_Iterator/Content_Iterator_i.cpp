@@ -6,7 +6,7 @@
 #include "Content_Iterator_i.h"
 
 
-Content_Iterator_i::Content_Iterator_i (const char *pathname,
+Content_Iterator_i::Content_Iterator_i (char const *pathname,
                                         CORBA::ULongLong file_size)
   : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
     file_io_ (),
@@ -63,7 +63,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
   CORBA::Octet *buf =
     Web_Server::Chunk_Type::allocbuf (BUFSIZ);
 
-  if (buf == 0)
+  if (buf == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Could not allocate chunk buffer\n")),
@@ -79,7 +79,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("Error during read")),
-                        0);
+                        false);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -95,7 +95,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
                   buf,
                   1);  // The sequence releases memory for us.
 
-  this->chunk_index_++;
+  ++this->chunk_index_;
 
   return true;
 }
@@ -128,7 +128,7 @@ Content_Iterator_i::init ()
 
   if (connector.connect (this->file_io_,
                          this->file_,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          O_RDONLY) == -1)
