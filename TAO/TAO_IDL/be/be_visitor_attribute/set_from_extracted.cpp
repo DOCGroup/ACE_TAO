@@ -18,11 +18,6 @@ be_visitor_attribute_set_from_extracted::be_visitor_attribute_set_from_extracted
 {
 }
 
-be_visitor_attribute_set_from_extracted::~be_visitor_attribute_set_from_extracted (
-  )
-{
-}
-
 int
 be_visitor_attribute_set_from_extracted::visit_array (
   be_array *)

@@ -23,10 +23,6 @@ be_visitor_operation_argument::be_visitor_operation_argument (
 {
 }
 
-be_visitor_operation_argument::~be_visitor_operation_argument ()
-{
-}
-
 int
 be_visitor_operation_argument::post_process (be_decl *bd)
 {

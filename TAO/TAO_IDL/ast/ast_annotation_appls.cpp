@@ -1,21 +1,19 @@
 #include "ast_annotation_appls.h"
 #include "ast_annotation_appl.h"
+#include "global_extern.h"
+#include "utl_scope.h"
 
-AST_Annotation_Appls::AST_Annotation_Appls ()
-{
-}
+AST_Annotation_Appls::AST_Annotation_Appls () = default;
 
-AST_Annotation_Appls::AST_Annotation_Appls (const AST_Annotation_Appls& other)
+AST_Annotation_Appls::AST_Annotation_Appls (AST_Annotation_Appls const &other)
 {
   *this = other;
 }
 
-AST_Annotation_Appls::~AST_Annotation_Appls ()
-{
-}
+AST_Annotation_Appls::~AST_Annotation_Appls () = default;
 
 AST_Annotation_Appls &
-AST_Annotation_Appls::operator= (const AST_Annotation_Appls& other)
+AST_Annotation_Appls::operator= (AST_Annotation_Appls const &other)
 {
   vector_.clear ();
   add (other);
@@ -29,7 +27,7 @@ AST_Annotation_Appls::add (AST_Annotation_Appl *appl)
 }
 
 void
-AST_Annotation_Appls::add (const AST_Annotation_Appls &other)
+AST_Annotation_Appls::add (AST_Annotation_Appls const &other)
 {
   for (const_iterator i = other.begin (); i != other.end (); ++i)
     {
@@ -95,21 +93,21 @@ AST_Annotation_Appls::find (AST_Annotation_Decl *annotation)
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::find (const char *annotation)
+AST_Annotation_Appls::find (std::string_view annotation)
 {
-  if (!annotation)
+  if (annotation.empty ())
     {
       return nullptr;
     }
 
-  UTL_Scope* bottom = idl_global->scopes ().bottom ();
-  if (!bottom)
+  UTL_Scope * bottom = idl_global->scopes ().bottom ();
+  if (bottom == nullptr)
     {
       return nullptr;
     }
 
-  AST_Decl* decl = bottom->lookup_by_name (annotation);
-  if (!decl)
+  AST_Decl * decl = bottom->lookup_by_name (annotation);
+  if (decl == nullptr)
     {
       return nullptr;
     }

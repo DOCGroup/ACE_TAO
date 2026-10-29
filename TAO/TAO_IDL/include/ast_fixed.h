@@ -13,8 +13,12 @@ public:
   AST_Fixed (UTL_ScopedName *name,
              AST_Expression *digits,
              AST_Expression *scale);
+  AST_Fixed (AST_Fixed const &) = delete;
+  AST_Fixed (AST_Fixed &&) = delete;
+  AST_Fixed &operator= (AST_Fixed const &) = delete;
+  AST_Fixed &operator= (AST_Fixed &&) = delete;
 
-  ~AST_Fixed () override;
+  ~AST_Fixed () override = default;
 
   void dump (ACE_OSTREAM_TYPE &o) override;
 
@@ -22,8 +26,8 @@ public:
 
   int ast_accept (ast_visitor *visitor) override;
 
-  AST_Expression *digits ();
-  AST_Expression *scale ();
+  AST_Expression *digits () const;
+  AST_Expression *scale () const;
 
 private:
   AST_Expression *pd_digits;

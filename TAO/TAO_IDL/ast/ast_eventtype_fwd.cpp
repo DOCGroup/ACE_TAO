@@ -21,10 +21,6 @@ AST_EventTypeFwd::AST_EventTypeFwd (AST_Interface *dummy,
 {
 }
 
-AST_EventTypeFwd::~AST_EventTypeFwd ()
-{
-}
-
 // Redefinition of inherited virtual operations.
 
 // Dump this AST_InterfaceFwd node to the ostream o.

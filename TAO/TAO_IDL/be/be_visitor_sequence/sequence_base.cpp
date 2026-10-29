@@ -21,11 +21,6 @@ be_visitor_sequence_base::be_visitor_sequence_base (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_base::~be_visitor_sequence_base ()
-{
-}
-
-
 int
 be_visitor_sequence_base::visit_predefined_type (be_predefined_type *node)
 {
@@ -181,12 +176,6 @@ be_visitor_sequence_base_template_args (be_visitor_context *ctx,
                                         be_sequence *seq)
   : be_visitor_sequence_base (ctx),
     beseq_ (seq)
-{
-}
-
-
-be_visitor_sequence_base_template_args::
-~be_visitor_sequence_base_template_args ()
 {
 }
 

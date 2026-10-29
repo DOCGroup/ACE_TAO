@@ -19,10 +19,6 @@ be_visitor_exception_cdr_op_ch::be_visitor_exception_cdr_op_ch (
 {
 }
 
-be_visitor_exception_cdr_op_ch::~be_visitor_exception_cdr_op_ch ()
-{
-}
-
 int
 be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
 {

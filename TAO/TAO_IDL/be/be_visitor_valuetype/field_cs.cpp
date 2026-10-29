@@ -13,16 +13,14 @@
 
 #include "valuetype.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
     be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    in_obv_space_ (false)
+  : be_visitor_decl (ctx)
 {
   setenclosings ("");
-}
-
-be_visitor_valuetype_field_cs::~be_visitor_valuetype_field_cs ()
-{
 }
 
 int
@@ -103,10 +101,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
@@ -118,24 +113,20 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
         {
           be_decl *parent =
                  dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           bt->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += bt->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           bt->full_name ());
+          fname = "_";
+          fname += bt->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       bt->full_name ());
+      fname = bt->full_name ();
     }
 
   TAO_INSERT_COMMENT (os);
@@ -857,11 +848,11 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << " (const char *val)" << be_nl;
+      *os << " (char const *val)" << be_nl;
     }
   else
     {
-      *os << " (const ::CORBA::WChar *val)" << be_nl;
+      *os << " (::CORBA::WChar const *val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl;
@@ -894,11 +885,11 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << " (const ::CORBA::String_var &val)" << be_nl;
+      *os << " (::CORBA::String_var const &val)" << be_nl;
     }
   else
     {
-      *os << " (const ::CORBA::WString_var &val)" << be_nl;
+      *os << " (::CORBA::WString_var const &val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl;
@@ -922,11 +913,11 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << this->pre_op () << "const char *" << be_nl;
+      *os << this->pre_op () << "char const *" << be_nl;
     }
   else
     {
-      *os << this->pre_op () << "const ::CORBA::WChar *" << be_nl;
+      *os << this->pre_op () << "::CORBA::WChar const *" << be_nl;
     }
 
   this->op_name (bu,
@@ -1153,13 +1144,13 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_cs::setenclosings (const char *pre)
+be_visitor_valuetype_field_cs::setenclosings (std::string_view pre)
 {
   this->pre_op_ = pre;
 }
 
-const char*
-be_visitor_valuetype_field_cs::pre_op ()
+std::string_view
+be_visitor_valuetype_field_cs::pre_op () const
 {
   return this->pre_op_;
 }

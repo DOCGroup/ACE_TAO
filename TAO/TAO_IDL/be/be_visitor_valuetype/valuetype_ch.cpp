@@ -22,10 +22,6 @@ be_visitor_valuetype_ch::be_visitor_valuetype_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_ch::~be_visitor_valuetype_ch ()
-{
-}
-
 int
 be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 {
@@ -188,13 +184,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&new_object);" << be_uidt
       << be_uidt_nl << be_nl
-      << "virtual const char* "
+      << "virtual char const * "
       << "_tao_obv_repository_id () const;"
       << be_nl_2
       << "virtual void "
       << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
       << be_nl_2
-      << "static const char* "
+      << "static char const * "
       << "_tao_obv_static_repository_id ();";
 
   if (be_global->tc_support ())

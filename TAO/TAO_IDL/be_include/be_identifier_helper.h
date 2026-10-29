@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "TAO_IDL_BE_Export.h"
-#include "ace/SString.h"
+#include <string>
 
 class Identifier;
 class be_type;
@@ -35,27 +35,25 @@ class be_visitor;
  */
 struct TAO_IDL_BE_Export IdentifierHelper
 {
-  static const char *
+  static std::string
   type_name (be_type *t, be_visitor *visitor);
 
   static Identifier *
-  original_local_name (Identifier * local_name);
+  original_local_name (Identifier const *local_name);
 
   // Removes '_cxx_ from segments of a scoped name, and optionally
   // de-escape the last segment, if it's to be appended to.
-  static ACE_CString
+  static std::string
   orig_sn (UTL_ScopedName * scoped_name, bool for_idl = true);
 
   // Detects case-insensitive match with IDL keyword.
   static bool
-  is_idl_keyword (Identifier * local_name);
+  is_idl_keyword (Identifier const *local_name);
 
   // Preserves the 'escape' (leading underscore) in a
   // generated identifier if necessary.
-  static ACE_CString
-  try_escape (Identifier * local_name);
-
-  static ACE_CString tmp_retval_;
+  static std::string
+  try_escape (Identifier const *local_name);
 };
 
 #endif /* BE_IDENTIFIER_HELPER_H */

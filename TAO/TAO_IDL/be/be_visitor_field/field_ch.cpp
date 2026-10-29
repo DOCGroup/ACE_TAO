@@ -24,10 +24,6 @@ be_visitor_field_ch::be_visitor_field_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_ch::~be_visitor_field_ch ()
-{
-}
-
 int
 be_visitor_field_ch::visit_field (be_field *node)
 {

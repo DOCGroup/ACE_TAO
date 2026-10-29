@@ -11,13 +11,12 @@
 
 #include "home.h"
 
+#include <string_view>
+
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ()),
-    for_finder_ (false)
+    export_macro_ (be_global->svnt_export_macro ())
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
@@ -27,10 +26,6 @@ be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
     {
       export_macro_ = be_global->skel_export_macro ();
     }
-}
-
-be_visitor_home_svs::~be_visitor_home_svs ()
-{
 }
 
 int
@@ -107,7 +102,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
 
   os_ << be_nl_2
       << "::" << c->name () << "_ptr" << be_nl
-      << node_->original_local_name ()->get_string ()
+      << node_->original_local_name ()->get_string_view_or_empty ()
       << "_Servant::" << node->local_name ();
 
   be_visitor_operation_arglist al_visitor (this->ctx_);
@@ -133,17 +128,18 @@ be_visitor_home_svs::visit_factory (be_factory *node)
     }
   else
     {
-      ACE_CString comp_sname_str (
-        ScopeAsDecl (comp_->defined_in ())->full_name ());
-      const char *comp_sname = comp_sname_str.c_str ();
-      const char *comp_lname = comp_->local_name ()->get_string ();
-      const char *global = (comp_sname_str == "" ? "" : "::");
+      std::string_view const comp_sname =
+        ScopeAsDecl (comp_->defined_in ())->full_name ();
+      std::string_view const comp_lname =
+        comp_->local_name ()->get_string_view_or_empty ();
+      std::string_view const global = comp_sname.empty () ? "" : "::";
 
-      ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
+      std::string_view const sname =
+        ScopeAsDecl (node_->defined_in ())->full_name ();
 
-      os_ << sname_str << global << "CCM_" << node_->original_local_name ()
-          << "_var executor = " << be_idt_nl
-          << sname_str << global << "CCM_" << node_->original_local_name ()
+      os_ << sname << global << "CCM_" << node_->original_local_name ()
+          << "_var executor =" << be_idt_nl
+          << sname << global << "CCM_" << node_->original_local_name ()
           << "::_duplicate (this->executor_.in ());" << be_uidt
           << be_nl_2;
 
@@ -206,21 +202,21 @@ int
 be_visitor_home_svs::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string_view const sname = scope->full_name ();
 
   // Avoid '_cxx_' prefix.
-  const char *lname =
-    node_->original_local_name ()->get_string ();
+  std::string_view const lname =
+    node_->original_local_name ()->get_string_view_or_empty ();
 
-  const char *clname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const clname =
+    comp_->local_name ()->get_string_view_or_empty ();
+  std::string_view const global = sname.empty () ? "" : "::";
 
   os_ << be_nl
       << lname << "_Servant::"
       << lname << "_Servant (" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
-      << "const char * ins_name," << be_nl
+      << "char const * ins_name," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c)" << be_uidt_nl
       << ": ::CIAO::Home_Servant_Impl_Base ()," << be_idt_nl
@@ -252,7 +248,7 @@ be_visitor_home_svs::gen_servant_class ()
       os_ << "for (::CORBA::ULong i = 0; i < descr.length (); ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
-          << "const char * descr_name = descr[i]->name ();"
+          << "char const * descr_name = descr[i]->name ();"
           << be_nl
           << "::CORBA::Any & descr_value = descr[i]->value ();";
 
@@ -381,27 +377,26 @@ be_visitor_home_svs::gen_servant_class ()
 void
 be_visitor_home_svs::gen_entrypoint ()
 {
-  ACE_CString sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string_view const sname =
+    ScopeAsDecl (node_->defined_in ())->full_name ();
 
   // Avoid _cxx_ prefix.
-  const char *lname =
-    node_->original_local_name ()->get_string ();
+  std::string_view const lname =
+    node_->original_local_name ()->get_string_view_or_empty ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c," << be_nl
-      << "const char * ins_name)" << be_uidt_nl
+      << "char const * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
+      << "::PortableServer::Servant retval = nullptr;" << be_nl
       << global << sname << "::CCM_" << lname
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
@@ -421,7 +416,7 @@ be_visitor_home_svs::gen_entrypoint ()
 //=======================================================
 
 Home_Op_Attr_Generator::Home_Op_Attr_Generator (
-    be_visitor_scope * visitor)
+    be_visitor_scope *visitor)
   : visitor_ (visitor)
 {
 }
@@ -442,9 +437,6 @@ be_visitor_home_attr_set::be_visitor_home_attr_set (
 {
 }
 
-be_visitor_home_attr_set::~be_visitor_home_attr_set ()
-{
-}
 
 int
 be_visitor_home_attr_set::visit_home (be_home *node)

@@ -15,9 +15,13 @@ class TAO_IDL_FE_Export AST_PortType
     public virtual UTL_Scope
 {
 public:
-  AST_PortType (UTL_ScopedName *n);
+  AST_PortType (AST_PortType const &) = delete;
+  AST_PortType (AST_PortType &&) = delete;
+  AST_PortType &operator= (AST_PortType const &) = delete;
+  AST_PortType &operator= (AST_PortType &&) = delete;
+  explicit AST_PortType (UTL_ScopedName *n);
 
-  ~AST_PortType () override;
+  ~AST_PortType () override = default;
 
   // Cleanup function.
   void destroy () override;

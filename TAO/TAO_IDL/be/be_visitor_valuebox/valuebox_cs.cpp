@@ -16,10 +16,6 @@ be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_cs::~be_visitor_valuebox_cs ()
-{
-}
-
 int
 be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 {
@@ -90,7 +86,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   *os << "::CORBA::ValueBase *" << be_nl
       << node->name () << "::_copy_value ()" << be_nl
       << "{" << be_idt_nl
-      << "::CORBA::ValueBase *result = 0;" << be_nl
+      << "::CORBA::ValueBase *result = nullptr;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "result," << be_nl
       << node->local_name () << " (*this)," << be_nl
@@ -99,7 +95,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "}" << be_nl_2;
 
   // The _tao_obv_repository_id method.
-  *os << "const char *" << be_nl
+  *os << "char const *" << be_nl
       << node->name () << "::_tao_obv_repository_id () const"
       << be_nl << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
@@ -168,8 +164,8 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
                         -1);
     }
 
-  bool is_array = false;
-  const char * unmarshal_arg;
+  bool is_array {};
+  std::string_view unmarshal_arg {};
   be_predefined_type *bpt = dynamic_cast<be_predefined_type*> (bt);
 
   if (bpt != nullptr)
@@ -247,7 +243,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "vb_object = 0;" << be_nl
+      << "vb_object = nullptr;" << be_nl
       << "if (is_null_object)"  << be_idt_nl
       << "{" << be_idt_nl
       << "return true;" << be_uidt_nl
@@ -383,7 +379,7 @@ be_visitor_valuebox_cs::visit_interface (be_interface *)
 int
 be_visitor_valuebox_cs::visit_predefined_type (be_predefined_type * node)
 {
-  char const * marshal_arg;
+  std::string_view marshal_arg;
 
   switch (node->pt ())
     {
@@ -559,8 +555,6 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
       << "}" << be_nl_2;
 
   // Accessor: const
-  *os << "const ";
-
   if (bt->accept (&bt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -570,7 +564,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << " &" << be_nl;
+  *os << " const &" << be_nl;
   *os << vb_node->name ()
       << "::operator[] (::CORBA::ULong index) const" << be_nl
       << "{" << be_idt_nl;
@@ -727,7 +721,7 @@ be_visitor_valuebox_cs::visit_union (be_union *)
 }
 
 void
-be_visitor_valuebox_cs::emit_destructor ()
+be_visitor_valuebox_cs::emit_destructor () const
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -740,7 +734,7 @@ be_visitor_valuebox_cs::emit_destructor ()
 }
 
 int
-be_visitor_valuebox_cs::emit_for_predef_enum (char const * marshal_arg)
+be_visitor_valuebox_cs::emit_for_predef_enum (std::string_view marshal_arg) const
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 

@@ -103,9 +103,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     AST_ConcreteType (AST_Decl::NT_sequence,
                       n),
     pd_max_size (ms),
-    pd_base_type (bt),
-    unbounded_ (true),
-    owns_base_type_ (false)
+    pd_base_type (bt)
 {
   FE_Utils::tmpl_mod_ref_check (this, bt);
 
@@ -143,10 +141,6 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     || nt == AST_Decl::NT_sequence
     || nt == AST_Decl::NT_map
     || nt == AST_Decl::NT_param_holder;
-}
-
-AST_Sequence::~AST_Sequence ()
-{
 }
 
 // Public operations.
@@ -190,8 +184,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   bool recursion_found = false;
   AST_Type** recursable_type = nullptr;
   list.get (recursable_type, 0);
-  if (!ACE_OS::strcmp (type->full_name (),
-                           (*recursable_type)->full_name ()))
+  if (type->full_name () == (*recursable_type)->full_name ())
     {
       // They match.
       recursion_found = true;
@@ -236,7 +229,7 @@ AST_Sequence::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Expression *
-AST_Sequence::max_size ()
+AST_Sequence::max_size () const
 {
   return this->pd_max_size;
 }

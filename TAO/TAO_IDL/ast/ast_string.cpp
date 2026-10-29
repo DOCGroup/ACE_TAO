@@ -70,11 +70,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_string.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "utl_identifier.h"
-#include "idl_defines.h"
 #include "global_extern.h"
+
+#include <string>
 
 // Note we are overlooking the wstring case here.
 AST_Decl::NodeType const
@@ -124,32 +123,15 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 
   unsigned long bound = ms->ev ()->u.ulval;
 
-  static char namebuf[NAMEBUFSIZE];
-  static char boundbuf[NAMEBUFSIZE];
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (boundbuf,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string flat_name = wide == 1 ? "CORBA_STRING" : "CORBA_WSTRING";
 
-  if (bound)
+  if (bound != 0)
     {
-      ACE_OS::sprintf (boundbuf,
-                       "_%ld",
-                       bound);
+      flat_name += "_";
+      flat_name += std::to_string (bound);
     }
 
-  ACE_OS::sprintf (namebuf,
-                   "CORBA_%sSTRING%s",
-                   (wide == 1 ? "" : "W"),
-                   boundbuf);
-
-  this->flat_name_ = ACE::strnew (namebuf);
-}
-
-AST_String::~AST_String ()
-{
+  this->flat_name_ = flat_name;
 }
 
 // Redefinition of inherited virtual operations.
@@ -182,13 +164,13 @@ AST_String::destroy ()
 // Data accessors.
 
 AST_Expression *
-AST_String::max_size ()
+AST_String::max_size () const
 {
   return this->pd_max_size;
 }
 
 long
-AST_String::width ()
+AST_String::width () const
 {
   return this->pd_width;
 }

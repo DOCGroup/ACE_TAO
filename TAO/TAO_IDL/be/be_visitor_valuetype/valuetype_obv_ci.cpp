@@ -26,10 +26,6 @@ be_visitor_valuetype_obv_ci::be_visitor_valuetype_obv_ci (
 {
 }
 
-be_visitor_valuetype_obv_ci::~be_visitor_valuetype_obv_ci ()
-{
-}
-
 
 // OBV_ class must be in OBV_ namespace
 int

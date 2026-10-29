@@ -83,6 +83,10 @@ class AST_Type;
 class TAO_IDL_FE_Export AST_Field : public virtual AST_Decl
 {
 public:
+  AST_Field (AST_Field const &) = delete;
+  AST_Field (AST_Field &&) = delete;
+  AST_Field &operator= (AST_Field const &) = delete;
+  AST_Field &operator= (AST_Field &&) = delete;
   enum Visibility
     {
       vis_NA,
@@ -109,7 +113,7 @@ public:
     UTL_ScopedName *name,
     AST_Field *other);
 
-  ~AST_Field () override;
+  ~AST_Field () override = default;
 
   // Data Accessors.
   AST_Type *field_type () const;
@@ -150,7 +154,7 @@ protected:
   Visibility visibility_;
   // Used with valuetype and eventtype fields.
 
-  bool owns_base_type_;
+  bool owns_base_type_ {};
   // If our field type is anonymous array or sequence, we're
   // responsible for destroying it.
 };

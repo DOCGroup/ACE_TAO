@@ -85,10 +85,6 @@ AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
       }
 }
 
-AST_UnionLabel::~AST_UnionLabel ()
-{
-}
-
 // Redefinition of inherited virtual operations.
 
 // Dump this AST_UnionLabel node to the ostream o.
@@ -126,13 +122,19 @@ AST_UnionLabel::destroy ()
 // Data accessors.
 
 AST_UnionLabel::UnionLabel
-AST_UnionLabel::label_kind ()
+AST_UnionLabel::label_kind () const
 {
   return this->pd_label_kind;
 }
 
 AST_Expression *
 AST_UnionLabel::label_val ()
+{
+  return this->pd_label_val;
+}
+
+AST_Expression const *
+AST_UnionLabel::label_val () const
 {
   return this->pd_label_val;
 }

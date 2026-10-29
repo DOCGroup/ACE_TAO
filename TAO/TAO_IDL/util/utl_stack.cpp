@@ -68,11 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 #include "global_extern.h"
 
-const size_t UTL_ScopeStack::increments = 64;
-
 UTL_ScopeStack::UTL_ScopeStack ()
-  : pd_stack_data_nalloced (increments),
-    pd_stack_top (0)
 {
   ACE_NEW (this->pd_stack_data, UTL_Scope *[increments]);
 }
@@ -143,7 +139,7 @@ UTL_ScopeStack::pop ()
 
 // Return top element on stack.
 UTL_Scope *
-UTL_ScopeStack::top ()
+UTL_ScopeStack::top () const
 {
   if (this->pd_stack_top <= 0)
     {
@@ -155,7 +151,7 @@ UTL_ScopeStack::top ()
 
 // Return bottom element on stack.
 UTL_Scope *
-UTL_ScopeStack::bottom ()
+UTL_ScopeStack::bottom () const
 {
   if (this->pd_stack_top == 0)
     {
@@ -174,32 +170,26 @@ UTL_ScopeStack::clear ()
 
 // How deep is the stack?
 unsigned long
-UTL_ScopeStack::depth ()
+UTL_ScopeStack::depth () const
 {
   return this->pd_stack_top;
 }
 
 // Return (top - 1) element on stack.
 UTL_Scope *
-UTL_ScopeStack::next_to_top ()
+UTL_ScopeStack::next_to_top () const
 {
-  UTL_Scope  *tmp, *retval;
-
-  if (this->depth () < 2)
+  if (this->pd_stack_top < 2)
     {
       return nullptr;
     }
 
-  tmp = top ();    // Save top
-  (void) pop ();    // Pop it
-  retval = top ();  // Get next one down
-  (void) push (tmp);  // Push top back
-  return retval;  // Return next one down
+  return this->pd_stack_data[this->pd_stack_top - 2];
 }
 
 // Return topmost non-NULL element.
 UTL_Scope *
-UTL_ScopeStack::top_non_null ()
+UTL_ScopeStack::top_non_null () const
 {
   for (long i = this->pd_stack_top - 1; i >= 0; --i)
     {
@@ -219,10 +209,10 @@ UTL_ScopeStack::lookup_by_name (
   for (long i = pd_stack_top - 1; i >= 0; --i)
     {
       UTL_Scope *scope = pd_stack_data[i];
-      if (scope)
+      if (scope != nullptr)
         {
           AST_Decl *node = scope->lookup_by_name (name, full_def_only, for_add);
-          if (node) return node;
+          if (node != nullptr) return node;
         }
     }
   return nullptr;
@@ -243,7 +233,7 @@ UTL_ScopeStackActiveIterator::next ()
 
 // Get current item.
 UTL_Scope *
-UTL_ScopeStackActiveIterator::item ()
+UTL_ScopeStackActiveIterator::item () const
 {
   if (this->il >= 0)
     {

@@ -16,10 +16,6 @@ be_visitor_interface::be_visitor_interface (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface::~be_visitor_interface ()
-{
-}
-
 // This method must be overridden by the derived interface visitors.
 int
 be_visitor_interface::visit_interface (be_interface *)
@@ -116,7 +112,7 @@ be_visitor_interface::is_amh_rh_node (be_interface *node)
   if (node->original_interface () != nullptr)
     {
       // and the name starts with AMH
-      if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
+      if (node->local_name ().substr (0, 3) == "AMH")
         {
           // then it is an AMH node.
           return 1;

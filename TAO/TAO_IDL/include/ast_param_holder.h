@@ -9,10 +9,14 @@ class TAO_IDL_FE_Export AST_Param_Holder
   : public virtual AST_Type
 {
 public:
+  AST_Param_Holder (AST_Param_Holder const &) = delete;
+  AST_Param_Holder (AST_Param_Holder &&) = delete;
+  AST_Param_Holder &operator= (AST_Param_Holder const &) = delete;
+  AST_Param_Holder &operator= (AST_Param_Holder &&) = delete;
   AST_Param_Holder (UTL_ScopedName *parameter_name,
                     FE_Utils::T_Param_Info *info);
 
-  ~AST_Param_Holder () override;
+  ~AST_Param_Holder () override = default;
 
   FE_Utils::T_Param_Info const *info () const;
 

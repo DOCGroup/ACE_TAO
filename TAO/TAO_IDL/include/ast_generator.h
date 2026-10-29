@@ -73,6 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "fe_utils.h"
 
+#include <string_view>
+
 class UTL_LabelList;
 class UTL_ExprList;
 class AST_Root;
@@ -103,9 +105,9 @@ class AST_Annotation_Member;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
-  AST_Generator () {}
+  AST_Generator () = default;
 
-  virtual ~AST_Generator () {}
+  virtual ~AST_Generator () = default;
 
   // Operations.
 
@@ -301,7 +303,8 @@ public:
 
   virtual AST_Expression *create_expr (UTL_String *s);
 
-  virtual AST_Expression *create_expr (char *s);
+  virtual AST_Expression *create_expr (std::string_view s);
+  virtual AST_Expression *create_expr (char const *s);
 
   virtual AST_Expression *create_expr (ACE_CDR::Char c);
 
@@ -309,7 +312,7 @@ public:
 
   virtual AST_Expression *create_expr (ACE_CDR::Double d);
 
-  virtual AST_Expression *create_expr (const ACE_CDR::Fixed &f);
+  virtual AST_Expression *create_expr (ACE_CDR::Fixed const &f);
 
   // Create a node representing an enumerator.
   virtual AST_EnumVal *create_enum_val (ACE_CDR::ULong v,

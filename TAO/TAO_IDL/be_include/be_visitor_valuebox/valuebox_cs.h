@@ -15,6 +15,8 @@
 #ifndef _BE_VISITOR_VALUEBOX_CS_H_
 #define _BE_VISITOR_VALUEBOX_CS_H_
 
+#include <string_view>
+
 /**
  * @class be_visitor_valuebox_cs
  *
@@ -26,10 +28,15 @@ class be_visitor_valuebox_cs : public be_visitor_valuebox
 {
 public:
   /// constructor
-  be_visitor_valuebox_cs (be_visitor_context *ctx);
+  explicit be_visitor_valuebox_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_cs () override;
+  ~be_visitor_valuebox_cs () override = default;
+
+  be_visitor_valuebox_cs (be_visitor_valuebox_cs const &) = delete;
+  be_visitor_valuebox_cs (be_visitor_valuebox_cs &&) = delete;
+  be_visitor_valuebox_cs &operator= (be_visitor_valuebox_cs const &) = delete;
+  be_visitor_valuebox_cs &operator= (be_visitor_valuebox_cs &&) = delete;
 
   /// visit valuebox.
   int visit_valuebox (be_valuebox *node) override;
@@ -63,9 +70,9 @@ public:
 
 private:
   /// Generate virtual destructor.
-  void emit_destructor ();
+  void emit_destructor () const;
 
-  int emit_for_predef_enum (char const * marshal_arg);
+  int emit_for_predef_enum (std::string_view marshal_arg) const;
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CS_H_ */

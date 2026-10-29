@@ -17,6 +17,8 @@
 #include "be_decl.h"
 #include "ast_field.h"
 
+#include <string_view>
+
 class be_visitor;
 class TAO_OutStream;
 
@@ -33,7 +35,7 @@ public:
 
   // Generate debugging ostream operator for members.
   void gen_member_ostream_operator (TAO_OutStream *os,
-                                    const char *instance_name,
+                                    std::string_view instance_name,
                                     bool use_underscore,
                                     bool accessor = false);
 
@@ -42,16 +44,16 @@ public:
   void port_name_prefixed (bool val);
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   // If the name of a provides or uses node has already been
   // prefixed with the (mirror)port name(s), we don't want
   // to prefix it again.
-  bool port_name_prefixed_;
+  bool port_name_prefixed_ {};
 };
 
 #endif

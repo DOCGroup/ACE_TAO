@@ -24,10 +24,6 @@ AST_Mirror_Port::AST_Mirror_Port (
 {
 }
 
-AST_Mirror_Port::~AST_Mirror_Port ()
-{
-}
-
 void
 AST_Mirror_Port::destroy ()
 {

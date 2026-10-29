@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // May of them could be forward declared..
 #include "ace/SString.h"
+#include "ace/Functor_String.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
 #include "ace/Synch_Traits.h"
@@ -78,6 +79,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_stack.h"
 #include "fe_utils.h"
 #include "idl_version.h"
+
+#include <optional>
+#include <string>
+#include <string_view>
+#include <unordered_set>
+#include <vector>
 
 class AST_Root;
 class AST_Module;
@@ -319,81 +326,85 @@ public:
   };
 
   IDL_GlobalData ();
-  ~IDL_GlobalData ();
+  ~IDL_GlobalData () = default;
+  IDL_GlobalData (IDL_GlobalData const&) = delete;
+  IDL_GlobalData (IDL_GlobalData&&) = delete;
+  IDL_GlobalData& operator= (IDL_GlobalData const&) = delete;
+  IDL_GlobalData& operator= (IDL_GlobalData&&) = delete;
 
   // Operations
   UTL_ScopeStack   &scopes ();              // Scopes stack
 
-  AST_Root         *root ();                // Root of AST
+  AST_Root         *root () const;          // Root of AST
   void             set_root (AST_Root *);       // Set it
 
-  AST_Generator    *gen ();                 // Generator
+  AST_Generator    *gen () const;           // Generator
   void             set_gen (AST_Generator *);   // Set it
 
-  AST_ValueType    *primary_key_base ();    // PrimaryKeyBase
+  AST_ValueType    *primary_key_base () const; // PrimaryKeyBase
   void             primary_key_base (AST_ValueType *);   // Set it
 
-  UTL_Error        *err ();                 // Error reporter
+  UTL_Error        *err () const;           // Error reporter
   void             set_err (UTL_Error *);       // Set it
 
-  int              err_count ();            // How many errors?
+  int              err_count () const;      // How many errors?
   void             set_err_count (int);         // Set it
 
-  long             lineno ();               // Where in file?
+  long             lineno () const;         // Where in file?
   void             set_lineno (long);           // Set it
 
-  UTL_String       *filename ();            // What file?
+  UTL_String       *filename () const;      // What file?
   void             set_filename (UTL_String *); // Set it
 
-  UTL_String       *main_filename ();       // What's the main
+  UTL_String       *main_filename () const; // What's the main
                                                 // file name?
   void             set_main_filename (UTL_String *);
                                                 // Set it
 
-  UTL_String       *real_filename ();       // What's the real
+  UTL_String       *real_filename () const; // What's the real
                                                 // file name?
   void             set_real_filename (UTL_String *);
                                                 // Set it
 
-  UTL_String       *stripped_filename ();   // Stripped filename
+  UTL_String       *stripped_filename () const; // Stripped filename
   void             set_stripped_filename (UTL_String *);  // Set it
 
-  bool             imported ();             // Are we imported?
-  bool             import ();               // Is import on?
+  bool             imported () const;       // Are we imported?
+  bool             import () const;         // Is import on?
   void             set_import (bool);           // Set it
 
-  bool             in_main_file ();         // Are we?
+  bool             in_main_file () const;   // Are we?
   void             set_in_main_file (bool);     // Set it
 
-  const char       *prog_name ();           // Invoked as..
-  void             set_prog_name (const char *);  // Set it
+  std::string_view prog_name () const;
+  void set_prog_name (std::string_view name);
+  void clear_prog_name ();
 
-  const char       *cpp_location ();        // Where's CPP?
-  void             set_cpp_location (const char *);// Set it
+  std::optional<std::string_view> cpp_location () const;
+  std::string_view cpp_location_or_empty () const;
+  void set_cpp_location (std::string_view location);
 
-  long             compile_flags ();        // What flags are on?
+  long             compile_flags () const;  // What flags are on?
   void             set_compile_flags (long);    // Turn some on or off
 
-  char             *local_escapes ();       // Get local escapes
-  void             set_local_escapes (const char *);// Set it
+  std::string_view local_escapes () const;
+  void             append_local_escape (std::string_view escape);
+  void             set_local_escapes (std::string_view escapes);
 
-  UTL_Indenter     *indent ();              // Get indenter
+  UTL_Indenter     *indent () const;        // Get indenter
   void             set_indent (UTL_Indenter *); // Set it
 
   void             store_include_file_name (UTL_String *);
 
-  UTL_String       **include_file_names (); // Array of file names
+  UTL_String       **include_file_names () const; // Array of file names
   void             set_include_file_names (UTL_String **); // Set it
 
-  unsigned long    n_include_file_names (); // How many
+  unsigned long    n_include_file_names () const; // How many
   void             set_n_include_file_names (unsigned long n);
 
   void             reset_flag_seen ();
 
   // = Types & methods supporting DDS DCPS sequence definitions (from #pragma)
-  using DCPS_Sequence_Types_List = ACE_Unbounded_Queue<char *>;
-
-
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
   using DCPS_Key_List = ACE_Unbounded_Queue<ACE_TString>;
 
@@ -405,17 +416,15 @@ public:
 
   using DCPS_Data_Type_Info_Iter = ACE_Unbounded_Queue_Iterator<ACE_TString>;
 
-  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager_Ex<const char*,
-                                                      DCPS_Data_Type_Info*,
-                                                      ACE_Hash<char*>,
-                                                      ACE_Equal_To<char*>,
-                                                      ACE_Null_Mutex>;
+  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager<std::string,
+                                                   DCPS_Data_Type_Info*,
+                                                   ACE_Null_Mutex>;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
-  void add_dcps_data_type (const char* id);
+  void add_dcps_data_type (std::string_view id);
 
   // FE calls when #pragma DCPS_DATA_KEY is processed
-  bool add_dcps_data_key (const char* id, const char* key);
+  bool add_dcps_data_key (std::string_view id, std::string_view key);
 
   // returns null if not matching; otherwise pointer to the info
   DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
@@ -427,10 +436,10 @@ public:
   bool dcps_support_zero_copy_read () const;
 
   // FE calls when #pragma DCPS_DATA_SEQUENCE_TYPE is processed
-  void set_dcps_sequence_type (const char* seq_type);
+  void set_dcps_sequence_type (std::string_view seq_type);
 
   // BE calls to check whether pragma for this sequence has been set
-  bool dcps_sequence_type_defined (const char* seq_type);
+  bool dcps_sequence_type_defined (std::string_view seq_type) const;
 
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
   void dcps_gen_zero_copy_read (bool value);
@@ -443,19 +452,13 @@ public:
   //   "#include"d in the main IDL file, not the ones after CC
   //   preprocessor parsed the file.
 
-  // Just storing the pointer. No memory will be allocated.
-  void add_to_included_idl_files (const char *file_name);
+  void add_to_included_idl_files (std::string_view file_name);
 
   // Get all the files.
-  char** included_idl_files ();
+  std::vector<std::string> & included_idl_files ();
 
   // The number of currently availabe include files.
   size_t n_included_idl_files ();
-
-  // Set the number of included_idl_files. Use this carefully. This
-  // method is used when we validate all the #included idl files,
-  // against the ones that we get after preprocessing.
-  void n_included_idl_files (size_t n);
 
   ParseState parse_state ();       // What state we're in
   void set_parse_state (ParseState s); // Set it
@@ -466,32 +469,33 @@ public:
   void idl_src_file (UTL_String *);
   // Set the source IDL file that is being parsed.
 
-  void temp_dir (const char *s);
+  void temp_dir (std::string_view s);
   // Set the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  const char *temp_dir () const;
+  std::optional<std::string_view> temp_dir () const;
   // Get the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  void tao_root (const char *s);
+  void tao_root (std::string_view s);
   // Set the path of TAO_ROOT.
 
-  const char *tao_root () const;
+  std::optional<std::string_view> tao_root () const;
+  std::string_view tao_root_or_empty () const;
   // Get the path for TAO_ROOT.
 
-  void gperf_path (const char *s);
+  void gperf_path (std::string_view s);
   // Set the path for the perfect hashing program (GPERF).
 
-  const char *gperf_path () const;
+  std::optional<std::string_view> gperf_path () const;
   // Get the path for the perfect hashing program (GPERF).
 
-  void ident_string (const char *s);
+  void ident_string (std::string_view s);
   // Set the value of the #ident string.
 
-  const char *ident_string () const;
+  std::string_view ident_string () const;
   // Get the value of the #ident string.
 
   void case_diff_error (bool);
@@ -510,14 +514,14 @@ public:
   void destroy ();
   // Cleanup function.
 
-  void append_idl_flag (const char *s);
+  void append_idl_flag (std::string_view s);
   // Save each flag passed to the IDL compiler.
 
-  const char *idl_flags () const;
+  std::string_view idl_flags () const;
   // Get a string representation of the flags
   // passed to the idl compiler.
 
-  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
+  std::unordered_set<std::string> &
   idl_keywords ();
   // Accessor for the IDL keyword container.
 
@@ -527,7 +531,7 @@ public:
   void update_prefix (char *filename);
   // Do repo id prefix bookkeeping when the file changes.
 
-  long seen_include_file_before (char *);
+  long seen_include_file_before (std::string_view filename);
   // Seen this include before?
 
   long last_seen_index () const;
@@ -544,55 +548,55 @@ public:
   // keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Is set by the IFR Service.
 
-  void add_include_path (const char *s, bool is_system);
+  void add_include_path (char const *s, bool is_system);
   // Add another path to 'include_paths_'. is_system is true for TAO/CIAO
   // specific paths and false for paths provided by user.
 
-  void add_rel_include_path (const char *s);
-  ACE_Unbounded_Queue<char *> const & rel_include_paths () const;
+  void add_rel_include_path (char const *s);
+  std::vector<std::string> const & rel_include_paths () const;
   // Accessor/mutator for the rel_include_paths_ member.
 
-  void add_ciao_lem_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_lem_file_names ();
+  void add_ciao_lem_file_names (char const *s);
+  std::vector<std::string> const & ciao_lem_file_names () const;
   // Accessor/mutator for the ciao_lem_file_names_ member.
 
-  void add_ciao_rti_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_rti_ts_file_names ();
+  void add_ciao_rti_ts_file_names (char const *s);
+  std::vector<std::string> const & ciao_rti_ts_file_names () const;
   // Accessor/mutator for the ciao_rti_ts_file_names_ member.
 
-  void add_ciao_spl_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_spl_ts_file_names ();
+  void add_ciao_spl_ts_file_names (char const *s);
+  std::vector<std::string> const & ciao_spl_ts_file_names () const;
   // Accessor/mutator for the ciao_spl_ts_file_names_ member.
 
-  void add_ciao_oci_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_oci_ts_file_names ();
+  void add_ciao_oci_ts_file_names (char const *s);
+  std::vector<std::string> const & ciao_oci_ts_file_names () const;
   // Accessor/mutator for the ciao_oci_ts_file_names_ member.
 
-    void add_ciao_coredx_ts_file_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_coredx_ts_file_names ();
+  void add_ciao_coredx_ts_file_names (char const *s);
+  std::vector<std::string> const & ciao_coredx_ts_file_names () const;
   // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
 
-  void add_ciao_ami_iface_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_iface_names ();
+  void add_ciao_ami_iface_names (char const *s);
+  std::vector<std::string> const & ciao_ami_iface_names () const;
   // Accessor/mutator for the ciao_ami_iface_names_ member.
 
-  void add_ciao_ami_recep_names (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_recep_names ();
+  void add_ciao_ami_recep_names (char const *s);
+  std::vector<std::string> const & ciao_ami_recep_names () const;
   // Accessor/mutator for the ciao_ami_recep_names_ member.
 
-  void add_included_ami_recep_names (const char *s);
-  ACE_Unbounded_Queue<char *> & included_ami_recep_names ();
+  void add_included_ami_recep_names (char const *s);
+  std::vector<std::string> const & included_ami_recep_names () const;
   // Accessor/mutator for the included_ami_recep_names_ member.
 
   bool included_ami_receps_done () const;
   void included_ami_receps_done (bool val);
 
-  void add_ciao_ami_idl_fnames (const char *s);
-  ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames ();
+  void add_ciao_ami_idl_fnames (char const *s);
+  std::vector<std::string> const & ciao_ami_idl_fnames () const;
   // Accessor/mutator for the included_ami_idl_fnames_ member.
 
-  void add_dds4ccm_impl_fnames (const char *s);
-  ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames ();
+  void add_dds4ccm_impl_fnames (char const *s);
+  std::vector<std::string> const & dds4ccm_impl_fnames () const;
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
 
   ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces ();
@@ -629,15 +633,15 @@ public:
   // be sure that all forward declared stucts or unions that
   // might be used in such a valuetype are fully defined.
 
-  const char *recursion_start () const;
-  void recursion_start (const char *val);
+  std::optional<std::string_view> recursion_start () const;
+  void recursion_start (std::string_view val);
   // Accessors for the member.
 
   bool multi_file_input () const;
   void multi_file_input (bool val);
   // Accessors for the member.
 
-  const char *big_file_name () const;
+  std::string_view big_file_name () const;
   // Just get the const string.
 
   FE_Utils::T_PARAMLIST_INFO const *current_params () const;
@@ -669,7 +673,7 @@ public:
 
   struct Include_Path_Info
   {
-    char *path_;
+    std::optional<std::string> path_;
     bool is_system_;
   };
 
@@ -739,7 +743,7 @@ public:
    * to the Abstract Syntax Tree. It was added for use in be_post_init. THIS
    * SHOULD NOT BE CALLED WHILE IN THE MIDDLE OF PARSING.
    */
-  void eval (const char *string, bool disable_output = false);
+  void eval (char const *string, bool disable_output = false);
 
   /**
    * Dump AST after parsing files and exit
@@ -748,72 +752,72 @@ public:
 
   /// flags for types of declarations seen while parsing.
   ///{
-  bool abstract_iface_seen_;
-  bool abstractbase_seen_;
-  bool aggregate_seen_;
-  bool ambiguous_type_seen_;
-  bool any_arg_seen_;
-  bool any_seen_;
-  bool any_seq_seen_;
-  bool array_seen_;
-  bool array_seq_seen_;
-  bool base_object_seen_;
-  bool basic_type_seen_;
-  bool bd_string_seen_;
-  bool boolean_seq_seen_;
-  bool char_seq_seen_;
-  bool component_seen_;
-  bool connector_seen_;
-  bool double_seq_seen_;
-  bool enum_seen_;
-  bool exception_seen_;
-  bool fixed_array_decl_seen_;
-  bool fixed_size_decl_seen_;
-  bool float_seq_seen_;
-  bool fwd_iface_seen_;
-  bool fwd_valuetype_seen_;
-  bool iface_seq_seen_;
-  bool interface_seen_;
-  bool local_iface_seen_;
-  bool long_seq_seen_;
-  bool longdouble_seq_seen_;
-  bool longlong_seq_seen_;
-  bool non_local_fwd_iface_seen_;
-  bool non_local_iface_seen_;
-  bool non_local_op_seen_;
-  bool object_arg_seen_;
-  bool octet_seq_seen_;
-  bool octet_map_seen_;
-  bool operation_seen_;
-  bool pseudo_seq_seen_;
-  bool recursive_type_seen_;
-  bool map_seen_;
-  bool seq_seen_;
-  bool short_seq_seen_;
-  bool special_basic_decl_seen_;
-  bool string_seen_;
-  bool string_member_seen_;
-  bool string_seq_seen_;
-  bool typecode_seen_;
-  bool ub_string_seen_;
-  bool ulong_seq_seen_;
-  bool ulonglong_seq_seen_;
-  bool union_seen_;
-  bool ushort_seq_seen_;
-  bool valuebase_seen_;
-  bool valuefactory_seen_;
-  bool valuetype_seen_;
-  bool var_array_decl_seen_;
-  bool var_size_decl_seen_;
-  bool vt_seq_seen_;
-  bool wchar_seq_seen_;
-  bool wstring_seq_seen_;
-  bool dds_connector_seen_;
-  bool ami_connector_seen_;
+  bool abstract_iface_seen_ {};
+  bool abstractbase_seen_ {};
+  bool aggregate_seen_ {};
+  bool ambiguous_type_seen_ {};
+  bool any_arg_seen_ {};
+  bool any_seen_ {};
+  bool any_seq_seen_ {};
+  bool array_seen_ {};
+  bool array_seq_seen_ {};
+  bool base_object_seen_ {};
+  bool basic_type_seen_ {};
+  bool bd_string_seen_ {};
+  bool boolean_seq_seen_ {};
+  bool char_seq_seen_ {};
+  bool component_seen_ {};
+  bool connector_seen_ {};
+  bool double_seq_seen_ {};
+  bool enum_seen_ {};
+  bool exception_seen_ {};
+  bool fixed_array_decl_seen_ {};
+  bool fixed_size_decl_seen_ {};
+  bool float_seq_seen_ {};
+  bool fwd_iface_seen_ {};
+  bool fwd_valuetype_seen_ {};
+  bool iface_seq_seen_ {};
+  bool interface_seen_ {};
+  bool local_iface_seen_ {};
+  bool long_seq_seen_ {};
+  bool longdouble_seq_seen_ {};
+  bool longlong_seq_seen_ {};
+  bool non_local_fwd_iface_seen_ {};
+  bool non_local_iface_seen_ {};
+  bool non_local_op_seen_ {};
+  bool object_arg_seen_ {};
+  bool octet_seq_seen_ {};
+  bool octet_map_seen_ {};
+  bool operation_seen_ {};
+  bool pseudo_seq_seen_ {};
+  bool recursive_type_seen_ {};
+  bool map_seen_ {};
+  bool seq_seen_ {};
+  bool short_seq_seen_ {};
+  bool special_basic_decl_seen_ {};
+  bool string_seen_ {};
+  bool string_member_seen_ {};
+  bool string_seq_seen_ {};
+  bool typecode_seen_ {};
+  bool ub_string_seen_ {};
+  bool ulong_seq_seen_ {};
+  bool ulonglong_seq_seen_ {};
+  bool union_seen_ {};
+  bool ushort_seq_seen_ {};
+  bool valuebase_seen_ {};
+  bool valuefactory_seen_ {};
+  bool valuetype_seen_ {};
+  bool var_array_decl_seen_ {};
+  bool var_size_decl_seen_ {};
+  bool vt_seq_seen_ {};
+  bool wchar_seq_seen_ {};
+  bool wstring_seq_seen_ {};
+  bool dds_connector_seen_ {};
+  bool ami_connector_seen_ {};
   ///}
 
   /// flag to force generation of skeleton includes (see bug #2419).
-  bool need_skeleton_includes_;
+  bool need_skeleton_includes_ {};
 
   /**
    * Version of IDL to enforce
@@ -832,62 +836,62 @@ public:
    * In other words just check the syntax of the input files, do not create
    * any output.
    */
-  bool syntax_only_;
+  bool syntax_only_ {};
 
   /**
    * Exit when finished processing cli arguments
    * Default is false.
    */
-  bool parse_args_exit_;
+  bool parse_args_exit_ {};
 
   /**
    * If parse_args_exit_ is true, this is the program status to return from
    * main.
    * Default is 0.
    */
-  int parse_args_exit_status_;
+  int parse_args_exit_status_ {};
 
   /**
    * Print command line argument help message when finished processing
    * cli arguments.
    */
-  bool print_help_;
+  bool print_help_ {};
 
   /**
    * Print compiler version when finished processing cli arguments.
    */
-  bool print_version_;
+  bool print_version_ {};
 
   /**
    * If true, we are inside the eval() function
    */
-  bool in_eval_;
+  bool in_eval_ {};
 
   /**
    * Dump constructs defined using eval() if true.
    */
-  bool dump_builtins_;
+  bool dump_builtins_ {};
 
   /**
    * If true, Dump only the IDL defined using eval() and exit using
    * ignore_files_
    */
-  bool just_dump_builtins_;
+  bool just_dump_builtins_ {};
 
   /**
    * Exit right before parsing input files.
    */
-  bool ignore_files_;
+  bool ignore_files_ {};
 
   /**
    * If true, silently ignore lookup errors.
    */
-  bool ignore_lookup_errors_;
+  bool ignore_lookup_errors_ {};
 
   /**
    * Reaction to unknown annotations
    */
-  Unknown_Annotations unknown_annotations_;
+  Unknown_Annotations unknown_annotations_ {UNKNOWN_ANNOTATIONS_WARN_ONCE};
 
   /**
    * Set of the local names of unkown annotations already seen
@@ -897,168 +901,161 @@ public:
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack
-  AST_Root                   *pd_root;               // Store AST root
-  AST_Generator              *pd_gen;                // Store generator
-  AST_ValueType              *pd_primary_key_base;   // Store PrimaryKeyBase
-  UTL_Error                  *pd_err;                // Error object
-  int                        pd_err_count;           // Count of errors
-  long                       pd_lineno;              // What line #
-  UTL_String                 *pd_filename;           // What file
-  UTL_String                 *pd_main_filename;      // What main filename
-  UTL_String                 *pd_real_filename;      // What real filename
-  UTL_String                 *pd_stripped_filename;  // Stripped filename
-  bool                       pd_import;              // Is import on?
-  bool                       pd_in_main_file;        // Are we in it?
-  const char                 *pd_prog_name;          // Argv[0]
-  const char                 *pd_cpp_location;       // Where to find CPP
-  long                       pd_compile_flags;       // Compile flags
-  char                       *pd_local_escapes;      // Trapdoor argument
-  UTL_Indenter               *pd_indent;             // Indent object
+  AST_Root                   *pd_root {};             // Store AST root
+  AST_Generator              *pd_gen {};              // Store generator
+  AST_ValueType              *pd_primary_key_base {}; // Store PrimaryKeyBase
+  UTL_Error                  *pd_err {};              // Error object
+  int                        pd_err_count {};         // Count of errors
+  long                       pd_lineno {};            // What line #
+  UTL_String                 *pd_filename {};          // What file
+  UTL_String                 *pd_main_filename {};     // What main filename
+  UTL_String                 *pd_real_filename {};     // What real filename
+  UTL_String                 *pd_stripped_filename {}; // Stripped filename
+  bool                       pd_import {};             // Is import on?
+  bool                       pd_in_main_file {};       // Are we in it?
+  std::string pd_prog_name {};
+  std::optional<std::string> pd_cpp_location {};
+  long                       pd_compile_flags {};      // Compile flags
+  std::string                 pd_local_escapes {};     // Trapdoor argument
+  UTL_Indenter               *pd_indent {};            // Indent object
                                                      // as it's being built
-  UTL_String                 **pd_include_file_names;// Array of file names.
-  unsigned long              pd_n_include_file_names;// How many.
-  unsigned long              pd_n_alloced_file_names;// How many alloced.
+  UTL_String                 **pd_include_file_names {}; // Array of file names.
+  unsigned long              pd_n_include_file_names {}; // How many.
+  unsigned long              pd_n_alloced_file_names {}; // How many alloced.
 
-  char **included_idl_files_;
+  std::vector<std::string> included_idl_files_;
   // IDL files that are "#include'd.
 
-  size_t n_included_idl_files_;
-  // The number of such idl files that are currently stored.
+  ParseState                pd_parse_state {PS_NoState}; // Parse state we're in.
 
-  size_t n_allocated_idl_files_;
-  // For char*'s have been allocated for this.
+  UTL_String                *pd_idl_src_file {};    // IDL source file.
 
-  ParseState                pd_parse_state;         // Parse state we're in.
-
-  UTL_String                *pd_idl_src_file;       // IDL source file.
-
-  char *tao_root_;
+  std::optional<std::string> tao_root_;
   // Needed if orb.idl is included.
 
-  char *gperf_path_;
+  std::optional<std::string> gperf_path_;
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
 
-  char *temp_dir_;
+  std::optional<std::string> temp_dir_;
   // Temp directory where which we can rewsolve in drv_preproc.cpp by
   // checking for  TEMP env variable otherwise we assign to /tmp/.
 
-  char *ident_string_;
+  std::string ident_string_;
   // Holds a string that begins with #ident, to be passed from the IDL
   // file to the generated files.
 
-  bool case_diff_error_;
+  bool case_diff_error_ {true};
   // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
 
-  bool nest_orb_;
+  bool nest_orb_ {};
   // Is this front end being used for the NEST ORB?
 
-  ACE_CString idl_flags_;
+  std::string idl_flags_;
   // Concatenation of all the command line options.
 
-  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> idl_keywords_;
+  std::unordered_set<std::string> idl_keywords_;
   // Container for all the IDL keywords so local names can be checked.
 
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
 
-  bool preserve_cpp_keywords_;
+  bool preserve_cpp_keywords_ {true};
   // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
   Unbounded_Paths_Queue include_paths_;
   // List of -I options passed to us.
 
-  ACE_Unbounded_Queue<char *> rel_include_paths_;
+  std::vector<std::string> rel_include_paths_;
   // Used by backends with the -r option.
 
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
 
-  bool pass_orb_idl_;
+  bool pass_orb_idl_ {};
   // Treat orb.idl like any other included IDL file.
 
-  bool using_ifr_backend_;
+  bool using_ifr_backend_ {};
   // Set by the IFR backend itself.
 
-  bool ignore_idl3_;
+  bool ignore_idl3_ {};
   // Need this for eventtypes left over after running idl3_to_idl2,
   // we don't want to try to generate another event consumer.
   DCPS_Type_Info_Map dcps_type_info_map_;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
 
-  DCPS_Sequence_Types_List dcps_sequence_types_list_;
+  std::vector<std::string> dcps_sequence_types_list_ {};
 
-  bool dcps_support_zero_copy_read_;
+  bool dcps_support_zero_copy_read_ {};
   // Are we enabled to support DCPS zero-copy read.
   // Need this flag to avoid generating wrong code for pre v0.12 DDS
   // with new TAO_IDL compiler.
 
-  bool dcps_gen_zero_copy_read_;
+  bool dcps_gen_zero_copy_read_ {};
   // Are we generating code insupport of DCPS zero-copy read data sequences?
 
   ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
   // List of valuetypes used as a primary key.
 
-  char *recursion_start_;
+  std::optional<std::string> recursion_start_;
   // Path to directory subtree we are iterating/recursing over.
   // Not used by all backends.
 
-  bool multi_file_input_;
+  bool multi_file_input_ {};
   // Some backends process multiple files to a single output.
 
-  const char *big_file_name_;
   // Used if the above flag is set.
 
-  FE_Utils::T_PARAMLIST_INFO *current_params_;
+  FE_Utils::T_PARAMLIST_INFO *current_params_ {};
   // Stored if we are parsing the scope of a template module,
   // 0 otherwise. Contains the params of the referenced
   // template module if we are traversing an alias.
 
-  UTL_StrList *alias_params_;
+  UTL_StrList *alias_params_ {};
   // Stored if we are parsing a template module reference. The
   // scope traversed will be that of the referenced template
   // module, but the param holder(s) created will use the
   // aliased names.
 
-  UTL_StrList *for_new_holder_;
+  UTL_StrList *for_new_holder_ {};
   // Stored if we are traversing an alias, this is a list of
   // the enclosing template module's params. When we create
   // a param holder, it will need this name rather than the
   // name of the alias's referenced param.
 
-  ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
+  std::vector<std::string> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
 
-  ACE_Unbounded_Queue<char *> ciao_rti_ts_file_names_;
+  std::vector<std::string> ciao_rti_ts_file_names_;
   // Files parsed with RTI typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_spl_ts_file_names_;
+  std::vector<std::string> ciao_spl_ts_file_names_;
   // Files parsed with OpenSplice typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_oci_ts_file_names_;
+  std::vector<std::string> ciao_oci_ts_file_names_;
   // Files parsed with OpenDDS typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_coredx_ts_file_names_;
+  std::vector<std::string> ciao_coredx_ts_file_names_;
   // Files parsed with CoreDX typesupport pragma
 
-  ACE_Unbounded_Queue<char *> ciao_ami_iface_names_;
+  std::vector<std::string> ciao_ami_iface_names_;
   // Interfaces that get a reply handler generated for AMI4CCM.
 
-  ACE_Unbounded_Queue<char *> ciao_ami_recep_names_;
+  std::vector<std::string> ciao_ami_recep_names_;
   // Receptacles that get a sendc_ version added for AMI4CCM.
 
-  ACE_Unbounded_Queue<char *> included_ami_recep_names_;
+  std::vector<std::string> included_ami_recep_names_;
   // We need to do something different with these...
 
-  bool included_ami_receps_done_;
+  bool included_ami_receps_done_ {};
   // ...but we need to do it only once.
 
-  ACE_Unbounded_Queue<char *> ciao_ami_idl_fnames_;
+  std::vector<std::string> ciao_ami_idl_fnames_;
   // Stores directives from #pragma ciao ami4ccm idl "xxx"
   // or  #pragma ami4ccm idl "xxx".
 
-  ACE_Unbounded_Queue<char *> dds4ccm_impl_fnames_;
+  std::vector<std::string> dds4ccm_impl_fnames_;
   // Stores directives from #pragma dds4ccm impl "xxx".
 
   /**
@@ -1069,23 +1066,23 @@ private:
   ACE_Unbounded_Queue<AST_Interface *> mixed_parentage_interfaces_;
 
   /// For quick access.
-  AST_Module *corba_module_;
+  AST_Module *corba_module_ {};
 
-  ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_;
-  bool explicit_anon_type_diagnostic_;
+  ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_ {ANON_TYPE_ERROR};
+  bool explicit_anon_type_diagnostic_ {};
 
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.
-  bool in_typedef_;
+  bool in_typedef_ {};
 
   /// Used during AST creation, corresponding flag in each
   /// AST_Decl created is set to this flag's value.
-  bool in_tmpl_mod_no_alias_;
+  bool in_tmpl_mod_no_alias_ {};
 
   /// Disables the error check faciliated by the above flag.
   /// No errors are possible because created nodes are all
   /// implied IDL.
-  bool in_tmpl_mod_alias_;
+  bool in_tmpl_mod_alias_ {};
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

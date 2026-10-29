@@ -80,13 +80,17 @@ class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
+  AST_Module (AST_Module const &) = delete;
+  AST_Module (AST_Module &&) = delete;
+  AST_Module &operator= (AST_Module const &) = delete;
+  AST_Module &operator= (AST_Module &&) = delete;
   static AST_Decl::NodeType const NT;
 
   // Constructor.
-  AST_Module (UTL_ScopedName *n, AST_Module *prev = nullptr);
+  explicit AST_Module (UTL_ScopedName *n, AST_Module *prev = nullptr);
 
   // Destructor.
-  ~AST_Module () override;
+  ~AST_Module () override = default;
 
   // Cleanup function.
   void destroy () override;
@@ -113,12 +117,12 @@ public:
                    Identifier *id = nullptr) override;
 
   // Accessor to this module's previous opening.
-  AST_Module *previous_opening ();
+  AST_Module *previous_opening () const;
 
   // Called to look up some declaration
   // in a previous opening of this module.
   AST_Decl *look_in_prev_mods_local (Identifier *e,
-                                     bool ignore_fwd = false);
+                                     bool ignore_fwd = false) override;
 
   // Called to look up some declaration
   // in a previous opening of this module.
@@ -149,85 +153,59 @@ public:
 
   // Scope Management Protocol
 
-  virtual
-  AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
+  AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t) override;
 
-  virtual
-  AST_Module *fe_add_module (AST_Module *m);
+  AST_Module *fe_add_module (AST_Module *m) override;
 
-  virtual
   AST_Template_Module_Inst *fe_add_template_module_inst (
-    AST_Template_Module_Inst *m);
+    AST_Template_Module_Inst *m) override;
 
-  virtual
-  AST_Interface *fe_add_interface (AST_Interface *i);
+  AST_Interface *fe_add_interface (AST_Interface *i) override;
 
-  virtual
-  AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
+  AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i) override;
 
-  virtual
-  AST_ValueType *fe_add_valuetype (AST_ValueType *i);
+  AST_ValueType *fe_add_valuetype (AST_ValueType *i) override;
 
-  virtual
-  AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
+  AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i) override;
 
-  virtual
-  AST_EventType *fe_add_eventtype (AST_EventType *i);
+  AST_EventType *fe_add_eventtype (AST_EventType *i) override;
 
-  virtual
-  AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
+  AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i) override;
 
-  virtual
-  AST_Component *fe_add_component (AST_Component *i);
+  AST_Component *fe_add_component (AST_Component *i) override;
 
-  virtual
-  AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
+  AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i) override;
 
-  virtual
-  AST_Connector *fe_add_connector (AST_Connector *i);
+  AST_Connector *fe_add_connector (AST_Connector *i) override;
 
-  virtual
-  AST_Home *fe_add_home (AST_Home *i);
+  AST_Home *fe_add_home (AST_Home *i) override;
 
-  virtual
-  AST_Constant *fe_add_constant (AST_Constant *c);
+  AST_Constant *fe_add_constant (AST_Constant *c) override;
 
-  virtual
-  AST_Exception *fe_add_exception (AST_Exception *e);
+  AST_Exception *fe_add_exception (AST_Exception *e) override;
 
-  virtual
-  AST_Union *fe_add_union (AST_Union *u);
+  AST_Union *fe_add_union (AST_Union *u) override;
 
-  virtual
-  AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+  AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u) override;
 
-  virtual
-  AST_Structure *fe_add_structure (AST_Structure *s);
+  AST_Structure *fe_add_structure (AST_Structure *s) override;
 
-  virtual
-  AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
+  AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s) override;
 
-  virtual
-  AST_Enum *fe_add_enum (AST_Enum *e);
+  AST_Enum *fe_add_enum (AST_Enum *e) override;
 
-  virtual
-  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 
-  virtual
-  AST_Typedef *fe_add_typedef (AST_Typedef *t);
+  AST_Typedef *fe_add_typedef (AST_Typedef *t) override;
 
-  virtual
-  AST_Native *fe_add_native (AST_Native *n);
+  AST_Native *fe_add_native (AST_Native *n) override;
 
-  virtual
-  AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
+  AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb) override;
 
-  virtual
-  AST_PortType *fe_add_porttype (AST_PortType *pt);
+  AST_PortType *fe_add_porttype (AST_PortType *pt) override;
 
-  virtual
   AST_Annotation_Decl *fe_add_annotation_decl (
-    AST_Annotation_Decl *annotation_decl);
+    AST_Annotation_Decl *annotation_decl) override;
 
   // Reset the last_in_same_parent_scope_ member to ourself
   // (called by AST_Root::destroy on the CORBA module containing
@@ -238,7 +216,7 @@ public:
   bool annotatable () const override { return true; }
 
 private: // Data
-  bool pd_has_nested_valuetype_;
+  bool pd_has_nested_valuetype_ {};
 
   AST_Module *previous_opening_;
   /// The immediatly previous opening of this module.
@@ -246,10 +224,10 @@ private: // Data
   AST_Module *last_in_same_parent_scope_;
   /// Pointer to the last opening of this module in the same parent
 
-  AST_Template_Module_Inst *from_inst_;
+  AST_Template_Module_Inst *from_inst_ {};
   /// Reference to the instantiation that created us, if any.
 
-  AST_Template_Module_Ref *from_ref_;
+  AST_Template_Module_Ref *from_ref_ {};
   /// Reference to the 'alias' type that created us, if any.
 };
 

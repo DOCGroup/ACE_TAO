@@ -79,12 +79,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_valuetype.h"
 #include "ast_annotation_decl.h"
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
+#include <string>
+#include <string_view>
+#include <utility>
 
 // Define an increment for the size of the array used to store names of
 // included files.
@@ -94,75 +97,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 static long *pSeenOnce = nullptr;
 
 IDL_GlobalData::IDL_GlobalData ()
-  : syntax_only_ (false),
-    parse_args_exit_ (false),
-    parse_args_exit_status_ (0),
-    print_help_ (false),
-    print_version_ (false),
-    in_eval_ (false),
-    dump_builtins_ (false),
-    just_dump_builtins_ (false),
-    ignore_files_ (false),
-    ignore_lookup_errors_ (false),
-    unknown_annotations_ (UNKNOWN_ANNOTATIONS_WARN_ONCE),
-    pd_root (nullptr),
-    pd_gen (nullptr),
-    pd_primary_key_base (nullptr),
-    pd_err (nullptr),
-    pd_err_count (0),
-    pd_lineno (0),
-    pd_filename (nullptr),
-    pd_main_filename (nullptr),
-    pd_real_filename (nullptr),
-    pd_stripped_filename (nullptr),
-    pd_import (false),
-    pd_in_main_file (false),
-    pd_prog_name (nullptr),
-    pd_cpp_location (nullptr),
-    pd_compile_flags (0),
-    pd_local_escapes (nullptr),
-    pd_indent (nullptr),
-    pd_include_file_names (nullptr),
-    pd_n_include_file_names (0),
-    pd_n_alloced_file_names (0),
-    included_idl_files_ (nullptr),
-    n_included_idl_files_ (0),
-    n_allocated_idl_files_ (0),
-    pd_parse_state (PS_NoState),
-    pd_idl_src_file (nullptr),
-    tao_root_ (nullptr),
-    gperf_path_ (nullptr),
-    temp_dir_ (nullptr),
-    ident_string_ (nullptr),
-    case_diff_error_ (true),
-    nest_orb_ (false),
-    idl_flags_ (""),
-    preserve_cpp_keywords_ (true),
-    pass_orb_idl_ (false),
-    using_ifr_backend_ (false),
-    ignore_idl3_ (false),
-    dcps_support_zero_copy_read_ (false),
-    dcps_gen_zero_copy_read_ (false),
-    recursion_start_ (nullptr),
-    multi_file_input_ (false),
-    big_file_name_ ("PICML_IDL_file_bag"),
-    current_params_ (nullptr),
-    alias_params_ (nullptr),
-    for_new_holder_ (nullptr),
-    included_ami_receps_done_ (false),
-    corba_module_ (nullptr),
-    anon_type_diagnostic_ (ANON_TYPE_ERROR),
-    explicit_anon_type_diagnostic_ (false),
-    in_typedef_ (false),
-    in_tmpl_mod_no_alias_ (false),
-    in_tmpl_mod_alias_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
   // Use ACE_GPERF if $ACE_ROOT hasn't been set or won't be set
   // in the environment.
   // Form the absolute pathname.
-  char* ace_root = ACE_OS::getenv ("ACE_ROOT");
+  char const * const ace_root = ACE_OS::getenv ("ACE_ROOT");
 
   if (ace_root == nullptr)
     // This may not cause any problem if -g option is used to specify
@@ -174,38 +115,21 @@ IDL_GlobalData::IDL_GlobalData ()
 #if defined (ACE_GPERF)
       // The actual gperf program must be included in the definition of
       // ACE_GPERF, not just the directory in which it is located.
-      const char ace_gperf[] = ACE_GPERF;
-      ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_gperf) + 1]);
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s",
-                       ace_gperf);
-#else
-      this->gperf_path_ = nullptr;
+      this->gperf_path_.emplace (ACE_GPERF);
 #endif
     }
   else
     {
 #if defined (ACE_GPERF)
-      const char ace_gperf[] = ACE_GPERF;
-      ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_root)
-                     + ACE_OS::strlen ("/bin/")
-                     + ACE_OS::strlen (ace_gperf)
-                     + 1]);
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "%s",
-                       ace_root,
-                       ace_gperf);
+      std::string path (ace_root);
+      path.append (ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A);
+      path.append (ACE_GPERF);
+      this->gperf_path_ = std::move (path);
 #else /* Not ACE_GPERF */
       // Set it to the default value.
-      ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_root)
-                     + ACE_OS::strlen ("/bin/ace_gperf")
-                     + 1]);
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s" ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "ace_gperf",
-                       ace_root);
+      std::string path (ace_root);
+      path.append (ACE_DIRECTORY_SEPARATOR_STR_A "bin" ACE_DIRECTORY_SEPARATOR_STR_A "ace_gperf");
+      this->gperf_path_ = std::move (path);
 #endif /* ACE_GPERF */
     }
 
@@ -217,15 +141,8 @@ IDL_GlobalData::IDL_GlobalData ()
   anon_type_diagnostic (ANON_TYPE_SILENT);
 #endif
 
-  // ambiguous_type_seen_ and basic_type_seen_ are not reset between
-  // command line idl files, so do those here and then reset the rest.
-  this->ambiguous_type_seen_ = false;
-  this->basic_type_seen_ = false;
+  // Reset the flags that are scoped to the current input file.
   this->reset_flag_seen ();
-}
-
-IDL_GlobalData::~IDL_GlobalData ()
-{
 }
 
 // When starting to process the next command line input idl file, reset.
@@ -305,7 +222,7 @@ IDL_GlobalData::scopes ()
 
 // Get or set root of AST
 AST_Root *
-IDL_GlobalData::root ()
+IDL_GlobalData::root () const
 {
   return this->pd_root;
 }
@@ -318,7 +235,7 @@ IDL_GlobalData::set_root (AST_Root *r)
 
 // Get or set generator object
 AST_Generator *
-IDL_GlobalData::gen ()
+IDL_GlobalData::gen () const
 {
   return this->pd_gen;
 }
@@ -331,7 +248,7 @@ IDL_GlobalData::set_gen (AST_Generator *g)
 
 // Get or set PrimaryKeyBase object
 AST_ValueType *
-IDL_GlobalData::primary_key_base ()
+IDL_GlobalData::primary_key_base () const
 {
   return this->pd_primary_key_base;
 }
@@ -344,7 +261,7 @@ IDL_GlobalData::primary_key_base (AST_ValueType *v)
 
 // Get or set error object
 UTL_Error *
-IDL_GlobalData::err ()
+IDL_GlobalData::err () const
 {
   return this->pd_err;
 }
@@ -357,7 +274,7 @@ IDL_GlobalData::set_err (UTL_Error *e)
 
 // Get or set error count
 int
-IDL_GlobalData::err_count ()
+IDL_GlobalData::err_count () const
 {
   return this->pd_err_count;
 }
@@ -370,7 +287,7 @@ IDL_GlobalData::set_err_count (int c)
 
 // Get or set line number
 long
-IDL_GlobalData::lineno ()
+IDL_GlobalData::lineno () const
 {
   return this->pd_lineno;
 }
@@ -383,7 +300,7 @@ IDL_GlobalData::set_lineno (long n)
 
 // Get or set file name being read now
 UTL_String *
-IDL_GlobalData::filename ()
+IDL_GlobalData::filename () const
 {
   return this->pd_filename;
 }
@@ -403,7 +320,7 @@ IDL_GlobalData::set_filename (UTL_String *s)
 
 // Get or set main file name
 UTL_String *
-IDL_GlobalData::main_filename ()
+IDL_GlobalData::main_filename () const
 {
   return this->pd_main_filename;
 }
@@ -422,7 +339,7 @@ IDL_GlobalData::set_main_filename (UTL_String *n)
 
 // Get or set real file name
 UTL_String *
-IDL_GlobalData::real_filename ()
+IDL_GlobalData::real_filename () const
 {
   return this->pd_real_filename;
 }
@@ -442,13 +359,13 @@ IDL_GlobalData::set_real_filename (UTL_String *n)
 
 // Get or set indicator whether import is on
 bool
-IDL_GlobalData::imported ()
+IDL_GlobalData::imported () const
 {
   return this->pd_in_main_file ? false : pd_import;
 }
 
 bool
-IDL_GlobalData::import ()
+IDL_GlobalData::import () const
 {
   return this->pd_import;
 }
@@ -461,7 +378,7 @@ IDL_GlobalData::set_import (bool is_in)
 
 // Get or set indicator whether we're reading the main file now
 bool
-IDL_GlobalData::in_main_file ()
+IDL_GlobalData::in_main_file () const
 {
   return this->pd_in_main_file;
 }
@@ -474,7 +391,7 @@ IDL_GlobalData::set_in_main_file (bool is_in)
 
 // Get or set stripped file name
 UTL_String *
-IDL_GlobalData::stripped_filename ()
+IDL_GlobalData::stripped_filename () const
 {
   return this->pd_stripped_filename;
 }
@@ -491,34 +408,53 @@ IDL_GlobalData::set_stripped_filename (UTL_String *nm)
 }
 
 // Get or set cache value for argv[0]
-const char *
-IDL_GlobalData::prog_name ()
+std::string_view
+IDL_GlobalData::prog_name () const
 {
   return this->pd_prog_name;
 }
 
 void
-IDL_GlobalData::set_prog_name (const char *pn)
+IDL_GlobalData::set_prog_name (std::string_view name)
 {
-  this->pd_prog_name = pn;
-}
-
-// Get or set location to find C preprocessor
-const char *
-IDL_GlobalData::cpp_location ()
-{
-  return this->pd_cpp_location;
+  this->pd_prog_name = name;
 }
 
 void
-IDL_GlobalData::set_cpp_location (const char *l)
+IDL_GlobalData::clear_prog_name ()
 {
-  this->pd_cpp_location = l;
+  this->pd_prog_name.clear ();
+}
+
+// Get or set location to find C preprocessor
+std::optional<std::string_view>
+IDL_GlobalData::cpp_location () const
+{
+  if (this->pd_cpp_location)
+    {
+      return *this->pd_cpp_location;
+    }
+
+  return std::nullopt;
+}
+
+std::string_view
+IDL_GlobalData::cpp_location_or_empty () const
+{
+  return this->pd_cpp_location
+    ? std::string_view (*this->pd_cpp_location)
+    : std::string_view {};
+}
+
+void
+IDL_GlobalData::set_cpp_location (std::string_view location)
+{
+  this->pd_cpp_location = location;
 }
 
 // Get or set IDL compiler flags
 long
-IDL_GlobalData::compile_flags ()
+IDL_GlobalData::compile_flags () const
 {
   return this->pd_compile_flags;
 }
@@ -537,28 +473,31 @@ IDL_GlobalData::set_compile_flags (long cf)
   this->pd_compile_flags = cf;
 }
 
-// Get or set local escapes string. This provides an additional
-// mechanism to pass information to a BE.
-char *
-IDL_GlobalData::local_escapes ()
+// Get local escapes. This provides an additional mechanism to pass
+// information to a BE.
+std::string_view
+IDL_GlobalData::local_escapes () const
 {
   return this->pd_local_escapes;
 }
 
+// Append a local escape.
 void
-IDL_GlobalData::set_local_escapes (const char *e)
+IDL_GlobalData::append_local_escape (std::string_view escape)
 {
-  if (this->pd_local_escapes != nullptr)
-    {
-      delete [] this->pd_local_escapes;
-    }
+  this->pd_local_escapes.append (escape);
+  this->pd_local_escapes.push_back (' ');
+}
 
-  this->pd_local_escapes = ACE::strnew (e);
+void
+IDL_GlobalData::set_local_escapes (std::string_view escapes)
+{
+  this->pd_local_escapes = escapes;
 }
 
 // Get or set indent object
 UTL_Indenter *
-IDL_GlobalData::indent ()
+IDL_GlobalData::indent () const
 {
   return this->pd_indent;
 }
@@ -571,17 +510,14 @@ IDL_GlobalData::set_indent (UTL_Indenter *i)
 
 // Have we seen this #include file name before?
 long
-IDL_GlobalData::seen_include_file_before (char *n)
+IDL_GlobalData::seen_include_file_before (std::string_view filename)
 {
-  unsigned long i;
-  char *incl = nullptr;
-  char *tmp = n;
-
-  for (i = 0; i < this->pd_n_include_file_names; ++i)
+  for (unsigned long i = 0; i < this->pd_n_include_file_names; ++i)
     {
-      incl = this->pd_include_file_names[i]->get_string ();
+      std::string_view const include_name =
+        this->pd_include_file_names[i]->get_string_view_or_empty ();
 
-      if (ACE_OS::strcmp (tmp, incl) == 0)
+      if (filename == include_name)
         {
           return ++pSeenOnce[i];
         }
@@ -595,7 +531,8 @@ void
 IDL_GlobalData::store_include_file_name (UTL_String *n)
 {
   // Check if we need to store it at all or whether we've seen it already.
-  if (this->seen_include_file_before (n->get_string ()))
+  if (this->seen_include_file_before (
+        n->get_string_view_or_empty ()))
     {
       n->destroy ();
       delete n; // Don't keep filenames we don't store!
@@ -649,7 +586,7 @@ IDL_GlobalData::set_include_file_names (UTL_String **ns)
 }
 
 UTL_String **
-IDL_GlobalData::include_file_names ()
+IDL_GlobalData::include_file_names () const
 {
   return this->pd_include_file_names;
 }
@@ -661,7 +598,7 @@ IDL_GlobalData::set_n_include_file_names (unsigned long n)
 }
 
 unsigned long
-IDL_GlobalData::n_include_file_names ()
+IDL_GlobalData::n_include_file_names () const
 {
   return pd_n_include_file_names;
 }
@@ -670,55 +607,21 @@ IDL_GlobalData::n_include_file_names ()
 // IDL file.
 
 void
-IDL_GlobalData::add_to_included_idl_files (const char *file_name)
+IDL_GlobalData::add_to_included_idl_files (std::string_view file_name)
 {
   // Let's avoid duplicates.
-  for (size_t index = 0; index < this->n_included_idl_files_; ++index)
+  for (std::string const &included_file : this->included_idl_files_)
     {
-      if (!ACE_OS::strcmp (file_name, this->included_idl_files_[index]))
+      if (file_name == included_file)
         {
           return;
         }
     }
 
-  // Is there enough space there to store one more file.
-  if (this->n_included_idl_files_ == this->n_allocated_idl_files_)
-    {
-      // Allocating more space.
-      if (this->n_allocated_idl_files_ == 0)
-        {
-          // First time creation.
-          this->n_allocated_idl_files_ = INCREMENT;
-          ACE_NEW (this->included_idl_files_,
-                   char *[this->n_allocated_idl_files_]);
-        }
-      else
-        {
-          // Adding more storage.
-          char** old_included_idl_files =
-            this->included_idl_files_;
-          size_t n_old_allocated_idl_files =
-            this->n_allocated_idl_files_;
-          this->n_allocated_idl_files_ += INCREMENT;
-          ACE_NEW (this->included_idl_files_,
-                   char *[this->n_allocated_idl_files_]);
-
-          for (size_t i = 0; i < n_old_allocated_idl_files; ++i)
-            {
-              this->included_idl_files_ [i] =
-                old_included_idl_files [i];
-            }
-
-          delete [] old_included_idl_files;
-        }
-    }
-
-  // Store it.
-  this->included_idl_files_ [this->n_included_idl_files_++] =
-    ACE::strnew (file_name);
+  this->included_idl_files_.emplace_back (file_name);
 }
 
-char**
+std::vector<std::string> &
 IDL_GlobalData::included_idl_files ()
 {
   return this->included_idl_files_;
@@ -727,16 +630,7 @@ IDL_GlobalData::included_idl_files ()
 size_t
 IDL_GlobalData::n_included_idl_files ()
 {
-  return this->n_included_idl_files_;
-}
-
-// Set the number of included_idl_files. Use this carefully. This
-// method is used when we validate all the #included idl files,
-// against the ones that we get after preprocessing.
-void
-IDL_GlobalData::n_included_idl_files (size_t n)
-{
-  this->n_included_idl_files_ = n;
+  return this->included_idl_files_.size ();
 }
 
 void
@@ -764,75 +658,67 @@ void IDL_GlobalData::idl_src_file (UTL_String *s)
 }
 
 void
-IDL_GlobalData::temp_dir (const char *s)
+IDL_GlobalData::temp_dir (std::string_view s)
 {
-  // Delete the old pointer.
-  delete [] this->temp_dir_;
-  this->temp_dir_ = nullptr; // In case the ACE_NEW fails below.
+  this->temp_dir_.emplace (s);
 
-  const size_t lengthSep = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
-  const size_t lengthPath = ACE_OS::strlen (s);
-
-  // Allocate memory, 1 for the end of string.
-  ACE_NEW (this->temp_dir_, char [lengthPath + lengthSep + 1u]);
-
-  // Copy the strings.
-  if (lengthSep < lengthPath &&
-      0 == ACE_OS::strcmp (s + lengthPath - lengthSep, ACE_DIRECTORY_SEPARATOR_STR_A))
+  size_t const separator_length = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
+  if (this->temp_dir_->size () <= separator_length
+      || this->temp_dir_->compare (this->temp_dir_->size () - separator_length,
+                                   separator_length,
+                                   ACE_DIRECTORY_SEPARATOR_STR_A) != 0)
     {
-      // Already has a directory seporator on end of temp root, don't add another.
-      ACE_OS::strcpy (this->temp_dir_, s);
-    }
-  else
-    {
-      // Need to add a directory seporator to temp root.
-      ACE_OS::sprintf (this->temp_dir_,
-                       "%s%s",
-                       s,
-                       ACE_DIRECTORY_SEPARATOR_STR_A);
+      this->temp_dir_->append (ACE_DIRECTORY_SEPARATOR_STR_A);
     }
 }
 
-const char *
+std::optional<std::string_view>
 IDL_GlobalData::temp_dir () const
 {
-  return this->temp_dir_;
+  return this->temp_dir_ ? std::optional<std::string_view> (*this->temp_dir_)
+                         : std::nullopt;
 }
 
 void
-IDL_GlobalData::tao_root (const char *s)
+IDL_GlobalData::tao_root (std::string_view s)
 {
-  delete [] this->tao_root_;
-  this->tao_root_ = ACE::strnew (s);
+  this->tao_root_.emplace (s);
 }
 
-const char *
+std::optional<std::string_view>
 IDL_GlobalData::tao_root () const
 {
-  return this->tao_root_;
+  return this->tao_root_ ? std::optional<std::string_view> (*this->tao_root_)
+                         : std::nullopt;
+}
+
+std::string_view
+IDL_GlobalData::tao_root_or_empty () const
+{
+  return this->tao_root_ ? std::string_view (*this->tao_root_)
+                         : std::string_view {};
 }
 
 void
-IDL_GlobalData::gperf_path (const char *s)
+IDL_GlobalData::gperf_path (std::string_view s)
 {
-  delete [] this->gperf_path_;
-  this->gperf_path_ = ACE::strnew (s);
+  this->gperf_path_.emplace (s);
 }
 
-const char *
+std::optional<std::string_view>
 IDL_GlobalData::gperf_path () const
 {
-  return this->gperf_path_;
+  return this->gperf_path_ ? std::optional<std::string_view> (*this->gperf_path_)
+                           : std::nullopt;
 }
 
 void
-IDL_GlobalData::ident_string (const char *s)
+IDL_GlobalData::ident_string (std::string_view s)
 {
-  delete [] this->ident_string_;
-  this->ident_string_ = ACE::strnew (s);
+  this->ident_string_ = s;
 }
 
-const char *
+std::string_view
 IDL_GlobalData::ident_string () const
 {
   return this->ident_string_;
@@ -921,19 +807,9 @@ IDL_GlobalData::destroy ()
 
   this->pd_n_include_file_names = 0;
 
-  for (size_t k = 0; k < n_included_idl_files_; ++k)
-    {
-      ACE::strdelete (this->included_idl_files_[k]);
-      this->included_idl_files_[k] = nullptr;
-    }
+  this->included_idl_files_.clear ();
 
-  this->n_included_idl_files_ = 0;
-  this->n_allocated_idl_files_ = 0;
-  delete [] this->included_idl_files_;
-  this->included_idl_files_ = nullptr;
-
-  ACE::strdelete (this->recursion_start_);
-  this->recursion_start_ = nullptr;
+  this->recursion_start_.reset ();
 
   // Reset the member of the CORBA module containing the basic types
   // to point to itself, since all the other CORBA modules (if any)
@@ -950,18 +826,19 @@ IDL_GlobalData::destroy ()
 }
 
 void
-IDL_GlobalData::append_idl_flag (const char *s)
+IDL_GlobalData::append_idl_flag (std::string_view s)
 {
-  this->idl_flags_ += " " + ACE_CString (s);
+  this->idl_flags_.append (" ");
+  this->idl_flags_.append (s);
 }
 
-const char *
+std::string_view
 IDL_GlobalData::idl_flags () const
 {
-  return this->idl_flags_.c_str ();
+  return this->idl_flags_;
 }
 
-ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
+std::unordered_set<std::string> &
 IDL_GlobalData::idl_keywords ()
 {
   return this->idl_keywords_;
@@ -983,21 +860,23 @@ IDL_GlobalData::update_prefix (char *filename)
       return;
     }
 
-  char *fstring = this->pd_filename->get_string ();
-  char *tail = fstring + ACE_OS::strlen (fstring) - 3;
+  std::string_view const current_filename =
+    this->pd_filename->get_string_view_or_empty ();
+  std::string_view const next_filename (filename);
 
   // We have to do this check because some preprocessors (gcc 3.2
   // on RedHat Linux 7.1, for one) output the same filename
   // multiple times for no apparent reason, and we don't want it
   // to clear the prefix.
-  if (ACE_OS::strcmp (fstring, filename) == 0
-      || ACE_OS::strcmp (tail, ".cc") == 0)
+  if (current_filename == next_filename
+      || (current_filename.size () >= 3
+          && current_filename.substr (current_filename.size () - 3) == ".cc"))
     {
       return;
     }
 
-  ACE_CString tmp ("", nullptr, false);
-  char *main_filename = this->pd_main_filename->get_string ();
+  std::string_view const main_filename =
+    this->pd_main_filename->get_string_view_or_empty ();
 
   char *prefix = nullptr;
   int status = this->file_prefixes_.find (filename, prefix);
@@ -1024,8 +903,8 @@ IDL_GlobalData::update_prefix (char *filename)
   // file, so we push a blank prefix on the stack, which may
   // possibly be changed later.
   if (this->seen_include_file_before (filename) != 0
-      || ACE_OS::strcmp (filename, main_filename) == 0
-      || ACE_OS::strcmp (filename, this->pd_filename->get_string ()) != 0)
+      || next_filename == main_filename
+      || next_filename != current_filename)
     {
       if (!this->pd_in_main_file)
         {
@@ -1037,7 +916,7 @@ IDL_GlobalData::update_prefix (char *filename)
           // new file at global scope. If there is a non-null prefix
           // stored in the table under our not-yet-changed filename,
           // pop it.
-          if (status == 0 && ACE_OS::strcmp (prefix, "") != 0)
+          if (status == 0 && !std::string_view (prefix).empty ())
             {
               char *trash = nullptr;
               this->pragma_prefixes_.pop (trash);
@@ -1047,7 +926,7 @@ IDL_GlobalData::update_prefix (char *filename)
     }
   else
     {
-      this->pragma_prefixes_.push (tmp.rep ());
+      this->pragma_prefixes_.push (ACE::strnew (""));
     }
 }
 
@@ -1074,116 +953,145 @@ IDL_GlobalData::preserve_cpp_keywords (bool val)
 }
 
 void
-IDL_GlobalData::add_include_path (const char *s, bool is_system)
+IDL_GlobalData::add_include_path (char const *s, bool is_system)
 {
-  Include_Path_Info info = { ACE::strnew (s), is_system };
+  Include_Path_Info info = { s != nullptr ? std::optional<std::string> (s)
+                                          : std::nullopt,
+                             is_system };
   this->include_paths_.enqueue_tail (info);
 }
 
 void
-IDL_GlobalData::add_rel_include_path (const char *s)
+IDL_GlobalData::add_rel_include_path (char const *s)
 {
-  this->rel_include_paths_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->rel_include_paths_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> const &
+std::vector<std::string> const &
 IDL_GlobalData::rel_include_paths () const
 {
   return this->rel_include_paths_;
 }
 
 void
-IDL_GlobalData::add_ciao_lem_file_names (const char *s)
+IDL_GlobalData::add_ciao_lem_file_names (char const *s)
 {
-  this->ciao_lem_file_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_lem_file_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_lem_file_names ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_lem_file_names () const
 {
   return this->ciao_lem_file_names_;
 }
 
 void
-IDL_GlobalData::add_ciao_rti_ts_file_names (const char *s)
+IDL_GlobalData::add_ciao_rti_ts_file_names (char const *s)
 {
-  this->ciao_rti_ts_file_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_rti_ts_file_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_rti_ts_file_names ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_rti_ts_file_names () const
 {
   return this->ciao_rti_ts_file_names_;
 }
 
 void
-IDL_GlobalData::add_ciao_spl_ts_file_names (const char *s)
+IDL_GlobalData::add_ciao_spl_ts_file_names (char const *s)
 {
-  this->ciao_spl_ts_file_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_spl_ts_file_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_spl_ts_file_names ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_spl_ts_file_names () const
 {
   return this->ciao_spl_ts_file_names_;
 }
 
 void
-IDL_GlobalData::add_ciao_oci_ts_file_names (const char *s)
+IDL_GlobalData::add_ciao_oci_ts_file_names (char const *s)
 {
-  this->ciao_oci_ts_file_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_oci_ts_file_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_oci_ts_file_names ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_oci_ts_file_names () const
 {
   return this->ciao_oci_ts_file_names_;
 }
 
 void
-IDL_GlobalData::add_ciao_coredx_ts_file_names (const char *s)
+IDL_GlobalData::add_ciao_coredx_ts_file_names (char const *s)
 {
-  this->ciao_coredx_ts_file_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_coredx_ts_file_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_coredx_ts_file_names ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_coredx_ts_file_names () const
 {
   return this->ciao_coredx_ts_file_names_;
 }
 
 void
-IDL_GlobalData::add_ciao_ami_iface_names (const char *s)
+IDL_GlobalData::add_ciao_ami_iface_names (char const *s)
 {
-  this->ciao_ami_iface_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_ami_iface_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_iface_names ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_ami_iface_names () const
 {
   return this->ciao_ami_iface_names_;
 }
 
 void
-IDL_GlobalData::add_ciao_ami_recep_names (const char *s)
+IDL_GlobalData::add_ciao_ami_recep_names (char const *s)
 {
-  this->ciao_ami_recep_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_ami_recep_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_recep_names ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_ami_recep_names () const
 {
   return this->ciao_ami_recep_names_;
 }
 
 void
-IDL_GlobalData::add_included_ami_recep_names (const char *s)
+IDL_GlobalData::add_included_ami_recep_names (char const *s)
 {
-  this->included_ami_recep_names_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->included_ami_recep_names_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::included_ami_recep_names ()
+std::vector<std::string> const &
+IDL_GlobalData::included_ami_recep_names () const
 {
   return this->included_ami_recep_names_;
 }
@@ -1201,25 +1109,31 @@ IDL_GlobalData::included_ami_receps_done (bool val)
 }
 
 void
-IDL_GlobalData::add_ciao_ami_idl_fnames (const char *s)
+IDL_GlobalData::add_ciao_ami_idl_fnames (char const *s)
 {
-  this->ciao_ami_idl_fnames_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->ciao_ami_idl_fnames_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_idl_fnames ()
+std::vector<std::string> const &
+IDL_GlobalData::ciao_ami_idl_fnames () const
 {
   return this->ciao_ami_idl_fnames_;
 }
 
 void
-IDL_GlobalData::add_dds4ccm_impl_fnames (const char *s)
+IDL_GlobalData::add_dds4ccm_impl_fnames (char const *s)
 {
-  this->dds4ccm_impl_fnames_.enqueue_tail (ACE::strnew (s));
+  if (s != nullptr)
+    {
+      this->dds4ccm_impl_fnames_.emplace_back (s);
+    }
 }
 
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::dds4ccm_impl_fnames ()
+std::vector<std::string> const &
+IDL_GlobalData::dds4ccm_impl_fnames () const
 {
   return this->dds4ccm_impl_fnames_;
 }
@@ -1303,7 +1217,7 @@ IDL_GlobalData::check_gperf ()
 {
   // If absolute path is not specified yet, let us call just
   // "gperf". Hopefully PATH is set up correctly to locate the gperf.
-  if (this->gperf_path_ == nullptr)
+  if (!this->gperf_path_)
     {
       // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
@@ -1320,14 +1234,14 @@ IDL_GlobalData::check_gperf ()
 
   // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
-  if (ACE_OS::strcmp (this->gperf_path_, ACE_GPERF) != 0)
+  if (std::string_view (*this->gperf_path_) != ACE_GPERF)
 #else
-  if (ACE_OS::strcmp (this->gperf_path_, "ace_gperf") != 0)
+  if (std::string_view (*this->gperf_path_) != "ace_gperf")
 #endif /* ACE_GPERF */
     {
       // It is absolute path. Check the existence, permissions and
       // the modes.
-      if (ACE_OS::access (this->gperf_path_,
+      if (ACE_OS::access (this->gperf_path_->c_str (),
                           F_OK | X_OK) == -1)
         {
           // Problem with the file. No point in having the absolute
@@ -1350,7 +1264,7 @@ IDL_GlobalData::check_gperf ()
 
   // Set the command line for the gperf program.
   process_options.command_line (ACE_TEXT ("\"%s\" -V"),
-                                this->gperf_path_);
+                                this->gperf_path_->c_str ());
 
   // Spawn a process for gperf.
   if (process.spawn (process_options) == -1)
@@ -1419,131 +1333,13 @@ IDL_GlobalData::fini ()
   this->pd_gen = nullptr;
   delete this->pd_indent;
   this->pd_indent = nullptr;
-  delete [] this->pd_local_escapes;
-  this->pd_local_escapes = nullptr;
-  delete [] this->tao_root_;
-  this->tao_root_ = nullptr;
-  delete [] this->gperf_path_;
-  this->gperf_path_ = nullptr;
-  delete [] this->temp_dir_;
-  this->temp_dir_ = nullptr;
-  delete [] this->ident_string_;
-  this->ident_string_ = nullptr;
+  this->pd_local_escapes.clear ();
+  this->tao_root_.reset ();
+  this->gperf_path_.reset ();
+  this->temp_dir_.reset ();
+  this->ident_string_.clear ();
   delete [] this->pd_include_file_names;
   this->pd_include_file_names = nullptr;
-
-  Include_Path_Info *path_info = nullptr;
-
-  for (Unbounded_Paths_Queue_Iterator qiter (this->include_paths_);
-       qiter.done () == 0;
-       qiter.advance ())
-    {
-      qiter.next (path_info);
-      ACE::strdelete (path_info->path_);
-    }
-
-  char **path_tmp  = nullptr;
-
-  for (ACE_Unbounded_Queue_Iterator<char *>riter (
-            this->rel_include_paths_
-          );
-       riter.done () == 0;
-       riter.advance ())
-    {
-      riter.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter1 (
-         this->ciao_lem_file_names_);
-       iter1.done () == 0;
-       iter1.advance ())
-    {
-      iter1.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter2 (
-         this->ciao_rti_ts_file_names_);
-       iter2.done () == 0;
-       iter2.advance ())
-    {
-      iter2.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter3 (
-         this->ciao_spl_ts_file_names_);
-       iter3.done () == 0;
-       iter3.advance ())
-    {
-      iter3.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter4 (
-         this->ciao_oci_ts_file_names_);
-       iter4.done () == 0;
-       iter4.advance ())
-    {
-      iter4.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter5 (
-         this->ciao_ami_iface_names_);
-       iter5.done () == 0;
-       iter5.advance ())
-    {
-      iter5.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter6 (
-         this->ciao_ami_recep_names_);
-       iter6.done () == 0;
-       iter6.advance ())
-    {
-      iter6.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter7 (
-         this->included_ami_recep_names_);
-       iter7.done () == 0;
-       iter7.advance ())
-    {
-      iter7.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter8 (
-         this->ciao_ami_idl_fnames_);
-       iter8.done () == 0;
-       iter8.advance ())
-    {
-      iter8.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter9 (
-         this->dds4ccm_impl_fnames_);
-       iter9.done () == 0;
-       iter9.advance ())
-    {
-      iter9.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter10 (
-         this->dcps_sequence_types_list_);
-       iter10.done () == 0;
-       iter10.advance ())
-    {
-      iter10.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
 
   ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
 
@@ -1572,10 +1368,7 @@ IDL_GlobalData::fini ()
       dcps_entry->int_id_->name_ = nullptr;
 
       delete dcps_entry->int_id_;
-      dcps_entry->int_id_ = 0;
-
-      delete [] dcps_entry->ext_id_;
-      dcps_entry->ext_id_ = 0;
+      dcps_entry->int_id_ = nullptr;
     }
 }
 
@@ -1608,30 +1401,25 @@ IDL_GlobalData::check_primary_keys ()
     }
 }
 
-const char *
+std::optional<std::string_view>
 IDL_GlobalData::recursion_start () const
 {
-  return this->recursion_start_;
+  return this->recursion_start_ ? std::optional<std::string_view> (*this->recursion_start_)
+                                : std::nullopt;
 }
 
 void
-IDL_GlobalData::recursion_start (const char *val)
+IDL_GlobalData::recursion_start (std::string_view val)
 {
-  ACE::strdelete (this->recursion_start_);
-
   /// Strip off any trailing slashes (not needed
   /// for further processing).
-  ACE_CString tmp (val);
-  ACE_CString::size_type len = tmp.length ();
-  ACE_TCHAR c = tmp[len - 1];
-
-  while (c == '\\' || c == '/')
+  std::string tmp (val);
+  while (!tmp.empty () && (tmp.back () == '\\' || tmp.back () == '/'))
     {
-      tmp = tmp.substr (0, --len);
-      c = tmp[len - 1];
+      tmp.pop_back ();
     }
 
-  this->recursion_start_ = ACE::strnew (tmp.c_str ());
+  this->recursion_start_ = std::move (tmp);
 }
 
 bool
@@ -1646,10 +1434,10 @@ IDL_GlobalData::multi_file_input (bool val)
   this->multi_file_input_ = val;
 }
 
-const char *
+std::string_view
 IDL_GlobalData::big_file_name () const
 {
-  return this->big_file_name_;
+  return "PICML_IDL_file_bag";
 }
 
 FE_Utils::T_PARAMLIST_INFO const *
@@ -1692,44 +1480,37 @@ IDL_GlobalData::for_new_holder (
 }
 
 void
-IDL_GlobalData::set_dcps_sequence_type (const char* seq_type)
+IDL_GlobalData::set_dcps_sequence_type (std::string_view seq_type)
 {
-  this->dcps_sequence_types_list_.enqueue_tail (ACE::strnew (seq_type));
+  this->dcps_sequence_types_list_.emplace_back (seq_type);
 }
 
 bool
-IDL_GlobalData::dcps_sequence_type_defined (const char* seq_type)
+IDL_GlobalData::dcps_sequence_type_defined (std::string_view seq_type) const
 {
-  char **tmp = nullptr;
-
-  for (ACE_Unbounded_Queue_Iterator<char *>riter (
-         this->dcps_sequence_types_list_);
-       riter.done () == 0;
-       riter.advance ())
+  for (std::string const &type_name : this->dcps_sequence_types_list_)
     {
-      riter.next (tmp);
-      if (ACE_OS::strcmp (*tmp, seq_type) == 0)
-        return true;
+      if (seq_type == type_name)
+        {
+          return true;
+        }
     }
   return false;
 }
 
 void
-IDL_GlobalData::add_dcps_data_type (const char* id)
+IDL_GlobalData::add_dcps_data_type (std::string_view id)
 {
   // Check if the type already exists.
-  DCPS_Data_Type_Info* newinfo ;
+  DCPS_Data_Type_Info *newinfo = nullptr;
+  std::string const type_name (id);
 
-  if (this->dcps_type_info_map_.find (id, newinfo) != 0)
+  if (this->dcps_type_info_map_.find (type_name, newinfo) != 0)
     {
       // No existing entry, add one.
 
-      char* foo_type;
-      ACE_NEW (foo_type, char [ACE_OS::strlen (id) + 1]);
-      ACE_OS::strcpy (foo_type, id);
-
       UTL_ScopedName* t1 =
-        FE_Utils::string_to_scoped_name (foo_type);
+        FE_Utils::string_to_scoped_name (type_name);
 
       // Chained with null Identifier required!!
       UTL_ScopedName* target =
@@ -1739,12 +1520,12 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
       newinfo->name_ = target;
 
       // Add the newly formed entry to the map.
-      if (this->dcps_type_info_map_.bind (foo_type, newinfo) != 0)
+      if (this->dcps_type_info_map_.bind (type_name, newinfo) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to insert type into ")
                       ACE_TEXT ("DCPS type container: %s.\n"),
-                      id));
+                      type_name.c_str ()));
           return;
         }
     }
@@ -1752,20 +1533,23 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
     {
       ACE_ERROR ((LM_WARNING,
                   ACE_TEXT ("Duplicate DCPS type defined: %s.\n"),
-                  id));
+                  type_name.c_str ()));
     }
 }
 
 bool
-IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
+IDL_GlobalData::add_dcps_data_key (std::string_view id, std::string_view key)
 {
   // Search the map for the type.
-  DCPS_Data_Type_Info* newinfo = nullptr;
+  DCPS_Data_Type_Info *newinfo = nullptr;
+  std::string const type_name (id);
 
-  if (this->dcps_type_info_map_.find (id, newinfo) == 0)
+  if (this->dcps_type_info_map_.find (type_name, newinfo) == 0)
     {
        // Add the new key field to the type.
-       newinfo->key_list_.enqueue_tail (ACE_TEXT_CHAR_TO_TCHAR (key));
+       std::string const key_string (key);
+       newinfo->key_list_.enqueue_tail (
+         ACE_TEXT_CHAR_TO_TCHAR (key_string.c_str ()));
        return true;
     }
   else
@@ -1928,7 +1712,7 @@ IDL_GlobalData::print_warnings ()
  * so to use them we must declare them here.
  */
 struct yy_buffer_state;
-extern yy_buffer_state *tao_yy_scan_string (const char *);
+extern yy_buffer_state *tao_yy_scan_string (char const *);
 extern int tao_yylex_destroy ();
 
 namespace
@@ -1937,7 +1721,7 @@ namespace
   {
   public:
     explicit OldState (bool disable_output = false)
-        : old_filename_ (idl_global->filename () ? new UTL_String (idl_global->filename (), true) : nullptr),
+        : old_filename_ (idl_global->filename () ? new UTL_String (idl_global->filename ()) : nullptr),
           // need a copy because IDL_GlobalData::set_filename() destroys previous value
           old_lineno_ (idl_global->lineno ()),
           old_idl_src_file_ (idl_global->idl_src_file ()),
@@ -1951,13 +1735,13 @@ namespace
         idl_global->set_filename (nullptr);
 
         // Name this pseudo-file "builtin-N"
-        static char buffer[64];
         static unsigned n = 1;
-        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
-        UTL_String pseudo_filename (&buffer[0], true);
+        std::string builtin_name ("builtin-");
+        builtin_name += std::to_string (n++);
+        UTL_String pseudo_filename {std::string_view (builtin_name)};
 
-        idl_global->idl_src_file (new UTL_String (&pseudo_filename, true));
-        idl_global->set_filename (new UTL_String (&pseudo_filename, true));
+        idl_global->idl_src_file (new UTL_String (&pseudo_filename));
+        idl_global->set_filename (new UTL_String (&pseudo_filename));
 
         if (disable_output_)
           {
@@ -1989,16 +1773,16 @@ namespace
 
     private:
       UTL_String *const old_filename_;
-      const long old_lineno_;
+      long const old_lineno_;
       UTL_String *const old_idl_src_file_;
-      const bool disable_output_;
+      bool const disable_output_;
       std::streambuf *const default_streambuf_;
-      const unsigned long flags_;
+      unsigned long const flags_;
   };
 }
 
 void
-IDL_GlobalData::eval (const char *string, bool disable_output)
+IDL_GlobalData::eval (char const *string, bool disable_output)
 {
   OldState old (disable_output);
 

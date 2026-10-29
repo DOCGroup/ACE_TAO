@@ -11,6 +11,10 @@
 
 #include "attribute.h"
 
+#include <string_view>
+
+#include <string>
+
 // Attribute gets mapped to one or possibly two operations based on whether
 // it is readonly or not. The two operations "get" and "set" the value of the
 // attribute.
@@ -38,14 +42,7 @@
 // *************************************************************************
 
 be_visitor_attribute::be_visitor_attribute (be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    for_facets_ (false),
-    op_scope_ (nullptr),
-    exec_class_extension_ ("_exec_i")
-{
-}
-
-be_visitor_attribute::~be_visitor_attribute ()
+  : be_visitor_decl (ctx)
 {
 }
 
@@ -57,11 +54,11 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   UTL_Scope *s = node->defined_in ();
   AST_Decl *d = ScopeAsDecl (s);
-  ACE_CString op_name (this->ctx_->port_prefix ());
-  op_name += node->local_name ()->get_string ();
+  std::string op_name (this->ctx_->port_prefix ());
+  op_name += node->local_name ()->get_string_view_or_empty ();
   Identifier *op_id = nullptr;
   ACE_NEW_RETURN (op_id,
-                  Identifier (op_name.c_str ()),
+                  Identifier (op_name),
                   -1);
 
   UTL_ScopedName *op_ln = nullptr;
@@ -195,7 +192,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
-        visitor.class_extension (this->exec_class_extension_.c_str ());
+        visitor.class_extension (this->exec_class_extension_);
         status = get_op.accept (&visitor);
         break;
       }
@@ -366,7 +363,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
-        visitor.class_extension (this->exec_class_extension_.c_str ());
+        visitor.class_extension (this->exec_class_extension_);
         status = set_op.accept (&visitor);
         break;
       }
@@ -422,7 +419,7 @@ be_visitor_attribute::op_scope (be_decl *node)
 }
 
 void
-be_visitor_attribute::exec_class_extension (const char *extension)
+be_visitor_attribute::exec_class_extension (std::string_view extension)
 {
   this->exec_class_extension_ = extension;
 }

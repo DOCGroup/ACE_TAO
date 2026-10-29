@@ -86,12 +86,16 @@ public:
   FE_Declarator (UTL_ScopedName *n,
                  DeclaratorType dt,
                  AST_Decl *cp);
+  FE_Declarator (FE_Declarator const &) = delete;
+  FE_Declarator (FE_Declarator &&) = delete;
+  FE_Declarator &operator= (FE_Declarator const &) = delete;
+  FE_Declarator &operator= (FE_Declarator &&) = delete;
   virtual ~FE_Declarator () = default;
 
   // Data Accessors.
-  AST_Decl *complex_part ();
-  UTL_ScopedName *name ();
-  DeclaratorType decl_type ();
+  AST_Decl *complex_part () const;
+  UTL_ScopedName *name () const;
+  DeclaratorType decl_type () const;
 
   // Other Operations.
 

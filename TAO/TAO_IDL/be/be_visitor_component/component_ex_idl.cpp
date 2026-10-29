@@ -11,14 +11,12 @@
 
 #include "component.h"
 
+#include <string_view>
+
 be_visitor_component_ex_idl::be_visitor_component_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_decl (ctx),
     os_ (*ctx->stream ())
-{
-}
-
-be_visitor_component_ex_idl::~be_visitor_component_ex_idl ()
 {
 }
 
@@ -59,21 +57,20 @@ be_visitor_component_ex_idl::visit_component (
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
 
-  ACE_CString sname_str =
+  std::string sname_str =
     IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
 
-  const char *lname =
-    node->original_local_name ()->get_string ();
+  std::string_view const lname =
+    node->original_local_name ()->get_string_view_or_empty ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "module CIAO_" << node->flat_name () << "_Impl" << be_nl
       << "{" << be_idt_nl;
 
   os_ << "local interface " << lname << "_Exec" << be_idt_nl
-      << ": " << global << sname << "::CCM_" << lname
+      << ": " << global << sname_str << "::CCM_" << lname
       << "," << be_idt_nl;
 
   os_ << "::Components::" << be_global->ciao_container_type ()

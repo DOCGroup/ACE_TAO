@@ -11,6 +11,9 @@
 
 #include "union_branch.h"
 
+#include <string>
+#include <string_view>
+
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for
 //  the copy ctor and assignment operator
@@ -23,12 +26,6 @@ be_visitor_union_branch_public_assign_cs (be_visitor_context *ctx)
 {
 }
 
-// destructor
-be_visitor_union_branch_public_assign_cs::
-~be_visitor_union_branch_public_assign_cs ()
-{
-}
-
 // visit the union_branch node
 int
 be_visitor_union_branch_public_assign_cs::visit_union_branch (
@@ -37,7 +34,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  const int index = be_visitor_union::branch_index (node);
+  int const index = be_visitor_union::branch_index (node);
 
   if (index == -1)
     {
@@ -114,11 +111,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
 
   // for anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];  // to hold the full and
-
-  // save the node's local name and full name in a buffer for quick use later
-  // on
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  std::string fname;
 
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
@@ -130,18 +123,20 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent = dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
-                           bt->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += bt->local_name ()->get_string_view_or_empty ();
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", bt->full_name ());
+          fname = "_";
+          fname += bt->full_name ();
         }
     }
   else
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", bt->full_name ());
+      fname = bt->full_name ();
     }
 
   // set the discriminant to the appropriate label

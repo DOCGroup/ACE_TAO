@@ -19,16 +19,13 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                         supports,
                         false,
                         false,
-                        false),
-    base_component_ (nullptr)
+                        false)
 {
   this->compile_inheritance (base_component);
   this->compile_supports (supports);
 }
 
-FE_ComponentHeader::~FE_ComponentHeader ()
-{
-}
+FE_ComponentHeader::~FE_ComponentHeader () = default;
 
 AST_Component *
 FE_ComponentHeader::base_component () const
@@ -208,7 +205,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
               && nt != AST_Decl::NT_interface)
             {
               idl_global->err ()->mismatched_template_param (
-                ph->info ()->name_.c_str ());
+                ph->info ()->name_);
 
               continue;
             }

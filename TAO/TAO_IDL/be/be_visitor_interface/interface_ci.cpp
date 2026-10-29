@@ -16,10 +16,6 @@ be_visitor_interface_ci::be_visitor_interface_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ci::~be_visitor_interface_ci ()
-{
-}
-
 int
 be_visitor_interface_ci::visit_interface (be_interface *node)
 {

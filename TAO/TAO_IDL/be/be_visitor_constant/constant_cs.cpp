@@ -16,10 +16,6 @@ be_visitor_constant_cs::be_visitor_constant_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_constant_cs::~be_visitor_constant_cs ()
-{
-}
-
 // visit the Constant_cs node and its scope
 int
 be_visitor_constant_cs::visit_constant (be_constant *node)

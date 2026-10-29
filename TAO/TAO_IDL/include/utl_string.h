@@ -70,7 +70,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/iosfwd.h"
   /* Basic_Types.h are needed in QNX for size_t type. */
 #include "ace/Basic_Types.h"
-#include "ace/SStringfwd.h"
+
+#include <optional>
+#include <string>
+#include <string_view>
 
 class TAO_IDL_FE_Export UTL_String
 {
@@ -79,13 +82,22 @@ class TAO_IDL_FE_Export UTL_String
   // =DESCRIPTION
   //  string class to store identifiers
 public:
-  UTL_String ();
+  UTL_String () = default;
 
-  UTL_String (const char *str, bool take_copy= false);
+  explicit UTL_String (char const* str);
+  // Compatibility with generated front-end sources; strings are always copied.
+  UTL_String (char const* str, bool take_copy);
 
-  UTL_String (UTL_String *s, bool force_copy= false);
+  explicit UTL_String (std::string_view str);
 
-  virtual ~UTL_String ();
+  explicit UTL_String (UTL_String const *s);
+
+  UTL_String (UTL_String const&) = delete;
+  UTL_String (UTL_String&&) = delete;
+  UTL_String& operator= (UTL_String const&) = delete;
+  UTL_String& operator= (UTL_String&&) = delete;
+
+  virtual ~UTL_String () = default;
 
   virtual void destroy ();
   // Cleanup function.
@@ -93,50 +105,63 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
-  char *get_string () const {return this->p_str;}
+  char *get_string ()
+  {
+    return this->p_str ? this->p_str->data () : nullptr;
+  }
+  char const *get_string () const
+  {
+    return this->p_str ? this->p_str->c_str () : nullptr;
+  }
   // Get contents of utl_string.
 
-  char *get_canonical_rep ();
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
+  std::optional<std::string_view> get_string_view () const
+  {
+    return this->p_str
+      ? std::optional<std::string_view> (*this->p_str)
+      : std::nullopt;
+  }
+  // Get contents of utl_string as a non-owning view, if present.
 
-  bool compare (UTL_String *s);
+  std::string_view get_string_view_or_empty () const
+  {
+    return this->p_str ? std::string_view (*this->p_str) : std::string_view {};
+  }
+  // Get contents of utl_string as a non-owning view, or an empty view if absent.
+
+  std::optional<std::string_view> get_canonical_rep ();
+  // Get canonical representation as a non-owning view, if present.
+
+  bool compare (UTL_String const *s) const;
   // Compare two UTL_String *
 
-  bool compare_quiet (UTL_String *s);
+  bool compare_quiet (UTL_String const *s) const;
   // Like the above but without error or warning message output.
 
   static bool strcmp_caseless (
-    const char *lhs,
-    const char *rhs,
+    std::string_view lhs,
+    std::string_view rhs,
     bool &mixed_case);
   // Caseless string compare returns true if match, mixed_case is
   // true if match only true due to ignoring case differences.
 
-  static bool compare (const char *lhs, const char *rhs);
-  // Compare two const char * (like the UTL_String compare)
+  static bool compare (std::string_view lhs, std::string_view rhs);
+  // Compare two strings (like the UTL_String compare)
 
-  static bool compare_quiet (const char *lhs, const char *rhs);
+  static bool compare_quiet (std::string_view lhs, std::string_view rhs);
   // Like the above but without error or warning message output.
 
-  static void get_canonical_rep (const char *src, char *dest);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
-
-  static void get_canonical_rep (ACE_CString &cstr);
+  static std::string get_canonical_rep (std::string_view str);
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string.
 
 private:
   // Data
-  bool copy_taken;
-  // If delete needs to be called on destroy/delete
+  std::optional<std::string> p_str {};
+  // Optional owned string storage.
 
-  char *p_str;
-  // Storage for characters.
-
-  char *c_str;
-  // Storage for canonicalized string.
+  std::optional<std::string> canonical_rep {};
+  // Cached canonical representation.
 };
 
 #endif           // _STRING_STRING_HH

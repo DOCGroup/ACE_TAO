@@ -13,6 +13,9 @@
 #ifndef _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 
+#include <string>
+#include <string_view>
+
 // ************************************************************
 // Operation visitor for CIAO executor implementations
 // ************************************************************
@@ -28,23 +31,27 @@
 class be_visitor_operation_exs : public be_visitor_scope
 {
 public:
-  be_visitor_operation_exs (be_visitor_context *ctx);
+  explicit be_visitor_operation_exs (be_visitor_context *ctx);
 
-  ~be_visitor_operation_exs ();
+  ~be_visitor_operation_exs () override = default;
+  be_visitor_operation_exs (be_visitor_operation_exs const &) = delete;
+  be_visitor_operation_exs (be_visitor_operation_exs &&) = delete;
+  be_visitor_operation_exs &operator= (be_visitor_operation_exs const &) = delete;
+  be_visitor_operation_exs &operator= (be_visitor_operation_exs &&) = delete;
 
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   void scope (be_decl *node);
-  void class_extension (const char *extension);
+  void class_extension (std::string_view extension);
 
 private:
   int gen_op_body (be_type *return_type);
 
 private:
   TAO_OutStream &os_;
-  be_decl *scope_;
-  const char *your_code_here_;
-  ACE_CString class_extension_;
+  be_decl *scope_ {};
+  std::string_view your_code_here_;
+  std::string class_extension_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_EXS_H_ */

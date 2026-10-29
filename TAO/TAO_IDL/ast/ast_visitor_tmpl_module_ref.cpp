@@ -22,10 +22,6 @@ ast_visitor_tmpl_module_ref::ast_visitor_tmpl_module_ref (
 {
 }
 
-ast_visitor_tmpl_module_ref::~ast_visitor_tmpl_module_ref ()
-{
-}
-
 int
 ast_visitor_tmpl_module_ref::visit_template_module_ref (
   AST_Template_Module_Ref *node)

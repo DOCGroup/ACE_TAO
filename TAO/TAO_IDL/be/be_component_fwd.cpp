@@ -36,9 +36,7 @@ be_component_fwd::be_component_fwd (AST_Interface *dummy,
   this->size_type (AST_Type::VARIABLE);
 }
 
-be_component_fwd::~be_component_fwd ()
-{
-}
+be_component_fwd::~be_component_fwd () = default;
 
 void
 be_component_fwd::destroy ()

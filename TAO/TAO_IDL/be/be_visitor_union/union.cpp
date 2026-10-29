@@ -16,10 +16,6 @@ be_visitor_union::be_visitor_union (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union::~be_visitor_union ()
-{
-}
-
 int
 be_visitor_union::visit_union (be_union *)
 {
@@ -33,7 +29,7 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

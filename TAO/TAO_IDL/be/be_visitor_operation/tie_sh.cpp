@@ -18,10 +18,6 @@ be_visitor_operation_tie_sh::be_visitor_operation_tie_sh (
 {
 }
 
-be_visitor_operation_tie_sh::~be_visitor_operation_tie_sh ()
-{
-}
-
 int
 be_visitor_operation_tie_sh::visit_operation (be_operation *node)
 {
@@ -62,7 +58,7 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
     }
 
   // STEP 2: generate the operation name.
-  *os << " " << this->ctx_->port_prefix ().c_str ()
+  *os << " " << this->ctx_->port_prefix ()
       << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these

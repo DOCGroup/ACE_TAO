@@ -153,13 +153,17 @@ public:
 
   // Constructor(s).
   UTL_Scope ();
-  UTL_Scope (AST_Decl::NodeType nt);
+  UTL_Scope (UTL_Scope const &) = delete;
+  UTL_Scope (UTL_Scope &&) = delete;
+  UTL_Scope &operator= (UTL_Scope const &) = delete;
+  UTL_Scope &operator= (UTL_Scope &&) = delete;
+  explicit UTL_Scope (AST_Decl::NodeType nt);
 
   // Destructor.
-  virtual ~UTL_Scope ();
+  ~UTL_Scope () override;
 
   // Data Accessors.
-  AST_Decl::NodeType scope_node_type ()
+  AST_Decl::NodeType scope_node_type () const
   {
     return pd_scope_node_type;
   }
@@ -191,7 +195,7 @@ public:
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
-  AST_Decl *lookup_by_name (const char *name);
+  AST_Decl *lookup_by_name (std::string_view name);
 
   virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
                                              bool ignore_fwd = false);
@@ -203,7 +207,7 @@ public:
                                     AST_Decl *&final_parent_decl);
 
   // How many entries are used?
-  virtual unsigned long nmembers ();
+  virtual unsigned long nmembers () const;
 
   // If the Identifier string (from the scoped name which has been
   // already determined to be of length 1) matches a param,
@@ -224,11 +228,11 @@ public:
   void add_to_name_referenced (Identifier *id);
 
   // Accessors for the has_prefix_ member.
-  bool has_prefix ();
+  bool has_prefix () const;
   void has_prefix (bool val);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -291,32 +295,32 @@ protected:
 
   // What type is this node? This is a cache of the information
   // in AST_Decl
-  const AST_Decl::NodeType pd_scope_node_type;
+  AST_Decl::NodeType const pd_scope_node_type {AST_Decl::NT_module};
 
   // Storage for declarations in this scope.
-  AST_Decl **pd_decls;                // Store declarations
-  long pd_decls_allocated;            // How many allocated?
-  long pd_decls_used;                 // How many used?
+  AST_Decl **pd_decls {};             // Store declarations
+  long pd_decls_allocated {};         // How many allocated?
+  long pd_decls_used {};              // How many used?
 
   // Storage for local manifest types in this scope.
-  AST_Decl **pd_local_types;          // Store types
-  long pd_locals_allocated;           // How many allocated?
-  long pd_locals_used;                // How many used?
+  AST_Decl **pd_local_types {};       // Store types
+  long pd_locals_allocated {};        // How many allocated?
+  long pd_locals_used {};             // How many used?
 
   // Storage for referenced nodes in this scope.
-  AST_Decl **pd_referenced;           // Store references
-  long pd_referenced_allocated;       // How many allocated?
-  long  pd_referenced_used;           // How many used?
+  AST_Decl **pd_referenced {};        // Store references
+  long pd_referenced_allocated {};    // How many allocated?
+  long pd_referenced_used {};         // How many used?
 
   // Storage for identifiers used in this scope. CORBA 2.3 introduced
   // stricter rules for clashes during name resolution, and the information
   // in pd_referenced is not enough to catch them all.
-  Identifier **pd_name_referenced;    // Store name references
-  long pd_name_referenced_allocated;  // How many allocated?
-  long pd_name_referenced_used;       // How many used?
+  Identifier **pd_name_referenced {}; // Store name references
+  long pd_name_referenced_allocated {}; // How many allocated?
+  long pd_name_referenced_used {};    // How many used?
 
   // Have we seen a #pragma prefix declaration in this scope?
-  bool has_prefix_;
+  bool has_prefix_ {};
 
   // Used in lookup of various CORBA pseudo objects, which also
   // determines generation of specific #include headers.
@@ -328,7 +332,7 @@ protected:
     PSEUDO_ABSTRACTBASE
   };
 
-  WHICH_PSEUDO which_pseudo_;
+  WHICH_PSEUDO which_pseudo_ {PSEUDO_ABSTRACTBASE};
 
 public:
   /// Scope Management Protocol.
@@ -499,7 +503,7 @@ public:
 
 protected:
   /// Quick check on the head of a name to see if it's global.
-  bool is_global_name (Identifier *i);
+  bool is_global_name (Identifier const *i) const;
 
 private:
   /// Checks called from fe_add_decl() specific to interfaces
@@ -539,10 +543,10 @@ public:
   bool is_done ();
 
   // What kind of iterator is this?
-  UTL_Scope::ScopeIterationKind iteration_kind ();
+  UTL_Scope::ScopeIterationKind iteration_kind () const;
 
   // What stage are we in with this iterator?
-  UTL_Scope::ScopeIterationKind iteration_stage ();
+  UTL_Scope::ScopeIterationKind iteration_stage () const;
 
 private:
   // Scope to iterate over.

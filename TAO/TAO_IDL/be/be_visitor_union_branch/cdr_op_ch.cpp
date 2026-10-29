@@ -16,10 +16,6 @@ be_visitor_union_branch_cdr_op_ch::be_visitor_union_branch_cdr_op_ch (
 {
 }
 
-be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch ()
-{
-}
-
 int
 be_visitor_union_branch_cdr_op_ch::visit_union_branch (be_union_branch *node)
 {

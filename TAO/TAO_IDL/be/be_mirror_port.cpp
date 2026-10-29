@@ -26,9 +26,7 @@ be_mirror_port::be_mirror_port (
 {
 }
 
-be_mirror_port::~be_mirror_port ()
-{
-}
+be_mirror_port::~be_mirror_port () = default;
 
 void
 be_mirror_port::destroy ()

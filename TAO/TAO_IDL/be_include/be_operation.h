@@ -35,16 +35,16 @@ public:
                 bool local,
                 bool abstract);
 
-  ~be_operation ();
+  ~be_operation () override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Add an argument to the scope.
-  virtual AST_Argument *be_add_argument (AST_Argument *arg);
+  AST_Argument *be_add_argument (AST_Argument *arg) override;
 
   /// Insert an exception at the head of the list.
   int be_insert_exception (AST_Exception *ex);
@@ -59,9 +59,9 @@ public:
   void is_attr_op (bool val);
 
 protected:
-  bool is_sendc_ami_;
-  bool is_excep_ami_;
-  bool is_attr_op_;
+  bool is_sendc_ami_ {};
+  bool is_excep_ami_ {};
+  bool is_attr_op_ {};
 };
 
 #endif

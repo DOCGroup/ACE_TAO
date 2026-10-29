@@ -78,13 +78,9 @@ UTL_List::UTL_List (UTL_List *c)
 {
 }
 
-UTL_List::~UTL_List ()
-{
-}
-
 // Compute list length.
 ACE_CDR::Long
-UTL_List::list_length (ACE_CDR::Long n)
+UTL_List::list_length (ACE_CDR::Long n) const
 {
   if (this->pd_cdr_data == nullptr)
     {
@@ -139,6 +135,12 @@ UTL_List::tail ()
   return pd_cdr_data;
 }
 
+UTL_List const *
+UTL_List::tail () const
+{
+  return pd_cdr_data;
+}
+
 // Set next list.
 void
 UTL_List::set_tail (UTL_List *l)
@@ -150,7 +152,7 @@ UTL_List::set_tail (UTL_List *l)
 
 // Compute list length.
 ACE_CDR::Long
-UTL_List::length ()
+UTL_List::length () const
 {
   return list_length (1);
 }
@@ -175,7 +177,7 @@ UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
 
 // Is iterator done?
 bool
-UTL_ListActiveIterator::is_done ()
+UTL_ListActiveIterator::is_done () const
 {
   return (this->source == nullptr) ? true : false;
 }

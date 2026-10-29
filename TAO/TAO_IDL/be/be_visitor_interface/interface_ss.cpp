@@ -14,12 +14,10 @@
 #include "ast_generator.h"
 #include "ast_string.h"
 
+#include <string_view>
+
 be_visitor_interface_ss::be_visitor_interface_ss (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
-{
-}
-
-be_visitor_interface_ss::~be_visitor_interface_ss ()
 {
 }
 
@@ -49,19 +47,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       return -1;
     }
-  ACE_CString full_skel_name_holder =
-    this->generate_full_skel_name (node);
+  std::string const full_skel_name = this->generate_full_skel_name (node);
+  std::string const flat_name = this->generate_flat_name (node);
 
-  const char *full_skel_name = full_skel_name_holder.c_str ();
-
-  ACE_CString flat_name_holder =
-    this->generate_flat_name (node);
-
-  const char *flat_name = flat_name_holder.c_str ();
-
-  int status =
-    node->gen_operation_table (flat_name,
-                               full_skel_name);
+  int status = node->gen_operation_table (flat_name,
+                                          full_skel_name);
 
   if (status == -1)
     {
@@ -93,17 +83,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
   // each case.
-  const char *local_name_prefix = "";
+  std::string_view local_name_prefix;
 
   if (!node->is_nested ())
     {
       local_name_prefix = "POA_";
     }
 
-  ACE_CString node_local_name_holder =
-    this->generate_local_name (node);
-
-  const char *node_local_name = node_local_name_holder.c_str ();
+  std::string const node_local_name = this->generate_local_name (node);
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
@@ -428,20 +415,20 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
   return 0;
 }
 
-ACE_CString
+std::string
 be_visitor_interface_ss::generate_flat_name (be_interface *node)
 {
-  return ACE_CString (node->flat_name ());
+  return std::string (node->flat_name ());
 }
 
-ACE_CString
+std::string
 be_visitor_interface_ss::generate_local_name (be_interface *node)
 {
-  return ACE_CString (node->local_name ());
+  return std::string (node->local_name ());
 }
 
-ACE_CString
+std::string
 be_visitor_interface_ss::generate_full_skel_name  (be_interface *node)
 {
-  return ACE_CString (node->full_skel_name ());
+  return std::string (node->full_skel_name ());
 }

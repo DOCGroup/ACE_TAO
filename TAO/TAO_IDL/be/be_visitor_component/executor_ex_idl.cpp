@@ -12,14 +12,12 @@
 
 #include "component.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_executor_ex_idl::be_visitor_executor_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
-{
-}
-
-be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl (
-  )
 {
 }
 
@@ -33,7 +31,7 @@ be_visitor_executor_ex_idl::visit_component (
 
   os_ << be_nl
       << "local interface CCM_"
-      << node->original_local_name ()->get_string ()
+      << node->original_local_name ()->get_string_view_or_empty ()
       << be_idt_nl
       << ": ";
 
@@ -43,15 +41,14 @@ be_visitor_executor_ex_idl::visit_component (
     }
   else
     {
-      ACE_CString sname_str =
+      std::string sname_str =
         IdentifierHelper::orig_sn (
           ScopeAsDecl (base->defined_in ())->name ());
 
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
+      std::string_view const global = sname_str.empty () ? "" : "::";
 
-      os_ << global << sname << "::CCM_"
-          << base->original_local_name ()->get_string ();
+      os_ << global << sname_str << "::CCM_"
+          << base->original_local_name ()->get_string_view_or_empty ();
     }
 
   this->gen_supported ();
@@ -106,8 +103,8 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
   be_type *ft = node->field_type ();
 
   os_ << IdentifierHelper::type_name (ft, this);
-  os_ << " " << this->ctx_->port_prefix ().c_str ()
-     << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+  os_ << " " << this->ctx_->port_prefix ()
+     << IdentifierHelper::try_escape (node->original_local_name ());
 
   this->gen_exception_list (node->get_get_exceptions (),
                            rd_only ? "" : "get");
@@ -168,21 +165,20 @@ be_visitor_executor_ex_idl::visit_provides (
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
 
-  ACE_CString sname_str =
+  std::string sname_str =
     IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
 
-  const char *lname =
-    impl->original_local_name ()->get_string ();
+  std::string_view const lname =
+    impl->original_local_name ()->get_string_view_or_empty ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const global = sname_str.empty () ? "" : "::";
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   os_ << be_nl
-      << global << sname << "::CCM_" << lname << " get_"
+      << global << sname_str << "::CCM_" << lname << " get_"
       << port_name << " ();";
 
   return 0;
@@ -195,9 +191,9 @@ be_visitor_executor_ex_idl::visit_consumes (
   be_eventtype *impl = node->consumes_type ();
 
   os_ << be_nl
-      << "void push_" << node->local_name ()->get_string ()
+      << "void push_" << node->local_name ()->get_string_view_or_empty ()
       << " (in ::"
-      << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
 
   return 0;
@@ -214,7 +210,7 @@ be_visitor_executor_ex_idl::gen_supported ()
     {
       os_ << "," << be_nl
           << "::"
-          << IdentifierHelper::orig_sn (supported[i]->name ()).c_str ();
+          << IdentifierHelper::orig_sn (supported[i]->name ());
     }
 
   os_ << be_uidt;
@@ -223,7 +219,7 @@ be_visitor_executor_ex_idl::gen_supported ()
 void
 be_visitor_executor_ex_idl::gen_exception_list (
   UTL_ExceptList *exceptions,
-  const char *prefix,
+  std::string_view prefix,
   bool closed)
 {
   if (exceptions != nullptr && exceptions->length () > 0)
@@ -235,7 +231,7 @@ be_visitor_executor_ex_idl::gen_exception_list (
            !ei.is_done ();)
         {
           os_ << "::"
-              << IdentifierHelper::orig_sn (ei.item ()->name ()).c_str ();
+              << IdentifierHelper::orig_sn (ei.item ()->name ());
 
           ei.next ();
 

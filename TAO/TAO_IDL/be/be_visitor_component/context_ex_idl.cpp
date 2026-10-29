@@ -12,14 +12,12 @@
 
 #include "component.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_context_ex_idl::be_visitor_context_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
-{
-}
-
-be_visitor_context_ex_idl::~be_visitor_context_ex_idl (
-  )
 {
 }
 
@@ -30,7 +28,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
 
   os_ << be_nl_2
       << "local interface CCM_"
-      << node->original_local_name ()->get_string ()
+      << node->original_local_name ()->get_string_view_or_empty ()
       << "_Context" << be_idt_nl
       << ": ";
 
@@ -46,16 +44,15 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
       AST_Decl *scope =
         ScopeAsDecl (base->defined_in ());
 
-      ACE_CString sname_str =
+      std::string sname_str =
         IdentifierHelper::orig_sn (scope->name ());
-      const char *sname = sname_str.c_str ();
 
-      const char *lname =
-        base->original_local_name ()->get_string ();
+      std::string_view const lname =
+        base->original_local_name ()->get_string_view_or_empty ();
 
-      const char *global = (sname_str == "" ? "" : "::");
+      std::string_view const global = sname_str.empty () ? "" : "::";
 
-      os_ << global << sname << "::CCM_"
+      os_ << global << sname_str << "::CCM_"
           << lname << "_Context";
     }
 
@@ -91,9 +88,9 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
   os_ << be_nl
       << "::";
 
-  ACE_CString port_name (this->ctx_->port_prefix ());
-  port_name += node->local_name ()->get_string ();
-  const char *lname = port_name.c_str ();
+  std::string port_name (this->ctx_->port_prefix ());
+  port_name += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const lname (port_name);
 
   // Note that we don't strip off the possible '_cxx_' when
   // adding the 'Connections' suffix. The front end will
@@ -102,13 +99,13 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
   // strip it off here.
   if (node->is_multiple ())
     {
-      os_ << IdentifierHelper::orig_sn (node_->name ()).c_str ()
+      os_ << IdentifierHelper::orig_sn (node_->name ())
           << "::" << lname << "Connections get_connections_"
           << lname << " ();";
     }
   else
     {
-      os_ << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      os_ << IdentifierHelper::orig_sn (impl->name ())
           << " get_connection_" << lname << " ();";
     }
 
@@ -121,9 +118,9 @@ be_visitor_context_ex_idl::visit_publishes (be_publishes *node)
   be_eventtype *impl = node->publishes_type ();
 
   os_ << be_nl
-      << "void push_" << node->local_name ()->get_string ()
+      << "void push_" << node->local_name ()->get_string_view_or_empty ()
       << " (in ::"
-      << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
 
   return 0;
@@ -135,9 +132,9 @@ be_visitor_context_ex_idl::visit_emits (be_emits *node)
   be_eventtype *impl = node->emits_type ();
 
   os_ << be_nl
-      << "void push_" << node->local_name ()->get_string ()
+      << "void push_" << node->local_name ()->get_string_view_or_empty ()
       << " (in ::"
-      << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
 
   return  0;

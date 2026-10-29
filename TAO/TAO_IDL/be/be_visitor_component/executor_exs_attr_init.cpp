@@ -14,12 +14,7 @@
 
 be_visitor_executor_exs_attr_init::be_visitor_executor_exs_attr_init (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    semicolon_generated_ (false)
-{
-}
-
-be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init ()
+  : be_visitor_component_scope (ctx)
 {
 }
 
@@ -41,7 +36,7 @@ be_visitor_executor_exs_attr_init::visit_attribute (
       return 0;
     }
 
-  os_ << this->ctx_->port_prefix ().c_str ()
+  os_ << this->ctx_->port_prefix ()
       << node->local_name () << "_ (";
 
   be_visitor_attr_init nrt_visitor (this->ctx_);

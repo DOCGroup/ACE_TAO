@@ -14,12 +14,7 @@
 be_visitor_ami4ccm_rh_ex_idl::be_visitor_ami4ccm_rh_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    os_ (*ctx->stream ()),
-    seen_in_or_inout_arg_ (false)
-{
-}
-
-be_visitor_ami4ccm_rh_ex_idl::~be_visitor_ami4ccm_rh_ex_idl ()
+    os_ (*ctx->stream ())
 {
 }
 

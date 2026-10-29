@@ -142,7 +142,7 @@ BE_produce ()
       BE_visit_root (amh_pre_proc_visitor, "AMH preprocessing");
     }
 
-  const char *fname = be_global->be_get_anyop_header_fname ();
+  std::string const fname = be_global->be_get_anyop_header_fname ();
 
   // No-op if the -GA wasn't on the command line.
   if (-1 == tao_cg->start_anyop_header (fname))
@@ -162,9 +162,9 @@ BE_produce ()
   // where checks for recursive types are done,
   // and before stub source file generation, since
   // generation of Any-related #includes may be redirected.
-  fname = be_global->be_get_anyop_source_fname ();
+  std::string const source_fname = be_global->be_get_anyop_source_fname ();
 
-  if (-1 == tao_cg->start_anyop_source (fname))
+  if (-1 == tao_cg->start_anyop_source (source_fname))
     {
       BE_abort ();
     }

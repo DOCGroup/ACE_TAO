@@ -85,12 +85,17 @@ public:
 
   AST_UnionLabel (UnionLabel lk,
                   AST_Expression *lv);
+  AST_UnionLabel (AST_UnionLabel const &) = delete;
+  AST_UnionLabel (AST_UnionLabel &&) = delete;
+  AST_UnionLabel &operator= (AST_UnionLabel const &) = delete;
+  AST_UnionLabel &operator= (AST_UnionLabel &&) = delete;
 
-  virtual ~AST_UnionLabel ();
+  virtual ~AST_UnionLabel () = default;
 
-  UnionLabel label_kind ();
+  UnionLabel label_kind () const;
 
   AST_Expression *label_val ();
+  AST_Expression const *label_val () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

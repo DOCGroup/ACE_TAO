@@ -11,9 +11,11 @@
 
 #include "component.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    op_scope_ (nullptr)
+  : be_visitor_component_scope (ctx)
 {
 }
 
@@ -26,10 +28,9 @@ be_visitor_servant_svs::visit_component (be_component *node)
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = node->local_name ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const sname = scope->full_name ();
+  std::string_view const lname = node->local_name ();
+  std::string_view const global = sname.empty () ? "" : "::";
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   bool const is_connector = (nt == AST_Decl::NT_connector);
@@ -45,7 +46,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   bool const de_facto = (is_connector || no_events);
 
-  const char *opt_conn =
+  std::string_view const opt_conn =
     (de_facto ? "Connector_" : "");
 
   os_ << be_nl_2
@@ -66,10 +67,10 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "," << be_nl
       << global << sname << "::CCM_"
       << lname << "," << be_nl
-      << lname << "_Context_T< " << be_idt_nl
+      << lname << "_Context_T<" << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T< "
-      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context, " << be_nl
+      << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T<"
+      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context," << be_nl
       << global << sname << "::" << lname << "> > > (exe, h, ins_name, hs, c)"
       << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
@@ -259,22 +260,21 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       return 0;
     }
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   AST_Type *obj = node->provides_type ();
-  const char *obj_name = obj->full_name ();
+  std::string_view const obj_name = obj->full_name ();
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string_view const sname = scope->full_name ();
 
   // Avoid '_cxx_' prefix.
-  const char *lname =
-    obj->original_local_name ()->get_string ();
+  std::string_view const lname =
+    obj->original_local_name ()->get_string_view_or_empty ();
 
-  const char *global = (sname_str == "" ? "" : "::");
-  const char *prefix_connector = (sname_str == "" ? "" : "_");
+  std::string_view const global = sname.empty () ? "" : "::";
+  std::string_view const prefix_connector = sname.empty () ? "" : "_";
 
   if (!be_global->gen_lwccm ())
     {
@@ -306,7 +306,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << "PortableServer::POA_var POA = cnt_safe->the_port_POA ();" << be_nl
         << "::CORBA::Object_var tmp =" << be_idt_nl
         << "this->get_facet_executor (\"" << port_name << "\");"<< be_uidt_nl << be_nl
-        << global << sname << "::CCM_" << lname << "_var tmp_var = " << be_idt_nl
+        << global << sname << "::CCM_" << lname << "_var tmp_var =" << be_idt_nl
         << global << sname <<"::CCM_" << lname
         << "::_narrow (tmp.in());" << be_uidt_nl << be_nl
         << "using " << lname << "_type = " << global << "CIAO_FACET" << prefix_connector
@@ -315,11 +315,11 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << "," << be_nl << global << sname <<"::CCM_" << lname << "," << be_nl
         << global << "Components::" << be_global->ciao_container_type ()
         << "Context>;" << be_uidt_nl << be_uidt_nl
-        << lname << "_type *" << port_name << "_servant_impl = 0;" << be_nl
+        << lname << "_type *" << port_name << "_servant_impl = nullptr;" << be_nl
         << "ACE_NEW_THROW_EX (" << be_idt_nl
         << port_name << "_servant_impl," << be_nl
         << lname << "_type (" << be_idt_nl
-        << "tmp_var.in(), " << be_nl
+        << "tmp_var.in()," << be_nl
         << "this->context_)," << be_uidt_nl
         << "CORBA::NO_MEMORY ());" << be_uidt_nl << be_nl
         << "PortableServer::ServantBase_var safe_base_servant ("
@@ -328,8 +328,8 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << "PortableServer::string_to_ObjectId (obj_id.c_str());" << be_uidt_nl << be_nl
         << "POA->activate_object_with_id(" << port_name << "_servant_oid.in(),"
         <<  port_name << "_servant_impl);" << be_nl
-        << "::CORBA::Object_var " << port_name << "_servant_impl_obj = " << be_idt_nl
-        << "cnt_safe->generate_reference ( " << be_idt_nl
+        << "::CORBA::Object_var " << port_name << "_servant_impl_obj =" << be_idt_nl
+        << "cnt_safe->generate_reference (" << be_idt_nl
         << "obj_id.c_str ()," << be_nl
         << "\"" << obj->repoID () << "\"," << be_nl
         << "::CIAO::Container_Types::FACET_CONSUMER_t);"
@@ -349,11 +349,11 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
       return 0;
     }
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
-  const char *obj_name = node->uses_type ()->full_name ();
+  std::string_view const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl_2
@@ -429,8 +429,9 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
       return 0;
     }
 
-  const char *obj_name = node->publishes_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
+  std::string_view const obj_name = node->publishes_type ()->full_name ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "::Components::Cookie *" << be_nl
@@ -465,8 +466,9 @@ be_visitor_servant_svs::visit_emits (be_emits *node)
       return 0;
     }
 
-  const char *obj_name = node->emits_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
+  std::string_view const obj_name = node->emits_type ()->full_name ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "void" << be_nl
@@ -494,16 +496,17 @@ int
 be_visitor_servant_svs::visit_consumes (be_consumes *node)
 {
   AST_Type  *obj = node->consumes_type ();
-  const char *port_name = node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
-  const char *comp_lname = node_->local_name ();
-  ACE_CString comp_sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *comp_sname = comp_sname_str.c_str ();
-  const char *global = (comp_sname_str == "" ? "" : "::");
+  std::string_view const comp_lname = node_->local_name ();
+  std::string_view const comp_sname =
+    ScopeAsDecl (node_->defined_in ())->full_name ();
+  std::string_view const global = comp_sname.empty () ? "" : "::";
 
-  const char *lname = obj->local_name ()->get_string ();
-  const char *fname = obj->full_name ();
+  std::string_view const lname =
+    obj->local_name ()->get_string_view_or_empty ();
+  std::string_view const fname = obj->full_name ();
 
   os_ << be_nl_2
       << comp_lname << "_Servant::" << lname << "Consumer_"
@@ -534,7 +537,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << port_name << "_Servant::_get_component ()" << be_nl
       << "{" << be_idt_nl;
 
-  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
+  if (be_global->ciao_container_type () == "Session")
     {
       os_ << "return this->ctx_->get_CCM_object ();";
     }
@@ -567,7 +570,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "::" << fname << " * ev_type =" << be_idt_nl
       << "::" << fname << "::_downcast (ev);"
       << be_uidt_nl << be_nl
-      << "if (ev_type != 0)" << be_idt_nl
+      << "if (ev_type != nullptr)" << be_idt_nl
       << "{" << be_idt_nl
       << "this->push_" << lname << " (ev_type);" << be_nl
       << "return;" << be_uidt_nl
@@ -605,7 +608,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "PortableServer::POA_var POA = cnt_safe->the_port_POA ();" << be_nl
       << node_->local_name () << "_Servant::" << lname
       << "Consumer_" << port_name << "_Servant *"
-      << port_name << "_servant_impl = " << be_idt_nl
+      << port_name << "_servant_impl =" << be_idt_nl
       << "new "   << node_->local_name () << "_Servant::" << lname
       << "Consumer_" << port_name << "_Servant (" << be_idt_nl
       << " this->executor_, this->context_);" << be_uidt_nl << be_uidt_nl << be_nl
@@ -617,16 +620,16 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << port_name << "_servant_oid.in()," << be_nl
       <<  port_name << "_servant_impl);" << be_uidt_nl << be_nl
 
-      << "::CORBA::Object_var " << port_name << "_servant_impl_obj = " << be_idt_nl
-      << "cnt_safe->generate_reference ( " << be_idt_nl
+      << "::CORBA::Object_var " << port_name << "_servant_impl_obj =" << be_idt_nl
+      << "cnt_safe->generate_reference (" << be_idt_nl
       << "obj_id.c_str ()," << be_nl
       << "\"";
 
-      ACE_CString work (obj->repoID ());
-      ACE_CString result (work.substr (0, work.rfind (':')));
+      std::string const repo_id (obj->repoID ());
+      std::string result (repo_id.substr (0, repo_id.rfind (':')));
       result += "Consumer:1.0";
 
-      os_ << result.c_str ();
+      os_ << result;
 
       os_ << "\"," << be_nl
       << "::CIAO::Container_Types::FACET_CONSUMER_t);"
@@ -650,10 +653,9 @@ be_visitor_servant_svs::gen_provides_top ()
       return;
     }
 
-  ACE_CString comp_sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *global = (comp_sname_str == "" ? "" : "::");
-  ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
+  std::string_view const sname =
+    ScopeAsDecl (node_->defined_in ())->full_name ();
+  std::string_view const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "/// CIAO-specific." << be_nl
@@ -668,9 +670,9 @@ be_visitor_servant_svs::gen_provides_top ()
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt << be_nl_2;
 
-  os_ << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
-      << "_var executor = " << be_idt_nl
-      << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+  os_ << "::" << sname << global << "CCM_" << node_->original_local_name ()
+      << "_var executor =" << be_idt_nl
+      << "::" << sname << global << "CCM_" << node_->original_local_name ()
       << "::_duplicate (this->executor_.in ());" << be_uidt << be_nl_2;
 
   os_ << "if (::CORBA::is_nil (executor.in ()))"
@@ -1034,10 +1036,6 @@ be_visitor_obv_factory_reg::be_visitor_obv_factory_reg (
 {
 }
 
-be_visitor_obv_factory_reg::~be_visitor_obv_factory_reg ()
-{
-}
-
 int
 be_visitor_obv_factory_reg::visit_publishes (be_publishes *node)
 {
@@ -1067,7 +1065,7 @@ be_visitor_obv_factory_reg::gen_obv_factory_registration (AST_Type *t)
 {
   if (be_global->gen_ciao_valuefactory_reg ())
     {
-      const char *fname = t->full_name ();
+      std::string_view const fname = t->full_name ();
 
       os_ << "TAO_OBV_REGISTER_FACTORY (" << be_idt_nl
           << "::" << fname << "_init," << be_nl
@@ -1082,9 +1080,6 @@ be_visitor_attr_set::be_visitor_attr_set (be_visitor_context *ctx)
 {
 }
 
-be_visitor_attr_set::~be_visitor_attr_set ()
-{
-}
 
 int
 be_visitor_attr_set::visit_attribute (be_attribute *node)
@@ -1162,18 +1157,14 @@ be_visitor_facet_executor_block::be_visitor_facet_executor_block (
 {
 }
 
-be_visitor_facet_executor_block::~be_visitor_facet_executor_block (
-  )
-{
-}
 
 int
 be_visitor_facet_executor_block::visit_provides (
   be_provides *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (name, \"" << port_name
@@ -1194,18 +1185,15 @@ be_visitor_connect_block::be_visitor_connect_block (
 {
 }
 
-be_visitor_connect_block::~be_visitor_connect_block ()
-{
-}
 
 int
 be_visitor_connect_block::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
-  const char *obj_name = node->uses_type ()->full_name ();
+  std::string_view const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl_2
@@ -1241,17 +1229,13 @@ be_visitor_disconnect_block::be_visitor_disconnect_block (
 {
 }
 
-be_visitor_disconnect_block::~be_visitor_disconnect_block (
-  )
-{
-}
 
 int
 be_visitor_disconnect_block::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   bool const is_multiple = node->is_multiple ();
 
@@ -1283,45 +1267,38 @@ be_visitor_receptacle_desc::be_visitor_receptacle_desc (
       be_visitor_context *ctx,
       be_component *node)
   : be_visitor_component_scope (ctx),
-    slot_ (0UL),
     comp_ (node)
 {
   node_ = node;
 }
 
-be_visitor_receptacle_desc::~be_visitor_receptacle_desc (
-  )
-{
-}
 
 int
 be_visitor_receptacle_desc::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   AST_Type *obj = node->uses_type ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl_2;
 
-  ACE_CString sname_str (comp_->full_name ());
-  const char *sname = sname_str.c_str ();
-
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string_view const sname = comp_->full_name ();
+  std::string_view const global = sname.empty () ? "" : "::";
 
   if (!is_multiple)
     {
       os_ << obj->full_name () << "_var ciao_"
-          << port_name << " = " << be_idt_nl
+          << port_name << " =" << be_idt_nl
           << "this->context_->get_connection_"
           << port_name << " ();" << be_uidt_nl;
     }
   else
     {
       os_ << "::" << sname << global << port_name << "Connections_var ciao_"
-          << port_name << " = " << be_idt_nl
+          << port_name << " =" << be_idt_nl
           << "this->context_->get_connections_"
           << port_name << " ();" << be_uidt_nl;
     }
@@ -1358,19 +1335,15 @@ be_visitor_subscribe_block::be_visitor_subscribe_block (
 {
 }
 
-be_visitor_subscribe_block::~be_visitor_subscribe_block (
-  )
-{
-}
 
 int
 be_visitor_subscribe_block::visit_publishes (
   be_publishes *node)
 {
-  const char *obj_name =
+  std::string_view const obj_name =
     node->publishes_type ()->full_name ();
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (publisher_name, \""
@@ -1394,17 +1367,13 @@ be_visitor_unsubscribe_block::be_visitor_unsubscribe_block (
 {
 }
 
-be_visitor_unsubscribe_block::~be_visitor_unsubscribe_block (
-  )
-{
-}
 
 int
 be_visitor_unsubscribe_block::visit_publishes (
   be_publishes *node)
 {
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (publisher_name, \""
@@ -1421,23 +1390,18 @@ be_visitor_unsubscribe_block::visit_publishes (
 
 be_visitor_event_source_desc::be_visitor_event_source_desc (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    slot_ (0UL)
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_event_source_desc::~be_visitor_event_source_desc (
-  )
-{
-}
 
 int
 be_visitor_event_source_desc::visit_publishes (
   be_publishes *node)
 {
   AST_Type *obj = node->publishes_type ();
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2;
 
@@ -1473,18 +1437,15 @@ be_visitor_connect_consumer_block::be_visitor_connect_consumer_block (
 {
 }
 
-be_visitor_connect_consumer_block::~be_visitor_connect_consumer_block ()
-{
-}
 
 int
 be_visitor_connect_consumer_block::visit_emits (
   be_emits *node)
 {
-  const char *obj_name =
+  std::string_view const obj_name =
     node->emits_type ()->full_name ();
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (emitter_name, \""
@@ -1510,17 +1471,13 @@ be_visitor_disconnect_consumer_block::be_visitor_disconnect_consumer_block (
 {
 }
 
-be_visitor_disconnect_consumer_block::~be_visitor_disconnect_consumer_block (
-  )
-{
-}
 
 int
 be_visitor_disconnect_consumer_block::visit_emits (
   be_emits *node)
 {
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (source_name, \""
@@ -1537,22 +1494,17 @@ be_visitor_disconnect_consumer_block::visit_emits (
 
 be_visitor_emitter_desc::be_visitor_emitter_desc (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    slot_ (0UL)
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_emitter_desc::~be_visitor_emitter_desc (
-  )
-{
-}
 
 int
 be_visitor_emitter_desc::visit_emits (be_emits *node)
 {
   AST_Type *obj = node->emits_type ();
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name =
+    node->local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl_2
       << "::CIAO::Servant::describe_emit_event_source<"
@@ -1577,10 +1529,6 @@ be_visitor_populate_port_tables::be_visitor_populate_port_tables (
 {
 }
 
-be_visitor_populate_port_tables::~be_visitor_populate_port_tables (
-  )
-{
-}
 
 int
 be_visitor_populate_port_tables::visit_provides (
@@ -1591,9 +1539,9 @@ be_visitor_populate_port_tables::visit_provides (
       return 0;
     }
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   os_ << be_nl
       << "this->setup_"
@@ -1608,7 +1556,7 @@ be_visitor_populate_port_tables::visit_consumes (
 {
   os_ << be_nl
       << "this->setup_consumer_"
-      << node->local_name ()->get_string () << "_i ();";
+      << node->local_name ()->get_string_view_or_empty () << "_i ();";
 
   return 0;
 }

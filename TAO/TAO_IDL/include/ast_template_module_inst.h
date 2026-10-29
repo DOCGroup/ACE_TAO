@@ -14,7 +14,11 @@ public:
                             AST_Template_Module *ref,
                             FE_Utils::T_ARGLIST *template_args);
 
-  ~AST_Template_Module_Inst () override;
+  ~AST_Template_Module_Inst () override = default;
+  AST_Template_Module_Inst (AST_Template_Module_Inst const &) = delete;
+  AST_Template_Module_Inst (AST_Template_Module_Inst &&) = delete;
+  AST_Template_Module_Inst &operator= (AST_Template_Module_Inst const &) = delete;
+  AST_Template_Module_Inst &operator= (AST_Template_Module_Inst &&) = delete;
 
   AST_Template_Module *ref () const;
 

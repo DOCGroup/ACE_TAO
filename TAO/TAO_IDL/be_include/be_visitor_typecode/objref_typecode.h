@@ -13,6 +13,8 @@
 #ifndef TAO_BE_VISITOR_OBJREF_TYPECODE_H
 #define TAO_BE_VISITOR_OBJREF_TYPECODE_H
 
+#include <string_view>
+
 namespace TAO
 {
   /**
@@ -29,7 +31,12 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
-    be_visitor_objref_typecode (be_visitor_context * ctx);
+    explicit be_visitor_objref_typecode (be_visitor_context * ctx);
+
+    be_visitor_objref_typecode (be_visitor_objref_typecode const &) = delete;
+    be_visitor_objref_typecode (be_visitor_objref_typecode &&) = delete;
+    be_visitor_objref_typecode &operator= (be_visitor_objref_typecode const &) = delete;
+    be_visitor_objref_typecode &operator= (be_visitor_objref_typecode &&) = delete;
 
     /// Visit an object reference / interface.
     /**
@@ -39,20 +46,20 @@ namespace TAO
      *       rest of the legacy method names and their call sites are
      *       updated accordingly.
      */
-    virtual int visit_interface (be_interface * node);
+    int visit_interface (be_interface * node) override;
 
     /// Visit a native.
     /**
      * @see visit_interface
      */
-    virtual int visit_native (be_native * node);
+    int visit_native (be_native * node) override;
 
   private:
     /// Generate TypeCode instance.
-    int visit_i (char const * kind,
-                 char const * flat_name,
-                 char const * repository_id,
-                 char const * original_local_name,
+    int visit_i (std::string_view kind,
+                 std::string_view flat_name,
+                 std::string_view repository_id,
+                 std::string_view original_local_name,
                  be_type * node);
   };
 }

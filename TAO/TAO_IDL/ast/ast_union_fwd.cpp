@@ -23,10 +23,6 @@ AST_UnionFwd::AST_UnionFwd (AST_Union *dummy,
 {
 }
 
-AST_UnionFwd::~AST_UnionFwd ()
-{
-}
-
 // Redefinition of inherited virtual operations.
 
 // Dump this AST_StructureFwd node to the ostream o.

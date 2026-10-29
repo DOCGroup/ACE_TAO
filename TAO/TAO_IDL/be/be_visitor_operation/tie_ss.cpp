@@ -11,13 +11,12 @@
 
 #include "operation.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_operation_tie_ss::be_visitor_operation_tie_ss (
     be_visitor_context *ctx)
   : be_visitor_scope (ctx)
-{
-}
-
-be_visitor_operation_tie_ss::~be_visitor_operation_tie_ss ()
 {
 }
 
@@ -57,7 +56,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
 
   // Although unlikely it is possible that the 'T' in 'template class<T>' will
   // conflict with an argument name...
-  ACE_CString template_name ("T");
+  std::string template_name ("T");
   bool template_name_ok = false;
 
   while (!template_name_ok)
@@ -73,8 +72,8 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
           AST_Argument *arg =
             dynamic_cast<AST_Argument*> (si.item ());
 
-          if (! ACE_OS::strcmp (arg->local_name ()->get_string (),
-                                template_name.c_str ()))
+          if (arg->local_name ()->get_string_view_or_empty ()
+              == std::string_view (template_name))
             {
               // clash !
               template_name_ok = false;
@@ -90,7 +89,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << "template <class " << template_name.c_str () << ">" << be_nl;
+  *os << "template <class " << template_name << ">" << be_nl;
 
   // Generate the return type mapping (same as in the header file).
   be_visitor_context ctx (*this->ctx_);
@@ -106,8 +105,8 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
     }
 
   *os << " " << intf->full_skel_name () << "_tie<"
-      << template_name.c_str () << ">::"
-      << this->ctx_->port_prefix ().c_str ()
+      << template_name << ">::"
+      << this->ctx_->port_prefix ()
       << node->local_name () << " ";
 
   // STEP 4: generate the argument list with the appropriate mapping (same as

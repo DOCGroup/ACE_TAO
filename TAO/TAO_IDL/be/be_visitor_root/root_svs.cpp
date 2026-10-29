@@ -16,10 +16,6 @@ be_visitor_root_svs::be_visitor_root_svs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_svs::~be_visitor_root_svs ()
-{
-}
-
 int
 be_visitor_root_svs::visit_root (be_root *node)
 {

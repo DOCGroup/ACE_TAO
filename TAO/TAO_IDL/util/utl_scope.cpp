@@ -106,11 +106,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "ast_extern.h"
 
+#include <string_view>
+
 #include "fe_extern.h"
 #include "nr_extern.h"
 #include "global_extern.h"
-
-#include "ace/OS_NS_strings.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -120,41 +120,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 //  Constructors.
 
-UTL_Scope::UTL_Scope ()
-  : pd_scope_node_type (AST_Decl::NT_module),
-    pd_decls (nullptr),
-    pd_decls_allocated (0),
-    pd_decls_used (0),
-    pd_local_types (nullptr),
-    pd_locals_allocated (0),
-    pd_locals_used (0),
-    pd_referenced (nullptr),
-    pd_referenced_allocated (0),
-    pd_referenced_used (0),
-    pd_name_referenced (nullptr),
-    pd_name_referenced_allocated (0),
-    pd_name_referenced_used (0),
-    has_prefix_ (false),
-    which_pseudo_ (PSEUDO_ABSTRACTBASE)
-{
-}
+UTL_Scope::UTL_Scope () = default;
 
 UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
-  : pd_scope_node_type (nt),
-    pd_decls (nullptr),
-    pd_decls_allocated (0),
-    pd_decls_used (0),
-    pd_local_types (nullptr),
-    pd_locals_allocated (0),
-    pd_locals_used (0),
-    pd_referenced (nullptr),
-    pd_referenced_allocated (0),
-    pd_referenced_used (0),
-    pd_name_referenced (nullptr),
-    pd_name_referenced_allocated (0),
-    pd_name_referenced_used (0),
-    has_prefix_ (false),
-    which_pseudo_ (PSEUDO_ABSTRACTBASE)
+  : pd_scope_node_type (nt)
 {
 }
 
@@ -232,7 +201,7 @@ UTL_Scope::destroy ()
 AST_Decl *
 UTL_Scope::lookup_for_add (AST_Decl *d)
 {
-  if (!d)
+  if (d == nullptr)
     {
       return nullptr;
     }
@@ -254,22 +223,20 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
       return 0;
     }
 
-  // Convert the identifier string into a
-  // canonical (uppercase) form as a ACE_CString
-  char *tmp = e->get_string ();
-  ACE_CString ext_id (tmp);
-  UTL_String::get_canonical_rep (ext_id);
+  std::string_view const name = e->get_string_view_or_empty ();
+  std::string const ext_id = UTL_String::get_canonical_rep (name);
 
-  if (!idl_global->idl_keywords ().find (ext_id))
+  if (idl_global->idl_keywords ().find (ext_id)
+      != idl_global->idl_keywords ().end ())
     {
       if (idl_global->case_diff_error ())
         {
-          idl_global->err ()->idl_keyword_error (tmp);
+          idl_global->err ()->idl_keyword_error (name);
 
           return -1;
         }
 
-      idl_global->err ()->idl_keyword_warning (tmp);
+      idl_global->err ()->idl_keyword_warning (name);
     }
 
   return 0;
@@ -375,7 +342,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
 
   // Must be defined in the CORBA module.
   AST_Decl *p = ScopeAsDecl (bt->defined_in ());
-  if (ACE_OS::strcmp (p->local_name ()->get_string (), "CORBA"))
+  if (p->local_name ()->get_string_view_or_empty () != "CORBA")
     {
       return;
     }
@@ -399,7 +366,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
 
   // Now check for predefined base type.
   AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (bt);
-  if (!pdt)
+  if (pdt == nullptr)
     {
       return;
     }
@@ -548,11 +515,11 @@ AST_Field *
 UTL_Scope::fe_add_ref_decl (AST_Field *t)
 {
   AST_Decl *d = this->fe_add_decl (t);
-  if (d)
+  if (d != nullptr)
     {
       AST_Type *ft = t->field_type ();
       UTL_ScopedName *mru = ft->last_referenced_as ();
-      if (mru)
+      if (mru != nullptr)
         {
           this->add_to_referenced (ft,
                                    false,
@@ -563,7 +530,7 @@ UTL_Scope::fe_add_ref_decl (AST_Field *t)
   // Catches struct/union/exception which all maintain a queue
   // for fields as distinct from decls and enum values.
   AST_Structure *s = dynamic_cast<AST_Structure*> (this);
-  if (s)
+  if (s != nullptr)
     {
       s->fields ().enqueue_tail (t);
     }
@@ -576,7 +543,7 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
 {
   AST_Decl *predef = this->lookup_for_add (t);
 
-  if (predef)
+  if (predef != nullptr)
     {
       if (!FE_Utils::can_be_redefined (predef, t))
         {
@@ -624,7 +591,7 @@ UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
 {
   // Already defined and cannot be redefined? Or already used?
   AST_Decl *d = this->lookup_for_add (t);
-  if (d)
+  if (d != nullptr)
     {
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add() calls only
@@ -950,27 +917,28 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     }
 
   bool *seen = nullptr;
-  char *name_string = e->get_string ();
+  std::string_view const name = e->get_string_view_or_empty ();
+  bool mixed_case = false;
   UTL_Scope *start_scope = idl_global->corba_module ();
 
-  if (ACE_OS::strcasecmp (name_string, "TypeCode") == 0
-      || ACE_OS::strcasecmp (name_string, "TCKind") == 0)
+  if (UTL_String::strcmp_caseless (name, "TypeCode", mixed_case)
+      || UTL_String::strcmp_caseless (name, "TCKind", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_TYPECODE;
       start_scope = this;
       seen = &idl_global->typecode_seen_;
     }
-  else if (ACE_OS::strcasecmp (name_string, "Object") == 0)
+  else if (UTL_String::strcmp_caseless (name, "Object", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_OBJECT;
       seen = &idl_global->base_object_seen_;
     }
-  else if (ACE_OS::strcasecmp (name_string, "ValueBase") == 0)
+  else if (UTL_String::strcmp_caseless (name, "ValueBase", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_VALUEBASE;
       seen = &idl_global->valuebase_seen_;
     }
-  else if (ACE_OS::strcasecmp (name_string, "AbstractBase") == 0)
+  else if (UTL_String::strcmp_caseless (name, "AbstractBase", mixed_case))
     {
       this->which_pseudo_ = PSEUDO_ABSTRACTBASE;
       seen = &idl_global->abstractbase_seen_;
@@ -1113,7 +1081,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // generation of some #includes and, whether successful or not,
   // incurs no extra overhead.
   AST_Decl *d = this->lookup_pseudo (e);
-  if (d)
+  if (d != nullptr)
     {
       return d;
     }
@@ -1123,7 +1091,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       return nullptr;
     }
 
-  bool in_corba = (ACE_OS::strcmp (e->get_string (), "CORBA") == 0);
+  bool const in_corba = (e->get_string_view_or_empty () == "CORBA");
 
   // We search only the decls here, the local types are done
   // below as a last resort.
@@ -1143,7 +1111,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           // match, unless we skip over these items. This is a workaround until
           // there's time to fix the code generation for CORBA basic types.
               && (in_corba
-                  || (ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA") != 0))
+                  || d->name ()->head ()->get_string_view_or_empty () != "CORBA")
               && e->case_compare (item_name))
             {
               return d; // We have found the one and only one we are looking for.
@@ -1154,10 +1122,10 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // Ok the name wasn't found in the current scope, if this
   // scope is a module, we can check it's previous openings!
   AST_Module *m = dynamic_cast<AST_Module*> (this);
-  if (m)
+  if (m != nullptr)
     {
       d = m->look_in_prev_mods_local (e);
-      if (d && (!full_def_only || d->is_defined ()))
+      if (d != nullptr && (!full_def_only || d->is_defined ()))
         {
           return d;
         }
@@ -1167,10 +1135,10 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       // Or if this scope is an interface, we can check if
       // it was inherited!
       AST_Interface *i = dynamic_cast<AST_Interface*> (this);
-      if (i)
+      if (i != nullptr)
         {
           d = i->look_in_inherited_local (e);
-          if (d)
+          if (d != nullptr)
             {
               return d;
             }
@@ -1201,7 +1169,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                            bool for_add)
 {
   // Empty name? Exit immediately.
-  if (!e)
+  if (e == nullptr)
     {
       return nullptr;
     }
@@ -1212,12 +1180,12 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // if we're not there already, short_circuiting the
   // scope-expanding iteration below.
   Identifier *name = e->head ();
-  const bool global_scope_name = work->is_global_name (name);
+  bool const global_scope_name = work->is_global_name (name);
   if (global_scope_name)
     {
       // No tail, exit directly
       UTL_List* tail = e->tail ();
-      if (!tail)
+      if (tail == nullptr)
         {
           return nullptr;
         }
@@ -1230,7 +1198,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     }
 
   AST_Decl *first_found_final_parent_decl = nullptr;
-  const bool searching_module_path = (e->length () != 1);
+  bool const searching_module_path = (e->length () != 1);
   AST_Decl *d = searching_module_path ?
     work->lookup_by_name_r (e, full_def_only, first_found_final_parent_decl) :
     work->lookup_by_name_r (e, full_def_only);
@@ -1246,7 +1214,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           if (d != nullptr)
             {
               work = outer;
-              if (first_found_final_parent_decl)
+              if (first_found_final_parent_decl != nullptr)
                 {
                   // Hidden scopes can't be used indirectly, therefore we didn't actually
                   // find this one because the "first_found_final_parent_decl" was found and
@@ -1259,7 +1227,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                   break; // Ok found it, stop searching.
                 }
             }
-          else if (searching_module_path && !first_found_final_parent_decl)
+          else if (searching_module_path && first_found_final_parent_decl == nullptr)
             {
               first_found_final_parent_decl = next_found_final_parent_decl;
             }
@@ -1299,7 +1267,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // generation of some #includes and, whether successful or not,
       // incurs no extra overhead.
       AST_Decl *d = work->lookup_pseudo (e->head ());
-      if (d)
+      if (d != nullptr)
         {
           return d;
         }
@@ -1313,7 +1281,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // matches a template module parameter. If so, the return
       // value is created on the heap and is owned by the caller
       // of this lookup.
-      if (final_parent_decl)
+      if (final_parent_decl != nullptr)
         {
           // Since we are inside the scope of a template module, any
           // single-segment scoped name that matches a template
@@ -1324,39 +1292,38 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
           AST_Param_Holder *param_holder =
             UTL_Scope::match_param (e);
 
-          if (param_holder)
+          if (param_holder != nullptr)
             {
               return param_holder;
             }
         }
 
       work_another_level = false; // Until we find something.
-      bool in_corba =
-        (ACE_OS::strcmp (e->head ()->get_string (), "CORBA") == 0);
+      bool const in_corba = (e->head ()->get_string_view_or_empty () == "CORBA");
 
       for (UTL_ScopeActiveIterator i (work, IK_decls);
            !i.is_done ();
            i.next ())
         {
           d = i.item ()->adjust_found (true, full_def_only);
-          if (d
+          if (d != nullptr
           // Right now we populate the global scope with all the CORBA basic
           // types, so something like 'ULong' in an IDL file will find a
           // match, unless we skip over these items. This is a workaround until
           // there's time to fix the code generation for CORBA basic types.
-              && (in_corba ||
-                  ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA"))
+              && (in_corba
+                  || d->name ()->head ()->get_string_view_or_empty () != "CORBA")
               && d->local_name ()->case_compare (e->head ()))
             {
               // Ok we found a match, is there any more to find?
-              if (final_parent_decl)
+              if (final_parent_decl != nullptr)
                 {
                   return d; // Last scope name matched
                 }
 
               UTL_Scope *next = DeclAsScope (d); // The next scope to search
 
-              if (next)
+              if (next != nullptr)
                 {
                   work = next;
                   work_another_level = true;
@@ -1374,7 +1341,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
   // A rare enough case that it's worth it to separate it and
   // do it as a last resort. Catches anonymnous types, enums
   // and members with their types defined all in one statement.
-  if (final_parent_decl)
+  if (final_parent_decl != nullptr)
     {
       for (UTL_ScopeActiveIterator i (work, IK_localtypes);
            !i.is_done ();
@@ -1401,7 +1368,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
                               AST_Decl *ex)
 {
   // Empty name? Exit immediately.
-  if (!e)
+  if (e == nullptr)
     {
       return;
     }
@@ -1414,7 +1381,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
       || nt == AST_Decl::NT_component)
     {
       AST_Interface *itf = dynamic_cast<AST_Interface*> (e);
-      if (itf
+      if (itf != nullptr
           && itf->defined_in () == this
           && !itf->is_defined ())
         {
@@ -1450,7 +1417,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
     }
 
   // Insert new reference.
-  if (!ex)
+  if (ex == nullptr)
     {
       this->pd_referenced [this->pd_referenced_used++] = e;
     }
@@ -1473,14 +1440,14 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
   if (recursive && !(e->has_ancestor (ScopeAsDecl (this))))
     {
       UTL_Scope *s = e->defined_in ();
-      if (s)
+      if (s != nullptr)
         {
           s->add_to_referenced (e, recursive, id);
         }
     }
 
   // Add the identifier arg, if non-null, to the identifier list.
-  if (id)
+  if (id != nullptr)
     {
       this->add_to_name_referenced (id);
     }
@@ -1544,13 +1511,13 @@ void
 UTL_Scope::add_to_scope (AST_Decl *e,
                          AST_Decl *ex)
 {
-  if (!e)
+  if (e == nullptr)
     {
       return;
     }
 
   Identifier *decl_name = e->local_name ();
-  char *decl_string = decl_name->get_string ();
+  std::string_view const decl_string = decl_name->get_string_view_or_empty ();
   AST_Decl::NodeType new_nt = e->node_type ();
 
   // First, make sure there's no clash between e, that was
@@ -1563,7 +1530,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     {
       // A local declaration doesn't use a scoped name.
       Identifier *ref_name = (*tmp)->local_name ();
-      char *ref_string = ref_name->get_string ();
+      std::string_view const ref_string = ref_name->get_string_view_or_empty ();
 
       // If the names compare exactly, it's a redefini8tion
       // error, unless they're both modules (which can be
@@ -1614,8 +1581,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
       if (decl_name->compare (parent_name))
         {
           idl_global->err ()->redef_error (
-                                  decl_name->get_string (),
-                                  parent_name->get_string ()
+                                  decl_name->get_string_view_or_empty (),
+                                  parent_name->get_string_view_or_empty ()
                                 );
 
           // if we try to continue from here, we risk a crash.
@@ -1626,8 +1593,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           if (idl_global->case_diff_error ())
             {
               idl_global->err ()->name_case_error (
-                                      decl_name->get_string (),
-                                      parent_name->get_string ()
+                                      decl_name->get_string_view_or_empty (),
+                                      parent_name->get_string_view_or_empty ()
                                     );
 
               // if we try to continue from here, we risk a crash.
@@ -1636,8 +1603,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           else
             {
               idl_global->err ()->name_case_warning (
-                                      decl_name->get_string (),
-                                      parent_name->get_string ()
+                                      decl_name->get_string_view_or_empty (),
+                                      parent_name->get_string_view_or_empty ()
                                     );
             }
         }
@@ -1660,7 +1627,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     }
 
   // Insert new decl.
-  if (!ex)
+  if (ex == nullptr)
     {
       this->pd_decls [this->pd_decls_used++] = e;
     }
@@ -1683,7 +1650,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
 void
 UTL_Scope::add_to_local_types (AST_Decl *e)
 {
-  if (!e)
+  if (e == nullptr)
     {
       return;
     }
@@ -1743,7 +1710,7 @@ UTL_Scope::referenced (AST_Decl *const e,
   // is a list of Identifiers that store the identifier (or
   // the first segment of a scoped name) used in the reference,
   // so we can catch these name reolution clashes.
-  if (id)
+  if (id != nullptr)
     {
       Identifier **name_tmp = this->pd_name_referenced;
       for (long j = this->pd_name_referenced_used;
@@ -1761,8 +1728,9 @@ UTL_Scope::referenced (AST_Decl *const e,
               && e->defined_in () == this
               && id->compare (*name_tmp))
             {
-              idl_global->err ()->redef_error (id->get_string (),
-                                               (*name_tmp)->get_string ());
+              idl_global->err ()->redef_error (
+                id->get_string_view_or_empty (),
+                (*name_tmp)->get_string_view_or_empty ());
               return true;
             }
           // No clash if one or the other of the identifiers was escaped.
@@ -1772,15 +1740,15 @@ UTL_Scope::referenced (AST_Decl *const e,
               if (idl_global->case_diff_error ())
                 {
                   idl_global->err ()->name_case_error (
-                                          id->get_string (),
-                                          (*name_tmp)->get_string ()
+                                          id->get_string_view_or_empty (),
+                                          (*name_tmp)->get_string_view_or_empty ()
                                         );
                 }
               else
                 {
                   idl_global->err ()->name_case_warning (
-                                          id->get_string (),
-                                          (*name_tmp)->get_string ()
+                                          id->get_string_view_or_empty (),
+                                          (*name_tmp)->get_string_view_or_empty ()
                                         );
                 }
 
@@ -1794,7 +1762,7 @@ UTL_Scope::referenced (AST_Decl *const e,
 }
 
 bool
-UTL_Scope::has_prefix ()
+UTL_Scope::has_prefix () const
 {
   return this->has_prefix_;
 }
@@ -1870,7 +1838,7 @@ UTL_Scope::ast_accept (ast_visitor *visitor)
 
 // How many entries are defined?
 unsigned long
-UTL_Scope::nmembers ()
+UTL_Scope::nmembers () const
 {
   return this->pd_decls_used;
 }
@@ -1888,7 +1856,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
       return nullptr;
     }
 
-  const char *name = e->first_component ()->get_string ();
+  std::string_view const name = e->first_component ()->get_string_view_or_empty ();
   FE_Utils::T_Param_Info *param = nullptr;
   unsigned long index = 0;
 
@@ -1907,7 +1875,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
        i.next (param);
        i.advance (), ++index)
     {
-      if (param->name_ == name)
+      if (std::string_view (param->name_.c_str ()) == name)
         {
           /// If we are parsing this template module as a
           /// reference, the param holder we create must have
@@ -1935,7 +1903,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
                                     0);
                 }
 
-              Identifier id (alias_param->get_string ());
+              Identifier id (alias_param->get_string_view_or_empty ());
               UTL_ScopedName sn (&id, nullptr);
 
               return
@@ -1960,13 +1928,13 @@ bool
 UTL_Scope::inherited_op_attr_clash (AST_Decl *t)
 {
   AST_Interface *i = dynamic_cast<AST_Interface*> (this);
-  if (!i)
+  if (i == nullptr)
     {
       return false;
     }
 
   AST_Decl *d = i->look_in_inherited (t->name (), false);
-  if (d)
+  if (d != nullptr)
     {
       AST_Decl::NodeType nt = d->node_type ();
       if (   nt == AST_Decl::NT_attr
@@ -1987,7 +1955,7 @@ bool
 UTL_Scope::arg_specific_error (AST_Decl *t)
 {
   AST_Operation *op = dynamic_cast<AST_Operation*> (this);
-  if (!op)
+  if (op == nullptr)
     {
       return false;
     }
@@ -2029,7 +1997,7 @@ UTL_Scope::smart_local_add (AST_Decl *t)
 
   // Decls inside a struct/union/exception are also referenced by
   // fields, and so must be handled differently.
-  if (s && !f)
+  if (s != nullptr && f == nullptr)
     {
       this->add_to_local_types (t);
     }
@@ -2043,7 +2011,7 @@ UTL_Scope::smart_local_add (AST_Decl *t)
   // so a branch name clash with a label name will be caught.
   AST_Union *u = dynamic_cast<AST_Union*> (this);
   AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (t);
-  if (u && ub)
+  if (u != nullptr && ub != nullptr)
     {
       if (u->udisc_type () == AST_Expression::EV_enum)
         {
@@ -2058,15 +2026,15 @@ UTL_Scope::smart_local_add (AST_Decl *t)
 
 // Determines if a name is global.
 bool
-UTL_Scope::is_global_name (Identifier *i)
+UTL_Scope::is_global_name (Identifier const *i) const
 {
-  if (!i)
+  if (i == nullptr)
     {
       return false;
     }
 
-  ACE_CString cmp (i->get_string (), nullptr, false);
-  return (cmp == "" || cmp == "::");
+  std::string_view const name = i->get_string_view_or_empty ();
+  return name.empty () || name == "::";
 }
 
 AST_Decl *
@@ -2075,10 +2043,10 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
                                       bool full_def_only)
 {
   // Remove all the layers of typedefs.
-  while (d && d->node_type () == AST_Decl::NT_typedef)
+  while (d != nullptr && d->node_type () == AST_Decl::NT_typedef)
     {
       AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
-      if (!td)
+      if (td == nullptr)
         {
           return nullptr;
         }
@@ -2086,14 +2054,14 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
       d = td->base_type ();
     }
 
-  if (!d)
+  if (d == nullptr)
     {
       return nullptr;
     }
 
   // Try to convert the AST_Decl to a UTL_Scope.
   UTL_Scope *sc = DeclAsScope (d);
-  if (!sc)
+  if (sc == nullptr)
     {
       return nullptr;
     }
@@ -2108,19 +2076,19 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
   else
     {
       AST_Interface *i = dynamic_cast<AST_Interface*> (d);
-      result = i ? i->look_in_inherited_local (e->head ())
-                 : sc->look_in_prev_mods_local (e->head (), true);
+      result = i != nullptr ? i->look_in_inherited_local (e->head ())
+                            : sc->look_in_prev_mods_local (e->head (), true);
     }
 
-  UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
-  if (!result)
+  UTL_ScopedName *sn = static_cast<UTL_ScopedName *> (e->tail ());
+  if (result == nullptr)
     {
-      if (!sn)
+      if (sn == nullptr)
         {
           result = UTL_Scope::match_param (e);
         }
     }
-  else if (sn)
+  else if (sn != nullptr)
     {
       // Look up the next component of the scoped name.
       result = iter_lookup_by_name_local (result,
@@ -2214,14 +2182,14 @@ UTL_ScopeActiveIterator::is_done ()
 
 // What kind of iterator is this?
 UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_kind ()
+UTL_ScopeActiveIterator::iteration_kind () const
 {
   return this->ik;
 }
 
 // And where are we in the iteration?
 UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_stage ()
+UTL_ScopeActiveIterator::iteration_stage () const
 {
   return this->stage;
 }
@@ -2239,7 +2207,7 @@ UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member
 }
 
 AST_Decl *
-UTL_Scope::lookup_by_name (const char *name)
+UTL_Scope::lookup_by_name (std::string_view name)
 {
   AST_Decl *node = nullptr;
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);

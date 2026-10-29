@@ -74,7 +74,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "ast_root.h"
 
-const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
+#include <string>
+#include <string_view>
+#include <unordered_set>
 
 // Populate the global scope with all predefined entities.
 void
@@ -267,7 +269,7 @@ fe_populate_global_scope ()
 void
 fe_populate_idl_keywords ()
 {
-  static constexpr char const *keywords[] =
+  static constexpr std::string_view keywords[] =
     {
       "ABSTRACT",
       "ALIAS",
@@ -340,19 +342,11 @@ fe_populate_idl_keywords ()
       "WSTRING"
     };
 
-  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &map =
-    idl_global->idl_keywords ();
+  std::unordered_set<std::string> &keywords_set = idl_global->idl_keywords ();
 
-  u_long length = sizeof (keywords) / sizeof (char *);
-  ACE_CString ext_id;
-  int int_id = 0;
-
-  for (u_long i = 0; i < length; ++i)
+  for (std::string_view const keyword : keywords)
     {
-      ext_id.set (keywords[i],
-                  false);
-      (void) map.bind (ext_id,
-                       int_id);
+      keywords_set.emplace (keyword);
     }
 }
 
@@ -377,14 +371,9 @@ FE_init ()
   idl_global->set_import (true);
   idl_global->set_in_main_file (false);
   idl_global->set_lineno (-1);
-  idl_global->set_prog_name (nullptr);
+  idl_global->clear_prog_name ();
 
-  char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
-  ACE_OS::memset (&local_escapes,
-                  0,
-                  LOCAL_ESCAPES_BUFFER_SIZE);
-
-  idl_global->set_local_escapes (local_escapes);
+  idl_global->set_local_escapes ({});
   idl_global->set_compile_flags (0);
   idl_global->set_include_file_names (nullptr);
   idl_global->set_n_include_file_names (0);
@@ -441,29 +430,36 @@ FE_populate ()
 }
 
 void
-FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
+FE_extract_env_include_paths (std::vector<std::string> &list)
 {
   ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
-                                   (char *) nullptr);
-  const char *aggr_str = incl_paths;
+                                   nullptr);
+  char const * const env_paths = incl_paths;
 
-  if (aggr_str != nullptr)
+  if (env_paths != nullptr)
     {
-      char separator;
 #if defined (ACE_WIN32)
-      separator = ';';
+      constexpr char separator = ';';
 #else
-      separator = ':';
+      constexpr char separator = ':';
 #endif
-      ACE_CString aggr_cstr (aggr_str);
-      ACE_CString::size_type pos;
+      std::string_view const paths (env_paths);
+      std::string_view::size_type start = 0;
 
       do
         {
-          pos = aggr_cstr.find (separator);
-          list.enqueue_tail (aggr_cstr.substr (0, pos));
-          aggr_cstr = aggr_cstr.substr (pos + 1);
-        } while (pos != ACE_CString::npos);
+          std::string_view::size_type const end = paths.find (separator, start);
+          std::string_view::size_type const length =
+            end == std::string_view::npos ? std::string_view::npos : end - start;
+          list.emplace_back (paths.substr (start, length));
+          if (end == std::string_view::npos)
+            {
+              break;
+            }
+
+          start = end + 1;
+        }
+      while (true);
     }
 }
 
@@ -471,56 +467,43 @@ FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
 void
 FE_store_env_include_paths ()
 {
-  ACE_Unbounded_Queue<ACE_CString> list;
+  std::vector<std::string> list;
   FE_extract_env_include_paths (list);
 
-  ACE_CString *path_tmp = nullptr;
-  for (ACE_Unbounded_Queue_Iterator<ACE_CString>iter (list);
-       !iter.done (); iter.advance ())
+  for (std::string const &path : list)
     {
-      if (iter.next (path_tmp) != 0)
-        {
-          idl_global->add_include_path (path_tmp->fast_rep (), false);
-        }
+      idl_global->add_include_path (path.c_str (), false);
     }
 }
 
-const char *
+std::string
 FE_get_cpp_loc_from_env ()
 {
-  const char *cpp_loc = nullptr;
-
   // See if TAO_IDL_PREPROCESSOR is defined.
   ACE_Env_Value<char*> preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"),
-                                     (char *) nullptr);
+                                     nullptr);
 
-  // Set cpp_loc to the built in location, unless it has been overriden by
-  // environment variables.
-  if (preprocessor != 0)
+  char const * const env_preprocessor = preprocessor;
+  if (env_preprocessor != nullptr)
     {
-      cpp_loc = preprocessor;
-    }
-  else
-    {
-      cpp_loc = idl_global->cpp_location ();
+      return env_preprocessor;
     }
 
-  return cpp_loc;
+  return std::string (idl_global->cpp_location_or_empty ());
 }
 
-const char *
+std::optional<std::string>
 FE_get_cpp_args_from_env ()
 {
-  const char *cpp_args = nullptr;
-
   // Added some customizable preprocessor options
   ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),
-                              (char *) nullptr);
+                              nullptr);
 
-  if (args1 != 0)
+  char const * const env_args = args1;
+  if (env_args != nullptr)
     {
-      cpp_args = args1;
+      return std::string (env_args);
     }
 
-  return cpp_args;
+  return std::nullopt;
 }

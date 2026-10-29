@@ -24,10 +24,6 @@ be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
 {
 }
 
-be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs ()
-{
-}
-
 // OBV_ class must be in OBV_ namespace
 int
 be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)

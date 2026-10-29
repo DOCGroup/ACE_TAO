@@ -10,13 +10,10 @@
 //=============================================================================
 
 #include "valuebox.h"
+#include "valuebox_type_name.h"
 
 be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
   : be_visitor_valuebox (ctx)
-{
-}
-
-be_visitor_valuebox_ci::~be_visitor_valuebox_ci ()
 {
 }
 
@@ -47,7 +44,7 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << "ACE_INLINE const char*" << be_nl
+  *os << "ACE_INLINE char const *" << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
@@ -78,8 +75,8 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Public constructor that takes a const array argument
   *os << "ACE_INLINE" << be_nl
-      << vb_node->name () << "::" << vb_node->local_name () << " (const "
-      << node->full_name () << " val)" << be_nl
+      << vb_node->name () << "::" << vb_node->local_name () << " ("
+      << node->full_name () << " const val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name () << "_dup (val);"
       << be_uidt_nl
@@ -87,8 +84,8 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Public copy constructor
   *os << "ACE_INLINE" << be_nl
-      << vb_node->name () << "::" << vb_node->local_name () << " (const "
-      << vb_node->local_name () << "& val)" << be_idt_nl
+      << vb_node->name () << "::" << vb_node->local_name () << " ("
+      << vb_node->local_name () << " const &val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl
       << "  ::CORBA::DefaultValueRefCountBase ()"
       << be_uidt_nl
@@ -99,8 +96,8 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Public assignment operator that takes a const array argument
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
-      << vb_node->name () << "::operator= (const "
-      << node->full_name () << " val)" << be_nl
+      << vb_node->name () << "::operator= ("
+      << node->full_name () << " const val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name ()
       << "_dup (val);" << be_nl
@@ -108,7 +105,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "}" << be_nl_2;
 
   // Public accessor and modifier methods
-  *os << "ACE_INLINE const " << node->full_name () << "_slice*" << be_nl
+  *os << "ACE_INLINE " << node->full_name () << "_slice const *" << be_nl
       << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -121,15 +118,15 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE void" << be_nl
-      << vb_node->name () << "::_value (const " << node->full_name ()
-      << " val)" << be_nl
+      << vb_node->name () << "::_value (" << node->full_name ()
+      << " const val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name () << "_dup (val);"
       << be_uidt_nl
       << "}" << be_nl_2;
 
   // Overloaded subscript operators
-  *os << "ACE_INLINE const " << node->full_name () << "_slice &" << be_nl
+  *os << "ACE_INLINE " << node->full_name () << "_slice const &" << be_nl
       << vb_node->name () << "::operator[] (::CORBA::ULong index) const"
       << be_nl
       << "{" << be_idt_nl
@@ -143,7 +140,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "}" << be_nl_2;
 
   // Explicit conversion functions
-  *os << "ACE_INLINE const " << node->full_name () << "_slice *" << be_nl
+  *os << "ACE_INLINE " << node->full_name () << "_slice const *" << be_nl
       << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -252,8 +249,8 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  const char *string_type;
-  const char *char_type;
+  std::string_view string_type {};
+  std::string_view char_type {};
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";
@@ -284,8 +281,9 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Public constructor with one const argument of underlying type
   *os << "ACE_INLINE" << be_nl
-      << vb_node->name () << "::" << vb_node->local_name () << " (const "
-      << node->full_name () << " val)" << be_nl
+      << vb_node->name () << "::" << vb_node->local_name () << " ("
+      << valuebox_type_name ("const ", node->full_name ())
+      << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
       << "}" << be_nl_2;
@@ -294,15 +292,16 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public constructor with one argument of type const CORBA::String_var&
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
-      << " (const ::CORBA::" << string_type << "_var& var)" << be_nl
+      << " (::CORBA::" << string_type << "_var const &var)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Public assignment operator with one argument of type const char *
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
-      << vb_node->name () << "::operator= (const "
-      << node->full_name () << " val)" << be_nl
+      << vb_node->name () << "::operator= ("
+      << valuebox_type_name ("const ", node->full_name ())
+      << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_nl
       << "return *this;" << be_uidt_nl
@@ -311,8 +310,8 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public assignment operator with one argument of type
   // const CORBA::String_var&
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
-      << vb_node->name () << "::operator= (const ::CORBA::"
-      << string_type << "_var& var)"
+      << vb_node->name () << "::operator= (::CORBA::"
+      << string_type << "_var const &var)"
       << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_nl
@@ -320,7 +319,8 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "}" << be_nl_2;
 
   // Accessor function takes no arguments and returns a const char *
-  *os << "ACE_INLINE const " << node->full_name () << be_nl
+  *os << "ACE_INLINE "
+      << valuebox_type_name ("const ", node->full_name ()) << be_nl
       << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -336,22 +336,24 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Modifier function with one argument of type const char *
   *os << "ACE_INLINE void" << be_nl
-      << vb_node->name () << "::_value (const "
-      << node->full_name () << " val)" << be_nl
+      << vb_node->name () << "::_value ("
+      << valuebox_type_name ("const ", node->full_name ())
+      << " val)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Modifier function with one argument of type const CORBA::String_var&
   *os << "ACE_INLINE void" << be_nl
-      << vb_node->name () << "::_value (const ::CORBA::" << string_type
-      << "_var& var)" << be_nl
+      << vb_node->name () << "::_value (::CORBA::" << string_type
+      << "_var const &var)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Access to the boxed value for method signatures
-  *os << "ACE_INLINE const " << node->full_name () << be_nl
+  *os << "ACE_INLINE "
+      << valuebox_type_name ("const ", node->full_name ()) << be_nl
       << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -560,8 +562,8 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
 int
 be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
-                                              const char * type_suffix,
-                                              bool is_any)
+                                              std::string_view type_suffix,
+                                              bool is_any) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -626,7 +628,7 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 }
 
 void
-be_visitor_valuebox_ci::emit_default_constructor ()
+be_visitor_valuebox_ci::emit_default_constructor () const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -641,7 +643,7 @@ be_visitor_valuebox_ci::emit_default_constructor ()
 }
 
 void
-be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -654,7 +656,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
-      << node->full_name () << "* p = 0;" << be_nl
+      << node->full_name () << "* p = nullptr;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name ()
@@ -665,7 +667,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
 
 void
 be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
-                                                  const char * type_suffix)
+                                                  std::string_view type_suffix) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -682,7 +684,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
 }
 
 void
-be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -692,9 +694,9 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
   // Public constructor with single argument of type const T&
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
-      << " (const " << node->full_name () << "& value)" << be_nl
+      << " (" << node->full_name () << " const &value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = 0;" << be_nl
+      << node->full_name () << "* p = nullptr;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
@@ -703,7 +705,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
 }
 
 void
-be_visitor_valuebox_ci::emit_copy_constructor ()
+be_visitor_valuebox_ci::emit_copy_constructor () const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -713,7 +715,7 @@ be_visitor_valuebox_ci::emit_copy_constructor ()
   // Public Copy constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
-      << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
+      << " (" << vb_node->full_name () << " const &val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl
       << "  ::CORBA::DefaultValueRefCountBase ()"
       << be_uidt_nl
@@ -723,7 +725,7 @@ be_visitor_valuebox_ci::emit_copy_constructor ()
 }
 
 void
-be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -732,13 +734,13 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
 
   // Public copy constructor
   *os << "ACE_INLINE" << be_nl
-      << vb_node->name () << "::" << vb_node->local_name () << " (const "
-      << vb_node->full_name () << "& val)" << be_idt_nl
+      << vb_node->name () << "::" << vb_node->local_name () << " ("
+      << vb_node->full_name () << " const &val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl
       << "  ::CORBA::DefaultValueRefCountBase ()"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = 0;" << be_nl
+      << node->full_name () << "* p = nullptr;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (val._pd_value.in ()));" << be_uidt_nl
@@ -749,7 +751,7 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
 
 void
 be_visitor_valuebox_ci::emit_assignment (be_decl *node,
-                                         const char * type_suffix)
+                                         std::string_view type_suffix) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -767,7 +769,7 @@ be_visitor_valuebox_ci::emit_assignment (be_decl *node,
 }
 
 void
-be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
+be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -776,10 +778,10 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
 
   // Public assignment operator with one argument of type const T&
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
-      << vb_node->name () << "::operator= (const "
-      << node->full_name () << "& value)" << be_nl
+      << vb_node->name () << "::operator= ("
+      << node->full_name () << " const &value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = 0;" << be_nl
+      << node->full_name () << "* p = nullptr;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value)," << be_nl
@@ -791,7 +793,7 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
 
 
 void
-be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
+be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -799,7 +801,7 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
   be_decl * vb_node = this->ctx_->node ();
 
   // Public accessor method (const)
-  *os << "ACE_INLINE const " << node->full_name () << " &" << be_nl
+  *os << "ACE_INLINE " << node->full_name () << " const &" << be_nl
       << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
@@ -814,10 +816,10 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
 
   // Public modifier method
   *os << "ACE_INLINE void" << be_nl
-      << vb_node->name () << "::_value (const "
-      << node->full_name () << "& value)" << be_nl
+      << vb_node->name () << "::_value ("
+      << node->full_name () << " const &value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p = 0;" << be_nl
+      << node->full_name () << "* p = nullptr;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
@@ -827,7 +829,7 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
 
 void
 be_visitor_valuebox_ci::emit_boxed_access (be_decl *node,
-                                           const char *out_ref_modifier)
+                                           std::string_view out_ref_modifier) const
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -835,7 +837,7 @@ be_visitor_valuebox_ci::emit_boxed_access (be_decl *node,
   be_decl * vb_node = this->ctx_->node ();
 
   // Access to the boxed value for method signatures
-  *os << "ACE_INLINE const " << node->full_name () << " &" << be_nl
+  *os << "ACE_INLINE " << node->full_name () << " const &" << be_nl
       << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl

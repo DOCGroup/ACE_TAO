@@ -19,6 +19,8 @@
 #include "be_type.h"
 #include "ast_map.h"
 
+#include <string>
+
 class AST_Expression;
 class AST_Type;
 class be_visitor;
@@ -66,35 +68,35 @@ public:
   virtual AST_Map *fe_add_map (AST_Map *);
 
   /// Overridden method on the be_scope class.
-  virtual be_decl *decl ();
+  be_decl *decl () override;
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+                                     bool use_underscore) override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Report the instance name for instantiation.
-  const char *instance_name ();
+  std::string instance_name () const;
 
   /// Accessors for the member.
   be_field *field_node () const;
   void field_node (be_field *node);
 
   /// Helper to create_name, also used by the traits visitor.
-  virtual char *gen_name ();
+  virtual std::string gen_name ();
 
 private:
-  const char *smart_fwd_helper_name (AST_Decl *elem_scope,
+  std::string smart_fwd_helper_name (AST_Decl *elem_scope,
                                      be_type *elem);
 
 private:
   /// Used if we are an anonymous member, to help generate a unique name.
-  be_field *field_node_;
+  be_field *field_node_ {};
 };
 
 #endif

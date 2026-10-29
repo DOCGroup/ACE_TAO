@@ -11,13 +11,11 @@
 #include "operation.h"
 #include "ace/SString.h"
 
+#include <string>
+
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
       be_visitor_context *ctx)
   : be_visitor_operation (ctx)
-{
-}
-
-be_visitor_amh_operation_ss::~be_visitor_amh_operation_ss ()
 {
 }
 
@@ -298,7 +296,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
 int
 be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                                                        TAO_OutStream *os,
-                                                       const char *skel_prefix)
+                                                       std::string_view skel_prefix)
 {
   TAO_INSERT_COMMENT (os);
 
@@ -318,18 +316,12 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
     }
 
 
-  char *buf;
-  intf->compute_full_name ("AMH_", "", buf);
-  ACE_CString amh_skel_name ("POA_");
-  amh_skel_name += buf;
-  // buf was allocated by ACE_OS::strdup, so we need to use free instead
-  // of delete.
-  ACE_OS::free (buf);
-  buf = nullptr;
+  std::string amh_skel_name ("POA_");
+  amh_skel_name += intf->compute_full_name ("AMH_", "");
 
   *os << "void" << be_nl
-      << amh_skel_name.c_str () << "::"
-      << skel_prefix << this->ctx_->port_prefix ().c_str ()
+      << amh_skel_name << "::"
+      << skel_prefix << this->ctx_->port_prefix ()
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl
@@ -342,8 +334,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   *os << "{" << be_idt_nl;
 
   // Get the right object implementation.
-  *os << amh_skel_name.c_str () << " * const _tao_impl =" << be_idt_nl
-      << "dynamic_cast<" << amh_skel_name.c_str () << " *> ("
+  *os << amh_skel_name << " * const _tao_impl =" << be_idt_nl
+      << "dynamic_cast<" << amh_skel_name << " *> ("
       << "_tao_servant" << ");" << be_uidt_nl;
 
   *os << "if (!_tao_impl)" << be_idt_nl
@@ -368,14 +360,9 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
     }
 
   // Create the response handler
-  char *buf;
-  intf->compute_full_name ("TAO_AMH_", "ResponseHandler", buf);
-  ACE_CString response_handler_implementation_name ("POA_");
-  response_handler_implementation_name += buf;
-  // buf was allocated by ACE_OS::strdup, so we need to use free instead
-  // of delete.
-  ACE_OS::free (buf);
-  buf = nullptr;
+  std::string response_handler_implementation_name ("POA_");
+  response_handler_implementation_name +=
+    intf->compute_full_name ("TAO_AMH_", "ResponseHandler");
 
   *os << be_nl
       << "TAO_ORB_Core *orb_core =" << be_idt_nl
@@ -384,16 +371,16 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << "orb_core->lane_resources ().amh_response_handler_allocator ();"
       << be_uidt_nl << be_nl
       << "TAO::TAO_Buffer_Allocator<" << be_idt << be_idt_nl
-      << response_handler_implementation_name.c_str () << "," << be_nl
+      << response_handler_implementation_name << "," << be_nl
       << "TAO_AMH_BUFFER_ALLOCATOR" << be_uidt_nl
       << "> buffer_allocator (amh_allocator);"
       << be_uidt_nl << be_nl
-      << response_handler_implementation_name.c_str ()
+      << response_handler_implementation_name
       << "_ptr _tao_rh_ptr = "
       << be_idt_nl
       << "buffer_allocator.allocate();"
       << be_uidt_nl << be_nl
-      << "if (!_tao_rh_ptr) " << be_idt_nl << "throw ::CORBA::NO_MEMORY ();"
+      << "if (!_tao_rh_ptr)" << be_idt_nl << "throw ::CORBA::NO_MEMORY ();"
       << be_uidt_nl;
 
   // Initialize amh rh
@@ -401,7 +388,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << be_nl;
 
   *os <<  "ACE_Utils::Auto_Functor <"
-      << response_handler_implementation_name.c_str ()
+      << response_handler_implementation_name
       << ", TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);"
       << be_nl;
 

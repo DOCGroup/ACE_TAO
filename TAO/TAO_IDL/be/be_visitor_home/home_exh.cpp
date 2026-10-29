@@ -11,16 +11,12 @@
 
 #include "home.h"
 
+#include <string_view>
+
 be_visitor_home_exh::be_visitor_home_exh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->exec_export_macro ())
-{
-}
-
-be_visitor_home_exh::~be_visitor_home_exh ()
 {
 }
 
@@ -101,15 +97,15 @@ int
 be_visitor_home_exh::gen_exec_class ()
 {
   // We don't want a '_cxx_' prefix here.
-  const char *lname =
-    node_->original_local_name ()->get_string ();
+  std::string_view const lname =
+    node_->original_local_name ()->get_string_view_or_empty ();
 
   os_ << be_nl
       << "/**" << be_nl
       << " * Home Executor Implementation Class: "
       << lname << "_exec_i" << be_nl
       << " */" << be_nl
-      << "class " << export_macro_.c_str () << " " << lname
+      << "class " << export_macro_ << " " << lname
       << "_exec_i" << be_idt_nl
       << ": public virtual " << lname << "_Exec," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
@@ -182,7 +178,7 @@ be_visitor_home_exh::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "/// Factory method for " << node_->full_name () << be_nl
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
       << "_Impl ();";

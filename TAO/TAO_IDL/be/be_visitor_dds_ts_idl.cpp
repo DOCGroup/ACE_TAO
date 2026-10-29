@@ -25,16 +25,15 @@
 #include "utl_string.h"
 #include "utl_identifier.h"
 
+#include <string_view>
+
 be_visitor_dds_ts_idl::be_visitor_dds_ts_idl (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    os_ptr_ (nullptr)
+  : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_dds_ts_idl::~be_visitor_dds_ts_idl ()
-{
-}
+be_visitor_dds_ts_idl::~be_visitor_dds_ts_idl () = default;
 
 int
 be_visitor_dds_ts_idl::visit_root (be_root *node)
@@ -112,7 +111,8 @@ void
 be_visitor_dds_ts_idl::gen_datawriter (be_type *node)
 {
   TAO_OutStream &los (*this->os_ptr_);
-  const char *lname = node->local_name ()->get_string ();
+  std::string_view const lname =
+    node->local_name ()->get_string_view_or_empty ();
 
   los << be_nl
       << "local interface " << lname
@@ -183,7 +183,8 @@ void
 be_visitor_dds_ts_idl::gen_datareader (be_type *node)
 {
   TAO_OutStream &los (*this->os_ptr_);
-  const char *lname = node->local_name ()->get_string ();
+  std::string_view const lname =
+    node->local_name ()->get_string_view_or_empty ();
 
   los << be_nl_2
       << "local interface " << lname
@@ -320,20 +321,20 @@ int
 be_visitor_dds_ts_idl::init_file ()
 {
   /// Open an IDL file for writing.
-  ACE_CString orig (
-    idl_global->stripped_filename ()->get_string ());
+  std::string orig (
+    idl_global->stripped_filename ()->get_string_view_or_empty ());
 
-  ACE_CString fname_noext (orig.substr (0, orig.rfind ('.')));
+  std::string fname_noext (orig.substr (0, orig.rfind ('.')));
   fname_noext += "TypeSupport";
 
-  ACE_CString fname (fname_noext);
+  std::string fname (fname_noext);
   fname += ".idl";
 
   ACE_NEW_RETURN (this->os_ptr_,
                   TAO_OutStream,
                   -1);
 
-  int status = this->os_ptr_->open (fname.c_str ());
+  int status = this->os_ptr_->open (fname);
 
   if (status == -1)
     {
@@ -344,14 +345,14 @@ be_visitor_dds_ts_idl::init_file ()
                         -1);
     }
 
-  this->os_ptr_->gen_ifdef_macro (fname_noext.c_str (),
+  this->os_ptr_->gen_ifdef_macro (fname_noext,
                                   "IDL",
                                   false);
 
   *this->os_ptr_ << be_nl_2
                  << "#include <dds_rtf2_dcps.idl>" << be_nl_2
                  << "#include \""
-                 << idl_global->filename ()->get_string ()
+                 << idl_global->filename ()->get_string_view_or_empty ()
                  << "\"";
 
   return 0;

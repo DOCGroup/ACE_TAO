@@ -26,11 +26,16 @@
 class be_visitor_root_exs : public be_visitor_root
 {
 public:
-  be_visitor_root_exs (be_visitor_context *ctx);
+  explicit be_visitor_root_exs (be_visitor_context *ctx);
 
-  ~be_visitor_root_exs ();
+  ~be_visitor_root_exs () override = default;
 
-  virtual int visit_root (be_root *node);
+  be_visitor_root_exs (const be_visitor_root_exs &) = delete;
+  be_visitor_root_exs (be_visitor_root_exs &&) = delete;
+  be_visitor_root_exs &operator= (const be_visitor_root_exs &) = delete;
+  be_visitor_root_exs &operator= (be_visitor_root_exs &&) = delete;
+
+  int visit_root (be_root *node) override;
 
 private:
   /// Open file and initialize stream.

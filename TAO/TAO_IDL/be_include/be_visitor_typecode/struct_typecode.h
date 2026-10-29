@@ -27,7 +27,12 @@ namespace TAO
   {
   public:
     /// Constructor.
-    be_visitor_struct_typecode (be_visitor_context * ctx);
+    explicit be_visitor_struct_typecode (be_visitor_context * ctx);
+
+    be_visitor_struct_typecode (be_visitor_struct_typecode const &) = delete;
+    be_visitor_struct_typecode (be_visitor_struct_typecode &&) = delete;
+    be_visitor_struct_typecode &operator= (be_visitor_struct_typecode const &) = delete;
+    be_visitor_struct_typecode &operator= (be_visitor_struct_typecode &&) = delete;
 
     /// Visit a structure.
     /**
@@ -37,7 +42,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_structure (be_structure * node);
+    int visit_structure (be_structure * node) override;
 
     /// Visit an exception.
     /**
@@ -47,7 +52,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_exception (be_exception * node);
+    int visit_exception (be_exception * node) override;
 
   private:
     /// Underlying structure/exception visitor code.
@@ -69,11 +74,11 @@ namespace TAO
      * @note Only applies for struct TypeCodes.  Exceptions cannot be
      *       recursive.
      */
-    bool is_recursive_;
+    bool is_recursive_ {};
 
     /// @c true if this visitor is already visiting an outer scope
     /// struct or exception
-    bool is_nested_;
+    bool is_nested_ {};
   };
 }
 

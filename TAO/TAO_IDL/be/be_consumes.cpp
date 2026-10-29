@@ -20,9 +20,7 @@ be_consumes::be_consumes (UTL_ScopedName *n,
 {
 }
 
-be_consumes::~be_consumes ()
-{
-}
+be_consumes::~be_consumes () = default;
 
 be_eventtype *
 be_consumes::consumes_type () const

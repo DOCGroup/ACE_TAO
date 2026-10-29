@@ -33,10 +33,15 @@ class be_visitor_sequence_base : public be_visitor_decl
 {
 public:
   /// Constructor
-  be_visitor_sequence_base (be_visitor_context *ctx);
+  explicit be_visitor_sequence_base (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_base () override;
+  ~be_visitor_sequence_base () override = default;
+
+  be_visitor_sequence_base (const be_visitor_sequence_base &) = delete;
+  be_visitor_sequence_base (be_visitor_sequence_base &&) = delete;
+  be_visitor_sequence_base &operator= (const be_visitor_sequence_base &) = delete;
+  be_visitor_sequence_base &operator= (be_visitor_sequence_base &&) = delete;
 
   // = Visitor methods.
   int visit_predefined_type (be_predefined_type *node) override;
@@ -76,10 +81,17 @@ class be_visitor_sequence_base_template_args: public be_visitor_sequence_base
 {
 public:
   be_visitor_sequence_base_template_args (be_visitor_context *ctx,
-                                          be_sequence *node );
+                                          be_sequence *node);
 
   ///Dtor
-  ~be_visitor_sequence_base_template_args () override;
+  ~be_visitor_sequence_base_template_args () override = default;
+
+  be_visitor_sequence_base_template_args (const be_visitor_sequence_base_template_args &) = delete;
+  be_visitor_sequence_base_template_args (be_visitor_sequence_base_template_args &&) = delete;
+  be_visitor_sequence_base_template_args &operator= (
+    const be_visitor_sequence_base_template_args &) = delete;
+  be_visitor_sequence_base_template_args &operator= (
+    be_visitor_sequence_base_template_args &&) = delete;
 
   //= Visit methods
   int visit_interface (be_interface *node) override;

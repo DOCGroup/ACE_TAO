@@ -66,17 +66,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _FE_EXTERN_FE_EXTERN_HH
 
 #include "TAO_IDL_FE_Export.h"
-#include "ace/SString.h"
-#include "ace/Unbounded_Queue.h"
+
+#include <optional>
+#include <string>
+#include <vector>
 
 // Declares all global functions for the FE
 
 TAO_IDL_FE_Export void FE_init ();
 TAO_IDL_FE_Export void FE_populate ();
-TAO_IDL_FE_Export void FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list);
+TAO_IDL_FE_Export void FE_extract_env_include_paths (std::vector<std::string> &list);
 TAO_IDL_FE_Export void FE_store_env_include_paths ();
-TAO_IDL_FE_Export const char *FE_get_cpp_loc_from_env ();
-TAO_IDL_FE_Export const char *FE_get_cpp_args_from_env ();
+TAO_IDL_FE_Export std::string FE_get_cpp_loc_from_env ();
+TAO_IDL_FE_Export std::optional<std::string> FE_get_cpp_args_from_env ();
 
 TAO_IDL_FE_Export int
 FE_yyparse ();
@@ -114,14 +116,10 @@ FE_new_UTL_Indenter ();
 class TAO_IDL_FE_Export Bailout
 {
 public:
-  bool increment_errors_;
-  int errors_;
-  Bailout()
-    : increment_errors_ (true),
-      errors_ (-1) // (Invalid)
-  {
-  }
-  Bailout(int errors)
+  bool increment_errors_ {true};
+  int errors_ {-1}; // (Invalid)
+  Bailout () = default;
+  explicit Bailout (int errors)
     : increment_errors_ (false),
       errors_ (errors)
   {

@@ -9,10 +9,14 @@ class AST_EventType;
 class TAO_IDL_FE_Export AST_Consumes : public virtual AST_Field
 {
 public:
+  AST_Consumes (AST_Consumes const &) = delete;
+  AST_Consumes (AST_Consumes &&) = delete;
+  AST_Consumes &operator= (AST_Consumes const &) = delete;
+  AST_Consumes &operator= (AST_Consumes &&) = delete;
   AST_Consumes (UTL_ScopedName *n,
                 AST_Type *consumes_type);
 
-  ~AST_Consumes () override;
+  ~AST_Consumes () override = default;
 
   // Data Accessor.
   AST_Type *consumes_type () const;

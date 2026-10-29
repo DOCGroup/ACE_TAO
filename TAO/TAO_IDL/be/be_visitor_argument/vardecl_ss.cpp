@@ -23,10 +23,6 @@ be_visitor_args_vardecl_ss::be_visitor_args_vardecl_ss (
 {
 }
 
-be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss ()
-{
-}
-
 int be_visitor_args_vardecl_ss::visit_argument (
   be_argument *node)
 {

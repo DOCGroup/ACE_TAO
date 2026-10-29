@@ -19,12 +19,7 @@
 
 be_visitor_operation_arglist::be_visitor_operation_arglist (
     be_visitor_context *ctx)
-  : be_visitor_operation (ctx),
-    unused_ (false)
-{
-}
-
-be_visitor_operation_arglist::~be_visitor_operation_arglist ()
+  : be_visitor_operation (ctx)
 {
 }
 

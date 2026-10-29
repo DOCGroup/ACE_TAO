@@ -7,11 +7,15 @@
 class TAO_IDL_FE_Export AST_Uses : public virtual AST_Field
 {
 public:
+  AST_Uses (AST_Uses const &) = delete;
+  AST_Uses (AST_Uses &&) = delete;
+  AST_Uses &operator= (AST_Uses const &) = delete;
+  AST_Uses &operator= (AST_Uses &&) = delete;
   AST_Uses (UTL_ScopedName *n,
             AST_Type *uses_type,
             bool is_multiple);
 
-  ~AST_Uses () override;
+  ~AST_Uses () override = default;
 
   // Data Accessors.
   AST_Type *uses_type () const;

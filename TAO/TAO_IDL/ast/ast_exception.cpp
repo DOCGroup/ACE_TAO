@@ -100,10 +100,6 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception ()
-{
-}
-
 // Public operations.
 
 // Are we or the parameter node involved in any recursion?

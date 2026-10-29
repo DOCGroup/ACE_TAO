@@ -82,14 +82,20 @@ public:
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);
+  AST_UnionBranch (AST_UnionBranch const &) = delete;
+  AST_UnionBranch (AST_UnionBranch &&) = delete;
+  AST_UnionBranch &operator= (AST_UnionBranch const &) = delete;
+  AST_UnionBranch &operator= (AST_UnionBranch &&) = delete;
 
-  ~AST_UnionBranch () override;
+  ~AST_UnionBranch () override = default;
 
-  UTL_LabelList *labels () const;
+  UTL_LabelList *labels ();
+  UTL_LabelList const *labels () const;
 
   AST_UnionLabel *label (unsigned long index = 0);
+  AST_UnionLabel const *label (unsigned long index = 0) const;
 
-  unsigned long label_list_length ();
+  unsigned long label_list_length () const;
 
   // Called if our labels are enum values - adds them to the
   // enclosing scope's name_referenced list.

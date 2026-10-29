@@ -39,14 +39,15 @@
 
 #include "ace/Log_Msg.h"
 
+#include <string>
+#include <string_view>
+
 be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_traits::~be_visitor_traits ()
-{
-}
+be_visitor_traits::~be_visitor_traits () = default;
 
 int
 be_visitor_traits::visit_root (be_root *node)
@@ -118,7 +119,7 @@ be_visitor_traits::visit_interface (be_interface *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      const char *fname = node->full_name ();
+      std::string_view const fname = node->full_name ();
 
       *os << be_nl_2
           << "template<>" << be_nl
@@ -403,7 +404,7 @@ be_visitor_traits::visit_array (be_array *node)
       return 0;
     }
 
-  ACE_CString name_holder;
+  std::string name_holder;
 
   if (node->is_nested ())
     {
@@ -418,14 +419,12 @@ be_visitor_traits::visit_array (be_array *node)
           name_holder += "_";
         }
 
-      name_holder += node->local_name ()->get_string ();
+      name_holder += node->local_name ()->get_string_view_or_empty ();
     }
   else
     {
       name_holder = node->full_name ();
     }
-
-  const char *name = name_holder.fast_rep ();
 
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -434,27 +433,27 @@ be_visitor_traits::visit_array (be_array *node)
       << "template<>" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
       << be_idt << be_idt_nl
-      << name << "_forany" << be_uidt_nl
+      << name_holder << "_forany" << be_uidt_nl
       << ">" << be_uidt_nl
       << "{" << be_idt_nl
       << "static void free (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice);"
+      << name_holder << "_slice * _tao_slice);"
       << be_uidt
       << be_uidt_nl
-      << "static " << name << "_slice * dup ("
+      << "static " << name_holder << "_slice * dup ("
       << be_idt << be_idt_nl
-      << "const " << name << "_slice * _tao_slice);"
+      << "const " << name_holder << "_slice * _tao_slice);"
       << be_uidt
       << be_uidt_nl
       << "static void copy (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_to," << be_nl
-      << "const " << name << "_slice * _tao_from);"
+      << name_holder << "_slice * _tao_to," << be_nl
+      << "const " << name_holder << "_slice * _tao_from);"
       << be_uidt
       << be_uidt_nl
-      << "static " << name << "_slice * alloc ();"
+      << "static " << name_holder << "_slice * alloc ();"
       << be_nl
       << "static void zero (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice);"
+      << name_holder << "_slice * _tao_slice);"
       << be_uidt
       << be_uidt
       << be_uidt_nl

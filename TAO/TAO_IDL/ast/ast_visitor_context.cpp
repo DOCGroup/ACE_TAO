@@ -12,19 +12,11 @@
 
 #include "ast_visitor_context.h"
 
-ast_visitor_context::ast_visitor_context ()
-  : template_params_ (nullptr),
-    template_args_ (nullptr)
-{
-}
+ast_visitor_context::ast_visitor_context () = default;
 
 ast_visitor_context::ast_visitor_context (const ast_visitor_context &ctx)
   : template_params_ (ctx.template_params_),
     template_args_ (ctx.template_args_)
-{
-}
-
-ast_visitor_context::~ast_visitor_context ()
 {
 }
 

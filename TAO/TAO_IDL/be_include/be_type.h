@@ -17,6 +17,9 @@
 #include "be_decl.h"
 #include "ast_type.h"
 
+#include <string>
+#include <string_view>
+
 #include "ace/SString.h"
 
 class TAO_OutStream;
@@ -28,7 +31,7 @@ public:
   be_type (AST_Decl::NodeType nt,
            UTL_ScopedName *n);
 
-  virtual ~be_type ();
+  ~be_type () override;
 
   /**
    * Return the typecode name. When both, the prefix and the suffix
@@ -39,9 +42,9 @@ public:
 
   /// Type name of a node used when generating declarations for smart
   /// proxies.
-  virtual const char *nested_sp_type_name (be_decl *use_scope,
-                                           const char *suffix = 0,
-                                           const char *prefix = 0);
+  virtual std::string nested_sp_type_name (be_decl *use_scope,
+                                           std::string_view suffix = {},
+                                           std::string_view prefix = {}) const;
 
   /// Compute the value of the member.
   void gen_fwd_helper_name ();
@@ -52,13 +55,13 @@ public:
 
   /// Generic implementation here, overridden for some types.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
+                                            std::string_view instance_name,
                                             bool use_underscore,
                                             bool accessor = false);
 
   /// Accessor to the member.
-  const char *fwd_helper_name () const;
-  void fwd_helper_name (const char *name);
+  std::string_view fwd_helper_name () const;
+  void fwd_helper_name (std::string_view name);
 
   /// Generate _var and _out typedefs for structs and unions.
   void gen_common_varout (TAO_OutStream *os);
@@ -87,32 +90,32 @@ public:
   virtual AST_Decl::NodeType base_node_type () const;
 
   /// Clean up allocated members.
-  virtual void destroy ();
+  virtual void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  virtual int accept (be_visitor* visitor) override;
 
 protected:
   /// Computes the fully scoped typecode name.
   virtual void compute_tc_name ();
 
   /// Typecode name.
-  UTL_ScopedName *tc_name_;
+  UTL_ScopedName *tc_name_ {};
 
   /// Used by interfaces, valuetypes and arrays to name helper structs.
-  ACE_CString fwd_helper_name_;
+  std::string fwd_helper_name_;
 
   /// Have we generated our _var and _out class typedefs yet?
-  bool common_varout_gen_;
+  bool common_varout_gen_ {};
 
   /// Has this declaration been used as a sequence element?
-  bool seen_in_sequence_;
+  bool seen_in_sequence_ {};
 
   /// Has this declaration been used as a map element?
-  bool seen_in_map_;
+  bool seen_in_map_ {};
 
   /// Has this declaration been used as a return type or parameter?
-  bool seen_in_operation_;
+  bool seen_in_operation_ {};
 };
 
 #endif // end of if !defined

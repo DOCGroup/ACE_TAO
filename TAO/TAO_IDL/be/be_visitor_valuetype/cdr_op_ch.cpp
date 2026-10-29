@@ -19,10 +19,6 @@ be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
 {
 }
 
-be_visitor_valuetype_cdr_op_ch::~be_visitor_valuetype_cdr_op_ch ()
-{
-}
-
 int
 be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
 {

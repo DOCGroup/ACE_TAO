@@ -21,10 +21,6 @@ be_visitor_typedef_any_op_ch::be_visitor_typedef_any_op_ch (
 {
 }
 
-be_visitor_typedef_any_op_ch::~be_visitor_typedef_any_op_ch ()
-{
-}
-
 int
 be_visitor_typedef_any_op_ch::visit_typedef (be_typedef *node)
 {

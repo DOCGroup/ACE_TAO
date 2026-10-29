@@ -87,6 +87,12 @@ UTL_ExprList::head ()
   return this->pd_car_data;
 }
 
+AST_Expression const *
+UTL_ExprList::head () const
+{
+  return this->pd_car_data;
+}
+
 void
 UTL_ExprList::destroy ()
 {
@@ -107,13 +113,13 @@ UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator (UTL_ExprList *s)
 
 // Get current item.
 AST_Expression *
-UTL_ExprlistActiveIterator::item ()
+UTL_ExprlistActiveIterator::item () const
 {
   if (source == nullptr)
     {
       return nullptr;
     }
 
-  return ((UTL_ExprList *) source)->head ();
+  return static_cast<UTL_ExprList *> (source)->head ();
 }
 

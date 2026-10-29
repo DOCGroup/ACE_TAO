@@ -20,10 +20,6 @@ be_visitor_typedef::be_visitor_typedef (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef::~be_visitor_typedef ()
-{
-}
-
 int be_visitor_typedef::visit_typedef (be_typedef *)
 {
   return -1; // Must be overridden.
@@ -38,7 +34,7 @@ be_visitor_typedef::visit_array (be_array *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -116,7 +112,7 @@ be_visitor_typedef::visit_enum (be_enum *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -188,7 +184,7 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -262,7 +258,7 @@ be_visitor_typedef::visit_map (be_map *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -337,7 +333,7 @@ be_visitor_typedef::visit_structure (be_structure *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -413,7 +409,7 @@ be_visitor_typedef::visit_union (be_union *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

@@ -12,16 +12,14 @@
 #include "valuetype.h"
 #include "nr_extern.h"
 
+#include <string_view>
+
 // ************************************************************
 // Interface visitor for server skeletons.
 // ************************************************************
 
 be_visitor_valuetype_ss::be_visitor_valuetype_ss (be_visitor_context *ctx)
   : be_visitor_valuetype (ctx)
-{
-}
-
-be_visitor_valuetype_ss::~be_visitor_valuetype_ss ()
 {
 }
 
@@ -48,27 +46,16 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  ACE_CString full_skel_name_holder =
-    this->generate_full_skel_name (node);
-
-  const char *full_skel_name = full_skel_name_holder.c_str ();
+  std::string_view const full_skel_name = node->full_skel_name ();
 
   TAO_INSERT_COMMENT (os);
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
   // each case.
-  const char *local_name_prefix = "";
-
-  if (!node->is_nested ())
-    {
-      local_name_prefix = "POA_";
-    }
-
-  ACE_CString node_local_name_holder =
-    this->generate_local_name (node);
-
-  const char *node_local_name = node_local_name_holder.c_str ();
+  std::string_view const local_name_prefix =
+    node->is_nested () ? std::string_view {} : "POA_";
+  std::string_view const node_local_name = node->local_name ();
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
@@ -121,16 +108,4 @@ int
 be_visitor_valuetype_ss::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
-}
-
-ACE_CString
-be_visitor_valuetype_ss::generate_local_name (be_valuetype *node)
-{
-  return ACE_CString (node->local_name ());
-}
-
-ACE_CString
-be_visitor_valuetype_ss::generate_full_skel_name (be_valuetype *node)
-{
-  return ACE_CString (node->full_skel_name ());
 }

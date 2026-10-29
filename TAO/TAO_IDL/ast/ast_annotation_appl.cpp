@@ -50,21 +50,19 @@ AST_Annotation_Appl::AST_Annotation_Appl (
     AST_Structure (name, false, false),
     AST_Annotation_Decl (name),
     original_name_ (name->get_string_copy ()),
-    params_ (params),
-    annotation_decl_ (nullptr)
+    params_ (params)
 {
 }
 
 AST_Annotation_Appl::~AST_Annotation_Appl ()
 {
-  delete [] original_name_;
   delete_params (params_);
   AST_Structure::destroy ();
 }
 
 void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
 {
-  dump_i (o, original_name_);
+  dump_i (o, this->original_name_.c_str ());
   if (params_)
     {
       dump_i (o, "(");
@@ -98,7 +96,7 @@ void AST_Annotation_Appl::destroy ()
 {
 }
 
-const char *AST_Annotation_Appl::original_name () const
+std::string_view AST_Annotation_Appl::original_name () const
 {
   return original_name_;
 }
@@ -124,7 +122,8 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
            * Check to see if we have a parameter that matches this. If not,
            * make sure that the member has a default value.
            */
-          Param *param = find_param (member->local_name ()->get_string ());
+          Param *param = find_param (
+            member->local_name ()->get_string_view_or_empty ());
           if (param)
             {
               new_member->value (new AST_Expression (param->expr, member->expr_type()));
@@ -180,7 +179,7 @@ AST_Annotation_Appl::annotation_decl ()
 }
 
 AST_Annotation_Appl::Param *
-AST_Annotation_Appl::find_param (const char *name)
+AST_Annotation_Appl::find_param (std::string_view name) const
 {
   if (params_)
     {
@@ -200,7 +199,8 @@ AST_Annotation_Appl::find_param (const char *name)
         {
           Param **param = nullptr;
           it.next (param);
-          if ((*param) && (*param)->id && !ACE_OS::strcmp ((*param)->id->get_string (), name))
+          if ((*param) && (*param)->id
+              && (*param)->id->get_string_view_or_empty () == name)
             {
               return (*param);
             }

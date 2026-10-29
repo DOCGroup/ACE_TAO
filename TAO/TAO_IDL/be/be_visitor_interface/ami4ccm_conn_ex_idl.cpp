@@ -18,10 +18,6 @@ be_visitor_ami4ccm_conn_ex_idl::be_visitor_ami4ccm_conn_ex_idl (
 {
 }
 
-be_visitor_ami4ccm_conn_ex_idl::~be_visitor_ami4ccm_conn_ex_idl ()
-{
-}
-
 int
 be_visitor_ami4ccm_conn_ex_idl::visit_interface (be_interface *node)
 {

@@ -18,10 +18,6 @@ be_visitor_valuetype_fwd_ch::be_visitor_valuetype_fwd_ch (
 {
 }
 
-be_visitor_valuetype_fwd_ch::~be_visitor_valuetype_fwd_ch ()
-{
-}
-
 // Visit the valuetype_fwd node and its scope.
 int
 be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)

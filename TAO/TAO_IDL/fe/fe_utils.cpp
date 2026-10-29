@@ -19,17 +19,14 @@
 #include "utl_identifier.h"
 #include "utl_string.h"
 
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-
-FE_Utils::T_Param_Info::T_Param_Info ()
-  : type_ (AST_Decl::NT_fixed),
-    const_type_ (AST_Expression::EV_none),
-    enum_const_type_decl_ (nullptr)
-{
-}
 
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
@@ -189,29 +186,28 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
 }
 
 UTL_ScopedName *
-FE_Utils::string_to_scoped_name (const char *s)
+FE_Utils::string_to_scoped_name (std::string_view s)
 {
   UTL_ScopedName *retval = nullptr;
-  ACE_CString str (s);
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
 
-  while (! str.empty ())
+  while (!s.empty ())
     {
       // Skip a leading double colon.
-      if (str.find (':') == 0)
+      if (s.front () == ':')
         {
-          str = str.substr (2);
+          s.remove_prefix (s.size () > 1 ? 2 : 1);
         }
 
       // Find the next double colon (if any) and get the next
       // name segment.
-      ACE_CString::size_type pos = str.find (':');
-      ACE_CString lname (str.substr (0, pos));
+      std::string_view::size_type const pos = s.find (':');
+      std::string_view const local_name (s.substr (0, pos));
 
       // Construct a UTL_ScopedName segment.
       ACE_NEW_RETURN (id,
-                      Identifier (lname.c_str ()),
+                      Identifier (local_name),
                       nullptr);
 
       ACE_NEW_RETURN (sn,
@@ -230,44 +226,57 @@ FE_Utils::string_to_scoped_name (const char *s)
         }
 
       // Update the working string.
-      str = str.substr (pos);
+      if (pos == std::string_view::npos)
+        {
+          s = {};
+        }
+      else
+        {
+          s.remove_prefix (pos);
+        }
     }
 
   return retval;
 }
 
-const char *
-FE_Utils::stripped_preproc_include (const char *name)
+std::string_view
+FE_Utils::stripped_preproc_include (std::string_view name)
 {
   // Some preprocessors prepend "./" to filenames in the
   // working directory, some others prepend ".\". If either
   // of these are here, we want to strip them.
-  if (name[0] == '.')
+  if (!name.empty () && name.front () == '.')
     {
-      if (name[1] == '\\' || name[1] == '/')
+      if (name.size () > 1 && (name[1] == '\\' || name[1] == '/'))
         {
-          return name + 2;
+          name.remove_prefix (2);
         }
     }
 
   return name;
 }
 
+char const *
+FE_Utils::stripped_preproc_include (char const *name)
+{
+  return FE_Utils::stripped_preproc_include (std::string_view (name)).data ();
+}
+
 void
 FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                       AST_Uses *u,
-                                      const char *prefix)
+                                      std::string_view prefix)
 {
-  ACE_CString struct_name (prefix);
+  std::string struct_name (prefix);
 
   if (!struct_name.empty ())
     {
       struct_name += '_';
     }
 
-  struct_name += u->local_name ()->get_string ();
+  struct_name += u->local_name ()->get_string_view_or_empty ();
   struct_name += "Connection";
-  Identifier struct_id (struct_name.c_str ());
+  Identifier struct_id (struct_name);
   UTL_ScopedName sn (&struct_id, nullptr);
 
   // In case this call comes from the backend. We
@@ -340,9 +349,9 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                          false,
                                          false);
 
-  ACE_CString seq_string (struct_name);
+  std::string seq_string (struct_name);
   seq_string += 's';
-  Identifier seq_id (seq_string.c_str ());
+  Identifier seq_id (seq_string);
   UTL_ScopedName seq_name (&seq_id,
                            nullptr);
   AST_Typedef *connections =
@@ -366,16 +375,10 @@ FE_Utils::create_implied_ami_uses_stuff ()
       return;
     }
 
-  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-         idl_global->included_ami_recep_names ());
-       ! i.done ();
-       i.advance ())
+  for (std::string const &item : idl_global->included_ami_recep_names ())
     {
-      char **item = nullptr;
-      i.next (item);
-
       UTL_ScopedName *sn =
-        FE_Utils::string_to_scoped_name (*item);
+        FE_Utils::string_to_scoped_name (item);
 
       AST_Decl *d =
         idl_global->root ()->lookup_by_name (sn, true);
@@ -434,7 +437,7 @@ FE_Utils::create_implied_ami_uses_stuff ()
 }
 
 int
-FE_Utils::path_cmp (const char *s, const char *t)
+FE_Utils::path_cmp (std::string_view s, std::string_view t)
 {
 #if defined (WIN32)
   // Since Windows has case-insensitive filenames, the preprocessor,
@@ -444,27 +447,31 @@ FE_Utils::path_cmp (const char *s, const char *t)
   // spelled when created. This 'feature' was preventing the
   // validation of included IDL files, necessary before generating
   // the corresponding C++ includes.
-  return ACE_OS::strcasecmp (s, t);
+  size_t const common_length = s.size () < t.size () ? s.size () : t.size ();
+  int const compare = common_length == 0
+    ? 0
+    : ACE_OS::strncasecmp (s.data (), t.data (), common_length);
+  if (compare != 0)
+    {
+      return compare;
+    }
+
+  return s.size () < t.size () ? -1 : s.size () > t.size () ? 1 : 0;
 #else
-  return ACE_OS::strcmp (s, t);
+  return s.compare (t);
 #endif /* defined (WIN32) */
 }
 
 bool
-FE_Utils::hasspace (const char *s)
+FE_Utils::hasspace (std::string_view s)
 {
-  if (s)
+  // Windows can't have a space as the first or last character
+  // but a unix filename can. Need to check all characters.
+  for (size_t i = 0u; i < s.size (); ++i)
     {
-      const size_t length = ACE_OS::strlen (s);
-
-      // Windows can't have a space as the first or last character
-      // but a unix filename can. Need to check all characters.
-      for (size_t i = 0u; i < length; ++i)
+      if (ACE_OS::ace_isspace (s [i]))
         {
-          if (ACE_OS::ace_isspace (s [i]))
-            {
-              return true;
-            }
+          return true;
         }
     }
 
@@ -474,9 +481,10 @@ FE_Utils::hasspace (const char *s)
 ACE_CString
 FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 {
-  ACE_CString id, retval;
-  const char *pattern = "sequence<";
-  size_t len = ACE_OS::strlen (pattern);
+  std::string id;
+  ACE_CString retval;
+  std::string const pattern ("sequence<");
+  size_t const len = pattern.length ();
   size_t index = 0;
 
 
@@ -496,7 +504,7 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 
           if (!FE_Utils::check_one_seq_of_param (list, id, index))
             {
-              retval = id;
+              retval = id.c_str ();
               break;
             }
         }
@@ -506,12 +514,12 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 }
 
 FILE *
-FE_Utils::open_included_file (char const * filename,
-                              char const *& directory)
+FE_Utils::open_included_file (std::string_view filename,
+                              std::string &directory)
 {
   FILE * f = nullptr;
-  ACE_CString const the_file (ACE_CString ('/')
-                              + ACE_CString (filename));
+  std::string the_file ("/");
+  the_file += filename;
 
   for (IDL_GlobalData::Unbounded_Paths_Queue_Iterator i (
          idl_global->include_paths ());
@@ -521,15 +529,15 @@ FE_Utils::open_included_file (char const * filename,
       IDL_GlobalData::Include_Path_Info *path_info = nullptr;
       (void) i.next (path_info);
 
-      if (path_info->path_ != nullptr)
+      if (path_info->path_)
         {
-          ACE_CString const complete_filename (ACE_CString (path_info->path_)
-                                               + the_file);
+          std::string const complete_filename =
+            *path_info->path_ + the_file;
 
           f = ACE_OS::fopen (complete_filename.c_str (), "r");
 
           if (f != nullptr)
-            directory = path_info->path_;
+            directory = *path_info->path_;
         }
     }
 
@@ -537,7 +545,7 @@ FE_Utils::open_included_file (char const * filename,
 }
 
 bool
-FE_Utils::is_include_file_found (ACE_CString & inc_file,
+FE_Utils::is_include_file_found (std::string &inc_file,
                                  UTL_String * idl_file_name)
 {
   char abspath[MAXPATHLEN] = "";
@@ -545,18 +553,16 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
 
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
-  const char *tmp_inc_file = inc_file.c_str ();
-
-  if (tmp_inc_file
-      && FE_Utils::hasspace (tmp_inc_file)
-      && tmp_inc_file[0] == '\"')
+  if (FE_Utils::hasspace (inc_file)
+      && inc_file.size () >= 2
+      && inc_file.front () == '\"'
+      && inc_file.back () == '\"')
     {
-      inc_file =
-        inc_file.substr (1, inc_file.length () - 2);
+      inc_file = inc_file.substr (1, inc_file.size () - 2);
     }
 
   inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
-  inc_file += idl_file_name->get_string ();
+  inc_file += idl_file_name->get_string_view_or_empty ();
   full_path =
     ACE_OS::realpath (inc_file.c_str (), abspath);
 
@@ -597,12 +603,7 @@ FE_Utils::validate_included_idl_files ()
   already_done = true;
 
   // New number of included_idl_files.
-  size_t newj = 0;
-
-  size_t n_pre_preproc_includes =
-    idl_global->n_included_idl_files ();
-
-  char **pre_preproc_includes =
+  std::vector<std::string> &pre_preproc_includes =
     idl_global->included_idl_files ();
 
   size_t n_post_preproc_includes =
@@ -614,30 +615,30 @@ FE_Utils::validate_included_idl_files ()
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
   IDL_GlobalData::Include_Path_Info *path_info = nullptr;
-  char *post_tmp = nullptr;
+  char const *post_tmp = nullptr;
   char *full_path = nullptr;
 
   // We are going to assemble a list of the include files found in
   // the top level file in the order that they are found in the pre-
   // processor output here
   // @see bug TAO#711 / Bugzilla #3513 for more
-  char** ordered_include_files =
-    new char* [n_pre_preproc_includes];
+  std::vector<std::string> ordered_include_files;
+  ordered_include_files.reserve (pre_preproc_includes.size ());
 
   for (size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
-      post_tmp = post_preproc_includes [i]->get_string ();
+      post_tmp = post_preproc_includes [i]->get_string_view_or_empty ().data ();
       full_path = ACE_OS::realpath (post_tmp, post_abspath);
 
       if (full_path)
         {
-          for (size_t j = 0u; j < n_pre_preproc_includes; ++j)
+          for (size_t j = 0u; j < pre_preproc_includes.size (); ++j)
             {
               // Check this name with the name that we got from the
               // preprocessor.
 
               bool valid_file = false;
-              full_path = ACE_OS::realpath (pre_preproc_includes [j],
+              full_path = ACE_OS::realpath (pre_preproc_includes [j].c_str (),
                                             pre_abspath);
               if (full_path &&
                   FE_Utils::path_cmp (pre_abspath, post_abspath) == 0 &&
@@ -652,17 +653,15 @@ FE_Utils::validate_included_idl_files ()
                         iter.advance ())
                 {
                   iter.next (path_info);
-                  ACE_CString pre_partial (path_info->path_);
+                  std::string pre_partial = path_info->path_.value_or ("");
 
                   // If the include path has literal "s (because of an include
                   // of a Windows path with spaces), we must remove them here.
-                  if (pre_partial.c_str () &&
-                      2u < pre_partial.length () &&
+                  if (pre_partial.size () > 2 &&
                       '"' == pre_partial [0] &&
-                      '"' == pre_partial [pre_partial.length () - 1u])
+                      '"' == pre_partial.back ())
                     {
-                      pre_partial =
-                        pre_partial.substr (1, pre_partial.length () - 2u);
+                      pre_partial = pre_partial.substr (1, pre_partial.size () - 2);
                     }
                   pre_partial += ACE_DIRECTORY_SEPARATOR_STR_A;
                   pre_partial += pre_preproc_includes [j];
@@ -685,20 +684,10 @@ FE_Utils::validate_included_idl_files ()
                   // File is valid.
                   // Move to the new index position.
                   // ... in the ordered list
-                  ordered_include_files [newj] =
-                        pre_preproc_includes [j];
-
-                  // Increment the new index.
-                  ++newj;
-
-                  for (size_t k = j + 1; k < n_pre_preproc_includes; ++k)
-                    {
-                      // Shift remaining entries down
-                      pre_preproc_includes [k-1] = pre_preproc_includes [k];
-                    }
-
-                  // Reduce length and zero the discarded element
-                  pre_preproc_includes [--n_pre_preproc_includes] = nullptr;
+                  ordered_include_files.emplace_back (
+                    std::move (pre_preproc_includes [j]));
+                  pre_preproc_includes.erase (
+                    pre_preproc_includes.begin () + j);
 
                   // Break out to next entry in pre-processor
                   // output
@@ -706,45 +695,30 @@ FE_Utils::validate_included_idl_files ()
                 }
             }
 
-          if (n_pre_preproc_includes == 0)
+          if (pre_preproc_includes.empty ())
             {
               break;
             }
         }
     }
 
-  // Tidy up not required includes
-  for (size_t l = 0u; l < n_pre_preproc_includes; ++l)
-    {
-      delete [] pre_preproc_includes [l];
-      pre_preproc_includes [l] = nullptr;
-    }
-
-  // Copy list back
-  for (size_t m = 0u; m < newj; ++m)
-    {
-      pre_preproc_includes [m] = ordered_include_files [m];
-    }
-
-  delete [] ordered_include_files;
-
-  // Now adjust the count on the included_idl_files.
-  idl_global->n_included_idl_files (newj);
+  pre_preproc_includes = std::move (ordered_include_files);
 }
 
 bool
 FE_Utils::validate_orb_include (UTL_String * idl_file_name)
 {
-  char foundpath[MAXPATHLEN] = "";
+  std::string foundpath;
 
   {
     // Check in the current folder.
     char abspath[MAXPATHLEN] = "";
-    ACE_CString cwd_path = ACE_OS::getcwd (abspath,
-                                           sizeof (abspath) / sizeof (char));
-    if (FE_Utils::is_include_file_found (cwd_path, idl_file_name))
+    char const * const cwd = ACE_OS::getcwd (abspath, sizeof (abspath));
+    std::string cwd_path (cwd == nullptr ? "" : cwd);
+    if (!cwd_path.empty ()
+        && FE_Utils::is_include_file_found (cwd_path, idl_file_name))
       {
-        ACE_OS::strcpy (foundpath, cwd_path.c_str ());
+        foundpath = cwd_path;
       }
   }
 
@@ -756,12 +730,12 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
       IDL_GlobalData::Include_Path_Info *path_info = nullptr;
       iter.next (path_info);
 
-      ACE_CString partial = path_info->path_;
+      std::string partial = path_info->path_.value_or ("");
 
       // We don't need to check anything if the file is already
       // found and the folder where are currently checking is
       // provided by user.
-      if (foundpath[0] != 0 && !path_info->is_system_)
+      if (!foundpath.empty () && !path_info->is_system_)
         {
           continue;
         }
@@ -770,8 +744,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
         {
           if (path_info->is_system_)
             {
-              if (foundpath[0] == 0 ||
-                  ACE_OS::strcmp (foundpath, partial.c_str ()) == 0)
+              if (foundpath.empty () || foundpath == partial)
                 {
                   return true;
                 }
@@ -780,7 +753,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
             {
               // We can fill in foundpath here since we are sure
               // that it was not set before. Check above ensures that.
-              ACE_OS::strcpy (foundpath, partial.c_str ());
+              foundpath = partial;
               continue;
             }
         }
@@ -792,26 +765,25 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
 void
 FE_Utils::original_local_name (Identifier *local_name)
 {
-  const char *lname = local_name->get_string ();
+  std::string_view const lname (local_name->get_string_view_or_empty ());
 
   // Remove _cxx_ if:
   // 1. it occurs and
   // 2. it occurs at the beginning of the string and
   // 3. the rest of the string is a C++ keyword
-  if (ACE_OS::strstr (lname, "_cxx_") == lname)
+  if (lname.compare (0, 5, "_cxx_") == 0)
     {
       TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
 
       unsigned int len =
-        static_cast<unsigned int> (ACE_OS::strlen (lname + 5));
+        static_cast<unsigned int> (lname.size () - 5);
 
-      const TAO_IDL_CPP_Keyword_Entry *entry =
-        cpp_key_tbl.lookup (lname + 5, len);
+      TAO_IDL_CPP_Keyword_Entry const *entry =
+        cpp_key_tbl.lookup (lname.data () + 5, len);
 
       if (entry != nullptr)
         {
-          ACE_CString tmp (lname + 5);
-          local_name->replace_string (tmp.c_str ());
+          local_name->replace_string (lname.substr (5));
         }
     }
 }
@@ -956,7 +928,7 @@ FE_Utils::tmpl_mod_ref_check (AST_Decl *context,
 
 bool
 FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
-                                  ACE_CString &param_id,
+                                  std::string const &param_id,
                                   size_t index)
 {
   size_t local_index = 0;

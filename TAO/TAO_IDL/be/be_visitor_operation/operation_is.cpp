@@ -16,10 +16,6 @@ be_visitor_operation_is::be_visitor_operation_is (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_is::~be_visitor_operation_is ()
-{
-}
-
 int
 be_visitor_operation_is::visit_operation (be_operation *node)
 {
@@ -63,7 +59,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  const char *classname = nullptr;
+  std::string_view classname;
 
   if (intf)
     {

@@ -31,9 +31,7 @@ be_param_holder::be_param_holder (UTL_ScopedName *parameter_name,
 {
 }
 
-be_param_holder::~be_param_holder ()
-{
-}
+be_param_holder::~be_param_holder () = default;
 
 int
 be_param_holder::accept (be_visitor *visitor)

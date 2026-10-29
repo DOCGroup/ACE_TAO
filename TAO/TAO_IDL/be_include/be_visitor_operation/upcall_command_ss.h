@@ -14,21 +14,27 @@
 #ifndef _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_
 #define _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_
 
+#include <string_view>
+
 class be_visitor_operation_upcall_command_ss
   : public be_visitor_operation
 {
 public:
   /// constructor
-  be_visitor_operation_upcall_command_ss (be_visitor_context * ctx);
+  explicit be_visitor_operation_upcall_command_ss (be_visitor_context * ctx);
 
   /// destructor
-  ~be_visitor_operation_upcall_command_ss ();
+  ~be_visitor_operation_upcall_command_ss () override = default;
+  be_visitor_operation_upcall_command_ss (be_visitor_operation_upcall_command_ss const &) = delete;
+  be_visitor_operation_upcall_command_ss (be_visitor_operation_upcall_command_ss &&) = delete;
+  be_visitor_operation_upcall_command_ss &operator= (be_visitor_operation_upcall_command_ss const &) = delete;
+  be_visitor_operation_upcall_command_ss &operator= (be_visitor_operation_upcall_command_ss &&) = delete;
 
   /// Same as visit_operation() but override full_skel_name and
   /// upcall_command_name.
   int visit (be_operation * node,
-             char const * full_skel_name,
-             char const * upcall_command_name);
+             std::string_view full_skel_name,
+             std::string_view upcall_command_name);
 
 private:
   /// Generate the upcall.

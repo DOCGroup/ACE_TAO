@@ -25,15 +25,19 @@
 class be_visitor_context_svth : public be_visitor_component_scope
 {
 public:
-  be_visitor_context_svth (be_visitor_context *ctx);
+  explicit be_visitor_context_svth (be_visitor_context *ctx);
 
-  ~be_visitor_context_svth ();
+  ~be_visitor_context_svth () override = default;
+  be_visitor_context_svth (be_visitor_context_svth const &) = delete;
+  be_visitor_context_svth (be_visitor_context_svth &&) = delete;
+  be_visitor_context_svth &operator= (be_visitor_context_svth const &) = delete;
+  be_visitor_context_svth &operator= (be_visitor_context_svth &&) = delete;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_uses (be_uses *node);
-  virtual int visit_publishes (be_publishes *node);
-  virtual int visit_emits (be_emits *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_uses (be_uses *node) override;
+  int visit_publishes (be_publishes *node) override;
+  int visit_emits (be_emits *node) override;
 };
 
 #endif /* _BE_COMPONENT_CONTEXT_SVH_H_ */

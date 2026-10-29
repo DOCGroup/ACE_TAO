@@ -11,6 +11,8 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <string_view>
+
 AST_Decl::NodeType const
 AST_Template_Module::NT = AST_Decl::NT_module;
 
@@ -26,10 +28,6 @@ AST_Template_Module::AST_Template_Module (
     AST_Type (AST_Decl::NT_module,
               n),
     template_params_ (template_params)
-{
-}
-
-AST_Template_Module::~AST_Template_Module ()
 {
 }
 
@@ -72,7 +70,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
       if (!this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
-          const char *s = nullptr;
+          std::string_view s;
 
           if (!n)
             {
@@ -84,7 +82,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
               s = d->full_name ();
             }
 
-          idl_global->err ()->mismatched_template_param (s);
+          idl_global->err ()->mismatched_template_param (s.data ());
 
           return false;
         }
@@ -219,7 +217,7 @@ AST_Template_Module::find_param (UTL_String *name)
       FE_Utils::T_Param_Info *param = nullptr;
       i.next (param);
 
-      if (param->name_ == name->get_string ())
+      if (std::string_view (param->name_) == name->get_string_view_or_empty ())
         {
           return param;
         }
@@ -268,7 +266,7 @@ AST_Template_Module::match_param_by_type (
     }
 
   idl_global->err ()->mismatched_template_param (
-    param->name_.c_str ());
+    param->name_);
 
   return false;
 }

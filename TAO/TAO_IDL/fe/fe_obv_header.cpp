@@ -66,10 +66,6 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
                         false,
                         false,
                         false),
-    supports_ (nullptr),
-    n_supports_ (0),
-    inherits_concrete_ (nullptr),
-    supports_concrete_ (nullptr),
     truncatable_ (truncatable)
 {
   this->compile_inheritance (inherits,
@@ -81,9 +77,7 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
     }
 }
 
-FE_OBVHeader::~FE_OBVHeader ()
-{
-}
+FE_OBVHeader::~FE_OBVHeader () = default;
 
 AST_Type **
 FE_OBVHeader::supports () const
@@ -250,7 +244,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
               && nt != AST_Decl::NT_interface)
             {
               idl_global->err ()->mismatched_template_param (
-                ph->info ()->name_.c_str ());
+                ph->info ()->name_);
 
               continue;
             }

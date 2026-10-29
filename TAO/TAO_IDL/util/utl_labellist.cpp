@@ -93,6 +93,12 @@ UTL_LabelList::head ()
   return this->pd_car_data;
 }
 
+AST_UnionLabel const *
+UTL_LabelList::head () const
+{
+  return this->pd_car_data;
+}
+
 // Copy a label list.
 UTL_LabelList *
 UTL_LabelList::copy ()
@@ -116,7 +122,7 @@ UTL_LabelList::copy ()
 
   if (this->tail () != nullptr)
     {
-      retval->nconc ((UTL_LabelList *) this->tail ()->copy ());
+      retval->nconc (static_cast<UTL_LabelList *> (this->tail ()->copy ()));
     }
 
   return retval;
@@ -139,7 +145,7 @@ UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
 
 // Get current item.
 AST_UnionLabel *
-UTL_LabellistActiveIterator::item ()
+UTL_LabellistActiveIterator::item () const
 {
   if (this->source == nullptr)
     {

@@ -14,7 +14,11 @@ public:
   AST_Template_Module (UTL_ScopedName *n,
                        FE_Utils::T_PARAMLIST_INFO *template_params);
 
-  ~AST_Template_Module () override;
+  ~AST_Template_Module () override = default;
+  AST_Template_Module (AST_Template_Module const &) = delete;
+  AST_Template_Module (AST_Template_Module &&) = delete;
+  AST_Template_Module &operator= (AST_Template_Module const &) = delete;
+  AST_Template_Module &operator= (AST_Template_Module &&) = delete;
 
   FE_Utils::T_PARAMLIST_INFO *
   template_params () const;

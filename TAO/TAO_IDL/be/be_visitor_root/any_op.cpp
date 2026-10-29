@@ -22,10 +22,6 @@ be_visitor_root_any_op::be_visitor_root_any_op (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_any_op::~be_visitor_root_any_op ()
-{
-}
-
 int
 be_visitor_root_any_op::visit_root (be_root *node)
 {

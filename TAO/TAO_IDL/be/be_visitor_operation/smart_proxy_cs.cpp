@@ -17,10 +17,6 @@ be_visitor_operation_smart_proxy_cs::be_visitor_operation_smart_proxy_cs (
 {
 }
 
-be_visitor_operation_smart_proxy_cs::~be_visitor_operation_smart_proxy_cs ()
-{
-}
-
 int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 {
   if (be_global->gen_smart_proxies ())
@@ -95,7 +91,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
         *os << "::";
 
       *os << "TAO_" << intf->flat_name () <<"_Smart_Proxy_Base::";
-      *os << this->ctx_->port_prefix ().c_str ()
+      *os << this->ctx_->port_prefix ()
           << node->local_name () << " ";
 
       // STEP 4: generate the argument list with the appropriate mapping (same as

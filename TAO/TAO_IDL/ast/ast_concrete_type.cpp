@@ -77,10 +77,6 @@ AST_ConcreteType::AST_ConcreteType (AST_Decl::NodeType nt,
 {
 }
 
-AST_ConcreteType::~AST_ConcreteType ()
-{
-}
-
 void
 AST_ConcreteType::destroy ()
 {

@@ -15,6 +15,9 @@
 
 #include "ast_argument.h"
 
+#include <string>
+#include <string_view>
+
 /**
  * @class be_visitor_args
  *
@@ -33,22 +36,26 @@ class be_visitor_args : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_args (be_visitor_context *ctx);
+  explicit be_visitor_args (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args ();
+  ~be_visitor_args () override = default;
+  be_visitor_args (be_visitor_args const &) = delete;
+  be_visitor_args (be_visitor_args &&) = delete;
+  be_visitor_args &operator= (be_visitor_args const &) = delete;
+  be_visitor_args &operator= (be_visitor_args &&) = delete;
 
   //= helper
   /// helper that produces either a nested name for
   /// header files or full name for others.
-  virtual const char *type_name (be_type *type,
-                                 const char *suffix = 0);
+  virtual std::string type_name (be_type *type,
+                                 std::string_view suffix = {});
 
   /// return the direction of the argument node
   virtual AST_Argument::Direction direction ();
 
   /// must be overridden by derived classes
-  virtual int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node) override;
 
   void set_fixed_direction (AST_Argument::Direction direction);
 
@@ -59,7 +66,7 @@ protected:
                   bool for_stub);
 
 private:
-  int fixed_direction_;
+  int fixed_direction_ {-1};
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_ARGUMENT_H_ */

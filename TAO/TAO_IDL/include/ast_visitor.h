@@ -86,7 +86,7 @@ class AST_Annotation_Decl;
 class TAO_IDL_FE_Export ast_visitor
 {
 public:
-  virtual ~ast_visitor ();
+  virtual ~ast_visitor () = default;
 
   virtual int visit_decl (AST_Decl *d) = 0;
   virtual int visit_scope (UTL_Scope *node) = 0;

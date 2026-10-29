@@ -25,13 +25,17 @@ class be_visitor_operation_direct_proxy_impl_ss : public be_visitor_operation
 {
 public:
   /// constructor
-  be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx);
+  explicit be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_direct_proxy_impl_ss ();
+  ~be_visitor_operation_direct_proxy_impl_ss () override;
+  be_visitor_operation_direct_proxy_impl_ss (be_visitor_operation_direct_proxy_impl_ss const &) = delete;
+  be_visitor_operation_direct_proxy_impl_ss (be_visitor_operation_direct_proxy_impl_ss &&) = delete;
+  be_visitor_operation_direct_proxy_impl_ss &operator= (be_visitor_operation_direct_proxy_impl_ss const &) = delete;
+  be_visitor_operation_direct_proxy_impl_ss &operator= (be_visitor_operation_direct_proxy_impl_ss &&) = delete;
 
   /// visit operation node.
-  virtual int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// A helper method to generate operation invocation code.
   virtual int gen_invoke (be_visitor_context &ctx, be_operation *node);

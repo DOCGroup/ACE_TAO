@@ -88,7 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #  include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-extern const ACE_TCHAR *DRV_arglist[];
+extern ACE_TCHAR const *DRV_arglist[];
 extern unsigned long DRV_argcount;
 
 char *DRV_files[NFILES];
@@ -101,7 +101,7 @@ DRV_version ()
   ACE_DEBUG ((LM_DEBUG,
               "%C\n"
               "TAO_IDL_FE, version %s%s (Based on Sun IDL FE, version %s)\n",
-              idl_global->prog_name (),
+              idl_global->prog_name ().data (),
               ACE_TEXT (TAO_VERSION),
               ACE_TEXT (TAO_PATCH),
               ACE_TEXT (SUN_IDL_FE_VERSION)));
@@ -190,13 +190,13 @@ DRV_cleanup ()
 */
 
 void
-DRV_drive (const char *s)
+DRV_drive (char const *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
   UTL_String *utl_string = nullptr;
   ACE_NEW (utl_string,
-           UTL_String (s, true));
+           UTL_String (s));
 
   idl_global->idl_src_file (utl_string);
 
@@ -205,7 +205,7 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: preprocessing %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -223,7 +223,7 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: parsing %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -239,7 +239,7 @@ DRV_drive (const char *s)
       // Filename set by FE_yyparse(), so we output it immediately after.
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("processing %C\n"),
-                  idl_global->filename ()->get_string ()));
+                  idl_global->filename ()->get_string_view_or_empty ().data ()));
     }
 
   // We must do this as late as possible to make sure any
@@ -252,7 +252,7 @@ DRV_drive (const char *s)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("%C: %C: found %d error%s\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s,
                   idl_global->err_count (),
                   (idl_global->err_count () > 1
@@ -269,7 +269,7 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: dump %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -292,7 +292,7 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: BE processing on %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -400,7 +400,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // If there are no input files, and we are not using the
       // directory recursion option, there's no sense going any further.
-      if (0 == DRV_nfiles && nullptr == idl_global->recursion_start ())
+      if (0 == DRV_nfiles && !idl_global->recursion_start ())
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: No input files\n")));
@@ -413,7 +413,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (idl_global->multi_file_input ())
         {
           output_file =
-            ACE_OS::fopen (idl_global->big_file_name (), "w");
+            ACE_OS::fopen (idl_global->big_file_name ().data (), "w");
         }
 
       for (DRV_file_index = 0;
@@ -435,11 +435,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (idl_global->multi_file_input ())
         {
           ACE_OS::fclose (output_file);
-          DRV_drive (idl_global->big_file_name ());
-          ACE_OS::unlink (idl_global->big_file_name ());
+          DRV_drive (idl_global->big_file_name ().data ());
+          ACE_OS::unlink (idl_global->big_file_name ().data ());
         }
     }
-  catch (const Bailout &bailout)
+  catch (Bailout const &bailout)
     {
       if (bailout.increment_errors_)
         {

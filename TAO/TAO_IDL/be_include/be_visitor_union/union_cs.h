@@ -26,10 +26,15 @@ class be_visitor_union_cs : public be_visitor_union
 {
 public:
   /// constructor
-  be_visitor_union_cs (be_visitor_context *ctx);
+  explicit be_visitor_union_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_cs () override;
+  ~be_visitor_union_cs () override = default;
+
+  be_visitor_union_cs (be_visitor_union_cs const &) = delete;
+  be_visitor_union_cs (be_visitor_union_cs &&) = delete;
+  be_visitor_union_cs &operator= (be_visitor_union_cs const &) = delete;
+  be_visitor_union_cs &operator= (be_visitor_union_cs &&) = delete;
 
   /// visit union. We provide code for this method in the derived class
   int visit_union (be_union *node) override;

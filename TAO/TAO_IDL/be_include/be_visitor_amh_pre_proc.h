@@ -17,7 +17,9 @@
 #define TAO_BE_VISITOR_AMH_PRE_PROC_H
 
 #include "be_visitor_scope.h"
-#include "ace/SString.h"
+
+#include <string>
+#include <string_view>
 
 /**
  * @class be_visitor_amh_pre_proc
@@ -35,7 +37,7 @@ private:
   };
 
 public:
-  be_visitor_amh_pre_proc (be_visitor_context *ctx);
+  explicit be_visitor_amh_pre_proc (be_visitor_context *ctx);
 
   ~be_visitor_amh_pre_proc () override;
 
@@ -90,10 +92,10 @@ private:
                               Operation_Kind operation_kind);
 
   /// Concatenate 3 strings into one.
-  int generate_name (ACE_CString &destination,
-                     const char *prefix,
-                     const char *middle_name,
-                     const char *suffix);
+  void generate_name (std::string &destination,
+                      std::string_view prefix,
+                      std::string_view middle_name,
+                      std::string_view suffix) const;
 
   /// Generate a get operation out of the attribute.
   be_operation *generate_get_operation (be_attribute *node);

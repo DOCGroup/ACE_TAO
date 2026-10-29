@@ -20,10 +20,6 @@ be_visitor_typedef_ci::be_visitor_typedef_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_ci::~be_visitor_typedef_ci ()
-{
-}
-
 int
 be_visitor_typedef_ci::visit_typedef (be_typedef *node)
 {
@@ -179,8 +175,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       *os << "ACE_INLINE" << be_nl
           << tdef->name () << "_slice *" << be_nl;
       *os << tdef->name () << "_dup (" << be_idt << be_idt_nl
-          << "const " << tdef->name ()
-          << "_slice *_tao_src" << be_uidt_nl
+          << tdef->name () << "_slice const *_tao_src" << be_uidt_nl
           << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << "return " << bt->name () << "_dup (_tao_src);" << be_uidt_nl;
@@ -192,7 +187,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       *os << tdef->name () << "_copy (" << be_idt << be_idt_nl
           << tdef->name ()
           << "_slice *_tao_dest," << be_nl
-          << "const " << tdef->name () << "_slice *_tao_src" << be_uidt_nl
+          << tdef->name () << "_slice const *_tao_src" << be_uidt_nl
           << ")" << be_uidt_nl;
       *os << "{" << be_idt_nl;
       *os << bt->name () << "_copy (_tao_dest, _tao_src);" << be_uidt_nl;
