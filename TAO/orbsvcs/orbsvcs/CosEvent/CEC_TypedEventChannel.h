@@ -133,7 +133,7 @@ public:
    */
   TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attributes,
                              TAO_CEC_Factory *factory = nullptr,
-                             int own_factory = 0);
+                             bool own_factory = false);
 
   /// Destructor
   ~TAO_CEC_TypedEventChannel () override;
@@ -222,16 +222,16 @@ public:
   using Iterator = InterfaceDescription::iterator;
 
   /// Finds a operation/parameter from the IFR cache
-  TAO_CEC_Operation_Params * find_from_ifr_cache (const char *operation);
+  TAO_CEC_Operation_Params * find_from_ifr_cache (char const *operation);
 
   /// Function allows consumer admin to register the uses interface
-  int consumer_register_uses_interace (const char *uses_interface);
+  int consumer_register_uses_interace (char const *uses_interface);
 
   /// Function allows supplier admin to register the supported interface
-  int supplier_register_supported_interface (const char *supported_interface);
+  int supplier_register_supported_interface (char const *supported_interface);
 
   /// Function to return the supported_interface_
-  const char * supported_interface () const;
+  char const * supported_interface () const;
 
   /// Function to return the base_interfaces_
   CORBA::RepositoryId base_interfaces (CORBA::ULong index) const;
@@ -258,14 +258,14 @@ public:
 
   /// Forwarded to the factory
   CORBA::Policy_ptr
-  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
+  create_roundtrip_timeout_policy (ACE_Time_Value const &timeout);
 
 protected:
   /// Function caches the full interface description from the IFR
-  int cache_interface_description (const char *interface_);
+  int cache_interface_description (char const *interface_);
 
   /// Insert a operation/parameter into the IFR cache
-  int insert_into_ifr_cache (const char *operation, TAO_CEC_Operation_Params *parameters);
+  int insert_into_ifr_cache (char const *operation, TAO_CEC_Operation_Params *parameters);
 
   /// Function clears the IFR cache
   int clear_ifr_cache ();

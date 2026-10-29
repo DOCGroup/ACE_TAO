@@ -152,7 +152,7 @@ TAO_CEC_TypedEventChannel::disconnect_callbacks () const
   return this->disconnect_callbacks_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_CEC_TypedEventChannel::supported_interface () const
 {
   return this->supported_interface_.c_str ();
