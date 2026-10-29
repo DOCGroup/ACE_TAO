@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  QtResource_Factory::QtResource_Factory (QApplication *qapp)
+  QtResource_Factory::QtResource_Factory (QApplication * const qapp)
     : qapp_ (qapp)
   {
   }
@@ -26,7 +26,7 @@ namespace TAO
       {
         ACE_NEW_RETURN (this->reactor_impl_,
                         ACE_QtReactor (qapp_),
-                        0);
+                        nullptr);
 
         if (TAO_debug_level > 0)
           TAOLIB_DEBUG ((LM_DEBUG,
