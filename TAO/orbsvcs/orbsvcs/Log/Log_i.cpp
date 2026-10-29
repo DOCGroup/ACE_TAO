@@ -35,8 +35,8 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
     log_flush_handler_ (reactor_, this, log_flush_interval_)
 {
   // TODO: get log parameters from (persistent?) store.
-  avail_status_.off_duty = 0;
-  avail_status_.log_full = 0;
+  avail_status_.off_duty = false;
+  avail_status_.log_full = false;
 }
 
 void
@@ -563,9 +563,9 @@ TAO_Log_i::get_availability_status_i ()
 
   if (this->op_state_ == DsLogAdmin::enabled
       && admin_state == DsLogAdmin::unlocked
-      && s == 1)
+      && s)
     {
-      this->avail_status_.off_duty = 0; // "on duty"
+      this->avail_status_.off_duty = false; // "on duty"
 
     }
   else
@@ -763,7 +763,7 @@ TAO_Log_i::delete_records (char const *grammar,
 
           if (current_size < max_size)
             {
-              avail_status_.log_full = 0;
+              avail_status_.log_full = false;
             }
         }
 
@@ -796,7 +796,7 @@ TAO_Log_i::delete_records_by_id (DsLogAdmin::RecordIdList const &ids)
 
           if (current_size < max_size)
             {
-              avail_status_.log_full = 0;
+              avail_status_.log_full = false;
             }
         }
 
@@ -1065,7 +1065,7 @@ TAO_Log_i::remove_old_records ()
 
           if (current_size < max_size)
             {
-              avail_status_.log_full = 0;
+              avail_status_.log_full = false;
             }
         }
 

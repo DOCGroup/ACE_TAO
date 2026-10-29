@@ -252,7 +252,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
           // union member value on the queue. Otherwise, we want
           // the member value in current_member_ while we visit
           // the nested component.
-          if (nested == 0)
+          if (nested == nullptr)
             {
               TAO_ETCL_Literal_Constraint lit (this->current_member_.ptr ());
               this->queue_.enqueue_head (lit);
@@ -297,7 +297,7 @@ TAO_Log_Constraint_Visitor::visit_component_pos (ETCL_Component_Pos *pos)
 
             success = dyn_enum.seek (slot);
 
-            if (success == 0)
+            if (!success)
               {
                 return -1;
               }
@@ -314,7 +314,7 @@ TAO_Log_Constraint_Visitor::visit_component_pos (ETCL_Component_Pos *pos)
 
             success = dyn_struct.seek (slot);
 
-            if (success == 0)
+            if (!success)
               {
                 return -1;
               }
@@ -418,7 +418,7 @@ TAO_Log_Constraint_Visitor::visit_component_array (
 
             success = dyn_array.seek (slot);
 
-            if (success == 0)
+            if (!success)
               {
                 return -1;
               }
@@ -434,7 +434,7 @@ TAO_Log_Constraint_Visitor::visit_component_array (
 
             success = dyn_sequence.seek (slot);
 
-            if (success == 0)
+            if (!success)
               {
                 return -1;
               }
