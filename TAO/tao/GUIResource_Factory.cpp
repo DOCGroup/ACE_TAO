@@ -7,14 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  GUIResource_Factory::GUIResource_Factory ()
-    : dynamically_allocated_reactor_ (false)
-  {
-  }
-
-  GUIResource_Factory::~GUIResource_Factory ()
-  {
-  }
+  GUIResource_Factory::~GUIResource_Factory () = default;
 
   ACE_Reactor *
   GUIResource_Factory::get_reactor ()
