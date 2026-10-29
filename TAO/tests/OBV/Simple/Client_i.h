@@ -31,13 +31,18 @@ class Checkpoint_Client_i
 {
 public:
   /// Constructor
-  Checkpoint_Client_i ();
+  Checkpoint_Client_i () = default;
 
   /// Destructor
-  virtual ~Checkpoint_Client_i ();
+  ~Checkpoint_Client_i () = default;
+
+  Checkpoint_Client_i (Checkpoint_Client_i const&) = delete;
+  Checkpoint_Client_i (Checkpoint_Client_i&&) = delete;
+  Checkpoint_Client_i& operator= (Checkpoint_Client_i const&) = delete;
+  Checkpoint_Client_i& operator= (Checkpoint_Client_i&&) = delete;
 
   /// Execute the methods
-  virtual int run (const char *,int, ACE_TCHAR**);
+  int run (char const *name, int argc, ACE_TCHAR *argv[]);
 
 private:
   /// Instantiate the checkpoint object.

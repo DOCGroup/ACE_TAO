@@ -3,20 +3,12 @@
 
 // Implementation of the valuetype member functions.
 
-Event_impl::Event_impl ()
-{
-}
-
 Event_impl::Event_impl (CORBA::Long value)
 {
   this->value_ (value);
 }
 
-Event_impl::~Event_impl ()
-{
-}
-
-CORBA::ValueBase*
+CORBA::ValueBase *
 Event_impl::_copy_value ()
 {
   return new Event_impl (this->value_ ());
@@ -26,12 +18,8 @@ Event_impl::_copy_value ()
 void
 Event_impl::do_print ()
 {
-  ACE_DEBUG((LM_DEBUG, "(value %d) \n",
-             (CORBA::ULong) this->value_()));
-}
-
-Event_factory::~Event_factory ()
-{
+  ACE_DEBUG ((LM_DEBUG, "(value %d) \n",
+              static_cast<CORBA::ULong> (this->value_ ())));
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event)

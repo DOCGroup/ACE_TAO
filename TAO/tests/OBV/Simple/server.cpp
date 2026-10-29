@@ -4,7 +4,7 @@
 // This is the main driver program for the time and date server.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Server<Checkpoint_i> server;
 
@@ -20,12 +20,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           server.run ();
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;
