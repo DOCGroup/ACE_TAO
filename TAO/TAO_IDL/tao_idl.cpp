@@ -76,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_identifier.h"
 
+#include <string>
+
 #include "drv_extern.h"
 
 #include "tao/Version.h"
@@ -219,9 +221,10 @@ DRV_drive (char const *s)
       (idl_global->compile_flags () & IDL_CF_INFORMATIVE))
     {
       // Filename set by FE_yyparse(), so we output it immediately after.
+      std::string const filename (idl_global->filename ()->get_string_view_or_empty ());
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("processing %C\n"),
-                  idl_global->filename ()->get_string_view_or_empty ().data ()));
+                  filename.c_str ()));
     }
 
   // We must do this as late as possible to make sure any

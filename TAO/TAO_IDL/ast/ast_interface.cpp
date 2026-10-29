@@ -97,6 +97,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <string>
+
 #include "ace/streams.h"
 
 AST_Decl::NodeType const
@@ -806,9 +808,11 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
               // Conflict against further results?
               if (d != d_before)
                 {
+                  std::string const filename (
+                    idl_global->filename ()->get_string_view_or_empty ());
                   ACE_ERROR ((LM_ERROR,
                               "warning in %C line %d: ",
-                              idl_global->filename ()->get_string_view_or_empty ().data (),
+                              filename.c_str (),
                               idl_global->lineno ()));
 
                   e->dump (*ACE_DEFAULT_LOG_STREAM);

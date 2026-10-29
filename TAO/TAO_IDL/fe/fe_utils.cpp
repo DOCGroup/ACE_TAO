@@ -615,7 +615,6 @@ FE_Utils::validate_included_idl_files ()
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
   IDL_GlobalData::Include_Path_Info *path_info = nullptr;
-  char const *post_tmp = nullptr;
   char *full_path = nullptr;
 
   // We are going to assemble a list of the include files found in
@@ -627,8 +626,8 @@ FE_Utils::validate_included_idl_files ()
 
   for (size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
-      post_tmp = post_preproc_includes [i]->get_string_view_or_empty ().data ();
-      full_path = ACE_OS::realpath (post_tmp, post_abspath);
+      std::string const post_tmp (post_preproc_includes [i]->get_string_view_or_empty ());
+      full_path = ACE_OS::realpath (post_tmp.c_str (), post_abspath);
 
       if (full_path)
         {
