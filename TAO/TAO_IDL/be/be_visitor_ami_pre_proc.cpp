@@ -82,7 +82,7 @@ be_visitor_ami_pre_proc::visit_module (be_module *node)
 {
   // Skip this for now until we get AMI integrated with
   // CIAO.
-  if (node->local_name ()->get_string_view_or_empty () == "Components")
+  if (node->local_name ()->get_string_view () == "Components")
     {
       return 0;
     }
@@ -128,7 +128,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
       return 0;
     }
 
-  std::string_view const lname = node_lname->get_string_view_or_empty ();
+  std::string_view const lname = node_lname->get_string_view ();
 
   // Skip the *Explict and *Implicit interfaces added for a home.
   if (lname.size () >= 6 && lname.compare (lname.size () - 6, 6, "plicit") == 0)
@@ -264,7 +264,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   this->generate_name (reply_handler_local_name,
                        "AMI_",
-                       node->name ()->last_component ()->get_string_view_or_empty (),
+                       node->name ()->last_component ()->get_string_view (),
                        "Handler");
 
   UTL_ScopedName *reply_handler_name =
@@ -413,7 +413,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   // Create the new name
   // Prepend "sendc_" to the name of the operation
   std::string new_op_name ("sendc_");
-  new_op_name += node->name ()->last_component ()->get_string_view_or_empty ();
+  new_op_name += node->name ()->last_component ()->get_string_view ();
 
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
@@ -447,7 +447,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   this->generate_name (
     handler_local_name,
     "AMI_",
-    parent->name ()->last_component ()->get_string_view_or_empty (),
+    parent->name ()->last_component ()->get_string_view (),
     "Handler");
 
   AST_Interface *handler = parent->ami_handler ();
@@ -568,7 +568,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
   UTL_ScopedName *sn = nullptr;
 
   std::string_view const original_op_name =
-    node->name ()->last_component ()->get_string_view_or_empty ();
+    node->name ()->last_component ()->get_string_view ();
 
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (reply_handler->name ()-> copy ());
@@ -738,7 +738,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   // Create the new name
   // Append _excep to the name of the operation
   std::string_view const original_op_name =
-    node->name ()->last_component ()->get_string_view_or_empty ();
+    node->name ()->last_component ()->get_string_view ();
   std::string new_op_name (original_op_name);
   new_op_name += "_excep";
 
@@ -899,7 +899,7 @@ be_operation *
 be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
 {
   std::string new_op_name ("get_");
-  new_op_name += node->name ()->last_component ()->get_string_view_or_empty ();
+  new_op_name += node->name ()->last_component ()->get_string_view ();
 
   UTL_ScopedName *get_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
@@ -934,7 +934,7 @@ be_operation *
 be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
 {
   std::string new_op_name ("set_");
-  new_op_name += node->name ()->last_component ()->get_string_view_or_empty ();
+  new_op_name += node->name ()->last_component ()->get_string_view ();
 
   UTL_ScopedName *set_name =
     static_cast<UTL_ScopedName *> (node->name ()-> copy ());
@@ -1031,7 +1031,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
             }
 
           std::string rh_local_name (prefix);
-          rh_local_name += parent->local_name ()->get_string_view_or_empty ();
+          rh_local_name += parent->local_name ()->get_string_view ();
           rh_local_name += suffix;
 
           UTL_ScopedName *rh_parent_name =

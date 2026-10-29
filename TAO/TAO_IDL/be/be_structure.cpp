@@ -130,7 +130,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
           << "     << ";
 
       std::string instance_name ("_tao_aggregate.");
-      instance_name += f->local_name ()->get_string_view_or_empty ();
+      instance_name += f->local_name ()->get_string_view ();
       AST_Decl::NodeType nt = f->field_type ()->node_type ();
       bool member_use_underscore =
         nt == AST_Decl::NT_array || nt == AST_Decl::NT_sequence;

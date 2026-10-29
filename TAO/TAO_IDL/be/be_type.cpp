@@ -87,7 +87,7 @@ be_type::compute_tc_name ()
     }
 
   std::string namebuf ("_tc_");
-  namebuf += n->last_component ()->get_string_view_or_empty ();
+  namebuf += n->last_component ()->get_string_view ();
 
   Identifier *id = nullptr;
   ACE_NEW (id,
@@ -171,7 +171,7 @@ be_type::gen_fwd_helper_name ()
         {
           segment = i.item ();
           std::string_view const name =
-            segment->get_string_view_or_empty ();
+            segment->get_string_view ();
 
           if (name.empty ())
             {
@@ -188,7 +188,7 @@ be_type::gen_fwd_helper_name ()
     }
 
   this->fwd_helper_name_ += "tao_";
-  this->fwd_helper_name_ += this->local_name ()->get_string_view_or_empty ();
+  this->fwd_helper_name_ += this->local_name ()->get_string_view ();
 }
 
 void

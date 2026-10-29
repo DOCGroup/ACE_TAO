@@ -106,7 +106,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   std::string arg_name (parent->full_name ());
   arg_name += "::";
   arg_name += (td == nullptr ? "_" : "");
-  arg_name += node->local_name ()->get_string_view_or_empty ();
+  arg_name += node->local_name ()->get_string_view ();
   arg_name += "_forany &_tao_array";
 
   // Generate the CDR << and >> operator declarations.

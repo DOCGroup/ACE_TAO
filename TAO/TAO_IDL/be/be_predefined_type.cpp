@@ -226,7 +226,7 @@ be_predefined_type::compute_tc_name ()
     case AST_PredefinedType::PT_pseudo:
       {
         std::string tcname ("_tc_");
-        tcname += this->name ()->last_component ()->get_string_view_or_empty ();
+        tcname += this->name ()->last_component ()->get_string_view ();
 
         ACE_NEW (id,
                  Identifier (tcname));

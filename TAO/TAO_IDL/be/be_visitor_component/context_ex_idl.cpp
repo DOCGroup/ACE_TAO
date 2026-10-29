@@ -29,7 +29,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
 
   os_ << be_nl_2
       << "local interface CCM_"
-      << node->original_local_name ()->get_string_view_or_empty ()
+      << node->original_local_name ()->get_string_view ()
       << "_Context" << be_idt_nl
       << ": ";
 
@@ -50,7 +50,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
       char const * const sname = sname_str.c_str ();
 
       std::string_view const lname =
-        base->original_local_name ()->get_string_view_or_empty ();
+        base->original_local_name ()->get_string_view ();
 
       std::string_view const global = sname_str.empty () ? "" : "::";
 
@@ -91,7 +91,7 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
       << "::";
 
   std::string port_name (this->ctx_->port_prefix ());
-  port_name += node->local_name ()->get_string_view_or_empty ();
+  port_name += node->local_name ()->get_string_view ();
   const char *lname = port_name.c_str ();
 
   // Note that we don't strip off the possible '_cxx_' when
@@ -120,7 +120,7 @@ be_visitor_context_ex_idl::visit_publishes (be_publishes *node)
   be_eventtype *impl = node->publishes_type ();
 
   os_ << be_nl
-      << "void push_" << node->local_name ()->get_string_view_or_empty ()
+      << "void push_" << node->local_name ()->get_string_view ()
       << " (in ::"
       << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
@@ -134,7 +134,7 @@ be_visitor_context_ex_idl::visit_emits (be_emits *node)
   be_eventtype *impl = node->emits_type ();
 
   os_ << be_nl
-      << "void push_" << node->local_name ()->get_string_view_or_empty ()
+      << "void push_" << node->local_name ()->get_string_view ()
       << " (in ::"
       << IdentifierHelper::orig_sn (impl->name ())
       << " e);";

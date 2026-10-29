@@ -262,7 +262,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
     }
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
 
   AST_Type *obj = node->provides_type ();
@@ -273,7 +273,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
 
   // Avoid '_cxx_' prefix.
   std::string_view const lname =
-    obj->original_local_name ()->get_string_view_or_empty ();
+    obj->original_local_name ()->get_string_view ();
 
   char const * const global = (sname_str.empty () ? "" : "::");
   char const * const prefix_connector = (sname_str.empty () ? "" : "_");
@@ -352,7 +352,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
     }
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
 
   std::string_view const obj_name = node->uses_type ()->full_name ();
@@ -433,7 +433,7 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
 
   std::string_view const obj_name = node->publishes_type ()->full_name ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2
       << "::Components::Cookie *" << be_nl
@@ -470,7 +470,7 @@ be_visitor_servant_svs::visit_emits (be_emits *node)
 
   std::string_view const obj_name = node->emits_type ()->full_name ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2
       << "void" << be_nl
@@ -499,7 +499,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
 {
   AST_Type  *obj = node->consumes_type ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   std::string_view const comp_lname = node_->local_name ();
   std::string const comp_sname_str (
@@ -508,7 +508,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   char const * const global = (comp_sname_str.empty () ? "" : "::");
 
   std::string_view const lname =
-    obj->local_name ()->get_string_view_or_empty ();
+    obj->local_name ()->get_string_view ();
   std::string_view const fname = obj->full_name ();
 
   os_ << be_nl_2
@@ -1170,7 +1170,7 @@ be_visitor_facet_executor_block::visit_provides (
   be_provides *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
 
   os_ << be_nl_2
@@ -1198,7 +1198,7 @@ int
 be_visitor_connect_block::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
 
   std::string_view const obj_name = node->uses_type ()->full_name ();
@@ -1243,7 +1243,7 @@ int
 be_visitor_disconnect_block::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
 
   bool const is_multiple = node->is_multiple ();
@@ -1287,7 +1287,7 @@ int
 be_visitor_receptacle_desc::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
 
   AST_Type *obj = node->uses_type ();
@@ -1356,7 +1356,7 @@ be_visitor_subscribe_block::visit_publishes (
   std::string_view const obj_name =
     node->publishes_type ()->full_name ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (publisher_name, \""
@@ -1387,7 +1387,7 @@ be_visitor_unsubscribe_block::visit_publishes (
   be_publishes *node)
 {
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (publisher_name, \""
@@ -1416,7 +1416,7 @@ be_visitor_event_source_desc::visit_publishes (
 {
   AST_Type *obj = node->publishes_type ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2;
 
@@ -1461,7 +1461,7 @@ be_visitor_connect_consumer_block::visit_emits (
   std::string_view const obj_name =
     node->emits_type ()->full_name ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (emitter_name, \""
@@ -1494,7 +1494,7 @@ be_visitor_disconnect_consumer_block::visit_emits (
   be_emits *node)
 {
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (source_name, \""
@@ -1522,7 +1522,7 @@ be_visitor_emitter_desc::visit_emits (be_emits *node)
 {
   AST_Type *obj = node->emits_type ();
   std::string_view const port_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
 
   os_ << be_nl_2
       << "::CIAO::Servant::describe_emit_event_source<"
@@ -1559,7 +1559,7 @@ be_visitor_populate_port_tables::visit_provides (
     }
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
 
   os_ << be_nl
@@ -1575,7 +1575,7 @@ be_visitor_populate_port_tables::visit_consumes (
 {
   os_ << be_nl
       << "this->setup_consumer_"
-      << node->local_name ()->get_string_view_or_empty () << "_i ();";
+      << node->local_name ()->get_string_view () << "_i ();";
 
   return 0;
 }

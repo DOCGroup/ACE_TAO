@@ -100,7 +100,7 @@ be_visitor_component_ami_rh_exs::visit_operation (
   os_ << be_nl_2
       << "void" << be_nl
       << this->class_name_ << "::"
-      << node->local_name ()->get_string_view_or_empty ()
+      << node->local_name ()->get_string_view ()
       << " (";
 
   int count =

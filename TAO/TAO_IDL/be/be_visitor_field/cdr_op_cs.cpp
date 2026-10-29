@@ -111,7 +111,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
-          fname += node->local_name ()->get_string_view_or_empty ();
+          fname += node->local_name ()->get_string_view ();
         }
       else
         {
@@ -1057,7 +1057,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
           be_decl *parent = dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
-          fname += node->local_name ()->get_string_view_or_empty ();
+          fname += node->local_name ()->get_string_view ();
         }
       else
         {

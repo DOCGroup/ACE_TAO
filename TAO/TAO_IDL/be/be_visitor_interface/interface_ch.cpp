@@ -321,7 +321,7 @@ be_visitor_interface_ch::visit_connector (be_connector *node)
 int
 be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
 {
-  this->ctx_->port_prefix (node->local_name ()->get_string_view_or_empty ());
+  this->ctx_->port_prefix (node->local_name ()->get_string_view ());
   this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
@@ -350,7 +350,7 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
 int
 be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
 {
-  this->ctx_->port_prefix (node->local_name ()->get_string_view_or_empty ());
+  this->ctx_->port_prefix (node->local_name ()->get_string_view ());
   this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the

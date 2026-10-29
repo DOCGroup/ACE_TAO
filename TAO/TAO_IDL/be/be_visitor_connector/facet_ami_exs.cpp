@@ -534,7 +534,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
   // do not handle not sendc operations.
   std::string_view const local_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
   if (local_name.find ("sendc_") == std::string_view::npos)
     {
       return 0;

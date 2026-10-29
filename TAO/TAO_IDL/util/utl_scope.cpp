@@ -237,12 +237,12 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
     {
       if (idl_global->case_diff_error ())
         {
-          idl_global->err ()->idl_keyword_error (e->get_string_view_or_empty ());
+          idl_global->err ()->idl_keyword_error (e->get_string_view ());
 
           return -1;
         }
 
-      idl_global->err ()->idl_keyword_warning (e->get_string_view_or_empty ());
+      idl_global->err ()->idl_keyword_warning (e->get_string_view ());
     }
 
   return 0;
@@ -348,7 +348,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
 
   // Must be defined in the CORBA module.
   AST_Decl *p = ScopeAsDecl (bt->defined_in ());
-  if (p->local_name ()->get_string_view_or_empty () != "CORBA")
+  if (p->local_name ()->get_string_view () != "CORBA")
     {
       return;
     }
@@ -923,7 +923,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     }
 
   bool *seen = nullptr;
-  std::string_view const name = e->get_string_view_or_empty ();
+  std::string_view const name = e->get_string_view ();
   bool mixed_case = false;
   UTL_Scope *start_scope = idl_global->corba_module ();
 
@@ -1097,7 +1097,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       return nullptr;
     }
 
-  bool const in_corba = (e->get_string_view_or_empty () == "CORBA");
+  bool const in_corba = (e->get_string_view () == "CORBA");
 
   // We search only the decls here, the local types are done
   // below as a last resort.
@@ -1117,7 +1117,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           // match, unless we skip over these items. This is a workaround until
           // there's time to fix the code generation for CORBA basic types.
               && (in_corba
-                  || d->name ()->head ()->get_string_view_or_empty () != "CORBA")
+                  || d->name ()->head ()->get_string_view () != "CORBA")
               && e->case_compare (item_name))
             {
               return d; // We have found the one and only one we are looking for.
@@ -1305,7 +1305,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
         }
 
       work_another_level = false; // Until we find something.
-      bool const in_corba = (e->head ()->get_string_view_or_empty () == "CORBA");
+      bool const in_corba = (e->head ()->get_string_view () == "CORBA");
 
       for (UTL_ScopeActiveIterator i (work, IK_decls);
            !i.is_done ();
@@ -1318,7 +1318,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
           // match, unless we skip over these items. This is a workaround until
           // there's time to fix the code generation for CORBA basic types.
               && (in_corba
-                  || d->name ()->head ()->get_string_view_or_empty () != "CORBA")
+                  || d->name ()->head ()->get_string_view () != "CORBA")
               && d->local_name ()->case_compare (e->head ()))
             {
               // Ok we found a match, is there any more to find?
@@ -1523,7 +1523,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     }
 
   Identifier *decl_name = e->local_name ();
-  std::string_view const decl_string = decl_name->get_string_view_or_empty ();
+  std::string_view const decl_string = decl_name->get_string_view ();
   AST_Decl::NodeType new_nt = e->node_type ();
 
   // First, make sure there's no clash between e, that was
@@ -1536,7 +1536,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     {
       // A local declaration doesn't use a scoped name.
       Identifier *ref_name = (*tmp)->local_name ();
-      std::string_view const ref_string = ref_name->get_string_view_or_empty ();
+      std::string_view const ref_string = ref_name->get_string_view ();
 
       // If the names compare exactly, it's a redefini8tion
       // error, unless they're both modules (which can be
@@ -1587,8 +1587,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
       if (decl_name->compare (parent_name))
         {
           idl_global->err ()->redef_error (
-                                  decl_name->get_string_view_or_empty (),
-                                  parent_name->get_string_view_or_empty ()
+                                  decl_name->get_string_view (),
+                                  parent_name->get_string_view ()
                                 );
 
           // if we try to continue from here, we risk a crash.
@@ -1599,8 +1599,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           if (idl_global->case_diff_error ())
             {
               idl_global->err ()->name_case_error (
-                                      decl_name->get_string_view_or_empty (),
-                                      parent_name->get_string_view_or_empty ()
+                                      decl_name->get_string_view (),
+                                      parent_name->get_string_view ()
                                     );
 
               // if we try to continue from here, we risk a crash.
@@ -1609,8 +1609,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           else
             {
               idl_global->err ()->name_case_warning (
-                                      decl_name->get_string_view_or_empty (),
-                                      parent_name->get_string_view_or_empty ()
+                                      decl_name->get_string_view (),
+                                      parent_name->get_string_view ()
                                     );
             }
         }
@@ -1735,8 +1735,8 @@ UTL_Scope::referenced (AST_Decl *const e,
               && id->compare (*name_tmp))
             {
               idl_global->err ()->redef_error (
-                id->get_string_view_or_empty (),
-                (*name_tmp)->get_string_view_or_empty ());
+                id->get_string_view (),
+                (*name_tmp)->get_string_view ());
               return true;
             }
           // No clash if one or the other of the identifiers was escaped.
@@ -1746,15 +1746,15 @@ UTL_Scope::referenced (AST_Decl *const e,
               if (idl_global->case_diff_error ())
                 {
                   idl_global->err ()->name_case_error (
-                                          id->get_string_view_or_empty (),
-                                          (*name_tmp)->get_string_view_or_empty ()
+                                          id->get_string_view (),
+                                          (*name_tmp)->get_string_view ()
                                         );
                 }
               else
                 {
                   idl_global->err ()->name_case_warning (
-                                          id->get_string_view_or_empty (),
-                                          (*name_tmp)->get_string_view_or_empty ()
+                                          id->get_string_view (),
+                                          (*name_tmp)->get_string_view ()
                                         );
                 }
 
@@ -1862,7 +1862,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
       return nullptr;
     }
 
-  std::string_view const name = e->first_component ()->get_string_view_or_empty ();
+  std::string_view const name = e->first_component ()->get_string_view ();
   FE_Utils::T_Param_Info *param = nullptr;
   unsigned long index = 0;
 

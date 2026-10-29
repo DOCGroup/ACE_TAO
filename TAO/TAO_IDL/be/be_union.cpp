@@ -149,7 +149,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
         }
 
       std::string instance_name ("_tao_union.");
-      instance_name += ub->local_name ()->get_string_view_or_empty ();
+      instance_name += ub->local_name ()->get_string_view ();
 
       *os << "strm << ";
 

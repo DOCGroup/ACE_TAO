@@ -148,7 +148,7 @@ UTL_IdList::last_component () const
 Identifier *
 UTL_IdList::first_component ()
 {
-  if (!this->pd_car_data->get_string_view_or_empty ().empty ())
+  if (!this->pd_car_data->get_string_view ().empty ())
     {
       return this->pd_car_data;
     }
@@ -159,7 +159,7 @@ UTL_IdList::first_component ()
 Identifier const *
 UTL_IdList::first_component () const
 {
-  if (!this->pd_car_data->get_string_view_or_empty ().empty ())
+  if (!this->pd_car_data->get_string_view ().empty ())
     {
       return this->pd_car_data;
     }
@@ -180,7 +180,7 @@ UTL_IdList::compare (UTL_IdList const *other) const
 
   // Strip away any leading empty segments.
 
-  if (this->pd_car_data->get_string_view_or_empty ().empty ())
+  if (this->pd_car_data->get_string_view ().empty ())
     {
       UTL_List const *this_tail = this->tail ();
 
@@ -192,7 +192,7 @@ UTL_IdList::compare (UTL_IdList const *other) const
       return static_cast<UTL_IdList const *> (this_tail)->compare (other);
     }
 
-  if (other->pd_car_data->get_string_view_or_empty ().empty ())
+  if (other->pd_car_data->get_string_view ().empty ())
     {
       UTL_List const *other_tail = other->tail ();
 
@@ -224,7 +224,7 @@ UTL_IdList::compare (UTL_IdList const *other) const
       Identifier const *this_id = this_list->head ();
       Identifier const *other_id = other_list->head ();
 
-      if (this_id->get_string_view_or_empty () != other_id->get_string_view_or_empty ())
+      if (this_id->get_string_view () != other_id->get_string_view ())
         {
           return 1;
         }
@@ -333,7 +333,7 @@ UTL_IdList::get_string_copy () const
         {
           result.append ("::");
         }
-      result.append (item_list->head ()->get_string_view_or_empty ());
+      result.append (item_list->head ()->get_string_view ());
       n++;
       item_list = static_cast<UTL_IdList const *> (item_list->tail ());
     }
@@ -344,5 +344,5 @@ UTL_IdList::get_string_copy () const
 bool
 UTL_IdList::is_absolute () const
 {
-  return first_component ()->get_string_view_or_empty () == "::";
+  return first_component ()->get_string_view () == "::";
 }

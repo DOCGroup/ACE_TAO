@@ -76,7 +76,7 @@ be_visitor_connector_dds_ex_base::is_dds_type (
           base = base->base_connector ();
         }
 
-      if (base->local_name ()->get_string_view_or_empty ()
+      if (base->local_name ()->get_string_view ()
           == "DDS_Base")
         {
           AST_Structure *s = dynamic_cast<AST_Structure*> (d);

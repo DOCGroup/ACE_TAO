@@ -129,7 +129,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
           be_decl *parent = dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
-          fname += bt->local_name ()->get_string_view_or_empty ();
+          fname += bt->local_name ()->get_string_view ();
         }
       else
         {

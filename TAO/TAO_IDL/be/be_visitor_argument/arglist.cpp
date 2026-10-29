@@ -58,7 +58,7 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
   if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
     {
       *os << " " << (unused_ ? "/* " : "" )
-          << node->local_name ()->get_string_view_or_empty ()
+          << node->local_name ()->get_string_view ()
           << (unused_ ? " */" : "");
     }
 
@@ -216,7 +216,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
       bool is_tckind =
-        (node->local_name ()->get_string_view_or_empty () == "TCKind");
+        (node->local_name ()->get_string_view () == "TCKind");
 
       switch (this->direction ())
         {

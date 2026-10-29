@@ -541,7 +541,7 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
           << "     << ";
 
       std::string instance_name ("this->");
-      instance_name += f->local_name ()->get_string_view_or_empty ();
+      instance_name += f->local_name ()->get_string_view ();
       f->gen_member_ostream_operator (os,
                                       instance_name,
                                       false,

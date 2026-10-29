@@ -33,7 +33,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
 
   // No '_cxx_' prefix.
   std::string_view const lname =
-    node_->original_local_name ()->get_string_view_or_empty ();
+    node_->original_local_name ()->get_string_view ();
 
   char const * const global = (sname_str.empty () ? "" : "::");
 
@@ -155,7 +155,7 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
     }
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
   std::string_view const obj_name = node->provides_type ()->full_name ();
 
@@ -192,7 +192,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
     }
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string_view_or_empty ();
+  prefix += node->local_name ()->get_string_view ();
   const char *port_name = prefix.c_str ();
   std::string_view const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
@@ -243,7 +243,7 @@ be_visitor_servant_svh::visit_publishes (be_publishes *node)
     {
       std::string_view const obj_name = node->publishes_type ()->full_name ();
       std::string_view const port_name =
-        node->local_name ()->get_string_view_or_empty ();
+        node->local_name ()->get_string_view ();
 
       os_ << be_uidt_nl << be_nl
           << "public:" << be_idt_nl;
@@ -267,7 +267,7 @@ be_visitor_servant_svh::visit_emits (be_emits *node)
     {
       std::string_view const obj_name = node->emits_type ()->full_name ();
       std::string_view const port_name =
-        node->local_name ()->get_string_view_or_empty ();
+        node->local_name ()->get_string_view ();
 
       os_ << be_nl_2
           << "virtual void" << be_nl
@@ -288,7 +288,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
     {
       std::string_view const obj_name = node->consumes_type ()->full_name ();
       std::string_view const port_name =
-        node->local_name ()->get_string_view_or_empty ();
+        node->local_name ()->get_string_view ();
 
       std::string holder (obj_name);
       std::size_t const pos = holder.rfind (':');

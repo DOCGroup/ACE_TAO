@@ -594,9 +594,9 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
   AST_Decl *intf = ScopeAsDecl (op->defined_in ());
   std::string arg_flat_name (intf->flat_name ());
   arg_flat_name += '_';
-  arg_flat_name += op->local_name ()->get_string_view_or_empty ();
+  arg_flat_name += op->local_name ()->get_string_view ();
   arg_flat_name += '_';
-  arg_flat_name += node->local_name ()->get_string_view_or_empty ();
+  arg_flat_name += node->local_name ()->get_string_view ();
 
   // Avoid generating a duplicate structure in the skeleton.
   if (this->S_.empty ())
@@ -730,7 +730,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
     {
       // Form a unique macro name using the local name and the bound.
       std::string macro_name (
-        alias->local_name ()->get_string_view_or_empty ());
+        alias->local_name ()->get_string_view ());
       macro_name += std::to_string (bound);
 
       os->gen_ifdef_macro (macro_name, guard_suffix, false);

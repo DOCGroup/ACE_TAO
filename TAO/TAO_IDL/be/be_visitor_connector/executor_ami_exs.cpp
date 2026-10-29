@@ -31,7 +31,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
   std::string_view const suffix = "_exec_i";
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   std::string class_name (
-    scope->local_name ()->get_string_view_or_empty ());
+    scope->local_name ()->get_string_view ());
   class_name += suffix;
 
   os_ << be_nl_2
@@ -175,7 +175,7 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   AST_Decl *d = i.item ();
 
   std::string_view const loc_name =
-    node->local_name ()->get_string_view_or_empty ();
+    node->local_name ()->get_string_view ();
   std::string_view const exec_ext =
     loc_name.find ("sync") != std::string_view::npos ? "1" : "0";
 

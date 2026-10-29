@@ -218,7 +218,7 @@ be_visitor_args_decl::visit_array (be_array *node)
 
           fname = parent->full_name ();
           fname += "::_";
-          fname += node->local_name ()->get_string_view_or_empty ();
+          fname += node->local_name ()->get_string_view ();
         }
       else
         {
