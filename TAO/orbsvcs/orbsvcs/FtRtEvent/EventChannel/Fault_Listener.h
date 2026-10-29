@@ -22,7 +22,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FTEC_Fault_Listener
 {
 public:
+  TAO_FTEC_Fault_Listener() = default;
   virtual ~TAO_FTEC_Fault_Listener() = default;
+  TAO_FTEC_Fault_Listener(TAO_FTEC_Fault_Listener const&) = delete;
+  TAO_FTEC_Fault_Listener(TAO_FTEC_Fault_Listener&&) = delete;
+  TAO_FTEC_Fault_Listener& operator=(TAO_FTEC_Fault_Listener const&) = delete;
+  TAO_FTEC_Fault_Listener& operator=(TAO_FTEC_Fault_Listener&&) = delete;
   virtual void connection_closed()=0;
 };
 

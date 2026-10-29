@@ -52,6 +52,11 @@ public:
   using StateWorker = ProxySupplierStateWorker;
   explicit TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
+  TAO_FTEC_ConsumerAdmin(TAO_FTEC_ConsumerAdmin const&) = delete;
+  TAO_FTEC_ConsumerAdmin(TAO_FTEC_ConsumerAdmin&&) = delete;
+  TAO_FTEC_ConsumerAdmin& operator=(TAO_FTEC_ConsumerAdmin const&) = delete;
+  TAO_FTEC_ConsumerAdmin& operator=(TAO_FTEC_ConsumerAdmin&&) = delete;
+
   /// destructor...
   ~TAO_FTEC_ConsumerAdmin () override = default;
 

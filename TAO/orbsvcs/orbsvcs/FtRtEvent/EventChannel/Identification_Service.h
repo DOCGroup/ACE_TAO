@@ -31,6 +31,11 @@ namespace FTRTEC
     Identification_Service();
     ~Identification_Service() override = default;
 
+    Identification_Service(Identification_Service const&) = delete;
+    Identification_Service(Identification_Service&&) = delete;
+    Identification_Service& operator=(Identification_Service const&) = delete;
+    Identification_Service& operator=(Identification_Service&&) = delete;
+
     /**
     * This function returns 0 when init is not called yet.
     */

@@ -55,6 +55,11 @@ public:
   /// constructor...
   explicit TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
+  TAO_FTEC_SupplierAdmin(TAO_FTEC_SupplierAdmin const&) = delete;
+  TAO_FTEC_SupplierAdmin(TAO_FTEC_SupplierAdmin&&) = delete;
+  TAO_FTEC_SupplierAdmin& operator=(TAO_FTEC_SupplierAdmin const&) = delete;
+  TAO_FTEC_SupplierAdmin& operator=(TAO_FTEC_SupplierAdmin&&) = delete;
+
   /// destructor...
   ~TAO_FTEC_SupplierAdmin () override = default;
 

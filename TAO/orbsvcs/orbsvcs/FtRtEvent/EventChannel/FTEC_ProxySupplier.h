@@ -31,6 +31,11 @@ public:
 
   TAO_FTEC_ProxyPushSupplier(TAO_EC_Event_Channel_Base* event_channel,
                            int validate_connection);
+
+  TAO_FTEC_ProxyPushSupplier(TAO_FTEC_ProxyPushSupplier const&) = delete;
+  TAO_FTEC_ProxyPushSupplier(TAO_FTEC_ProxyPushSupplier&&) = delete;
+  TAO_FTEC_ProxyPushSupplier& operator=(TAO_FTEC_ProxyPushSupplier const&) = delete;
+  TAO_FTEC_ProxyPushSupplier& operator=(TAO_FTEC_ProxyPushSupplier&&) = delete;
     /// Activate in the POA
   void activate (
     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) override;

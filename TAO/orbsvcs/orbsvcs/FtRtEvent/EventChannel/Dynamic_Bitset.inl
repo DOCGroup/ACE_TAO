@@ -30,7 +30,7 @@ Dynamic_Bitset operator & (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs)
 {
   Dynamic_Bitset tmp(lhs);
   tmp &= rhs;
-  return tmp;
+  return static_cast<Dynamic_Bitset const&> (tmp);
 }
 
 ACE_INLINE

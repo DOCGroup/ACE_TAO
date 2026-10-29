@@ -35,6 +35,11 @@ namespace FTRTEC
     Replication_Service();
     ~Replication_Service () override;
 
+    Replication_Service(Replication_Service const&) = delete;
+    Replication_Service(Replication_Service&&) = delete;
+    Replication_Service& operator=(Replication_Service const&) = delete;
+    Replication_Service& operator=(Replication_Service&&) = delete;
+
     int init (int argc,
       ACE_TCHAR* []) override;
 

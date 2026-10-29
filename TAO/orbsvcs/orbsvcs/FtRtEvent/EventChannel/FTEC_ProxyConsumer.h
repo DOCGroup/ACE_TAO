@@ -31,6 +31,11 @@ public:
 
   explicit TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
+  TAO_FTEC_ProxyPushConsumer(TAO_FTEC_ProxyPushConsumer const&) = delete;
+  TAO_FTEC_ProxyPushConsumer(TAO_FTEC_ProxyPushConsumer&&) = delete;
+  TAO_FTEC_ProxyPushConsumer& operator=(TAO_FTEC_ProxyPushConsumer const&) = delete;
+  TAO_FTEC_ProxyPushConsumer& operator=(TAO_FTEC_ProxyPushConsumer&&) = delete;
+
   void activate (
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) override;
 

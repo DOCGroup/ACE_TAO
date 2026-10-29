@@ -38,7 +38,9 @@ public:
   explicit Dynamic_Bitset(size_type size = 0);
   ~Dynamic_Bitset();
   Dynamic_Bitset(Dynamic_Bitset const& other);
+  Dynamic_Bitset(Dynamic_Bitset&&) = delete;
   Dynamic_Bitset& operator = (Dynamic_Bitset const& other);
+  Dynamic_Bitset& operator = (Dynamic_Bitset&&) = delete;
   Dynamic_Bitset& operator &=(Dynamic_Bitset const& other);
 
   reference operator[](size_type bit);
