@@ -698,7 +698,7 @@ TAO_OutStream::print (AST_Expression *expr)
       break;
     case AST_Expression::EV_string:
       *this << '"'
-            << ev->u.strval->get_string_view_or_empty ()
+            << ev->u.strval->get_string_view ().value ()
             << '"';
       break;
     case AST_Expression::EV_wstring:

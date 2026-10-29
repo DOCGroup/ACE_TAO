@@ -1909,7 +1909,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
                                     0);
                 }
 
-              Identifier id (alias_param->get_string_view_or_empty ());
+              Identifier id (alias_param->get_string_view ().value ());
               UTL_ScopedName sn (&id, nullptr);
 
               return

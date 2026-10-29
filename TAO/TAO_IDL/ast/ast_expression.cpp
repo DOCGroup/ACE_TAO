@@ -2608,8 +2608,8 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_bool:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_string:
-      return pd_ev->u.strval->get_string_view_or_empty ()
-        == vc->ev ()->u.strval->get_string_view_or_empty ();
+      return pd_ev->u.strval->get_string_view ().value ()
+        == vc->ev ()->u.strval->get_string_view ().value ();
     case EV_wstring:
       return !ACE_OS::strcmp (pd_ev->u.wstrval, vc->ev ()->u.wstrval);
     case EV_longlong:
