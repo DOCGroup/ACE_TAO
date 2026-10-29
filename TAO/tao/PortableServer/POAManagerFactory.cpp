@@ -45,7 +45,7 @@ TAO_POAManager_Factory::create_POAManager (
 
   PortableServer::POAManager_var poamanager;
 
-  if (id != 0)
+  if (id != nullptr)
   {
     poamanager = this->find (id);
 

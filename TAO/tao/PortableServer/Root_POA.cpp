@@ -455,12 +455,12 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
       // The POAManager name will be generated when the POAManager instance
       // is created.
       the_poa_manager
-        = tao_poa_manager_factory->create_POAManager (0, empty_policies);
+        = tao_poa_manager_factory->create_POAManager (nullptr, empty_policies);
 #else
 
       PortableServer::POAManager_ptr the_poa_manager_ptr;
       ACE_NEW_THROW_EX (the_poa_manager_ptr,
-                        TAO_POA_Manager (this->object_adapter (), 0),
+                        TAO_POA_Manager (this->object_adapter (), nullptr),
                         CORBA::NO_MEMORY ());
       the_poa_manager = the_poa_manager_ptr;
 #endif /* TAO_HAS_MINIMUM_POA == 0 && ! CORBA_E_COMPACT) */
@@ -771,7 +771,7 @@ TAO_Root_POA::destroy (CORBA::Boolean etherealize_objects,
                        CORBA::Boolean wait_for_completion)
 {
   // Lock access for the duration of this transaction.
-  TAO::Portable_Server::POA_Guard poa_guard (*this , 0);
+  TAO::Portable_Server::POA_Guard poa_guard (*this, false);
   ACE_UNUSED_ARG (poa_guard);
 
   this->destroy_i (etherealize_objects, wait_for_completion);
@@ -878,7 +878,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress =
     this->object_adapter ().non_servant_upcall_in_progress ();
   if (this->outstanding_requests_ == 0 &&
-      (non_servant_upcall_in_progress == 0 ||
+      (non_servant_upcall_in_progress == nullptr ||
        &non_servant_upcall_in_progress->poa () != this))
     {
       TAO::ORT_Array my_array_obj_ref_template;
@@ -1403,7 +1403,7 @@ TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
                                       is_system_id,
                                       poa_creation_time);
   if (result != 0
-      || (this->root () == 0 && poa_system_name != this->system_name ())
+      || (!this->root () && poa_system_name != this->system_name ())
       || is_root != this->root ()
       || is_system_id != this->system_id ()
       || !this->validate_lifespan (is_persistent, poa_creation_time))

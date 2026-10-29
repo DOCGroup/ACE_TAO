@@ -87,7 +87,7 @@ namespace TAO
       // Inform the custom servant dispatching (CSD) strategy that the
       // servant is deactivated. This would be called just once when the
       // servant is deactivated the first time.
-      if (active_object_map_entry->deactivated_ == 0)
+      if (!active_object_map_entry->deactivated_)
         {
           this->poa_->servant_deactivated_hook (
             active_object_map_entry->servant_,
@@ -859,7 +859,7 @@ namespace TAO
       PortableServer::ObjectId user_id;
 
       if (this->active_object_map_->
-          bind_using_system_id_returning_system_id (0,
+          bind_using_system_id_returning_system_id (nullptr,
                                                     priority,
                                                     system_id.out ()) != 0)
         {
@@ -876,11 +876,11 @@ namespace TAO
 
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
-                                       intf,
-                                       0,
-                                       1,
-                                       priority,
-                                       true);
+                                             intf,
+                                             nullptr,
+                                             1,
+                                             priority,
+                                             true);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
                                                         user_id);

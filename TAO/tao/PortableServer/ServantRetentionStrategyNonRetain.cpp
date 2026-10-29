@@ -214,7 +214,7 @@ namespace TAO
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
                                              intf,
-                                             0,
+                                             nullptr,
                                              1,
                                              priority,
                                              true);
