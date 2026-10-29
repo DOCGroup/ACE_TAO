@@ -40,30 +40,35 @@ public:
                           ACE_Reactor *reactor,
                           FILE *file_ptr);
 
+  Supplier_Timer_Handler (Supplier_Timer_Handler const &) = delete;
+  Supplier_Timer_Handler &operator= (Supplier_Timer_Handler const &) = delete;
+  Supplier_Timer_Handler (Supplier_Timer_Handler &&) = delete;
+  Supplier_Timer_Handler &operator= (Supplier_Timer_Handler &&) = delete;
+
   /// Destructor.
   ~Supplier_Timer_Handler () = default;
 
   /// Method which will be called by the Reactor when timeout occurs.
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
 
 private:
   /// The values of the stock and its rate are got from the file.
   int get_stock_information ();
 
   /// The supplier instance.
-  Supplier *supplier_obj_;
+  Supplier *supplier_obj_ {};
 
   /// Reactor used by the supplier.
-  ACE_Reactor *reactor_;
+  ACE_Reactor *reactor_ {};
 
   /// The file handle of the file from where the stock input is obtained.
-  FILE* file_ptr_;
+  FILE *file_ptr_ {};
 
   /// The name of the stock.
-  char stockname_[BUFSIZ];
+  char stockname_[BUFSIZ] {};
 
   /// The market value of the stock.It will be typecasted to long later.
-  long value_;
+  long value_ {};
 };
 
 #endif /* SUPPLIER_TIMER_HANDLER_H */

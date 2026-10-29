@@ -19,15 +19,7 @@
 #include "ace/OS_NS_fcntl.h"
 
 // Constructor.
-Supplier::Supplier ()
-  : ior_ (0),
-    use_naming_service_ (1),
-    notifier_ (),
-    f_ptr_ (0),
-    loop_count_ (10),
-    period_value_ (1)
-{
-}
+Supplier::Supplier () = default;
 
 Supplier::~Supplier ()
 {
@@ -43,7 +35,7 @@ Supplier::~Supplier ()
 
 // Reads the Server factory IOR from a file.
 int
-Supplier::read_ior (ACE_TCHAR *filename)
+Supplier::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -57,7 +49,7 @@ Supplier::read_ior (ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();
 
-  if (data == 0)
+  if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior\n"),
                       -1);
@@ -113,7 +105,7 @@ Supplier::parse_args ()
         break;
 
       case 's': // Don't use the naming service
-        this->use_naming_service_ = 0;
+        this->use_naming_service_ = false;
         break;
 
       case '?':
@@ -138,7 +130,7 @@ Supplier::parse_args ()
 
 // Give the stock status information to the Notifier.
 int
-Supplier::send_market_status (const char *stock_name, long value)
+Supplier::send_market_status (char const *stock_name, long value)
 {
   try
     {
@@ -146,13 +138,13 @@ Supplier::send_market_status (const char *stock_name, long value)
       this->notifier_->market_status (stock_name,
                                       value);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception (
         "System Exception : Supplier::send_market_status");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception (
         "User Exception : Supplier::send_market_status");
@@ -165,7 +157,7 @@ Supplier::send_market_status (const char *stock_name, long value)
 int
 Supplier::run ()
 {
-  long timer_id = 0;
+  long timer_id {};
 
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier Daemon is running...\n"));
@@ -211,13 +203,13 @@ Supplier::via_naming_service ()
       this->notifier_ =
         Notifier::_narrow (notifier_obj.in ());
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception (
         "System Exception : Supplier::via_naming_service\n");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception (
         "User Exception : Supplier::via_naming_service\n");
@@ -253,7 +245,7 @@ Supplier::init (int argc, ACE_TCHAR **argv)
       if (this->use_naming_service_)
         return via_naming_service ();
 
-      if (this->ior_ == 0)
+      if (this->ior_ == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: no ior specified\n",
                            this->argv_[0]),
@@ -270,12 +262,12 @@ Supplier::init (int argc, ACE_TCHAR **argv)
       // done using the <_narrow> method.
       this->notifier_ = Notifier::_narrow (notifier_object.in ());
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception : Supplier::init");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception : Supplier::init");
       return -1;
@@ -284,7 +276,7 @@ Supplier::init (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-ACE_Reactor*
+ACE_Reactor *
 Supplier::reactor_used () const
 {
   return ACE_Reactor::instance ();
@@ -292,7 +284,7 @@ Supplier::reactor_used () const
 
 // The stock market information is read from a file.
 int
-Supplier::read_file (ACE_TCHAR *filename)
+Supplier::read_file (ACE_TCHAR const *filename)
 {
   f_ptr_ = ACE_OS::fopen (filename, "r");
 
@@ -301,7 +293,7 @@ Supplier::read_file (ACE_TCHAR *filename)
               filename));
 
   // the stock values are to be read from a file.
-  if (f_ptr_ == 0)
+  if (f_ptr_ == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
                        filename),

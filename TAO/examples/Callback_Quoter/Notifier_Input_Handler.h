@@ -36,6 +36,11 @@ public:
   /// Constructor.
   Notifier_Input_Handler ();
 
+  Notifier_Input_Handler (Notifier_Input_Handler const &) = delete;
+  Notifier_Input_Handler &operator= (Notifier_Input_Handler const &) = delete;
+  Notifier_Input_Handler (Notifier_Input_Handler &&) = delete;
+  Notifier_Input_Handler &operator= (Notifier_Input_Handler &&) = delete;
+
   /// Destructor.
   ~Notifier_Input_Handler ();
 
@@ -60,16 +65,16 @@ private:
   int init_naming_service ();
 
   /// File where the IOR of the Notifier object is stored.
-  FILE *ior_output_file_;
+  FILE *ior_output_file_ {};
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// Naming context for the naming service.
-  CosNaming::NamingContext_var naming_context_;
+  CosNaming::NamingContext_var naming_context_ {};
 
   /// helper class for getting access to Naming Service.
   TAO_Naming_Client naming_server_;
@@ -78,7 +83,7 @@ private:
   Notifier_i notifier_i_;
 
   /// This specifies whether the naming service is to be used.
-  int using_naming_service_;
+  bool using_naming_service_ {true};
 };
 
 #endif /* NOTIFIER_INPUT_HANDLER_H */

@@ -39,6 +39,11 @@ public:
   /// Constructor.
   Supplier ();
 
+  Supplier (Supplier const &) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier &&) = delete;
+
   /// Destructor.
   ~Supplier ();
 
@@ -49,7 +54,7 @@ public:
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Sends the stock name and its value.
-  int send_market_status (const char *stock_name,
+  int send_market_status (char const *stock_name,
                           long value);
 
 private:
@@ -58,10 +63,10 @@ private:
   Supplier_Timer_Handler *supplier_timer_handler_ {};
 
   /// Remember our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Function to read the Notifier IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
   int parse_args ();
@@ -70,20 +75,20 @@ private:
   /// object with the POA.
   int via_naming_service();
 
-  /// returns the TAO instance of the singleton Reactor.
-   ACE_Reactor *reactor_used () const;
+  /// Returns the TAO instance of the singleton Reactor.
+  ACE_Reactor *reactor_used () const;
 
   /// This method used for getting stock information from a file.
-  int read_file (ACE_TCHAR *filename);
+  int read_file (ACE_TCHAR const *filename);
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the Notifier.
-  ACE_TCHAR *ior_;
+  ACE_TCHAR *ior_ {};
 
   /// An instance of the name client used for resolving the factory
   /// objects.
@@ -91,19 +96,19 @@ private:
 
   /// This variable denotes whether the naming service
   /// is used or not.
-  int use_naming_service_;
+  bool use_naming_service_ {true};
 
   /// Notifier object reference.
-  Notifier_var notifier_;
+  Notifier_var notifier_ {};
 
   /// The pointer for accessing the input stream.
-  FILE  *f_ptr_;
+  FILE *f_ptr_ {};
 
   /// Iteration count.
-  int loop_count_;
+  int loop_count_ {10};
 
   /// Time period between two succesive market feeds to the Notifier.
-  long  period_value_;
+  long period_value_ {1};
 };
 
 #endif /*SUPPLIER_I_H */

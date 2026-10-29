@@ -22,8 +22,8 @@ Supplier_Timer_Handler:: Supplier_Timer_Handler (Supplier *supplier,
 
 // Method which will be called by the reactor on timeout.
 int
-Supplier_Timer_Handler:: handle_timeout (const ACE_Time_Value & /* tv */,
-                                         const void * /* arg */)
+Supplier_Timer_Handler::handle_timeout (ACE_Time_Value const & /* tv */,
+                                        void const * /* arg */)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sending Stock Market Information to Notifier...\n"));
