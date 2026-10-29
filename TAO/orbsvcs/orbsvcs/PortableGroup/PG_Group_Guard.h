@@ -79,11 +79,11 @@ private:
   /// Reference to the ObjectId that is the map key necessary to
   /// unbind the corresponding object group map entry from the map
   /// upon destruction.
-  const PortableServer::ObjectId & oid_;
+  PortableServer::ObjectId const & oid_;
 
   /// Flag that dictates whether or not the destructor will perform
   /// cleanup.
-  bool released_;
+  bool released_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
