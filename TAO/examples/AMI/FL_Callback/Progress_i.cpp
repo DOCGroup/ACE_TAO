@@ -34,15 +34,14 @@ Progress_Window::Progress_Window (int n_peers,
                                   int n_iterations,
                                   int x, int y,
                                   int w, int h,
-                                  const char* l)
+                                  char const *l)
   :  Fl_Box (x, y, w, h, l),
      n_peers_ (n_peers),
      peers_ (n_peers),
-     n_iterations_ (n_iterations)
+     n_iterations_ (n_iterations),
+     request_progress_ (n_peers),
+     reply_progress_ (n_peers)
 {
-  ACE_NEW (this->request_progress_, Fl_Widget*[this->n_peers_]);
-  ACE_NEW (this->reply_progress_, Fl_Widget*[this->n_peers_]);
-
   // @@ leak...
   Fl_Widget *button = new Fl_Button (x + 5, y + 5,
                                      50, h - 10,
@@ -57,9 +56,9 @@ Progress_Window::Progress_Window (int n_peers,
   int sy = y + 5;
 
   // Set the width of the sliders...
-  int sx = x + 60;
-  int sw = w - 65;
-  int max = this->n_peers_ * this->n_iterations_;
+  int const sx = x + 60;
+  int const sw = w - 65;
+  int const max = this->n_peers_ * this->n_iterations_;
   for (int i = 0; i < this->n_peers_; ++i)
     {
       Fl_Slider *obj;
@@ -94,7 +93,7 @@ Progress_Window::sent_request (CORBA::Long id)
   obj->value (obj->value () + 1);
   obj->redraw ();
 
-  int i = static_cast<int> (obj->value ());
+  int const i = static_cast<int> (obj->value ());
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
 }
@@ -109,7 +108,7 @@ Progress_Window::recv_reply (CORBA::Long id)
   obj->value (obj->value () + 1);
   obj->redraw ();
 
-  int i = static_cast<int> (obj->value ());
+  int const i = static_cast<int> (obj->value ());
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
 }
@@ -117,7 +116,7 @@ Progress_Window::recv_reply (CORBA::Long id)
 CORBA::Long
 Progress_Window::bind (Peer_ptr a_peer)
 {
-  CORBA::ULong l = this->peers_.length ();
+  CORBA::ULong const l = this->peers_.length ();
   this->peers_.length (l + 1);
   this->peers_[l] = Peer::_duplicate (a_peer);
 
@@ -125,7 +124,7 @@ Progress_Window::bind (Peer_ptr a_peer)
 }
 
 void
-Progress_Window::start_callback (Fl_Widget* /* widget */,
+Progress_Window::start_callback (Fl_Widget * /* widget */,
                                  void *data)
 {
   Progress_Window *self = static_cast<Progress_Window*> (data);
@@ -145,7 +144,7 @@ Progress_Window::start ()
           this->peers_[i]->start (this->peers_,
                                   this->n_iterations_);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &)
         {
           // Ignore exceptions
         }
