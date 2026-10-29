@@ -75,7 +75,7 @@ TAO_EC_Conjunction_Filter::size () const
 }
 
 int
-TAO_EC_Conjunction_Filter::filter (const RtecEventComm::EventSet& event,
+TAO_EC_Conjunction_Filter::filter (RtecEventComm::EventSet const &event,
                                    TAO_EC_QOS_Info& qos_info)
 {
   ChildrenIterator end = this->end ();
@@ -107,7 +107,7 @@ TAO_EC_Conjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Conjunction_Filter::push (const RtecEventComm::EventSet& event,
+TAO_EC_Conjunction_Filter::push (RtecEventComm::EventSet const &event,
                                  TAO_EC_QOS_Info& qos_info)
 {
   CORBA::Long pos = this->current_child_ - this->begin ();
@@ -174,7 +174,7 @@ TAO_EC_Conjunction_Filter::max_event_size () const
 
 int
 TAO_EC_Conjunction_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+      RtecEventComm::EventHeader const &header) const
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -189,8 +189,8 @@ TAO_EC_Conjunction_Filter::can_match (
 
 int
 TAO_EC_Conjunction_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info&)
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }
