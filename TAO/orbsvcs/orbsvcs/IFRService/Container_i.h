@@ -184,28 +184,28 @@ public:
       CORBA::InterfaceDefSeq const &base_interfaces);
 
   virtual CORBA::ValueDef_ptr create_value (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
-      const CORBA::InitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::InitializerSeq const &initializers);
 
   CORBA::ValueDef_ptr create_value_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
-      const CORBA::InitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::InitializerSeq const &initializers);
 
   virtual CORBA::ValueBoxDef_ptr create_value_box (
       const char *id,
@@ -266,28 +266,28 @@ public:
       const CORBA::InterfaceDefSeq &base_interfaces);
 
   virtual ::CORBA::ExtValueDef_ptr create_ext_value (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers);
 
   CORBA::ExtValueDef_ptr create_ext_value_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers);
 
   /// Called from TAO_IFR_Service_Utils::name_exists.
   static int same_as_tmp_name (const char *name);

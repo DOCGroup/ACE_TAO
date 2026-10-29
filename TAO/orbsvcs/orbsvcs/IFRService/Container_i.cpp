@@ -1277,16 +1277,16 @@ TAO_Container_i::create_interface_i (char const *id,
 
 CORBA::ValueDef_ptr
 TAO_Container_i::create_value (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::InitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::InitializerSeq const &initializers
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueDef::_nil ());
@@ -1307,16 +1307,16 @@ TAO_Container_i::create_value (
 
 CORBA::ValueDef_ptr
 TAO_Container_i::create_value_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::InitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::InitializerSeq const &initializers
   )
 {
   ACE_Configuration_Section_Key new_key;
@@ -1677,16 +1677,16 @@ TAO_Container_i::create_local_interface_i (
 
 CORBA::ExtValueDef_ptr
 TAO_Container_i::create_ext_value (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers
     )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtValueDef::_nil ());
@@ -1707,16 +1707,16 @@ TAO_Container_i::create_ext_value (
 
 CORBA::ExtValueDef_ptr
 TAO_Container_i::create_ext_value_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers
     )
 {
   ACE_Configuration_Section_Key new_key;
