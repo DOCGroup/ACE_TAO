@@ -194,7 +194,7 @@ TAO_CEC_EventChannel::destroy ()
 }
 
 CORBA::Policy_ptr TAO_CEC_EventChannel::create_roundtrip_timeout_policy
-(const ACE_Time_Value &timeout)
+(ACE_Time_Value const &timeout)
 {
   return this->factory_->create_roundtrip_timeout_policy (timeout);
 }

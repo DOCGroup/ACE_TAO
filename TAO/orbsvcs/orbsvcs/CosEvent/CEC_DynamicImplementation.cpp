@@ -57,7 +57,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
 }
 
 CORBA::RepositoryId
-TAO_CEC_DynamicImplementationServer::_primary_interface (const PortableServer::ObjectId &,
+TAO_CEC_DynamicImplementationServer::_primary_interface (PortableServer::ObjectId const &,
                                                          PortableServer::POA_ptr)
 {
   return CORBA::string_dup (repository_id_);
@@ -88,7 +88,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   CORBA::NamedValue_ptr nv = list->item (0);
 
   CORBA::Any_ptr ap = nv->value ();
-  const char *value {};
+  char const *value {};
   *ap >>= value;
 
   if (TAO_debug_level >= 10)
@@ -98,7 +98,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                   value));
     }
 
-  const char *object_id =
+  char const *object_id =
     CORBA::_tc_Object->id ();
 
   if (TAO_debug_level >= 10)

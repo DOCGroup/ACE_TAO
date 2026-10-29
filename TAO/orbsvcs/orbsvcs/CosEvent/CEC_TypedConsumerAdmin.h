@@ -46,7 +46,7 @@ public:
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
 
   /// Invoke the typed event on all the consumers
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (TAO_CEC_TypedEvent const &typed_event);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.

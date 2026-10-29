@@ -94,8 +94,8 @@ protected:
   CosNaming::Name channel_name_;
 
 private:
-  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &) = delete;
-  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &) = delete;
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader const &) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader const &) = delete;
   TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
   TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 };

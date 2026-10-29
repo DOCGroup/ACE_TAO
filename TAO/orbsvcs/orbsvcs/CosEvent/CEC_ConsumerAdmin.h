@@ -69,7 +69,7 @@ public:
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier> *worker);
 
   /// Push the event to all the consumers
-  void push (const CORBA::Any &event);
+  void push (CORBA::Any const &event);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.

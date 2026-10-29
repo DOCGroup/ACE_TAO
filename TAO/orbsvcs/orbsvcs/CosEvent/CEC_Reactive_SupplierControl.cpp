@@ -346,7 +346,7 @@ TAO_CEC_Reactive_SupplierControl::system_exception (
           proxy->disconnect_pull_consumer ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions..
     }
