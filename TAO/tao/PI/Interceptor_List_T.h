@@ -60,13 +60,13 @@ namespace TAO
     };
 
     /// Constructor.
-    Interceptor_List ();
+    Interceptor_List () = default;
 
     void add_interceptor (InterceptorType_ptr_type i);
 
     /// Register an interceptor with policies.
     void add_interceptor (InterceptorType_ptr_type i,
-                          const CORBA::PolicyList& policies);
+                          CORBA::PolicyList const &policies);
 
     void destroy_interceptors ();
 

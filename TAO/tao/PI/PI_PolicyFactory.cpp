@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_PI_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value)
+    CORBA::Any const &value)
 {
   if (type == PortableInterceptor::PROCESSING_MODE_POLICY_TYPE)
     {

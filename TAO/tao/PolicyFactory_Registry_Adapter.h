@@ -73,7 +73,7 @@ namespace TAO
 
     /// Check if a @c PolicyFactory corresponding to the given type,
     /// exists.
-    virtual bool factory_exists (CORBA::PolicyType &type) const = 0;
+    virtual bool factory_exists (CORBA::PolicyType type) const = 0;
   };
 }
 

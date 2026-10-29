@@ -11,11 +11,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename InterceptorType, typename DetailsType>
-  Interceptor_List<InterceptorType,DetailsType>::Interceptor_List ()
-  {
-  }
-
-  template <typename InterceptorType, typename DetailsType>
   typename Interceptor_List<InterceptorType,DetailsType>::RegisteredInterceptor&
   Interceptor_List<InterceptorType,DetailsType>::registered_interceptor (
     size_t index)
@@ -109,7 +104,7 @@ namespace TAO
   void
   Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
     InterceptorType_ptr_type interceptor,
-    const CORBA::PolicyList& policies
+    CORBA::PolicyList const &policies
     )
   {
     if (!CORBA::is_nil (interceptor))
