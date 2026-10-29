@@ -182,7 +182,7 @@ be_visitor_connector_dds_ex_base::match_template_args ()
        i.next ())
     {
       std::string_view const ref_name =
-        i.item ()->get_string_view ().value ();
+        i.item ()->str ();
       size_t slot = 0;
 
       for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR ci (

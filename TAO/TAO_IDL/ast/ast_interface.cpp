@@ -586,7 +586,7 @@ AST_Interface::redefine (AST_Interface *from)
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ()->get_string_view ().value ());
+  this->set_file_name (idl_global->filename ()->str ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
 }
@@ -809,7 +809,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
               if (d != d_before)
                 {
                   std::string const filename (
-                    idl_global->filename ()->get_string_view ().value ());
+                    idl_global->filename ()->str ());
                   ACE_ERROR ((LM_ERROR,
                               "warning in %C line %d: ",
                               filename.c_str (),

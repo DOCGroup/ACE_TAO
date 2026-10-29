@@ -291,7 +291,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
               if (d != d_before)
                 {
                   std::string const filename (
-                    idl_global->filename ()->get_string_view ().value ());
+                    idl_global->filename ()->str ());
                   ACE_ERROR ((LM_ERROR,
                               "warning in %C line %d: ",
                               filename.c_str (),

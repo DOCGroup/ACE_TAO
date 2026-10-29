@@ -110,7 +110,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
   // Generate the #ident string, if any.
   this->gen_ident_string (this->client_header_);
 
-  std::string_view const filename = idl_global->filename ()->get_string_view ().value ();
+  std::string_view const filename = idl_global->filename ()->str ();
   bool const got_pidl = filename.size () >= 5
     && filename.substr (filename.size () - 5) == ".pidl";
 
@@ -746,7 +746,7 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
   *this->anyop_header_ << "\n#include \"tao/AnyTypeCode/Any.h\"\n";
 
   std::string tao_prefix;
-  std::string_view const filename = idl_global->filename ()->get_string_view ().value ();
+  std::string_view const filename = idl_global->filename ()->str ();
   bool const got_tao_pidl = filename.size () >= 5
     && filename.substr (filename.size () - 5) == ".pidl";
 
@@ -3287,7 +3287,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
     {
       this->gen_standard_include (
         this->ciao_exec_idl_,
-        idl_global->stripped_filename ()->get_string_view ().value ());
+        idl_global->stripped_filename ()->str ());
     }
 
   for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
@@ -3430,7 +3430,7 @@ TAO_CodeGen::gen_ami_conn_idl_includes ()
 
   this->gen_standard_include (
     this->ciao_ami_conn_idl_,
-    idl_global->stripped_filename ()->get_string_view ().value ());
+    idl_global->stripped_filename ()->str ());
 }
 
 void

@@ -256,26 +256,19 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      std::optional<std::string_view> const item = i.item ()->get_string_view ();
-      if (item)
-        {
-          i.item ()->dump (o);
+      std::string_view const item = i.item ()->get_string_view ();
+      i.item ()->dump (o);
 
-          if (first)
-            {
-              if (*item != "::")
-                {
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
-            }
-        }
-      else
+      if (first)
         {
-          o << "(null string)";
+          if (item != "::")
+            {
+              first = false;
+            }
+          else
+            {
+              second = true;
+            }
         }
     }
 }

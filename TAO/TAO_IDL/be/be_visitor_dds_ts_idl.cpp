@@ -322,7 +322,7 @@ be_visitor_dds_ts_idl::init_file ()
 {
   /// Open an IDL file for writing.
   std::string orig (
-    idl_global->stripped_filename ()->get_string_view ().value ());
+    idl_global->stripped_filename ()->str ());
 
   std::string fname_noext (orig.substr (0, orig.rfind ('.')));
   fname_noext += "TypeSupport";
@@ -352,7 +352,7 @@ be_visitor_dds_ts_idl::init_file ()
   *this->os_ptr_ << be_nl_2
                  << "#include <dds_rtf2_dcps.idl>" << be_nl_2
                  << "#include \""
-                 << idl_global->filename ()->get_string_view ().value ()
+                 << idl_global->filename ()->str ()
                  << "\"";
 
   return 0;

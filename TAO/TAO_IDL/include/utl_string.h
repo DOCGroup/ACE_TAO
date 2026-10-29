@@ -65,7 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _STRING_STRING_HH
 #define _STRING_STRING_HH
 
-#include <optional>
 #include <string>
 #include <string_view>
 
@@ -85,9 +84,11 @@ public:
   UTL_String () = default;
 
   explicit UTL_String (char const* str);
+  // Compatibility with the checked-in lex/yacc generated parser sources.
   UTL_String (char const* str, bool take_copy);
 
-  explicit UTL_String (std::string_view str);
+  explicit UTL_String (std::string value);
+  explicit UTL_String (std::string_view value);
 
   explicit UTL_String (UTL_String const *s);
 
@@ -104,35 +105,35 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
+  // Compatibility with the checked-in lex/yacc generated parser sources.
   char *get_string ()
   {
-    return this->p_str ? this->p_str->data () : nullptr;
+    this->canonical_rep_.clear ();
+    return this->value_.data ();
   }
   char const *get_string () const
   {
-    return this->p_str ? this->p_str->c_str () : nullptr;
+    return this->value_.c_str ();
   }
   // Get contents of utl_string.
 
-  std::optional<std::string_view> get_string_view () const
+  std::string const& str () const
   {
-    return this->p_str ? std::optional<std::string_view> (*this->p_str) : std::nullopt;
+    return this->value_;
   }
-  // Get contents of utl_string as a non-owning view, if present.
+  // Get contents of utl_string as a standard string.
 
-  std::string_view get_string_view_or_empty () const
-  {
-    return this->p_str ? std::string_view (*this->p_str) : std::string_view {};
-  }
+  std::string const& get_canonical_rep ();
+  // Get canonical representation.
 
-  bool has_string () const;
-  // Check whether this string has a value, including an empty string.
-
-  std::optional<std::string_view> get_canonical_rep ();
-  // Get canonical representation as a non-owning view, if present.
+  bool compare (UTL_String const& s) const;
+  // Compare two UTL_String values.
 
   bool compare (UTL_String const *s) const;
-  // Compare two UTL_String *
+  // Compatibility for the checked-in generated parser sources.
+
+  bool compare_quiet (UTL_String const& s) const;
+  // Like compare without error or warning message output.
 
   bool compare_quiet (UTL_String const *s) const;
   // Like the above but without error or warning message output.
@@ -154,8 +155,8 @@ public:
 
 private:
   // Data
-  std::optional<std::string> p_str {};
-  std::optional<std::string> canonical_rep {};
+  std::string value_;
+  std::string canonical_rep_;
 };
 
 #endif           // _STRING_STRING_HH

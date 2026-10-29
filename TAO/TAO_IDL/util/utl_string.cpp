@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_ctype.h"
 
 #include <string>
+#include <utility>
 
 //////////////////////////////////////////////////////////////////////
 //// Static functions may be used by non-UTL_String instances.
@@ -167,7 +168,7 @@ UTL_String::get_canonical_rep (std::string_view str)
 //////////////////////////////////////////////////////////////////////
 
 UTL_String::UTL_String (char const* str)
-  : p_str (str != nullptr ? std::optional<std::string> (str) : std::nullopt)
+  : value_ (str != nullptr ? str : "")
 {
 }
 
@@ -177,13 +178,18 @@ UTL_String::UTL_String (char const* str, bool take_copy)
   ACE_UNUSED_ARG (take_copy);
 }
 
+UTL_String::UTL_String (std::string value)
+  : value_ (std::move (value))
+{
+}
+
 UTL_String::UTL_String (std::string_view str)
-  : p_str (str)
+  : value_ (str)
 {
 }
 
 UTL_String::UTL_String (UTL_String const *s)
-  : p_str (s->p_str)
+  : value_ (s->value_)
 {
 }
 
@@ -192,47 +198,50 @@ UTL_String::~UTL_String () = default;
 void
 UTL_String::destroy ()
 {
-  this->canonical_rep.reset ();
-  this->p_str.reset ();
+  this->canonical_rep_.clear ();
+  this->value_.clear ();
 }
 
 // Compare two UTL_String *.
 bool
+UTL_String::compare (UTL_String const& s) const
+{
+  return compare (this->value_, s.value_);
+}
+
+bool
 UTL_String::compare (UTL_String const *s) const
 {
-  std::optional<std::string_view> const lhs = this->get_string_view ();
-  std::optional<std::string_view> const rhs = s != nullptr ? s->get_string_view () : std::nullopt;
-  return lhs && rhs && compare (*lhs, *rhs);
+  return s != nullptr && this->compare (*s);
+}
+
+bool
+UTL_String::compare_quiet (UTL_String const& s) const
+{
+  return compare_quiet (this->value_, s.value_);
 }
 
 bool
 UTL_String::compare_quiet (UTL_String const *s) const
 {
-  std::optional<std::string_view> const lhs = this->get_string_view ();
-  std::optional<std::string_view> const rhs = s != nullptr ? s->get_string_view () : std::nullopt;
-  return lhs && rhs && compare_quiet (*lhs, *rhs);
+  return s != nullptr && this->compare_quiet (*s);
 }
 
 // Get the canonical representation from a String.
-std::optional<std::string_view>
+std::string const&
 UTL_String::get_canonical_rep ()
 {
-  if (!this->p_str)
+  if (this->canonical_rep_.empty () && !this->value_.empty ())
     {
-      return std::nullopt;
+      this->canonical_rep_ = get_canonical_rep (this->value_);
     }
 
-  if (!this->canonical_rep)
-    {
-      this->canonical_rep = get_canonical_rep (*this->p_str);
-    }
-
-  return std::string_view (*this->canonical_rep);
+  return this->canonical_rep_;
 }
 
 // AST Dumping.
 void
 UTL_String::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << this->get_string_view_or_empty ();
+  o << this->value_;
 }

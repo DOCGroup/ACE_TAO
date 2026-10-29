@@ -271,7 +271,7 @@ get_filename (AST_Decl *node = nullptr)
 
   UTL_String * const filename = idl_global->filename ();
   return filename != nullptr
-    ? filename->get_string_view ().value ()
+    ? std::string_view (filename->str ())
     : std::string_view {};
 }
 
@@ -740,7 +740,7 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
 {
   idl_error_header (EIDL_SYNTAX_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string_view ().value ());
+                    idl_global->filename ()->str ());
   ACE_ERROR ((LM_ERROR,
               "%C\n",
               parse_state_to_error_message (ps).data ()));
@@ -871,7 +871,7 @@ UTL_Error::coercion_error (AST_Expression *v,
 {
   idl_error_header (EIDL_COERCION_FAILURE,
                     v->line (),
-                    v->file_name ()->get_string_view ().value ());
+                    v->file_name ()->str ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " to %C\n",
@@ -1082,7 +1082,7 @@ UTL_Error::eval_error (AST_Expression *v)
 {
   idl_error_header (EIDL_EVAL_ERROR,
                     v->line (),
-                    v->file_name ()->get_string_view ().value ());
+                    v->file_name ()->str ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1410,7 +1410,7 @@ UTL_Error::back_end (long lineno,
 {
   idl_error_header (EIDL_BACK_END,
                     lineno,
-                    s->get_string_view_or_empty ());
+                    s->str ());
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -1486,7 +1486,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
                                 AST_Decl *masking)
 {
   std::string_view const this_file =
-    idl_global->filename ()->get_string_view ().value ();
+    idl_global->filename ()->str ();
   std::string_view const masked_file = masked->file_name ();
   std::string_view const masking_file = masking->file_name ();
   std::string const masked_file_string (masked_file);
