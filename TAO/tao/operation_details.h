@@ -69,16 +69,16 @@ public:
   friend class TAO::CSD::FW_Server_Request_Wrapper;
 
   /// Constructor
-  TAO_Operation_Details (const char *name,
-                         const CORBA::ULong len,
+  TAO_Operation_Details (char const *name,
+                         CORBA::ULong len,
                          TAO::Argument **args = nullptr,
-                         const CORBA::ULong num_args = 0,
-                         const CORBA::Boolean has_in_args = true,
-                         const TAO::Exception_Data *ex_data = nullptr,
-                         const CORBA::ULong ex_count = 0);
+                         CORBA::ULong num_args = 0,
+                         CORBA::Boolean has_in_args = true,
+                         TAO::Exception_Data const *ex_data = nullptr,
+                         CORBA::ULong ex_count = 0);
 
   /// Operation name
-  const char* opname () const;
+  char const *opname () const;
 
   /// Length of the operation name
   CORBA::ULong opname_len () const;
@@ -96,15 +96,15 @@ public:
 
   /// Accessors for the service context list
   IOP::ServiceContextList &request_service_info ();
-  const IOP::ServiceContextList &request_service_info () const;
+  IOP::ServiceContextList const &request_service_info () const;
   IOP::ServiceContextList &reply_service_info ();
-  const IOP::ServiceContextList &reply_service_info () const;
+  IOP::ServiceContextList const &reply_service_info () const;
 
   /// Access the TAO_Service_Context
   TAO_Service_Context &request_service_context ();
-  const TAO_Service_Context &request_service_context () const;
+  TAO_Service_Context const &request_service_context () const;
   TAO_Service_Context &reply_service_context ();
-  const TAO_Service_Context &reply_service_context () const;
+  TAO_Service_Context const &reply_service_context () const;
 
   /// Reset the contents of the service context lists that we hold.
   void reset_request_service_info ();
@@ -131,10 +131,10 @@ public:
    * is not found in the list of exceptions specified by the operation
    * this call would raise an UNKNOWN exception.
    */
-  CORBA::Exception *corba_exception (const char *ex) const;
+  CORBA::Exception *corba_exception (char const *ex) const;
 
   /// Check whether exception @a ex is in the signature of this operation
-  bool has_exception (::CORBA::Exception& ex) const;
+  bool has_exception (::CORBA::Exception &ex) const;
 
   /**
    * @name Helper methods used by the Invocation classes.
@@ -174,11 +174,16 @@ public:
   void reply_dispatcher (TAO_Reply_Dispatcher *rd);
 
 private:
+  TAO_Operation_Details (TAO_Operation_Details const &) = delete;
+  TAO_Operation_Details &operator= (TAO_Operation_Details const &) = delete;
+  TAO_Operation_Details (TAO_Operation_Details &&) = delete;
+  TAO_Operation_Details &operator= (TAO_Operation_Details &&) = delete;
+
   /// Name of the operation being invoked.
-  const char *opname_;
+  char const *opname_;
 
   /// Precalculated length of opname_.
-  const CORBA::ULong opname_len_;
+  CORBA::ULong const opname_len_;
 
   /// Request ID of this operation.
   CORBA::ULong request_id_;
@@ -204,16 +209,16 @@ private:
   TAO::Argument **args_;
 
   /// Number of arguments including the return value
-  const CORBA::ULong num_args_;
+  CORBA::ULong const num_args_;
 
   /// A flag indicating any args are sent with the request
-  const CORBA::Boolean has_in_args_;
+  CORBA::Boolean const has_in_args_;
 
   /// The type of exceptions that the operations can throw.
-  const TAO::Exception_Data *ex_data_;
+  TAO::Exception_Data const *ex_data_;
 
   /// Count of the exceptions that operations can throw.
-  const CORBA::ULong ex_count_;
+  CORBA::ULong const ex_count_;
 
   /// Boolean flag to indicate whether in the skeletons the stub arguments
   /// stored in these operation details should be used or not.
