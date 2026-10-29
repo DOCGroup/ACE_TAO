@@ -108,8 +108,7 @@ AST_Annotation_Appls::find (std::string_view annotation)
       return nullptr;
     }
 
-  std::string const annotation_name (annotation);
-  AST_Decl * decl = bottom->lookup_by_name (annotation_name.c_str ());
+  AST_Decl * decl = bottom->lookup_by_name (annotation);
   if (decl == nullptr)
     {
       return nullptr;

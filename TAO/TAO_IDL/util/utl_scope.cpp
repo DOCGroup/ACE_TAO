@@ -2213,7 +2213,7 @@ UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member
 }
 
 AST_Decl *
-UTL_Scope::lookup_by_name (char const *name)
+UTL_Scope::lookup_by_name (std::string_view name)
 {
   AST_Decl *node = nullptr;
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);

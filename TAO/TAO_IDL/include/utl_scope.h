@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_SCOPE_UTL_SCOPE_HH
 #define _UTL_SCOPE_UTL_SCOPE_HH
 
+#include <string_view>
+
 // This is the base class for name scoping. Each entity which can
 // be directly contained in a naming scope has an add() function
 // defined for it. The functions defined on the base scoping class
@@ -191,7 +193,7 @@ public:
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
-  AST_Decl *lookup_by_name (char const *name);
+  AST_Decl *lookup_by_name (std::string_view name);
 
   virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
                                              bool ignore_fwd = false);
