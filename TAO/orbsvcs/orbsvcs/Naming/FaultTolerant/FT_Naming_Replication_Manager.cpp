@@ -86,10 +86,6 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Nam
 {
 }
 
-TAO_FT_Naming_Replication_Manager::~TAO_FT_Naming_Replication_Manager()
-{
-}
-
 void
 TAO_FT_Naming_Replication_Manager::init_orb ()
 {

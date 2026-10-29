@@ -34,7 +34,7 @@ class TAO_FT_Naming_Server;
 class FT_Update_Replicant_i : public virtual POA_FT_Naming::UpdatePushNotifier
 {
 public:
-  FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner);
+  explicit FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner);
 
   void register_peer (::FT_Naming::UpdatePushNotifier_ptr peer,
                       ::FT_Naming::ReplicaInfo const &info,
@@ -73,9 +73,9 @@ public:
   using Replica_var = FT_Naming::UpdatePushNotifier_var;
   using Replica_ptr = FT_Naming::UpdatePushNotifier_ptr;
 
-  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
+  explicit TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
 
-  ~TAO_FT_Naming_Replication_Manager () override;
+  ~TAO_FT_Naming_Replication_Manager () override = default;
 
   int svc () override;
   int handle_exception (ACE_HANDLE) override;
