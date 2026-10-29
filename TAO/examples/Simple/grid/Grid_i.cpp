@@ -9,26 +9,11 @@ Grid_i::ushort_min (CORBA::UShort a, CORBA::UShort b)
   return a > b ? b : a;
 }
 
-// Default constructor.
-Grid_i::Grid_i ()
-  : width_ (0),
-    height_ (0),
-    array_ (0)
-{
-  //no-op
-}
-
 //  Constructor.
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y)
   : width_ (x),
-    height_ (y),
-    array_ (0)
-{
-}
-
-// Default destructor.
-Grid_i::~Grid_i ()
+    height_ (y)
 {
 }
 
@@ -45,7 +30,7 @@ Grid_i::set (CORBA::Short x,
     throw Grid::RANGE_ERROR ();
   else
     {
-      if (this->array_.get () == 0)
+      if (this->array_ == nullptr)
         this->array_.reset (allocate_array (this->width_, this->height_));
       *(this->array_.get () + this->width_ * y + x) = value;
     }
@@ -63,7 +48,7 @@ Grid_i::get (CORBA::Short x,
     throw Grid::RANGE_ERROR ();
   else
     {
-      if (this->array_.get () == 0)
+      if (this->array_ == nullptr)
         this->array_.reset (allocate_array (this->width_, this->height_));
       return *(this->array_.get () + this->width_ * y + x);
     }
@@ -94,7 +79,6 @@ Grid_i::width (CORBA::Short x)
                           Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
         }
       this->array_ = std::move(array);
-      array.release ();
       this->width_ = x;
     }
 }
@@ -111,7 +95,6 @@ Grid_i::height (CORBA::Short y)
                           this->width_ * sizeof (CORBA::Long));
         }
       this->array_ = std::move(array);
-      array.release ();
       this->height_ = y;
     }
 }
@@ -133,7 +116,7 @@ Grid_i::destroy ()
 CORBA::Long *
 Grid_i::allocate_array (CORBA::Short x, CORBA::Short y)
 {
-  CORBA::Long *array = 0;
+  CORBA::Long *array = nullptr;
   ACE_NEW_THROW_EX (array,
                     CORBA::Long[x * y],
                     CORBA::NO_MEMORY ());
@@ -159,16 +142,6 @@ Grid_Factory_i::shutdown ()
   this->orb_->shutdown ();
 }
 
-// Constructor
-Grid_Factory_i::Grid_Factory_i ()
-{
-}
-
-// Destructor
-Grid_Factory_i::~Grid_Factory_i ()
-{
-}
-
 // Make a <Grid>.
 Grid_ptr
 Grid_Factory_i::make_grid (CORBA::Short width,
@@ -187,7 +160,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
 
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
-  Grid_i *grid = 0;
+  Grid_i *grid = nullptr;
   ACE_NEW_THROW_EX (grid,
                     Grid_i (width, height),
                     CORBA::NO_MEMORY ());
