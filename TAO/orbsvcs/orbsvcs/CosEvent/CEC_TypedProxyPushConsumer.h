@@ -71,7 +71,7 @@ public:
 
   void push (CORBA::Any const &event) override;
 
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (TAO_CEC_TypedEvent const &typed_event);
 
   void disconnect_push_consumer () override;
 

@@ -95,7 +95,7 @@ public:
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   /// Push an event into the queue.
-  void push (const CORBA::Any &event);
+  void push (CORBA::Any const &event);
 
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   void connect_pull_consumer (CosEventComm::PullConsumer_ptr pull_consumer) override;

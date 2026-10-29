@@ -99,19 +99,19 @@ public:
   virtual void shutdown ();
 
   /// Internal methods to push an event to each consumer.
-  virtual void push (const CORBA::Any &event);
+  virtual void push (CORBA::Any const &event);
   virtual void push_nocopy (CORBA::Any &event);
   /// Internal methods to invoke a typed event to each consumer.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (TAO_CEC_TypedEvent const &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Pushes to the consumer, verifies that it is connected.
-  void push_to_consumer (const CORBA::Any &event);
-  void reactive_push_to_consumer (const CORBA::Any &event);
+  void push_to_consumer (CORBA::Any const &event);
+  void reactive_push_to_consumer (CORBA::Any const &event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  void invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
-  void reactive_invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
+  void invoke_to_consumer (TAO_CEC_TypedEvent const &typed_event);
+  void reactive_invoke_to_consumer (TAO_CEC_TypedEvent const &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /**

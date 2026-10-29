@@ -74,7 +74,7 @@ TAO_CEC_TypedProxyPushConsumer::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       result = CosTypedEventChannelAdmin::TypedProxyPushConsumer::_nil ();
     }
@@ -92,7 +92,7 @@ TAO_CEC_TypedProxyPushConsumer::deactivate ()
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is being disconnected twice, or some
@@ -156,7 +156,7 @@ TAO_CEC_TypedProxyPushConsumer::shutdown ()
     {
       supplier->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
@@ -264,7 +264,7 @@ TAO_CEC_TypedProxyPushConsumer::apply_policy
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::push (const CORBA::Any& /* event */)
+TAO_CEC_TypedProxyPushConsumer::push (CORBA::Any const & /* event */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -299,7 +299,7 @@ TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer ()
             {
               supplier->disconnect_push_supplier ();
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // Ignore exceptions, we must isolate other clients from
               // failures on this one.
@@ -337,7 +337,7 @@ TAO_CEC_TypedProxyPushConsumer::get_typed_consumer ()
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::invoke (const TAO_CEC_TypedEvent& typed_event)
+TAO_CEC_TypedProxyPushConsumer::invoke (TAO_CEC_TypedEvent const &typed_event)
 {
   TAO_CEC_TypedProxyPushConsumer_Guard ace_mon (this->lock_,
                                                 this->refcount_,

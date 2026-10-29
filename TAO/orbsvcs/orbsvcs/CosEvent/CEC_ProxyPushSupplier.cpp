@@ -87,7 +87,7 @@ TAO_CEC_ProxyPushSupplier::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       result = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
     }
@@ -105,7 +105,7 @@ TAO_CEC_ProxyPushSupplier::deactivate ()
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is being disconnected twice, or some
@@ -141,7 +141,7 @@ TAO_CEC_ProxyPushSupplier::shutdown ()
         {
           typed_consumer->disconnect_push_consumer ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.
@@ -173,7 +173,7 @@ TAO_CEC_ProxyPushSupplier::shutdown ()
     {
       consumer->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions, we must isolate other clients from
       // problems on this one.
@@ -186,7 +186,7 @@ TAO_CEC_ProxyPushSupplier::shutdown ()
 using Destroy_Guard = TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel, TAO_CEC_ProxyPushSupplier>;
 
 void
-TAO_CEC_ProxyPushSupplier::push (const CORBA::Any &event)
+TAO_CEC_ProxyPushSupplier::push (CORBA::Any const &event)
 {
   Destroy_Guard auto_destroy (this->refcount_,
                               this->event_channel_,
@@ -215,7 +215,7 @@ using Destroy_Guard_Typed =
   TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_TypedEventChannel, TAO_CEC_ProxyPushSupplier>;
 
 void
-TAO_CEC_ProxyPushSupplier::invoke (const TAO_CEC_TypedEvent& typed_event)
+TAO_CEC_ProxyPushSupplier::invoke (TAO_CEC_TypedEvent const &typed_event)
 {
   Destroy_Guard_Typed auto_destroy (this->refcount_, this->typed_event_channel_, this);
   {
@@ -538,7 +538,7 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier ()
             {
               typed_consumer->disconnect_push_consumer ();
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const &ex)
             {
               // Ignore exceptions, we must isolate other clients from
               // problems on this one.
@@ -557,7 +557,7 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier ()
         {
           consumer->disconnect_push_consumer ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.
@@ -571,7 +571,7 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier ()
 }
 
 void
-TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
+TAO_CEC_ProxyPushSupplier::push_to_consumer (CORBA::Any const &event)
 {
   CosEventComm::PushConsumer_var consumer;
   {
@@ -596,7 +596,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
       // Inform the control that we were able to push something
       control->successful_transmission(this);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       control->consumer_not_exist (this);
     }
@@ -604,7 +604,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
     {
       control->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Shouldn't happen, but does not hurt
     }
@@ -612,7 +612,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
 
 void
 TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
-    const CORBA::Any& event)
+    CORBA::Any const &event)
 {
   CosEventComm::PushConsumer_var consumer;
   {
@@ -634,7 +634,7 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
       // Inform the control that we were able to push something
       control->successful_transmission(this);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& not_used)
+  catch (CORBA::OBJECT_NOT_EXIST const &not_used)
     {
        if (TAO_debug_level >= 4)
         {
@@ -653,7 +653,7 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
 
       control->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Shouldn't happen, but does not hurt
     }
@@ -661,7 +661,7 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 void
-TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event)
+TAO_CEC_ProxyPushSupplier::invoke_to_consumer (TAO_CEC_TypedEvent const &typed_event)
 {
   CORBA::Object_var typed_consumer_obj;
 
@@ -702,7 +702,7 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
       // Inform the control that we were able to invoke something
       control->successful_transmission(this);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& not_used)
+  catch (CORBA::OBJECT_NOT_EXIST const &not_used)
     {
       if (TAO_debug_level >= 4)
         {
@@ -720,7 +720,7 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
         }
       control->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       // Shouldn't happen, but does not hurt
       if (TAO_debug_level >= 4)
@@ -733,7 +733,7 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
 
 void
 TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
-    const TAO_CEC_TypedEvent& typed_event)
+    TAO_CEC_TypedEvent const &typed_event)
 {
   CORBA::Object_var typed_consumer_obj;
 
@@ -776,7 +776,7 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
       // Inform the control that we were able to invoke something
       control->successful_transmission(this);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& not_used)
+  catch (CORBA::OBJECT_NOT_EXIST const &not_used)
     {
       if (TAO_debug_level >= 4)
         {
@@ -794,7 +794,7 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
         }
       control->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       if (TAO_debug_level >= 4)
         {
