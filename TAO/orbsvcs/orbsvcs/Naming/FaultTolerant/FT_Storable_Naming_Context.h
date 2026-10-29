@@ -43,7 +43,7 @@ public:
    */
   TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa,
-                                  const char *poa_id,
+                                  char const *poa_id,
                                   TAO_Storable_Naming_Context_Factory *cxt_factory,
                                   TAO::Storable_Factory *factory);
 
@@ -60,7 +60,7 @@ public:
   // naming context implementations.
   static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
 
-  bool is_object_group (const CORBA::Object_ptr obj) const;
+  bool is_object_group (CORBA::Object_ptr const obj) const;
 
  /**
   * Queues a request to update the peer replica instance of this
@@ -73,7 +73,7 @@ public:
   * if it cannot be found.
   */
   TAO_FT_Storable_Naming_Context* find_relative_context (
-                              const CosNaming::Name &n);
+                              CosNaming::Name const &n);
 
   /**
    * Mark the implementation as stale for replicated persistence support.

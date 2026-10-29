@@ -20,7 +20,7 @@ TAO_FT_Naming_Manager *TAO_FT_Storable_Naming_Context::naming_manager_ = nullptr
 
 TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *poa_id,
+                               char const *poa_id,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *pers_factory)
   : TAO_Storable_Naming_Context (orb,
@@ -34,7 +34,7 @@ TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr o
 }
 
 CORBA::Boolean
-TAO_FT_Storable_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
+TAO_FT_Storable_Naming_Context::is_object_group (CORBA::Object_ptr const obj) const
 {
   // Ensure the object is not nil first. If so, it cannot be an ObjectGroup.
   if (CORBA::is_nil (obj))
@@ -47,7 +47,7 @@ TAO_FT_Storable_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 }
 
 CORBA::Object_ptr
-TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
+TAO_FT_Storable_Naming_Context::resolve (CosNaming::Name const &n)
 {
   // Invoke the base class resolve operation to acquire the object at the
   // specified compound name.  Any exceptions should flow back to client.
@@ -74,13 +74,13 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
     // next object reference from the object group.
     resolved_ref = this->naming_manager_->next_member (resolved_ref.in ());
   }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
   {
     // This is apparently not an object group, so we should return the
     // object reference itself
     // No action required
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
        ACE_TEXT ("TAO_FT_Storable_Naming_Context::resolve - ")
