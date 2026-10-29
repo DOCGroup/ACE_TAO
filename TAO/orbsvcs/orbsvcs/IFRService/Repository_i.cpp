@@ -788,7 +788,7 @@ TAO_Repository_i::select_idltype (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Wstring:
       return this->WstringDef_servant_->_tied_object ();
     default:
-      return 0;
+      return nullptr;
   }
 }
 
@@ -814,7 +814,7 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Value:
       return this->ExtValueDef_servant_->_tied_object ();
     default:
-      return 0;
+      return nullptr;
   }
 }
 
@@ -854,7 +854,7 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueMember:
       return this->ValueMemberDef_servant_->_tied_object ();
     default:
-      return 0;
+      return nullptr;
   }
 }
 

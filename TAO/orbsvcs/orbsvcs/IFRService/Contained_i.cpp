@@ -82,7 +82,7 @@ TAO_Contained_i::destroy_i ()
 char *
 TAO_Contained_i::id ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -154,7 +154,7 @@ TAO_Contained_i::id_i (const char *id)
 char *
 TAO_Contained_i::name ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -175,7 +175,7 @@ TAO_Contained_i::name_i ()
 char *
 TAO_Contained_i::version ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -295,7 +295,7 @@ TAO_Contained_i::defined_in_i ()
 char *
 TAO_Contained_i::absolute_name ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -324,7 +324,7 @@ TAO_Contained_i::describe (
   )
 {
   // This will always be overridden by derived classes.
-  return 0;
+  return nullptr;
 }
 
 CORBA::Contained::Description *
@@ -332,7 +332,7 @@ TAO_Contained_i::describe_i (
   )
 {
   // This will always be overridden by derived classes.
-  return 0;
+  return nullptr;
 }
 
 void

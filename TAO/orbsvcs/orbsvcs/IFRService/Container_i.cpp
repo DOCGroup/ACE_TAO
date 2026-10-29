@@ -172,7 +172,7 @@ TAO_Container_i::destroy_definitions_i ()
 CORBA::Contained_ptr
 TAO_Container_i::lookup (const char *search_name)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -441,7 +441,7 @@ CORBA::ContainedSeq *
 TAO_Container_i::contents (CORBA::DefinitionKind limit_type,
                            CORBA::Boolean exclude_inherited)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -595,7 +595,7 @@ TAO_Container_i::lookup_name (const char *search_name,
                               CORBA::DefinitionKind limit_type,
                               CORBA::Boolean exclude_inherited)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -658,7 +658,7 @@ TAO_Container_i::describe_contents (CORBA::DefinitionKind limit_type,
                                     CORBA::Boolean exclude_inherited,
                                     CORBA::Long max_returned_objs)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -1864,7 +1864,7 @@ TAO_Container_i::lookup_name_recursive (
                                                           this->repo_);
 
               // This member may not be a container.
-              if (impl == 0)
+              if (impl == nullptr)
                 {
                   continue;
                 }

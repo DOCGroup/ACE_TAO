@@ -30,7 +30,7 @@ TAO_OperationDef_i::def_kind ()
 CORBA::Contained::Description *
 TAO_OperationDef_i::describe ( )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -132,7 +132,7 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def)
 CORBA::ParDescriptionSeq *
 TAO_OperationDef_i::params ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -222,7 +222,7 @@ TAO_OperationDef_i::params_i ()
                                                 this->repo_);
 
       // We have an undefined interface
-      if (impl == 0)
+      if (impl == nullptr)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Encountered undefined parameter type "
@@ -346,7 +346,7 @@ TAO_OperationDef_i::mode_i (CORBA::OperationMode mode)
 CORBA::ContextIdSeq *
 TAO_OperationDef_i::contexts ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -448,7 +448,7 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
 CORBA::ExceptionDefSeq *
 TAO_OperationDef_i::exceptions ( )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
