@@ -25,9 +25,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-static const int szInt =  sizeof(int);
-static const int szChar = sizeof(char);
-static const int szBool = sizeof(int);
+constexpr int szInt = sizeof(int);
+constexpr int szChar = sizeof(char);
+constexpr int szBool = sizeof(int);
 
 class TAO_NS_Persistence_Header
 {
