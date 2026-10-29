@@ -293,7 +293,7 @@ TAO_UnionDef_i::members_i ()
 }
 
 void
-TAO_UnionDef_i::members (const CORBA::UnionMemberSeq &members)
+TAO_UnionDef_i::members (CORBA::UnionMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -303,7 +303,7 @@ TAO_UnionDef_i::members (const CORBA::UnionMemberSeq &members)
 }
 
 void
-TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members)
+TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
 {
   // Destroy our old refs.
   TAO_Container_i::destroy_references_i ();

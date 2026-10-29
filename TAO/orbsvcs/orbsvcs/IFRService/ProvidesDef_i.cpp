@@ -109,7 +109,7 @@ TAO_ProvidesDef_i::interface_type_i (
       return;
     }
 
-  const char *tmp =
+  char const *tmp =
     TAO_IFR_Service_Utils::reference_to_path (interface_type);
 
   ACE_Configuration_Section_Key new_key;

@@ -131,7 +131,7 @@ TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def)
 void
 TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 {
-  const char *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
+  char const *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "type_path",
                                             path);
