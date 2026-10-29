@@ -210,7 +210,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
     ));
   }
 
-  int result = 0;
+  int result {};
 
   // Make sure it is an event type we can handle.
   if (result == 0)

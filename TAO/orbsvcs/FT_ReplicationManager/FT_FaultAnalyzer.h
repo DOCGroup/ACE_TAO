@@ -37,7 +37,7 @@ namespace TAO
     /**
     * Default constructor.
     */
-    FT_FaultAnalyzer ();
+    FT_FaultAnalyzer () = default;
 
     /**
     * Destructor.

@@ -128,7 +128,7 @@ char const * TAO::FT_ReplicationManager::identity () const
 //public
 int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
 {
-  int result = 0;
+  int result {};
 
   if (TAO_debug_level > 1)
   {
@@ -319,7 +319,7 @@ int TAO::FT_ReplicationManager::idle (int & result)
 //public
 int TAO::FT_ReplicationManager::fini ()
 {
-  int result = 0;
+  int result {};
 
   result = this->fault_consumer_.fini ();
 
@@ -368,7 +368,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 
   // Re-initialize our consumer.
   // Swallow any exception.
-  int result = 0;
+  int result {};
   try
   {
     //@@ should we check to see if a notifier is already registered, rather than
@@ -731,7 +731,7 @@ PortableGroup::ObjectGroupId
 TAO::FT_ReplicationManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-  PortableGroup::ObjectGroupId result = 0;
+  PortableGroup::ObjectGroupId result {};
   TAO::PG_Object_Group * group = nullptr;
   if (this->group_factory_.find_group (object_group, group))
   {
@@ -883,7 +883,7 @@ void
 TAO::FT_ReplicationManager::delete_object (
   PortableGroup::GenericFactory::FactoryCreationId const & factory_creation_id)
 {
-  PortableGroup::ObjectGroupId group_id = 0;
+  PortableGroup::ObjectGroupId group_id {};
   if (factory_creation_id >>= group_id)
   {
     this->group_factory_.delete_group (

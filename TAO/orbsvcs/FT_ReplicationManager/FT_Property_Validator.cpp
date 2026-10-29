@@ -133,12 +133,12 @@ TAO::FT_Property_Validator::validate_criteria (
   invalid_criteria.length (len);
 
   /// The invalid criteria index.
-  CORBA::ULong p = 0;
+  CORBA::ULong p {};
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      CORBA::Long value;
+      CORBA::Long value {};
 
       if (!(property.val >>= value))
         invalid_criteria[p++] = property;

@@ -51,7 +51,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type (
 int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
   CosNotification::StructuredEvent const & event)
 {
-  int result = 0;
+  int result {};
 
   CosNotification::FilterableEventBody const & filterable =
     event.filterable_data;
@@ -207,7 +207,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style (
   PortableGroup::Name prop_name (1);
   prop_name.length (1);
   prop_name[0].id = CORBA::string_dup (FT::FT_MEMBERSHIP_STYLE);
-  int result = 0;
+  int result {};
 
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value)
@@ -237,7 +237,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style (
   PortableGroup::Name prop_name (1);
   prop_name.length (1);
   prop_name[0].id = CORBA::string_dup (FT::FT_REPLICATION_STYLE);
-  int result = 0;
+  int result {};
 
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value)
@@ -267,7 +267,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members (
   PortableGroup::Name prop_name (1);
   prop_name.length (1);
   prop_name[0].id = CORBA::string_dup (FT::FT_MINIMUM_NUMBER_MEMBERS);
-  int result = 0;
+  int result {};
 
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value)
@@ -297,7 +297,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members (
   PortableGroup::Name prop_name (1);
   prop_name.length (1);
   prop_name[0].id = CORBA::string_dup (FT::FT_INITIAL_NUMBER_MEMBERS);
-  int result = 0;
+  int result {};
 
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value)
@@ -327,7 +327,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
   PortableGroup::Name prop_name (1);
   prop_name.length (1);
   prop_name[0].id = CORBA::string_dup (FT::FT_FACTORIES);
-  int result = 0;
+  int result {};
 
   PortableGroup::FactoryInfos const *temp_factories = nullptr;
   PortableGroup::Value value;
@@ -370,7 +370,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
   // Then, compare the TypeId and Location of the failed object with
   // those of the primary.  If they match, it was a primary fault.
 
-  int result = 0;
+  int result {};
   object_is_primary = false;
 
   try
@@ -457,7 +457,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
 int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
   TAO::FT_FaultEventDescriptor & fault_event_desc)
 {
-  int result = 0;
+  int result {};
   PortableGroup::ObjectGroup_var the_object_group = PortableGroup::ObjectGroup::_nil();
   PortableGroup::Properties_var properties;
 
@@ -730,7 +730,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member (
   TAO::FT_FaultEventDescriptor & fault_event_desc,
   PortableGroup::ObjectGroup_out new_iogr)
 {
-  int result = 0;
+  int result {};
   new_iogr = PortableGroup::ObjectGroup::_nil ();
 
   try
@@ -760,7 +760,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
   TAO::FT_FaultEventDescriptor & fault_event_desc,
   PortableGroup::ObjectGroup_out new_iogr)
 {
-  int result = 0;
+  int result {};
   new_iogr = PortableGroup::ObjectGroup::_nil ();
 
   try
@@ -806,7 +806,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
   TAO::FT_FaultEventDescriptor & fault_event_desc,
   PortableGroup::ObjectGroup_out new_iogr)
 {
-  int result = 0;
+  int result {};
   new_iogr = PortableGroup::ObjectGroup::_nil ();
 
   try
@@ -901,7 +901,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
 int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
   TAO::FT_FaultEventDescriptor & fault_event_desc)
 {
-  int result = 0;
+  int result {};
 
   // To handle a location failure, we should:
   // - Unregister all the factories at that location.
@@ -962,7 +962,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
 int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
   TAO::FT_FaultEventDescriptor & fault_event_desc)
 {
-  int result = 0;
+  int result {};
 
   // To handle a type failure, we should:
   // - Unregister the factory at the location of the failure
