@@ -7,12 +7,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {
   namespace {
-    Identification_Service* service;
-    const char oid[] = "\xF8\xB3\xB1\xFE\xAC\xC6\x07\x11\x02\x0C\x02\x50\xEB\x05\x77\xD0";
-  }
-
-  Identification_Service::Identification_Service()
-  {
+    Identification_Service* service {};
+    char const oid[] = "\xF8\xB3\xB1\xFE\xAC\xC6\x07\x11\x02\x0C\x02\x50\xEB\x05\x77\xD0";
   }
 
   Identification_Service* Identification_Service::instance()
@@ -60,13 +56,13 @@ namespace FTRTEC {
   }
 
 
-  const FtRtecEventComm::ObjectId& Identification_Service::object_id() const
+  FtRtecEventComm::ObjectId const& Identification_Service::object_id() const
   {
     return object_id_;
   }
 
 
-  const CosNaming::Name& Identification_Service::name() const
+  CosNaming::Name const& Identification_Service::name() const
   {
     return name_;
   }

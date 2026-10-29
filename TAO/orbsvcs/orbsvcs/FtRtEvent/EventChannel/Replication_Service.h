@@ -59,14 +59,14 @@ namespace FTRTEC
     * @param state The request to be replicated.
     * @param rollback The rollback operation when the replication failed.
     */
-    void replicate_request(const FtRtecEventChannelAdmin::Operation& update,
+    void replicate_request(FtRtecEventChannelAdmin::Operation const& update,
       RollbackOperation rollback);
 
    /**
     * Inform the backup replicas that a new replica has joined the object
     * group.
     */
-    void add_member(const FTRT::ManagerInfo & info,
+    void add_member(FTRT::ManagerInfo const &info,
                     CORBA::ULong object_group_ref_version);
 
     int  acquire_read ();
