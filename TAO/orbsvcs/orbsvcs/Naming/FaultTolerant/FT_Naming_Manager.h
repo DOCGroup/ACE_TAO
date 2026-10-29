@@ -78,21 +78,21 @@ public:
   /// FT_Naming::ROUND_ROBIN is supported.
   ///@param[in] the_criteria Properties to be used by the object group.
   PortableGroup::ObjectGroup_ptr create_object_group (
-    const char * group_name,
+    char const * group_name,
     ::FT_Naming::LoadBalancingStrategyValue lb_strategy,
-    const ::PortableGroup::Criteria & the_criteria) override;
+    ::PortableGroup::Criteria const & the_criteria) override;
 
   /// Deletes the object group with the provided group_name.
-  void delete_object_group (const char * group_name) override;
+  void delete_object_group (char const * group_name) override;
 
   /// Retrieves a reference to a group with the specified name
   PortableGroup::ObjectGroup_ptr get_object_group_ref_from_name (
-    const char * group_name) override;
+    char const * group_name) override;
 
   /// Provide a new load balancing strategy for the group with the provided
   /// name.
   void set_load_balancing_strategy (
-      const char * group_name,
+      char const * group_name,
       ::FT_Naming::LoadBalancingStrategyValue lb_strategy) override;
 
   /// Retrieve the names of the groups with the specified load balancing
@@ -108,20 +108,20 @@ public:
   //@{
   /// Set the default properties to be used by all object groups.
   void set_default_properties (
-      const PortableGroup::Properties & props) override;
+      PortableGroup::Properties const & props) override;
 
   /// Get the default properties used by all object groups.
   PortableGroup::Properties * get_default_properties () override;
 
   /// Remove default properties.
   void remove_default_properties (
-      const PortableGroup::Properties & props) override;
+      PortableGroup::Properties const & props) override;
 
   /// Set properties associated with a given Replica type.  These
   /// properties override the default properties.
   void set_type_properties (
-      const char * type_id,
-      const PortableGroup::Properties & overrides) override;
+      char const * type_id,
+      PortableGroup::Properties const & overrides) override;
 
   /**
    * Return the properties associated with a give Replica type.  These
@@ -129,12 +129,12 @@ public:
    * addition to the default properties that were not overridden.
    */
   PortableGroup::Properties * get_type_properties (
-      const char * type_id) override;
+      char const * type_id) override;
 
   /// Remove the given properties associated with the Replica type ID.
   void remove_type_properties (
-      const char * type_id,
-      const PortableGroup::Properties & props) override;
+      char const * type_id,
+      PortableGroup::Properties const & props) override;
 
   /**
    * Dynamically set the properties associated with a given object
@@ -144,7 +144,7 @@ public:
    */
   void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides) override;
+      PortableGroup::Properties const & overrides) override;
 
   /**
    * Return the properties currently in use by the given object
@@ -169,9 +169,9 @@ public:
   /// add the created object to the ObjectGroup.
   PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria) override;
+      PortableGroup::Location const & the_location,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria) override;
 
   /// Add an existing object to the ObjectGroup.
   /// @param[in] object_group A reference for the group to which the
@@ -183,7 +183,7 @@ public:
   /// members must have the same type.
   PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location,
+      PortableGroup::Location const & the_location,
       CORBA::Object_ptr member) override;
 
   /**
@@ -195,7 +195,7 @@ public:
    */
   PortableGroup::ObjectGroup_ptr remove_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location) override;
+      PortableGroup::Location const & the_location) override;
 
   /// Return the locations of the members in the given ObjectGroup.
   PortableGroup::Locations * locations_of_members (
@@ -203,7 +203,7 @@ public:
 
   /// Return the locations of the members in the given ObjectGroup.
   PortableGroup::ObjectGroups * groups_at_location (
-      const PortableGroup::Location & the_location) override;
+      PortableGroup::Location const & the_location) override;
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   PortableGroup::ObjectGroupId get_object_group_id (
@@ -217,7 +217,7 @@ public:
   /// ObjectGroup at the given location.
   CORBA::Object_ptr get_member_ref (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & loc) override;
+      PortableGroup::Location const & loc) override;
 
   //@}
 
@@ -236,9 +236,9 @@ public:
    * name in addition to the factory_creation_id.
    */
   CORBA::Object_ptr create_object (
-      const char * object_name,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
+      char const * object_name,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
         factory_creation_id);
 
@@ -249,7 +249,7 @@ public:
    * Afterward, the ObjectGroup itself will be deleted.
    */
   void delete_object (
-      const PortableGroup::GenericFactory::FactoryCreationId &
+      PortableGroup::GenericFactory::FactoryCreationId const &
         factory_creation_id);
 
   //@}
@@ -274,10 +274,10 @@ public:
 
   /// Indicate the object group state is stale.
   /// Only valid when object group persistence is enabled.
-  void set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info);
+  void set_object_group_stale (FT_Naming::ObjectGroupUpdate const & group_info);
 
   /// Initialize a global load balancing strategy
-  void set_global_strategy (const ACE_TCHAR *strat_name);
+  void set_global_strategy (ACE_TCHAR const *strat_name);
 
   /// Destructor.
   ~TAO_FT_Naming_Manager () override;
