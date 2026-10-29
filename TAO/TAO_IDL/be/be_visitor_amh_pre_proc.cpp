@@ -145,7 +145,7 @@ be_visitor_amh_pre_proc::create_response_handler (
   // Generate 'AMH_InterfaceResponseHandler'
   std::string class_name;
   class_name += "AMH_";
-  class_name += node->local_name ().data ();
+  class_name += node->local_name ();
   class_name += "ResponseHandler";
 
   UTL_ScopedName * const amh_name =

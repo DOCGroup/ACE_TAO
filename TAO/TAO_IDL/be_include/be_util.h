@@ -16,7 +16,7 @@
 
 #include "TAO_IDL_BE_Export.h"
 
-#include <string_view>
+#include <string>
 
 class TAO_OutStream;
 class be_module;
@@ -46,7 +46,7 @@ public:
 
   /// Special BE arg call factored out of DRV_args.
   static TAO_IDL_BE_Export void
-  prep_be_arg (std::string_view s);
+  prep_be_arg (std::string const& s);
 
   /// Checks made after parsing args.
   static TAO_IDL_BE_Export void
@@ -61,7 +61,7 @@ public:
   generator_init ();
 
   /// Called from various places.
-  static std::string_view
+  static std::string const&
   get_output_path (bool for_anyop, bool for_skel, bool for_exec);
 
   static const char *

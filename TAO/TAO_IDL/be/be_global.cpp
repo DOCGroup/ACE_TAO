@@ -63,13 +63,13 @@ BE_GlobalData::changing_standard_include_files ()
 /************ Helper functions **************/
 static std::string
 be_change_idl_file_extension (UTL_String* idl_file,
-                              std::optional<std::string_view> new_extension,
+                              std::string const& new_extension,
                               bool base_name_only = false,
                               bool for_anyop = false,
                               bool for_skel = false,
                               bool for_exec = false)
 {
-  if (idl_file == nullptr || !new_extension)
+  if (idl_file == nullptr)
     {
       return {};
     }
@@ -105,7 +105,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
     }
 
   // Anyop * skel file output defaults to general output dir if not set.
-  std::string_view const output_path =
+  std::string const& output_path =
     be_util::get_output_path (for_anyop, for_skel, for_exec);
 
   std::string fname;
@@ -131,14 +131,8 @@ be_change_idl_file_extension (UTL_String* idl_file,
         }
     }
 
-  fname.append (new_extension->data (), new_extension->size ());
+  fname.append (new_extension);
   return fname;
-}
-
-static std::optional<std::string_view>
-optional_string_view (std::optional<std::string> const& value)
-{
-  return value ? std::optional<std::string_view> (*value) : std::nullopt;
 }
 
 std::string
@@ -157,8 +151,7 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
       orb_file = true;
     }
 
-  std::optional<std::string_view> const ending =
-    orb_file ? std::optional<std::string_view> ("C.h") : be_global->client_hdr_ending ();
+  std::string const ending = orb_file ? "C.h" : be_global->client_hdr_ending ();
 
   return be_change_idl_file_extension (idl_file_name,
                                        ending,
@@ -197,8 +190,7 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
       orb_file = true;
     }
 
-  std::optional<std::string_view> const ending =
-    orb_file ? std::optional<std::string_view> ("S.h") : be_global->server_hdr_ending ();
+  std::string const ending = orb_file ? "S.h" : be_global->server_hdr_ending ();
 
   return be_change_idl_file_extension (idl_file_name,
                                        ending,
@@ -223,9 +215,7 @@ BE_GlobalData::be_get_svnt_template_hdr (UTL_String *idl_file_name,
       orb_file = true;
     }
 
-  std::optional<std::string_view> const ending =
-    orb_file ? std::optional<std::string_view> ("S.h") :
-    be_global->ciao_svnt_header_template_ending ();
+  std::string const ending = orb_file ? "S.h" : be_global->ciao_svnt_header_template_ending ();
 
   return be_change_idl_file_extension (idl_file_name,
                                        ending,
@@ -674,284 +664,284 @@ BE_GlobalData::be_get_ciao_ami_conn_impl_src_fname (
                                    base_name_only);
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::skel_export_macro () const
 {
   return this->skel_export_macro_;
 }
 
 void
-BE_GlobalData::skel_export_macro (std::string_view s)
+BE_GlobalData::skel_export_macro (std::string const& s)
 {
   this->skel_export_macro_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::skel_export_include () const
 {
   return this->skel_export_include_;
 }
 
 void
-BE_GlobalData::skel_export_include (std::string_view s)
+BE_GlobalData::skel_export_include (std::string const& s)
 {
   this->skel_export_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::skel_export_file () const
 {
   return this->skel_export_file_;
 }
 
 void
-BE_GlobalData::skel_export_file (std::string_view s)
+BE_GlobalData::skel_export_file (std::string const& s)
 {
   this->skel_export_file_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::stub_export_macro () const
 {
   return this->stub_export_macro_;
 }
 
 void
-BE_GlobalData::stub_export_macro (std::string_view s)
+BE_GlobalData::stub_export_macro (std::string const& s)
 {
   this->stub_export_macro_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::stub_export_include () const
 {
   return this->stub_export_include_;
 }
 
 void
-BE_GlobalData::stub_export_include (std::string_view s)
+BE_GlobalData::stub_export_include (std::string const& s)
 {
   this->stub_export_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::stub_export_file () const
 {
   return this->stub_export_file_;
 }
 
 void
-BE_GlobalData::stub_export_file (std::string_view s)
+BE_GlobalData::stub_export_file (std::string const& s)
 {
   this->stub_export_file_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::anyop_export_macro () const
 {
   return this->anyop_export_macro_;
 }
 
 void
-BE_GlobalData::anyop_export_macro (std::string_view s)
+BE_GlobalData::anyop_export_macro (std::string const& s)
 {
   this->anyop_export_macro_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::anyop_export_include () const
 {
   return this->anyop_export_include_;
 }
 
 void
-BE_GlobalData::anyop_export_include (std::string_view s)
+BE_GlobalData::anyop_export_include (std::string const& s)
 {
   this->anyop_export_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::exec_export_macro () const
 {
   return this->exec_export_macro_;
 }
 
 void
-BE_GlobalData::exec_export_macro (std::string_view s)
+BE_GlobalData::exec_export_macro (std::string const& s)
 {
   this->exec_export_macro_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::exec_export_include () const
 {
   return this->exec_export_include_;
 }
 
 void
-BE_GlobalData::exec_export_include (std::string_view s)
+BE_GlobalData::exec_export_include (std::string const& s)
 {
   this->exec_export_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::svnt_export_macro () const
 {
   return this->svnt_export_macro_;
 }
 
 void
-BE_GlobalData::svnt_export_macro (std::string_view s)
+BE_GlobalData::svnt_export_macro (std::string const& s)
 {
   this->svnt_export_macro_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::svnt_export_include () const
 {
   return this->svnt_export_include_;
 }
 
 void
-BE_GlobalData::svnt_export_include (std::string_view s)
+BE_GlobalData::svnt_export_include (std::string const& s)
 {
   this->svnt_export_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::conn_export_macro () const
 {
   return this->conn_export_macro_;
 }
 
 void
-BE_GlobalData::conn_export_macro (std::string_view s)
+BE_GlobalData::conn_export_macro (std::string const& s)
 {
   this->conn_export_macro_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::conn_export_include () const
 {
   return this->conn_export_include_;
 }
 
 void
-BE_GlobalData::conn_export_include (std::string_view s)
+BE_GlobalData::conn_export_include (std::string const& s)
 {
   this->conn_export_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::pch_include () const
 {
   return this->pch_include_;
 }
 
 void
-BE_GlobalData::pch_include (std::string_view s)
+BE_GlobalData::pch_include (std::string const& s)
 {
   this->pch_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::pre_include () const
 {
   return this->pre_include_;
 }
 
 void
-BE_GlobalData::pre_include (std::string_view s)
+BE_GlobalData::pre_include (std::string const& s)
 {
   this->pre_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::post_include () const
 {
   return this->post_include_;
 }
 
 void
-BE_GlobalData::post_include (std::string_view s)
+BE_GlobalData::post_include (std::string const& s)
 {
   this->post_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::include_guard () const
 {
   return this->include_guard_;
 }
 
 void
-BE_GlobalData::include_guard (std::string_view s)
+BE_GlobalData::include_guard (std::string const& s)
 {
   this->include_guard_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::safe_include () const
 {
   return this->safe_include_;
 }
 
 void
-BE_GlobalData::safe_include (std::string_view s)
+BE_GlobalData::safe_include (std::string const& s)
 {
   this->safe_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::unique_include () const
 {
   return this->unique_include_;
 }
 
 void
-BE_GlobalData::unique_include (std::string_view s)
+BE_GlobalData::unique_include (std::string const& s)
 {
   this->unique_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::stripped_filename () const
 {
   return this->stripped_filename_;
 }
 
 void
-BE_GlobalData::stripped_filename (std::string_view s)
+BE_GlobalData::stripped_filename (std::string const& s)
 {
   this->stripped_filename_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::versioning_begin () const
 {
   return this->versioning_begin_;
 }
 
 void
-BE_GlobalData::versioning_include (std::string_view s)
+BE_GlobalData::versioning_include (std::string const& s)
 {
   this->versioning_include_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::versioning_include () const
 {
   return this->versioning_include_;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::core_versioning_begin () const
 {
   return this->core_versioning_begin_;
 }
 
 void
-BE_GlobalData::versioning_end (std::string_view s)
+BE_GlobalData::versioning_end (std::string const& s)
 {
   this->versioning_end_ = "\n\n";
   this->versioning_end_.append (s);
@@ -965,7 +955,7 @@ BE_GlobalData::versioning_end (std::string_view s)
 }
 
 void
-BE_GlobalData::versioning_begin (std::string_view s)
+BE_GlobalData::versioning_begin (std::string const& s)
 {
   this->versioning_begin_ = "\n\n";
   this->versioning_begin_.append (s);
@@ -978,25 +968,25 @@ BE_GlobalData::versioning_begin (std::string_view s)
     "\n}" + this->core_versioning_end_;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::versioning_end () const
 {
   return this->versioning_end_;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::core_versioning_end () const
 {
   return this->core_versioning_end_;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::anyops_versioning_begin () const
 {
   return this->anyops_versioning_begin_;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::anyops_versioning_end () const
 {
   return this->anyops_versioning_end_;
@@ -1004,148 +994,141 @@ BE_GlobalData::anyops_versioning_end () const
 
 // Set the client_hdr_ending.
 void
-BE_GlobalData::client_hdr_ending (std::string_view s)
+BE_GlobalData::client_hdr_ending (std::string const& s)
 {
   this->client_hdr_ending_ = s;
 }
 
 // Get the client_hdr_ending.
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::client_hdr_ending () const
 {
-  return optional_string_view (this->client_hdr_ending_);
-}
-
-std::string_view
-BE_GlobalData::client_hdr_ending_or_empty () const
-{
-  return this->client_hdr_ending_ ? std::string_view (*this->client_hdr_ending_)
-                                  : std::string_view {};
+  return this->client_hdr_ending_;
 }
 
 void
-BE_GlobalData::client_inline_ending  (std::string_view s)
+BE_GlobalData::client_inline_ending  (std::string const& s)
 {
   this->client_inline_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::client_inline_ending () const
 {
-  return optional_string_view (this->client_inline_ending_);
+  return this->client_inline_ending_;
 }
 
 // Set the client_stub_ending.
 void
-BE_GlobalData::client_stub_ending (std::string_view s)
+BE_GlobalData::client_stub_ending (std::string const& s)
 {
   this->client_stub_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::client_stub_ending () const
 {
-  return optional_string_view (this->client_stub_ending_);
+  return this->client_stub_ending_;
 }
 
 void
-BE_GlobalData::server_hdr_ending (std::string_view s)
+BE_GlobalData::server_hdr_ending (std::string const& s)
 {
   this->server_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::server_hdr_ending () const
 {
-  return optional_string_view (this->server_hdr_ending_);
+  return this->server_hdr_ending_;
 }
 
 void
-BE_GlobalData::implementation_hdr_ending (std::string_view s)
+BE_GlobalData::implementation_hdr_ending (std::string const& s)
 {
   this->implementation_hdr_ending_ = s;
 }
 
 void
-BE_GlobalData::implementation_skel_ending (std::string_view s)
+BE_GlobalData::implementation_skel_ending (std::string const& s)
 {
   this->implementation_skel_ending_ = s;
 }
 
 void
-BE_GlobalData::impl_class_prefix (std::string_view s)
+BE_GlobalData::impl_class_prefix (std::string const& s)
 {
   this->impl_class_prefix_ = s;
 }
 
 void
-BE_GlobalData::impl_class_suffix (std::string_view s)
+BE_GlobalData::impl_class_suffix (std::string const& s)
 {
   this->impl_class_suffix_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::impl_class_prefix () const
 {
   return this->impl_class_prefix_;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::implementation_hdr_ending () const
 {
-  return optional_string_view (this->implementation_hdr_ending_);
+  return this->implementation_hdr_ending_;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::impl_class_suffix () const
 {
   return this->impl_class_suffix_;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::implementation_skel_ending () const
 {
-  return optional_string_view (this->implementation_skel_ending_);
+  return this->implementation_skel_ending_;
 }
 
 void
-BE_GlobalData::server_template_hdr_ending (std::string_view s)
+BE_GlobalData::server_template_hdr_ending (std::string const& s)
 {
   this->server_template_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::server_template_hdr_ending () const
 {
-  return optional_string_view (this->server_template_hdr_ending_);
+  return this->server_template_hdr_ending_;
 }
 
 void
-BE_GlobalData::server_skeleton_ending (std::string_view s)
+BE_GlobalData::server_skeleton_ending (std::string const& s)
 {
   this->server_skeleton_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::server_skeleton_ending () const
 {
-  return optional_string_view (this->server_skeleton_ending_);
+  return this->server_skeleton_ending_;
 }
 
 void
-BE_GlobalData::server_template_skeleton_ending (std::string_view s)
+BE_GlobalData::server_template_skeleton_ending (std::string const& s)
 {
   this->server_template_skeleton_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::server_template_skeleton_ending () const
 {
-  return optional_string_view (this->server_template_skeleton_ending_);
+  return this->server_template_skeleton_ending_;
 }
 
 void
-BE_GlobalData::anyop_header_ending (std::string_view s)
+BE_GlobalData::anyop_header_ending (std::string const& s)
 {
   this->anyop_hdr_ending_ = s;
 }
@@ -1199,214 +1182,214 @@ BE_GlobalData::gen_static_desc_operations (bool val)
   this->gen_static_desc_operations_ = val;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::anyop_header_ending () const
 {
-  return optional_string_view (this->anyop_hdr_ending_);
+  return this->anyop_hdr_ending_;
 }
 
 void
-BE_GlobalData::anyop_source_ending (std::string_view s)
+BE_GlobalData::anyop_source_ending (std::string const& s)
 {
   this->anyop_src_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::anyop_source_ending () const
 {
-  return optional_string_view (this->anyop_src_ending_);
+  return this->anyop_src_ending_;
 }
 
 void
-BE_GlobalData::ciao_svnt_header_ending (std::string_view s)
+BE_GlobalData::ciao_svnt_header_ending (std::string const& s)
 {
   this->ciao_svnt_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_svnt_header_ending () const
 {
-  return optional_string_view (this->ciao_svnt_hdr_ending_);
+  return this->ciao_svnt_hdr_ending_;
 }
 
 void
-BE_GlobalData::ciao_svnt_source_ending (std::string_view s)
+BE_GlobalData::ciao_svnt_source_ending (std::string const& s)
 {
   this->ciao_svnt_src_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_svnt_source_ending () const
 {
-  return optional_string_view (this->ciao_svnt_src_ending_);
+  return this->ciao_svnt_src_ending_;
 }
 
 void
-BE_GlobalData::ciao_svnt_header_template_ending (std::string_view s)
+BE_GlobalData::ciao_svnt_header_template_ending (std::string const& s)
 {
   this->ciao_svnt_hdr_template_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_svnt_header_template_ending () const
 {
-  return optional_string_view (this->ciao_svnt_hdr_template_ending_);
+  return this->ciao_svnt_hdr_template_ending_;
 }
 
 void
-BE_GlobalData::ciao_svnt_source_template_ending (std::string_view s)
+BE_GlobalData::ciao_svnt_source_template_ending (std::string const& s)
 {
   this->ciao_svnt_src_template_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_svnt_source_template_ending () const
 {
-  return optional_string_view (this->ciao_svnt_src_template_ending_);
+  return this->ciao_svnt_src_template_ending_;
 }
 
 void
-BE_GlobalData::ciao_exec_header_ending (std::string_view s)
+BE_GlobalData::ciao_exec_header_ending (std::string const& s)
 {
   this->ciao_exec_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_exec_header_ending () const
 {
-  return optional_string_view (this->ciao_exec_hdr_ending_);
+  return this->ciao_exec_hdr_ending_;
 }
 
 void
-BE_GlobalData::ciao_exec_source_ending (std::string_view s)
+BE_GlobalData::ciao_exec_source_ending (std::string const& s)
 {
   this->ciao_exec_src_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_exec_source_ending () const
 {
-  return optional_string_view (this->ciao_exec_src_ending_);
+  return this->ciao_exec_src_ending_;
 }
 
 void
-BE_GlobalData::ciao_exec_stub_header_ending (std::string_view s)
+BE_GlobalData::ciao_exec_stub_header_ending (std::string const& s)
 {
   this->ciao_exec_stub_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_exec_stub_header_ending () const
 {
-  return optional_string_view (this->ciao_exec_stub_hdr_ending_);
+  return this->ciao_exec_stub_hdr_ending_;
 }
 
 void
-BE_GlobalData::ciao_exec_idl_ending (std::string_view s)
+BE_GlobalData::ciao_exec_idl_ending (std::string const& s)
 {
   this->ciao_exec_idl_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_exec_idl_ending () const
 {
-  return optional_string_view (this->ciao_exec_idl_ending_);
+  return this->ciao_exec_idl_ending_;
 }
 
 void
-BE_GlobalData::ciao_conn_header_ending (std::string_view s)
+BE_GlobalData::ciao_conn_header_ending (std::string const& s)
 {
   this->ciao_conn_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_conn_header_ending () const
 {
-  return optional_string_view (this->ciao_conn_hdr_ending_);
+  return this->ciao_conn_hdr_ending_;
 }
 
 void
-BE_GlobalData::ciao_conn_source_ending (std::string_view s)
+BE_GlobalData::ciao_conn_source_ending (std::string const& s)
 {
   this->ciao_conn_src_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_conn_source_ending () const
 {
-  return optional_string_view (this->ciao_conn_src_ending_);
+  return this->ciao_conn_src_ending_;
 }
 
 void
-BE_GlobalData::dds_typesupport_hdr_ending (std::string_view s)
+BE_GlobalData::dds_typesupport_hdr_ending (std::string const& s)
 {
   this->dds_typesupport_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::dds_typesupport_hdr_ending () const
 {
-  return optional_string_view (this->dds_typesupport_hdr_ending_);
+  return this->dds_typesupport_hdr_ending_;
 }
 
 void
-BE_GlobalData::ciao_ami_conn_idl_ending (std::string_view s)
+BE_GlobalData::ciao_ami_conn_idl_ending (std::string const& s)
 {
   this->ciao_ami_conn_idl_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_ami_conn_idl_ending () const
 {
-  return optional_string_view (this->ciao_ami_conn_idl_ending_);
+  return this->ciao_ami_conn_idl_ending_;
 }
 
 void
-BE_GlobalData::ciao_ami_conn_impl_hdr_ending (std::string_view s)
+BE_GlobalData::ciao_ami_conn_impl_hdr_ending (std::string const& s)
 {
   this->ciao_ami_conn_impl_hdr_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_ami_conn_impl_hdr_ending () const
 {
-  return optional_string_view (this->ciao_ami_conn_impl_hdr_ending_);
+  return this->ciao_ami_conn_impl_hdr_ending_;
 }
 
 void
-BE_GlobalData::ciao_ami_conn_impl_src_ending (std::string_view s)
+BE_GlobalData::ciao_ami_conn_impl_src_ending (std::string const& s)
 {
   this->ciao_ami_conn_impl_src_ending_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 BE_GlobalData::ciao_ami_conn_impl_src_ending () const
 {
-  return optional_string_view (this->ciao_ami_conn_impl_src_ending_);
+  return this->ciao_ami_conn_impl_src_ending_;
 }
 
 void
-BE_GlobalData::ciao_container_type (std::string_view s)
+BE_GlobalData::ciao_container_type (std::string const& s)
 {
   this->ciao_container_type_ = s;
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::ciao_container_type () const
 {
   return this->ciao_container_type_;
 }
 
 void
-BE_GlobalData::output_dir (std::string_view s)
+BE_GlobalData::output_dir (std::string const& s)
 {
-  this->output_dir_ = s;
+  this->output_dir_ = std::string (s);
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::output_dir () const
 {
-  return this->output_dir_ ? std::string_view (*this->output_dir_) : std::string_view ();
+  return this->output_dir_;
 }
 bool
 BE_GlobalData::overwrite_not_exec () const
@@ -1421,51 +1404,51 @@ BE_GlobalData::overwrite_not_exec (bool val)
 }
 
 void
-BE_GlobalData::skel_output_dir (std::string_view s)
+BE_GlobalData::skel_output_dir (std::string const& s)
 {
-  this->skel_output_dir_ = s;
+  this->skel_output_dir_ = std::string (s);
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::skel_output_dir () const
 {
-  return this->skel_output_dir_ ? std::string_view (*this->skel_output_dir_) : std::string_view ();
+  return this->skel_output_dir_;
 }
 
 void
-BE_GlobalData::stub_include_dir (std::string_view s)
+BE_GlobalData::stub_include_dir (std::string const& s)
 {
-  this->stub_include_dir_ = s;
+  this->stub_include_dir_ = std::string (s);
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::stub_include_dir () const
 {
-  return this->stub_include_dir_ ? std::string_view (*this->stub_include_dir_) : std::string_view ();
+  return this->stub_include_dir_;
 }
 
 void
-BE_GlobalData::anyop_output_dir (std::string_view s)
+BE_GlobalData::anyop_output_dir (std::string const& s)
 {
-  this->anyop_output_dir_ = s;
+  this->anyop_output_dir_ = std::string (s);
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::anyop_output_dir () const
 {
-  return this->anyop_output_dir_ ? std::string_view (*this->anyop_output_dir_) : std::string_view ();
+  return this->anyop_output_dir_;
 }
 
 void
-BE_GlobalData::exec_output_dir (std::string_view s)
+BE_GlobalData::exec_output_dir (std::string const& s)
 {
-  this->exec_output_dir_ = s;
+  this->exec_output_dir_ = std::string (s);
 }
 
-std::string_view
+std::string const&
 BE_GlobalData::exec_output_dir () const
 {
-  return this->exec_output_dir_ ? std::string_view (*this->exec_output_dir_) : std::string_view ();
+  return this->exec_output_dir_;
 }
 void
 BE_GlobalData::any_support (bool val)
@@ -1781,7 +1764,7 @@ BE_GlobalData::dds_impl (std::string_view val)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%C: invalid or unknown ")
                   ACE_TEXT ("argument <%C> to -Wb,dds_impl\n"),
-                  idl_global->prog_name ().data (),
+                  idl_global->prog_name ().c_str (),
                   value.c_str ()));
     }
 }
@@ -1817,40 +1800,40 @@ BE_GlobalData::destroy ()
   this->unique_include_.clear ();
   this->stripped_filename_.clear ();
 
-  this->client_hdr_ending_.reset ();
-  this->client_stub_ending_.reset ();
-  this->client_inline_ending_.reset ();
-  this->server_hdr_ending_.reset ();
-  this->implementation_hdr_ending_.reset ();
-  this->implementation_skel_ending_.reset ();
+  this->client_hdr_ending_.clear ();
+  this->client_stub_ending_.clear ();
+  this->client_inline_ending_.clear ();
+  this->server_hdr_ending_.clear ();
+  this->implementation_hdr_ending_.clear ();
+  this->implementation_skel_ending_.clear ();
   this->impl_class_prefix_.clear ();
   this->impl_class_suffix_.clear ();
-  this->server_template_hdr_ending_.reset ();
-  this->server_skeleton_ending_.reset ();
-  this->server_template_skeleton_ending_.reset ();
-  this->anyop_hdr_ending_.reset ();
-  this->anyop_src_ending_.reset ();
-  this->ciao_svnt_hdr_ending_.reset ();
-  this->ciao_svnt_src_ending_.reset ();
-  this->ciao_svnt_hdr_template_ending_.reset ();
-  this->ciao_svnt_src_template_ending_.reset ();
-  this->ciao_exec_hdr_ending_.reset ();
-  this->ciao_exec_src_ending_.reset ();
-  this->ciao_exec_stub_hdr_ending_.reset ();
-  this->ciao_exec_idl_ending_.reset ();
-  this->ciao_conn_hdr_ending_.reset ();
-  this->ciao_conn_src_ending_.reset ();
-  this->dds_typesupport_hdr_ending_.reset ();
-  this->ciao_ami_conn_idl_ending_.reset ();
-  this->ciao_ami_conn_impl_hdr_ending_.reset ();
-  this->ciao_ami_conn_impl_src_ending_.reset ();
+  this->server_template_hdr_ending_.clear ();
+  this->server_skeleton_ending_.clear ();
+  this->server_template_skeleton_ending_.clear ();
+  this->anyop_hdr_ending_.clear ();
+  this->anyop_src_ending_.clear ();
+  this->ciao_svnt_hdr_ending_.clear ();
+  this->ciao_svnt_src_ending_.clear ();
+  this->ciao_svnt_hdr_template_ending_.clear ();
+  this->ciao_svnt_src_template_ending_.clear ();
+  this->ciao_exec_hdr_ending_.clear ();
+  this->ciao_exec_src_ending_.clear ();
+  this->ciao_exec_stub_hdr_ending_.clear ();
+  this->ciao_exec_idl_ending_.clear ();
+  this->ciao_conn_hdr_ending_.clear ();
+  this->ciao_conn_src_ending_.clear ();
+  this->dds_typesupport_hdr_ending_.clear ();
+  this->ciao_ami_conn_idl_ending_.clear ();
+  this->ciao_ami_conn_impl_hdr_ending_.clear ();
+  this->ciao_ami_conn_impl_src_ending_.clear ();
   this->ciao_container_type_.clear ();
 
-  this->output_dir_.reset ();
-  this->stub_include_dir_.reset ();
-  this->skel_output_dir_.reset ();
-  this->anyop_output_dir_.reset ();
-  this->exec_output_dir_.reset ();
+  this->output_dir_.clear ();
+  this->stub_include_dir_.clear ();
+  this->skel_output_dir_.clear ();
+  this->anyop_output_dir_.clear ();
+  this->exec_output_dir_.clear ();
 
   if (nullptr != this->messaging_)
     {

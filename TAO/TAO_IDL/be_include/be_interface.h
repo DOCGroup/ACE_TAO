@@ -58,7 +58,7 @@ public:
   // Methods, which access the strategy.
 
   /// Return the local name.
-  std::string_view local_name () const;
+  std::string const& local_name () const;
 
   /// Retrieve the fully scoped skel class name.
   std::string_view full_skel_name () const;

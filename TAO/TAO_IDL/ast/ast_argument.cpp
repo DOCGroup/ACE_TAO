@@ -122,7 +122,7 @@ AST_Argument::~AST_Argument () = default;
 void
 AST_Argument::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, direction_to_string (pd_direction).data ());
+  this->dump_i (o, direction_to_string (pd_direction));
   this->dump_i (o, " ");
   AST_Field::dump (o);
 }

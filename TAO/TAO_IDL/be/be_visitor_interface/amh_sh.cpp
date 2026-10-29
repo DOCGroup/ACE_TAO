@@ -360,7 +360,7 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   std::string non_amh_name (node->client_enclosing_scope ());
-  non_amh_name += node->local_name ().data ();
+  non_amh_name += node->local_name ();
 
   // Print out the _this() method.  The _this() method for AMH
   // interfaces is "special", because the returned type is not exactly

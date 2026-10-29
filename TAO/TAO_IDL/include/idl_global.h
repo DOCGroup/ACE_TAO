@@ -376,7 +376,7 @@ public:
   bool             in_main_file () const;   // Are we?
   void             set_in_main_file (bool);     // Set it
 
-  std::string_view prog_name () const;
+  std::string const& prog_name () const;
   void set_prog_name (std::string_view name);
   void clear_prog_name ();
 

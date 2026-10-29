@@ -408,7 +408,7 @@ IDL_GlobalData::set_stripped_filename (UTL_String *nm)
 }
 
 // Get or set cache value for argv[0]
-std::string_view
+std::string const&
 IDL_GlobalData::prog_name () const
 {
   return this->pd_prog_name;

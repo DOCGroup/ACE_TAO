@@ -114,7 +114,7 @@ be_interface::be_interface (UTL_ScopedName *n,
 
 be_interface::~be_interface () = default;
 
-std::string_view
+std::string const&
 be_interface::local_name () const
 {
   // Return the local name.

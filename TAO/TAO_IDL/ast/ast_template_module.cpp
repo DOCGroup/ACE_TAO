@@ -84,7 +84,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
               s = d->full_name ();
             }
 
-          idl_global->err ()->mismatched_template_param (s.data ());
+          idl_global->err ()->mismatched_template_param (s);
 
           return false;
         }
