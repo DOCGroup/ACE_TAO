@@ -39,12 +39,6 @@ TAO::ORB_Table::lock ()
 // ****************************************************************
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter ()
-  : core_ (0)
-{
-}
-
-ACE_INLINE
 TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (::TAO_ORB_Core * core)
   : core_ (core)
 {
@@ -74,13 +68,14 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (
     (void) this->core_->_incr_refcnt ();
 }
 
-ACE_INLINE void
+ACE_INLINE TAO::ORB_Core_Ref_Counter &
 TAO::ORB_Core_Ref_Counter::operator= (TAO::ORB_Core_Ref_Counter const & rhs)
 {
   // Strongly exception safe.  May not be strictly necessary, but
   // let's do things the right way, regardless.
   TAO::ORB_Core_Ref_Counter tmp (rhs);
   std::swap (this->core_, tmp.core_);
+  return *this;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

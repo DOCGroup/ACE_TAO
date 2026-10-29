@@ -12,10 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ORB_Table::ORB_Table ()
-  : lock_ (),
-    first_orb_not_default_ (false),
-    table_ (TAO_DEFAULT_ORB_TABLE_SIZE),
-    first_orb_ (nullptr)
+  : table_ (TAO_DEFAULT_ORB_TABLE_SIZE)
 {
 }
 
@@ -29,7 +26,7 @@ TAO::ORB_Table::bind (char const * orb_id,
     {
       errno = EINVAL;
       return -1;
-    };
+    }
 
   value_type const value =
     std::make_pair (key_type (orb_id), data_type (orb_core));
@@ -87,7 +84,7 @@ TAO::ORB_Table::find (char const * orb_id)
 }
 
 int
-TAO::ORB_Table::unbind (const char *orb_id)
+TAO::ORB_Table::unbind (char const *orb_id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
