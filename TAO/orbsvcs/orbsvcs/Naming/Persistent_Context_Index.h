@@ -71,7 +71,7 @@ public:
    * specified file name/base address.  Find or allocate <index_>.
    * Return 0 on success or -1 on failure.
    */
-  int open (const ACE_TCHAR *file_name,
+  int open (ACE_TCHAR const *file_name,
             void * base_address = TAO_NAMING_BASE_ADDR);
 
   /**
@@ -91,7 +91,7 @@ public:
    */
   TAO_Persistent_Naming_Context *create_naming_context_impl (
     PortableServer::POA_ptr poa,
-    const char *poa_id);
+    char const *poa_id);
 
   /**
    * Destructor.  The memory mapped file that was opened/created is
@@ -112,11 +112,11 @@ public:
    * i.e., a context with @a poa_id, @A counter and @A hash_map has just
    * been created, and is registering with us.
    */
-  int bind (const char *poa_id, ACE_UINT32 *&counter, CONTEXT *hash_map);
+  int bind (char const *poa_id, ACE_UINT32 *&counter, CONTEXT *hash_map);
 
   /// Remove an entry for the Persistent Naming Context with @a poa_id
   /// from <index_> (i.e., this context has just been destroyed).
-  int unbind (const char *poa_id);
+  int unbind (char const *poa_id);
 
   // = Accessors.
 
@@ -151,17 +151,17 @@ private:
    * use it here, and in TAO_Persistent_Naming_Context, whenever we
    * deal with data that should be kept in persistent store.
    */
-  ALLOCATOR *allocator_;
+  ALLOCATOR *allocator_ {};
 
   /// Hash map where we keep entries for all Persistent Naming
   /// Contexts.
-  CONTEXT_INDEX *index_;
+  CONTEXT_INDEX *index_ {};
 
   /// Name of the memory-mapped file used by <allocator_>.
-  const ACE_TCHAR *index_file_;
+  ACE_TCHAR const *index_file_ {};
 
   /// Base address for the memory-mapped file.
-  void *base_address_;
+  void *base_address_ {};
 
   /// ORB. We use it for several object_to_string conversions, and
   /// keep it around for Persistent Naming Contexts' use.
