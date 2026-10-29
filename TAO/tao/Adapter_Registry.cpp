@@ -14,9 +14,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *)
-  : adapters_capacity_ (16), // @@ Make it configurable
-    adapters_count_ (0),
-    adapters_ (nullptr)
 {
   ACE_NEW (this->adapters_,
            TAO_Adapter*[this->adapters_capacity_]);
@@ -40,7 +37,7 @@ TAO_Adapter_Registry::close (int wait_for_completion)
           this->adapters_[i]->close (wait_for_completion);
         }
     }
-  catch (const::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 3)
         {
@@ -121,7 +118,7 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
 
 CORBA::Object_ptr
 TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
-                                                const TAO_MProfile &mprofile)
+                                                TAO_MProfile const &mprofile)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
@@ -167,7 +164,7 @@ TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub)
 }
 
 TAO_Adapter *
-TAO_Adapter_Registry::find_adapter (const char *name) const
+TAO_Adapter_Registry::find_adapter (char const *name) const
 {
   for (TAO_Adapter **i = this->adapters_;
        i != this->adapters_ + this->adapters_count_;
