@@ -318,7 +318,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
-                                  UTL_String (tmp + 1, true),
+                                  UTL_String (tmp + 1),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }
@@ -541,7 +541,7 @@ idl_parse_line_and_file (char *buf)
 
       h[i] = '\0';
       ACE_NEW (tmp,
-               UTL_String (h, true));
+               UTL_String (h));
       idl_global->update_prefix (tmp->get_string ());
       idl_global->set_filename (tmp);
     }
@@ -577,8 +577,7 @@ idl_parse_line_and_file (char *buf)
     {
       ACE_NEW (nm,
                UTL_String (
-                 FE_Utils::stripped_preproc_include (
-                   std::string_view (fname->get_string ()))));
+                 FE_Utils::stripped_preproc_include (fname->get_string ())));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
