@@ -22,11 +22,15 @@ class sum_server_i : public virtual POA_ORT::sum_server
 {
  public:
   /// Constructor
-  sum_server_i ();
+  sum_server_i () = default;
+  sum_server_i (sum_server_i const &) = delete;
+  sum_server_i (sum_server_i &&) = delete;
+  sum_server_i &operator= (sum_server_i const &) = delete;
+  sum_server_i &operator= (sum_server_i &&) = delete;
 
   /// add variables method
   CORBA::Long add_variables (CORBA::Long a,
-                             CORBA::Long b);
+                             CORBA::Long b) override;
 };
 
 #endif /* SUM_SERVER_I_H */

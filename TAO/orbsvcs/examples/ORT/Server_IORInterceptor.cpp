@@ -36,7 +36,7 @@ void
 Server_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr ior_info)
 {
-  Gateway_ObjRef_Factory *my_factory = 0;
+  Gateway_ObjRef_Factory *my_factory = nullptr;
 
   PortableInterceptor::ObjectReferenceFactory_var current_factory =
     ior_info->current_factory ();
@@ -51,14 +51,14 @@ Server_IORInterceptor::components_established (
 
 void
 Server_IORInterceptor::adapter_manager_state_changed (
-    const char *,
+    char const *,
     PortableInterceptor::AdapterState)
 {
 }
 
 void
 Server_IORInterceptor:: adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq &,
+    PortableInterceptor::ObjectReferenceTemplateSeq const &,
     PortableInterceptor::AdapterState)
 {
 }
