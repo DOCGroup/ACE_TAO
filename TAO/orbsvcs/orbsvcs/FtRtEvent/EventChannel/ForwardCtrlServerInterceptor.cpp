@@ -78,7 +78,7 @@ void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerR
     IOP::ServiceContext_var service_context =
       ri->get_request_service_context(IOP::FT_GROUP_VERSION);
   }
-  catch (const CORBA::Exception&){
+  catch (CORBA::Exception const &){
     // not an FT call , continue to process the request
     return;
   }
@@ -99,19 +99,19 @@ void ForwardCtrlServerInterceptor::receive_request_service_contexts (
 
 FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context)
 {
-  Safe_InputCDR cdr (reinterpret_cast<const char*> (service_context->context_data.get_buffer ()),
+  Safe_InputCDR cdr (reinterpret_cast<char const *> (service_context->context_data.get_buffer ()),
                       service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FT::FTGroupVersionServiceContext fgvsc;
 
-  if ((cdr >> fgvsc) == 0)
+  if (!(cdr >> fgvsc))
     throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
   return fgvsc.object_group_ref_version;
@@ -158,7 +158,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
       //if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
       //ACE_THROW (CORBA::MARSHAL ());
 
-      if ((cdr << forward.in() ) == 0 )
+      if (!(cdr << forward.in ()))
         throw CORBA::MARSHAL ();
 
       ACE_Message_Block mb;
