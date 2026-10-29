@@ -5,8 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)
-  : orb_core_ (orb_core),
-    next_ (nullptr)
+  : orb_core_ (orb_core)
 {
 }
 
@@ -16,7 +15,7 @@ TAO_Policy_Validator::~TAO_Policy_Validator ()
 }
 
 TAO_ORB_Core &
-TAO_Policy_Validator::orb_core() const
+TAO_Policy_Validator::orb_core () const
 {
   return this->orb_core_;
 }
