@@ -10451,7 +10451,7 @@ yyreduce:
 #line 6995 "fe/idl.ypp"
         {
           ACE_NEW_RETURN ((yyval.sval),
-                          UTL_String ((yyvsp[0].strval), true),
+                          UTL_String ((yyvsp[0].strval)),
                           1);
         }
 #line 10458 "fe/idl.tab.cpp"

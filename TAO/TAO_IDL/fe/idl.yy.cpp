@@ -1,6 +1,6 @@
-#line 2 "fe/idl.yy.cpp"
+#line 1 "fe/idl.yy.cpp"
 
-#line 4 "fe/idl.yy.cpp"
+#line 3 "fe/idl.yy.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -1437,17 +1437,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_annotation_appl.h"
 #include "idl.tab.hpp"
 
+
 static char *               idl_wstring_escape_reader (char *);
 static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
 static ACE_CDR::Char        idl_escape_reader (char *);
-static ACE_CDR::Double      idl_atof (char *);
-static ACE_CDR::LongLong    idl_atoi (char *, long);
-static ACE_CDR::ULongLong   idl_atoui (char *, long);
+static ACE_CDR::Double      idl_atof (char const *);
+static ACE_CDR::LongLong    idl_atoi (char const *, long);
+static ACE_CDR::ULongLong   idl_atoui (char const *, long);
 static void                 idl_parse_line_and_file (char *);
 static void                 idl_store_pragma (char *);
 static char *               idl_get_pragma_string (char *);
-static bool                 idl_valid_version (char *);
-static AST_Decl *           idl_find_node (const char *);
+static bool                 idl_valid_version (char const *);
+static AST_Decl *           idl_find_node (char const *);
 
 #define ace_yytext yytext
 
@@ -1465,9 +1466,9 @@ static AST_Decl *           idl_find_node (const char *);
 #  pragma GCC diagnostic ignored "-Wmisleading-indentation"
 #endif
 
-#line 1471 "fe/idl.yy.cpp"
+#line 1472 "fe/idl.yy.cpp"
 /* SO we don't choke on files that use \r\n */
-#line 1473 "fe/idl.yy.cpp"
+#line 1474 "fe/idl.yy.cpp"
 
 #define INITIAL 0
 
@@ -1693,10 +1694,10 @@ YY_DECL
         }
 
     {
-#line 129 "fe/idl.ll"
+#line 131 "fe/idl.ll"
 
 
-#line 1702 "fe/idl.yy.cpp"
+#line 1703 "fe/idl.yy.cpp"
 
     while ( /*CONSTCOND*/1 )        /* loops until end-of-file is reached */
         {
@@ -1761,367 +1762,367 @@ do_action:    /* This label is used only to access EOF actions. */
     { /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 131 "fe/idl.ll"
+#line 133 "fe/idl.ll"
 return IDL_ANY;
     YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 132 "fe/idl.ll"
+#line 134 "fe/idl.ll"
 return IDL_OBJECT;
     YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 133 "fe/idl.ll"
+#line 135 "fe/idl.ll"
 return IDL_MODULE;
     YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 134 "fe/idl.ll"
+#line 136 "fe/idl.ll"
 return IDL_RAISES;
     YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 135 "fe/idl.ll"
+#line 137 "fe/idl.ll"
 return IDL_READONLY;
     YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 136 "fe/idl.ll"
+#line 138 "fe/idl.ll"
 return IDL_ATTRIBUTE;
     YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 137 "fe/idl.ll"
+#line 139 "fe/idl.ll"
 return IDL_EXCEPTION;
     YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 138 "fe/idl.ll"
+#line 140 "fe/idl.ll"
 return IDL_CONTEXT;
     YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 139 "fe/idl.ll"
+#line 141 "fe/idl.ll"
 return IDL_INTERFACE;
     YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 140 "fe/idl.ll"
+#line 142 "fe/idl.ll"
 return IDL_CONST;
     YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 141 "fe/idl.ll"
+#line 143 "fe/idl.ll"
 return IDL_TYPEDEF;
     YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 142 "fe/idl.ll"
+#line 144 "fe/idl.ll"
 return IDL_STRUCT;
     YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 143 "fe/idl.ll"
+#line 145 "fe/idl.ll"
 return IDL_ENUM;
     YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 144 "fe/idl.ll"
+#line 146 "fe/idl.ll"
 return IDL_STRING;
     YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 145 "fe/idl.ll"
+#line 147 "fe/idl.ll"
 return IDL_WSTRING;
     YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 146 "fe/idl.ll"
+#line 148 "fe/idl.ll"
 return IDL_SEQUENCE;
     YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 147 "fe/idl.ll"
+#line 149 "fe/idl.ll"
 return IDL_UNION;
     YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 148 "fe/idl.ll"
+#line 150 "fe/idl.ll"
 return IDL_FIXED;
     YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 149 "fe/idl.ll"
+#line 151 "fe/idl.ll"
 return IDL_SWITCH;
     YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 150 "fe/idl.ll"
+#line 152 "fe/idl.ll"
 return IDL_CASE;
     YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 151 "fe/idl.ll"
+#line 153 "fe/idl.ll"
 return IDL_DEFAULT;
     YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 152 "fe/idl.ll"
+#line 154 "fe/idl.ll"
 return IDL_FLOAT;
     YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 153 "fe/idl.ll"
+#line 155 "fe/idl.ll"
 return IDL_DOUBLE;
     YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 154 "fe/idl.ll"
+#line 156 "fe/idl.ll"
 return IDL_LONG;
     YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 155 "fe/idl.ll"
+#line 157 "fe/idl.ll"
 return IDL_SHORT;
     YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 156 "fe/idl.ll"
+#line 158 "fe/idl.ll"
 return IDL_UNSIGNED;
     YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 157 "fe/idl.ll"
+#line 159 "fe/idl.ll"
 return IDL_CHAR;
     YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 158 "fe/idl.ll"
+#line 160 "fe/idl.ll"
 return IDL_WCHAR;
     YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 159 "fe/idl.ll"
+#line 161 "fe/idl.ll"
 return IDL_BOOLEAN;
     YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 160 "fe/idl.ll"
+#line 162 "fe/idl.ll"
 return IDL_OCTET;
     YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 161 "fe/idl.ll"
+#line 163 "fe/idl.ll"
 return IDL_VOID;
     YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 162 "fe/idl.ll"
+#line 164 "fe/idl.ll"
 return IDL_NATIVE;
     YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 163 "fe/idl.ll"
+#line 165 "fe/idl.ll"
 return IDL_LOCAL;
     YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 164 "fe/idl.ll"
+#line 166 "fe/idl.ll"
 return IDL_ABSTRACT;
     YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 166 "fe/idl.ll"
+#line 168 "fe/idl.ll"
 return IDL_CUSTOM;
     YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 167 "fe/idl.ll"
+#line 169 "fe/idl.ll"
 return IDL_FACTORY;
     YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 168 "fe/idl.ll"
+#line 170 "fe/idl.ll"
 return IDL_PRIVATE;
     YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 169 "fe/idl.ll"
+#line 171 "fe/idl.ll"
 return IDL_PUBLIC;
     YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 170 "fe/idl.ll"
+#line 172 "fe/idl.ll"
 return IDL_SUPPORTS;
     YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 171 "fe/idl.ll"
+#line 173 "fe/idl.ll"
 return IDL_TRUNCATABLE;
     YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 172 "fe/idl.ll"
+#line 174 "fe/idl.ll"
 return IDL_VALUETYPE;
     YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 174 "fe/idl.ll"
+#line 176 "fe/idl.ll"
 return IDL_COMPONENT;
     YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 175 "fe/idl.ll"
+#line 177 "fe/idl.ll"
 return IDL_CONSUMES;
     YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 176 "fe/idl.ll"
+#line 178 "fe/idl.ll"
 return IDL_EMITS;
     YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 177 "fe/idl.ll"
+#line 179 "fe/idl.ll"
 return IDL_EVENTTYPE;
     YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 178 "fe/idl.ll"
+#line 180 "fe/idl.ll"
 return IDL_FINDER;
     YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 179 "fe/idl.ll"
+#line 181 "fe/idl.ll"
 return IDL_GETRAISES;
     YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 180 "fe/idl.ll"
+#line 182 "fe/idl.ll"
 return IDL_HOME;
     YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 181 "fe/idl.ll"
+#line 183 "fe/idl.ll"
 return IDL_IMPORT;
     YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 182 "fe/idl.ll"
+#line 184 "fe/idl.ll"
 return IDL_MULTIPLE;
     YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 183 "fe/idl.ll"
+#line 185 "fe/idl.ll"
 return IDL_PRIMARYKEY;
     YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 184 "fe/idl.ll"
+#line 186 "fe/idl.ll"
 return IDL_PROVIDES;
     YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 185 "fe/idl.ll"
+#line 187 "fe/idl.ll"
 return IDL_PUBLISHES;
     YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 186 "fe/idl.ll"
+#line 188 "fe/idl.ll"
 return IDL_SETRAISES;
     YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 187 "fe/idl.ll"
+#line 189 "fe/idl.ll"
 return IDL_TYPEID;
     YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 188 "fe/idl.ll"
+#line 190 "fe/idl.ll"
 return IDL_TYPEPREFIX;
     YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 189 "fe/idl.ll"
+#line 191 "fe/idl.ll"
 return IDL_USES;
     YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 190 "fe/idl.ll"
+#line 192 "fe/idl.ll"
 return IDL_MANAGES;
     YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 192 "fe/idl.ll"
+#line 194 "fe/idl.ll"
 return IDL_TYPENAME;
     YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 193 "fe/idl.ll"
+#line 195 "fe/idl.ll"
 return IDL_PORT;
     YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 194 "fe/idl.ll"
+#line 196 "fe/idl.ll"
 return IDL_MIRRORPORT;
     YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 195 "fe/idl.ll"
+#line 197 "fe/idl.ll"
 return IDL_PORTTYPE;
     YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 196 "fe/idl.ll"
+#line 198 "fe/idl.ll"
 return IDL_CONNECTOR;
     YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 197 "fe/idl.ll"
+#line 199 "fe/idl.ll"
 return IDL_ALIAS;
     YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 199 "fe/idl.ll"
+#line 201 "fe/idl.ll"
 return IDL_TRUETOK;
     YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 200 "fe/idl.ll"
+#line 202 "fe/idl.ll"
 return IDL_FALSETOK;
     YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 202 "fe/idl.ll"
+#line 204 "fe/idl.ll"
 return IDL_INOUT;
     YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 203 "fe/idl.ll"
+#line 205 "fe/idl.ll"
 return IDL_IN;
     YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 204 "fe/idl.ll"
+#line 206 "fe/idl.ll"
 return IDL_OUT;
     YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 205 "fe/idl.ll"
+#line 207 "fe/idl.ll"
 return IDL_ONEWAY;
     YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 207 "fe/idl.ll"
+#line 209 "fe/idl.ll"
 return IDL_LEFT_SHIFT;
     YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 208 "fe/idl.ll"
+#line 210 "fe/idl.ll"
 return IDL_RIGHT_SHIFT;
     YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 209 "fe/idl.ll"
+#line 211 "fe/idl.ll"
 {
                   tao_yylval.strval = ACE::strnew ("::");
                   return IDL_SCOPE_DELIMITOR;
@@ -2130,77 +2131,77 @@ YY_RULE_SETUP
 case 74:
 /* rule 74 can match eol */
 YY_RULE_SETUP
-#line 214 "fe/idl.ll"
+#line 216 "fe/idl.ll"
 return IDL_ANNOTATION_DECL; // Allow annotation names that start with "annotation"
     YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 215 "fe/idl.ll"
+#line 217 "fe/idl.ll"
 return IDL_ANNOTATION_SYMBOL;
     YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 217 "fe/idl.ll"
+#line 219 "fe/idl.ll"
 IDL4_KEYWORD(IDL_INT8); REJECT;
     YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 218 "fe/idl.ll"
+#line 220 "fe/idl.ll"
 IDL4_KEYWORD(IDL_UINT8); REJECT;
     YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 219 "fe/idl.ll"
+#line 221 "fe/idl.ll"
 IDL4_KEYWORD(IDL_INT16); REJECT;
     YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 220 "fe/idl.ll"
+#line 222 "fe/idl.ll"
 IDL4_KEYWORD(IDL_UINT16); REJECT;
     YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 221 "fe/idl.ll"
+#line 223 "fe/idl.ll"
 IDL4_KEYWORD(IDL_INT32); REJECT;
     YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 222 "fe/idl.ll"
+#line 224 "fe/idl.ll"
 IDL4_KEYWORD(IDL_UINT32); REJECT;
     YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 223 "fe/idl.ll"
+#line 225 "fe/idl.ll"
 IDL4_KEYWORD(IDL_INT64); REJECT;
     YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 224 "fe/idl.ll"
+#line 226 "fe/idl.ll"
 IDL4_KEYWORD(IDL_UINT64); REJECT;
     YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 226 "fe/idl.ll"
+#line 228 "fe/idl.ll"
 IDL4_KEYWORD(IDL_BITFIELD); REJECT;
     YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 227 "fe/idl.ll"
+#line 229 "fe/idl.ll"
 IDL4_KEYWORD(IDL_BITMASK); REJECT;
     YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 228 "fe/idl.ll"
+#line 230 "fe/idl.ll"
 IDL4_KEYWORD(IDL_BITSET); REJECT;
     YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 229 "fe/idl.ll"
+#line 231 "fe/idl.ll"
 IDL4_KEYWORD(IDL_MAP); REJECT;
     YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 231 "fe/idl.ll"
+#line 233 "fe/idl.ll"
 {
   // Make sure that this identifier is not a C++ keyword. If it is,
   // prepend it with a _cxx_. Lookup in the perfect hash table for C++
@@ -2208,7 +2209,7 @@ YY_RULE_SETUP
   // regular expression is to handle EBCDIC, as well as ASCII.
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  const TAO_IDL_CPP_Keyword_Entry *entry = 0;
+  TAO_IDL_CPP_Keyword_Entry const *entry = nullptr;
   if (!idl_global->preserve_cpp_keywords())
     {
       // This check will ensure that escaped C++ keywords will be
@@ -2236,7 +2237,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 264 "fe/idl.ll"
+#line 266 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -2244,7 +2245,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 268 "fe/idl.ll"
+#line 270 "fe/idl.ll"
 {
                   tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
@@ -2252,7 +2253,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 273 "fe/idl.ll"
+#line 275 "fe/idl.ll"
 {
                   tao_yylval.fixval = ACE_CDR::Fixed::from_string (ace_yytext);
                   return IDL_FIXED_PT_LITERAL;
@@ -2260,7 +2261,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 278 "fe/idl.ll"
+#line 280 "fe/idl.ll"
 {
                   tao_yylval.ival = idl_atoi (ace_yytext, 10);
                   return IDL_INTEGER_LITERAL;
@@ -2268,7 +2269,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 282 "fe/idl.ll"
+#line 284 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui (ace_yytext, 10);
                   return IDL_UINTEGER_LITERAL;
@@ -2276,7 +2277,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 286 "fe/idl.ll"
+#line 288 "fe/idl.ll"
 {
                   tao_yylval.ival = idl_atoi (ace_yytext, 16);
                   return IDL_INTEGER_LITERAL;
@@ -2284,7 +2285,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 290 "fe/idl.ll"
+#line 292 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui (ace_yytext, 16);
                   return IDL_UINTEGER_LITERAL;
@@ -2292,7 +2293,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 294 "fe/idl.ll"
+#line 296 "fe/idl.ll"
 {
                   tao_yylval.ival = idl_atoi (ace_yytext, 8);
                   return IDL_INTEGER_LITERAL;
@@ -2300,7 +2301,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 298 "fe/idl.ll"
+#line 300 "fe/idl.ll"
 {
                   tao_yylval.uival = idl_atoui (ace_yytext, 8);
                   return IDL_UINTEGER_LITERAL;
@@ -2309,7 +2310,7 @@ YY_RULE_SETUP
 case 98:
 /* rule 98 can match eol */
 YY_RULE_SETUP
-#line 303 "fe/idl.ll"
+#line 305 "fe/idl.ll"
 {
                   /* Skip the quotes */
                   char * const tmp = ace_yytext;
@@ -2326,7 +2327,7 @@ YY_RULE_SETUP
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
-                                  UTL_String (tmp + 1, true),
+                                  UTL_String (tmp + 1),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }
@@ -2334,7 +2335,7 @@ YY_RULE_SETUP
 case 99:
 /* rule 99 can match eol */
 YY_RULE_SETUP
-#line 323 "fe/idl.ll"
+#line 325 "fe/idl.ll"
 {
                   /* Skip the bookends */
                   char * const tmp = ACE_OS::strdup (ace_yytext);
@@ -2357,7 +2358,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 342 "fe/idl.ll"
+#line 344 "fe/idl.ll"
 {
                   tao_yylval.cval = ace_yytext[1];
                   return IDL_CHARACTER_LITERAL;
@@ -2365,7 +2366,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 346 "fe/idl.ll"
+#line 348 "fe/idl.ll"
 {
                   // octal character constant
                   tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
@@ -2374,7 +2375,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 351 "fe/idl.ll"
+#line 353 "fe/idl.ll"
 {
                   // hexadecimal character constant
                   tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
@@ -2383,7 +2384,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 356 "fe/idl.ll"
+#line 358 "fe/idl.ll"
 {
                   tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
@@ -2391,7 +2392,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 360 "fe/idl.ll"
+#line 362 "fe/idl.ll"
 {
                   // wide character constant
                   tao_yylval.wcval = ace_yytext[2];
@@ -2400,7 +2401,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 365 "fe/idl.ll"
+#line 367 "fe/idl.ll"
 {
                   // hexadecimal wide character constant
                   tao_yylval.wcval = idl_wchar_escape_reader (ace_yytext + 2);
@@ -2409,11 +2410,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 106:
 /* rule 106 can match eol */
-#line 371 "fe/idl.ll"
+#line 373 "fe/idl.ll"
 case 107:
 /* rule 107 can match eol */
 YY_RULE_SETUP
-#line 371 "fe/idl.ll"
+#line 373 "fe/idl.ll"
 {/* remember pragma */
                   idl_global->set_lineno (idl_global->lineno () + 1);
                   idl_store_pragma (ace_yytext);
@@ -2422,11 +2423,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 108:
 /* rule 108 can match eol */
-#line 377 "fe/idl.ll"
+#line 379 "fe/idl.ll"
 case 109:
 /* rule 109 can match eol */
 YY_RULE_SETUP
-#line 377 "fe/idl.ll"
+#line 379 "fe/idl.ll"
 {/* ignore file */
                   idl_global->set_lineno(idl_global->lineno () + 1);
                   break;
@@ -2434,11 +2435,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 110:
 /* rule 110 can match eol */
-#line 382 "fe/idl.ll"
+#line 384 "fe/idl.ll"
 case 111:
 /* rule 111 can match eol */
 YY_RULE_SETUP
-#line 382 "fe/idl.ll"
+#line 384 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2446,11 +2447,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 112:
 /* rule 112 can match eol */
-#line 387 "fe/idl.ll"
+#line 389 "fe/idl.ll"
 case 113:
 /* rule 113 can match eol */
 YY_RULE_SETUP
-#line 387 "fe/idl.ll"
+#line 389 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2458,11 +2459,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 114:
 /* rule 114 can match eol */
-#line 392 "fe/idl.ll"
+#line 394 "fe/idl.ll"
 case 115:
 /* rule 115 can match eol */
 YY_RULE_SETUP
-#line 392 "fe/idl.ll"
+#line 394 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2470,11 +2471,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 116:
 /* rule 116 can match eol */
-#line 397 "fe/idl.ll"
+#line 399 "fe/idl.ll"
 case 117:
 /* rule 117 can match eol */
 YY_RULE_SETUP
-#line 397 "fe/idl.ll"
+#line 399 "fe/idl.ll"
 {
                   idl_parse_line_and_file (ace_yytext);
                   break;
@@ -2482,11 +2483,11 @@ YY_RULE_SETUP
     YY_BREAK
 case 118:
 /* rule 118 can match eol */
-#line 402 "fe/idl.ll"
+#line 404 "fe/idl.ll"
 case 119:
 /* rule 119 can match eol */
 YY_RULE_SETUP
-#line 402 "fe/idl.ll"
+#line 404 "fe/idl.ll"
 {
                   /* ignore cpp ident */
                   idl_global->set_lineno (idl_global->lineno () + 1);
@@ -2496,7 +2497,7 @@ YY_RULE_SETUP
 case 120:
 /* rule 120 can match eol */
 YY_RULE_SETUP
-#line 407 "fe/idl.ll"
+#line 409 "fe/idl.ll"
 {
                   /* ignore comments */
                   idl_global->set_lineno(idl_global->lineno () + 1);
@@ -2505,7 +2506,7 @@ YY_RULE_SETUP
     YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 412 "fe/idl.ll"
+#line 414 "fe/idl.ll"
 {
                   for (;;)
                     {
@@ -2528,13 +2529,13 @@ YY_RULE_SETUP
     YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 431 "fe/idl.ll"
+#line 433 "fe/idl.ll"
 break;
     YY_BREAK
 case 123:
 /* rule 123 can match eol */
 YY_RULE_SETUP
-#line 432 "fe/idl.ll"
+#line 434 "fe/idl.ll"
 {
                   idl_global->set_lineno (idl_global->lineno () + 1);
                   break;
@@ -2542,15 +2543,15 @@ YY_RULE_SETUP
     YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 436 "fe/idl.ll"
+#line 438 "fe/idl.ll"
 return ace_yytext[0];
     YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 438 "fe/idl.ll"
+#line 440 "fe/idl.ll"
 ECHO;
     YY_BREAK
-#line 2556 "fe/idl.yy.cpp"
+#line 2557 "fe/idl.yy.cpp"
             case YY_STATE_EOF(INITIAL):
                 yyterminate();
 
@@ -3531,21 +3532,21 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 438 "fe/idl.ll"
+#line 440 "fe/idl.ll"
 
         /* subroutines */
 
 static bool
-same_file (char *path1, char *path2)
+same_file (char const *path1, char const *path2)
 {
-  char fullpath1 [MAXPATHLEN + 1] = {0};
-  char fullpath2 [MAXPATHLEN + 1] = {0};
+  char fullpath1 [MAXPATHLEN + 1] = {};
+  char fullpath2 [MAXPATHLEN + 1] = {};
 
   char *fp1 = ACE_OS::realpath (path1, fullpath1);
   char *fp2 = ACE_OS::realpath (path2, fullpath2);
 
   return
-    (fp1 == 0 || fp2 == 0)
+    (fp1 == nullptr || fp2 == nullptr)
       ? false
       : FE_Utils::path_cmp (fullpath1,fullpath2) == 0;
 }
@@ -3555,8 +3556,8 @@ static void
 idl_parse_line_and_file (char *buf)
 {
   char *r = buf;
-  char *h = 0;
-  UTL_String *nm = 0;
+  char *h = nullptr;
+  UTL_String *nm = nullptr;
 
   // Skip initial '#'.
   if (*r != '#')
@@ -3609,7 +3610,7 @@ idl_parse_line_and_file (char *buf)
     }
 
   *r = 0;
-  UTL_String *tmp = 0;
+  UTL_String *tmp = nullptr;
 
   if (*h == '\0')
     {
@@ -3636,7 +3637,7 @@ idl_parse_line_and_file (char *buf)
 
       h[i] = '\0';
       ACE_NEW (tmp,
-               UTL_String (h, true));
+               UTL_String (h));
       idl_global->update_prefix (tmp->get_string ());
       idl_global->set_filename (tmp);
     }
@@ -3672,8 +3673,7 @@ idl_parse_line_and_file (char *buf)
     {
       ACE_NEW (nm,
                UTL_String (
-                 FE_Utils::stripped_preproc_include (
-                   fname->get_string ()), true));
+                 FE_Utils::stripped_preproc_include (fname->get_string ())));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -3729,13 +3729,13 @@ idl_store_pragma (char *buf)
   sp -= crunched;
   *sp = '\0';
 
-  if (ACE_OS::strstr (buf + 8, "import") != 0)
+  if (ACE_OS::strstr (buf + 8, "import") != nullptr)
     {
       idl_global->set_import (true);
       return;
     }
 
-  if (ACE_OS::strstr (buf + 8, "include") != 0)
+  if (ACE_OS::strstr (buf + 8, "include") != nullptr)
     {
       idl_global->set_import (false);
       return;
@@ -3745,14 +3745,14 @@ idl_store_pragma (char *buf)
     {
       char *new_prefix = idl_get_pragma_string (buf);
 
-      if (new_prefix != 0)
+      if (new_prefix != nullptr)
         {
           unsigned long depth = idl_global->scopes ().depth ();
 
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
-          ACE_Hash_Map_Entry<char *, char *> *entry = 0;
+          ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
           int const status =
             idl_global->file_prefixes ().find (ext_id, entry);
 
@@ -3760,7 +3760,7 @@ idl_store_pragma (char *buf)
             {
               if (ACE_OS::strcmp (entry->int_id_, "") != 0)
                 {
-                  char *trash = 0;
+                  char *trash = nullptr;
                   idl_global->pragma_prefixes ().pop (trash);
                   delete [] trash;
                 }
@@ -3814,22 +3814,22 @@ idl_store_pragma (char *buf)
 
       char *number = ACE_OS::strchr (tmp, ' ');
 
-      if (number == 0)
+      if (number == nullptr)
         {
           number = ACE_OS::strchr (tmp, '\t');
         }
 
-      // Used later to trim the type string.
-      ptrdiff_t cutoff = number - tmp;
-
       // Most likely this means there is only a version number
       // without an identifier to apply it to.
-      if (number == 0)
+      if (number == nullptr)
         {
-          const char *msg = "no identifier or scoped name";
+          char const *msg = "no identifier or scoped name";
           idl_global->err ()->version_syntax_error (msg);
           return;
         }
+
+      // Used later to trim the type string.
+      ptrdiff_t const cutoff = number - tmp;
 
       while (*number == ' ' || *number == '\t')
         {
@@ -3840,7 +3840,7 @@ idl_store_pragma (char *buf)
 
       // For some reason, the SunCC preprocessor adds a trailing space, which
       // messes with idl_valid_version() below, so we check and remove.
-      while (number[len - 1] == ' ')
+      while (len != 0 && number[len - 1] == ' ')
         {
           number[len - 1] = '\0';
           len = ACE_OS::strlen (number);
@@ -3853,7 +3853,7 @@ idl_store_pragma (char *buf)
       // do it here.
       AST_Decl *d = idl_find_node (tmp);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           return;
         }
@@ -3864,7 +3864,7 @@ idl_store_pragma (char *buf)
           return;
         }
 
-      d->version (ACE::strnew (number));
+      d->version (std::string_view (number));
     }
   else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0)
     {
@@ -3884,14 +3884,14 @@ idl_store_pragma (char *buf)
 
       AST_Decl *d = idl_find_node (work.c_str ());
 
-      if (d == 0)
+      if (d == nullptr)
         {
           return;
         }
 
       char *new_id = idl_get_pragma_string (buf);
 
-      if (new_id != 0)
+      if (new_id != nullptr)
         {
           if (d->typeid_set ())
             {
@@ -4061,7 +4061,7 @@ idl_store_pragma (char *buf)
  * idl_atoi - Convert a string of digits into a negative integer according to base b
  */
 static ACE_CDR::LongLong
-idl_atoi (char *s, long b)
+idl_atoi (char const *s, long b)
 {
   ACE_CDR::LongLong r = 0;
 
@@ -4107,7 +4107,7 @@ idl_atoi (char *s, long b)
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
 static ACE_CDR::ULongLong
-idl_atoui (char *s, long b)
+idl_atoui (char const *s, long b)
 {
   ACE_CDR::ULongLong r = 0;
 
@@ -4147,7 +4147,7 @@ idl_atoui (char *s, long b)
  * Convert a string to a float; atof doesn't seem to work, always.
  */
 static ACE_CDR::Double
-idl_atof (char *s)
+idl_atof (char const *s)
 {
   double d = 0.0;
   double e, k;
@@ -4341,7 +4341,7 @@ static char *
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
-  const char *firstquote = ACE_OS::strchr (pragma, '"');
+  char const *firstquote = ACE_OS::strchr (pragma, '"');
 
   if (!firstquote)
     {
@@ -4350,8 +4350,8 @@ idl_get_pragma_string (char *pragma)
       return nullptr;
     }
 
-  const char *start = firstquote + 1;
-  const char *end = ACE_OS::strchr (start, '"');
+  char const *start = firstquote + 1;
+  char const *end = ACE_OS::strchr (start, '"');
 
   if (!end)
     {
@@ -4376,36 +4376,36 @@ idl_get_pragma_string (char *pragma)
 }
 
 static bool
-idl_valid_version (char *s)
+idl_valid_version (char const *s)
 {
   // Nothing preceding decimal point.
   if (*s == '.')
     {
-      return 0;
+      return false;
     }
 
-  char *minor = ACE_OS::strchr (s, '.');
+  char const *minor = ACE_OS::strchr (s, '.');
   int i;
 
-  if (minor == 0)
+  if (minor == nullptr)
     {
       // No decimal point.
-      return 0;
+      return false;
     }
 
   if (*(minor + 1) == '\0')
     {
       // Nothing following decimal point.
-      return 0;
+      return false;
     }
 
-  char *tmp = minor + 1;
+  char const *tmp = minor + 1;
 
   for (i = 0; tmp[i] != '\0'; ++i)
     {
       if (!isdigit (tmp[i]))
         {
-          return 0;
+          return false;
         }
     }
 
@@ -4415,7 +4415,7 @@ idl_valid_version (char *s)
     {
       if (!isdigit (s[i]))
         {
-          return 0;
+          return false;
         }
     }
 
@@ -4423,23 +4423,23 @@ idl_valid_version (char *s)
   if (ACE_OS::atoi (minor + 1) > ACE_UINT16_MAX
       || ACE_OS::atoi (s) > ACE_UINT16_MAX)
     {
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 static AST_Decl *
-idl_find_node (const char *s)
+idl_find_node (char const *s)
 {
   UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
-  AST_Decl * d = 0;
+  AST_Decl * d = nullptr;
 
-  if (node != 0)
+  if (node != nullptr)
     {
       d = idl_global->scopes ().top_non_null ()->lookup_by_name (node);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (node);
         }
