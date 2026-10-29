@@ -211,7 +211,7 @@ TAO_InterfaceDef_i::base_interfaces_i ()
 }
 
 void
-TAO_InterfaceDef_i::base_interfaces (const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_InterfaceDef_i::base_interfaces (CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -221,7 +221,7 @@ TAO_InterfaceDef_i::base_interfaces (const CORBA::InterfaceDefSeq &base_interfac
 }
 
 void
-TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interfaces)
 {
   // If we are an abstract interface, all our base interfaces must be
   // abstract as well.
@@ -291,7 +291,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
 }
 
 CORBA::Boolean
-TAO_InterfaceDef_i::is_a (const char *interface_id)
+TAO_InterfaceDef_i::is_a (char const *interface_id)
 {
   TAO_IFR_READ_GUARD_RETURN (false);
 
@@ -301,7 +301,7 @@ TAO_InterfaceDef_i::is_a (const char *interface_id)
 }
 
 CORBA::Boolean
-TAO_InterfaceDef_i::is_a_i (const char *interface_id)
+TAO_InterfaceDef_i::is_a_i (char const *interface_id)
 {
   if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
@@ -553,9 +553,9 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
 CORBA::AttributeDef_ptr
 TAO_InterfaceDef_i::create_attribute (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode
   )
@@ -573,9 +573,9 @@ TAO_InterfaceDef_i::create_attribute (
 
 CORBA::AttributeDef_ptr
 TAO_InterfaceDef_i::create_attribute_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode
   )
@@ -626,14 +626,14 @@ TAO_InterfaceDef_i::create_attribute_i (
 }
 
 CORBA::OperationDef_ptr
-TAO_InterfaceDef_i::create_operation (const char *id,
-                                      const char *name,
-                                      const char *version,
+TAO_InterfaceDef_i::create_operation (char const *id,
+                                      char const *name,
+                                      char const *version,
                                       CORBA::IDLType_ptr result,
                                       CORBA::OperationMode mode,
-                                      const CORBA::ParDescriptionSeq &params,
-                                      const CORBA::ExceptionDefSeq &exceptions,
-                                      const CORBA::ContextIdSeq &contexts)
+                                      CORBA::ParDescriptionSeq const &params,
+                                      CORBA::ExceptionDefSeq const &exceptions,
+                                      CORBA::ContextIdSeq const &contexts)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::OperationDef::_nil ());
 
@@ -650,14 +650,14 @@ TAO_InterfaceDef_i::create_operation (const char *id,
 }
 
 CORBA::OperationDef_ptr
-TAO_InterfaceDef_i::create_operation_i (const char *id,
-                                        const char *name,
-                                        const char *version,
+TAO_InterfaceDef_i::create_operation_i (char const *id,
+                                        char const *name,
+                                        char const *version,
                                         CORBA::IDLType_ptr result,
                                         CORBA::OperationMode mode,
-                                        const CORBA::ParDescriptionSeq &params,
-                                        const CORBA::ExceptionDefSeq &exceptions,
-                                        const CORBA::ContextIdSeq &contexts)
+                                        CORBA::ParDescriptionSeq const &params,
+                                        CORBA::ExceptionDefSeq const &exceptions,
+                                        CORBA::ContextIdSeq const &contexts)
 {
   // This will throw an exception if a name clash is found.
   // create_common() will check for all other errors.
@@ -945,7 +945,7 @@ TAO_InterfaceDef_i::interface_contents (
 }
 
 int
-TAO_InterfaceDef_i::name_clash (const char *name)
+TAO_InterfaceDef_i::name_clash (char const *name)
 {
   try
     {
@@ -955,7 +955,7 @@ TAO_InterfaceDef_i::name_clash (const char *name)
                                           TAO_IFR_Service_Utils::repo_,
                                           CORBA::dk_Interface);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return 1;
     }
@@ -1131,7 +1131,7 @@ TAO_InterfaceDef_i::inherited_operations (
 }
 
 void
-TAO_InterfaceDef_i::check_inherited (const char *name,
+TAO_InterfaceDef_i::check_inherited (char const *name,
                                      CORBA::DefinitionKind kind)
 {
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;

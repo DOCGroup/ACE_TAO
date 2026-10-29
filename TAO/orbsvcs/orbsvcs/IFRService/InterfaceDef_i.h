@@ -72,51 +72,51 @@ public:
 
   CORBA::InterfaceDefSeq *base_interfaces_i ();
 
-  virtual void base_interfaces (const CORBA::InterfaceDefSeq &base_interfaces);
+  virtual void base_interfaces (CORBA::InterfaceDefSeq const &base_interfaces);
 
-  void base_interfaces_i (const CORBA::InterfaceDefSeq &base_interfaces);
+  void base_interfaces_i (CORBA::InterfaceDefSeq const &base_interfaces);
 
-  virtual CORBA::Boolean is_a (const char *interface_id);
+  virtual CORBA::Boolean is_a (char const *interface_id);
 
-  CORBA::Boolean is_a_i (const char *interface_id);
+  CORBA::Boolean is_a_i (char const *interface_id);
 
   virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface ();
 
   CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i ();
 
   virtual CORBA::AttributeDef_ptr create_attribute (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode);
 
   CORBA::AttributeDef_ptr create_attribute_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode);
 
   virtual CORBA::OperationDef_ptr create_operation (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts);
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions,
+      CORBA::ContextIdSeq const &contexts);
 
   CORBA::OperationDef_ptr create_operation_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts);
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions,
+      CORBA::ContextIdSeq const &contexts);
 
   /// Gathers the attributes and operations of all the ancestors.
   void interface_contents (
@@ -127,7 +127,7 @@ public:
 
   /// Called from TAO_IFR_Service_Utils::name_exists() when we
   /// are in a list of supported interfaces.
-  static int name_clash (const char *name);
+  static int name_clash (char const *name);
 
   /// Depth-first traversal of the inheritance tree to get all the
   /// attributes.
@@ -148,7 +148,7 @@ private:
 
   /// When creating a new attribute, check for a clash with an inherited
   /// attribute name.
-  void check_inherited (const char *name, CORBA::DefinitionKind kind);
+  void check_inherited (char const *name, CORBA::DefinitionKind kind);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
