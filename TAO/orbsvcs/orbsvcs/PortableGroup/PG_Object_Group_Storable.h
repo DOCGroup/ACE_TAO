@@ -74,7 +74,7 @@ namespace TAO
       TAO::Storable_Factory & storable_factory);
 
     /// Destructor
-    ~PG_Object_Group_Storable ();
+    ~PG_Object_Group_Storable () override;
 
   public:
     /**
@@ -93,42 +93,42 @@ namespace TAO
     virtual void stale (bool is_stale);
     virtual bool stale ();
 
-    virtual const PortableGroup::Location & get_primary_location ();
+    PortableGroup::Location const & get_primary_location () override;
 
-    virtual void add_member (
-        const PortableGroup::Location & the_location,
-        CORBA::Object_ptr member);
+    void add_member (
+        PortableGroup::Location const & the_location,
+        CORBA::Object_ptr member) override;
 
-    virtual int set_primary_member (
+    int set_primary_member (
         TAO_IOP::TAO_IOR_Property * prop,
-        const PortableGroup::Location & the_location);
+        PortableGroup::Location const & the_location) override;
 
-    virtual void remove_member (
-        const PortableGroup::Location & the_location);
+    void remove_member (
+        PortableGroup::Location const & the_location) override;
 
-    virtual void create_member (
-        const PortableGroup::Location & the_location,
-        const char * type_id,
-        const PortableGroup::Criteria & the_criteria);
+    void create_member (
+        PortableGroup::Location const & the_location,
+        char const * type_id,
+        PortableGroup::Criteria const & the_criteria) override;
 
-    virtual PortableGroup::Locations * locations_of_members ();
+    PortableGroup::Locations * locations_of_members () override;
 
-    virtual CORBA::Object_ptr get_member_reference (
-        const PortableGroup::Location & the_location);
+    CORBA::Object_ptr get_member_reference (
+        PortableGroup::Location const & the_location) override;
 
-    virtual void initial_populate ();
+    void initial_populate () override;
 
-    virtual void minimum_populate ();
+    void minimum_populate () override;
 
-    virtual int has_member_at (const PortableGroup::Location & location );
+    int has_member_at (PortableGroup::Location const & location) override;
 
-    virtual void distribute (int value);
+    void distribute (int value) override;
 
-    virtual void set_name (const char* group_name);
+    void set_name (char const * group_name) override;
 
-    virtual const char* get_name ();
+    char const * get_name () override;
 
-    virtual PortableGroup::ObjectGroupId  get_object_group_id () const;
+    PortableGroup::ObjectGroupId get_object_group_id () const override;
 
   private:
     /////////////////////////
