@@ -147,7 +147,7 @@ int
 be_visitor_context_svth::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
+  prefix += node->local_name ()->get_string_view_or_empty ();
   const char *port_name = prefix.c_str ();
 
   std::string_view const obj_name = node->uses_type ()->full_name ();

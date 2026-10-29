@@ -97,8 +97,8 @@ int
 be_visitor_context_svts::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  prefix += node->local_name ()->get_string_view_or_empty ();
+  std::string_view const port_name (prefix);
 
   AST_Type *obj = node->uses_type ();
   bool const is_multiple = node->is_multiple ();
@@ -119,10 +119,9 @@ int
 be_visitor_context_svts::visit_publishes (be_publishes *node)
 {
   AST_Type *obj = node->publishes_type ();
-  const char *port_name =
-    node->local_name ()->get_string ();
+  std::string_view const port_name = node->local_name ()->get_string_view_or_empty ();
   std::string_view const fname = obj->full_name ();
-  const char *lname = obj->local_name ()->get_string ();
+  std::string_view const lname = obj->local_name ()->get_string_view_or_empty ();
   std::string const sname_str (
     ScopeAsDecl (obj->defined_in ())->full_name ());
 

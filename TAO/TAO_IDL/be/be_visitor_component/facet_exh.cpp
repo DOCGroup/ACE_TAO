@@ -38,7 +38,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
     impl->original_local_name ()->get_string_view_or_empty ();
 
   std::string lname_str (this->ctx_->port_prefix ());
-  lname_str += node->original_local_name ()->get_string ();
+  lname_str += node->original_local_name ()->get_string_view_or_empty ();
   const char *lname = lname_str.c_str ();
 
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());

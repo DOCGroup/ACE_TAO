@@ -328,7 +328,7 @@ int
 be_visitor_executor_exs::visit_provides (be_provides *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
+  prefix += node->local_name ()->get_string_view_or_empty ();
   const char *port_name = prefix.c_str ();
 
   be_type *obj = node->provides_type ();
@@ -341,7 +341,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
   char const * const global = (sname_str.empty () ? "" : "::");
 
   std::string lname_str (this->ctx_->port_prefix ());
-  lname_str += node->original_local_name ()->get_string ();
+  lname_str += node->original_local_name ()->get_string_view_or_empty ();
   const char *lname = lname_str.c_str ();
 
   os_ << be_nl_2

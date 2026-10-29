@@ -155,7 +155,7 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
     }
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix += node->local_name ()->get_string ();
+  prefix += node->local_name ()->get_string_view_or_empty ();
   const char *port_name = prefix.c_str ();
   std::string_view const obj_name = node->provides_type ()->full_name ();
 
@@ -192,7 +192,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
     }
 
   std::string prefix (this->ctx_->port_prefix ());
-  prefix +=node->local_name ()->get_string ();
+  prefix += node->local_name ()->get_string_view_or_empty ();
   const char *port_name = prefix.c_str ();
   std::string_view const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();

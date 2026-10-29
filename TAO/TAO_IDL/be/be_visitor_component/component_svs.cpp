@@ -86,7 +86,7 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
   std::string const sname_str (
     ScopeAsDecl (node->defined_in ())->full_name ());
   char const * const sname = sname_str.c_str ();
-  const char *lname = node->local_name ()->get_string ();
+  std::string_view const lname = node->local_name ()->get_string_view_or_empty ();
   const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl_2
