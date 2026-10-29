@@ -54,13 +54,13 @@ namespace TAO
     PortableGroup::TypeId_var type_id;
 
     /// The ObjectGroupId of the faulted object.
-    PortableGroup::ObjectGroupId object_group_id;
+    PortableGroup::ObjectGroupId object_group_id {};
 
     /// Other properties of the object group to which the fault relates.
-    PortableGroup::MembershipStyleValue membership_style;
-    FT::ReplicationStyleValue replication_style;
-    PortableGroup::MinimumNumberMembersValue minimum_number_members;
-    PortableGroup::InitialNumberMembersValue initial_number_members;
+    PortableGroup::MembershipStyleValue membership_style {};
+    FT::ReplicationStyleValue replication_style {};
+    PortableGroup::MinimumNumberMembersValue minimum_number_members {};
+    PortableGroup::InitialNumberMembersValue initial_number_members {};
 
     /// The object group's factories.
     PortableGroup::FactoryInfos_var factories;

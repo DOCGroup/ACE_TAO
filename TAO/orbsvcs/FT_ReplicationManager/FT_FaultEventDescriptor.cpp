@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Default constructor.
 TAO::FT_FaultEventDescriptor::FT_FaultEventDescriptor ()
   : type_id (CORBA::string_dup (""))
-  , object_group_id (PortableGroup::ObjectGroupId (0))
 {
 }
 
