@@ -25,9 +25,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.
 TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
-  TAO::FT_ReplicationManager const * replication_manager)
-  : replication_manager_ (
-      const_cast<TAO::FT_ReplicationManager *> (replication_manager))
+  TAO::FT_ReplicationManager * replication_manager)
+  : replication_manager_ (replication_manager)
 {
 }
 

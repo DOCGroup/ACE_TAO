@@ -54,7 +54,7 @@ namespace TAO
     * @param replication_manager Pointer to TAO::FT_ReplicationManager.
     */
     explicit FT_ReplicationManagerFaultAnalyzer (
-      TAO::FT_ReplicationManager const * replication_manager);
+      TAO::FT_ReplicationManager * replication_manager);
 
     /**
     * Destructor.
