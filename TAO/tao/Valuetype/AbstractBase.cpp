@@ -292,7 +292,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           abs = factory->create_for_unmarshal_abstract ();
 
-          return (abs == 0 ? false : abs->_tao_unmarshal_v (strm));
+          return (abs == nullptr ? false : abs->_tao_unmarshal_v (strm));
         }
       else
         {
