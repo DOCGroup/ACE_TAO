@@ -42,14 +42,14 @@ public:
 
   void write (TAO_Storable_Naming_Context & context);
 
-  void write_global (const TAO_NS_Persistence_Global & global);
+  void write_global (TAO_NS_Persistence_Global const &global);
   void read_global (TAO_NS_Persistence_Global & global);
 
 private:
-  void write_header (const TAO_NS_Persistence_Header & header);
+  void write_header (TAO_NS_Persistence_Header const &header);
   void read_header (TAO_NS_Persistence_Header & header);
 
-  void write_record (const TAO_NS_Persistence_Record & record);
+  void write_record (TAO_NS_Persistence_Record const &record);
   void read_record (TAO_NS_Persistence_Record & record);
 
   TAO::Storable_Base &stream_;

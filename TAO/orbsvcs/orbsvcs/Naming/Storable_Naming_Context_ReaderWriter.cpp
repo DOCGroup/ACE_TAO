@@ -87,8 +87,7 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
               oid = context.poa_->reference_to_id (obj.in ());
             CORBA::String_var
               nm = PortableServer::ObjectId_to_string (oid.in ());
-            const char
-              *newname = nm.in ();
+            char const *newname = nm.in ();
             name.set (newname); // The local ObjectID (persistance filename)
             record.type (TAO_NS_Persistence_Record::LOCAL_NCONTEXT);
           }
@@ -113,11 +112,11 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
       }
     record.ref(name);
 
-    const char *myid = (*it).ext_id_.id();
+    char const *myid = (*it).ext_id_.id();
     ACE_CString id(myid);
     record.id(id);
 
-    const char *mykind = (*it).ext_id_.kind();
+    char const *mykind = (*it).ext_id_.kind();
     ACE_CString kind(mykind);
     record.kind(kind);
 
@@ -159,8 +158,7 @@ TAO_Storable_Naming_Context_ReaderWriter::read (TAO_Storable_Naming_Context & co
         {
           PortableServer::ObjectId_var
             id = PortableServer::string_to_ObjectId (record.ref ().c_str ());
-          const char
-            *intf = context.interface_->_interface_repository_id ();
+          char const *intf = context.interface_->_interface_repository_id ();
           CORBA::Object_var
             objref = context.poa_->create_reference_with_id (id.in (), intf);
           bindings_map->bind ( record.id ().c_str (),
@@ -189,7 +187,7 @@ TAO_Storable_Naming_Context_ReaderWriter::read (TAO_Storable_Naming_Context & co
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_header (const TAO_NS_Persistence_Header & header)
+TAO_Storable_Naming_Context_ReaderWriter::write_header (TAO_NS_Persistence_Header const &header)
 {
   stream_.rewind();
   stream_ << header.size();
@@ -212,7 +210,7 @@ TAO_Storable_Naming_Context_ReaderWriter::read_header (TAO_NS_Persistence_Header
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_record (const TAO_NS_Persistence_Record & record)
+TAO_Storable_Naming_Context_ReaderWriter::write_record (TAO_NS_Persistence_Record const &record)
 {
   TAO_NS_Persistence_Record::Record_Type type = record.type();
   stream_ << type;
@@ -247,7 +245,7 @@ TAO_Storable_Naming_Context_ReaderWriter::read_record (TAO_NS_Persistence_Record
 }
 
 void
-TAO_Storable_Naming_Context_ReaderWriter::write_global (const TAO_NS_Persistence_Global & global)
+TAO_Storable_Naming_Context_ReaderWriter::write_global (TAO_NS_Persistence_Global const &global)
 {
   stream_.rewind();
   stream_ << global.counter();
