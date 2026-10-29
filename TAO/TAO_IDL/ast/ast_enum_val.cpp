@@ -107,7 +107,7 @@ AST_EnumVal::enum_parent () const
 }
 
 void
-AST_EnumVal::enum_parent (AST_Enum *node)
+AST_EnumVal::enum_parent (AST_Enum * const node)
 {
   enum_parent_ = node;
 }

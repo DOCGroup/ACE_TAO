@@ -224,7 +224,7 @@ AST_Field::visibility () const
 }
 
 void
-AST_Field::visibility (AST_Field::Visibility val)
+AST_Field::visibility (AST_Field::Visibility const val)
 {
   visibility_ = val;
 }

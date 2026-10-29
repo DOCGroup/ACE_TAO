@@ -121,7 +121,7 @@ public:
   /// Get and Set Visibility
   ///{
   Visibility visibility () const;
-  void visibility (Visibility val);
+  void visibility (Visibility const val);
   ///}
 
   // Are we or do we contain a wstring?
