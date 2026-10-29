@@ -96,7 +96,7 @@ void AST_Annotation_Appl::destroy ()
 {
 }
 
-std::string_view AST_Annotation_Appl::original_name () const
+std::string const& AST_Annotation_Appl::original_name () const
 {
   return original_name_;
 }
