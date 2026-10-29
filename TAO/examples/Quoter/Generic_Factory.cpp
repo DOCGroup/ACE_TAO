@@ -14,11 +14,7 @@
 
 #include "orbsvcs/LifeCycleServiceC.h"
 
-Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server ()
-: use_LifeCycle_Service_ (0),
-  debug_level_ (1)
-{
-}
+Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server () = default;
 
 Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server ()
 {
@@ -32,11 +28,11 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server ()
       if (!CORBA::is_nil (this->quoterNamingContext_var_.in ()))
         this->quoterNamingContext_var_->unbind (generic_Factory_Name);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
     }
@@ -46,7 +42,7 @@ int
 Quoter_Generic_Factory_Server::init (int argc,
                                      ACE_TCHAR *argv[])
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
 
   try
     {
@@ -182,7 +178,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Generic_Factory_Server::init - %C\n", exception_message));
       ex._tao_print_exception (
@@ -222,7 +218,7 @@ Quoter_Generic_Factory_Server::parse_args ()
         this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'l':
-        this->use_LifeCycle_Service_ = 1;
+        this->use_LifeCycle_Service_ = true;
         break;
       default:
         exit_code = 1;
@@ -261,12 +257,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           quoter_Generic_Factory_Server.run ();
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

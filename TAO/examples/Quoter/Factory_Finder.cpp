@@ -13,11 +13,7 @@
 
 #include "Factory_Finder.h"
 
-Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server ()
-:   debug_level_ (1)
-{
-  // Nothing
-}
+Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server () = default;
 
 Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server ()
 {
@@ -31,7 +27,7 @@ Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server ()
       if (!CORBA::is_nil (this->quoterNamingContext_var_.in ()))
         this->quoterNamingContext_var_->unbind (factory_Finder_Name);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not unbind the Factor Finder from the Name Service\n"));
       ex._tao_print_exception ("~Quoter_Factor_Finder_Server");
@@ -42,7 +38,7 @@ int
 Quoter_Factory_Finder_Server::init (int argc,
                                     ACE_TCHAR *argv[])
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
 
   try
     {
@@ -135,7 +131,7 @@ Quoter_Factory_Finder_Server::init (int argc,
         ACE_DEBUG ((LM_DEBUG,
                     "Factory_Finder: Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factor_Finder_Server::init - %C\n", exception_message));
       ex._tao_print_exception ("SYS_EX");
@@ -210,12 +206,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           quoter_Factory_Finder_Server.run ();
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

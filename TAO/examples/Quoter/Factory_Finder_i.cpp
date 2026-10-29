@@ -20,24 +20,16 @@
 
 // Constructor
 Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (int debug_level)
-: debug_level_ (debug_level)
+  : debug_level_ (debug_level)
 {
-  // Nothing
 }
-
-// Destructor.
-Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i ()
-{
-  // Nothing
-}
-
 
 CosLifeCycle::Factories *
-Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
+Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
 
-  CosLifeCycle::Factories *factories_ptr = 0;
+  CosLifeCycle::Factories *factories_ptr = nullptr;
 
   try
   {
@@ -87,7 +79,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
       ACE_DEBUG ((LM_DEBUG,
                   "Factory Finder: Have reference to a Quoter Factory.\n"));
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %C\n", exception_message));
       throw CosLifeCycle::NoFactory (factory_key);

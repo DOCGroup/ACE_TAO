@@ -36,6 +36,11 @@ public:
   /// Destructor
   ~Quoter_Factory_Finder_Server ();
 
+  Quoter_Factory_Finder_Server (Quoter_Factory_Finder_Server const &) = delete;
+  Quoter_Factory_Finder_Server &operator= (Quoter_Factory_Finder_Server const &) = delete;
+  Quoter_Factory_Finder_Server (Quoter_Factory_Finder_Server &&) = delete;
+  Quoter_Factory_Finder_Server &operator= (Quoter_Factory_Finder_Server &&) = delete;
+
   /// Initialize the Quoter_Server state - parsing arguments and ...
   int init (int argc, ACE_TCHAR *argv[]);
 
@@ -50,19 +55,19 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// instance of the Quoter Factory Finder
-  Quoter_Factory_Finder_i *quoter_Factory_Finder_i_ptr_;
+  Quoter_Factory_Finder_i *quoter_Factory_Finder_i_ptr_ {};
 
   /// reference to the Quoter naming context
-  CosNaming::NamingContext_var quoterNamingContext_var_;
+  CosNaming::NamingContext_var quoterNamingContext_var_ {};
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
   /// commandline arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  int debug_level_ {1};
 };
 
 #endif /* QUOTER_FACTORY_FINDER_H */

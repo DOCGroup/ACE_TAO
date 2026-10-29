@@ -12,12 +12,7 @@
 #include "server.h"
 #include "tao/ORB_Core.h"
 
-Quoter_Server::Quoter_Server ()
-  : num_of_objs_ (1),
-    quoter_Factory_i_ptr_ (0),
-    debug_level_ (1)
-{
-}
+Quoter_Server::Quoter_Server () = default;
 
 int
 Quoter_Server::parse_args ()
@@ -57,7 +52,7 @@ int
 Quoter_Server::init (int argc,
                     ACE_TCHAR* argv[])
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
   try
     {
       exception_message = "While ORB Manager init";
@@ -126,7 +121,7 @@ Quoter_Server::init (int argc,
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Server: IOR is: <%C>\n", quoter_Factory_ior.in ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quote_Server::init - %C\n", exception_message));
       ex._tao_print_exception ("Exception");
@@ -143,7 +138,7 @@ Quoter_Server::init (int argc,
 int
 Quoter_Server::init_naming_service ()
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
   try
     {
       CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance()->orb();
@@ -181,7 +176,7 @@ Quoter_Server::init_naming_service ()
       quoterNameContext->bind (quoterFactoryContextName,
                                quoter_factory_var.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quote_Server::init_naming_service - %C", exception_message));
       ex._tao_print_exception ("Exception");
@@ -219,7 +214,7 @@ Quoter_Server::~Quoter_Server ()
       if (!CORBA::is_nil (this->namingContext_var_.in ()))
         this->namingContext_var_->unbind (factory_name);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "Could not unbind Quoter Server from the Name Service\n"));
@@ -243,12 +238,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       quoter_server.run ();
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

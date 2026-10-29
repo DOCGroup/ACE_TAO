@@ -21,12 +21,7 @@ Quoter_Task::svc ()
 
 // Constructor.
 Quoter_Client::Quoter_Client ()
-  : quoter_factory_key_ (0),
-    quoter_key_ (ACE_OS::strdup ("key0")),
-    shutdown_ (0),
-    quoter_var_ (Stock::Quoter::_nil ()),
-    useLifeCycleService_(0),  // use the Generic Factory
-    debug_level_ (1)
+  : quoter_key_ (ACE_OS::strdup ("key0"))
 {
   // Nothing
 }
@@ -50,10 +45,10 @@ Quoter_Client::parse_args ()
         this->debug_level_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'l':
-        this->useLifeCycleService_ = 1;
+        this->useLifeCycleService_ = true;
         break;
       case 'x':
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
       default:
         exit_code = 1;
@@ -84,7 +79,7 @@ Quoter_Client::run ()
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Client is running\n"));
 
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
   try
     {
       exception_message = "While using get_quote ()";
@@ -125,7 +120,7 @@ Quoter_Client::run ()
       if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object: ACE Hardware = %i\n", q));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %C\n", exception_message));
       ex._tao_print_exception ("Quoter_Client::run");
@@ -139,16 +134,16 @@ Quoter_Client::~Quoter_Client ()
 {
   // Free resources
   // Close the ior files
-  if (this->quoter_factory_key_ != 0)
+  if (this->quoter_factory_key_ != nullptr)
     ACE_OS::free (this->quoter_factory_key_);
-  if (this->quoter_key_ != 0)
+  if (this->quoter_key_ != nullptr)
     ACE_OS::free (this->quoter_key_);
 }
 
 int
 Quoter_Client::init_naming_service ()
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
 
   try
     {
@@ -198,7 +193,7 @@ Quoter_Client::init_naming_service ()
       // The name of the Quoter Generic Factory
       CosLifeCycle::Key factoryName (2);  // max = 2
 
-      if (this->useLifeCycleService_ == 1)
+      if (this->useLifeCycleService_)
       {
         // use the LifeCycle Service
         factoryName.length(1);
@@ -220,7 +215,7 @@ Quoter_Client::init_naming_service ()
       CosLifeCycle::Factories *factories_ptr =
           factory_Finder_var_->find_factories (factoryName);
 
-      if (factories_ptr == 0)
+      if (factories_ptr == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Did not get a Generic Quoter Factory.\n"),
                           -1);
@@ -256,13 +251,13 @@ Quoter_Client::init_naming_service ()
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Quoter Factory.\n"));
     }
-  catch (const CosLifeCycle::NoFactory& excpt)
+  catch (CosLifeCycle::NoFactory const &excpt)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %C\n", exception_message));
       excpt._tao_print_exception (
         "Quoter::init_naming_service: No Factory available!");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Client::init_naming_service - %C\n", exception_message));
       ex._tao_print_exception ("Quoter::init_naming_service");
@@ -331,7 +326,7 @@ Quoter_Client::init (int argc, ACE_TCHAR **argv)
                             -1);
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Quoter::init");
       return -1;
