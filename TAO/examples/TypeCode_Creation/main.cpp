@@ -13,7 +13,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->create_interface_tc (CORBA::string_dup ("IDL:iface:1.0"),
                                   CORBA::string_dup ("iface"));
 
-      CORBA::ULong length = 5;
+      CORBA::ULong length {5};
 
       CORBA::UnionMemberSeq foo_members (length);
       foo_members.length (length);
@@ -49,7 +49,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       foo_members[3].name = CORBA::string_dup ("foo_iface_member");
       foo_members[3].type = CORBA::TypeCode::_duplicate (iface_tc.in ());
       foo_members[3].type_def = CORBA::IDLType::_nil ();
-      CORBA::Octet default_label_value = 0;
+      CORBA::Octet default_label_value {};
       foo_members[3].label <<= CORBA::Any::from_octet (default_label_value);
 
       // The last member is the same type as the previous one, but has
@@ -86,16 +86,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                           bar_members);
 
       // Check for equality with the typecode created by the IDL compiler.
-      CORBA::Boolean eq = bar_tc->equal (_tc_bar);
+      bool const equal = bar_tc->equal (_tc_bar);
 
-      if (!eq)
+      if (!equal)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ORB-created typecode not correct!\n"),
                              -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("exception:");
       return 1;
