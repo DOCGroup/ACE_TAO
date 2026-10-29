@@ -11,11 +11,11 @@
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
 
-static const char the_prefix[] = "miop";
+static constexpr char the_prefix[] = "miop";
 
 // UIPMC doesn't support object keys, so send profiles by default in the
 // GIOP 1.2 target specification.
-static const CORBA::Short default_addressing_mode_ =
+static constexpr CORBA::Short default_addressing_mode_ =
   TAO_Target_Specification::Profile_Addr;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -35,9 +35,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
                                            TAO_DEF_GIOP_MINOR))
   , endpoint_ ()
   , tagged_profile_ ()
-  , group_id_ (0)
-  , ref_version_ (0)
-  , has_ref_version_ (false)
 {
   // The default for component version is 1.0.
   this->component_version_.major = 1;
@@ -46,7 +43,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
   this->addressing_mode_ = default_addressing_mode_;
 }
 
-TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
+TAO_UIPMC_Profile::TAO_UIPMC_Profile (ACE_INET_Addr const &addr,
                                       TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
@@ -54,9 +51,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                                            TAO_DEF_GIOP_MINOR))
   , endpoint_ (addr)
   , tagged_profile_ ()
-  , group_id_ (0)
-  , ref_version_ (0)
-  , has_ref_version_ (false)
 {
   // The default for component version is 1.0.
   this->component_version_.major = 1;
@@ -170,13 +164,13 @@ TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_UIPMC_Profile::parse_string (const char *string)
+TAO_UIPMC_Profile::parse_string (char const *string)
 {
   this->parse_string_i (string);
 }
 
 void
-TAO_UIPMC_Profile::parse_string_i (const char *string)
+TAO_UIPMC_Profile::parse_string_i (char const *string)
 {
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
@@ -239,7 +233,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // The Domain ID is terminated with a '-'.
 
   // Look for the group domain delimitor.
-  const char *pos = ACE_OS::strchr (string, '-');
+  char const *pos = ACE_OS::strchr (string, '-');
 
   if (pos == 0)
     {
@@ -480,10 +474,10 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 }
 
 CORBA::Boolean
-TAO_UIPMC_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_UIPMC_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_UIPMC_Profile *op =
-    dynamic_cast<const TAO_UIPMC_Profile *> (other_profile);
+  TAO_UIPMC_Profile const *op =
+    dynamic_cast<TAO_UIPMC_Profile const *> (other_profile);
 
   if (op == nullptr)
     return false;
@@ -625,7 +619,7 @@ TAO_UIPMC_Profile::create_tagged_profile ()
       this->tagged_profile_.profile_data.length (length);
       CORBA::Octet *buffer =
         this->tagged_profile_.profile_data.get_buffer ();
-      for (const ACE_Message_Block *i = encap.begin ();
+      for (ACE_Message_Block const *i = encap.begin ();
            i != encap.end ();
            i = i->next ())
         {
@@ -651,7 +645,7 @@ TAO_UIPMC_Profile::create_profile_body (TAO_OutputCDR &encap) const
 void
 TAO_UIPMC_Profile::set_group_info (
   GIOP::Version const &component_version,
-  const char *domain_id,
+  char const *domain_id,
   PortableGroup::ObjectGroupId group_id,
   bool has_ref_version,
   PortableGroup::ObjectGroupRefVersion ref_version)
@@ -707,7 +701,7 @@ TAO_UIPMC_Profile::update_cached_group_component ()
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+  for (ACE_Message_Block const *iterator = out_cdr.begin ();
        iterator != nullptr;
        iterator = iterator->cont ())
     {
@@ -777,7 +771,7 @@ TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode)
 
 int
 TAO_UIPMC_Profile::extract_group_component (
-  const IOP::TaggedProfile &profile,
+  IOP::TaggedProfile const &profile,
   PortableGroup::TagGroupTaggedComponent &group)
 {
   // Create the decoding stream from the encapsulation in the buffer,
@@ -787,7 +781,7 @@ TAO_UIPMC_Profile::extract_group_component (
   CORBA::Octet const *buf =
     profile.profile_data.get_buffer ();
 
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (buf),
+  TAO_InputCDR cdr (reinterpret_cast<char const *> (buf),
                     profile.profile_data.length ());
 //#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -843,7 +837,7 @@ TAO_UIPMC_Profile::extract_group_component (
   // Found it.
   buf = tagged_component.component_data.get_buffer ();
 
-  TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+  TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                        tagged_component.component_data.length ());
 
   // Extract the Byte Order.
