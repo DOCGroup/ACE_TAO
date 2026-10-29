@@ -1862,7 +1862,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
       return nullptr;
     }
 
-  char const *name = e->first_component ()->get_string ();
+  std::string_view const name = e->first_component ()->get_string_view_or_empty ();
   FE_Utils::T_Param_Info *param = nullptr;
   unsigned long index = 0;
 
@@ -1881,7 +1881,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
        i.next (param);
        i.advance (), ++index)
     {
-      if (std::string_view (param->name_.c_str ()) == name)
+      if (std::string_view (param->name_) == name)
         {
           /// If we are parsing this template module as a
           /// reference, the param holder we create must have
