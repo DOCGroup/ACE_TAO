@@ -27,7 +27,7 @@ TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 }
 
 void
-TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
+TAO_PortableGroup_Acceptor_Registry::open (TAO_Profile const *profile,
                                            TAO_ORB_Core &orb_core)
 {
   Entry *entry = nullptr;
@@ -45,10 +45,6 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
       TAO_ProtocolFactorySetItor end =
         orb_core.protocol_factories ()->end ();
 
-      // int found = 0;
-      // If usable protocol (factory) is found then this will be
-      // set equal to 1.
-
       for (TAO_ProtocolFactorySetItor factory =
              orb_core.protocol_factories ()->begin ();
            factory != end;
@@ -60,33 +56,30 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
                             orb_core,
                             factory);
 
-              // found = 1;  // A usable protocol was found.
             }
-          else
-            continue;
         }
     }
 }
 
-#define MAX_ADDR_LENGTH   (32)
+constexpr int MAX_ADDR_LENGTH = 32;
 
 void
-TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
+TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
                                              TAO_ORB_Core &orb_core,
                                              TAO_ProtocolFactorySetItor &factory)
 {
-  TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
+  TAO_Acceptor * const acceptor = (*factory)->factory ()->make_acceptor ();
 
   if (acceptor != nullptr)
     {
       // Extract the desired endpoint/protocol version if one
       // exists.
-      const TAO_GIOP_Message_Version &version = profile->version ();
-      char buffer [MAX_ADDR_LENGTH];
+      TAO_GIOP_Message_Version const &version = profile->version ();
+      char buffer [MAX_ADDR_LENGTH] {};
 
       // Removed the constness of profile.  We're not changing
       // anything, but need to call a nonconst function.
-      TAO_Profile* nc_profile = const_cast<TAO_Profile *> (profile);
+      TAO_Profile * const nc_profile = const_cast<TAO_Profile *> (profile);
       nc_profile->endpoint ()->addr_to_string (buffer, MAX_ADDR_LENGTH);
 
       if (acceptor->open (&orb_core,
@@ -155,7 +148,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
 }
 
 int
-TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
+TAO_PortableGroup_Acceptor_Registry::find (TAO_Profile const *profile,
                                            Entry *&entry)
 {
   Acceptor_Registry_Iterator iter (this->registry_);
@@ -165,7 +158,7 @@ TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
       // Since the endpoint routine is nonconst, need to
       // cast away the constness even though we're not
       // changing anything.
-      TAO_Profile *nc_profile = const_cast<TAO_Profile *> (profile);
+      TAO_Profile * const nc_profile = const_cast<TAO_Profile *> (profile);
       if (entry->endpoint->is_equivalent (nc_profile->endpoint ()))
         return 1;
 
