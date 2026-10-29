@@ -167,8 +167,8 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer () override;
-  virtual void push (const RtecEventComm::EventSet &events) override;
+  void disconnect_push_consumer () override;
+  void push (RtecEventComm::EventSet const &events) override;
   //@}
 
 protected:
@@ -180,10 +180,10 @@ private:
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  void new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
   // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  void reconnect (RtecEventChannelAdmin::ConsumerQOS const &sub);
   //@}
 
   /// Proxy used to receive events from the Event Channel.

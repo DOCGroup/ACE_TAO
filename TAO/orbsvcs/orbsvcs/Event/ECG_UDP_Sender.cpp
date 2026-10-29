@@ -46,7 +46,7 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 }
 
 void
-TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
+TAO_ECG_UDP_Sender::connect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
@@ -76,7 +76,7 @@ TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
 }
 
 void
-TAO_ECG_UDP_Sender::new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
+TAO_ECG_UDP_Sender::new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   // Activate with poa.
   RtecEventComm::PushConsumer_var consumer_ref;
@@ -106,7 +106,7 @@ TAO_ECG_UDP_Sender::new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
 }
 
 void
-TAO_ECG_UDP_Sender::reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub)
+TAO_ECG_UDP_Sender::reconnect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   // Obtain our object reference from the POA.
   RtecEventComm::PushConsumer_var consumer_ref;
@@ -151,7 +151,7 @@ TAO_ECG_UDP_Sender::shutdown ()
 }
 
 void
-TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
+TAO_ECG_UDP_Sender::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {
@@ -171,7 +171,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
       if (events[i].header.ttl <= 0)
         continue;
 
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const &e = events[i];
 
       // We need to modify the TTL field, but copying the entire event
       // would be wasteful; instead we create a new header and only
