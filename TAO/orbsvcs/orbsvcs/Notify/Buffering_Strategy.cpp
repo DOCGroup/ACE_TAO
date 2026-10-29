@@ -30,8 +30,6 @@ TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
 , global_not_full_ (admin_properties->global_queue_not_full())
 , local_not_full_ (global_queue_lock_)
 , local_not_empty_ (global_queue_lock_)
-, shutdown_ (false)
-, tracker_ (nullptr)
 {
 }
 

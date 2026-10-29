@@ -124,10 +124,10 @@ private:
   TAO_SYNCH_CONDITION local_not_empty_;
 
   /// Flag to shutdown.
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// Optional queue tracker
-  Tracker* tracker_;
+  Tracker* tracker_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
