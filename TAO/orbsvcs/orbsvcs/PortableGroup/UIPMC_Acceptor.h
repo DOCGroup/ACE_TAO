@@ -31,7 +31,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Note [] as sizeof used to infer length
-static const char CopyPreferredInterfaceToken[]= "$$$$";
+static constexpr char CopyPreferredInterfaceToken[] = "$$$$";
 
 // TAO UIPMC_Acceptor concrete call definition
 
@@ -47,17 +47,17 @@ class TAO_PortableGroup_Export TAO_UIPMC_Acceptor : public TAO_Acceptor
 public:
   /// Constructor.
   TAO_UIPMC_Acceptor (bool listen_on_all_ifs,
-                      const char *listener_interfaces);
+                      char const *listener_interfaces);
 
   /// Destructor.
   ~TAO_UIPMC_Acceptor () override;
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address () const;
+  ACE_INET_Addr const &address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints ();
+  ACE_INET_Addr const *endpoints ();
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -67,18 +67,18 @@ public:
             ACE_Reactor *reactor,
             int version_major,
             int version_minor,
-            const char *address,
-            const char *options = nullptr) override;
+            char const *address,
+            char const *options = nullptr) override;
   int open_default (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
-                    const char *options = nullptr) override;
+                    char const *options = nullptr) override;
   int close () override;
-  int create_profile (const TAO::ObjectKey &object_key,
+  int create_profile (TAO::ObjectKey const &object_key,
                       TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
-  int is_collocated (const TAO_Endpoint *endpoint) override;
+  int is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
@@ -94,7 +94,7 @@ public:
   int hostname (TAO_ORB_Core *orb_core,
                 ACE_INET_Addr &addr,
                 char *&host,
-                const char *specified_hostname = nullptr);
+                char const *specified_hostname = nullptr);
 
   /**
    * Set the host name for the given address using the dotted decimal
@@ -109,15 +109,22 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr,
+  virtual int open_i (ACE_INET_Addr const &addr,
                       ACE_Reactor *reactor);
 
   /// Parse protocol specific options.
-  virtual int parse_options (const char *options);
+  virtual int parse_options (char const *options);
 
+private:
+  TAO_UIPMC_Acceptor (TAO_UIPMC_Acceptor const &) = delete;
+  TAO_UIPMC_Acceptor (TAO_UIPMC_Acceptor &&) = delete;
+  TAO_UIPMC_Acceptor & operator= (TAO_UIPMC_Acceptor const &) = delete;
+  TAO_UIPMC_Acceptor & operator= (TAO_UIPMC_Acceptor &&) = delete;
+
+protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_;
+  ACE_INET_Addr *addrs_ {};
 
   /**
    * Cache the information about the endpoints serviced by this
@@ -126,11 +133,11 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_;
+  char **hosts_ {};
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).
-  CORBA::ULong endpoint_count_;
+  CORBA::ULong endpoint_count_ {};
 
   /**
    * The GIOP version for this endpoint
@@ -140,10 +147,10 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 
 private:
-  bool listen_on_all_;
+  bool listen_on_all_ {};
   ACE_CString listener_interfaces_;
 };
 
