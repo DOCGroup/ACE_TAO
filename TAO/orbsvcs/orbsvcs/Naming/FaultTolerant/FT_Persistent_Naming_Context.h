@@ -40,7 +40,7 @@ public:
    * load balancing.
    */
   TAO_FT_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                    const char *poa_id,
+                                    char const *poa_id,
                                     TAO_Persistent_Context_Index *context_index,
                                     HASH_MAP *map = nullptr,
                                     ACE_UINT32 *counter = nullptr);
