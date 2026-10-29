@@ -23,10 +23,10 @@
 #include "tao/Strategies/advanced_resource.h"
 
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 ACE_UINT32 burst_messages = 1000;
 
-unsigned char performance_test = 0;
+bool performance_test {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -134,7 +134,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // event loop.
       delete client;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

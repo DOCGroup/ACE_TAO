@@ -24,7 +24,7 @@
 # define ACE_MAIN testClient
 #endif
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -52,8 +52,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_UINT32 niter = 10;
-ACE_UINT32 SIZE_BLOCK= 256;
+constexpr ACE_UINT32 niter = 10;
+constexpr ACE_UINT32 SIZE_BLOCK = 256;
 
 /**
  * @class Client
@@ -68,17 +68,22 @@ public:
   /// ctor
   Client (Simple_Server_ptr server, ACE_UINT32 niterations);
 
-  virtual ~Client () {};
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
+
+  ~Client () = default;
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc ();
 
 private:
   /// The server.
-  Simple_Server_var server_;
+  Simple_Server_var server_ {};
 
   /// The number of iterations on each client thread.
-  ACE_UINT32 niterations_;
+  ACE_UINT32 niterations_ {};
 };
 
 
@@ -124,7 +129,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -163,7 +168,7 @@ Client::svc ()
 
       timer.start ();
 
-      ACE_UINT32 client_count = 0;
+      ACE_UINT32 client_count {};
       for (ACE_UINT32 i = 0; i < this->niterations_; ++i)
         {
           client_count++;
@@ -199,7 +204,7 @@ Client::svc ()
       for (int c = 0; c < 10; ++c)
         server_->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

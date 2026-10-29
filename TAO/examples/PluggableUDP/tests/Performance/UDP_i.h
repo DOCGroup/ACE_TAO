@@ -27,20 +27,25 @@ class UDP_i: public POA_UDP
 {
 public:
   /// Constructor
-  UDP_i ();
+  UDP_i () = default;
 
   /// Destructor
-  ~UDP_i ();
+  ~UDP_i () override = default;
 
-  virtual void setResponseHandler (UDP_ptr udpHandler);
+  UDP_i (UDP_i const &) = delete;
+  UDP_i &operator= (UDP_i const &) = delete;
+  UDP_i (UDP_i &&) = delete;
+  UDP_i &operator= (UDP_i &&) = delete;
 
-  virtual void invoke (const char *client_name,
-                       CORBA::Long request_id);
+  void setResponseHandler (UDP_ptr udpHandler) override;
 
-  virtual void reset (const char * client_name);
+  void invoke (char const *client_name,
+               CORBA::Long request_id) override;
+
+  void reset (char const *client_name) override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
@@ -53,7 +58,7 @@ public:
 
 private:
   /// ORB pointer.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   ACE_Hash_Map_Manager_Ex < CORBA::String_var,
                             CORBA::Long,
@@ -61,11 +66,11 @@ private:
                             ACE_Equal_To < const char * >,
                             ACE_Null_Mutex > request_id_table_;
 
-  ACE_UINT32 messages_count_;
+  ACE_UINT32 messages_count_ {};
 
-  ACE_UINT32 wrong_messages_count_;
+  ACE_UINT32 wrong_messages_count_ {};
 
-  UDP_var responseHandler_;
+  UDP_var responseHandler_ {};
 };
 
 #endif /* UDP_I_H */
