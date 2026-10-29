@@ -13,8 +13,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager ()
-  : poa_ (),
-    object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
+  : object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     location_map_ (TAO_PG_MAX_LOCATIONS),
     lock_ ()
 {
@@ -44,9 +43,9 @@ TAO_PG_ObjectGroupManager::~TAO_PG_ObjectGroupManager ()
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_member (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    const PortableGroup::Location & /* the_location */,
-    const char * /* type_id */,
-    const PortableGroup::Criteria & /* the_criteria */)
+    PortableGroup::Location const & /* the_location */,
+    char const * /* type_id */,
+    PortableGroup::Criteria const & /* the_criteria */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -54,7 +53,7 @@ TAO_PG_ObjectGroupManager::create_member (
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member)
 {
   if (CORBA::is_nil (member))
@@ -67,7 +66,7 @@ TAO_PG_ObjectGroupManager::add_member (
 
   // Verify that the member's RepositoryId matches the object group's
   // type ID.
-  const CORBA::Boolean check_type_id = true;
+  CORBA::Boolean const check_type_id = true;
 
   return this->add_member_i (object_group,
                              the_location,
@@ -79,10 +78,10 @@ TAO_PG_ObjectGroupManager::add_member (
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::_tao_add_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member,
-    const char * type_id,
-    const CORBA::Boolean propagate_member_already_present)
+    char const * type_id,
+    CORBA::Boolean const propagate_member_already_present)
 {
   if (CORBA::is_nil (member))
     throw CORBA::BAD_PARAM ();
@@ -97,25 +96,25 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
   try
     {
       // TypeId already checked by GenericFactory.
-      const CORBA::Boolean check_type_id = false;
+      CORBA::Boolean const check_type_id = false;
 
       new_group = this->add_member_i (object_group,
                                       the_location,
                                       member,
                                       check_type_id);
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       throw CORBA::INTERNAL ();
     }
-  catch (const PortableGroup::MemberAlreadyPresent&)
+  catch (PortableGroup::MemberAlreadyPresent const &)
     {
       if (propagate_member_already_present)
         throw;
       else
         throw CORBA::INTERNAL ();
     }
-  catch (const PortableGroup::ObjectNotAdded&)
+  catch (PortableGroup::ObjectNotAdded const &)
     {
       throw PortableGroup::NoFactory (the_location, type_id);
     }
@@ -126,9 +125,9 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::add_member_i (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member,
-    const CORBA::Boolean check_type_id)
+    CORBA::Boolean const check_type_id)
 {
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group);
@@ -183,7 +182,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
   // No object group member of the object group with the given
   // ObjectGroupId resides at the location.  Add the object group
   // entry to array of object groups residing at the location.
-  const size_t groups_len = groups->size ();
+  size_t const groups_len = groups->size ();
   groups->size (groups_len + 1);
   (*groups)[groups_len] = group_entry;
 
@@ -198,7 +197,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
@@ -228,7 +227,7 @@ TAO_PG_ObjectGroupManager::remove_member (
        iter != end;
        ++iter)
     {
-      const TAO_PG_MemberInfo & info = *iter;
+      TAO_PG_MemberInfo const & info = *iter;
 
       if (info.location == the_location)
         {
@@ -294,7 +293,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
 
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-  CORBA::ULong loc = 0;
+  CORBA::ULong loc {};
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
   for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
@@ -317,7 +316,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
 
 PortableGroup::ObjectGroups *
 TAO_PG_ObjectGroupManager::groups_at_location (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   PortableGroup::ObjectGroups * ogs;
   ACE_NEW_THROW_EX (ogs,
@@ -331,7 +330,7 @@ TAO_PG_ObjectGroupManager::groups_at_location (
   TAO_PG_ObjectGroup_Array * groups = nullptr;
   if (this->location_map_.find (the_location, groups) == 0)
     {
-      CORBA::ULong len = static_cast<CORBA::ULong> (groups->size ());
+      CORBA::ULong const len = static_cast<CORBA::ULong> (groups->size ());
 
       ogs->length (len);
 
@@ -392,7 +391,7 @@ TAO_PG_ObjectGroupManager::get_object_group_ref (
 CORBA::Object_ptr
 TAO_PG_ObjectGroupManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & loc)
+    PortableGroup::Location const & loc)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -474,9 +473,9 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
   CORBA::ULong group_id,
-  const PortableServer::ObjectId &oid,
-  const char * type_id,
-  const PortableGroup::Criteria & the_criteria)
+  PortableServer::ObjectId const & oid,
+  char const * type_id,
+  PortableGroup::Criteria const & the_criteria)
 {
   if (CORBA::is_nil (this->poa_.in ()))
     throw CORBA::INTERNAL ();
@@ -528,7 +527,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
 void
 TAO_PG_ObjectGroupManager::destroy_object_group (
-  const PortableServer::ObjectId & oid)
+  PortableServer::ObjectId const & oid)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
@@ -560,7 +559,7 @@ TAO_PG_ObjectGroupManager::type_id (
 }
 
 PortableGroup::ObjectGroup_ptr
-TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
+TAO_PG_ObjectGroupManager::object_group (PortableServer::ObjectId const & oid)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -639,14 +638,14 @@ TAO_PG_ObjectGroupManager::get_group_entry (
     {
       oid = this->poa_->reference_to_id (object_group);
     }
-  catch (const PortableServer::POA::WrongAdapter& ex)
+  catch (PortableServer::POA::WrongAdapter const & ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception ("TAO_PG (%P|%t) Unexpected exception\n");
 
       throw CORBA::INTERNAL ();
     }
-  catch (const PortableServer::POA::WrongPolicy& ex)
+  catch (PortableServer::POA::WrongPolicy const & ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception ("TAO_PG (%P|%t) Unexpected exception\n");
@@ -663,13 +662,13 @@ TAO_PG_ObjectGroupManager::get_group_entry (
 
 CORBA::Boolean
 TAO_PG_ObjectGroupManager::member_already_present (
-  const TAO_PG_ObjectGroup_Array &groups,
+  TAO_PG_ObjectGroup_Array const & groups,
   TAO_PG_ObjectGroup_Map_Entry * group_entry)
 {
   // Multiple members from different object groups may reside at the
   // same location.  Iterate through the list to attempt to find a
   // match.
-  size_t len = groups.size ();
+  size_t const len = groups.size ();
   for (size_t i = 0; i < len; ++i)
     {
       // It should be enough just to compare the group_entry pointers,
@@ -690,13 +689,13 @@ TAO_PG_ObjectGroupManager::member_already_present (
 
 int
 TAO_PG_ObjectGroupManager::get_object_group_position (
-  const TAO_PG_ObjectGroup_Array &groups,
+  TAO_PG_ObjectGroup_Array const & groups,
   TAO_PG_ObjectGroup_Map_Entry * group_entry)
 {
   // Multiple members from different object groups may reside at the
   // same location.  Iterate through the list to attempt to find a
   // match.
-  size_t len = groups.size ();
+  size_t const len = groups.size ();
   for (size_t i = 0; i < len; ++i)
     {
       // It should be enough just to compare the group_entry pointers,
@@ -738,7 +737,7 @@ TAO_PG_ObjectGroupManager::valid_type_id (
   CORBA::String_var type_id =
     CORBA::string_dup (group_entry->type_id.in ());
 
-  CORBA::Boolean right_type_id = false;
+  CORBA::Boolean right_type_id {};
   {
     // Release the lock during the type_id check.  No need to block
     // other threads during the invocation.
@@ -820,7 +819,7 @@ TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
                 ACE_TEXT ("Found group at position %i, size = %i\n"),
                 to_be_removed, groups->size ()));
   // remove the element from the array and resize the array.
-  const size_t groups_len = groups->size ();
+  size_t const groups_len = groups->size ();
   size_t j;
   for (size_t i = to_be_removed; i < groups_len - 1; ++i)
     {
@@ -828,7 +827,7 @@ TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
       (*groups)[i] = (*groups)[j];
     }
 
-  size_t new_len = groups_len - 1;
+  size_t const new_len = groups_len - 1;
   groups->size (new_len);
   return new_len;
 }
@@ -843,7 +842,7 @@ TAO_PG_ObjectGroupManager::generic_factory (
 
 size_t
 TAO_PG_ObjectGroupManager::member_count (
-    const PortableServer::ObjectId & oid,
+    PortableServer::ObjectId const & oid,
     bool is_alive)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
@@ -852,7 +851,7 @@ TAO_PG_ObjectGroupManager::member_count (
   if (this->object_group_map_.find (oid, group_entry) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
 
-  int count = 0;
+  int count {};
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
@@ -873,7 +872,7 @@ TAO_PG_ObjectGroupManager::member_count (
 
 bool
 TAO_PG_ObjectGroupManager::is_alive (
-    const PortableServer::ObjectId & oid,
+    PortableServer::ObjectId const & oid,
     CORBA::Object_ptr member)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
@@ -953,7 +952,7 @@ TAO_PG_ObjectGroupManager::get_members (bool is_alive)
 
 void
 TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
-                                             const TimeBase::TimeT& timeout)
+                                             TimeBase::TimeT const & timeout)
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1009,9 +1008,9 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
 bool
 TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
                                  CORBA::Object_var& obj,
-                                 const TimeBase::TimeT& tt)
+                                 TimeBase::TimeT const & tt)
 {
-  bool status = true;
+  bool status { true };
   if (CORBA::is_nil (obj.in ()))
     throw CORBA::OBJECT_NOT_EXIST ();
 
@@ -1037,20 +1036,20 @@ TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
                                 CORBA::ADD_OVERRIDE);
 
   // Clean up the policy that was allocated in the try/catch
-  for (CORBA::ULong i = 0; i < policy_list.length (); i++)
+  for (CORBA::ULong i = 0; i < policy_list.length (); ++i)
     policy_list[i]->destroy ();
 
   try {
     status = ! rtt_obj->_non_existent ();
   }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (CORBA::TIMEOUT const & ex)
   {
     if (TAO_debug_level > 8)
     {
       ex._tao_print_exception ("TAO_PG_ObjectGroupManager::ping");
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     if (TAO_debug_level > 8)
     {
