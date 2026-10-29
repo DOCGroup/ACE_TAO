@@ -2,7 +2,7 @@
 #include "FactoryC_impl.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -41,28 +41,28 @@ no_factory (OBV_FactoryTest::Test_ptr test)
       OBV_FactoryTest::BaseValue_var base_value =
         test->get_base_value ();
     }
-  catch (const CORBA::MARSHAL& ex)
+  catch (CORBA::MARSHAL const& ex)
     {
-      if ((ex.minor() & 0xFFFU) == 1)
+      if ((ex.minor () & 0xFFFU) == 1)
         {
           succeed = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
   if (!succeed)
-  {
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, no_factory failed\n"));
-  }
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) ERROR, no_factory failed\n"));
+    }
 
   return succeed;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -74,18 +74,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       OBV_FactoryTest::Test_var test =
-        OBV_FactoryTest::Test::_narrow(tmp.in ());
+        OBV_FactoryTest::Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
-      {
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil OBV_FactoryTest::Test reference <%s>\n",
-                           ior),
-                          1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil OBV_FactoryTest::Test reference <%s>\n",
+                             ior),
+                            1);
+        }
 
       // Check if we get the correct exception with minor code because no
       // factory has been set.
@@ -93,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Create factories.
-      OBV_FactoryTest::BaseValue_init *base_factory = 0;
+      OBV_FactoryTest::BaseValue_init *base_factory = nullptr;
       ACE_NEW_RETURN (base_factory,
                       OBV_FactoryTest::BaseValue_init,
                       1); // supplied by mapping
@@ -102,7 +102,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    base_factory);
       base_factory->_remove_ref (); // release ownership
 
-      OBV_FactoryTest::Value1_init *value1_factory = 0;
+      OBV_FactoryTest::Value1_init *value1_factory = nullptr;
       ACE_NEW_RETURN (value1_factory,
                       OBV_FactoryTest::Value1_init,
                       1); // supplied by mapping
@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    value1_factory);
       value1_factory->_remove_ref ();
 
-      OBV_FactoryTest::Value2_init *value2_factory = 0;
+      OBV_FactoryTest::Value2_init *value2_factory = nullptr;
       ACE_NEW_RETURN (value2_factory,
                       Value2_init_impl,
                       1); // custom implementation
@@ -146,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
