@@ -187,7 +187,7 @@ namespace XSCRT
         map_ = std::unique_ptr<Map_> (new Map_);
       }
 
-      auto const insertion (map_->insert (std::pair<IdentityProvider const *, Type *> (std::addressof (id), t)));
+      std::pair<Map_::iterator, bool> const insertion (map_->try_emplace (std::addressof (id), t));
       if (!insertion.second)
       {
         throw std::logic_error ("XML ID is already registered");
@@ -286,7 +286,7 @@ namespace XSCRT
 
     void set_idref (const std::basic_string<ACE_TCHAR> &name, Type *new_idref)
     {
-      this->idref_map_.insert (std::pair<std::basic_string<ACE_TCHAR>, Type *> (name, new_idref));
+      this->idref_map_.try_emplace (name, new_idref);
     }
 
   private:

@@ -78,7 +78,7 @@ class ID_Map
   {
     if (obj_ref)
     {
-      this->id_map_.insert (ID_MAP::value_type(id, obj_ref));
+      this->id_map_.try_emplace (id, obj_ref);
     }
     else
     {
@@ -91,7 +91,7 @@ class ID_Map
   {
     if (obj_ref)
     {
-        this->idref_map_.insert (IDREF_MAP::value_type(idref, obj_ref));
+        this->idref_map_.emplace (idref, obj_ref);
     }
     else
     {

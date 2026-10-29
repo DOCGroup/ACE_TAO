@@ -11,7 +11,7 @@ namespace XMLSchema
 
     info.add_base (XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (Base));
 
-    map.insert (std::make_pair (id, info));
+    map.try_emplace (id, info);
   }
 
   template <typename C>
@@ -20,7 +20,7 @@ namespace XMLSchema
     // XSCRT::Type
     {
       XSCRT::TypeId const id (typeid (XSCRT::Type));
-      map.insert (std::make_pair (id, XSCRT::ExtendedTypeInfo (id)));
+      map.try_emplace (id, id);
     }
 
     add_info<byte> (map, nullptr);
@@ -58,7 +58,7 @@ namespace XMLSchema
 
       info.add_base (XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (XSCRT::Type));
 
-      map.insert (std::make_pair (id, info));
+      map.try_emplace (id, info);
     }
 
     // IDREF
@@ -68,7 +68,7 @@ namespace XMLSchema
 
       info.add_base (XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (IDREF_Base));
 
-      map.insert (std::make_pair (id, info));
+      map.try_emplace (id, info);
     }
   }
 }
