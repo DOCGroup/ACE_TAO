@@ -649,7 +649,7 @@ TAO_AV_RTP_Object::destroy ()
 }
 
 int
-TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
+TAO_AV_RTP_Object::set_policies (TAO_AV_PolicyList const &policy_list)
 {
   this->policy_list_ = policy_list;
   CORBA::ULong const num_policies = this->policy_list_.length ();
@@ -750,7 +750,7 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 }
 
 int
-TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_RTP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"RTP",3) == 0)
     {
@@ -759,7 +759,7 @@ TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
   return 0;
 }
 
-const char *
+char const *
 TAO_AV_RTP_Flow_Factory::control_flow_factory ()
 {
   return "RTCP";

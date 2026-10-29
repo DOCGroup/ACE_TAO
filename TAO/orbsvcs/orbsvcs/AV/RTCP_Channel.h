@@ -187,10 +187,10 @@ public:
   ACE_UINT32 octets_sent ();
 
   /// Sets the canonical name of the source.
-  void cname (const char *cname) { this->cname_ = cname; }
+  void cname (char const *cname) { this->cname_ = cname; }
 
   /// Returns the canonical name of the source.
-  const char *cname () { return this->cname_.c_str(); }
+  char const *cname () { return this->cname_.c_str(); }
 
   /// Returns whether or not this source is active.
   char active ();

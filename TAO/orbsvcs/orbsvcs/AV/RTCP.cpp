@@ -50,7 +50,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
-                                             const ACE_Addr &peer_address)
+                                             ACE_Addr const &peer_address)
 {
   int length = static_cast<int> (data->length ());
   int more = length;
@@ -337,7 +337,7 @@ TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
 TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory () = default;
 
 int
-TAO_AV_RTCP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_RTCP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"RTCP",4) == 0)
       return 1;
@@ -448,7 +448,7 @@ TAO_AV_RTCP_Object::destroy ()
 }
 
 int
-TAO_AV_RTCP_Object::set_policies (const TAO_AV_PolicyList &/*policy_list*/)
+TAO_AV_RTCP_Object::set_policies (TAO_AV_PolicyList const &/*policy_list*/)
 {
   return -1;
 }
@@ -467,7 +467,7 @@ TAO_AV_RTCP_Object::stop ()
 
 int
 TAO_AV_RTCP_Object::handle_control_input (ACE_Message_Block *frame,
-                                          const ACE_Addr &peer_address)
+                                          ACE_Addr const &peer_address)
 {
   return this->callback_->receive_frame (frame,
                                          0,
@@ -771,7 +771,7 @@ TAO_AV_RTCP_Callback::handle_destroy ()
 int
 TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
                                      TAO_AV_frame_info *,
-                                     const ACE_Addr &peer_address)
+                                     ACE_Addr const &peer_address)
 {
   RTCP_Channel_In *c;
 

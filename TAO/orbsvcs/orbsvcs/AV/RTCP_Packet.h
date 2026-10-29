@@ -92,7 +92,7 @@ public:
   /// and an optional reason for leaving the session.
   RTCP_BYE_Packet (ACE_UINT32 *srcList,
                    unsigned char length,
-                   const char *text = nullptr);
+                   char const *text = nullptr);
 
   /// Constructor for incoming BYE RTCP packets.
   RTCP_BYE_Packet (char *buffer,
@@ -114,7 +114,7 @@ public:
                   unsigned char &length);
 
   /// Returns the reason for leaving the session.
-  const char *reason ();
+  char const *reason ();
 
   /// Prints the contents of the packet.
   void dump ();
@@ -316,9 +316,9 @@ public:
   /// for each unique ssrc.
   void add_priv_item(ACE_UINT32 ssrc,
                      unsigned char nameLength,
-                     const char *name,
+                     char const *name,
                      unsigned char dataLength,
-                     const char *data);
+                     char const *data);
 
   /// Returns the size of the packet in bytes.
   unsigned int packet_size () override;

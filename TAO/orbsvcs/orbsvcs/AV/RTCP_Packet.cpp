@@ -70,7 +70,7 @@ RTCP_Packet::is_valid (char is_first)
 
 RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
                                  unsigned char length,
-                                 const char *text)
+                                 char const *text)
 {
   this->chd_.ver_ = 2;
   this->chd_.count_ = length;
@@ -183,10 +183,10 @@ RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
 
 //==============================================================================
 
-const char *
+char const *
 RTCP_BYE_Packet::reason ()
 {
-  ACE_CString reason = (const char *)this->reason_;
+  ACE_CString reason = reinterpret_cast<char const *> (this->reason_);
 
   return reason.c_str();
 }
@@ -615,7 +615,7 @@ void
 RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                             unsigned char type,
                             unsigned char length,
-                            const char *data)
+                            char const *data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
