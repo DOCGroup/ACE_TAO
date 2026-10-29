@@ -105,17 +105,16 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
-  // Compatibility with the checked-in lex/yacc generated parser sources.
-  char *get_string ()
+  std::string& get_string ()
   {
     this->canonical_rep_.clear ();
-    return this->value_.data ();
+    return this->value_;
   }
-  char const *get_string () const
+  std::string const& get_string () const
   {
-    return this->value_.c_str ();
+    return this->value_;
   }
-  // Get contents of utl_string.
+  // Get contents of utl_string as a standard string.
 
   std::string const& str () const
   {

@@ -181,8 +181,8 @@ be_visitor_connector_dds_ex_base::match_template_args ()
        ! i.is_done ();
        i.next ())
     {
-      std::string_view const ref_name =
-        i.item ()->str ();
+      std::string const& ref_name =
+        i.item ()->get_string ();
       size_t slot = 0;
 
       for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR ci (
@@ -193,7 +193,7 @@ be_visitor_connector_dds_ex_base::match_template_args ()
           FE_Utils::T_Param_Info *t_param = nullptr;
           ci.next (t_param);
 
-          if (std::string_view (t_param->name_) == ref_name)
+          if (t_param->name_ == ref_name)
             {
               AST_Decl **d = nullptr;
               this->t_inst_->template_args ()->get (d, slot);

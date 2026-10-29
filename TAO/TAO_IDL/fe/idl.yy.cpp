@@ -3638,7 +3638,7 @@ idl_parse_line_and_file (char *buf)
       h[i] = '\0';
       ACE_NEW (tmp,
                UTL_String (h));
-      idl_global->update_prefix (tmp->get_string ());
+      idl_global->update_prefix (tmp->get_string ().data ());
       idl_global->set_filename (tmp);
     }
 
@@ -3647,8 +3647,8 @@ idl_parse_line_and_file (char *buf)
 
   bool is_real_filename =
     fname->compare (idl_global->real_filename ())
-    || same_file (fname->get_string(),
-                  idl_global->real_filename ()->get_string ());
+    || same_file (fname->get_string ().c_str (),
+                  idl_global->real_filename ()->get_string ().c_str ());
 
   bool is_main_filename = false;
 
@@ -3656,8 +3656,8 @@ idl_parse_line_and_file (char *buf)
     {
       is_main_filename =
         fname->compare (idl_global->main_filename ())
-        || same_file (fname->get_string (),
-                      idl_global->main_filename ()->get_string ());
+        || same_file (fname->get_string ().c_str (),
+                      idl_global->main_filename ()->get_string ().c_str ());
     }
 
   if (is_real_filename || is_main_filename)
@@ -3673,7 +3673,7 @@ idl_parse_line_and_file (char *buf)
     {
       ACE_NEW (nm,
                UTL_String (
-                 FE_Utils::stripped_preproc_include (fname->get_string ())));
+                 FE_Utils::stripped_preproc_include (fname->get_string ().c_str ())));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -3751,7 +3751,7 @@ idl_store_pragma (char *buf)
 
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
-          char *ext_id = idl_global->filename ()->get_string ();
+          char *ext_id = idl_global->filename ()->get_string ().data ();
           ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
           int const status =
             idl_global->file_prefixes ().find (ext_id, entry);

@@ -8028,7 +8028,7 @@ yyreduce:
                           ACE_TEXT ("error in %C line %d:\n")
                           ACE_TEXT ("Abstract valuetype can't have a ")
                           ACE_TEXT ("factory construct.\n"),
-                          idl_global->filename ()->get_string (),
+                          idl_global->filename ()->get_string ().c_str (),
                           idl_global->lineno ()));
 
               idl_global->set_err_count (idl_global->err_count () + 1);
@@ -10055,7 +10055,7 @@ yyreduce:
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("error in %C line %d\n"),
-                      idl_global->filename ()->get_string (),
+                      idl_global->filename ()->get_string ().c_str (),
                       idl_global->lineno ()));
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")

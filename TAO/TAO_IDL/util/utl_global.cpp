@@ -909,7 +909,7 @@ IDL_GlobalData::update_prefix (char *filename)
       if (!this->pd_in_main_file)
         {
           status =
-            this->file_prefixes_.find (this->pd_filename->get_string (),
+            this->file_prefixes_.find (this->pd_filename->get_string ().data (),
                                        prefix);
 
           // This function is called just before we transition to a
