@@ -67,7 +67,7 @@ public:
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
-            const TAO_EndpointSet &endpoint_set,
+            TAO_EndpointSet const &endpoint_set,
             bool ignore_address);
 
   /// Close all open acceptors.
@@ -78,7 +78,7 @@ public:
 
   /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
-  bool is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Return the acceptor bridges
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
@@ -96,7 +96,7 @@ private:
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
-                    const char *options);
+                    char const *options);
 
   /// Create a default acceptor using the specified protocol factory.
   int open_default (TAO_ORB_Core *orb_core,
@@ -104,7 +104,7 @@ private:
                     int major,
                     int minor,
                     TAO_ProtocolFactorySetItor &factory,
-                    const char *options);
+                    char const *options);
 
   /// Open a default acceptor.
   int open_default_i (TAO_ORB_Core *orb_core,
@@ -113,7 +113,7 @@ private:
                       int minor,
                       TAO_ProtocolFactorySetItor &factory,
                       TAO_Acceptor* acceptor,
-                      const char *options);
+                      char const *options);
 
   /// Extract endpoint-specific options from the endpoint string.
   void extract_endpoint_options (ACE_CString &addrs,
