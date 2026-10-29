@@ -51,17 +51,17 @@ public:
   // Methods added by the
   /// @name MIOP specification methods
   //@{
-  virtual PortableServer::ObjectId * create_id_for_reference (
+  PortableServer::ObjectId * create_id_for_reference (
       CORBA::Object_ptr the_ref) override;
 
-  virtual PortableGroup::IDs * reference_to_ids (
+  PortableGroup::IDs * reference_to_ids (
       CORBA::Object_ptr the_ref) override;
 
-  virtual void associate_reference_with_id (
+  void associate_reference_with_id (
       CORBA::Object_ptr ref,
       PortableServer::ObjectId const & oid) override;
 
-  virtual void disassociate_reference_with_id (
+  void disassociate_reference_with_id (
       CORBA::Object_ptr ref,
       PortableServer::ObjectId const & oid) override;
   //@}
@@ -174,7 +174,7 @@ public:
 
 protected:
   /// Template method for creating new POA's of this type.
-  virtual TAO_Root_POA *new_POA (String const &name,
+  TAO_Root_POA *new_POA (String const &name,
                                  PortableServer::POAManager_ptr poa_manager,
                                  TAO_POA_Policy_Set const &policies,
                                  TAO_Root_POA *parent,

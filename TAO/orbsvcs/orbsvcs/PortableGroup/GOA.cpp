@@ -114,7 +114,7 @@ TAO_GOA::create_POA (char const *adapter_name,
                         PortableServer::POAManager_ptr poa_manager,
                         CORBA::PolicyList const &policies)
 {
-  PortableServer::POA_ptr poa = this->TAO_Regular_POA::create_POA (adapter_name,
+  PortableServer::POA_ptr const poa = this->TAO_Regular_POA::create_POA (adapter_name,
                                                            poa_manager,
                                                            policies);
   return poa;
@@ -124,7 +124,7 @@ PortableServer::POA_ptr
 TAO_GOA::find_POA (char const *adapter_name,
                       CORBA::Boolean activate_it)
 {
-  PortableServer::POA_ptr poa = this->TAO_Regular_POA::find_POA (adapter_name,
+  PortableServer::POA_ptr const poa = this->TAO_Regular_POA::find_POA (adapter_name,
                                                          activate_it);
   return poa;
 }
@@ -143,7 +143,7 @@ TAO_GOA::destroy (CORBA::Boolean etherealize_objects,
 PortableServer::ThreadPolicy_ptr
 TAO_GOA::create_thread_policy (PortableServer::ThreadPolicyValue value)
 {
-  PortableServer::ThreadPolicy_ptr policy =
+  PortableServer::ThreadPolicy_ptr const policy =
     this->TAO_Regular_POA::create_thread_policy (value);
   return policy;
 }
@@ -153,7 +153,7 @@ TAO_GOA::create_thread_policy (PortableServer::ThreadPolicyValue value)
 PortableServer::LifespanPolicy_ptr
 TAO_GOA::create_lifespan_policy (PortableServer::LifespanPolicyValue value)
 {
-  PortableServer::LifespanPolicy_ptr policy =
+  PortableServer::LifespanPolicy_ptr const policy =
     this->TAO_Regular_POA::create_lifespan_policy (value);
   return policy;
 }
@@ -161,7 +161,7 @@ TAO_GOA::create_lifespan_policy (PortableServer::LifespanPolicyValue value)
 PortableServer::IdUniquenessPolicy_ptr
 TAO_GOA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value)
 {
-  PortableServer::IdUniquenessPolicy_ptr policy =
+  PortableServer::IdUniquenessPolicy_ptr const policy =
     this->TAO_Regular_POA::create_id_uniqueness_policy (value);
   return policy;
 }
@@ -170,7 +170,7 @@ TAO_GOA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
 PortableServer::IdAssignmentPolicy_ptr
 TAO_GOA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value)
 {
-  PortableServer::IdAssignmentPolicy_ptr policy =
+  PortableServer::IdAssignmentPolicy_ptr const policy =
     this->TAO_Regular_POA::create_id_assignment_policy (value);
   return policy;
 }
@@ -181,7 +181,7 @@ TAO_GOA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_GOA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value)
 {
-  PortableServer::ImplicitActivationPolicy_ptr policy =
+  PortableServer::ImplicitActivationPolicy_ptr const policy =
     this->TAO_Regular_POA::create_implicit_activation_policy (value);
   return policy;
 }
@@ -189,7 +189,7 @@ TAO_GOA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
 PortableServer::ServantRetentionPolicy_ptr
 TAO_GOA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value)
 {
-  PortableServer::ServantRetentionPolicy_ptr policy =
+  PortableServer::ServantRetentionPolicy_ptr const policy =
     this->TAO_Regular_POA::create_servant_retention_policy (value);
   return policy;
 }
@@ -198,7 +198,7 @@ TAO_GOA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
 PortableServer::RequestProcessingPolicy_ptr
 TAO_GOA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value)
 {
-  PortableServer::RequestProcessingPolicy_ptr policy =
+  PortableServer::RequestProcessingPolicy_ptr const policy =
     this->TAO_Regular_POA::create_request_processing_policy (value);
   return policy;
 }
@@ -209,7 +209,7 @@ TAO_GOA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 char *
 TAO_GOA::the_name ()
 {
-  char * name =
+  char * const name =
     this->TAO_Regular_POA::the_name ();
   return name;
 }
@@ -217,7 +217,7 @@ TAO_GOA::the_name ()
 PortableServer::POA_ptr
 TAO_GOA::the_parent ()
 {
-  PortableServer::POA_ptr parent =
+  PortableServer::POA_ptr const parent =
     this->TAO_Regular_POA::the_parent ();
   return parent;
 }
@@ -225,7 +225,7 @@ TAO_GOA::the_parent ()
 PortableServer::POAList *
 TAO_GOA::the_children ()
 {
-  PortableServer::POAList *children =
+  PortableServer::POAList * const children =
     this->TAO_Regular_POA::the_children ();
   return children;
 }
@@ -233,7 +233,7 @@ TAO_GOA::the_children ()
 PortableServer::POAManager_ptr
 TAO_GOA::the_POAManager ()
 {
-  PortableServer::POAManager_ptr poa_manager =
+  PortableServer::POAManager_ptr const poa_manager =
     this->TAO_Regular_POA::the_POAManager ();
   return poa_manager;
 }
@@ -244,7 +244,7 @@ TAO_GOA::the_POAManager ()
 PortableServer::AdapterActivator_ptr
 TAO_GOA::the_activator ()
 {
-  PortableServer::AdapterActivator_ptr activator =
+  PortableServer::AdapterActivator_ptr const activator =
     this->TAO_Regular_POA::the_activator ();
   return activator;
 }
@@ -258,7 +258,7 @@ TAO_GOA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator)
 PortableServer::ServantManager_ptr
 TAO_GOA::get_servant_manager ()
 {
-  PortableServer::ServantManager_ptr servant_manager =
+  PortableServer::ServantManager_ptr const servant_manager =
     this->TAO_Regular_POA::get_servant_manager ();
   return servant_manager;
 }
@@ -272,7 +272,7 @@ TAO_GOA::set_servant_manager (PortableServer::ServantManager_ptr imgr)
 PortableServer::Servant
 TAO_GOA::get_servant ()
 {
-  PortableServer::Servant servant =
+  PortableServer::Servant const servant =
     this->TAO_Regular_POA::get_servant ();
   return servant;
 }
@@ -288,7 +288,7 @@ TAO_GOA::set_servant (PortableServer::Servant servant)
 PortableServer::ObjectId *
 TAO_GOA::activate_object (PortableServer::Servant p_servant)
 {
-  PortableServer::ObjectId *object_id =
+  PortableServer::ObjectId * const object_id =
     this->TAO_Regular_POA::activate_object (p_servant);
   return object_id;
 }
@@ -309,7 +309,7 @@ TAO_GOA::deactivate_object (PortableServer::ObjectId const &oid)
 CORBA::Object_ptr
 TAO_GOA::create_reference (char const *intf)
 {
-  CORBA::Object_ptr obj =
+  CORBA::Object_ptr const obj =
     this->TAO_Regular_POA::create_reference (intf);
   return obj;
 }
@@ -318,7 +318,7 @@ CORBA::Object_ptr
 TAO_GOA::create_reference_with_id (PortableServer::ObjectId const &oid,
                                    char const *intf)
 {
-  CORBA::Object_ptr obj =
+  CORBA::Object_ptr const obj =
     this->TAO_Regular_POA::create_reference_with_id (oid,
                                              intf);
   return obj;
@@ -327,7 +327,7 @@ TAO_GOA::create_reference_with_id (PortableServer::ObjectId const &oid,
 PortableServer::ObjectId *
 TAO_GOA::servant_to_id (PortableServer::Servant p_servant)
 {
-  PortableServer::ObjectId *object_id =
+  PortableServer::ObjectId * const object_id =
     this->TAO_Regular_POA::servant_to_id (p_servant);
   return object_id;
 }
@@ -335,7 +335,7 @@ TAO_GOA::servant_to_id (PortableServer::Servant p_servant)
 CORBA::Object_ptr
 TAO_GOA::servant_to_reference (PortableServer::Servant p_servant)
 {
-  CORBA::Object_ptr obj =
+  CORBA::Object_ptr const obj =
     this->TAO_Regular_POA::servant_to_reference (p_servant);
   return obj;
 }
@@ -344,7 +344,7 @@ TAO_GOA::servant_to_reference (PortableServer::Servant p_servant)
 PortableServer::Servant
 TAO_GOA::reference_to_servant (CORBA::Object_ptr reference)
 {
-  PortableServer::Servant servant =
+  PortableServer::Servant const servant =
     this->TAO_Regular_POA::reference_to_servant (reference);
   return servant;
 }
@@ -352,7 +352,7 @@ TAO_GOA::reference_to_servant (CORBA::Object_ptr reference)
 PortableServer::ObjectId *
 TAO_GOA::reference_to_id (CORBA::Object_ptr reference)
 {
-  PortableServer::ObjectId *object_id =
+  PortableServer::ObjectId * const object_id =
     this->TAO_Regular_POA::reference_to_id (reference);
   return object_id;
 }
@@ -360,7 +360,7 @@ TAO_GOA::reference_to_id (CORBA::Object_ptr reference)
 PortableServer::Servant
 TAO_GOA::id_to_servant (PortableServer::ObjectId const &oid)
 {
-  PortableServer::Servant servant =
+  PortableServer::Servant const servant =
     this->TAO_Regular_POA::id_to_servant (oid);
   return servant;
 }
@@ -368,7 +368,7 @@ TAO_GOA::id_to_servant (PortableServer::ObjectId const &oid)
 CORBA::Object_ptr
 TAO_GOA::id_to_reference (PortableServer::ObjectId const &oid)
 {
-  CORBA::Object_ptr obj =
+  CORBA::Object_ptr const obj =
     this->TAO_Regular_POA::id_to_reference (oid);
   return obj;
 }
@@ -384,13 +384,12 @@ TAO_GOA::find_group_component (CORBA::Object_ptr const the_ref,
                                PortableGroup::TagGroupTaggedComponent &group)
 {
   TAO_MProfile const &profiles = the_ref->_stubobj ()->base_profiles ();
-  TAO_Profile const *profile;
-  CORBA::ULong slot;
+  TAO_Profile const *profile {};
+  CORBA::ULong slot {};
 
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
-  slot = 0;
-  while (0 != (profile = profiles.get_profile (slot)))
+  while ((profile = profiles.get_profile (slot)) != nullptr)
     {
       if (this->find_group_component_in_profile (profile, group) == 0)
         return 0;
@@ -410,7 +409,7 @@ TAO_GOA::find_group_component_in_profile (TAO_Profile const *profile,
   // group tag.
   TAO_Tagged_Components const &components = profile->tagged_components ();
 
-  IOP::TaggedComponent tagged_component;
+  IOP::TaggedComponent tagged_component {};
   tagged_component.tag = IOP::TAG_GROUP;
 
   // Try to find it.
@@ -418,14 +417,14 @@ TAO_GOA::find_group_component_in_profile (TAO_Profile const *profile,
     return -1;
 
   // Found it.
-  CORBA::Octet const *buf =
+  CORBA::Octet const * const buf =
     tagged_component.component_data.get_buffer ();
 
   TAO_InputCDR in_cdr (reinterpret_cast <char const *> (buf),
                        tagged_component.component_data.length ());
 
   // Extract the Byte Order.
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
   if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
   in_cdr.reset_byte_order (static_cast <int> (byte_order));
@@ -442,14 +441,13 @@ TAO_GOA::create_group_acceptors (CORBA::Object_ptr the_ref,
                                  TAO_ORB_Core &orb_core)
 {
   TAO_MProfile const &profiles = the_ref->_stubobj ()->base_profiles ();
-  TAO_Profile const *profile;
-  CORBA::ULong slot;
-  int num = 0;
+  TAO_Profile const *profile {};
+  CORBA::ULong slot {};
+  int num {};
 
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
-  slot = 0;
-  while (0 != (profile = profiles.get_profile (slot)))
+  while ((profile = profiles.get_profile (slot)) != nullptr)
     {
       if (profile->supports_multicast ())
         {
@@ -471,7 +469,7 @@ TAO_GOA::associate_group_with_ref (
       CORBA::Object_ptr obj_ref)
 {
   // Find the Group Component so that we can extract the Group ID.
-  PortableGroup::TagGroupTaggedComponent *tmp_group_id;
+  PortableGroup::TagGroupTaggedComponent *tmp_group_id {};
   ACE_NEW_THROW_EX (tmp_group_id,
                     PortableGroup::TagGroupTaggedComponent,
                     CORBA::NO_MEMORY (
@@ -489,7 +487,7 @@ TAO_GOA::associate_group_with_ref (
       throw PortableGroup::NotAGroupObject ();
     }
 
-  PortableGroup_Request_Dispatcher *rd =
+  PortableGroup_Request_Dispatcher * const rd =
     dynamic_cast <PortableGroup_Request_Dispatcher*>(
       this->orb_core_.request_dispatcher());
   if (!rd)
