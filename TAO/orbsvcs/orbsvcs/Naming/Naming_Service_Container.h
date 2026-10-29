@@ -47,9 +47,9 @@ public:
   ~ACE_NS_Node ();
 
 private:
-  ACE_NS_Node (const T &i, ACE_NS_Node<T> *n);
+  ACE_NS_Node (T const &i, ACE_NS_Node<T> *n);
   ACE_NS_Node (ACE_NS_Node<T> *n = nullptr, int = 0);
-  ACE_NS_Node (const ACE_NS_Node<T> &n);
+  ACE_NS_Node (ACE_NS_Node<T> const &n);
 
   /// Pointer to next element in the list of <ACE_NS_Node>s.
   ACE_NS_Node<T> *next_;
@@ -100,8 +100,8 @@ public:
   T& operator* ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Unbounded_List_Iterator<T> &) const;
-  bool operator!= (const ACE_Unbounded_List_Iterator<T> &) const;
+  bool operator== (ACE_Unbounded_List_Iterator<T> const &) const;
+  bool operator!= (ACE_Unbounded_List_Iterator<T> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -138,10 +138,10 @@ public:
   ACE_Unbounded_List (ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
-  ACE_Unbounded_List (const ACE_Unbounded_List<T> &);
+  ACE_Unbounded_List (ACE_Unbounded_List<T> const &);
 
   /// Assignment operator.
-  void operator= (const ACE_Unbounded_List<T> &);
+  void operator= (ACE_Unbounded_List<T> const &);
 
   /// Destructor.
   ~ACE_Unbounded_List ();
@@ -161,14 +161,14 @@ public:
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Size of the set.
   size_t size () const;
@@ -189,13 +189,13 @@ public:
 private:
   /// Insert <item> at the tail of the set (doesn't check for
   /// duplicates).
-  int insert_tail (const T &item);
+  int insert_tail (T const &item);
 
   /// Delete all the nodes in the List.
   void delete_nodes ();
 
   /// Copy nodes into this set.
-  void copy_nodes (const ACE_Unbounded_List<T> &);
+  void copy_nodes (ACE_Unbounded_List<T> const &);
 
   /// Head of the linked list of NS_Nodes.
   ACE_NS_Node<T> *head_;
