@@ -180,14 +180,24 @@ Identifier::compare (Identifier const *o) const
 bool
 Identifier::case_compare (Identifier const *o) const
 {
-  return UTL_String::compare (this->get_string (), o->get_string ());
+  if (o == nullptr || !this->pv_string_ || !o->pv_string_)
+    {
+      return false;
+    }
+
+  return UTL_String::compare (this->get_string_view (), o->get_string_view ());
 }
 
 // Report no error if the two identifiers differ only in case.
 bool
 Identifier::case_compare_quiet (Identifier const *o) const
 {
-  return UTL_String::compare_quiet (this->get_string (), o->get_string ());
+  if (o == nullptr || !this->pv_string_ || !o->pv_string_)
+    {
+      return false;
+    }
+
+  return UTL_String::compare_quiet (this->get_string_view (), o->get_string_view ());
 }
 
 Identifier *

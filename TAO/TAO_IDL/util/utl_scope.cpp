@@ -237,12 +237,12 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
     {
       if (idl_global->case_diff_error ())
         {
-          idl_global->err ()->idl_keyword_error (e->get_string ());
+          idl_global->err ()->idl_keyword_error (e->get_string_view_or_empty ());
 
           return -1;
         }
 
-      idl_global->err ()->idl_keyword_warning (e->get_string ());
+      idl_global->err ()->idl_keyword_warning (e->get_string_view_or_empty ());
     }
 
   return 0;
