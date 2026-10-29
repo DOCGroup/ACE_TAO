@@ -67,7 +67,7 @@ public:
                     CORBA::ULong buf_sz = 0);
 
   /// Destructor.
-  virtual ~TAO_ECG_Mcast_EH () override;
+  ~TAO_ECG_Mcast_EH () override;
 
   /**
    * Register for changes in the EC subscription list.
@@ -88,12 +88,12 @@ public:
    * multicast groups, close the sockets and deregister from the
    * reactor.
    */
-  virtual int shutdown () override;
+  int shutdown () override;
   //@}
 
   /// Reactor callback.  Notify receiver_ that a dgram corresponding
   /// to \a fd is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd) override;
+  int handle_input (ACE_HANDLE fd) override;
 
 private:
   /**
@@ -117,10 +117,10 @@ private:
 
     /// Event Channel Observer methods
     //@{
-    virtual void update_consumer (
-        const RtecEventChannelAdmin::ConsumerQOS& sub);
-    virtual void update_supplier (
-        const RtecEventChannelAdmin::SupplierQOS& pub);
+    void update_consumer (
+        RtecEventChannelAdmin::ConsumerQOS const &sub) override;
+    void update_supplier (
+        RtecEventChannelAdmin::SupplierQOS const &pub) override;
 
   private:
     /// Handler we notify of subscriptions changes.
@@ -137,7 +137,7 @@ private:
 
   /// The Observer method.  Subscribe/unsubscribe to multicast groups
   /// according to changes in consumer subscriptions.
-  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  void update_consumer (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
 
   using Address_Set = ACE_Unbounded_Set<ACE_INET_Addr>;
@@ -160,7 +160,7 @@ private:
    *        back to the caller.
    */
   void compute_required_subscriptions (
-        const RtecEventChannelAdmin::ConsumerQOS& sub,
+        RtecEventChannelAdmin::ConsumerQOS const &sub,
               Address_Set& multicast_addresses);
 
   /// Unsubscribe from any multicast addresses we are currently
@@ -203,8 +203,8 @@ private:
     Observer_Disconnect_Command (RtecEventChannelAdmin::Observer_Handle handle,
                                  RtecEventChannelAdmin::EventChannel_ptr ec);
 
-    Observer_Disconnect_Command (const Observer_Disconnect_Command &rhs);
-    Observer_Disconnect_Command & operator= (const Observer_Disconnect_Command & rhs);
+    Observer_Disconnect_Command (Observer_Disconnect_Command const &rhs);
+    Observer_Disconnect_Command &operator= (Observer_Disconnect_Command const &rhs);
 
     void execute ();
 

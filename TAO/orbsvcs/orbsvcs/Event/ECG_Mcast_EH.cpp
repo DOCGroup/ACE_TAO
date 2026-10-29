@@ -16,7 +16,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
-                                    const ACE_TCHAR *net_if,
+                                    ACE_TCHAR const *net_if,
                                     CORBA::ULong sz)
   : net_if_ (net_if ? ACE_OS::strdup (net_if) : nullptr)
   , subscriptions_ ()
@@ -128,7 +128,7 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 
 void
 TAO_ECG_Mcast_EH::update_consumer (
-         const RtecEventChannelAdmin::ConsumerQOS& sub)
+         RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   Address_Set multicast_addresses;
 
@@ -142,13 +142,13 @@ TAO_ECG_Mcast_EH::update_consumer (
 
 void
 TAO_ECG_Mcast_EH::compute_required_subscriptions (
-    const RtecEventChannelAdmin::ConsumerQOS& sub,
+    RtecEventChannelAdmin::ConsumerQOS const &sub,
     Address_Set& multicast_addresses)
 {
   CORBA::ULong count = sub.dependencies.length ();
   for (CORBA::ULong i = 0; i != count; ++i)
     {
-      const RtecEventComm::EventHeader& header =
+      RtecEventComm::EventHeader const &header =
                            sub.dependencies[i].event.header;
       if (0 < header.type && header.type < ACE_ES_EVENT_UNDEFINED)
         {
@@ -177,7 +177,7 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
               break;
             }
         }
-      catch (const ::CORBA::BAD_OPERATION &)
+      catch (::CORBA::BAD_OPERATION const &)
         {
           // server only supports IPv4
            // Grab the right mcast group for this event...
@@ -289,7 +289,7 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& sub)
+        RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   if (this->eh_)
     this->eh_->update_consumer (sub);
@@ -297,7 +297,7 @@ TAO_ECG_Mcast_EH::Observer::update_consumer (
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&)
+    RtecEventChannelAdmin::SupplierQOS const &)
 {
 }
 

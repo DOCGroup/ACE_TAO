@@ -68,7 +68,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
   int bindresult =
     this->consumer_task_map_.bind (RtecEventComm::PushConsumer::_duplicate(pc.in()),
                                    dtask);
-  const char* explanation = nullptr;
+  char const *explanation = nullptr;
   if (bindresult == -1)
     explanation = "general failure";
   else if (bindresult == 1)
@@ -162,7 +162,7 @@ TAO_EC_TPC_Dispatching::shutdown ()
 void
 TAO_EC_TPC_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
-                             const RtecEventComm::EventSet& event,
+                             RtecEventComm::EventSet const &event,
                              TAO_EC_QOS_Info& qos_info)
 {
   RtecEventComm::EventSet event_copy = event;
