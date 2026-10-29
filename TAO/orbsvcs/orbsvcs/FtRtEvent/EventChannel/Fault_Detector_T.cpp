@@ -6,11 +6,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
-Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::Fault_Detector_T()
-{
-}
-
-template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 int
 Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
 {
@@ -33,7 +28,8 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
 
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 int
-Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(const FTRT::Location& location)
+Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(
+  FTRT::Location const& location)
 {
     if (location.length() == 0)
       return -1;

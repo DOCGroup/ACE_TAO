@@ -46,7 +46,7 @@ Basic_Replication_Strategy::check_validity()
 }
 
 void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
-                       const FTRT::State& state)
+                       FTRT::State const& state)
 {
   bool finished = true;
   do {
@@ -63,9 +63,9 @@ void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
 
 void
 Basic_Replication_Strategy::replicate_request(
-  const FTRT::State& state,
+  FTRT::State const& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid)
+  FtRtecEventChannelAdmin::ObjectId const& oid)
 {
   ACE_UNUSED_ARG(rollback);
   ACE_UNUSED_ARG(oid);

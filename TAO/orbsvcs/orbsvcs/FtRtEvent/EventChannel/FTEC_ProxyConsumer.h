@@ -31,7 +31,7 @@ public:
 
   explicit TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
-  virtual void activate (
+  void activate (
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) override;
 
     // = The RtecEventChannelAdmin::ProxyPushConsumer methods...

@@ -32,8 +32,8 @@ public:
   TAO_FTEC_ProxyPushSupplier(TAO_EC_Event_Channel_Base* event_channel,
                            int validate_connection);
     /// Activate in the POA
- virtual void activate (
-       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
+  void activate (
+    RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) override;
     // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,

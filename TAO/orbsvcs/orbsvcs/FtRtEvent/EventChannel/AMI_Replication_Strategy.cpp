@@ -12,9 +12,9 @@ AMI_Replication_Strategy::AMI_Replication_Strategy(bool mt)
 
 void
 AMI_Replication_Strategy::replicate_request(
-  const FTRT::State& state,
+  FTRT::State const& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid)
+  FtRtecEventChannelAdmin::ObjectId const& oid)
 {
   ACE_UNUSED_ARG(state);
   ACE_UNUSED_ARG(rollback);
@@ -22,7 +22,7 @@ AMI_Replication_Strategy::replicate_request(
 }
 
 void
-AMI_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+AMI_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
                                      CORBA::ULong object_group_ref_version)
 {
   ACE_UNUSED_ARG(info);

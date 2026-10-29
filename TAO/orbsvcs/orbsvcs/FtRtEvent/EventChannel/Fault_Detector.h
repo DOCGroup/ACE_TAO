@@ -35,7 +35,7 @@ public:
   int init(int argc, ACE_TCHAR** argv);
   void stop();
   void set_listener(TAO_FTEC_Fault_Listener*);
-  const FTRT::Location& my_location() const;
+  FTRT::Location const& my_location() const;
   virtual int connect(FTRT::Location const& location) = 0;
 
 private:
@@ -51,8 +51,12 @@ protected:
   class ReactorTask : public ACE_Task_Base
   {
   public:
-    // ctor
     ReactorTask();
+    ReactorTask(ReactorTask const&) = delete;
+    ReactorTask(ReactorTask&&) = delete;
+    ReactorTask& operator=(ReactorTask const&) = delete;
+    ReactorTask& operator=(ReactorTask&&) = delete;
+
     int svc () override;
     ACE_Reactor reactor_;
   };
