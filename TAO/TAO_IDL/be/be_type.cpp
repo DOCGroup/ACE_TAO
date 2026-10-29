@@ -353,7 +353,7 @@ be_type::seen_in_operation (bool val)
 AST_Decl::NodeType
 be_type::base_node_type () const
 {
-  return const_cast<be_type*> (this)->node_type ();
+  return this->node_type ();
 }
 
 // Cleanup method

@@ -87,9 +87,7 @@ be_typedef::primitive_base_type ()
 AST_Decl::NodeType
 be_typedef::base_node_type () const
 {
-  be_typedef *td = const_cast<be_typedef *> (this);
-
-  be_type *base = dynamic_cast<be_type*> (td->base_type ());
+  be_type *base = dynamic_cast<be_type*> (this->base_type ());
 
   return base->base_node_type ();
 }
