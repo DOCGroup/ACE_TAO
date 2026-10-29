@@ -18,69 +18,76 @@
 #include "ace/Read_Buffer.h"
 
 // Name of file contains ior.
-static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
+static ACE_TCHAR const *IOR = ACE_TEXT ("file://ior");
 
 // Default iterations.
-static CORBA::ULong iterations = 20;
+static CORBA::ULong iterations {20};
 
 // Default number of invocations to buffer before flushing.
-static CORBA::Long message_count = iterations / 4;
+static CORBA::Long message_count {static_cast<CORBA::Long> (iterations / 4)};
 
 // Time interval between invocation (in milli seconds).
-static long interval = 1000;
+static long interval {1000};
 
 // Flag indicates whether to shutdown remote server or not upon client
 // shutdown.
-static int shutdown_server = 0;
+static bool shutdown_server {};
 
 // AMI call or regular call.
-static int invoke_ami_style = 1;
+static bool invoke_ami_style {true};
 
 // Setup buffering or not.
-static int setup_buffering = 1;
+static bool setup_buffering {true};
 
 // Flag indicates that all replies have been received
-static int received_all_replies = 0;
+static bool received_all_replies {};
 
 class Reply_Handler : public POA_AMI_testHandler
 {
 public:
-  void method (CORBA::ULong reply_number)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "client: AMI Reply %d @ %T\n",
-                  reply_number));
+  Reply_Handler (Reply_Handler const&) = delete;
+  Reply_Handler (Reply_Handler&&) = delete;
+  Reply_Handler& operator= (Reply_Handler const&) = delete;
+  Reply_Handler& operator= (Reply_Handler&&) = delete;
 
-      // Last reply flips the flag.
-      if (reply_number == iterations)
-        received_all_replies = 1;
-    }
+  Reply_Handler () = default;
 
-  void method_excep (::Messaging::ExceptionHolder *holder)
+  void method (CORBA::ULong reply_number) override
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "client: AMI Reply %d @ %T\n",
+                reply_number));
+
+    // Last reply flips the flag.
+    if (reply_number == iterations)
+      received_all_replies = true;
+  }
+
+  void method_excep (::Messaging::ExceptionHolder *holder) override
   {
     try
       {
         holder->raise_exception ();
       }
-    catch (const CORBA::SystemException& ex)
+    catch (CORBA::SystemException const& ex)
       {
         ex._tao_print_exception ("Reply_Handler::method_excep: ");
       }
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ()
+  void shutdown () override
   {
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  void shutdown_excep (::Messaging::ExceptionHolder *holder)
+  void shutdown_excep (::Messaging::ExceptionHolder *holder) override
   {
     try
       {
         holder->raise_exception ();
       }
-    catch (const CORBA::SystemException& ex)
+    catch (CORBA::SystemException const& ex)
       {
         ex._tao_print_exception ("Reply_Handler::shutdown_excep: ");
       }
@@ -91,7 +98,7 @@ static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:k:m:i:t:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -121,7 +128,7 @@ parse_args (int argc, ACE_TCHAR **argv)
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server = true;
         break;
 
       case '?':
@@ -140,13 +147,13 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == 0)
+  if (IOR == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
 
   // Without AMI, replies are immediate.
   if (!invoke_ami_style)
-    received_all_replies = 1;
+    received_all_replies = true;
 
   // Message count must be a multiple of iterations; otherwise we'll
   // have some unsent messages left in the buffered queue.  Even
@@ -279,7 +286,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
           else
             {
-              CORBA::ULong reply_number = 0;
+              CORBA::ULong reply_number {};
 
               // Invoke the regular method.
               test_object->method (i,
@@ -319,7 +326,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // queues before main() ends.
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;

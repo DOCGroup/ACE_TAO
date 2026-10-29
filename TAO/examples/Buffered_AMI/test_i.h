@@ -22,13 +22,18 @@ class test_i : public POA_test
 {
 public:
   /// ctor.
-  test_i (CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::ORB_ptr orb);
+
+  test_i (test_i const&) = delete;
+  test_i (test_i&&) = delete;
+  test_i& operator= (test_i const&) = delete;
+  test_i& operator= (test_i&&) = delete;
 
   // = The test interface methods.
   void method (CORBA::ULong request_number,
-               CORBA::ULong_out reply_number);
+               CORBA::ULong_out reply_number) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB.
