@@ -195,13 +195,13 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_ci::setenclosings (char const *pre)
+be_visitor_valuetype_field_ci::setenclosings (std::string_view pre)
 {
   this->pre_op_ = pre;
 }
 
-char const *
-be_visitor_valuetype_field_ci::pre_op ()
+std::string_view
+be_visitor_valuetype_field_ci::pre_op () const
 {
   return this->pre_op_;
 }

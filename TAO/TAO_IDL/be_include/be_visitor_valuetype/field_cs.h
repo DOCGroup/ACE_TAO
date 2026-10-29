@@ -84,15 +84,15 @@ public:
   int visit_union (be_union *node) override;
 
   /// print additional string before op (e.g. ACE_INLINE)
-  void setenclosings (char const *pre);
-  char const *pre_op ();
+  void setenclosings (std::string_view pre);
+  std::string_view pre_op () const;
 
   /// if (in_obv_space_) print OBV_name else print name
   void op_name (be_valuetype *node, TAO_OutStream *os);
 
   bool in_obv_space_ {};
 private:
-  char const *pre_op_ {};
+  std::string_view pre_op_ {};
 
   int valuetype_common (be_type *node);
 };

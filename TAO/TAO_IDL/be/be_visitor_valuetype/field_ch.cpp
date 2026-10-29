@@ -778,21 +778,21 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_ch::setenclosings (char const *pre,
-                                              char const *post)
+be_visitor_valuetype_field_ch::setenclosings (std::string_view pre,
+                                              std::string_view post)
 {
   pre_op_ = pre;
   post_op_ = post;
 }
 
-char const *
-be_visitor_valuetype_field_ch::pre_op ()
+std::string_view
+be_visitor_valuetype_field_ch::pre_op () const
 {
   return pre_op_;
 }
 
-char const *
-be_visitor_valuetype_field_ch::post_op ()
+std::string_view
+be_visitor_valuetype_field_ch::post_op () const
 {
   return post_op_;
 }
