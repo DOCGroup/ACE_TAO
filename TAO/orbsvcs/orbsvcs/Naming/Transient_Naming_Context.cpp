@@ -15,15 +15,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Transient_Bindings_Map::unbind (const char *id, const char *kind)
+TAO_Transient_Bindings_Map::unbind (char const *id, char const *kind)
 {
   TAO_ExtId name (id, kind);
   return this->map_.unbind (name);
 }
 
 int
-TAO_Transient_Bindings_Map::bind (const char *id,
-                                  const char *kind,
+TAO_Transient_Bindings_Map::bind (char const *id,
+                                  char const *kind,
                                   CORBA::Object_ptr obj,
                                   CosNaming::BindingType type)
 {
@@ -31,8 +31,8 @@ TAO_Transient_Bindings_Map::bind (const char *id,
 }
 
 int
-TAO_Transient_Bindings_Map::rebind (const char *id,
-                                    const char *kind,
+TAO_Transient_Bindings_Map::rebind (char const *id,
+                                    char const *kind,
                                     CORBA::Object_ptr obj,
                                     CosNaming::BindingType type)
 {
@@ -40,8 +40,8 @@ TAO_Transient_Bindings_Map::rebind (const char *id,
 }
 
 int
-TAO_Transient_Bindings_Map::find (const char *id,
-                                  const char *kind,
+TAO_Transient_Bindings_Map::find (char const *id,
+                                  char const *kind,
                                   CORBA::Object_ptr & obj,
                                   CosNaming::BindingType &type)
 {
@@ -87,8 +87,8 @@ TAO_Transient_Bindings_Map::total_size ()
 }
 
 int
-TAO_Transient_Bindings_Map::shared_bind (const char * id,
-                                         const char * kind,
+TAO_Transient_Bindings_Map::shared_bind (char const *id,
+                                         char const *kind,
                                          CORBA::Object_ptr obj,
                                          CosNaming::BindingType type,
                                          int rebind)
@@ -116,7 +116,7 @@ TAO_Transient_Bindings_Map::shared_bind (const char * id,
 }
 
 TAO_Transient_Naming_Context::TAO_Transient_Naming_Context (PortableServer::POA_ptr poa,
-                                                            const char *poa_id,
+                                                            char const *poa_id,
                                                             size_t hash_table_size)
   : TAO_Hash_Naming_Context (poa,
                              poa_id),
@@ -135,7 +135,7 @@ TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context ()
 
 CosNaming::NamingContext_ptr
 TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
-                                                const char *poa_id,
+                                                char const *poa_id,
                                                 size_t context_size)
 {
   // Put together a servant for the new Naming Context.

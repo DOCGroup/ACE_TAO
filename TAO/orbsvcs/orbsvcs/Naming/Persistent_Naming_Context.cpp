@@ -8,7 +8,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Persistent_Bindings_Map::unbind (const char *id, const char *kind)
+TAO_Persistent_Bindings_Map::unbind (char const *id, char const *kind)
 {
   TAO_Persistent_ExtId name (id, kind);
   TAO_Persistent_IntId entry;
@@ -26,8 +26,8 @@ TAO_Persistent_Bindings_Map::unbind (const char *id, const char *kind)
 }
 
 int
-TAO_Persistent_Bindings_Map::bind (const char *id,
-                                   const char *kind,
+TAO_Persistent_Bindings_Map::bind (char const *id,
+                                   char const *kind,
                                    CORBA::Object_ptr obj,
                                    CosNaming::BindingType type)
 {
@@ -35,8 +35,8 @@ TAO_Persistent_Bindings_Map::bind (const char *id,
 }
 
 int
-TAO_Persistent_Bindings_Map::rebind (const char *id,
-                                     const char *kind,
+TAO_Persistent_Bindings_Map::rebind (char const *id,
+                                     char const *kind,
                                      CORBA::Object_ptr obj,
                                      CosNaming::BindingType type)
 {
@@ -44,8 +44,8 @@ TAO_Persistent_Bindings_Map::rebind (const char *id,
 }
 
 int
-TAO_Persistent_Bindings_Map::find (const char *id,
-                                   const char *kind,
+TAO_Persistent_Bindings_Map::find (char const *id,
+                                   char const *kind,
                                    CORBA::Object_ptr & obj,
                                    CosNaming::BindingType &type)
 {
@@ -136,8 +136,8 @@ TAO_Persistent_Bindings_Map::set (HASH_MAP *map, ACE_Allocator *alloc)
 }
 
 int
-TAO_Persistent_Bindings_Map::shared_bind (const char * id,
-                                          const char * kind,
+TAO_Persistent_Bindings_Map::shared_bind (char const *id,
+                                          char const *kind,
                                           CORBA::Object_ptr obj,
                                           CosNaming::BindingType type,
                                           int rebind)
@@ -232,7 +232,7 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
 }
 
 TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                                              const char *poa_id,
+                                                              char const *poa_id,
                                                               TAO_Persistent_Context_Index *context_index,
                                                               HASH_MAP *map,
                                                               ACE_UINT32 *counter)
@@ -284,7 +284,7 @@ TAO_Persistent_Naming_Context::set_cleanup_level (int level)
 
 CosNaming::NamingContext_ptr
 TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
-                                                 const char *poa_id,
+                                                 char const *poa_id,
                                                  size_t context_size,
                                                  TAO_Persistent_Context_Index * ind)
 {
