@@ -1,4 +1,6 @@
 /* -*- c++ -*- */
+#include <string>
+
 #include "orbsvcs/Log_Macros.h"
 #include "ast_argument.h"
 #include "ast_array.h"
@@ -1108,12 +1110,12 @@ ifr_adding_visitor::visit_provides (AST_Provides *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  char *local_name = node->local_name ()->get_string ();
+  std::string const local_name (node->local_name ()->get_string_view_or_empty ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::ProvidesDef_var new_def =
     c->create_provides (comp_str.fast_rep (),
-                        local_name,
+                        local_name.c_str (),
                         IFR_C_String (node->provides_type ()->version ()),
                         interface_type.in ());
 
@@ -1135,12 +1137,12 @@ ifr_adding_visitor::visit_uses (AST_Uses *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  char *local_name = node->local_name ()->get_string ();
+  std::string const local_name (node->local_name ()->get_string_view_or_empty ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::UsesDef_var new_def =
     c->create_uses (comp_str.fast_rep (),
-                    local_name,
+                    local_name.c_str (),
                     IFR_C_String (node->uses_type ()->version ()),
                     interface_type.in (),
                     static_cast<CORBA::Boolean> (node->is_multiple ()));
@@ -1163,12 +1165,12 @@ ifr_adding_visitor::visit_publishes (AST_Publishes *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  char *local_name = node->local_name ()->get_string ();
+  std::string const local_name (node->local_name ()->get_string_view_or_empty ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::PublishesDef_var new_def =
     c->create_publishes (comp_str.fast_rep (),
-                         local_name,
+                         local_name.c_str (),
                          IFR_C_String (node->publishes_type ()->version ()),
                          event_type.in ());
 
@@ -1190,12 +1192,12 @@ ifr_adding_visitor::visit_emits (AST_Emits *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  char *local_name = node->local_name ()->get_string ();
+  std::string const local_name (node->local_name ()->get_string_view_or_empty ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::EmitsDef_var new_def =
     c->create_emits (comp_str.fast_rep (),
-                     local_name,
+                     local_name.c_str (),
                      IFR_C_String (node->emits_type ()->version ()),
                      event_type.in ());
 
@@ -1217,12 +1219,12 @@ ifr_adding_visitor::visit_consumes (AST_Consumes *node)
       this->ir_current_.in ());
 
   ACE_CString comp_str (c->_interface_repository_id ());
-  char *local_name = node->local_name ()->get_string ();
+  std::string const local_name (node->local_name ()->get_string_view_or_empty ());
   this->expand_id (comp_str, local_name);
 
   ::CORBA::ComponentIR::ConsumesDef_var new_def =
     c->create_consumes (comp_str.fast_rep (),
-                        local_name,
+                        local_name.c_str (),
                         IFR_C_String (node->consumes_type ()->version ()),
                         event_type.in ());
 
@@ -2599,9 +2601,7 @@ ifr_adding_visitor::predefined_type_to_pkind (AST_PredefinedType *node)
       return CORBA::pk_value_base;
     case AST_PredefinedType::PT_pseudo:
       {
-        char const *local_name = node->local_name ()->get_string ();
-
-        if (!ACE_OS::strcmp (local_name, "Principal"))
+        if (node->local_name ()->get_string_view_or_empty () == "Principal")
           {
             return CORBA::pk_Principal;
           }
@@ -4054,8 +4054,16 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
 
 void
 ifr_adding_visitor::expand_id (ACE_CString &str,
-                               char const *local_name)
+                               std::string_view const local_name)
 {
-  ssize_t pos = str.rfind (':');
-  str = str.substr (0, pos) + '/' + local_name + str.substr (pos);
+  std::string const repository_id (str.c_str ());
+  size_t const pos = repository_id.rfind (':');
+  std::string expanded_id = repository_id.substr (0, pos);
+  expanded_id += '/';
+  expanded_id.append (local_name);
+  if (pos != std::string::npos)
+    {
+      expanded_id += repository_id.substr (pos);
+    }
+  str = expanded_id.c_str ();
 }

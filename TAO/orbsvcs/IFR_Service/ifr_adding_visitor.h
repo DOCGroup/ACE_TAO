@@ -14,6 +14,8 @@
 #ifndef TAO_IFR_ADDING_VISITOR_H
 #define TAO_IFR_ADDING_VISITOR_H
 
+#include <string_view>
+
 #include "ifr_visitor.h"
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
@@ -168,7 +170,7 @@ protected:
                           CORBA::ComponentIR::HomeDef_ptr h);
 
   void expand_id (ACE_CString &str,
-                  char const *local_name);
+                  std::string_view const local_name);
 
 protected:
   /**
