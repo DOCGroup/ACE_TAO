@@ -80,15 +80,15 @@ public:
    * Return the next endpoint in the list, but use protocol-specific
    * filtering to constrain the value. The orb core is needed to supply
    * any sort of filter arguments, and the root endpoint is needed in case
-   * the algorithm needs to rewind. If the supplied root is 0, then this
+   * the algorithm needs to rewind. If the supplied root is nullptr, then this
    * is assumed to be the candidate next endpoint.
    *
-   * To use this, the caller starts off the change with root == 0. This
+   * To use this, the caller starts off the change with root == nullptr. This
    * is a bit of a violation in logic, a more correct implementation would
-   * accept this == 0 and a non-null root.
+   * accept this == nullptr and a non-null root.
    * To do iteration using next_filtered, do:
-   *   for (TAO_Endpoint *ep = root_endpoint->next_filtered (orb_core, 0);
-   *        ep != 0;
+   *   for (TAO_Endpoint *ep = root_endpoint->next_filtered (orb_core, nullptr);
+   *        ep != nullptr;
    *        ep = ep->next_filtered(orb_core, root_endpoint)) { }
    */
   TAO_Endpoint *next_filtered (TAO_ORB_Core *, TAO_Endpoint *root) override;

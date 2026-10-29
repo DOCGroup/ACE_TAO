@@ -215,7 +215,7 @@ TAO_IIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
-  if (std::strchr (h, ':') != 0)
+  if (std::strchr (h, ':') != nullptr)
     this->is_ipv6_decimal_ = true;
 #endif /* ACE_HAS_IPV6 */
 
@@ -235,7 +235,7 @@ TAO_IIOP_Endpoint::next_filtered (TAO_ORB_Core * orb_core, TAO_Endpoint *root)
   bool ipv6_only = false;
   bool prefer_ipv6 = false;
 #if defined (ACE_HAS_IPV6)
-  want_ipv6 = root == 0 || this->is_ipv6_decimal();
+  want_ipv6 = root == nullptr || this->is_ipv6_decimal();
   ipv6_only = orb_core->orb_params()->connect_ipv6_only();
   prefer_ipv6 = orb_core->orb_params()->prefer_ipv6_interfaces();
 #else
@@ -264,7 +264,7 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
 #if defined (ACE_HAS_IPV6)
   if (ipv6_only)
     {
-      if (candidate == 0 || candidate->is_ipv6_decimal())
+      if (candidate == nullptr || candidate->is_ipv6_decimal())
         return candidate;
       const ACE_INET_Addr &addr = candidate->object_addr ();
       bool allowed = addr.get_type () == AF_INET6 &&
@@ -275,9 +275,9 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
     }
   if (prefer_ipv6)
     {
-      if (candidate == 0)
+      if (candidate == nullptr)
         return !want_ipv6 ? candidate :
-          root->next_filtered_i(0, ipv6_only, prefer_ipv6, false);
+          root->next_filtered_i(nullptr, ipv6_only, prefer_ipv6, false);
 
       if (want_ipv6 == candidate->is_ipv6_decimal())
         return candidate;

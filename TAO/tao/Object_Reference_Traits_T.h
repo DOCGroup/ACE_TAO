@@ -64,7 +64,7 @@ struct object_reference_traits_decorator
 
   inline static object_type const * initialize_if_zero(object_type * & element)
   {
-    if (element == 0)
+    if (element == nullptr)
     {
       element = derived::nil();
     }
