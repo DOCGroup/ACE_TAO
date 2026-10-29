@@ -152,16 +152,3 @@ Checkpoint_i::shutdown ()
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
 }
-
-
-// Constructor.
-
-Checkpoint_i::Checkpoint_i ()
-{
-}
-
-// Destructor.
-
-Checkpoint_i::~Checkpoint_i ()
-{
-}
