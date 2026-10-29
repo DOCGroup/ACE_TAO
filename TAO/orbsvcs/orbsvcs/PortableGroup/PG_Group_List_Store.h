@@ -93,14 +93,14 @@ namespace TAO
 
     /// Ensure ID is monotonically increasing even when groups gets
     /// removed.
-    PortableGroup::ObjectGroupId next_group_id_;
+    PortableGroup::ObjectGroupId next_group_id_ {};
 
     TAO::Storable_Base * create_stream (const char * mode);
 
     Storable_Factory & storable_factory_;
-    bool loaded_from_stream_;
-    time_t last_changed_;
-    bool stale_;
+    bool loaded_from_stream_ {};
+    time_t last_changed_ {};
+    bool stale_ {};
     void read (TAO::Storable_Base & stream);
     void write (TAO::Storable_Base & stream);
 

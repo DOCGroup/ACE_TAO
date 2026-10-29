@@ -27,21 +27,21 @@ namespace TAO
     PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store,
                                     Method_Type method_type);
 
-    ~PG_Group_List_Store_File_Guard () noexcept(false);
+    ~PG_Group_List_Store_File_Guard () noexcept(false) override;
 
-    virtual void set_object_last_changed (const time_t & time);
+    void set_object_last_changed (time_t const & time) override;
 
-    virtual time_t get_object_last_changed ();
+    time_t get_object_last_changed () override;
 
-    virtual bool object_obsolete ();
+    bool object_obsolete () override;
 
-    virtual void mark_object_current ();
+    void mark_object_current () override;
 
-    virtual int load_from_stream ();
+    int load_from_stream () override;
 
-    virtual bool is_loaded_from_stream ();
+    bool is_loaded_from_stream () override;
 
-    virtual TAO::Storable_Base * create_stream (const char * mode);
+    TAO::Storable_Base * create_stream (char const * mode) override;
 
 private:
     PG_Group_List_Store & list_store_;
@@ -132,11 +132,7 @@ using SFG = TAO::Storable_File_Guard;
 
 TAO::PG_Group_List_Store::PG_Group_List_Store (
   Storable_Factory & storable_factory)
-  : next_group_id_ (0)
-  , storable_factory_ (storable_factory)
-  , loaded_from_stream_ (false)
-  , last_changed_ (0)
-  , stale_ (false)
+  : storable_factory_ (storable_factory)
 {
   // Create a temporary stream simply to check if a readable
   // version already exists.
@@ -243,9 +239,9 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 }
 
 TAO::Storable_Base *
-TAO::PG_Group_List_Store::create_stream (const char * mode)
+TAO::PG_Group_List_Store::create_stream (char const * mode)
 {
-  ACE_CString file_name("ObjectGroup_global");
+  ACE_CString const file_name ("ObjectGroup_global");
 
   return this->storable_factory_.create_stream (
     file_name.c_str (), mode);
