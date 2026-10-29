@@ -311,14 +311,14 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint
     dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
 
   if (endpoint == nullptr)
-    return 0;
+    return false;
 
   if ((this->ssl_component ().port != 0
        && endpoint->ssl_component ().port != 0
        && this->ssl_component ().port != endpoint->ssl_component ().port)
        || this->qop () < endpoint->qop ())
   {
-    return 0;
+    return false;
   }
 
   // Comparing the underlying iiop endpoints is wrong, as their port
@@ -326,13 +326,13 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint
   // Therefore, directly comparing the hosts at this point. See also the
   // comments in the hash() method
   if (this->iiop_endpoint() == nullptr || endpoint->iiop_endpoint() == nullptr)
-    return 0;
+    return false;
 
   if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
                        endpoint->iiop_endpoint()->host ()) != 0))
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
 
 TAO_Endpoint *

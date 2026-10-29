@@ -75,7 +75,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 CORBA::Boolean
 TAO::SSLIOP::Current::no_context ()
 {
-  return (this->implementation () == nullptr ? true : false);
+  return this->implementation () == nullptr;
 }
 
 void

@@ -90,7 +90,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
       TAO_InputCDR cdr_component (reinterpret_cast<char const *> (component.component_data.get_buffer ()),
                                   component.component_data.length ());
       CORBA::Boolean byte_order;
-      if ((cdr_component >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if (!(cdr_component >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
       cdr_component.reset_byte_order (static_cast<int> (byte_order));
 
@@ -168,7 +168,7 @@ TAO_SSLIOP_Profile::do_is_equivalent (TAO_Profile const * other_profile)
 
   // Make sure we have a TAO_SSLIOP_Profile.
   if (op == nullptr)
-    return 0;
+    return false;
 
   // Now verify TAO_SSLIOP_Endpoint equivalence.
   TAO_SSLIOP_Endpoint const *other_endp = &op->ssl_endpoint_;
@@ -179,10 +179,10 @@ TAO_SSLIOP_Profile::do_is_equivalent (TAO_Profile const * other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 TAO_Endpoint*
@@ -228,9 +228,8 @@ TAO_SSLIOP_Profile::encode_endpoints ()
 
       // Encode the data structure.
       TAO_OutputCDR out_cdr;
-      if (((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-           == 0)
-          || (out_cdr << endpoints) == 0)
+      if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+          || !(out_cdr << endpoints))
         return -1;
 
       CORBA::ULong const length = static_cast<CORBA::ULong> (out_cdr.total_length ());
@@ -275,13 +274,13 @@ TAO_SSLIOP_Profile::decode_tagged_endpoints ()
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
-      if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO_SSLEndpointSequence endpoints;
-      if ((in_cdr >> endpoints) == 0)
+      if (!(in_cdr >> endpoints))
         return -1;
 
       // Use information extracted from the tagged component to
