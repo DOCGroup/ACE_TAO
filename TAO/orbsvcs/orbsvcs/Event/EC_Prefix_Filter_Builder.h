@@ -42,7 +42,7 @@ public:
   explicit TAO_EC_Prefix_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   /// destructor...
-  virtual ~TAO_EC_Prefix_Filter_Builder () override = default;
+  ~TAO_EC_Prefix_Filter_Builder () override = default;
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,

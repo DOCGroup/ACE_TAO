@@ -244,7 +244,7 @@ public:
                                     ACE_Lock* lock);
 
   /// Destructor
-  virtual ~TAO_EC_Reactive_ObserverStrategy () override = default;
+  ~TAO_EC_Reactive_ObserverStrategy () override = default;
 
 protected:
   /// Helpers.

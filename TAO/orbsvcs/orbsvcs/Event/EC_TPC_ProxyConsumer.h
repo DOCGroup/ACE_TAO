@@ -29,9 +29,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_TPC_ProxyPushConsumer :
 {
 public:
   explicit TAO_EC_TPC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* ec);
-  virtual ~TAO_EC_TPC_ProxyPushConsumer () override;
+  ~TAO_EC_TPC_ProxyPushConsumer () override;
 
-  virtual void disconnect_push_consumer () override;
+  void disconnect_push_consumer () override;
 
 private:
   using BASECLASS = TAO_EC_Default_ProxyPushConsumer;

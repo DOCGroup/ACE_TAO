@@ -87,16 +87,16 @@ public:
                                    CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_EC_Reactive_SupplierControl () override = default;
+  ~TAO_EC_Reactive_SupplierControl () override = default;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_SupplierControl
-  virtual int activate () override;
-  virtual int shutdown () override;
-  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy) override;
+  int activate () override;
+  int shutdown () override;
+  void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy) override;
   virtual void system_exception (TAO_EC_ProxyPushConsumer *proxy,
                                  CORBA::SystemException &);
 
@@ -143,7 +143,7 @@ class TAO_EC_Ping_Supplier : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 public:
   explicit TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer) override;
+  void work (TAO_EC_ProxyPushConsumer *consumer) override;
 
 private:
   TAO_EC_SupplierControl *control_;

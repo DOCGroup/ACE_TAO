@@ -85,9 +85,9 @@ public:
   explicit TAO_EC_Trivial_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
-  virtual TAO_EC_Supplier_Filter*
+  TAO_EC_Supplier_Filter*
       create (RtecEventChannelAdmin::SupplierQOS& qos) override;
-  virtual void
+  void
       destroy (TAO_EC_Supplier_Filter *filter) override;
 
 private:
