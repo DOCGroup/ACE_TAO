@@ -53,7 +53,7 @@ public:
   using StateWorker = ProxyConsumerStateWorker;
 
   /// constructor...
-  TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
   ~TAO_FTEC_SupplierAdmin () override;

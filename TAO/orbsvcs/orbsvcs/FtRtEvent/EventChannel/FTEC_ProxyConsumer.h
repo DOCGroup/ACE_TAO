@@ -29,7 +29,7 @@ public:
   using State = FtRtecEventChannelAdmin::ProxyPushConsumerStat;
   using Skeleton = POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr;
 
-  TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   virtual void activate (
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) override;

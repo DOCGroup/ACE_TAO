@@ -25,7 +25,7 @@ class ProxyConsumerStateWorker
   : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
-  ProxyConsumerStateWorker(FtRtecEventChannelAdmin::ProxyConsumerStates& states);
+  explicit ProxyConsumerStateWorker(FtRtecEventChannelAdmin::ProxyConsumerStates& states);
   ~ProxyConsumerStateWorker() override = default;
 
   ProxyConsumerStateWorker(ProxyConsumerStateWorker const&) = delete;

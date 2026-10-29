@@ -30,7 +30,7 @@ public:
   /**
    * @param mt Specifies whether multithreaded ORB is used.
    */
-  Basic_Replication_Strategy(bool mt);
+  explicit Basic_Replication_Strategy(bool mt);
   ~Basic_Replication_Strategy() override;
 
   void check_validity() override;

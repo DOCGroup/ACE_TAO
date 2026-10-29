@@ -50,7 +50,7 @@ public:
              FtRtecEventChannelAdmin::ConsumerAdminState>;
 
   using StateWorker = ProxySupplierStateWorker;
-  TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
   ~TAO_FTEC_ConsumerAdmin () override;
