@@ -18,8 +18,9 @@ NS_group_svc::NS_group_svc (bool quiet)
 }
 
 bool
-NS_group_svc::determine_policy_string (const ACE_TCHAR *policy,
-                                       FT_Naming::LoadBalancingStrategyValue& value)
+NS_group_svc::determine_policy_string (
+  ACE_TCHAR const *policy,
+  FT_Naming::LoadBalancingStrategyValue& value)
 {
   bool rc = false;
 
@@ -90,7 +91,7 @@ NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
 }
 
 bool
-NS_group_svc::group_exist ( const ACE_TCHAR* group_name )
+NS_group_svc::group_exist (ACE_TCHAR const *group_name) const
 {
   if (group_name == nullptr )
     {
@@ -108,7 +109,7 @@ NS_group_svc::group_exist ( const ACE_TCHAR* group_name )
         this->naming_manager_->get_object_group_ref_from_name
           (ACE_TEXT_ALWAYS_CHAR (group_name));
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       return false;
     }
@@ -124,8 +125,8 @@ NS_group_svc::group_exist ( const ACE_TCHAR* group_name )
  */
 
 int
-NS_group_svc::group_create (const ACE_TCHAR* group_name,
-                            const ACE_TCHAR* policy )
+NS_group_svc::group_create (ACE_TCHAR const *group_name,
+                            ACE_TCHAR const *policy)
 {
   if (group_name == nullptr || policy == nullptr )
     {
@@ -195,7 +196,7 @@ NS_group_svc::group_create (const ACE_TCHAR* group_name,
         }
 
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -217,8 +218,8 @@ NS_group_svc::group_create (const ACE_TCHAR* group_name,
  * specified object group.
  */
 int
-NS_group_svc::group_bind (const ACE_TCHAR* group_name,
-                          const ACE_TCHAR* path)
+NS_group_svc::group_bind (ACE_TCHAR const *group_name,
+                          ACE_TCHAR const *path)
 {
   if (group_name == nullptr || path == nullptr)
     {
@@ -251,7 +252,7 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
 
       this->name_service_->rebind (name.in(), group_var.in());
     }
-  catch (const CosNaming::NamingContextExt::InvalidName& )
+  catch (CosNaming::NamingContextExt::InvalidName const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -261,7 +262,7 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CosNaming::NamingContext::CannotProceed&)
+  catch (CosNaming::NamingContext::CannotProceed const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -271,7 +272,7 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -281,7 +282,7 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CORBA::SystemException& )
+  catch (CORBA::SystemException const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -291,7 +292,7 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CORBA::Exception& )
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -305,7 +306,7 @@ NS_group_svc::group_bind (const ACE_TCHAR* group_name,
 }
 
 int
-NS_group_svc::group_unbind (const ACE_TCHAR* path)
+NS_group_svc::group_unbind (ACE_TCHAR const *path)
 {
   if ( path == nullptr)
     {
@@ -323,7 +324,7 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
       CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
       this->name_service_->unbind (name.in());
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -333,7 +334,7 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
         }
       return -1;
     }
-  catch (const CosNaming::NamingContext::CannotProceed&)
+  catch (CosNaming::NamingContext::CannotProceed const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -343,7 +344,7 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
         }
       return -1;
     }
-  catch (const CosNaming::NamingContext::InvalidName&)
+  catch (CosNaming::NamingContext::InvalidName const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -353,7 +354,7 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
         }
       return -1;
     }
-  catch (const CORBA::SystemException& )
+  catch (CORBA::SystemException const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -363,7 +364,7 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
         }
       return -1;
     }
-  catch (const CORBA::Exception& )
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -382,7 +383,7 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
  * Displays all object groups that currently exist in the naming service.
  */
 int
-NS_group_svc::group_list ()
+NS_group_svc::group_list () const
 {
   // KCS: The group list is independent of locations. I created a new operation in the
   // naming manager IDL to support requesting the group list - which is a list of names
@@ -404,8 +405,9 @@ NS_group_svc::group_list ()
 }
 
 int
-NS_group_svc::display_load_policy_group(FT_Naming::LoadBalancingStrategyValue strategy,
-                                        const ACE_TCHAR *display_label)
+NS_group_svc::display_load_policy_group (
+  FT_Naming::LoadBalancingStrategyValue strategy,
+  ACE_TCHAR const *display_label) const
 {
   if( display_label == nullptr )
     {
@@ -444,7 +446,7 @@ NS_group_svc::display_load_policy_group(FT_Naming::LoadBalancingStrategyValue st
             }
         }
     }
-  catch (const CORBA::Exception& )
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -465,8 +467,8 @@ NS_group_svc::display_load_policy_group(FT_Naming::LoadBalancingStrategyValue st
  * requests to object group members.
  */
 int
-NS_group_svc::group_modify (const ACE_TCHAR* group_name,
-                            const ACE_TCHAR* policy)
+NS_group_svc::group_modify (ACE_TCHAR const *group_name,
+                            ACE_TCHAR const *policy)
 {
   if (group_name == nullptr || policy == nullptr)
     {
@@ -496,7 +498,7 @@ NS_group_svc::group_modify (const ACE_TCHAR* group_name,
       this->naming_manager_->set_load_balancing_strategy
         (ACE_TEXT_ALWAYS_CHAR (group_name), strategy );
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -506,7 +508,7 @@ NS_group_svc::group_modify (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -526,7 +528,7 @@ NS_group_svc::group_modify (const ACE_TCHAR* group_name,
  * Removes the specified object group from the naming service.
  */
 int
-NS_group_svc::group_remove (const ACE_TCHAR* group_name)
+NS_group_svc::group_remove (ACE_TCHAR const *group_name)
 {
   if (group_name == nullptr)
     {
@@ -542,7 +544,7 @@ NS_group_svc::group_remove (const ACE_TCHAR* group_name)
     {
       this->naming_manager_->delete_object_group (ACE_TEXT_ALWAYS_CHAR (group_name));
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -552,7 +554,7 @@ NS_group_svc::group_remove (const ACE_TCHAR* group_name)
         }
       return -1;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -573,9 +575,9 @@ NS_group_svc::group_remove (const ACE_TCHAR* group_name)
  * is available for selection.
  */
 int
-NS_group_svc::member_add (const ACE_TCHAR* group_name,
-                          const ACE_TCHAR* location,
-                          const ACE_TCHAR* ior)
+NS_group_svc::member_add (ACE_TCHAR const *group_name,
+                          ACE_TCHAR const *location,
+                          ACE_TCHAR const *ior)
 {
   if (group_name == nullptr || location == nullptr || ior == nullptr )
     {
@@ -614,7 +616,7 @@ NS_group_svc::member_add (const ACE_TCHAR* group_name,
                                                      location_name,
                                                      ior_var.in());
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -624,7 +626,7 @@ NS_group_svc::member_add (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const PortableGroup::ObjectNotAdded&)
+  catch (PortableGroup::ObjectNotAdded const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -634,7 +636,7 @@ NS_group_svc::member_add (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -653,7 +655,7 @@ NS_group_svc::member_add (const ACE_TCHAR* group_name,
  * Lists the members of the specified object group.
  */
 int
-NS_group_svc::member_list (const ACE_TCHAR* group_name)
+NS_group_svc::member_list (ACE_TCHAR const *group_name)
 {
   if (group_name == nullptr)
     {
@@ -678,7 +680,7 @@ NS_group_svc::member_list (const ACE_TCHAR* group_name)
         {
           for (unsigned int i = 0; i < locations->length(); ++i)
             {
-              const PortableGroup::Location & loc = locations[i];
+              PortableGroup::Location const &loc = locations[i];
               if (loc.length() > 0)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
@@ -689,7 +691,7 @@ NS_group_svc::member_list (const ACE_TCHAR* group_name)
         }
 
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -699,7 +701,7 @@ NS_group_svc::member_list (const ACE_TCHAR* group_name)
         }
       return -1;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -719,8 +721,8 @@ NS_group_svc::member_list (const ACE_TCHAR* group_name)
  * Removes the specified member object from the specified object group.
  */
 int
-NS_group_svc::member_remove (const ACE_TCHAR* group_name,
-                             const ACE_TCHAR* location)
+NS_group_svc::member_remove (ACE_TCHAR const *group_name,
+                             ACE_TCHAR const *location)
 {
   if (group_name == nullptr || location == nullptr)
     {
@@ -753,7 +755,7 @@ NS_group_svc::member_remove (const ACE_TCHAR* group_name,
       group_var = this->naming_manager_->remove_member (group_var.in(),
                                                         location_name);
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -763,7 +765,7 @@ NS_group_svc::member_remove (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const PortableGroup::MemberNotFound&)
+  catch (PortableGroup::MemberNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -773,7 +775,7 @@ NS_group_svc::member_remove (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -794,8 +796,8 @@ NS_group_svc::member_remove (const ACE_TCHAR* group_name,
  * object group.
  */
 int
-NS_group_svc::member_show (const ACE_TCHAR* group_name,
-                           const ACE_TCHAR* location)
+NS_group_svc::member_show (ACE_TCHAR const *group_name,
+                           ACE_TCHAR const *location)
 {
   if (group_name == nullptr || location == nullptr)
     {
@@ -830,7 +832,7 @@ NS_group_svc::member_show (const ACE_TCHAR* group_name,
         }
 
     }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -840,7 +842,7 @@ NS_group_svc::member_show (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const PortableGroup::MemberNotFound&)
+  catch (PortableGroup::MemberNotFound const &)
     {
       if (TAO_debug_level > 2)
         {
@@ -850,7 +852,7 @@ NS_group_svc::member_show (const ACE_TCHAR* group_name,
         }
       return -1;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       if (TAO_debug_level > 2)
         {
