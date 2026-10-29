@@ -472,8 +472,8 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
 }
 
 int
-TAO_AV_UDP_QoS_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                               const void *arg)
+TAO_AV_UDP_QoS_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                               void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -559,7 +559,7 @@ TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler 
 TAO_AV_UDP_QoS_Transport::~TAO_AV_UDP_QoS_Transport () = default;
 
 int
-TAO_AV_UDP_QoS_Transport::set_remote_address (const ACE_INET_Addr &address)
+TAO_AV_UDP_QoS_Transport::set_remote_address (ACE_INET_Addr const &address)
 {
   this->peer_addr_ = address;
   return 0;
@@ -590,7 +590,7 @@ TAO_AV_UDP_QoS_Transport::get_peer_addr ()
 }
 
 ssize_t
-TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
+TAO_AV_UDP_QoS_Transport::send (ACE_Message_Block const *mblk,
                                 ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
@@ -601,7 +601,7 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -679,7 +679,7 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
 }
 
 ssize_t
-TAO_AV_UDP_QoS_Transport::send (const char *buf,
+TAO_AV_UDP_QoS_Transport::send (char const *buf,
                                 size_t len,
                                 ACE_Time_Value *)
 {
@@ -703,7 +703,7 @@ TAO_AV_UDP_QoS_Transport::send (const char *buf,
 }
 
 ssize_t
-TAO_AV_UDP_QoS_Transport::send (const iovec *iov,
+TAO_AV_UDP_QoS_Transport::send (iovec const *iov,
                                 int /*iovcnt*/,
                                 ACE_Time_Value *)
 {
@@ -1018,7 +1018,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%N,%l) Negotiator Not Found\n"));
@@ -1298,7 +1298,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "Negotiator not found for flow %s\n",
@@ -1376,7 +1376,7 @@ TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory ()
 TAO_AV_UDP_QoS_Factory::~TAO_AV_UDP_QoS_Factory () = default;
 
 int
-TAO_AV_UDP_QoS_Factory::match_protocol (const char *protocol_string)
+TAO_AV_UDP_QoS_Factory::match_protocol (char const *protocol_string)
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1443,7 +1443,7 @@ TAO_AV_UDP_QoS_Flow_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_UDP_QoS_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_UDP_QoS_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"QoS_UDP") == 0)
     return 1;

@@ -34,8 +34,8 @@ u_int TAO_SFP_Base::credit_len;
 u_int TAO_SFP_Base::fragment_len;
 
 bool
-operator< (const TAO_SFP_Fragment_Node& left,
-           const TAO_SFP_Fragment_Node& right)
+operator< (TAO_SFP_Fragment_Node const & left,
+           TAO_SFP_Fragment_Node const & right)
 {
   return left.fragment_info_.frag_number < right.fragment_info_.frag_number;
 }
@@ -1023,7 +1023,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_SFP_Object::send_frame (const iovec * /*iov*/,
+TAO_SFP_Object::send_frame (iovec const * /*iov*/,
                             int /*iovcnt*/,
                             TAO_AV_frame_info * /*frame_info*/)
 {
@@ -1031,7 +1031,7 @@ TAO_SFP_Object::send_frame (const iovec * /*iov*/,
 }
 
 int
-TAO_SFP_Object::send_frame (const char* /*buf*/,
+TAO_SFP_Object::send_frame (char const * /*buf*/,
                                size_t /*len*/)
 {
   return 0;
@@ -1082,7 +1082,7 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
 }
 
 int
-TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
+TAO_SFP_Object::set_policies (TAO_AV_PolicyList const & policies)
 {
   TAO_AV_Policy *policy = nullptr;
   for (CORBA::ULong i=0;i<policies.length ();i++)
@@ -1158,7 +1158,7 @@ TAO_SFP_Consumer_Object::handle_input ()
 
 TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                                                   TAO_AV_Transport *transport,
-                                                  const char *sfp_options)
+                                                  char const *sfp_options)
   :TAO_SFP_Object (callback,transport),
    credit_sequence_num_ (0)
 
@@ -1231,7 +1231,7 @@ TAO_AV_SFP_Factory::init (int /*argc*/, ACE_TCHAR ** /*argv*/)
 }
 
 int
-TAO_AV_SFP_Factory::match_protocol (const char *flow_string)
+TAO_AV_SFP_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"sfp",3) == 0)
     return 1;

@@ -47,7 +47,7 @@ public:
   TAO_AV_SCTP_SEQ_Factory ();
   ~TAO_AV_SCTP_SEQ_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *protocol_string) override;
+  int match_protocol (char const *protocol_string) override;
   TAO_AV_Acceptor *make_acceptor () override;
   TAO_AV_Connector *make_connector () override;
 };
@@ -146,7 +146,7 @@ class TAO_AV_SCTP_SEQ_Base_Acceptor  :public ACE_Acceptor <TAO_AV_SCTP_SEQ_Flow_
  public:
   virtual int acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor,
                              ACE_Reactor *reactor,
-                             const ACE_INET_Addr &local_addr,
+                             ACE_INET_Addr const &local_addr,
                              TAO_FlowSpec_Entry *entry);
   int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler) override;
  protected:
@@ -202,8 +202,8 @@ public:
   int connector_open (TAO_AV_SCTP_SEQ_Connector *connector,
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
-                         const ACE_Multihomed_INET_Addr &remote_addr,
-                         const ACE_Multihomed_INET_Addr &local_addr);
+                         ACE_Multihomed_INET_Addr const &remote_addr,
+                         ACE_Multihomed_INET_Addr const &local_addr);
   int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler) override;
 protected:
   TAO_AV_SCTP_SEQ_Connector *connector_ {};

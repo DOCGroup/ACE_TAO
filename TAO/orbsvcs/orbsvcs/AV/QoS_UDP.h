@@ -34,7 +34,7 @@ public:
   ~TAO_AV_UDP_QoS_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   /// Initialization hook.
-  int match_protocol (const char *protocol_string) override;
+  int match_protocol (char const *protocol_string) override;
   TAO_AV_Acceptor *make_acceptor () override;
   TAO_AV_Connector *make_connector () override;
 };
@@ -66,7 +66,7 @@ public:
 
   ACE_Addr *get_peer_addr () override;
 
-  virtual int set_remote_address (const ACE_INET_Addr &address);
+  virtual int set_remote_address (ACE_INET_Addr const &address);
 
   /// Write the complete Message_Block chain to the connection.
   ssize_t send (ACE_Message_Block const *mblk,
@@ -235,7 +235,7 @@ protected:
 //                           TAO_AV_frame_info *frame_info = 0);
 //   // send a data frame.
 
-//   virtual int send_frame (const iovec *iov,
+//   virtual int send_frame (iovec const *iov,
 //                           int iovcnt,
 //                           TAO_AV_frame_info *frame_info = 0);
 

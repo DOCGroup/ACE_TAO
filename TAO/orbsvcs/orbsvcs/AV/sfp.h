@@ -45,8 +45,8 @@ public:
   TAO_SFP_Fragment_Node () : data_ (nullptr) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
-  friend bool operator< (const TAO_SFP_Fragment_Node& left,
-                         const TAO_SFP_Fragment_Node& right);
+  friend bool operator< (TAO_SFP_Fragment_Node const & left,
+                         TAO_SFP_Fragment_Node const & right);
 };
 
 /**
@@ -235,15 +235,15 @@ public:
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const iovec *iov,
+  virtual int send_frame (iovec const *iov,
                           int iovcnt,
                           TAO_AV_frame_info *frame_info = nullptr) override;
 
-  int send_frame (const char *buf,
+  int send_frame (char const *buf,
                   size_t len) override;
 
   int destroy () override;
-  int set_policies (const TAO_AV_PolicyList &policies) override;
+  int set_policies (TAO_AV_PolicyList const &policies) override;
 
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
@@ -266,7 +266,7 @@ class TAO_AV_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
 public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
-                           const char *flow_options);
+                           char const *flow_options);
   int handle_input () override;
 protected:
   CORBA::ULong credit_sequence_num_;
@@ -300,7 +300,7 @@ public:
   ~TAO_AV_SFP_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialization hook.
-  int match_protocol (const char *flow_string) override;
+  int match_protocol (char const *flow_string) override;
   TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,
                                                 TAO_AV_Flow_Handler *handler,
