@@ -51,8 +51,8 @@ public:
   TAO_EC_MT_Dispatching &operator= (TAO_EC_MT_Dispatching &&) = delete;
 
   // = The EC_Dispatching methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
+  void activate () override;
+  void shutdown () override;
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,

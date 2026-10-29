@@ -72,8 +72,8 @@ public:
   static int init_svcs ();
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]) override;
-  virtual int fini () override;
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
 
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
@@ -98,7 +98,7 @@ public:
 protected:
   // = Override the default definition in the Message_Queue, to count
   // the number of messages (and not their size).
-  virtual bool is_full_i () override;
+  bool is_full_i () override;
 };
 
 /**
@@ -127,7 +127,7 @@ public:
   TAO_EC_Dispatching_Task& operator= (TAO_EC_Dispatching_Task&&) = delete;
 
   /// Process the events in the queue.
-  virtual int svc () override;
+  int svc () override;
 
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
@@ -183,7 +183,7 @@ public:
   TAO_EC_Shutdown_Task_Command& operator= (TAO_EC_Shutdown_Task_Command&&) = delete;
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 };
 
 // ****************************************************************
@@ -203,10 +203,10 @@ public:
   TAO_EC_Push_Command& operator= (TAO_EC_Push_Command&&) = delete;
 
   /// Destructor
-  virtual ~TAO_EC_Push_Command () override;
+  ~TAO_EC_Push_Command () override;
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 
 private:
   /// The proxy

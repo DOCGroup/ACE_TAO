@@ -65,8 +65,8 @@ public:
   TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching &&) = delete;
 
   // = The EC_Dispatching methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
+  void activate () override;
+  void shutdown () override;
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
@@ -101,7 +101,7 @@ public:
   explicit TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
@@ -120,11 +120,11 @@ public:
                              ACE_Allocator* allocator);
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Push_Command () override;
+  ~TAO_EC_Kokyu_Push_Command () override;
 
 private:
   /// The proxy

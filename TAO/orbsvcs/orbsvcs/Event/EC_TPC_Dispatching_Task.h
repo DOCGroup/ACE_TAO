@@ -28,7 +28,7 @@ public:
   TAO_EC_TPC_Dispatching_Task& operator= (const TAO_EC_TPC_Dispatching_Task&) = delete;
   TAO_EC_TPC_Dispatching_Task& operator= (TAO_EC_TPC_Dispatching_Task&&) = delete;
 
-  virtual int close (u_long flags = 0) override;
+  int close (u_long flags = 0) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
