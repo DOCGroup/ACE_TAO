@@ -148,7 +148,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
         }
       else
         {
-          retval += id->get_string ();
+          retval += id->get_string_view_or_empty ();
         }
 
        if (first)
@@ -186,14 +186,16 @@ IdentifierHelper::is_idl_keyword (Identifier const *local_name)
 std::string
 IdentifierHelper::try_escape (Identifier * local_name)
 {
-  std::string s_local_name (local_name->get_string ());
+  std::string_view const s_local_name = local_name->get_string_view_or_empty ();
 
   if (IdentifierHelper::is_idl_keyword (local_name))
     {
-      return "_" + s_local_name;
+      std::string retval ("_");
+      retval += s_local_name;
+      return retval;
     }
   else
     {
-      return s_local_name;
+      return std::string (s_local_name);
     }
 }

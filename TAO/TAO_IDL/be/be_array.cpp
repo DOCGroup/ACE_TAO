@@ -234,7 +234,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
   std::string arg_name (parent->full_name ());
   arg_name += "::";
   arg_name += use_underscore ? "_" : "";
-  arg_name += this->local_name ()->get_string ();
+  arg_name += this->local_name ()->get_string_view_or_empty ();
   arg_name += "_forany &_tao_array";
 
   // Using 'const' with xxx_forany here prevents the compiler from
@@ -310,7 +310,7 @@ be_array::gen_member_ostream_operator (TAO_OutStream *os,
   std::string decl_name (parent->full_name ());
   decl_name += "::";
   decl_name += use_underscore ? "_" : "";
-  decl_name += this->local_name ()->get_string ();
+  decl_name += this->local_name ()->get_string_view_or_empty ();
 
  // The container is always const, so the member is const as well,
  // but we have to cast it away for the forany constructor.

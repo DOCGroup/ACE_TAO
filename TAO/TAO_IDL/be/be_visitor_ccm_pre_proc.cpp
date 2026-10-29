@@ -762,7 +762,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
   // sequence was originally created with the port prefix (if
   // any) in its name, so we must use it here.
   std::string connections_string (this->ctx_->port_prefix ());
-  connections_string += node->local_name ()->get_string ();
+  connections_string += node->local_name ()->get_string_view_or_empty ();
   connections_string += "Connections";
   Identifier connections_id (connections_string);
   UTL_ScopedName connections_name (&connections_id,
@@ -1547,9 +1547,9 @@ AST_Interface *
 be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
 {
   AST_Type *impl = node->field_type ();
-  std::string rettype_string (impl->local_name ()->get_string ());
+  std::string rettype_string (impl->local_name ()->get_string_view_or_empty ());
   rettype_string += "Consumer";
-  Identifier rettype_id (rettype_string.c_str ());
+  Identifier rettype_id (rettype_string);
   AST_Decl *d =
     impl->defined_in ()->lookup_by_name_local (&rettype_id, false);
   rettype_id.destroy ();
@@ -1789,9 +1789,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
   else
     {
-      std::string new_local (
-          node->base_home ()->local_name ()->get_string ()
-        );
+      std::string new_local (node->base_home ()->local_name ()->get_string_view_or_empty ());
       new_local += "Explicit";
       UTL_ScopedName *parent_name =
         static_cast<UTL_ScopedName *> (node->base_home ()->name ()->copy ());
@@ -1923,8 +1921,8 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
       /// contents, so it's ok that it's empty.
 
       std::string uname ("sendc_");
-      uname += u->local_name ()->get_string ();
-      Identifier utmp_id (uname.c_str ());
+      uname += u->local_name ()->get_string_view_or_empty ();
+      Identifier utmp_id (uname);
       UTL_ScopedName utmp_sn (&utmp_id, nullptr);
 
       s = u->defined_in ();
