@@ -1,6 +1,7 @@
 #include "Progress_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 #include "tao/FlResource/FlResource_Loader.h"
 
 #include <FL/Fl.H>
@@ -14,7 +15,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -47,7 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO::FlResource_Loader fl_loader;
   try
@@ -77,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       sw.show ();
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -105,7 +106,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
           if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",

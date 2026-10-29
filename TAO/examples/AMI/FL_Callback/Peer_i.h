@@ -58,7 +58,7 @@ public:
 
   void init (CORBA::ORB_ptr orb,
              Progress_ptr progress,
-             ACE_Time_Value const &delay);
+             ACE_Time_Value const& delay);
 
   /// Used by the Reply_Handler to indicate that a reply has been
   /// received.
@@ -67,7 +67,7 @@ public:
    // = See test.idl for an explanation of these methods.
   CORBA::Long request (CORBA::Long id) override;
 
-  void start (PeerSet const &the_peers,
+  void start (PeerSet const& the_peers,
               CORBA::Long iterations) override;
 
   void shutdown () override;
@@ -83,7 +83,7 @@ private:
   Progress_var progress_ {};
 
   /// The delay on each request
-  ACE_Time_Value delay_;
+  ACE_Time_Value delay_ {};
 
   /// The id assigned by the progress interface
   CORBA::Long id_ {};
@@ -97,7 +97,7 @@ private:
 class Peer_Task : public ACE_Task_Base
 {
 public:
-  Peer_Task (PeerSet const &the_peers,
+  Peer_Task (PeerSet const& the_peers,
              CORBA::Long iterations,
              Progress_ptr progress,
              AMI_PeerHandler_ptr handler,
@@ -116,7 +116,7 @@ private:
   PeerSet the_peers_;
 
   /// The number of iterations
-  CORBA::Long iterations_;
+  CORBA::Long iterations_ {};
 
   /// To report progress
   Progress_var progress_;
@@ -125,7 +125,7 @@ private:
   AMI_PeerHandler_var handler_;
 
   /// Our id
-  CORBA::Long id_;
+  CORBA::Long id_ {};
 };
 
 #endif /* PEER_I_H */

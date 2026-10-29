@@ -50,13 +50,13 @@ private:
 
 private:
   /// The total number of peers
-  int n_peers_;
+  int n_peers_ {};
 
   /// The peers
   PeerSet peers_;
 
   /// The number of iterations;
-  int n_iterations_;
+  int n_iterations_ {};
 
   /// The set of sliders where we keep track of each client
   std::vector<Fl_Widget *> request_progress_;

@@ -134,7 +134,7 @@ Progress_Window::start_callback (Fl_Widget * /* widget */,
 void
 Progress_Window::start ()
 {
-  if (this->peers_.length () < CORBA::ULong (this->n_peers_))
+  if (this->peers_.length () < static_cast<CORBA::ULong> (this->n_peers_))
     return;
 
   for (CORBA::ULong i = 0; i != this->peers_.length (); ++i)

@@ -9,8 +9,8 @@ Peer_Handler_i::Peer_Handler_i (Peer_i *peer)
 void
 Peer_Handler_i::request (CORBA::Long retval)
 {
-  static int i = 0;
-  i++;
+  static int i {};
+  ++i;
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) %d replies received\n", i));
   this->peer_->reply (retval);
@@ -42,7 +42,7 @@ Peer_i::Peer_i ()
 void
 Peer_i::init (CORBA::ORB_ptr orb,
               Progress_ptr progress,
-              ACE_Time_Value const &delay)
+              ACE_Time_Value const& delay)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->progress_ = Progress::_duplicate (progress);
@@ -70,7 +70,7 @@ Peer_i::request (CORBA::Long id)
 }
 
 void
-Peer_i::start (PeerSet const &the_peers,
+Peer_i::start (PeerSet const& the_peers,
                CORBA::Long iterations)
 {
   AMI_PeerHandler_var handler =
@@ -94,7 +94,7 @@ Peer_i::shutdown ()
 
 // ****************************************************************
 
-Peer_Task::Peer_Task (PeerSet const &the_peers,
+Peer_Task::Peer_Task (PeerSet const& the_peers,
                       CORBA::Long iterations,
                       Progress_ptr progress,
                       AMI_PeerHandler_ptr handler,
@@ -110,7 +110,7 @@ Peer_Task::Peer_Task (PeerSet const &the_peers,
 int
 Peer_Task::svc ()
 {
-  for (int i = 0; i != this->iterations_; ++i)
+  for (CORBA::Long i = 0; i != this->iterations_; ++i)
     {
       CORBA::ULong const l = this->the_peers_.length ();
       for (CORBA::ULong j = 0; j != l; ++j)
