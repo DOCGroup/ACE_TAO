@@ -167,7 +167,7 @@ public:
   MMDevice_Map_Hash_Key ();
 
   /// constructor.
-  MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
+  explicit MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
 
   /// copy constructor.
   MMDevice_Map_Hash_Key (MMDevice_Map_Hash_Key const &);
@@ -185,7 +185,7 @@ public:
   /// hash function for this mmdevice.
   u_long hash () const;
 
-  static const int hash_maximum_;
+  static constexpr int hash_maximum_ = 10000;
 protected:
   AVStreams::MMDevice_ptr mmdevice_;
 };
@@ -355,7 +355,7 @@ public:
   TAO_AV_QoS &operator= (TAO_AV_QoS &&) = delete;
 
   /// constructor taking a stream qos parameter.
-  TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
+  explicit TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
 
   /// sets the maps with the QoS parameter.
   int set (AVStreams::streamQoS &stream_qos);
@@ -730,7 +730,7 @@ class TAO_AV_Export TAO_MMDevice
 public:
   /// Constructor
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
-  TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
+  explicit TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
   TAO_MMDevice (TAO_MMDevice const &) = delete;
   TAO_MMDevice (TAO_MMDevice &&) = delete;
   TAO_MMDevice &operator= (TAO_MMDevice const &) = delete;

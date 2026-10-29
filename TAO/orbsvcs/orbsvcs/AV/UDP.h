@@ -49,7 +49,7 @@ class TAO_AV_Export TAO_AV_UDP_Transport
 public:
   TAO_AV_UDP_Transport ();
 
-  TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler);
+  explicit TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler);
 
   ~TAO_AV_UDP_Transport () override;
   int open (ACE_Addr *addr) override;

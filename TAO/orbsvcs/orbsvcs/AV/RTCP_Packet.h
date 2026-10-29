@@ -46,7 +46,7 @@ public:
   RTCP_Packet();
 
   /// Constructor for incoming RTCP packets.
-  RTCP_Packet(char *buffer);
+  explicit RTCP_Packet(char *buffer);
 
   /// Destructor
   virtual ~RTCP_Packet();

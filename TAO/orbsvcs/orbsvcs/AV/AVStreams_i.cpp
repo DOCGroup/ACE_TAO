@@ -305,8 +305,6 @@ TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr /* remote_negotiator */,
 // MMDevice_Map_Hash_Key
 // ----------------------------------------------------------------------
 
-const int MMDevice_Map_Hash_Key::hash_maximum_ = 10000;
-
 //default constructor.
 MMDevice_Map_Hash_Key::MMDevice_Map_Hash_Key ()
 {

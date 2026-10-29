@@ -33,7 +33,7 @@ public:
   TAO_FDev ();
 
   /// constructor taking a flowname.
-  TAO_FDev (char const *flowname);
+  explicit TAO_FDev (char const *flowname);
 
   /// Destructor..
   ~TAO_FDev () override;

@@ -65,7 +65,7 @@ class TAO_AV_Export TAO_AV_SCTP_SEQ_Transport
 public:
   TAO_AV_SCTP_SEQ_Transport ();
 
-  TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handler *handler);
+  explicit TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handler *handler);
 
   ~TAO_AV_SCTP_SEQ_Transport () override;
   int open (ACE_Addr *addr) override;
@@ -122,7 +122,7 @@ class TAO_AV_SCTP_SEQ_Flow_Handler
    public ACE_Svc_Handler <ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
 {
 public:
-  TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback *callback = nullptr);
+  explicit TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback *callback = nullptr);
   ~TAO_AV_SCTP_SEQ_Flow_Handler () override;
   TAO_AV_Transport *transport ();
   int open (void * = nullptr) override;

@@ -45,7 +45,7 @@ class TAO_AV_Export TAO_AV_Transport_Item
 public:
   /// Creator method, the Transport name can only be set when the
   /// object is created.
-  TAO_AV_Transport_Item (ACE_CString const &name);
+  explicit TAO_AV_Transport_Item (ACE_CString const &name);
   TAO_AV_Transport_Item (TAO_AV_Transport_Item const &) = delete;
   TAO_AV_Transport_Item &operator= (TAO_AV_Transport_Item const &) = delete;
   TAO_AV_Transport_Item (TAO_AV_Transport_Item &&) = delete;
@@ -80,7 +80,7 @@ class TAO_AV_Export TAO_AV_Flow_Protocol_Item
 public:
   /// creator method, the Flow_Protocol name can only be set when the
   /// object is created.
-  TAO_AV_Flow_Protocol_Item (ACE_CString const &name);
+  explicit TAO_AV_Flow_Protocol_Item (ACE_CString const &name);
   TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item const &) = delete;
   TAO_AV_Flow_Protocol_Item &operator= (TAO_AV_Flow_Protocol_Item const &) = delete;
   TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item &&) = delete;

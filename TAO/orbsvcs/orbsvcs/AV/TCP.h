@@ -50,7 +50,7 @@ class TAO_AV_TCP_Transport
 public:
   TAO_AV_TCP_Transport ();
 
-  TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler);
+  explicit TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler);
 
   ~TAO_AV_TCP_Transport () override;
 
@@ -104,7 +104,7 @@ class TAO_AV_TCP_Flow_Handler
    public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = nullptr);
+  explicit TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = nullptr);
   ~TAO_AV_TCP_Flow_Handler () override;
   TAO_AV_Transport *transport ();
   int open (void * = nullptr) override;
