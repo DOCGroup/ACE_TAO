@@ -151,7 +151,7 @@ namespace TAO
       /// necessary to have a new method to distinguish between a
       /// credential that is nil because it has not been set, vs one
       /// that was set to nil explicitly.
-      int credentials_set () const;
+      bool credentials_set () const;
 
     protected:
       /// Cache the SSL tagged component in a decoded format. Notice

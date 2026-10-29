@@ -58,7 +58,7 @@ TAO_SSLIOP_Endpoint::credentials () const
   return this->credentials_.in ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_SSLIOP_Endpoint::credentials_set () const
 {
   return this->credentials_set_;
