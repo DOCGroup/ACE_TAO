@@ -39,8 +39,8 @@ class TAO_NS_Persistence_Header
   int destroyed () const ;
 
   private:
-  unsigned int size_;
-  int destroyed_;
+  unsigned int size_ {};
+  int destroyed_ {};
 };
 
 class TAO_NS_Persistence_Record
@@ -76,7 +76,7 @@ class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
   unsigned int counter () const ;
 
   private:
-  unsigned int counter_;
+  unsigned int counter_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
