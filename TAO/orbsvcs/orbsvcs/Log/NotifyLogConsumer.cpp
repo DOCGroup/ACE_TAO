@@ -90,19 +90,19 @@ TAO_Notify_LogConsumer::push
       // log the RecordList.
       this->log_->write_recordlist (recList);
     }
-  catch (const DsLogAdmin::LogFull& )
+  catch (DsLogAdmin::LogFull const &)
     {
       throw CORBA::NO_RESOURCES ();
     }
-  catch (const DsLogAdmin::LogOffDuty& )
+  catch (DsLogAdmin::LogOffDuty const &)
     {
       throw CORBA::NO_RESOURCES ();
     }
-  catch (const DsLogAdmin::LogLocked& )
+  catch (DsLogAdmin::LogLocked const &)
     {
       throw CORBA::NO_PERMISSION ();
     }
-  catch (const DsLogAdmin::LogDisabled& )
+  catch (DsLogAdmin::LogDisabled const &)
     {
       throw CORBA::TRANSIENT ();
     }

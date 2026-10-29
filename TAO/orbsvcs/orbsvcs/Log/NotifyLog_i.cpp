@@ -45,8 +45,13 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
   CosNotification::AdminProperties* admin = get_admin ();
 
   DsNotifyLogAdmin::NotifyLog_var log =
-    notifyLogFactory->create (DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
-                               static_cast<const CosNotification::AdminProperties> (*admin), id);
+    notifyLogFactory->create (
+        DsLogAdmin::halt,
+        0,
+        thresholds_,
+        static_cast<CosNotification::QoSProperties const &> (*qos),
+        static_cast<CosNotification::AdminProperties const &> (*admin),
+        id);
 
   this->copy_attributes (log.in ());
 
@@ -64,8 +69,13 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
   CosNotification::AdminProperties* admin = get_admin ();
 
   DsNotifyLogAdmin::NotifyLog_var log =
-    notifyLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
-                               static_cast<const CosNotification::AdminProperties> (*admin));
+    notifyLogFactory->create_with_id (
+        id,
+        DsLogAdmin::halt,
+        0,
+        thresholds_,
+        static_cast<CosNotification::QoSProperties const &> (*qos),
+        static_cast<CosNotification::AdminProperties const &> (*admin));
 
   this->copy_attributes (log.in ());
 
@@ -204,7 +214,7 @@ TAO_NotifyLog_i::get_admin ()
 }
 
 void
-TAO_NotifyLog_i::set_admin (const CosNotification::AdminProperties& admin)
+TAO_NotifyLog_i::set_admin (CosNotification::AdminProperties const &admin)
 {
   this->event_channel_->set_admin (admin);
 }
@@ -217,7 +227,7 @@ TAO_NotifyLog_i::get_qos ()
 }
 
 void
-TAO_NotifyLog_i::set_qos (const CosNotification::QoSProperties& /* qos */)
+TAO_NotifyLog_i::set_qos (CosNotification::QoSProperties const & /* qos */)
 {
   throw CORBA::NO_IMPLEMENT ();
   //TODO: need to add later
@@ -225,7 +235,7 @@ TAO_NotifyLog_i::set_qos (const CosNotification::QoSProperties& /* qos */)
 
 void
 TAO_NotifyLog_i::validate_qos (
-    const CosNotification::QoSProperties& /* required_qos */,
+    CosNotification::QoSProperties const & /* required_qos */,
     CosNotification::NamedPropertyRangeSeq_out /* available_qos */)
 {
   throw CORBA::NO_IMPLEMENT ();
