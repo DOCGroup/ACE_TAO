@@ -4,18 +4,10 @@
 
 #include <sstream>
 
-Messenger_i::Messenger_i()
-{
-}
-
-Messenger_i::~Messenger_i()
-{
-}
-
 char * Messenger_i::receive_boxedvalue (::demo::value::idl::boxedValue * b)
 {
   std::ostringstream os;
-  if (b == 0)
+  if (b == nullptr)
     os << "null boxed values";
   else
     os << "boxed values: " << b->b1 ()->_value() << ", " << b->b2 ()->_value();
@@ -28,7 +20,7 @@ char * Messenger_i::receive_long (
                                   ::demo::value::idl::boxedLong * p2)
 {
   std::ostringstream os;
-  if (p1 == 0 || p2 == 0)
+  if (p1 == nullptr || p2 == nullptr)
     os << "one or two null values";
   else if (p1 == p2)
     os << "shared long: " << p1->_value ();
@@ -43,7 +35,7 @@ char * Messenger_i::receive_string (
                                     ::demo::value::idl::boxedString * s2)
 {
   std::ostringstream os;
-  if (s1 == 0 || s2 == 0)
+  if (s1 == nullptr || s2 == nullptr)
     os << "one or two null values";
   else if (s1 == s2)
     os << "shared string: " << s1->_value ();
@@ -56,11 +48,11 @@ char * Messenger_i::receive_string (
 char * Messenger_i::receive_list (::demo::value::idl::Node * node)
 {
   std::ostringstream os;
-  typedef ACE_Vector< ::demo::value::idl::Node *> NodeVector;
+  using NodeVector = ACE_Vector< ::demo::value::idl::Node *>;
   NodeVector l;
-  ::demo::value::idl::Node* x = node;
+  ::demo::value::idl::Node *x = node;
 
-  while (x != 0)
+  while (x != nullptr)
   {
     size_t const len = l.size ();
     size_t i = 0;
@@ -84,7 +76,7 @@ char * Messenger_i::receive_list (::demo::value::idl::Node * node)
   for (size_t i = 0; i < len; ++i)
   {
     os << l[i]->id ();
-    if (l[i]->next () != 0)
+    if (l[i]->next () != nullptr)
       os << " ";
   }
   return CORBA::string_dup (os.str().c_str());
@@ -102,7 +94,8 @@ Messenger_i::receive_truncatable (::demo::value::idl::TValue *& v)
 }
 
 char *
-Messenger_i::receive_sequence (const ::demo::value::idl::ConfigValues & v)
+Messenger_i::receive_sequence (
+    ::demo::value::idl::ConfigValues const &v)
 {
   std::ostringstream os;
   os << "valuetype sequence: " << std::endl;
@@ -110,7 +103,7 @@ Messenger_i::receive_sequence (const ::demo::value::idl::ConfigValues & v)
   for (CORBA::ULong i = 0; i < len; ++i)
   {
     os << v[i]->name();
-    const char* str;
+    char const *str = nullptr;
     v[i]->value () >>= str;
     os << " - " << str << std::endl;
   }

@@ -8,30 +8,30 @@
 class Messenger_i : public virtual POA_demo::value::idl::ValueServer
 {
 public:
-  Messenger_i();
+  Messenger_i () = default;
 
-  virtual char * receive_boxedvalue (
-    ::demo::value::idl::boxedValue * b);
+  Messenger_i (Messenger_i const&) = delete;
+  Messenger_i (Messenger_i&&) = delete;
+  Messenger_i& operator= (Messenger_i const&) = delete;
+  Messenger_i& operator= (Messenger_i&&) = delete;
 
-  virtual char * receive_long (
-    ::demo::value::idl::boxedLong * p1,
-    ::demo::value::idl::boxedLong * p2);
+  char *receive_boxedvalue (::demo::value::idl::boxedValue *b) override;
 
-  virtual char * receive_string (
-    ::demo::value::idl::boxedString * s1,
-    ::demo::value::idl::boxedString * s2);
+  char *receive_long (::demo::value::idl::boxedLong *p1,
+                      ::demo::value::idl::boxedLong *p2) override;
 
-  virtual char * receive_list (
-    ::demo::value::idl::Node * node);
+  char *receive_string (::demo::value::idl::boxedString *s1,
+                        ::demo::value::idl::boxedString *s2) override;
 
-  virtual char * receive_truncatable (
-    ::demo::value::idl::TValue *& v);
+  char *receive_list (::demo::value::idl::Node *node) override;
 
-  virtual char * receive_sequence (
-    const ::demo::value::idl::ConfigValues & v);
+  char *receive_truncatable (::demo::value::idl::TValue *&v) override;
+
+  char *receive_sequence (
+      ::demo::value::idl::ConfigValues const &v) override;
 
 protected:
-  virtual ~Messenger_i();
+  ~Messenger_i () override = default;
 };
 
 

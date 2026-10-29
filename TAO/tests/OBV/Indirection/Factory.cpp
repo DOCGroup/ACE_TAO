@@ -8,10 +8,10 @@ NodeFactory::register_new_factory (CORBA::ORB& orb) {
   orb.register_value_factory (id.in (), mf.in ());
 }
 
-CORBA::ValueBase*
+CORBA::ValueBase *
 NodeFactory::create_for_unmarshal ()
 {
-  ::CORBA::ValueBase *ret_val = 0;
+  ::CORBA::ValueBase *ret_val = nullptr;
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_demo::value::idl::Node,
@@ -27,10 +27,10 @@ BoxedValueFactory::register_new_factory (CORBA::ORB& orb) {
   orb.register_value_factory (id.in (), mf.in ());
 }
 
-CORBA::ValueBase*
+CORBA::ValueBase *
 BoxedValueFactory::create_for_unmarshal ()
 {
-  ::CORBA::ValueBase *ret_val = 0;
+  ::CORBA::ValueBase *ret_val = nullptr;
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_demo::value::idl::boxedValue,
@@ -46,10 +46,10 @@ BaseValueFactory::register_new_factory (CORBA::ORB& orb) {
   orb.register_value_factory (id.in (), mf.in ());
 }
 
-CORBA::ValueBase*
+CORBA::ValueBase *
 BaseValueFactory::create_for_unmarshal ()
 {
-  ::CORBA::ValueBase *ret_val = 0;
+  ::CORBA::ValueBase *ret_val = nullptr;
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_demo::value::idl::BaseValue,
@@ -65,10 +65,10 @@ TValueFactory::register_new_factory (CORBA::ORB& orb) {
   orb.register_value_factory (id.in (), mf.in ());
 }
 
-CORBA::ValueBase*
+CORBA::ValueBase *
 TValueFactory::create_for_unmarshal ()
 {
-  ::CORBA::ValueBase *ret_val = 0;
+  ::CORBA::ValueBase *ret_val = nullptr;
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_demo::value::idl::TValue,
@@ -84,10 +84,10 @@ ConfigValueFactory::register_new_factory (CORBA::ORB& orb) {
   orb.register_value_factory (id.in (), mf.in ());
 }
 
-CORBA::ValueBase*
+CORBA::ValueBase *
 ConfigValueFactory::create_for_unmarshal ()
 {
-  ::CORBA::ValueBase *ret_val = 0;
+  ::CORBA::ValueBase *ret_val = nullptr;
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_demo::value::idl::ConfigValue,
@@ -95,7 +95,7 @@ ConfigValueFactory::create_for_unmarshal ()
   return ret_val;
 }
 
-ConfigValueImpl::ConfigValueImpl (const char* name, const char* value)
+ConfigValueImpl::ConfigValueImpl (char const *name, char const *value)
 {
   this->name (name);
   this->value () <<= value;
