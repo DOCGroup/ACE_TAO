@@ -77,8 +77,8 @@ public:
   int handle_input (ACE_HANDLE) override;
   int handle_output (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
   int open (void *) override;
   //@}
 
@@ -86,20 +86,30 @@ public:
   int add_transport_to_cache ();
 
   // UIPMC Additions - Begin
-  const ACE_INET_Addr &addr () const;
+  ACE_INET_Addr const &addr () const;
 
-  void addr (const ACE_INET_Addr &addr);
+  void addr (ACE_INET_Addr const &addr);
 
-  const ACE_INET_Addr &local_addr () const;
+  ACE_INET_Addr const &local_addr () const;
 
-  void local_addr (const ACE_INET_Addr &addr);
+  void local_addr (ACE_INET_Addr const &addr);
 
   /// Set this to listen on all interfaces
   void listen_on_all (bool value);
 
   /// Set this to specify ListenerInterfaces pairs
   /// (Same as -ORBPreferredInterfaces but for listeners)
-  void listener_interfaces (const char *);
+  void listener_interfaces (char const *);
+
+private:
+  TAO_UIPMC_Mcast_Connection_Handler (
+    TAO_UIPMC_Mcast_Connection_Handler const &) = delete;
+  TAO_UIPMC_Mcast_Connection_Handler (
+    TAO_UIPMC_Mcast_Connection_Handler &&) = delete;
+  TAO_UIPMC_Mcast_Connection_Handler & operator= (
+    TAO_UIPMC_Mcast_Connection_Handler const &) = delete;
+  TAO_UIPMC_Mcast_Connection_Handler & operator= (
+    TAO_UIPMC_Mcast_Connection_Handler &&) = delete;
 
 protected:
   // This is always the remote address
@@ -109,7 +119,7 @@ protected:
   ACE_INET_Addr local_addr_;
 
   // Should we listen on all interfaces
-  bool listen_on_all_;
+  bool listen_on_all_ {};
 
   // Which interfaces are to be listening for the group address
   ACE_CString listener_interfaces_;
@@ -120,7 +130,7 @@ protected:
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
-  int handle_write_ready (const ACE_Time_Value *timeout) override;
+  int handle_write_ready (ACE_Time_Value const *timeout) override;
   //@}
 };
 
