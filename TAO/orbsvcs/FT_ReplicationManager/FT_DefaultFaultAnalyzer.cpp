@@ -21,9 +21,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Default constructor.
-TAO::FT_DefaultFaultAnalyzer::FT_DefaultFaultAnalyzer () = default;
-
 /// Destructor.
 TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer () = default;
 
