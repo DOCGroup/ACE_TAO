@@ -27,9 +27,6 @@ TAO::Security::SecurityManager::SecurityManager (/* unknown */)
   this->access_decision_ = ad;
 }
 
-TAO::Security::SecurityManager::~SecurityManager ()
-= default;
-
 Security::MechandOptionsList*
 TAO::Security::SecurityManager::supported_mechanisms ()
 {
@@ -118,15 +115,6 @@ TAO::Security::AccessDecision::ReferenceKeyType::operator char const * () const
 {
   return "<hardcoded refkey>";
 }
-
-TAO::Security::AccessDecision::AccessDecision ()
-  : default_allowance_decision_ (false),
-    default_collocated_decision_ (false)
-{
-}
-
-TAO::Security::AccessDecision::~AccessDecision ()
-= default;
 
 TAO::Security::AccessDecision::OBJECT_KEY
 TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)

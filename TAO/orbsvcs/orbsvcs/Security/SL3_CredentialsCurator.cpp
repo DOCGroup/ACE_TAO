@@ -20,7 +20,7 @@ TAO::SL3::CredentialsCurator::CredentialsCurator ()
 
 TAO::SL3::CredentialsCurator::~CredentialsCurator ()
 {
-  const Factory_Iterator fend = this->acquirer_factories_.end ();
+  Factory_Iterator const fend = this->acquirer_factories_.end ();
   for (Factory_Iterator i = this->acquirer_factories_.begin ();
        i != fend;
        ++i)
@@ -33,7 +33,7 @@ TAO::SL3::CredentialsCurator::~CredentialsCurator ()
 
   this->acquirer_factories_.close ();
 
-  const Credentials_Iterator end = this->credentials_table_.end ();
+  Credentials_Iterator const end = this->credentials_table_.end ();
   for (Credentials_Iterator j = this->credentials_table_.begin ();
        j != end;
        ++j)
@@ -83,9 +83,9 @@ TAO::SL3::CredentialsCurator::supported_methods ()
 
   methods->length (this->acquirer_factories_.current_size ());
 
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
-  const Factory_Iterator end = this->acquirer_factories_.end ();
+  Factory_Iterator const end = this->acquirer_factories_.end ();
   for (Factory_Iterator i = this->acquirer_factories_.begin ();
        i != end;
        ++i)
@@ -130,9 +130,9 @@ TAO::SL3::CredentialsCurator::default_creds_list ()
 
   creds_list->length (this->credentials_table_.current_size ());
 
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
-  const Credentials_Iterator end = this->credentials_table_.end ();
+  Credentials_Iterator const end = this->credentials_table_.end ();
   for (Credentials_Iterator i = this->credentials_table_.begin ();
        i != end;
        ++i)
@@ -160,9 +160,9 @@ TAO::SL3::CredentialsCurator::default_creds_ids ()
 
   creds_ids->length (this->credentials_table_.current_size ());
 
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
-  const Credentials_Iterator end = this->credentials_table_.end ();
+  Credentials_Iterator const end = this->credentials_table_.end ();
   for (Credentials_Iterator i = this->credentials_table_.begin ();
        i != end;
        ++i)
@@ -222,7 +222,7 @@ TAO::SL3::CredentialsCurator:: register_acquirer_factory (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  const int result =
+  int const result =
     this->acquirer_factories_.bind (method.in (), factory);
 
   if (result == 1)  // Entry already exists in table.
