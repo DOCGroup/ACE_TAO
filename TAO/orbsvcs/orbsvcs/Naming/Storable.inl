@@ -61,7 +61,7 @@ TAO_NS_Persistence_Record::id () const
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::id (const ACE_CString& id)
+TAO_NS_Persistence_Record::id (ACE_CString const &id)
 {
   this->id_ = id;
 }
@@ -73,7 +73,7 @@ TAO_NS_Persistence_Record::kind () const
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::kind (const ACE_CString& kind)
+TAO_NS_Persistence_Record::kind (ACE_CString const &kind)
 {
   this->kind_ = kind;
 }
@@ -85,7 +85,7 @@ TAO_NS_Persistence_Record::ref () const
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::ref (const ACE_CString& ref)
+TAO_NS_Persistence_Record::ref (ACE_CString const &ref)
 {
   this->ref_ = ref;
 }

@@ -54,13 +54,13 @@ class TAO_NS_Persistence_Record
   void type (Record_Type type);
 
   ACE_CString id () const;
-  void id (const ACE_CString& id);
+  void id (ACE_CString const &id);
 
   ACE_CString kind () const;
-  void kind (const ACE_CString& kind);
+  void kind (ACE_CString const &kind);
 
   ACE_CString ref () const;
-  void ref (const ACE_CString& ior);
+  void ref (ACE_CString const &ior);
 
  private:
   Record_Type type_;
