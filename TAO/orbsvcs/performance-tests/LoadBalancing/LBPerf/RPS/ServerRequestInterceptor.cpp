@@ -5,10 +5,6 @@ ServerRequestInterceptor::ServerRequestInterceptor ()
 {
 }
 
-ServerRequestInterceptor::~ServerRequestInterceptor ()
-{
-}
-
 char *
 ServerRequestInterceptor::name ()
 {
@@ -54,7 +50,7 @@ ServerRequestInterceptor::send_other (
 CORBA::Long
 ServerRequestInterceptor::request_count ()
 {
-  const CORBA::Long r = this->request_count_.value ();
+  CORBA::Long const r = this->request_count_.value ();
   this->request_count_ = 0;
 
   return r;

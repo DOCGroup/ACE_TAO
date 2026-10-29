@@ -9,10 +9,10 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
-int do_dump_history = 0;
-int do_shutdown = 1;
+bool do_dump_history = false;
+bool do_shutdown = true;
 float rate = 0;
 int number;
 int
@@ -25,11 +25,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'h':
-        do_dump_history = 1;
+        do_dump_history = true;
         break;
 
       case 'x':
-        do_shutdown = 0;
+        do_shutdown = false;
         break;
 
       case 'k':
@@ -67,7 +67,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -169,7 +169,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           roundtrip->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
