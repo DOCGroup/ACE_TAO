@@ -62,7 +62,7 @@ public:
 
   /// Set the capacity alarm thresholds
   virtual void
-    set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds) = 0;
+    set_capacity_alarm_thresholds (DsLogAdmin::CapacityAlarmThresholdList const &thresholds) = 0;
 
   /// Gets the forwarding state
   virtual DsLogAdmin::ForwardingState
@@ -77,7 +77,7 @@ public:
 
   /// Set the log duration.
   virtual void
-    set_interval (const DsLogAdmin::TimeInterval& interval) = 0;
+    set_interval (DsLogAdmin::TimeInterval const &interval) = 0;
 
   /// Get the log full action
   virtual DsLogAdmin::LogFullActionType
@@ -93,7 +93,7 @@ public:
 
   /// Set the list of the QoS properties supported by the log.
   virtual void
-    set_log_qos (const DsLogAdmin::QoSList& qos) = 0;
+    set_log_qos (DsLogAdmin::QoSList const &qos) = 0;
 
   /// Gets the max record life
   virtual CORBA::ULong
@@ -117,7 +117,7 @@ public:
 
   /// Set the weekly scheduling parameters.
   virtual void
-    set_week_mask (const DsLogAdmin::WeekMask& masks) = 0;
+    set_week_mask (DsLogAdmin::WeekMask const &masks) = 0;
 
 
   // = LogRecordStore status methods
@@ -148,7 +148,7 @@ public:
   /// Insert rec into storage.
   /// Returns 0 on success -1 on failure and 1 if the log is full.
   virtual int
-    log (const DsLogAdmin::LogRecord &rec) = 0;
+    log (DsLogAdmin::LogRecord const &rec) = 0;
 
   /// Deletes "old" records from the store.
   virtual int
@@ -157,14 +157,14 @@ public:
   /// Set single record attributes.
   virtual void
     set_record_attribute (DsLogAdmin::RecordId id,
-                          const DsLogAdmin::NVList & attr_list) = 0;
+                          DsLogAdmin::NVList const &attr_list) = 0;
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
   virtual CORBA::ULong
-    set_records_attribute (const char * grammar,
-                           const char * c,
-                           const DsLogAdmin::NVList & attr_list) = 0;
+    set_records_attribute (char const *grammar,
+                           char const *c,
+                           DsLogAdmin::NVList const &attr_list) = 0;
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
@@ -180,8 +180,8 @@ public:
   /// Returns all records in the log that match the given constraint
   /// <c>.
   virtual DsLogAdmin::RecordList*
-    query (const char * grammar,
-           const char * c,
+    query (char const *grammar,
+           char const *c,
            DsLogAdmin::Iterator_out i) = 0;
 
   /// Retrieve <how_many> records from time <from_time> using iterator
@@ -193,24 +193,24 @@ public:
 
   /// Returns the number of records matching constraint <c>.
   virtual CORBA::ULong
-    match (const char * grammar,
-           const char * c) = 0;
+    match (char const *grammar,
+           char const *c) = 0;
 
   /// Delete records matching constraint <c>.
   virtual CORBA::ULong
-    delete_records (const char * grammar,
-                    const char * c) = 0;
+    delete_records (char const *grammar,
+                    char const *c) = 0;
 
   /// Delete records matching ids in <ids>
   virtual CORBA::ULong
-    delete_records_by_id (const DsLogAdmin::RecordIdList & ids) = 0;
+    delete_records_by_id (DsLogAdmin::RecordIdList const &ids) = 0;
 
 
   virtual CORBA::ULong
     remove_old_records () = 0;
 
   /// Read-Write Lock
-  virtual ACE_SYNCH_RW_MUTEX& lock() = 0;
+  virtual ACE_SYNCH_RW_MUTEX &lock () = 0;
 
 protected:
   /// Constructor.

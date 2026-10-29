@@ -237,16 +237,16 @@ protected:
   /// Remove the record from the LogRecordStore.
   void remove_i (LOG_RECORD_STORE_ITER iter);
 
-  DsLogAdmin::RecordList* query_i (const char *constraint,
+  DsLogAdmin::RecordList *query_i (char const *constraint,
                                    DsLogAdmin::Iterator_out &iter_out,
                                    CORBA::ULong how_many);
 
   /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
-  void check_grammar (const char* grammar);
+  void check_grammar (char const *grammar);
 
 
   /// The size of a LogRecord
-  size_t log_record_size(const DsLogAdmin::LogRecord &rec);
+  size_t log_record_size (DsLogAdmin::LogRecord const &rec);
 
   TAO_LogMgr_i*   logmgr_i_;
 
