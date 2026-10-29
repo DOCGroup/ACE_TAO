@@ -23,7 +23,7 @@ TAO_AbstractInterfaceDef_i::def_kind ()
 CORBA::Boolean
 TAO_AbstractInterfaceDef_i::is_a (const char *interface_id)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 

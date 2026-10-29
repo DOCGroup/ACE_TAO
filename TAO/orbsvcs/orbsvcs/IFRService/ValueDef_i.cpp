@@ -585,7 +585,7 @@ TAO_ValueDef_i::abstract_base_values_i (
 CORBA::Boolean
 TAO_ValueDef_i::is_abstract ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 
@@ -624,7 +624,7 @@ TAO_ValueDef_i::is_abstract_i (CORBA::Boolean is_abstract)
 CORBA::Boolean
 TAO_ValueDef_i::is_custom ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 
@@ -663,7 +663,7 @@ TAO_ValueDef_i::is_custom_i (CORBA::Boolean is_custom)
 CORBA::Boolean
 TAO_ValueDef_i::is_truncatable ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 
@@ -702,7 +702,7 @@ TAO_ValueDef_i::is_truncatable_i (CORBA::Boolean is_truncatable)
 CORBA::Boolean
 TAO_ValueDef_i::is_a (const char *id)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 

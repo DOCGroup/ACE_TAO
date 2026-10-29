@@ -366,7 +366,7 @@ TAO_Contained_i::name_exists (const char *name)
                                           root_key,
                                           this->repo_,
                                           CORBA::dk_Repository);
-      return 0;
+      return false;
     }
 
   ACE_TString container_path;
@@ -407,11 +407,11 @@ TAO_Contained_i::name_exists (const char *name)
 
     if (defn_name == name)
       {
-        return 1;
+        return true;
       }
   }
 
-  return 0;
+  return false;
 }
 
 void

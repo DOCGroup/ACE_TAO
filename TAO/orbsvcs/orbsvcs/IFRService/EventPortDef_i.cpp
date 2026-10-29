@@ -89,7 +89,7 @@ TAO_EventPortDef_i::is_a (
     const char *event_id
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 

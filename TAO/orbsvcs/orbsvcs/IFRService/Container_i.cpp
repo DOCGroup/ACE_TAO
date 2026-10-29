@@ -1960,7 +1960,7 @@ TAO_Container_i:: lookup_attr (
         }
     }
 
-  if (exclude_inherited == 0)
+  if (!exclude_inherited)
     {
       ACE_Configuration_Section_Key bases_key;
       status =
@@ -2062,7 +2062,7 @@ TAO_Container_i::lookup_op (
         }
     }
 
-  if (exclude_inherited == 0)
+  if (!exclude_inherited)
     {
       ACE_Configuration_Section_Key bases_key;
       status =

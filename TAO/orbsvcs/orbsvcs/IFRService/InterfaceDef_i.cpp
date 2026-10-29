@@ -293,7 +293,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
 CORBA::Boolean
 TAO_InterfaceDef_i::is_a (const char *interface_id)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 
@@ -305,7 +305,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id)
 {
   if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
-      return 1;
+      return true;
     }
 
   ACE_TString id;
@@ -316,7 +316,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id)
   // Is it our type?
   if (ACE_OS::strcmp (id.fast_rep (), interface_id) == 0)
     {
-      return 1;
+      return true;
     }
 
   // Is it one of our ancestors' types?
@@ -343,13 +343,13 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id)
 
       CORBA::Boolean success = impl.is_a_i (interface_id);
 
-      if (success == 1)
+      if (success)
         {
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::InterfaceDef::FullInterfaceDescription *
@@ -900,7 +900,7 @@ TAO_InterfaceDef_i::interface_contents (
         }
     }
 
-  if (exclude_inherited == 0)
+  if (!exclude_inherited)
     {
       // Must recurse through the base interfaces.
       ACE_Configuration_Section_Key inherited_key;

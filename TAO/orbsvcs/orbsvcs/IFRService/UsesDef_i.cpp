@@ -135,7 +135,7 @@ TAO_UsesDef_i::interface_type_i (
 CORBA::Boolean
 TAO_UsesDef_i::is_multiple ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 
