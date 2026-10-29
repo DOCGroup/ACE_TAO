@@ -22,7 +22,7 @@ TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
   CORBA::ORB_ptr orb,
   TAO::Storable_Factory *persistence_factory,
   TAO_Storable_Naming_Context_Factory *context_impl_factory,
-  const ACE_TCHAR *)
+  ACE_TCHAR const *)
   : orb_(orb),
     persistence_factory_(persistence_factory),
     context_impl_factory_(context_impl_factory)
@@ -37,7 +37,7 @@ TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
 
 PortableServer::Servant
 TAO_Storable_Naming_Context_Activator::incarnate (
-    const PortableServer::ObjectId &oid,
+    PortableServer::ObjectId const &oid,
     PortableServer::POA_ptr poa)
 {
   // Make sure complete initialization has been done
@@ -95,7 +95,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
 
 void
 TAO_Storable_Naming_Context_Activator::etherealize (
-    const PortableServer::ObjectId &/*oid*/,
+    PortableServer::ObjectId const &/*oid*/,
     PortableServer::POA_ptr /*adapter*/,
     PortableServer::Servant servant,
     CORBA::Boolean /*cleanup_in_progress*/,
