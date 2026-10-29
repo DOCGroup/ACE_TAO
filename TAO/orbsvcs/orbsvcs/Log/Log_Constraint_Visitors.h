@@ -48,7 +48,7 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
 {
 public:
   /// Constructor.
-  TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord const & rec);
+  explicit TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord const & rec);
 
   /**
    * Returns 1 if the offer satisfies the constraint

@@ -51,7 +51,7 @@ public:
   TAO_NotifyLogFactory_i ();
 
   /// Constructor.
-  TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
+  explicit TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
 
   /// Destructor.
   ~TAO_NotifyLogFactory_i () override;
