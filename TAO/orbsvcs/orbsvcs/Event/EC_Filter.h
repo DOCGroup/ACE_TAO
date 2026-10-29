@@ -63,8 +63,8 @@ public:
 
   /// Matches two event headers.
   /// @todo Should we strategize the algorithm used to match headers?
-  static int matches (const RtecEventComm::EventHeader& rhs,
-                      const RtecEventComm::EventHeader& lhs);
+  static int matches (RtecEventComm::EventHeader const &rhs,
+                      RtecEventComm::EventHeader const &lhs);
 
   using value_type = TAO_EC_Filter *;
   using const_value_type = TAO_EC_Filter * const;
@@ -92,7 +92,7 @@ public:
    * event.  Then, why is this not enforced by the interface by having
    * EC_ProxyPushSupplier take an event rather than a set?
    */
-  virtual int filter (const RtecEventComm::EventSet& event,
+  virtual int filter (RtecEventComm::EventSet const &event,
                       TAO_EC_QOS_Info& qos_info) = 0;
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
                              TAO_EC_QOS_Info& qos_info) = 0;
@@ -103,7 +103,7 @@ public:
    * Notice that there are two versions of the method, if the event is
    * not const then filter can take ownership of the event.
    */
-  virtual void push (const RtecEventComm::EventSet& event,
+  virtual void push (RtecEventComm::EventSet const &event,
                      TAO_EC_QOS_Info& qos_info) = 0;
   virtual void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info) = 0;
@@ -121,7 +121,7 @@ public:
    * couldn't possibly be interested in their events.
    * The rt_info and
    */
-  virtual int can_match (const RtecEventComm::EventHeader& header) const = 0;
+  virtual int can_match (RtecEventComm::EventHeader const &header) const = 0;
 
   /**
    * This is used for computing the scheduling dependencies:
@@ -136,8 +136,8 @@ public:
    * configurations that do no require scheduling the recursion stops
    * fairly soon.
    */
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info& qos_info) = 0;
+  virtual int add_dependencies (RtecEventComm::EventHeader const &header,
+                                TAO_EC_QOS_Info const &qos_info) = 0;
 
   /**
    * Obtain the QOS information for this filter, the default
@@ -175,19 +175,19 @@ public:
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info) override;
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info) override;
-  virtual void push (const RtecEventComm::EventSet& event,
+  int filter (RtecEventComm::EventSet const &event,
+              TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info) override;
-  virtual void clear () override;
-  virtual CORBA::ULong max_event_size () const override;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info) override;
+  void push (RtecEventComm::EventSet const &event,
+             TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet& event,
+                    TAO_EC_QOS_Info& qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (RtecEventComm::EventHeader const &header) const override;
+  int add_dependencies (RtecEventComm::EventHeader const &header,
+                        TAO_EC_QOS_Info const &qos_info) override;
 };
 
 // ****************************************************************
