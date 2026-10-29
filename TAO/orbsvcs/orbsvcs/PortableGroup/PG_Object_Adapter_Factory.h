@@ -29,10 +29,15 @@ class TAO_PortableGroup_Export TAO_PG_Object_Adapter_Factory : public TAO_Object
 {
 public:
   /// Constructor
-  TAO_PG_Object_Adapter_Factory ();
+  TAO_PG_Object_Adapter_Factory () = default;
+
+  TAO_PG_Object_Adapter_Factory (TAO_PG_Object_Adapter_Factory const &) = delete;
+  TAO_PG_Object_Adapter_Factory (TAO_PG_Object_Adapter_Factory &&) = delete;
+  TAO_PG_Object_Adapter_Factory & operator= (TAO_PG_Object_Adapter_Factory const &) = delete;
+  TAO_PG_Object_Adapter_Factory & operator= (TAO_PG_Object_Adapter_Factory &&) = delete;
 
   /// Create adapter.
-  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
+  TAO_Adapter * create (TAO_ORB_Core * orb_core) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
