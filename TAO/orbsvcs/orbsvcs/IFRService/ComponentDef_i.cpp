@@ -129,7 +129,7 @@ TAO_ComponentDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_ComponentDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -307,7 +307,7 @@ TAO_ComponentDef_i::type_i ()
 CORBA::InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

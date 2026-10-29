@@ -25,7 +25,7 @@ TAO_ConstantDef_i::def_kind ()
 CORBA::Contained::Description *
 TAO_ConstantDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -140,7 +140,7 @@ TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 CORBA::Any *
 TAO_ConstantDef_i::value ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

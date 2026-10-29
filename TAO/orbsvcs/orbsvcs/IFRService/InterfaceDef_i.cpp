@@ -64,7 +64,7 @@ TAO_InterfaceDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_InterfaceDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -166,7 +166,7 @@ TAO_InterfaceDef_i::type_i ()
 CORBA::InterfaceDefSeq *
 TAO_InterfaceDef_i::base_interfaces ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -355,7 +355,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id)
 CORBA::InterfaceDef::FullInterfaceDescription *
 TAO_InterfaceDef_i::describe_interface ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

@@ -24,7 +24,7 @@ TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i () = default;
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

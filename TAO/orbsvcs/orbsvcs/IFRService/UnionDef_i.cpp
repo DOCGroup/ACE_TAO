@@ -182,7 +182,7 @@ TAO_UnionDef_i::discriminator_type_def_i (
 CORBA::UnionMemberSeq *
 TAO_UnionDef_i::members ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

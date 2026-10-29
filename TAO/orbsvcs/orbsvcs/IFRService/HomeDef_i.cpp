@@ -65,7 +65,7 @@ TAO_HomeDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_HomeDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -232,7 +232,7 @@ CORBA::InterfaceDefSeq *
 TAO_HomeDef_i::supported_interfaces (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

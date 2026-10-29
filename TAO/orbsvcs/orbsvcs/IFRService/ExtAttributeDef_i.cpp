@@ -20,7 +20,7 @@ CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -68,7 +68,7 @@ CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::set_exceptions (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -116,7 +116,7 @@ CORBA::ExtAttributeDescription *
 TAO_ExtAttributeDef_i::describe_attribute (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

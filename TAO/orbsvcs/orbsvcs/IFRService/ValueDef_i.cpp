@@ -60,7 +60,7 @@ TAO_ValueDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_ValueDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -113,7 +113,7 @@ TAO_ValueDef_i::type_i ()
 CORBA::InterfaceDefSeq *
 TAO_ValueDef_i::supported_interfaces ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -257,7 +257,7 @@ TAO_ValueDef_i::supported_interfaces_i (
 CORBA::InitializerSeq *
 TAO_ValueDef_i::initializers ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -458,7 +458,7 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
 CORBA::ValueDefSeq *
 TAO_ValueDef_i::abstract_base_values ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -800,7 +800,7 @@ TAO_ValueDef_i::is_a_i (const char *id)
 CORBA::ValueDef::FullValueDescription *
 TAO_ValueDef_i::describe_value ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

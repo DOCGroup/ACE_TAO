@@ -23,7 +23,7 @@ TAO_ProvidesDef_i::def_kind ()
 CORBA::Contained::Description *
 TAO_ProvidesDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
