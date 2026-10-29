@@ -118,16 +118,16 @@ public:
   char * naming_manager_ior ();
 
   virtual int update_object_group (
-    const ::FT_Naming::ObjectGroupUpdate & group_info);
+    ::FT_Naming::ObjectGroupUpdate const & group_info);
 
   virtual int update_naming_context (
-    const ::FT_Naming::NamingContextUpdate & naming_context);
+    ::FT_Naming::NamingContextUpdate const & naming_context);
 
-  void update_ior (FT_Naming::EntityKind, const CORBA::Object_ptr);
-  void combine_iors (FT_Naming::EntityKind, const CORBA::Object_ptr);
+  void update_ior (FT_Naming::EntityKind, CORBA::Object_ptr const);
+  void combine_iors (FT_Naming::EntityKind, CORBA::Object_ptr const);
 
-  const ACE_CString & ft_endpoint ();
-  const ACE_Time_Value & ft_update_delay ();
+  ACE_CString const & ft_endpoint () const;
+  ACE_Time_Value const & ft_update_delay () const;
 
   /// Destroy the child POAs created in @c init_with_orb,
   /// @c init_naming_manager_with_orb, and
@@ -138,7 +138,7 @@ public:
   ~TAO_FT_Naming_Server () override;
 
   void update_info (FT_Naming::UpdateInfoSeq &infos);
-  void update_iors (const FT_Naming::ReplicaInfo & iors);
+  void update_iors (FT_Naming::ReplicaInfo const & iors);
   void update_info_i ();
   void update_iors_i ();
 
