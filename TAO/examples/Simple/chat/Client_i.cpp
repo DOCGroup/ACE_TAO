@@ -19,11 +19,9 @@
 #include "ace/OS_NS_unistd.h"
 
 Client_i::Client_i ()
-  : ior_ ("")
-  , ior_file_name_ (ACE_TEXT ("chat.ior"))
-  , nickname_ ("noname")
+  : nickname_ ("noname")
 {
-  Receiver_i *tmp = 0;
+  Receiver_i *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     Receiver_i (),
                     CORBA::NO_MEMORY ());
@@ -108,7 +106,7 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client_i::init\n");
       return -1;
@@ -151,7 +149,7 @@ Client_i::run ()
       // Run the ORB.
       this->orb_manager_.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_i::run ()");
       return -1;
@@ -165,7 +163,7 @@ Client_i::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  if (ACE_OS::fgets (buf, BUFSIZ, stdin) == 0)
+  if (ACE_OS::fgets (buf, BUFSIZ, stdin) == nullptr)
     return 0;
 
   try
@@ -180,7 +178,7 @@ Client_i::handle_input (ACE_HANDLE)
             {
               this->server_->remove (this->receiver_var_.in ());
             }
-          catch (const CORBA::Exception &)
+          catch (CORBA::Exception const &)
             {
               // we don't care about problems
             }
@@ -194,7 +192,7 @@ Client_i::handle_input (ACE_HANDLE)
       this->server_->say (this->receiver_var_.in (),
                           buf);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Input_Handler::init");
       return -1;
@@ -204,7 +202,7 @@ Client_i::handle_input (ACE_HANDLE)
 }
 
 int
-Client_i::read_ior (const ACE_TCHAR *filename)
+Client_i::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -219,7 +217,7 @@ Client_i::read_ior (const ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();
 
-  if (data == 0)
+  if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Unable to read ior (%p)\n"),
                        ACE_TEXT ("read")),

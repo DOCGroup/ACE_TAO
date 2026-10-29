@@ -12,17 +12,8 @@
 
 #include "Receiver_i.h"
 
-Receiver_i::Receiver_i ()
-  : orb_ (0)
-{
-}
-
-Receiver_i::~Receiver_i ()
-{
-}
-
 void
-Receiver_i::message (const char *msg)
+Receiver_i::message (char const *msg)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (": %C\n"),

@@ -38,25 +38,30 @@ public:
   Broadcaster_i () = default;
 
   /// Destructor.
-  virtual ~Broadcaster_i () = default;
+  ~Broadcaster_i () override = default;
+
+  Broadcaster_i (Broadcaster_i const &) = delete;
+  Broadcaster_i &operator= (Broadcaster_i const &) = delete;
+  Broadcaster_i (Broadcaster_i &&) = delete;
+  Broadcaster_i &operator= (Broadcaster_i &&) = delete;
 
   /// Saves receiver references in a list.
-  virtual void add (Receiver_ptr receiver,
-                    const char *nickname);
+  void add (Receiver_ptr receiver,
+            char const *nickname) override;
 
   /// Removes receiver references from the list.
-  virtual void remove (Receiver_ptr receiver);
+  void remove (Receiver_ptr receiver) override;
 
   /// Called by Broadcaster clients to send messages.
-  virtual void say (Receiver_ptr receiver,
-                    const char *text);
+  void say (Receiver_ptr receiver,
+            char const *text) override;
 
 public:
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
   /// Broadcasts the text to all registered clients.
-  void broadcast (const char* text);
+  void broadcast (char const *text);
 
   /**
    * @class Receiver_Data
@@ -69,7 +74,7 @@ public:
   {
   public:
     /// The == op required by the ACE_Unbounded set.
-    bool operator == (const Receiver_Data &receiver_data) const;
+    bool operator == (Receiver_Data const &receiver_data) const;
 
     /// Stores the receiver reference.
     Receiver_var receiver_;
@@ -78,10 +83,8 @@ public:
     ACE_CString nickname_;
   };
 
-  typedef ACE_Unbounded_Set<Receiver_Data>
-          RECEIVER_SET;
-  typedef ACE_Unbounded_Set_Iterator<Receiver_Data>
-          RECEIVER_SET_ITERATOR;
+  using RECEIVER_SET = ACE_Unbounded_Set<Receiver_Data>;
+  using RECEIVER_SET_ITERATOR = ACE_Unbounded_Set_Iterator<Receiver_Data>;
 
   /// Set of registered clients.
   RECEIVER_SET receiver_set_;

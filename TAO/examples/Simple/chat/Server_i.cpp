@@ -15,18 +15,12 @@
 #include "ace/OS_NS_stdio.h"
 
 Server_i::Server_i ()
-  : ior_file_name_ (ACE_TEXT ("chat.ior"))
 {
-  Broadcaster_i *tmp = 0;
+  Broadcaster_i *tmp = nullptr;
   ACE_NEW_THROW_EX (tmp,
                     Broadcaster_i (),
                     CORBA::NO_MEMORY ());
   this->broadcaster_i_ = tmp;
-}
-
-Server_i::~Server_i ()
-{
-  // NO Op.
 }
 
 int
@@ -97,12 +91,12 @@ Server_i::run ()
 }
 
 int
-Server_i::write_IOR (const char* ior)
+Server_i::write_IOR (char const *ior)
 {
   FILE* ior_output_file_ =
     ACE_OS::fopen (this->ior_file_name_, "w");
 
-  if (ior_output_file_)
+  if (ior_output_file_ != nullptr)
     {
       ACE_OS::fprintf (ior_output_file_,
                        ACE_TEXT ("%s"),
