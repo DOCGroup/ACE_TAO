@@ -222,13 +222,13 @@ protected:
 
   /// Check that valid threshold values have been given.
   static CORBA::Boolean validate_capacity_alarm_thresholds (
-    const DsLogAdmin::CapacityAlarmThresholdList & threshs);
+    DsLogAdmin::CapacityAlarmThresholdList const & threshs);
 
   /// Reset Log QoS
-  void reset_log_qos (const DsLogAdmin::QoSList& qos);
+  void reset_log_qos (DsLogAdmin::QoSList const & qos);
 
   /// Validate log QoS
-  void validate_log_qos (const DsLogAdmin::QoSList& qos);
+  void validate_log_qos (DsLogAdmin::QoSList const & qos);
 
   /// Reset Week Mask
   ///
@@ -236,14 +236,14 @@ protected:
   /// week mask list when the log service starts, and to reinitialize
   /// them when they are changed.
   ///
-  void reset_week_mask (const DsLogAdmin::WeekMask& masks);
+  void reset_week_mask (DsLogAdmin::WeekMask const & masks);
 
   /// Validate Week Mask
   ///
   /// Used to check whether week mask is valid.  If not, throws an
   /// InvalidTime, InvalidTimeInterval, or InvalidMask exception.
   ///
-  void validate_week_mask (const DsLogAdmin::WeekMask& masks);
+  void validate_week_mask (DsLogAdmin::WeekMask const & masks);
 
 protected:
   /// Reference to the LogMgr servant
@@ -306,68 +306,68 @@ private:
 };
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
-           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+operator==(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
+           DsLogAdmin::CapacityAlarmThresholdList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
-           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+operator!=(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
+           DsLogAdmin::CapacityAlarmThresholdList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::IntervalsOfDay& rhs,
-           const DsLogAdmin::IntervalsOfDay& lhs);
+operator==(DsLogAdmin::IntervalsOfDay const & rhs,
+           DsLogAdmin::IntervalsOfDay const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
-           const DsLogAdmin::IntervalsOfDay& lhs);
+operator!=(DsLogAdmin::IntervalsOfDay const & rhs,
+           DsLogAdmin::IntervalsOfDay const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::QoSList& rhs,
-           const DsLogAdmin::QoSList& lhs);
+operator==(DsLogAdmin::QoSList const & rhs,
+           DsLogAdmin::QoSList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::QoSList& rhs,
-           const DsLogAdmin::QoSList& lhs);
+operator!=(DsLogAdmin::QoSList const & rhs,
+           DsLogAdmin::QoSList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::Time24& rhs,
-           const DsLogAdmin::Time24& lhs);
+operator==(DsLogAdmin::Time24 const & rhs,
+           DsLogAdmin::Time24 const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::Time24& rhs,
-           const DsLogAdmin::Time24& lhs);
+operator!=(DsLogAdmin::Time24 const & rhs,
+           DsLogAdmin::Time24 const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::Time24Interval& rhs,
-           const DsLogAdmin::Time24Interval& lhs);
+operator==(DsLogAdmin::Time24Interval const & rhs,
+           DsLogAdmin::Time24Interval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::Time24Interval& rhs,
-           const DsLogAdmin::Time24Interval& lhs);
+operator!=(DsLogAdmin::Time24Interval const & rhs,
+           DsLogAdmin::Time24Interval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::TimeInterval& rhs,
-           const DsLogAdmin::TimeInterval& lhs);
+operator==(DsLogAdmin::TimeInterval const & rhs,
+           DsLogAdmin::TimeInterval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::TimeInterval& rhs,
-           const DsLogAdmin::TimeInterval& lhs);
+operator!=(DsLogAdmin::TimeInterval const & rhs,
+           DsLogAdmin::TimeInterval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::WeekMaskItem& rhs,
-           const DsLogAdmin::WeekMaskItem& lhs);
+operator==(DsLogAdmin::WeekMaskItem const & rhs,
+           DsLogAdmin::WeekMaskItem const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::WeekMaskItem& rhs,
-           const DsLogAdmin::WeekMaskItem& lhs);
+operator!=(DsLogAdmin::WeekMaskItem const & rhs,
+           DsLogAdmin::WeekMaskItem const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::WeekMask& rhs,
-           const DsLogAdmin::WeekMask& lhs);
+operator==(DsLogAdmin::WeekMask const & rhs,
+           DsLogAdmin::WeekMask const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::WeekMask& rhs,
-           const DsLogAdmin::WeekMask& lhs);
+operator!=(DsLogAdmin::WeekMask const & rhs,
+           DsLogAdmin::WeekMask const & lhs);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

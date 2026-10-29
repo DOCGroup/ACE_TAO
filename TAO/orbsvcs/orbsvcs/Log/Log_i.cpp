@@ -125,7 +125,7 @@ TAO_Log_i::get_log_qos ()
 }
 
 void
-TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos)
+TAO_Log_i::set_log_qos (DsLogAdmin::QoSList const &qos)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -485,7 +485,7 @@ TAO_Log_i::get_interval ()
 }
 
 void
-TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval)
+TAO_Log_i::set_interval (DsLogAdmin::TimeInterval const &interval)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -556,7 +556,7 @@ TAO_Log_i::get_availability_status_i ()
   //   * current time falls within one (or more) of the log
   //     scheduling times.
 
-  const CORBA::Boolean s = this->scheduled ();
+  CORBA::Boolean const s = this->scheduled ();
 
   DsLogAdmin::AdministrativeState admin_state =
     this->recordstore_->get_administrative_state ();
@@ -595,7 +595,7 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
                             this->recordstore_->lock (),
                             CORBA::INTERNAL ());
 
-  const CORBA::Boolean validated =
+  CORBA::Boolean const validated =
     TAO_Log_i::validate_capacity_alarm_thresholds (threshs);
 
   if (!validated)
@@ -656,7 +656,7 @@ TAO_Log_i::get_week_mask ()
 }
 
 void
-TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks)
+TAO_Log_i::set_week_mask (DsLogAdmin::WeekMask const &masks)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -693,8 +693,8 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks)
 }
 
 DsLogAdmin::RecordList*
-TAO_Log_i::query (const char *grammar,
-                  const char *constraint,
+TAO_Log_i::query (char const *grammar,
+                  char const *constraint,
                   DsLogAdmin::Iterator_out iter_out)
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
@@ -723,15 +723,15 @@ TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
 }
 
 CORBA::ULong
-TAO_Log_i::match (const char* grammar,
-                  const char *constraint)
+TAO_Log_i::match (char const *grammar,
+                  char const *constraint)
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
                            this->recordstore_->lock (),
                            CORBA::INTERNAL ());
 
-  const CORBA::ULong count =
+  CORBA::ULong const count =
     this->recordstore_->match (grammar,
                                constraint);
 
@@ -739,15 +739,15 @@ TAO_Log_i::match (const char* grammar,
 }
 
 CORBA::ULong
-TAO_Log_i::delete_records (const char *grammar,
-                           const char *constraint)
+TAO_Log_i::delete_records (char const *grammar,
+                           char const *constraint)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             this->recordstore_->lock (),
                             CORBA::INTERNAL ());
 
-  const CORBA::ULong count =
+  CORBA::ULong const count =
     this->recordstore_->delete_records (grammar,
                                         constraint);
 
@@ -755,10 +755,10 @@ TAO_Log_i::delete_records (const char *grammar,
     {
       if (avail_status_.log_full)
         {
-          const CORBA::ULongLong current_size =
+          CORBA::ULongLong const current_size =
             this->recordstore_->get_current_size ();
 
-          const CORBA::ULongLong max_size =
+          CORBA::ULongLong const max_size =
             this->recordstore_->get_max_size ();
 
           if (current_size < max_size)
@@ -774,24 +774,24 @@ TAO_Log_i::delete_records (const char *grammar,
 }
 
 CORBA::ULong
-TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids)
+TAO_Log_i::delete_records_by_id (DsLogAdmin::RecordIdList const &ids)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
                             this->recordstore_->lock (),
                             CORBA::INTERNAL ());
 
-  const CORBA::ULong count =
+  CORBA::ULong const count =
     this->recordstore_->delete_records_by_id (ids);
 
   if (count > 0)
     {
       if (avail_status_.log_full)
         {
-          const CORBA::ULongLong current_size =
+          CORBA::ULongLong const current_size =
             this->recordstore_->get_current_size ();
 
-          const CORBA::ULongLong max_size =
+          CORBA::ULongLong const max_size =
             this->recordstore_->get_max_size ();
 
           if (current_size < max_size)
@@ -807,7 +807,7 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids)
 }
 
 void
-TAO_Log_i::write_records (const DsLogAdmin::Anys &records)
+TAO_Log_i::write_records (DsLogAdmin::Anys const &records)
 {
   // create a record list..
   DsLogAdmin::RecordList reclist (records.length ());
@@ -822,7 +822,7 @@ TAO_Log_i::write_records (const DsLogAdmin::Anys &records)
 }
 
 void
-TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist)
+TAO_Log_i::write_recordlist (DsLogAdmin::RecordList const &reclist)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -903,7 +903,7 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist)
 
 void
 TAO_Log_i::set_record_attribute (DsLogAdmin::RecordId id,
-                                 const DsLogAdmin::NVList &attr_list)
+                                 DsLogAdmin::NVList const &attr_list)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -914,9 +914,9 @@ TAO_Log_i::set_record_attribute (DsLogAdmin::RecordId id,
 }
 
 CORBA::ULong
-TAO_Log_i::set_records_attribute (const char *grammar,
-                                  const char *constraint,
-                                  const DsLogAdmin::NVList
+TAO_Log_i::set_records_attribute (char const *grammar,
+                                  char const *constraint,
+                                  DsLogAdmin::NVList const
                                   &attr_list)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
@@ -979,7 +979,7 @@ TAO_Log_i::scheduled ()
       tv.usec (0);
 
       TimeBase::TimeT nano_sunday =
-        (CORBA::ULongLong) tv.sec () * 10000000;
+        static_cast<CORBA::ULongLong> (tv.sec ()) * 10000000;
 
       for (CORBA::ULong i = 0; i < weekly_intervals_.length (); ++i)
         {
@@ -996,12 +996,12 @@ TAO_Log_i::scheduled ()
 void
 TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log)
 {
-  const DsLogAdmin::LogFullActionType log_full_action =
+  DsLogAdmin::LogFullActionType const log_full_action =
     this->get_log_full_action ();
 
   log->set_log_full_action (log_full_action);
 
-  const CORBA::ULongLong max_size =
+  CORBA::ULongLong const max_size =
     this->get_max_size ();
 
   log->set_max_size (max_size);
@@ -1011,22 +1011,22 @@ TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log)
 
   log->set_log_qos (log_qos.in ());
 
-  const CORBA::ULong max_record_life =
+  CORBA::ULong const max_record_life =
     this->get_max_record_life ();
 
   log->set_max_record_life (max_record_life);
 
-  const DsLogAdmin::AdministrativeState adminstrative_state =
+  DsLogAdmin::AdministrativeState const adminstrative_state =
     this->get_administrative_state ();
 
   log->set_administrative_state (adminstrative_state);
 
-  const DsLogAdmin::ForwardingState forwarding_state =
+  DsLogAdmin::ForwardingState const forwarding_state =
     this->get_forwarding_state ();
 
   log->set_forwarding_state (forwarding_state);
 
-  const DsLogAdmin::TimeInterval interval =
+  DsLogAdmin::TimeInterval const interval =
     this->get_interval ();
 
   log->set_interval (interval);
@@ -1050,17 +1050,17 @@ TAO_Log_i::remove_old_records ()
                             this->recordstore_->lock (),
                             CORBA::INTERNAL ());
 
-  const CORBA::ULong count =
+  CORBA::ULong const count =
     this->recordstore_->remove_old_records ();
 
   if (count > 0)
     {
       if (avail_status_.log_full)
         {
-          const CORBA::ULongLong current_size =
+          CORBA::ULongLong const current_size =
             this->recordstore_->get_current_size ();
 
-          const CORBA::ULongLong max_size =
+          CORBA::ULongLong const max_size =
             this->recordstore_->get_max_size ();
 
           if (current_size < max_size)
@@ -1076,12 +1076,12 @@ TAO_Log_i::remove_old_records ()
 void
 TAO_Log_i::check_capacity_alarm_threshold ()
 {
-  const CORBA::ULongLong max_size =
+  CORBA::ULongLong const max_size =
     this->recordstore_->get_max_size ();
 
   if (max_size != 0 && this->thresholds_.length () > 0)
     {
-      const DsLogAdmin::LogFullActionType log_full_action =
+      DsLogAdmin::LogFullActionType const log_full_action =
         this->recordstore_->get_log_full_action ();
 
       CORBA::ULongLong current_size =
@@ -1089,7 +1089,7 @@ TAO_Log_i::check_capacity_alarm_threshold ()
         ? this->recordstore_->get_gauge ()
         : this->recordstore_->get_current_size ());
 
-      const CORBA::UShort percent =
+      CORBA::UShort const percent =
         static_cast<CORBA::UShort> (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U) /
                                      (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
@@ -1098,7 +1098,7 @@ TAO_Log_i::check_capacity_alarm_threshold ()
         {
           if (notifier_)
             {
-              const DsLogNotification::PerceivedSeverityType severity =
+              DsLogNotification::PerceivedSeverityType const severity =
                 ((percent == 100)
                 ? DsLogNotification::critical
                 : DsLogNotification::minor);
@@ -1137,20 +1137,20 @@ TAO_Log_i::check_capacity_alarm_threshold ()
 void
 TAO_Log_i::reset_capacity_alarm_threshold ()
 {
-  const CORBA::ULongLong max_size =
+  CORBA::ULongLong const max_size =
     this->recordstore_->get_max_size ();
 
   if (max_size != 0 && this->thresholds_.length() > 0)
     {
-      const DsLogAdmin::LogFullActionType log_full_action =
+      DsLogAdmin::LogFullActionType const log_full_action =
         this->recordstore_->get_log_full_action ();
 
       if (log_full_action == DsLogAdmin::halt)
         {
-          const CORBA::ULongLong current_size =
+          CORBA::ULongLong const current_size =
             this->recordstore_->get_current_size ();
 
-          const CORBA::UShort percent =
+          CORBA::UShort const percent =
             static_cast<CORBA::UShort> (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
                                          (double) ACE_UINT64_DBLCAST_ADAPTER (max_size));
 
@@ -1165,7 +1165,7 @@ TAO_Log_i::reset_capacity_alarm_threshold ()
 
 CORBA::Boolean
 TAO_Log_i::validate_capacity_alarm_thresholds (
-    const DsLogAdmin::CapacityAlarmThresholdList & threshs)
+    DsLogAdmin::CapacityAlarmThresholdList const & threshs)
 {
   for (CORBA::ULong i = 0; i < threshs.length (); i++)
     if (threshs[i] > 100)
@@ -1186,7 +1186,7 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
 }
 
 void
-TAO_Log_i::reset_log_qos (const DsLogAdmin::QoSList& qos)
+TAO_Log_i::reset_log_qos (DsLogAdmin::QoSList const & qos)
 {
   // @@ The current revision of the specification (formal/03-07-01)
   // does not clearly define the semantics to follow when the QoSList
@@ -1213,7 +1213,7 @@ TAO_Log_i::reset_log_qos (const DsLogAdmin::QoSList& qos)
 }
 
 void
-TAO_Log_i::validate_log_qos (const DsLogAdmin::QoSList& qos)
+TAO_Log_i::validate_log_qos (DsLogAdmin::QoSList const & qos)
 {
   DsLogAdmin::QoSList denied;
 
@@ -1240,7 +1240,7 @@ TAO_Log_i::validate_log_qos (const DsLogAdmin::QoSList& qos)
 }
 
 void
-TAO_Log_i::reset_week_mask (const DsLogAdmin::WeekMask& masks)
+TAO_Log_i::reset_week_mask (DsLogAdmin::WeekMask const & masks)
 {
   CORBA::ULong count = 0;
   weekly_intervals_.length (100);
@@ -1280,7 +1280,7 @@ TAO_Log_i::reset_week_mask (const DsLogAdmin::WeekMask& masks)
 }
 
 void
-TAO_Log_i::validate_week_mask (const DsLogAdmin::WeekMask& masks)
+TAO_Log_i::validate_week_mask (DsLogAdmin::WeekMask const & masks)
 {
   for (CORBA::ULong i = 0; i < masks.length (); ++i)
     {
@@ -1317,10 +1317,10 @@ TAO_Log_i::validate_week_mask (const DsLogAdmin::WeekMask& masks)
 
 
 bool
-operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
-           const DsLogAdmin::CapacityAlarmThresholdList& lhs)
+operator==(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
+           DsLogAdmin::CapacityAlarmThresholdList const & lhs)
 {
-  const CORBA::ULong length = rhs.length ();
+  CORBA::ULong const length = rhs.length ();
 
   if (length != lhs.length ())
     {
@@ -1339,18 +1339,18 @@ operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
 }
 
 bool
-operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
-           const DsLogAdmin::CapacityAlarmThresholdList& lhs)
+operator!=(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
+           DsLogAdmin::CapacityAlarmThresholdList const & lhs)
 {
   return !(lhs == rhs);
 }
 
 
 bool
-operator==(const DsLogAdmin::IntervalsOfDay& rhs,
-           const DsLogAdmin::IntervalsOfDay& lhs)
+operator==(DsLogAdmin::IntervalsOfDay const & rhs,
+           DsLogAdmin::IntervalsOfDay const & lhs)
 {
-  const CORBA::ULong length = rhs.length ();
+  CORBA::ULong const length = rhs.length ();
 
   if (length != lhs.length ())
     {
@@ -1369,18 +1369,18 @@ operator==(const DsLogAdmin::IntervalsOfDay& rhs,
 }
 
 bool
-operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
-           const DsLogAdmin::IntervalsOfDay& lhs)
+operator!=(DsLogAdmin::IntervalsOfDay const & rhs,
+           DsLogAdmin::IntervalsOfDay const & lhs)
 {
   return !(lhs == rhs);
 }
 
 
 bool
-operator==(const DsLogAdmin::QoSList& rhs,
-           const DsLogAdmin::QoSList& lhs)
+operator==(DsLogAdmin::QoSList const & rhs,
+           DsLogAdmin::QoSList const & lhs)
 {
-  const CORBA::ULong length = rhs.length ();
+  CORBA::ULong const length = rhs.length ();
 
   if (length != lhs.length ())
     {
@@ -1399,82 +1399,82 @@ operator==(const DsLogAdmin::QoSList& rhs,
 }
 
 bool
-operator!=(const DsLogAdmin::QoSList& rhs,
-           const DsLogAdmin::QoSList& lhs)
+operator!=(DsLogAdmin::QoSList const & rhs,
+           DsLogAdmin::QoSList const & lhs)
 {
   return !(lhs == rhs);
 }
 
 
 bool
-operator==(const DsLogAdmin::Time24& rhs,
-           const DsLogAdmin::Time24& lhs)
+operator==(DsLogAdmin::Time24 const & rhs,
+           DsLogAdmin::Time24 const & lhs)
 {
   return (rhs.hour   == lhs.hour &&
           rhs.minute == lhs.minute);
 }
 
 bool
-operator!=(const DsLogAdmin::Time24& rhs,
-           const DsLogAdmin::Time24& lhs)
+operator!=(DsLogAdmin::Time24 const & rhs,
+           DsLogAdmin::Time24 const & lhs)
 {
   return !(lhs == rhs);
 }
 
 
 bool
-operator==(const DsLogAdmin::Time24Interval& rhs,
-           const DsLogAdmin::Time24Interval& lhs)
+operator==(DsLogAdmin::Time24Interval const & rhs,
+           DsLogAdmin::Time24Interval const & lhs)
 {
   return (rhs.start == lhs.start &&
           rhs.stop  == lhs.stop);
 }
 
 bool
-operator!=(const DsLogAdmin::Time24Interval& rhs,
-           const DsLogAdmin::Time24Interval& lhs)
+operator!=(DsLogAdmin::Time24Interval const & rhs,
+           DsLogAdmin::Time24Interval const & lhs)
 {
   return !(lhs == rhs);
 }
 
 
 bool
-operator==(const DsLogAdmin::TimeInterval& rhs,
-           const DsLogAdmin::TimeInterval& lhs)
+operator==(DsLogAdmin::TimeInterval const & rhs,
+           DsLogAdmin::TimeInterval const & lhs)
 {
   return (rhs.start == lhs.start &&
           rhs.stop  == lhs.stop);
 }
 
 bool
-operator!=(const DsLogAdmin::TimeInterval& rhs,
-           const DsLogAdmin::TimeInterval& lhs)
+operator!=(DsLogAdmin::TimeInterval const & rhs,
+           DsLogAdmin::TimeInterval const & lhs)
 {
   return !(lhs == rhs);
 }
 
 
 bool
-operator==(const DsLogAdmin::WeekMaskItem& rhs,
-           const DsLogAdmin::WeekMaskItem& lhs)
+operator==(DsLogAdmin::WeekMaskItem const & rhs,
+           DsLogAdmin::WeekMaskItem const & lhs)
 {
   return (rhs.days      == lhs.days &&
           rhs.intervals == lhs.intervals);
 }
 
 bool
-operator!=(const DsLogAdmin::WeekMaskItem& rhs,
-           const DsLogAdmin::WeekMaskItem& lhs)
+operator!=(DsLogAdmin::WeekMaskItem const & rhs,
+           DsLogAdmin::WeekMaskItem const & lhs)
 {
   return !(lhs == rhs);
 }
 
 
 bool
-operator==(const DsLogAdmin::WeekMask& rhs,
-           const DsLogAdmin::WeekMask& lhs)
+operator==(DsLogAdmin::WeekMask const & rhs,
+           DsLogAdmin::WeekMask const & lhs)
 {
-  const CORBA::ULong length = rhs.length ();
+  CORBA::ULong const length = rhs.length ();
 
   if (length != lhs.length ())
     {
@@ -1493,8 +1493,8 @@ operator==(const DsLogAdmin::WeekMask& rhs,
 }
 
 bool
-operator!=(const DsLogAdmin::WeekMask& rhs,
-           const DsLogAdmin::WeekMask& lhs)
+operator!=(DsLogAdmin::WeekMask const & rhs,
+           DsLogAdmin::WeekMask const & lhs)
 {
   return !(lhs == rhs);
 }
