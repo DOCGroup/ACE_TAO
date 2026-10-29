@@ -30,7 +30,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Not needed for ORB-created typecodes
       // (see CORBA 2.4.2 section 10.7.3).
       foo_members[0].type_def = CORBA::IDLType::_nil ();
-      CORBA::Short label_value = 3;
+      CORBA::Short label_value {3};
       foo_members[0].label <<= label_value;
 
       foo_members[1].name = CORBA::string_dup ("foo_str_member");
@@ -60,7 +60,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       label_value = 0;
       foo_members[4].label <<= label_value;
 
-      CORBA::TypeCode_ptr foo_tc = orb->create_union_tc ("IDL:foo:1.0",
+      CORBA::TypeCode_var foo_tc = orb->create_union_tc ("IDL:foo:1.0",
                                                           "foo",
                                                           CORBA::_tc_short,
                                                           foo_members);
@@ -77,7 +77,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       bar_members[1].name = CORBA::string_dup ("bar_foo_member");
 
-      bar_members[1].type = foo_tc;
+      bar_members[1].type = foo_tc.in ();
 
       bar_members[1].type_def = CORBA::IDLType::_nil ();
 
