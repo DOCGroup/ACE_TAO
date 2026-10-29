@@ -32,7 +32,7 @@ BE_init (int &, ACE_TCHAR *[])
 }
 
 void
-BE_post_init (char *[], long)
+BE_post_init (std::vector<std::string> const &)
 {
   annotation_tests ();
 }

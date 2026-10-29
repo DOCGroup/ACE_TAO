@@ -443,16 +443,12 @@ annotation_tests ()
     if (annotation->annotation_decl () != test_annotation_1)
       {
         UTL_ScopedName *scopedname = annotation->name ();
-        const char *name = scopedname ?
-          scopedname-> get_string_copy () : "UNKNOWN";
+        std::string const name = scopedname ?
+          scopedname->get_string_copy () : "UNKNOWN";
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for test_seq_t base type to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_.c_str (), name));
-        if (scopedname)
-          {
-            delete [] name;
-          }
+          t.name_.c_str (), name.c_str ()));
         t.failed ();
       }
   } catch (Failed const &) {}
@@ -573,16 +569,12 @@ annotation_tests ()
     if (annotation->annotation_decl () != test_annotation_1)
       {
         UTL_ScopedName *scopedname = annotation->name ();
-        const char *name = scopedname ?
-          scopedname-> get_string_copy () : "UNKNOWN";
+        std::string const name = scopedname ?
+          scopedname->get_string_copy () : "UNKNOWN";
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for test_union discriminator to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_.c_str (), name));
-        if (scopedname)
-          {
-            delete [] name;
-          }
+          t.name_.c_str (), name.c_str ()));
         t.failed ();
       }
 
@@ -765,16 +757,12 @@ annotation_tests ()
     if (annotation->annotation_decl () != test_annotation_1)
       {
         UTL_ScopedName *scopedname = annotation->name ();
-        const char *name = scopedname ?
-          scopedname-> get_string_copy () : "UNKNOWN";
+        std::string const name = scopedname ?
+          scopedname->get_string_copy () : "UNKNOWN";
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for struct12Array base type to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_.c_str (), name));
-        if (scopedname)
-          {
-            delete [] name;
-          }
+          t.name_.c_str (), name.c_str ()));
         t.failed ();
       }
   } catch (Failed const &) {}
