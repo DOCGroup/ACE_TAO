@@ -20,9 +20,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if(argc < 2 )
+      if (argc < 2)
         {
-          ACE_ERROR_RETURN((LM_ERROR,
+          ACE_ERROR_RETURN ((LM_ERROR,
                             "Usage:\n  %s [corbaname URL]\n",
                             argv[0]),
                            1);
@@ -48,20 +48,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       CORBA::Boolean ret_value =
         factory->print_status ();
 
-      if (ret_value != 0)
+      if (ret_value)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "The server has not been contacted. Error!!\n",
-                      0));
+                      "The server has not been contacted. Error!!\n"));
         }
 
       return 0;
     }
-  catch (const CORBA::SystemException&)
+  catch (CORBA::SystemException const &)
     {
       //
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
     }

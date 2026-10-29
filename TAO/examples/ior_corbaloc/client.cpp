@@ -19,20 +19,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     {
       IOR_corbaloc_Client_i client;
 
-      int init_result;
-      init_result = client.init (argc, argv);
-
-        if (init_result == 0)
-          {
-            client.run ();
-          }
-        return 0;
+      if (client.init (argc, argv) == 0)
+        {
+          client.run ();
+        }
+      return 0;
     }
-  catch (const CORBA::SystemException&)
+  catch (CORBA::SystemException const &)
     {
       //
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
     }

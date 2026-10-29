@@ -30,8 +30,13 @@ class IOR_corbaloc_Client_i
 {
  public:
   // = Constructor and destructor.
-  IOR_corbaloc_Client_i ();
-  ~IOR_corbaloc_Client_i ();
+  IOR_corbaloc_Client_i () = default;
+  ~IOR_corbaloc_Client_i () = default;
+
+  IOR_corbaloc_Client_i (IOR_corbaloc_Client_i const &) = delete;
+  IOR_corbaloc_Client_i &operator= (IOR_corbaloc_Client_i const &) = delete;
+  IOR_corbaloc_Client_i (IOR_corbaloc_Client_i &&) = delete;
+  IOR_corbaloc_Client_i &operator= (IOR_corbaloc_Client_i &&) = delete;
 
   /// Execute the client example code.
   int run ();
@@ -44,7 +49,7 @@ class IOR_corbaloc_Client_i
   ACE_TString corbaloc_url_;
 
   /// Naming context
-  CosNaming::NamingContextExt_var naming_context_;
+  CosNaming::NamingContextExt_var naming_context_ {};
 };
 
 #endif /* IOR_CORBALOC_CLIENT_I_H */
