@@ -54,7 +54,7 @@ public:
    * the @a event_channel argument.
    * In any case it assumes ownership.
    */
-  TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
+  explicit TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
 
   /// Destructor...
   ~TAO_CEC_ConsumerAdmin () override = default;

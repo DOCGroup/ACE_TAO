@@ -37,7 +37,7 @@ class TAO_Event_Serv_Export TAO_CEC_TypedConsumerAdmin
 {
 public:
   // Constructor
-  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
+  explicit TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
 
   // Destructor
   ~TAO_CEC_TypedConsumerAdmin () override = default;

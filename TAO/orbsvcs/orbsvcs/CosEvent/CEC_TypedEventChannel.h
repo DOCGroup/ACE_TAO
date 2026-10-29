@@ -364,7 +364,7 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_Operation_Params
 {
   /// constructor
-  TAO_CEC_Operation_Params (CORBA::ULong num_params);
+  explicit TAO_CEC_Operation_Params (CORBA::ULong num_params);
   /// destructor
   ~TAO_CEC_Operation_Params ();
 
