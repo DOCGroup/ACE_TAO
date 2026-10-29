@@ -42,14 +42,14 @@ struct TAO_RTSched_Export TAO_RT_Info_Ex
   TAO_RT_Info_Ex ();
   // Default Constructor.
 
-  TAO_RT_Info_Ex (const RtecScheduler::RT_Info &);
+  explicit TAO_RT_Info_Ex (RtecScheduler::RT_Info const &);
   // Constructor from an RT_Info
   // (also serves as a copy constructor).
 
-  virtual ~TAO_RT_Info_Ex ();
+  virtual ~TAO_RT_Info_Ex () = default;
   // Destructor.
 
-  void operator = (const RtecScheduler::RT_Info &);
+  void operator = (RtecScheduler::RT_Info const &);
   // Assignment operator with an RT_Info on the RHS.
 
   virtual void reset (u_long reset_flags);
@@ -59,7 +59,7 @@ struct TAO_RTSched_Export TAO_RT_Info_Ex
   virtual void enabled_state (RtecScheduler::RT_Info_Enabled_Type_t);
   // Sets the info and underlying entry's enable states.
 
-  virtual RtecScheduler::RT_Info_Enabled_Type_t enabled_state ();
+  virtual RtecScheduler::RT_Info_Enabled_Type_t enabled_state () const;
   // Returns the info's enable state.
 };
 
@@ -76,23 +76,23 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
   //   which offers improved performance compared to admission control
   //   outside the scheduler.
 {
-  TAO_RT_Info_Tuple ();
+  TAO_RT_Info_Tuple () = default;
   // Default Constructor.
 
-  TAO_RT_Info_Tuple (const RtecScheduler::RT_Info &);
+  explicit TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &);
   // Constructor from an RT_Info.
   // (also serves as a copy constructor).
 
-  virtual ~TAO_RT_Info_Tuple ();
+  ~TAO_RT_Info_Tuple () override;
   // Destructor.
 
-  void operator = (const RtecScheduler::RT_Info &);
+  void operator = (RtecScheduler::RT_Info const &);
   // Assignment operator with an RT_Info on the RHS.
 
-  bool operator < (const TAO_RT_Info_Tuple &t);
+  bool operator < (TAO_RT_Info_Tuple const &t) const;
   // Less-than comparison operator: orders tuples by ascending rate (descending period).
 
-  u_long rate_index;
+  u_long rate_index {};
   // Index of the tuple in the operation's ordered available rates
 };
 
@@ -422,7 +422,7 @@ public:
   TAO_RSE_Reset_Visitor ();
 
   /// Destructor.
-  virtual ~TAO_RSE_Reset_Visitor () {}
+  ~TAO_RSE_Reset_Visitor () override = default;
 
   /// Resets the fields in the entry to pre-DFS traversal states.
   /// Returns 0 on success and -1 on error.

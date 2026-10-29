@@ -22,8 +22,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-const ACE_Scheduler::mode_t ACE_Scheduler::CURRENT_MODE = 0xFFFFFFFF;
-
 ACE_Scheduler *ACE_Scheduler::instance_ = nullptr;
 
 
@@ -34,7 +32,7 @@ ACE_Scheduler *ACE_Scheduler::instance_ = nullptr;
 ///////////////////////////////////////////////////////////////////////////////
 
 void
-ACE_Scheduler::output (FILE *file, const status_t status)
+ACE_Scheduler::output (FILE *file, status_t status)
 {
   switch (status)
   {
@@ -100,16 +98,6 @@ ACE_Scheduler::output (FILE *file, const status_t status)
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-ACE_Scheduler::ACE_Scheduler ()
-{
-}
-
-
-ACE_Scheduler::~ACE_Scheduler ()
-{
-}
-
-
 // ************************************************************
 
 ACE_Scheduler::status_t
@@ -173,8 +161,8 @@ int ACE_Scheduler::number_of_dependencies(RT_Info& rt_info)
   return rt_info.dependencies.length();
 }
 
-int ACE_Scheduler::add_dependency(RT_Info* rt_info,
-                              const Dependency_Info& d)
+int ACE_Scheduler::add_dependency (RT_Info *rt_info,
+                                   Dependency_Info const &d)
 {
   // ORBSVCS_DEBUG ((LM_DEBUG, "Sched (%t) adding dependency to: %s\n",
   //              (const char*)rt_info->entry_point));
@@ -227,7 +215,7 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 }
 
 int
-ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
+ACE_Scheduler::dispatch_configuration (Preemption_Priority const &p_priority,
                                        OS_Thread_Priority & priority,
                                        Dispatching_Type & d_type)
 {

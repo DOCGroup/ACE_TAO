@@ -51,7 +51,7 @@ TAO_RT_Info_Ex::TAO_RT_Info_Ex ()
 // Constructor from an RT_Info
 // (Also serves as a copy constructor)
 
-TAO_RT_Info_Ex::TAO_RT_Info_Ex (const RtecScheduler::RT_Info &info)
+TAO_RT_Info_Ex::TAO_RT_Info_Ex (RtecScheduler::RT_Info const &info)
 {
   this->entry_point = info.entry_point;
   this->handle = info.handle;
@@ -72,16 +72,10 @@ TAO_RT_Info_Ex::TAO_RT_Info_Ex (const RtecScheduler::RT_Info &info)
 }
 
 
-// Destructor.
-TAO_RT_Info_Ex::~TAO_RT_Info_Ex ()
-{
-}
-
-
 // Assignment operator with an RT_Info on the RHS.
 
 void
-TAO_RT_Info_Ex::operator = (const RtecScheduler::RT_Info &info)
+TAO_RT_Info_Ex::operator = (RtecScheduler::RT_Info const &info)
 {
   // IMPORTANT: we don't copy the name or the handle or the output
   // attributes or the volatile token (entry pointer) or the valid
@@ -161,7 +155,7 @@ TAO_RT_Info_Ex::enabled_state (RtecScheduler::RT_Info_Enabled_Type_t enabled_in)
 }
 
 RtecScheduler::RT_Info_Enabled_Type_t
-TAO_RT_Info_Ex::enabled_state ()
+TAO_RT_Info_Ex::enabled_state () const
 {
   return this->enabled;
 }
@@ -171,33 +165,23 @@ TAO_RT_Info_Ex::enabled_state ()
 // struct TAO_RT_Info_Tuple //
 //////////////////////////////
 
-// Default Constructor.
-TAO_RT_Info_Tuple::TAO_RT_Info_Tuple ()
-  : rate_index (0)
-{
-}
-
-
 // Constructor from an RT_Info.
 // (Also serves as a copy constructor)
 
-TAO_RT_Info_Tuple::TAO_RT_Info_Tuple (const RtecScheduler::RT_Info &info)
-  : TAO_RT_Info_Ex (info),
-    rate_index (0)
+TAO_RT_Info_Tuple::TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &info)
+  : TAO_RT_Info_Ex (info)
 {
 }
 
 // Destructor.
 
-TAO_RT_Info_Tuple::~TAO_RT_Info_Tuple ()
-{
-}
+TAO_RT_Info_Tuple::~TAO_RT_Info_Tuple () = default;
 
 
 // Assignment operator with an RT_Info on the RHS.
 
 void
-TAO_RT_Info_Tuple::operator = (const RtecScheduler::RT_Info &info)
+TAO_RT_Info_Tuple::operator = (RtecScheduler::RT_Info const &info)
 {
   static_cast<TAO_RT_Info_Ex> (*this) = info;
 }
@@ -206,7 +190,7 @@ TAO_RT_Info_Tuple::operator = (const RtecScheduler::RT_Info &info)
 // Less-than comparison operator: orders tuples by ascending rate (descending period).
 
 bool
-TAO_RT_Info_Tuple::operator < (const TAO_RT_Info_Tuple &t)
+TAO_RT_Info_Tuple::operator < (TAO_RT_Info_Tuple const &t) const
 {
   return (this->period > t.period) ? true : false;
 }

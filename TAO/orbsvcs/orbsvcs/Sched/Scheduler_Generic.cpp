@@ -30,9 +30,9 @@ struct Mode_Entry
 
   Mode_Entry () = default;
 
-  Mode_Entry (RtecScheduler::RT_Info * const rt_info,
-             const u_long start_time = 0,
-             const u_long stop_time = 0) :
+  Mode_Entry (RtecScheduler::RT_Info *rt_info,
+             u_long start_time = 0,
+             u_long stop_time = 0) :
     rt_info_ (rt_info),
     start_time_ (start_time),
     stop_time_ (stop_time)
@@ -41,7 +41,7 @@ struct Mode_Entry
 
   ~Mode_Entry () = default;
 
-  Mode_Entry &operator= (const Mode_Entry &) = default;
+  Mode_Entry &operator= (Mode_Entry const &) = default;
 };
 
 
@@ -121,7 +121,7 @@ Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
 
 Scheduler::status_t
 Scheduler_Generic::register_task (RT_Info *rt_info [],
-                                   const u_int number_of_modes,
+                                   u_int number_of_modes,
                                    handle_t &handle)
 {
   status_t ret;
@@ -174,8 +174,8 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
 
 
 void
-Scheduler_Generic::init (const int minimum_priority,
-                          const int maximum_priority,
+Scheduler_Generic::init (int minimum_priority,
+                          int maximum_priority,
                           char const *runtime_filename,
                           char const *rt_info_filename,
                           char const *timeline_filename)
@@ -214,11 +214,11 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &
 
 
 int
-Scheduler_Generic::priority (const handle_t /* handle */,
+Scheduler_Generic::priority (handle_t /* handle */,
                              OS_Thread_Priority &priority,
                              Sub_Priority &subpriority,
                              Preemption_Priority &preemption_prio,
-                             const mode_t /* requested_mode */) const
+                             mode_t /* requested_mode */) const
 {
   priority = minimum_priority_;
   subpriority = ACE_Scheduler_MIN_SUB_PRIORITY;

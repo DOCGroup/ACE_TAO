@@ -34,15 +34,15 @@ public:
   ~Scheduler_Generic () override;
 
   // = Initialize the scheduler.
-  void init (const int minimum_priority,
-             const int maximum_priority,
+  void init (int minimum_priority,
+             int maximum_priority,
              char const *runtime_filename = nullptr,
              char const *rt_info_filename = nullptr,
              char const *timeline_filename = nullptr) override;
 
   // = Registers a task.
   status_t register_task (RT_Info *[],
-                          const u_int number_of_modes,
+                          u_int number_of_modes,
                           handle_t &handle) override;
 
   /// Obtains an RT_Info based on its "handle".
@@ -64,11 +64,11 @@ public:
    * as the relative ordering (due to dependencies) within the priority.
    * Returns 0 on success, or 1 if an invalid mode or handle are supplied.
    */
-  int priority (const handle_t handle,
+  int priority (handle_t handle,
                 OS_Thread_Priority &priority,
                 Sub_Priority &subpriority,
                 Preemption_Priority &preemption_prio,
-                const mode_t = CURRENT_MODE) const override;
+                mode_t = CURRENT_MODE) const override;
 
 private:
   /// The number of task handles dispensed so far.
@@ -125,9 +125,9 @@ private:
   /// Display the schedule, task-by-task.
   void print_schedule ();
 
-  Scheduler_Generic (const Scheduler_Generic &) = delete;
+  Scheduler_Generic (Scheduler_Generic const &) = delete;
   Scheduler_Generic (Scheduler_Generic &&) = delete;
-  Scheduler_Generic &operator= (const Scheduler_Generic &) = delete;
+  Scheduler_Generic &operator= (Scheduler_Generic const &) = delete;
   Scheduler_Generic &operator= (Scheduler_Generic &&) = delete;
 };
 
