@@ -1750,7 +1750,7 @@ TAO_ValueDef_i::value_contents (
         }
     }
 
-  if (exclude_inherited == 0)
+  if (!exclude_inherited)
     {
       // Must recurse through the base value.
       ACE_Configuration_Section_Key base_key;

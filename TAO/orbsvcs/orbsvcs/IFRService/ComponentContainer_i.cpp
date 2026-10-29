@@ -25,7 +25,7 @@ TAO_ComponentContainer_i::create_component (
     const char *name,
     const char *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces
+    CORBA::InterfaceDefSeq const &supports_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
@@ -45,7 +45,7 @@ TAO_ComponentContainer_i::create_component_i (
     const char *name,
     const char *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces
+    CORBA::InterfaceDefSeq const &supports_interfaces
   )
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
@@ -140,7 +140,7 @@ TAO_ComponentContainer_i::create_home (
     const char *version,
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces,
+    CORBA::InterfaceDefSeq const &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
   )
 {
@@ -164,7 +164,7 @@ TAO_ComponentContainer_i::create_home_i (
     const char *version,
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces,
+    CORBA::InterfaceDefSeq const &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
   )
 {
@@ -260,9 +260,9 @@ TAO_ComponentContainer_i::create_event (
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::ExtInitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::ExtInitializerSeq const &initializers
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
@@ -290,9 +290,9 @@ TAO_ComponentContainer_i::create_event_i (
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::ExtInitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::ExtInitializerSeq const &initializers
   )
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
