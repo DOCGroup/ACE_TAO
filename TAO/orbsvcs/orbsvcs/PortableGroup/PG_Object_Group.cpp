@@ -20,30 +20,28 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Object_Group::MemberInfo::MemberInfo (
     CORBA::Object_ptr member,
-    const PortableGroup::Location & location)
+    PortableGroup::Location const & location)
   : member_ (CORBA::Object::_duplicate (member))
-  , factory_(PortableGroup::GenericFactory::_nil ())
+  , factory_ (PortableGroup::GenericFactory::_nil ())
   , location_ (location)
-  , is_primary_ (false)
 {
 }
 
 TAO::PG_Object_Group::MemberInfo::MemberInfo (
     CORBA::Object_ptr member,
-    const PortableGroup::Location & location,
+    PortableGroup::Location const & location,
     PortableGroup::GenericFactory_ptr factory,
     PortableGroup::GenericFactory::FactoryCreationId factory_id)
   : member_ (CORBA::Object::_duplicate (member))
   , factory_ (PortableGroup::GenericFactory::_duplicate (factory))
   , factory_id_ (factory_id)
   , location_ (location)
-  , is_primary_ (false)
 {
 }
 
 TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
 {
-  if( ! CORBA::is_nil (this->factory_.in()))
+  if (!CORBA::is_nil (this->factory_.in ()))
     {
       this->factory_->delete_object (this->factory_id_);
     }
@@ -55,25 +53,21 @@ TAO::PG_Object_Group::PG_Object_Group (
   PortableGroup::FactoryRegistry_ptr factory_registry,
   TAO::PG_Object_Group_Manipulator & manipulator,
   CORBA::Object_ptr empty_group,
-  const PortableGroup::TagGroupTaggedComponent & tagged_component,
-  const char * type_id,
-  const PortableGroup::Criteria & the_criteria,
-  const TAO::PG_Property_Set_var & type_properties)
+  PortableGroup::TagGroupTaggedComponent const & tagged_component,
+  char const * type_id,
+  PortableGroup::Criteria const & the_criteria,
+  TAO::PG_Property_Set_var const & type_properties)
   : internals_()
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , distribute_ (true)
   , role_ (type_id)
   , type_id_ (type_id)
   , tagged_component_ (tagged_component)
   , reference_ (CORBA::Object::_duplicate(empty_group))
-  , group_name_ (nullptr)
   , members_ ()
   , primary_location_(0)
   , properties_ (the_criteria, type_properties)
-  , initial_number_members_ (0)
-  , minimum_number_members_ (0)
   , group_specific_factories_ ()
 {
 }
@@ -86,17 +80,13 @@ TAO::PG_Object_Group::PG_Object_Group (
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
   , manipulator_ (manipulator)
-  , distribute_ (true)
   , role_ ("")
   , type_id_ ()
   , tagged_component_ ()
   , reference_ (CORBA::Object::_nil ())
-  , group_name_ (nullptr)
   , members_ ()
   , primary_location_(0)
   , properties_ ()
-  , initial_number_members_ (0)
-  , minimum_number_members_ (0)
   , group_specific_factories_ ()
 {
 }
@@ -152,7 +142,7 @@ TAO::PG_Object_Group::get_group_specific_factories (
   result = this->group_specific_factories_;
 }
 
-const PortableGroup::Location &
+PortableGroup::Location const &
 TAO::PG_Object_Group::get_primary_location ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -205,7 +195,7 @@ TAO::PG_Object_Group::add_member_to_iogr (CORBA::Object_ptr member)
 }
 
 void
-TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
+TAO::PG_Object_Group::add_member (PortableGroup::Location const & the_location,
                                   CORBA::Object_ptr member)
 
 {
@@ -232,13 +222,13 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 
   // Verify that the member is not using V1.0 profiles
   // since IIOP V1.0 does not support tagged components
-  const TAO_MProfile &member_profiles =
+  TAO_MProfile const & member_profiles =
     member->_stubobj ()->base_profiles ();
-  CORBA::ULong member_profile_count =
+  CORBA::ULong const member_profile_count =
     member_profiles.profile_count ();
   if (member_profile_count > 0)
     {
-      const TAO_GIOP_Message_Version & version =
+      TAO_GIOP_Message_Version const & version =
         member_profiles.get_profile (0)->version ();
       if (version.major_version () == 1 &&
           version.minor_version () == 0)
@@ -264,11 +254,11 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
     new_reference =
       this->add_member_to_iogr (member);
   }
-  catch (const TAO_IOP::Duplicate&)
+  catch (TAO_IOP::Duplicate const &)
     {
       throw PortableGroup::MemberAlreadyPresent ();
     }
-  catch (const TAO_IOP::Invalid_IOR&)
+  catch (TAO_IOP::Invalid_IOR const &)
     {
       throw PortableGroup::ObjectNotAdded ();
     }
@@ -330,17 +320,17 @@ TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
 int
 TAO::PG_Object_Group::set_primary_member (
     TAO_IOP::TAO_IOR_Property * prop,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->internals_,
                     0);
-  int result = 1;
+  int result { 1 };
   MemberInfo * info = nullptr;
   if (this->members_.find (the_location, info) == 0)
     {
-      int cleared = 0;
+      int cleared {};
       this->primary_location_ = the_location;
       for (MemberMap_Iterator it = this->members_.begin ();
            !cleared && it != this->members_.end ();
@@ -403,7 +393,7 @@ TAO::PG_Object_Group::set_primary_member (
 
 void
 TAO::PG_Object_Group::remove_member (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   MemberInfo * info = nullptr;
@@ -459,7 +449,7 @@ TAO::PG_Object_Group::get_object_group_id () const
 
 void
 TAO::PG_Object_Group::set_properties_dynamically (
-    const PortableGroup::Properties & overrides)
+    PortableGroup::Properties const & overrides)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -495,7 +485,7 @@ int
 TAO::PG_Object_Group::increment_version ()
 {
   // assume internals is locked
-  int result = 0;
+  int result {};
   this->tagged_component_.object_group_ref_version += 1;
   if (TAO_debug_level > 3)
     {
@@ -564,7 +554,7 @@ TAO::PG_Object_Group::distribute_iogr ()
                                             this->tagged_component_.object_group_ref_version,
                                             info->is_primary_);
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // we expect an exception
               // tao_update_object_group is not a real method
@@ -591,7 +581,7 @@ TAO::PG_Object_Group::locations_of_members ()
 
   PortableGroup::Locations * result = nullptr;
 
-  CORBA::ULong count = static_cast<CORBA::ULong> (this->members_.current_size ());
+  CORBA::ULong const count = static_cast<CORBA::ULong> (this->members_.current_size ());
 
   ACE_NEW_THROW_EX (
     result,
@@ -600,12 +590,12 @@ TAO::PG_Object_Group::locations_of_members ()
 
   result->length (count);
 
-  CORBA::ULong pos = 0;
+  CORBA::ULong pos {};
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
       ++it)
   {
-    const PortableGroup::Location & location = (*it).ext_id_;
+    PortableGroup::Location const & location = (*it).ext_id_;
     PortableGroup::Location & out = (*result)[pos];
     out = location;
     ++pos;
@@ -615,7 +605,7 @@ TAO::PG_Object_Group::locations_of_members ()
 
 CORBA::Object_ptr
 TAO::PG_Object_Group::get_member_reference (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -640,7 +630,7 @@ TAO::PG_Object_Group::get_member_reference (
 PortableGroup::MembershipStyleValue
 TAO::PG_Object_Group::get_membership_style () const
 {
-  PortableGroup::MembershipStyleValue membership_style = 0;
+  PortableGroup::MembershipStyleValue membership_style {};
   if (!TAO::find (properties_,
                   PortableGroup::PG_MEMBERSHIP_STYLE,
                   membership_style))
@@ -654,7 +644,7 @@ TAO::PG_Object_Group::get_membership_style () const
 PortableGroup::MinimumNumberMembersValue
 TAO::PG_Object_Group::get_minimum_number_members () const
 {
-  PortableGroup::MinimumNumberMembersValue minimum_number_members = 0;
+  PortableGroup::MinimumNumberMembersValue minimum_number_members {};
   if (!TAO::find (properties_,
                   PortableGroup::PG_MINIMUM_NUMBER_MEMBERS,
                   minimum_number_members))
@@ -667,7 +657,7 @@ TAO::PG_Object_Group::get_minimum_number_members () const
 PortableGroup::InitialNumberMembersValue
 TAO::PG_Object_Group::get_initial_number_members () const
 {
-  PortableGroup::InitialNumberMembersValue initial_number_members = 0;
+  PortableGroup::InitialNumberMembersValue initial_number_members {};
   if (!TAO::find (properties_,
                   PortableGroup::PG_INITIAL_NUMBER_MEMBERS,
                   initial_number_members))
@@ -679,9 +669,9 @@ TAO::PG_Object_Group::get_initial_number_members () const
 
 void
 TAO::PG_Object_Group::create_member (
-    const PortableGroup::Location & the_location,
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria)
+    PortableGroup::Location const & the_location,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -698,13 +688,13 @@ TAO::PG_Object_Group::create_member (
 
       // @@ what if factory_type != type_id != this->type_id_
 
-      int created = 0; // bool
-      CORBA::ULong factory_count = factories->length ();
+      bool created {};
+      CORBA::ULong const factory_count = factories->length ();
       for (CORBA::ULong factory_pos = 0;
            ! created && factory_pos < factory_count;
            ++factory_pos)
         {
-          const PortableGroup::FactoryInfo & factory_info =
+          PortableGroup::FactoryInfo const & factory_info =
             (*factories)[factory_pos];
           if (factory_info.the_location == the_location)
             {
@@ -750,7 +740,7 @@ TAO::PG_Object_Group::create_member (
                 {
                   this->distribute_iogr ();
                 }
-              created = 1;
+              created = true;
             }
         }
       if (! created)
@@ -776,15 +766,15 @@ TAO::PG_Object_Group::create_members (size_t count)
         role_.c_str(),
         factory_type.out ());
 
-  CORBA::ULong factory_count = factories->length ();
+  CORBA::ULong const factory_count = factories->length ();
   if (factory_count > 0)
     {
-      CORBA::ULong factory_pos = 0;
+      CORBA::ULong factory_pos {};
       while (members_.current_size () < count && factory_pos < factory_count)
         {
-          const PortableGroup::FactoryInfo & factory_info =
+          PortableGroup::FactoryInfo const & factory_info =
             (*factories)[factory_pos];
-          const PortableGroup::Location & factory_location =
+          PortableGroup::Location const & factory_location =
             factory_info.the_location;
           if (0 != this->members_.find (factory_location))
             {
@@ -828,7 +818,7 @@ TAO::PG_Object_Group::create_members (size_t count)
                     new_reference; // note var-to-var assignment does
                                    // a duplicate
                 }
-              catch (const CORBA::Exception&)
+              catch (CORBA::Exception const &)
                 {
                   // log, but otherwise ignore the errorf
                   if (TAO_debug_level > 0)
@@ -890,7 +880,7 @@ TAO::PG_Object_Group::minimum_populate ()
 }
 
 int
-TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
+TAO::PG_Object_Group::has_member_at (PortableGroup::Location const & location)
 {
   return (0 == this->members_.find (location));
 }
@@ -902,7 +892,7 @@ TAO::PG_Object_Group::distribute (int value)
 }
 
 void
-TAO::PG_Object_Group::set_name (const char* group_name)
+TAO::PG_Object_Group::set_name (char const * group_name)
 {
   if (group_name_ != nullptr)
     CORBA::string_free (group_name_);
@@ -910,7 +900,7 @@ TAO::PG_Object_Group::set_name (const char* group_name)
   group_name_ = CORBA::string_dup (group_name);
 }
 
-const char*
+char const *
 TAO::PG_Object_Group::get_name ()
 {
   return group_name_;
