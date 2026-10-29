@@ -17,25 +17,25 @@ namespace TAO_Notify
 {
 Random_File::Random_File () = default;
 
-Random_File::~Random_File()
+Random_File::~Random_File ()
 {
-  this->close();
+  this->close ();
 }
 
 size_t
-Random_File::block_size() const
+Random_File::block_size () const
 {
   return this->block_size_;
 }
 
 ACE_OFF_T
-Random_File::size() const
+Random_File::size () const
 {
   Random_File * const mutable_this = const_cast<Random_File *> (this);
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-  ACE_OFF_T original_pos = mutable_this->tell ();
-  mutable_this->ACE_FILE::seek(0, SEEK_END);
-  ACE_OFF_T cursize = mutable_this->tell();
+  ACE_OFF_T const original_pos = mutable_this->tell ();
+  mutable_this->ACE_FILE::seek (0, SEEK_END);
+  ACE_OFF_T cursize = mutable_this->tell ();
   mutable_this->ACE_FILE::seek (original_pos, SEEK_SET);
   if ((cursize % this->block_size_) != 0)
   {
@@ -45,7 +45,7 @@ Random_File::size() const
 }
 
 bool
-Random_File::open(const ACE_TCHAR* filename, size_t block_size)
+Random_File::open (ACE_TCHAR const *filename, size_t const block_size)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   this->block_size_ = block_size;
@@ -57,7 +57,7 @@ Random_File::open(const ACE_TCHAR* filename, size_t block_size)
       ACE_TEXT ("(%P|%t) Opening file %s\n")
       , filename
       ));
-    ACE_HANDLE handle = ACE_OS::open(filename,
+    ACE_HANDLE const handle = ACE_OS::open (filename,
       O_CREAT | O_RDWR | O_BINARY,
       ACE_DEFAULT_FILE_PERMS);
 
@@ -82,7 +82,7 @@ Random_File::open(const ACE_TCHAR* filename, size_t block_size)
 }
 
 bool
-Random_File::write(const size_t block_number, void* buf, bool atomic)
+Random_File::write (size_t const block_number, void * const buf, bool const atomic)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
@@ -100,7 +100,7 @@ Random_File::write(const size_t block_number, void* buf, bool atomic)
       result = sync();
     }
     // ACE uses an ssize_t for buffer size, so we do this to make it happy.
-    ssize_t block_size = this->block_size_;
+    ssize_t const block_size = this->block_size_;
     if (result && (block_size !=
       ACE_OS::write(this->get_handle(), buf, block_size)))
     {
@@ -117,7 +117,7 @@ Random_File::write(const size_t block_number, void* buf, bool atomic)
 }
 
 bool
-Random_File::read(const size_t block_number, void* buf)
+Random_File::read (size_t const block_number, void * const buf)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
@@ -127,7 +127,7 @@ Random_File::read(const size_t block_number, void* buf)
   bool result = this->seek(block_number);
   if (result)
   {
-    ssize_t block_size = this->block_size_;
+    ssize_t const block_size = this->block_size_;
     if (block_size !=
       ACE_OS::read(this->get_handle(), buf, block_size))
     {
@@ -138,19 +138,16 @@ Random_File::read(const size_t block_number, void* buf)
 }
 
 bool
-Random_File::seek(const size_t block_number)
+Random_File::seek (size_t const block_number)
 {
-  ssize_t destloc = block_number * this->block_size_;
-  bool result = (destloc == this->ACE_FILE::seek(destloc, SEEK_SET));
-  return result;
+  ssize_t const destloc = block_number * this->block_size_;
+  return destloc == this->ACE_FILE::seek (destloc, SEEK_SET);
 }
 
 bool
-Random_File::sync()
+Random_File::sync () const
 {
-  bool result = false;
-  result = (0 == ACE_OS::fsync(this->get_handle()));
-  return result;
+  return ACE_OS::fsync (this->get_handle ()) == 0;
 }
 
 } /* namespace TAO_Notify */

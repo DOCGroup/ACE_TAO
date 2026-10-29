@@ -41,7 +41,7 @@ class TAO_Notify_Serv_Export Random_File : public ACE_FILE
 {
 public:
   /// The constructor.
-  Random_File();
+  Random_File ();
 
   Random_File (Random_File const &) = delete;
   Random_File (Random_File &&) = delete;
@@ -49,18 +49,18 @@ public:
   Random_File &operator= (Random_File &&) = delete;
 
   /// The destructor, which closes the open file.
-  ~Random_File();
+  ~Random_File ();
 
   /// Open a file with default permissions.
-  bool open(const ACE_TCHAR* filename, size_t block_size = 512);
+  bool open (ACE_TCHAR const *filename, size_t const block_size = 512);
 
   /// Accessor for the block size.
   /// Note signed size_t is used to be compatible with
   /// ACE_FILE.
-  size_t block_size() const;
+  size_t block_size () const;
 
   /// Return the current file size, in number of blocks.
-  ACE_OFF_T size() const;
+  ACE_OFF_T size () const;
 
   /// Write a block to our file, potentially as an "atomic" write.
   /// If the atomic argument is true, then the operating system's
@@ -71,17 +71,17 @@ public:
   /// The flush after provides the caller with a guarantee that
   /// the data will appear in the file even if the system fails
   /// immediately after this method returns.
-  bool write(const size_t block_number, void* buffer, bool atomic = false);
+  bool write (size_t const block_number, void * const buffer, bool const atomic = false);
 
   /// Read a block from our file.
-  bool read(const size_t block_number, void* buffer);
+  bool read (size_t const block_number, void * const buffer);
 
 private:
   /// Seek to a given block number, used by reads and writes.
-  bool seek(const size_t block_number);
+  bool seek (size_t const block_number);
 
   /// Synchronize the file to disk, used to implement atomic.
-  bool sync();
+  bool sync () const;
 
 private:
   size_t block_size_ = 512;
