@@ -160,28 +160,28 @@ public:
       CORBA::EnumMemberSeq const &members);
 
   virtual CORBA::AliasDef_ptr create_alias (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type);
 
   CORBA::AliasDef_ptr create_alias_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type);
 
   virtual CORBA::InterfaceDef_ptr create_interface (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   CORBA::InterfaceDef_ptr create_interface_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   virtual CORBA::ValueDef_ptr create_value (
       const char *id,

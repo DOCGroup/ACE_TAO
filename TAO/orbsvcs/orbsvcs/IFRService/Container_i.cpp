@@ -1152,9 +1152,9 @@ TAO_Container_i::create_enum_i (char const *id,
 }
 
 CORBA::AliasDef_ptr
-TAO_Container_i::create_alias (const char *id,
-                               const char *name,
-                               const char *version,
+TAO_Container_i::create_alias (char const *id,
+                               char const *name,
+                               char const *version,
                                CORBA::IDLType_ptr original_type)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AliasDef::_nil ());
@@ -1168,9 +1168,9 @@ TAO_Container_i::create_alias (const char *id,
 }
 
 CORBA::AliasDef_ptr
-TAO_Container_i::create_alias_i (const char *id,
-                                 const char *name,
-                                 const char *version,
+TAO_Container_i::create_alias_i (char const *id,
+                                 char const *name,
+                                 char const *version,
                                  CORBA::IDLType_ptr original_type)
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -1205,10 +1205,10 @@ TAO_Container_i::create_alias_i (const char *id,
 }
 
 CORBA::InterfaceDef_ptr
-TAO_Container_i::create_interface (const char *id,
-                                   const char *name,
-                                   const char *version,
-                                   const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_Container_i::create_interface (char const *id,
+                                   char const *name,
+                                   char const *version,
+                                   CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -1221,10 +1221,10 @@ TAO_Container_i::create_interface (const char *id,
 }
 
 CORBA::InterfaceDef_ptr
-TAO_Container_i::create_interface_i (const char *id,
-                                     const char *name,
-                                     const char *version,
-                                     const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_Container_i::create_interface_i (char const *id,
+                                     char const *name,
+                                     char const *version,
+                                     CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
