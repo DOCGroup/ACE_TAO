@@ -683,9 +683,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
 void
 RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                                  unsigned char nameLength,
-                                 const char* name,
+                                 char const *name,
                                  unsigned char dataLength,
-                                 const char* data)
+                                 char const *data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item

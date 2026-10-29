@@ -28,7 +28,7 @@ public:
   /// Constructor for an incoming channel.  Requires the synchronization source
   /// id and address of the sender.
   RTCP_Channel_In(ACE_UINT32 ssrc,
-                  const ACE_Addr *addr);
+                  ACE_Addr const *addr);
 
   /// Destructor
   ~RTCP_Channel_In();
@@ -37,7 +37,7 @@ public:
   /// RTP_Packet and calls updateStatistics.  It also uses compares the peer_addr
   /// to the stored peer_address_ to check for loops.
   void recv_rtp_packet (ACE_Message_Block *mb,
-                        const ACE_Addr *peer_addr);
+                        ACE_Addr const *peer_addr);
 
   /// Takes statistics of incoming RTP traffic and creates a receiver report block.
   RR_Block *getRRBlock();

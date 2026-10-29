@@ -40,7 +40,7 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 
 int
 TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
-                                               const void *arg)
+                                               void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -101,7 +101,7 @@ TAO_AV_UDP_MCast_Transport::get_local_addr ()
 }
 
 ssize_t
-TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_AV_UDP_MCast_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
   // friends.
@@ -111,7 +111,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -130,7 +130,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
           // we should set ACE_IOV_MAX to that limit.
           if (iovcnt == ACE_IOV_MAX)
             {
-              n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
+              n = this->handler_->get_mcast_socket ()->send ((iovec const *) iov,
                                                              iovcnt);
 
               if (n < 1)
@@ -145,7 +145,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
+      n = this->handler_->get_mcast_socket ()->send ((iovec const *) iov,
                                                      iovcnt);
       if (n < 1)
         return n;
@@ -170,7 +170,7 @@ TAO_AV_UDP_MCast_Transport::send (char const *buf,
 }
 
 ssize_t
-TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
+TAO_AV_UDP_MCast_Transport::send (iovec const *iov,
                                   int iovcnt,
                                   ACE_Time_Value *)
 {

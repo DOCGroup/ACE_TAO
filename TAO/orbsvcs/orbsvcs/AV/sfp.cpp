@@ -34,8 +34,8 @@ u_int TAO_SFP_Base::credit_len;
 u_int TAO_SFP_Base::fragment_len;
 
 bool
-operator< (TAO_SFP_Fragment_Node const & left,
-           TAO_SFP_Fragment_Node const & right)
+operator< (TAO_SFP_Fragment_Node const &left,
+           TAO_SFP_Fragment_Node const &right)
 {
   return left.fragment_info_.frag_number < right.fragment_info_.frag_number;
 }
@@ -1082,7 +1082,7 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
 }
 
 int
-TAO_SFP_Object::set_policies (TAO_AV_PolicyList const & policies)
+TAO_SFP_Object::set_policies (TAO_AV_PolicyList const &policies)
 {
   TAO_AV_Policy *policy = nullptr;
   for (CORBA::ULong i=0;i<policies.length ();i++)

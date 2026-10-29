@@ -100,7 +100,7 @@ public:
                       char const *format_name,
                       char const *flow_protocol,
                       char const *fwd_address);
-                      //const char *peer_address);
+                      //char const *peer_address);
 
   /// construct the entry from a string specified by the flowSpec grammar.
   virtual int parse (char const *flowSpec_entry) = 0;
@@ -118,7 +118,7 @@ public:
   virtual Role role () = 0;
   void role (Role role);
   /// accessor to string version of direction .
-  char const * direction_str () const;
+  char const *direction_str () const;
 
   /// accessor to the flow protocol string.
   char const *flow_protocol_str () const;
@@ -135,13 +135,13 @@ public:
 
   /// Address in string format i. hostname:port.
   char const *address_str () const;
-  //  const char * peer_address_str () const;
+  //  char const *peer_address_str () const;
 
   /// accessor to carrier protocol i.e TCP,UDP,RTP/UDP.
   TAO_AV_Core::Protocol carrier_protocol ();
 
   /// accessor to string version of carrier protocol.
-  char const * carrier_protocol_str () const;
+  char const *carrier_protocol_str () const;
 
   /// accessor to format to be used for this flow.
   char const *format () const;

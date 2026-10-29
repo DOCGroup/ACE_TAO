@@ -485,7 +485,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_RTP_Object::send_frame (const iovec *iov,
+TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                int iovcnt,
                                TAO_AV_frame_info *frame_info)
 {
@@ -609,7 +609,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_RTP_Object::send_frame (const char*,
+TAO_AV_RTP_Object::send_frame (char const *,
                                size_t)
 {
   return 0;

@@ -145,7 +145,7 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
       // Get the Vdev created by the child from the naming service
       this->get_vdev ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy::activate");
@@ -173,7 +173,7 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service ()
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service");
@@ -216,7 +216,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy::get_vdev");
@@ -290,7 +290,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
                            " could not resolve Stream_Endpoint_A in Naming service <%s>\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint");
@@ -333,7 +333,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
     stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate ( this->stream_endpoint_b_.in() );
     vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
@@ -377,7 +377,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint");

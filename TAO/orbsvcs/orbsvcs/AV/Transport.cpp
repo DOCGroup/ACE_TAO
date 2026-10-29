@@ -561,7 +561,7 @@ TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)
 
 int
 TAO_AV_Flow_Handler::handle_timeout (ACE_Time_Value const & /*tv*/,
-                                     const void * /*arg*/)
+                                     void const * /*arg*/)
 {
   int result = this->callback_->handle_timeout (this->timeout_arg_);
   if (result < 0)

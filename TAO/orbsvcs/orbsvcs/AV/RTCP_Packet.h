@@ -308,7 +308,7 @@ public:
   void add_item(ACE_UINT32 ssrc,
                 unsigned char type,
                 unsigned char length,
-                const char* data);
+                char const *data);
 
   /// This will add a private item using the name and data for the ssrc specified.
   /// When the first item for a ssrc is added, a chunk is created.  Subsequent

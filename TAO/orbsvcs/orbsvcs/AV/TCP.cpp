@@ -46,7 +46,7 @@ TAO_AV_TCP_Transport::get_peer_addr ()
 }
 
 ssize_t
-TAO_AV_TCP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_AV_TCP_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
   // friends.
@@ -56,7 +56,7 @@ TAO_AV_TCP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -75,7 +75,7 @@ TAO_AV_TCP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
           // we should set ACE_IOV_MAX to that limit.
           if (iovcnt == ACE_IOV_MAX)
             {
-              n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+              n = this->handler_->peer ().sendv_n ((iovec const *) iov,
                                                    iovcnt);
               if (n < 1)
                 return n;
@@ -89,7 +89,7 @@ TAO_AV_TCP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+      n = this->handler_->peer ().sendv_n ((iovec const *) iov,
                                            iovcnt);
       if (n < 1)
         return n;
@@ -109,11 +109,11 @@ TAO_AV_TCP_Transport::send (char const *buf,
 }
 
 ssize_t
-TAO_AV_TCP_Transport::send (const iovec *iov,
+TAO_AV_TCP_Transport::send (iovec const *iov,
                           int iovcnt,
                           ACE_Time_Value *)
 {
-  return this->handler_->peer ().sendv_n ((const iovec *) iov,
+  return this->handler_->peer ().sendv_n ((iovec const *) iov,
                                           iovcnt);
 }
 
@@ -218,7 +218,7 @@ TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_TCP_Object::send_frame (const iovec *iov,
+TAO_AV_TCP_Object::send_frame (iovec const *iov,
                                int iovcnt,
                                TAO_AV_frame_info * /*frame_info*/)
 {
@@ -226,7 +226,7 @@ TAO_AV_TCP_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_TCP_Object::send_frame (const char*buf,
+TAO_AV_TCP_Object::send_frame (char const *buf,
                                size_t len)
 {
   int result = this->transport_->send (buf, len, 0);
@@ -684,7 +684,7 @@ TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 
 int
 TAO_AV_TCP_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
-                                               const void *arg)
+                                               void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }

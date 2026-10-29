@@ -7,11 +7,11 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
-                                  const ACE_Addr *peer_addr)
+                                  ACE_Addr const *peer_addr)
  : remote_ssrc_ (ssrc),
    cname_ ("")
 {
-  const ACE_INET_Addr *const_inet_addr = dynamic_cast<const ACE_INET_Addr*> (peer_addr);
+  ACE_INET_Addr const *const_inet_addr = dynamic_cast<ACE_INET_Addr const *> (peer_addr);
 
   ACE_INET_Addr *inet_addr = nullptr;
   ACE_NEW (inet_addr,
@@ -208,7 +208,7 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
 
 void
 RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
-                                const ACE_Addr *peer_address)
+                                ACE_Addr const *peer_address)
 {
   if (*peer_address != *this->peer_address_)
     ORBSVCS_DEBUG ((LM_DEBUG,

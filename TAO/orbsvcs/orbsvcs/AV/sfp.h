@@ -45,8 +45,8 @@ public:
   TAO_SFP_Fragment_Node () : data_ (nullptr) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
-  friend bool operator< (TAO_SFP_Fragment_Node const & left,
-                         TAO_SFP_Fragment_Node const & right);
+  friend bool operator< (TAO_SFP_Fragment_Node const &left,
+                         TAO_SFP_Fragment_Node const &right);
 };
 
 /**

@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //----------------------------------------------------------------------
 
 ACE_INLINE
-const ACE_SOCK_Dgram *
+ACE_SOCK_Dgram const *
 TAO_AV_UDP_Flow_Handler::get_socket () const
 {
   return &this->sock_dgram_;

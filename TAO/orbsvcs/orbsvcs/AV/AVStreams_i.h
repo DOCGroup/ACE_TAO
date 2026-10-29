@@ -236,7 +236,7 @@ public:
   CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party,
                             AVStreams::MMDevice_ptr b_party,
                             AVStreams::streamQoS& the_qos,
-                            AVStreams::flowSpec const & the_flows) override;
+                            AVStreams::flowSpec const &the_flows) override;
 
   /**
    * Establish a connection between two streamendpoints. This can
@@ -327,7 +327,7 @@ public:
 
 protected:
   /// checks whether the flowname is  in the flow_spec.
-  int in_flowSpec (AVStreams::flowSpec const & flow_spec, char const *flow_name);
+  int in_flowSpec (AVStreams::flowSpec const &flow_spec, char const *flow_name);
 
   /// Multicast socket.
   ACE_SOCK_Dgram_Mcast sock_mcast_;
@@ -491,7 +491,7 @@ public:
   /// Called by StreamCtrl. responder is the peer to connect to
   CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
                           AVStreams::streamQoS& qos_spec,
-                          AVStreams::flowSpec const & the_spec) override;
+                          AVStreams::flowSpec const &the_spec) override;
 
   /// Called by the peer StreamEndPoint. The flow_spec indicates the
   /// flows (which contain transport addresses etc.)
@@ -549,7 +549,7 @@ protected:
   char* add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep);
 
   /// translate from application level to network level qos.
-  int translate_qos (AVStreams::streamQoS const & application_qos,
+  int translate_qos (AVStreams::streamQoS const &application_qos,
                      AVStreams::streamQoS& network_qos);
 
   /// Count of the number of flows in this streamendpoint, used to
@@ -995,14 +995,14 @@ public:
    * protocol objects. eg. in SFP to create Producer Object/ Consumer Object.
    */
   virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
-                                          char const * address,
-                                          char const * use_flow_protocol) = 0;
+                                          char const *address,
+                                          char const *use_flow_protocol) = 0;
 
   /// connect to the peer endpoint.
   virtual CORBA::Boolean connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
                                             AVStreams::QoS & the_qos,
-                                            char const * address,
-                                            char const * use_flow_protocol);
+                                            char const *address,
+                                            char const *use_flow_protocol);
 
   /**
    * This should be implemented in both the FlowProducer and consumer and hence is
