@@ -1527,10 +1527,10 @@ TAO_Container_i::create_native_i (char const *id,
 
 CORBA::AbstractInterfaceDef_ptr
 TAO_Container_i::create_abstract_interface (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::AbstractInterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::AbstractInterfaceDefSeq const &base_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AbstractInterfaceDef::_nil ());
@@ -1545,10 +1545,10 @@ TAO_Container_i::create_abstract_interface (
 
 CORBA::AbstractInterfaceDef_ptr
 TAO_Container_i::create_abstract_interface_i (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::AbstractInterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::AbstractInterfaceDefSeq const &base_interfaces
   )
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -1602,10 +1602,10 @@ TAO_Container_i::create_abstract_interface_i (
 
 CORBA::LocalInterfaceDef_ptr
 TAO_Container_i::create_local_interface (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::InterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::InterfaceDefSeq const &base_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::LocalInterfaceDef::_nil ());
@@ -1620,10 +1620,10 @@ TAO_Container_i::create_local_interface (
 
 CORBA::LocalInterfaceDef_ptr
 TAO_Container_i::create_local_interface_i (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::InterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::InterfaceDefSeq const &base_interfaces
   )
 {
   TAO_Container_i::tmp_name_holder_ = name;

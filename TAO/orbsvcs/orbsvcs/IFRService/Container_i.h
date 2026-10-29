@@ -242,28 +242,28 @@ public:
       char const *version);
 
   virtual CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::AbstractInterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::AbstractInterfaceDefSeq const &base_interfaces);
 
   CORBA::AbstractInterfaceDef_ptr create_abstract_interface_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::AbstractInterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::AbstractInterfaceDefSeq const &base_interfaces);
 
   virtual CORBA::LocalInterfaceDef_ptr create_local_interface (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   CORBA::LocalInterfaceDef_ptr create_local_interface_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   virtual ::CORBA::ExtValueDef_ptr create_ext_value (
       char const *id,
