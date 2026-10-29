@@ -42,7 +42,7 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
 
   this->received_fragments_ = this->default_received_fragments_;
   this->own_received_fragments_ = false;
-  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   this->received_fragments_size_ =
     this->fragment_count_ / bits_per_ulong + 1;
   if (this->received_fragments_size_ > ECG_DEFAULT_FRAGMENT_BUFSIZ)
@@ -86,7 +86,7 @@ TAO_ECG_UDP_Request_Entry::test_received (CORBA::ULong fragment_id) const
   if (fragment_id > this->fragment_count_)
     return 1;
 
-  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   CORBA::ULong idx = fragment_id / bits_per_ulong;
   CORBA::ULong bit = fragment_id % bits_per_ulong;
   return ACE_BIT_ENABLED (this->received_fragments_[idx], 1<<bit);
@@ -99,7 +99,7 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
   if (fragment_id > this->fragment_count_)
     return;
 
-  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   CORBA::ULong idx = fragment_id / bits_per_ulong;
   CORBA::ULong bit = fragment_id % bits_per_ulong;
   ACE_SET_BITS (this->received_fragments_[idx], 1<<bit);
@@ -246,7 +246,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 
   // Read the message from dgram.
 
-  const int iovcnt = 2;
+  constexpr int iovcnt = 2;
   iovec iov[iovcnt];
   iov[0].iov_base = header_buf;
   iov[0].iov_len  = TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE;

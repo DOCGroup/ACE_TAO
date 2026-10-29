@@ -43,9 +43,9 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   // ACE_ASSERT (max_fragment_payload != 0);
 
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
-  const int TAO_WRITEV_MAX = ACE_IOV_MAX - 1;
+  constexpr int TAO_WRITEV_MAX = ACE_IOV_MAX - 1;
 #else
-  const int TAO_WRITEV_MAX = ACE_IOV_MAX;
+  constexpr int TAO_WRITEV_MAX = ACE_IOV_MAX;
 #endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
   iovec iov[TAO_WRITEV_MAX];
 

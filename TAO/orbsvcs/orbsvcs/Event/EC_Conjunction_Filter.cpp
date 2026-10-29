@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const int bits_per_word = sizeof(TAO_EC_Conjunction_Filter::Word) * CHAR_BIT;
+constexpr int bits_per_word = sizeof(TAO_EC_Conjunction_Filter::Word) * CHAR_BIT;
 
 TAO_EC_Conjunction_Filter::
     TAO_EC_Conjunction_Filter (TAO_EC_Filter* children[],
