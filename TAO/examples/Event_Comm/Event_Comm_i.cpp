@@ -1,6 +1,18 @@
 #include "Event_Comm_i.h"
 #include "ace/OS_NS_regex.h"
 
+#include <memory>
+#include <string>
+#include <string_view>
+
+struct Compiled_Regex_Deleter
+{
+  void operator() (char *regex) const
+  {
+    ACE_OS::free (regex);
+  }
+};
+
 /**
  * Keeps track of context information associated with
  * a <Event_Comm::Consumer> entry.
@@ -21,22 +33,20 @@ public:
   Consumer_Entry &operator= (Consumer_Entry &&) = delete;
 
   // = Set/get filtering criteria.
-  void criteria (char const *criteria);
-  char const *criteria () const;
+  std::string const &criteria () const;
 
   // = Set/get Event_Comm::Consumer object reference.
   Event_Comm::Consumer *consumer () const;
   void consumer (Event_Comm::Consumer *);
 
   // = Set/get the compiled regular expression buffer.
-  char const *regexp () const;
-  void regexp (char *);
+  char *regexp ();
 
 private:
-  char *filtering_criteria_ {};
+  std::string filtering_criteria_;
   // String containing the filtering criteria.
 
-  char *compiled_regexp_ {};
+  std::unique_ptr<char, Compiled_Regex_Deleter> compiled_regexp_ {};
   // Compiled representation of the regular expression (see
   // regexpr(3g)).
 
@@ -46,15 +56,7 @@ private:
 
 // = Set/get filtering criteria.
 
-void
-Consumer_Entry::criteria (char const *criteria)
-{
-  ACE_OS::free (this->filtering_criteria_);
-  ACE_ALLOCATOR (this->filtering_criteria_,
-                 ACE_OS::strdup (criteria));
-}
-
-char const *
+std::string const &
 Consumer_Entry::criteria () const
 {
   return this->filtering_criteria_;
@@ -74,27 +76,20 @@ Consumer_Entry::consumer (Event_Comm::Consumer *consumer)
   this->consumer_ = consumer;
 }
 
-char const *
-Consumer_Entry::regexp () const
+char *
+Consumer_Entry::regexp ()
 {
-  return this->compiled_regexp_;
-}
-
-void
-Consumer_Entry::regexp (char *regexp)
-{
-  ACE_OS::free ((void *) this->compiled_regexp_);
-  this->compiled_regexp_ = regexp;
+  return this->compiled_regexp_.get ();
 }
 
 Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
                                 char const *filtering_criteria)
-  : consumer_ (consumer)
+  : filtering_criteria_ (filtering_criteria)
+  , consumer_ (consumer)
 {
   char *compile_buffer = nullptr;
 
-  this->criteria (filtering_criteria);
-  ACE_ASSERT (this->criteria () != nullptr);
+  ACE_ASSERT (filtering_criteria != nullptr);
 
   // Check for wildcard case first.
   if (ACE_OS::strcmp (filtering_criteria, "") == 0)
@@ -116,7 +111,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   // Should throw an exception here!
   ACE_ASSERT (compile_buffer != nullptr);
 
-  this->regexp (compile_buffer);
+  this->compiled_regexp_.reset (compile_buffer);
   ACE_ASSERT (this->regexp () != nullptr);
 
   // Increment the reference count since we are keeping a copy of
@@ -126,8 +121,6 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 
 Consumer_Entry::~Consumer_Entry ()
 {
-  ACE_OS::free (this->filtering_criteria_);
-  ACE_OS::free (this->compiled_regexp_);
   // Decrement the object reference count.
   CORBA::release (this->consumer_);
 }
@@ -158,6 +151,8 @@ void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
                        char const *filtering_criteria)
 {
+  std::string_view const criteria_view (filtering_criteria);
+
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
               consumer_ref,
@@ -181,10 +176,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Check for a duplicate entry.
       if (consumer_ref->_is_equivalent (me->ext_id_)
-          && (ACE_OS::strcmp (filtering_criteria,
-                              "") == 0
-              || ACE_OS::strcmp (filtering_criteria,
-                                 nr_entry->criteria ()) == 0))
+          && (criteria_view.empty () || criteria_view == nr_entry->criteria ()))
         {
           // Inform the caller that the <Event_Comm::Consumer> * is
           // already being used.
@@ -217,6 +209,8 @@ void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
                          char const *filtering_criteria)
 {
+  std::string_view const criteria_view (filtering_criteria);
+
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",
               consumer_ref));
@@ -241,9 +235,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Look for a match ..
       if (consumer_ref->_is_equivalent (me->ext_id_)
-          && (ACE_OS::strcmp (filtering_criteria, "") == 0
-              || ACE_OS::strcmp (filtering_criteria,
-                                 nr_entry->criteria ()) == 0))
+          && (criteria_view.empty () || criteria_view == nr_entry->criteria ()))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "removed entry %x with criteria \"%s\"\n",
@@ -332,16 +324,14 @@ Notifier_i::push (Event_Comm::Event const &event)
     {
       Event_Comm::Consumer_ptr consumer_ref = me->int_id_->consumer ();
       ACE_ASSERT (consumer_ref != nullptr);
+      std::string const &criteria = me->int_id_->criteria ();
 
 #if defined (ACE_HAS_REGEX)
-      char *regexp = const_cast<char *> (me->int_id_->regexp ());
+      char *regexp = me->int_id_->regexp ();
       ACE_ASSERT (regexp);
 
-      char const *criteria = me->int_id_->criteria ();
-      ACE_ASSERT (criteria);
-
       // Do a regular expression comparison to determine matching.
-      if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
+      if (criteria.empty () // Everything matches the wildcard.
           || ACE_OS::step (event.tag_, regexp) != 0)
 #endif // #if defined (ACE_HAS_REGEX)
         // if ACE_HAS_REGEX has not been defined,
@@ -350,7 +340,7 @@ Notifier_i::push (Event_Comm::Event const &event)
           ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %x\n",
                       static_cast<char const *> (event.tag_),
-                      me->int_id_->criteria (),
+                      criteria.c_str (),
                       consumer_ref));
           try
             {
