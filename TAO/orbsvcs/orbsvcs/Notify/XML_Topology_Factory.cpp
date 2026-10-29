@@ -1,12 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Topology_Factory.h"
 #include "orbsvcs/Notify/XML_Saver.h"
 #include "orbsvcs/Notify/XML_Loader.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
-//#include "ace/Service_Object.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -110,7 +108,7 @@ namespace TAO_Notify
         if (TAO_debug_level > 0 || verbose)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -file_count: %d\n"),
+            ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -file_count: %B\n"),
             this->backup_count_
           ));
         }
