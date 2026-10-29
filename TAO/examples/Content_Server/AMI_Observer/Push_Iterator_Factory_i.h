@@ -45,21 +45,27 @@ class Push_Iterator_Factory_i :
   //    to explicitly use threads at the application level.
 
 public:
+  Push_Iterator_Factory_i () = default;
+  Push_Iterator_Factory_i (Push_Iterator_Factory_i const&) = delete;
+  Push_Iterator_Factory_i (Push_Iterator_Factory_i&&) = delete;
+  Push_Iterator_Factory_i& operator= (Push_Iterator_Factory_i const&) = delete;
+  Push_Iterator_Factory_i& operator= (Push_Iterator_Factory_i&&) = delete;
+
   /**
    * This registration method passes a <Callback> that the Web server
    * uses to ``push'' data associated with <pathname> one ``chunk'' at
    * a time.  The <metadata> reports information about the <pathname>.
    */
   Web_Server::Metadata_Type *register_callback
-    (const char *pathname,
-     Web_Server::Callback_ptr client_callback);
+    (char const *pathname,
+     Web_Server::Callback_ptr client_callback) override;
 
   /// Set the file modification date in the metadata structure.
-  int modification_date (ACE_stat *file_status,
+  int modification_date (ACE_stat const *file_status,
                          Web_Server::Metadata_Type &metadata);
 
   /// Set the type of file content in the metadata structure.
-  int content_type (const char *filename,
+  int content_type (char const *filename,
                     Web_Server::Metadata_Type &metadata);
 
 private:

@@ -50,9 +50,14 @@ class Push_Iterator_Handler
   friend class Push_Iterator_Handler_Friend;
 
 public:
+  Push_Iterator_Handler (Push_Iterator_Handler const&) = delete;
+  Push_Iterator_Handler (Push_Iterator_Handler&&) = delete;
+  Push_Iterator_Handler& operator= (Push_Iterator_Handler const&) = delete;
+  Push_Iterator_Handler& operator= (Push_Iterator_Handler&&) = delete;
+
   /// Constructor that creates a content iterator corresponding to the
   /// name of the file being retrieved from the web server.
-  Push_Iterator_Handler ();
+  Push_Iterator_Handler () = default;
 
   /**
    * Activate and run this Reply Handler.  The contents (not the
@@ -61,21 +66,19 @@ public:
    * retrieval completes.
    */
   void run (int *request_count,
-            const char *pathname,
+            char const *pathname,
             Web_Server::Iterator_Factory_ptr factory);
 
 private:
   /// Destructor  (private to ensure that Iterator_Handler is allocated
   /// on the heap).
-  ~Push_Iterator_Handler ();
+  ~Push_Iterator_Handler () override = default;
 
   /// AMI callback that is invoked when a response from the
   /// corresponding server method is received.
-  virtual void register_callback
-  (const Web_Server::Metadata_Type &metadata);
+  void register_callback (Web_Server::Metadata_Type const& metadata) override;
 
-  virtual void register_callback_excep
-  (::Messaging::ExceptionHolder *)
+  void register_callback_excep (::Messaging::ExceptionHolder *) override
     {}
 
   /// Deactivate this handler.
@@ -83,7 +86,7 @@ private:
 
 private:
   /// The servant that accepts data pushed from the content server.
-  Callback_i *callback_servant_;
+  Callback_i *callback_servant_ {};
 
   /// Reference to the callback object the server sends data to.
   Web_Server::Callback_var callback_;

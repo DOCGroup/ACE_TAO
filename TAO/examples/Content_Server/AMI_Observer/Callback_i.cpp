@@ -13,7 +13,6 @@ Callback_i::Callback_i (int *request_count)
     file_io_ (),
     ami_handler_ (),
     metadata_ (),
-    last_chunk_ (0),
     lock_ (),
     request_count_ (request_count)
 {
@@ -22,7 +21,7 @@ Callback_i::Callback_i (int *request_count)
 
   if (connector.connect (this->file_io_,
                          this->file_,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          O_CREAT | O_TRUNC | O_WRONLY,
@@ -42,7 +41,7 @@ Callback_i::~Callback_i ()
 }
 
 void
-Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
+Callback_i::next_chunk (Web_Server::Chunk_Type const& chunk_data,
                         CORBA::Boolean last_chunk)
 {
   if (!last_chunk)
@@ -71,7 +70,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
                            guard,
                            this->lock_));
 
-        this->last_chunk_ = 1;  // Received entire content.
+        this->last_chunk_ = true;  // Received entire content.
       }
 
       ACE_DEBUG ((LM_INFO,
@@ -96,7 +95,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
 }
 
 void
-Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
+Callback_i::metadata (Web_Server::Metadata_Type const& metadata)
 {
   try
     {
@@ -124,7 +123,7 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
           (void) this->spawn_viewer ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Caught unexpected exception ")
@@ -132,24 +131,24 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
     }
 }
 
-int
+bool
 Callback_i::metadata_received ()
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
-                            0));
+                            false));
 
-  return (this->metadata_.content_type.in () != 0);
+  return this->metadata_.content_type.in () != nullptr;
 }
 
-int
+bool
 Callback_i::content_received ()
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
-                            0));
+                            false));
 
   return this->last_chunk_;
 }
@@ -158,12 +157,12 @@ int
 Callback_i::get_viewer (char *viewer,
                         size_t length)
 {
-  const char *content_type =
+  char const *content_type =
     this->metadata_.content_type.in ();
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
     {
-      const char lynx[] = "lynx";
+      char const lynx[] = "lynx";
       if (length <= sizeof (lynx))
         return -1;
       else
@@ -172,7 +171,7 @@ Callback_i::get_viewer (char *viewer,
   else if (ACE_OS::strcasecmp (content_type,
                                "text/plain") == 0)
     {
-      const char more[] = "more";
+      char const more[] = "more";
       if (length <= sizeof (more))
         return -1;
       else
@@ -181,7 +180,7 @@ Callback_i::get_viewer (char *viewer,
   else if (ACE_OS::strcasecmp (content_type,
                                "application/postscript") == 0)
     {
-      const char ghostview[] = "ghostview";
+      char const ghostview[] = "ghostview";
       if (length <= sizeof (ghostview))
         return -1;
       else
@@ -190,7 +189,7 @@ Callback_i::get_viewer (char *viewer,
   else if (ACE_OS::strcasecmp (content_type,
                                "application/pdf") == 0)
     {
-      const char acroread[] = "acroread";
+      char const acroread[] = "acroread";
       if (length <= sizeof (acroread))
         return -1;
       else
@@ -205,7 +204,7 @@ Callback_i::get_viewer (char *viewer,
            || ACE_OS::strcasecmp (content_type,
                                   "image/png") == 0)
     {
-      const char xv[] = "xv";
+      char const xv[] = "xv";
       if (length <= sizeof (xv))
         return -1;
       else
@@ -223,7 +222,7 @@ Callback_i::get_viewer (char *viewer,
 int
 Callback_i::spawn_viewer ()
 {
-  char viewer[BUFSIZ];
+  char viewer[BUFSIZ] {};
 
   if (this->get_viewer (viewer,
                         sizeof (viewer)) != 0)

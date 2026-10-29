@@ -9,7 +9,7 @@
 
 Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
-  (const char *pathname,
+  (char const *pathname,
    Web_Server::Callback_ptr client_callback)
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
@@ -28,7 +28,7 @@ Push_Iterator_Factory_i::register_callback
 
   // Send the file to the client asynchronously.  This allows the
   // server to service multiple file requests from clients.
-  Callback_Handler *handler = 0;
+  Callback_Handler *handler = nullptr;
   ACE_NEW_THROW_EX (handler,
                     Callback_Handler (pathname,
                                       client_callback),
@@ -40,13 +40,13 @@ Push_Iterator_Factory_i::register_callback
   // Start sending data to the client callback object.
   handler->run ();
 
-  ACE_stat file_status;
+  ACE_stat file_status {};
   if (ACE_OS::stat (pathname,
                     &file_status) == -1)
     // HTTP 1.1 "Internal Server Error".
     throw Web_Server::Error_Result (500);
 
-  Web_Server::Metadata_Type *meta_tmp = 0;
+  Web_Server::Metadata_Type *meta_tmp = nullptr;
   ACE_NEW_THROW_EX (meta_tmp,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
@@ -68,15 +68,15 @@ Push_Iterator_Factory_i::register_callback
 
 int
 Push_Iterator_Factory_i::modification_date
-  (ACE_stat *file_status,
+  (ACE_stat const *file_status,
    Web_Server::Metadata_Type & metadata)
 {
   // Get the modification time from the file status structure/
-  struct tm *t_gmt = ACE_OS::gmtime (&(file_status->st_mtime));
+  struct tm const *t_gmt = ACE_OS::gmtime (&(file_status->st_mtime));
 
   // A time string is probably never going to exceed 256 bytes.
-  const size_t buflen = 256;
-  char buf[buflen];
+  constexpr size_t buflen = 256;
+  char buf[buflen] {};
 
   // Format the time to conform to RFC 1123.
   if (ACE_OS::strftime (buf,
@@ -91,34 +91,28 @@ Push_Iterator_Factory_i::modification_date
 }
 
 int
-Push_Iterator_Factory_i::content_type (const char *filename,
+Push_Iterator_Factory_i::content_type (char const *filename,
                                        Web_Server::Metadata_Type &metadata)
 {
-  if (filename == 0)
+  if (filename == nullptr)
     return -1;
-
-  // @@ There are a bunch of const_casts in this method.  It's ugly.
-  //    I know.
-  //        -Ossama
-
-  size_t len = ACE_OS::strlen (filename);
 
   // Search for extension
   // Handle the case where multiple periods exists in the filename,
   // e.g.:  foo.bar.ps
-  char * extension = 0;
-  for (char * tmp = const_cast<char *> (filename);
-       tmp != 0 && tmp != tmp + len;
+  char const *extension = nullptr;
+  for (char const *tmp = filename;
+       tmp != nullptr;
        )
     {
-      tmp = const_cast<char *> (ACE_OS::strchr (tmp, '.'));
+      tmp = ACE_OS::strchr (tmp, '.');
 
-      if (tmp != 0)
+      if (tmp != nullptr)
         extension = ++tmp;  // Skip over the '.'
     }
 
-  if (extension == 0)
-    extension = const_cast<char *> (filename);  // No extension!
+  if (extension == nullptr)
+    extension = filename;  // No extension!
 
   if (ACE_OS::strcasecmp (extension, "htm") == 0
       || ACE_OS::strcasecmp (extension, "html") == 0)

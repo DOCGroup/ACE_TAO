@@ -51,28 +51,32 @@ class Callback_i :
   friend class Callback_i_Friend;
 
 public:
+  Callback_i (Callback_i const&) = delete;
+  Callback_i (Callback_i&&) = delete;
+  Callback_i& operator= (Callback_i const&) = delete;
+  Callback_i& operator= (Callback_i&&) = delete;
+
   /// Constructor
-  Callback_i (int *request_count);
+  explicit Callback_i (int *request_count);
 
   /// This operation returns the next <chunk> of the file starting at
   /// <offset>.  If there are no more bindings, false is returned.
-  virtual void next_chunk (const Web_Server::Chunk_Type &chunk,
-                           CORBA::Boolean last_chunk);
+  void next_chunk (Web_Server::Chunk_Type const& chunk,
+                   CORBA::Boolean last_chunk) override;
 
   /// Set metadata associated with received data.
-  void metadata (const Web_Server::Metadata_Type &metadata);
+  void metadata (Web_Server::Metadata_Type const& metadata);
 
 private:
   /// Destructor must be private to ensure that this object is
   /// allocated on the heap.
-  ~Callback_i ();
+  ~Callback_i () override;
 
-  /// Returns one if the metadata was received, and zero otherwise.
-  int metadata_received ();
+  /// Check whether the metadata was received.
+  bool metadata_received ();
 
-  /// Returns one if the entire content was received, and zero
-  /// otherwise.
-  int content_received ();
+  /// Check whether the entire content was received.
+  bool content_received ();
 
   /// Get the name of the viewer associated with the file being
   /// retrieved.
@@ -101,7 +105,7 @@ private:
   Web_Server::Metadata_Type metadata_;
 
   /// Flag that indicates entire data content has been received.
-  int last_chunk_;
+  bool last_chunk_ {};
 
   /// Lock used to prevent race conditions when checking to see if
   /// metadata or entire content has been received.
