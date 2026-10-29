@@ -62,10 +62,10 @@ public:
   virtual void destroy_definitions_i ();
 
   virtual CORBA::Contained_ptr lookup (
-      const char *search_name);
+      char const *search_name);
 
   CORBA::Contained_ptr lookup_i (
-      const char *search_name);
+      char const *search_name);
 
   virtual CORBA::ContainedSeq *contents (
       CORBA::DefinitionKind limit_type,
@@ -76,13 +76,13 @@ public:
       CORBA::Boolean exclude_inherited);
 
   virtual CORBA::ContainedSeq *lookup_name (
-      const char *search_name,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
 
   CORBA::ContainedSeq *lookup_name_i (
-      const char *search_name,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
@@ -290,14 +290,14 @@ public:
       CORBA::ExtInitializerSeq const &initializers);
 
   /// Called from TAO_IFR_Service_Utils::name_exists.
-  static int same_as_tmp_name (const char *name);
+  static int same_as_tmp_name (char const *name);
 
   /// Accesses the static member.
-  static void tmp_name_holder (const char *name);
+  static void tmp_name_holder (char const *name);
 
   /// Used with structs, unions and exceptions.
   void update_refs (
-      const char *path,
+      char const *path,
       char const *name = nullptr
     );
 
@@ -305,25 +305,25 @@ protected:
   /// Store a union member's label value.
    void store_label (
       ACE_Configuration_Section_Key key,
-      const CORBA::Any &value);
+      CORBA::Any const &value);
 
   void lookup_attr (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      char const *search_name,
       CORBA::Boolean exclude_inherited);
 
   void lookup_op (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      char const *search_name,
       CORBA::Boolean exclude_inherited);
 
 private:
   void lookup_name_recursive (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
@@ -333,18 +333,18 @@ private:
       CORBA::DefinitionKind container_kind,
       ACE_Configuration_Section_Key &container_key,
       ACE_Configuration_Section_Key &new_key,
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces);
 
 protected:
-  static const char *tmp_name_holder_;
+  static char const *tmp_name_holder_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

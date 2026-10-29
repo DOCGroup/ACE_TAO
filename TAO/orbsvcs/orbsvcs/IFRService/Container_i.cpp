@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char *TAO_Container_i::tmp_name_holder_ = nullptr;
+char const *TAO_Container_i::tmp_name_holder_ = nullptr;
 
 TAO_Container_i::TAO_Container_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
@@ -170,7 +170,7 @@ TAO_Container_i::destroy_definitions_i ()
 }
 
 CORBA::Contained_ptr
-TAO_Container_i::lookup (const char *search_name)
+TAO_Container_i::lookup (char const *search_name)
 {
   TAO_IFR_READ_GUARD_RETURN (nullptr);
 
@@ -180,7 +180,7 @@ TAO_Container_i::lookup (const char *search_name)
 }
 
 CORBA::Contained_ptr
-TAO_Container_i::lookup_i (const char *search_name)
+TAO_Container_i::lookup_i (char const *search_name)
 {
   ACE_Configuration_Section_Key iter_key;
   ACE_Configuration_Section_Key work_key;
@@ -590,7 +590,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
 }
 
 CORBA::ContainedSeq *
-TAO_Container_i::lookup_name (const char *search_name,
+TAO_Container_i::lookup_name (char const *search_name,
                               CORBA::Long levels_to_search,
                               CORBA::DefinitionKind limit_type,
                               CORBA::Boolean exclude_inherited)
@@ -606,7 +606,7 @@ TAO_Container_i::lookup_name (const char *search_name,
 }
 
 CORBA::ContainedSeq *
-TAO_Container_i::lookup_name_i (const char *search_name,
+TAO_Container_i::lookup_name_i (char const *search_name,
                                 CORBA::Long levels_to_search,
                                 CORBA::DefinitionKind limit_type,
                                 CORBA::Boolean exclude_inherited)
@@ -1779,13 +1779,13 @@ TAO_Container_i::create_ext_value_i (
 }
 
 int
-TAO_Container_i::same_as_tmp_name (const char *name)
+TAO_Container_i::same_as_tmp_name (char const *name)
 {
   return ACE_OS::strcmp (TAO_Container_i::tmp_name_holder_, name) == 0;
 }
 
 void
-TAO_Container_i::tmp_name_holder (const char *name)
+TAO_Container_i::tmp_name_holder (char const *name)
 {
   TAO_Container_i::tmp_name_holder_ = name;
 }
@@ -1794,7 +1794,7 @@ void
 TAO_Container_i::lookup_name_recursive (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
@@ -1907,7 +1907,7 @@ void
 TAO_Container_i:: lookup_attr (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      char const *search_name,
       CORBA::Boolean exclude_inherited
     )
 {
@@ -2009,7 +2009,7 @@ void
 TAO_Container_i::lookup_op (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      char const *search_name,
       CORBA::Boolean exclude_inherited
     )
 {
@@ -2110,7 +2110,7 @@ TAO_Container_i::lookup_op (
 
 void
 TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
-                              const CORBA::Any &value)
+                              CORBA::Any const &value)
 {
   CORBA::TypeCode_var tc = value.type ();
 
@@ -2233,8 +2233,8 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
 }
 
 void
-TAO_Container_i::update_refs (const char *path,
-                              const char *name)
+TAO_Container_i::update_refs (char const *path,
+                              char const *name)
 {
   ACE_Configuration_Section_Key refs_key;
   int status =
@@ -2332,15 +2332,15 @@ TAO_Container_i::create_value_common (
     CORBA::DefinitionKind container_kind,
     ACE_Configuration_Section_Key &container_key,
     ACE_Configuration_Section_Key &new_key,
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces
   )
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -2370,7 +2370,7 @@ TAO_Container_i::create_value_common (
                                              (CORBA::ULong) is_truncatable);
   if (!CORBA::is_nil (base_value))
     {
-      const char *base_path =
+      char const *base_path =
         TAO_IFR_Service_Utils::reference_to_path (base_value);
 
       // Get the servant's key into the temporary key holder, because
@@ -2406,7 +2406,7 @@ TAO_Container_i::create_value_common (
                                                  length);
 
       ACE_TString base_id;
-      const char *base_path = nullptr;
+      char const *base_path = nullptr;
       char *stringified = nullptr;
 
       for (CORBA::ULong i = 0; i < length; ++i)
@@ -2455,7 +2455,7 @@ TAO_Container_i::create_value_common (
                                                  "count",
                                                  length);
       ACE_TString supported_id;
-      const char *supported_path = nullptr;
+      char const *supported_path = nullptr;
       CORBA::ULong kind = 0;
       bool concrete_seen = false;
       CORBA::DefinitionKind def_kind;
