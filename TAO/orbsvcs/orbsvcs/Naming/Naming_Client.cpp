@@ -41,14 +41,4 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout)
   return 0;
 }
 
-TAO_Naming_Client::TAO_Naming_Client ()
-{
-  // Do nothing
-}
-
-TAO_Naming_Client::~TAO_Naming_Client ()
-{
-  // Do nothing
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
