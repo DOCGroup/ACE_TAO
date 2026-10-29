@@ -31,7 +31,7 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
 
           ACE_CString s =
             ACE_CString ("X509: ")
-            + ACE_CString (const_cast<char const *> (id));
+            + ACE_CString (id);
 
           this->id_ = CORBA::string_dup (s.c_str ());
 

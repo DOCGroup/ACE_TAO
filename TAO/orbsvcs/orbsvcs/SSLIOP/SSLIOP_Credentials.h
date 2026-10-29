@@ -119,7 +119,7 @@ namespace TAO
 
       static SSLIOP::Credentials_ptr _nil ()
       {
-        return (SSLIOP::Credentials_ptr) 0;
+        return nullptr;
       }
 
       //@}
