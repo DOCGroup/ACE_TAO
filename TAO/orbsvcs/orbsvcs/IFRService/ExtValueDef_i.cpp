@@ -130,7 +130,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 
 void
 TAO_ExtValueDef_i::ext_initializers (
-    const CORBA::ExtInitializerSeq &ext_initializers
+    CORBA::ExtInitializerSeq const &ext_initializers
   )
 {
   TAO_IFR_WRITE_GUARD;
@@ -142,7 +142,7 @@ TAO_ExtValueDef_i::ext_initializers (
 
 void
 TAO_ExtValueDef_i::ext_initializers_i (
-    const CORBA::ExtInitializerSeq &ext_initializers
+    CORBA::ExtInitializerSeq const &ext_initializers
   )
 {
   ACE_Configuration *config = this->repo_->config ();
@@ -702,13 +702,13 @@ TAO_ExtValueDef_i::describe_ext_value_i (
 
 CORBA::ExtAttributeDef_ptr
 TAO_ExtValueDef_i::create_ext_attribute (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode,
-    const CORBA::ExceptionDefSeq &get_exceptions,
-    const CORBA::ExceptionDefSeq &set_exceptions
+    CORBA::ExceptionDefSeq const &get_exceptions,
+    CORBA::ExceptionDefSeq const &set_exceptions
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtAttributeDef::_nil ());
@@ -726,13 +726,13 @@ TAO_ExtValueDef_i::create_ext_attribute (
 
 CORBA::ExtAttributeDef_ptr
 TAO_ExtValueDef_i::create_ext_attribute_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode,
-    const CORBA::ExceptionDefSeq &get_exceptions,
-    const CORBA::ExceptionDefSeq &set_exceptions
+    CORBA::ExceptionDefSeq const &get_exceptions,
+    CORBA::ExceptionDefSeq const &set_exceptions
   )
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -786,7 +786,7 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
 void
 TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                                     ACE_Configuration_Section_Key &key,
-                                    const char *sub_section)
+                                    char const *sub_section)
 {
   ACE_Configuration_Section_Key excepts_key;
   int status =
@@ -846,8 +846,8 @@ TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
 
 void
 TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
-                               const char *sub_section,
-                               const CORBA::ExcDescriptionSeq &exceptions)
+                               char const *sub_section,
+                               CORBA::ExcDescriptionSeq const &exceptions)
 {
   CORBA::ULong length = exceptions.length ();
 
@@ -881,8 +881,8 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
 
 void
 TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
-                               const char *sub_section,
-                               const CORBA::ExceptionDefSeq &exceptions)
+                               char const *sub_section,
+                               CORBA::ExceptionDefSeq const &exceptions)
 {
   CORBA::ULong length = exceptions.length ();
 

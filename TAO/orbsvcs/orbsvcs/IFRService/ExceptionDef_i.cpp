@@ -249,7 +249,7 @@ TAO_ExceptionDef_i::members_i ()
 }
 
 void
-TAO_ExceptionDef_i::members (const CORBA::StructMemberSeq &members)
+TAO_ExceptionDef_i::members (CORBA::StructMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -259,7 +259,7 @@ TAO_ExceptionDef_i::members (const CORBA::StructMemberSeq &members)
 }
 
 void
-TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members)
+TAO_ExceptionDef_i::members_i (CORBA::StructMemberSeq const &members)
 {
   // Destroy our old refs.
   TAO_Container_i::destroy_references_i ();

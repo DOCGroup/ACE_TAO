@@ -46,19 +46,19 @@ public:
 
   CORBA::ExcDescriptionSeq *get_exceptions_i ();
 
-  virtual void get_exceptions (const CORBA::ExcDescriptionSeq &get_exceptions);
+  virtual void get_exceptions (CORBA::ExcDescriptionSeq const &get_exceptions);
 
-  void get_exceptions_i (const CORBA::ExcDescriptionSeq &get_exceptions);
+  void get_exceptions_i (CORBA::ExcDescriptionSeq const &get_exceptions);
 
   virtual CORBA::ExcDescriptionSeq *set_exceptions ();
 
   CORBA::ExcDescriptionSeq *set_exceptions_i ();
 
   virtual void set_exceptions (
-      const CORBA::ExcDescriptionSeq &set_exceptions);
+      CORBA::ExcDescriptionSeq const &set_exceptions);
 
   void set_exceptions_i (
-      const CORBA::ExcDescriptionSeq &set_exceptions);
+      CORBA::ExcDescriptionSeq const &set_exceptions);
 
   virtual CORBA::ExtAttributeDescription *describe_attribute ();
 
@@ -72,10 +72,10 @@ private:
   /// Common code for the set and get varieties.
 
   void fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
-                        const char *sub_section);
+                        char const *sub_section);
 
-  void exceptions (const char *sub_section,
-                   const CORBA::ExcDescriptionSeq &exceptions);
+  void exceptions (char const *sub_section,
+                   CORBA::ExcDescriptionSeq const &exceptions);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
