@@ -39,10 +39,10 @@ public:
   int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Verify prefix is a match
-  int match_prefix (const ACE_CString &prefix) override;
+  int match_prefix (ACE_CString const &prefix) override;
 
   /// Returns the prefix used by the protocol.
-  const char *prefix () const override;
+  char const *prefix () const override;
 
   /// Return the character used to mark where an endpoint ends and
   /// where its options begin.
@@ -54,6 +54,11 @@ public:
   int requires_explicit_endpoint () const override;
 
 private:
+  TAO_UIPMC_Protocol_Factory (TAO_UIPMC_Protocol_Factory const &) = delete;
+  TAO_UIPMC_Protocol_Factory (TAO_UIPMC_Protocol_Factory &&) = delete;
+  TAO_UIPMC_Protocol_Factory & operator= (TAO_UIPMC_Protocol_Factory const &) = delete;
+  TAO_UIPMC_Protocol_Factory & operator= (TAO_UIPMC_Protocol_Factory &&) = delete;
+
   /// Changing the version number can be used to provide backwards
   /// compatibility with old clients.
   // int major_;
@@ -61,7 +66,7 @@ private:
 
   /// Should we override the default behaviour (whatever it is) to listen on
   /// all interfaces
-  bool listen_on_all_;
+  bool listen_on_all_ {};
 
   /// Any specified and valid -ORBListenerInterfaces option string
   ACE_CString listener_interfaces_;
