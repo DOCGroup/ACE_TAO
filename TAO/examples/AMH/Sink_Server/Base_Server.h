@@ -32,7 +32,12 @@ class AMH_Servant;
 class Base_Server
 {
 public:
-  Base_Server (int &argc, ACE_TCHAR **argv);
+  Base_Server (Base_Server const&) = delete;
+  Base_Server (Base_Server&&) = delete;
+  Base_Server& operator= (Base_Server const&) = delete;
+  Base_Server& operator= (Base_Server&&) = delete;
+
+  Base_Server (int& argc, ACE_TCHAR **argv);
 
   //    Is there any reason to make the destructor virtual?  Will you
   //    ever be destroying a derived class through a pointer to
@@ -44,7 +49,7 @@ public:
   // entry in the vtbl) and if, by chance, someone does delete a
   // derived-class though this classes ptr, we are still safe.  The
   // short answer to your question is : I don't know. :)
-  virtual ~Base_Server ();
+  virtual ~Base_Server () = default;
 
   // Just parse the command line for the output-file (-o) option.
   // return -1 if -o option is not present
@@ -71,18 +76,18 @@ public:
   // Mayur: A separate file for just one method? AAAGH. OK.
 
   /// Accesor method (for servants) to the initialised ORB
-  CORBA::ORB_ptr orb ();
+  CORBA::ORB_ptr orb () const;
 
 protected:
-  int &argc_;
+  int& argc_;
   ACE_TCHAR **argv_;
-  const ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR const *ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
 private:
   /// Write servant IOR to file specified with the '-o' option
-  int write_ior_to_file (const char * ior);
+  int write_ior_to_file (char const *ior);
 };
 
 #if defined (__ACE_INLINE__)

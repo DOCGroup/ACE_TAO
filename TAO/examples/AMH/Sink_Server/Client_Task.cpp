@@ -2,6 +2,7 @@
 #include "tao/Strategies/advanced_resource.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
@@ -18,7 +19,7 @@ int
 Client_Task::parse_args ()
 {
     ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:O:");
-    int c;
+    int c {};
 
     while ((c = get_opts ()) != -1)
       {
@@ -31,7 +32,7 @@ Client_Task::parse_args ()
             }
           case 'n':
             {
-              int iterations = ACE_OS::atoi (get_opts.opt_arg ());
+              int const iterations = ACE_OS::atoi (get_opts.opt_arg ());
               if (iterations >= 0 )
                 this->iterations_ = iterations;
               break;
@@ -97,7 +98,7 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
                             0);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught trying to narrow servant\n");
       return 0;
@@ -108,8 +109,8 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
 int
 Client_Task::run_test ()
 {
-  ACE_hrtime_t test_start = 0;
-  ACE_hrtime_t test_end = 0;
+  ACE_hrtime_t test_start {};
+  ACE_hrtime_t test_end {};
 
   try
     {
@@ -123,14 +124,14 @@ Client_Task::run_test ()
 
       test_end = ACE_OS::gethrtime ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return 0;
     }
 
 
   // High resolution timer calibration
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Basic_Stats totals;
@@ -153,15 +154,15 @@ Client_Task::svc ()
     {
       for (int i = 0; i != this->iterations_; ++i)
         {
-          CORBA::ULongLong start = ACE_OS::gethrtime ();
+          CORBA::ULongLong const start = ACE_OS::gethrtime ();
 
           (void) this->roundtrip_->test_method (start);
 
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           this->latency_.sample (now - start);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return 0;
     }
@@ -169,8 +170,8 @@ Client_Task::svc ()
 }
 
 void
-Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
-                                  const ACE_TCHAR *msg,
+Client_Task::accumulate_and_dump (ACE_Basic_Stats& totals,
+                                  ACE_TCHAR const *msg,
                                   ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   totals.accumulate (this->latency_);

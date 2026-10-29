@@ -1,8 +1,10 @@
 #include "MT_AMH_Server.h"
 #include "AMH_Servant.h"
 
+#include "ace/OS_NS_stdlib.h"
+
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   MT_AMH_Server amh_server (argc, argv);
   amh_server.try_RT_scheduling();
