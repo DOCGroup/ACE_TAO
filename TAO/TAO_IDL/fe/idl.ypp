@@ -6876,7 +6876,7 @@ at_least_one_formal_parameter
               ACE_NEW_RETURN ($2, FE_Utils::T_PARAMLIST_INFO, 1);
             }
 
-          $2->enqueue_head (*$1);
+          $2->insert ($2->begin (), *$1);
           delete $1;
           $1 = 0;
 
@@ -6907,7 +6907,7 @@ formal_parameters
               ACE_NEW_RETURN ($1, FE_Utils::T_PARAMLIST_INFO, 1);
             }
 
-          $1->enqueue_tail (*$3);
+          $1->push_back (*$3);
           $$ = $1;
 
           delete $3;

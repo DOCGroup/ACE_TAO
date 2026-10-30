@@ -77,7 +77,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           bool is_fixed = false;
           FE_Utils::T_Param_Info *param = nullptr;
 
-          if (this->t_params_->get (param, slot - 1) != 0)
+          if (slot - 1 >= this->t_params_->size ())
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_connector_dds_exh::")
@@ -85,6 +85,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
                                  ACE_TEXT ("template param fetch failed\n ")),
                                 -1);
             }
+          param = &(*this->t_params_)[slot - 1];
 
           if (d->node_type () == AST_Decl::NT_typedef)
             {

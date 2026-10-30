@@ -8,6 +8,7 @@
 #include "ast_predefined_type.h"
 
 #include <string>
+#include <vector>
 
 class UTL_StrList;
 class UTL_IdList;
@@ -32,7 +33,7 @@ struct TAO_IDL_FE_Export FE_Utils
     T_Param_Info () = default;
   };
 
-  using T_PARAMLIST_INFO = ACE_Unbounded_Queue<T_Param_Info>;
+  using T_PARAMLIST_INFO = std::vector<T_Param_Info>;
 
   static bool duplicate_param_id (T_PARAMLIST_INFO *params);
 

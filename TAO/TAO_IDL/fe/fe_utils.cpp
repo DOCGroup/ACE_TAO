@@ -31,23 +31,13 @@
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {
-  size_t cur_pos = 0UL;
-  size_t size = params->size ();
-
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
-       !i.done ();
-       i.advance (), ++cur_pos)
+  for (size_t cur_pos = 0; cur_pos < params->size (); ++cur_pos)
     {
-      FE_Utils::T_Param_Info *this_one = nullptr;
-      FE_Utils::T_Param_Info *that_one = nullptr;
+      FE_Utils::T_Param_Info const& this_one = (*params)[cur_pos];
 
-      i.next (this_one);
-
-      for (size_t j = cur_pos + 1; j < size; ++j)
+      for (size_t j = cur_pos + 1; j < params->size (); ++j)
         {
-          params->get (that_one, j);
-
-          if (this_one->name_ == that_one->name_)
+          if (this_one.name_ == (*params)[j].name_)
             {
               return true;
             }
@@ -482,22 +472,15 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   std::string retval;
   std::string const pattern ("sequence<");
   size_t const len = pattern.length ();
-  size_t index = 0;
-
-
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*list);
-       !i.done ();
-       i.advance (), ++index)
+  for (size_t index = 0; index < list->size (); ++index)
     {
-      FE_Utils::T_Param_Info *param = nullptr;
-      i.next (param);
+      FE_Utils::T_Param_Info const& param = (*list)[index];
 
-      if (param->name_.find (pattern) == 0)
+      if (param.name_.find (pattern) == 0)
         {
           // Get the substring of what's between the brackets.
           // It will have to match a previous param in the list.
-          id = param->name_.substr (len,
-                                    param->name_.length () - (len + 1));
+          id = param.name_.substr (len, param.name_.length () - (len + 1));
 
           if (!FE_Utils::check_one_seq_of_param (list, id, index))
             {
@@ -910,21 +893,9 @@ FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                   std::string const &param_id,
                                   size_t index)
 {
-  size_t local_index = 0;
-
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*list);
-       !i.done ();
-       i.advance (), ++local_index)
+  for (size_t local_index = 0; local_index < index; ++local_index)
     {
-      if (local_index == index)
-        {
-          break;
-        }
-
-      FE_Utils::T_Param_Info *info = nullptr;
-      i.next (info);
-
-      if (info->name_ == param_id)
+      if ((*list)[local_index].name_ == param_id)
         {
           return true;
         }

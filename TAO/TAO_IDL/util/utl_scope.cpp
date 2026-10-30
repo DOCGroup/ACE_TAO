@@ -1860,7 +1860,6 @@ UTL_Scope::match_param (UTL_ScopedName *e)
     }
 
   std::string const& name = e->first_component ()->get_string ();
-  FE_Utils::T_Param_Info *param = nullptr;
   unsigned long index = 0;
 
   UTL_StrList *alias_params =
@@ -1874,11 +1873,9 @@ UTL_Scope::match_param (UTL_ScopedName *e)
 
   UTL_String *alias_param = nullptr;
 
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
-       i.next (param);
-       i.advance (), ++index)
+  for (FE_Utils::T_Param_Info const& param_info : *params)
     {
-      if (param->name_ == name)
+      if (param_info.name_ == name)
         {
           /// If we are parsing this template module as a
           /// reference, the param holder we create must have
@@ -1912,16 +1909,18 @@ UTL_Scope::match_param (UTL_ScopedName *e)
               return
                 idl_global->gen ()->create_param_holder (
                   &sn,
-                  param);
+                  const_cast<FE_Utils::T_Param_Info *> (&param_info));
             }
           else
             {
               return
                 idl_global->gen ()->create_param_holder (
                   e,
-                  param);
+                  const_cast<FE_Utils::T_Param_Info *> (&param_info));
             }
         }
+
+      ++index;
     }
 
   return nullptr;

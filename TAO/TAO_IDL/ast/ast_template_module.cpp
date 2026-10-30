@@ -64,8 +64,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
           d = td->primitive_base_type ();
         }
 
-      FE_Utils::T_Param_Info *param = nullptr;
-      (void) this->template_params_->get (param, slot);
+      FE_Utils::T_Param_Info *param = &(*this->template_params_)[slot];
 
       if (!this->match_one_param (param, d))
         {
@@ -209,17 +208,11 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
 FE_Utils::T_Param_Info *
 AST_Template_Module::find_param (UTL_String *name)
 {
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (
-         *this->template_params_);
-       !i.done ();
-       i.advance ())
+  for (FE_Utils::T_Param_Info &param : *this->template_params_)
     {
-      FE_Utils::T_Param_Info *param = nullptr;
-      i.next (param);
-
-      if (param->name_ == name->get_string ())
+      if (param.name_ == name->get_string ())
         {
-          return param;
+          return &param;
         }
     }
 
@@ -230,24 +223,18 @@ bool
 AST_Template_Module::match_param_by_type (
   FE_Utils::T_Param_Info *param)
 {
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (
-         *this->template_params_);
-       !i.done ();
-       i.advance ())
+  for (FE_Utils::T_Param_Info const& my_param : *this->template_params_)
     {
-      FE_Utils::T_Param_Info *my_param = nullptr;
-      i.next (my_param);
-
-      if (param->type_ == my_param->type_)
+      if (param->type_ == my_param.type_)
         {
           if (param->type_ == AST_Decl::NT_const)
             {
-              if (param->const_type_ == my_param->const_type_)
+              if (param->const_type_ == my_param.const_type_)
                 {
                   if (param->const_type_ == AST_Expression::EV_enum)
                     {
                       if (param->enum_const_type_decl_
-                            == my_param->enum_const_type_decl_)
+                            == my_param.enum_const_type_decl_)
                         {
                           return true;
                         }

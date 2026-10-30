@@ -10316,7 +10316,7 @@ yyreduce:
               ACE_NEW_RETURN ((yyvsp[0].plval), FE_Utils::T_PARAMLIST_INFO, 1);
             }
 
-          (yyvsp[0].plval)->enqueue_head (*(yyvsp[-1].pival));
+          (yyvsp[0].plval)->insert ((yyvsp[0].plval)->begin (), *(yyvsp[-1].pival));
           delete (yyvsp[-1].pival);
           (yyvsp[-1].pival) = 0;
 
@@ -10348,7 +10348,7 @@ yyreduce:
               ACE_NEW_RETURN ((yyvsp[-2].plval), FE_Utils::T_PARAMLIST_INFO, 1);
             }
 
-          (yyvsp[-2].plval)->enqueue_tail (*(yyvsp[0].pival));
+          (yyvsp[-2].plval)->push_back (*(yyvsp[0].pival));
           (yyval.plval) = (yyvsp[-2].plval);
 
           delete (yyvsp[0].pival);

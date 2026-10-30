@@ -183,21 +183,18 @@ be_visitor_connector_dds_ex_base::match_template_args ()
         i.item ()->get_string ();
       size_t slot = 0;
 
-      for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR ci (
-             *this->t_inst_->ref ()->template_params ());
-           ! ci.done ();
-           ci.advance (), ++slot)
+      for (FE_Utils::T_Param_Info const& t_param :
+             *this->t_inst_->ref ()->template_params ())
         {
-          FE_Utils::T_Param_Info *t_param = nullptr;
-          ci.next (t_param);
-
-          if (t_param->name_ == ref_name)
+          if (t_param.name_ == ref_name)
             {
               AST_Decl **d = nullptr;
               this->t_inst_->template_args ()->get (d, slot);
               this->t_args_.enqueue_tail (*d);
               break;
             }
+
+          ++slot;
         }
     }
 }

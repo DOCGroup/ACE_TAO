@@ -621,19 +621,16 @@ ast_visitor_reifying::visit_constant (AST_Constant *node)
 int
 ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
 {
-  size_t i = 0;
   FE_Utils::T_ARGLIST const *t_args =
     this->ctx_->template_args ();
 
-  for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (
-         *this->ctx_->template_params ());
-       !iter.done ();
-       iter.advance (), ++i)
+  FE_Utils::T_PARAMLIST_INFO const& t_params =
+    *this->ctx_->template_params ();
+  for (size_t i = 0; i < t_params.size (); ++i)
     {
-      FE_Utils::T_Param_Info *item = nullptr;
-      iter.next (item);
+      FE_Utils::T_Param_Info const& item = t_params[i];
 
-      std::string const& name = item->name_;
+      std::string const& name = item.name_;
 
       /// The param holder's info->name_ may be the same as the
       /// node's local name, but if the node comes from an
@@ -658,7 +655,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                                  ACE_TEXT ("visit_param_holder() - access of ")
                                  ACE_TEXT ("current template arglist failed - ")
                                  ACE_TEXT ("param=%C scope=%C index=%d\n"),
-                                 item->name_.c_str (),
+                                 item.name_.c_str (),
                                  ScopeAsDecl (idl_global->scopes ().top ())->full_name ().c_str (),
                                  i),
                                 -1);
