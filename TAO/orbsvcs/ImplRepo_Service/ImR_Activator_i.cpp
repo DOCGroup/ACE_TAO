@@ -426,9 +426,10 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 #endif
         ACE::terminate_process (pid);
 
-      if (this->running_server_list_.remove (name) == 0)
+      std::string const server_name (name);
+      if (this->running_server_list_.erase (server_name) != 0)
         {
-          this->dying_server_list_.insert (name);
+          this->dying_server_list_.insert (server_name);
         }
 
       if (debug_ > 1)
@@ -465,7 +466,9 @@ ImR_Activator_i::still_alive (CORBA::Long pid)
 bool
 ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 {
-  bool is_running =  this->running_server_list_.find (name) == 0;
+  std::string const server_name (name);
+  bool is_running =
+    this->running_server_list_.find (server_name) != this->running_server_list_.end ();
 
   if (is_running)
     {
@@ -593,7 +596,7 @@ ImR_Activator_i::start_server(const char* name,
       this->process_map_.rebind (pid, name);
       if (unique)
         {
-          this->running_server_list_.insert (name);
+          this->running_server_list_.emplace (name);
         }
       if (!CORBA::is_nil (this->locator_.in ()))
         {
@@ -645,9 +648,9 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
     {
       this->process_map_.unbind (pid);
     }
-  if (this->running_server_list_.remove (name) == -1)
+  if (this->running_server_list_.erase (name.c_str ()) == 0)
     {
-      this->dying_server_list_.remove (name);
+      this->dying_server_list_.erase (name.c_str ());
     }
 
   if (this->notify_imr_ && !CORBA::is_nil (this->locator_.in ()))
