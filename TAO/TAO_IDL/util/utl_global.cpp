@@ -807,8 +807,7 @@ IDL_GlobalData::preserve_cpp_keywords (bool val)
 void
 IDL_GlobalData::add_include_path (std::string const& path, bool is_system)
 {
-  Include_Path_Info info = { path, is_system };
-  this->include_paths_.enqueue_tail (info);
+  this->include_paths_.push_back ({path, is_system});
 }
 
 void
@@ -1439,8 +1438,8 @@ IDL_GlobalData::corba_module (AST_Module *m)
   this->corba_module_ = m;
 }
 
-IDL_GlobalData::Unbounded_Paths_Queue &
-IDL_GlobalData::include_paths ()
+std::vector<IDL_GlobalData::Include_Path_Info> const&
+IDL_GlobalData::include_paths () const
 {
   return this->include_paths_;
 }

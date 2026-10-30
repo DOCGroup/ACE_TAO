@@ -518,20 +518,18 @@ FE_Utils::open_included_file (std::string const& filename,
   std::string the_file ("/");
   the_file += filename;
 
-  for (IDL_GlobalData::Unbounded_Paths_Queue_Iterator i (
-         idl_global->include_paths ());
-       !i.done () && f == nullptr;
-       i.advance ())
+  for (IDL_GlobalData::Include_Path_Info const& path_info :
+         idl_global->include_paths ())
     {
-      IDL_GlobalData::Include_Path_Info *path_info = nullptr;
-      (void) i.next (path_info);
-
-      std::string const complete_filename = path_info->path_ + the_file;
+      std::string const complete_filename = path_info.path_ + the_file;
 
       f = ACE_OS::fopen (complete_filename.c_str (), "r");
 
       if (f != nullptr)
-        directory = path_info->path_;
+        {
+          directory = path_info.path_;
+          break;
+        }
     }
 
   return f;
@@ -605,7 +603,6 @@ FE_Utils::validate_included_idl_files ()
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
-  IDL_GlobalData::Include_Path_Info *path_info = nullptr;
   char *full_path = nullptr;
 
   // We are going to assemble a list of the include files found in
@@ -637,13 +634,10 @@ FE_Utils::validate_included_idl_files ()
                   // This file name is valid.
                   valid_file = true;
                 }
-              else for (IDL_GlobalData::Unbounded_Paths_Queue_Iterator iter (
-                          idl_global->include_paths ());
-                        !iter.done ();
-                        iter.advance ())
+              else for (IDL_GlobalData::Include_Path_Info const& path_info :
+                          idl_global->include_paths ())
                 {
-                  iter.next (path_info);
-                  std::string pre_partial = path_info->path_;
+                  std::string pre_partial = path_info.path_;
 
                   // If the include path has literal "s (because of an include
                   // of a Windows path with spaces), we must remove them here.
@@ -712,27 +706,22 @@ FE_Utils::validate_orb_include (std::string const& idl_file_name)
       }
   }
 
-  for (IDL_GlobalData::Unbounded_Paths_Queue_Iterator iter (
-         idl_global->include_paths ());
-       !iter.done ();
-       iter.advance ())
+  for (IDL_GlobalData::Include_Path_Info const& path_info :
+         idl_global->include_paths ())
     {
-      IDL_GlobalData::Include_Path_Info *path_info = nullptr;
-      iter.next (path_info);
-
-      std::string partial = path_info->path_;
+      std::string partial = path_info.path_;
 
       // We don't need to check anything if the file is already
       // found and the folder where are currently checking is
       // provided by user.
-      if (!foundpath.empty () && !path_info->is_system_)
+      if (!foundpath.empty () && !path_info.is_system_)
         {
           continue;
         }
 
       if (FE_Utils::is_include_file_found (partial, idl_file_name))
         {
-          if (path_info->is_system_)
+          if (path_info.is_system_)
             {
               if (foundpath.empty () || foundpath == partial)
                 {

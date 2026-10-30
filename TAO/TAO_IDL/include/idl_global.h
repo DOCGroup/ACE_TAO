@@ -668,13 +668,10 @@ public:
   struct Include_Path_Info
   {
     std::string path_;
-    bool is_system_;
+    bool is_system_ {};
   };
 
-  using Unbounded_Paths_Queue = ACE_Unbounded_Queue<Include_Path_Info>;
-  using Unbounded_Paths_Queue_Iterator = ACE_Unbounded_Queue_Iterator<Include_Path_Info>;
-
-  Unbounded_Paths_Queue &include_paths ();
+  std::vector<Include_Path_Info> const& include_paths () const;
   // Accessor for the member.
 
   enum ANON_TYPE_DIAGNOSTIC
@@ -957,7 +954,7 @@ private:
   bool preserve_cpp_keywords_ {true};
   // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
-  Unbounded_Paths_Queue include_paths_;
+  std::vector<Include_Path_Info> include_paths_;
   // List of -I options passed to us.
 
   std::vector<std::string> rel_include_paths_;
