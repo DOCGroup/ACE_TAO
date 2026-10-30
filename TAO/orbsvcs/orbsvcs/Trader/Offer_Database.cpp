@@ -5,6 +5,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class LOCK_TYPE>
@@ -148,9 +150,9 @@ remove_offer (const char* type, CORBA::ULong id)
 
 template <class LOCK_TYPE> int
 TAO_Offer_Database<LOCK_TYPE>::
-remove_offer (const CosTrading::OfferId offer_id)
+remove_offer (char const* offer_id)
 {
-  char* stype = nullptr;
+  char const* stype = nullptr;
   CORBA::ULong index;
 
   this->parse_offer_id (offer_id,
@@ -166,8 +168,8 @@ remove_offer (const CosTrading::OfferId offer_id)
 
 template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
-lookup_offer (const CosTrading::OfferId offer_id,
-              char*& type_name)
+lookup_offer (char const* offer_id,
+              char const*& type_name)
 {
   CORBA::ULong index;
   CosTrading::Offer* offer = nullptr;
@@ -182,9 +184,9 @@ lookup_offer (const CosTrading::OfferId offer_id,
 
 template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
-lookup_offer (const CosTrading::OfferId offer_id)
+lookup_offer (char const* offer_id)
 {
-  char* type_name;
+  char const* type_name;
   CORBA::ULong index;
   CosTrading::Offer* offer = nullptr;
 
@@ -259,21 +261,16 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids ()
 
 template <class LOCK_TYPE> void
 TAO_Offer_Database<LOCK_TYPE>::
-parse_offer_id (const CosTrading::OfferId offer_id,
-                char*&service_type,
+parse_offer_id (char const* offer_id,
+                char const*& service_type,
                 CORBA::ULong& id)
 {
   // Get service type: it is everything from 17th character to the end.
-  service_type = (char *) offer_id + 16;
+  service_type = offer_id + 16;
 
-  // Get id: temporarily put the end of string character where the service
-  // type starts, convert to number, replace the character back.
-  char* start_of_type =  (char *) (offer_id + 16);
-  char temp = *start_of_type;
-  *start_of_type = '\0';
-  id = ACE_OS::atoi (offer_id);
-
-  *start_of_type = temp;
+  // Convert the fixed-width numeric prefix without modifying offer_id.
+  std::string id_string (offer_id, 16);
+  id = ACE_OS::atoi (id_string.c_str ());
 
   if (! TAO_Trader_Base::is_valid_identifier_name (service_type))
     throw CosTrading::IllegalOfferId (offer_id);

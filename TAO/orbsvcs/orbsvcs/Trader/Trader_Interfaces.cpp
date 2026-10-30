@@ -864,7 +864,7 @@ withdraw (const char *id)
 {
   // Get service type map.
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
-  offer_database.remove_offer ((CosTrading::OfferId) id);
+  offer_database.remove_offer (id);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -873,12 +873,12 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 describe (const char *id)
 {
   // Get service type map.
-  char* type = nullptr;
+  char const* type = nullptr;
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   // Perform a lookup to find the offer.
   CosTrading::Offer* offer =
-    offer_database.lookup_offer ((CosTrading::OfferId) id, type);
+    offer_database.lookup_offer (id, type);
 
   CosTrading::Register::OfferInfo* offer_info = nullptr;
   ACE_NEW_THROW_EX (offer_info, CosTrading::Register::OfferInfo, CORBA::NO_MEMORY ());
@@ -908,7 +908,7 @@ modify (const char *id,
   if (check)
     throw CosTrading::NotImplemented ();
 
-  char* type = nullptr;
+  char const* type = nullptr;
   TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
@@ -916,7 +916,7 @@ modify (const char *id,
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = offer_database.
-    lookup_offer (const_cast<CosTrading::OfferId> (id), type);
+    lookup_offer (id, type);
 
   if (offer != nullptr)
     {
@@ -980,21 +980,21 @@ withdraw_using_constraint (const char *type,
 
         TAO_Trader_Constraint_Evaluator evaluator (offer, dp_support);
         if (constr_inter.evaluate (evaluator))
-          ids.enqueue_tail (offer_iter.get_id ());
+          {
+            CORBA::String_var offer_id (offer_iter.get_id ());
+            ids.emplace_back (offer_id.in ());
+          }
 
         offer_iter.next_offer ();
       }
   }
 
-  if (ids.size () != 0)
+  if (! ids.empty ())
     {
-      while (! ids.is_empty ())
+      while (! ids.empty ())
         {
-          char* offer_id = nullptr;
-
-          ids.dequeue_head (offer_id);
-          offer_database.remove_offer (offer_id);
-          CORBA::string_free (offer_id);
+          offer_database.remove_offer (ids.front ().c_str ());
+          ids.pop_front ();
         }
     }
   else

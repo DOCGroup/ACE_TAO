@@ -185,20 +185,7 @@ TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator ()
 {
 }
 
-TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator ()
-{
-  int return_value = 0;
-
-  do
-    {
-      CosTrading::OfferId offer_id = 0;
-
-      return_value = this->ids_.dequeue_head (offer_id);
-      if (return_value == 0)
-        CORBA::string_free (offer_id);
-    }
-  while (return_value == 0);
-}
+TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator () = default;
 
 CORBA::ULong
 TAO_Offer_Id_Iterator::max_left ()
@@ -239,9 +226,9 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
   // Transfer OfferIds chunk.
   for (CORBA::ULong i = 0; i < returnable_items; i++)
     {
-      CosTrading::OfferId offer_id = 0;
-      this->ids_.dequeue_head (offer_id);
-      (*_ids)[i] = offer_id;
+      std::string offer_id = this->ids_.front ();
+      this->ids_.pop_front ();
+      (*_ids)[i] = offer_id.c_str ();
     }
 
   // Return true only if there are items left to be returned in
@@ -252,7 +239,8 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
 void
 TAO_Offer_Id_Iterator::insert_id (CosTrading::OfferId new_id)
 {
-  this->ids_.enqueue_tail (new_id);
+  CORBA::String_var offer_id (new_id);
+  this->ids_.emplace_back (offer_id.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
