@@ -550,7 +550,7 @@ print_idl_versions()
   for (int v = 1; v < IDL_VERSION_COUNT; v++)
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ().data ()
+        IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ().c_str ()
         ));
     }
 }
@@ -595,7 +595,7 @@ process_long_option(long ac, char **av, long &i)
   else if (long_option == "default-idl-version")
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        idl_global->default_idl_version_.to_string ().data ()));
+          idl_global->default_idl_version_.to_string ().c_str ()));
       idl_global->parse_args_exit (0);
     }
   else if (long_option == "list-idl-versions")

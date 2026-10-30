@@ -9,7 +9,7 @@
 
 #include "TAO_IDL_FE_Export.h"
 
-#include <string_view>
+#include <string>
 
 /**
  * List of Specific Idl Versions
@@ -89,17 +89,17 @@ public:
   /**
    * Get version as string.
    */
-  std::string_view to_string () const;
+  std::string const& to_string () const;
   /**
    * Set version from string, sets versions as invalid if it does not match
    * any strings in idlVersionNames.
    */
-  void from_string (std::string_view version);
+  void from_string (std::string const& version);
 
   /**
    * Get the value for the __TAO_IDL_IDL_VERSION preprocessor macro.
    */
-  std::string_view to_macro () const;
+  std::string const& to_macro () const;
 
   /**
    * Compare a IdlVersion to a SpecificIdlVersion or another IdlVersion

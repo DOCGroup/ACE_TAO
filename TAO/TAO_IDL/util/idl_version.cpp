@@ -7,7 +7,7 @@
 #include "idl_version.h"
 
 namespace {
-  constexpr std::string_view idlVersionNames[IDL_VERSION_COUNT] = {
+  std::string const idlVersionNames[IDL_VERSION_COUNT] = {
     "Invalid",
     "3",
     "4"
@@ -16,7 +16,7 @@ namespace {
   /**
    * Values for __TAO_IDL_IDL_VERSION. Should work like __TAO_IDL does.
    */
-  constexpr std::string_view idl_version_macros[IDL_VERSION_COUNT] = {
+  std::string const idl_version_macros[IDL_VERSION_COUNT] = {
     "0x0",
     "0x030000",
     "0x040000"
@@ -43,12 +43,12 @@ bool IdlVersion::is_valid () const
   return version_ != IDL_VERSION_INVALID;
 }
 
-std::string_view IdlVersion::to_string () const
+std::string const& IdlVersion::to_string () const
 {
   return idlVersionNames[version_];
 }
 
-void IdlVersion::from_string (std::string_view version)
+void IdlVersion::from_string (std::string const& version)
 {
   for (int i = 0; i < IDL_VERSION_COUNT; i++)
     {
@@ -61,7 +61,7 @@ void IdlVersion::from_string (std::string_view version)
   version_ = IDL_VERSION_INVALID;
 }
 
-std::string_view IdlVersion::to_macro () const
+std::string const& IdlVersion::to_macro () const
 {
   return idl_version_macros[version_];
 }
