@@ -1938,12 +1938,12 @@ TAO_CodeGen::gperf_input_stream ()
 }
 
 void
-TAO_CodeGen::gperf_input_filename (std::string_view filename)
+TAO_CodeGen::gperf_input_filename (std::string const& filename)
 {
   this->gperf_input_filename_ = filename;
 }
 
-std::string_view
+std::string const&
 TAO_CodeGen::gperf_input_filename () const
 {
   return this->gperf_input_filename_;

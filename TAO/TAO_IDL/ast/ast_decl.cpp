@@ -320,11 +320,9 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
 }
 
 void
-AST_Decl::set_prefix_with_typeprefix_r (std::string_view value,
+AST_Decl::set_prefix_with_typeprefix_r (std::string const& value,
                                         UTL_Scope *appeared_in)
 {
-  std::string const prefix_value (value);
-
   if (this->typeid_set_)
     {
       return;
@@ -356,7 +354,7 @@ AST_Decl::set_prefix_with_typeprefix_r (std::string_view value,
           UTL_Scope *s_tmp = DeclAsScope (tmp);
           if (s_tmp)
             {
-              tmp->set_prefix_with_typeprefix_r (prefix_value, appeared_in);
+              tmp->set_prefix_with_typeprefix_r (value, appeared_in);
             }
         }
     }
@@ -374,7 +372,7 @@ AST_Decl::set_prefix_with_typeprefix_r (std::string_view value,
               AST_Decl *d = si.item ();
               if (d->node_type () != AST_Decl::NT_pre_defined)
                 {
-                  d->set_prefix_with_typeprefix_r (prefix_value, appeared_in);
+                  d->set_prefix_with_typeprefix_r (value, appeared_in);
                 }
             }
         }
@@ -792,7 +790,7 @@ AST_Decl::repoID () const
 }
 
 void
-AST_Decl::repoID (std::string_view value)
+AST_Decl::repoID (std::string const& value)
 {
   this->repoID_ = value;
 }
@@ -810,7 +808,7 @@ AST_Decl::prefix () const
 }
 
 void
-AST_Decl::prefix (std::string_view value)
+AST_Decl::prefix (std::string const& value)
 {
   this->prefix_ = value;
 }
@@ -852,14 +850,13 @@ AST_Decl::version () const
 }
 
 void
-AST_Decl::version (std::string_view value)
+AST_Decl::version (std::string const& value)
 {
   // Previous #pragma version or #pragma id make this illegal.
   if ((this->version_.empty () || this->version_ == value)
       && !this->typeid_set_)
     {
-      std::string const new_version (value);
-      this->version_ = new_version;
+      this->version_ = value;
 
       // Repo id is now computed eagerly, so a version set must update
       // is as well.
@@ -869,7 +866,7 @@ AST_Decl::version (std::string_view value)
           std::string::size_type const pos = tmp.rfind (':');
           if (pos != std::string::npos)
             {
-              tmp = tmp.substr (0, pos + 1) + new_version;
+              tmp = tmp.substr (0, pos + 1) + value;
               this->repoID_ = tmp;
             }
         }
@@ -914,7 +911,7 @@ AST_Decl::typeid_set (bool val)
 }
 
 void
-AST_Decl::set_id_with_typeid (std::string_view value)
+AST_Decl::set_id_with_typeid (std::string const& value)
 {
   // Can't call 'typeid' twice, even with the same value.
   if (this->typeid_set ())
@@ -967,7 +964,7 @@ AST_Decl::set_id_with_typeid (std::string_view value)
 }
 
 void
-AST_Decl::set_prefix_with_typeprefix (std::string_view value)
+AST_Decl::set_prefix_with_typeprefix (std::string const& value)
 {
   // Are we a legal type for 'typeprefix'? This is checked only at
   // the top level.
@@ -1215,7 +1212,7 @@ AST_Decl::original_local_name (Identifier *local_name)
     {
       // Assign to the Identifier variable.
       ACE_NEW (this->pd_original_local_name,
-               Identifier (name.substr (cxx_prefix.size ())));
+               Identifier (std::string (name.substr (cxx_prefix.size ()))));
     }
   else
     {

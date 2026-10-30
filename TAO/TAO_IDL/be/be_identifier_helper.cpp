@@ -102,7 +102,7 @@ IdentifierHelper::original_local_name (Identifier const *local_name)
         {
           // Remove _cxx_ and assign to the Identifier variable.
           ACE_NEW_RETURN (id,
-                          Identifier (keyword),
+                          Identifier (std::string (keyword)),
                           nullptr);
         }
     }

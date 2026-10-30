@@ -134,7 +134,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
   if (lname.size () >= 6 && lname.compare (lname.size () - 6, 6, "plicit") == 0)
     {
       UTL_Scope *s = node->defined_in ();
-      std::string_view const local_name (lname.substr (0, lname.size () - 8));
+      std::string const local_name (lname.substr (0, lname.size () - 8));
       Identifier local_id (local_name);
       AST_Decl *d = s->lookup_by_name_local (&local_id, false);
       local_id.destroy ();

@@ -384,8 +384,8 @@ AST_Module::fe_add_module (AST_Module *t)
           return nullptr;
         }
 
-      std::string_view const prev_prefix = d->prefix ();
-      std::string_view const this_prefix = t->prefix ();
+      std::string const& prev_prefix = d->prefix ();
+      std::string const& this_prefix = t->prefix ();
 
       if (this_prefix.empty ())
         {

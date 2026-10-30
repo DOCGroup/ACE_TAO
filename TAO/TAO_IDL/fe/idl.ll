@@ -768,7 +768,7 @@ idl_store_pragma (char *buf)
           return;
         }
 
-      d->version (std::string_view (number));
+      d->version (std::string (number));
     }
   else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0)
     {

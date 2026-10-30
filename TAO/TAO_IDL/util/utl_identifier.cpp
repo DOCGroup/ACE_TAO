@@ -71,7 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-Identifier::Identifier (std::string_view s)
+Identifier::Identifier (std::string const& s)
 {
   preprocess_and_replace_string (s);
 }
@@ -99,13 +99,13 @@ Identifier::get_string () const
 }
 
 void
-Identifier::replace_string (std::string_view s)
+Identifier::replace_string (std::string const& s)
 {
   this->pv_string_ = s;
 }
 
 void
-Identifier::preprocess_and_replace_string (std::string_view s)
+Identifier::preprocess_and_replace_string (std::string const& s)
 {
   bool shift = false;
 

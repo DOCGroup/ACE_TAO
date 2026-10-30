@@ -224,15 +224,15 @@ be_visitor_context::port_prefix ()
 }
 
 void
-be_visitor_context::port_prefix (std::string_view prefix)
+be_visitor_context::port_prefix (std::string const& prefix)
 {
-  this->port_prefix_.assign (prefix.data (), prefix.size ());
+  this->port_prefix_ = prefix;
 }
 
 void
-be_visitor_context::append_port_prefix (std::string_view suffix)
+be_visitor_context::append_port_prefix (std::string const& suffix)
 {
-  this->port_prefix_.append (suffix.data (), suffix.size ());
+  this->port_prefix_.append (suffix);
 }
 
 std::string_view

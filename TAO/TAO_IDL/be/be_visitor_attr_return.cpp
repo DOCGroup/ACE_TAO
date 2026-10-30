@@ -280,7 +280,7 @@ be_visitor_attr_return::visit_valuetype (be_valuetype *)
 }
 
 void
-be_visitor_attr_return::attr_name (std::string_view name)
+be_visitor_attr_return::attr_name (std::string const& name)
 {
   this->attr_name_string_ += this->ctx_->port_prefix ();
   this->attr_name_string_ += name;

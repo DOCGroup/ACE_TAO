@@ -305,15 +305,11 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
     }
 
   UTL_Scope *scope = i->defined_in ();
-  std::string_view prefix_holder;
-
   // If our prefix is empty, we check to see if an ancestor has one.
   while (i->prefix ().empty () && scope != nullptr)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-      prefix_holder = parent->prefix ();
-
-      i->prefix (prefix_holder);
+      i->prefix (parent->prefix ());
       scope = parent->defined_in ();
     }
 
@@ -328,9 +324,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       while (d->prefix ().empty () && scope != nullptr)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
-          prefix_holder = parent->prefix ();
-
-          d->prefix (prefix_holder);
+          d->prefix (parent->prefix ());
           scope = parent->defined_in ();
         }
 

@@ -131,8 +131,8 @@ public:
 
   /// Accessor for the member.
   std::string &port_prefix ();
-  void port_prefix (std::string_view prefix);
-  void append_port_prefix (std::string_view suffix);
+  void port_prefix (std::string const& prefix);
+  void append_port_prefix (std::string const& suffix);
 
   /// return the export macro currently in force
   std::string_view export_macro () const;

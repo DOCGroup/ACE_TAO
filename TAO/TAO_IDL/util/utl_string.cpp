@@ -183,11 +183,6 @@ UTL_String::UTL_String (std::string value)
 {
 }
 
-UTL_String::UTL_String (std::string_view str)
-  : value_ (str)
-{
-}
-
 UTL_String::UTL_String (UTL_String const *s)
   : value_ (s->value_)
 {

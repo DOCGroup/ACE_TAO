@@ -374,7 +374,7 @@ public:
   TAO_OutStream *gperf_input_stream ();
 
   /// Set the gperf input file name.
-  void gperf_input_filename (std::string_view filename);
+  void gperf_input_filename (std::string const& filename);
 
   /**
    * Retrieve the gperf input file name being used.
@@ -382,7 +382,7 @@ public:
    * program. This is needed coz I do ACE_OS::open on this when I need
    * ACE_HANDLE for the file instead FILE*.
    */
-  std::string_view gperf_input_filename () const;
+  std::string const& gperf_input_filename () const;
 
   /// Convert input string to all one case.
   static std::string upcase (std::string_view str);

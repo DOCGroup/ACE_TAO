@@ -207,7 +207,7 @@ FE_Utils::string_to_scoped_name (std::string_view s)
 
       // Construct a UTL_ScopedName segment.
       ACE_NEW_RETURN (id,
-                      Identifier (local_name),
+                      Identifier (std::string (local_name)),
                       nullptr);
 
       ACE_NEW_RETURN (sn,

@@ -415,7 +415,7 @@ IDL_GlobalData::prog_name () const
 }
 
 void
-IDL_GlobalData::set_prog_name (std::string_view name)
+IDL_GlobalData::set_prog_name (std::string const& name)
 {
   this->pd_prog_name = name;
 }
@@ -447,7 +447,7 @@ IDL_GlobalData::cpp_location_or_empty () const
 }
 
 void
-IDL_GlobalData::set_cpp_location (std::string_view location)
+IDL_GlobalData::set_cpp_location (std::string const& location)
 {
   this->pd_cpp_location = location;
 }
@@ -475,7 +475,7 @@ IDL_GlobalData::set_compile_flags (long cf)
 
 // Get local escapes. This provides an additional mechanism to pass
 // information to a BE.
-std::string_view
+std::string const&
 IDL_GlobalData::local_escapes () const
 {
   return this->pd_local_escapes;
@@ -483,14 +483,14 @@ IDL_GlobalData::local_escapes () const
 
 // Append a local escape.
 void
-IDL_GlobalData::append_local_escape (std::string_view escape)
+IDL_GlobalData::append_local_escape (std::string const& escape)
 {
   this->pd_local_escapes.append (escape);
   this->pd_local_escapes.push_back (' ');
 }
 
 void
-IDL_GlobalData::set_local_escapes (std::string_view escapes)
+IDL_GlobalData::set_local_escapes (std::string const& escapes)
 {
   this->pd_local_escapes = escapes;
 }
@@ -607,7 +607,7 @@ IDL_GlobalData::n_include_file_names () const
 // IDL file.
 
 void
-IDL_GlobalData::add_to_included_idl_files (std::string_view file_name)
+IDL_GlobalData::add_to_included_idl_files (std::string const& file_name)
 {
   // Let's avoid duplicates.
   for (std::string const &included_file : this->included_idl_files_)
@@ -658,7 +658,7 @@ void IDL_GlobalData::idl_src_file (UTL_String *s)
 }
 
 void
-IDL_GlobalData::temp_dir (std::string_view s)
+IDL_GlobalData::temp_dir (std::string const& s)
 {
   this->temp_dir_.emplace (s);
 
@@ -680,7 +680,7 @@ IDL_GlobalData::temp_dir () const
 }
 
 void
-IDL_GlobalData::tao_root (std::string_view s)
+IDL_GlobalData::tao_root (std::string const& s)
 {
   this->tao_root_.emplace (s);
 }
@@ -700,7 +700,7 @@ IDL_GlobalData::tao_root_or_empty () const
 }
 
 void
-IDL_GlobalData::gperf_path (std::string_view s)
+IDL_GlobalData::gperf_path (std::string const& s)
 {
   this->gperf_path_.emplace (s);
 }
@@ -713,12 +713,12 @@ IDL_GlobalData::gperf_path () const
 }
 
 void
-IDL_GlobalData::ident_string (std::string_view s)
+IDL_GlobalData::ident_string (std::string const& s)
 {
   this->ident_string_ = s;
 }
 
-std::string_view
+std::string const&
 IDL_GlobalData::ident_string () const
 {
   return this->ident_string_;
@@ -826,13 +826,13 @@ IDL_GlobalData::destroy ()
 }
 
 void
-IDL_GlobalData::append_idl_flag (std::string_view s)
+IDL_GlobalData::append_idl_flag (std::string const& s)
 {
   this->idl_flags_.append (" ");
   this->idl_flags_.append (s);
 }
 
-std::string_view
+std::string const&
 IDL_GlobalData::idl_flags () const
 {
   return this->idl_flags_;
@@ -1409,7 +1409,7 @@ IDL_GlobalData::recursion_start () const
 }
 
 void
-IDL_GlobalData::recursion_start (std::string_view val)
+IDL_GlobalData::recursion_start (std::string const& val)
 {
   /// Strip off any trailing slashes (not needed
   /// for further processing).
@@ -1480,7 +1480,7 @@ IDL_GlobalData::for_new_holder (
 }
 
 void
-IDL_GlobalData::set_dcps_sequence_type (std::string_view seq_type)
+IDL_GlobalData::set_dcps_sequence_type (std::string const& seq_type)
 {
   this->dcps_sequence_types_list_.emplace_back (seq_type);
 }
@@ -1499,11 +1499,11 @@ IDL_GlobalData::dcps_sequence_type_defined (std::string_view seq_type) const
 }
 
 void
-IDL_GlobalData::add_dcps_data_type (std::string_view id)
+IDL_GlobalData::add_dcps_data_type (std::string const& id)
 {
   // Check if the type already exists.
   DCPS_Data_Type_Info *newinfo = nullptr;
-  std::string const type_name (id);
+  std::string const& type_name = id;
 
   if (this->dcps_type_info_map_.find (type_name, newinfo) != 0)
     {
@@ -1538,18 +1538,17 @@ IDL_GlobalData::add_dcps_data_type (std::string_view id)
 }
 
 bool
-IDL_GlobalData::add_dcps_data_key (std::string_view id, std::string_view key)
+IDL_GlobalData::add_dcps_data_key (std::string const& id, std::string const& key)
 {
   // Search the map for the type.
   DCPS_Data_Type_Info *newinfo = nullptr;
-  std::string const type_name (id);
+  std::string const& type_name = id;
 
   if (this->dcps_type_info_map_.find (type_name, newinfo) == 0)
     {
        // Add the new key field to the type.
-       std::string const key_string (key);
        newinfo->key_list_.enqueue_tail (
-         ACE_TEXT_CHAR_TO_TCHAR (key_string.c_str ()));
+         ACE_TEXT_CHAR_TO_TCHAR (key.c_str ()));
        return true;
     }
   else

@@ -48,7 +48,7 @@ public:
   int visit_valuebox (be_valuebox *) override;
   int visit_valuetype (be_valuetype *) override;
 
-  void attr_name (std::string_view name);
+  void attr_name (std::string const& name);
 
 private:
   std::string attr_name_;

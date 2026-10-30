@@ -206,14 +206,14 @@ be_type::gen_member_ostream_operator (TAO_OutStream *os,
   *os << instance_name << (accessor ? " ()" : "");
 }
 
-std::string_view
+std::string const&
 be_type::fwd_helper_name () const
 {
-  return {this->fwd_helper_name_.data (), this->fwd_helper_name_.size ()};
+  return this->fwd_helper_name_;
 }
 
 void
-be_type::fwd_helper_name (std::string_view name)
+be_type::fwd_helper_name (std::string const& name)
 {
   if (name.empty ())
     {
@@ -221,7 +221,7 @@ be_type::fwd_helper_name (std::string_view name)
     }
   else
     {
-      this->fwd_helper_name_.assign (name.data (), name.size ());
+      this->fwd_helper_name_ = name;
     }
 }
 

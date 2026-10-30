@@ -78,7 +78,7 @@ public:
   Identifier () = default;
   // Default Constructor.
 
-  explicit Identifier (std::string_view s);
+  explicit Identifier (std::string const& s);
   // Constructor.
 
   Identifier (Identifier const &other);
@@ -96,10 +96,10 @@ public:
   std::string const& get_string () const;
   ///}
 
-  void replace_string (std::string_view s);
+  void replace_string (std::string const& s);
   // Replace the underlying string.
 
-  void preprocess_and_replace_string (std::string_view s);
+  void preprocess_and_replace_string (std::string const& s);
 
   bool compare (Identifier const *other) const;
   // Compare with other Identifier.

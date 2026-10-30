@@ -120,7 +120,7 @@ public:
                                        TAO_OutStream *os);
 
   /// Accessor to the member.
-  std::string_view fwd_helper_name () const;
+  std::string const& fwd_helper_name () const;
 
   // There are three possible situations.
   // (1) If there is no initializers but at least one operation.

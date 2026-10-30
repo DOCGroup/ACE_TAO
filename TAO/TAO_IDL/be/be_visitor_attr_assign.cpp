@@ -204,9 +204,9 @@ be_visitor_attr_assign::visit_valuetype (be_valuetype *)
 }
 
 void
-be_visitor_attr_assign::attr_name (std::string_view name)
+be_visitor_attr_assign::attr_name (std::string const& name)
 {
-  this->attr_name_.assign (name.data (), name.size ());
+  this->attr_name_ = name;
 
   // Add to this string for convenience, it's generated
   // in each method above at least once.

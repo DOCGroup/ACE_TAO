@@ -62,8 +62,8 @@ public:
                                             bool accessor = false);
 
   /// Accessor to the member.
-  std::string_view fwd_helper_name () const;
-  void fwd_helper_name (std::string_view name);
+  std::string const& fwd_helper_name () const;
+  void fwd_helper_name (std::string const& name);
 
   /// Generate _var and _out typedefs for structs and unions.
   void gen_common_varout (TAO_OutStream *os);

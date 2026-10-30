@@ -257,16 +257,16 @@ public:
   // Return the flattened full scoped name.
 
   std::string const& repoID () const;
-  void repoID (std::string_view value);
+  void repoID (std::string const& value);
   void clear_repoID ();
   // Accessors for the repository ID.
 
   std::string const& prefix () const;
-  void prefix (std::string_view value);
+  void prefix (std::string const& value);
   // Accessors for the repository ID prefix.
 
   std::string const& version () const;
-  void version (std::string_view value);
+  void version (std::string const& value);
   void version (char *value);
   // Accessors for the version_ member.
 
@@ -278,10 +278,10 @@ public:
   void typeid_set (bool val);
   // Accessors for the typeid_set_ member.
 
-  void set_id_with_typeid (std::string_view value);
+  void set_id_with_typeid (std::string const& value);
   // Called by a 'typeId' declaration.
 
-  void set_prefix_with_typeprefix (std::string_view value);
+  void set_prefix_with_typeprefix (std::string const& value);
   // Called by a 'type_prefix' declaration.
 
   // If there is _cxx_ in the beginning, we will remove that and keep
@@ -487,7 +487,7 @@ private:
   // The scope in which our prefix, if any, was assigned.
   UTL_Scope *prefix_scope_ {};
 
-  void set_prefix_with_typeprefix_r (std::string_view value,
+  void set_prefix_with_typeprefix_r (std::string const& value,
                                      UTL_Scope *appeared_in);
 
   bool in_tmpl_mod_not_aliased_;

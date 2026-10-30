@@ -247,7 +247,7 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
     static_cast<UTL_ScopedName *> (amh_node->name ()->copy ());
 
   ACE_NEW_RETURN (id,
-                  Identifier (std::string_view (original_op_name)),
+                  Identifier (original_op_name),
                   -1);
 
   ACE_NEW_RETURN (sn,

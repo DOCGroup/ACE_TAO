@@ -129,7 +129,7 @@ FE_Declarator::compose (AST_Decl *d)
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
     {
-      std::string_view original_prefix = d->prefix ();
+      std::string original_prefix = d->prefix ();
       AST_Decl *scope = d;
 
       // Maybe the prefix hasn't been applied yet.

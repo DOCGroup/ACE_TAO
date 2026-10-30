@@ -1442,7 +1442,7 @@ int
 be_visitor_ccm_pre_proc::lookup_one_exception (std::string_view name,
                                                be_exception *&result)
 {
-  Identifier id (name);
+  Identifier id {std::string (name)};
   UTL_ScopedName local_name (&id,
                              nullptr);
   UTL_ScopedName scoped_name (&this->module_id_,
@@ -1737,18 +1737,18 @@ be_visitor_ccm_pre_proc::create_scoped_name (std::string_view prefix,
                                              std::string_view suffix,
                                              AST_Decl *parent) const
 {
-  std::string local_string (prefix != nullptr ? prefix : "");
-  if (local_name != nullptr)
+  std::string local_string (prefix);
+  if (!local_name.empty ())
     {
       local_string += local_name;
     }
-  if (suffix != nullptr)
+  if (!suffix.empty ())
     {
       local_string += suffix;
     }
   Identifier *local_id = nullptr;
   ACE_NEW_RETURN (local_id,
-                  Identifier (local_string.c_str ()),
+                  Identifier (local_string),
                   nullptr);
   UTL_ScopedName *last_segment = nullptr;
   ACE_NEW_RETURN (last_segment,

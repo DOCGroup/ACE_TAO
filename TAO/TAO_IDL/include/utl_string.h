@@ -88,8 +88,6 @@ public:
   UTL_String (char const* str, bool take_copy);
 
   explicit UTL_String (std::string value);
-  explicit UTL_String (std::string_view value);
-
   explicit UTL_String (UTL_String const *s);
 
   UTL_String (UTL_String const&) = delete;

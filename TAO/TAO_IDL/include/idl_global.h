@@ -377,19 +377,19 @@ public:
   void             set_in_main_file (bool);     // Set it
 
   std::string const& prog_name () const;
-  void set_prog_name (std::string_view name);
+  void set_prog_name (std::string const& name);
   void clear_prog_name ();
 
   std::optional<std::string_view> cpp_location () const;
   std::string_view cpp_location_or_empty () const;
-  void set_cpp_location (std::string_view location);
+  void set_cpp_location (std::string const& location);
 
   long             compile_flags () const;  // What flags are on?
   void             set_compile_flags (long);    // Turn some on or off
 
-  std::string_view local_escapes () const;
-  void             append_local_escape (std::string_view escape);
-  void             set_local_escapes (std::string_view escapes);
+  std::string const& local_escapes () const;
+  void             append_local_escape (std::string const& escape);
+  void             set_local_escapes (std::string const& escapes);
 
   UTL_Indenter     *indent () const;        // Get indenter
   void             set_indent (UTL_Indenter *); // Set it
@@ -421,10 +421,10 @@ public:
                                                    ACE_Null_Mutex>;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
-  void add_dcps_data_type (std::string_view id);
+  void add_dcps_data_type (std::string const& id);
 
   // FE calls when #pragma DCPS_DATA_KEY is processed
-  bool add_dcps_data_key (std::string_view id, std::string_view key);
+  bool add_dcps_data_key (std::string const& id, std::string const& key);
 
   // returns null if not matching; otherwise pointer to the info
   DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
@@ -436,7 +436,7 @@ public:
   bool dcps_support_zero_copy_read () const;
 
   // FE calls when #pragma DCPS_DATA_SEQUENCE_TYPE is processed
-  void set_dcps_sequence_type (std::string_view seq_type);
+  void set_dcps_sequence_type (std::string const& seq_type);
 
   // BE calls to check whether pragma for this sequence has been set
   bool dcps_sequence_type_defined (std::string_view seq_type) const;
@@ -452,7 +452,7 @@ public:
   //   "#include"d in the main IDL file, not the ones after CC
   //   preprocessor parsed the file.
 
-  void add_to_included_idl_files (std::string_view file_name);
+  void add_to_included_idl_files (std::string const& file_name);
 
   // Get all the files.
   std::vector<std::string> & included_idl_files ();
@@ -469,7 +469,7 @@ public:
   void idl_src_file (UTL_String *);
   // Set the source IDL file that is being parsed.
 
-  void temp_dir (std::string_view s);
+  void temp_dir (std::string const& s);
   // Set the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
@@ -479,23 +479,23 @@ public:
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  void tao_root (std::string_view s);
+  void tao_root (std::string const& s);
   // Set the path of TAO_ROOT.
 
   std::optional<std::string_view> tao_root () const;
   std::string_view tao_root_or_empty () const;
   // Get the path for TAO_ROOT.
 
-  void gperf_path (std::string_view s);
+  void gperf_path (std::string const& s);
   // Set the path for the perfect hashing program (GPERF).
 
   std::optional<std::string_view> gperf_path () const;
   // Get the path for the perfect hashing program (GPERF).
 
-  void ident_string (std::string_view s);
+  void ident_string (std::string const& s);
   // Set the value of the #ident string.
 
-  std::string_view ident_string () const;
+  std::string const& ident_string () const;
   // Get the value of the #ident string.
 
   void case_diff_error (bool);
@@ -514,10 +514,10 @@ public:
   void destroy ();
   // Cleanup function.
 
-  void append_idl_flag (std::string_view s);
+  void append_idl_flag (std::string const& s);
   // Save each flag passed to the IDL compiler.
 
-  std::string_view idl_flags () const;
+  std::string const& idl_flags () const;
   // Get a string representation of the flags
   // passed to the idl compiler.
 
@@ -634,7 +634,7 @@ public:
   // might be used in such a valuetype are fully defined.
 
   std::optional<std::string_view> recursion_start () const;
-  void recursion_start (std::string_view val);
+  void recursion_start (std::string const& val);
   // Accessors for the member.
 
   bool multi_file_input () const;

@@ -1202,7 +1202,7 @@ DRV_pre_proc (char const *myfile)
 
   UTL_String *stripped_tmp = nullptr;
   ACE_NEW (stripped_tmp,
-           UTL_String (DRV_stripped_name (myfile)));
+           UTL_String (std::string (DRV_stripped_name (myfile))));
 
   idl_global->set_stripped_filename (stripped_tmp);
 
