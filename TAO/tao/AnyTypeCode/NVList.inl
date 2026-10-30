@@ -49,7 +49,7 @@ CORBA::NVList::count () const
 {
   (const_cast<CORBA::NVList *> (this))->evaluate ();
 
-  return this->max_;
+  return static_cast<CORBA::ULong> (this->values_.size ());
 }
 
 ACE_INLINE
