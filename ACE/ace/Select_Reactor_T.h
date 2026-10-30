@@ -47,6 +47,11 @@ template <class ACE_SELECT_REACTOR_TOKEN>
 class ACE_Select_Reactor_T : public ACE_Select_Reactor_Impl
 {
 public:
+  ACE_Select_Reactor_T (ACE_Select_Reactor_T const &) = delete;
+  ACE_Select_Reactor_T (ACE_Select_Reactor_T &&) = delete;
+  ACE_Select_Reactor_T &operator= (ACE_Select_Reactor_T const &) = delete;
+  ACE_Select_Reactor_T &operator= (ACE_Select_Reactor_T &&) = delete;
+
   /// If @a disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
   /// but will elide the notify() feature.  If @a mask_signals is
@@ -684,10 +689,6 @@ protected:
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
   sig_atomic_t deactivated_;
-
-private:
-  ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
-  ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -170,6 +170,11 @@ private:
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
 public:
+  ACE_TP_Reactor (ACE_TP_Reactor const &) = delete;
+  ACE_TP_Reactor (ACE_TP_Reactor &&) = delete;
+  ACE_TP_Reactor &operator= (ACE_TP_Reactor const &) = delete;
+  ACE_TP_Reactor &operator= (ACE_TP_Reactor &&) = delete;
+
   /// Initialize ACE_TP_Reactor with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
@@ -294,10 +299,6 @@ private:
   void clear_handle_read_set (ACE_HANDLE handle);
 
   int post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,int status);
-
-private:
-  ACE_TP_Reactor (const ACE_TP_Reactor &) = delete;
-  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
