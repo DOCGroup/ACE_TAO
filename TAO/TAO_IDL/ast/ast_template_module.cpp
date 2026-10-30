@@ -219,7 +219,7 @@ AST_Template_Module::find_param (UTL_String *name)
       FE_Utils::T_Param_Info *param = nullptr;
       i.next (param);
 
-      if (std::string_view (param->name_) == name->str ())
+      if (std::string_view (param->name_) == name->get_string ())
         {
           return param;
         }

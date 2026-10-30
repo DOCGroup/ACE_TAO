@@ -87,7 +87,6 @@ public:
   explicit UTL_String (char const* str);
 
   explicit UTL_String (std::string value);
-  explicit UTL_String (UTL_String const *s);
 
   UTL_String (UTL_String const&) = delete;
   UTL_String (UTL_String&&) = delete;
@@ -108,12 +107,6 @@ public:
     return this->value_;
   }
   std::string const& get_string () const
-  {
-    return this->value_;
-  }
-  // Get contents of utl_string as a standard string.
-
-  std::string const& str () const
   {
     return this->value_;
   }

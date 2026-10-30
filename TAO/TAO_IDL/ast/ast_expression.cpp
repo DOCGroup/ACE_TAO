@@ -183,7 +183,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
               AST_ExprValue);
 
       ACE_NEW (this->pd_ev->u.strval,
-               UTL_String (v->pd_ev->u.strval));
+               UTL_String (v->pd_ev->u.strval->get_string ()));
 
       this->pd_ev->et = EV_string;
     }
@@ -490,7 +490,7 @@ AST_Expression::AST_Expression (UTL_String *sv)
 
   UTL_String *new_str = nullptr;
   ACE_NEW (new_str,
-           UTL_String (sv));
+           UTL_String (sv->get_string ()));
 
   this->pd_ev->u.strval = new_str;
   this->pd_ev->et = EV_string;
@@ -2608,8 +2608,8 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_bool:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_string:
-      return pd_ev->u.strval->str ()
-        == vc->ev ()->u.strval->str ();
+      return pd_ev->u.strval->get_string ()
+        == vc->ev ()->u.strval->get_string ();
     case EV_wstring:
       return !ACE_OS::strcmp (pd_ev->u.wstrval, vc->ev ()->u.wstrval);
     case EV_longlong:

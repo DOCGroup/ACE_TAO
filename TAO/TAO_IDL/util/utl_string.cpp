@@ -177,11 +177,6 @@ UTL_String::UTL_String (std::string value)
 {
 }
 
-UTL_String::UTL_String (UTL_String const *s)
-  : value_ (s->value_)
-{
-}
-
 UTL_String::~UTL_String () = default;
 
 void

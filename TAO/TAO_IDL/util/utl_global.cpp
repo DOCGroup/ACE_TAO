@@ -515,7 +515,7 @@ IDL_GlobalData::seen_include_file_before (std::string_view filename)
   for (unsigned long i = 0; i < this->pd_n_include_file_names; ++i)
     {
       std::string_view const include_name =
-        this->pd_include_file_names[i]->str ();
+        this->pd_include_file_names[i]->get_string ();
 
       if (filename == include_name)
         {
@@ -532,7 +532,7 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
 {
   // Check if we need to store it at all or whether we've seen it already.
   if (this->seen_include_file_before (
-        n->str ()))
+        n->get_string ()))
     {
       n->destroy ();
       delete n; // Don't keep filenames we don't store!
@@ -861,7 +861,7 @@ IDL_GlobalData::update_prefix (char *filename)
     }
 
   std::string_view const current_filename =
-    this->pd_filename->str ();
+    this->pd_filename->get_string ();
   std::string_view const next_filename (filename);
 
   // We have to do this check because some preprocessors (gcc 3.2
@@ -876,7 +876,7 @@ IDL_GlobalData::update_prefix (char *filename)
     }
 
   std::string_view const main_filename =
-    this->pd_main_filename->str ();
+    this->pd_main_filename->get_string ();
 
   char *prefix = nullptr;
   int status = this->file_prefixes_.find (filename, prefix);
@@ -1721,7 +1721,7 @@ namespace
   public:
     explicit OldState (bool disable_output = false)
         : old_filename_ (idl_global->filename ()
-                         ? new UTL_String (idl_global->filename ())
+                         ? new UTL_String (idl_global->filename ()->get_string ())
                          : nullptr),
           // need a copy because IDL_GlobalData::set_filename() destroys previous value
           old_lineno_ (idl_global->lineno ()),
@@ -1741,8 +1741,8 @@ namespace
         builtin_name += std::to_string (n++);
         UTL_String pseudo_filename {std::move (builtin_name)};
 
-        idl_global->idl_src_file (new UTL_String (&pseudo_filename));
-        idl_global->set_filename (new UTL_String (&pseudo_filename));
+        idl_global->idl_src_file (new UTL_String (pseudo_filename.get_string ()));
+        idl_global->set_filename (new UTL_String (pseudo_filename.get_string ()));
 
         if (disable_output_)
           {
