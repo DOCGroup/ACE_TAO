@@ -44,9 +44,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Config_ImpExp_Base
 {
 public:
-  ACE_Config_ImpExp_Base (const ACE_Config_ImpExp_Base &) = delete;
+  ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base const &) = delete;
   ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base &&) = delete;
-  ACE_Config_ImpExp_Base &operator= (const ACE_Config_ImpExp_Base &) = delete;
+  ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base const &) = delete;
   ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base &&) = delete;
 
   /// Constructor taking the ACE_Configuration to import/export to
@@ -91,9 +91,9 @@ protected:
 class ACE_Export ACE_Registry_ImpExp : public ACE_Config_ImpExp_Base
 {
 public:
-  ACE_Registry_ImpExp (const ACE_Registry_ImpExp &) = delete;
+  ACE_Registry_ImpExp (ACE_Registry_ImpExp const &) = delete;
   ACE_Registry_ImpExp (ACE_Registry_ImpExp &&) = delete;
-  ACE_Registry_ImpExp &operator= (const ACE_Registry_ImpExp &) = delete;
+  ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp const &) = delete;
   ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp &&) = delete;
 
   /// Construction
@@ -161,9 +161,9 @@ private:
 class ACE_Export ACE_Ini_ImpExp  : public ACE_Config_ImpExp_Base
 {
 public:
-  ACE_Ini_ImpExp (const ACE_Ini_ImpExp &) = delete;
+  ACE_Ini_ImpExp (ACE_Ini_ImpExp const &) = delete;
   ACE_Ini_ImpExp (ACE_Ini_ImpExp &&) = delete;
-  ACE_Ini_ImpExp &operator= (const ACE_Ini_ImpExp &) = delete;
+  ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp const &) = delete;
   ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp &&) = delete;
 
   /**

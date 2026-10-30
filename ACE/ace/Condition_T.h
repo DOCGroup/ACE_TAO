@@ -50,9 +50,9 @@ template <class MUTEX>
 class ACE_Condition
 {
 public:
-  ACE_Condition (const ACE_Condition &) = delete;
+  ACE_Condition (ACE_Condition const &) = delete;
   ACE_Condition (ACE_Condition &&) = delete;
-  ACE_Condition &operator= (const ACE_Condition &) = delete;
+  ACE_Condition &operator= (ACE_Condition const &) = delete;
   ACE_Condition &operator= (ACE_Condition &&) = delete;
 
   /// Initialize the condition variable.

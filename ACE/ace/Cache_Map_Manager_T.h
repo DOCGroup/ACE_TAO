@@ -59,9 +59,9 @@ template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class RE
 class ACE_Cache_Map_Manager
 {
 public:
-  ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager &) = delete;
+  ACE_Cache_Map_Manager (ACE_Cache_Map_Manager const &) = delete;
   ACE_Cache_Map_Manager (ACE_Cache_Map_Manager &&) = delete;
-  ACE_Cache_Map_Manager &operator= (const ACE_Cache_Map_Manager &) = delete;
+  ACE_Cache_Map_Manager &operator= (ACE_Cache_Map_Manager const &) = delete;
   ACE_Cache_Map_Manager &operator= (ACE_Cache_Map_Manager &&) = delete;
 
   // = Traits.

@@ -126,9 +126,9 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Manager_Ex
 {
 public:
-  ACE_Hash_Map_Manager_Ex (const ACE_Hash_Map_Manager_Ex &) = delete;
+  ACE_Hash_Map_Manager_Ex (ACE_Hash_Map_Manager_Ex const &) = delete;
   ACE_Hash_Map_Manager_Ex (ACE_Hash_Map_Manager_Ex &&) = delete;
-  ACE_Hash_Map_Manager_Ex &operator= (const ACE_Hash_Map_Manager_Ex &) = delete;
+  ACE_Hash_Map_Manager_Ex &operator= (ACE_Hash_Map_Manager_Ex const &) = delete;
   ACE_Hash_Map_Manager_Ex &operator= (ACE_Hash_Map_Manager_Ex &&) = delete;
 
   friend class ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;

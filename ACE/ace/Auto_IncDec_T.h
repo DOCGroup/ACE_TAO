@@ -38,9 +38,9 @@ template <class ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>
 class ACE_Auto_IncDec
 {
 public:
-  ACE_Auto_IncDec (const ACE_Auto_IncDec &) = delete;
+  ACE_Auto_IncDec (ACE_Auto_IncDec const &) = delete;
   ACE_Auto_IncDec (ACE_Auto_IncDec &&) = delete;
-  ACE_Auto_IncDec &operator= (const ACE_Auto_IncDec &) = delete;
+  ACE_Auto_IncDec &operator= (ACE_Auto_IncDec const &) = delete;
   ACE_Auto_IncDec &operator= (ACE_Auto_IncDec &&) = delete;
 
   /// Implicitly increment the counter.
