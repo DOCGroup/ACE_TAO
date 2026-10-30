@@ -118,14 +118,8 @@ public:
   bool compare (UTL_String const& s) const;
   // Compare two UTL_String values.
 
-  bool compare (UTL_String const *s) const;
-  // Compatibility for the checked-in generated parser sources.
-
   bool compare_quiet (UTL_String const& s) const;
   // Like compare without error or warning message output.
-
-  bool compare_quiet (UTL_String const *s) const;
-  // Like the above but without error or warning message output.
 
   static bool strcmp_caseless (
     std::string_view lhs,

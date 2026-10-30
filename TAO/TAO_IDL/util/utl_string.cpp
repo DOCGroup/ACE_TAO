@@ -194,21 +194,9 @@ UTL_String::compare (UTL_String const& s) const
 }
 
 bool
-UTL_String::compare (UTL_String const *s) const
-{
-  return s != nullptr && this->compare (*s);
-}
-
-bool
 UTL_String::compare_quiet (UTL_String const& s) const
 {
   return compare_quiet (this->value_, s.value_);
-}
-
-bool
-UTL_String::compare_quiet (UTL_String const *s) const
-{
-  return s != nullptr && this->compare_quiet (*s);
 }
 
 // Get the canonical representation from a String.
