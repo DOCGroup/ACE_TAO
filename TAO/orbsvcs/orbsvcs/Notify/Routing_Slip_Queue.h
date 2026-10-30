@@ -6,6 +6,8 @@
 
 #include "orbsvcs/Notify/Routing_Slip.h"
 
+#include <deque>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -40,7 +42,7 @@ namespace TAO_Notify
    */
   class TAO_Notify_Serv_Export Routing_Slip_Queue
   {
-    using Queue = ACE_Unbounded_Queue <Routing_Slip_Ptr>;
+    using Queue = std::deque<Routing_Slip_Ptr>;
 // FUZZ: disable check_for_ACE_Guard
     using Guard = ACE_Guard< TAO_SYNCH_MUTEX >;
 // FUZZ: enable check_for_ACE_Guard
