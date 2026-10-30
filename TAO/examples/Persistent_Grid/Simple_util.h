@@ -17,6 +17,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
+#include <optional>
+#include <string>
+
 /**
  * @class Server
  *
@@ -100,7 +103,7 @@ public:
   Client () = default;
 
   /// Destructor.
-  ~Client ();
+  ~Client () = default;
 
   Client (Client const&) = delete;
   Client (Client&&) = delete;
@@ -139,7 +142,7 @@ protected:
   ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  char *ior_ {};
+  std::optional<std::string> ior_ {};
 
   /// Flag to use the naming service
   bool naming_ {};

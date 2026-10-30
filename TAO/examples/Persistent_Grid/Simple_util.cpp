@@ -154,7 +154,7 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
                        "Unable to read ior: %p\n"),
                       -1);
 
-  this->ior_ = ACE_OS::strdup (data);
+  this->ior_ = data;
   ior_buffer.alloc ()->free (data);
 
   ACE_OS::close (f_handle);
@@ -178,7 +178,7 @@ Client<InterfaceObj, Var>::parse_args ()
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        this->ior_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
@@ -195,12 +195,6 @@ Client<InterfaceObj, Var>::parse_args ()
 
   // Indicates successful parsing of command line.
   return 0;
-}
-
-template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::~Client ()
-{
-  ACE_OS::free (this->ior_);
 }
 
 template <class InterfaceObj, class Var> int
@@ -220,15 +214,15 @@ Client<InterfaceObj, Var>::init (char const * /*name*/,
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->ior_ != nullptr)
+      if (this->ior_.has_value ())
         {
           CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_);
+            this->orb_->string_to_object (this->ior_->c_str ());
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%C>\n",
-                               this->ior_),
+                               this->ior_->c_str ()),
                               -1);
           this->server_ = InterfaceObj::_narrow (server_object.in ());
         }
