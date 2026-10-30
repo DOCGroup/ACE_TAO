@@ -7,16 +7,8 @@ extern CORBA::Boolean special_value;
 Foo_B_Statistics::Foo_B_Statistics(unsigned num_remote_clients,
                                    unsigned num_collcated_clients)
 : num_clients_ (num_remote_clients + num_collcated_clients),
-  num_collcated_clients_ (num_collcated_clients),
-  expected_callbacks_ (0),
-  actual_callbacks_ (0),
-  servant_error_count_ (0)
+  num_collcated_clients_ (num_collcated_clients)
 {
-  for (unsigned i = 0; i < 16; i++)
-    {
-      this->expected_op_count_[i] = 0;
-      this->actual_op_count_[i] = 0;
-    }
 }
 
 void

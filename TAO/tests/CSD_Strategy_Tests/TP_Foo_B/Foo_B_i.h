@@ -10,51 +10,56 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
 {
   public:
     Foo_B_i();
-    virtual ~Foo_B_i() = default;
+    ~Foo_B_i() override = default;
 
-    virtual void op1();
+    void op1() override;
 
-    virtual void op2(CORBA::Long value);
+    void op2(CORBA::Long value) override;
 
-    virtual CORBA::Long op3(CORBA::Long value);
+    CORBA::Long op3(CORBA::Long value) override;
 
-    virtual void op4(CORBA::Long value);
+    void op4(CORBA::Long value) override;
 
-    virtual void op5();
+    void op5() override;
 
-    virtual CORBA::Boolean op6(const TimeOfDay& t,
-                               char*& message);
+    CORBA::Boolean op6(const TimeOfDay& t,
+                       char*& message) override;
 
-    virtual void op7(Callback_ptr cb);
+    void op7(Callback_ptr cb) override;
 
-    virtual void test_unbounded_string_arg(const char* message);
+    void test_unbounded_string_arg(const char* message) override;
 
-    virtual void test_bounded_string_arg(const char* message);
+    void test_bounded_string_arg(const char* message) override;
 
-    virtual void test_fixed_array_arg(const Fixed_Array message);
+    void test_fixed_array_arg(const Fixed_Array message) override;
 
-    virtual void test_var_array_arg(const Var_Array messages);
+    void test_var_array_arg(const Var_Array messages) override;
 
-    virtual void test_bounded_var_size_arg(const Bounded_Var_Size& message);
+    void test_bounded_var_size_arg(const Bounded_Var_Size& message) override;
 
-    virtual void test_unbounded_var_size_arg(const Unbounded_Var_Size& message);
+    void test_unbounded_var_size_arg(const Unbounded_Var_Size& message) override;
 
-    virtual void test_fixed_size_arg(const TimeOfDay& t);
+    void test_fixed_size_arg(const TimeOfDay& t) override;
 
-    virtual void test_special_basic_arg(CORBA::Boolean value,
-                                        CORBA::Long client_id);
+    void test_special_basic_arg(CORBA::Boolean value,
+                                CORBA::Long client_id) override;
 
-    virtual void test_objref_arg(Callback_ptr cb);
+    void test_objref_arg(Callback_ptr cb) override;
 
-    virtual void done();
+    void done() override;
 
     void gather_stats (Foo_B_Statistics& stats);
+
+    Foo_B_i (Foo_B_i const &) = delete;
+    Foo_B_i (Foo_B_i &&) = delete;
+    Foo_B_i & operator= (Foo_B_i const &) = delete;
+    Foo_B_i & operator= (Foo_B_i &&) = delete;
 
   private:
     LongVector in_long_ [16];
     StringVector in_string_ [16];
-    unsigned op_count_ [16];
-    unsigned error_count_;
+    unsigned op_count_ [16] {};
+    unsigned error_count_ {};
 };
 
 #endif

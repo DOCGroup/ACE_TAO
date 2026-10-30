@@ -3,14 +3,7 @@
 #include "TestAppExceptionC.h"
 #include "ace/SString.h"
 
-Foo_B_i::Foo_B_i()
-: error_count_ (0)
-{
-   for (unsigned i = 0; i < 16; i++)
-    {
-      op_count_[i] = 0;
-    }
-}
+Foo_B_i::Foo_B_i() = default;
 
 
 void
