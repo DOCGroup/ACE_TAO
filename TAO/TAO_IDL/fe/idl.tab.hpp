@@ -196,7 +196,7 @@ union YYSTYPE
   ACE_CDR::WChar                wcval;          /* WChar value          */
   ACE_CDR::Fixed                fixval;         /* Fixed point value    */
   std::string                   *sval;          /* String value         */
-  char                          *wsval;         /* WString value        */
+  std::string                   *wsval;         /* WString value        */
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */

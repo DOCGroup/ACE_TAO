@@ -203,7 +203,7 @@ bool stack_based_lookup_for_primary_expr = false;
   ACE_CDR::WChar                wcval;          /* WChar value          */
   ACE_CDR::Fixed                fixval;         /* Fixed point value    */
   std::string                   *sval;          /* String value         */
-  char                          *wsval;         /* WString value        */
+  std::string                   *wsval;         /* WString value        */
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
@@ -2282,10 +2282,9 @@ literal
         }
         | IDL_WSTRING_LITERAL
         {
-          char *wide_string = $1;
-          $$ = idl_global->gen ()->create_wstring_expr (wide_string);
-          ACE_OS::free (wide_string);
-          $1 = 0;
+          $$ = idl_global->gen ()->create_wstring_expr (std::move (*$1));
+          delete $1;
+          $1 = nullptr;
         }
         | IDL_CHARACTER_LITERAL
         {

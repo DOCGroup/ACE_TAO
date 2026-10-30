@@ -94,7 +94,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <string_view>
 
-static char *               idl_wstring_escape_reader (char *);
 static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
 static ACE_CDR::Char        idl_escape_reader (char *);
 static ACE_CDR::Double      idl_atof (char const *);
@@ -326,7 +325,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                 }
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
-                  char * const tmp = ACE_OS::strdup (ace_yytext);
+                  char * const tmp = ace_yytext;
                   for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
                     {
                       if (isspace (tmp[i]))
@@ -339,8 +338,9 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                         }
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
-                  tao_yylval.wsval = ACE_OS::strdup (idl_wstring_escape_reader (tmp + 2));
-                  ACE_OS::free (tmp);
+                  ACE_NEW_RETURN (tao_yylval.wsval,
+                                  std::string (tmp + 2),
+                                  IDL_WSTRING_LITERAL);
                   return IDL_WSTRING_LITERAL;
                 }
 "'"."'"         {
@@ -1229,15 +1229,6 @@ idl_wchar_escape_reader (char *str)
   ACE_CDR::WChar out = (ACE_CDR::WChar) idl_atoui (&str[2], 16);
   str[i] = save;
   return out;
-}
-
-/*
- * Checks wstring for validity
- */
-static char *
-idl_wstring_escape_reader (char *str)
-{
-  return str;
 }
 
 static char *
