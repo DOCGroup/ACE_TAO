@@ -12,7 +12,6 @@
 #include "operation.h"
 
 #include <string>
-#include <string_view>
 
 // ************************************************************
 // Generic Operation visitor
@@ -67,9 +66,9 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
   if (node->local_name ().substr (0, 4) == "AMH_")
     {
       //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder\n"));
-      std::string_view const full_name = node->full_name ();
+      std::string const& full_name = node->full_name ();
       size_t const last_E = full_name.rfind ('E');
-      if (last_E != std::string_view::npos
+      if (last_E != std::string::npos
           && full_name.substr (last_E) == "ExceptionHolder")
         {
           //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder\n"));
@@ -81,8 +80,8 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
 }
 
 int
-be_visitor_operation::gen_raise_exception (std::string_view exception_name,
-                                           std::string_view exception_arguments)
+be_visitor_operation::gen_raise_exception (std::string const& exception_name,
+                                           std::string const& exception_arguments)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -482,7 +481,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   /// For now, keep a list of system operation or arg names
   /// that may not be remapped. May decide later to regnerate
   /// ORB code for alt mapping as well.
-  std::string_view const repo_id = scope->repoID ();
+  std::string const& repo_id = scope->repoID ();
   bool sys_val = (repo_id == "IDL:repository_id:1.0");
 
   // For types other than the 4 above, don't unalias the type name

@@ -12,7 +12,7 @@
 #include "operation.h"
 #include "be_visitor_operation/operation_svs.h"
 
-#include <string_view>
+#include <string>
 
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)
@@ -100,9 +100,9 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
   os_ << be_nl
       << "{" << be_idt_nl;
 
-  std::string_view const sname_str =
+  std::string const& sname_str =
     ScopeAsDecl (scope_->defined_in ())->full_name ();
-  std::string_view const global = sname_str.empty () ? std::string_view {} : "::";
+  std::string const global = sname_str.empty () ? "" : "::";
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SVTS)
     {

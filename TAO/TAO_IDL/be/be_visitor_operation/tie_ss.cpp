@@ -12,7 +12,6 @@
 #include "operation.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_operation_tie_ss::be_visitor_operation_tie_ss (
     be_visitor_context *ctx)
@@ -74,8 +73,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
           AST_Argument *arg =
             dynamic_cast<AST_Argument*> (si.item ());
 
-          if (arg->local_name ()->get_string ()
-              == std::string_view (template_name))
+          if (arg->local_name ()->get_string () == template_name)
             {
               // clash !
               template_name_ok = false;

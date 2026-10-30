@@ -61,7 +61,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  std::string_view classname;
+  std::string classname;
 
   if (intf)
     {

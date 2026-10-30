@@ -15,7 +15,6 @@
 #define _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H
 
 #include <string>
-#include <string_view>
 
 // ************************************************************
 // Attribute visitor
@@ -47,7 +46,7 @@ public:
 
   void for_facets (bool val);
   void op_scope (be_decl *node);
-  void exec_class_extension (std::string_view extension);
+  void exec_class_extension (std::string const& extension);
 
 private:
   bool for_facets_ {};

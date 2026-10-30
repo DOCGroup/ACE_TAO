@@ -14,7 +14,7 @@
 #ifndef _BE_VISITOR_OPERATION_RETTYPE_H_
 #define _BE_VISITOR_OPERATION_RETTYPE_H_
 
-#include <string_view>
+#include <string>
 
 // ***********************************************************************
 // Operation visitor for return types in the signature of the operation
@@ -102,7 +102,7 @@ public:
   int visit_valuebox (be_valuebox *node) override;
 
 private:
-  std::string_view type_name (be_type *node) const;
+  std::string const& type_name (be_type *node) const;
 
 private:
   TAO_OutStream *os;

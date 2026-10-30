@@ -11,7 +11,7 @@
 #ifndef AMH_OPERATION_SS_H
 #define AMH_OPERATION_SS_H
 
-#include <string_view>
+#include <string>
 
 /**
  * @class be_visitor_operation_amh_ss
@@ -36,7 +36,7 @@ public:
 protected:
   int generate_shared_prologue (be_decl *node,
                                 TAO_OutStream *os,
-                                std::string_view skel_prefix);
+                                std::string const& skel_prefix);
   int generate_shared_section (be_decl *node,
                                TAO_OutStream *os);
   int generate_shared_epilogue (TAO_OutStream *os);

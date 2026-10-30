@@ -11,8 +11,6 @@
 
 #include "operation.h"
 
-#include <string_view>
-
 // ****************************************************************************
 // Operation visitor for return types. This generates the mapping for a return
 // type in an operation signature
@@ -298,7 +296,7 @@ be_visitor_operation_rettype::visit_valuebox (
   return 0;
 }
 
-std::string_view
+std::string const&
 be_visitor_operation_rettype::type_name (be_type *node) const
 {
   be_type *bt = nullptr;

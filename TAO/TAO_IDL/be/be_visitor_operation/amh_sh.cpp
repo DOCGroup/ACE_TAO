@@ -119,7 +119,7 @@ void
 be_visitor_amh_operation_sh::generate_shared_prologue (
     be_decl *node,
     TAO_OutStream *os,
-    std::string_view skel_prefix)
+    std::string const& skel_prefix)
 {
   TAO_INSERT_COMMENT (os);
 
