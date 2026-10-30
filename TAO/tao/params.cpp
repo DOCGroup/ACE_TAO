@@ -195,7 +195,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
           if (check_offset > 0 &&
               check_offset != endpt.npos)
             {
-              endpoint_set.enqueue_tail (endpt);
+              endpoint_set.push_back (endpt);
               // Insert endpoint into list
             }
           else

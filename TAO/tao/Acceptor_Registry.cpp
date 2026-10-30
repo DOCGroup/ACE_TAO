@@ -110,7 +110,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              TAO_EndpointSet const &endpoint_set,
                              bool ignore_address)
 {
-  if (endpoint_set.is_empty ()
+  if (endpoint_set.empty ()
       // No endpoints were specified, we let each protocol pick its
       // own default.
 
@@ -128,14 +128,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // Count the maximum number of endpoints in the set.  This will be
   // the maximum number of acceptors that need to be created.
   size_t acceptor_count = 0;
-  TAO_EndpointSetIterator endpts (endpoint_set);
-
-  for (ACE_CString *ep = nullptr;
-       endpts.next (ep) != 0;
-       endpts.advance ())
+  for (ACE_CString const& iop : endpoint_set)
     {
-      ACE_CString const &iop = (*ep);
-
       // IOP://address1,address2
       //    ^ slot
       ACE_CString::size_type const slot = iop.find ("://", 0);
@@ -191,9 +185,9 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       // remaining number of endpoints in the current endpoint
       // specification.
       char const *ep_end =
-        ep->c_str () + std::strlen (ep->c_str ());
+        iop.c_str () + std::strlen (iop.c_str ());
 
-      for (char const *e = std::strchr (ep->c_str (), ',');
+      for (char const *e = std::strchr (iop.c_str (), ',');
            e != nullptr && e != ep_end;
            e = std::strchr (e, ','))
         {
@@ -215,14 +209,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                           CORBA::COMPLETED_NO));
     }
 
-  TAO_EndpointSetIterator endpoints (endpoint_set);
-
-  for (ACE_CString *endpoint = nullptr;
-       endpoints.next (endpoint) != 0;
-       endpoints.advance ())
+  for (ACE_CString const& iop : endpoint_set)
     {
-      ACE_CString const &iop = (*endpoint);
-
       // IOP://address1,address2
       //    ^ slot
       ACE_CString::size_type const slot = iop.find ("://", 0);

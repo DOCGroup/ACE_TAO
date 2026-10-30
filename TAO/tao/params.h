@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/Invocation_Retry_Params.h"
-#include "ace/Unbounded_Queue.h"
+#include <vector>
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
 #include "ace/Time_Value.h"
@@ -31,14 +31,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 
-// @@ Using an ACE_Unbounded_Queue to contain the endpoints and
-//    preconnects may not be the best container to use.  However, it
-//    will only be used during ORB bootstrapping.  Also, a template
-//    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists
-//    in ACE so we do not have to worry about increasing TAO's
-//    footprint by using this container.
-using TAO_EndpointSet = ACE_Unbounded_Queue<ACE_CString>;
-using TAO_EndpointSetIterator = ACE_Unbounded_Queue_Const_Iterator<ACE_CString>;
+using TAO_EndpointSet = std::vector<ACE_CString>;
+using TAO_EndpointSetIterator = TAO_EndpointSet::const_iterator;
 
 // -------------------------------------------------------------------
 
