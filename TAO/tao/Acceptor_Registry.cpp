@@ -15,6 +15,7 @@
 #endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
 #include <memory>
+#include <new>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
@@ -28,8 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Acceptor_Registry::~TAO_Acceptor_Registry ()
 {
   this->close_all ();
-
-  delete [] this->acceptors_;
 }
 
 size_t
@@ -196,17 +195,22 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         }
     }
 
-  // The array containing the TAO_Acceptors will never contain more
-  // than the number of endpoints stored in TAO_ORB_Parameters.
-  if (this->acceptors_ == nullptr)
+  // The collection of TAO_Acceptors will never contain more than the
+  // number of endpoints stored in TAO_ORB_Parameters.
+  if (this->acceptors_.empty ())
     {
-      ACE_NEW_THROW_EX (this->acceptors_,
-                        TAO_Acceptor *[acceptor_count],
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
+      try
+        {
+          this->acceptors_.reserve (acceptor_count);
+        }
+      catch (std::bad_alloc const &)
+        {
+          throw CORBA::NO_MEMORY (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              ENOMEM),
+            CORBA::COMPLETED_NO);
+        }
     }
 
   for (ACE_CString const& iop : endpoint_set)
@@ -310,7 +314,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   int vres = GetVersionEx (&vinfo);
   if ((vres == 0 || vinfo.dwMajorVersion < 6) &&
       !orb_core->orb_params ()->connect_ipv6_only ()
-      && this->acceptors_ == nullptr)
+      && this->acceptors_.empty ())
     {
       // Since Win32 has single-stack IPv4/IPv6 we need an additional
       // acceptor to open explicitly on IPv6 ANY *and* IPv4 ANY.
@@ -335,10 +339,14 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
             }
         }
 
-      // Allocate TAO_Acceptor array
-      ACE_NEW_RETURN (this->acceptors_,
-                      TAO_Acceptor *[acceptor_count],
-                      -1);
+      try
+        {
+          this->acceptors_.reserve (acceptor_count);
+        }
+      catch (std::bad_alloc const &)
+        {
+          return -1;
+        }
 
       // Loop through all the loaded protocols...
       for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -466,11 +474,16 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   // endpoints were specified by the user, meaning that the number of
   // acceptors will never be more than the number of loaded protocols
   // in the ORB core.
-  if (this->acceptors_ == nullptr)
+  if (this->acceptors_.empty ())
     {
-      ACE_NEW_RETURN (this->acceptors_,
-                      TAO_Acceptor *[pfs->size ()],
-                      -1);
+      try
+        {
+          this->acceptors_.reserve (pfs->size ());
+        }
+      catch (std::bad_alloc const &)
+        {
+          return -1;
+        }
     }
 
   TAO_ProtocolFactorySetItor const end = pfs->end ();
@@ -589,7 +602,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
       return -1;
     }
 
-  this->acceptors_[this->size_++] = acceptor;
+  this->acceptors_.push_back (acceptor);
 
   return 0;
 }
@@ -608,7 +621,7 @@ TAO_Acceptor_Registry::close_all ()
         }
     }
 
-  this->size_ = 0;
+  this->acceptors_.clear ();
   return 0;
 }
 
@@ -844,7 +857,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             }
 
           // add acceptor to list
-          this->acceptors_[this->size_++] = acceptor;
+          this->acceptors_.push_back (acceptor);
         }
       else
         {

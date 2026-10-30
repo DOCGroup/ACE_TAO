@@ -17,6 +17,8 @@
 #include /**/ "ace/pre.h"
 #include "ace/Unbounded_Set.h"
 
+#include <vector>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -136,10 +138,7 @@ private:
 
 private:
   /// List of acceptors that are currently open.
-  TAO_Acceptor **acceptors_ {};
-
-  /// Number of acceptors that are currently open.
-  size_t size_ {};
+  std::vector<TAO_Acceptor*> acceptors_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
