@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/CDR_Stream.h"
 #include "utl_scoped_name.h"
 
+#include <memory>
 #include <string>
 
 class UTL_Scope;
@@ -341,13 +342,13 @@ private:
   AST_ExprValue *pd_ev;
   // Computed value.
 
-  AST_Expression *pd_v1;
+  std::unique_ptr<AST_Expression> pd_v1;
   // 1st sub-expression.
 
-  AST_Expression *pd_v2;
+  std::unique_ptr<AST_Expression> pd_v2;
   // 2nd sub-expression.
 
-  UTL_ScopedName *pd_n;
+  std::unique_ptr<UTL_ScopedName> pd_n;
   // Symbolic name (if any).
 
   AST_Decl *tdef;

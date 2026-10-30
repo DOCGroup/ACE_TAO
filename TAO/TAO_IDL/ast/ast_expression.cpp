@@ -214,8 +214,8 @@ AST_Expression::AST_Expression (AST_Expression *v,
 
       if (nullptr != v->pd_n)
         {
-          this->pd_n =
-            dynamic_cast<UTL_ScopedName *> (v->pd_n->copy ());
+          this->pd_n.reset (
+            dynamic_cast<UTL_ScopedName *> (v->pd_n->copy ()));
         }
     }
 }
@@ -2186,7 +2186,7 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
 
   if (s == nullptr)
     {
-      idl_global->err ()->lookup_error (this->pd_n);
+      idl_global->err ()->lookup_error (this->pd_n.get ());
       return nullptr;
     }
 
@@ -2199,12 +2199,12 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
     }
 
   // Do lookup.
-  d = s->lookup_by_name (this->pd_n,
+  d = s->lookup_by_name (this->pd_n.get (),
                          true);
 
   if (d == nullptr)
     {
-      idl_global->err ()->lookup_error (this->pd_n);
+      idl_global->err ()->lookup_error (this->pd_n.get ());
       return nullptr;
     }
 
@@ -2212,7 +2212,7 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
   if (d->node_type () != AST_Decl::NT_const
       && d->node_type () != AST_Decl::NT_enum_val)
     {
-      idl_global->err ()->constant_expected (this->pd_n,
+      idl_global->err ()->constant_expected (this->pd_n.get (),
                                              d);
       return nullptr;
     }
@@ -2268,7 +2268,7 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
   if (d != nullptr)
     {
       AST_Decl *enum_val =
-        idl_global->scopes ().top_non_null ()->lookup_by_name (this->pd_n,
+        idl_global->scopes ().top_non_null ()->lookup_by_name (this->pd_n.get (),
                                                                true);
 
       if (enum_val != nullptr)
@@ -2752,78 +2752,78 @@ AST_Expression::dump (ACE_OSTREAM_TYPE &o)
     case EC_add:
       dump_binary_expr (o,
                         "+",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_minus:
       dump_binary_expr (o,
                         "-",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_mul:
       dump_binary_expr (o,
                         "*",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_div:
       dump_binary_expr (o,
                         "/",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_mod:
       dump_binary_expr (o,
                         "%",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_or:
       dump_binary_expr (o,
                         "|",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_xor:
       dump_binary_expr (o,
                         "^",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_and:
       dump_binary_expr (o,
                         "&",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_left:
       dump_binary_expr (o,
                         "<<",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     case EC_right:
       dump_binary_expr (o,
                         ">>",
-                        this->pd_v1,
-                        this->pd_v2);
+                        this->pd_v1.get (),
+                        this->pd_v2.get ());
       break;
     // Unary expressions.
     case EC_u_plus:
       dump_unary_expr (o,
                        "+",
-                       this->pd_v1);
+                       this->pd_v1.get ());
       break;
     case EC_u_minus:
       dump_unary_expr (o,
                        "-",
-                       this->pd_v1);
+                       this->pd_v1.get ());
       break;
     case EC_bit_neg:
       dump_unary_expr (o,
                        "~",
-                       this->pd_v1);
+                       this->pd_v1.get ());
       break;
     // Unevaluated symbol.
     case EC_symbol:
@@ -2854,26 +2854,13 @@ AST_Expression::destroy ()
   delete this->pd_ev;
   this->pd_ev = nullptr;
 
-  if (this->pd_v1 != nullptr)
-    {
-      this->pd_v1->destroy ();
-    }
-  delete this->pd_v1;
-  this->pd_v1 = nullptr;
-
-  if (this->pd_v2 != nullptr)
-    {
-      this->pd_v2->destroy ();
-    }
-  delete this->pd_v2;
-  this->pd_v2 = nullptr;
-
+  this->pd_v1.reset ();
+  this->pd_v2.reset ();
   if (this->pd_n != nullptr)
     {
       this->pd_n->destroy ();
     }
-  delete this->pd_n;
-  this->pd_n = nullptr;
+  this->pd_n.reset ();
 
   if (this->param_holder_ != nullptr)
     {
@@ -2943,37 +2930,52 @@ AST_Expression::set_ev (AST_Expression::AST_ExprValue *new_ev)
 AST_Expression *
 AST_Expression::v1 () const
 {
-  return this->pd_v1;
+  return this->pd_v1.get ();
 }
 
 void
 AST_Expression::set_v1 (AST_Expression *e)
 {
-  this->pd_v1 = e;
+  if (this->pd_v1.get () != e)
+    {
+      this->pd_v1.reset (e);
+    }
 }
 
 AST_Expression *
 AST_Expression::v2 () const
 {
-  return this->pd_v2;
+  return this->pd_v2.get ();
 }
 
 void
 AST_Expression::set_v2 (AST_Expression *e)
 {
-  this->pd_v2 = e;
+  if (this->pd_v2.get () != e)
+    {
+      this->pd_v2.reset (e);
+    }
 }
 
 UTL_ScopedName *
 AST_Expression::n () const
 {
-  return this->pd_n;
+  return this->pd_n.get ();
 }
 
 void
 AST_Expression::set_n (UTL_ScopedName *new_n)
 {
-  this->pd_n = new_n;
+  if (this->pd_n.get () == new_n)
+    {
+      return;
+    }
+
+  if (this->pd_n != nullptr)
+    {
+      this->pd_n->destroy ();
+    }
+  this->pd_n.reset (new_n);
 }
 
 std::string
