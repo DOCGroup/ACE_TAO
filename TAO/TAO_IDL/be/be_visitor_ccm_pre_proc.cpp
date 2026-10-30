@@ -46,7 +46,7 @@
 
 #include <string>
 
-const char *LW_EXCEP_NAMES[] =
+std::string const LW_EXCEP_NAMES[] =
   {
     "AlreadyConnected",
     "InvalidConnection",
@@ -57,7 +57,7 @@ const char *LW_EXCEP_NAMES[] =
     "FinderFailure"
   };
 
-constexpr std::string_view ADDL_EXCEP_NAMES[] =
+std::string const ADDL_EXCEP_NAMES[] =
   {
     "InvalidKey",
     "UnknownKeyValue",
@@ -1439,10 +1439,10 @@ be_visitor_ccm_pre_proc::lookup_exceptions ()
 }
 
 int
-be_visitor_ccm_pre_proc::lookup_one_exception (std::string_view name,
+be_visitor_ccm_pre_proc::lookup_one_exception (std::string const& name,
                                                be_exception *&result)
 {
-  Identifier id {std::string (name)};
+  Identifier id {name};
   UTL_ScopedName local_name (&id,
                              nullptr);
   UTL_ScopedName scoped_name (&this->module_id_,
@@ -1732,9 +1732,9 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
 }
 
 UTL_ScopedName *
-be_visitor_ccm_pre_proc::create_scoped_name (std::string_view prefix,
-                                             std::string_view local_name,
-                                             std::string_view suffix,
+be_visitor_ccm_pre_proc::create_scoped_name (std::string const& prefix,
+                                             std::string const& local_name,
+                                             std::string const& suffix,
                                              AST_Decl *parent) const
 {
   std::string local_string (prefix);

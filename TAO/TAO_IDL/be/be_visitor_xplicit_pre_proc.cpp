@@ -37,13 +37,9 @@
 #include "utl_exprlist.h"
 #include "utl_exceptlist.h"
 
-#include <string_view>
-
 #include "fe_obv_header.h"
 #include "nr_extern.h"
 #include "global_extern.h"
-
-#include <string_view>
 
 be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
       be_visitor_context *ctx)

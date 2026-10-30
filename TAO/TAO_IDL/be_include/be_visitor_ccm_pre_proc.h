@@ -16,7 +16,7 @@
 #ifndef TAO_BE_VISITOR_CCM_PRE_PROC_H
 #define TAO_BE_VISITOR_CCM_PRE_PROC_H
 
-#include <string_view>
+#include <string>
 
 #include "be_visitor_component_scope.h"
 #include "ast_component.h"
@@ -87,7 +87,7 @@ protected:
 
   int lookup_cookie ();
   int lookup_exceptions ();
-  int lookup_one_exception (std::string_view name,
+  int lookup_one_exception (std::string const& name,
                             be_exception *&result);
 
   int create_event_consumer (be_eventtype *node);
@@ -97,9 +97,9 @@ protected:
   AST_Interface *create_equivalent (be_home *node,
                                     AST_Interface *xplicit,
                                     AST_Interface *implicit);
-  UTL_ScopedName *create_scoped_name (std::string_view prefix,
-                                      std::string_view local_name,
-                                      std::string_view suffix,
+  UTL_ScopedName *create_scoped_name (std::string const& prefix,
+                                      std::string const& local_name,
+                                      std::string const& suffix,
                                       AST_Decl *parent) const;
   UTL_NameList *compute_inheritance (be_home *node);
 

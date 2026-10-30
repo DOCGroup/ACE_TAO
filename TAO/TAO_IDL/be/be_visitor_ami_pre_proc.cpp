@@ -36,7 +36,6 @@
 #include "ace/Log_Msg.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -884,9 +883,9 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
 
 int
 be_visitor_ami_pre_proc::generate_name (std::string &destination,
-                                        std::string_view prefix,
-                                        std::string_view middle_name,
-                                        std::string_view suffix)
+                                        std::string const& prefix,
+                                        std::string const& middle_name,
+                                        std::string const& suffix)
 {
   destination.assign (prefix);
   destination += middle_name;
