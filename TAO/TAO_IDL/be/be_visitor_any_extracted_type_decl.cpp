@@ -20,8 +20,6 @@
 
 #include "utl_identifier.h"
 
-#include <string_view>
-
 be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx)
