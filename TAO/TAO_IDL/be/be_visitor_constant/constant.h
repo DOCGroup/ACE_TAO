@@ -20,6 +20,6 @@
 #include "be_visitor_constant.h"
 #include "be_visitor_context.h"
 
-#include <string_view>
+#include <string>
 
-std::string_view exprtype_to_cpp_corba_type (AST_Expression::ExprType et);
+std::string exprtype_to_cpp_corba_type (AST_Expression::ExprType et);

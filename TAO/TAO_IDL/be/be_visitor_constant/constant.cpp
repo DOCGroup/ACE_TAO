@@ -1,6 +1,6 @@
 #include "constant.h"
 
-std::string_view exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
+std::string exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
 {
   switch (et)
     {
@@ -43,6 +43,6 @@ std::string_view exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
     case AST_Expression::EV_uint8:
       return "CORBA::UInt8";
     default:
-      return nullptr;
+      return {};
     }
 }
