@@ -16,6 +16,8 @@
 
 #include "orbsvcs/Trader/Trader_Utils.h"
 
+#include <deque>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -141,7 +143,7 @@ private:
 
   /// Structure that stores pointers to offers
   /// to iterate over.
-  ACE_Unbounded_Queue <CosTrading::Offer *> offers_;
+  std::deque<CosTrading::Offer *> offers_;
 };
 
   // *************************************************************
@@ -191,7 +193,7 @@ private:
   TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection&&) = delete;
   TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection&&) = delete;
 
-  using Offer_Iters = ACE_Unbounded_Queue<CosTrading::OfferIterator*>;
+  using Offer_Iters = std::deque<CosTrading::OfferIterator*>;
 
   /// The iterator collection.
   Offer_Iters iters_;
