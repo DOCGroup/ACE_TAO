@@ -27,7 +27,7 @@ public:
   bool match_arg_names (FE_Utils::T_ARGLIST *args);
 
   // Checks for errors in the template param refs of an alias.
-  bool match_param_refs (UTL_StrList *refs, UTL_Scope *decl_scope);
+  bool match_param_refs (UTL_StrList const& refs, UTL_Scope *decl_scope);
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -53,7 +53,7 @@ private:
                         AST_Decl *d);
 
   // Find one of our params by name.
-  FE_Utils::T_Param_Info *find_param (UTL_String *name);
+  FE_Utils::T_Param_Info *find_param (std::string const& name);
 
   // Match a param with an aliased id by type.
   bool match_param_by_type (FE_Utils::T_Param_Info *param);

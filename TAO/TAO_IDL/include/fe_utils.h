@@ -4,11 +4,11 @@
 #include "ast_decl.h"
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
+#include "utl_strlist.h"
 
 #include <string>
 #include <vector>
 
-class UTL_StrList;
 class UTL_IdList;
 using UTL_ScopedName = UTL_IdList;
 class UTL_NameList;

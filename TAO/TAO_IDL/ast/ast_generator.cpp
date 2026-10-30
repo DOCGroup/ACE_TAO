@@ -115,6 +115,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_generator.h"
 
+#include <utility>
+
 AST_PredefinedType *
 AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
                                        UTL_ScopedName *n)
@@ -1161,13 +1163,13 @@ AST_Template_Module_Ref *
 AST_Generator::create_template_module_ref (
   UTL_ScopedName *n,
   AST_Template_Module *ref,
-  UTL_StrList *param_refs)
+  UTL_StrList param_refs)
 {
   AST_Template_Module_Ref *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   AST_Template_Module_Ref (n,
                                            ref,
-                                           param_refs),
+                                           std::move (param_refs)),
                   nullptr);
 
   return retval;

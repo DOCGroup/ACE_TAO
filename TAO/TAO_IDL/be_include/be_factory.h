@@ -19,7 +19,6 @@
 #include "ast_factory.h"
 
 class AST_Type;
-class UTL_StrList;
 class be_visitor;
 class be_argument;
 

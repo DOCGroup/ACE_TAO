@@ -12,7 +12,7 @@ class TAO_IDL_FE_Export AST_Template_Module_Ref
 public:
   AST_Template_Module_Ref (UTL_ScopedName *n,
                            AST_Template_Module *ref,
-                           UTL_StrList *param_refs);
+                           UTL_StrList param_refs);
 
   ~AST_Template_Module_Ref () override;
   AST_Template_Module_Ref (AST_Template_Module_Ref const &) = delete;
@@ -22,7 +22,7 @@ public:
 
   AST_Template_Module *ref () const;
 
-  UTL_StrList *param_refs () const;
+  UTL_StrList const& param_refs () const;
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -48,7 +48,7 @@ public:
   static AST_Decl::NodeType const NT;
 
 private:
-  UTL_StrList *param_refs_;
+  UTL_StrList param_refs_;
 
   /// Flag to prevent multiple module creations when we encounter
   /// 'chained' alias declarations.

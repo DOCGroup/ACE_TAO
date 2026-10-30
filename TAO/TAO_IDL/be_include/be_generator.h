@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_BE_Export.h"
 #include "ast_generator.h"
+#include "utl_strlist.h"
 
 class TAO_IDL_BE_Export be_generator : public AST_Generator
 {
@@ -325,7 +326,7 @@ public:
   AST_Template_Module_Ref *create_template_module_ref (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
-    UTL_StrList *param_refs) override;
+    UTL_StrList param_refs) override;
 
   AST_Param_Holder *create_param_holder (
     UTL_ScopedName *parameter_name,

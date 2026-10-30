@@ -132,7 +132,7 @@ AST_Expression::fill_definition_details ()
                           ? idl_global->scopes ().top ()
                           : nullptr ;
   this->pd_line = idl_global->lineno ();
-  this->pd_file_name = new UTL_String (idl_global->filename ());
+  this->pd_file_name = idl_global->filename ();
   enum_parent (nullptr);
 }
 
@@ -2943,16 +2943,16 @@ AST_Expression::set_line (long l)
   this->pd_line = l;
 }
 
-UTL_String *
+std::string const&
 AST_Expression::file_name () const
 {
   return this->pd_file_name;
 }
 
 void
-AST_Expression::set_file_name (UTL_String *f)
+AST_Expression::set_file_name (std::string const& file_name)
 {
-  this->pd_file_name = f;
+  this->pd_file_name = file_name;
 }
 
 AST_Expression::ExprComb

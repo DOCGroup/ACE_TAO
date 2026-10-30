@@ -4,13 +4,15 @@
 
 #include "utl_strlist.h"
 
+#include <utility>
+
 AST_Decl::NodeType const
 AST_Template_Module_Ref::NT = AST_Decl::NT_module;
 
 AST_Template_Module_Ref::AST_Template_Module_Ref (
       UTL_ScopedName *n,
       AST_Template_Module *ref,
-      UTL_StrList *param_refs)
+      UTL_StrList param_refs)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_module,
@@ -18,7 +20,7 @@ AST_Template_Module_Ref::AST_Template_Module_Ref (
     AST_Field (AST_Decl::NT_module,
                ref,
                n),
-    param_refs_ (param_refs)
+    param_refs_ (std::move (param_refs))
 {
 }
 
@@ -30,7 +32,7 @@ AST_Template_Module_Ref::ref () const
   return dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
-UTL_StrList *
+UTL_StrList const&
 AST_Template_Module_Ref::param_refs () const
 {
   return this->param_refs_;
@@ -45,10 +47,6 @@ AST_Template_Module_Ref::dump (ACE_OSTREAM_TYPE &)
 void
 AST_Template_Module_Ref::destroy ()
 {
-  this->param_refs_->destroy ();
-  delete this->param_refs_;
-  this->param_refs_ = nullptr;
-
   this->AST_Field::destroy ();
 }
 

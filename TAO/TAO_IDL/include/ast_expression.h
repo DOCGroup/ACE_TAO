@@ -257,8 +257,8 @@ public:
   long line () const;
   void set_line (long l);
 
-  UTL_String *file_name () const;
-  void set_file_name (UTL_String *f);
+  std::string const& file_name () const;
+  void set_file_name (std::string const& file_name);
 
   ExprComb ec () const;
 
@@ -337,7 +337,7 @@ private:
   long pd_line;
   // Line defined in.
 
-  UTL_String *pd_file_name;
+  std::string pd_file_name;
   // What file defined in.
 
   ExprComb pd_ec;

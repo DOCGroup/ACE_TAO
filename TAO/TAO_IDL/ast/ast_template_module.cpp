@@ -87,7 +87,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 }
 
 bool
-AST_Template_Module::match_param_refs (UTL_StrList *refs,
+AST_Template_Module::match_param_refs (UTL_StrList const& refs,
                                        UTL_Scope *decl_scope)
 {
   UTL_Scope *s = decl_scope;
@@ -109,12 +109,10 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
                         false);
     }
 
-  for (UTL_StrlistActiveIterator i (refs);
-       !i.is_done ();
-       i.next ())
+  for (std::string const& ref : refs)
     {
       FE_Utils::T_Param_Info *enclosing_param =
-        enclosing->find_param (i.item ());
+        enclosing->find_param (ref);
 
       if (enclosing_param == nullptr)
         {
@@ -202,11 +200,11 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
 }
 
 FE_Utils::T_Param_Info *
-AST_Template_Module::find_param (UTL_String *name)
+AST_Template_Module::find_param (std::string const& name)
 {
   for (FE_Utils::T_Param_Info &param : *this->template_params_)
     {
-      if (param.name_ == name->get_string ())
+      if (param.name_ == name)
         {
           return &param;
         }

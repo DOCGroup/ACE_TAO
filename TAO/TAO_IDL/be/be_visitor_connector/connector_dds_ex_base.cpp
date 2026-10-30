@@ -172,12 +172,8 @@ be_visitor_connector_dds_ex_base::match_template_args ()
       return;
     }
 
-  for (UTL_StrlistActiveIterator i (this->t_ref_->param_refs ());
-       ! i.is_done ();
-       i.next ())
+  for (std::string const& ref_name : this->t_ref_->param_refs ())
     {
-      std::string const& ref_name =
-        i.item ()->get_string ();
       size_t slot = 0;
 
       for (FE_Utils::T_Param_Info const& t_param :

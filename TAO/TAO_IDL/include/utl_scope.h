@@ -81,6 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // function defined in the parent "AST_" class.
 
 #include "fe_utils.h"
+#include "utl_strlist.h"
 
 class Identifier;
 class AST_PredefinedType;
@@ -127,7 +128,6 @@ class AST_Consumes;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
-class UTL_StrList;
 class UTL_NameList;
 class AST_Annotation_Decl;
 class AST_Annotation_Member;
@@ -439,8 +439,7 @@ public:
   virtual
   AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
-  virtual
-  UTL_StrList *fe_add_context (UTL_StrList *c);
+  virtual void fe_add_context (UTL_StrList context);
 
   virtual
   UTL_NameList *fe_add_exceptions (UTL_NameList *e);

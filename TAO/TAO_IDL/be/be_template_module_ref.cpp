@@ -3,10 +3,12 @@
 
 #include "ast_template_module.h"
 
+#include <utility>
+
 be_template_module_ref::be_template_module_ref (
       UTL_ScopedName *n,
       AST_Template_Module *ref,
-      UTL_StrList *param_refs)
+      UTL_StrList param_refs)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_module,
@@ -16,7 +18,7 @@ be_template_module_ref::be_template_module_ref (
                n),
     AST_Template_Module_Ref (n,
                              ref,
-                             param_refs),
+                             std::move (param_refs)),
     be_decl (AST_Decl::NT_module,
              n),
     be_field (ref,

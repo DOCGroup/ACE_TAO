@@ -84,10 +84,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_namelist.h"
 #include "utl_exceptlist.h"
 #include "utl_identifier.h"
-#include "utl_string.h"
 #include "utl_strlist.h"
 
 #include "global_extern.h"
+
+#include <utility>
 
 AST_Decl::NodeType const
 AST_Operation::NT = AST_Decl::NT_op;
@@ -104,7 +105,6 @@ AST_Operation::AST_Operation (AST_Type *rt,
     UTL_Scope(AST_Decl::NT_op),
     pd_return_type (rt),
     pd_flags (fl),
-    pd_context (nullptr),
     pd_exceptions (nullptr)
 {
   AST_PredefinedType *pdt = nullptr;
@@ -287,13 +287,11 @@ AST_Operation::compute_argument_attr ()
   return 0;
 }
 
-// Add this context (a UTL_StrList) to this scope.
-UTL_StrList *
-AST_Operation::fe_add_context (UTL_StrList *t)
+// Set the operation context.
+void
+AST_Operation::fe_add_context (UTL_StrList context)
 {
-  this->pd_context = t;
-
-  return t;
+  this->pd_context = std::move (context);
 }
 
 // Add these exceptions (identified by name) to this scope.
@@ -444,8 +442,6 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Decl *d = nullptr;
   AST_Type *e = nullptr;
-  UTL_String *s = nullptr;
-
   if (this->pd_flags == OP_oneway)
     {
       this->dump_i (o, "oneway ");
@@ -496,21 +492,20 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       this->dump_i (o, ")");
     }
 
-  if (this->pd_context != nullptr)
+  if (!this->pd_context.empty ())
     {
       this->dump_i (o, " context(");
 
-      // Must advance the iterator explicity inside the loop.
-      for (UTL_StrlistActiveIterator si (this->pd_context); !si.is_done();)
+      bool first = true;
+      for (std::string const& context : this->pd_context)
         {
-          s = si.item ();
-          si.next ();
-          this->dump_i (o, s->get_string ());
-
-          if (!si.is_done())
+          if (!first)
             {
               this->dump_i (o, ", ");
             }
+
+          this->dump_i (o, context);
+          first = false;
         }
 
       this->dump_i (o, ")");
@@ -537,7 +532,7 @@ AST_Operation::flags () const
   return this->pd_flags;
 }
 
-UTL_StrList *
+UTL_StrList const&
 AST_Operation::context () const
 {
   return this->pd_context;

@@ -140,6 +140,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <fe_home_header.h>
 #include <fe_utils.h>
 
+#include <utility>
+
 void tao_yyerror (const char *);
 int tao_yylex (void);
 extern "C" int tao_yywrap (void);
@@ -163,6 +165,10 @@ bool stack_based_lookup_for_primary_expr = false;
 #endif
 
 %}
+
+%code requires {
+#include <utl_strlist.h>
+}
 
 /*
  * Declare the type of values in the grammar
@@ -800,12 +806,14 @@ template_module_ref
             }
 
           bool refs_match =
-            ref->match_param_refs ($5,
+            ref->match_param_refs (*$5,
                                    s);
 
           if (! refs_match)
             {
               // Error message is already output.
+              delete $5;
+              $5 = nullptr;
               return 1;
             }
 
@@ -815,7 +823,10 @@ template_module_ref
             idl_global->gen ()->create_template_module_ref (
               &sn,
               ref,
-              $5);
+              std::move (*$5));
+
+          delete $5;
+          $5 = nullptr;
 
           (void) s->fe_add_template_module_ref (tmr);
 
@@ -4876,7 +4887,9 @@ operation
 
               if ($10 != 0)
                 {
-                  (void) o->fe_add_context ($10);
+                  (void) o->fe_add_context (std::move (*$10));
+                  delete $10;
+                  $10 = nullptr;
                 }
             }
 
@@ -5410,10 +5423,15 @@ opt_context
 at_least_one_string_literal :
         IDL_STRING_LITERAL string_literals
         {
-          ACE_NEW_RETURN ($<slval>$,
-                          UTL_StrList ($1,
-                                       $2),
-                          1);
+          ACE_NEW_RETURN ($$, UTL_StrList, 1);
+          $$->emplace_back ($1->get_string ());
+          delete $1;
+
+          if ($2 != nullptr)
+            {
+              $$->insert ($$->end (), $2->begin (), $2->end ());
+              delete $2;
+            }
         }
         ;
 
@@ -5425,21 +5443,18 @@ string_literals
         }
         IDL_STRING_LITERAL
         {
-          UTL_StrList *sl = 0;
-          ACE_NEW_RETURN (sl,
-                          UTL_StrList ($4,
-                                       0),
-                          1);
-
           if ($1 == 0)
             {
-              $<slval>$ = sl;
+              ACE_NEW_RETURN ($$, UTL_StrList, 1);
             }
           else
             {
-              $1->nconc (sl);
-              $<slval>$ = $1;
+              $$ = $1;
+              $1 = nullptr;
             }
+
+          $$->emplace_back ($4->get_string ());
+          delete $4;
         }
         | %empty
         {
@@ -6965,25 +6980,33 @@ formal_parameter
 at_least_one_formal_parameter_name
         : formal_parameter_name formal_parameter_names
         {
-          ACE_NEW_RETURN ($$, UTL_StrList ($1, $2), 1);
+          ACE_NEW_RETURN ($$, UTL_StrList, 1);
+          $$->emplace_back ($1->get_string ());
+          delete $1;
+
+          if ($2 != nullptr)
+            {
+              $$->insert ($$->end (), $2->begin (), $2->end ());
+              delete $2;
+            }
         }
         ;
 
 formal_parameter_names
         : formal_parameter_names ',' formal_parameter_name
         {
-          UTL_StrList *sl = 0;
-          ACE_NEW_RETURN (sl, UTL_StrList ($3, 0), 1);
-
           if ($1 == 0)
             {
-              $$ = sl;
+              ACE_NEW_RETURN ($$, UTL_StrList, 1);
             }
           else
             {
-              $1->nconc (sl);
               $$ = $1;
+              $1 = nullptr;
             }
+
+          $$->emplace_back ($3->get_string ());
+          delete $3;
         }
         | %empty
         {

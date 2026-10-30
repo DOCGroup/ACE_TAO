@@ -868,7 +868,7 @@ UTL_Error::coercion_error (AST_Expression *v,
 {
   idl_error_header (EIDL_COERCION_FAILURE,
                     v->line (),
-                    v->file_name ()->get_string ());
+                    v->file_name ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " to %C\n",
@@ -1075,7 +1075,7 @@ UTL_Error::eval_error (AST_Expression *v)
 {
   idl_error_header (EIDL_EVAL_ERROR,
                     v->line (),
-                    v->file_name ()->get_string ());
+                    v->file_name ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));

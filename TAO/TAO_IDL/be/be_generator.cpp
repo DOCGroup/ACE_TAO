@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of the BE-subclassed classes instead of of AST classes.
 
 #include "be_generator.h"
+
+#include <utility>
 #include "be_root.h"
 #include "be_predefined_type.h"
 #include "be_module.h"
@@ -1158,13 +1160,13 @@ AST_Template_Module_Ref *
 be_generator::create_template_module_ref (
   UTL_ScopedName *n,
   AST_Template_Module *ref,
-  UTL_StrList *param_refs)
+  UTL_StrList param_refs)
 {
   be_template_module_ref *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_template_module_ref (n,
                                           ref,
-                                          param_refs),
+                                          std::move (param_refs)),
                   nullptr);
 
   return retval;

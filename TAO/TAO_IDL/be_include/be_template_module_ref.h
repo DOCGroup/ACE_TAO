@@ -12,7 +12,7 @@ class be_template_module_ref
 public:
   be_template_module_ref (UTL_ScopedName *n,
                            AST_Template_Module *ref,
-                           UTL_StrList *param_refs);
+                           UTL_StrList param_refs);
 
   ~be_template_module_ref () override;
 

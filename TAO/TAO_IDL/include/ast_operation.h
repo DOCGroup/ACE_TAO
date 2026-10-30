@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_decl.h"
 #include "utl_scope.h"
+#include "utl_strlist.h"
 
 class UTL_ExceptList;
 class AST_Type;
@@ -101,7 +102,7 @@ public:
 
   Flags flags () const;
 
-  UTL_StrList *context () const;
+  UTL_StrList const& context () const;
 
   UTL_ExceptList *exceptions () const;
 
@@ -158,7 +159,7 @@ protected:
   Flags pd_flags;
   // Operation flags
 
-  UTL_StrList *pd_context;
+  UTL_StrList pd_context;
   // Context
 
   UTL_ExceptList *pd_exceptions;
@@ -182,7 +183,7 @@ protected:
 
   friend int tao_yyparse ();
   AST_Argument *fe_add_argument (AST_Argument *a) override;
-  UTL_StrList *fe_add_context (UTL_StrList *c) override;
+  void fe_add_context (UTL_StrList context) override;
   UTL_NameList *fe_add_exceptions (UTL_NameList *e) override;
 };
 

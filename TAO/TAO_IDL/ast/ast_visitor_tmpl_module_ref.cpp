@@ -68,19 +68,16 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   /// that's what will be search for any matches. We save the
   /// current list to restore after the traversal.
 
-  if (idl_global->for_new_holder () == nullptr)
+  if (!idl_global->for_new_holder ())
     {
-      idl_global->for_new_holder (
-        const_cast<UTL_StrList *> (
-          node->param_refs ()));
+      idl_global->for_new_holder (node->param_refs ());
     }
 
-  UTL_StrList const *old_refs = idl_global->alias_params ();
+  std::optional<UTL_StrList> old_refs = idl_global->alias_params ();
   FE_Utils::T_PARAMLIST_INFO const *old_params =
     idl_global->current_params ();
 
-  idl_global->alias_params (
-    const_cast<UTL_StrList *> (node->param_refs ()));
+  idl_global->alias_params (node->param_refs ());
   AST_Template_Module *tm = node->ref ();
   idl_global->current_params (tm->template_params ());
 
@@ -100,8 +97,8 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   idl_global->current_params (
     const_cast<FE_Utils::T_PARAMLIST_INFO *> (
       old_params));
-  idl_global->for_new_holder (nullptr);
-  idl_global->alias_params (const_cast<UTL_StrList *> (old_refs));
+  idl_global->for_new_holder (std::nullopt);
+  idl_global->alias_params (std::move (old_refs));
 
   idl_global->scopes ().pop ();
 

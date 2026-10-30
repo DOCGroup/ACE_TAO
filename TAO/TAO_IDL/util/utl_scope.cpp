@@ -734,10 +734,9 @@ UTL_Scope::fe_add_constant (AST_Constant *)
   return nullptr;
 }
 
-UTL_StrList *
-UTL_Scope::fe_add_context (UTL_StrList *)
+void
+UTL_Scope::fe_add_context (UTL_StrList)
 {
-  return nullptr;
 }
 
 UTL_NameList *
@@ -1862,16 +1861,20 @@ UTL_Scope::match_param (UTL_ScopedName *e)
   std::string const& name = e->first_component ()->get_string ();
   unsigned long index = 0;
 
-  UTL_StrList *alias_params =
-    const_cast<UTL_StrList *> (idl_global->for_new_holder ());
+  std::optional<UTL_StrList> const& for_new_holder =
+    idl_global->for_new_holder ();
+  std::optional<UTL_StrList> const& alias_params_value =
+    idl_global->alias_params ();
+  UTL_StrList const *alias_params = nullptr;
 
-  if (alias_params == nullptr)
+  if (for_new_holder)
     {
-      alias_params =
-        const_cast<UTL_StrList *> (idl_global->alias_params ());
+      alias_params = &*for_new_holder;
     }
-
-  UTL_String *alias_param = nullptr;
+  else if (alias_params_value)
+    {
+      alias_params = &*alias_params_value;
+    }
 
   for (FE_Utils::T_Param_Info const& param_info : *params)
     {
@@ -1882,20 +1885,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
           /// the name of the corresponding aliased param.
           if (alias_params != nullptr)
             {
-              unsigned long slot = 0;
-
-              for (UTL_StrlistActiveIterator iter (alias_params);
-                   !iter.is_done ();
-                   iter.next (), ++slot)
-                {
-                  if (slot == index)
-                    {
-                      alias_param = iter.item ();
-                      break;
-                    }
-                }
-
-              if (alias_param == nullptr)
+              if (index >= alias_params->size ())
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      ACE_TEXT ("UTL_Scope::match_param - ")
@@ -1903,7 +1893,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
                                     0);
                 }
 
-              Identifier id (alias_param->get_string ());
+              Identifier id ((*alias_params)[index]);
               UTL_ScopedName sn (&id, nullptr);
 
               return

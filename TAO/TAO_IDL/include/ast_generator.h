@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_porttype.h"
 
 #include "fe_utils.h"
+#include "utl_strlist.h"
 
 #include <string>
 
@@ -422,7 +423,7 @@ public:
   AST_Template_Module_Ref *create_template_module_ref (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
-    UTL_StrList *param_refs);
+    UTL_StrList param_refs);
 
   virtual
   AST_Param_Holder *create_param_holder (

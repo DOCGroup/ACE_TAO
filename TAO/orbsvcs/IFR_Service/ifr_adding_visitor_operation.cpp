@@ -5,12 +5,13 @@
 #include "ast_expression.h"
 #include "ast_operation.h"
 #include "utl_identifier.h"
-#include "utl_string.h"
 
 #include "ifr_adding_visitor_operation.h"
 #include "utl_exceptlist.h"
 #include "utl_strlist.h"
 #include "nr_extern.h"
+
+#include <string>
 
 ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
   : ifr_adding_visitor (scope)
@@ -93,31 +94,17 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       // Build the context list.
 
-      UTL_StrList *ctx_list = node->context ();
-
-      if (ctx_list != nullptr)
-        {
-          length = static_cast<CORBA::ULong> (ctx_list->length ());
-        }
-      else
-        {
-          length = 0;
-        }
+      UTL_StrList const& ctx_list = node->context ();
+      length = static_cast<CORBA::ULong> (ctx_list.size ());
 
       CORBA::ContextIdSeq contexts (length);
       contexts.length (length);
 
-      UTL_StrlistActiveIterator ctx_iter (ctx_list);
-      UTL_String *str = nullptr;
       i = 0;
 
-      while (!ctx_iter.is_done ())
+      for (std::string const& context : ctx_list)
         {
-          str = ctx_iter.item ();
-
-          contexts[i++] = str->get_string ().c_str ();
-
-          ctx_iter.next ();
+          contexts[i++] = context.c_str ();
         }
 
       // Get the return type.

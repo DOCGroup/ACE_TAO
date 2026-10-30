@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
 #include "utl_identifier.h"
+#include "utl_strlist.h"
 #include "utl_stack.h"
 #include "fe_utils.h"
 #include "idl_version.h"
@@ -646,15 +647,15 @@ public:
   // referenced template parameter of the eclosing template
   // module.
 
-  UTL_StrList const *alias_params () const;
-  void alias_params (UTL_StrList *params);
+  std::optional<UTL_StrList> const& alias_params () const;
+  void alias_params (std::optional<UTL_StrList> params);
   // Accessors for the member. If we are parsing a template
   // module reference, we traverse the scope of the referenced
   // template module, but create param holders with the
   // alias names.
 
-  UTL_StrList const *for_new_holder () const;
-  void for_new_holder (UTL_StrList *params);
+  std::optional<UTL_StrList> const& for_new_holder () const;
+  void for_new_holder (std::optional<UTL_StrList> params);
   // Accessors for the member. If a lookup matches something
   // from current_params(), the actual created param holder must
   // match the corresponding element on this list, if it is
@@ -1001,13 +1002,13 @@ private:
   // 0 otherwise. Contains the params of the referenced
   // template module if we are traversing an alias.
 
-  UTL_StrList *alias_params_ {};
+  std::optional<UTL_StrList> alias_params_;
   // Stored if we are parsing a template module reference. The
   // scope traversed will be that of the referenced template
   // module, but the param holder(s) created will use the
   // aliased names.
 
-  UTL_StrList *for_new_holder_ {};
+  std::optional<UTL_StrList> for_new_holder_;
   // Stored if we are traversing an alias, this is a list of
   // the enclosing template module's params. When we create
   // a param holder, it will need this name rather than the

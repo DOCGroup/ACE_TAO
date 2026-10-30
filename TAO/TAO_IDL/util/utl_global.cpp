@@ -1266,7 +1266,7 @@ FE_Utils::T_PARAMLIST_INFO *params)
   this->current_params_ = params;
 }
 
-UTL_StrList const *
+std::optional<UTL_StrList> const&
 IDL_GlobalData::alias_params () const
 {
   return this->alias_params_;
@@ -1274,12 +1274,12 @@ IDL_GlobalData::alias_params () const
 
 void
 IDL_GlobalData::alias_params (
-UTL_StrList *params)
+std::optional<UTL_StrList> params)
 {
-  this->alias_params_ = params;
+  this->alias_params_ = std::move (params);
 }
 
-UTL_StrList const *
+std::optional<UTL_StrList> const&
 IDL_GlobalData::for_new_holder () const
 {
   return this->for_new_holder_;
@@ -1287,9 +1287,9 @@ IDL_GlobalData::for_new_holder () const
 
 void
 IDL_GlobalData::for_new_holder (
-  UTL_StrList *params)
+  std::optional<UTL_StrList> params)
 {
-  this->for_new_holder_ = params;
+  this->for_new_holder_ = std::move (params);
 }
 
 void
