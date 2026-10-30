@@ -30,7 +30,7 @@
 #include "ace/OS_NS_ctype.h"
 
 //FUZZ: disable check_for_lack_ACE_OS
-static const char usage [] =
+constexpr char usage [] =
 "[[-?]\n"
 "                 -f <name of input data file>\n"
 "                 [-O[RBport] ORB port number]\n"
@@ -52,15 +52,15 @@ DualEC_Supplier::DualEC_Supplier (int argc, ACE_TCHAR** argv)
   channel_lo_name_ (1),
   sched_hi_name_ (1),
   sched_lo_name_ (1),
-  sched_hi_impl_ (0),
-  sched_lo_impl_ (0),
-  ec_hi_impl_ (0),
-  ec_lo_impl_ (0),
+  sched_hi_impl_ (nullptr),
+  sched_lo_impl_ (nullptr),
+  ec_hi_impl_ (nullptr),
+  ec_lo_impl_ (nullptr),
   argc_(argc),
   argv_(argv),
   total_messages_ (2000),
   break_count_(-1),
-  input_file_name_(0),
+  input_file_name_ (nullptr),
   update_data_ (1),
   dump_schedule_headers_ (0),
   use_runtime_schedulers_ (0),
@@ -86,7 +86,7 @@ DualEC_Supplier::DualEC_Supplier (int argc, ACE_TCHAR** argv)
 
       this->terminator_ = terminator_impl_._this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
       ex._tao_print_exception (
         "DualEC_Supplier::DualEC_Supplier : could "
@@ -141,7 +141,7 @@ DualEC_Supplier::~DualEC_Supplier ()
       this->naming_context_->unbind (this->channel_hi_name_);
       this->naming_context_->unbind (this->channel_lo_name_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("DualEC_Supplier::~DualEC_Supplier");
     }
@@ -187,7 +187,7 @@ DualEC_Supplier::init ()
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("DualEC_Supplier::init");
     return -1;
@@ -347,7 +347,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
       }
       while (++total_sent < sup->total_messages_);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -410,7 +410,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
       }
       while (++total_sent < sup->total_messages_);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -536,7 +536,7 @@ DualEC_Supplier::create_schedulers ()
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("DualEC_Supplier::create_schedulers");
       return -1;
@@ -586,7 +586,7 @@ DualEC_Supplier::create_event_channels ()
       naming_context_->bind (this->channel_lo_name_,
                                      this->ec_lo_.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("DualEC_Supplier::create_event_channels");
     return -1;
@@ -620,7 +620,7 @@ DualEC_Supplier::compute_schedules ()
          this->configs_lo_.out (),
          this->anomalies_lo_.out ());
 
-      if (dump_schedule_headers_ && (this->hi_schedule_file_name_ != 0))
+      if (dump_schedule_headers_ && (this->hi_schedule_file_name_ != nullptr))
         {
           ACE_Scheduler_Factory::dump_schedule (infos_hi_.in (),
                                                 deps_hi_.in (),
@@ -629,7 +629,7 @@ DualEC_Supplier::compute_schedules ()
                                                 this->hi_schedule_file_name_);
         }
 
-      if (dump_schedule_headers_ && (this->lo_schedule_file_name_ != 0))
+      if (dump_schedule_headers_ && (this->lo_schedule_file_name_ != nullptr))
         {
           ACE_Scheduler_Factory::dump_schedule (infos_lo_.in (),
                                                 deps_lo_.in (),
@@ -638,7 +638,7 @@ DualEC_Supplier::compute_schedules ()
                                                 this->lo_schedule_file_name_);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
     ex._tao_print_exception ("SYS_EX");
     }
@@ -694,7 +694,7 @@ DualEC_Supplier::start_generating_events ()
       for (Weapons * const weap : this->weapons_data_)
         delete weap;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }
@@ -704,16 +704,16 @@ DualEC_Supplier::start_generating_events ()
 void
 DualEC_Supplier::load_schedule_data ()
 {
-  Navigation * nav = 0;
-  Weapons * weap = 0;
+  Navigation *nav = nullptr;
+  Weapons *weap = nullptr;
 
   Schedule_Viewer_Data data;
 
   // constants for periods (in units of one hundred nanoseconds)
-  const TimeBase::TimeT ONE_HZ_PERIOD = 10000000;
-  // const TimeBase::TimeT FIVE_HZ_PERIOD = ONE_HZ_PERIOD / 5;
-  // const TimeBase::TimeT TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
-  const TimeBase::TimeT TWENTY_HZ_PERIOD = ONE_HZ_PERIOD / 20;
+  TimeBase::TimeT const ONE_HZ_PERIOD = 10000000;
+  // TimeBase::TimeT const FIVE_HZ_PERIOD = ONE_HZ_PERIOD / 5;
+  // TimeBase::TimeT const TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
+  TimeBase::TimeT const TWENTY_HZ_PERIOD = ONE_HZ_PERIOD / 20;
 
   if (this->input_file_name_)
     {
@@ -761,7 +761,7 @@ DualEC_Supplier::load_schedule_data ()
                       (ACE_OS::strcmp(data.operation_name, "low_20") == 0))
                     {
                       ACE_NEW (weap, Weapons);
-                      if (weap == 0)
+                      if (weap == nullptr)
                         {
                           ACE_ERROR ((LM_ERROR,
                                       "DOVE_Supplier::load_schedule_data: "
@@ -800,7 +800,7 @@ DualEC_Supplier::load_schedule_data ()
                   else
                     {
                       ACE_NEW (nav, Navigation);
-                      if (nav == 0)
+                      if (nav == nullptr)
                         {
                           ACE_ERROR ((LM_ERROR,
                                       "DOVE_Supplier::load_schedule_data: "
@@ -865,7 +865,7 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
             ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
           else
             {
-              this->input_file_name_ = 0;
+              this->input_file_name_ = nullptr;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%s: file name must be specified with -f option",
                                  argv[0]),
@@ -1029,7 +1029,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // when done, we clean up
       delete event_Supplier_ptr;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

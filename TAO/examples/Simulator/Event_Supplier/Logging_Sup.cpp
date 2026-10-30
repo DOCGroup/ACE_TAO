@@ -28,7 +28,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
-static const char usage [] =
+constexpr char usage [] =
 "[[-?]\n"
 "                 [-O[RBport] ORB port number]\n"
 "                 [-m <count> of messages to send [100]\n"
@@ -41,9 +41,9 @@ Logging_Supplier::Logging_Supplier (int argc, ACE_TCHAR** argv)
 : argc_(argc),
   argv_(argv),
   total_messages_(10),
-  input_file_name_(0),
+  input_file_name_ (nullptr),
   update_data_ (1),
-  schedule_file_name_(0)
+  schedule_file_name_ (nullptr)
 {
   navigation_.roll = navigation_.pitch = 0;
 }
@@ -106,7 +106,7 @@ void
 Logging_Supplier::load_schedule_data
       (std::vector<Schedule_Viewer_Data *> &schedule_data)
 {
-  Schedule_Viewer_Data *data = 0;
+  Schedule_Viewer_Data *data = nullptr;
 
   if (this->input_file_name_)
     {
@@ -175,7 +175,7 @@ Logging_Supplier::load_schedule_data
     {
       ACE_NEW (data, Schedule_Viewer_Data);
 
-      const char *oper_name = 0;
+      char const *oper_name = nullptr;
       switch (i % 4)
       {
       case 0:
@@ -370,7 +370,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
     if (++schedule_index == schedule_data.size ())
       schedule_index = 0;
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     ACE_ERROR ((LM_ERROR,
                 "(%t)Error in Logging_Supplier::insert_event_data.\n"));
@@ -411,7 +411,7 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
             ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
           else
             {
-              this->input_file_name_ = 0;
+              this->input_file_name_ = nullptr;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%s: file name must be specified with -f option",
                                  argv[0]),
@@ -425,7 +425,7 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
             ACE_DEBUG ((LM_DEBUG,"Dumping file!\n"));
           else
             {
-              this->input_file_name_ = 0;
+              this->input_file_name_ = nullptr;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%s: file name must be specified with -d option",
                                  argv[0]),
@@ -488,7 +488,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // when done, we clean up
       delete event_Supplier_ptr;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

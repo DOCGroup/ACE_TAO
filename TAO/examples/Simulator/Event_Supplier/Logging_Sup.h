@@ -50,6 +50,11 @@ public:
 
   ~Logging_Supplier ();
 
+  Logging_Supplier (Logging_Supplier const &) = delete;
+  Logging_Supplier (Logging_Supplier &&) = delete;
+  Logging_Supplier &operator= (Logging_Supplier const &) = delete;
+  Logging_Supplier &operator= (Logging_Supplier &&) = delete;
+
   /// connect the DOVE_Supplier
   int init ();
 
@@ -78,7 +83,7 @@ private:
   unsigned long total_messages_;
   ACE_TCHAR *input_file_name_;
   unsigned long update_data_;
-  const ACE_TCHAR* schedule_file_name_;
+  ACE_TCHAR const *schedule_file_name_;
 };
 
 #endif /* LOGGING_SUP_H */

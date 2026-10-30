@@ -49,6 +49,11 @@ public:
 
   ~Event_Supplier ();
 
+  Event_Supplier (Event_Supplier const &) = delete;
+  Event_Supplier (Event_Supplier &&) = delete;
+  Event_Supplier &operator= (Event_Supplier const &) = delete;
+  Event_Supplier &operator= (Event_Supplier &&) = delete;
+
   /// connect the DOVE_Supplier
   int init ();
 

@@ -21,6 +21,8 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
+#include <memory>
+
 /**
  * @class Demo_Consumer
  *
@@ -32,7 +34,12 @@
 class Demo_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  Demo_Consumer ();
+  Demo_Consumer () = default;
+
+  Demo_Consumer (Demo_Consumer const &) = delete;
+  Demo_Consumer (Demo_Consumer &&) = delete;
+  Demo_Consumer &operator= (Demo_Consumer const &) = delete;
+  Demo_Consumer &operator= (Demo_Consumer &&) = delete;
 
   /**
    * Uses the name server to obtain a reference to the <supplier_name>
@@ -42,10 +49,10 @@ public:
    * on success, -1 on failure.
    */
   int open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
-                     const char *my_name);
+                     char const *my_name);
 
   /// The channel is disconnecting.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
   // = (not protected to allow short-circuiting) protected:
   /**
@@ -53,7 +60,7 @@ public:
    * the supplier.  If its a shutdown message, the consumer
    * disconnects from the channel.
    */
-  virtual void push (const RtecEventComm::EventSet &events);
+  void push (RtecEventComm::EventSet const &events) override;
 
 protected:
   /// Disconnect from the Event Service.
