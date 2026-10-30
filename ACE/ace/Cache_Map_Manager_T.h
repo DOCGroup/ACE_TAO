@@ -59,6 +59,11 @@ template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class RE
 class ACE_Cache_Map_Manager
 {
 public:
+  ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager &) = delete;
+  ACE_Cache_Map_Manager (ACE_Cache_Map_Manager &&) = delete;
+  ACE_Cache_Map_Manager &operator= (const ACE_Cache_Map_Manager &) = delete;
+  ACE_Cache_Map_Manager &operator= (ACE_Cache_Map_Manager &&) = delete;
+
   // = Traits.
   using key_type = KEY;
   using mapped_type = VALUE;
@@ -219,11 +224,6 @@ protected:
 
   /// The strategy to be followed for caching entries in the map.
   CACHING_STRATEGY &caching_strategy_;
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
-  ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
 };
 
 /**
