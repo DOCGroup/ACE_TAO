@@ -14,7 +14,6 @@
 #include "be_visitor_sequence/cdr_op_ch.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_array_cdr_op_ch::be_visitor_array_cdr_op_ch (
     be_visitor_context *ctx)

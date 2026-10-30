@@ -12,7 +12,6 @@
 #include "array.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
   : be_visitor_array (ctx)
