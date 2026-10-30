@@ -32,6 +32,9 @@
 #include "tao/PortableServer/Acceptor_Filter_Factory.h"
 #include "tao/PortableServer/Network_Priority_Hook.h"
 
+#include <new>
+#include <stdexcept>
+
 #include "tao/StringSeqC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PolicyC.h"
@@ -192,7 +195,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
 
     tagged_component_ (),
     tagged_component_id_ (),
-    profile_id_array_ (0),
+    profile_id_array_ (),
     policies_ (policies),
     adapter_state_ (PortableInterceptor::HOLDING),
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -2061,11 +2064,23 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
 
   CORBA::ULong const new_len = old_len + 1;
 
+  try
+    {
+      this->profile_id_array_.reserve (new_len);
+    }
+  catch (std::bad_alloc const &)
+    {
+      throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+    }
+  catch (std::length_error const &)
+    {
+      throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+    }
+
   this->tagged_component_id_.length (new_len);
   this->tagged_component_id_[old_len] = component;
 
-  this->profile_id_array_.size (new_len);
-  this->profile_id_array_[old_len] = profile_id;
+  this->profile_id_array_.push_back (profile_id);
 }
 
 TAO_Stub *
