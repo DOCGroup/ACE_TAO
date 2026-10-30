@@ -325,7 +325,7 @@ TAO_Thread_Lane::open ()
 
   bool ignore_address = false;
 
-  if (endpoint_set.is_empty ())
+  if (endpoint_set.empty ())
     {
       // If endpoints are not specified for this lane, use the
       // endpoints specified for the default lane but ignore their
