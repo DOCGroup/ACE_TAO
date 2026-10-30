@@ -18,7 +18,6 @@
 #include "ace/Unbounded_Queue.h"
 
 #include <string>
-#include <string_view>
 #include <vector>
 
 #include "TAO_IDL_BE_Export.h"
@@ -385,8 +384,8 @@ public:
   std::string const& gperf_input_filename () const;
 
   /// Convert input string to all one case.
-  static std::string upcase (std::string_view str);
-  static std::string downcase (std::string_view str);
+  static std::string upcase (std::string const& str);
+  static std::string downcase (std::string const& str);
 
   /// Pass along the #ident string, if any, from the IDL file.
   void gen_ident_string (TAO_OutStream *stream) const;
@@ -397,21 +396,21 @@ public:
   /// Generate file include, with optional empty comment to
   /// short-circuit DOxygen.
   void gen_standard_include (TAO_OutStream *stream,
-                             std::string_view included_file,
+                             std::string const& included_file,
                              bool add_comment = false);
 
   /// Generate a system include using angle brackets.
   void gen_system_include (TAO_OutStream *stream,
-                           std::string_view included_file);
+                           std::string const& included_file);
 
   /// Cleanup.
   void destroy ();
 
 private:
-  void gen_ifndef_string (std::string_view fname,
+  void gen_ifndef_string (std::string const& fname,
                           TAO_OutStream *stream,
-                          std::string_view prefix,
-                          std::string_view suffix);
+                          std::string const& prefix,
+                          std::string const& suffix);
 
   /// Utility methods for generating file includes.
   void gen_stub_hdr_includes ();
@@ -440,10 +439,10 @@ private:
   void gen_conn_src_includes ();
   void gen_ami_conn_idl_includes ();
 
-  bool is_system_file (std::string_view idl_name) const;
+  bool is_system_file (std::string const& idl_name) const;
 
-  void gen_export_file (std::string_view filename,
-                        std::string_view macro,
+  void gen_export_file (std::string const& filename,
+                        std::string const& macro,
                         const char *msg,
                         bool for_skel = false);
 

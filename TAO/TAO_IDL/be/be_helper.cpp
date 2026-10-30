@@ -377,13 +377,6 @@ TAO_OutStream::operator<< (std::string const &str)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (std::string_view str)
-{
-  this->write_text (std::string (str));
-  return *this;
-}
-
-TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 {
   this->flush_pending_whitespace ();

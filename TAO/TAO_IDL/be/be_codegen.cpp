@@ -39,7 +39,7 @@ TAO_CodeGen::~TAO_CodeGen () = default;
 
 // Change the string to all upper case.
 std::string
-TAO_CodeGen::upcase (std::string_view str)
+TAO_CodeGen::upcase (std::string const& str)
 {
   std::string upcase_str;
   upcase_str.reserve (str.size ());
@@ -63,7 +63,7 @@ TAO_CodeGen::upcase (std::string_view str)
 
 // Change the string to all lower case.
 std::string
-TAO_CodeGen::downcase (std::string_view str)
+TAO_CodeGen::downcase (std::string const& str)
 {
   std::string downcase_str;
   downcase_str.reserve (str.size ());
@@ -746,7 +746,7 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
   // override path.
   if (got_tao_pidl)
     {
-      const std::string_view stub_incl_dir = be_global->stub_include_dir ();
+      std::string const& stub_incl_dir = be_global->stub_include_dir ();
 
       if (stub_incl_dir.empty ())
         {
@@ -754,7 +754,7 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
         }
       else
         {
-          tao_prefix.assign (stub_incl_dir.data (), stub_incl_dir.size ());
+          tao_prefix = stub_incl_dir;
           tao_prefix += '/';
         }
     }
@@ -785,8 +785,8 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
-          std::string_view const pidl_checker_included (idl_name);
-          constexpr std::string_view pidl_suffix = ".pidl";
+          std::string const& pidl_checker_included = idl_name;
+          std::string const pidl_suffix = ".pidl";
           bool const got_pidl = pidl_checker_included.size () >= pidl_suffix.size ()
             && pidl_checker_included.substr (
                  pidl_checker_included.size () - pidl_suffix.size ()) == pidl_suffix;
@@ -975,8 +975,8 @@ TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
 
   for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
     {
-      std::string_view const filename (path_tmp);
-      constexpr std::string_view exec_idl_suffix = "E.idl";
+      std::string const& filename = path_tmp;
+      std::string const exec_idl_suffix = "E.idl";
       // sanity
       if (filename.size () >= exec_idl_suffix.size ()
           && filename.substr (filename.size () - exec_idl_suffix.size ())
@@ -1940,7 +1940,7 @@ TAO_CodeGen::gperf_input_filename () const
 void
 TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 {
-  std::string_view const str = idl_global->ident_string ();
+  std::string const& str = idl_global->ident_string ();
 
   if (!str.empty ())
     {
@@ -1955,7 +1955,7 @@ TAO_CodeGen::gen_export_files ()
       && !be_global->stub_export_macro ().empty ()
       && (!be_global->stub_export_include ().empty () || !be_global->stub_export_file ().empty ()))
     {
-      std::string_view const filename = be_global->stub_export_file ().empty ()
+      std::string const& filename = be_global->stub_export_file ().empty ()
         ? be_global->stub_export_include () : be_global->stub_export_file ();
       this->gen_export_file (
         filename,
@@ -2007,8 +2007,8 @@ TAO_CodeGen::gen_export_files ()
 }
 
 void
-TAO_CodeGen::gen_export_file (std::string_view filename,
-                              std::string_view macro,
+TAO_CodeGen::gen_export_file (std::string const& filename,
+                              std::string const& macro,
                               const char *,
                               bool for_skel)
 {
@@ -2019,11 +2019,9 @@ TAO_CodeGen::gen_export_file (std::string_view filename,
       return;
     }
 
-  std::string const macro_string (macro);
-  std::string const filename_string (filename);
   std::string file_str;
 
-  const std::string_view output_path =
+  std::string const& output_path =
     be_util::get_output_path (false, for_skel, false);
 
   if (!output_path.empty ())
@@ -2032,7 +2030,7 @@ TAO_CodeGen::gen_export_file (std::string_view filename,
       std::string normalized_path;
       normalized_path.reserve (output_path.size ());
 
-      for (std::string_view::size_type i = 0; i < output_path.size (); ++i)
+      for (std::string::size_type i = 0; i < output_path.size (); ++i)
         {
           if (output_path[i] == '\\')
             {
@@ -2052,7 +2050,7 @@ TAO_CodeGen::gen_export_file (std::string_view filename,
       file_str += '/';
     }
 
-  file_str += filename_string;
+  file_str += filename;
 
   TAO_OutStream os;
 
@@ -2061,11 +2059,11 @@ TAO_CodeGen::gen_export_file (std::string_view filename,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
                   ACE_TEXT ("Error: file open failed on %C\n"),
-                  filename_string.c_str ()));
+                  filename.c_str ()));
       return;
     }
 
-  constexpr std::string_view suffix = "_Export";
+  std::string const suffix = "_Export";
   if (macro.size () < suffix.size ()
       || macro.substr (macro.size () - suffix.size ()) != suffix)
     {
@@ -2073,11 +2071,11 @@ TAO_CodeGen::gen_export_file (std::string_view filename,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
                   ACE_TEXT ("Error: export macro %C does not end with ")
                   ACE_TEXT ("\"_Export\""),
-                  macro_string.c_str ()));
+                  macro.c_str ()));
       return;
     }
 
-  std::string const stem (macro.substr (0, macro.size () - suffix.size ()));
+  std::string const stem = macro.substr (0, macro.size () - suffix.size ());
 
   os << "\n#ifndef " << stem << "_EXPORT_H\n"
      << "#define " << stem << "_EXPORT_H\n\n"
@@ -2126,7 +2124,7 @@ TAO_CodeGen::gen_export_file (std::string_view filename,
 
 void
 TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
-                                   std::string_view included_file,
+                                   std::string const& included_file,
                                    bool add_comment)
 {
   // Switch between changing or non-changing standard include files
@@ -2134,8 +2132,8 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
   // generated with ""s or <>s respectively, for the standard include
   // files (e.g. tao/corba.h).
 
-  std::string_view start_delimiter = "\"";
-  std::string_view end_delimiter = "\"";
+  std::string start_delimiter = "\"";
+  std::string end_delimiter = "\"";
 
   if (be_global->changing_standard_include_files () == 0)
     {
@@ -2157,7 +2155,7 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 
 void
 TAO_CodeGen::gen_system_include (TAO_OutStream *stream,
-                                 std::string_view included_file)
+                                 std::string const& included_file)
 {
   *stream << "\n#include <"
           << included_file
@@ -2165,13 +2163,13 @@ TAO_CodeGen::gen_system_include (TAO_OutStream *stream,
 }
 
 void
-TAO_CodeGen::gen_ifndef_string (std::string_view fname,
+TAO_CodeGen::gen_ifndef_string (std::string const& fname,
                                 TAO_OutStream *stream,
-                                std::string_view prefix,
-                                std::string_view suffix)
+                                std::string const& prefix,
+                                std::string const& suffix)
 {
   size_t const extension = fname.find_last_of ('.');
-  size_t const length = extension == std::string_view::npos ? 0 : extension;
+  size_t const length = extension == std::string::npos ? 0 : extension;
   std::string macro_name (prefix);
   macro_name.reserve (prefix.size () + length + suffix.size () + 7);
 
@@ -2407,8 +2405,8 @@ TAO_CodeGen::gen_stub_hdr_includes ()
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
-          std::string_view const pidl_checker (idl_name);
-          constexpr std::string_view pidl_suffix = ".pidl";
+          std::string const& pidl_checker = idl_name;
+          std::string const pidl_suffix = ".pidl";
           bool const got_pidl = pidl_checker.size () >= pidl_suffix.size ()
             && pidl_checker.substr (
                  pidl_checker.size () - pidl_suffix.size ()) == pidl_suffix;
@@ -3287,7 +3285,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
         {
           std::string const test = exec_idl_fname.substr (0, base) + "AE.idl";
 
-          if (std::string_view (path_tmp).find (test) != std::string_view::npos)
+          if (path_tmp.find (test) != std::string::npos)
             {
               // Skip this include for ami4ccm.
               skip_incl = true;
@@ -3303,7 +3301,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
 }
 
 bool
-TAO_CodeGen::is_system_file (std::string_view idl_name) const
+TAO_CodeGen::is_system_file (std::string const& idl_name) const
 {
   return
     idl_name == "Components.idl"
