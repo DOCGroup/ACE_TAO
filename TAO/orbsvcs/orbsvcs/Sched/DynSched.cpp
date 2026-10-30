@@ -14,12 +14,38 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Null_Mutex.h"
 
+#include <algorithm>
+#include <new>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/DynSched.inl"
 #endif /* __ACE_INLINE__ */
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace
+{
+  template <typename T>
+  int insert_unique (std::vector<T> &entries, T const &entry)
+  {
+    if (std::find (entries.begin (), entries.end (), entry) != entries.end ())
+    {
+      return 1;
+    }
+
+    try
+    {
+      entries.push_back (entry);
+    }
+    catch (std::bad_alloc const &)
+    {
+      return -1;
+    }
+
+    return 0;
+  }
+}
 
 //////////////////////
 // Helper functions //
@@ -238,7 +264,7 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
   }
 
   // try to store the new task's information . . .
-  switch (rt_info_entries_.insert (rt_info))
+  switch (insert_unique (rt_info_entries_, rt_info))
     {
       case 0 : // successfully inserted
         {
@@ -495,18 +521,14 @@ ACE_DynScheduler::lookup_rt_info (handle_t handle,
     return ST_UNKNOWN_TASK;
   }
 
-  RT_Info** entry;
-  ACE_Unbounded_Set_Iterator <RT_Info *> i (rt_info_entries_);
-  while (i.next (entry) != 0)
+  for (RT_Info *info_ptr : rt_info_entries_)
+  {
+    if (info_ptr->handle == handle)
     {
-      i.advance ();
-      RT_Info* info_ptr = *entry;
-      if (info_ptr->handle == handle)
-        {
-          rtinfo = info_ptr;
-          return SUCCEEDED;
-        }
+      rtinfo = info_ptr;
+      return SUCCEEDED;
     }
+  }
 
   return ST_UNKNOWN_TASK;
 }
@@ -1315,17 +1337,15 @@ ACE_DynScheduler::setup_task_entries ()
 
   // set up links between rt_info_entries_, task_entries_,
   // and ordered_task_entries_ tables
-  ACE_Unbounded_Set_Iterator <RT_Info *> iter (rt_info_entries_);
-  for (u_int i = 0; i < tasks (); ++i, iter.advance ())
+  for (u_int i = 0; i < tasks (); ++i)
   {
-    RT_Info** info_entry;
-
-    // tie task entry to corresponding rt_info
-    if (! iter.next (info_entry))
+    if (i >= rt_info_entries_.size ())
     {
       return ST_BAD_INTERNAL_POINTER;
     }
-    task_entries_ [i].rt_info (*info_entry);
+
+    // tie task entry to corresponding rt_info
+    task_entries_ [i].rt_info (rt_info_entries_[i]);
 
     // Tie rt_info to corresponding task entry: the double cast is
     // needed to ensure that the size of the pointer and the size of the
