@@ -12,7 +12,7 @@
 #ifndef _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 #define _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 
-#include <string_view>
+#include <string>
 
 /**
  * This is a concrete visitor to generate the
@@ -47,7 +47,7 @@ public:
 private:
   void gen_supported ();
   void gen_exception_list (UTL_ExceptList *exceptions,
-                           std::string_view prefix = {},
+                           std::string const& prefix = std::string {},
                            bool closed = true);
 };
 

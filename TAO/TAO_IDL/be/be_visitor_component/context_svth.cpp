@@ -31,13 +31,12 @@ be_visitor_context_svth::visit_component (be_component *node)
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   std::string const sname_str (scope->full_name ());
-  std::string_view const sname = sname_str;
 
   // No '_cxx_' prefix.
   std::string const& lname =
     node->original_local_name ()->get_string ();
 
-  std::string_view const global = sname_str.empty () ? "" : "::";
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl
       << "class " << lname << "_Servant;"
@@ -114,7 +113,7 @@ be_visitor_context_svth::visit_component (be_component *node)
       << "/** @name Operations and members for " << lname
       << " receptacles and event sources,"
       << be_nl
-      << " * defined in " << global << sname
+      << " * defined in " << global << sname_str
       << "::CCM_" << lname << "_Context." << be_nl << " */"
       << be_nl
       << "//@{";
@@ -150,7 +149,7 @@ be_visitor_context_svth::visit_uses (be_uses *node)
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
-  std::string_view const obj_name = node->uses_type ()->full_name ();
+  std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_uidt_nl << be_nl
@@ -216,7 +215,7 @@ be_visitor_context_svth::visit_uses (be_uses *node)
 int
 be_visitor_context_svth::visit_publishes (be_publishes *node)
 {
-  std::string_view const obj_name = node->publishes_type ()->full_name ();
+  std::string const obj_name = node->publishes_type ()->full_name ();
   std::string const& port_name =
     node->local_name ()->get_string ();
 
@@ -255,7 +254,7 @@ be_visitor_context_svth::visit_publishes (be_publishes *node)
 int
 be_visitor_context_svth::visit_emits (be_emits *node)
 {
-  std::string_view const obj_name = node->emits_type ()->full_name ();
+  std::string const obj_name = node->emits_type ()->full_name ();
   std::string const& port_name =
     node->local_name ()->get_string ();
 

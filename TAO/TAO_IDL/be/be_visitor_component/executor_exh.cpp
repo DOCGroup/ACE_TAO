@@ -55,13 +55,12 @@ be_visitor_executor_exh::visit_component (be_component *node)
   this->node_ = node;
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   std::string const sname_str (scope->full_name ());
-  std::string_view const sname = sname_str;
 
   // No _cxx_ prefix.
   std::string const& lname =
     node->original_local_name ()->get_string ();
 
-  std::string_view const global = sname_str.empty () ? "" : "::";
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "/// Component Executor Implementation Class: "
@@ -170,7 +169,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_uidt << be_nl_2
       << "private:" << be_idt_nl
       << "/// Context for component instance. Used for all middleware communication" << be_nl
-      << global << sname << "::CCM_" << lname
+      << global << sname_str << "::CCM_" << lname
       << "_Context_var ciao_context_;" << be_nl_2;
 
 
@@ -287,18 +286,17 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
   std::string const sname_str (scope->full_name ());
-  std::string_view const sname = sname_str;
 
   // No '_cxx_' prefix.
   std::string const& lname =
     impl->original_local_name ()->get_string ();
 
-  std::string_view const global = sname_str.empty () ? "" : "::";
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "/// Factory method and getter for " << port_name << " facet" << be_nl
       << "/// @return existing instance of facet if one exists, else creates one" << be_nl
-      << "virtual " << global << sname << "::CCM_"
+      << "virtual " << global << sname_str << "::CCM_"
       << lname << "_ptr" << be_nl
       << "get_" << port_name << " ();";
 
@@ -308,7 +306,7 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 int
 be_visitor_executor_exh::visit_consumes (be_consumes *node)
 {
-  std::string_view const obj_name =
+  std::string const obj_name =
     node->consumes_type ()->full_name ();
 
   std::string const& port_name =

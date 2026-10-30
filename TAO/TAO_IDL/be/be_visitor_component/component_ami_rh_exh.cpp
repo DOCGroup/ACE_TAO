@@ -11,7 +11,6 @@
 
 #include "component.h"
 
-#include <string_view>
 
 be_visitor_component_ami_rh_exh::be_visitor_component_ami_rh_exh (
       be_visitor_context *ctx)

@@ -138,7 +138,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
       return 0;
     }
   node_ = node;
-  std::string_view const lname = node->local_name ();
+  std::string const lname = node->local_name ();
 
   os_ << be_nl_2
       << comment_start_border_ << be_nl
@@ -267,9 +267,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   std::string const sname_str (scope->full_name ());
-  std::string_view const sname = sname_str;
-  std::string_view const global = sname.empty () ? "" : "::";
-  std::string_view const container_type = be_global->ciao_container_type ();
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "void" << be_nl
@@ -280,7 +278,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << "Context_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->ciao_context_ =" << be_idt_nl
-      << global << sname << "::CCM_" << lname
+      << global << sname_str << "::CCM_" << lname
       << "_Context::_narrow (ctx);" << be_uidt << be_nl_2
       << "if (::CORBA::is_nil (this->ciao_context_.in ()))"
       << be_idt_nl

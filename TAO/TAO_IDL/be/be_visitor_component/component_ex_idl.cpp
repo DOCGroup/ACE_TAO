@@ -64,7 +64,7 @@ be_visitor_component_ex_idl::visit_component (
   std::string const& lname =
     node->original_local_name ()->get_string ();
 
-  std::string_view const global = sname_str.empty () ? "" : "::";
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "module CIAO_" << node->flat_name () << "_Impl" << be_nl

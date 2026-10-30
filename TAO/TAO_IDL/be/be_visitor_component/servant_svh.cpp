@@ -157,7 +157,7 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  std::string_view const obj_name = node->provides_type ()->full_name ();
+  std::string const obj_name = node->provides_type ()->full_name ();
 
   if (!be_global->gen_lwccm ())
     {
@@ -194,7 +194,7 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  std::string_view const obj_name = node->uses_type ()->full_name ();
+  std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_uidt_nl << be_nl
@@ -241,7 +241,7 @@ be_visitor_servant_svh::visit_publishes (be_publishes *node)
 {
   if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
-      std::string_view const obj_name = node->publishes_type ()->full_name ();
+      std::string const obj_name = node->publishes_type ()->full_name ();
       std::string const& port_name =
         node->local_name ()->get_string ();
 
@@ -265,7 +265,7 @@ be_visitor_servant_svh::visit_emits (be_emits *node)
 {
    if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
-      std::string_view const obj_name = node->emits_type ()->full_name ();
+      std::string const obj_name = node->emits_type ()->full_name ();
       std::string const& port_name =
         node->local_name ()->get_string ();
 
@@ -286,13 +286,13 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 {
   if(!be_global->gen_noeventccm ())
     {
-      std::string_view const obj_name = node->consumes_type ()->full_name ();
+      std::string const obj_name = node->consumes_type ()->full_name ();
       std::string const& port_name =
         node->local_name ()->get_string ();
 
       std::string holder (obj_name);
       std::size_t const pos = holder.rfind (':');
-      std::string_view ev_lname;
+      std::string ev_lname;
 
       if (pos == std::string::npos)
         {
@@ -318,15 +318,14 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 
       std::string const sname_str (
         ScopeAsDecl (node_->defined_in ())->full_name ());
-      char const * const sname = sname_str.c_str ();
-      std::string_view const lname = node_->local_name ();
-      char const * const global = (sname_str.empty () ? "" : "::");
+      std::string const& lname = node_->local_name ();
+      std::string const global = sname_str.empty () ? "" : "::";
 
       os_ << ev_lname << "Consumer_" << port_name
           << "_Servant (" << be_idt_nl
-          << global << sname << "::CCM_" << lname
+          << global << sname_str << "::CCM_" << lname
           << "_ptr executor," << be_nl
-          << global << sname << "::CCM_" << lname
+          << global << sname_str << "::CCM_" << lname
           << "_Context_ptr c);" << be_uidt_nl << be_nl;
 
       os_ << "virtual ~" << ev_lname << "Consumer_" << port_name
@@ -350,11 +349,11 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << be_uidt_nl << be_nl
           << "protected:" << be_idt_nl;
 
-      os_ << global << sname << "::CCM_" << lname << "_var" << be_nl
+      os_ << global << sname_str << "::CCM_" << lname << "_var" << be_nl
           << "executor_;";
 
       os_ << be_nl_2
-          << global << sname << "::CCM_"
+          << global << sname_str << "::CCM_"
           << lname << "_Context_var" << be_nl
           << "ctx_;";
 

@@ -46,8 +46,7 @@ be_visitor_executor_ex_idl::visit_component (
         IdentifierHelper::orig_sn (
           ScopeAsDecl (base->defined_in ())->name ()).c_str ());
 
-      char const * const sname = sname_str.c_str ();
-      char const * const global = (sname_str.empty () ? "" : "::");
+      std::string const global = sname_str.empty () ? "" : "::";
 
       os_ << global << sname_str << "::CCM_"
           << base->original_local_name ()->get_string ();
@@ -169,12 +168,10 @@ be_visitor_executor_ex_idl::visit_provides (
 
   std::string const sname_str (
     IdentifierHelper::orig_sn (scope->name ()).c_str ());
-  char const * const sname = sname_str.c_str ();
-
   std::string const& lname =
     impl->original_local_name ()->get_string ();
 
-  char const * const global = (sname_str.empty () ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
@@ -222,7 +219,7 @@ be_visitor_executor_ex_idl::gen_supported ()
 void
 be_visitor_executor_ex_idl::gen_exception_list (
   UTL_ExceptList *exceptions,
-  std::string_view prefix,
+  std::string const& prefix,
   bool closed)
 {
   if (exceptions != nullptr && exceptions->length () > 0)

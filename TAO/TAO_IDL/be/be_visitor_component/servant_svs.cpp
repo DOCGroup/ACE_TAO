@@ -12,7 +12,6 @@
 #include "component.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -29,9 +28,8 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   std::string const sname_str (scope->full_name ());
-  char const * const sname = sname_str.c_str ();
-  std::string_view const lname = node->local_name ();
-  char const * const global = (sname_str.empty () ? "" : "::");
+  std::string const& lname = node->local_name ();
+  std::string const global = sname_str.empty () ? "" : "::";
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   bool const is_connector = (nt == AST_Decl::NT_connector);
@@ -47,13 +45,13 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   bool const de_facto = (is_connector || no_events);
 
-  std::string_view const opt_conn =
+  std::string const opt_conn =
     (de_facto ? "Connector_" : "");
 
   os_ << be_nl_2
       << lname << "_Servant::"
       << lname << "_Servant (" << be_idt << be_idt << be_idt_nl
-      << global << sname << "::CCM_" << lname
+      << global << sname_str << "::CCM_" << lname
       << "_ptr exe," << be_nl
       << "::Components::CCMHome_ptr h," << be_nl
       << "const char * ins_name," << be_nl
@@ -66,13 +64,13 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "_Servant_Impl_T<" << be_idt_nl
       << "::" << node_->full_skel_name ()
       << "," << be_nl
-      << global << sname << "::CCM_"
+      << global << sname_str << "::CCM_"
       << lname << "," << be_nl
       << lname << "_Context_T<" << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T<"
-      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context," << be_nl
-      << global << sname << "::" << lname << "> > > (exe, h, ins_name, hs, c)"
+      << be_idt_nl << global << sname_str << "::CCM_" << lname << "_Context," << be_nl
+      << global << sname_str << "::" << lname << "> > > (exe, h, ins_name, hs, c)"
       << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -266,7 +264,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   const char *port_name = prefix.c_str ();
 
   AST_Type *obj = node->provides_type ();
-  std::string_view const obj_name = obj->full_name ();
+  std::string const obj_name = obj->full_name ();
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   std::string const sname_str (scope->full_name ());
   char const * const sname = sname_str.c_str ();
@@ -355,7 +353,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
-  std::string_view const obj_name = node->uses_type ()->full_name ();
+  std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl_2
@@ -431,7 +429,7 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
       return 0;
     }
 
-  std::string_view const obj_name = node->publishes_type ()->full_name ();
+  std::string const obj_name = node->publishes_type ()->full_name ();
   std::string const& port_name =
     node->local_name ()->get_string ();
 
@@ -468,7 +466,7 @@ be_visitor_servant_svs::visit_emits (be_emits *node)
       return 0;
     }
 
-  std::string_view const obj_name = node->emits_type ()->full_name ();
+  std::string const obj_name = node->emits_type ()->full_name ();
   std::string const& port_name =
     node->local_name ()->get_string ();
 
@@ -501,7 +499,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   std::string const& port_name =
     node->local_name ()->get_string ();
 
-  std::string_view const comp_lname = node_->local_name ();
+  std::string const comp_lname = node_->local_name ();
   std::string const comp_sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
   char const * const comp_sname = comp_sname_str.c_str ();
@@ -509,7 +507,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
 
   std::string const& lname =
     obj->local_name ()->get_string ();
-  std::string_view const fname = obj->full_name ();
+  std::string const fname = obj->full_name ();
 
   os_ << be_nl_2
       << comp_lname << "_Servant::" << lname << "Consumer_"
@@ -628,7 +626,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "obj_id.c_str ()," << be_nl
       << "\"";
 
-      std::string_view const work = obj->repoID ();
+      std::string const work = obj->repoID ();
       std::string result (work.substr (0, work.rfind (':')));
       result += "Consumer:1.0";
 
@@ -1070,7 +1068,7 @@ be_visitor_obv_factory_reg::gen_obv_factory_registration (AST_Type *t)
 {
   if (be_global->gen_ciao_valuefactory_reg ())
     {
-      std::string_view const fname = t->full_name ();
+      std::string const fname = t->full_name ();
 
       os_ << "TAO_OBV_REGISTER_FACTORY (" << be_idt_nl
           << "::" << fname << "_init," << be_nl
@@ -1201,7 +1199,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
-  std::string_view const obj_name = node->uses_type ()->full_name ();
+  std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl_2
@@ -1353,7 +1351,7 @@ int
 be_visitor_subscribe_block::visit_publishes (
   be_publishes *node)
 {
-  std::string_view const obj_name =
+  std::string const obj_name =
     node->publishes_type ()->full_name ();
   std::string const& port_name =
     node->local_name ()->get_string ();
@@ -1458,7 +1456,7 @@ int
 be_visitor_connect_consumer_block::visit_emits (
   be_emits *node)
 {
-  std::string_view const obj_name =
+  std::string const obj_name =
     node->emits_type ()->full_name ();
   std::string const& port_name =
     node->local_name ()->get_string ();

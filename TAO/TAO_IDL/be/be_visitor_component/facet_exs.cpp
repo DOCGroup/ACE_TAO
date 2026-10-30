@@ -85,7 +85,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = is_global ? "" : "::";
+  std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
       << lname << "_exec_i::" << lname

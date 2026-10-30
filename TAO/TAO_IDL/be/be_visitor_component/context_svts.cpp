@@ -32,7 +32,7 @@ be_visitor_context_svts::visit_component (be_component *node)
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   std::string const sname_str (scope->full_name ());
-  std::string_view const lname = node_->local_name ();
+  std::string const lname = node_->local_name ();
   char const * const global = (sname_str.empty () ? "" : "::");
 
   os_ << be_nl
@@ -98,7 +98,7 @@ be_visitor_context_svts::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  std::string_view const port_name (prefix);
+  std::string const& port_name = prefix;
 
   AST_Type *obj = node->uses_type ();
   bool const is_multiple = node->is_multiple ();
@@ -120,7 +120,7 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
 {
   AST_Type *obj = node->publishes_type ();
   std::string const& port_name = node->local_name ()->get_string ();
-  std::string_view const fname = obj->full_name ();
+  std::string const fname = obj->full_name ();
   std::string const& lname = obj->local_name ()->get_string ();
   std::string const sname_str (
     ScopeAsDecl (obj->defined_in ())->full_name ());
@@ -257,7 +257,7 @@ be_visitor_context_svts::visit_emits (be_emits *node)
   std::string const& port_name =
     node->local_name ()->get_string ();
 
-  std::string_view const fname = obj->full_name ();
+  std::string const fname = obj->full_name ();
   std::string const& lname =
     obj->local_name ()->get_string ();
 
@@ -320,9 +320,9 @@ be_visitor_context_svts::visit_emits (be_emits *node)
 
 void
 be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
-                                          std::string_view port_name)
+                                          std::string const& port_name)
 {
-  std::string_view const fname = obj->full_name ();
+  std::string const fname = obj->full_name ();
 
   os_ << be_nl_2
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
@@ -377,9 +377,9 @@ be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
 void
 be_visitor_context_svts::gen_uses_multiplex (
   AST_Type *obj,
-  std::string_view port_name)
+  std::string const& port_name)
 {
-  std::string_view const fname = obj->full_name ();
+  std::string const fname = obj->full_name ();
 
   os_ << be_nl_2
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl

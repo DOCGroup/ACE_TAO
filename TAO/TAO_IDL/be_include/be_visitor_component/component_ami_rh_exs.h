@@ -14,8 +14,6 @@
 #ifndef _BE_COMPONENT_AMI_RH_EXS_H_
 #define _BE_COMPONENT_AMI_RH_EXS_H_
 
-#include <string_view>
-
 class be_visitor_context;
 
 /**

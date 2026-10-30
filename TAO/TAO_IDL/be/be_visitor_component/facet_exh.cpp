@@ -13,8 +13,6 @@
 
 #include <string>
 
-#include <string>
-
 be_visitor_facet_exh::be_visitor_facet_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -44,12 +42,11 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());
   std::string const sname_str (
     IdentifierHelper::orig_sn (s->name (), false).c_str ());
-  char const * const sname = sname_str.c_str ();
-  char const * const global = (sname_str.empty () ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = (is_global ? "" : "::");
+  std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
       << "///  Executor implementation class for "
