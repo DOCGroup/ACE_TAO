@@ -11,8 +11,6 @@
 
 #include "home.h"
 
-#include <string_view>
-
 be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),

@@ -11,7 +11,7 @@
 
 #include "home.h"
 
-#include <string_view>
+#include <string>
 
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
@@ -132,11 +132,10 @@ be_visitor_home_svs::visit_factory (be_factory *node)
     {
       std::string comp_sname_str (
         ScopeAsDecl (comp_->defined_in ())->full_name ());
-      char const *comp_sname = comp_sname_str.c_str ();
       std::string const& comp_lname = comp_->local_name ()->get_string ();
-      char const *global = (comp_sname_str == "" ? "" : "::");
+      std::string const global = comp_sname_str.empty () ? "" : "::";
 
-      std::string_view const sname =
+      std::string const& sname =
         ScopeAsDecl (node_->defined_in ())->full_name ();
 
       os_ << sname << global << "CCM_" << node_->original_local_name ()
@@ -171,9 +170,9 @@ be_visitor_home_svs::visit_factory (be_factory *node)
         }
 
       os_ << ");" << be_uidt << be_nl_2
-          << global << comp_sname << "::CCM_" << comp_lname
+          << global << comp_sname_str << "::CCM_" << comp_lname
           << "_var _ciao_comp =" << be_idt_nl
-          << global << comp_sname << "::CCM_" << comp_lname
+          << global << comp_sname_str << "::CCM_" << comp_lname
           << "::_narrow (_ciao_ec.in ());" << be_uidt << be_nl_2
           << "if (::CORBA::is_nil (_ciao_ec.in ()))" <<  be_idt_nl
           << "{" << be_idt_nl
@@ -204,14 +203,13 @@ int
 be_visitor_home_svs::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  std::string sname_str (scope->full_name ());
-  char const *sname = sname_str.c_str ();
+  std::string const& sname = scope->full_name ();
 
   // Avoid '_cxx_' prefix.
   std::string const& lname = node_->original_local_name ()->get_string ();
 
   std::string const& clname = comp_->local_name ()->get_string ();
-  char const *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname.empty () ? "" : "::";
 
   os_ << be_nl
       << lname << "_Servant::"
@@ -378,14 +376,13 @@ be_visitor_home_svs::gen_servant_class ()
 void
 be_visitor_home_svs::gen_entrypoint ()
 {
-  std::string sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
-  char const *sname = sname_str.c_str ();
+  std::string const& sname =
+    ScopeAsDecl (node_->defined_in ())->full_name ();
 
   // Avoid _cxx_ prefix.
   std::string const& lname = node_->original_local_name ()->get_string ();
 
-  char const *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_
