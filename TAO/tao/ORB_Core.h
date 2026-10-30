@@ -41,6 +41,8 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
 #include "ace/Service_Config.h"
+
+#include <vector>
 #include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -559,7 +561,7 @@ public:
   int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup, size_t &slot_id);
 
   /// Cleans up ts_objects using the underlying TSS cleanup function registry.
-  void tss_cleanup (ACE_Array_Base<void *> &ts_objects);
+  void tss_cleanup (const std::vector<void *> &ts_objects);
 
   /// Get access to the leader_follower class.
   TAO_Leader_Follower &leader_follower ();

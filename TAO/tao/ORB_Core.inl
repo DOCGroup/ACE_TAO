@@ -2,6 +2,9 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Table.h"
 
+#include <new>
+#include <stdexcept>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Service_Gestalt*
@@ -275,7 +278,7 @@ TAO_ORB_Core::get_tss_resource (size_t slot_id)
     this->get_tss_resources ();
 
   if (slot_id >= tss_resources->ts_objects_.size ())
-    return 0;
+    return nullptr;
 
   return tss_resources->ts_objects_[slot_id];
 }
@@ -298,18 +301,25 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
   // If the TSS array isn't large enough, then increase its size.
   // We're guaranteed not to exceed the number of allocated slots by
   // the above check.
-  const size_t old_size = tss_resources->ts_objects_.size ();
-  const size_t new_size = slot_id + 1;
-  if (slot_id >= old_size
-      && tss_resources->ts_objects_.size (new_size) != 0)
-    return -1;
-
-  // Initialize intermediate array elements to zero, since they
-  // haven't been initialized yet.  This ensures that garbage is not
-  // returned when accessing any of those elements at a later point in
-  // time.
-  for (size_t i = old_size; i < slot_id; ++i)
-    tss_resources->ts_objects_[i] = 0;
+  size_t const old_size = tss_resources->ts_objects_.size ();
+  size_t const new_size = slot_id + 1;
+  if (slot_id >= old_size)
+    {
+      try
+        {
+          tss_resources->ts_objects_.resize (new_size, nullptr);
+        }
+      catch (std::bad_alloc const &)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
+      catch (std::length_error const &)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
+    }
 
   tss_resources->ts_objects_[slot_id] = ts_object;
 
@@ -322,7 +332,7 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
 }
 
 ACE_INLINE void
-TAO_ORB_Core::tss_cleanup (ACE_Array_Base<void *> &ts_objects)
+TAO_ORB_Core::tss_cleanup (const std::vector<void *> &ts_objects)
 {
   this->tss_cleanup_funcs_.cleanup (ts_objects);
 }

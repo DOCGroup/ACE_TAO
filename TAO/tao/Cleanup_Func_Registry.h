@@ -21,8 +21,6 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ace/Array_Base.h"
-
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -57,7 +55,7 @@ protected:
 
   /// Invoke the corresponding cleanup function on each
   /// thread-specific object.
-  void cleanup (ACE_Array_Base<void *> &ts_objects);
+  void cleanup (const std::vector<void *> &ts_objects);
 
 private:
   TAO_Cleanup_Func_Registry (TAO_Cleanup_Func_Registry const &) = delete;
