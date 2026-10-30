@@ -41,6 +41,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_OS_Log_Msg_Attributes
 {
 public:
+  ACE_OS_Log_Msg_Attributes (ACE_OS_Log_Msg_Attributes const &) = delete;
+  ACE_OS_Log_Msg_Attributes (ACE_OS_Log_Msg_Attributes &&) = delete;
+  ACE_OS_Log_Msg_Attributes &operator= (ACE_OS_Log_Msg_Attributes const &) = delete;
+  ACE_OS_Log_Msg_Attributes &operator= (ACE_OS_Log_Msg_Attributes &&) = delete;
+
   /// Constructor
   ACE_OS_Log_Msg_Attributes ();
 
@@ -69,10 +74,6 @@ protected:
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-
-private:
-  void operator= (const ACE_OS_Log_Msg_Attributes &) = delete;
-  ACE_OS_Log_Msg_Attributes (const ACE_OS_Log_Msg_Attributes &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
