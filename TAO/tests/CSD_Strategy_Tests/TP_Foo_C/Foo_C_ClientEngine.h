@@ -18,12 +18,17 @@ class CSD_TP_Foo_C_Export Foo_C_ClientEngine : public ClientEngine
 {
 public:
   Foo_C_ClientEngine(Foo_C_ptr obj,
-                      unsigned  client_id);
-  virtual ~Foo_C_ClientEngine();
+                     unsigned  client_id);
+  ~Foo_C_ClientEngine() override;
 
-  virtual bool execute();
+  bool execute() override;
 
   static void expected_results(Foo_C_Statistics& stats);
+
+  Foo_C_ClientEngine (Foo_C_ClientEngine const &) = delete;
+  Foo_C_ClientEngine (Foo_C_ClientEngine &&) = delete;
+  Foo_C_ClientEngine & operator= (Foo_C_ClientEngine const &) = delete;
+  Foo_C_ClientEngine & operator= (Foo_C_ClientEngine &&) = delete;
 
 private:
   Foo_C_var obj_;

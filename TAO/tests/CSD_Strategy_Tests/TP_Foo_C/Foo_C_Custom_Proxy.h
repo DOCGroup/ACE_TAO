@@ -37,6 +37,11 @@ public:
   void cust_op4(long x);
   void cust_op5();
 
+  Foo_C_Custom_Proxy (Foo_C_Custom_Proxy const &) = delete;
+  Foo_C_Custom_Proxy (Foo_C_Custom_Proxy &&) = delete;
+  Foo_C_Custom_Proxy & operator= (Foo_C_Custom_Proxy const &) = delete;
+  Foo_C_Custom_Proxy & operator= (Foo_C_Custom_Proxy &&) = delete;
+
 private:
   Foo_C_i*                        servant_;
   Foo_C_var                       objref_;
