@@ -21,7 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -50,11 +50,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 wchar_t *
-make_wstring (const char *str)
+make_wstring (char const *str)
 {
   // Short circuit null pointer case
-  if (str == 0)
-    return 0;
+  if (str == nullptr)
+    return nullptr;
 
   size_t len = ACE_OS::strlen (str) + 1;
   wchar_t *wstr = new wchar_t[len];
@@ -93,9 +93,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Get the server
       simple_var server = simple::_narrow (object.in ());
 
-      const char *bare_string = "Hello World";
+      char const *bare_string = "Hello World";
 
-      const char *any_string = "Any World";
+      char const *any_string = "Any World";
       CORBA::Any inarg;
       inarg <<= any_string;
       CORBA::Any_var outarg;
@@ -106,7 +106,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      inarg,
                      outarg.out ());
 
-      const char *any_reply;
+      char const *any_reply;
       outarg >>= any_reply;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -138,7 +138,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
       return 1;
