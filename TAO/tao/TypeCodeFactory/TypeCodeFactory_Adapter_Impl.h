@@ -23,6 +23,8 @@
 #include "ace/Service_Config.h"
 #include "tao/default_environment.h"
 
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -141,7 +143,7 @@ public:
   CORBA::TypeCode_ptr create_enum_tc (
     char const * id,
     char const * name,
-    ACE_Array_Base<CORBA::String_var> const & enumerators,
+    std::vector<CORBA::String_var> const & enumerators,
     CORBA::ULong ncases) override;
 
   /// Create a structure or exception TypeCode.
@@ -149,7 +151,7 @@ public:
     CORBA::TCKind,
     char const * id,
     char const * name,
-    ACE_Array_Base<
+    std::vector<
       TAO::TypeCode::Struct_Field<CORBA::String_var,
                                   CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields) override;
@@ -159,8 +161,8 @@ public:
     char const * id,
     char const * name,
     CORBA::TypeCode_ptr discriminant_type,
-    ACE_Array_Base<TAO::TypeCode::Case<CORBA::String_var,
-                                       CORBA::TypeCode_var> > const & cases,
+    std::vector<TAO::TypeCode::Case<CORBA::String_var,
+                                    CORBA::TypeCode_var> > const & cases,
     CORBA::ULong ncases,
     CORBA::Long default_index,
     char const * default_case_name,
@@ -173,7 +175,7 @@ public:
     char const * name,
     CORBA::ValueModifier modifier,
     CORBA::TypeCode_ptr concrete_base,
-    ACE_Array_Base<
+    std::vector<
       TAO::TypeCode::Value_Field<CORBA::String_var,
                                  CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields) override;

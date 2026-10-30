@@ -23,6 +23,10 @@
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 
+#include <new>
+#include <stdexcept>
+#include <vector>
+
 #include "tao/CDR.h"
 
 #include "ace/Array_Base.h"
@@ -51,7 +55,6 @@ namespace TAO
       CORBA::TypeCode_ptr type {};
     };
 
-    using TC_Info_List = ACE_Array_Base<TC_Info>;
   }
 }
 
@@ -62,13 +65,20 @@ namespace
   {
     // Since we created a new tc, add it to the list.
     size_t const old_size = infos.size ();
-    if (infos.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
+    try
       {
-        // Can't increase the list size.
+        infos.push_back (TAO::TypeCodeFactory::TC_Info {});
+      }
+    catch (std::bad_alloc const &)
+      {
+        return false;
+      }
+    catch (std::length_error const &)
+      {
         return false;
       }
 
-    TAO::TypeCodeFactory::TC_Info & info = infos [old_size];
+    TAO::TypeCodeFactory::TC_Info & info = infos[old_size];
 
     try
       {
@@ -78,7 +88,7 @@ namespace
       }
     catch (...)
       {
-        infos.size (old_size); // Remove the partially added new TC from the list.
+        infos.pop_back ();
         return false;
       }
     return true;
@@ -126,7 +136,7 @@ namespace
   // copying semantics.
   using union_elem_type = ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
                                                               CORBA::TypeCode_var> >;
-  using union_case_array_type = ACE_Array_Base<union_elem_type>;
+  using union_case_array_type = std::vector<union_elem_type>;
 
   // ------------------------------------------------------------
 
@@ -149,7 +159,7 @@ namespace
     TAO::TypeCodeFactory::TC_Info_List & tcs,
     TAO::TypeCodeFactory::TC_Info_List & infos)
   {
-    // See comments above for rationale behind using an array instead
+    // See comments above for rationale behind using a sequential container instead
     // of a map.
 
     size_t const len = infos.size ();
@@ -161,17 +171,27 @@ namespace
         if (std::strcmp (info.id, id) == 0)
           {
             // We have a matching id, so store the TypeCode in the out
-            // array and then compare the others.
+            // list and then compare the others.
             size_t const old_size = tcs.size ();
-            if (tcs.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
-              return false;
+            try
+              {
+                tcs.push_back (TAO::TypeCodeFactory::TC_Info {});
+              }
+            catch (std::bad_alloc const &)
+              {
+                return false;
+              }
+            catch (std::length_error const &)
+              {
+                return false;
+              }
 
             TAO::TypeCodeFactory::TC_Info & new_info = tcs[old_size];
             new_info.type = info.type;
           }
       }
 
-    return (tcs.size () > 0) ;
+    return !tcs.empty ();
   }
 
   // For TC_Info_List whose elements are duplicated prior to addition,
@@ -465,8 +485,8 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
         && cdr >> nfields))
     return false;
 
-  using member_array_type = ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                                        CORBA::TypeCode_var> >;
+  using member_array_type = std::vector<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                                                     CORBA::TypeCode_var> >;
 
   member_array_type fields (nfields);
 
@@ -849,7 +869,7 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
         && cdr >> nenumerators))
     return false;
 
-  ACE_Array_Base<CORBA::String_var> enumerators (nenumerators);
+  std::vector<CORBA::String_var> enumerators (nenumerators);
 
   for (CORBA::ULong i = 0; i < nenumerators; ++i)
     {
@@ -859,7 +879,7 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
 
   using typecode_type = TAO::TypeCode::Enum<
     CORBA::String_var,
-    ACE_Array_Base<CORBA::String_var>,
+    std::vector<CORBA::String_var>,
     TAO::True_RefCount_Policy>;
 
   ACE_NEW_RETURN (tc,
@@ -1117,8 +1137,8 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
         && cdr >> nfields))
     return false;
 
-  using member_array_type = ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                                       CORBA::TypeCode_var> >;
+  using member_array_type = std::vector<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                                                    CORBA::TypeCode_var> >;
 
   member_array_type fields (nfields);
 
@@ -1504,7 +1524,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
     return false;
   }
 
-  if (indirect_infos.size() == 0) {
+  if (indirect_infos.empty ()) {
     cleanup_tc_info_list(direct_infos);
     return true;
   }
@@ -1520,8 +1540,8 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
       case CORBA::tk_struct:
         {
           // Set remaining parameters.
-          using member_array_type = ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                                                CORBA::TypeCode_var> >;
+          using member_array_type = std::vector<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                                                             CORBA::TypeCode_var> >;
 
           using typecode_type = TAO::TypeCode::Struct<
             CORBA::String_var,
@@ -1573,8 +1593,8 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
       case CORBA::tk_event:
         {
           // Set remaining parameters.
-          using member_array_type = ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                                               CORBA::TypeCode_var> >;
+          using member_array_type = std::vector<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                                                            CORBA::TypeCode_var> >;
 
           using typecode_type = TAO::TypeCode::Value<CORBA::String_var,
                                                       CORBA::TypeCode_var,

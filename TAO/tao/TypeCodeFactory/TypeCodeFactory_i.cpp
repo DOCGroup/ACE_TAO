@@ -32,6 +32,8 @@
 #include "ace/Value_Ptr.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i () = default;
@@ -41,8 +43,8 @@ namespace TCF
   namespace Struct
   {
     using field_array_type =
-      ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                  CORBA::TypeCode_var> >;
+      std::vector<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                               CORBA::TypeCode_var> >;
 
     using typecode_type = TAO::TypeCode::Struct<CORBA::String_var,
                                                 CORBA::TypeCode_var,
@@ -59,7 +61,7 @@ namespace TCF
     // Use an ACE::Value_Ptr to provide exception safety and proper
     // copying semantics.
     using elem_type = ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic>;
-    using case_array_type = ACE_Array_Base<elem_type>;
+    using case_array_type = std::vector<elem_type>;
 
     using typecode_type = TAO::TypeCode::Union<CORBA::String_var,
                                                CORBA::TypeCode_var,
@@ -74,8 +76,8 @@ namespace TCF
   namespace Value
   {
     using field_array_type =
-      ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                 CORBA::TypeCode_var> >;
+      std::vector<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                              CORBA::TypeCode_var> >;
 
     using typecode_type = TAO::TypeCode::Value<CORBA::String_var,
                                                CORBA::TypeCode_var,
@@ -608,7 +610,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
-  ACE_Array_Base<CORBA::String_var> enumerators (len);
+  std::vector<CORBA::String_var> enumerators (len);
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
@@ -626,7 +628,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   using typecode_type = TAO::TypeCode::Enum<
     CORBA::String_var,
-    ACE_Array_Base<CORBA::String_var>,
+    std::vector<CORBA::String_var>,
     TAO::True_RefCount_Policy>;
 
   ACE_NEW_THROW_EX (tc,

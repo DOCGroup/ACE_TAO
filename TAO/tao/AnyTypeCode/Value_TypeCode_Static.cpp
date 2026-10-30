@@ -11,6 +11,8 @@
 #include "ace/Truncate.h"
 #include <cstring>
 
+#include <vector>
+
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Value_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
@@ -226,7 +228,7 @@ TAO::TypeCode::Value<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
+  std::vector<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)

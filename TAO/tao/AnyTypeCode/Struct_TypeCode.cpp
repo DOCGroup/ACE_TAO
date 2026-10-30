@@ -17,6 +17,9 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
@@ -212,9 +215,8 @@ TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
                       RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<Struct_Field<CORBA::String_var,
-                              CORBA::TypeCode_var> >
-    tc_fields (this->nfields_);
+  std::vector<Struct_Field<CORBA::String_var,
+                           CORBA::TypeCode_var> > tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)
     {
