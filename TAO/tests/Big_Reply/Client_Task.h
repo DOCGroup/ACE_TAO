@@ -18,9 +18,13 @@ public:
   Client_Task (Test::Big_Reply_ptr receiver,
                CORBA::Long event_count,
                ACE_Thread_Manager *thr_mgr);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Validate the connection

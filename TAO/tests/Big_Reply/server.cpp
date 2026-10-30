@@ -12,10 +12,15 @@ CORBA::ULong constexpr data_size = 4000000;
 class OrbTask : public ACE_Task_Base
 {
 public:
-  OrbTask (CORBA::ORB_ptr orb)
+  explicit OrbTask (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
+  ~OrbTask () override = default;
+  OrbTask (OrbTask const &) = delete;
+  OrbTask &operator= (OrbTask const &) = delete;
+  OrbTask (OrbTask &&) = delete;
+  OrbTask &operator= (OrbTask &&) = delete;
 
   int svc () override
   {
@@ -23,7 +28,7 @@ public:
         {
           this->orb_->run ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
         }
       return 0;

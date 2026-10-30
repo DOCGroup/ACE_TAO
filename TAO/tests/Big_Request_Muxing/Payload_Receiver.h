@@ -13,19 +13,23 @@ class Payload_Receiver
   : public virtual POA_Test::Payload_Receiver
 {
 public:
-  Payload_Receiver ();
+  Payload_Receiver () = default;
+  Payload_Receiver (Payload_Receiver const &) = delete;
+  Payload_Receiver &operator= (Payload_Receiver const &) = delete;
+  Payload_Receiver (Payload_Receiver &&) = delete;
+  Payload_Receiver &operator= (Payload_Receiver &&) = delete;
 
   // = The skeleton methods
-  virtual void more_data (const Test::Payload &payload,
-                          CORBA::Boolean maybe_lost);
+  void more_data (Test::Payload const &payload,
+                  CORBA::Boolean maybe_lost) override;
 
-  virtual void ping ();
+  void ping () override;
 
   int count (bool maybe_lost = false) const;
 
 private:
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> message_count_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> maybe_lost_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> message_count_ {};
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> maybe_lost_count_ {};
 };
 
 #include /**/ "ace/post.h"

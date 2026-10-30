@@ -2,22 +2,22 @@
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 namespace
 {
   // There are 3 clients so the server should expect:
   // 3 * NUM_MSGS * NUM_THRDS total messages.
-  const int NUM_MSGS = 100;
-  const int NUM_THRDS = 2;
-  const int MSG_SIZE = 4096;
+  int constexpr NUM_MSGS = 100;
+  int constexpr NUM_THRDS = 2;
+  int constexpr MSG_SIZE = 4096;
 }
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -141,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     orb->run (tv);
     orb->destroy ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ACE_DEBUG ((LM_DEBUG, "(%P) Client: "));
     ex._tao_print_exception ("CORBA Exception caught:");
