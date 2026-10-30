@@ -18,7 +18,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   try
     {
-      typedef TAO::unbounded_value_sequence<int> int_sequence;
+      using int_sequence = TAO::unbounded_value_sequence<int>;
 
       int_sequence a;
       int_sequence b(23);
@@ -60,7 +60,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       int_sequence e(c);
 
-      typedef TAO::unbounded_value_sequence<Foo> Foo_sequence;
+      using Foo_sequence = TAO::unbounded_value_sequence<Foo>;
 
       Foo_sequence u;
       Foo_sequence v(32);

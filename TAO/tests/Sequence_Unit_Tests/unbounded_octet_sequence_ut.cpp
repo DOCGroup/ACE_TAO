@@ -21,14 +21,14 @@
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 
-typedef unbounded_value_sequence<CORBA::Octet> tested_sequence;
-typedef tested_sequence::element_traits tested_element_traits;
-typedef tested_sequence::allocation_traits tested_allocation_traits;
-typedef details::range_checking<CORBA::Octet,true> range;
+using tested_sequence = unbounded_value_sequence<CORBA::Octet>;
+using tested_element_traits = tested_sequence::element_traits;
+using tested_allocation_traits = tested_sequence::allocation_traits;
+using range = details::range_checking<CORBA::Octet,true>;
 
 struct Tester
 {
-  typedef tested_sequence::value_type value_type;
+  using value_type = tested_sequence::value_type;
 
   int test_copy_constructor_from_ulong()
   {
@@ -389,7 +389,7 @@ struct Tester
     return status;
   }
 
-  Tester() {}
+  Tester () = default;
 };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
@@ -403,7 +403,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
       }
 
       {
-        typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
+        using common = value_sequence_tester<tested_sequence,tested_allocation_traits>;
         common tester;
         status += tester.test_all ();
       }

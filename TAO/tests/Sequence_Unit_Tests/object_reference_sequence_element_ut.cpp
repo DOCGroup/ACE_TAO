@@ -16,10 +16,10 @@
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
-  typedef object_reference_traits<mock_reference,mock_reference_var,true> tested_element_traits;
-  typedef object_reference_sequence_element<tested_element_traits> tested_element;
-  typedef mock_reference * reference_type;
-  typedef tested_element_traits::object_type_var reference_var;
+  using tested_element_traits = object_reference_traits<mock_reference,mock_reference_var,true>;
+  using tested_element = object_reference_sequence_element<tested_element_traits>;
+  using reference_type = mock_reference *;
+  using reference_var = tested_element_traits::object_type_var;
 
   int test_assignment_from_var_release_true()
   {

@@ -19,13 +19,13 @@
         return 1; \
       }
 
-typedef unbounded_array_sequence<my_array, my_array_slice, my_array_tag> tested_sequence;
-typedef tested_sequence::value_type value_type;
-typedef tested_sequence::const_value_type const_value_type;
+using tested_sequence = unbounded_array_sequence<my_array, my_array_slice, my_array_tag>;
+using value_type = tested_sequence::value_type;
+using const_value_type = tested_sequence::const_value_type;
 
-typedef tested_sequence::element_traits tested_element_traits;
-typedef tested_sequence::allocation_traits tested_allocation_traits;
-typedef TAO::details::range_checking<value_type,true> range;
+using tested_element_traits = tested_sequence::element_traits;
+using tested_allocation_traits = tested_sequence::allocation_traits;
+using range = TAO::details::range_checking<value_type,true>;
 
 int test_default_constructor()
   {

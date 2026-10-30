@@ -10,7 +10,7 @@
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"
 
-typedef TAO::unbounded_basic_string_sequence<char> s_sequence;
+using s_sequence = TAO::unbounded_basic_string_sequence<char>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

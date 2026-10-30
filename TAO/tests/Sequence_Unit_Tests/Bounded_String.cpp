@@ -10,8 +10,8 @@
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"
 
-CORBA::ULong const MAXIMUM = 42;
-typedef TAO::bounded_basic_string_sequence<char, MAXIMUM> s_sequence;
+CORBA::ULong constexpr MAXIMUM = 42;
+using s_sequence = TAO::bounded_basic_string_sequence<char, MAXIMUM>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

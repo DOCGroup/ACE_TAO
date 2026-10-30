@@ -10,7 +10,7 @@
 #include "tao/Unbounded_Octet_Sequence_T.h"
 #include "ace/Log_Msg.h"
 
-typedef TAO::unbounded_value_sequence <CORBA::Octet> s_sequence;
+using s_sequence = TAO::unbounded_value_sequence <CORBA::Octet>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

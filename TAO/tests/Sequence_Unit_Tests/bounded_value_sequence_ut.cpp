@@ -18,16 +18,16 @@
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
-CORBA::ULong const MAXIMUM = 32;
+CORBA::ULong constexpr MAXIMUM = 32;
 
-typedef bounded_value_sequence<int,MAXIMUM> tested_sequence;
-typedef tested_sequence::element_traits tested_element_traits;
-typedef tested_sequence::allocation_traits tested_allocation_traits;
-typedef details::range_checking<int,true> range;
+using tested_sequence = bounded_value_sequence<int,MAXIMUM>;
+using tested_element_traits = tested_sequence::element_traits;
+using tested_allocation_traits = tested_sequence::allocation_traits;
+using range = details::range_checking<int,true>;
 
 struct Tester
 {
-  typedef tested_sequence::value_type value_type;
+  using value_type = tested_sequence::value_type;
 
   int test_set_length_less_than_maximum()
   {
@@ -308,7 +308,7 @@ struct Tester
     status += this->test_get_buffer_true_with_release_true();
     return status;
   }
-  Tester() {}
+  Tester () = default;
 };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
@@ -322,7 +322,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
       }
 
       {
-        typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
+        using common = value_sequence_tester<tested_sequence,tested_allocation_traits>;
         common tester;
         status += tester.test_all ();
       }

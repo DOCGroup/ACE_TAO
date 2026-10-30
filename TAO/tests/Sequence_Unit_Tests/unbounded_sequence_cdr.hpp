@@ -36,7 +36,7 @@ namespace TAO {
 
     template <typename stream, typename sequence>
     bool insert_unbounded_sequence(stream & strm, const sequence & source) {
-      const CORBA::ULong length = source.length ();
+      CORBA::ULong const length = source.length ();
       if (!(strm << length)) {
         return false;
       }

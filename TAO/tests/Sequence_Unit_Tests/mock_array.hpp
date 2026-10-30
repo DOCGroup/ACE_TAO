@@ -12,8 +12,8 @@
 
 #include <algorithm>
 
-typedef unsigned long my_array[5];
-typedef unsigned long my_array_slice;
+using my_array = unsigned long[5];
+using my_array_slice = unsigned long;
 struct my_array_tag {};
 
 namespace TAO

@@ -23,8 +23,8 @@ struct testing_string_traits
   static call_counter not_released_from_const_calls;
   static call_counter not_released_from_managed_calls;
 
-  typedef charT char_type;
-  typedef TAO::details::string_traits<charT,false> real_traits;
+  using char_type = charT;
+  using real_traits = TAO::details::string_traits<charT,false>;
 
   static char_type * default_initializer()
   {
