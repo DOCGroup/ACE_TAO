@@ -139,21 +139,19 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
   // If we do not have a lock held in a weaker mode than the
   // strongest held and we have requests on the semaphore signal
   // the semaphore.
-  while (lock_queue_.size () > 0)
+  while (!this->lock_queue_.empty ())
     {
-      CC_LockModeEnum lock_on_queue = CC_EM;
-
-      lock_queue_.dequeue_head (lock_on_queue);
+      CC_LockModeEnum const lock_on_queue = this->lock_queue_.front ();
 
       if (compatible (lock_on_queue))
         {
+          this->lock_queue_.pop_front ();
           if (semaphore_.release () == -1)
             throw CORBA::INTERNAL ();
           lock_[lock_on_queue]++;
         }
       else
         {
-          lock_queue_.enqueue_head (lock_on_queue);
           break;
         }
     }
@@ -190,10 +188,10 @@ CC_LockSet::lock_i (CC_LockModeEnum lm)
   // If the lock is not compatible with the locks we hold allready or
   // there is lock requests in the queue we cannot grant the lock and
   // thus we queue the request. Otherwise update the lock count.
-  if (!compatible (lm) || lock_queue_.size () > 0)
+  if (!compatible (lm) || !this->lock_queue_.empty ())
     {
       // Put the lock mode in the queue
-      lock_queue_.enqueue_tail (lm);
+      this->lock_queue_.push_back (lm);
       this->dump ();
       return true; // Lock the semaphore.
     }
@@ -244,7 +242,7 @@ CC_LockSet::change_mode_i (CC_LockModeEnum lm_held,
   else
     {
       lock_[lm_held]++;
-      lock_queue_.enqueue_tail (lm_new);
+      this->lock_queue_.push_back (lm_new);
       this->dump ();
       return true;
     }
@@ -261,7 +259,7 @@ void
 CC_LockSet::dump () const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
+              "waiting_calls_: %B, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
               lock_queue_.size (),
               lock_[CC_IR],
               lock_[CC_R],

@@ -39,7 +39,8 @@
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Token.h"
-#include "ace/Unbounded_Queue.h"
+
+#include <deque>
 
 #include "orbsvcs/CosConcurrencyControlS.h"
 #include "orbsvcs/Concurrency/concurrency_serv_export.h"
@@ -181,7 +182,7 @@ private:
   TAO_SYNCH_MUTEX mlock_;
 
   /// Queue to hold the requested locks not yet granted.
-  ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;
+  std::deque<CC_LockModeEnum> lock_queue_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
