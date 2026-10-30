@@ -32,7 +32,7 @@
 #include "ace/Thread_Mutex.h"
 #include <atomic>
 #include "ace/Null_Mutex.h"
-#include "ace/Vector_T.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -141,7 +141,7 @@ namespace CORBA
     using _var_type = ValueBase_var;
     using _out_type = ValueBase_out;
 
-    using Repository_Id_List = ACE_Vector<ACE_CString>;
+    using Repository_Id_List = std::vector<ACE_CString>;
 
     virtual CORBA::ValueBase* _copy_value () TAO_local_COPY_VALUE_IS_PURE;
 
