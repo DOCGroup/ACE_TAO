@@ -32,7 +32,7 @@ TAO_Notify_Admin::TAO_Notify_Admin ()
   // Initialize all Admin objects to initially be subscribed for all
   // events.  This is a reasonable default and is required to allow
   // Cos Event consumers/suppliers to send/receive events,
-  this->subscribed_types_.insert (TAO_Notify_EventType::special ());
+  this->subscribed_types_.add (TAO_Notify_EventType::special ());
 }
 
 TAO_Notify_Admin::~TAO_Notify_Admin () = default;
@@ -187,7 +187,7 @@ TAO_Notify_Admin::load_child (ACE_CString const &type,
                     ));
       // since we initialized our subscribed types to everything
       // in the constructor. we have to clear it out first.
-      this->subscribed_types_.reset();
+      this->subscribed_types_.clear ();
       result = &this->subscribed_types_;
     }
   else if (type == "filter_admin")

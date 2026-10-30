@@ -55,7 +55,7 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
       TAO_Notify_EventTypeSeq added_result = added;
       TAO_Notify_EventTypeSeq removed_result;
 
-      if (subscribed_types.find (special) != 0)
+      if (!subscribed_types.contains (special))
         {
           added_result.remove_seq (subscribed_types);
           removed_result.intersection (subscribed_types, removed);

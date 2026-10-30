@@ -165,7 +165,7 @@ TAO_Notify_Proxy::load_child (ACE_CString const &type, CORBA::Long id,
   {
     // since we initialized our subscribed types to everything
     // in the constructor. we have to clear it out first.
-    this->subscribed_types_.reset();
+    this->subscribed_types_.clear ();
     result = &this->subscribed_types_;
   }
   else if (type == "filter_admin")
