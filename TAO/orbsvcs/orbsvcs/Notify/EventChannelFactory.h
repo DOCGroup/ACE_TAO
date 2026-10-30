@@ -26,6 +26,7 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
 #include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -49,7 +50,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   , public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Builder;
-  using Routing_Slip_Set = ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr>;
+  using Routing_Slip_Set = std::vector<TAO_Notify::Routing_Slip_Ptr>;
 
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory >;
