@@ -6,7 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -14,10 +14,14 @@ parse_args (int argc, ACE_TCHAR *argv[]);
 class Crasher : public ACE_Event_Handler
 {
 public:
-  Crasher();
+  Crasher () = default;
+  Crasher (Crasher const &) = delete;
+  Crasher &operator= (Crasher const &) = delete;
+  Crasher (Crasher &&) = delete;
+  Crasher &operator= (Crasher &&) = delete;
 
-  virtual int handle_timeout (ACE_Time_Value const & current_time,
-                              void const * arg);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *arg) override;
 };
 
 int
@@ -70,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::Servant_var<Echo> impl;
       {
-        Echo * tmp = 0;
+        Echo *tmp = nullptr;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
@@ -108,15 +112,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Crasher crasher;
 
       // Crash after 15 seconds
-      ACE_Time_Value interval(15, 0);
-      ACE_Reactor * reactor = orb->orb_core()->reactor();
-      reactor->schedule_timer(&crasher, 0, interval, interval);
+      ACE_Time_Value interval (15, 0);
+      ACE_Reactor *reactor = orb->orb_core ()->reactor ();
+      reactor->schedule_timer (&crasher, nullptr, interval, interval);
 
       ORB_Task task(orb.in());
       task.activate(THR_NEW_LWP | THR_JOINABLE, 4, 1);
 
       Test::Payload payload(16); payload.length(16);
-      for(int i = 0; i != 4; ++i)
+      for (int i = 0; i != 4; ++i)
         {
           server->start_task(echo.in());
         }
@@ -129,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -142,7 +146,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -164,15 +168,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Crasher::Crasher()
-{
-}
-
 int
-Crasher::handle_timeout (ACE_Time_Value const & ,
+Crasher::handle_timeout (ACE_Time_Value const &,
                          void const *)
 {
-  ACE_OS::abort();
+  ACE_OS::abort ();
 
   return 0;
 }

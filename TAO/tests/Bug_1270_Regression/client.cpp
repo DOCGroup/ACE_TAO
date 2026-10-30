@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -46,7 +46,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Any scope_as_any;
       scope_as_any <<= Messaging::SYNC_WITH_TRANSPORT;
 
-      CORBA::PolicyList policies(1); policies.length (1);
+      CORBA::PolicyList policies (1);
+      policies.length (1);
       policies[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any);
@@ -60,13 +61,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::ServantBase_var impl;
       {
-        Echo * tmp;
+        Echo *tmp = nullptr;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
         // reasonable way to handle allocation errors in ACE.
         ACE_NEW_RETURN (tmp,
-                        Echo(orb.in(), 100),
+                        Echo (orb.in (), 100),
                         1);
         impl = tmp;
       }
@@ -80,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         Test::Echo::_narrow (object_act.in ());
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Echo_Caller_var server =
         Test::Echo_Caller::_narrow(tmp.in ());
@@ -95,7 +96,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      server->start_task(echo.in());
+      server->start_task (echo.in ());
 
       orb->run ();
 
@@ -106,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
       return 1;
@@ -119,7 +120,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

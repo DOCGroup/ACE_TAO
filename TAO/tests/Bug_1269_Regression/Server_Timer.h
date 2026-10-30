@@ -20,6 +20,10 @@ class Server_Timer : public ACE_Event_Handler
 public:
   /// Constructor
   Server_Timer (Test::Echo_ptr echo, ACE_Reactor * reactor);
+  Server_Timer (Server_Timer const &) = delete;
+  Server_Timer &operator= (Server_Timer const &) = delete;
+  Server_Timer (Server_Timer &&) = delete;
+  Server_Timer &operator= (Server_Timer &&) = delete;
 
   void activate ();
 

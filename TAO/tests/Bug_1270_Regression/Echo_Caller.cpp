@@ -7,28 +7,28 @@
 #include "Server_Timer.h"
 #include "tao/ORB_Core.h"
 
-Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
-  : orb_(CORBA::ORB::_duplicate(orb))
+Echo_Caller::Echo_Caller (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 void
-Echo_Caller::start_task(Test::Echo_ptr client)
+Echo_Caller::start_task (Test::Echo_ptr client)
 {
-  Server_Timer * task =
-    new Server_Timer(client, orb_->orb_core()->reactor());
+  Server_Timer *task =
+    new Server_Timer (client, this->orb_->orb_core ()->reactor ());
   task->activate();
   task->remove_reference ();
 
   task =
-    new Server_Timer(client, orb_->orb_core()->reactor());
+    new Server_Timer (client, this->orb_->orb_core ()->reactor ());
   task->activate();
   task->remove_reference ();
 }
 
 void
-Echo_Caller::shutdown()
+Echo_Caller::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));
-  orb_->shutdown(0);
+  this->orb_->shutdown (false);
 }

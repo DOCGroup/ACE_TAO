@@ -6,16 +6,12 @@
 
 #include "Echo_Callback.h"
 
-Echo_Callback::Echo_Callback()
-{
-}
-
 void
 Echo_Callback::echo_payload(Test::Payload const &)
 {
-  static int n = 0;
+  static int n {};
   n++;
-  if(n == 30)
+  if (n == 30)
     ACE_OS::abort();
 
   ACE_Time_Value tick(0, 20000);

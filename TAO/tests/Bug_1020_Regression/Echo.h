@@ -10,7 +10,7 @@
 class Echo : public POA_Test::Echo
 {
 public:
-  Echo (CORBA::ORB_ptr orb);
+  explicit Echo (CORBA::ORB_ptr orb);
   Echo (Echo const &) = delete;
   Echo &operator= (Echo const &) = delete;
   Echo (Echo &&) = delete;
