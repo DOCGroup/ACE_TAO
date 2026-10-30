@@ -18,7 +18,8 @@
 
 #include "orbsvcs/ESF/ESF_Busy_Lock.h"
 #include "tao/Basic_Types.h"
-#include "ace/Containers.h"
+#include <deque>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Command_Base;
@@ -134,7 +135,7 @@ private:
   CORBA::ULong busy_hwm_;
   CORBA::ULong max_write_delay_;
 
-  ACE_Unbounded_Queue<ACE_Command_Base*> command_queue_;
+  std::deque<std::unique_ptr<ACE_Command_Base>> command_queue_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
