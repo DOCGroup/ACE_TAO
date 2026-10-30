@@ -24,9 +24,9 @@
 #include "orbsvcs/Notify/notify_serv_export.h"
 #include "orbsvcs/Notify/Random_File.h"
 #include "orbsvcs/Notify/Bit_Vector.h"
-#include "ace/Containers_T.h"
-#include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Manager.h"
+
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -193,7 +193,7 @@ private:
   ACE_Thread_Manager thread_manager_;
   Random_File pstore_;
   Bit_Vector free_blocks_;
-  ACE_Unbounded_Queue<Persistent_Storage_Block*> block_queue_;
+  std::deque<Persistent_Storage_Block*> block_queue_;
   TAO_SYNCH_MUTEX lock_;
   TAO_SYNCH_MUTEX free_blocks_lock_;
   TAO_SYNCH_MUTEX queue_lock_;
