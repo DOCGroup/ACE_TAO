@@ -41,11 +41,18 @@ template<class Object>
 class TAO_ESF_Worker
 {
 public:
-  virtual ~TAO_ESF_Worker ();
+  TAO_ESF_Worker () = default;
+
+  virtual ~TAO_ESF_Worker () = default;
+
+  TAO_ESF_Worker (TAO_ESF_Worker const &) = delete;
+  TAO_ESF_Worker (TAO_ESF_Worker &&) = delete;
+  TAO_ESF_Worker &operator= (TAO_ESF_Worker const &) = delete;
+  TAO_ESF_Worker &operator= (TAO_ESF_Worker &&) = delete;
 
   /// Used by the collection to inform the worker
   /// the number of proxies in the collection.
-  virtual void set_size(size_t size);
+  virtual void set_size (size_t size);
 
   /// Callback interface.
   virtual void work (Object *object) = 0;

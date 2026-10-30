@@ -8,11 +8,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
-template<class PROXY>
-TAO_ESF_Proxy_Collection<PROXY>::~TAO_ESF_Proxy_Collection ()
-{
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PROXY_COLLECTION_CPP */

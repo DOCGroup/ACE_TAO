@@ -28,7 +28,12 @@ class TAO_ESF_Immediate_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   TAO_ESF_Immediate_Changes ();
-  explicit TAO_ESF_Immediate_Changes (const COLLECTION &collection);
+  explicit TAO_ESF_Immediate_Changes (COLLECTION const &collection);
+
+  TAO_ESF_Immediate_Changes (TAO_ESF_Immediate_Changes const &) = delete;
+  TAO_ESF_Immediate_Changes (TAO_ESF_Immediate_Changes &&) = delete;
+  TAO_ESF_Immediate_Changes &operator= (TAO_ESF_Immediate_Changes const &) = delete;
+  TAO_ESF_Immediate_Changes &operator= (TAO_ESF_Immediate_Changes &&) = delete;
 
   // = The TAO_ESF_Proxy methods
   void for_each (TAO_ESF_Worker<PROXY> *worker) override;

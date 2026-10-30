@@ -12,11 +12,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<class PROXY>
-TAO_ESF_Proxy_List<PROXY>::TAO_ESF_Proxy_List ()
-{
-}
-
 template<class PROXY> void
 TAO_ESF_Proxy_List<PROXY>::connected (PROXY *proxy)
 {

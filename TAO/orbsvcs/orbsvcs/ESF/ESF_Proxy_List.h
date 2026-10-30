@@ -17,6 +17,7 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
+#include <cstddef>
 #include <list>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -37,7 +38,7 @@ public:
   using Iterator = typename Implementation::iterator;
 
   /// Constructor
-  TAO_ESF_Proxy_List ();
+  TAO_ESF_Proxy_List () = default;
 
   /// Return the first element in the collection, or end() if there
   /// are none
@@ -47,7 +48,7 @@ public:
   Iterator end ();
 
   /// Return the number of elements in the collection
-  size_t size () const;
+  std::size_t size () const;
 
   /// Insert a new element to the collection
   void connected (PROXY *);

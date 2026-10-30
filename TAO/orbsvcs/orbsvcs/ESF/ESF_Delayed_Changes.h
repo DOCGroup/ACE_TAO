@@ -88,7 +88,12 @@ class TAO_ESF_Delayed_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   TAO_ESF_Delayed_Changes ();
-  explicit TAO_ESF_Delayed_Changes (const COLLECTION &collection);
+  explicit TAO_ESF_Delayed_Changes (COLLECTION const &collection);
+
+  TAO_ESF_Delayed_Changes (TAO_ESF_Delayed_Changes const &) = delete;
+  TAO_ESF_Delayed_Changes (TAO_ESF_Delayed_Changes &&) = delete;
+  TAO_ESF_Delayed_Changes &operator= (TAO_ESF_Delayed_Changes const &) = delete;
+  TAO_ESF_Delayed_Changes &operator= (TAO_ESF_Delayed_Changes &&) = delete;
 
   int busy ();
   int idle ();

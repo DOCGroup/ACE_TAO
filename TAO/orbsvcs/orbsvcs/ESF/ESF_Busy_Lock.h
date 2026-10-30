@@ -41,7 +41,12 @@ class TAO_ESF_Busy_Lock_Adapter
 {
 public:
   /// Constructor
-  explicit TAO_ESF_Busy_Lock_Adapter (Adaptee* adaptee);
+  explicit TAO_ESF_Busy_Lock_Adapter (Adaptee *adaptee);
+
+  TAO_ESF_Busy_Lock_Adapter (TAO_ESF_Busy_Lock_Adapter const &) = delete;
+  TAO_ESF_Busy_Lock_Adapter (TAO_ESF_Busy_Lock_Adapter &&) = delete;
+  TAO_ESF_Busy_Lock_Adapter &operator= (TAO_ESF_Busy_Lock_Adapter const &) = delete;
+  TAO_ESF_Busy_Lock_Adapter &operator= (TAO_ESF_Busy_Lock_Adapter &&) = delete;
 
   /**
    * @name The ACE_Lock methods
@@ -60,7 +65,7 @@ public:
   //@}
 
 private:
-  Adaptee* adaptee_;
+  Adaptee *adaptee_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

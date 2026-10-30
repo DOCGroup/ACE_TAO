@@ -35,7 +35,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    TAO_ESF_Delayed_Changes (const COLLECTION &collection)
+    TAO_ESF_Delayed_Changes (COLLECTION const &collection)
       :  collection_ (collection),
          lock_ (this),
          busy_cond_ (busy_lock_),
@@ -52,7 +52,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 {
   ACE_GUARD (Busy_Lock, ace_mon, this->lock_);
 
-  worker->set_size(this->collection_.size());
+  worker->set_size (this->collection_.size ());
   ITERATOR end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {

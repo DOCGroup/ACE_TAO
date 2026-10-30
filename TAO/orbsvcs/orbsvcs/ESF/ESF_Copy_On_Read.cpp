@@ -16,7 +16,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    TAO_ESF_Copy_On_Read (const COLLECTION &collection)
+    TAO_ESF_Copy_On_Read (COLLECTION const &collection)
       :  collection_ (collection)
 {
 }
@@ -50,7 +50,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
             ++j;
           }
       }
-      worker->set_size(size);
+      worker->set_size (size);
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {
           worker->work (*j);
@@ -58,7 +58,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
         }
       delete[] proxies;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {

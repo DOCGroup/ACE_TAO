@@ -13,7 +13,7 @@ TAO_ESF_Proxy_List<PROXY>::end ()
   return this->impl_.end ();
 }
 
-template<class PROXY> ACE_INLINE size_t
+template<class PROXY> ACE_INLINE std::size_t
 TAO_ESF_Proxy_List<PROXY>::size () const
 {
   return this->impl_.size ();

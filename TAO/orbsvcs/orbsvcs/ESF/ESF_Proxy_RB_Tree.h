@@ -17,6 +17,7 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
+#include <cstddef>
 #include <set>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -28,10 +29,10 @@ class TAO_ESF_Proxy_RB_Tree_Iterator
 public:
   using Implementation = typename std::set<PROXY *>::iterator;
 
-  explicit TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
+  explicit TAO_ESF_Proxy_RB_Tree_Iterator (Implementation const &i);
 
-  bool operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
-  bool operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
+  bool operator == (TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const;
+  bool operator != (TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const;
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ ();
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> operator++ (int);
   PROXY *operator *();
@@ -54,10 +55,10 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree
 {
 public:
-  /// A typedef for the underlying implementaiton class
+  /// An alias for the underlying implementation class
   using Implementation = std::set<PROXY *>;
 
-  /// A typedef for the underlying iterator
+  /// An alias for the underlying iterator
   using Iterator = TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>;
 
   /// Constructor
@@ -71,7 +72,7 @@ public:
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> end ();
 
   /// Return the number of elements in the collection
-  size_t size () const;
+  std::size_t size () const;
 
   /// Insert a new element to the collection
   void connected (PROXY *);
