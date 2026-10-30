@@ -15,7 +15,7 @@
 #ifndef _BE_VISITOR_VALUEBOX_CS_H_
 #define _BE_VISITOR_VALUEBOX_CS_H_
 
-#include <string_view>
+#include <string>
 
 /**
  * @class be_visitor_valuebox_cs
@@ -72,7 +72,7 @@ private:
   /// Generate virtual destructor.
   void emit_destructor () const;
 
-  int emit_for_predef_enum (std::string_view marshal_arg) const;
+  int emit_for_predef_enum (std::string const& marshal_arg) const;
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CS_H_ */

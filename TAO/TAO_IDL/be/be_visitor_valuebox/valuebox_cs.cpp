@@ -380,7 +380,7 @@ be_visitor_valuebox_cs::visit_interface (be_interface *)
 int
 be_visitor_valuebox_cs::visit_predefined_type (be_predefined_type * node)
 {
-  std::string_view marshal_arg;
+  std::string marshal_arg;
 
   switch (node->pt ())
     {
@@ -735,7 +735,7 @@ be_visitor_valuebox_cs::emit_destructor () const
 }
 
 int
-be_visitor_valuebox_cs::emit_for_predef_enum (std::string_view marshal_arg) const
+be_visitor_valuebox_cs::emit_for_predef_enum (std::string const& marshal_arg) const
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 

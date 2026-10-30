@@ -15,7 +15,6 @@
 #include "valuebox_type_name.h"
 
 #include <string>
-#include <string_view>
 #include "valuebox_type_name.h"
 
 be_visitor_valuebox_union_member_ci::be_visitor_valuebox_union_member_ci (

@@ -5,14 +5,13 @@
 
 #include <memory>
 #include <string>
-#include <string_view>
 
 namespace
 {
   std::string
-  valuebox_type_name (std::string_view prefix,
-                     std::string_view name,
-                     std::string_view suffix = {})
+  valuebox_type_name (std::string const& prefix,
+                     std::string const& name,
+                     std::string const& suffix = {})
   {
     bool const is_const = prefix.substr (0, 6) == "const ";
     std::string type_name (is_const ? prefix.substr (6) : prefix);
@@ -48,9 +47,9 @@ namespace
 
   inline void
   emit_valuebox_type_name (TAO_OutStream *os,
-                           std::string_view prefix,
+                           std::string const& prefix,
                            UTL_IdList *name,
-                           std::string_view suffix)
+                           std::string const& suffix)
   {
     std::string const name_string = name->get_string_copy ();
     *os << valuebox_type_name (prefix, name_string, suffix);
