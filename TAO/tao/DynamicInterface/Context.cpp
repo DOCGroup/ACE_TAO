@@ -4,6 +4,8 @@
 #include "tao/SystemException.h"
 #include "ace/Guard_T.h"
 
+#include <new>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/DynamicInterface/Context.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -84,44 +86,50 @@ CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
 
 CORBA::ContextList::~ContextList ()
 {
-  for (CORBA::ULong i = 0; i < this->count (); ++i)
+  for (char *ctx : this->ctx_list_)
     {
-      char **ctx = nullptr;
-
-      if (this->ctx_list_.get (ctx, i) == -1)
-        {
-          return;
-        }
-
-      CORBA::string_free (*ctx);
+      CORBA::string_free (ctx);
     }
 }
 
 void
 CORBA::ContextList::add (char *ctx)
 {
-  this->ctx_list_.enqueue_tail (CORBA::string_dup (ctx));
+  char *duplicate = CORBA::string_dup (ctx);
+  try
+    {
+      this->ctx_list_.push_back (duplicate);
+    }
+  catch (std::bad_alloc const&)
+    {
+      CORBA::string_free (duplicate);
+      throw CORBA::NO_MEMORY ();
+    }
 }
 
 void
 CORBA::ContextList::add_consume (char *ctx)
 {
-  this->ctx_list_.enqueue_tail (ctx);
+  try
+    {
+      this->ctx_list_.push_back (ctx);
+    }
+  catch (std::bad_alloc const&)
+    {
+      CORBA::string_free (ctx);
+      throw CORBA::NO_MEMORY ();
+    }
 }
 
 char *
 CORBA::ContextList::item (CORBA::ULong slot)
 {
-  char **ctx = nullptr;
-
-  if (this->ctx_list_.get (ctx, slot) == -1)
+  if (slot >= this->ctx_list_.size ())
     {
       throw ::CORBA::TypeCode::Bounds ();
     }
-  else
-    {
-      return CORBA::string_dup (*ctx);
-    }
+
+  return CORBA::string_dup (this->ctx_list_[slot]);
 }
 
 void

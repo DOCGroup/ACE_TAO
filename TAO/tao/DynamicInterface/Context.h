@@ -30,8 +30,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/default_environment.h"
 
-#include "ace/Unbounded_Queue.h"
 #include <atomic>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -176,8 +176,8 @@ namespace CORBA
     /// Reference counter.
     std::atomic<uint32_t> refcount_ { 1 };
 
-    /// Internal list of typecodes.
-    ACE_Unbounded_Queue<char *> ctx_list_;
+    /// Internal list of context strings.
+    std::vector<char *> ctx_list_;
   };
 } // End CORBA namespace.
 
