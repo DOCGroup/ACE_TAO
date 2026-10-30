@@ -84,7 +84,7 @@ struct TAO_IDL_FE_Export FE_Utils
 
   /// Check if 'param' is a sequence of a previous param, and if
   /// so, if the previous param exists.
-  static ACE_CString
+  static std::string
   check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list);
 
   /// Attempt to open file for reading until it is found in one of the

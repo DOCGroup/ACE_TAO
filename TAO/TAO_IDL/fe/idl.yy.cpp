@@ -3879,8 +3879,12 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      ACE_CString work (tmp);
-      work = work.substr (0, work.find (' '));
+      std::string work (tmp);
+      size_t const end = work.find (' ');
+      if (end != std::string::npos)
+        {
+          work.resize (end);
+        }
 
       AST_Decl *d = idl_find_node (work.c_str ());
 

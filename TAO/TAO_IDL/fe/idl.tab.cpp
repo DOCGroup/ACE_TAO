@@ -10321,7 +10321,7 @@ yyreduce:
 
           // The param added above is always the last one parsed,
           // so we check for matches between sequence<T> & T here.
-          ACE_CString bad_id =
+          std::string bad_id =
             FE_Utils::check_for_seq_of_param (
               (yyvsp[0].plval));
 

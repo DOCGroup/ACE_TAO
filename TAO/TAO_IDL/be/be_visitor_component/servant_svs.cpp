@@ -297,7 +297,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << node_->local_name () << "_Servant::setup_"
         << port_name << "_i ()" << be_nl
         << "{" << be_idt_nl
-        << "ACE_CString obj_id (this->ins_name_);" << be_nl
+        << "std::string obj_id (this->ins_name_);" << be_nl
         << "obj_id += \"_" << port_name << "\";" << be_nl_2
         << "::CIAO::Container_var cnt_safe =" << be_idt_nl
         << "::CIAO::Container::_duplicate ("
@@ -600,7 +600,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << node_->local_name () << "_Servant::setup_consumer_"
       << port_name << "_i ()" << be_nl
       << "{" << be_idt_nl
-      << "ACE_CString obj_id (this->ins_name_);" << be_nl
+      << "std::string obj_id (this->ins_name_);" << be_nl
       << "obj_id += \"_" << port_name << "\";" << be_nl_2
       << "::CIAO::Container_var cnt_safe =" << be_idt_nl
       << "::CIAO::Container::_duplicate ("

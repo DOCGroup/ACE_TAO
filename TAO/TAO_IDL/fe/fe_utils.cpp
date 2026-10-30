@@ -478,11 +478,11 @@ FE_Utils::hasspace (std::string_view s)
   return false;
 }
 
-ACE_CString
+std::string
 FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 {
   std::string id;
-  ACE_CString retval;
+  std::string retval;
   std::string const pattern ("sequence<");
   size_t const len = pattern.length ();
   size_t index = 0;
@@ -504,7 +504,7 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 
           if (!FE_Utils::check_one_seq_of_param (list, id, index))
             {
-              retval = id.c_str ();
+              retval = id;
               break;
             }
         }
