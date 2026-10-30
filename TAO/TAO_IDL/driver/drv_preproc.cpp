@@ -66,7 +66,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <optional>
 #include <string>
-#include <string_view>
 #include <vector>
 
 #include "idl_defines.h"
@@ -505,8 +504,8 @@ DRV_sweep_dirs (char const *rel_path,
 
 std::string&
 DRV_add_include_path (std::string& include_path,
-                      std::string_view path,
-                      std::string_view suffix,
+                      std::string const& path,
+                      std::string const& suffix,
                       bool is_system)
 {
   if (path.empty ())
@@ -514,10 +513,9 @@ DRV_add_include_path (std::string& include_path,
       return include_path;
     }
 
-  std::string_view path_view (path);
   bool const needToQuote =
-    (!path_view.empty () && path_view.front () == '"')
-    || path_view.find (' ') != std::string_view::npos;
+    (!path.empty () && path.front () == '"')
+    || path.find (' ') != std::string::npos;
   char const
 #if defined (ACE_WIN32)
     nativeDir =  '\\',
@@ -528,35 +526,36 @@ DRV_add_include_path (std::string& include_path,
 #endif
 
   // Eliminate possible enclosing quotes and a trailing directory separator.
-  if (!path_view.empty () && path_view.front () == '"')
+  std::string normalized_path (path);
+  if (!normalized_path.empty () && normalized_path.front () == '"')
     {
-      path_view.remove_prefix (1);
+      normalized_path.erase (0, 1);
     }
-  if (!path_view.empty () && path_view.back () == '"')
+  if (!normalized_path.empty () && normalized_path.back () == '"')
     {
-      path_view.remove_suffix (1);
+      normalized_path.pop_back ();
     }
-  if (path_view.size () > 1
-      && (path_view.back () == nativeDir || path_view.back () == foreignDir))
+  if (normalized_path.size () > 1
+      && (normalized_path.back () == nativeDir || normalized_path.back () == foreignDir))
     {
-      path_view.remove_suffix (1);
+      normalized_path.pop_back ();
     }
-  include_path.assign (path_view);
+  include_path = normalized_path;
 
   if (!suffix.empty ())
     {
-      std::string_view suffix_view (suffix);
-      if (include_path.empty () && !suffix_view.empty ()
-          && (nativeDir == suffix_view.front () || foreignDir == suffix_view.front ()))
+      std::string normalized_suffix (suffix);
+      if (include_path.empty () && !normalized_suffix.empty ()
+          && (nativeDir == normalized_suffix.front () || foreignDir == normalized_suffix.front ()))
         {
           // Path is empty, don't add the
           // suffix's leading directory separator.
-          suffix_view.remove_prefix (1);
+          normalized_suffix.erase (0, 1);
         }
 
-      if (!include_path.empty () && !suffix_view.empty ()
-          && nativeDir != suffix_view.front ()
-          && foreignDir != suffix_view.front ())
+      if (!include_path.empty () && !normalized_suffix.empty ()
+          && nativeDir != normalized_suffix.front ()
+          && foreignDir != normalized_suffix.front ())
         {
           // Force a directory separator.
           include_path += nativeDir;
@@ -565,7 +564,7 @@ DRV_add_include_path (std::string& include_path,
       // Add the suffix string to the path,
       // ensuring that foreign directory slashes
       // are added as the native type.
-      for (char const character : suffix_view)
+      for (char const character : normalized_suffix)
         {
           include_path += (foreignDir == character)
                              ? nativeDir
@@ -877,8 +876,7 @@ namespace
     // included as a local name only, we add the 'tao/' prefix
     // so the generated C++ include files will be correct.
     else if (incl_file.size () >= 5
-             && std::string_view (incl_file).substr (incl_file.size () - 5)
-                  == ".pidl"
+             && incl_file.compare (incl_file.size () - 5, 5, ".pidl") == 0
              && incl_file.find ('/') == std::string::npos
              && incl_file.find ('\\') == std::string::npos)
       {
@@ -1010,10 +1008,10 @@ DRV_copy_input (FILE *fin,
   // Convert single \ into double \ otherwise MSVC++ pre-processor
   // gets awfully confused.
   std::string escaped_filename;
-  std::string_view const filename_view (orig_filename);
-  escaped_filename.reserve (filename_view.size ());
+  std::string const filename (orig_filename);
+  escaped_filename.reserve (filename.size ());
 
-  for (char const current_character : filename_view)
+  for (char const current_character : filename)
     {
       if (current_character == '\\')
         {
@@ -1050,11 +1048,11 @@ DRV_copy_input (FILE *fin,
 
 // Strip down a name to the last component,
 // i.e. everything after the last '/' or '\' character.
-static std::string_view
-DRV_stripped_name (std::string_view filename)
+static std::string
+DRV_stripped_name (std::string const& filename)
 {
   size_t const separator = filename.find_last_of ("/\\");
-  return separator == std::string_view::npos
+  return separator == std::string::npos
     ? filename
     : filename.substr (separator + 1);
 }

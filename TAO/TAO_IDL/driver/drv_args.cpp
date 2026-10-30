@@ -65,7 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // drv_args.cpp - Argument parsing for IDL compiler main driver
 
 #include <string>
-#include <string_view>
 
 #include "idl_defines.h"
 
@@ -94,16 +93,17 @@ DRV_push_file (char const *s)
 
 // Prepare a CPP argument
 static void
-DRV_prep_cpp_arg (std::string_view input)
+DRV_prep_cpp_arg (std::string const& input)
 {
   std::string newarg;
   newarg.reserve (512);
 
-  for (std::string_view::size_type pos = input.find (',');
+  std::string::size_type start = 0;
+  for (std::string::size_type pos = input.find (',', start);
        pos != std::string::npos;
-       input.remove_prefix (pos + 1), pos = input.find (','))
+       start = pos + 1, pos = input.find (',', start))
     {
-      newarg.append (input.substr (0, pos));
+      newarg.append (input, start, pos - start);
     }
 
   DRV_cpp_putarg (newarg.c_str ());
@@ -115,8 +115,8 @@ DRV_usage ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C: usage: %C [[flag|file] ...] [-- file ...]\n"),
-              idl_global->prog_name ().data (),
-              idl_global->prog_name ().data ()));
+              idl_global->prog_name ().c_str (),
+              idl_global->prog_name ().c_str ()));
 
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("Legal flags:\n")
@@ -558,7 +558,7 @@ print_idl_versions()
 void
 process_long_option(long ac, char **av, long &i)
 {
-  std::string_view const long_option (av[i] + 2);
+  std::string const long_option (av[i] + 2);
   bool const no_more_args = i + 1 >= ac;
   if (long_option == "idl-version")
     {
@@ -642,22 +642,23 @@ process_long_option(long ac, char **av, long &i)
       else
         {
           i++;
-          if (std::string_view (av[i]) == "warn-once")
+          std::string const annotation_mode (av[i]);
+          if (annotation_mode == "warn-once")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE;
             }
-          else if (std::string_view (av[i]) == "warn-all")
+          else if (annotation_mode == "warn-all")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ALL;
             }
-          else if (std::string_view (av[i]) == "error")
+          else if (annotation_mode == "error")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
             }
-          else if (std::string_view (av[i]) == "ignore")
+          else if (annotation_mode == "ignore")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_IGNORE;
