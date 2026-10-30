@@ -9,7 +9,7 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb,
                           ACE_Thread_Manager *thr_mgr,
                           int number_of_oneways)
   : ACE_Task_Base (thr_mgr)
-  , sender_(Test::Sender::_duplicate (reply_gen))
+  , sender_ (Test::Sender::_duplicate (reply_gen))
   , orb_ (CORBA::ORB::_duplicate (orb))
   , number_ (number_of_oneways)
 {
@@ -37,7 +37,8 @@ Client_Task::svc ()
       CORBA::Any scope_as_any;
       scope_as_any <<= Messaging::SYNC_NONE;
 
-      CORBA::PolicyList policies (1); policies.length (1);
+      CORBA::PolicyList policies (1);
+      policies.length (1);
       policies[0] =
         orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any);
@@ -53,10 +54,10 @@ Client_Task::svc ()
           this->sender_->send_ready_message ();
 
           // Do it slowly.
-          ACE_OS::sleep(ACE_Time_Value(0,250000));
+          ACE_OS::sleep (ACE_Time_Value (0, 250000));
          }
        }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught Exception");
       return -1;

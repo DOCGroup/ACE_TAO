@@ -1,13 +1,7 @@
 #include "Sender_i.h"
 
 Sender_i::Sender_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    active_objects_ (0),
-    number_received_ (0)
-{
-}
-
-Sender_i::~Sender_i ()
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -24,7 +18,7 @@ Sender_i::send_ready_message ()
   ACE_DEBUG ((LM_DEBUG,
               "Received a call ...\n"));
 
-  number_received_++;
+  this->number_received_++;
 }
 
 CORBA::ULong

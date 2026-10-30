@@ -13,20 +13,30 @@
 #include "ace/Get_Opt.h"
 
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
-bool level_obj = false;
-bool level_thread = false;
-bool level_orb = false;
 
-bool synch_none = false;
-bool synch_delayed = false;
+enum class Policy_Level
+{
+  object,
+  thread,
+  orb
+};
+
+enum class Synchronization
+{
+  none,
+  delayed
+};
+
+Policy_Level policy_level = Policy_Level::object;
+Synchronization synchronization = Synchronization::none;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:s:"));
-  int c;
-  level_obj = true; //default
-  synch_none = true; //default
+  int c {};
+  policy_level = Policy_Level::object;
+  synchronization = Synchronization::none;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -35,34 +45,25 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 'l':
-  {
-    ACE_TCHAR *level = get_opts.opt_arg ();
-    level_obj = false;
-
-    if (ACE_OS::strcmp (level, ACE_TEXT("orb")) == 0) {
-      level_orb = true;
-    }
-    else if (ACE_OS::strcmp (level, ACE_TEXT("thread")) == 0) {
-      level_thread = true;
-    }
-    else {
-      level_obj = true;
-    }
-    break;
-  }
+        {
+          ACE_TCHAR const *level = get_opts.opt_arg ();
+          if (ACE_OS::strcmp (level, ACE_TEXT("orb")) == 0)
+            policy_level = Policy_Level::orb;
+          else if (ACE_OS::strcmp (level, ACE_TEXT("thread")) == 0)
+            policy_level = Policy_Level::thread;
+          else
+            policy_level = Policy_Level::object;
+          break;
+        }
       case 's':
-  {
-    ACE_TCHAR *synch = get_opts.opt_arg ();
-    synch_none = false;
-
-    if (ACE_OS::strcmp (synch, ACE_TEXT("delayed")) == 0) {
-      synch_delayed = true;
-    }
-    else {
-      synch_none = true;
-    }
-    break;
-  }
+        {
+          ACE_TCHAR const *synch = get_opts.opt_arg ();
+          if (ACE_OS::strcmp (synch, ACE_TEXT("delayed")) == 0)
+            synchronization = Synchronization::delayed;
+          else
+            synchronization = Synchronization::none;
+          break;
+        }
 
       case '?':
       default:
@@ -80,7 +81,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -90,7 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
       if (CORBA::is_nil (tmp.in ()))
         {
@@ -103,12 +104,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         CORBA::Any scope_as_any;
 
-        if (synch_none == true)
+        if (synchronization == Synchronization::none)
           {
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Applying SYNC_NONE.\n"));
             scope_as_any <<= Messaging::SYNC_NONE;
           }
-        else if (synch_delayed == true)
+        else if (synchronization == Synchronization::delayed)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying SYNC_DELAYED_BUFFERING.\n"));
@@ -121,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                               scope_as_any);
 
-        if (level_thread == true)
+        if (policy_level == Policy_Level::thread)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at thread level.\n"));
@@ -134,20 +135,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             policy_current->set_policy_overrides (policies,
                                                   CORBA::ADD_OVERRIDE);
           }
-        else if (level_orb == true)
+        else if (policy_level == Policy_Level::orb)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at orb level.\n"));
 
             CORBA::Object_var obj =
-              orb->resolve_initial_references("ORBPolicyManager");
+              orb->resolve_initial_references ("ORBPolicyManager");
             CORBA::PolicyManager_var policy_manager =
-              CORBA::PolicyManager::_narrow(obj.in());
+              CORBA::PolicyManager::_narrow (obj.in ());
 
             policy_manager->set_policy_overrides (policies,
                                                   CORBA::ADD_OVERRIDE);
           }
-        else if (level_obj == true)
+        else if (policy_level == Policy_Level::object)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at Object level.\n"));
@@ -180,21 +181,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_Base_Transport_Property desc (hello->_stubobj ()->profile_in_use ()->endpoint ());
 
-      if (tcm.current_size() == 0)
+      if (tcm.current_size () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
            "The Transport Cache shouldn't be empty here.\n"),
           1);
         }
 
-      size_t busy_count = 0;
-      TAO_Transport *transport = 0;
+      size_t busy_count {};
+      TAO_Transport *transport = nullptr;
       TAO::Transport_Cache_Manager::Find_Result find_result =
         tcm.find_transport (&desc, transport, busy_count);
       // We don't need this transport any more. Release the ownership.
       transport->remove_reference ();
 
-      switch (find_result){
+      switch (find_result)
+        {
         case TAO::Transport_Cache_Manager::CACHE_FOUND_NONE:
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -226,11 +228,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_TEXT("Transport_Cache::find returned unknown status.\n")
               ),1);
           }
-      }
+        }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "ERROR: Exception caught: %s\"%s\"\n"
       , ex._name(), ex._rep_id ()));
