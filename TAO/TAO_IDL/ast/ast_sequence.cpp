@@ -136,11 +136,16 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  this->owns_base_type_ =
+  bool const owns_base_type =
     nt == AST_Decl::NT_array
     || nt == AST_Decl::NT_sequence
     || nt == AST_Decl::NT_map
     || nt == AST_Decl::NT_param_holder;
+
+  if (owns_base_type)
+    {
+      this->owned_base_type_.reset (bt);
+    }
 }
 
 AST_Sequence::~AST_Sequence () = default;
@@ -275,10 +280,10 @@ AST_Sequence::is_defined ()
 void
 AST_Sequence::destroy ()
 {
-  if (this->owns_base_type_)
+  if (this->owned_base_type_ != nullptr)
     {
-      this->pd_base_type->destroy ();
-      delete this->pd_base_type;
+      this->owned_base_type_->destroy ();
+      this->owned_base_type_.reset ();
       this->pd_base_type = nullptr;
     }
 

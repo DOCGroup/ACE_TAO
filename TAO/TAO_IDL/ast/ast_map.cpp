@@ -156,15 +156,25 @@ AST_Map::AST_Map (AST_Expression *ms,
   // A map data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
 
-  this->owns_key_type_ =
+  bool const owns_key_type =
     knt == AST_Decl::NT_array
     || knt == AST_Decl::NT_map
     || knt == AST_Decl::NT_param_holder;
 
-  this->owns_value_type_ =
+  if (owns_key_type)
+    {
+      this->owned_key_type_.reset (key_bt);
+    }
+
+  bool const owns_value_type =
     vnt == AST_Decl::NT_array
     || vnt == AST_Decl::NT_map
     || vnt == AST_Decl::NT_param_holder;
+
+  if (owns_value_type)
+    {
+      this->owned_value_type_.reset (val_bt);
+    }
 }
 
 // Public operations.
@@ -347,17 +357,17 @@ AST_Map::is_defined ()
 void
 AST_Map::destroy ()
 {
-  if (this->owns_key_type_)
+  if (this->owned_key_type_ != nullptr)
     {
-      this->key_pd_type->destroy ();
-      delete this->key_pd_type;
+      this->owned_key_type_->destroy ();
+      this->owned_key_type_.reset ();
       this->key_pd_type = nullptr;
     }
 
-  if (this->owns_value_type_)
+  if (this->owned_value_type_ != nullptr)
     {
-      this->value_pd_type->destroy();
-      delete this->value_pd_type;
+      this->owned_value_type_->destroy ();
+      this->owned_value_type_.reset ();
       this->value_pd_type = nullptr;
     }
 

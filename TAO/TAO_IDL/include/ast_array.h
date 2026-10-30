@@ -139,9 +139,7 @@ private:
   AST_Type *pd_base_type;
   // Base type of array.
 
-  bool owns_base_type_ {};
-  // If our base type is anonymous array or sequence, we're
-  // responsible for destroying it.
+  std::unique_ptr<AST_Type> owned_base_type_;
 
   // Compute how many dimensions.
   std::vector<std::unique_ptr<AST_Expression>> compute_dims (

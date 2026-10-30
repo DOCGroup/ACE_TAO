@@ -143,9 +143,7 @@ private:
   bool unbounded_ {true};
   // Whether we are bounded or unbounded.
 
-  bool owns_base_type_ {};
-  // If our base type is anonymous array or sequence, we're
-  // responsible for destroying it.
+  std::unique_ptr<AST_Type> owned_base_type_;
 
   /**
    * Annotations on the base type

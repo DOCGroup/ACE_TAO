@@ -213,6 +213,13 @@ AST_Array::base_type () const
 void
 AST_Array::set_base_type (AST_Type *nbt)
 {
+  if (this->owned_base_type_ != nullptr
+      && this->owned_base_type_.get () != nbt)
+    {
+      this->owned_base_type_->destroy ();
+      this->owned_base_type_.reset ();
+    }
+
   this->pd_base_type = nbt;
   this->is_local_ = nbt->is_local ();
   AST_Decl::NodeType bnt = nbt->node_type ();
@@ -221,7 +228,10 @@ AST_Array::set_base_type (AST_Type *nbt)
       || bnt == AST_Decl::NT_map
       || bnt == AST_Decl::NT_param_holder)
     {
-      this->owns_base_type_ = true;
+      if (this->owned_base_type_.get () != nbt)
+        {
+          this->owned_base_type_.reset (nbt);
+        }
     }
 }
 
@@ -234,10 +244,10 @@ AST_Array::legal_for_primary_key () const
 void
 AST_Array::destroy ()
 {
-  if (this->owns_base_type_)
+  if (this->owned_base_type_ != nullptr)
     {
-      this->pd_base_type->destroy ();
-      delete this->pd_base_type;
+      this->owned_base_type_->destroy ();
+      this->owned_base_type_.reset ();
       this->pd_base_type = nullptr;
     }
 

@@ -166,12 +166,8 @@ private:
   bool unbounded_ {true};
   // Whether we are bounded or unbounded.
 
-  bool owns_key_type_ {};
-  // If our key type is anonymous array or map, we're
-  // responsible for destroying it.
-  bool owns_value_type_ {};
-  // If our value type is anonymous array or map, we're
-  // responsible for destroying it.
+  std::unique_ptr<AST_Type> owned_key_type_;
+  std::unique_ptr<AST_Type> owned_value_type_;
 
   /**
    * Annotations on the key type
