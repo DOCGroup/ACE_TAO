@@ -22,9 +22,10 @@
 
 #include "ConsumerC.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Containers.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
+
+#include <vector>
 
 /**
  * @class Notifier_i
@@ -89,7 +90,7 @@ public:
     CORBA::Long desired_value_ {};
   };
 
-  using CONSUMERS = ACE_Unbounded_Set<Consumer_Data>;
+  using CONSUMERS = std::vector<Consumer_Data>;
 
   using CONSUMER_MAP = ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex>;
 
