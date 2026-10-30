@@ -20,11 +20,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 #include "tao/LocalObject.h"
-#include "ace/SString.h"
 #include "tao/Objref_VarOut_T.h"
+
+#include <string>
+#include <unordered_map>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -72,10 +73,7 @@ public:
   //@}
 
 protected:
-  using Map = ACE_Hash_Map_Manager_Ex <ACE_CString, ACE_CString,
-                                       ACE_Hash <ACE_CString>,
-                                       ACE_Equal_To <ACE_CString>,
-                                       ACE_Null_Mutex>;
+  using Map = std::unordered_map<std::string, std::string>;
 
   /// The map
   Map map_;

@@ -18,13 +18,14 @@ TAO_Async_IOR_Table_Impl::async_find (::IORTable::Locate_ResponseHandler handler
   // We don't want the lock held during locate, so make it go out
   // of scope before then.
   {
-    ACE_CString key (object_key);
-    ACE_CString ior;
+    std::string const key (object_key);
+    std::string ior;
     TAO_AMH_Locate_ResponseHandler_var rh = handler;
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-    if (this->map_.find (key, ior) == 0)
+    Map::const_iterator const iter = this->map_.find (key);
+    if (iter != this->map_.end ())
       {
-        rh->forward_ior (ior.c_str(), false);
+        rh->forward_ior (iter->second.c_str (), false);
         return;
       }
     if (CORBA::is_nil (this->async_locator_.in ()))
