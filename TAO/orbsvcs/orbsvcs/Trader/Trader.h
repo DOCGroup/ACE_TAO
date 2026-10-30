@@ -30,6 +30,7 @@
 
 #include <deque>
 #include <string>
+#include <vector>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -505,7 +506,7 @@ using TAO_Offer_Map = ACE_Hash_Map_Manager_Ex<CORBA::ULong,
                                                ACE_Hash<CORBA::ULong>,
                                                ACE_Equal_To<CORBA::ULong>,
                                                ACE_Null_Mutex>;
-using TAO_String_Set = ACE_Unbounded_Set<CORBA::String_var>;
+using TAO_String_Set = std::vector<CORBA::String_var>;
 using TAO_String_Queue = std::deque<std::string>;
 
 // = Helpful operators.
