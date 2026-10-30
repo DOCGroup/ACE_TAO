@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_LABEL_AST_UNION_LABEL_HH
 #define _AST_UNION_LABEL_AST_UNION_LABEL_HH
 
+#include <memory>
+
 #include "TAO_IDL_FE_Export.h"
 #include "ace/iosfwd.h"
 
@@ -112,7 +114,7 @@ private:
   UnionLabel pd_label_kind;
   // Label kind.
 
-  AST_Expression *pd_label_val;
+  std::unique_ptr<AST_Expression> pd_label_val;
   // Label expression.
 };
 

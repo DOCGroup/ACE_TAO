@@ -5,6 +5,8 @@
 
 #include "fe_utils.h"
 
+#include <memory>
+
 class AST_Expression;
 
 class TAO_IDL_FE_Export AST_Fixed : public virtual AST_ConcreteType
@@ -30,8 +32,8 @@ public:
   AST_Expression *scale () const;
 
 private:
-  AST_Expression *pd_digits;
-  AST_Expression *pd_scale;
+  std::unique_ptr<AST_Expression> pd_digits;
+  std::unique_ptr<AST_Expression> pd_scale;
 };
 
 #endif  // AST_FIXED_H

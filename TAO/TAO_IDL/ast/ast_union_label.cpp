@@ -115,9 +115,7 @@ AST_UnionLabel::destroy ()
   // Otherwise (default label) our label value is 0.
   if (UL_label == this->pd_label_kind)
     {
-      this->pd_label_val->destroy ();
-      delete this->pd_label_val;
-      this->pd_label_val = nullptr;
+      this->pd_label_val.reset ();
     }
 }
 
@@ -132,11 +130,11 @@ AST_UnionLabel::label_kind () const
 AST_Expression *
 AST_UnionLabel::label_val ()
 {
-  return this->pd_label_val;
+  return this->pd_label_val.get ();
 }
 
 AST_Expression const *
 AST_UnionLabel::label_val () const
 {
-  return this->pd_label_val;
+  return this->pd_label_val.get ();
 }

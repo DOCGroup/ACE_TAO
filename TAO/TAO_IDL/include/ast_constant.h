@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_CONSTANT_AST_CONSTANT_HH
 #define _AST_CONSTANT_AST_CONSTANT_HH
 
+#include <memory>
+
 #include "ast_expression.h"
 #include "ast_decl.h"
 #include "global_extern.h"
@@ -122,7 +124,7 @@ public:
   bool annotatable () const override { return true; }
 
 protected:
-  AST_Expression *pd_constant_value;
+  std::unique_ptr<AST_Expression> pd_constant_value;
   // The value.
 
   AST_Expression::ExprType pd_et;

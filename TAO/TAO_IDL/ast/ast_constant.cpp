@@ -152,12 +152,7 @@ AST_Constant::ast_accept (ast_visitor *visitor)
 void
 AST_Constant::destroy ()
 {
-  if (this->pd_constant_value != nullptr)
-    {
-      this->pd_constant_value->destroy ();
-      delete this->pd_constant_value;
-      this->pd_constant_value = nullptr;
-    }
+  this->pd_constant_value.reset ();
 
   this->AST_Decl::destroy ();
 }
@@ -167,7 +162,7 @@ AST_Constant::destroy ()
 AST_Expression *
 AST_Constant::constant_value () const
 {
-  return this->pd_constant_value;
+  return this->pd_constant_value.get ();
 }
 
 AST_Expression::ExprType
