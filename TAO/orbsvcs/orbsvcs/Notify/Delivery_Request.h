@@ -6,7 +6,6 @@
 #include "orbsvcs/Notify/notify_serv_export.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 #include "orbsvcs/Notify/Event.h"
-#include <ace/Vector_T.h>
 #include <ace/Bound_Ptr.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +24,6 @@ namespace TAO_Notify
 class Delivery_Request;
 /// A reference-counted smart pointer to a Delivery_Request.
 using Delivery_Request_Ptr = ACE_Strong_Bound_Ptr<Delivery_Request, TAO_SYNCH_MUTEX>;
-
-using Delivery_Request_Queue = ACE_Unbounded_Queue<Delivery_Request_Ptr>;
 
 // Forward declarations of TAO_Notify classes/pointers/collections referenced
 // in this header
@@ -104,11 +101,6 @@ public:
 
   /// expose routing slip method
   void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
-
-  // Meaningless, but needed by ACE_Vector on some platforms (gcc2.x LynxOS)
-  bool operator == (const Delivery_Request & rhs) const;
-  // Meaningless, but needed by ACE_Vector on some platforms
-  bool  operator != (const Delivery_Request & rhs) const;
 
 private:
   /// No null constructor.

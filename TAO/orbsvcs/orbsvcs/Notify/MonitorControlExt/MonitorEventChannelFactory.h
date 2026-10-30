@@ -9,8 +9,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Vector_T.h"
 #include "ace/Monitor_Base.h"
+
+#include <vector>
 
 #include "orbsvcs/Notify/EventChannelFactory.h"
 #include "orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h"
@@ -91,7 +92,7 @@ private:
   TAO_SYNCH_RW_MUTEX mutex_;
   ACE_CString name_;
   Map map_;
-  ACE_Vector<ACE_CString> stat_names_;
+  std::vector<ACE_CString> stat_names_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -22,8 +22,9 @@
 
 #include "tao/Versioned_Namespace.h"
 
-#include "ace/Vector_T.h"
 #include "ace/Basic_Types.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +37,7 @@ namespace TAO_Notify
 class TAO_Notify_Serv_Export Bit_Vector
 {
   using BASIC_UINT_TYPE = ACE_UINT32;
-  using VECTOR_TYPE = ACE_Vector<BASIC_UINT_TYPE>;
+  using VECTOR_TYPE = std::vector<BASIC_UINT_TYPE>;
   static constexpr int BITS_PER_WORD = 32;
   static constexpr int BPW_LOG_2 = 5;
 public:

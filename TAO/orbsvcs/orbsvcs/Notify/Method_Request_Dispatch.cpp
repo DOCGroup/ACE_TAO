@@ -111,7 +111,8 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
   CORBA::ULong count;
   if (cdr.read_ulong (count))
   {
-    TAO_Notify::IdVec id_path (count);
+    TAO_Notify::IdVec id_path;
+    id_path.reserve (count);
     for (size_t nid = 0; ok && nid < count; ++nid)
     {
       TAO_Notify_Object::ID id = 0;

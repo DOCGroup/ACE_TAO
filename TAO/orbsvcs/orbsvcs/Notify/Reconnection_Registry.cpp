@@ -11,7 +11,7 @@
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
-#include "ace/Vector_T.h"
+#include <vector>
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -178,7 +178,7 @@ namespace TAO_Notify
   {
     TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
     CORBA::ORB_var orb = properties->orb ();
-    ACE_Vector <NotifyExt::ReconnectionRegistry::ReconnectionID> bad_ids;
+    std::vector<NotifyExt::ReconnectionRegistry::ReconnectionID> bad_ids;
 
     Reconnection_Registry_Type::ENTRY *entry;
     for (Reconnection_Registry_Type::ITERATOR iter (this->reconnection_registry_);
