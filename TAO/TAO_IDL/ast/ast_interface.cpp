@@ -1003,7 +1003,7 @@ AST_Interface::analyze_parentage ()
       && !this->imported ()
       && !in_tmpl_module)
     {
-      idl_global->mixed_parentage_interfaces ().enqueue_tail (this);
+      idl_global->mixed_parentage_interfaces ().push_back (this);
     }
 }
 

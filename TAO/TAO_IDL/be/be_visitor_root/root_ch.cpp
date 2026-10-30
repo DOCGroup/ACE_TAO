@@ -240,7 +240,8 @@ be_visitor_root_ch::gen_static_corba_overrides ()
 
   for (index = 0; index < size; ++index)
     {
-      idl_global->mixed_parentage_interfaces ().dequeue_head (i);
+      i = idl_global->mixed_parentage_interfaces ().front ();
+      idl_global->mixed_parentage_interfaces ().pop_front ();
 
       *o_ << be_nl
           << "extern " << be_global->stub_export_macro () << " void release ("

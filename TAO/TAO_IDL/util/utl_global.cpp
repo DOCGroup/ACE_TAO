@@ -987,7 +987,7 @@ IDL_GlobalData::dds4ccm_impl_fnames () const
   return this->dds4ccm_impl_fnames_;
 }
 
-ACE_Unbounded_Queue<AST_Interface *> &
+std::deque<AST_Interface *> &
 IDL_GlobalData::mixed_parentage_interfaces ()
 {
   return this->mixed_parentage_interfaces_;
@@ -1213,7 +1213,7 @@ IDL_GlobalData::fini ()
   this->dcps_type_info_map_.clear ();
 }
 
-ACE_Unbounded_Queue<AST_ValueType *> &
+std::deque<AST_ValueType *> &
 IDL_GlobalData::primary_keys ()
 {
   return this->primary_keys_;
@@ -1222,18 +1222,10 @@ IDL_GlobalData::primary_keys ()
 void
 IDL_GlobalData::check_primary_keys ()
 {
-  AST_ValueType *holder = nullptr;
-
-  while (!this->primary_keys_.is_empty ())
+  while (!this->primary_keys_.empty ())
     {
-      // Dequeue the element at the head of the queue.
-      if (this->primary_keys_.dequeue_head (holder) != 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) idl_global::check_primary_keys - "
-                      "dequeue_head failed\n"));
-          throw Bailout ();
-        }
+      AST_ValueType *holder = this->primary_keys_.front ();
+      this->primary_keys_.pop_front ();
 
       if (!holder->legal_for_primary_key ())
         {

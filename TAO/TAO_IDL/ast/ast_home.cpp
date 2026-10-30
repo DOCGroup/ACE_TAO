@@ -46,7 +46,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 
   if (pk != nullptr)
     {
-      idl_global->primary_keys ().enqueue_tail (pk);
+      idl_global->primary_keys ().push_back (pk);
     }
   else if (primary_key != nullptr)
     {

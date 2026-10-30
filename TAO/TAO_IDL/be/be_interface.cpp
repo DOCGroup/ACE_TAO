@@ -45,6 +45,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
+#include <deque>
+
 be_interface::be_interface (UTL_ScopedName *n,
                             AST_Type **ih,
                             long nih,
@@ -353,22 +355,18 @@ be_interface::redefine (AST_Interface *from)
 
   if (bi->has_mixed_parentage_)
     {
-      ACE_Unbounded_Queue<AST_Interface *> &q =
+      std::deque<AST_Interface *> &q =
         idl_global->mixed_parentage_interfaces ();
-      size_t slot = 0;
-      AST_Interface **t = nullptr;
 
       // The queue of interfaces with mixed parentage must
       // replace each interface that has been forward
       // declared, since the pointer existing in the queue
       // will be deleted after redefine() returns.
-      for (slot = 0; slot < q.size (); ++slot)
+      for (size_t slot = 0; slot < q.size (); ++slot)
         {
-          (void) q.get (t, slot);
-
-          if (*t == bi)
+          if (q[slot] == bi)
             {
-              (void) q.set (this, slot);
+              q[slot] = this;
               break;
             }
         }

@@ -79,6 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 #include "idl_version.h"
 
+#include <deque>
 #include <memory>
 #include <optional>
 #include <string>
@@ -593,7 +594,7 @@ public:
   std::vector<std::string> const & dds4ccm_impl_fnames () const;
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
 
-  ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces ();
+  std::deque<AST_Interface *> & mixed_parentage_interfaces ();
   // Accessor for the member
 
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
@@ -618,7 +619,7 @@ public:
   void fini ();
   // Do final cleanup just before process exits.
 
-  ACE_Unbounded_Queue<AST_ValueType *> &primary_keys ();
+  std::deque<AST_ValueType *> &primary_keys ();
   // Accessor for the member.
 
   void check_primary_keys ();
@@ -985,7 +986,7 @@ private:
   bool dcps_gen_zero_copy_read_ {};
   // Are we generating code insupport of DCPS zero-copy read data sequences?
 
-  ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
+  std::deque<AST_ValueType *> primary_keys_;
   // List of valuetypes used as a primary key.
 
   std::optional<std::string> recursion_start_;
@@ -1053,7 +1054,7 @@ private:
    * CORBA::is_nil, needed when the interface inherits versions from
    * both CORBA::Object and CORBA::AbstractBase.
    */
-  ACE_Unbounded_Queue<AST_Interface *> mixed_parentage_interfaces_;
+  std::deque<AST_Interface *> mixed_parentage_interfaces_;
 
   /// For quick access.
   AST_Module *corba_module_ {};
