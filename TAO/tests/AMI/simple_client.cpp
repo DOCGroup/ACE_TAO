@@ -17,8 +17,8 @@
 
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
-int shutdown_flag = 0;
-int debug = 0;
+bool shutdown_flag = false;
+bool debug = false;
 int result = 0;
 
 int
@@ -31,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -40,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        shutdown_flag = 1;
+        shutdown_flag = true;
         break;
       case '?':
       default:
@@ -64,10 +64,14 @@ public:
   Handler () = default;
 
   /// Destructor.
-  ~Handler () = default;
+  ~Handler () override = default;
+  Handler (Handler const &) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   void foo (CORBA::Long ami_return_val,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       if (debug)
         {
@@ -92,7 +96,7 @@ public:
         }
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"
@@ -101,7 +105,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThing& ex)
+      catch (A::DidTheRightThing const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
@@ -120,7 +124,7 @@ public:
               result = 1;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("ERROR");
           ACE_ERROR ((LM_ERROR,
@@ -129,26 +133,26 @@ public:
     };
 
 
-  void get_yadda (CORBA::Long result)
+  void get_yadda (CORBA::Long result) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *)
+  void get_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda ()
+  void set_yadda () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *)
+  void set_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
@@ -160,7 +164,7 @@ public:
                 "Callback method <set_yadda_excep> called:\n"));
   }
 
-  void inout_arg_test_excep (::Messaging::ExceptionHolder *)
+  void inout_arg_test_excep (::Messaging::ExceptionHolder *) override
   {
   }
 };
@@ -303,12 +307,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ami_test_var->shutdown ();
         }
 
-      poa_var->destroy (1,  // ethernalize objects
-                        0); // wait for completion
+      poa_var->destroy (true,  // ethernalize objects
+                        false); // wait for completion
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
