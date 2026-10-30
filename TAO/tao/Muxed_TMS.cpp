@@ -5,6 +5,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
@@ -259,27 +261,22 @@ TAO_Muxed_TMS::clear_cache_i ()
   REQUEST_DISPATCHER_TABLE::ITERATOR const end =
     this->dispatcher_table_.end ();
 
-  ACE_Unbounded_Stack <ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> > ubs;
+  std::vector<ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>> dispatchers;
 
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
        i != end;
        ++i)
     {
-      ubs.push ((*i).int_id_);
+      dispatchers.push_back ((*i).int_id_);
     }
 
   this->dispatcher_table_.unbind_all ();
-  size_t const sz = ubs.size ();
-
-  for (size_t k = 0 ; k != sz ; ++k)
+  while (!dispatchers.empty ())
     {
-      ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
-
-      if (ubs.pop (rd) == 0)
-        {
-          rd->connection_closed ();
-        }
+      ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd = dispatchers.back ();
+      dispatchers.pop_back ();
+      rd->connection_closed ();
     }
 
   return 0;
