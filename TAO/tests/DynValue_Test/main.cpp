@@ -497,7 +497,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // Expected with no factory registered
         }
 
-      CORBA::ValueFactoryBase *vf= 0;
+      CORBA::ValueFactoryBase *vf = nullptr;
       ACE_NEW_THROW_EX (vf, NestedValue_Factory, CORBA::NO_MEMORY ());
       analyzer.register_factory (vf);
 
