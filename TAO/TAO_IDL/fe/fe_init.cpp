@@ -75,7 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_root.h"
 
 #include <string>
-#include <string_view>
 #include <unordered_set>
 
 // Populate the global scope with all predefined entities.
@@ -269,7 +268,7 @@ fe_populate_global_scope ()
 void
 fe_populate_idl_keywords ()
 {
-  static constexpr std::string_view keywords[] =
+  static constexpr char const* keywords[] =
     {
       "ABSTRACT",
       "ALIAS",
@@ -344,7 +343,7 @@ fe_populate_idl_keywords ()
 
   std::unordered_set<std::string> &keywords_set = idl_global->idl_keywords ();
 
-  for (std::string_view const keyword : keywords)
+  for (char const* const keyword : keywords)
     {
       keywords_set.emplace (keyword);
     }
@@ -437,20 +436,19 @@ FE_extract_env_include_paths (std::vector<std::string> &list)
 #else
       constexpr char separator = ':';
 #endif
-      std::string_view const paths (env_paths);
-      std::string_view::size_type start = 0;
+      std::string const paths (env_paths);
+      std::string::size_type start = 0;
 
       do
         {
-          std::string_view::size_type const end = paths.find (separator, start);
-          std::string_view::size_type const length =
-            end == std::string_view::npos ? std::string_view::npos : end - start;
-          list.emplace_back (paths.substr (start, length));
-          if (end == std::string_view::npos)
+          std::string::size_type const end = paths.find (separator, start);
+          if (end == std::string::npos)
             {
+              list.emplace_back (paths.substr (start));
               break;
             }
 
+          list.emplace_back (paths.substr (start, end - start));
           start = end + 1;
         }
       while (true);

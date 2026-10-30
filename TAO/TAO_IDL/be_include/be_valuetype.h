@@ -16,7 +16,7 @@
 #include "ast_valuetype.h"
 #include "ast_field.h"
 
-#include <string_view>
+#include <string>
 
 class TAO_OutStream;
 
@@ -71,11 +71,11 @@ public:
   void gen_var_out_seq_decls ();
 
   /// Retrieve the fully scoped skel class name.
-  std::string_view full_obv_skel_name () const;
+  std::string const& full_obv_skel_name () const;
 
-  std::string_view field_pd_prefix () const;
+  std::string field_pd_prefix () const;
 
-  std::string_view field_pd_postfix () const;
+  std::string field_pd_postfix () const;
 
   // For building the name for private data fields.
   be_valuetype *statefull_inherit ();

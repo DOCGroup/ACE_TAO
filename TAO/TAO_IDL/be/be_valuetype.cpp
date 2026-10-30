@@ -160,7 +160,7 @@ be_valuetype::compute_fullobvskelname () const
 }
 
 // Retrieve the fully scoped skeleton name.
-std::string_view
+std::string const&
 be_valuetype::full_obv_skel_name () const
 {
   if (this->full_obv_skel_name_.empty ())
@@ -559,7 +559,7 @@ be_valuetype::gen_var_out_seq_decls ()
   os->gen_ifdef_macro (this->flat_name (),
                        "var_out");
 
-  std::string_view const lname = this->local_name ();
+  std::string const& lname = this->local_name ();
 
   *os << be_nl_2
       << "class " << lname << ";" << be_nl
@@ -572,13 +572,13 @@ be_valuetype::gen_var_out_seq_decls ()
 }
 
 // For building the pre and postfix of private data fields.
-std::string_view
+std::string
 be_valuetype::field_pd_prefix () const
 {
   return "_pd_";
 }
 
-std::string_view
+std::string
 be_valuetype::field_pd_postfix () const
 {
   return "";
