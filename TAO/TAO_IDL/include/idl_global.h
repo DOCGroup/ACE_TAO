@@ -66,7 +66,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _IDL_IDL_GLOBAL_HH
 
 // May of them could be forward declared..
-#include "ace/SString.h"
 #include "ace/Functor_String.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
@@ -397,15 +396,13 @@ public:
 
   // = Types & methods supporting DDS DCPS sequence definitions (from #pragma)
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
-  using DCPS_Key_List = ACE_Unbounded_Queue<ACE_TString>;
+  using DCPS_Key_List = std::vector<std::string>;
 
   struct DCPS_Data_Type_Info
   {
     UTL_ScopedName *name_;
     DCPS_Key_List   key_list_;
   };
-
-  using DCPS_Data_Type_Info_Iter = ACE_Unbounded_Queue_Iterator<ACE_TString>;
 
   using DCPS_Type_Info_Map = ACE_Hash_Map_Manager<std::string,
                                                    DCPS_Data_Type_Info*,

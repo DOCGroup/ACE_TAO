@@ -1396,10 +1396,9 @@ IDL_GlobalData::add_dcps_data_key (std::string const& id, std::string const& key
 
   if (this->dcps_type_info_map_.find (type_name, newinfo) == 0)
     {
-       // Add the new key field to the type.
-       newinfo->key_list_.enqueue_tail (
-         ACE_TEXT_CHAR_TO_TCHAR (key.c_str ()));
-       return true;
+      // Add the new key field to the type.
+      newinfo->key_list_.push_back (key);
+      return true;
     }
   else
     {
