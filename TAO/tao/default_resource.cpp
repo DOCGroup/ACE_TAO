@@ -44,16 +44,6 @@ TAO_Codeset_Parameters::TAO_Codeset_Parameters ()
 
 TAO_Codeset_Parameters::~TAO_Codeset_Parameters ()
 {
-  for (TAO_Codeset_Parameters::iterator i =
-         this->translators ();
-       !i.done ();
-       i.advance ())
-    {
-      ACE_TCHAR** element = nullptr;
-      if (i.next (element))
-        ACE_OS::free (*element);
-    }
-
   ACE_OS::free (this->native_);
 }
 
@@ -72,13 +62,9 @@ TAO_Codeset_Parameters::apply_to (TAO_Codeset_Descriptor_Base *csd)
   if (this->native () != nullptr)
       csd->ncs (this->native ());
 
-  ACE_TCHAR** element = nullptr;
-  for (TAO_Codeset_Parameters::iterator i = this->translators ();
-       !i.done ();
-       i.advance ())
+  for (std::basic_string<ACE_TCHAR> const& translator : this->translators_)
     {
-      if (i.next (element))
-        csd->add_translator (*element);
+      csd->add_translator (translator.c_str ());
     }
 }
 
@@ -92,7 +78,7 @@ TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
 void
 TAO_Codeset_Parameters::add_translator (const ACE_TCHAR*name)
 {
-  this->translators_.enqueue_tail (ACE_OS::strdup (name));
+  this->translators_.emplace_back (name);
 }
 
 TAO_Codeset_Parameters::iterator
