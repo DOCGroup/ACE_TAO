@@ -252,6 +252,11 @@ template <class KEY, class VALUE>
 class ACE_Map
 {
 public:
+  ACE_Map (ACE_Map const &) = delete;
+  ACE_Map (ACE_Map &&) = delete;
+  ACE_Map &operator= (ACE_Map const &) = delete;
+  ACE_Map &operator= (ACE_Map &&) = delete;
+
   // = Traits.
   using key_type = KEY;
   using mapped_type = VALUE;
@@ -416,11 +421,6 @@ protected:
   /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl () = 0;
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () = 0;
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Map<KEY, VALUE> &) = delete;
-  ACE_Map (const ACE_Map<KEY, VALUE> &) = delete;
 };
 
 /**
@@ -520,6 +520,11 @@ template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class RE
 class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 {
 public:
+  ACE_Map_Impl (ACE_Map_Impl const &) = delete;
+  ACE_Map_Impl (ACE_Map_Impl &&) = delete;
+  ACE_Map_Impl &operator= (ACE_Map_Impl const &) = delete;
+  ACE_Map_Impl &operator= (ACE_Map_Impl &&) = delete;
+
   // = Traits.
   using iterator_impl = ACE_Map_Impl_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, ITERATOR, ENTRY>;
   using reverse_iterator_impl = ACE_Map_Impl_Reverse_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, REVERSE_ITERATOR, ENTRY>;
@@ -684,11 +689,6 @@ protected:
   /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &) = delete;
-  ACE_Map_Impl (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &) = delete;
 };
 
 /**
@@ -788,6 +788,11 @@ template <class KEY, class VALUE, class KEY_ADAPTER>
 class ACE_Active_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
 public:
+  ACE_Active_Map_Manager_Adapter (ACE_Active_Map_Manager_Adapter const &) = delete;
+  ACE_Active_Map_Manager_Adapter (ACE_Active_Map_Manager_Adapter &&) = delete;
+  ACE_Active_Map_Manager_Adapter &operator= (ACE_Active_Map_Manager_Adapter const &) = delete;
+  ACE_Active_Map_Manager_Adapter &operator= (ACE_Active_Map_Manager_Adapter &&) = delete;
+
   // = Traits.
   using expanded_value = std::pair<KEY, VALUE>;
   using iterator_impl = ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>;
@@ -965,11 +970,6 @@ protected:
   /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &) = delete;
-  ACE_Active_Map_Manager_Adapter (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &) = delete;
 };
 
 /**
@@ -1069,6 +1069,11 @@ template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_
 class ACE_Hash_Map_Manager_Ex_Adapter : public ACE_Map<KEY, VALUE>
 {
 public:
+  ACE_Hash_Map_Manager_Ex_Adapter (ACE_Hash_Map_Manager_Ex_Adapter const &) = delete;
+  ACE_Hash_Map_Manager_Ex_Adapter (ACE_Hash_Map_Manager_Ex_Adapter &&) = delete;
+  ACE_Hash_Map_Manager_Ex_Adapter &operator= (ACE_Hash_Map_Manager_Ex_Adapter const &) = delete;
+  ACE_Hash_Map_Manager_Ex_Adapter &operator= (ACE_Hash_Map_Manager_Ex_Adapter &&) = delete;
+
   // = Traits.
   using iterator_impl = ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
   using reverse_iterator_impl = ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
@@ -1238,11 +1243,6 @@ protected:
   /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &) = delete;
-  ACE_Hash_Map_Manager_Ex_Adapter (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &) = delete;
 };
 
 /**
@@ -1342,6 +1342,11 @@ template <class KEY, class VALUE, class KEY_GENERATOR>
 class ACE_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
 public:
+  ACE_Map_Manager_Adapter (ACE_Map_Manager_Adapter const &) = delete;
+  ACE_Map_Manager_Adapter (ACE_Map_Manager_Adapter &&) = delete;
+  ACE_Map_Manager_Adapter &operator= (ACE_Map_Manager_Adapter const &) = delete;
+  ACE_Map_Manager_Adapter &operator= (ACE_Map_Manager_Adapter &&) = delete;
+
   // = Traits.
   using iterator_impl = ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
   using reverse_iterator_impl = ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
@@ -1511,11 +1516,6 @@ protected:
   /// Return reverse iterator.
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
   virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &) = delete;
-  ACE_Map_Manager_Adapter (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
