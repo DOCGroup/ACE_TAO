@@ -23,7 +23,8 @@
 #include "tao/PortableServer/POAManagerFactoryC.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/LocalObject.h"
-#include "ace/Unbounded_Set.h"
+
+#include <vector>
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -66,7 +67,7 @@ public:
 private:
   TAO_Object_Adapter &object_adapter_;
 
-  using POAMANAGERSET = ACE_Unbounded_Set < ::PortableServer::POAManager_ptr>;
+  using POAMANAGERSET = std::vector<::PortableServer::POAManager_ptr>;
 
   POAMANAGERSET poamanager_set_;
 };
