@@ -22,7 +22,7 @@
 
 #include "orbsvcs/PortableGroupC.h"
 
-#include "ace/Array_Base.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,7 +46,7 @@ struct TAO_PG_Factory_Node
   PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 };
 
-using TAO_PG_Factory_Set = ACE_Array_Base<TAO_PG_Factory_Node>;
+using TAO_PG_Factory_Set = std::vector<TAO_PG_Factory_Node>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

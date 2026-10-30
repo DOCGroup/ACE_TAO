@@ -256,7 +256,7 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set &factory_set,
       // some object group members may not have been destroyed yet.
       // Note that this size reduction is fast since no memory is
       // actually deallocated.
-      factory_set.size (ilen);
+      factory_set.resize (ilen);
     }
 }
 
@@ -315,13 +315,13 @@ TAO_PG_GenericFactory::delete_member (
                   // one.
                   size_t const new_len = len - 1;
                   node = factory_set[new_len]; // Memberwise copy
-                  factory_set.size (new_len);
+                  factory_set.resize (new_len);
                 }
               else
                 {
                   // A copy isn't necessary if the last member was
                   // deleted.
-                  factory_set.size (0);
+                  factory_set.clear ();
                 }
 
               return;
@@ -348,7 +348,7 @@ TAO_PG_GenericFactory::populate_object_group (
   TAO_PG_Factory_Set & factory_set)
 {
   CORBA::ULong const factory_infos_count = factory_infos.length ();
-  factory_set.size (factory_infos_count);
+  factory_set.resize (factory_infos_count);
 
   for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
     {

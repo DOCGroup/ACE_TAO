@@ -182,9 +182,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
   // No object group member of the object group with the given
   // ObjectGroupId resides at the location.  Add the object group
   // entry to array of object groups residing at the location.
-  size_t const groups_len = groups->size ();
-  groups->size (groups_len + 1);
-  (*groups)[groups_len] = group_entry;
+  groups->push_back (group_entry);
 
   // Don't bother checking for duplicates since a check is already
   // performed when binding to the location map above.
@@ -818,18 +816,8 @@ TAO_PG_ObjectGroupManager::remove_entry_from_groups (int to_be_removed,
                 ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::remove_entry_from_groups -")
                 ACE_TEXT ("Found group at position %i, size = %i\n"),
                 to_be_removed, groups->size ()));
-  // remove the element from the array and resize the array.
-  size_t const groups_len = groups->size ();
-  size_t j;
-  for (size_t i = to_be_removed; i < groups_len - 1; ++i)
-    {
-      j = i + 1;
-      (*groups)[i] = (*groups)[j];
-    }
-
-  size_t const new_len = groups_len - 1;
-  groups->size (new_len);
-  return new_len;
+  groups->erase (groups->begin () + to_be_removed);
+  return groups->size ();
 }
 
 void
