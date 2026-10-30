@@ -2,13 +2,10 @@
 #include "Foo_A_ClientEngine.h"
 
 Foo_A_Statistics::Foo_A_Statistics(unsigned num_clients)
-: num_clients_ (num_clients)
+: num_clients_ (num_clients),
+  expected_ {},
+  actual_ {}
 {
-  for (unsigned i = 0; i < 5; i++)
-    {
-      this->expected_[i] = 0;
-      this->actual_[i] = 0;
-    }
 }
 
 void

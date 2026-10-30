@@ -2,13 +2,7 @@
 #include "AppShutdown.h"
 
 
-Foo_A_i::Foo_A_i()
-{
-  for (unsigned i = 0; i < 5; i++)
-    {
-      this->op_count_[i] = 0;
-    }
-}
+Foo_A_i::Foo_A_i() = default;
 
 void
 Foo_A_i::op1()
