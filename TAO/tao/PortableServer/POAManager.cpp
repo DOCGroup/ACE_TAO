@@ -6,6 +6,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/IORInterceptor_Adapter.h"
 
+#include <algorithm>
+#include <new>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/POAManager.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -70,11 +73,9 @@ TAO_POA_Manager::activate_i ()
       // Find the poas that applied the custom servant dispatching
       // strategy to launch the dispatching threads.
 
-      for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end ();
-       ++iterator)
+      for (TAO_Root_POA *poa : this->poa_collection_)
         {
-          (*iterator)->poa_activated_hook ();
+          poa->poa_activated_hook ();
         }
     }
 
@@ -130,11 +131,8 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // same ORB as this POA the BAD_INV_ORDER exception is raised and
   // the state is not changed.
 
-  for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end ();
-       ++iterator)
+  for (TAO_Root_POA *poa : this->poa_collection_)
     {
-      TAO_Root_POA *poa = *iterator;
       // Notify the poas that applied the custom servant dispatching
       // strategy to stop the dispatching threads.
       poa->poa_deactivated_hook ();
@@ -205,11 +203,8 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
   // exception is raised and the state is not changed.
   if (wait_for_completion)
     {
-      for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-           iterator != this->poa_collection_.end ();
-           ++iterator)
+      for (TAO_Root_POA *poa : this->poa_collection_)
         {
-          TAO_Root_POA *poa = *iterator;
           poa->wait_for_completions (wait_for_completion);
         }
     }
@@ -257,11 +252,8 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
 
   if (wait_for_completion)
     {
-      for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-           iterator != this->poa_collection_.end ();
-           ++iterator)
+      for (TAO_Root_POA *poa : this->poa_collection_)
         {
-          TAO_Root_POA *poa = *iterator;
           poa->wait_for_completions (wait_for_completion);
         }
     }
@@ -274,7 +266,12 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
 int
 TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
 {
-  int const result = this->poa_collection_.remove (poa);
+  POA_COLLECTION::iterator const position =
+    std::find (this->poa_collection_.begin (), this->poa_collection_.end (), poa);
+  if (position == this->poa_collection_.end ())
+    return -1;
+
+  this->poa_collection_.erase (position);
 
   // The #if really only needs to go around the
   // "this->poa_manager_factory_.remove_poamanager (this);" line, but it's
@@ -283,21 +280,31 @@ TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
   // move back in.
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  if (result == 0)
+  if (this->poa_collection_.empty ())
     {
-      if (this->poa_collection_.is_empty ())
-        {
-          this->poa_manager_factory_.remove_poamanager (this);
-        }
+      this->poa_manager_factory_.remove_poamanager (this);
     }
 #endif
-  return result;
+  return 0;
 }
 
 int
 TAO_POA_Manager::register_poa (TAO_Root_POA *poa)
 {
-  return this->poa_collection_.insert (poa);
+  if (std::find (this->poa_collection_.begin (), this->poa_collection_.end (), poa)
+      != this->poa_collection_.end ())
+    return -1;
+
+  try
+    {
+      this->poa_collection_.push_back (poa);
+    }
+  catch (std::bad_alloc const&)
+    {
+      return -1;
+    }
+
+  return 0;
 }
 
 void
