@@ -50,7 +50,7 @@ be_field::field_type () const
 
 void
 be_field::gen_member_ostream_operator (TAO_OutStream *os,
-                                       std::string_view instance_name,
+                                       std::string const& instance_name,
                                        bool use_underscore,
                                        bool accessor)
 {

@@ -59,7 +59,7 @@ be_string::be_string (AST_Decl::NodeType nt,
 // Overridden method.
 void
 be_string::gen_member_ostream_operator (TAO_OutStream *os,
-                                        std::string_view instance_name,
+                                        std::string const& instance_name,
                                         bool use_underscore,
                                         bool accessor)
 {

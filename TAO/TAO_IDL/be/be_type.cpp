@@ -27,7 +27,6 @@
 #include "nr_extern.h"
 
 #include <string>
-#include <string_view>
 
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)
@@ -199,7 +198,7 @@ be_type::gen_ostream_operator (TAO_OutStream *,
 
 void
 be_type::gen_member_ostream_operator (TAO_OutStream *os,
-                                      std::string_view instance_name,
+                                      std::string const& instance_name,
                                       bool /* use_underscore */,
                                       bool accessor)
 {

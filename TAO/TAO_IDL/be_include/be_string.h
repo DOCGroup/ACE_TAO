@@ -17,7 +17,7 @@
 #include "be_type.h"
 #include "ast_string.h"
 
-#include <string_view>
+#include <string>
 
 class AST_Expression;
 class be_visitor;
@@ -33,7 +33,7 @@ public:
 
   // Overridden from class be_type.
   virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            std::string_view instance_name,
+                                            std::string const& instance_name,
                                             bool use_underscore,
                                             bool accessor = false) override;
 

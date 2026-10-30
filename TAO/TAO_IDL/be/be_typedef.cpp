@@ -94,7 +94,7 @@ be_typedef::base_node_type () const
 
 void
 be_typedef::gen_member_ostream_operator (TAO_OutStream *os,
-                                         std::string_view instance_name,
+                                         std::string const& instance_name,
                                          bool use_underscore,
                                          bool accessor)
 {
