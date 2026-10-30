@@ -12,7 +12,6 @@
 #include "union_branch.h"
 
 #include <string>
-#include <string_view>
 
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for

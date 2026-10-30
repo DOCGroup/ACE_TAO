@@ -12,7 +12,6 @@
 #include "union_branch.h"
 
 #include <string>
-#include <string_view>
 
 bool
 be_visitor_union_branch_public_reset_cs::requires_reset (be_type *node)

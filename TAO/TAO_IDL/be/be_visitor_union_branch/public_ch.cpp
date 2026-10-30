@@ -11,7 +11,6 @@
 
 #include "union_branch.h"
 
-#include <string_view>
 
 // **********************************************
 //  Visitor for union_branch in the client header file.
