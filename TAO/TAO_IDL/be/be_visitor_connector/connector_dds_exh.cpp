@@ -167,15 +167,9 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
   /// also done in visit_mirror_port(), but we must also do
   /// it here to catch a port interface that didn't come to
   /// us from an extended port or mirror port.
-  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
-        this->port_ifaces_);
-      !iter.done ();
-      iter.advance ())
+  for (be_interface *iface : this->port_ifaces_)
     {
-      be_interface **item = nullptr;
-      iter.next (item);
-
-      (*item)->dds_connector_traits_done (false);
+      iface->dds_connector_traits_done (false);
     }
 
   return 0;
@@ -210,15 +204,9 @@ be_visitor_connector_dds_exh::visit_mirror_port (
 
   /// Unset the flags in the port interfaces list so
   /// they can be used again in another port.
-  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
-         this->port_ifaces_);
-       !iter.done ();
-       iter.advance ())
+  for (be_interface *iface : this->port_ifaces_)
     {
-      be_interface **item = nullptr;
-      iter.next (item);
-
-      (*item)->dds_connector_traits_done (false);
+      iface->dds_connector_traits_done (false);
     }
 
   return 0;
@@ -404,6 +392,6 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
           << lname << ";";
 
       iface->dds_connector_traits_done (true);
-      this->port_ifaces_.enqueue_tail (iface);
+      this->port_ifaces_.push_back (iface);
     }
 }

@@ -14,6 +14,8 @@
 #ifndef _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_
 #define _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_
 
+#include <vector>
+
 class be_visitor_context;
 
 class be_visitor_connector_dds_exh
@@ -60,7 +62,7 @@ private:
 
   /// Have to keep a list of port interfaces so their
   /// dds
-  ACE_Unbounded_Queue<be_interface *> port_ifaces_;
+  std::vector<be_interface *> port_ifaces_;
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_ */
