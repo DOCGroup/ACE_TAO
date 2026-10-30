@@ -143,7 +143,7 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
       delete *iterator;
     }
 
-  this->protocol_factories_.reset ();
+  this->protocol_factories_.clear ();
 
   for (int i = 0; i < this->parser_names_count_; ++i)
     CORBA::string_free (this->parser_names_[i]);
@@ -229,7 +229,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             ACE_NEW_RETURN (item,
                             TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                             -1);
-            if (pset->insert (item) == -1)
+            if (TAO_ProtocolFactorySet_insert (*pset, item) == -1)
               TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
                           ACE_TEXT ("for %s: %m\n"),

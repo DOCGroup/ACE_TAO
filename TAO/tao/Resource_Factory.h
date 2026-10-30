@@ -23,9 +23,13 @@
 #include /**/ "tao/Versioned_Namespace.h"
 #include "tao/Basic_Types.h"
 
+#include <algorithm>
 #include <memory>
+#include <new>
+#include <stdexcept>
+#include <vector>
+
 #include "ace/Service_Object.h"
-#include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
@@ -89,9 +93,33 @@ private:
 
 // typedefs for containers containing the list of loaded protocol
 // factories.
-using TAO_ProtocolFactorySet = ACE_Unbounded_Set<TAO_Protocol_Item*>;
+using TAO_ProtocolFactorySet = std::vector<TAO_Protocol_Item*>;
 
-using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
+using TAO_ProtocolFactorySetItor = TAO_ProtocolFactorySet::iterator;
+
+inline int
+TAO_ProtocolFactorySet_insert (TAO_ProtocolFactorySet &protocol_factories,
+                               TAO_Protocol_Item *item)
+{
+  if (std::find (protocol_factories.begin (), protocol_factories.end (), item)
+      != protocol_factories.end ())
+    return 1;
+
+  try
+    {
+      protocol_factories.push_back (item);
+    }
+  catch (std::bad_alloc const &)
+    {
+      return -1;
+    }
+  catch (std::length_error const &)
+    {
+      return -1;
+    }
+
+  return 0;
+}
 
 // ****************************************************************
 

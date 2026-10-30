@@ -15,8 +15,6 @@
 #define TAO_ACCEPTOR_REGISTRY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Unbounded_Set.h"
-
 #include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -43,7 +41,7 @@ class TAO_MProfile;
 class TAO_Protocol_Factory;
 class TAO_Protocol_Item;
 
-using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item *>;
+using TAO_ProtocolFactorySetItor = std::vector<TAO_Protocol_Item *>::iterator;
 
 using TAO_AcceptorSetIterator = TAO_Acceptor**;
 
