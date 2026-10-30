@@ -3,10 +3,13 @@
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
-#include "ace/Unbounded_Set.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
+
+#include <algorithm>
+#include <memory>
+#include <new>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_Mcast_EH.inl"
@@ -106,7 +109,7 @@ TAO_ECG_Mcast_EH::shutdown ()
       (void) this->subscriptions_[i].dgram->close();
       delete this->subscriptions_[i].dgram;
     }
-  this->subscriptions_.size (0);
+  this->subscriptions_.clear ();
 
   return 0;
 }
@@ -186,9 +189,18 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
           inet_addr.set (udp_addr.port, udp_addr.ipaddr);
         }
 
-      // Ignore errors, if the element is in the set we simply ignore
-      // the problem...
-      (void) multicast_addresses.insert (inet_addr);
+      // Ignore duplicates and allocation failures, as before.
+      if (std::find (multicast_addresses.begin (), multicast_addresses.end (),
+                     inet_addr) == multicast_addresses.end ())
+        {
+          try
+            {
+              multicast_addresses.push_back (inet_addr);
+            }
+          catch (std::bad_alloc const &)
+            {
+            }
+        }
     }
 }
 
@@ -199,11 +211,14 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
   for (size_t i = 0; i < this->subscriptions_.size (); ++i)
     {
       ACE_INET_Addr multicast_group = this->subscriptions_[i].mcast_addr;
-      if (multicast_addresses.find (multicast_group))
+      std::vector<ACE_INET_Addr>::iterator const address =
+        std::find (multicast_addresses.begin (), multicast_addresses.end (),
+                   multicast_group);
+      if (address != multicast_addresses.end ())
         {
           // Remove from the list of subscriptions to be added,
           // because we already subscribe to it...
-          (void) multicast_addresses.remove (multicast_group);
+          multicast_addresses.erase (address);
           continue;
         }
 
@@ -214,11 +229,10 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
                                                ACE_Event_Handler::READ_MASK);
       (void) socket->close();
       delete socket;
-      // Move the deleted subscription out of the <subscriptions_>
-      // array by moving the last subscription in array into its place.
+      // Move the last subscription into the removed subscription's place.
       this->subscriptions_[i] =
         this->subscriptions_[this->subscriptions_.size () - 1];
-      this->subscriptions_.size (this->subscriptions_.size () - 1);
+      this->subscriptions_.pop_back ();
       --i;
     }
 
@@ -228,20 +242,27 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
 void
 TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 {
-  using Address_Iterator = ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
-  for (Address_Iterator k = multicast_addresses.begin ();
+  for (Address_Set::const_iterator k = multicast_addresses.begin ();
        k != multicast_addresses.end ();
        ++k)
     {
       Subscription new_subscription;
       new_subscription.mcast_addr = *k;
-      ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
+      std::unique_ptr<ACE_SOCK_Dgram_Mcast> socket_guard =
+        std::make_unique<ACE_SOCK_Dgram_Mcast> ();
+      new_subscription.dgram = socket_guard.get ();
+      try
+        {
+          this->subscriptions_.push_back (new_subscription);
+        }
+      catch (...)
+        {
+          (void) socket_guard->close ();
+          throw;
+        }
+      (void) socket_guard.release ();
 
-      size_t const subscriptions_size = this->subscriptions_.size ();
-      this->subscriptions_.size (subscriptions_size + 1);
-      this->subscriptions_[subscriptions_size] = new_subscription;
-
-      ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
+      ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_.back ().dgram;
 
       if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
         ORBSVCS_ERROR ((LM_ERROR,

@@ -20,8 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Set.h"
-#include "ace/Array_Base.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -30,6 +28,8 @@
 #include "orbsvcs/Event/ECG_Adapters.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -140,7 +140,7 @@ private:
   void update_consumer (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
 
-  using Address_Set = ACE_Unbounded_Set<ACE_INET_Addr>;
+  using Address_Set = std::vector<ACE_INET_Addr>;
 
   /// Helpers for updating multicast subscriptions based on changes in
   /// consumer subscriptions.
@@ -222,7 +222,7 @@ private:
     ACE_INET_Addr mcast_addr;
     ACE_SOCK_Dgram_Mcast *dgram {};
   };
-  using Subscriptions = ACE_Array_Base<Subscription>;
+  using Subscriptions = std::vector<Subscription>;
 
   /// List of multicast addresses we subscribe to and dgrams we use.
   /*
@@ -233,13 +233,13 @@ private:
    * not possible to subscribe to more than one mcast address on the same
    * socket.
    *
-   * Performance.  We use array to store subscriptions (mcast addr / dgram
+   * Performance.  We use a vector to store subscriptions (mcast addr / dgram
    * pairs).  If performance is not adequate, we should look into
    * using a hash map, keyed on file descriptors, instead.  When there
    * are many subscriptions, handle_input() is likely to be more
-   * efficient with a hash lookup than an array iteration for locating a
+   * efficient with a hash lookup than a vector iteration for locating a
    * target dgram.  Difference in costs of subscripton changes between
-   * hash map and array would need to be looked at as well, although
+   * hash map and vector would need to be looked at as well, although
    * it is probably highly dependent on the pattern of changes.
    */
   Subscriptions subscriptions_;
