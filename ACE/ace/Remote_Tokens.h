@@ -80,7 +80,7 @@ public:
    * Returns 0 on success, -1 on failure with @c errno == problem.
    */
   virtual int acquire (int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
+                       void (*sleep_hook)(void *) = nullptr,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::synch);
 
@@ -90,7 +90,7 @@ public:
    * Returns 0 on success (the token was acquired), and -1 with
    * EWOULDBLOCK if the token was already held.
    */
-  virtual int tryacquire (void (*sleep_hook)(void *) = 0);
+  virtual int tryacquire (void (*sleep_hook)(void *) = nullptr);
 
   /**
    * Renew the token by offering to release it if there are any other

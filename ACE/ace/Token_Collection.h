@@ -128,7 +128,7 @@ public:
    * hands.
    */
   virtual int acquire (int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
+                       void (*sleep_hook)(void *) = nullptr,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
 
@@ -136,16 +136,16 @@ public:
   /// parameters are passed to <token>::acquire.
   virtual int acquire (const ACE_TCHAR *token_name,
                        int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
+                       void (*sleep_hook)(void *) = nullptr,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
 
   /// Try to acquire all tokens in collection.
-  virtual int tryacquire (void (*sleep_hook)(void *) = 0);
+  virtual int tryacquire (void (*sleep_hook)(void *) = nullptr);
 
   /// Try to acquire @a token_name.
   virtual int tryacquire (const ACE_TCHAR *token_name,
-                          void (*sleep_hook)(void *) = 0);
+                          void (*sleep_hook)(void *) = nullptr);
 
   /**
    * Renews "atomically" all resources in the collection.  This is

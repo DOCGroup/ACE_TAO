@@ -626,8 +626,8 @@ public:
    */
   static void init_hook (ACE_OS_Log_Msg_Attributes &attributes
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
-                         , ACE_SEH_EXCEPT_HANDLER selector = 0
-                         , ACE_SEH_EXCEPT_HANDLER handler = 0
+                         , ACE_SEH_EXCEPT_HANDLER selector = nullptr
+                         , ACE_SEH_EXCEPT_HANDLER handler = nullptr
 # endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                          );
 
