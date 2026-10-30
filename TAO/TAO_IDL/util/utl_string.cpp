@@ -67,9 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "utl_err.h"
 
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
-
 #include "ace/OS_NS_ctype.h"
 
 #include <string>
@@ -135,7 +132,6 @@ UTL_String::compare (std::string const& lhs, std::string const& rhs)
 
   return result;
 }
-
 // Like the above but without error or warning message output.
 bool
 UTL_String::compare_quiet (std::string const& lhs, std::string const& rhs)
@@ -163,32 +159,4 @@ UTL_String::get_canonical_rep (std::string const& str)
     }
 
   return result;
-}
-
-//////////////////////////////////////////////////////////////////////
-
-UTL_String::UTL_String (char const* str)
-  : value_ (str != nullptr ? str : "")
-{
-}
-
-UTL_String::UTL_String (std::string value)
-  : value_ (std::move (value))
-{
-}
-
-UTL_String::~UTL_String () = default;
-
-void
-UTL_String::destroy ()
-{
-  this->value_.clear ();
-}
-
-// Compare two UTL_String *.
-// AST Dumping.
-void
-UTL_String::dump (ACE_OSTREAM_TYPE &o)
-{
-  o << this->value_;
 }

@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_global.h"
 #include "utl_scoped_name.h"
 
+#include <string>
+
 
 class AST_Decl;
 class AST_Interface;
@@ -76,7 +78,6 @@ class AST_Enum;
 class AST_Fixed;
 class AST_Union;
 class AST_UnionLabel;
-class UTL_String;
 class AST_Annotation_Decl;
 class AST_Annotation_Member;
 
@@ -378,7 +379,7 @@ public:
 
   // Report back-end error
   void back_end (long lineno,
-                 UTL_String *s);
+                 std::string const& s);
 
   // Report illegal infix operator error (they can be used
   // only with integer, floating point or fixed point expressions.

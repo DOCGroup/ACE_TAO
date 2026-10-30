@@ -768,11 +768,11 @@ be_generator::create_expr (ACE_CDR::ULong l,
 }
 
 AST_Expression *
-be_generator::create_expr (UTL_String *s)
+be_generator::create_expr (std::string s)
 {
   be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (s),
+                  be_expression (std::move (s), AST_Expression::EV_string),
                   nullptr);
 
   return retval;
@@ -801,11 +801,11 @@ be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-be_generator::create_expr (std::string const& s)
+be_generator::create_wstring_expr (std::string s)
 {
   be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (s),
+                  be_expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
 
   return retval;

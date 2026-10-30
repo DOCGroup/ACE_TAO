@@ -70,7 +70,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <string>
 
-class UTL_String;
 class UTL_Scope;
 class ast_visitor;
 class AST_Decl;
@@ -184,8 +183,6 @@ public:
           ACE_CDR::Char       cval;     // Contains char expression value.
           ACE_CDR::WChar      wcval;    // Contains wchar expression value.
           ACE_CDR::Octet      oval;     // Contains octet expr value.
-          UTL_String          *strval;  // Contains String * expr value.
-          char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
           ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
           ACE_CDR::Int8       int8val;  // Signed Byte Sized Integer
@@ -194,6 +191,7 @@ public:
 
       ExprType et {EV_none};
       Value u {};
+      std::string strval;
     };
 
  // Operations.
@@ -237,11 +235,8 @@ public:
 
   explicit AST_Expression (ACE_CDR::Octet o);
 
-  explicit AST_Expression (UTL_String *s);
-
-  explicit AST_Expression (char *s);
-
-  explicit AST_Expression (std::string const& s);
+  explicit AST_Expression (std::string s);
+  AST_Expression (std::string s, ExprType t);
 
   explicit AST_Expression (UTL_ScopedName *n);
 

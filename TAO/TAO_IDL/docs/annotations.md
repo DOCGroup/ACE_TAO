@@ -383,7 +383,7 @@ these lines would also need to be added:
     {
       const char *comment =
         dynamic_cast<AST_Annotation_Member *> ((*document)["comment"])->
-          value ()->ev ()->u.strval->get_string ();
+          value ()->ev ()->strval;
 
       bool deprecated =
         dynamic_cast<AST_Annotation_Member *> ((*document)["deprecated"])->

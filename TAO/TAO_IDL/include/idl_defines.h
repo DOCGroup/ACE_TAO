@@ -115,8 +115,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /**
  * This signals that the TAO IDL front end provides its modern C++ string API:
- * UTL_IdList::get_string_copy () returns std::string, and UTL_String::str ()
- * returns a const std::string reference. Include this header and test this macro
+ * UTL_IdList::get_string_copy () returns std::string, and string APIs use
+ * std::string directly. Include this header and test this macro
  * when a backend also supports older TAO IDL versions, where get_string_copy ()
  * returns an owning char * that must be released with delete [].
  */

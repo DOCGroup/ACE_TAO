@@ -754,11 +754,11 @@ AST_Generator::create_expr (ACE_CDR::ULong v,
 }
 
 AST_Expression *
-AST_Generator::create_expr (UTL_String *s)
+AST_Generator::create_expr (std::string s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (s),
+                  AST_Expression (std::move (s)),
                   nullptr);
 
   return retval;
@@ -787,20 +787,14 @@ AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-AST_Generator::create_expr (std::string const& s)
+AST_Generator::create_wstring_expr (std::string s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (s),
+                  AST_Expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
 
   return retval;
-}
-
-AST_Expression *
-AST_Generator::create_expr (char const *s)
-{
-  return this->create_expr (std::string (s));
 }
 
 AST_Expression *

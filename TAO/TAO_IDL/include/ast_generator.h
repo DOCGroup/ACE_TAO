@@ -302,10 +302,8 @@ public:
   virtual AST_Expression *create_expr (ACE_CDR::ULong v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr (UTL_String *s);
-
-  virtual AST_Expression *create_expr (std::string const& s);
-  virtual AST_Expression *create_expr (char const *s);
+  virtual AST_Expression *create_expr (std::string s);
+  virtual AST_Expression *create_wstring_expr (std::string s);
 
   virtual AST_Expression *create_expr (ACE_CDR::Char c);
 

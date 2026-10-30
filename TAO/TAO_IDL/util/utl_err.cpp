@@ -67,7 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_err.h"
 #include "utl_identifier.h"
-#include "utl_string.h"
 #include "global_extern.h"
 #include "nr_extern.h"
 #include "fe_extern.h"
@@ -1391,11 +1390,11 @@ UTL_Error::fixed_unsupported (AST_Fixed *d)
 
 void
 UTL_Error::back_end (long lineno,
-                     UTL_String *s)
+                     std::string const& s)
 {
   idl_error_header (EIDL_BACK_END,
                     lineno,
-                    s->get_string ());
+                    s);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }

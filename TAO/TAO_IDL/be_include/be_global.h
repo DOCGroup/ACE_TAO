@@ -24,7 +24,6 @@ class be_valuetype;
 class be_module;
 class be_interface;
 class be_interface_fwd;
-class UTL_String;
 class AST_PredefinedType;
 class AST_Generator;
 

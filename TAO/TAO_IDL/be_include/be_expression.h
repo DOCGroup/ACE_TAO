@@ -44,9 +44,8 @@ public:
   be_expression (ACE_CDR::ULong l,
                  AST_Expression::ExprType t);
 
-  explicit be_expression (UTL_String *s);
-
-  explicit be_expression (std::string const& s);
+  explicit be_expression (std::string s);
+  be_expression (std::string s, AST_Expression::ExprType t);
 
   explicit be_expression (ACE_CDR::Char c);
 

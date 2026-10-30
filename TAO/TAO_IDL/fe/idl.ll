@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL
  */
 
+#include <string>
+
 #include "global_extern.h"
 #include "nr_extern.h"
 #include "utl_strlist.h"
@@ -318,7 +320,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
-                                  UTL_String (tmp + 1),
+                                  std::string (tmp + 1),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }

@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 %{
 #include <utl_identifier.h>
 #include <utl_err.h>
-#include <utl_string.h>
 #include <utl_strlist.h>
 #include <utl_namelist.h>
 #include <utl_exprlist.h>
@@ -167,6 +166,8 @@ bool stack_based_lookup_for_primary_expr = false;
 %}
 
 %code requires {
+#include <string>
+#include <utility>
 #include <utl_strlist.h>
 }
 
@@ -201,7 +202,7 @@ bool stack_based_lookup_for_primary_expr = false;
   ACE_CDR::Char                 cval;           /* Char value           */
   ACE_CDR::WChar                wcval;          /* WChar value          */
   ACE_CDR::Fixed                fixval;         /* Fixed point value    */
-  UTL_String                    *sval;          /* String value         */
+  std::string                   *sval;          /* String value         */
   char                          *wsval;         /* WString value        */
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
@@ -1797,8 +1798,7 @@ interface_forward :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1);
 
-          if (ACE_OS::strcmp ($1->get_string ().c_str (),
-                              "TypeCode") == 0
+          if ($1->get_string () == "TypeCode"
               && !idl_global->in_main_file ())
             {
               AST_PredefinedType *pdt =
@@ -2276,15 +2276,14 @@ literal
         }
         | IDL_STRING_LITERAL
         {
-          $$ = idl_global->gen ()->create_expr ($1);
-          $1->destroy ();
+          $$ = idl_global->gen ()->create_expr (std::move (*$1));
           delete $1;
-          $1 = 0;
+          $1 = nullptr;
         }
         | IDL_WSTRING_LITERAL
         {
           char *wide_string = $1;
-          $$ = idl_global->gen ()->create_expr (wide_string);
+          $$ = idl_global->gen ()->create_wstring_expr (wide_string);
           ACE_OS::free (wide_string);
           $1 = 0;
         }
@@ -5424,7 +5423,7 @@ at_least_one_string_literal :
         IDL_STRING_LITERAL string_literals
         {
           ACE_NEW_RETURN ($$, UTL_StrList, 1);
-          $$->emplace_back ($1->get_string ());
+          $$->emplace_back (std::move (*$1));
           delete $1;
 
           if ($2 != nullptr)
@@ -5453,7 +5452,7 @@ string_literals
               $1 = nullptr;
             }
 
-          $$->emplace_back ($4->get_string ());
+          $$->emplace_back (std::move (*$4));
           delete $4;
         }
         | %empty
@@ -5476,7 +5475,7 @@ typeid_dcl
           else
             {
               d->set_id_with_typeid (
-                     $3->get_string ()
+                     *$3
                    );
             }
 
@@ -5484,9 +5483,8 @@ typeid_dcl
           delete $2;
           $2 = 0;
 
-          $3->destroy ();
           delete $3;
-          $3 = 0;
+          $3 = nullptr;
 
           $$ = 0;
         }
@@ -5515,7 +5513,7 @@ typeprefix_dcl
           else
             {
               d->set_prefix_with_typeprefix (
-                     $3->get_string ()
+                     *$3
                    );
             }
 
@@ -5523,9 +5521,8 @@ typeprefix_dcl
           delete $2;
           $2 = 0;
 
-          $3->destroy ();
           delete $3;
-          $3 = 0;
+          $3 = nullptr;
 
           $$ = 0;
         }
@@ -5794,7 +5791,7 @@ provides_decl : IDL_PROVIDES interface_type id
             }
           else
             {
-              int compare = 0;
+              bool is_object = false;
               nt = d->node_type ();
 
               switch (nt)
@@ -5818,13 +5815,11 @@ provides_decl : IDL_PROVIDES interface_type id
                   case AST_Decl::NT_pre_defined:
                     // Nothing else but CORBA::Object can have
                     // this identifier.
-                    compare =
-                      ACE_OS::strcmp (d->local_name ()->get_string ().c_str (),
-                                      "Object");
+                    is_object = d->local_name ()->get_string () == "Object";
 
                     // Simple provides port must use IDL interface
                     // or CORBA::Object.
-                    if (compare != 0)
+                    if (!is_object)
                       {
                         idl_global->err ()->interface_expected (d);
                         so_far_so_good = false;
@@ -5918,7 +5913,7 @@ uses_decl : uses_opt_multiple interface_type id
             }
           else
             {
-              int compare = 0;
+              bool is_object = false;
               nt = d->node_type ();
 
               switch (nt)
@@ -5942,13 +5937,11 @@ uses_decl : uses_opt_multiple interface_type id
                   case AST_Decl::NT_pre_defined:
                     // Nothing else but CORBA::Object can have
                     // this identifier.
-                    compare =
-                      ACE_OS::strcmp (d->local_name ()->get_string ().c_str (),
-                                      "Object");
+                    is_object = d->local_name ()->get_string () == "Object";
 
                     // Simple provides port must use IDL interface
                     // or CORBA::Object.
-                    if (compare != 0)
+                    if (!is_object)
                       {
                         idl_global->err ()->interface_expected (d);
                         so_far_so_good = false;
@@ -6981,7 +6974,7 @@ at_least_one_formal_parameter_name
         : formal_parameter_name formal_parameter_names
         {
           ACE_NEW_RETURN ($$, UTL_StrList, 1);
-          $$->emplace_back ($1->get_string ());
+          $$->emplace_back (std::move (*$1));
           delete $1;
 
           if ($2 != nullptr)
@@ -7005,7 +6998,7 @@ formal_parameter_names
               $1 = nullptr;
             }
 
-          $$->emplace_back ($3->get_string ());
+          $$->emplace_back (std::move (*$3));
           delete $3;
         }
         | %empty
@@ -7018,7 +7011,7 @@ formal_parameter_name
         : IDENTIFIER
         {
           ACE_NEW_RETURN ($$,
-                          UTL_String ($1),
+                          std::string ($1),
                           1);
         }
         ;

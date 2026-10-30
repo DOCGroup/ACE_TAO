@@ -16,7 +16,6 @@
 #include "idl_defines.h"
 #include "utl_identifier.h"
 #include "utl_idlist.h"
-#include "utl_string.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "../../tao/Version.h"
@@ -684,11 +683,11 @@ TAO_OutStream::print (AST_Expression *expr)
       break;
     case AST_Expression::EV_string:
       *this << '"'
-            << ev->u.strval->get_string ()
+            << ev->strval
             << '"';
       break;
     case AST_Expression::EV_wstring:
-      this->TAO_OutStream::print ("L\"%s\"", ev->u.wstrval);
+      this->TAO_OutStream::print ("L\"%s\"", ev->strval.c_str ());
       break;
     case AST_Expression::EV_enum:
       this->print (expr->n ());

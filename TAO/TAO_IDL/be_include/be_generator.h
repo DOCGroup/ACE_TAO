@@ -230,9 +230,8 @@ public:
   AST_Expression *create_expr (ACE_CDR::ULong v,
                                        AST_Expression::ExprType t) override;
 
-  AST_Expression *create_expr (UTL_String *s) override;
-
-  AST_Expression *create_expr (std::string const& s) override;
+  AST_Expression *create_expr (std::string s) override;
+  AST_Expression *create_wstring_expr (std::string s) override;
 
   AST_Expression *create_expr (ACE_CDR::Char c) override;
 

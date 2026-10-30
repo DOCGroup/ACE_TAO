@@ -14,6 +14,8 @@
 #include "be_expression.h"
 #include "be_visitor.h"
 
+#include <utility>
+
 be_expression::be_expression (UTL_ScopedName *n)
   : AST_Expression (n)
 {
@@ -65,13 +67,13 @@ be_expression::be_expression (ACE_CDR::ULong l,
 {
 }
 
-be_expression::be_expression (UTL_String *s)
-  : AST_Expression (s)
+be_expression::be_expression (std::string s)
+  : AST_Expression (std::move (s))
 {
 }
 
-be_expression::be_expression (std::string const& s)
-  : AST_Expression (s)
+be_expression::be_expression (std::string s, ExprType t)
+  : AST_Expression (std::move (s), t)
 {
 }
 

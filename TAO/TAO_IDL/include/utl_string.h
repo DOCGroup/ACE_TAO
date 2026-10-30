@@ -69,47 +69,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 
-#include "ace/iosfwd.h"
-  /* Basic_Types.h are needed in QNX for size_t type. */
-#include "ace/Basic_Types.h"
-
 class TAO_IDL_FE_Export UTL_String
 {
   // =TITLE
   //  UTL_String
   // =DESCRIPTION
-  //  string class to store identifiers
+  //  String comparison and canonicalization helpers.
 public:
-  UTL_String () = default;
-
-  // Compatibility with the checked-in lex/yacc generated parser sources.
-  explicit UTL_String (char const* str);
-
-  explicit UTL_String (std::string value);
-
-  UTL_String (UTL_String const&) = delete;
-  UTL_String (UTL_String&&) = delete;
-  UTL_String& operator= (UTL_String const&) = delete;
-  UTL_String& operator= (UTL_String&&) = delete;
-
-  virtual ~UTL_String ();
-
-  virtual void destroy ();
-  // Cleanup function.
-
-  virtual void dump (ACE_OSTREAM_TYPE &o);
-  // Dump to the ostream.
-
-  std::string& get_string ()
-  {
-    return this->value_;
-  }
-  std::string const& get_string () const
-  {
-    return this->value_;
-  }
-  // Get contents of utl_string as a standard string.
-
   static bool strcmp_caseless (
     std::string const& lhs,
     std::string const& rhs,
@@ -118,16 +84,12 @@ public:
   // true if match only true due to ignoring case differences.
 
   static bool compare (std::string const& lhs, std::string const& rhs);
-  // Compare two const char * (like the UTL_String compare)
+  // Compare two strings and report case-only differences.
 
   static bool compare_quiet (std::string const& lhs, std::string const& rhs);
   // Like the above but without error or warning message output.
 
   static std::string get_canonical_rep (std::string const& str);
-
-private:
-  // Data
-  std::string value_;
 };
 
 #endif           // _STRING_STRING_HH

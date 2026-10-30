@@ -74,7 +74,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_err.h"
 #include "utl_scope.h"
-#include "utl_string.h"
 
 #include "nr_extern.h"
 #include "global_extern.h"
@@ -83,6 +82,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
+#include <utility>
 
 AST_Expression::ExprType
 AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
@@ -172,16 +173,13 @@ AST_Expression::AST_Expression (AST_Expression *v,
   this->fill_definition_details ();
   enum_parent (v->enum_parent ());
 
-  // If we are here because one string constant has
-  // another one as its rhs, we must copy the UTL_String
-  // so both can be destroyed at cleanup.
+  // Copy string literal values into the new expression value.
   if (EV_string == t)
     {
       ACE_NEW (this->pd_ev,
               AST_ExprValue);
 
-      ACE_NEW (this->pd_ev->u.strval,
-               UTL_String (v->pd_ev->u.strval->get_string ()));
+      this->pd_ev->strval = v->pd_ev->strval;
 
       this->pd_ev->et = EV_string;
     }
@@ -190,8 +188,8 @@ AST_Expression::AST_Expression (AST_Expression *v,
       ACE_NEW (this->pd_ev,
               AST_ExprValue);
 
-      this->pd_ev->u.wstrval = ACE::strnew (v->pd_ev->u.wstrval);
-      this->pd_ev->et = EV_string;
+      this->pd_ev->strval = v->pd_ev->strval;
+      this->pd_ev->et = EV_wstring;
     }
   else
     {
@@ -472,30 +470,13 @@ AST_Expression::AST_Expression (ACE_CDR::Octet ov)
   this->pd_ev->u.oval = ov;
 }
 
-// An AST_Expression denoting a string (char * encapsulated as a String).
-AST_Expression::AST_Expression (UTL_String *sv)
-  : pd_ec (EC_none),
-    pd_ev (nullptr),
-    pd_v1 (nullptr),
-    pd_v2 (nullptr),
-    pd_n (nullptr),
-    tdef (nullptr)
+// An AST_Expression denoting a string literal.
+AST_Expression::AST_Expression (std::string sv)
+  : AST_Expression (std::move (sv), EV_string)
 {
-  this->fill_definition_details ();
-
-  ACE_NEW (this->pd_ev,
-           AST_ExprValue);
-
-  UTL_String *new_str = nullptr;
-  ACE_NEW (new_str,
-           UTL_String (sv->get_string ()));
-
-  this->pd_ev->u.strval = new_str;
-  this->pd_ev->et = EV_string;
 }
 
-// An AST_Expression denoting a wide string.
-AST_Expression::AST_Expression (std::string const& sv)
+AST_Expression::AST_Expression (std::string sv, ExprType t)
   : pd_ec (EC_none),
     pd_ev (nullptr),
     pd_v1 (nullptr),
@@ -508,8 +489,15 @@ AST_Expression::AST_Expression (std::string const& sv)
   ACE_NEW (this->pd_ev,
            AST_ExprValue);
 
-  this->pd_ev->et = EV_wstring;
-  this->pd_ev->u.wstrval = ACE::strndup (sv.c_str (), sv.size ());
+  this->pd_ev->et = t;
+  if (t == EV_string)
+    {
+      this->pd_ev->strval = std::move (sv);
+    }
+  else if (t == EV_wstring)
+    {
+      this->pd_ev->strval = std::move (sv);
+    }
 }
 
 AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
@@ -2444,10 +2432,10 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       copy->u.oval = this->pd_ev->u.oval;
       break;
     case EV_string:
-      copy->u.strval = this->pd_ev->u.strval;
+      copy->strval = this->pd_ev->strval;
       break;
     case EV_wstring:
-      copy->u.wstrval = this->pd_ev->u.wstrval;
+      copy->strval = this->pd_ev->strval;
       break;
     case EV_fixed:
       copy->u.fixedval = this->pd_ev->u.fixedval;
@@ -2606,10 +2594,9 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_bool:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_string:
-      return pd_ev->u.strval->get_string ()
-        == vc->ev ()->u.strval->get_string ();
+      return pd_ev->strval == vc->ev ()->strval;
     case EV_wstring:
-      return !ACE_OS::strcmp (pd_ev->u.wstrval, vc->ev ()->u.wstrval);
+      return pd_ev->strval == vc->ev ()->strval;
     case EV_longlong:
       return pd_ev->u.llval == vc->ev ()->u.llval;
     case EV_ulonglong:
@@ -2718,14 +2705,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
       o << (ev->u.bval == true ? "TRUE" : "FALSE");
       return;
     case AST_Expression::EV_string:
-      if (ev->u.strval != nullptr)
-        {
-          ev->u.strval->dump (o);
-        }
-      else
-        {
-          o << "(null string)";
-        }
+      o << ev->strval;
       return;
     case AST_Expression::EV_longlong:
       o << ev->u.llval;
@@ -2871,20 +2851,6 @@ AST_Expression::ast_accept (ast_visitor *visitor)
 void
 AST_Expression::destroy ()
 {
-  if (nullptr != this->pd_ev)
-    {
-      if (EV_string == this->pd_ev->et)
-        {
-          this->pd_ev->u.strval->destroy ();
-          delete this->pd_ev->u.strval;
-          this->pd_ev->u.strval = nullptr;
-        }
-      else if (EV_wstring == this->pd_ev->et)
-        {
-          ACE::strdelete (this->pd_ev->u.wstrval);
-          this->pd_ev->u.wstrval = nullptr;
-        }
-    }
   delete this->pd_ev;
   this->pd_ev = nullptr;
 

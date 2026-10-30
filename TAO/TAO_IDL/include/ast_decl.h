@@ -78,7 +78,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class Identifier;
 class UTL_Scope;
-class UTL_String;
 class ast_visitor;
 
 /**

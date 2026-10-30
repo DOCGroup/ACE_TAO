@@ -290,9 +290,9 @@ annotation_tests ()
     AST_Annotation_Member *value =
       t.get_annotation_member (string_annotation, "value");
 
-    UTL_String test_string ("This is some text");
-    t.assert_annotation_member_value<UTL_String*, UTL_String*>
-      (value, &test_string);
+    std::string test_string ("This is some text");
+    t.assert_annotation_member_value<std::string, std::string>
+      (value, test_string);
   } catch (Failed const &) {}
 
   AST_Expression *constant_annotation_x = 0;
@@ -682,23 +682,23 @@ annotation_tests ()
     AST_Annotation_Member *member;
     AST_Annotation_Appl *annotation;
 
-    UTL_String first_string ("This is some text");
+    std::string first_string ("This is some text");
     annotation = t.assert_annotation_appl (value, 0, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String *, UTL_String *>
-      (member, &first_string);
+    t.assert_annotation_member_value <std::string, std::string>
+      (member, first_string);
 
-    UTL_String second_string ("Something else");
+    std::string second_string ("Something else");
     annotation = t.assert_annotation_appl (value, 1, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String *, UTL_String *>
-      (member, &second_string);
+    t.assert_annotation_member_value <std::string, std::string>
+      (member, second_string);
 
-    UTL_String third_string ("One last thing");
+    std::string third_string ("One last thing");
     annotation = t.assert_annotation_appl (value, 2, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String *, UTL_String *>
-      (member, &third_string);
+    t.assert_annotation_member_value <std::string, std::string>
+      (member, third_string);
   } catch (Failed const &) {}
 
   try {
