@@ -12,7 +12,6 @@
 #include "valuetype.h"
 
 #include <string>
-#include <string_view>
 
 // **********************************************
 //  Visitor for field in the client inline file.

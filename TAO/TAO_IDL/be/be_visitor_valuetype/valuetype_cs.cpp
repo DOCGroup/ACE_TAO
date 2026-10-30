@@ -12,7 +12,6 @@
 #include "valuetype.h"
 
 #include <string>
-#include <string_view>
 
 // ************************************************************
 // Valuetype visitor for client stubs.

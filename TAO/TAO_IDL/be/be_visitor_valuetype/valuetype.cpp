@@ -12,7 +12,6 @@
 #include "valuetype.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -952,10 +951,10 @@ be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
 {
  if (node->local_name ().substr (0, 4) == "AMH_")
    {
-     std::string_view const full_name = node->full_name ();
-     std::string_view::size_type const last_E = full_name.rfind ('E');
+     std::string const& full_name = node->full_name ();
+     std::string::size_type const last_E = full_name.rfind ('E');
 
-     if (last_E != std::string_view::npos
+     if (last_E != std::string::npos
          && full_name.substr (last_E) == "ExceptionHolder")
        {
          return true;

@@ -15,7 +15,7 @@
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CH_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CH_H_
 
-#include <string_view>
+#include <string>
 
 /**
  * @class be_visitor_valuetype_field_ch
@@ -84,13 +84,13 @@ public:
   int visit_union (be_union *node) override;
 
   /// print additional material around the field (e.g. virtual before)
-  void setenclosings (std::string_view pre, std::string_view post);
-  std::string_view pre_op () const;
-  std::string_view post_op () const;
+  void setenclosings (std::string const& pre, std::string const& post);
+  std::string const& pre_op () const;
+  std::string const& post_op () const;
 
 private:
-  std::string_view pre_op_ {};
-  std::string_view post_op_ {};
+  std::string pre_op_ {};
+  std::string post_op_ {};
   AST_Field::Visibility visibility_;
 };
 

@@ -12,8 +12,6 @@
 #include "valuetype.h"
 #include "nr_extern.h"
 
-#include <string_view>
-
 // ************************************************************
 // Interface visitor for server skeletons.
 // ************************************************************
@@ -48,7 +46,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  std::string_view const full_skel_name =
+  std::string const& full_skel_name =
     this->generate_full_skel_name (node);
 
   TAO_INSERT_COMMENT (os);
@@ -56,14 +54,14 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
   // each case.
-  char const *local_name_prefix = "";
+  std::string local_name_prefix;
 
   if (!node->is_nested ())
     {
       local_name_prefix = "POA_";
     }
 
-  std::string_view const node_local_name =
+  std::string const& node_local_name =
     this->generate_local_name (node);
 
   *os << full_skel_name << "::"
@@ -119,13 +117,13 @@ be_visitor_valuetype_ss::visit_eventtype (be_eventtype *node)
   return this->visit_valuetype (node);
 }
 
-std::string_view
+std::string const&
 be_visitor_valuetype_ss::generate_local_name (be_valuetype *node)
 {
   return node->local_name ();
 }
 
-std::string_view
+std::string const&
 be_visitor_valuetype_ss::generate_full_skel_name (be_valuetype *node)
 {
   return node->full_skel_name ();
