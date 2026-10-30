@@ -13,8 +13,6 @@
 #ifndef TAO_BE_VISITOR_ALIAS_TYPECODE_H
 #define TAO_BE_VISITOR_ALIAS_TYPECODE_H
 
-#include <string_view>
-
 namespace TAO
 {
   /**
