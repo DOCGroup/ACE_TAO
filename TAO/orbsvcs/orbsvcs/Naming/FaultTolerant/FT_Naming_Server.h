@@ -24,6 +24,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "orbsvcs/FT_NamingReplicationC.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -206,8 +207,8 @@ protected:
   TAO_FTNS_Notifier ior_notifier_;
   TAO_FTNS_Notifier info_notifier_;
 
-  ACE_Unbounded_Queue<FT_Naming::ReplicaInfo> u_iors_;
-  ACE_Unbounded_Queue<FT_Naming::UpdateInfoSeq*> u_infos_;
+  std::deque<FT_Naming::ReplicaInfo> u_iors_;
+  std::deque<FT_Naming::UpdateInfoSeq*> u_infos_;
   TAO_SYNCH_MUTEX ior_lock_;
   TAO_SYNCH_MUTEX info_lock_;
 };
