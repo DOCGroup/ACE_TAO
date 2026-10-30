@@ -4,18 +4,6 @@
 
 
 template <typename T>
-ServantList<T>::ServantList()
-{
-}
-
-
-template <typename T>
-ServantList<T>::~ServantList()
-{
-}
-
-
-template <typename T>
 void
 ServantList<T>::create_and_activate(unsigned                num_servants,
                                     CORBA::ORB_ptr          orb,

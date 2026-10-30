@@ -11,9 +11,7 @@ AppShutdown::AppShutdown()
 }
 
 
-AppShutdown::~AppShutdown()
-{
-}
+AppShutdown::~AppShutdown() = default;
 
 
 void
@@ -60,7 +58,7 @@ AppShutdown::client_done()
       // is a poor-man version of "wait until the CSD request queue drains".
       ACE_OS::sleep(1);
       this->orb_shutdown_task_.orb(this->orb_.in());
-      if (this->orb_shutdown_task_.open(0) != 0)
+      if (this->orb_shutdown_task_.open() != 0)
         {
           ACE_ERROR((LM_ERROR, "(%P|%t) AppShutdown failed to create orb "\
             "shutdown thread.\n"));
