@@ -5254,8 +5254,8 @@ yyreduce:
                 {
                 default:
                 case IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE:
-                  if (idl_global->unknown_annotations_seen_.insert (
-                        id.get_string ()).second)
+                  if (!idl_global->unknown_annotations_seen_.insert (
+                         id.get_string ()).second)
                     {
                       break;
                     }
