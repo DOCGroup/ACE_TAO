@@ -92,7 +92,7 @@ public:
   // This also calls the base class version.
   void redefine (AST_Structure *from) override;
 
-  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
+  bool in_recursion (std::vector<AST_Type *> &list) override;
   // Are we or the parameter node involved in some kind of recursion?
 
   // Data Accessors.

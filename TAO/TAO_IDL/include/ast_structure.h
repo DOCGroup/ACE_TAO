@@ -77,8 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 #include "utl_scope.h"
-#include "ace/Unbounded_Queue.h"
-
 #include <vector>
 
 
@@ -122,7 +120,7 @@ public:
   bool is_local () override;
   // Overwrite the is_local method.
 
-  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
+  bool in_recursion (std::vector<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
   int contains_wstring () override;

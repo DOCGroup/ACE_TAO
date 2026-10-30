@@ -170,12 +170,12 @@ AST_Map::AST_Map (AST_Expression *ms,
 // Public operations.
 
 bool
-AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Map::in_recursion (std::vector<AST_Type *> &list)
 {
-  if (list.is_empty ()) // only structs, unions and valuetypes can be recursive
+  if (list.empty ()) // only structs, unions and valuetypes can be recursive
     return false;
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   AST_Type *key_type = dynamic_cast<AST_Type*> (this->key_type ());
   AST_Type *val_type = dynamic_cast<AST_Type*> (this->value_type());
@@ -226,10 +226,9 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type** recursable_type = nullptr;
-  list.get (recursable_type, 0);
-  if (key_type->full_name () == (*recursable_type)->full_name ()
-      || val_type->full_name () == (*recursable_type)->full_name ())
+  AST_Type *recursable_type = list.front ();
+  if (key_type->full_name () == recursable_type->full_name ()
+      || val_type->full_name () == recursable_type->full_name ())
     {
       // They match.
       recursion_found = true;

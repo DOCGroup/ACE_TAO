@@ -129,7 +129,7 @@ AST_Type::compute_size_type ()
 }
 
 bool
-AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> & /*list*/)
+AST_Type::in_recursion (std::vector<AST_Type *> & /*list*/)
 {
   // By default we are not involved in recursion.
   return false;
@@ -365,18 +365,11 @@ AST_Type::nested_name (std::string const& local_name,
 
 bool
 AST_Type::match_names (AST_Type *t,
-                       ACE_Unbounded_Queue<AST_Type *> const &list) const
+                       std::vector<AST_Type *> const &list) const
 {
-  for (ACE_Unbounded_Queue_Const_Iterator<AST_Type *> iter (list);
-       !iter.done ();
-       (void) iter.advance ())
+  for (AST_Type *type : list)
     {
-      // Queue element.
-      AST_Type **temp = nullptr;
-
-      (void) iter.next (temp);
-
-      if (t->full_name () == (*temp)->full_name ())
+      if (t->full_name () == type->full_name ())
         {
           return true;
         }

@@ -135,7 +135,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     {
       if (ih[i]->node_type () == AST_Decl::NT_param_holder)
         {
-          this->param_holders_.enqueue_tail (ih[i]);
+          this->param_holders_.push_back (ih[i]);
         }
 
       FE_Utils::tmpl_mod_ref_check (this, ih[i]);
@@ -1010,23 +1010,16 @@ AST_Interface::ami4ccm_uses (AST_Interface *implied)
 void
 AST_Interface::destroy ()
 {
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> i (
-         this->param_holders_);
-       !i.done ();
-       (void) i.advance ())
+  for (AST_Type *t : this->param_holders_)
     {
-      AST_Type **tt = nullptr;
-      i.next (tt);
-      AST_Type *t = *tt;
       t->destroy ();
       delete t;
-      t = nullptr;
     }
 
   // The destroy() we are in gets called twice if we start from
   // be_valuetype or be_eventtype. This line keeps us from
   // iterating over null pointers the 2nd time.
-  this->param_holders_.reset ();
+  this->param_holders_.clear ();
 
   delete [] this->pd_inherits;
   this->pd_inherits = nullptr;

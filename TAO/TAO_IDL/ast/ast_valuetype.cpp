@@ -63,7 +63,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     {
       if (supports[i]->node_type () == AST_Decl::NT_param_holder)
         {
-          this->param_holders_.enqueue_tail (supports[i]);
+          this->param_holders_.push_back (supports[i]);
         }
 
       FE_Utils::tmpl_mod_ref_check (this, supports[i]);
@@ -73,7 +73,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     {
       if (inherits_concrete->node_type () == AST_Decl::NT_param_holder)
         {
-          this->param_holders_.enqueue_tail (inherits_concrete);
+          this->param_holders_.push_back (inherits_concrete);
         }
     }
 }
@@ -81,7 +81,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
 AST_ValueType::~AST_ValueType () = default;
 
 bool
-AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_ValueType::in_recursion (std::vector<AST_Type *> &list)
 {
   bool self_test = (list.size () == 0);
 
@@ -108,10 +108,9 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       else
       {
         // get the head element which is the type being tested
-        AST_Type** recursable_type = nullptr;
-        list.get (recursable_type, 0);
+        AST_Type *recursable_type = list.front ();
         // Check if we are the possibly recursive type being tested
-        if (this->full_name () == (*recursable_type)->full_name ())
+        if (this->full_name () == recursable_type->full_name ())
         {
           // match, so we're recursive
           idl_global->recursive_type_seen_ = true;
@@ -125,7 +124,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
   }
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();

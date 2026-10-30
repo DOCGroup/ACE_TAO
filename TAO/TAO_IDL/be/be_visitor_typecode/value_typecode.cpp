@@ -30,7 +30,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
   be_visitor_typecode_defn::QNode const * const qnode =
     this->queue_lookup (this->tc_queue_, node);
 
-  ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+  std::vector<AST_Type *> recursion_queue;
   bool in_recursion = node->in_recursion (recursion_queue);
   if (qnode && in_recursion)
     {
@@ -217,7 +217,7 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
       be_visitor_typecode_defn::QNode const * const qnode =
         this->queue_lookup (this->tc_queue_, node);
 
-      ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+      std::vector<AST_Type *> recursion_queue;
       recursion_queue.enqueue_tail (node);
       if (qnode
         && member_type->in_recursion (recursion_queue))

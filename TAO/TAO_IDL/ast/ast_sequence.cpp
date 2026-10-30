@@ -148,12 +148,12 @@ AST_Sequence::~AST_Sequence () = default;
 // Public operations.
 
 bool
-AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Sequence::in_recursion (std::vector<AST_Type *> &list)
 {
   if (list.size () == 0) // only structs, unions and valuetypes can be recursive
     return false;
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   AST_Type *type = dynamic_cast<AST_Type*> (this->base_type ());
 
@@ -184,9 +184,8 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type** recursable_type = nullptr;
-  list.get (recursable_type, 0);
-  if (type->full_name () == (*recursable_type)->full_name ())
+  AST_Type *recursable_type = list.front ();
+  if (type->full_name () == recursable_type->full_name ())
     {
       // They match.
       recursion_found = true;

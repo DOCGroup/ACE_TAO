@@ -26,7 +26,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   // Evaluate the member in time for the decision to generate
   // the recursive typecode include in the stub source file.
-  ACE_Unbounded_Queue<AST_Type *> list;
+  std::vector<AST_Type *> list;
   (void) node->in_recursion (list);
 
   // Instantiate a visitor context with a copy of our context. This info

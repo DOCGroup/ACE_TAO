@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 
 #include <deque>
+#include <vector>
 
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
@@ -212,7 +213,7 @@ protected:
   // pd_inherits won't work because the real interfaces will
   // probably already be destroyed and the pointers will be
   // garbage.
-  ACE_Unbounded_Queue<AST_Type *> param_holders_;
+  std::vector<AST_Type *> param_holders_;
 
   /// Do we have both abstract and concrete parents?
   int has_mixed_parentage_ {-1};

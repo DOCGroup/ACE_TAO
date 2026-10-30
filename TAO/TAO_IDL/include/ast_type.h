@@ -67,9 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_decl.h"
 
-#include "ace/Unbounded_Queue.h"
-
 #include <string>
+#include <vector>
 
 // Class for all IDL types
 //
@@ -100,7 +99,7 @@ public:
   // Most types cannot be involved except structs and unions.
   // The head element of the list the possibly recursed type we are checking for.
   // If the list is empty, we are trying to determine this for ourselves.
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (std::vector<AST_Type *> &list);
 
   // Set the size type.
   virtual void size_type (SIZE_TYPE);
@@ -154,7 +153,7 @@ protected:
                            std::string const& prefix) const;
 
   bool match_names (AST_Type *t,
-                    ACE_Unbounded_Queue<AST_Type *> const &list) const;
+                    std::vector<AST_Type *> const &list) const;
 
 protected:
   // Has the full definition been added to the Interface Repository?
