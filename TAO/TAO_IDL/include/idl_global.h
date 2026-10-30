@@ -67,7 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // May of them could be forward declared..
 #include "ace/Functor_String.h"
-#include "ace/Containers_T.h"
 #include "ace/Synch_Traits.h"
 
 #include "ast_expression.h"
@@ -887,7 +886,7 @@ public:
   /**
    * Set of the local names of unkown annotations already seen
    */
-  ACE_Unbounded_Set<Identifier> unknown_annotations_seen_;
+  std::unordered_set<std::string> unknown_annotations_seen_;
 
 private:
   // Data

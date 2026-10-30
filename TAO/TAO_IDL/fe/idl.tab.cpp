@@ -5246,12 +5246,13 @@ yyreduce:
             }
           else
             {
-              Identifier &id = *name->last_component ();
+              Identifier const& id = *name->last_component ();
               switch (idl_global->unknown_annotations_)
                 {
                 default:
                 case IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE:
-                  if (idl_global->unknown_annotations_seen_.insert (id) == 1)
+                  if (idl_global->unknown_annotations_seen_.insert (
+                        id.get_string ()).second)
                     {
                       break;
                     }
