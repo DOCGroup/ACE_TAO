@@ -14,15 +14,7 @@
 #include "helper.h"
 #include "ace/OS_NS_ctype.h"
 
-const CORBA::ULong TEST_BUFSIZE = 128;
-
-Generator::Generator ()
-{
-}
-
-Generator::~Generator ()
-{
-}
+CORBA::ULong constexpr TEST_BUFSIZE = 128;
 
 CORBA::Short
 Generator::gen_short ()
@@ -91,7 +83,7 @@ Generator::gen_wstring (int max_length)
   return buf;
 }
 
-const Alt_Mapping::Fixed_Struct
+Alt_Mapping::Fixed_Struct
 Generator::gen_fixed_struct ()
 {
   this->fixed_struct_.l = ACE_OS::rand ();

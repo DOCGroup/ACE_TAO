@@ -17,21 +17,10 @@
 //               Test_Unbounded_String
 // ************************************************************************
 
-Test_Unbounded_String::Test_Unbounded_String ()
-  : opname_ (CORBA::string_dup ("test_unbounded_string"))
-{
-}
-
-Test_Unbounded_String::~Test_Unbounded_String ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-}
-
 char const *
 Test_Unbounded_String::opname () const
 {
-  return this->opname_;
+  return this->opname_.c_str ();
 }
 
 int
@@ -66,7 +55,7 @@ Test_Unbounded_String::run_sii_test (Alt_Mapping_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Test_Unbounded_String::run_sii_test\n");
     }
@@ -75,7 +64,7 @@ Test_Unbounded_String::run_sii_test (Alt_Mapping_ptr objref)
 }
 
 CORBA::Boolean
-Test_Unbounded_String::check_validity ()
+Test_Unbounded_String::check_validity () const
 {
   CORBA::ULong len = this->in_.length ();
 
@@ -90,7 +79,7 @@ Test_Unbounded_String::check_validity ()
 }
 
 CORBA::Boolean
-Test_Unbounded_String::check_validity (CORBA::Request_ptr )
+Test_Unbounded_String::check_validity (CORBA::Request_ptr ) const
 {
   // No need to retrieve anything because, for all the args and
   // the return, we provided the memory and we own it.
@@ -98,7 +87,7 @@ Test_Unbounded_String::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Unbounded_String::print_values ()
+Test_Unbounded_String::print_values () const
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

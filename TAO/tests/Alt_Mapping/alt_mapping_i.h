@@ -12,6 +12,7 @@
 #define ALT_MAPPING_I_H
 
 #include "alt_mappingS.h"
+#include <string>
 
 /**
  * @class Alt_Mapping_i
@@ -23,17 +24,17 @@
 class Alt_Mapping_i : public POA_Alt_Mapping
 {
 public:
-  Alt_Mapping_i (CORBA::ORB_ptr orb);
+  explicit Alt_Mapping_i (CORBA::ORB_ptr orb);
 
-  ~Alt_Mapping_i ();
+  ~Alt_Mapping_i () override = default;
   Alt_Mapping_i (Alt_Mapping_i const &) = delete;
   Alt_Mapping_i &operator= (Alt_Mapping_i const &) = delete;
   Alt_Mapping_i (Alt_Mapping_i &&) = delete;
   Alt_Mapping_i &operator= (Alt_Mapping_i &&) = delete;
 
-  std::string test_unbounded_string (std::string const s1,
-                         std::string &s2,
-                         std::string &s3) override;
+  std::string test_unbounded_string (std::string s1,
+                                     std::string &s2,
+                                     std::string &s3) override;
 
   Alt_Mapping::StructSeq test_struct_sequence (
     Alt_Mapping::StructSeq const &s1,

@@ -16,7 +16,7 @@
 #include "ace/OS_NS_stdio.h"
 
 // Parses the command line arguments and returns an error status.
-static FILE *ior_output_file = 0;
+static FILE *ior_output_file = nullptr;
 static ACE_TCHAR const *ior_output_filename = ACE_TEXT("test.ior");
 
 static int
@@ -51,7 +51,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   PortableServer::POA_var oa_ptr;
-  Alt_Mapping_i *svnt = 0;
+  Alt_Mapping_i *svnt = nullptr;
 
   try
     {
@@ -132,12 +132,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       oa_ptr->destroy (true, true);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;
